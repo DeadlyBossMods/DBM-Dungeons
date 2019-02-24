@@ -5,7 +5,6 @@ mod:SetRevision(("$Revision$"):sub(12, -3))
 mod:SetCreatureID(36658, 36661)
 mod:SetEncounterID(837, 838, 2000)
 mod:DisableESCombatDetection()
-mod:SetMinSyncRevision(105)
 mod:SetUsedIcons(8)
 
 mod:RegisterCombat("combat")

@@ -5,7 +5,6 @@ mod:SetRevision(("$Revision$"):sub(12, -3))
 mod:SetCreatureID(36494)
 mod:SetEncounterID(833, 834, 1999)
 mod:SetUsedIcons(8)
-mod:SetMinSyncRevision(7)--Could break if someone is running out of date version with higher revision
 
 mod:RegisterCombat("combat")
 
