@@ -1,0 +1,11 @@
+package-as: DBM-Dungeons
+enable-nolib-creation: no
+
+move-folders:
+    DBM-Dungeons/DBM-Party-BC: DBM-Party-BC
+    DBM-Dungeons/DBM-Party-Cataclysm: DBM-Party-Cataclysm
+    DBM-Dungeons/DBM-Party-Classic: DBM-Party-Classic
+    DBM-Dungeons/DBM-Party-Legion: DBM-Party-Legion
+    DBM-Dungeons/DBM-Party-MoP: DBM-Party-MoP
+    DBM-Dungeons/DBM-Party-WoD: DBM-Party-WoD
+    DBM-Dungeons/DBM-Party-WotLK: DBM-Party-WotLK
