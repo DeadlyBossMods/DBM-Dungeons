@@ -1,7 +1,7 @@
 local mod	= DBM:NewMod(322, "DBM-Party-Cataclysm", 14, 186)
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision(("$Revision: 174 $"):sub(12, -3))
+mod:SetRevision(("$Revision$"):sub(12, -3))
 mod:SetCreatureID(54590)
 mod:SetEncounterID(1337)
 mod:SetMinSyncRevision(19)--Could break if someone is running out of date version with higher revision

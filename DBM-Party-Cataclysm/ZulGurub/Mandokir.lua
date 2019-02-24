@@ -2,7 +2,7 @@ local mod	= DBM:NewMod(176, "DBM-Party-Cataclysm", 11, 76)
 local L		= mod:GetLocalizedStrings()
 local Ohgan	= DBM:EJ_GetSectionInfo(2615)
 
-mod:SetRevision(("$Revision: 185 $"):sub(12, -3))
+mod:SetRevision(("$Revision$"):sub(12, -3))
 mod:SetCreatureID(52151)
 mod:SetEncounterID(1179)
 mod:SetZone()
