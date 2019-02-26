@@ -24,8 +24,6 @@ local timerFlyingKickCD		= mod:NewCDTimer(25, 113764)--25-30 second variation
 local timerFirestormKick	= mod:NewBuffActiveTimer(6, 113764)
 local timerBlazingFistsCD	= mod:NewNextTimer(30, 114807, nil, "Tank", 2, 5)
 
-mod:AddBoolOption("KickArrow", true)
-
 function mod:OnCombatStart(delay)
 	timerFlyingKickCD:Start(10-delay)
 	timerBlazingFistsCD:Start(20.5-delay)

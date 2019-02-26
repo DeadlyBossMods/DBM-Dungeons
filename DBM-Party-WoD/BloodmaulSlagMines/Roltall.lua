@@ -17,12 +17,13 @@ mod:RegisterEventsInCombat(
 
 local warnHeatWave				= mod:NewSpellAnnounce(152940, 3, nil, nil, nil, nil, nil, 2)
 local warnBurningSlag			= mod:NewSpellAnnounce(152939, 3)
+local warnFieryBoulder			= mod:NewCountAnnounce(153247, 4)
 
 local specWarnFieryBoulder		= mod:NewSpecialWarningCount(153247, nil, nil, 2, 2, 2)--Important to everyone
 local specWarnBurningSlagFire	= mod:NewSpecialWarningMove(152939, nil, nil, nil, 2, 2)
 
 local timerFieryBoulderCD		= mod:NewNextTimer(13.3, 153247, nil, nil, nil, 3)--13.3-13.4 Observed
-local timerHeatWave				= mod:NewBuffActiveTimer(9.5, 152940)
+local timerHeatWave				= mod:NewBuffActiveTimer(9.5, 152940, nil, nil, nil, 2)
 local timerHeatWaveCD			= mod:NewNextTimer(9.5, 152940, nil, nil, nil, 2)--9.5-9.8 Observed
 local timerBurningSlagCD		= mod:NewNextTimer(10.7, 152939, nil, nil, nil, 3)--10.7-11 Observed
 
@@ -40,9 +41,11 @@ function mod:SPELL_CAST_START(args)
 	if spellId == 153247 then--Boulder
 		if self.vb.burningSlagCast then self.vb.burningSlagCast = false end
 		self.vb.boulderCount = self.vb.boulderCount + 1
-		specWarnFieryBoulder:Show(self.vb.boulderCount)
 		if self.vb.boulderCount == 1 then
+			specWarnFieryBoulder:Show(self.vb.boulderCount)
 			specWarnFieryBoulder:Play("153247")
+		else
+			warnFieryBoulder:Show(self.vb.boulderCount)
 		end
 		if self.vb.boulderCount == 3 then
 			timerHeatWaveCD:Start()

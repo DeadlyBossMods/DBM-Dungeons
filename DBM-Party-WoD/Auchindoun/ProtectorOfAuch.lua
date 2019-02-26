@@ -16,8 +16,8 @@ mod:RegisterEventsInCombat(
 
 local specWarnHolyShield		= mod:NewSpecialWarningTarget(153002, nil, nil, nil, 1, 2)
 local yellHolyShield			= mod:NewYell(153002)
-local specWarnConsecreatedLight	= mod:NewSpecialWarningSpell(153006, nil, nil, nil, 3)
-local specWarnFate				= mod:NewSpecialWarningSpell(157465, nil, nil, nil, 2)
+local specWarnConsecreatedLight	= mod:NewSpecialWarningSpell(153006, nil, nil, nil, 3, 2)
+local specWarnFate				= mod:NewSpecialWarningSpell(157465, nil, nil, nil, 2, 2)
 local specWarnSanctifiedGround	= mod:NewSpecialWarningMove(161457, nil, nil, nil, 1, 2)
 
 local timerHolyShieldCD			= mod:NewNextTimer(47, 153002, nil, nil, nil, 3)
@@ -28,18 +28,12 @@ local timerFateCD				= mod:NewCDTimer(37, 157465, nil, nil, nil, 3)--Need more l
 local countdownHolyShield		= mod:NewCountdown(47, 153002)
 local countdownConsecratedLight	= mod:NewCountdown("Alt7", 153006)
 
-mod:AddArrowOption("ShieldArrow", 153002, true, true)
-
 function mod:ShieldTarget(targetname, uId)
 	if not targetname then return end
 	specWarnHolyShield:Show(targetname)
+	specWarnHolyShield:Play("findshield")
 	if targetname == UnitName("player") then
 		yellHolyShield:Yell()
-	else
-		if self.Options.ShieldArrow then
-			DBM.Arrow:ShowRunTo(uId, 3, 9)
-		end
-		specWarnHolyShield:ScheduleVoice(3, "findshield")
 	end
 end
 
@@ -50,9 +44,7 @@ function mod:OnCombatStart(delay)
 end
 
 function mod:OnCombatEnd()
-	if self.Options.ShieldArrow then
-		DBM.Arrow:Hide()
-	end
+
 end
 
 function mod:SPELL_CAST_START(args)
@@ -65,9 +57,11 @@ function mod:SPELL_CAST_START(args)
 		countdownHolyShield:Start()
 	elseif spellId == 153006 then
 		specWarnConsecreatedLight:Show()
+		specWarnConsecreatedLight:Play("findshelter")
 		timerConsecratedLight:Start()
 	elseif spellId == 157465 then
 		specWarnFate:Show()
+		specWarnFate:Play("watchstep")
 		timerFateCD:Start()
 	end
 end
