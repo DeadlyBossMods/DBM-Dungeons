@@ -16,7 +16,7 @@ mod:RegisterEventsInCombat(
 
 local warnSplitSoon     = mod:NewSoonAnnounce("ej5335", 2)
 local warnSplit         = mod:NewSpellAnnounce("ej5335", 3)
-local warnMindControl   = mod:NewTargetAnnounce(39019, 4)
+local warnMindControl   = mod:NewTargetNoFilterAnnounce(39019, 4)
 local warnMindRend      = mod:NewTargetAnnounce(39017, 2)
 
 local timerMindControl  = mod:NewTargetTimer(6, 39019, nil, nil, nil, 3)
