@@ -271,10 +271,6 @@ L= DBM:GetModLocalization(688)
 -----------------------
 L= DBM:GetModLocalization(671)
 
-L:SetOptionLocalization({
-	KickArrow	= "Voir la flèche DBM lorsque $spell:114487 est près de vous"
-})
-
 -----------------------
 -- Durand/High Inquisitor Whitemane --
 -----------------------

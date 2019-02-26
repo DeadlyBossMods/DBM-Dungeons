@@ -20,7 +20,7 @@ local warnMoltenCore			= mod:NewTargetAnnounce(150678, 2)
 
 local specWarnMoltenBlast		= mod:NewSpecialWarningInterrupt(150677, "HasInterrupt", nil, 3, 1, 2)
 local specWarnUnstableSlag		= mod:NewSpecialWarningSwitch(150755, "Dps", nil, 2, 1, 2)
-local specWarnMagmaEruptionCast	= mod:NewSpecialWarningSpell(150784, nil, nil, nil, 2)
+local specWarnMagmaEruptionCast	= mod:NewSpecialWarningSpell(150784, nil, nil, nil, 2, 2)
 local specWarnMagmaEruption		= mod:NewSpecialWarningMove(150784, nil, nil, nil, 1, 2)
 local specWarnMoltenCore		= mod:NewSpecialWarningDispel(150678, "MagicDispeller", nil, nil, 1, 2)
 
@@ -46,6 +46,7 @@ function mod:SPELL_CAST_START(args)
 		end
 	elseif spellId == 150784 then
 		specWarnMagmaEruptionCast:Show()
+		specWarnMagmaEruptionCast:Play("watchstep")
 		timerMagmaEruptionCD:Start()
 	elseif spellId == 150755 then
 		specWarnUnstableSlag:Show()

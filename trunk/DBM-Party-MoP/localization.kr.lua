@@ -269,10 +269,6 @@ L= DBM:GetModLocalization(688)
 -----------------------
 L= DBM:GetModLocalization(671)
 
-L:SetOptionLocalization({
-	KickArrow	= "$spell:114487 대상이 가까이 있을 경우 DBM 화살표 보기"
-})
-
 -----------------------
 -- Durand/High Inquisitor Whitemane --
 -----------------------
