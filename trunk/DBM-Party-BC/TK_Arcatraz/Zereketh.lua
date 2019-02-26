@@ -20,7 +20,7 @@ local warnVoid      = mod:NewSpellAnnounce(36119, 3)
 local specwarnNova	= mod:NewSpecialWarningSpell(39005, nil, nil, nil, 2, 2)
 local specwarnSoC	= mod:NewSpecialWarningDispel(39367, "Healer", nil, nil, 1, 2)
 
-local timerSoC      = mod:NewTargetTimer(18, 39367, nil, "Healer", 2, 3)
+local timerSoC      = mod:NewTargetTimer(18, 39367, nil, "Healer", 2, 3, nil, DBM_CORE_MAGIC_ICON)
 
 function mod:SPELL_CAST_START(args)
 	if args:IsSpellID(36127, 39005) then
@@ -37,8 +37,10 @@ end
 
 function mod:SPELL_AURA_APPLIED(args)
 	if args:IsSpellID(39367, 32863) then
-		specwarnSoC:Show(args.destName)
-		specwarnSoC:Play("dispelnow")
+		if self:CheckDispelFilter() then
+			specwarnSoC:Show(args.destName)
+			specwarnSoC:Play("dispelnow")
+		end
 		timerSoC:Start(args.destName)
 	end
 end

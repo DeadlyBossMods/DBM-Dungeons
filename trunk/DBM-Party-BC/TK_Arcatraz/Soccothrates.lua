@@ -24,7 +24,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 end
 
 function mod:SPELL_AURA_APPLIED(args)
-	if args.spellId == 35759 then
+	if args.spellId == 35759 and self:CheckDispelFilter() then
 		specwarnFelFireShock:Show(args.destName)
 		specwarnFelFireShock:Play("dispelnow")
 	end

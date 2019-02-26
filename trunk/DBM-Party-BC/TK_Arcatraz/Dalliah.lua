@@ -17,13 +17,13 @@ mod:RegisterEventsInCombat(
 local warnGift			= mod:NewTargetAnnounce(39009, 3)
 
 local specwarnWhirlwind	= mod:NewSpecialWarningRun(36175, "Melee", nil, nil, 4, 6)
-local specwarnHeal		= mod:NewSpecialWarningInterrupt(39013, "-Healer", nil, nil, 1, 2)
+local specwarnHeal		= mod:NewSpecialWarningInterrupt(39013, "HasInterrupt", nil, 2, 1, 2)
 
 local timerGift			= mod:NewTargetTimer(10, 39009, nil, false, 2, 3)
 
 function mod:SPELL_CAST_START(args)
-	if args:IsSpellID(39013, 36144) then
-		specwarnHeal:Show()
+	if args:IsSpellID(39013, 36144) and self:CheckInterruptFilter(args.sourceGUID, false, true) then
+		specwarnHeal:Show(args.sourceName)
 		specwarnHeal:Play("kickcast")
 	elseif args:IsSpellID(36175, 36142) then
 		specwarnWhirlwind:Show()
