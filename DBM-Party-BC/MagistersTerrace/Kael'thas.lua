@@ -10,15 +10,12 @@ mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 36819",
-	"SPELL_CAST_SUCCESS 44194",
+	"SPELL_CAST_SUCCESS 44194 36819",
 	"SPELL_AURA_APPLIED 46165",
 	"SPELL_AURA_REMOVED 46165",
+	"UNIT_SPELLCAST_SUCCEEDED boss1",
 	"CHAT_MSG_MONSTER_YELL"
 )
-
---TODO, switch to these events if blizzard enables boss1
---	"<231.31 20:53:15> [UNIT_SPELLCAST_SUCCEEDED] Kael'thas Sunstrider(Omegal) [[target:Clear Flight::0:44232]]", -- [530]
---	"<231.31 20:53:15> [UNIT_SPELLCAST_SUCCEEDED] Kael'thas Sunstrider(Omegal) [[target:Power Feedback::0:47109]]", -- [531]
 
 local WarnShockBarrior		= mod:NewSpellAnnounce(46165, 3)
 local WarnGravityLapse		= mod:NewSpellAnnounce(44224, 2)
@@ -32,16 +29,12 @@ local timerPhoenix			= mod:NewCDTimer(45, 44194, nil, nil, nil, 1)--45-70?
 local timerGravityLapse		= mod:NewBuffActiveTimer(35, 44194, nil, nil, nil, 6)
 local timerGravityLapseCD	= mod:NewNextTimer(13.5, 44194, nil, nil, nil, 6)
 
-local interruptable = false
-local phase2Started = false
-
-local function clearInterrupt()
-	interruptable = false
-end
+mod.vb.interruptable = false
+mod.vb.phase = 1
 
 function mod:OnCombatStart(delay)
-	interruptable = false
-	phase2Started = false
+	self.vb.interruptable = false
+	self.vb.phase = 1
 	if not self:IsDifficulty("normal5") then
         timerShockBarrior:Start(-delay)
     end
@@ -50,15 +43,14 @@ end
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
 	if spellId == 36819 then
-		interruptable = true
+		self.vb.interruptable = true
         timerPyroblast:Start()
-        self:Schedule(4, clearInterrupt)
     elseif spellId == 44224 then
     	WarnGravityLapse:Show()
     	timerGravityLapse:Start()
     	timerGravityLapseCD:Schedule(35)--Show after current lapse has ended
-    	if not phase2Started then
-    		phase2Started = true
+    	if self.vb.phase < 2 then
+    		self.vb.phase = 2
 			timerShockBarrior:Stop()
 			timerPhoenix:Stop()
     	end
@@ -70,6 +62,8 @@ function mod:SPELL_CAST_SUCCESS(args)
 		specwarnPhoenix:Show()
 		specwarnPhoenix:Play("killmob")
 		timerPhoenix:Start()
+	elseif spellId == 36819 then
+		self.vb.interruptable = false
 	end
 end
 
@@ -81,15 +75,26 @@ function mod:SPELL_AURA_APPLIED(args)
 end
 
 function mod:SPELL_AURA_REMOVED(args)
-	if args.spellId == 46165 and interruptable then
+	if args.spellId == 46165 and self.vb.interruptable then
         specwarnPyroblast:Show(args.destName)
         specwarnPyroblast:Play("kickcast")
 	end
 end
 
+--TODO, switch to these events if blizzard enables boss1
+--	"<231.31 20:53:15> [UNIT_SPELLCAST_SUCCEEDED] Kael'thas Sunstrider(Omegal) [[target:Clear Flight::0:44232]]", -- [530]
+--	"<231.31 20:53:15> [UNIT_SPELLCAST_SUCCEEDED] Kael'thas Sunstrider(Omegal) [[target:Power Feedback::0:47109]]", -- [531]
+function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
+	if spellId == 47109 and self.vb.phase < 2 then--Power Feedback
+		self.vb.phase = 2
+		timerShockBarrior:Stop()
+		timerPhoenix:Stop()
+	end
+end
+
 function mod:CHAT_MSG_MONSTER_YELL(msg)
-	if msg == L.KaelP2 then
-		phase2Started = true
+	if msg == L.KaelP2 and self.vb.phase < 2 then
+		self.vb.phase = 2
 		timerShockBarrior:Stop()
 		timerPhoenix:Stop()
 	end

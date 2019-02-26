@@ -13,9 +13,7 @@ mod:RegisterEventsInCombat(
 	"SPELL_AURA_REMOVED 32361"
 )
 
-
 --TODO: Timers
---TODO: Verify jumping actually prevents quake stun and add a warning to jump during cast.
 local WarnPrison	= mod:NewTargetAnnounce(32361, 3)
 
 local specWarnQuake	= mod:NewSpecialWarningSpell(33919, nil, nil, nil, 2, 2)
