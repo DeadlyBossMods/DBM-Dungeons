@@ -12,8 +12,8 @@ mod:RegisterEventsInCombat(
 	"SPELL_AURA_APPLIED 32346"
 )
 
-local warningSoul	= mod:NewTargetAnnounce(32346, 2)
-local warningAvatar	= mod:NewSpellAnnounce(32424, 3)
+local warningSoul		= mod:NewTargetAnnounce(32346, 2)
+local warningAvatar		= mod:NewSpellAnnounce(32424, 3)
 
 function mod:SPELL_CAST_START(args)
 	if args.spellId == 32424 then

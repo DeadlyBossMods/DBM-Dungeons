@@ -37,7 +37,7 @@ end
 
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
-	if spellId == 150677 then
+	if spellId == 150677 and self:CheckInterruptFilter(args.sourceGUID, false, true) then
 		specWarnMoltenBlast:Show(args.sourceName)
 		if self:IsTank() then
 			specWarnMoltenBlast:Play("kickcast")

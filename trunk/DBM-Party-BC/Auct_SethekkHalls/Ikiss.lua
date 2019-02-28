@@ -15,7 +15,7 @@ mod:RegisterEventsInCombat(
 
 local warnSheep					= mod:NewTargetAnnounce(38245, 3)
 
-local specWarnArcaneExplosion	= mod:NewSpecialWarningSpell(38197, nil, nil, nil, 2, 2)
+local specWarnArcaneExplosion	= mod:NewSpecialWarningSpell(38197, nil, nil, 2, 3, 2)
 
 local timerArcaneExplosion		= mod:NewCastTimer(5, 38197, nil, nil, nil, 2)
 

@@ -15,9 +15,9 @@ mod:RegisterEventsInCombat(
 	"SPELL_AURA_REMOVED 31718 31481"
 )
 
-local warningCloud		= mod:NewSpellAnnounce(25033)
-local warningWinds		= mod:NewTargetAnnounce(31718)
-local warningBurst		= mod:NewTargetAnnounce(31481)
+local warningCloud		= mod:NewSpellAnnounce(25033, 2)
+local warningWinds		= mod:NewTargetNoFilterAnnounce(31718, 2)
+local warningBurst		= mod:NewTargetNoFilterAnnounce(31481, 3)
 
 local timerWinds		= mod:NewTargetTimer(6, 31718, nil, nil, nil, 3)
 local timerBurst		= mod:NewTargetTimer(10, 31481, nil, nil, nil, 3)

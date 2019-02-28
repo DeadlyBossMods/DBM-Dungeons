@@ -14,11 +14,11 @@ mod:RegisterEventsInCombat(
 )
 
 --TODO: Timers
-local WarnPrison	= mod:NewTargetAnnounce(32361, 3)
+local WarnPrison		= mod:NewTargetAnnounce(32361, 3)
 
-local specWarnQuake	= mod:NewSpecialWarningSpell(33919, nil, nil, nil, 2, 2)
+local specWarnQuake		= mod:NewSpecialWarningSpell(33919, nil, nil, nil, 2, 2)
 
-local timerPrison	= mod:NewTargetTimer(5, 32361, nil, nil, nil, 3)
+local timerPrison		= mod:NewTargetTimer(5, 32361, nil, nil, nil, 3)
 
 function mod:SPELL_CAST_START(args)
 	if args.spellId == 33919 then
