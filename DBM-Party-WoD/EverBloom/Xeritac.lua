@@ -23,7 +23,7 @@ local warnToxicSpiderling			= mod:NewAddsLeftAnnounce("ej10492", 2, "Interface\\
 local warnInhale					= mod:NewSpellAnnounce(169233, 3)
 local warnPhase2					= mod:NewPhaseAnnounce(2, 2, nil, nil, nil, nil, nil, 2)
 
-local specWarnVenomCrazedPaleOne	= mod:NewSpecialWarningSwitch("ej10502", "-Healer")
+local specWarnVenomCrazedPaleOne	= mod:NewSpecialWarningSwitch("ej10502", "-Healer", nil, nil, 1, 2)
 local specWarnGaseousVolley			= mod:NewSpecialWarningSpell(169382, nil, nil, nil, 2, 2)
 local specWarnToxicGas				= mod:NewSpecialWarningMove(169223, nil, nil, nil, 1, 2)
 
