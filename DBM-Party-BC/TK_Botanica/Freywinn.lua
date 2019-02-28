@@ -11,7 +11,7 @@ mod:RegisterEventsInCombat(
 	"SPELL_CAST_SUCCESS 34557"
 )
 
-local specWarnTranq		= mod:NewSpecialWarningSwitch("ej5458", "-Healer")
+local specWarnTranq		= mod:NewSpecialWarningSwitch("ej5458", "-Healer", nil, nil, 1, 2)
 
 function mod:SPELL_CAST_SUCCESS(args)
 	if args.spellId == 34557 then      --Summon Frayer Protector

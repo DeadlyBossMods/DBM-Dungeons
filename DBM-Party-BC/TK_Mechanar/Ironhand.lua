@@ -15,7 +15,7 @@ mod:RegisterEventsInCombat(
 	"RAID_BOSS_EMOTE"
 )
 
-local warnShadowpower       = mod:NewTargetAnnounce(35322, 3)
+local warnShadowpower       = mod:NewTargetNoFilterAnnounce(35322, 3)
 local WarnJackHammer		= mod:NewSpellAnnounce(39194, 4)
 
 local specWarnJackHammer	= mod:NewSpecialWarningRun(39194, "Melee", nil, nil, 4, 2)

@@ -18,7 +18,7 @@ local timerShell			= mod:NewBuffActiveTimer(7, 32358, nil, nil, nil, 5)
 function mod:SPELL_CAST_START(args)
 	if args:IsSpellID(32358, 38759) then
 		specWarnShell:Show(args.sourceName)
-		timerShell:Start()
 		specWarnShell:Play("stopattack")
+		timerShell:Start()
 	end
 end

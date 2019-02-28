@@ -70,7 +70,7 @@ end
 
 function mod:SPELL_AURA_APPLIED(args)
 	local spellId = args.spellId
-	if spellId == 149997 then
+	if spellId == 149997 and self:CheckInterruptFilter(args.sourceGUID, false, true) then
 		specWarnFirestorm:Show(args.sourceName)
 		if self:IsTank() then
 			specWarnFirestorm:Play("kickcast")

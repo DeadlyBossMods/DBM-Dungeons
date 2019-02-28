@@ -13,7 +13,7 @@ mod:RegisterEventsInCombat(
 --	"UNIT_DIED"
 )
 
-local warnMark      = mod:NewTargetAnnounce(30689)
+local warnMark      = mod:NewTargetNoFilterAnnounce(30689)
 
 local specwarnMark  = mod:NewSpecialWarningYou(30689, nil, nil, nil, 1, 2)
 local yellMark		= mod:NewYell(30689)

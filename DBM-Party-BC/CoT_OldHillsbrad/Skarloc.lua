@@ -23,7 +23,7 @@ local specWarnConsecration		= mod:NewSpecialWarningMove(38385, nil, nil, nil, 1,
 local timerHammer               = mod:NewTargetTimer(6, 13005, nil, nil, nil, 3)
 
 function mod:SPELL_CAST_START(args)
-	if args.spellId == 29427 then
+	if args.spellId == 29427 and self:CheckInterruptFilter(args.sourceGUID, false, true) then
 		specWarnHeal:Show(args.sourceName)
 		specWarnHeal:Play("kickcast")
 	end

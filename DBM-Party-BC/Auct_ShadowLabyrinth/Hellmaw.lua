@@ -11,7 +11,7 @@ mod:RegisterEventsInCombat(
 	"SPELL_CAST_SUCCESS 33547"
 )
 
-local warnFear      = mod:NewSpellAnnounce(33547)
+local warnFear      = mod:NewSpellAnnounce(33547, 3)
 
 local timerFear     = mod:NewNextTimer(25, 33547, nil, nil, nil, 2)
 

@@ -63,14 +63,14 @@ end
 
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
-	if spellId == 168082 then
+	if spellId == 168082 and self:CheckInterruptFilter(args.sourceGUID, false, true) then
 		specWarnRevitalizingWaters:Show(args.sourceName)
 		if self:IsTank() then
 			specWarnRevitalizingWaters:Play("kickcast")
 		else
 			specWarnRevitalizingWaters:Play("helpkick")
 		end
-	elseif spellId == 168041 then
+	elseif spellId == 168041 and self:CheckInterruptFilter(args.sourceGUID, false, true) then
 		specWarnBriarskin:Show(args.sourceName)
 		specWarnBriarskin:Play("kickcast")
 	elseif spellId == 168383 then

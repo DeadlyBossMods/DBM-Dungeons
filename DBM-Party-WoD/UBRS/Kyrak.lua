@@ -20,8 +20,8 @@ mod:RegisterEventsInCombat(
 local warnRejuvSerumCast			= mod:NewCastAnnounce(161203, 3)
 local warnVilebloodSerum			= mod:NewSpellAnnounce(161209, 3)--Some may think this is spammy but the puddles tick literally instantly giving not much time to move before 2nd tick which may kill you.
 
-local specWarnDebilitatingFixation	= mod:NewSpecialWarningInterrupt(161199, "-Healer", nil, 2, 3)
-local specWarnEruption				= mod:NewSpecialWarningDodge(155037, "Tank")
+local specWarnDebilitatingFixation	= mod:NewSpecialWarningInterrupt(161199, "-Healer", nil, 2, 3, 2)
+local specWarnEruption				= mod:NewSpecialWarningDodge(155037, "Tank", nil, nil, 1, 2)
 local specWarnRejuvSerum			= mod:NewSpecialWarningDispel(161203, "MagicDispeller", nil, nil, 1, 2)
 local specWarnToxicFumes			= mod:NewSpecialWarningDispel(162600, "RemovePoison", nil, 2, 1, 2)
 local specWarnVilebloodSerum		= mod:NewSpecialWarningMove(161288, nil, nil, nil, 1, 2)
@@ -66,6 +66,7 @@ function mod:SPELL_CAST_START(args)
 		warnRejuvSerumCast:Show()
 	elseif spellId == 155037 and self:IsInCombat() then
 		specWarnEruption:Show()
+		specWarnEruption:Play("watchstep")
 		timerEruptionCD:Start(nil, args.sourceGUID)
 	end
 end

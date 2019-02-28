@@ -22,7 +22,7 @@ local timerNet			= mod:NewTargetTimer(6, 35107, nil, nil, nil, 3)
 local enrageTimer		= mod:NewBerserkTimer(300)
 
 function mod:OnCombatStart(delay)
-	if self:IsDifficulty("heroic5") then
+	if not self:IsDifficulty("normal5") then
         enrageTimer:Start(-delay)
     end
 end

@@ -63,7 +63,7 @@ function mod:SPELL_AURA_APPLIED(args)
 end
 
 function mod:SPELL_CAST_START(args)
-	if args.spellId == 154055 then
+	if args.spellId == 154055 and self:CheckInterruptFilter(args.sourceGUID, false, true) then
 		specWarnShielding:Show(args.sourceName)
 		specWarnShielding:Play("kickcast")
 	end

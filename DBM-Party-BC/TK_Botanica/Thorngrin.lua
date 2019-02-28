@@ -12,7 +12,7 @@ mod:RegisterEventsInCombat(
 	"SPELL_AURA_REMOVED 34661"
 )
 
-local warnSacrifice       = mod:NewTargetAnnounce(34661, 2)
+local warnSacrifice       = mod:NewTargetNoFilterAnnounce(34661, 2)
 
 local timerSacrifice      = mod:NewTargetTimer(8, 34661, nil, nil, nil, 3)
 
