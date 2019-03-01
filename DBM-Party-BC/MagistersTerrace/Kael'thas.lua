@@ -62,7 +62,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 		specwarnPhoenix:Show()
 		specwarnPhoenix:Play("killmob")
 		timerPhoenix:Start()
-	elseif spellId == 36819 then
+	elseif args.spellId == 36819 then
 		self.vb.interruptable = false
 	end
 end

@@ -18,7 +18,7 @@ mod:RegisterEventsInCombat(
 
 local warnDancingFlames			= mod:NewTargetNoFilterAnnounce(149975, 3, nil, "Healer")
 
-local specWarnMagmaBarrage		= mod:NewSpecialWarningMove(150011, nil, nil, nil, 1, 2)
+local specWarnMagmaBarrage		= mod:NewSpecialWarningMove(150011, nil, nil, nil, 1, 8)
 local specWarnRoughSmash		= mod:NewSpecialWarningDodge(149941, "Melee", nil, nil, 4, 2)
 local specWarnRuination			= mod:NewSpecialWarningSwitch("ej8622", "-Healer", nil, nil, 1, 2)
 local specWarnCalamity			= mod:NewSpecialWarningSwitch("ej8626", "-Healer", nil, nil, 1, 2)

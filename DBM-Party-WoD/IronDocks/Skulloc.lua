@@ -16,7 +16,7 @@ mod:RegisterEventsInCombat(
 )
 
 --TODO, verify gron smash numbers and see if it is time based or damage based.
-local warnRapidFire			= mod:NewTargetAnnounce(168398, 3)
+local warnRapidFire			= mod:NewTargetNoFilterAnnounce(168398, 3)
 local warnBackdraft			= mod:NewCastAnnounce(169129, 4)
 
 local specWarnRapidFire		= mod:NewSpecialWarningMoveAway(168398, nil, nil, nil, 1, 2)
@@ -26,7 +26,7 @@ local specWarnCannonBarrage	= mod:NewSpecialWarningSpell(168929, nil, nil, nil, 
 local specWarnCannonBarrageE= mod:NewSpecialWarningEnd(168929, nil, nil, nil, 1, 2)
 
 local timerRapidFireCD		= mod:NewNextTimer(12, 168398, nil, nil, nil, 3)
-local timerRapidFire		= mod:NewTargetTimer(5, 168398, nil, "-Tank")
+local timerRapidFire		= mod:NewTargetTimer(5, 168398, nil, "-Tank", nil, 5)
 local timerGronSmashCD		= mod:NewCDTimer(70, 168227, nil, nil, nil, 2)--Timer is too variable, which is why i never enabled. every time i kill boss it's diff. today 2nd gron smash happened at 49 seconds, 21 seconds sooner than this timer
 
 mod.vb.flameCast = false
@@ -42,8 +42,8 @@ function mod:SPELL_AURA_APPLIED(args)
 		timerRapidFireCD:Start()
 		if args:IsPlayer() then
 			specWarnRapidFire:Show()
-			yellRapidFire:Yell()
 			specWarnRapidFire:Play("runout")
+			yellRapidFire:Yell()
 		else
 			warnRapidFire:Show(args.destName)
 		end

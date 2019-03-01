@@ -32,7 +32,7 @@ local warnDoom					= mod:NewTargetNoFilterAnnounce(156965, 3, nil, "Healer")
 local specWarnDrainLife			= mod:NewSpecialWarningInterrupt(156854, "HasInterrupt", nil, nil, 1, 2)
 local specWarnCorruption		= mod:NewSpecialWarningDispel(156842, "Healer", nil, nil, 1, 2)
 local specWarnRainOfFire		= mod:NewSpecialWarningSpell(156857, nil, nil, nil, 2, 2)--156856 fires SUCCESS but do not use, it fires for any player walking in or out of it
-local specWarnRainOfFireMove	= mod:NewSpecialWarningMove(156857, nil, nil, nil, 1, 2)
+local specWarnRainOfFireMove	= mod:NewSpecialWarningMove(156857, nil, nil, nil, 1, 8)
 --Unknown Abilities
 local specWarnFixate			= mod:NewSpecialWarningRun(157168, nil, nil, 2, 4, 2)
 --Affliction Abilities

@@ -35,11 +35,12 @@ mod.vb.phase = 1
 
 function mod:SupressiveFireTarget(targetname, uId)
 	if not targetname then return end
-	warnSupressiveFire:Show(targetname)
 	if targetname == UnitName("player") then
 		specWarnSupressiveFire:Show()
-		yellSupressiveFire:Yell()
 		specWarnSupressiveFire:Play("findshelter")
+		yellSupressiveFire:Yell()
+	else
+		warnSupressiveFire:Show(targetname)
 	end
 end
 
@@ -66,7 +67,7 @@ function mod:SPELL_CAST_START(args)
 		self:BossTargetScanner(79548, "SupressiveFireTarget", 0.2, 15)
 	elseif spellId == 160943 and self:AntiSpam(2, 1) then
 		specWarnShrapnelblast:Show()
-		specWarnShrapnelblast:Play("runaway")
+		specWarnShrapnelblast:Play("shockwave")
 	end
 end
 

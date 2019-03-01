@@ -30,11 +30,11 @@ local timerRecklessProvocation			= mod:NewBuffActiveTimer(5, 164426)
 function mod:SPELL_AURA_APPLIED(args)
 	if args.spellId == 164426 then
 		specWarnRecklessProvocation:Show(args.destName)
-		timerRecklessProvocation:Start()
 		specWarnRecklessProvocation:Play("stopattack")
+		timerRecklessProvocation:Start()
 	elseif args.spellId == 164835 and self:AntiSpam(2, 1) then
 		specWarnEnrage:Show(args.destName)
-		specWarnEnrage:Play("trannow") --multi sound
+		specWarnEnrage:Play("enrage") --multi sound
 	elseif args.spellId == 164632 and args:IsPlayer() and self:AntiSpam(2, 2) then
 		specWarnBurningArrowsMove:Show()
 		specWarnBurningArrowsMove:Play("runaway")
