@@ -18,14 +18,14 @@ mod:RegisterEventsInCombat(
 )
 
 local warnOgreTraps				= mod:NewCastAnnounce(163390, 3)
+local warnSphereEnd				= mod:NewEndAnnounce(163689, 1)
 
 local specWarnSanguineSphere	= mod:NewSpecialWarningReflect(163689, "-Healer", nil, 2, 1, 2)
-local specWarnSanguineSphereEnd	= mod:NewSpecialWarningEnd(163689, "-Healer", nil, 2)
-local specWarnFlamingSlash		= mod:NewSpecialWarningDodge(163665, nil, nil, nil, 3)--Devastating in challenge modes. move or die.
-local specWarnLavaSwipe			= mod:NewSpecialWarningSpell(165152, nil, nil, nil, 2)
+local specWarnFlamingSlash		= mod:NewSpecialWarningDodge(163665, nil, nil, nil, 3, 2)--Devastating in challenge modes. move or die.
+local specWarnLavaSwipe			= mod:NewSpecialWarningSpell(165152, nil, nil, nil, 2, 2)
 local specWarnBigBoom			= mod:NewSpecialWarningSpell(163379, nil, nil, nil, 2)--maybe use switch.
 
-local timerSanguineSphere		= mod:NewTargetTimer(15, 163689)
+local timerSanguineSphere		= mod:NewTargetTimer(15, 163689, nil, nil, nil, 5, nil, DBM_CORE_DAMAGE_ICON)
 local timerFlamingSlashCD		= mod:NewNextTimer(29, 163665, nil, nil, nil, 3)
 local timerLavaSwipeCD			= mod:NewNextTimer(29, 165152, nil, nil, nil, 3)
 local timerOgreTrapsCD			= mod:NewCDTimer(25, 163390, nil, nil, nil, 3)--25-30 variation.
@@ -42,6 +42,7 @@ function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
 	if spellId == 163665 then
 		specWarnFlamingSlash:Show()
+		specWarnFlamingSlash:Play("chargemove")
 		if self:IsNormal() then
 			timerFlamingSlashCD:Start(41.5)
 			countdownFlamingSlash:Start(41.5)
@@ -54,6 +55,7 @@ function mod:SPELL_CAST_START(args)
 		timerOgreTrapsCD:Start()
 	elseif spellId == 163379 then
 		specWarnBigBoom:Show()
+		specWarnBigBoom:Play("watchstep")
 	end
 end
 
@@ -79,7 +81,7 @@ end
 function mod:SPELL_AURA_REMOVED(args)
 	if args.spellId == 163689 then
 		timerSanguineSphere:Cancel(args.destName)
-		specWarnSanguineSphereEnd:Show()
+		warnSphereEnd:Show()
 	end
 end
 
@@ -99,6 +101,7 @@ end
 function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
 	if spellId == 164956 and self:AntiSpam(5, 2) then
 		specWarnLavaSwipe:Show()
+		specWarnLavaSwipe:Play("shockwave")
 		if self:IsHeroic() then
 			timerLavaSwipeCD:Start()
 		else
