@@ -21,7 +21,7 @@ local warnMark					= mod:NewTargetAnnounce(163447, 3)
 local specWarnFreezingSnare		= mod:NewSpecialWarningYou(162066, nil, nil, nil, 1, 2)
 local specWarnFreezingSnareNear	= mod:NewSpecialWarningClose(162066, nil, nil, nil, 1, 2)
 local yellFreezingSnare			= mod:NewYell(162066)
-local specWarnDiffusedEnergy	= mod:NewSpecialWarningMove(161588, nil, nil, nil, 1, 2)
+local specWarnDiffusedEnergy	= mod:NewSpecialWarningMove(161588, nil, nil, nil, 1, 8)
 local specWarnSpinningSpear		= mod:NewSpecialWarningDodge(162058, nil, nil, 3, 2, 2)
 local specWarnMark				= mod:NewSpecialWarningMoveAway(163447, nil, nil, nil, 1, 2)
 local yellMark					= mod:NewYell(163447)
@@ -85,7 +85,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		end
 	elseif args.spellId == 161588 and args:IsPlayer() and self:AntiSpam() then
 		specWarnDiffusedEnergy:Show()
-		specWarnDiffusedEnergy:Play("runaway")
+		specWarnDiffusedEnergy:Play("watchfeet")
 	end
 end
 mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED

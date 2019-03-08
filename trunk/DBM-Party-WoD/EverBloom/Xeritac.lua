@@ -25,7 +25,7 @@ local warnPhase2					= mod:NewPhaseAnnounce(2, 2, nil, nil, nil, nil, nil, 2)
 
 local specWarnVenomCrazedPaleOne	= mod:NewSpecialWarningSwitch("ej10502", "-Healer", nil, nil, 1, 2)
 local specWarnGaseousVolley			= mod:NewSpecialWarningSpell(169382, nil, nil, nil, 2, 2)
-local specWarnToxicGas				= mod:NewSpecialWarningMove(169223, nil, nil, nil, 1, 2)
+local specWarnToxicGas				= mod:NewSpecialWarningMove(169223, nil, nil, nil, 1, 8)
 
 mod.vb.spiderlingCount = 4
 mod.vb.phase = 1
@@ -51,7 +51,7 @@ end
 function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId)
 	if spellId == 169223 and destGUID == UnitGUID("player") and self:AntiSpam(2) then
 		specWarnToxicGas:Show()
-		specWarnToxicGas:Play("runaway")
+		specWarnToxicGas:Play("watchfeet")
 	end
 end
 mod.SPELL_ABSORBED = mod.SPELL_PERIODIC_DAMAGE

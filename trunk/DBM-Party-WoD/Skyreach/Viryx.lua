@@ -19,13 +19,13 @@ mod:RegisterEventsInCombat(
 )
 
 --TODO, had bugged transcriptor so no IEEU events. See if IEEU is better for adds joining fight.
-local warnCastDown			= mod:NewTargetAnnounce(153954, 4)
-local warnShielding			= mod:NewTargetAnnounce(154055, 2)
+local warnCastDown			= mod:NewTargetNoFilterAnnounce(153954, 4)
+local warnShielding			= mod:NewTargetNoFilterAnnounce(154055, 2)
 
-local specWarnCastDownSoon	= mod:NewSpecialWarningSoon(153954)--Everyone, becaus it can grab healer too, which affects healer/tank
+local specWarnCastDownSoon	= mod:NewSpecialWarningSoon(153954, nil, nil, nil, 1, 2)--Everyone, becaus it can grab healer too, which affects healer/tank
 local specWarnCastDown		= mod:NewSpecialWarningSwitch(153954, "Dps", nil, nil, 3, 2)--Only dps, because it's their job to stop it.
 local specWarnLensFlareCast	= mod:NewSpecialWarningSpell(154032, nil, nil, nil, 2, 2)--If there is any way to find actual target, like maybe target scanning, this will be changed.
-local specWarnLensFlare		= mod:NewSpecialWarningMove(154043, nil, nil, nil, 1, 2)
+local specWarnLensFlare		= mod:NewSpecialWarningMove(154043, nil, nil, nil, 1, 8)
 local specWarnAdd			= mod:NewSpecialWarning("specWarnAdd", "Dps", nil, nil, 1, 2)
 local specWarnShielding		= mod:NewSpecialWarningInterrupt(154055, "HasInterrupt", nil, 2, 1, 2)
 
@@ -72,7 +72,7 @@ end
 function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId, _, _, _, overkill)
 	if spellId == 154043 and destGUID == UnitGUID("player") and self:AntiSpam(2) then
 		specWarnLensFlare:Show()
-		specWarnLensFlare:Play("runaway")
+		specWarnLensFlare:Play("watchfeet")
 	end
 end
 mod.SPELL_ABSORBED = mod.SPELL_PERIODIC_DAMAGE
@@ -94,10 +94,12 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
 		specWarnCastDownSoon:Play("mobsoon")
 	elseif spellId == 165834 then--Force Demon Creator to Ride Me
 		--TODO, see if victom detectable here instead
-		specWarnCastDown:Show()
 		timerCastDownCD:Start()
-		specWarnCastDown:Play("helpme")
-		specWarnCastDown:ScheduleVoice(2, "helpme2")
+		if self.vb.lastGrab and self.vb.lastGrab ~= UnitName("player") then
+			specWarnCastDown:Show()
+			specWarnCastDown:Play("helpme")
+			specWarnCastDown:ScheduleVoice(2, "helpme2")
+		end
 	elseif spellId == 154049 then-- Call Adds
 		specWarnAdd:Show()
 		specWarnAdd:Play("killmob")

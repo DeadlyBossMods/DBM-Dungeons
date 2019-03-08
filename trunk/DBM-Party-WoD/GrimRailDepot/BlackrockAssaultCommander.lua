@@ -25,7 +25,7 @@ local warnPhase3				= mod:NewPhaseAnnounce(3, 2, nil, nil, nil, nil, nil, 2)
 local specWarnSupressiveFire	= mod:NewSpecialWarningYou(160681, nil, nil, nil, 1, 2)
 local yellSupressiveFire		= mod:NewYell(160681)
 local specWarnShrapnelblast		= mod:NewSpecialWarningDodge(160943, "Tank", nil, nil, 3, 2)--160943 boss version, 166675 trash version.
-local specWarnSlagBlast			= mod:NewSpecialWarningMove(166570, nil, nil, nil, 1, 2)
+local specWarnSlagBlast			= mod:NewSpecialWarningMove(166570, nil, nil, nil, 1, 8)
 
 local timerSupressiveFire		= mod:NewTargetTimer(10, 160681)
 
@@ -54,7 +54,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		timerSupressiveFire:Start(args.destName)
 	elseif spellId == 166570 and args.destGUID == UnitGUID("player") and self:AntiSpam() then
 		specWarnSlagBlast:Show()
-		specWarnSlagBlast:Play("runaway")
+		specWarnSlagBlast:Play("watchfeet")
 	end
 end
 mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED

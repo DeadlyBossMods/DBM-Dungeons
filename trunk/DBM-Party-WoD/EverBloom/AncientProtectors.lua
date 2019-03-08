@@ -29,7 +29,7 @@ local specWarnRapidTidesDispel		= mod:NewSpecialWarningDispel(168105, "MagicDisp
 local specWarnSlash					= mod:NewSpecialWarningDodge(168383, nil, nil, nil, 2, 2)
 local yellSlash						= mod:NewYell(168383)
 local specWarnNoxious				= mod:NewSpecialWarningRun(175997, nil, nil, 2, 4, 2)
-local specWarnBramble				= mod:NewSpecialWarningMove(167977, nil, nil, nil, 1, 2)
+local specWarnBramble				= mod:NewSpecialWarningMove(167977, nil, nil, nil, 1, 8)
 
 local timerShapersFortitude			= mod:NewTargetTimer(8, 168520, nil, false, 2, 5)
 local timerNoxiousCD				= mod:NewCDTimer(16, 175997, nil, "Melee", nil, 2)
@@ -124,7 +124,7 @@ end
 function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId)
 	if spellId == 167977 and destGUID == UnitGUID("player") and self:AntiSpam(2, 1) then
 		specWarnBramble:Show()
-		specWarnBramble:Play("runaway")
+		specWarnBramble:Play("watchfeet")
 	end
 end
 mod.SPELL_ABSORBED = mod.SPELL_PERIODIC_DAMAGE

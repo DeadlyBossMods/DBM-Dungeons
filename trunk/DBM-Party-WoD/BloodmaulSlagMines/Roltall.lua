@@ -20,7 +20,7 @@ local warnBurningSlag			= mod:NewSpellAnnounce(152939, 3)
 local warnFieryBoulder			= mod:NewCountAnnounce(153247, 4)
 
 local specWarnFieryBoulder		= mod:NewSpecialWarningCount(153247, nil, nil, 2, 2, 2)--Important to everyone
-local specWarnBurningSlagFire	= mod:NewSpecialWarningMove(152939, nil, nil, nil, 2, 2)
+local specWarnBurningSlagFire	= mod:NewSpecialWarningMove(152939, nil, nil, 2, 1, 8)
 
 local timerFieryBoulderCD		= mod:NewNextTimer(13.3, 153247, nil, nil, nil, 3)--13.3-13.4 Observed
 local timerHeatWave				= mod:NewBuffActiveTimer(9.5, 152940, nil, nil, nil, 2)
@@ -69,14 +69,14 @@ end
 function mod:SPELL_AURA_APPLIED(args)
 	if args.spellId == 153227 and args:IsPlayer() and self:AntiSpam(2, 1) then
 		specWarnBurningSlagFire:Show()
-		specWarnBurningSlagFire:Play("runaway")
+		specWarnBurningSlagFire:Play("watchfeet")
 	end
 end
 
 function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId)
 	if spellId == 153227 and destGUID == UnitGUID("player") and self:AntiSpam(2, 1) then
 		specWarnBurningSlagFire:Show()
-		specWarnBurningSlagFire:Play("runaway")
+		specWarnBurningSlagFire:Play("watchfeet")
 	end
 end
 mod.SPELL_ABSORBED = mod.SPELL_PERIODIC_DAMAGE
