@@ -19,9 +19,9 @@ local warnBrittleBark			= mod:NewSpellAnnounce(164275, 1)
 local warnBrittleBarkOver		= mod:NewEndAnnounce(164275, 2)
 local warnUncheckedGrowth		= mod:NewSpellAnnounce("ej10098", 3, 164294)
 
-local specWarnLivingLeaves		= mod:NewSpecialWarningMove(169495, nil, nil, nil, 1, 2)
+local specWarnLivingLeaves		= mod:NewSpecialWarningMove(169495, nil, nil, nil, 1, 8)
 local specWarnUncheckedGrowthYou= mod:NewSpecialWarningYou(164294, nil, nil, nil, 1, 2)
-local specWarnUncheckedGrowth	= mod:NewSpecialWarningMove(164294, nil, nil, nil, 1, 2)
+local specWarnUncheckedGrowth	= mod:NewSpecialWarningMove(164294, nil, nil, nil, 1, 8)
 local specWarnUncheckedGrowthAdd= mod:NewSpecialWarningSwitch("ej10098", "Tank", nil, nil, 1, 2)
 local specWarnParchedGrasp		= mod:NewSpecialWarningSpell(164357, "Tank", nil, nil, 1, 2)
 
@@ -61,10 +61,10 @@ end
 function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, destName, _, _, spellId)
 	if spellId == 169495 and destGUID == UnitGUID("player") and self:AntiSpam(2, 1) then
 		specWarnLivingLeaves:Show()
-		specWarnLivingLeaves:Play("runaway")
+		specWarnLivingLeaves:Play("watchfeet")
 	elseif spellId == 164294 and destGUID == UnitGUID("player") and self:AntiSpam(2, 1) then
 		specWarnUncheckedGrowth:Show()
-		specWarnUncheckedGrowth:Play("runaway")
+		specWarnUncheckedGrowth:Play("watchfeet")
 	end
 end
 mod.SPELL_PERIODIC_MISSED = mod.SPELL_PERIODIC_DAMAGE

@@ -31,8 +31,8 @@ local specWarnClawsOfArgus			= mod:NewSpecialWarningSpell(153764, nil, nil, nil,
 local specWarnClawsOfArgusEnd		= mod:NewSpecialWarningEnd(153764, nil, nil, nil, 1, 2)
 local specWarnSummonFelguard		= mod:NewSpecialWarningSwitch(164081, "Tank", nil, nil, 1, 2)
 local specWarnFelblast				= mod:NewSpecialWarningInterrupt(154221, "HasInterrupt", nil, 2, 1, 2)--Very spammy
-local specWarnFelPool				= mod:NewSpecialWarningMove(153616, nil, nil, nil, 1, 2)
-local specWarnFelSpark				= mod:NewSpecialWarningMove(153726, nil, nil, nil, 1, 2)
+local specWarnFelPool				= mod:NewSpecialWarningMove(153616, nil, nil, nil, 1, 8)
+local specWarnFelSpark				= mod:NewSpecialWarningMove(153726, nil, nil, nil, 1, 8)
 
 local timerCurtainOfFlameCD			= mod:NewNextTimer(20, 153396, nil, nil, nil, 3)--20sec cd but can be massively delayed by adds phases
 local timerFelLash					= mod:NewTargetTimer(7.5, 153234, nil, "Tank|Healer", 2, 5)
@@ -154,10 +154,10 @@ end
 function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId)
 	if spellId == 153616 and destGUID == UnitGUID("player") and self:AntiSpam(2, 1) then
 		specWarnFelPool:Show()
-		specWarnFelPool:Play("runaway")
+		specWarnFelPool:Play("watchfeet")
 	elseif spellId == 153726 and destGUID == UnitGUID("player") and self:AntiSpam(2, 2) then
 		specWarnFelSpark:Show()
-		specWarnFelSpark:Play("runaway")
+		specWarnFelSpark:Play("watchfeet")
 	end
 end
 mod.SPELL_ABSORBED = mod.SPELL_PERIODIC_DAMAGE

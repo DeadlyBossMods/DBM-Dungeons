@@ -35,13 +35,13 @@ function mod:SPELL_CAST_SUCCESS(args)
 		warnDaggerFall:Show()
 	elseif spellId == 153153 then
 		specWarnDarkCommunion:Show()
+		specWarnDarkCommunion:Play("killmob")
 		timerDarkCommunionCD:Start()
 		--countdownDarkCommunion:Start()
-		specWarnDarkCommunion:Play("killmob")
 	elseif spellId == 164974 then
 		specWarnDarkEclipse:Show()
-		timerDarkEclipseCD:Start()
 		specWarnDarkEclipse:Play("164974")
+		timerDarkEclipseCD:Start()
 	end
 end
 
