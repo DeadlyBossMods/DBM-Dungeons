@@ -9,17 +9,17 @@ mod:SetZone()
 mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
-	"SPELL_AURA_APPLIED",
-	"SPELL_AURA_REMOVED",
-	"SPELL_SUMMON"
+	"SPELL_AURA_APPLIED 58845 52709",
+	"SPELL_AURA_REMOVED 58845",
+	"SPELL_SUMMON 52451"
 )
 
-local warningCurse	= mod:NewTargetAnnounce(58845, 1)
-local warningSteal	= mod:NewTargetAnnounce(52709, 2)
+local warningCurse	= mod:NewTargetNoFilterAnnounce(58845, 2, nil, "RemoveCurse", 2)
+local warningSteal	= mod:NewTargetNoFilterAnnounce(52709, 2)
 local warningGhoul	= mod:NewSpellAnnounce(52451, 3)
 
-local timerGhoulCD	= mod:NewCDTimer(20, 52451)
-local timerCurse	= mod:NewTargetTimer(30, 58845)
+local timerGhoulCD	= mod:NewCDTimer(20, 52451, nil, nil, nil, 1)
+local timerCurse	= mod:NewTargetTimer(30, 58845, nil, "RemoveCurse", nil, 5, nil, DBM_CORE_CURSE_ICON)
 
 function mod:SPELL_SUMMON(args)
 	if args.spellId == 52451 then
@@ -39,6 +39,6 @@ end
 
 function mod:SPELL_AURA_REMOVED(args)
 	if args.spellId == 58845 then
-		timerCurse:Cancel()
+		timerCurse:Stop(args.destName)
 	end
 end

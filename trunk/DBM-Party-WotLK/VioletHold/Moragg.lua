@@ -8,12 +8,13 @@ mod:SetZone()
 mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
-	"SPELL_AURA_APPLIED"
+	"SPELL_AURA_APPLIED 54396"
 )
 
-local warningLink 	= mod:NewTargetAnnounce(54396, 2)
-local timerLink		= mod:NewTargetTimer(12, 54396)
-local timerLinkCD	= mod:NewCDTimer(45, 54396)
+local warningLink 	= mod:NewTargetNoFilterAnnounce(54396, 2)
+
+local timerLink		= mod:NewTargetTimer(12, 54396, nil, nil, nil, 5, nil, DBM_CORE_HEALER_ICON)
+local timerLinkCD	= mod:NewCDTimer(45, 54396, nil, nil, nil, 3)
 
 function mod:SPELL_AURA_APPLIED(args)
 	if args.spellId == 54396 then

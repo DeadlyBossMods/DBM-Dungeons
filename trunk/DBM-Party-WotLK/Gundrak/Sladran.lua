@@ -14,7 +14,7 @@ mod:RegisterEventsInCombat(
 
 local warningNova	= mod:NewSpellAnnounce(55081, 3)
 
-local timerNovaCD	= mod:NewCDTimer(24, 55081)
+local timerNovaCD	= mod:NewCDTimer(24, 55081, nil, nil, nil, 2)
 
 function mod:SPELL_CAST_START(args)
 	if args:IsSpellID(55081, 59842) then

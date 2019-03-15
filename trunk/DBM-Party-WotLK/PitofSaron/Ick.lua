@@ -18,7 +18,7 @@ mod:RegisterEventsInCombat(
 )
 
 local warnPursuitCast			= mod:NewCastAnnounce(68987, 3)
-local warnPursuit				= mod:NewTargetAnnounce(68987, 4)--TODO, just switch to UNIT_AURA, syncing not reliable especially with older zones.
+local warnPursuit				= mod:NewTargetNoFilterAnnounce(68987, 4)
 
 local specWarnToxic				= mod:NewSpecialWarningMove(69024, nil, nil, nil, 1, 2)
 local specWarnMines				= mod:NewSpecialWarningSpell(69015, nil, nil, nil, 2, 2)

@@ -487,10 +487,6 @@ L:SetMiscLocalization({
 -----------------------
 L = DBM:GetModLocalization(635)
 
-L:SetWarningLocalization({
-	specwarnRadiance	= "烈光 - 背對王"
-})
-
 L:SetMiscLocalization({
 	YellCombatEnd	= "我認輸了!我投降。幹得好。我現在可以離場了嗎?"
 })

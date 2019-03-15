@@ -499,10 +499,6 @@ L:SetMiscLocalization({
 -----------------------
 L = DBM:GetModLocalization(635)
 
-L:SetWarningLocalization({
-	specwarnRadiance		= "Сияние - отвернитесь"
-})
-
 L:SetMiscLocalization({
 	YellCombatEnd	= "Я сдаюсь! Я побежден. Отличная работа. Можно теперь убегать?"
 })

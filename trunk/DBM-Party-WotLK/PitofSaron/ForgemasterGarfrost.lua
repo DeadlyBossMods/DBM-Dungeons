@@ -33,10 +33,10 @@ local timerDeepFreeze			= mod:NewTargetTimer(14, 70381, nil, false, 3, 5)
 mod:AddBoolOption("SetIconOnSaroniteRockTarget", true)
 mod:AddBoolOption("AchievementCheck", false, "announce")
 
-local warnedfailed = false
+mod.vb.warnedfailed = false
 
 function mod:OnCombatStart(delay)
-	warnedfailed = false
+	self.vb.warnedfailed = false
 end
 
 function mod:SPELL_CAST_START(args)
@@ -65,13 +65,13 @@ function mod:SPELL_AURA_APPLIED_DOSE(args)
 			specWarnPermafrost:Show(amount)
 			specWarnPermafrost:Play("stackhigh")
 		end
-		if self.Options.AchievementCheck and not warnedfailed then
+		if self.Options.AchievementCheck and not self.vb.warnedfailed then
 			local channel = IsInGroup(2) and "INSTANCE_CHAT" or "PARTY"
 			if amount == 9 or amount == 10 then
 				SendChatMessage(L.AchievementWarning:format(args.destName, amount), channel)
 			elseif amount > 11 then
 				SendChatMessage(L.AchievementFailed:format(args.destName, amount), channel)
-				warnedfailed = true
+				self.vb.warnedfailed = true
 			end
 		end
 	end
@@ -99,11 +99,13 @@ function mod:CHAT_MSG_ADDON(prefix, msg, channel, targetName)
 		targetName = Ambiguate(targetName, "none")
 		if self:AntiSpam(5, targetName) then--Antispam sync by target name, since this doesn't use dbms built in onsync handler.
 			local uId = DBM:GetRaidUnitId(targetName)
-			if uId and not UnitIsUnit(uId, "player") and self:CheckNearby(10, targetName) then
-				specWarnSaroniteRockNear:Show(targetName)
-				specWarnSaroniteRockNear:Play("watchstep")
-			else
-				warnSaroniteRock:Show(targetName)
+			if uId and not UnitIsUnit(uId, "player") then
+				if self:CheckNearby(10, targetName) then
+					specWarnSaroniteRockNear:Show(targetName)
+					specWarnSaroniteRockNear:Play("watchstep")
+				else
+					warnSaroniteRock:Show(targetName)
+				end
 			end
 			if self.Options.SetIconOnSaroniteRockTarget then
 				self:SetIcon(targetName, 8, 5)

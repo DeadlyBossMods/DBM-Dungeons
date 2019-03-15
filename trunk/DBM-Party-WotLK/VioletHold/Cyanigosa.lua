@@ -13,17 +13,18 @@ mod:RegisterEvents(
 )
 
 mod:RegisterEventsInCombat(
-	"SPELL_CAST_SUCCESS",
-	"SPELL_AURA_APPLIED",
-	"SPELL_AURA_REMOVED"
+	"SPELL_CAST_SUCCESS 58694 58693 59369",
+	"SPELL_AURA_APPLIED 59374",
+	"SPELL_AURA_REMOVED 59374"
 )
 
 local warningVacuum		= mod:NewSpellAnnounce(58694, 1)
 local warningBlizzard	= mod:NewSpellAnnounce(58693, 3)
-local warningMana		= mod:NewTargetAnnounce(59374, 2)
 
-local timerVacuumCD		= mod:NewCDTimer(35, 58694)
-local timerMana			= mod:NewTargetTimer(8, 59374)
+local specwarnMana		= mod:NewSpecialWarningDispel(59374, "Healer", nil, nil, 1, 2)
+
+local timerVacuumCD		= mod:NewCDTimer(35, 58694, nil, nil, nil, 2)
+local timerMana			= mod:NewTargetTimer(8, 59374, nil, "Healer", nil, 5, nil, DBM_CORE_MAGIC_ICON)
 local timerCombat		= mod:NewCombatTimer(14)
 
 function mod:OnCombatStart(delay)
@@ -42,14 +43,17 @@ end
 
 function mod:SPELL_AURA_APPLIED(args)
 	if args.spellId == 59374 then
-		warningMana:Show(args.destName)
+		if self:CheckDispelFilter() then
+			specwarnMana:Show(args.destName)
+			specwarnMana:Play("helpdispel")
+		end
 		timerMana:Start(args.destName)
 	end
 end
 
 function mod:SPELL_AURA_REMOVED(args)
 	if args.spellId == 59374 then
-		timerMana:Cancel()
+		timerMana:Stop(args.destName)
 	end
 end
 

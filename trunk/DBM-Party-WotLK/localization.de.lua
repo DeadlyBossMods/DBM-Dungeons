@@ -489,14 +489,6 @@ L:SetMiscLocalization({
 -----------------------
 L = DBM:GetModLocalization(635)
 
-L:SetWarningLocalization({
-	specwarnRadiance		= "Strahlen - Schau weg!"
-})
-
-L:SetOptionLocalization({
-	specwarnRadiance		= "Spezialwarnung für $spell:66935"
-})
-
 L:SetMiscLocalization({
 	YellCombatEnd	= "Ich ergebe mich! Exzellente Arbeit. Darf ich jetzt wegrennen?"
 })

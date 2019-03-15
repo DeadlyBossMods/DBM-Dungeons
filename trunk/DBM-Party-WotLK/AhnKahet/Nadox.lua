@@ -15,7 +15,7 @@ mod:RegisterEventsInCombat(
 
 local warningPlague	= mod:NewTargetAnnounce(56130, 2, nil, "Healer")
 
-local timerPlague	= mod:NewTargetTimer(30, 56130, nil, false)
+local timerPlague	= mod:NewTargetTimer(30, 56130, nil, "Healer", nil, 3)
 
 function mod:SPELL_AURA_APPLIED(args)
 	if args:IsSpellID(56130, 59467) then
@@ -26,6 +26,6 @@ end
 
 function mod:SPELL_AURA_REMOVED(args)
 	if args:IsSpellID(56130, 59467) then
-		timerPlague:Cancel()
+		timerPlague:Stop()
 	end
 end

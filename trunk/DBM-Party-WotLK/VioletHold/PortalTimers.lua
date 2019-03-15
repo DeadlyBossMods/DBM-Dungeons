@@ -16,7 +16,7 @@ local warningPortalNow	= mod:NewAnnounce("WarningPortalNow", 2, 57687)
 local warningPortalSoon	= mod:NewAnnounce("WarningPortalSoon", 1, 57687)
 local warningBossNow	= mod:NewAnnounce("WarningBossNow", 4, 33341)
 
-local timerPortalIn	= mod:NewTimer(122, "TimerPortalIn", 57687)
+local timerPortalIn	= mod:NewTimer(122, "TimerPortalIn", 57687, nil, nil, 1)
 
 mod:AddBoolOption("ShowAllPortalTimers", false, "timer")--rate they spawn seems to accelerate slowly over time. thus making timers inaccurate by end of fight
 

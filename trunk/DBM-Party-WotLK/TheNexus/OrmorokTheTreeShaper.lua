@@ -33,8 +33,8 @@ end
 function mod:SPELL_CAST_SUCCESS(args)
 	if args:IsSpellID(47958, 57082, 57083) then
 		specWarnSpikes:Show()
-		timerSpikesCD:Start()
 		specWarnSpikes:Play("watchstep")
+		timerSpikesCD:Start()
 	elseif args:IsSpellID(48017, 57086) then
 		warningFrenzy:Show()
 	end
@@ -42,10 +42,10 @@ end
 
 function mod:SPELL_AURA_APPLIED(args)
 	if args.spellId == 47981 then
-		timerReflection:Start()
 		specWarnReflection:Show(args.sourceName)
-		timerReflectionCD:Start()
 		specWarnReflection:Play("stopattack")
+		timerReflection:Start()
+		timerReflectionCD:Start()
 	end
 end
 

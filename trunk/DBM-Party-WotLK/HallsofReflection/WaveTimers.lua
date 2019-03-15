@@ -13,7 +13,8 @@ mod.noStatistics = true
 
 local warnNewWaveSoon	= mod:NewAnnounce("WarnNewWaveSoon", 2)
 local warnNewWave		= mod:NewAnnounce("WarnNewWave", 3)
-local timerNextWave		= mod:NewTimer(150, "TimerNextWave")
+
+local timerNextWave		= mod:NewTimer(150, "TimerNextWave", 57687, nil, nil, 1)
 
 mod:AddBoolOption("ShowAllWaveWarnings", true, "announce")
 mod:AddBoolOption("ShowAllWaveTimers", false, "timer")
