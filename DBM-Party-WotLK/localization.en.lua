@@ -491,15 +491,6 @@ L:SetMiscLocalization({
 -----------------------
 L = DBM:GetModLocalization(635)
 
-L:SetWarningLocalization({
-	specwarnRadiance		= "Radiance - Look away"
-})
-
-L:SetOptionLocalization({
-	specwarnRadiance		= DBM_CORE_AUTO_SPEC_WARN_OPTIONS.spell:format(66935),
-	SetIconOnHammerTarget	= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(66940)
-})
-
 L:SetMiscLocalization({
 	YellCombatEnd	= "I yield! I submit. Excellent work. May I run away now?"
 })

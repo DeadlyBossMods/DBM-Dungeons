@@ -9,16 +9,16 @@ mod:SetZone()
 mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
-	"SPELL_CAST_SUCCESS",
-	"SPELL_AURA_APPLIED",
-	"SPELL_AURA_REMOVED"
+	"SPELL_CAST_SUCCESS 58848 52766",
+	"SPELL_AURA_APPLIED 52772",
+	"SPELL_AURA_REMOVED 52772"
 )
 
 local warningTime 	= mod:NewSpellAnnounce(58848, 3)
-local warningCurse 	= mod:NewTargetAnnounce(52772, 2)
+local warningCurse 	= mod:NewTargetNoFilterAnnounce(52772, 2, nil, "RemoveCurse", 2)
 
-local timerCurse	= mod:NewTargetTimer(10, 52772)
-local timerTimeCD	= mod:NewCDTimer(25, 58848)
+local timerCurse	= mod:NewTargetTimer(10, 52772, nil, "RemoveCurse", nil, 5, nil, DBM_CORE_CURSE_ICON)
+local timerTimeCD	= mod:NewCDTimer(25, 58848, nil, nil, nil, 2)
 
 function mod:SPELL_CAST_SUCCESS(args)
 	if args:IsSpellID(58848, 52766)  then

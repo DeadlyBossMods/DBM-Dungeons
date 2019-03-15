@@ -12,18 +12,18 @@ mod:RegisterEvents(
 )
 
 mod:RegisterEventsInCombat(
-	"SPELL_AURA_APPLIED",
-	"SPELL_AURA_REMOVED"
+	"SPELL_AURA_APPLIED 59331 50255 59322 50228",
+	"SPELL_AURA_REMOVED 59331 50255"
 )
 
 local warnPhase2		= mod:NewPhaseAnnounce(2)
-local warningPoison		= mod:NewTargetAnnounce(59331, 2)
+local warningPoison		= mod:NewTargetNoFilterAnnounce(59331, 2, nil, "Healer")
 
 local specWarnWhirlwind	= mod:NewSpecialWarningRun(59322, nil, nil, 2, 4, 2)
 
-local timerPoison		= mod:NewTargetTimer(12, 59331)
-local timerWhirlwindCD	= mod:NewCDTimer(23, 59322)
-local timerAchieve		= mod:NewAchievementTimer(180, 1873, "TimerSpeedKill")
+local timerPoison		= mod:NewTargetTimer(12, 59331, nil, "Healer", 2, 5, nil, DBM_CORE_HEALER_ICON)
+local timerWhirlwindCD	= mod:NewCDTimer(23, 59322, nil, nil, nil, 2)
+local timerAchieve		= mod:NewAchievementTimer(180, 1873)
 
 function mod:SPELL_AURA_APPLIED(args)
 	if args:IsSpellID(59331, 50255) then
@@ -48,7 +48,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L.Phase2 or msg:find(L.Phase2) then
 		warnPhase2:Show()
 	elseif msg == L.CombatStart or msg:find(L.CombatStart) then
-		if self:IsDifficulty("heroic5") then
+		if not self:IsDifficulty("normal5") then
 			timerAchieve:Start()
 		end
 	end

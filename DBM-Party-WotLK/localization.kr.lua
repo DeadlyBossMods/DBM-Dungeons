@@ -491,10 +491,6 @@ L:SetMiscLocalization({
 -----------------------
 L = DBM:GetModLocalization(635)
 
-L:SetWarningLocalization({
-	specwarnRadiance	= "광휘 - 고개 돌리세요!"
-})
-
 L:SetMiscLocalization({
 	YellCombatEnd	= "항복! 제가 졌습니다. 훌륭한 솜씨군요. 이제 집에 가도 되겠습니까?"
 })

@@ -451,14 +451,6 @@ L:SetMiscLocalization({
 -------------------
 L = DBM:GetModLocalization(635)
 
-L:SetWarningLocalization({
-	specwarnRadiance		= "Radiance. Retournez vous !"
-})
-
-L:SetOptionLocalization({
-	specwarnRadiance		= "Montre une alerte spéciale pour Radiance."
-})
-
 L:SetMiscLocalization({
 	YellCombatEnd			= "Grâce ! Je me rends. Excellent travail. Puis-je me débiner, maintenant ?"
 })

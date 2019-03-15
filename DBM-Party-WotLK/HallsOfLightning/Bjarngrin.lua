@@ -9,7 +9,7 @@ mod:SetZone()
 mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
-	"SPELL_CAST_START"
+	"SPELL_CAST_START 52027 52028"
 )
 
 local warningWhirlwind		= mod:NewSpellAnnounce(52027, 3)

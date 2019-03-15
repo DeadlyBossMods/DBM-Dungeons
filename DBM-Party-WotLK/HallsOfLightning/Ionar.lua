@@ -22,7 +22,7 @@ local warningOverload		= mod:NewTargetAnnounce(52658, 2)
 
 local specWarnOverload		= mod:NewSpecialWarningMoveAway(52658, nil, nil, nil, 1, 2)
 
-local timerOverload			= mod:NewTargetTimer(10, 52658)
+local timerOverload			= mod:NewTargetTimer(10, 52658, nil, nil, nil, 3)
 
 mod:AddRangeFrameOption(10, 52658)
 mod:AddBoolOption("SetIconOnOverloadTarget", true)

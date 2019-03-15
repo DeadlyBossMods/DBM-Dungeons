@@ -9,14 +9,15 @@ mod:SetZone()
 mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
-	"SPELL_CAST_START"
+	"SPELL_CAST_START 53472 59433"
 )
 
 local warningPound		= mod:NewSpellAnnounce(53472, 3)
-local timerAchieve		= mod:NewAchievementTimer(240, 1860, "TimerSpeedKill") 
+
+local timerAchieve		= mod:NewAchievementTimer(240, 1860) 
 
 function mod:OnCombatStart(delay)
-	if self:IsDifficulty("heroic5") then
+	if not self:IsDifficulty("normal5") then
 		timerAchieve:Start(-delay)
 	end
 end

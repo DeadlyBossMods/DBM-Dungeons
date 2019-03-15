@@ -5,7 +5,7 @@ mod:SetRevision(("$Revision$"):sub(12, -3))
 --mod:SetEncounterID(843, 844, 1990)
 
 mod:RegisterEvents(
-	"SPELL_AURA_REMOVED",
+	"SPELL_AURA_REMOVED 69708",
 	"UNIT_SPELLCAST_SUCCEEDED boss1"
 )
 

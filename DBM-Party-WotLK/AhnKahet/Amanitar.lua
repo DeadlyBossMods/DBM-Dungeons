@@ -15,7 +15,7 @@ mod.onlyHeroic = true
 
 local warningMini	= mod:NewSpellAnnounce(57055, 3)
 
-local timerMiniCD	= mod:NewCDTimer(30, 57055)
+local timerMiniCD	= mod:NewCDTimer(30, 57055, nil, nil, nil, 2)
 
 function mod:SPELL_CAST_START(args)
 	if args.spellId == 57055 then
