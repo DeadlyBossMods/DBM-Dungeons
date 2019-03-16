@@ -15,15 +15,15 @@ mod:RegisterEventsInCombat(
 
 local warnStaticCling			= mod:NewSpellAnnounce(87618, 3)
 
-local specWarnStaticCling		= mod:NewSpecialWarningJump(87618, nil, nil, nil, 1)
+local specWarnStaticCling		= mod:NewSpecialWarningJump(87618, nil, nil, nil, 1, 2)
 local specWarnGroundingField	= mod:NewSpecialWarningMoveTo(86911, nil, DBM_CORE_AUTO_SPEC_WARN_OPTIONS.run:format(86911), nil, nil, 3)
 
-local timerGroundingField		= mod:NewCastTimer(10, 86911)
+local timerGroundingField		= mod:NewCastTimer(10, 86911, nil, nil, nil, 2)
 local timerGroundingFieldCD		= mod:NewCDTimer(45, 86911, nil, nil, nil, 2, nil, DBM_CORE_DEADLY_ICON)
 
 function mod:SPELL_AURA_APPLIED(args)
 	if args.spellId == 86911 then
-		specWarnGroundingField:Show()
+		specWarnGroundingField:Show(args.spellName)
 		timerGroundingField:Start()
 		timerGroundingFieldCD:Start()
 	end
@@ -33,5 +33,6 @@ function mod:SPELL_CAST_START(args)
 	if args.spellId == 87618 then
 		warnStaticCling:Show(args.spellName)
 		specWarnStaticCling:Schedule(0.625)--delay message since jumping at start of cast is no longer correct in 4.0.6+
+		specWarnStaticCling:ScheduleVoice(0.625, "jumpnow")
 	end
 end

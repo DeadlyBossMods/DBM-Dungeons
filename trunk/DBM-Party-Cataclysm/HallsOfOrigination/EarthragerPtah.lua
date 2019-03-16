@@ -10,10 +10,10 @@ mod:RegisterCombat("combat")
 mod:RegisterKill("yell", L.Kill)
 
 mod:RegisterEventsInCombat(
-	"SPELL_CAST_SUCCESS"
+	"SPELL_CAST_SUCCESS 77370"
 )
 
-local warnFlameBolt	= mod:NewSpellAnnounce(77370, 2)
+local warnFlameBolt		= mod:NewSpellAnnounce(77370, 2)
 
 function mod:SPELL_CAST_SUCCESS(args)
 	if args.spellId == 77370 then

@@ -25,8 +25,8 @@ local warnLightningCharge	= mod:NewCastAnnounce(91872, 3)
 
 local specWarnPhase2Soon	= mod:NewSpecialWarning("specWarnPhase2Soon", true, nil, nil, 2, 2)
 
-local timerThunderCrash		= mod:NewCastTimer(3, 84522)
-local timerWailingWinds		= mod:NewBuffActiveTimer(6, 83066)
+local timerThunderCrash		= mod:NewCastTimer(3, 84522, nil, nil, nil, 3)
+local timerWailingWinds		= mod:NewBuffActiveTimer(6, 83066, nil, nil, nil, 3)
 local timerAbsorbStorms		= mod:NewCDTimer(33, 83151, nil, false, 2)
 local timerGatheredStorms	= mod:NewBuffActiveTimer(25, 84982, nil, false, 2)
 local timerPhase2Start		= mod:NewPhaseTimer(5)
