@@ -9,15 +9,15 @@ mod:SetZone()
 mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
-	"SPELL_AURA_APPLIED 93956 93956",
-	"SPELL_AURA_REMOVED",
+	"SPELL_AURA_APPLIED 93956",
+	"SPELL_AURA_REMOVED 93956",
 	"SPELL_CAST_START 93857"
 )
 
 local warnVeilShadow	= mod:NewSpellAnnounce(93956, 3)
 local warnWorgenSpirit	= mod:NewSpellAnnounce(93857, 3)
 
-local timerVeilShadow	= mod:NewBuffFadesTimer(8, 93956)
+local timerVeilShadow	= mod:NewBuffFadesTimer(8, 93956, nil, nil, nil, 5, nil, DBM_CORE_MAGIC_ICON)
 
 local veilShadowCast = 0
 

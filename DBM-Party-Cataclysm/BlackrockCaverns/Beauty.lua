@@ -9,12 +9,12 @@ mod:SetZone()
 mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
-	"SPELL_CAST_START",
-	"SPELL_CAST_SUCCESS"
+	"SPELL_AURA_APPLIED 76031",
+	"SPELL_CAST_SUCCESS 76028"
 )
 
 local warnTerrifyingRoar	= mod:NewSpellAnnounce(76028, 2)
-local warnMagmaSpit			= mod:NewTargetAnnounce(76031, 3)
+local warnMagmaSpit			= mod:NewTargetNoFilterAnnounce(76031, 3)
 
 local timerTerrifyingRoarCD	= mod:NewCDTimer(30, 76028)
 local timerMagmaSpit		= mod:NewTargetTimer(9, 76031)
