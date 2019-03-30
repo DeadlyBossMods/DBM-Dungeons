@@ -10,7 +10,6 @@ L = DBM:GetModLocalization(368)
 L:SetGeneralLocalization{
 	name 		= "Ghamoo-Ra"
 }
-
 -----------------------------
 --  Domina  --
 -----------------------------
@@ -19,7 +18,6 @@ L = DBM:GetModLocalization(436)
 L:SetGeneralLocalization{
 	name 		= "Domina"
 }
-
 -----------------------------
 --  Subjugator Kor'ul  --
 -----------------------------
@@ -28,7 +26,6 @@ L = DBM:GetModLocalization(426)
 L:SetGeneralLocalization{
 	name 		= "Subjugator Kor'ul"
 }
-
 -----------------------------
 --  Thruk  --
 -----------------------------
@@ -37,7 +34,6 @@ L = DBM:GetModLocalization(1145)
 L:SetGeneralLocalization{
 	name 		= "Thruk"
 }
-
 -----------------------------
 --  Guardian of the Deep  --
 -----------------------------
@@ -46,7 +42,6 @@ L = DBM:GetModLocalization(447)
 L:SetGeneralLocalization{
 	name 		= "Guardian of the Deep"
 }
-
 -----------------------------
 --  Executioner Gore  --
 -----------------------------
@@ -55,7 +50,6 @@ L = DBM:GetModLocalization(1144)
 L:SetGeneralLocalization{
 	name 		= "Executioner Gore"
 }
-
 -----------------------------
 --  Twilight Lord Bathiel  --
 -----------------------------
@@ -64,7 +58,6 @@ L = DBM:GetModLocalization(437)
 L:SetGeneralLocalization{
 	name 		= "Twilight Lord Bathiel"
 }
-
 -----------------------------
 --  Aku'mai  --
 -----------------------------
@@ -352,6 +345,123 @@ L:SetGeneralLocalization{
 	name 		= "King Gordok"
 }
 
+-------------------------
+--  Gnomeregan-231J/90M (4)  --
+-----------------------------
+--  Grubbis  --
+-----------------------------
+L = DBM:GetModLocalization(419)
+
+L:SetGeneralLocalization{
+	name 		= "Grubbis"
+}
+-----------------------------
+--  Viscous Fallout  --
+-----------------------------
+L = DBM:GetModLocalization(420)
+
+L:SetGeneralLocalization{
+	name 		= "Viscous Fallout"
+}
+-----------------------------
+--  Electrocutioner 6000  --
+-----------------------------
+L = DBM:GetModLocalization(421)
+
+L:SetGeneralLocalization{
+	name 		= "Electrocutioner 6000"
+}
+-----------------------------
+--  Crowd Pummeler 9-60  --
+-----------------------------
+L = DBM:GetModLocalization(418)
+
+L:SetGeneralLocalization{
+	name 		= "Crowd Pummeler 9-60"
+}
+-----------------------------
+--  Mekgineer Thermaplugg  --
+-----------------------------
+L = DBM:GetModLocalization(422)
+
+L:SetGeneralLocalization{
+	name 		= "Mekgineer Thermaplugg"
+}
+
+-------------------------
+--  Lower Blackrock Spire-229J/229M (5)  --
+-----------------------------
+--  Highlord Omokk  --
+-----------------------------
+L = DBM:GetModLocalization(388)
+
+L:SetGeneralLocalization{
+	name 		= "Highlord Omokk"
+}
+-----------------------------
+--  Shadow Hunter Vosh'gajin  --
+-----------------------------
+L = DBM:GetModLocalization(389)
+
+L:SetGeneralLocalization{
+	name 		= "Shadow Hunter Vosh'gajin"
+}
+-----------------------------
+--  War Master Voone  --
+-----------------------------
+L = DBM:GetModLocalization(390)
+
+L:SetGeneralLocalization{
+	name 		= "War Master Voone"
+}
+-----------------------------
+--  Mother Smolderweb  --
+-----------------------------
+L = DBM:GetModLocalization(391)
+
+L:SetGeneralLocalization{
+	name 		= "Mother Smolderweb"
+}
+-----------------------------
+--  Urok Doomhowl  --
+-----------------------------
+L = DBM:GetModLocalization(392)
+
+L:SetGeneralLocalization{
+	name 		= "Urok Doomhowl"
+}
+-----------------------------
+--  Quartermaster Zigris  --
+-----------------------------
+L = DBM:GetModLocalization(393)
+
+L:SetGeneralLocalization{
+	name 		= "Quartermaster Zigris"
+}
+-----------------------------
+--  Halycon  --
+-----------------------------
+L = DBM:GetModLocalization(394)
+
+L:SetGeneralLocalization{
+	name 		= "Halycon"
+}
+-----------------------------
+--  Gizrul  --
+-----------------------------
+L = DBM:GetModLocalization(395)
+
+L:SetGeneralLocalization{
+	name 		= "Gizrul"
+}
+-----------------------------
+--  Overlord Wyrmthalak  --
+-----------------------------
+L = DBM:GetModLocalization(396)
+
+L:SetGeneralLocalization{
+	name 		= "Overlord Wyrmthalak"
+}
 
 -------------------------
 --  Ragefire Chasm (7)  --
@@ -363,7 +473,6 @@ L = DBM:GetModLocalization(694)
 L:SetGeneralLocalization{
 	name 		= "Adarogg"
 }
-
 -----------------------------
 --  Dark Shaman Koranthal  --
 -----------------------------
@@ -372,7 +481,6 @@ L = DBM:GetModLocalization(695)
 L:SetGeneralLocalization{
 	name 		= "Dark Shaman Koranthal"
 }
-
 -----------------------------
 --  Slagmaw  --
 -----------------------------
@@ -381,7 +489,6 @@ L = DBM:GetModLocalization(696)
 L:SetGeneralLocalization{
 	name 		= "Slagmaw"
 }
-
 -----------------------------
 --  Lava Guard Gordoth  --
 -----------------------------
@@ -401,7 +508,6 @@ L = DBM:GetModLocalization(464)
 L:SetGeneralLocalization{
 	name 		= "Hogger"
 }
-
 -----------------------------
 --  Lord Overheat  --
 -----------------------------
@@ -410,7 +516,6 @@ L = DBM:GetModLocalization(465)
 L:SetGeneralLocalization{
 	name 		= "Lord Overheat"
 }
-
 -----------------------------
 --  Randolph Moloch  --
 -----------------------------

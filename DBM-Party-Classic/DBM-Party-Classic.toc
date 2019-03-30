@@ -1,6 +1,6 @@
 ﻿## Interface: 80100
 ## X-Min-Interface: 80000
-## Title:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cff69ccf0Party-Classic (NYI)|r
+## Title:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cff69ccf0Party-Classic|r
 ## Title-deDE:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cff69ccf0Gruppe-Classic|r
 ## Title-esES:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cff69ccf0Mazmorras (Clásico)|r
 ## Title-koKR:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cff69ccf05인던전-오리지널|r
@@ -24,7 +24,7 @@
 ## X-DBM-Mod-Name-koKR: 5인 던전(오리지널)
 ## X-DBM-Mod-Name-zhTW: 隊伍首領 (傳統)
 ## X-DBM-Mod-Sort: 1115
-## X-DBM-Mod-MapID: 48,230,429,389,34
+## X-DBM-Mod-MapID: 48,230,429,389,34,90,229
 localization.en.lua
 localization.de.lua
 localization.kr.lua
@@ -73,6 +73,22 @@ DireMaul\GuardSlipkik.lua
 DireMaul\CaptainKromcrush.lua
 DireMaul\ChoRush.lua
 DireMaul\KingGordok.lua
+
+Gnomeregan\Grubbis.lua
+Gnomeregan\ViscousFallout.lua
+Gnomeregan\Electrocutioner6000.lua
+Gnomeregan\CrowdPummeler.lua
+Gnomeregan\MekgineerThermaplugg.lua
+
+LowerBlackrockSpire\HighlordOmokk.lua
+LowerBlackrockSpire\ShadowHunterVoshgajin.lua
+LowerBlackrockSpire\WarMasterVoone.lua
+LowerBlackrockSpire\MotherSmolderweb.lua
+LowerBlackrockSpire\UrokDoomhowl.lua
+LowerBlackrockSpire\QuartermasterZigris.lua
+LowerBlackrockSpire\Halycon.lua
+LowerBlackrockSpire\Gizrul.lua
+LowerBlackrockSpire\OverlordWyrmthalak.lua
 
 RagefireChasm\Adarogg.lua
 RagefireChasm\Koranthal.lua
