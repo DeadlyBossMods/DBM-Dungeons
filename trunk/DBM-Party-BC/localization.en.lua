@@ -389,7 +389,6 @@ L = DBM:GetModLocalization(531)
 L = DBM:GetModLocalization(532)
 
 L:SetMiscLocalization({
---	DelrissaPull	= "Annihilate them.",
 	DelrissaEnd		= "Not what I had... planned."
 })
 
