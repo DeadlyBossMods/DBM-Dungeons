@@ -29,6 +29,7 @@ localization.en.lua
 localization.de.lua
 localization.kr.lua
 localization.tw.lua
+localization.es.lua
 BlackfathomDeeps\GhamooRa.lua
 BlackfathomDeeps\Domina.lua
 BlackfathomDeeps\Korul.lua
