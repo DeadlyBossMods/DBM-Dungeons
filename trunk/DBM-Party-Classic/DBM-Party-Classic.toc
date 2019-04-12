@@ -24,7 +24,7 @@
 ## X-DBM-Mod-Name-koKR: 5인 던전(오리지널)
 ## X-DBM-Mod-Name-zhTW: 隊伍首領 (傳統)
 ## X-DBM-Mod-Sort: 1115
-## X-DBM-Mod-MapID: 48,230,429,389,34,90,229
+## X-DBM-Mod-MapID: 48,230,429,389,34,90,229,349,129,47
 localization.en.lua
 localization.de.lua
 localization.kr.lua
@@ -91,10 +91,31 @@ LowerBlackrockSpire\Halycon.lua
 LowerBlackrockSpire\Gizrul.lua
 LowerBlackrockSpire\OverlordWyrmthalak.lua
 
+Maraudon\Noxxion.lua
+Maraudon\Razorlash.lua
+Maraudon\TinkererGizlock.lua
+Maraudon\LordVyletongue.lua
+Maraudon\CelebrastheCursed.lua
+Maraudon\Landslide.lua
+Maraudon\Rotgrip.lua
+Maraudon\PrincessTheradras.lua
+
 RagefireChasm\Adarogg.lua
 RagefireChasm\Koranthal.lua
 RagefireChasm\Slagmaw.lua
 RagefireChasm\Gordoth.lua
+
+RazorfenDowns\Aarux.lua
+RazorfenDowns\MordressFireEye.lua
+RazorfenDowns\Mushlump.lua
+RazorfenDowns\DeathSpeakerBlackhorn.lua
+RazorfenDowns\AmnenartheColdbringer.lua
+
+RazorfenKraul\HunterBonetusk.lua
+RazorfenKraul\Roogug.lua
+RazorfenKraul\WarlordRamtusk.lua
+RazorfenKraul\Groyat.lua
+RazorfenKraul\CharlgaRazorflank.lua
 
 StormwindStockaid\Hogger.lua
 StormwindStockaid\LordOverheat.lua

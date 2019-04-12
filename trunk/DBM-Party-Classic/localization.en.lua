@@ -464,6 +464,80 @@ L:SetGeneralLocalization{
 }
 
 -------------------------
+--  Maraudon-232J/349M (6)  --
+-----------------------------
+--  Noxxion  --
+-----------------------------
+L = DBM:GetModLocalization(423)
+
+L:SetGeneralLocalization{
+	name 		= "Noxxion"
+}
+
+-----------------------------
+--  Razorlash  --
+-----------------------------
+L = DBM:GetModLocalization(424)
+
+L:SetGeneralLocalization{
+	name 		= "Razorlash"
+}
+
+-----------------------------
+--  Tinkerer Gizlock  --
+-----------------------------
+L = DBM:GetModLocalization(425)
+
+L:SetGeneralLocalization{
+	name 		= "Tinkerer Gizlock"
+}
+
+-----------------------------
+--  Lord Vyletongue  --
+-----------------------------
+L = DBM:GetModLocalization(427)
+
+L:SetGeneralLocalization{
+	name 		= "Lord Vyletongue"
+}
+
+-----------------------------
+--  Celebras the Cursed  --
+-----------------------------
+L = DBM:GetModLocalization(428)
+
+L:SetGeneralLocalization{
+	name 		= "Celebras the Cursed"
+}
+
+-----------------------------
+--  Landslide  --
+-----------------------------
+L = DBM:GetModLocalization(429)
+
+L:SetGeneralLocalization{
+	name 		= "Landslide"
+}
+
+-----------------------------
+--  Rotgrip  --
+-----------------------------
+L = DBM:GetModLocalization(430)
+
+L:SetGeneralLocalization{
+	name 		= "Rotgrip"
+}
+
+-----------------------------
+--  Princess Theradras  --
+-----------------------------
+L = DBM:GetModLocalization(431)
+
+L:SetGeneralLocalization{
+	name 		= "Princess Theradras"
+}
+
+-------------------------
 --  Ragefire Chasm (7)  --
 -----------------------------
 --  Adarogg  --
@@ -496,6 +570,100 @@ L = DBM:GetModLocalization(697)
 
 L:SetGeneralLocalization{
 	name 		= "Lava Guard Gordoth"
+}
+
+-------------------------
+--  Razorfen Downs -233J/129M (8)  --
+-----------------------------
+--  Aarux  --
+-----------------------------
+L = DBM:GetModLocalization(1142)
+
+L:SetGeneralLocalization{
+	name 		= "Aarux"
+}
+
+-----------------------------
+--  Mordress Fire Eye  --
+-----------------------------
+L = DBM:GetModLocalization(433)
+
+L:SetGeneralLocalization{
+	name 		= "Mordress Fire Eye"
+}
+
+-----------------------------
+--  Mushlump  --
+-----------------------------
+L = DBM:GetModLocalization(1143)
+
+L:SetGeneralLocalization{
+	name 		= "Mushlump"
+}
+
+-----------------------------
+--  Death Speaker Blackhorn  --
+-----------------------------
+L = DBM:GetModLocalization(1146)
+
+L:SetGeneralLocalization{
+	name 		= "Death Speaker Blackhorn"
+}
+
+-----------------------------
+--  Amnenar the Coldbringer  --
+-----------------------------
+L = DBM:GetModLocalization(1141)
+
+L:SetGeneralLocalization{
+	name 		= "Amnenar the Coldbringer"
+}
+
+-------------------------
+--  Razorfen Downs -234J/47M (9)  --
+-----------------------------
+--  Hunter Bonetusk  --
+-----------------------------
+L = DBM:GetModLocalization(896)
+
+L:SetGeneralLocalization{
+	name 		= "Hunter Bonetusk"
+}
+
+-----------------------------
+--  Roogug  --
+-----------------------------
+L = DBM:GetModLocalization(895)
+
+L:SetGeneralLocalization{
+	name 		= "Roogug"
+}
+
+-----------------------------
+--  Warlord Ramtusk  --
+-----------------------------
+L = DBM:GetModLocalization(899)
+
+L:SetGeneralLocalization{
+	name 		= "Warlord Ramtusk"
+}
+
+-----------------------------
+--  Groyat, the Blind Hunter  --
+-----------------------------
+L = DBM:GetModLocalization(900)
+
+L:SetGeneralLocalization{
+	name 		= "Groyat, the Blind Hunter"
+}
+
+-----------------------------
+--  Charlga Razorflank  --
+-----------------------------
+L = DBM:GetModLocalization(901)
+
+L:SetGeneralLocalization{
+	name 		= "Charlga Razorflank"
 }
 
 -------------------------
