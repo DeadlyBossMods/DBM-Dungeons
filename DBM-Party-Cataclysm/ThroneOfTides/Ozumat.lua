@@ -1,7 +1,7 @@
 local mod	= DBM:NewMod(104, "DBM-Party-Cataclysm", 9, 65)
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision(("$Revision$"):sub(12, -3))
+mod:SetRevision(("@file-date-integer@"))
 mod:SetCreatureID(40792)
 mod:SetEncounterID(1047)
 mod:SetMainBossID(42172)--42172 is Ozumat, but we need Neptulon for engage trigger.
