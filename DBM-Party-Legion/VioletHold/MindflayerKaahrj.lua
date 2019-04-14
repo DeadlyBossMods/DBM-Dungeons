@@ -1,7 +1,7 @@
 local mod	= DBM:NewMod(1686, "DBM-Party-Legion", 9, 777)
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision(("@file-date-integer@"))
+mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(101950)
 mod:SetEncounterID(1846)
 mod:SetZone()
