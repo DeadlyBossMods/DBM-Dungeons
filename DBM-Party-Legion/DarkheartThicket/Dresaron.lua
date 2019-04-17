@@ -1,7 +1,7 @@
 local mod	= DBM:NewMod(1656, "DBM-Party-Legion", 2, 762)
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision(string.sub("@file-date-integer@", 1, -5))
+mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(99200)
 mod:SetEncounterID(1838)
 mod:DisableESCombatDetection()--Remove if blizz fixes trash firing ENCOUNTER_START

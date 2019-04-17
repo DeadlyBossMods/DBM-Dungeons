@@ -1,7 +1,7 @@
 local mod	= DBM:NewMod(129, "DBM-Party-Cataclysm", 4, 70)
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision(string.sub("@file-date-integer@", 1, -5))
+mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(39732)
 mod:SetEncounterID(1079)
 mod:SetZone()

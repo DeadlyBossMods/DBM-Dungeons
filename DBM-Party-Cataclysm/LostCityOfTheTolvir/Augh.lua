@@ -1,7 +1,7 @@
 local mod	= DBM:NewMod("Augh", "DBM-Party-Cataclysm", 5)
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision(string.sub("@file-date-integer@", 1, -5))
+mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(49045)
 mod:SetModelID(37339)--Needs hardcode because he's not in EJ as a separate boss even though he is.
 mod:SetZone()
