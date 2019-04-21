@@ -13,7 +13,6 @@ L = DBM:GetModLocalization(527)
 L = DBM:GetModLocalization(528)
 
 L:SetOptionLocalization({
-	SetIconOnBaneTarget	= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(37566),
 	RangeFrame			= DBM_CORE_AUTO_RANGE_OPTION_TEXT:format(15, 37566)
 })
 
@@ -205,10 +204,6 @@ L = DBM:GetModLocalization(546)
 --  Murmur  --
 --------------
 L = DBM:GetModLocalization(547)
-
-L:SetOptionLocalization({
-	SetIconOnTouchTarget	= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(33711)
-})
 
 -------------------------------
 --  Old Hillsbrad Foothills  --

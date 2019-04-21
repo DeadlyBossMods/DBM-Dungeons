@@ -22,7 +22,7 @@ local specWarnTouch		= mod:NewSpecialWarningMoveAway(33711, nil, nil, nil, 1, 2)
 local timerBoomCast     = mod:NewCastTimer(5, 33923, nil, nil, nil, 2)
 local timerTouch        = mod:NewTargetTimer(14, 33711, nil, nil, nil, 3)
 
-mod:AddBoolOption("SetIconOnTouchTarget", true)
+mod:AddSetIconOption("SetIconOnTouchTarget", 33711, true, false, {8})
 
 function mod:SPELL_CAST_START(args)
 	if args.spellId == 33923 or args.spellId == 38796 then

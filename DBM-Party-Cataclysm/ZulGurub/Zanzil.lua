@@ -5,6 +5,7 @@ mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(52053)
 mod:SetEncounterID(1181)
 mod:SetZone()
+mod:SetUsedIcons(8)
 
 mod:RegisterCombat("combat")
 
@@ -27,7 +28,7 @@ local timerZanzilGas		= mod:NewBuffActiveTimer(7, 96338, nil, nil, nil, 2)
 local timerGaze				= mod:NewTargetTimer(17, 96342, nil, nil, nil, 3)
 local timerZanzilElixir		= mod:NewCDTimer(30, 96316, nil, nil, nil, 1)
 
-mod:AddBoolOption("SetIconOnGaze", false)
+mod:AddSetIconOption("SetIconOnGaze", 96342, false, false, {8})
 mod:AddBoolOption("InfoFrame", "Healer")--on by default for healers, so they know what numpties to heal through gas
 
 local frameDebuff = DBM:GetSpellInfo(96328)

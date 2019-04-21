@@ -27,7 +27,7 @@ local specWarnBreath		= mod:NewSpecialWarningMove(93612, nil, nil, nil, 1, 8)
 local timerShockwaveCD		= mod:NewNextTimer(28.5, 93610, nil, nil, nil, 3)
 local timerMCCD				= mod:NewNextTimer(40, 93621, nil, nil, nil, 3)
 
-mod:AddBoolOption("SetIconOnMC", true)
+mod:AddSetIconOption("SetIconOnMC", 93621, true, false, {8, 7})
 
 local warnMCTargets = {}
 mod.vb.mcIcon = 8

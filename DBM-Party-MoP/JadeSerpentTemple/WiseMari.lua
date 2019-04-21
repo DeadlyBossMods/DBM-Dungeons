@@ -29,7 +29,7 @@ local timerLivingWater			= mod:NewCastTimer(5.5, 106526)
 --local timerLivingWaterCD		= mod:NewCDTimer(13, 106526, nil, nil, nil, 1)
 local timerWashAway				= mod:NewNextTimer(8, 106334)
 
-mod:AddBoolOption("SetIconOnAdds", false)
+mod:AddSetIconOption("SetIconOnAdds", "ej5616", false, true, {8})
 
 mod.vb.addsRemaining = 4--Also 4 on heroic?
 mod.vb.firstAdd = false

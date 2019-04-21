@@ -51,7 +51,7 @@ local timerBombardmentCD			= mod:NewCDTimer(25, 229284, 229287, nil, nil, 3)
 
 --local countdownFocusedGazeCD		= mod:NewCountdown(40, 198006)
 
-mod:AddSetIconOption("SetIconOnShadows", 229159, true)
+mod:AddSetIconOption("SetIconOnShadows", 229159, true, false, {1, 2, 3})
 mod:AddRangeFrameOption(6, 230066)
 --mod:AddInfoFrameOption(198108, false)
 

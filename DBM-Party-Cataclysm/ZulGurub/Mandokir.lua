@@ -35,7 +35,7 @@ local timerBloodletting		= mod:NewTargetTimer(10, 96776, nil, nil, nil, 5, nil, 
 local timerBloodlettingCD	= mod:NewCDTimer(25, 96776, nil, nil, nil, 3)
 local timerOhgan			= mod:NewCastTimer(2.5, 96724, nil, nil, nil, 1)
 
-mod:AddSetIconOption("SetIconOnOhgan", 96717, false, true)
+mod:AddSetIconOption("SetIconOnOhgan", 96717, false, true, {8})
 
 mod.vb.reviveCounter = 8
 mod.vb.ohganDiedOnce = false

@@ -373,7 +373,6 @@ L= DBM:GetModLocalization(104)
 L= DBM:GetModLocalization(186)
 
 L:SetOptionLocalization{
-	StormIcon	= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(43648),
 	RangeFrame	= "Окно проверки дистанции (10м)"
 }
 

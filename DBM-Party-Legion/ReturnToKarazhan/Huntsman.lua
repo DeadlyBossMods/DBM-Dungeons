@@ -34,7 +34,7 @@ local timerSharedSufferingCD		= mod:NewNextTimer(19, 228852, nil, nil, nil, 3)
 
 local countdownSharedSuffering		= mod:NewCountdown(19, 228852)
 
-mod:AddSetIconOption("SetIconOnSharedSuffering", 228852, true)
+mod:AddSetIconOption("SetIconOnSharedSuffering", 228852, true, false, {1})
 
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId

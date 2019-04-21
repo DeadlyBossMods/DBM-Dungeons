@@ -26,7 +26,7 @@ local timerSabotage				= mod:NewTargetTimer(5, 107268)
 local timerSabotageCD			= mod:NewNextTimer(12, 107268, nil, nil, nil, 3)
 --local timerThrowExplosiveCD	= mod:NewNextTimer(22, 102569)
 
-mod:AddBoolOption("IconOnSabotage", true)
+mod:AddSetIconOption("IconOnSabotage", 107268, true, false, {8})
 
 function mod:OnCombatStart(delay)
 --	timerSabotageCD:Start(-delay)--Unknown, tank pulled before log got started, will need a fresh log.

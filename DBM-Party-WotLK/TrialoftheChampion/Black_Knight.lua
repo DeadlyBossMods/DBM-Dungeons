@@ -29,7 +29,7 @@ local timerCombatStart		= mod:NewCombatTimer(55.5)
 local timerMarked			= mod:NewTargetTimer(10, 67823, nil, nil, nil, 3)
 local timerExplode			= mod:NewCastTimer(4, 67729, nil, nil, nil, 2)
 
-mod:AddBoolOption("SetIconOnMarkedTarget", false)
+mod:AddSetIconOption("SetIconOnMarkedTarget", 67823, false, false, {8})
 mod:AddBoolOption("AchievementCheck", false, "announce")
 
 local warnedfailed = false

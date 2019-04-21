@@ -36,7 +36,7 @@ local timerBlinkCD				= mod:NewNextTimer(30, 199811, nil, nil, nil, 3)
 local timerWebCD				= mod:NewCDTimer(21.8, 200227, nil, nil, nil, 3)--21-26
 local timerVenomCD				= mod:NewCDTimer(30, 200024, nil, nil, nil, 3)--30-33
 
-mod:AddSetIconOption("SetIconOnWeb", 200284)
+mod:AddSetIconOption("SetIconOnWeb", 200284, true, false, {1, 2})
 
 mod.vb.blinkCount = 0
 

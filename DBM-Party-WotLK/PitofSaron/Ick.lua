@@ -30,7 +30,7 @@ local timerPursuitCast			= mod:NewCastTimer(5, 68987)
 local timerPursuitConfusion		= mod:NewBuffActiveTimer(12, 69029)
 local timerPoisonNova			= mod:NewCastTimer(5, 68989, nil, "Melee", 2, 2)
 
-mod:AddBoolOption("SetIconOnPursuitTarget", true)
+mod:AddSetIconOption("SetIconOnPursuitTarget", 68987, true, false, {8})
 
 local pursuit = DBM:GetSpellInfo(68987)
 local pursuitTable = {}

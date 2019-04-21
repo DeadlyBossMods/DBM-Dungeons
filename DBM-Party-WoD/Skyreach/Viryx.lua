@@ -32,7 +32,7 @@ local specWarnShielding		= mod:NewSpecialWarningInterrupt(154055, "HasInterrupt"
 local timerLenseFlareCD		= mod:NewCDTimer(38, 154032, nil, nil, nil, 3)
 local timerCastDownCD		= mod:NewCDTimer(28, 153954, nil, nil, nil, 1, nil, DBM_CORE_DAMAGE_ICON)
 
-mod:AddSetIconOption("SetIconOnCastDown", 153954)
+mod:AddSetIconOption("SetIconOnCastDown", 153954, true, false, {1})
 
 mod.vb.lastGrab = nil
 local skyTrashMod = DBM:GetModByName("SkyreachTrash")

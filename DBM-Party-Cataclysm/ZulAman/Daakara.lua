@@ -5,6 +5,7 @@ mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(23863)
 mod:SetEncounterID(1194)
 mod:SetZone()
+mod:SetUsedIcons(8)
 
 mod:RegisterCombat("combat")
 mod:RegisterEventsInCombat(
@@ -36,8 +37,8 @@ local timerParalysisCD		= mod:NewNextTimer(27, 43095, nil, nil, nil, 5, nil, DBM
 local timerSurgeCD			= mod:NewNextTimer(8.5, 42402, nil, nil, nil, 3)--Bear Form Ability, same mechanic as bear boss, cannot soak more than 1 before debuff fades or you will die.
 local timerLightningTotemCD	= mod:NewNextTimer(17, 97930, nil, nil, nil, 1, nil, DBM_CORE_DAMAGE_ICON)--Eagle Form Ability.
 
-mod:AddBoolOption("ThrowIcon", false)
-mod:AddBoolOption("ClawRageIcon", false)
+mod:AddSetIconOption("ThrowIcon", 43093, false, false, {8})
+mod:AddSetIconOption("ClawRageIcon", 43150, false, false, {8})
 mod:AddBoolOption("InfoFrame")
 
 local surgeDebuff = DBM:GetSpellInfo(42402)

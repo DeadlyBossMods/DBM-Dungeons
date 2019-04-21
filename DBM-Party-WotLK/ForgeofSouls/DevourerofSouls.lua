@@ -24,7 +24,7 @@ local specwarnPhantomBlast		= mod:NewSpecialWarningInterrupt(68982, "HasInterrup
 local timerMirroredSoul			= mod:NewTargetTimer(8, 69051, nil, nil, nil, 3)
 local timerUnleashedSouls		= mod:NewBuffActiveTimer(5, 68939, nil, nil, nil, 2)
 
-mod:AddBoolOption("SetIconOnMirroredTarget", false)
+mod:AddSetIconOption("SetIconOnMirroredTarget", 69051, false, false, {8})
 
 function mod:SPELL_CAST_START(args)
 	if args.spellId == 68982 and self:CheckInterruptFilter(args.sourceGUID, false, true) then						-- Phantom Blast

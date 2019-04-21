@@ -21,7 +21,7 @@ local warnCorrupion			= mod:NewTargetNoFilterAnnounce(76188, 2, nil, "Healer", 2
 local timerCorruption		= mod:NewTargetTimer(12, 76188, nil, "Healer", nil, 5, nil, DBM_CORE_HEALER_ICON..DBM_CORE_MAGIC_ICON)
 local timerVeil				= mod:NewTargetTimer(4, 76189, nil, "Healer", nil, 5, nil, DBM_CORE_HEALER_ICON)
 
-mod:AddBoolOption("SetIconOnBoss")
+mod:AddSetIconOption("SetIconOnBoss", 76242, true, false, {8})
 
 function mod:SPELL_AURA_APPLIED(args)
 	if args.spellId == 76200 then

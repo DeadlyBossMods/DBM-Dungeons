@@ -35,7 +35,7 @@ local timerNightmareCD				= mod:NewCDTimer(17, 200243, nil, nil, nil, 3)--17-25
 local timerParanoiaCD				= mod:NewCDTimer(18, 200359, nil, nil, nil, 3)--18-28
 --local timerApocNightmareCD			= mod:NewCDTimer(18, 200050, nil, nil, nil, 2)
 
-mod:AddSetIconOption("SetIconOnNightmare", 200243)
+mod:AddSetIconOption("SetIconOnNightmare", 200243, true, false, {1, 2})
 
 mod.vb.nightmareIcon = 1
 

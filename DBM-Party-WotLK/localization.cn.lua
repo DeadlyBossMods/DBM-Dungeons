@@ -564,8 +564,7 @@ L:SetWarningLocalization({
 
 L:SetOptionLocalization({
 	specwarnMirroredSoul	= "Show special warning to stop damage on $spell:69051",
-	specwarnWailingSouls	= "Show special warning when $spell:68899 is cast",
-	SetIconOnMirroredTarget	= "Set icons on $spell:69051 targets"
+	specwarnWailingSouls	= "Show special warning when $spell:68899 is cast"
 })
 
 

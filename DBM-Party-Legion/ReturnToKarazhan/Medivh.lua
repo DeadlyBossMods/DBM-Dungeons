@@ -38,7 +38,7 @@ local timerSpecialCD				= mod:NewCDSpecialTimer(30)
 
 local countdownSpecial				= mod:NewCountdown(30, 228582)
 
-mod:AddSetIconOption("SetIconOnWreath", 228261, true)
+mod:AddSetIconOption("SetIconOnWreath", 228261, true, false, {1, 2})
 --mod:AddInfoFrameOption(198108, false)
 
 mod.vb.playersFrozen = 0

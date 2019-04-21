@@ -179,10 +179,6 @@ L = DBM:GetModLocalization(597)
 -------------
 L = DBM:GetModLocalization(599)
 
-L:SetOptionLocalization({
-	SetIconOnOverloadTarget	= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(52658)
-})
-
 ---------------
 --  Volkhan  --
 ---------------
@@ -458,8 +454,7 @@ L:SetMiscLocalization({
 L = DBM:GetModLocalization(637)
 
 L:SetOptionLocalization({
-	AchievementCheck		= "Announce 'I've Had Worse' achievement failure to party",
-	SetIconOnMarkedTarget	= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(67823)
+	AchievementCheck		= "Announce 'I've Had Worse' achievement failure to party"
 })
 
 L:SetMiscLocalization({
@@ -502,10 +497,6 @@ L:SetMiscLocalization({
 ---------------------
 L = DBM:GetModLocalization(609)
 
-L:SetOptionLocalization({
-	SetIconOnPursuitTarget	= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(68987)
-})
-
 L:SetMiscLocalization({
 	Barrage	= "%s begins rapidly conjuring explosive mines!"
 })
@@ -516,8 +507,7 @@ L:SetMiscLocalization({
 L = DBM:GetModLocalization(608)
 
 L:SetOptionLocalization({
-	AchievementCheck			= "Announce 'Doesn't Go to Eleven' achievement warnings to party",
-	SetIconOnSaroniteRockTarget	= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(68789)
+	AchievementCheck			= "Announce 'Doesn't Go to Eleven' achievement warnings to party"
 })
 
 L:SetMiscLocalization({
@@ -530,10 +520,6 @@ L:SetMiscLocalization({
 --  Scourgelord Tyrannus  --
 ----------------------------
 L = DBM:GetModLocalization(610)
-
-L:SetOptionLocalization({
-	SetIconOnHoarfrostTarget	= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(69246)
-})
 
 L:SetMiscLocalization({
 	CombatStart	= "Alas, brave, brave adventurers, your meddling has reached its end. Do you hear the clatter of bone and steel coming up the tunnel behind you? That is the sound of your impending demise.",
@@ -552,10 +538,6 @@ L = DBM:GetModLocalization(615)
 --  Devourer of Souls  --
 -------------------------
 L = DBM:GetModLocalization(616)
-
-L:SetOptionLocalization({
-	SetIconOnMirroredTarget	= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(69051)
-})
 
 ---------------------------
 --  Halls of Reflection  --

@@ -41,7 +41,7 @@ local timerUnholyPower			= mod:NewBuffActiveTimer(10, 69167, nil, "Tank|Healer",
 local timerHoarfrostCD			= mod:NewCDTimer(25.5, 69246, nil, nil, nil, 3)
 local timerForcefulSmash		= mod:NewCDTimer(40, 69155, nil, "Tank", 2, 5, nil, DBM_CORE_TANK_ICON)--Highly Variable. 40-50
 
-mod:AddBoolOption("SetIconOnHoarfrostTarget", true)
+mod:AddSetIconOption("SetIconOnHoarfrostTarget", 69246, true, false, {8})
 mod:AddRangeFrameOption(8, 69246)
 
 function mod:OnCombatStart(delay)

@@ -26,7 +26,7 @@ local specWarnHarvestNear	= mod:NewSpecialWarningClose(88495, nil, nil, nil, 1, 
 local timerHarvest			= mod:NewCastTimer(5, 88495, nil, nil, nil, 3)
 local timerOverdrive		= mod:NewBuffActiveTimer(10, 88481, nil, nil, nil, 2)
 
-mod:AddBoolOption("HarvestIcon")
+mod:AddSetIconOption("HarvestIcon", 88495, true, false, {8})
 
 function mod:HarvestTarget()
 	local targetname = self:GetBossTarget(43778)

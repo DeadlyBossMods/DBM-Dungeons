@@ -23,7 +23,7 @@ local specWarnDownwind	= mod:NewSpecialWarningMove(88286, nil, nil, nil, 1, 2)
 
 local timerBreathCD		= mod:NewCDTimer(10.5, 88308, nil, nil, nil, 3)
 
-mod:AddBoolOption("BreathIcon")
+mod:AddSetIconOption("BreathIcon", 88308, true, false, {8})
 
 mod.vb.activeWind = "none"
 
