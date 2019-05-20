@@ -734,10 +734,19 @@ L:SetGeneralLocalization{
 -----------------------------
 --  Skum  --
 -----------------------------
-L = DBM:GetModLocalization(479)
+L = DBM:GetModLocalization(478)
 
 L:SetGeneralLocalization{
 	name 		= "Skum"
+}
+
+-----------------------------
+--  Lord Serpentis  --
+-----------------------------
+L = DBM:GetModLocalization(479)
+
+L:SetGeneralLocalization{
+	name 		= "Lord Serpentis"
 }
 
 -----------------------------
