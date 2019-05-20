@@ -116,3 +116,13 @@ RazorfenKraul\CharlgaRazorflank.lua
 StormwindStockaid\Hogger.lua
 StormwindStockaid\LordOverheat.lua
 StormwindStockaid\Moloch.lua
+
+WailingCaverns\LadyAnacondra.lua
+WailingCaverns\LordPythas.lua
+WailingCaverns\LordCobrahn.lua
+WailingCaverns\Kresh.lua
+WailingCaverns\Skum.lua
+WailingCaverns\LordSerpentis.lua
+WailingCaverns\VerantheEverliving.lua
+WailingCaverns\MutanustheDevourer.lua
+WailingCaverns\DeviateFaerieDragon.lua

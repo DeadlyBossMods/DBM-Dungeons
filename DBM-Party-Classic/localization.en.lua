@@ -692,3 +692,77 @@ L = DBM:GetModLocalization(466)
 L:SetGeneralLocalization{
 	name 		= "Randolph Moloch"
 }
+
+-------------------------
+--  Wailing Caverns 240J/43M (13L/17C)  --
+-----------------------------
+--  Lady Anacondra  --
+-----------------------------
+L = DBM:GetModLocalization(474)
+
+L:SetGeneralLocalization{
+	name 		= "Lady Anacondra"
+}
+
+-----------------------------
+--  Lord Pythas  --
+-----------------------------
+L = DBM:GetModLocalization(476)
+
+L:SetGeneralLocalization{
+	name 		= "Lord Pythas"
+}
+
+-----------------------------
+--  Lord Cobrahn  --
+-----------------------------
+L = DBM:GetModLocalization(475)
+
+L:SetGeneralLocalization{
+	name 		= "Lord Cobrahn"
+}
+
+-----------------------------
+--  Kresh  --
+-----------------------------
+L = DBM:GetModLocalization(477)
+
+L:SetGeneralLocalization{
+	name 		= "Kresh"
+}
+
+-----------------------------
+--  Skum  --
+-----------------------------
+L = DBM:GetModLocalization(479)
+
+L:SetGeneralLocalization{
+	name 		= "Skum"
+}
+
+-----------------------------
+--  Veran the Everliving  --
+-----------------------------
+L = DBM:GetModLocalization(480)
+
+L:SetGeneralLocalization{
+	name 		= "Veran the Everliving"
+}
+
+-----------------------------
+--  Mutanus the Devourer  --
+-----------------------------
+L = DBM:GetModLocalization(481)
+
+L:SetGeneralLocalization{
+	name 		= "Mutanus the Devourer"
+}
+
+-----------------------------
+--  Deviate Faerie Dragon  --
+-----------------------------
+L = DBM:GetModLocalization("DeviateFaerie")
+
+L:SetGeneralLocalization{
+	name 		= "Deviate Faerie Dragon"
+}
