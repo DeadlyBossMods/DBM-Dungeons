@@ -13,18 +13,14 @@
 ## X-DBM-Mod: 1
 ## X-DBM-Mod-Type: PARTY
 ## X-DBM-Mod-Category: Classic
-## X-DBM-Mod-SubCategories: Blackfathom Deeps,Blackrock Depths,Dire Maul,Gnomeregan,Lower Blackrock Spire,Maraudon,Ragefire Chasm,Razorfen Downs,Razorfen Kraul,The stockade,The Temple of Atal'Hakkar,Uldaman,Wailing Caverns,Zul'Farrak
-## X-DBM-Mod-SubCategories-deDE: Tiefschwarze Grotte,Schwarzfelstiefen,Düsterbruch,Gnomeregan,Untere Schwarzfelsspitze,Maraudon,Der Flammenschlund,Hügel der Klingenhauer,Kral der Klingenhauer,Verlies von Sturmwind,Versunkener Tempel,Uldaman,Höhlen des Wehklagens,Zul'Farrak
-## X-DBM-Mod-SubCategories-esES: Cavernas de Brazanegra,Profundidades de Roca Negra,La Masacre,Gnomeregan,Cumbre de Roca Negra Inferior,Maraudon,Sima Ígnea,Zahúrda Rajacieno,Horado Rajacieno,Las Mazmorras,El Templo de Atal'Hakkar,Uldaman,Cuevas de los Lamentos,Zul'Farrak
-## X-DBM-Mod-SubCategories-koKR: 검은심연 나락,검은바위 나락,혈투의 전장,놈리건,검은바위 첨탐 하층,마라우돈,성난불길 협곡,가시덩굴 구릉,가시덩굴 우리,스톰윈드 지하감옥,가라앉은 사원,울다만,통곡의 동굴,줄파락
-## X-DBM-Mod-SubCategories-zhTW: 黑澗深淵,黑石深淵,厄運之槌,諾姆瑞根,黑石塔下層,瑪拉頓,怒焰裂谷,剃刀高地,剃刀沼澤,監獄,阿塔哈卡神廟,奧達曼,哀嚎洞穴,祖爾法拉克
+## X-DBM-Mod-SubCategoriesID: 48,230,429,90,229,349,389,129,47,34,109,70,43,209
 ## X-DBM-Mod-Name: Party-Classic
 ## X-DBM-Mod-Name-deDE: Gruppe (Classic)
 ## X-DBM-Mod-Name-esES: Mazmorras (Clásico)
 ## X-DBM-Mod-Name-koKR: 5인 던전(오리지널)
 ## X-DBM-Mod-Name-zhTW: 隊伍首領 (傳統)
 ## X-DBM-Mod-Sort: 1115
-## X-DBM-Mod-MapID: 48,230,429,389,34,90,229,349,129,47
+## X-DBM-Mod-MapID: 48,230,429,90,229,349,389,129,47,34,109,70,43,209
 localization.en.lua
 localization.de.lua
 localization.kr.lua
