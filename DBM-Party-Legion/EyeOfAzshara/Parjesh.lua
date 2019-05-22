@@ -15,7 +15,7 @@ mod:RegisterEventsInCombat(
 
 --Notes: Boss always casts 191900 (Crashing wave) few seconds before impaling spear. It doesn't really need it's own warning
 --TODO, interrupt warnings for adds maybe.
-local warnImpalingSpear				= mod:NewTargetAnnounce(192094, 4)
+local warnImpalingSpear				= mod:NewTargetNoFilterAnnounce(192094, 4)
 
 local specWarnReinforcements		= mod:NewSpecialWarningSwitch(196563, "Tank", nil, nil, 1, 2)
 local specWarnCrashingwave			= mod:NewSpecialWarningDodge(191900, nil, nil, nil, 2, 2)

@@ -1,4 +1,4 @@
-local mod	= DBM:NewMod(421, "DBM-Party-Classic", 4, 231)
+local mod	= DBM:NewMod(421, "DBM-Party-Classic", 5, 231)
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
@@ -7,31 +7,45 @@ mod:SetEncounterID(380)
 
 mod:RegisterCombat("combat")
 
---[[
 mod:RegisterEventsInCombat(
-	"SPELL_CAST_START"
+	"SPELL_CAST_START 11082 8292",
+	"SPELL_CAST_SUCCESS 11084"
 )
 
---local warningSoul	= mod:NewTargetAnnounce(32346, 2)
+local warningShock				= mod:NewSpellAnnounce(11084, 2, nil, "Tank|Healer")
 
-local specWarnMaddeningCall			= mod:NewSpecialWarningInterrupt(86620, "HasInterrupt", nil, nil, 1, 2)
+local specWarnMegavolt			= mod:NewSpecialWarningInterrupt(11082, "HasInterrupt", nil, nil, 1, 2)
+local specWarnChainBolt			= mod:NewSpecialWarningInterrupt(8292, "HasInterrupt", nil, nil, 1, 2)
 
-local timerMaddeningCallCD			= mod:NewAITimer(180, 86620, nil, nil, nil, 4, nil, DBM_CORE_INTERRUPT_ICON)
+local timerMegavoltCD			= mod:NewAITimer(180, 11082, nil, nil, nil, 4, nil, DBM_CORE_INTERRUPT_ICON)
+local timerChainBoltCD			= mod:NewAITimer(180, 8292, nil, nil, nil, 4, nil, DBM_CORE_INTERRUPT_ICON)
+local timerShockCD				= mod:NewAITimer(180, 11084, nil, "Tank|Healer", nil, 5, nil, DBM_CORE_TANK_ICON)
 
 function mod:OnCombatStart(delay)
-	timerMaddeningCallCD:Start(1-delay)
+	timerMegavoltCD:Start(1-delay)
+	timerChainBoltCD:Start(1-delay)
+	timerShockCD:Start(1-delay)
 end
 
 function mod:SPELL_CAST_START(args)
-	timerMaddeningCallCD:Start()
-	if args.spellId == 86620 and self:CheckInterruptFilter(args.sourceGUID, false, true) then
-		specWarnMaddeningCall:Show(args.sourceName)
-		specWarnMaddeningCall:Play("kickcast")
+	if args.spellId == 11082 then
+		timerMegavoltCD:Start()
+		if self:CheckInterruptFilter(args.sourceGUID, false, true) then
+			specWarnMegavolt:Show(args.sourceName)
+			specWarnMegavolt:Play("kickcast")
+		end
+	elseif args.spellId == 8292 then
+		timerChainBoltCD:Start()
+		if self:CheckInterruptFilter(args.sourceGUID, false, true) then
+			specWarnChainBolt:Show(args.sourceName)
+			specWarnChainBolt:Play("kickcast")
+		end
 	end
 end
 
-function mod:SPELL_AURA_APPLIED(args)
-	if args.spellId == 32346 then
-		warningSoul:Show(args.destName)
+function mod:SPELL_CAST_SUCCESS(args)
+	if args.spellId == 11084 then
+		warningShock:Show()
+		timerShockCD:Start()
 	end
-end--]]
+end

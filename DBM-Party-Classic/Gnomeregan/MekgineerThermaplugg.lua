@@ -1,4 +1,4 @@
-local mod	= DBM:NewMod(422, "DBM-Party-Classic", 4, 231)
+local mod	= DBM:NewMod(422, "DBM-Party-Classic", 5, 231)
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
@@ -7,31 +7,50 @@ mod:SetEncounterID(382)
 
 mod:RegisterCombat("combat")
 
---[[
 mod:RegisterEventsInCombat(
-	"SPELL_CAST_START"
+	"SPELL_CAST_START 93655",
+	"SPELL_CAST_SUCCESS 74720",
+	"SPELL_AURA_APPLIED 74720"
 )
 
 --local warningSoul	= mod:NewTargetAnnounce(32346, 2)
+local wowTOC = DBM:GetTOC()
+local specWarnSteamBlast, timerSteamBlastCD
+local warningPound, timerPoundCD
+if wowTOC >= 20000 then--Not classic, only initialize these warnings/timers on retail
+	warningPound				= mod:NewTargetAnnounce(32346, 2)
 
-local specWarnMaddeningCall			= mod:NewSpecialWarningInterrupt(86620, "HasInterrupt", nil, nil, 1, 2)
+	specWarnSteamBlast			= mod:NewSpecialWarningInterrupt(93655, "HasInterrupt", nil, nil, 1, 2)
 
-local timerMaddeningCallCD			= mod:NewAITimer(180, 86620, nil, nil, nil, 4, nil, DBM_CORE_INTERRUPT_ICON)
+	timerSteamBlastCD			= mod:NewAITimer(180, 93655, nil, nil, nil, 4, nil, DBM_CORE_INTERRUPT_ICON)
+	timerPoundCD				= mod:NewAITimer(180, 74720, nil, "Tank|Healer", nil, 5, nil, DBM_CORE_TANK_ICON)
+end
 
 function mod:OnCombatStart(delay)
-	timerMaddeningCallCD:Start(1-delay)
+	if timerSteamBlastCD then
+		timerSteamBlastCD:Start(1-delay)
+		timerPoundCD:Start(1-delay)
+	end
 end
 
 function mod:SPELL_CAST_START(args)
-	timerMaddeningCallCD:Start()
-	if args.spellId == 86620 and self:CheckInterruptFilter(args.sourceGUID, false, true) then
-		specWarnMaddeningCall:Show(args.sourceName)
-		specWarnMaddeningCall:Play("kickcast")
+	if args.spellId == 93655 then
+		timerSteamBlastCD:Start()
+		if self:CheckInterruptFilter(args.sourceGUID, false, true) then
+			specWarnSteamBlast:Show(args.sourceName)
+			specWarnSteamBlast:Play("kickcast")
+		end
+	end
+end
+
+function mod:SPELL_CAST_SUCESS(args)
+	if args.spellId == 74720 then
+		timerSteamBlastCD:Start()
 	end
 end
 
 function mod:SPELL_AURA_APPLIED(args)
-	if args.spellId == 32346 then
-		warningSoul:Show(args.destName)
+	if args.spellId == 74720 then
+		warningPound:Show(args.destName)
 	end
-end--]]
+end
