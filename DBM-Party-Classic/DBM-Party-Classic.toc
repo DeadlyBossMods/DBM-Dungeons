@@ -22,9 +22,6 @@
 ## X-DBM-Mod-Sort: 1115
 ## X-DBM-Mod-MapID: 48,230,429,90,229,349,389,129,47,34,109,70,43,209
 localization.en.lua
-localization.de.lua
-localization.kr.lua
-localization.tw.lua
 localization.es.lua
 BlackfathomDeeps\GhamooRa.lua
 BlackfathomDeeps\Domina.lua
@@ -116,6 +113,15 @@ RazorfenKraul\CharlgaRazorflank.lua
 StormwindStockaid\Hogger.lua
 StormwindStockaid\LordOverheat.lua
 StormwindStockaid\Moloch.lua
+
+Uldaman\Revelosh.lua
+Uldaman\TheLostDwarves.lua
+Uldaman\Ironaya.lua
+Uldaman\ObsidianSentinel.lua
+Uldaman\AncientStoneKeeper.lua
+Uldaman\GalgannFirehammer.lua
+Uldaman\Grimlok.lua
+Uldaman\Archaedas.lua
 
 WailingCaverns\LadyAnacondra.lua
 WailingCaverns\LordPythas.lua

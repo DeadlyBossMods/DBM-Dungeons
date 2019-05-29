@@ -694,6 +694,73 @@ L:SetGeneralLocalization{
 }
 
 -------------------------
+--  Wailing Caverns 229J/70M (12L/16C)  --
+-----------------------------
+--  Revelosh  --
+-----------------------------
+L = DBM:GetModLocalization(467)
+
+L:SetGeneralLocalization{
+	name 		= "Revelosh"
+}
+-----------------------------
+--  The Lost Dwarves  --
+-----------------------------
+L = DBM:GetModLocalization(468)
+
+L:SetGeneralLocalization{
+	name 		= "The Lost Dwarves"
+}
+-----------------------------
+--  Ironaya  --
+-----------------------------
+L = DBM:GetModLocalization(469)
+
+L:SetGeneralLocalization{
+	name 		= "Ironaya"
+}
+-----------------------------
+--  Obsidian Sentinel  --
+-----------------------------
+L = DBM:GetModLocalization(748)
+
+L:SetGeneralLocalization{
+	name 		= "Obsidian Sentinel"
+}
+-----------------------------
+--  Ancient Stone Keeper  --
+-----------------------------
+L = DBM:GetModLocalization(470)
+
+L:SetGeneralLocalization{
+	name 		= "Ancient Stone Keeper"
+}
+-----------------------------
+--  Galgann Firehammer  --
+-----------------------------
+L = DBM:GetModLocalization(471)
+
+L:SetGeneralLocalization{
+	name 		= "Galgann Firehammer"
+}
+-----------------------------
+--  Grimlok  --
+-----------------------------
+L = DBM:GetModLocalization(472)
+
+L:SetGeneralLocalization{
+	name 		= "Grimlok"
+}
+-----------------------------
+--  Archaedas  --
+-----------------------------
+L = DBM:GetModLocalization(473)
+
+L:SetGeneralLocalization{
+	name 		= "Archaedas"
+}
+
+-------------------------
 --  Wailing Caverns 240J/43M (13L/17C)  --
 -----------------------------
 --  Lady Anacondra  --
