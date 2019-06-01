@@ -45,7 +45,7 @@ function mod:SPELL_CAST_START(args)
 		timerTornSpiritsCD:Start()
 		timerSoulVesselCD:Start()
 		specWarnSoulVessel:Play("findshadow")
-		specWarnSoulVesselEnd:ScheduleVoice("safenow")
+		specWarnSoulVesselEnd:ScheduleVoice(11.5, "safenow")
 	elseif spellId == 153994 then
 		specWarnTornSpirits:Show()
 		specWarnTornSpirits:Play("mobsoon")
