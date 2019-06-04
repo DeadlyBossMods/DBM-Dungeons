@@ -8,14 +8,14 @@ mod:SetEncounterID(381)
 mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
-	"SPELL_CAST_SUCCESS 10887 16169"
+	"SPELL_CAST_SUCCESS 10887 8374"
 )
 
 local specWarnCrowdPummel			= mod:NewSpecialWarningSpell(10887, "Melee", nil, nil, 2, 2)
 
 local timerCrowdPummelCD			= mod:NewAITimer(180, 10887, nil, nil, nil, 2)
 
-local timerArcingSmashD				= mod:NewAITimer(180, 10887, nil, "Tank", nil, 5, nil, DBM_CORE_TANK_ICON)
+local timerArcingSmashD				= mod:NewAITimer(180, 8374, nil, "Tank", nil, 5, nil, DBM_CORE_TANK_ICON)
 
 function mod:OnCombatStart(delay)
 	timerCrowdPummelCD:Start(1-delay)
@@ -27,7 +27,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 		specWarnCrowdPummel:Show()
 		specWarnCrowdPummel:Play("carefly")
 		timerCrowdPummelCD:Start()
-	elseif args.spellId == 16169 then
+	elseif args.spellId == 8374 then
 		timerArcingSmashD:Start()
 	end
 end

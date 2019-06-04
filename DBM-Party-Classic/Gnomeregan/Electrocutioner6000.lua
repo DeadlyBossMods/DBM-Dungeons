@@ -8,17 +8,17 @@ mod:SetEncounterID(380)
 mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
-	"SPELL_CAST_START 11082 8292",
+	"SPELL_CAST_START 11082 11085",
 	"SPELL_CAST_SUCCESS 11084"
 )
 
 local warningShock				= mod:NewSpellAnnounce(11084, 2, nil, "Tank|Healer")
 
 local specWarnMegavolt			= mod:NewSpecialWarningInterrupt(11082, "HasInterrupt", nil, nil, 1, 2)
-local specWarnChainBolt			= mod:NewSpecialWarningInterrupt(8292, "HasInterrupt", nil, nil, 1, 2)
+local specWarnChainBolt			= mod:NewSpecialWarningInterrupt(11085, "HasInterrupt", nil, nil, 1, 2)
 
 local timerMegavoltCD			= mod:NewAITimer(180, 11082, nil, nil, nil, 4, nil, DBM_CORE_INTERRUPT_ICON)
-local timerChainBoltCD			= mod:NewAITimer(180, 8292, nil, nil, nil, 4, nil, DBM_CORE_INTERRUPT_ICON)
+local timerChainBoltCD			= mod:NewAITimer(180, 11085, nil, nil, nil, 4, nil, DBM_CORE_INTERRUPT_ICON)
 local timerShockCD				= mod:NewAITimer(180, 11084, nil, "Tank|Healer", nil, 5, nil, DBM_CORE_TANK_ICON)
 
 function mod:OnCombatStart(delay)
@@ -34,7 +34,7 @@ function mod:SPELL_CAST_START(args)
 			specWarnMegavolt:Show(args.sourceName)
 			specWarnMegavolt:Play("kickcast")
 		end
-	elseif args.spellId == 8292 then
+	elseif args.spellId == 11085 then
 		timerChainBoltCD:Start()
 		if self:CheckInterruptFilter(args.sourceGUID, false, true) then
 			specWarnChainBolt:Show(args.sourceName)
