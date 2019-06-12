@@ -132,3 +132,11 @@ WailingCaverns\LordSerpentis.lua
 WailingCaverns\VerantheEverliving.lua
 WailingCaverns\MutanustheDevourer.lua
 WailingCaverns\DeviateFaerieDragon.lua
+
+ZulFarrak\Gahzrilla.lua
+ZulFarrak\Antusul.lua
+ZulFarrak\ThekatheMartyr.lua
+ZulFarrak\WitchDoctorZumrah.lua
+ZulFarrak\HydromancerVelrath.lua
+ZulFarrak\Nekrum_Sezzziz.lua
+ZulFarrak\ChiefUkorzSandscalp.lua

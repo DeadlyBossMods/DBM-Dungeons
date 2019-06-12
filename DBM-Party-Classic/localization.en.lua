@@ -842,3 +842,68 @@ L = DBM:GetModLocalization("DeviateFaerie")
 L:SetGeneralLocalization{
 	name 		= "Deviate Faerie Dragon"
 }
+
+-------------------------
+--  Zul'Farrak 241J/209M (14L/18C)  --
+-----------------------------
+--  Ghaz'rilla  --
+-----------------------------
+L = DBM:GetModLocalization(483)
+
+L:SetGeneralLocalization{
+	name 		= "Gahz'rilla"
+}
+
+-----------------------------
+--  Antu'sul  --
+-----------------------------
+L = DBM:GetModLocalization(484)
+
+L:SetGeneralLocalization{
+	name 		= "Antu'sul"
+}
+
+-----------------------------
+--  Theka the Martyr  --
+-----------------------------
+L = DBM:GetModLocalization(485)
+
+L:SetGeneralLocalization{
+	name 		= "Theka the Martyr"
+}
+
+-----------------------------
+--  Witch Doctor Zum'rah  --
+-----------------------------
+L = DBM:GetModLocalization(486)
+
+L:SetGeneralLocalization{
+	name 		= "Witch Doctor Zum'rah"
+}
+
+-----------------------------
+--  Hydromancer Velrath (not in Dungeon Journal)  --
+-----------------------------
+L = DBM:GetModLocalization("HydromancerVelrath")
+
+L:SetGeneralLocalization{
+	name 		= "Hydromancer Velrath"
+}
+
+-----------------------------
+--  Nekrum & Sezz'ziz  --
+-----------------------------
+L = DBM:GetModLocalization(487)
+
+L:SetGeneralLocalization{
+	name 		= "Nekrum & Sezz'ziz"
+}
+
+-----------------------------
+--  Chief Ukorz Sandscalp  --
+-----------------------------
+L = DBM:GetModLocalization(489)
+
+L:SetGeneralLocalization{
+	name 		= "Chief Ukorz Sandscalp"
+}
