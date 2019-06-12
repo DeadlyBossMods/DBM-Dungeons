@@ -14,7 +14,6 @@ mod:RegisterEventsInCombat(
 
 --TODO, Totems on shared timer?
 --TODO, tone down special warnings if they are too much. They might be more than people are used to/want in classic
-local warningDruidSlumber			= mod:NewTargetNoFilterAnnounce(8040, 2)
 local warningEarthgrabTotem			= mod:NewSpellAnnounce(8376, 2)
 local warningHealingWard			= mod:NewSpellAnnounce(4971, 4)
 
