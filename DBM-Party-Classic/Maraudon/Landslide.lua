@@ -7,31 +7,41 @@ mod:SetEncounterID(426)
 
 mod:RegisterCombat("combat")
 
---[[
 mod:RegisterEventsInCombat(
-	"SPELL_CAST_START"
+	"SPELL_CAST_START 21808",
+	"SPELL_CAST_SUCCESS 110762 11130 5568"
 )
 
---local warningSoul	= mod:NewTargetAnnounce(32346, 2)
+--TODO, verify classic knock away spellID
+local warningLandSlide				= mod:NewSpellAnnounce(21808, 2)
+local warningKnockAway				= mod:NewSpellAnnounce(11130, 2)
+local warningTrample				= mod:NewSpellAnnounce(5568, 2)
 
-local specWarnMaddeningCall			= mod:NewSpecialWarningInterrupt(86620, "HasInterrupt", nil, nil, 1, 2)
+local specWarnWrath					= mod:NewSpecialWarningInterrupt(21807, "HasInterrupt", nil, nil, 1, 2)
 
-local timerMaddeningCallCD			= mod:NewAITimer(180, 86620, nil, nil, nil, 4, nil, DBM_CORE_INTERRUPT_ICON)
+local timerLandslideCD				= mod:NewAITimer(180, 21808, 2, nil, nil, nil, 1)
+local timerKnockAwayCD				= mod:NewAITimer(180, 11130, nil, nil, nil, 2)
+local timerTrampleCD				= mod:NewAITimer(180, 5568, nil, nil, nil, 2)
 
 function mod:OnCombatStart(delay)
-	timerMaddeningCallCD:Start(1-delay)
+	timerLandslideCD:Start(1-delay)
+	timerKnockAwayCD:Start(1-delay)
+	timerTrampleCD:Start(1-delay)
 end
 
 function mod:SPELL_CAST_START(args)
-	timerMaddeningCallCD:Start()
-	if args.spellId == 86620 and self:CheckInterruptFilter(args.sourceGUID, false, true) then
-		specWarnMaddeningCall:Show(args.sourceName)
-		specWarnMaddeningCall:Play("kickcast")
+	if args.spellId == 21808 then
+		warningLandSlide:Show()
+		timerLandslideCD:Start()
 	end
 end
 
-function mod:SPELL_AURA_APPLIED(args)
-	if args.spellId == 32346 then
-		warningSoul:Show(args.destName)
+function mod:SPELL_CAST_SUCCESS(args)
+	if args.spellId == 110762 or args.spellId == 11130 then--Retail, Classic (not confirmed, no actual data yet)
+		warningKnockAway:Show()
+		timerKnockAwayCD:Start()
+	elseif args.spellId == 5568 then
+		warningTrample:Show()
+		timerTrampleCD:Start()
 	end
-end--]]
+end

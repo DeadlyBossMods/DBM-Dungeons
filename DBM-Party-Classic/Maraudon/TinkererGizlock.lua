@@ -7,31 +7,23 @@ mod:SetEncounterID(427)
 
 mod:RegisterCombat("combat")
 
---[[
 mod:RegisterEventsInCombat(
-	"SPELL_CAST_START"
+	"SPELL_CAST_START 21833"
 )
 
---local warningSoul	= mod:NewTargetAnnounce(32346, 2)
+--TODO, start or success for spell?
+--TODO, support his other spells? technicaly they won't be cast if you stack on him
+local warningGoblinDragonGun		= mod:NewSpellAnnounce(21833, 2)
 
-local specWarnMaddeningCall			= mod:NewSpecialWarningInterrupt(86620, "HasInterrupt", nil, nil, 1, 2)
-
-local timerMaddeningCallCD			= mod:NewAITimer(180, 86620, nil, nil, nil, 4, nil, DBM_CORE_INTERRUPT_ICON)
+local timerGoblinDragonGunCD		= mod:NewAITimer(180, 21833, nil, nil, nil, 3)
 
 function mod:OnCombatStart(delay)
-	timerMaddeningCallCD:Start(1-delay)
+	timerGoblinDragonGunCD:Start(1-delay)
 end
 
 function mod:SPELL_CAST_START(args)
-	timerMaddeningCallCD:Start()
-	if args.spellId == 86620 and self:CheckInterruptFilter(args.sourceGUID, false, true) then
-		specWarnMaddeningCall:Show(args.sourceName)
-		specWarnMaddeningCall:Play("kickcast")
+	if args.spellId == 21833 then
+		warningGoblinDragonGun:Show()
+		timerGoblinDragonGunCD:Start()
 	end
 end
-
-function mod:SPELL_AURA_APPLIED(args)
-	if args.spellId == 32346 then
-		warningSoul:Show(args.destName)
-	end
-end--]]

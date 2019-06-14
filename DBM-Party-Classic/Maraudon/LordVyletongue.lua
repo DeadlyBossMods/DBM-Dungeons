@@ -7,31 +7,21 @@ mod:SetEncounterID(424)
 
 mod:RegisterCombat("combat")
 
---[[
 mod:RegisterEventsInCombat(
-	"SPELL_CAST_START"
+	"SPELL_CAST_SUCCESS 7964"
 )
 
---local warningSoul	= mod:NewTargetAnnounce(32346, 2)
+local warningSmokeBomb				= mod:NewSpellAnnounce(7964, 2)
 
-local specWarnMaddeningCall			= mod:NewSpecialWarningInterrupt(86620, "HasInterrupt", nil, nil, 1, 2)
-
-local timerMaddeningCallCD			= mod:NewAITimer(180, 86620, nil, nil, nil, 4, nil, DBM_CORE_INTERRUPT_ICON)
+local timerSmokeBombCD					= mod:NewAITimer(180, 7964, nil, nil, nil, 3)
 
 function mod:OnCombatStart(delay)
-	timerMaddeningCallCD:Start(1-delay)
+	timerSmokeBombCD:Start(1-delay)
 end
 
-function mod:SPELL_CAST_START(args)
-	timerMaddeningCallCD:Start()
-	if args.spellId == 86620 and self:CheckInterruptFilter(args.sourceGUID, false, true) then
-		specWarnMaddeningCall:Show(args.sourceName)
-		specWarnMaddeningCall:Play("kickcast")
+function mod:SPELL_CAST_SUCCESS(args)
+	if args.spellId == 7964 then
+		warningSmokeBomb:Show()
+		timerSmokeBombCD:Start()
 	end
 end
-
-function mod:SPELL_AURA_APPLIED(args)
-	if args.spellId == 32346 then
-		warningSoul:Show(args.destName)
-	end
-end--]]

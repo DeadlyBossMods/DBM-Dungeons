@@ -7,31 +7,27 @@ mod:SetEncounterID(422)
 
 mod:RegisterCombat("combat")
 
---[[
 mod:RegisterEventsInCombat(
-	"SPELL_CAST_START"
+	"SPELL_CAST_SUCCESS 10966 21707"
 )
 
---local warningSoul	= mod:NewTargetAnnounce(32346, 2)
+--TODO, spawns affect uppercut timer?
+local warningSpawns					= mod:NewSpellAnnounce(21707, 2)
+local warningUppercut				= mod:NewSpellAnnounce(10966, 2)
 
-local specWarnMaddeningCall			= mod:NewSpecialWarningInterrupt(86620, "HasInterrupt", nil, nil, 1, 2)
-
-local timerMaddeningCallCD			= mod:NewAITimer(180, 86620, nil, nil, nil, 4, nil, DBM_CORE_INTERRUPT_ICON)
+local timerSpawnsCD					= mod:NewAITimer(180, 21707, nil, nil, nil, 1, nil, DBM_CORE_DAMAGE_ICON)
+local timerUppercutCD				= mod:NewAITimer(180, 10966, nil, nil, nil, 5, nil, DBM_CORE_TANK_ICON)
 
 function mod:OnCombatStart(delay)
-	timerMaddeningCallCD:Start(1-delay)
+	timerUppercutCD:Start(1-delay)
 end
 
-function mod:SPELL_CAST_START(args)
-	timerMaddeningCallCD:Start()
-	if args.spellId == 86620 and self:CheckInterruptFilter(args.sourceGUID, false, true) then
-		specWarnMaddeningCall:Show(args.sourceName)
-		specWarnMaddeningCall:Play("kickcast")
+function mod:SPELL_CAST_SUCCESS(args)
+	if args.spellId == 10966 then
+		warningUppercut:Show()
+		timerUppercutCD:Start()
+	elseif args.spellId == 21707 then
+		warningSpawns:Show()
+		timerSpawnsCD:Start()
 	end
 end
-
-function mod:SPELL_AURA_APPLIED(args)
-	if args.spellId == 32346 then
-		warningSoul:Show(args.destName)
-	end
-end--]]
