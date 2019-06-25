@@ -34,13 +34,10 @@ local specWarnFelblast				= mod:NewSpecialWarningInterrupt(154221, "HasInterrupt
 local specWarnFelPool				= mod:NewSpecialWarningMove(153616, nil, nil, nil, 1, 8)
 local specWarnFelSpark				= mod:NewSpecialWarningMove(153726, nil, nil, nil, 1, 8)
 
-local timerCurtainOfFlameCD			= mod:NewNextTimer(20, 153396, nil, nil, nil, 3)--20sec cd but can be massively delayed by adds phases
+local timerCurtainOfFlameCD			= mod:NewNextTimer(20, 153396, nil, nil, nil, 3, nil, nil, nil, 2, 4)--20sec cd but can be massively delayed by adds phases
 local timerFelLash					= mod:NewTargetTimer(7.5, 153234, nil, "Tank|Healer", 2, 5)
 local timerClawsOfArgus				= mod:NewBuffActiveTimer(20, 153764, nil, nil, nil, 6)
-local timerClawsOfArgusCD			= mod:NewNextTimer(70, 153764, nil, nil, nil, 6)
-
-local countdownClawsOfArgus			= mod:NewCountdown(70, 153764)
-local countdownCurtainOfFlame		= mod:NewCountdown("Alt20", 153396)
+local timerClawsOfArgusCD			= mod:NewNextTimer(70, 153764, nil, nil, nil, 6, nil, nil, nil, 1, 4)
 
 mod:AddRangeFrameOption(5, 153396)
 
@@ -58,9 +55,7 @@ function mod:OnCombatStart(delay)
 	self.vb.debuffCount = 0
 	self.vb.flamesCast = 2--Set to 2 on pull to offset first argus
 	timerCurtainOfFlameCD:Start(16-delay)
-	countdownCurtainOfFlame:Start(16-delay)
 	timerClawsOfArgusCD:Start(34-delay)
-	countdownClawsOfArgus:Start(34-delay)
 	specWarnClawsOfArgus:ScheduleVoice(27.5-delay, "mobsoon")
 end
 
@@ -75,7 +70,6 @@ function mod:SPELL_CAST_SUCCESS(args)
 		self.vb.flamesCast = self.vb.flamesCast + 1
 		if self.vb.flamesCast < 3 then
 			timerCurtainOfFlameCD:Start()
-			countdownCurtainOfFlame:Start()
 		end
 	end
 end
@@ -127,7 +121,6 @@ function mod:SPELL_AURA_REMOVED(args)
 		specWarnClawsOfArgusEnd:Play("phasechange")
 		timerCurtainOfFlameCD:Start(7)
 		timerClawsOfArgusCD:Start()
-		countdownClawsOfArgus:Start()
 		specWarnClawsOfArgus:ScheduleVoice(63.5, "mobsoon")
 	end
 end

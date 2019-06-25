@@ -63,9 +63,6 @@ local timerSeedOfMelevolenceCD	= mod:NewCDTimer(22, 156921, nil, nil, nil, 3)--2
 local timerChaosWaveCD			= mod:NewCDTimer(13, 157001, nil, nil, nil, 3)--13-17 variation
 local timerDemonicLeapCD		= mod:NewCDTimer(20, 157039, nil, nil, nil, 3)
 
---Affliction Abilities
-local countdownSeedOfMelevolence= mod:NewCountdownFades(18, 156921)
-
 mod:AddRangeFrameOption(10, 156921)
 
 local seedDebuff = DBM:GetSpellInfo(156921)
@@ -124,7 +121,6 @@ function mod:SPELL_AURA_APPLIED(args)
 		timerSeedOfMelevolence:Start(args.destName)
 		if args:IsPlayer() then
 			specWarnSeedOfMelevolence:Show()
-			countdownSeedOfMelevolence:Start()
 			specWarnSeedOfMelevolence:Play("runout")
 		end
 		if self.Options.RangeFrame then
@@ -161,9 +157,6 @@ function mod:SPELL_AURA_REMOVED(args)
 	if spellId == 156921 and args:IsDestTypePlayer() then
 		self.vb.seedCount = self.vb.seedCount - 1
 		timerSeedOfMelevolence:Cancel(args.destName)
-		if args:IsPlayer() then
-			countdownSeedOfMelevolence:Cancel()
-		end
 		if self.Options.RangeFrame and self.vb.seedCount == 0 then
 			DBM.RangeCheck:Hide()
 		end

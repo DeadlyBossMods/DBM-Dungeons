@@ -21,11 +21,8 @@ local specWarnDarkEclipse		= mod:NewSpecialWarningSpell(164974, nil, nil, nil, 3
 local timerDarkCommunionCD		= mod:NewCDTimer(60, 153153, nil, nil, nil, 1, nil, DBM_CORE_DAMAGE_ICON)
 local timerDarkEclipseCD		= mod:NewNextTimer(45.5, 164974, nil, nil, nil, 6)--timer seems changed?
 
---local countdownDarkCommunion	= mod:NewCountdown(45.5, 153153)
-
 function mod:OnCombatStart(delay)
 	timerDarkCommunionCD:Start(24-delay)
-	--countdownDarkCommunion:Start(15-delay)
 	timerDarkEclipseCD:Start(-delay)
 end
 
@@ -37,7 +34,6 @@ function mod:SPELL_CAST_SUCCESS(args)
 		specWarnDarkCommunion:Show()
 		specWarnDarkCommunion:Play("killmob")
 		timerDarkCommunionCD:Start()
-		--countdownDarkCommunion:Start()
 	elseif spellId == 164974 then
 		specWarnDarkEclipse:Show()
 		specWarnDarkEclipse:Play("164974")

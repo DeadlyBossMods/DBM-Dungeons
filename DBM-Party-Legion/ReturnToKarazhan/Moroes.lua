@@ -49,8 +49,6 @@ local timerWillBreakerCD			= mod:NewAITimer(40, 227672, nil, "Tank", nil, 5)
 
 --local berserkTimer					= mod:NewBerserkTimer(300)
 
---local countdownFocusedGazeCD		= mod:NewCountdown(40, 198006)
-
 mod:AddInfoFrameOption(227909, true)
 
 local updateInfoFrame

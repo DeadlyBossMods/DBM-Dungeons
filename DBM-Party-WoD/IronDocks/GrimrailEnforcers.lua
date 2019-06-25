@@ -26,15 +26,12 @@ local specWarnLavaSwipe			= mod:NewSpecialWarningSpell(165152, nil, nil, nil, 2,
 local specWarnBigBoom			= mod:NewSpecialWarningSpell(163379, nil, nil, nil, 2)--maybe use switch.
 
 local timerSanguineSphere		= mod:NewTargetTimer(15, 163689, nil, nil, nil, 5, nil, DBM_CORE_DAMAGE_ICON)
-local timerFlamingSlashCD		= mod:NewNextTimer(29, 163665, nil, nil, nil, 3)
+local timerFlamingSlashCD		= mod:NewNextTimer(29, 163665, nil, nil, nil, 3, nil, nil, nil, 1, 4)
 local timerLavaSwipeCD			= mod:NewNextTimer(29, 165152, nil, nil, nil, 3)
 local timerOgreTrapsCD			= mod:NewCDTimer(25, 163390, nil, nil, nil, 3)--25-30 variation.
 
-local countdownFlamingSlash		= mod:NewCountdown(29, 163665)
-
 function mod:OnCombatStart(delay)
 	timerFlamingSlashCD:Start(5-delay)
-	countdownFlamingSlash:Start(5-delay)
 	timerOgreTrapsCD:Start(19.5-delay)
 end
 
@@ -45,10 +42,8 @@ function mod:SPELL_CAST_START(args)
 		specWarnFlamingSlash:Play("chargemove")
 		if self:IsNormal() then
 			timerFlamingSlashCD:Start(41.5)
-			countdownFlamingSlash:Start(41.5)
 		else
 			timerFlamingSlashCD:Start()
-			countdownFlamingSlash:Start()
 		end
 	elseif spellId == 163390 then
 		warnOgreTraps:Show()
@@ -89,7 +84,6 @@ function mod:UNIT_DIED(args)
 	local cid = self:GetCIDFromGUID(args.destGUID)
 	if cid == 80805 then--Makogg Emberblade
 		timerFlamingSlashCD:Cancel()
-		countdownFlamingSlash:Cancel()
 		timerLavaSwipeCD:Cancel()
 	elseif cid == 80808 then--Neesa Nox
 		timerOgreTrapsCD:Cancel()

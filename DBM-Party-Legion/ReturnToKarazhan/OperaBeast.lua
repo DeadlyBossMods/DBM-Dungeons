@@ -55,8 +55,6 @@ local timerDinnerBellCD				= mod:NewCDTimer(10.9, 227987, nil, nil, nil, 4, nil,
 
 --local berserkTimer				= mod:NewBerserkTimer(300)
 
---local countdownFocusedGazeCD		= mod:NewCountdown(40, 198006)
-
 mod:AddSetIconOption("SetIconOnDusting", 228221, true, false, {1})
 --mod:AddInfoFrameOption(198108, false)
 

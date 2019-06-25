@@ -22,17 +22,14 @@ local warnBlackIronCyclone		= mod:NewTargetAnnounce(155721, 3)
 local specWarnBlackIronCyclone	= mod:NewSpecialWarningRun(155721, nil, nil, 2, 4, 2)
 local specWarnZaela				= mod:NewSpecialWarningSwitch("ej10312", nil, nil, 4, 1, 2)
 
-local timerDestructiveSmiteCD	= mod:NewNextTimer(15.5, 155673, nil, "Tank", nil, 5, nil, DBM_CORE_TANK_ICON)
+local timerDestructiveSmiteCD	= mod:NewNextTimer(15.5, 155673, nil, "Tank", nil, 5, nil, DBM_CORE_TANK_ICON, nil, 2, 4)
 local timerReboundingBladeCD	= mod:NewNextTimer(10.5, 155705, nil, false)
 local timerBlackIronCycloneCD	= mod:NewCDTimer(19.5, 155721, nil, nil, nil, 3)--19.5-23sec variation in phase 2. phase 1 seems diff
 local timerZaelaReturns			= mod:NewTimer(26.5, "timerZaelaReturns", 166041, nil, nil, 6)
 
-local countdownDestructiveSmite	= mod:NewCountdown(15.5, 155673, "Tank", nil, nil, nil, nil, 2)
-
 function mod:OnCombatStart(delay)
 	timerReboundingBladeCD:Start(-delay)
 	timerDestructiveSmiteCD:Start(10-delay)
-	countdownDestructiveSmite:Start(10-delay)
 	timerBlackIronCycloneCD:Start(18-delay)--In one pull, the first cast got interrupted
 end
 
@@ -40,7 +37,6 @@ function mod:SPELL_CAST_SUCCESS(args)
 	if args.spellId == 155673 then
 		warnDestructiveSmite:Show()
 		timerDestructiveSmiteCD:Start()
-		countdownDestructiveSmite:Start()
 	end
 end
 

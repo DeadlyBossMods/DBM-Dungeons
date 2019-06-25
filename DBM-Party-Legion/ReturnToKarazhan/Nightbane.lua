@@ -48,8 +48,6 @@ local timerFearCD					= mod:NewCDTimer(43, 228837, nil, nil, nil, 2)--43-46
 
 --local berserkTimer				= mod:NewBerserkTimer(300)
 
-local countdownIngiteSoul			= mod:NewCountdownFades("AltTwo9", 228796)
-
 mod:AddSetIconOption("SetIconOnIgnite", 228796, true, false, {1})
 mod:AddInfoFrameOption(228829, true)
 
@@ -120,12 +118,11 @@ end
 function mod:SPELL_AURA_APPLIED(args)
 	local spellId = args.spellId
 	if spellId == 228796 then
-		countdownIngiteSoul:Start()
 		if args:IsPlayer() then
 			specWarnIgniteSoul:Show(charredEarth)
 			specWarnIgniteSoul:Play("targetyou")
 			--Yes a 5 count (not typical 3). This debuff is pretty much EVERYTHING
-			yellIgniteSoul:Countdown(9, 5)
+			yellIgniteSoul:Countdown(spellId, 5)
 		else
 			warnIgniteSoul:Show(args.destName)
 		end
@@ -141,7 +138,6 @@ function mod:SPELL_AURA_REMOVED(args)
 		if args:IsPlayer() then
 			yellIgniteSoul:Cancel()
 		end
-		countdownIngiteSoul:Cancel()
 		if self.Options.SetIconOnIgnite then
 			self:SetIcon(args.destName, 0)
 		end

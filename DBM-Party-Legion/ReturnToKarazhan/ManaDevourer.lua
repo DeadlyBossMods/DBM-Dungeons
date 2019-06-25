@@ -26,9 +26,7 @@ local specWarnDecimatingEssence		= mod:NewSpecialWarningSpell(227507, nil, nil, 
 local specWarnCoalescePower			= mod:NewSpecialWarningMoveTo(227297, nil, nil, nil, 1, 2)
 
 local timerEnergyVoidCD				= mod:NewCDTimer(21.7, 227523, nil, nil, nil, 3)
-local timerCoalescePowerCD			= mod:NewNextTimer(30, 227297, nil, nil, nil, 1)
-
-local countdownCoalescePower		= mod:NewCountdown(30, 227297)
+local timerCoalescePowerCD			= mod:NewNextTimer(30, 227297, nil, nil, nil, 1, nil, nil, nil, 1, 4)
 
 mod:AddInfoFrameOption(227502, true)
 
@@ -37,7 +35,6 @@ local unstableMana, looseMana = DBM:GetSpellInfo(227502), DBM:GetSpellInfo(22729
 function mod:OnCombatStart(delay)
 	timerEnergyVoidCD:Start(14.5-delay)
 	timerCoalescePowerCD:Start(30-delay)
-	countdownCoalescePower:Start(30-delay)
 	if self.Options.InfoFrame then
 		DBM.InfoFrame:SetHeader(unstableMana)
 		DBM.InfoFrame:Show(5, "playerdebuffstacks", unstableMana)
@@ -74,6 +71,5 @@ function mod:SPELL_AURA_APPLIED(args)
 		specWarnCoalescePower:Show(looseMana)
 		specWarnCoalescePower:Play("helpsoak")
 		timerCoalescePowerCD:Start()
-		countdownCoalescePower:Start()
 	end
 end

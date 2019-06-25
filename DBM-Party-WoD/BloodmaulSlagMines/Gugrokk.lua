@@ -25,14 +25,11 @@ local specWarnMagmaEruption		= mod:NewSpecialWarningMove(150784, nil, nil, nil, 
 local specWarnMoltenCore		= mod:NewSpecialWarningDispel(150678, "MagicDispeller", nil, nil, 1, 2)
 
 local timerMagmaEruptionCD		= mod:NewCDTimer(20, 150784)
-local timerUnstableSlagCD		= mod:NewCDTimer(20, 150755, nil, nil, nil, 1)
-
-local countdownUnstableSlag		= mod:NewCountdown(20, 150755)
+local timerUnstableSlagCD		= mod:NewCDTimer(20, 150755, nil, nil, nil, 1, nil, DBM_CORE_DAMAGE_ICON, nil, 1, 4)
 
 function mod:OnCombatStart(delay)
 --	timerMagmaEruptionCD:Start(8-delay)--Poor sample size
 	timerUnstableSlagCD:Start(-delay)--Also poor sample size but more likely to be correct.
-	countdownUnstableSlag:Start(-delay)
 end
 
 function mod:SPELL_CAST_START(args)
@@ -51,7 +48,6 @@ function mod:SPELL_CAST_START(args)
 	elseif spellId == 150755 then
 		specWarnUnstableSlag:Show()
 		timerUnstableSlagCD:Start()
-		countdownUnstableSlag:Start()
 		specWarnUnstableSlag:Play("mobkill")
 	end
 end

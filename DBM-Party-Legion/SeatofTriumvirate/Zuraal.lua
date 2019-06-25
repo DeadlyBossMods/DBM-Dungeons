@@ -38,8 +38,6 @@ local timerCoalescedVoidCD				= mod:NewCDTimer(12.1, 244579, nil, nil, nil, 1, n
 local timerUmbraShiftCD					= mod:NewCDTimer(12, 244433, nil, nil, nil, 6)
 local timerVoidTear						= mod:NewBuffActiveTimer(20, 244621, nil, nil, nil, 6)
 
---local countdownBreath					= mod:NewCountdown(22, 227233)
-
 mod:AddSetIconOption("SetIconOnFixate", 244657, true, false, {1})
 
 function mod:OnCombatStart(delay)

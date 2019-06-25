@@ -39,8 +39,6 @@ local timerWashAwayCD				= mod:NewAITimer(40, 227783, nil, nil, nil, 3)
 
 --local berserkTimer				= mod:NewBerserkTimer(300)
 
---local countdownFocusedGazeCD		= mod:NewCountdown(40, 198006)
-
 --mod:AddInfoFrameOption(198108, false)
 mod:AddRangeFrameOption(5, 227777)
 

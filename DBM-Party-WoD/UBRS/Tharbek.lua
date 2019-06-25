@@ -20,7 +20,7 @@ mod:RegisterEventsInCombat(
 )
 
 --Chi blast warns very spammy. and not useful.
-local warnTharbek			= mod:NewSpellAnnounce("ej10276", 3, "Interface\\ICONS\\INV_Misc_Head_Orc_01.blp")
+local warnTharbek			= mod:NewSpellAnnounce("ej10276", 3, "134170")
 local warnIronReaver		= mod:NewTargetNoFilterAnnounce(161989, 3)
 local warnImbuedIronAxe		= mod:NewTargetAnnounce(162090, 4)
 

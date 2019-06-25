@@ -35,8 +35,6 @@ local timerRavagingDarknessCD			= mod:NewCDTimer(8.8, 245802, nil, nil, nil, 3)
 local timerUmbralFlankingCD				= mod:NewCDTimer(35.2, 247245, nil, nil, nil, 3)
 local timerScreechCD					= mod:NewCDTimer(15.4, 248831, nil, nil, nil, 3, nil, DBM_CORE_HEROIC_ICON)
 
---local countdownBreath					= mod:NewCountdown(22, 227233)
-
 function mod:OnCombatStart(delay)
 	timerRavagingDarknessCD:Start(5.5-delay)
 	timerVoidTrapCD:Start(8.8-delay)

@@ -32,8 +32,6 @@ local timerGrandShiftCD					= mod:NewCDTimer(14.6, 249009, nil, nil, nil, 3, nil
 local timerUmbralCadenceCD				= mod:NewCDTimer(10.9, 247930, nil, nil, nil, 2, nil, DBM_CORE_HEALER_ICON)
 local timerBacklash						= mod:NewBuffActiveTimer(12.5, 247816, nil, nil, nil, 6)
 
---local countdownBreath					= mod:NewCountdown(22, 227233)
-
 mod.vb.phase = 1
 
 function mod:OnCombatStart(delay)
