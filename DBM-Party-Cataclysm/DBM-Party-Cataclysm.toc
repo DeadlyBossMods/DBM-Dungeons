@@ -42,6 +42,7 @@
 ## X-DBM-Mod-LoadCID: 50063,50056,50089,50009,50061
 ## X-DBM-Mod-MinCoreRevision: 14755
 ## X-Curse-Project-ID: 314994
+## X-WoWI-ID: 24904
 
 localization.en.lua
 localization.de.lua
