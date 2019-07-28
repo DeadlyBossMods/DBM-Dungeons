@@ -38,6 +38,8 @@
 ## X-DBM-Mod-Sort: 915
 ## X-DBM-Mod-MapID: 619,601,595,600,604,602,599,576,578,574,575,608,658,632,668,650
 ## X-DBM-Mod-MinCoreRevision: 14002
+## X-Curse-Project-ID: 314994
+
 localization.en.lua
 localization.cn.lua
 localization.ru.lua
