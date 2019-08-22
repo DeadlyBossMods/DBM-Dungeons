@@ -23,24 +23,18 @@ function mod:OnCombatStart(delay)
 	timerCauseInsanityCD:Start(1-delay)
 end
 
-do
-	--local CurseofBlood, CauseInsanity = DBM:GetSpellInfo(12889), DBM:GetSpellInfo(12888)
-	function mod:SPELL_CAST_SUCCESS(args)
-		if args.spellId == 12889 then
-		--if args.spellName == CurseofBlood then
-			timerCurseofTonguesCD:Start()
-		elseif args.spellId == 12888 then
-			timerCauseInsanityCD:Start()
-		end
+function mod:SPELL_CAST_SUCCESS(args)
+	if args.spellId == 12889 then
+		timerCurseofTonguesCD:Start()
+	elseif args.spellId == 12888 then
+		timerCauseInsanityCD:Start()
 	end
+end
 
-	function mod:SPELL_AURA_APPLIED(args)
-		if args.spellId == 12889 then
-		--if args.spellName == CurseofBlood then
-			warningCurseofTongues:Show(args.destName)
-		elseif args.spellId == 12888 then
-		--if args.spellName == CauseInsanity then
-			warningCauseInsanity:Show(args.destName)
-		end
+function mod:SPELL_AURA_APPLIED(args)
+	if args.spellId == 12889 then
+		warningCurseofTongues:Show(args.destName)
+	elseif args.spellId == 12888 then
+		warningCauseInsanity:Show(args.destName)
 	end
 end

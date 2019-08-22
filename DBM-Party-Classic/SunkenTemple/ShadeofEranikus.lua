@@ -26,27 +26,20 @@ function mod:OnCombatStart(delay)
 	timerWarStompCD:Start(1-delay)
 end
 
-do
-	--local DeepSlumber, AcidBreath, WarStomp = DBM:GetSpellInfo(12890), DBM:GetSpellInfo(12533), DBM:GetSpellInfo(24375)
-	function mod:SPELL_CAST_SUCCESS(args)
-		if args.spellId == 12890 then
-		--if args.spellName == DeepSlumber then
-			timerDeepSlumberCD:Start()
-		elseif args.spellId == 12533 then
-		--elseif args.spellName == AcidBreath then
-			warningAcidBreath:Show()
-			timerAcidBreathCD:Start()
-		elseif args.spellId == 24375 then
-		--elseif args.spellName == WarStomp then
-			warningWarStomp:Show()
-			timerWarStompCD:Start()
-		end
+function mod:SPELL_CAST_SUCCESS(args)
+	if args.spellId == 12890 then
+		timerDeepSlumberCD:Start()
+	elseif args.spellId == 12533 then
+		warningAcidBreath:Show()
+		timerAcidBreathCD:Start()
+	elseif args.spellId == 24375 then
+		warningWarStomp:Show()
+		timerWarStompCD:Start()
 	end
+end
 
-	function mod:SPELL_AURA_APPLIED(args)
-		if args.spellId == 12890 then
-		--if args.spellName == DeepSlumber then
-			warningDeepSlumber:Show(args.destName)
-		end
+function mod:SPELL_AURA_APPLIED(args)
+	if args.spellId == 12890 then
+		warningDeepSlumber:Show(args.destName)
 	end
 end
