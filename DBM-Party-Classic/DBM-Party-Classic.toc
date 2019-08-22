@@ -121,6 +121,14 @@ StormwindStockaid\Hogger.lua
 StormwindStockaid\LordOverheat.lua
 StormwindStockaid\Moloch.lua
 
+SunkenTemple\AvatarofHakkar.lua
+SunkenTemple\JammalantheProphet.lua
+SunkenTemple\Dreamscythe.lua
+SunkenTemple\Weaver.lua
+SunkenTemple\Morphaz.lua
+SunkenTemple\Hazzas.lua
+SunkenTemple\ShadeofEranikus.lua
+
 Uldaman\Revelosh.lua
 Uldaman\TheLostDwarves.lua
 Uldaman\Ironaya.lua

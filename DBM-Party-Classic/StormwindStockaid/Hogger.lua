@@ -22,10 +22,12 @@ function mod:OnCombatStart(delay)
 end
 
 function mod:SPELL_CAST_START(args)
-	timerMaddeningCallCD:Start()
-	if args.spellId == 86620 and self:CheckInterruptFilter(args.sourceGUID, false, true) then
-		specWarnMaddeningCall:Show(args.sourceName)
-		specWarnMaddeningCall:Play("kickcast")
+	if args.spellId == 86620 then
+		timerMaddeningCallCD:Start()
+		if self:CheckInterruptFilter(args.sourceGUID, false, true) then
+			specWarnMaddeningCall:Show(args.sourceName)
+			specWarnMaddeningCall:Play("kickcast")
+		end
 	end
 end
 

@@ -215,7 +215,7 @@ L:SetGeneralLocalization{
 }
 
 -------------------------
---  Dire Maul-230J/429M (3)  --
+--  Dire Maul-230J/429M (3L/6C)  --
 -----------------------------
 --  Zevrim Thornhoof  --
 -----------------------------
@@ -346,7 +346,7 @@ L:SetGeneralLocalization{
 }
 
 -------------------------
---  Gnomeregan-231J/90M (4)  --
+--  Gnomeregan-231J/90M (4L/7C)  --
 -----------------------------
 --  Grubbis  --
 -----------------------------
@@ -389,7 +389,7 @@ L:SetGeneralLocalization{
 }
 
 -------------------------
---  Lower Blackrock Spire-229J/229M (5)  --
+--  Lower Blackrock Spire-229J/229M (5L/3C)  --
 -----------------------------
 --  Highlord Omokk  --
 -----------------------------
@@ -464,7 +464,7 @@ L:SetGeneralLocalization{
 }
 
 -------------------------
---  Maraudon-232J/349M (6)  --
+--  Maraudon-232J/349M (6L/8C)  --
 -----------------------------
 --  Noxxion  --
 -----------------------------
@@ -538,7 +538,7 @@ L:SetGeneralLocalization{
 }
 
 -------------------------
---  Ragefire Chasm (7)  --
+--  Ragefire Chasm (7L/9C)  --
 -----------------------------
 --  Adarogg  --
 -----------------------------
@@ -573,7 +573,7 @@ L:SetGeneralLocalization{
 }
 
 -------------------------
---  Razorfen Downs -233J/129M (8)  --
+--  Razorfen Downs -233J/129M (8L/10C)  --
 -----------------------------
 --  Aarux  --
 -----------------------------
@@ -620,7 +620,7 @@ L:SetGeneralLocalization{
 }
 
 -------------------------
---  Razorfen Downs -234J/47M (9)  --
+--  Razorfen Kraul -234J/47M (9L/11C)  --
 -----------------------------
 --  Hunter Bonetusk  --
 -----------------------------
@@ -667,7 +667,7 @@ L:SetGeneralLocalization{
 }
 
 -------------------------
---  Stormwind Stockaid (10)  --
+--  Stormwind Stockade (10L/15C)  --
 -----------------------------
 --  Hogger  --
 -----------------------------
@@ -694,7 +694,62 @@ L:SetGeneralLocalization{
 }
 
 -------------------------
---  Wailing Caverns 229J/70M (12L/16C)  --
+--  Sunken Temple 237J/109M (11L/18C)  --
+-----------------------------
+--  Avatar of Hakkar  --
+-----------------------------
+L = DBM:GetModLocalization(457)
+
+L:SetGeneralLocalization{
+	name 		= "Avatar of Hakkar"
+}
+-----------------------------
+--  Jammal'an the Prophet  --
+-----------------------------
+L = DBM:GetModLocalization(458)
+
+L:SetGeneralLocalization{
+	name 		= "Jammal'an the Prophet"
+}
+----------------------------------------------
+--	Wardens of the Dream					--
+--	(Dreamscythe, Weaver, Morphaz, Hazzas)	--
+----------------------------------------------
+L = DBM:GetModLocalization("Dreamscythe")
+
+L:SetGeneralLocalization{
+	name 		= "Dreamscythe"
+}
+
+L = DBM:GetModLocalization("Weaver")
+
+L:SetGeneralLocalization{
+	name 		= "Weaver"
+}
+
+L = DBM:GetModLocalization("Morphaz")
+
+L:SetGeneralLocalization{
+	name 		= "Morphaz"
+}
+
+L = DBM:GetModLocalization("Hazzas")
+
+L:SetGeneralLocalization{
+	name 		= "Hazzas"
+}
+
+-----------------------------
+--  Shade of Eranikus  --
+-----------------------------
+L = DBM:GetModLocalization(463)
+
+L:SetGeneralLocalization{
+	name 		= "Shade of Eranikus"
+}
+
+-------------------------
+--  Uldaman 239J/70M (12L/18C)  --
 -----------------------------
 --  Revelosh  --
 -----------------------------
@@ -709,7 +764,7 @@ L:SetGeneralLocalization{
 L = DBM:GetModLocalization(468)
 
 L:SetGeneralLocalization{
-	name 		= "The Lost Dwarves"
+	name 		= "The Lost Dwarves"--Horde Only
 }
 -----------------------------
 --  Ironaya  --
@@ -761,7 +816,7 @@ L:SetGeneralLocalization{
 }
 
 -------------------------
---  Wailing Caverns 240J/43M (13L/17C)  --
+--  Wailing Caverns 240J/43M (13L/19C)  --
 -----------------------------
 --  Lady Anacondra  --
 -----------------------------
