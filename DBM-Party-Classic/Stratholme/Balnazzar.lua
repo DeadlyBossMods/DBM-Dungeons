@@ -16,8 +16,6 @@ local warningDomination					= mod:NewTargetNoFilterAnnounce(17405, 4)
 local warningSleep						= mod:NewTargetNoFilterAnnounce(66290, 3)
 local warningPsychicScream				= mod:NewSpellAnnounce(13704, 3)
 
---local specWarnMaddeningCall			= mod:NewSpecialWarningInterrupt(86620, "HasInterrupt", nil, nil, 1, 2)
-
 local timerDominationCD					= mod:NewAITimer(180, 17405, nil, nil, nil, 3)
 local timerSleepCD						= mod:NewAITimer(180, 66290, nil, nil, nil, 3, nil, DBM_CORE_MAGIC_ICON)
 local timerPsychicScreamCD				= mod:NewAITimer(180, 13704, nil, nil, nil, 2, nil, DBM_CORE_MAGIC_ICON)
@@ -29,7 +27,7 @@ function mod:OnCombatStart(delay)
 end
 
 function mod:SPELL_CAST_SUCCESS(args)
-	if args.spellId == 86620 then
+	if args.spellId == 17405 then
 		timerDominationCD:Start()
 	elseif args.spellId == 66290 then
 		timerSleepCD:Start()

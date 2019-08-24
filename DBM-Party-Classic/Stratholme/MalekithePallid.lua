@@ -21,14 +21,14 @@ function mod:OnCombatStart(delay)
 end
 
 function mod:SPELL_CAST_START(args)
-	if args.spellId == 32346 then
+	if args.spellId == 16869 then
 		timerIceTombCD:Start()
 	end
 end
 
 
 function mod:SPELL_AURA_APPLIED(args)
-	if args.spellId == 32346 then
+	if args.spellId == 16869 then
 		warningIceTomb:Show(args.destName)
 	end
 end

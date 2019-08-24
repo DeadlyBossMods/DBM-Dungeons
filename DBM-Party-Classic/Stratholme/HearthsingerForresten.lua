@@ -8,7 +8,8 @@ mod:SetEncounterID(473)
 mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
-	"SPELL_CAST_START 16798"
+	"SPELL_CAST_START 16798",
+	"SPELL_AURA_APPLIED 16798"
 )
 
 local warningEnchantingLullaby		= mod:NewTargetNoFilterAnnounce(16798, 2)
@@ -33,7 +34,7 @@ function mod:SPELL_CAST_START(args)
 end
 
 function mod:SPELL_AURA_APPLIED(args)
-	if args.spellId == 32346 then
+	if args.spellId == 16798 then
 		warningEnchantingLullaby:Show(args.destName)
 	end
 end
