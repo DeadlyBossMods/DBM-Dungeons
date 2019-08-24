@@ -1,5 +1,5 @@
 if UnitFactionGroup("player") == "Alliance" then return end
-local mod	= DBM:NewMod(468, "DBM-Party-Classic", 12, 239)
+local mod	= DBM:NewMod(468, "DBM-Party-Classic", 13, 239)
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")

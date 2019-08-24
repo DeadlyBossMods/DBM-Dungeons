@@ -667,7 +667,126 @@ L:SetGeneralLocalization{
 }
 
 -------------------------
---  Stormwind Stockade (10L/15C)  --
+--  Stratholme 236J/329M (10L/16C)  --
+-----------------------------
+--  Hearthsinger Forresten  --
+-----------------------------
+L = DBM:GetModLocalization(443)
+
+L:SetGeneralLocalization{
+	name 		= "Hearthsinger Forresten"
+}
+
+-----------------------------
+--  Timmy the Cruel  --
+-----------------------------
+L = DBM:GetModLocalization(445)
+
+L:SetGeneralLocalization{
+	name 		= "Timmy the Cruel"
+}
+
+-----------------------------
+--  Commander Malor  --
+-----------------------------
+L = DBM:GetModLocalization(749)
+
+L:SetGeneralLocalization{
+	name 		= "Commander Malor"
+}
+
+-----------------------------
+--  Willey Hopebreaker  --
+-----------------------------
+L = DBM:GetModLocalization(446)
+
+L:SetGeneralLocalization{
+	name 		= "Willey Hopebreaker"
+}
+
+-----------------------------
+--  Instructor Galford  --
+-----------------------------
+L = DBM:GetModLocalization(448)
+
+L:SetGeneralLocalization{
+	name 		= "Instructor Galford"
+}
+
+-----------------------------
+--  Balnazzar  --
+-----------------------------
+L = DBM:GetModLocalization(449)
+
+L:SetGeneralLocalization{
+	name 		= "Balnazzar"
+}
+
+-----------------------------
+--  The Unforgiven  --
+-----------------------------
+L = DBM:GetModLocalization(450)
+
+L:SetGeneralLocalization{
+	name 		= "The Unforgiven"
+}
+
+-----------------------------
+--  Baroness Anastari  --
+-----------------------------
+L = DBM:GetModLocalization(451)
+
+L:SetGeneralLocalization{
+	name 		= "Baroness Anastari"
+}
+
+-----------------------------
+--  Narub'enkan  --
+-----------------------------
+L = DBM:GetModLocalization(452)
+
+L:SetGeneralLocalization{
+	name 		= "Narub'enkan"
+}
+
+-----------------------------
+--  Maleki the Pallid  --
+-----------------------------
+L = DBM:GetModLocalization(453)
+
+L:SetGeneralLocalization{
+	name 		= "Maleki the Pallid"
+}
+
+-----------------------------
+--  Magistrate Barthilas  --
+-----------------------------
+L = DBM:GetModLocalization(454)
+
+L:SetGeneralLocalization{
+	name 		= "Magistrate Barthilas"
+}
+
+-----------------------------
+--  Ramstein the Gorger  --
+-----------------------------
+L = DBM:GetModLocalization(455)
+
+L:SetGeneralLocalization{
+	name 		= "Ramstein the Gorger"
+}
+
+-----------------------------
+--  Lord Aurius Rivendare  --
+-----------------------------
+L = DBM:GetModLocalization(456)
+
+L:SetGeneralLocalization{
+	name 		= "Lord Aurius Rivendare"
+}
+
+-------------------------
+--  Stormwind Stockade (11L/15C)  --
 -----------------------------
 --  Hogger  --
 -----------------------------
@@ -694,7 +813,7 @@ L:SetGeneralLocalization{
 }
 
 -------------------------
---  Sunken Temple 237J/109M (11L/18C)  --
+--  Sunken Temple 237J/109M (12L/18C)  --
 -----------------------------
 --  Avatar of Hakkar  --
 -----------------------------
@@ -749,7 +868,7 @@ L:SetGeneralLocalization{
 }
 
 -------------------------
---  Uldaman 239J/70M (12L/18C)  --
+--  Uldaman 239J/70M (13L/18C)  --
 -----------------------------
 --  Revelosh  --
 -----------------------------
@@ -816,7 +935,7 @@ L:SetGeneralLocalization{
 }
 
 -------------------------
---  Wailing Caverns 240J/43M (13L/19C)  --
+--  Wailing Caverns 240J/43M (14L/19C)  --
 -----------------------------
 --  Lady Anacondra  --
 -----------------------------
@@ -899,7 +1018,7 @@ L:SetGeneralLocalization{
 }
 
 -------------------------
---  Zul'Farrak 241J/209M (14L/18C)  --
+--  Zul'Farrak 241J/209M (15L/18C)  --
 -----------------------------
 --  Ghaz'rilla  --
 -----------------------------
