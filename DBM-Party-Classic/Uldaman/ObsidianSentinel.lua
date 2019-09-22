@@ -15,16 +15,9 @@ mod:RegisterEventsInCombat(
 local warningReflection				= mod:NewTargetNoFilterAnnounce(9941, 2)
 local warningSplinteredObsidian		= mod:NewSpellAnnounce(10072, 2)
 
-local timerSplinteredObsidianCD		= mod:NewAITimer(180, 10072, nil, nil, nil, 1, nil, DBM_CORE_DAMAGE_ICON)
-
-function mod:OnCombatStart(delay)
-	timerSplinteredObsidianCD:Start(1-delay)
-end
-
 function mod:SPELL_CAST_SUCCESS(args)
 	if args.spellId == 10072 and self:AntiSpam(3, 1) then
 		warningSplinteredObsidian:Show()
-		timerSplinteredObsidianCD:Start()
 	end
 end
 
