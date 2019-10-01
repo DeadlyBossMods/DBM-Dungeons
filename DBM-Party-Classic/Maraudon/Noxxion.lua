@@ -19,7 +19,8 @@ local timerSpawnsCD					= mod:NewAITimer(180, 21707, nil, nil, nil, 1, nil, DBM_
 local timerUppercutCD				= mod:NewAITimer(180, 10966, nil, nil, nil, 5, nil, DBM_CORE_TANK_ICON)
 
 function mod:OnCombatStart(delay)
-	timerUppercutCD:Start(1-delay)
+	timerSpawnsCD:Start(1-delay)--6
+	timerUppercutCD:Start(1-delay)--18
 end
 
 function mod:SPELL_CAST_SUCCESS(args)

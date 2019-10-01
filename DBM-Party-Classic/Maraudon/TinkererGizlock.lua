@@ -8,20 +8,20 @@ mod:SetEncounterID(427)
 mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
-	"SPELL_CAST_START 21833"
+	"SPELL_CAST_SUCCESS 21833"
 )
 
---TODO, start or success for spell?
 --TODO, support his other spells? technicaly they won't be cast if you stack on him
+--TODO, more timer review on goblin Dragon Gun
 local warningGoblinDragonGun		= mod:NewSpellAnnounce(21833, 2)
 
-local timerGoblinDragonGunCD		= mod:NewAITimer(180, 21833, nil, nil, nil, 3)
+local timerGoblinDragonGunCD		= mod:NewCDTimer(20.7, 21833, nil, nil, nil, 3)
 
 function mod:OnCombatStart(delay)
-	timerGoblinDragonGunCD:Start(1-delay)
+	timerGoblinDragonGunCD:Start(12.8-delay)
 end
 
-function mod:SPELL_CAST_START(args)
+function mod:SPELL_CAST_SUCCESS(args)
 	if args.spellId == 21833 then
 		warningGoblinDragonGun:Show()
 		timerGoblinDragonGunCD:Start()

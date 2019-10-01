@@ -15,28 +15,25 @@ mod:RegisterEventsInCombat(
 
 --TODO, fear spread diff ID from initial target? if so, announce initial target
 --TODO, target scan Boulder?
---TODO, double check hardcoded timers which were made from lie streams.
+--TODO, more data that maybe gaze and dust field ona shared special timer?
 --local warningRepulsiveGaze		= mod:NewTargetNoFilterAnnounce(21869, 2)
 local warningRepulsiveGaze			= mod:NewSpellAnnounce(21869, 2)
 local warningBoulder				= mod:NewSpellAnnounce(21832, 2)
 local warningDustField				= mod:NewSpellAnnounce(21909, 2)
 
---local specWarnWrath					= mod:NewSpecialWarningInterrupt(21807, "HasInterrupt", nil, nil, 1, 2)
+local specWarnDustField				= mod:NewSpecialWarningRun(21909, "Melee", nil, nil, 4, 2)
 
-local timerRespulsiveGazeCD			= mod:NewCDTimer(37, 21869, nil, nil, nil, 3)--37-42
-local timerBoulderCD				= mod:NewCDTimer(10, 21832, nil, nil, nil, 3)
-local timerDustFieldCD				= mod:NewCDTimer(33, 21909, nil, nil, nil, 2)--33-36
+local timerRespulsiveGazeCD			= mod:NewCDTimer(26.8, 21869, nil, nil, nil, 3)--26.8-51
+local timerDustFieldCD				= mod:NewCDTimer(21.9, 21909, nil, nil, nil, 2)--21.9-44
 
 function mod:OnCombatStart(delay)
 	timerRespulsiveGazeCD:Start(7-delay)
-	timerBoulderCD:Start(8-delay)
-	timerDustFieldCD:Start(16-delay)
+	timerDustFieldCD:Start(8-delay)
 end
 
 function mod:SPELL_CAST_START(args)
-	if args.spellId == 21832 then
+	if args.spellId == 21832 and args:GetSrcCreatureID() == 12201 then
 		warningBoulder:Show()
-		timerBoulderCD:Start()
 	end
 end
 
@@ -45,7 +42,12 @@ function mod:SPELL_CAST_SUCCESS(args)
 		warningRepulsiveGaze:Show()
 		timerRespulsiveGazeCD:Start()
 	elseif args.spellId == 21909 then
-		warningDustField:Show()
+		if self.Options.SpecWarn21909run and not self:IsTrivial(70) then--Mob will scale up to level 60, so retail needs to trivial it at 70, not 60 like classic
+			specWarnDustField:Show()
+			specWarnDustField:Play("justrun")
+		else
+			warningDustField:Show()
+		end
 		timerDustFieldCD:Start()
 	end
 end

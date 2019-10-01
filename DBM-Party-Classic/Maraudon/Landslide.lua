@@ -20,13 +20,13 @@ local warningTrample				= mod:NewSpellAnnounce(5568, 2)
 local specWarnWrath					= mod:NewSpecialWarningInterrupt(21807, "HasInterrupt", nil, nil, 1, 2)
 
 local timerLandslideCD				= mod:NewAITimer(180, 21808, 2, nil, nil, nil, 1)
-local timerKnockAwayCD				= mod:NewAITimer(180, 11130, nil, nil, nil, 2)
-local timerTrampleCD				= mod:NewAITimer(180, 5568, nil, nil, nil, 2)
+local timerKnockAwayCD				= mod:NewCDTimer(15.9, 11130, nil, nil, nil, 2)
+local timerTrampleCD				= mod:NewCDTimer(21.9, 5568, nil, nil, nil, 2)
 
 function mod:OnCombatStart(delay)
+	timerTrampleCD:Start(6-delay)--6
+	timerKnockAwayCD:Start(9-delay)--9
 	timerLandslideCD:Start(1-delay)
-	timerKnockAwayCD:Start(1-delay)
-	timerTrampleCD:Start(1-delay)
 end
 
 function mod:SPELL_CAST_START(args)

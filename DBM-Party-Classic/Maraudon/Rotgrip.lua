@@ -8,26 +8,20 @@ mod:SetEncounterID(428)
 mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
-	"SPELL_CAST_SUCCESS 15976 16495"
+	"SPELL_CAST_SUCCESS 16495"
 )
 
---Puncture doesn't do that much damage, but maybe useful if doing it under leveled
-local warningPuncture				= mod:NewSpellAnnounce(15976, 2, nil, false)
+--Puncture too random, and not important enough, so removed. Fatal bite was never seen?
 local warningFatalBite				= mod:NewSpellAnnounce(16495, 3)
 
-local timerPunctureCD				= mod:NewAITimer(180, 15976, nil, false, nil, 5, nil, DBM_CORE_TANK_ICON)
 local timerFatalBiteCD				= mod:NewAITimer(180, 16495, nil, nil, nil, 5, nil, DBM_CORE_TANK_ICON)
 
 function mod:OnCombatStart(delay)
-	timerPunctureCD:Start(1-delay)
 	timerFatalBiteCD:Start(1-delay)
 end
 
 function mod:SPELL_CAST_SUCCESS(args)
-	if args.spellId == 15976 then
-		warningPuncture:Show()
-		timerPunctureCD:Start()
-	elseif args.spellId == 16495 then
+	if args.spellId == 16495 then
 		warningFatalBite:Show()
 		timerFatalBiteCD:Start()
 	end
