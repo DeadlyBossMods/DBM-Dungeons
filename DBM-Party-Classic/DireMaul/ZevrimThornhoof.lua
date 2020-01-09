@@ -7,31 +7,28 @@ mod:SetCreatureID(11490)
 
 mod:RegisterCombat("combat")
 
---[[
 mod:RegisterEventsInCombat(
-	"SPELL_CAST_START"
+	"SPELL_CAST_START 22651"
 )
 
---local warningSoul	= mod:NewTargetAnnounce(32346, 2)
+local warnSacrifice				= mod:NewTargetNoFilterAnnounce(22651, 4)
 
-local specWarnMaddeningCall			= mod:NewSpecialWarningInterrupt(86620, "HasInterrupt", nil, nil, 1, 2)
+local yellSacrifice				= mod:NewYell(22651)
 
-local timerMaddeningCallCD			= mod:NewAITimer(180, 86620, nil, nil, nil, 4, nil, DBM_CORE_INTERRUPT_ICON)
+--function mod:OnCombatStart(delay)
 
-function mod:OnCombatStart(delay)
-	timerMaddeningCallCD:Start(1-delay)
+--end
+
+function mod:SacTarget(targetname, uId)
+	if not targetname then return end
+	warnSacrifice:Show(targetname)
+	if targetname == UnitName("player") then
+		yellSacrifice:Yell()
+	end
 end
 
 function mod:SPELL_CAST_START(args)
-	timerMaddeningCallCD:Start()
-	if args.spellId == 86620 and self:CheckInterruptFilter(args.sourceGUID, false, true) then
-		specWarnMaddeningCall:Show(args.sourceName)
-		specWarnMaddeningCall:Play("kickcast")
+	if args.spellId == 22651 then
+		self:BossTargetScanner(args.sourceGUID, "SacTarget", 0.1, 8)
 	end
 end
-
-function mod:SPELL_AURA_APPLIED(args)
-	if args.spellId == 32346 then
-		warningSoul:Show(args.destName)
-	end
-end--]]
