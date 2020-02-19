@@ -15,7 +15,7 @@ mod:RegisterEventsInCombat(
 	"SPELL_PERIODIC_MISSED 38385"
 )
 
-local warnHammer                = mod:NewTargetAnnounce(13005, 2)
+local warnHammer                = mod:NewTargetNoFilterAnnounce(13005, 2)
 
 local specWarnHeal				= mod:NewSpecialWarningInterrupt(29427, "HasInterrupt", nil, nil, 1, 2)
 local specWarnConsecration		= mod:NewSpecialWarningMove(38385, nil, nil, nil, 1, 2)
