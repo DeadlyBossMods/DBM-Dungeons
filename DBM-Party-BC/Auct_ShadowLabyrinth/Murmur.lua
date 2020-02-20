@@ -42,7 +42,7 @@ function mod:SPELL_AURA_APPLIED(args)
             specWarnTouch:Show()
             specWarnTouch:Play("runout")
         else
-        	warnTouch:Show(args.destName)
+			warnTouch:Show(args.destName)
         end
 	end
 end
