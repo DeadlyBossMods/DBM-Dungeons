@@ -96,7 +96,7 @@ function mod:UNIT_SPELLCAST_CHANNEL_START(uId, _, bfaSpellId, _, legacySpellId)
 	if spellId == 199811 then--Blink Strikes Channel ending
 		self.vb.blinkCount = self.vb.blinkCount + 1
 		local targetname = UnitExists("boss1target") and UnitName("boss1target")
-		if not targetname then 
+		if not targetname then
 			return
 		end
 		if UnitIsUnit("boss1target", "player") then

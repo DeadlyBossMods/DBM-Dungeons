@@ -8,7 +8,7 @@ mod:SetEncounterID(1938)
 mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
-	"UNIT_SPELLCAST_SUCCEEDED boss1"
+	"UNIT_SPELLCAST_START boss1"
 )
 
 --186782 Some Random Orc Icon. Could not find red fel orc icon. Only green orcs or brown orcs. Brown closer to red than green is.
@@ -54,14 +54,8 @@ end
 --Change to no sync if blizz adds IEEU(boss1)
 function mod:UNIT_SPELLCAST_START(uId, _, spellId)
    if spellId == 30738 then -- Blade Dance Targeting
-   		self:SendSync("BladeDance")
-   end
-end
-
-function mod:OnSync(event, arg)
-	if event == "BladeDance" then
 		specWarnBladeDance:Show()
 		timerBladeDanceCD:Start()
 		specWarnBladeDance:Play("aesoon")
-	end
+   end
 end

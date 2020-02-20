@@ -114,8 +114,9 @@ globals = {
 	"C_DateAndTime",
 	"C_EncounterJournal",
 	"C_FriendList",
-	"C_Timer",
 	"C_QuestLog",
+	"C_Timer",
+	"C_UIWidgetManager",
 	"ChatEdit_GetActiveWindow",
 	"ChatFrame_AddMessageEventFilter",
 	"CinematicFrame_CancelCinematic",
@@ -165,6 +166,7 @@ globals = {
 	-- FrameXML frames
 	"AlertFrame",
 	"BonusRollFrame",
+	"ExtraActionBarFrame",
 	"GameTooltip",
 	"ItemRefTooltip",
 	"Minimap",

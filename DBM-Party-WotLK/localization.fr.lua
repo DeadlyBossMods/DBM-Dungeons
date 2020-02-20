@@ -89,7 +89,7 @@ L:SetWarningLocalization({
 })
 
 L:SetTimerLocalization({
-	TimerWaveIn		= 	"Prochaine vague (6)", 
+	TimerWaveIn		= 	"Prochaine vague (6)",
 })
 
 L:SetOptionLocalization({
@@ -148,7 +148,7 @@ L = DBM:GetModLocalization(592)
 L = DBM:GetModLocalization(594)
 
 -------------------------
---  Drakkari Colossus  --		
+--  Drakkari Colossus  --
 -------------------------
 L = DBM:GetModLocalization(593)
 
@@ -401,7 +401,7 @@ L:SetWarningLocalization({
 })
 
 L:SetTimerLocalization({
-	TimerPortalIn	= "Portail #%d" 
+	TimerPortalIn	= "Portail #%d"
 })
 
 L:SetOptionLocalization({

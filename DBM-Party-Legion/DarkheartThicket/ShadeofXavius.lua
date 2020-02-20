@@ -85,7 +85,7 @@ function mod:SPELL_AURA_APPLIED(args)
 			yellParanoia:Yell()
 		else
 			warnParanoia:Show(args.destName)
-		end		
+		end
 	end
 end
 mod.SPELL_AURA_REFRESH = mod.SPELL_AURA_APPLIED

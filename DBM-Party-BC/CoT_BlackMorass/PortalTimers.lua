@@ -39,8 +39,8 @@ function mod:UPDATE_UI_WIDGET(table)
 	local text = widgetInfo.text
 	if not text then return end
 	local currentPortal = text:match("(%d+).+18")
-	if not currentPortal then 
-		currentPortal = 0 
+	if not currentPortal then
+		currentPortal = 0
 	end
 	currentPortal = tonumber(currentPortal)
 	if currentPortal > lastPortal then

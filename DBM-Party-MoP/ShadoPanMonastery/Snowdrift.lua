@@ -9,7 +9,7 @@ mod:SetReCombatTime(60)
 
 -- pre-bosswave. Novice -> Black Sash (Fragrant Lotus, Flying Snow). this runs automaticially.
 -- maybe we need Black Sash wave warns.
--- but boss (Master Snowdrift) not combat starts automaticilly. 
+-- but boss (Master Snowdrift) not combat starts automaticilly.
 mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(

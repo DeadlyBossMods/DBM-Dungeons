@@ -49,7 +49,8 @@ end
 
 function mod:CHAT_MSG_MONSTER_EMOTE(msg, _, _, _, target)
 	if msg:find(L.pursuitEmote) then
-		local target = DBM:GetUnitFullName(target)
+		if not target then return end
+		target = DBM:GetUnitFullName(target)
 		timerPursuit:Start()
 		timerPursuitCD:Start()
 		if target then

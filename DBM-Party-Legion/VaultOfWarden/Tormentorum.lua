@@ -63,7 +63,7 @@ function mod:SPELL_AURA_APPLIED(args)
 	if spellId == 212564 and args:IsPlayer() and self:AntiSpam(4, 1) then
 		specWarnStare:Show()
 		specWarnStare:Play("targetyou")
-	end	
+	end
 end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, bfaSpellId, _, legacySpellId)

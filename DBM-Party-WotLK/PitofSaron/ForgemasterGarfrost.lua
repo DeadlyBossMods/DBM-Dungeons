@@ -88,7 +88,7 @@ function mod:RAID_BOSS_WHISPER(msg)
 		specWarnSaroniteRock:Show()
 		specWarnSaroniteRock:Play("watchstep")
 		yellRock:Yell()
---	end 
+--	end
 end
 
 --per usual, use transcriptor message to get messages from both bigwigs and DBM, all without adding comms to this mod at all

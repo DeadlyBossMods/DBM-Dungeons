@@ -84,4 +84,3 @@ function mod:SPELL_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId)
 		specWarnHeavenFury:Play("runaway")
 	end
 end
-		

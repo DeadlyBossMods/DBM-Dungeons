@@ -162,7 +162,7 @@ end
 function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, bfaSpellId, _, legacySpellId)
 	local spellId = legacySpellId or bfaSpellId
 	if spellId == 206341 then
-	
+
 	end
 end
 --]]

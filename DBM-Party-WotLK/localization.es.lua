@@ -163,7 +163,7 @@ L = DBM:GetModLocalization(592)
 L = DBM:GetModLocalization(594)
 
 ---------------------
--- Coloso Drakkari --		
+-- Coloso Drakkari --
 ---------------------
 L = DBM:GetModLocalization(593)
 
@@ -449,7 +449,7 @@ L:SetWarningLocalization({
 })
 
 L:SetTimerLocalization({
-	TimerPortalIn	= "Portal %d" , 
+	TimerPortalIn	= "Portal %d" ,
 })
 
 L:SetOptionLocalization({

@@ -155,12 +155,12 @@ L:SetOptionLocalization({
 
 -------------
 -- Ammunae --
-------------- 
+-------------
 L= DBM:GetModLocalization(128)
 
 -------------
 -- Setesh  --
-------------- 
+-------------
 L= DBM:GetModLocalization(129)
 
 ----------
@@ -263,7 +263,7 @@ L= DBM:GetModLocalization(100)
 --  The Stonecore  --
 ---------------------
 -- Corborus --
--------------- 
+--------------
 L= DBM:GetModLocalization(110)
 
 L:SetWarningLocalization({
@@ -286,7 +286,7 @@ L:SetOptionLocalization({
 
 --------------
 -- Slabhide --
--------------- 
+--------------
 L= DBM:GetModLocalization(111)
 
 L:SetWarningLocalization({
@@ -310,7 +310,7 @@ L:SetOptionLocalization({
 
 -----------
 -- Ozruk --
------------ 
+-----------
 L= DBM:GetModLocalization(112)
 
 -------------------------
@@ -331,7 +331,7 @@ L:SetMiscLocalization{
 
 --------------
 -- Altairus --
--------------- 
+--------------
 L= DBM:GetModLocalization(115)
 
 L:SetOptionLocalization({
@@ -347,12 +347,12 @@ L= DBM:GetModLocalization(116)
 --  The Throne of Tides  --
 ---------------------------
 -- Lady Naz'jar --
------------------- 
+------------------
 L= DBM:GetModLocalization(101)
 
 -----======-----------
 -- Commander Ulthok --
----------------------- 
+----------------------
 L= DBM:GetModLocalization(102)
 
 -------------------------
@@ -362,7 +362,7 @@ L= DBM:GetModLocalization(103)
 
 ------------
 -- Ozumat --
------------- 
+------------
 L= DBM:GetModLocalization(104)
 
 ----------------
@@ -499,7 +499,7 @@ L= DBM:GetModLocalization(176)
 
 L:SetWarningLocalization{
 	WarnRevive		= "%d fantasmas restantes",
-	SpecWarnOhgan	= "Ohgan revivido! Ataque agora!" 
+	SpecWarnOhgan	= "Ohgan revivido! Ataque agora!"
 }
 
 L:SetOptionLocalization{
@@ -757,4 +757,3 @@ L = DBM:GetModLocalization("Xariona")
 L:SetGeneralLocalization{
 	name = "Xariona"
 }
-

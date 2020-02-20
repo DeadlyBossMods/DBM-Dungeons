@@ -268,7 +268,7 @@ L= DBM:GetModLocalization(100)
 ----------------------
 --------------
 -- Corborus --
--------------- 
+--------------
 L= DBM:GetModLocalization(110)
 
 L:SetWarningLocalization({
@@ -315,7 +315,7 @@ L:SetOptionLocalization({
 
 -----------
 -- Ozruk --
------------ 
+-----------
 L= DBM:GetModLocalization(112)
 
 -------------------------
@@ -337,7 +337,7 @@ L:SetMiscLocalization{
 
 --------------
 -- Altairus --
--------------- 
+--------------
 L= DBM:GetModLocalization(115)
 
 L:SetOptionLocalization({
@@ -353,12 +353,12 @@ L= DBM:GetModLocalization(116)
 --  Trono de las Mareas  --
 ---------------------------
 -- Lady Naz'jar --
------------------- 
+------------------
 L= DBM:GetModLocalization(101)
 
 -----------------------
 -- Comandante Ulthok --
------------------------ 
+-----------------------
 L= DBM:GetModLocalization(102)
 
 ---------------------------
@@ -368,7 +368,7 @@ L= DBM:GetModLocalization(103)
 
 ------------
 -- Ozumat --
------------- 
+------------
 L= DBM:GetModLocalization(104)
 
 L:SetTimerLocalization{

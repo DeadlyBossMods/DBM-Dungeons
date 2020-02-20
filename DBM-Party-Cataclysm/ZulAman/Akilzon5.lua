@@ -47,9 +47,9 @@ end
 function mod:SPELL_AURA_APPLIED(args)
 	if args.spellId == 97318 then
 		if args:IsDestTypePlayer() then
-			warnPlucked:Show(args.destName)	
+			warnPlucked:Show(args.destName)
 		else
-			self:ScanForMobs(args.destGUID, 0, 8, 1, 0.1, 10, "SetIconOnEagle")
+			self:ScanForMobs(args.destGUID, 2, 8, 1, 0.1, 10, "SetIconOnEagle")
 		end
 	end
 end

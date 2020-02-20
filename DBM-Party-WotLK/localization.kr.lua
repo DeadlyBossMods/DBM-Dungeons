@@ -435,7 +435,7 @@ L:SetWarningLocalization({
 })
 
 L:SetTimerLocalization({
-	TimerPortalIn	= "차원문 #%d" , 
+	TimerPortalIn	= "차원문 #%d" ,
 })
 
 L:SetOptionLocalization({

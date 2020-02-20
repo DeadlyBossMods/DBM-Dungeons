@@ -46,9 +46,9 @@ function mod:SPELL_AURA_APPLIED(args)
 		timerMirroredSoul:Start(args.destName)
 		specwarnMirroredSoul:Show(args.sourceName)--if sourcename isn't good use L.name
 		specwarnMirroredSoul:Play("stopattack")
-		if self.Options.SetIconOnMirroredTarget then 
-			self:SetIcon(args.destName, 8, 8) 
-		end 
+		if self.Options.SetIconOnMirroredTarget then
+			self:SetIcon(args.destName, 8, 8)
+		end
 	elseif args.spellId == 68939 then							-- Unleashed Souls
 		timerUnleashedSouls:Start()
 	end
@@ -57,8 +57,8 @@ end
 function mod:SPELL_AURA_REMOVED(args)
 	if args.spellId == 69051 and args:IsDestTypePlayer() then	-- Mirrored Soul
 		timerMirroredSoul:Cancel(args.destName)
-		if self.Options.SetIconOnMirroredTarget then 
-			self:SetIcon(args.destName, 0) 
-		end 
+		if self.Options.SetIconOnMirroredTarget then
+			self:SetIcon(args.destName, 0)
+		end
 	end
 end

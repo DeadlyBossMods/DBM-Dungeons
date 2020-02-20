@@ -83,8 +83,8 @@ function mod:UNIT_AURA_UNFILTERED(uId)
 	local name = DBM:GetUnitFullName(uId)
 	if not isPursuitDebuff and pursuitTable[name] then
 		pursuitTable[name] = nil
-		if self.Options.SetIconOnPursuitTarget then 
-			self:SetIcon(name, 0) 
+		if self.Options.SetIconOnPursuitTarget then
+			self:SetIcon(name, 0)
 		end
 	elseif isPursuitDebuff and not pursuitTable[name] then
 		pursuitTable[name] = true
@@ -94,8 +94,8 @@ function mod:UNIT_AURA_UNFILTERED(uId)
 		else
 			warnPursuit:Show(name)
 		end
-		if self.Options.SetIconOnPursuitTarget then 
-			self:SetIcon(name, 8) 
+		if self.Options.SetIconOnPursuitTarget then
+			self:SetIcon(name, 8)
 		end
 	end
 end

@@ -23,8 +23,8 @@ local timerShift		= mod:NewBuffActiveTimer(18, 51162, nil, nil, nil, 6)
 function mod:OnCombatEnd(wipe)
 	if not wipe then
 		if DBM.Bars:GetBar(L.MakeitCountTimer) then
-			DBM.Bars:CancelBar(L.MakeitCountTimer) 
-		end	
+			DBM.Bars:CancelBar(L.MakeitCountTimer)
+		end
 	end
 end
 

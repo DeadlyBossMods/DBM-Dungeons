@@ -66,4 +66,3 @@ function mod:UNIT_HEALTH(uId)
 		prewarnShield = false
 	end
 end
-		

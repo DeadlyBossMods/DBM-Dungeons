@@ -14,7 +14,7 @@ mod:RegisterEventsInCombat(
 
 local warningPound		= mod:NewSpellAnnounce(53472, 3)
 
-local timerAchieve		= mod:NewAchievementTimer(240, 1860) 
+local timerAchieve		= mod:NewAchievementTimer(240, 1860)
 
 function mod:OnCombatStart(delay)
 	if not self:IsDifficulty("normal5") then

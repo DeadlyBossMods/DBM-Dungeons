@@ -42,7 +42,7 @@ local toxicLinkTargets = {}
 local function warnToxicLinkTargets(self)
 	warnToxicLink:Show(table.concat(toxicLinkTargets, "<, >"))
 	table.wipe(toxicLinkTargets)
-	self.vb.toxicLinkIcon = 8	
+	self.vb.toxicLinkIcon = 8
 end
 
 function mod:OnCombatStart(delay)
@@ -62,7 +62,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		toxicLinkTargets[#toxicLinkTargets + 1] = args.destName
 		if self:IsInCombat() then--only start cd timer on boss fight, not when trash does it.
 			timerToxicLinkCD:Start()
-		end	
+		end
 		if args:IsPlayer() then
 			specWarnToxicLink:Show()
 			specWarnToxicLink:Play("gather")

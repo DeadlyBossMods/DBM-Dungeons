@@ -53,7 +53,7 @@ function mod:OnCombatEnd()
 end
 
 function mod:GraspingVineTarget(targetname, uId)
-	if not targetname then 
+	if not targetname then
 		self.vb.lastGrasping = nil
 		return
 	end

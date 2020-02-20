@@ -15,7 +15,7 @@ mod:RegisterEventsInCombat(
 local warningNova	= mod:NewSpellAnnounce(52960, 3)
 
 local timerNovaCD	= mod:NewCDTimer(30, 52960, nil, nil, nil, 2)
-local timerAchieve	= mod:NewAchievementTimer(120, 1867) 
+local timerAchieve	= mod:NewAchievementTimer(120, 1867)
 
 function mod:OnCombatStart(delay)
 	if not self:IsDifficulty("normal5") then

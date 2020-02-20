@@ -10,7 +10,7 @@ mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
 	"SPELL_AURA_APPLIED 75842 75846",
-	"SPELL_AURA_APPLIED_DOSE 75846"	
+	"SPELL_AURA_APPLIED_DOSE 75846"
 )
 
 local warnObsidianArmor		= mod:NewSpellAnnounce(75842, 2)

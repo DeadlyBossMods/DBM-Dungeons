@@ -54,7 +54,7 @@ function mod:FreezingSnareTarget(targetname, uId)
 		warnFreezingSnare:Show(targetname)
 	end
 end
-  
+
 function mod:OnCombatStart(delay)
 
 end

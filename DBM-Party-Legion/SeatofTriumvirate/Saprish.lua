@@ -85,7 +85,7 @@ end
 function mod:SPELL_AURA_REMOVED(args)
 	local spellId = args.spellId
 	if spellId == 247245 then
-		
+
 	end
 end
 

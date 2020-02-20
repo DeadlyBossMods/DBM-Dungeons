@@ -180,7 +180,7 @@ function mod:SPELL_CAST_START(args)
 			specWarnChaosBolt:Play("kickcast")
 		else
 			specWarnChaosBolt:Play("helpkick")
-		end	
+		end
 	elseif spellId == 156857 then--Base version cast only in phase 1
 		specWarnRainOfFire:Show()
 		specWarnRainOfFire:Play("watchstep")

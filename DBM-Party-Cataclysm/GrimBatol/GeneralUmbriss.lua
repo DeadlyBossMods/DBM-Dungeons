@@ -67,7 +67,7 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg, _, _, _, target)
 	if msg:find("spell:74670") then
 		timerBlitz:Start()
 		if not target then return end
-		local target = DBM:GetUnitFullName(target)
+		target = DBM:GetUnitFullName(target)
 		if target == UnitName("player") then
 			specWarnBlitz:Show()
 			specWarnBlitz:Play("targetyou")

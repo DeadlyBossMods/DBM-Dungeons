@@ -28,7 +28,7 @@ function mod:SPELL_AURA_APPLIED(args)
             specwarnMark:Play("targetyou")
             yellMark:Yell()
         else
-        	warnMark:Show(args.destName)
+			warnMark:Show(args.destName)
         end
 	end
 end

@@ -49,9 +49,9 @@ local lastWave	= 0
 
 local function getWaveString(self, wave)
 	local waveInfo
-	if self:IsDifficulty("heroic5") then 
+	if self:IsDifficulty("heroic5") then
 		waveInfo = wavesHeroic[wave]
-	else 
+	else
 		waveInfo = wavesNormal[wave]
 	end
 	if #waveInfo == 1 then

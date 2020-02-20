@@ -61,7 +61,7 @@ function mod:SPELL_AURA_REMOVED(args)
 		self.vb.sporeCount = self.vb.sporeCount - 1
 		if self.vb.sporeCount == 0 then
 			timerFungalSpores:Cancel()
-		end	
+		end
 	end
 end
 
