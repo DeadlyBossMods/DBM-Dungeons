@@ -9,7 +9,7 @@ mod:SetZone()
 mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
-	"SPELL_CAST_SUCCESS 22686 27483",
+	"SPELL_CAST_SUCCESS 22686",
 	"SPELL_AURA_APPLIED 48920 48873 48878"
 )
 
