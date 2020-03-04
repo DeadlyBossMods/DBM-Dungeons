@@ -24,7 +24,7 @@ local warnWordShame			= mod:NewTargetAnnounce(93852, 3)
 local specWarnDesecration	= mod:NewSpecialWarningMove(93691, nil, nil, nil, 1, 8)
 local specWarnEmpowerment	= mod:NewSpecialWarningInterrupt(93844, "HasInterrupt", nil, nil, 1, 2)
 
-local timerAdds				= mod:NewTimer(40, "TimerAdds", 48000, nil, nil, 1)
+local timerAdds				= mod:NewTimer(40, "TimerAdds", "136116", nil, nil, 1)
 local timerMaleficStrike	= mod:NewNextTimer(6, 93685, nil, false, nil, 5, nil, DBM_CORE_TANK_ICON)
 
 function mod:OnCombatStart(delay)
