@@ -41,7 +41,7 @@ globals = {
 	"DBM_BIG_ADD",
 	"DBM_BOSS",
 	"DBM_BossPreview",
-	"DBM_CORE_L"
+	"DBM_CORE_L",
 	"DBM_DISABLE_ZONE_DETECTION",
 	"DBM_GUI_Bosses",
 	"DBM_GUI_Frame",
