@@ -20,7 +20,7 @@ local warningStorm		= mod:NewSpellAnnounce(50752, 2)
 
 local specWarnSorrow	= mod:NewSpecialWarningMoveTo(50760, nil, nil, nil, 2, 2)
 
-local timerWoe			= mod:NewTargetTimer(10, 50761, nil, "Healer", nil, 5, nil, DBM_CORE_HEALER_ICON..DBM_CORE_MAGIC_ICON)
+local timerWoe			= mod:NewTargetTimer(10, 50761, nil, "Healer", nil, 5, nil, DBM_CORE_L.HEALER_ICON..DBM_CORE_L.MAGIC_ICON)
 local timerStormCD		= mod:NewCDTimer(20, 50752, nil, nil, nil, 3)
 local timerSorrowCD		= mod:NewCDTimer(30, 50760, nil, nil, nil, 2)
 local timerAchieve		= mod:NewAchievementTimer(60, 1866)

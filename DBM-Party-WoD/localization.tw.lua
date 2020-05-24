@@ -199,8 +199,8 @@ L= DBM:GetModLocalization(967)
 L= DBM:GetModLocalization(968)
 
 L:SetWarningLocalization({
-	warnAdd			= DBM_CORE_AUTO_ANNOUNCE_TEXTS.spell:format("擎天護盾傀儡"),
-	specWarnAdd		= DBM_CORE_AUTO_SPEC_WARN_TEXTS.switch:format("擎天護盾傀儡")
+	warnAdd			= DBM_CORE_L.AUTO_ANNOUNCE_TEXTS.spell:format("擎天護盾傀儡"),
+	specWarnAdd		= DBM_CORE_L.AUTO_SPEC_WARN_TEXTS.switch:format("擎天護盾傀儡")
 })
 
 L:SetOptionLocalization({

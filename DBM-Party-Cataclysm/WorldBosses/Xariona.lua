@@ -28,8 +28,8 @@ local specWarnTwilightFissure	= mod:NewSpecialWarningYou(93546, nil, nil, nil, 1
 
 local timerTwilightFissureCD	= mod:NewCDTimer(23, 93546, nil, nil, nil, 3)
 local timerTwilightZoneCD		= mod:NewNextTimer(30, 93553, nil, nil, nil, 3)
-local timerTwilightBuffetCD		= mod:NewCDTimer(20, 93551, nil, nil, nil, 3, nil, DBM_CORE_MAGIC_ICON)
-local timerTwilightBuffet		= mod:NewTargetTimer(10, 93551, nil, "Healer", nil, 5, nil, DBM_CORE_HEALER_ICON..DBM_CORE_MAGIC_ICON)
+local timerTwilightBuffetCD		= mod:NewCDTimer(20, 93551, nil, nil, nil, 3, nil, DBM_CORE_L.MAGIC_ICON)
+local timerTwilightBuffet		= mod:NewTargetTimer(10, 93551, nil, "Healer", nil, 5, nil, DBM_CORE_L.HEALER_ICON..DBM_CORE_L.MAGIC_ICON)
 local timerUnleashedMagicCD		= mod:NewCDTimer(66, 93556, nil, nil, nil, 2)--66 Cd but least priority spell, she will cast breath, fissure zone or buffet before this, so overlapping CDs often delay this upwards to 5 seconds late
 
 local specialCharging = false

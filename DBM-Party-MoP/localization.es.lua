@@ -19,7 +19,7 @@ L:SetWarningLocalization({
 })
 
 L:SetOptionLocalization({
-	SpecWarnIntensity	= DBM_CORE_AUTO_SPEC_WARN_OPTIONS.stack:format(6, 113315)
+	SpecWarnIntensity	= DBM_CORE_L.AUTO_SPEC_WARN_OPTIONS.stack:format(6, 113315)
 })
 
 ---------------------------
@@ -56,7 +56,7 @@ L:SetWarningLocalization({
 
 L:SetOptionLocalization({
 	SpecWarnFizzyBubbles	= "Mostrar aviso especial cuando no estés afectado por el perjuicio de $spell:114459",
-	RangeFrame				= DBM_CORE_AUTO_RANGE_OPTION_TEXT:format(10, 106546)
+	RangeFrame				= DBM_CORE_L.AUTO_RANGE_OPTION_TEXT:format(10, 106546)
 })
 
 -----------------------------
@@ -72,7 +72,7 @@ L:SetWarningLocalization({
 })
 
 L:SetOptionLocalization({
-	warnStaticField	= DBM_CORE_AUTO_ANNOUNCE_OPTIONS.spell:format(106923)
+	warnStaticField	= DBM_CORE_L.AUTO_ANNOUNCE_OPTIONS.spell:format(106923)
 })
 
 ------------------------------
@@ -121,7 +121,7 @@ L:SetOptionLocalization({
 L= DBM:GetModLocalization(655)
 
 L:SetOptionLocalization({
-	IconOnSabotage	= DBM_CORE_AUTO_ICONS_OPTION_TEXT:format(107268)
+	IconOnSabotage	= DBM_CORE_L.AUTO_ICONS_OPTION_TEXT:format(107268)
 })
 
 ----------------------

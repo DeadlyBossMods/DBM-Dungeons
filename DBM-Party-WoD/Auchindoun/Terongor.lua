@@ -49,12 +49,12 @@ local specWarnChaosWave			= mod:NewSpecialWarningYou(157001)
 local yellWarnChaosWave			= mod:NewYell(157001)
 
 --Basic Abilities
-local timerDrainLifeCD			= mod:NewCDTimer(15, 156854, nil, nil, nil, 4, nil, DBM_CORE_INTERRUPT_ICON)--15~18 variation
+local timerDrainLifeCD			= mod:NewCDTimer(15, 156854, nil, nil, nil, 4, nil, DBM_CORE_L.INTERRUPT_ICON)--15~18 variation
 local timerFixate				= mod:NewTargetTimer(12, 157168, nil, "-Tank", 3, 3)
-local timerRainOfFireCD			= mod:NewCDTimer(12, 156857, nil, nil, nil, 4, nil, DBM_CORE_INTERRUPT_ICON)--12-22sec variation phase 2. Unknown Phase 1 repeat timer
+local timerRainOfFireCD			= mod:NewCDTimer(12, 156857, nil, nil, nil, 4, nil, DBM_CORE_L.INTERRUPT_ICON)--12-22sec variation phase 2. Unknown Phase 1 repeat timer
 --Destruction Abilities
-local timerChaosBoltCD			= mod:NewCDTimer(20.5, 156975, nil, nil, nil, 4, nil, DBM_CORE_INTERRUPT_ICON)--20-25 variation.
-local timerImmolateCD			= mod:NewCDTimer(12, 156964, nil, "Healer", nil, 5, nil, DBM_CORE_HEALER_ICON)--Only timer that's probably not variable
+local timerChaosBoltCD			= mod:NewCDTimer(20.5, 156975, nil, nil, nil, 4, nil, DBM_CORE_L.INTERRUPT_ICON)--20-25 variation.
+local timerImmolateCD			= mod:NewCDTimer(12, 156964, nil, "Healer", nil, 5, nil, DBM_CORE_L.HEALER_ICON)--Only timer that's probably not variable
 --Affliction Abilities
 local timerSeedOfMelevolence	= mod:NewTargetTimer(18, 156921, nil, "-Tank")
 local timerSeedOfMelevolenceCD	= mod:NewCDTimer(22, 156921, nil, nil, nil, 3)--22-25

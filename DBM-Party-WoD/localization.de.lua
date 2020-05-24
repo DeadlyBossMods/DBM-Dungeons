@@ -199,8 +199,8 @@ L= DBM:GetModLocalization(967)
 L= DBM:GetModLocalization(968)
 
 L:SetWarningLocalization({
-	warnAdd			= DBM_CORE_AUTO_ANNOUNCE_TEXTS.spell:format("Schildkonstrukt der Himmelsnadel"),
-	specWarnAdd		= DBM_CORE_AUTO_SPEC_WARN_TEXTS.switch:format("Schildkonstrukt der Himmelsnadel")
+	warnAdd			= DBM_CORE_L.AUTO_ANNOUNCE_TEXTS.spell:format("Schildkonstrukt der Himmelsnadel"),
+	specWarnAdd		= DBM_CORE_L.AUTO_SPEC_WARN_TEXTS.switch:format("Schildkonstrukt der Himmelsnadel")
 })
 
 L:SetOptionLocalization({

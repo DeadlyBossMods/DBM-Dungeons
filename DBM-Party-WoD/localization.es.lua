@@ -200,8 +200,8 @@ L= DBM:GetModLocalization(967)
 L= DBM:GetModLocalization(968)
 
 L:SetWarningLocalization({
-	warnAdd			= DBM_CORE_AUTO_ANNOUNCE_TEXTS.spell:format("Ensamblaje de protección del Trecho Celestial"),
-	specWarnAdd		= DBM_CORE_AUTO_SPEC_WARN_TEXTS.switch:format("Ensamblaje de protección del Trecho Celestial")
+	warnAdd			= DBM_CORE_L.AUTO_ANNOUNCE_TEXTS.spell:format("Ensamblaje de protección del Trecho Celestial"),
+	specWarnAdd		= DBM_CORE_L.AUTO_SPEC_WARN_TEXTS.switch:format("Ensamblaje de protección del Trecho Celestial")
 })
 
 L:SetOptionLocalization({

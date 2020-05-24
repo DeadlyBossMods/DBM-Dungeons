@@ -13,7 +13,7 @@ mod:RegisterEventsInCombat(
 
 local specWarnDevouringBlackness			= mod:NewSpecialWarningInterrupt(149955, "HasInterrupt", nil, nil, 1, 2)
 
-local timerDevouringBlacknessCD			= mod:NewAITimer(180, 149955, nil, nil, nil, 4, nil, DBM_CORE_INTERRUPT_ICON)
+local timerDevouringBlacknessCD			= mod:NewAITimer(180, 149955, nil, nil, nil, 4, nil, DBM_CORE_L.INTERRUPT_ICON)
 
 function mod:OnCombatStart(delay)
 	timerDevouringBlacknessCD:Start(1-delay)

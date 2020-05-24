@@ -18,8 +18,8 @@ mod:RegisterEventsInCombat(
 local warnTransformation	= mod:NewSpellAnnounce(76200, 3)
 local warnCorrupion			= mod:NewTargetNoFilterAnnounce(76188, 2, nil, "Healer", 2)
 
-local timerCorruption		= mod:NewTargetTimer(12, 76188, nil, "Healer", nil, 5, nil, DBM_CORE_HEALER_ICON..DBM_CORE_MAGIC_ICON)
-local timerVeil				= mod:NewTargetTimer(4, 76189, nil, "Healer", nil, 5, nil, DBM_CORE_HEALER_ICON)
+local timerCorruption		= mod:NewTargetTimer(12, 76188, nil, "Healer", nil, 5, nil, DBM_CORE_L.HEALER_ICON..DBM_CORE_L.MAGIC_ICON)
+local timerVeil				= mod:NewTargetTimer(4, 76189, nil, "Healer", nil, 5, nil, DBM_CORE_L.HEALER_ICON)
 
 mod:AddSetIconOption("SetIconOnBoss", 76242, true, false, {8})
 

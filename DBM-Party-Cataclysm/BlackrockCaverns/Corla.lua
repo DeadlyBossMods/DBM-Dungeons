@@ -23,10 +23,10 @@ local specWarnShadowStrike	= mod:NewSpecialWarningInterrupt(82362, nil, nil, nil
 local specWarnDarkCommand	= mod:NewSpecialWarningInterrupt(75823, nil, nil, nil, 1, 2)
 local specWarnEvolution		= mod:NewSpecialWarningStack(75697, true, 80, nil, nil, 1, 6)
 
-local timerDarkCommandCast	= mod:NewCastTimer(4, 75823, nil, nil, nil, 4, nil, DBM_CORE_INTERRUPT_ICON)
-local timerDarkCommand		= mod:NewTargetTimer(4, 75823, nil, nil, nil, 5, nil, DBM_CORE_HEALER_ICON..DBM_CORE_MAGIC_ICON)
-local timerDarkCommandCD	= mod:NewCDTimer(25, 75823, nil, nil, nil, 4, nil, DBM_CORE_INTERRUPT_ICON)
-local timerShadowStrike		= mod:NewCastTimer(2, 82362, nil, nil, nil, 4, nil, DBM_CORE_INTERRUPT_ICON)
+local timerDarkCommandCast	= mod:NewCastTimer(4, 75823, nil, nil, nil, 4, nil, DBM_CORE_L.INTERRUPT_ICON)
+local timerDarkCommand		= mod:NewTargetTimer(4, 75823, nil, nil, nil, 5, nil, DBM_CORE_L.HEALER_ICON..DBM_CORE_L.MAGIC_ICON)
+local timerDarkCommandCD	= mod:NewCDTimer(25, 75823, nil, nil, nil, 4, nil, DBM_CORE_L.INTERRUPT_ICON)
+local timerShadowStrike		= mod:NewCastTimer(2, 82362, nil, nil, nil, 4, nil, DBM_CORE_L.INTERRUPT_ICON)
 local timerEvolution		= mod:NewBuffFadesTimer(15, 75697, nil, nil, nil, 5)
 
 function mod:OnCombatStart(delay)

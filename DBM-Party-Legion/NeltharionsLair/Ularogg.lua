@@ -24,7 +24,7 @@ local specWarnSunder				= mod:NewSpecialWarningDefensive(198496, "Tank", nil, 2,
 local specWarnStrikeofMountain		= mod:NewSpecialWarningDodge(216290, nil, nil, nil, 1, 2)
 local yellStrikeofMountain			= mod:NewYell(216290)
 
-local timerSunderCD					= mod:NewCDTimer(7.5, 198496, nil, "Tank", nil, 5, nil, DBM_CORE_TANK_ICON)
+local timerSunderCD					= mod:NewCDTimer(7.5, 198496, nil, "Tank", nil, 5, nil, DBM_CORE_L.TANK_ICON)
 local timerStrikeCD					= mod:NewCDTimer(15, 216290, nil, nil, nil, 3)
 local timerStanceOfMountainCD		= mod:NewCDTimer(119.5, 216249, nil, nil, nil, 6)
 

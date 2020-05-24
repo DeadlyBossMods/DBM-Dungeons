@@ -21,8 +21,8 @@ local specwarnRenew			= mod:NewSpecialWarningDispel(66537, "MagicDispeller", nil
 local specwarnHolyFire		= mod:NewSpecialWarningDispel(66538, "Healer", nil, nil, 1, 2)
 local specwarnShadows		= mod:NewSpecialWarningDispel(66619, "Healer", nil, nil, 1, 2)
 
-local timerHolyFire			= mod:NewTargetTimer(8, 66538, nil, "Healer", 2, 5, nil, DBM_CORE_MAGIC_ICON)
-local timerShadows          = mod:NewTargetTimer(5, 66619, nil, "Healer", 2, 5, nil, DBM_CORE_MAGIC_ICON)
+local timerHolyFire			= mod:NewTargetTimer(8, 66538, nil, "Healer", 2, 5, nil, DBM_CORE_L.MAGIC_ICON)
+local timerShadows          = mod:NewTargetTimer(5, 66619, nil, "Healer", 2, 5, nil, DBM_CORE_L.MAGIC_ICON)
 
 mod.vb.shielded = false
 

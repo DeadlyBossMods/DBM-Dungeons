@@ -29,7 +29,7 @@ local trashmod = DBM:GetModByName("CoSTrash")
 
 function mod:SurgeTarget(targetname, uId)
 	if not targetname then
-		warnSurge:Show(DBM_CORE_UNKNOWN)
+		warnSurge:Show(DBM_CORE_L.UNKNOWN)
 		return
 	end
 	if targetname == UnitName("player") then

@@ -21,7 +21,7 @@ local specWarnFrenziedAssault	= mod:NewSpecialWarningSpell(107120, "Tank")
 local specWarnViscousFluid		= mod:NewSpecialWarningMove(107122)
 
 local timerFrenziedAssault		= mod:NewBuffActiveTimer(6, 107120)
-local timerFrenziedAssaultCD	= mod:NewNextTimer(17, 107120, nil, nil, nil, 5, nil, DBM_CORE_TANK_ICON)
+local timerFrenziedAssaultCD	= mod:NewNextTimer(17, 107120, nil, nil, nil, 5, nil, DBM_CORE_L.TANK_ICON)
 
 function mod:OnCombatStart(delay)
 	timerFrenziedAssaultCD:Start(6-delay)

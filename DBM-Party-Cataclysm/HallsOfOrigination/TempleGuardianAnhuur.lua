@@ -22,7 +22,7 @@ local warnReckoning				= mod:NewTargetNoFilterAnnounce(75592, 4)
 local specWarnLight				= mod:NewSpecialWarningMove(75117, nil, nil, nil, 1, 2)
 local specWarnDivineReckoning	= mod:NewSpecialWarningDispel(75592, "Healer", nil, nil, 1, 2)
 
-local timerReckoning			= mod:NewTargetTimer(8, 75592, nil, nil, nil, 5, nil, DBM_CORE_MAGIC_ICON)
+local timerReckoning			= mod:NewTargetTimer(8, 75592, nil, nil, nil, 5, nil, DBM_CORE_L.MAGIC_ICON)
 
 local prewarnShield = false
 

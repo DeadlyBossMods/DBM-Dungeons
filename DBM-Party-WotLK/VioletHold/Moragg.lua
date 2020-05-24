@@ -13,7 +13,7 @@ mod:RegisterEventsInCombat(
 
 local warningLink 	= mod:NewTargetNoFilterAnnounce(54396, 2)
 
-local timerLink		= mod:NewTargetTimer(12, 54396, nil, nil, nil, 5, nil, DBM_CORE_HEALER_ICON)
+local timerLink		= mod:NewTargetTimer(12, 54396, nil, nil, nil, 5, nil, DBM_CORE_L.HEALER_ICON)
 local timerLinkCD	= mod:NewCDTimer(45, 54396, nil, nil, nil, 3)
 
 function mod:SPELL_AURA_APPLIED(args)

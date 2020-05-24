@@ -31,7 +31,7 @@
 ## X-DBM-Mod-Name-zhCN: 队伍首领(德拉诺之王)
 ## X-DBM-Mod-Sort: 615
 ## X-DBM-Mod-MapID: 1182, 1175, 1208, 1195, 1279, 1176, 1209, 1358
-## X-DBM-Mod-MinCoreRevision: 15159
+## X-DBM-Mod-MinCoreRevision: 20200524142133
 ## X-Curse-Project-ID: 314994
 ## X-WoWI-ID: 24904
 ## Version: @project-version@

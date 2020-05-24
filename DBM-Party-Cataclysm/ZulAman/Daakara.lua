@@ -32,10 +32,10 @@ local warnLightningTotem	= mod:NewSpellAnnounce(97930, 4)--Eagle Form
 local specWarnFlameBreath	= mod:NewSpecialWarningMove(97497, nil, nil, nil, 1, 2)
 local specWarnBurn			= mod:NewSpecialWarningMove(43217, nil, nil, nil, 1, 2)
 
-local timerThrow			= mod:NewNextTimer(15, 43093, nil, nil, nil, 5, nil, DBM_CORE_HEALER_ICON)
-local timerParalysisCD		= mod:NewNextTimer(27, 43095, nil, nil, nil, 5, nil, DBM_CORE_HEALER_ICON..DBM_CORE_MAGIC_ICON)
+local timerThrow			= mod:NewNextTimer(15, 43093, nil, nil, nil, 5, nil, DBM_CORE_L.HEALER_ICON)
+local timerParalysisCD		= mod:NewNextTimer(27, 43095, nil, nil, nil, 5, nil, DBM_CORE_L.HEALER_ICON..DBM_CORE_L.MAGIC_ICON)
 local timerSurgeCD			= mod:NewNextTimer(8.5, 42402, nil, nil, nil, 3)--Bear Form Ability, same mechanic as bear boss, cannot soak more than 1 before debuff fades or you will die.
-local timerLightningTotemCD	= mod:NewNextTimer(17, 97930, nil, nil, nil, 1, nil, DBM_CORE_DAMAGE_ICON)--Eagle Form Ability.
+local timerLightningTotemCD	= mod:NewNextTimer(17, 97930, nil, nil, nil, 1, nil, DBM_CORE_L.DAMAGE_ICON)--Eagle Form Ability.
 
 mod:AddSetIconOption("ThrowIcon", 43093, false, false, {8})
 mod:AddSetIconOption("ClawRageIcon", 43150, false, false, {8})

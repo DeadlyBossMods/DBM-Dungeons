@@ -24,9 +24,9 @@ local warnPhase2		= mod:NewPhaseAnnounce(2)
 local specWarnTears		= mod:NewSpecialWarningInterrupt(96435, "HasInterrupt", nil, 2, 1, 2)
 
 local timerTears		= mod:NewCastTimer(6, 96435, nil, nil, nil, 2)
-local timerLash			= mod:NewTargetTimer(10, 96423, nil, "Healer", 2, 5, nil, DBM_CORE_HEALER_ICON..DBM_CORE_MAGIC_ICON)
+local timerLash			= mod:NewTargetTimer(10, 96423, nil, "Healer", 2, 5, nil, DBM_CORE_L.HEALER_ICON..DBM_CORE_L.MAGIC_ICON)
 local timerWaveAgony	= mod:NewCDTimer(32, 96457, nil, nil, nil, 3)
-local timerRavage		= mod:NewTargetTimer(10, 96592, nil, false, nil, 5, nil, DBM_CORE_HEALER_ICON)
+local timerRavage		= mod:NewTargetTimer(10, 96592, nil, false, nil, 5, nil, DBM_CORE_L.HEALER_ICON)
 
 mod.vb.phase = 1
 

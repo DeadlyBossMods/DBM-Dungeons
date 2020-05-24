@@ -24,9 +24,9 @@ local specWarnGroundSlam	= mod:NewSpecialWarningDodge(78903, "Tank", nil, nil, 1
 local specWarnShatter		= mod:NewSpecialWarningRun(78807, "Melee", nil, 2, 4, 2)
 
 --local timerShatterCD		= mod:NewCDTimer(19, 78807)
-local timerBulwark			= mod:NewBuffActiveTimer(10, 78939, nil, nil, nil, 5, nil, DBM_CORE_MAGIC_ICON)
-local timerBulwarkCD		= mod:NewCDTimer(20, 78939, nil, nil, nil, 5, nil, DBM_CORE_MAGIC_ICON)
-local timerShatter			= mod:NewCastTimer(3, 78807, nil, "Melee", 2, 2, nil, DBM_CORE_DEADLY_ICON)
+local timerBulwark			= mod:NewBuffActiveTimer(10, 78939, nil, nil, nil, 5, nil, DBM_CORE_L.MAGIC_ICON)
+local timerBulwarkCD		= mod:NewCDTimer(20, 78939, nil, nil, nil, 5, nil, DBM_CORE_L.MAGIC_ICON)
+local timerShatter			= mod:NewCastTimer(3, 78807, nil, "Melee", 2, 2, nil, DBM_CORE_L.DEADLY_ICON)
 
 mod.vb.prewarnEnrage = false
 

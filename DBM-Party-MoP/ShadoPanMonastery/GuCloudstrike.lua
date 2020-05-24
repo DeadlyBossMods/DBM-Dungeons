@@ -37,7 +37,7 @@ local staticFieldText = DBM:GetSpellInfo(106923)
 -- very poor code. not clean. (to replace %%s -> %s)
 local targetFormatText
 do
-	local originalText = DBM_CORE_AUTO_ANNOUNCE_TEXTS.target
+	local originalText = DBM_CORE_L.AUTO_ANNOUNCE_TEXTS.target
 	local startIndex = string.find(originalText, "%%%%")
 	local tmp1 = string.sub(originalText, 1, startIndex)
 	local tmp2 = string.sub(originalText, startIndex+2)

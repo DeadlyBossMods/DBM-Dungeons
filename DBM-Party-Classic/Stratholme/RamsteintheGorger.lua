@@ -14,7 +14,7 @@ mod:RegisterEventsInCombat(
 local warningKnockout			= mod:NewSpellAnnounce(17307, 2)
 local warningTrample			= mod:NewSpellAnnounce(5568, 2)
 
-local timerKnockoutCD			= mod:NewAITimer(180, 17307, nil, nil, nil, 5, nil, DBM_CORE_TANK_ICON)
+local timerKnockoutCD			= mod:NewAITimer(180, 17307, nil, nil, nil, 5, nil, DBM_CORE_L.TANK_ICON)
 local timerTrampleCD			= mod:NewAITimer(180, 5568, nil, nil, nil, 2)
 
 function mod:OnCombatStart(delay)

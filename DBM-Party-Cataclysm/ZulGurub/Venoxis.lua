@@ -30,7 +30,7 @@ local specWarnBloodvenom	= mod:NewSpecialWarningSpell(96842, nil, nil, nil, 2, 2
 local specWarnPoolAcridTears= mod:NewSpecialWarningMove(96521, nil, nil, nil, 1, 2)
 local specWarnEffusion		= mod:NewSpecialWarningMove(96680, nil, nil, nil, 1, 2)
 
-local timerWhisperHethiss	= mod:NewTargetTimer(8, 96466, nil, nil, nil, 4, nil, DBM_CORE_INTERRUPT_ICON)
+local timerWhisperHethiss	= mod:NewTargetTimer(8, 96466, nil, nil, nil, 4, nil, DBM_CORE_L.INTERRUPT_ICON)
 local timerBreathHethiss	= mod:NewNextTimer(12, 96509, nil, nil, nil, 3)
 local timerToxicLinkCD		= mod:NewNextTimer(14, 96477, nil, nil, nil, 3)--13-15 second variations, 14 will be a good medium
 

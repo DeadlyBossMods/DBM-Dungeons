@@ -25,7 +25,7 @@ local specWarnFlamingFixate		= mod:NewSpecialWarningRun(82850, nil, nil, nil, 4,
 local specWarnDevouring 		= mod:NewSpecialWarningDodge(90950, nil, nil, nil, 2, 2)
 local specWarnSeepingTwilight	= mod:NewSpecialWarningMove(75317, nil, nil, nil, 2, 2)
 
-local timerAddCD				= mod:NewCDTimer(22, 90949, nil, nil, nil, 1, nil, DBM_CORE_DAMAGE_ICON)--22-27. 24 is the average
+local timerAddCD				= mod:NewCDTimer(22, 90949, nil, nil, nil, 1, nil, DBM_CORE_L.DAMAGE_ICON)--22-27. 24 is the average
 local timerDevouringCD			= mod:NewCDTimer(40, 90950, nil, nil, nil, 3)
 local timerDevouring			= mod:NewBuffActiveTimer(5, 90950, nil, nil, nil, 3)
 --local timerShredding			= mod:NewBuffActiveTimer(20, 75271)

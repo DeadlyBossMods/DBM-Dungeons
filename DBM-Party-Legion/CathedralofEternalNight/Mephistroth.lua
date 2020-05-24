@@ -33,7 +33,7 @@ local specWarnDemonicUpheaval		= mod:NewSpecialWarningMoveAway(233963, nil, nil,
 local yellDemonicUpheaval			= mod:NewYell(233963)
 
 local timerDarkSolitudeCD			= mod:NewCDTimer(8.5, 234817, nil, nil, nil, 3)
-local timerCarrionSwarmCD			= mod:NewCDTimer(18, 233155, nil, "Tank", nil, 5, nil, DBM_CORE_TANK_ICON)
+local timerCarrionSwarmCD			= mod:NewCDTimer(18, 233155, nil, "Tank", nil, 5, nil, DBM_CORE_L.TANK_ICON)
 local timerDemonicUpheavalCD		= mod:NewCDTimer(32, 233963, nil, nil, nil, 3)--32-35
 local timerShadowFadeCD				= mod:NewCDTimer(40, 233206, nil, nil, nil, 6)
 
