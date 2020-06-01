@@ -80,7 +80,7 @@ function mod:LeapTarget(targetname, uId)
 	if not targetname then return end
 	if targetname == UnitName("player") then
 		specWarnDemonicLeap:Show()
-		specWarnDemonicLeap:Play("targetyou')
+		specWarnDemonicLeap:Play("targetyou")
 		yellDemonicLeap:Yell()
 	else
 		warnDemonicLeap:Show(targetname)
