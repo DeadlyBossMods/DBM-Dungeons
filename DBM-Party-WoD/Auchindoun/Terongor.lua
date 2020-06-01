@@ -43,9 +43,9 @@ local specWarnExhaustion		= mod:NewSpecialWarningDispel(164841, "RemoveCurse", n
 local specWarnChaosBolt			= mod:NewSpecialWarningInterrupt(156975, "HasInterrupt", nil, nil, 3, 2)
 local specWarnImmolate			= mod:NewSpecialWarningDispel(156964, "Healer", nil, nil, 1, 2)
 --Demonic Abilities
-local specWarnDemonicLeap		= mod:NewSpecialWarningYou(157039)
+local specWarnDemonicLeap		= mod:NewSpecialWarningYou(157039, nil, nil, nil, 1, 2)
 local yellDemonicLeap			= mod:NewYell(157039)
-local specWarnChaosWave			= mod:NewSpecialWarningYou(157001)
+local specWarnChaosWave			= mod:NewSpecialWarningYou(157001, nil, nil, nil, 1, 2)
 local yellWarnChaosWave			= mod:NewYell(157001)
 
 --Basic Abilities
@@ -78,20 +78,23 @@ mod.vb.phase = 1
 
 function mod:LeapTarget(targetname, uId)
 	if not targetname then return end
-	warnDemonicLeap:Show(targetname)
 	if targetname == UnitName("player") then
 		specWarnDemonicLeap:Show()
+		specWarnDemonicLeap:Play("targetyou')
 		yellDemonicLeap:Yell()
+	else
+		warnDemonicLeap:Show(targetname)
 	end
 end
 
 function mod:ChaosWaveTarget(targetname, uId)
 	if not targetname then return end
-	warnChaosWave:Show(targetname)
 	if targetname == UnitName("player") then
 		specWarnChaosWave:Show()
-		yellWarnChaosWave:Yell()
 		specWarnChaosWave:Play("runaway")
+		yellWarnChaosWave:Yell()
+	else
+		warnChaosWave:Show(targetname)
 	end
 end
 
