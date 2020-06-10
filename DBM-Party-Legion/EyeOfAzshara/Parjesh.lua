@@ -36,7 +36,7 @@ function mod:SPELL_AURA_APPLIED(args)
 	if spellId == 192094 then
 		timerSpearCD:Start()
 		if args:IsPlayer() then
-			specWarnImpalingSpear:Show(DBM_ADDS)
+			specWarnImpalingSpear:Show(DBM_CORE_L.ADDS)
 			yellImpalingSpear:Yell()
 			specWarnImpalingSpear:Play("behindmob")
 		else
