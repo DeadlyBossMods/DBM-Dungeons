@@ -47,7 +47,6 @@ globals = {
 	"DBM_GUI_Translations",
 	"DBM_GUI",
 	"DBM",
-	"DBMHudMap",
 	"DBMInfoFrame",
 	"DBMRangeCheck",
 	"DBMRangeCheckRadar",
