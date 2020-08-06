@@ -4,7 +4,6 @@ local L		= mod:GetLocalizedStrings()
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(119542)--119883 Fel Portal Guardian 118834
 mod:SetEncounterID(2053)
-mod:SetZone()
 --mod:SetHotfixNoticeRev(15186)
 --mod:SetUsedIcons(8)
 

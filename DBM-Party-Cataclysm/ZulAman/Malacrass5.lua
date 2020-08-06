@@ -4,7 +4,6 @@ local L		= mod:GetLocalizedStrings()
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(24239)
 mod:SetEncounterID(1193)
-mod:SetZone()
 
 mod:RegisterCombat("combat")
 mod:SetMinCombatTime(30)	-- Prevent pre-maturely combat-end in cases where none targets the boss?

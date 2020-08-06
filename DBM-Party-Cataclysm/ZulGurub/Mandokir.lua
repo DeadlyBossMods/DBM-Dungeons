@@ -5,7 +5,6 @@ local Ohgan	= DBM:EJ_GetSectionInfo(2615)
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(52151)
 mod:SetEncounterID(1179)
-mod:SetZone()
 mod:SetUsedIcons(8)
 
 mod:RegisterCombat("combat")

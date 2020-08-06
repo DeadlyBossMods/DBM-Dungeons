@@ -5,7 +5,6 @@ mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(40792)
 mod:SetEncounterID(1047)
 mod:SetMainBossID(42172)--42172 is Ozumat, but we need Neptulon for engage trigger.
-mod:SetZone()
 
 mod:RegisterCombat("combat")
 

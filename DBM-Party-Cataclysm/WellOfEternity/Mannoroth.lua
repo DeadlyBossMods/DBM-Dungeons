@@ -5,7 +5,6 @@ mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(54969)
 mod:SetEncounterID(1274)--Definitely Review
 mod:SetReCombatTime(60)
-mod:SetZone()
 
 mod:RegisterCombat("combat")
 mod:RegisterKill("say", L.Kill)

@@ -5,7 +5,6 @@ mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(95674, 99868)
 mod:SetEncounterID(1807)
 mod:DisableEEKillDetection()
-mod:SetZone()
 
 mod:RegisterCombat("combat")
 

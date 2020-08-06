@@ -4,8 +4,7 @@ local L		= mod:GetLocalizedStrings()
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(34928)
 --mod:SetEncounterID(338, 339, 2023)--DO NOT ENABLE. Confessor and Eadric are both flagged as same encounterid ("Argent Champion")
---mod:SetZone()
-
+--
 mod:RegisterCombat("combat")
 mod:RegisterKill("yell", L.YellCombatEnd)
 

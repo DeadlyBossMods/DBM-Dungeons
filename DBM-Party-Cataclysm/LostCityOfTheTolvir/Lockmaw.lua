@@ -4,7 +4,6 @@ local L		= mod:GetLocalizedStrings()
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(43614)
 --mod:SetEncounterID(1054)--Disabled because it's likely not correct since him and augh are split.
-mod:SetZone()
 
 mod:RegisterCombat("combat")
 

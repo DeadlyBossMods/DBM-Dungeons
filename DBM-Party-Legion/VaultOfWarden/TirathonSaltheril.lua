@@ -5,7 +5,6 @@ mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(95885)
 mod:SetEncounterID(1815)
 mod:DisableESCombatDetection()--Remove if blizz fixes trash firing ENCOUNTER_START
-mod:SetZone()
 
 mod:RegisterCombat("combat")
 

@@ -4,7 +4,6 @@ local L		= mod:GetLocalizedStrings()
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(101950)
 mod:SetEncounterID(1846)
-mod:SetZone()
 
 mod.imaspecialsnowflake = true
 

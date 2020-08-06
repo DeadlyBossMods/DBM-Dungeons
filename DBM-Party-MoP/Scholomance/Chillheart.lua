@@ -8,7 +8,6 @@ mod:SetCreatureID(58633, 58664)--58633 is boss, 58664 is Phylactery. We register
 --that said, the way dbm works, registering UNIT_DIED was overkill in original code
 --Just adding both CIDs to combat table will suffice, 58633 will be removed in phase 1 sure, but 58664 stays in table until boss actually dies completely so all is good.
 mod:SetEncounterID(1426)
-mod:SetZone()
 
 mod:RegisterCombat("combat")
 

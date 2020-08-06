@@ -3,7 +3,6 @@ local L = mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(30658)
-mod:SetZone()
 
 mod:RegisterEvents(
 	"UPDATE_UI_WIDGET",

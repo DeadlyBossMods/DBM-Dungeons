@@ -4,7 +4,6 @@ local L		= mod:GetLocalizedStrings()
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(104215)
 mod:SetEncounterID(1868)
-mod:SetZone()
 
 mod.noNormal = true
 

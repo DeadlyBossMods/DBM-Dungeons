@@ -4,7 +4,6 @@ local L		= mod:GetLocalizedStrings()
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(54590)
 mod:SetEncounterID(1337)
-mod:SetZone()
 
 mod:RegisterCombat("emote", L.Pull)
 --Still don't know why this needs to pull this way, this boss fires an engage event? plus emote only fires FIRST pull so this mod is even broken subsiquent pulls

@@ -4,7 +4,6 @@ local L		= mod:GetLocalizedStrings()
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(29311)
 mod:SetEncounterID(215, 263, 1968)
-mod:SetZone()
 
 mod:RegisterCombat("combat")
 

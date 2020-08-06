@@ -4,7 +4,6 @@ local L		= mod:GetLocalizedStrings()
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(49045)
 mod:SetModelID(37339)--Needs hardcode because he's not in EJ as a separate boss even though he is.
-mod:SetZone()
 
 mod:RegisterCombat("combat")
 

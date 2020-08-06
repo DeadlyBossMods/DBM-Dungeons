@@ -4,7 +4,6 @@ local L		= mod:GetLocalizedStrings()
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(76413)
 mod:SetEncounterID(1761)
-mod:SetZone()
 
 mod:RegisterCombat("combat")
 mod.disableHealthCombat = true
