@@ -31,7 +31,7 @@ local specwarnWaveVirtue		= mod:NewSpecialWarningMoveTo(103678, nil, nil, nil, 2
 local specwarnTwilight			= mod:NewSpecialWarningMove(103775, nil, nil, nil, 1, 8)
 local specwarnWaveTwilight		= mod:NewSpecialWarningMoveTo(103780, nil, nil, nil, 2)
 
-local timerCombatStart			= mod:NewTimer(51.5, "TimerCombatStart", 2457)
+local timerCombatStart			= mod:NewTimer(51.5, "TimerCombatStart", "132349")
 local timerWaveVirtueCD			= mod:NewNextTimer(30, 103678, nil, nil, nil, 2)--Will he do it more then once? if you are terrible and take > 30 sec to push him?
 local timerWaveTwilightCD		= mod:NewNextTimer(30, 103780, nil, nil, nil, 2)--^
 
