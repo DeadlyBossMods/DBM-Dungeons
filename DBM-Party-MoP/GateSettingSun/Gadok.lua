@@ -24,7 +24,7 @@ local specWarnStafingRun	= mod:NewSpecialWarningSpell("ej5660", nil, nil, nil, 2
 local specWarnStafingRunAoe	= mod:NewSpecialWarningMove(116297)
 local specWarnAcidBomb		= mod:NewSpecialWarningMove(115458)
 
-local timerImpalingStrikeCD	= mod:NewNextTimer(30, 107047)
+local timerImpalingStrikeCD	= mod:NewCDTimer(25.5, 107047)
 local timerPreyTime			= mod:NewTargetTimer(5, 106933, nil, "Healer", nil, 5, nil, DBM_CORE_L.HEALER_ICON)
 local timerPreyTimeCD		= mod:NewNextTimer(14.5, 106933, nil, nil, nil, 3)
 
@@ -67,6 +67,8 @@ function mod:RAID_BOSS_EMOTE(msg)--Needs a better trigger if possible using tran
 	if msg == L.StaffingRun or msg:find(L.StaffingRun) then
 		warnStrafingRun:Show()
 		specWarnStafingRun:Show()
+		timerPreyTimeCD:Stop()
+		timerImpalingStrikeCD:Stop()
 		timerImpalingStrikeCD:Start(29)
 		timerPreyTimeCD:Start(32.5)
 	end

@@ -19,7 +19,7 @@ local warnBananas			= mod:NewStackAnnounce(106651, 2)
 
 local specWarnGroundPound	= mod:NewSpecialWarningMove(106807, "Tank")
 
-local timerGroundPoundCD	= mod:NewCDTimer(10.5, 106807, nil, "Melee", 2, 5)
+--local timerGroundPoundCD	= mod:NewCDTimer(4.8, 106807, nil, "Melee", 2, 5)
 
 function mod:OnCombatStart(delay)
 --	timerGroundPoundCD:Start(-delay)--No accurate start time yet, i think he does it on engage though instantly so may be irrelevent.
@@ -49,6 +49,6 @@ function mod:SPELL_CAST_START(args)
 	if args.spellId == 106807 then
 		warnGroundPound:Show()
 		specWarnGroundPound:Show()
-		timerGroundPoundCD:Start()
+--		timerGroundPoundCD:Start()
 	end
 end

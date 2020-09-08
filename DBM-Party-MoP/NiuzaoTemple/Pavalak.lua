@@ -28,7 +28,7 @@ mod.vb.phase = 1
 
 function mod:OnCombatStart(delay)
 	self.vb.phase = 1
-	timerBladeRushCD:Start(-delay)
+	timerBladeRushCD:Start(10.6-delay)
 end
 
 function mod:OnCombatEnd()
