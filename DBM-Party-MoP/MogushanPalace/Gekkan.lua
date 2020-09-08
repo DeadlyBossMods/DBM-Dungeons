@@ -11,8 +11,8 @@ mod:RegisterEventsInCombat(
 	"SPELL_AURA_APPLIED 118988 129262 118958 118903",
 	"SPELL_AURA_APPLIED_DOSE 129262",
 	"SPELL_AURA_REMOVED 118988 129262 118903 118958",
-	"SPELL_CAST_START 118903 118963 118940",
-	"UNIT_DIED"
+	"SPELL_CAST_START 118903 118963 118940"
+--	"UNIT_DIED"
 )
 
 local warnRecklessInspiration	= mod:NewStackAnnounce(118988, 3)
@@ -29,11 +29,11 @@ local specWarnHexDispel			= mod:NewSpecialWarningDispel(118903, false)
 
 local timerInspiriation			= mod:NewTargetTimer(20, 118988)
 local timerIronProtector		= mod:NewTargetTimer(15, 118958)
-local timerHexCD				= mod:NewCDTimer(9, 118903, nil, nil, nil, 3)
-local timerHex					= mod:NewTargetTimer(20, 118903, nil, "Healer")
+--local timerHexCD				= mod:NewCDTimer(9, 118903, nil, nil, nil, 3)
+local timerHex					= mod:NewTargetTimer(20, 118903, nil, "Healer", nil, 5)
 
-function mod:OnCombatStart(delay)
-end
+--function mod:OnCombatStart(delay)
+--end
 
 function mod:SPELL_AURA_APPLIED(args)
 	if args:IsSpellID(118988, 129262) then
@@ -70,7 +70,7 @@ function mod:SPELL_CAST_START(args)
 	if args.spellId == 118903 then
 		warnHexCast:Show()
 		specWarnHexInterrupt:Show(args.sourceName)
-		timerHexCD:Start()
+--		timerHexCD:Start()
 	elseif args.spellId == 118963 then
 		warnShank:Show()
 		specWarnShank:Show(args.sourceName)
@@ -80,9 +80,11 @@ function mod:SPELL_CAST_START(args)
 	end
 end
 
+--[[
 function mod:UNIT_DIED(args)
 	local cid = self:GetCIDFromGUID(args.destGUID)
 	if cid == 61340 and self:IsInCombat() then--Seperate statement for Glintrok Hexxer since we actually need to cancel a cd bar.
-		timerHexCD:Cancel()
+--		timerHexCD:Cancel()
 	end
 end
+--]]

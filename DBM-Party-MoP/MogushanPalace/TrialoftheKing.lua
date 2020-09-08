@@ -32,7 +32,7 @@ local specWarnConflag		= mod:NewSpecialWarningTarget(120201, "Healer")
 
 local timerRavage			= mod:NewTargetTimer(11, 119946)
 local timerRavageCD			= mod:NewCDTimer(20, 119946, nil, nil, nil, 3)
-local timerShockwaveCD		= mod:NewNextTimer(15, 119922, nil, nil, nil, 3)
+local timerShockwaveCD		= mod:NewCDTimer(10.9, 119922, nil, nil, nil, 3)
 local timerWhirlingDervishCD= mod:NewCDTimer(22, 119981)
 local timerTraumaticBlow	= mod:NewTargetTimer(5, 123655)
 local timerTraumaticBlowCD	= mod:NewCDTimer(17, 123655)--17-21sec variation

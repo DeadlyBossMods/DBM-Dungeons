@@ -14,31 +14,31 @@ mod:RegisterEventsInCombat(
 )
 
 
-local warnGroundSmash		= mod:NewCastAnnounce(119684, 3)
+local warnGroundSlam		= mod:NewCastAnnounce(119684, 3)
 local warnStaff				= mod:NewSpellAnnounce("ej5973", 2)
 local warnRoar				= mod:NewSpellAnnounce(122959, 3, nil, "Healer|Tank")
 local warnWhirlwindingAxe	= mod:NewSpellAnnounce(119374, 4)
 local warnStreamBlades		= mod:NewSpellAnnounce("ej5972", 4)
 local warnCrossbowTrap		= mod:NewSpellAnnounce("ej5974", 4)
 
-local specWarnSmash			= mod:NewSpecialWarningMove(119684, "Healer")
+local specWarnSlam			= mod:NewSpecialWarningMove(119684, "Healer")
 
-local timerSmashCD			= mod:NewCDTimer(28, 119684, nil, nil, nil, 3)
-local timerStaffCD			= mod:NewCDTimer(23, "ej5973", nil, nil, nil, 3)--23~25 sec.
+local timerSlamCD			= mod:NewCDTimer(18.2, 119684, nil, nil, nil, 3)
+local timerStaffCD			= mod:NewCDTimer(20.6, "ej5973", nil, nil, nil, 3)--20.6~25 sec.
 local timerWhirlwindingAxe	= mod:NewNextTimer(15, 119374, nil, nil, nil, 3)
 --local timerRoarCD			= mod:NewCDTimer(48, 122959)--Need to confirm, i crashed during log and only got 2 casts, so only one CD, not enough confirmation for me.
 
 function mod:OnCombatStart(delay)
 	timerStaffCD:Start(8-delay)
-	timerSmashCD:Start(9.5-delay)
+	timerSlamCD:Start(9.5-delay)
 	timerWhirlwindingAxe:Start(-delay)
 end
 
 function mod:SPELL_CAST_START(args)
 	if args.spellId == 119684 then
-		warnGroundSmash:Show()
-		specWarnSmash:Show()
-		timerSmashCD:Start()
+		warnGroundSlam:Show()
+		specWarnSlam:Show()
+		timerSlamCD:Start()
 	end
 end
 
