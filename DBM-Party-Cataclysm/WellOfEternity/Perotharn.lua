@@ -1,6 +1,8 @@
 local mod	= DBM:NewMod(290, "DBM-Party-Cataclysm", 13, 185)
 local L		= mod:GetLocalizedStrings()
 
+mod.statTypes = "heroic,timewalker"
+
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(55085)
 mod:SetEncounterID(1272)
@@ -14,7 +16,6 @@ mod:RegisterEventsInCombat(
 	"SPELL_AURA_APPLIED 105544 105526",
 	"SPELL_AURA_REMOVED 105544"
 )
-mod.onlyHeroic = true
 
 local warnFelFlames			= mod:NewTargetNoFilterAnnounce(108141, 3)
 local warnDecay				= mod:NewTargetNoFilterAnnounce(105544, 3, nil, "Healer")

@@ -1,6 +1,8 @@
 local mod	= DBM:NewMod(341, "DBM-Party-Cataclysm", 14, 186)
 local L		= mod:GetLocalizedStrings()
 
+mod.statTypes = "heroic,timewalker"
+
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(54938)
 mod:SetEncounterID(1339)
@@ -19,7 +21,6 @@ mod:RegisterEventsInCombat(
 mod:RegisterEvents(
 	"CHAT_MSG_MONSTER_SAY"
 )
-mod.onlyHeroic = true
 
 local warnRighteousShear		= mod:NewTargetNoFilterAnnounce(103151, 2, nil, "Healer", 2)
 local warnPurifyingLight		= mod:NewSpellAnnounce(103565, 3)

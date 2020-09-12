@@ -1,6 +1,8 @@
 local mod	= DBM:NewMod(1827, "DBM-Party-Legion", 11, 860)
 local L		= mod:GetLocalizedStrings()
 
+mod.statTypes = "heroic,mythic,challenge"
+
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(114329, 114522, 114330, 114328)
 mod:SetEncounterID(1957)--Shared (so not used for encounter START since it'd fire 3 mods)
@@ -10,8 +12,6 @@ mod:SetUsedIcons(1)
 --mod:SetHotfixNoticeRev(14922)
 mod:SetBossHPInfoToHighest()
 --mod.respawnTime = 30
-
-mod.noNormal = true
 
 mod:RegisterCombat("combat")
 

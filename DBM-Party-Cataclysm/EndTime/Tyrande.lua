@@ -1,6 +1,8 @@
 local mod	= DBM:NewMod(283, "DBM-Party-Cataclysm", 12, 184)
 local L		= mod:GetLocalizedStrings()
 
+mod.statTypes = "heroic,timewalker"
+
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(54544)
 mod:SetEncounterID(1884)
@@ -13,7 +15,6 @@ mod:RegisterEventsInCombat(
 	"SPELL_AURA_APPLIED_DOSE 102472",
 	"SPELL_CAST_START 102472 102173"
 )
-mod.onlyHeroic = true
 
 local warnGuidance		= mod:NewSpellAnnounce(102472, 3)
 local warnGuidanceStack	= mod:NewCountAnnounce(102472, 2, nil, false)

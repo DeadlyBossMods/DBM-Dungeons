@@ -1,6 +1,8 @@
 local mod	= DBM:NewMod(184, "DBM-Party-Cataclysm", 11, 76)
 local L		= mod:GetLocalizedStrings()
 
+mod.statTypes = "heroic,timewalker"
+
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(52053)
 mod:SetEncounterID(1181)
@@ -13,7 +15,6 @@ mod:RegisterEventsInCombat(
 	"SPELL_AURA_APPLIED 96338 96316 96916",
 	"SPELL_CAST_START 96914 96338 96342"
 )
-mod.onlyHeroic = true
 
 local warnZanzilElixir		= mod:NewSpellAnnounce(96316, 4)
 local warnZanzilFire		= mod:NewSpellAnnounce(96914, 3)

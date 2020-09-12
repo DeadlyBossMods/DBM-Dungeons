@@ -1,6 +1,8 @@
 local mod = DBM:NewMod(542, "DBM-Party-BC", 9, 252)
 local L = mod:GetLocalizedStrings()
 
+mod.statTypes = "heroic,timewalker"
+
 mod:SetRevision("@file-date-integer@")
 
 mod:SetCreatureID(23035)
@@ -15,7 +17,6 @@ mod:RegisterEventsInCombat(
 	"UNIT_HEALTH boss1" ,
 	"CHAT_MSG_MONSTER_EMOTE"
 )
-mod.onlyHeroic = true
 
 local warnBirds             = mod:NewSpellAnnounce("ej5253", 2, 32038)
 local warnStoned            = mod:NewAnnounce("warnStoned", 1, 32810, false)

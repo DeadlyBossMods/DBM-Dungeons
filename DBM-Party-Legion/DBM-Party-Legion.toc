@@ -15,8 +15,7 @@
 ## X-DBM-Mod: 1
 ## X-DBM-Mod-Type: PARTY
 ## X-DBM-Mod-Category: LEG
-## X-DBM-Mod-Has-Challenge: 1
-## X-DBM-Mod-Has-Mythic : 1
+## X-DBM-StatTypes: normal,heroic,mythic,challenge
 ## X-DBM-Mod-SubCategoriesID: 1501, 1466, 1456, 1477, 1458, 1516, 1571, 1492, 1544, 1493, 1651, 1677, 1753
 ## X-DBM-Mod-Name: Dungeons (Legion)
 ## X-DBM-Mod-Name-deDE: Gruppe (Legion)

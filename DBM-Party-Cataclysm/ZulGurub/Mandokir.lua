@@ -2,6 +2,8 @@ local mod	= DBM:NewMod(176, "DBM-Party-Cataclysm", 11, 76)
 local L		= mod:GetLocalizedStrings()
 local Ohgan	= DBM:EJ_GetSectionInfo(2615)
 
+mod.statTypes = "heroic,timewalker"
+
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(52151)
 mod:SetEncounterID(1179)
@@ -17,7 +19,6 @@ mod:RegisterEventsInCombat(
 	"SPELL_HEAL 96724",
 	"UNIT_DIED"
 )
-mod.onlyHeroic = true
 
 local warnDecapitate		= mod:NewTargetAnnounce(96684, 2)
 local warnBloodletting		= mod:NewTargetAnnounce(96776, 3)
