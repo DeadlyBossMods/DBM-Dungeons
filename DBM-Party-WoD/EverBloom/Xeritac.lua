@@ -1,6 +1,8 @@
 local mod	= DBM:NewMod(1209, "DBM-Party-WoD", 5, 556)
 local L		= mod:GetLocalizedStrings()
 
+mod.statTypes = "normal,heroic,mythic,challenge,timewalker"
+
 mod:SetRevision((string.sub("@file-date-integer@", 1, -5)):sub(12, -3))
 mod:SetCreatureID(84550)
 mod:SetEncounterID(1752)--TODO: VERIFY, "Boss 4" isn't descriptive enough

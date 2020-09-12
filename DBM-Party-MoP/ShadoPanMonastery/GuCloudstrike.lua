@@ -1,6 +1,8 @@
 local mod	= DBM:NewMod(673, "DBM-Party-MoP", 3, 312)
 local L		= mod:GetLocalizedStrings()
 
+mod.statTypes = "normal,heroic,challenge,timewalker"
+
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(56747)--56747 (Gu Cloudstrike), 56754 (Azure Serpent)
 mod:SetEncounterID(1303)

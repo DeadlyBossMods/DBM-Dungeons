@@ -1,6 +1,8 @@
 local mod = DBM:NewMod(532, "DBM-Party-BC", 16, 249)
 local L = mod:GetLocalizedStrings()
 
+mod.statTypes = "normal,heroic,timewalker"
+
 mod:SetRevision("@file-date-integer@")
 
 mod:SetCreatureID(24560)--24560 is main boss.
