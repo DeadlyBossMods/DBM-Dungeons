@@ -1,6 +1,8 @@
 local mod	= DBM:NewMod("Garr", "DBM-Party-Cataclysm", 15)
 local L		= mod:GetLocalizedStrings()
 
+mod.statTypes = "normal,timewalker"
+
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(50056)
 mod:SetModelID(37307)
@@ -11,7 +13,6 @@ mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 93508",
 	"SPELL_CAST_SUCCESS 93506"
 )
-mod.onlyNormal = true
 
 local warnAntiMagicPulse		= mod:NewSpellAnnounce(93506, 2)--An attack that one shots anyone not in a twilight zone.
 

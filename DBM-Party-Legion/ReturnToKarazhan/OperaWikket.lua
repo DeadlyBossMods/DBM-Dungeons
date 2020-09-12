@@ -1,6 +1,8 @@
 local mod	= DBM:NewMod(1820, "DBM-Party-Legion", 11, 860)
 local L		= mod:GetLocalizedStrings()
 
+mod.statTypes = "heroic,mythic,challeng"
+
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(114284, 114251)
 mod:SetEncounterID(1957)--Shared (so not used for encounter START since it'd fire 3 mods)
@@ -8,8 +10,6 @@ mod:DisableESCombatDetection()--However, with ES disabled, EncounterID can be us
 --mod:SetUsedIcons(1)
 --mod:SetHotfixNoticeRev(14922)
 --mod.respawnTime = 30
-
-mod.noNormal = true
 
 mod:RegisterCombat("combat")
 

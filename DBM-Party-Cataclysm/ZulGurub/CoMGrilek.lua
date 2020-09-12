@@ -1,6 +1,8 @@
 local mod	= DBM:NewMod(177, "DBM-Party-Cataclysm", 11, 76, 1)
 local L		= mod:GetLocalizedStrings()
 
+mod.statTypes = "heroic,timewalker"
+
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(52258)
 
@@ -10,7 +12,6 @@ mod:RegisterEventsInCombat(
 	"SPELL_CAST_SUCCESS",
 	"CHAT_MSG_MONSTER_EMOTE"
 )
-mod.onlyHeroic = true
 
 local warnPursuit				= mod:NewTargetNoFilterAnnounce(96306, 4)
 local warnRupture				= mod:NewTargetNoFilterAnnounce(96619, 3)

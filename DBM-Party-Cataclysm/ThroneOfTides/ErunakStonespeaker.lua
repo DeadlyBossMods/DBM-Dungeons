@@ -1,6 +1,8 @@
 local mod	= DBM:NewMod(103, "DBM-Party-Cataclysm", 9, 65)
 local L		= mod:GetLocalizedStrings()
 
+mod.statTypes = "normal,heroic,timewalker"
+
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(40825, 40788)
 mod:SetMainBossID(40788)-- 40788 = Mindbender Ghur'sha

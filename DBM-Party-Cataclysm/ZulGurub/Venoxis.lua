@@ -1,6 +1,8 @@
 local mod	= DBM:NewMod(175, "DBM-Party-Cataclysm", 11, 76)
 local L		= mod:GetLocalizedStrings()
 
+mod.statTypes = "heroic,timewalker"
+
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(52155)
 mod:SetEncounterID(1178)
@@ -16,7 +18,6 @@ mod:RegisterEvents(
 	"SPELL_AURA_APPLIED 96477 96509 96512 96466",
 	"SPELL_AURA_REMOVED 96466 96477"
 )
-mod.onlyHeroic = true
 
 local warnWordHethiss		= mod:NewSpellAnnounce(96560, 2)
 local warnBreathHethiss		= mod:NewSpellAnnounce(96509, 3)

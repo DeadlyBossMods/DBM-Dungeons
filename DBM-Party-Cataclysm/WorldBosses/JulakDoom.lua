@@ -1,6 +1,8 @@
 local mod	= DBM:NewMod("JulakDoom", "DBM-Party-Cataclysm", 15)
 local L		= mod:GetLocalizedStrings()
 
+mod.statTypes = "normal,timewalker"
+
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(50089)
 mod:SetModelID(24301)
@@ -15,7 +17,6 @@ mod:RegisterEventsInCombat(
 	"SPELL_DAMAGE 93612",
 	"SPELL_MISSED 93612"
 )
-mod.onlyNormal = true
 
 local warnShockwave			= mod:NewCastAnnounce(93610, 3)
 local warnMC				= mod:NewTargetNoFilterAnnounce(93621, 4)

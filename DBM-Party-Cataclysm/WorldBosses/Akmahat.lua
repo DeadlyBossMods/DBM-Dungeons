@@ -1,6 +1,8 @@
 local mod	= DBM:NewMod("Akmahat", "DBM-Party-Cataclysm", 15)
 local L		= mod:GetLocalizedStrings()
 
+mod.statTypes = "normal,timewalker"
+
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(50063)
 mod:SetModelID(34573)
@@ -12,7 +14,6 @@ mod:RegisterEventsInCombat(
 	"SPELL_AURA_APPLIED 93561 93578",
 	"SPELL_AURA_REMOVED 93561 93578"
 )
-mod.onlyNormal = true
 
 local warnShockwave			= mod:NewSpellAnnounce(94968, 2, nil, "Tank|Healer")
 local warnSandsofTime		= mod:NewTargetNoFilterAnnounce(93578, 2)

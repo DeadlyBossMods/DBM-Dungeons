@@ -1,14 +1,14 @@
 local mod	= DBM:NewMod("Nightbane", "DBM-Party-Legion", 11)
 local L		= mod:GetLocalizedStrings()
 
+mod.statTypes = "mythic,challenge"
+
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(114895)
 mod:SetEncounterID(2031)
 mod:SetUsedIcons(1)
 mod:SetHotfixNoticeRev(15430)
 mod.respawnTime = 25
-
-mod.onlyMythic = true--VERIFY how they actually do this
 
 mod:RegisterCombat("combat")
 

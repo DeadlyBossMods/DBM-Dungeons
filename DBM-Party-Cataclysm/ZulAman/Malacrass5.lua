@@ -1,6 +1,8 @@
 local mod	= DBM:NewMod(190, "DBM-Party-Cataclysm", 10, 77)
 local L		= mod:GetLocalizedStrings()
 
+mod.statTypes = "heroic,timewalker"
+
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(24239)
 mod:SetEncounterID(1193)
@@ -15,7 +17,6 @@ mod:RegisterEventsInCombat(
 	"SPELL_PERIODIC_DAMAGE 43429 43440 61603",
 	"SPELL_PERIODIC_MISSED 43429 43440 61603"
 )
-mod.onlyHeroic = true
 
 local warnSiphon			= mod:NewTargetNoFilterAnnounce(43501, 3)
 local warnSpiritBolts		= mod:NewSpellAnnounce(43383, 3)

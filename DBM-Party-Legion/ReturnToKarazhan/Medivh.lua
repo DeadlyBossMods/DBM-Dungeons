@@ -1,14 +1,14 @@
 local mod	= DBM:NewMod(1817, "DBM-Party-Legion", 11, 860)
 local L		= mod:GetLocalizedStrings()
 
+mod.statTypes = "heroic,mythic,challenge"
+
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(114350)
 mod:SetEncounterID(1965)
 mod:SetUsedIcons(1, 2)
 --mod:SetHotfixNoticeRev(14922)
 --mod.respawnTime = 30
-
-mod.noNormal = true
 
 mod:RegisterCombat("combat")
 

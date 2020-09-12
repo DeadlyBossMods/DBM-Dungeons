@@ -1,6 +1,8 @@
 ﻿local mod	= DBM:NewMod(187, "DBM-Party-Cataclysm", 10, 77)
 local L		= mod:GetLocalizedStrings()
 
+mod.statTypes = "heroic,timewalker"
+
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(23576)
 mod:SetEncounterID(1190)
@@ -11,7 +13,6 @@ mod:RegisterEventsInCombat(
 	"SPELL_AURA_APPLIED 42398 42402",
 	"CHAT_MSG_MONSTER_YELL"
 )
-mod.onlyHeroic = true
 
 local warnBear			= mod:NewAnnounce("WarnBear", 4, 39414)
 local warnBearSoon		= mod:NewAnnounce("WarnBearSoon", 3, 39414)
