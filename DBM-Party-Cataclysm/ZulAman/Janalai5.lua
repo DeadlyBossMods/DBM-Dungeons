@@ -26,13 +26,13 @@ local specWarnHatchAll		= mod:NewSpecialWarningSpell(43144, "Tank", nil, nil, 1,
 
 local timerBomb				= mod:NewCastTimer(12, 42630, nil, nil, nil, 3)
 local timerBombCD			= mod:NewNextTimer(30, 42630, nil, nil, nil, 3)
-local timerAdds				= mod:NewNextTimer(65, 43962, nil, nil, nil, 1, nil, DBM_CORE_L.TANK_ICON..DBM_CORE_L.DAMAGE_ICON)--I'm not evey sure it's timed or health based but it definitely wasn't 92 seconds in my run it was 65
+local timerAdds				= mod:NewNextTimer(60, 43962, nil, nil, nil, 1, nil, DBM_CORE_L.TANK_ICON..DBM_CORE_L.DAMAGE_ICON) -- this timer only works accurately when one of the hatchers has been killed. Otherwise it's getting delayed by 30 seconds each cycle.
 
 local berserkTimer			= mod:NewBerserkTimer(600)
 
 function mod:OnCombatStart(delay)
 	timerAdds:Start(12-delay)
-	timerBombCD:Start(55-delay)--Needs verification of consistency.
+	timerBombCD:Start(55-delay)
 	berserkTimer:Start(-delay)
 end
 
