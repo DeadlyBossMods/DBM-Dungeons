@@ -15,7 +15,7 @@ mod:RegisterEventsInCombat(
 	"UNIT_SPELLCAST_SUCCEEDED boss1"
 )
 
-local warnLeap					= mod:NewTargetAnnounce(196346, 2)--0.5 seconds may still be too hard to dodge even if target scanning works.
+local warnLeap					= mod:NewTargetNoFilterAnnounce(196346, 2)--0.5 seconds may still be too hard to dodge even if target scanning works.
 local warnNightFall				= mod:NewSpellAnnounce(198401, 2)
 
 local specWarnNightfall			= mod:NewSpecialWarningMove(198408, nil, nil, nil, 1, 2)
