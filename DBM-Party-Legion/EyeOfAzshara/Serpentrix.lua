@@ -48,6 +48,10 @@ function mod:OnCombatStart(delay)
 	timerWindsCD:Start(33-delay)
 end
 
+function mod:OnCombatEnd()
+	timerWindsCD:Stop()--Does it nearly immediately upon death
+end
+
 function mod:SPELL_AURA_APPLIED(args)
 	local spellId = args.spellId
 	if spellId == 191855 then

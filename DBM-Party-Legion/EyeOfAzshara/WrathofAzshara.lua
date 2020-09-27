@@ -44,6 +44,8 @@ function mod:OnCombatEnd()
 	if self.Options.RangeFrame then
 		DBM.RangeCheck:Hide()
 	end
+	if not serpMod then serpMod = DBM:GetModByName(1479) end
+	serpMod:UpdateWinds()--Defeating wrath should terminate all zonewide events
 end
 
 function mod:SPELL_AURA_APPLIED(args)
