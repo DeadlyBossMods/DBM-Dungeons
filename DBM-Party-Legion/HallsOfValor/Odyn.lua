@@ -62,7 +62,7 @@ function mod:OnCombatStart(delay)
 	timerTempestCD:Start(8-delay, 1)
 	self:Schedule(10, tempestDelayed, self, 1)
 	timerShatterSpearsCD:Start(40-delay)
-	timerRunicBrandCD:Start(44-delay)
+	timerRunicBrandCD:Start(44-delay, 1)
 end
 
 function mod:SPELL_AURA_APPLIED(args)
