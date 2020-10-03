@@ -32,19 +32,19 @@ local specWarnBodySlam			= mod:NewSpecialWarningDodge(154175, nil, nil, nil, 2, 
 local specWarnInhale			= mod:NewSpecialWarningRun(153804, nil, nil, 2, 4, 2)
 local specWarnNecroticPitch		= mod:NewSpecialWarningMove(153692, nil, nil, nil, 1, 8)
 
-local timerBodySlamCD			= mod:NewCDSourceTimer(30, 154175, nil, nil, nil, 3)
-local timerInhaleCD				= mod:NewCDTimer(35, 153804, nil, nil, nil, 6, nil, DBM_CORE_L.DEADLY_ICON)
+local timerBodySlamCD			= mod:NewCDSourceTimer(28, 154175, nil, nil, nil, 3)
+local timerInhaleCD				= mod:NewCDTimer(34, 153804, nil, nil, nil, 6, nil, DBM_CORE_L.DEADLY_ICON)
 local timerInhale				= mod:NewBuffActiveTimer(9, 153804, nil, nil, nil, 6, nil, DBM_CORE_L.DEADLY_ICON)
 local timerCorpseBreathCD		= mod:NewCDTimer(28, 165578, nil, false, nil, 5)--32-37 Variation, also not that important so off by default since there will already be up to 3 smash timers
-local timerSubmergeCD			= mod:NewCDTimer(80, 177694, nil, nil, nil, 6)
+--local timerSubmergeCD			= mod:NewCDTimer(80, 177694, nil, nil, nil, 6)
 
 mod.vb.inhaleActive = false
 
 function mod:OnCombatStart(delay)
 	self.vb.inhaleActive = false
 	timerBodySlamCD:Start(15-delay, UnitName("boss1") or BOSS, UnitGUID("boss1"))
-	timerInhaleCD:Start(29-delay)
-	timerSubmergeCD:Start(-delay)
+	timerInhaleCD:Start(27.1-delay)
+--	timerSubmergeCD:Start(-delay)
 end
 
 function mod:SPELL_CAST_START(args)
@@ -56,7 +56,7 @@ function mod:SPELL_CAST_START(args)
 			specWarnBodySlam:Play("watchstep")
 		end
 		if args:GetSrcCreatureID() == 75452 then--Source is Bonemaw, not one of his adds
-			timerBodySlamCD:Start(30, args.sourceName, args.sourceGUID)
+			timerBodySlamCD:Start(28, args.sourceName, args.sourceGUID)
 		else
 			timerBodySlamCD:Start(14, args.sourceName, args.sourceGUID)--little guys use it more often.
 		end
@@ -84,7 +84,7 @@ end
 function mod:UNIT_DIED(args)
 	local cid = self:GetCIDFromGUID(args.destGUID)
 	if cid == 76057 then--Carrion Centipede
-		timerBodySlamCD:Cancel(args.destName, args.destGUID)
+		timerBodySlamCD:Stop(args.destName, args.destGUID)
 	end
 end
 
@@ -100,8 +100,11 @@ end
 function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
 	if spellId == 177694 then
 		warnSubmerge:Show()
-		timerInhaleCD:Start()
-		timerSubmergeCD:Start()
+		timerInhaleCD:Stop()
+		local name, guid = UnitName(uId), UnitGUID(uId)
+		timerBodySlamCD:Stop(name, guid)
+		timerInhaleCD:Start(26.8)
+--		timerSubmergeCD:Start()
 	end
 end
 
