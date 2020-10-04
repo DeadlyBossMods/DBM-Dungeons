@@ -35,7 +35,7 @@ local specWarnBramble				= mod:NewSpecialWarningMove(167977, nil, nil, nil, 1, 8
 
 local timerShapersFortitude			= mod:NewTargetTimer(8, 168520, nil, false, 2, 5)
 local timerNoxiousCD				= mod:NewCDTimer(16, 175997, nil, "Melee", nil, 2)
-local timerGraspingVineCD			= mod:NewNextTimer(31.5, 168375, nil, nil, nil, 3)
+local timerGraspingVineCD			= mod:NewNextTimer(30.4, 168375, nil, nil, nil, 3)
 
 mod:AddNamePlateOption("NPAuraOnFort", 168520)
 
