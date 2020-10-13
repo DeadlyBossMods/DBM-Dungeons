@@ -23,7 +23,7 @@ local timerGroundingField		= mod:NewCastTimer(10, 86911, nil, nil, nil, 2)
 local timerGroundingFieldCD		= mod:NewCDTimer(45, 86911, nil, nil, nil, 2, nil, DBM_CORE_L.DEADLY_ICON)
 
 function mod:SPELL_AURA_APPLIED(args)
-	if args.spellId == 86911 then
+	if args.spellId == 86911 and self:AntiSpam(5, 1) then
 		specWarnGroundingField:Show(args.spellName)
 		timerGroundingField:Start()
 		timerGroundingFieldCD:Start()
