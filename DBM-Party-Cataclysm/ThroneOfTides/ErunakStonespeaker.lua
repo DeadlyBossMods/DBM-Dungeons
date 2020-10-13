@@ -96,7 +96,7 @@ function mod:SPELL_CAST_START(args)
 	elseif args.spellId == 84931 then
 		self:ScheduleMethod(0.1, "EarthShardsTarget")
 	elseif args.spellId == 76307 then
-		specWarnAbsorbMagic:Show()
+		specWarnAbsorbMagic:Show(args.sourceName)
 		specWarnAbsorbMagic:Play("stopattack")
 	end
 end
