@@ -658,6 +658,7 @@ globals = {
 	"C_Garrison.TargetSpellHasFollowerTemporaryAbility",
 	"C_Garrison.UpgradeBuilding",
 	"C_Garrison.UpgradeGarrison",
+	"C_GossipInfo",
 	"C_Heirloom",
 	"C_Heirloom.CanHeirloomUpgradeFromPending",
 	"C_Heirloom.CreateHeirloom",
