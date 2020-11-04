@@ -336,6 +336,11 @@ L = DBM:GetModLocalization(416)
 L:SetGeneralLocalization{
 	name 		= "Cho'Rush the Observer"
 }
+
+L:SetMiscLocalization{
+    Defeat	= "The king is dead - OH NOES!  Summon Mizzle da Crafty!  He knows what to do next!"
+}
+
 -----------------------------
 --  King Gordok  --
 -----------------------------
