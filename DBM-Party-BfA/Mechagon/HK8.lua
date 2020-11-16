@@ -84,7 +84,7 @@ function mod:OnCombatStart(delay)
 	table.wipe(unitTracked)
 	if self.Options.NPAuraOnWalkieShockie then
 		DBM:FireEvent("BossMod_EnableHostileNameplates")
-		self:RegisterOnUpdateHandler(function(self)
+		self:RegisterOnUpdateHandler(function()
 			for i = 1, 40 do
 				local UnitID = "nameplate"..i
 				local GUID = UnitGUID(UnitID)
