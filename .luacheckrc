@@ -18,7 +18,7 @@ ignore = {
 	"231/_.*", -- unused variables starting with _
 	"311", -- Value assigned to a local variable is unused
 	"431", -- shadowing upvalue
---	"43.", -- Shadowing an upvalue, an upvalue argument, an upvalue loop variable.
+	"43.", -- Shadowing an upvalue, an upvalue argument, an upvalue loop variable.
 	"542", -- An empty if branch
 }
 globals = {
