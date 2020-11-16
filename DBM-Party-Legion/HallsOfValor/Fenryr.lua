@@ -114,7 +114,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 	local spellId = args.spellId
 	if spellId == 196567 then--Stealth (boss retreat)
 		--Stop all timers but not combat
-		for i, v in ipairs(self.timers) do
+		for _, v in ipairs(self.timers) do
 			v:Stop()
 		end
 		--Artificially set no wipe to 10 minutes

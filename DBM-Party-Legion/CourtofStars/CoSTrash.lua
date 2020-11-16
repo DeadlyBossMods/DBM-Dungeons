@@ -186,7 +186,7 @@ do
 
 	local function updateInfoFrame()
 		local lines = {}
-		for hint, j in pairs(hints) do
+		for hint, _ in pairs(hints) do
 			local text = hintTranslations[hint] or hint
 			lines[text] = ""
 		end
