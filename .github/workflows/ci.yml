@@ -30,6 +30,7 @@ jobs:
 
       - name: Create Package
         uses: BigWigsMods/packager@master
+        if: ${{ github.event_name != 'pull_request' }}
         env:
           CF_API_KEY: ${{ secrets.CF_API_KEY }}
           GITHUB_OAUTH: ${{ secrets.GITHUB_TOKEN }}
@@ -40,4 +41,4 @@ jobs:
         with:
           webhook_url: ${{ secrets.DISCORD_WEBHOOK }}
           status: ${{ job.status }}
-        if: failure()
+        if: ${{ failure() }}
