@@ -45,7 +45,7 @@ function mod:OnCombatStart(delay)
 --	timerFissureCD:Start(-delay)
 	timerAirphase:Start(12.5-delay)
 	self:ScheduleMethod(12.5-delay, "airphase")
-	if not self:IsTrivial(90) then
+	if not self:IsTrivial() then
 		self:RegisterShortTermEvents(
 			"SPELL_DAMAGE 80800 80801",
 			"SPELL_MISSED 80800 80801"

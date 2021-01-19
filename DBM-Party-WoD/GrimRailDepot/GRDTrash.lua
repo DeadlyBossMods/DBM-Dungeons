@@ -23,10 +23,8 @@ local specWarnFlametongueGround			= mod:NewSpecialWarningMove(176033, nil, nil, 
 local specWarnShrapnelblast				= mod:NewSpecialWarningDodge(166675, "Tank", nil, nil, 3, 2)--160943 boss version, 166675 trash version.
 local specWarnThunderzone				= mod:NewSpecialWarningMove(166340, nil, nil, nil, 1, 8)
 
-local isTrivial = mod:IsTrivial(110)
-
 function mod:SPELL_AURA_APPLIED(args)
-	if not self.Options.Enabled or self:IsDifficulty("normal5") or isTrivial then return end
+	if not self.Options.Enabled or self:IsDifficulty("normal5") or self:IsTrivial() then return end
 	local spellId = args.spellId
 	if spellId == 176025 then
 		if args:IsPlayer() then
@@ -43,7 +41,7 @@ end
 mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED
 
 function mod:SPELL_CAST_START(args)
-	if not self.Options.Enabled or self:IsDifficulty("normal5") or isTrivial then return end
+	if not self.Options.Enabled or self:IsDifficulty("normal5") or self:IsTrivial() then return end
 	local spellId = args.spellId
 	if spellId == 166675 and self:AntiSpam(2, 1) then
 		specWarnShrapnelblast:Show()
@@ -57,7 +55,7 @@ function mod:SPELL_CAST_START(args)
 end
 
 function mod:SPELL_CAST_SUCCESS(args)
-	if not self.Options.Enabled or self:IsDifficulty("normal5") or isTrivial then return end
+	if not self.Options.Enabled or self:IsDifficulty("normal5") or self:IsTrivial() then return end
 	local spellId = args.spellId
 	if spellId == 163966 and self:AntiSpam(3, 3) then
 		specWarnActivating:Show(args.sourceName)
@@ -66,7 +64,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 end
 
 function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId)
-	if spellId == 176033 and destGUID == UnitGUID("player") and self:AntiSpam(2, 2) and not isTrivial then
+	if spellId == 176033 and destGUID == UnitGUID("player") and self:AntiSpam(2, 2) and not self:IsTrivial() then
 		specWarnFlametongueGround:Show()
 		specWarnFlametongueGround:Play("watchfeet")
 	end

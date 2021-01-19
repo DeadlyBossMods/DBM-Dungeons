@@ -33,7 +33,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		timerPoison:Start(args.destName)
 	elseif args:IsSpellID(59322, 50228) then
 		timerWhirlwindCD:Start()
-		if not self:IsTrivial(90) then
+		if not self:IsTrivial() then
 			specWarnWhirlwind:Show()
 			specWarnWhirlwind:Play("runout")
 		end

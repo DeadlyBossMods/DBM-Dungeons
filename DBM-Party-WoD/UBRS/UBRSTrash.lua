@@ -30,10 +30,8 @@ local specWarnEruption					= mod:NewSpecialWarningDodge(155037, "Tank", nil, nil
 local timerSmashCD						= mod:NewCDTimer(13, 155572, nil, nil, nil, 3)
 local timerEruptionCD					= mod:NewCDTimer(10, 155037, nil, false, nil, 3)--10-15 sec variation. May be distracting or spammy since two of them
 
-local isTrivial = mod:IsTrivial(110)
-
 function mod:SPELL_AURA_APPLIED(args)
-	if not self.Options.Enabled or self:IsDifficulty("normal5") or isTrivial then return end
+	if not self.Options.Enabled or self:IsDifficulty("normal5") or self:IsTrivial() then return end
 	local spellId = args.spellId
 	if spellId == 155586 and self:CheckDispelFilter() then
 		specWarnVeilofShadowDispel:Show(args.destName)
@@ -45,7 +43,7 @@ function mod:SPELL_AURA_APPLIED(args)
 end
 
 function mod:SPELL_CAST_START(args)
-	if not self.Options.Enabled or self:IsDifficulty("normal5") or isTrivial then return end
+	if not self.Options.Enabled or self:IsDifficulty("normal5") or self:IsTrivial() then return end
 	local spellId = args.spellId
 	if spellId == 155505 then
 		if self:CheckInterruptFilter(args.sourceGUID, false, true) then

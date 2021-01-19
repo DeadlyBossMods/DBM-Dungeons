@@ -49,7 +49,7 @@ function mod:OnCombatStart(delay)
 	timerToxicLinkCD:Start(12-delay)
 	self.vb.toxicLinkIcon = 8
 	table.wipe(toxicLinkTargets)
-	if not self:IsTrivial(90) then--Only warning that uses these events is remorseless winter and that warning is completely useless spam for level 90s.
+	if not self:IsTrivial() then--Only warning that uses these events is remorseless winter and that warning is completely useless spam for level 90s.
 		self:RegisterShortTermEvents(
 			"SPELL_DAMAGE 96685 96521",
 			"SPELL_MISSED 96685 96521"

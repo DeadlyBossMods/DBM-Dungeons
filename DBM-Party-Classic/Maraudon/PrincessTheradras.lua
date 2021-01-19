@@ -42,7 +42,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 		warningRepulsiveGaze:Show()
 		timerRespulsiveGazeCD:Start()
 	elseif args.spellId == 21909 then
-		if self.Options.SpecWarn21909run and not self:IsTrivial(70) then--Mob will scale up to level 60, so retail needs to trivial it at 70, not 60 like classic
+		if self.Options.SpecWarn21909run and not self:IsTrivial() then--Mob will scale up to level 60, so retail needs to trivial it at 70, not 60 like classic
 			specWarnDustField:Show()
 			specWarnDustField:Play("justrun")
 		else

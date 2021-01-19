@@ -15,8 +15,6 @@ local specWarnSolarDetonation		= mod:NewSpecialWarningMoveAway(160288, nil, nil,
 
 mod:AddRangeFrameOption(3, 160288)--Range guessed. Maybe 5. one tooltip says 1.5 but it def seemed bigger then that. closer to 3-5
 
-local isTrivial = mod:IsTrivial(110)
-
 mod.vb.debuffCount = 0
 local Debuff = DBM:GetSpellInfo(160288)
 local debuffFilter
@@ -27,7 +25,7 @@ do
 end
 
 function mod:SPELL_AURA_APPLIED(args)
-	if not self.Options.Enabled or self:IsDifficulty("normal5") or isTrivial then return end
+	if not self.Options.Enabled or self:IsDifficulty("normal5") or self:IsTrivial() then return end
 	local spellId = args.spellId
 	if spellId == 160303 or spellId == 160288 then
 		self.vb.debuffCount = self.vb.debuffCount + 1
@@ -46,7 +44,7 @@ function mod:SPELL_AURA_APPLIED(args)
 end
 
 function mod:SPELL_AURA_REMOVED(args)
-	if not self.Options.Enabled or self:IsDifficulty("normal5") or isTrivial then return end
+	if not self.Options.Enabled or self:IsDifficulty("normal5") or self:IsTrivial() then return end
 	local spellId = args.spellId
 	if spellId == 160303 or spellId == 160288 then
 		self.vb.debuffCount = self.vb.debuffCount - 1
