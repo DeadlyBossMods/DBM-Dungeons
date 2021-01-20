@@ -20,7 +20,7 @@ local warnGuidanceStack	= mod:NewCountAnnounce(102472, 2, nil, false)
 
 local specwarnStardust	= mod:NewSpecialWarningInterrupt(102173, "HasInterrupt", nil, nil, 1, 2)
 
-local timerGuidance		= mod:NewNextTimer(20, 102472)
+local timerGuidance		= mod:NewCDTimer(9.7, 102472)--Iffy, and might be worth removing
 
 function mod:SPELL_AURA_APPLIED(args)
 	if args.spellId == 102472 then
