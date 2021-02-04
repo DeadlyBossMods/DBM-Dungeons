@@ -1,4 +1,4 @@
-﻿## Interface: 90002
+## Interface: 90002
 ## X-Min-Interface: 80000
 ## Title:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cff69ccf0Dungeons (Classic)|r
 ## Title-deDE:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cff69ccf0Gruppe-Classic|r
@@ -6,6 +6,7 @@
 ## Title-koKR:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cff69ccf05인던전-오리지널|r
 ## Title-zhTW:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cff69ccf0隊伍首領-傳統|r
 ## Title-zhCN:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cff69ccf0队伍首领(经典旧世)|r
+## Title-ruRU:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cff69ccf0Классические подземелья|r
 ## Author: MysticalOS
 ## LoadOnDemand: 1
 ## RequiredDeps: DBM-Core
@@ -22,6 +23,7 @@
 ## X-DBM-Mod-Name-koKR: 5인 던전(오리지널)
 ## X-DBM-Mod-Name-zhTW: 隊伍首領 (傳統)
 ## X-DBM-Mod-Name-zhCN: 队伍首领(经典旧世)
+## X-DBM-Mod-Name-ruRU: Классические подземелья
 ## X-DBM-Mod-Sort: 1115
 ## X-DBM-Mod-MapID: 48,230,429,90,229,349,389,129,47,329,34,109,70,43,209
 ## X-DBM-Mod-MinCoreRevision: 20200524142133
