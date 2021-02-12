@@ -102,7 +102,7 @@ function mod:SPELL_AURA_APPLIED(args)
 			specWarnDrenched:Show(burningBlaze)
 		end
 	elseif spellId == 228221 then
-		timerSevereDustingCD:Start()
+		timerSevereDustingCD:Update(0, 12)
 		if args:IsPlayer() then
 			specWarnSevereDusting:Show()
 			specWarnSevereDusting:Play("justrun")
