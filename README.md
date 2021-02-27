@@ -1,7 +1,7 @@
 <p><img src="https://media.forgecdn.net/attachments/76/25/patreon-medium-button.png" width="408" height="80" /></p>
 <p><a href="https://www.patreon.com/deadlybossmods">https://www.patreon.com/deadlybossmods</a></p>
 <h6 id="w-description"><span style="font-size: 18px;"><strong>Description:</strong></span></h6>
-<p>This mod will add support for 5 man Dungeons, spanning Classic all the way to Legion, to Deadly Boss Mods (DBM).</p>
+<p>This mod will add support for 5 man Dungeons, spanning Classic all the way to Battle for Azeroth, to Deadly Boss Mods (DBM).</p>
 <h6 id="w-features"><span style="font-size: 18px;"><strong>Features:</strong></span></h6>
 <ul>
 <li>Helpful combat warnings, timers, and infoframes for 5 man dungeons</li>
