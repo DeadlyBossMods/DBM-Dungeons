@@ -16,6 +16,7 @@ Features:
 * All warnings are configurable through DBM GUI
 
 **Note about current dungeon content:**
+
 Dungeons for current expansion will always be included as part of base Deadly Boss Mods download. So at this time, Shadowlands dungeon mods are not part of this package but already included in DBM-Core package.
 
 Looking for Raid mods?
