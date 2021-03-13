@@ -9,7 +9,7 @@
 <li>All warnings are configurable through DBM GUI</li>
 </ul>
 <p><span style="font-size: 18px;"><strong>Note about current dungeon content:</strong></span></p>
-<p>Dungeons for current expansion will always be included as part of base Deadly Boss Mods download. So at this time, Battle for Azeroth dungeon mods are not part of this package but already included in DBM-Core package.</p>
+<p>Dungeons for current expansion will always be included as part of base Deadly Boss Mods download. So at this time, Shadowlands dungeon mods are not part of this package but already included in DBM-Core package.</p>
 <h2 id="w-old-content-mods-are-split-into-multiple-packages"><strong>Looking for Raid mods?</strong></h2>
 <p>You can find them at these links:</p>
 <ul>
