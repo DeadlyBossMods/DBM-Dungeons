@@ -1,4 +1,4 @@
-[![Build Status](https://github.com/DeadlyBossMods/DBM-BfA/workflows/CI/badge.svg)](https://github.com/DeadlyBossMods/DBM-BfA/actions?workflow=CI)
+[![Build Status](https://github.com/DeadlyBossMods/DBM-Dungeons/workflows/CI/badge.svg)](https://github.com/DeadlyBossMods/DBM-Dungeons/actions?workflow=CI)
 [![DeadlyBossMods on Discord](https://img.shields.io/badge/discord-DeadlyBossMods-738bd7.svg?style=flat)](https://discord.gg/DeadlyBossMods) 
 
 [![Patreon](https://media.forgecdn.net/attachments/76/25/patreon-medium-button.png)](https://www.patreon.com/deadlybossmods)
