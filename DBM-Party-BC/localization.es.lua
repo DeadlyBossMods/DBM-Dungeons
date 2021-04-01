@@ -14,6 +14,10 @@ L = DBM:GetModLocalization(527)
 -----------------------
 L = DBM:GetModLocalization(528)
 
+L:SetOptionLocalization({
+	RangeFrame			= DBM_CORE_L.AUTO_RANGE_OPTION_TEXT:format(15, 37566)
+})
+
 -------------------------
 -- Vazruden el Heraldo --
 -------------------------
