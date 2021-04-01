@@ -13,7 +13,7 @@ mod:RegisterEventsInCombat(
 	"SPELL_AURA_REMOVED 37566"
 )
 
-local warnBane      = mod:NewTargetAnnounce(37566)
+local warnBane      = mod:NewTargetNoFilterAnnounce(37566)
 
 local specwarnBane  = mod:NewSpecialWarningMoveAway(37566, nil, nil, nil, 1, 2)
 local yellBane		= mod:NewYell(37566)
@@ -21,7 +21,7 @@ local yellBane		= mod:NewYell(37566)
 local timerBane     = mod:NewTargetTimer(15, 37566, nil, nil, nil, 3)
 
 mod:AddSetIconOption("SetIconOnBaneTarget", 37566, true, false, {8})
-mod:AddBoolOption("RangeFrame")
+mod:AddRangeFrameOption(37566, 15)
 
 function mod:OnCombatEnd()
 	if self.Options.RangeFrame then
