@@ -1,4 +1,4 @@
-﻿local mod	= DBM:NewMod(189, "DBM-Party-Cataclysm", 10, 77)
+local mod	= DBM:NewMod(189, "DBM-Party-Cataclysm", 10, 77)
 local L		= mod:GetLocalizedStrings()
 
 mod.statTypes = "heroic,timewalker"
