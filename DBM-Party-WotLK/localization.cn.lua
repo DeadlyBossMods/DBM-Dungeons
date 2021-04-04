@@ -1,4 +1,4 @@
-﻿-- Simplified Chinese by Diablohu
+-- Simplified Chinese by Diablohu
 -- http://wow.gamespot.com.cn
 -- Last Update: 12/13/2008
 

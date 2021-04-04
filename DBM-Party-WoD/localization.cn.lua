@@ -1,4 +1,4 @@
-﻿--Mini Dragon(projecteurs@gmail.com)
+--Mini Dragon(projecteurs@gmail.com)
 --Thanks to Yike Xia
 --Last update: Dec 4, 2014@11926
 
