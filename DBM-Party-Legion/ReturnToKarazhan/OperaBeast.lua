@@ -57,11 +57,10 @@ local timerDinnerBellCD				= mod:NewCDTimer(10.9, 227987, nil, nil, nil, 4, nil,
 mod:AddSetIconOption("SetIconOnDusting", 228221, true, false, {1})
 --mod:AddInfoFrameOption(198108, false)
 
-mod.vb.phase = 1
 local burningBlaze = DBM:GetSpellInfo(228193)
 
 function mod:OnCombatStart(delay)
-	self.vb.phase = 1
+	self:SetStage(1)
 	timerLeftoversCD:Start(7.3-delay)
 	timerHeatWaveCD:Start(31.6-delay)
 end
@@ -128,7 +127,7 @@ end
 function mod:SPELL_AURA_REMOVED(args)
 	local spellId = args.spellId
 	if spellId == 232156 then--Spectral Service
-		self.vb.phase = 2
+		self:SetStage(2)
 		timerDinnerBellCD:Start(8)
 		timerDentArmorCD:Start(15.5)
 	elseif spellId == 228221 and self.Options.SetIconOnDusting then

@@ -28,10 +28,8 @@ local timerLash			= mod:NewTargetTimer(10, 96423, nil, "Healer", 2, 5, nil, DBM_
 local timerWaveAgony	= mod:NewCDTimer(32, 96457, nil, nil, nil, 3)
 local timerRavage		= mod:NewTargetTimer(10, 96592, nil, false, nil, 5, nil, DBM_CORE_L.HEALER_ICON)
 
-mod.vb.phase = 1
-
 function mod:OnCombatStart(delay)
-	self.vb.phase = 1
+	self:SetStage(1)
 end
 
 function mod:SPELL_AURA_APPLIED(args)
@@ -48,7 +46,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		warnRavage:Show(args.destName)
 		timerRavage:Start(args.destName)
 	elseif args.spellId == 97380 and self.vb.phase < 2 then
-		self.vb.phase = 2
+		self:SetStage(2)
 		warnPhase2:Show()
 	end
 end

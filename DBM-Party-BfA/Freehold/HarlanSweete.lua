@@ -32,10 +32,8 @@ local timerAvastyeCD				= mod:NewCDTimer(13, 257316, nil, nil, nil, 1, nil, DBM_
 local timerSwiftwindSaberCD			= mod:NewCDTimer(15.8, 257278, nil, nil, nil, 3)
 local timerCannonBarrageCD			= mod:NewCDTimer(17.4, 257305, nil, nil, nil, 3)
 
-mod.vb.phase = 1
-
 function mod:OnCombatStart(delay)
-	self.vb.phase = 1
+	self:SetStage(1)
 	timerSwiftwindSaberCD:Start(10.4-delay)
 	timerCannonBarrageCD:Start(20-delay)
 	timerAvastyeCD:Start(31.6-delay)
@@ -73,7 +71,7 @@ end
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
 	if spellId == 257402 or spellId == 257458 then
-		self.vb.phase = self.vb.phase + 1
+		self:SetStage(0)
 		timerSwiftwindSaberCD:Stop()
 		timerAvastyeCD:Stop()
 		timerCannonBarrageCD:Stop()

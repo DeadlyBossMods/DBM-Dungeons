@@ -36,10 +36,8 @@ local timerTornadoKickCD	= mod:NewCDTimer(32, 106434)--Or this
 --local timerChaseDownCD		= mod:NewCDTimer(22, 118961)--Unknown
 local timerChaseDown		= mod:NewTargetTimer(11, 118961)
 
-mod.vb.phase = 1
-
 function mod:OnCombatStart(delay)
-	self.vb.phase = 1
+	self:SetStage(1)
 end
 
 function mod:SPELL_AURA_APPLIED(args)
@@ -72,7 +70,7 @@ end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
 	if spellId == 110324 then
-		self.vb.phase = self.vb.phase + 1
+		self:SetStage(0)
 		if self.vb.phase == 2 then
 			warnPhase2:Show()
 		elseif self.vb.phase == 3 then

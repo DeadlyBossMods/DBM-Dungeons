@@ -26,10 +26,8 @@ local specWarnSmash		= mod:NewSpecialWarningDodge(42723, "Tank", nil, nil, 1, 2)
 local timerSmash		= mod:NewCastTimer(3, 42723)
 local timerWoeStrike	= mod:NewTargetTimer(10, 42723, nil, "RemoveCurse", nil, 5, nil, DBM_CORE_L.CURSE_ICON)
 
-mod.vb.phase = 1
-
 function mod:OnCombatStart(delay)
-	self.vb.phase = 1
+	self:SetStage(1)
 end
 
 function mod:SPELL_CAST_START(args)
@@ -67,6 +65,6 @@ end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
 	if spellId == 42863 then -- Scourge Resurrection
-		self.vb.phase = 2
+		self:SetStage(2)
 	end
 end

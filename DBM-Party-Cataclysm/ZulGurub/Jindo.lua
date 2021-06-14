@@ -35,12 +35,11 @@ local timerShadowsOfHakkarNext	= mod:NewNextTimer(21, 97172, nil, nil, nil, 2)
 
 mod:AddSetIconOption("BodySlamIcon", 97597, true, false, {8})
 
-mod.vb.phase = 1
 mod.vb.barrier = 3
 local zoneName = DBM:GetSpellInfo(97170)
 
 function mod:OnCombatStart(delay)
-	self.vb.phase = 1
+	self:SetStage(1)
 	self.vb.barrier = 3
 end
 
@@ -78,7 +77,7 @@ function mod:SPELL_CAST_START(args)
 	if args.spellId == 97172 then
 		warnShadowsOfHakkar:Show()
 	elseif args.spellId == 97158 and self.vb.phase < 2 then
-		self.vb.phase = 2
+		self:SetStage(2)
 		warnPhase2:Show()
 	end
 end

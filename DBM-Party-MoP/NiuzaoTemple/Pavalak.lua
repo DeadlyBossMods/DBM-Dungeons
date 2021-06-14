@@ -26,10 +26,8 @@ local timerTempestCD		= mod:NewCDTimer(43, 119875)--Tempest has a higher cast pr
 
 mod:AddInfoFrameOption(119875, true)
 
-mod.vb.phase = 1
-
 function mod:OnCombatStart(delay)
-	self.vb.phase = 1
+	self:SetStage(1)
 	timerBladeRushCD:Start(10.6-delay)
 end
 
@@ -41,7 +39,7 @@ end
 
 function mod:SPELL_AURA_APPLIED(args)
 	if args.spellId == 119476 then
-		self.vb.phase = 2
+		self:SetStage(2)
 		specWarnBulwark:Show()
 		timerBladeRushCD:Cancel()
 		timerTempestCD:Cancel()

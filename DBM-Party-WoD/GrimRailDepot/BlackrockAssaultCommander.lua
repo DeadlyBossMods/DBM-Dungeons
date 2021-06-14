@@ -30,7 +30,6 @@ local timerSupressiveFire		= mod:NewTargetTimer(10, 160681)
 
 local grenade = DBM:EJ_GetSectionInfo(9711)
 local mortar = DBM:EJ_GetSectionInfo(9712)
-mod.vb.phase = 1
 
 function mod:SupressiveFireTarget(targetname, uId)
 	if not targetname then return end
@@ -44,7 +43,7 @@ function mod:SupressiveFireTarget(targetname, uId)
 end
 
 function mod:OnCombatStart(delay)
-	self.vb.phase = 1
+	self:SetStage(1)
 end
 
 function mod:SPELL_AURA_APPLIED(args)
@@ -71,7 +70,7 @@ function mod:SPELL_CAST_START(args)
 end
 
 function mod:UNIT_TARGETABLE_CHANGED()
-	self.vb.phase = self.vb.phase + 1
+	self:SetStage(0)
 	if self.vb.phase == 2 then
 		warnPhase2:Show()
 		warnPhase2:Play("ptwo")

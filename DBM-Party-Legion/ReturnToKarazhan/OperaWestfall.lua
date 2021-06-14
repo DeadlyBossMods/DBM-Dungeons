@@ -41,10 +41,8 @@ local timerWashAwayCD				= mod:NewAITimer(40, 227783, nil, nil, nil, 3)
 --mod:AddInfoFrameOption(198108, false)
 mod:AddRangeFrameOption(5, 227777)
 
-mod.vb.phase = 1
-
 function mod:OnCombatStart(delay)
-	self.vb.phase = 1
+	self:SetStage(1)
 end
 
 function mod:OnCombatEnd()

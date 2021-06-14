@@ -34,11 +34,10 @@ local timerCloudCD					= mod:NewCDTimer(32.8, 199143, nil, nil, nil, 3)
 local timerSwarmCD					= mod:NewCDTimer(32.8, 201733, nil, nil, nil, 3)
 local timerShadowBoltVolleyCD		= mod:NewCDTimer(8, 202019, nil, nil, nil, 2)
 
-mod.vb.phase = 1
 mod.vb.shadowboltCount = 0
 
 function mod:OnCombatStart(delay)
-	self.vb.phase = 1
+	self:SetStage(1)
 	self.vb.shadowboltCount = 0
 	timerUnerringShearCD:Start(5.5-delay)
 	timerDarkBlastCD:Start(10-delay)
@@ -109,7 +108,7 @@ end
 function mod:UNIT_DIED(args)
 	local cid = self:GetCIDFromGUID(args.destGUID)
 	if cid == 98965 then--Kur'talos Ravencrest
-		self.vb.phase = 2
+		self:SetStage(2)
 		timerDarkBlastCD:Stop()
 		timerUnerringShearCD:Stop()
 		if not self:IsNormal() then

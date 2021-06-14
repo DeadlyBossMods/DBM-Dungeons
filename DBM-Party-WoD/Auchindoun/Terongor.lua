@@ -75,7 +75,6 @@ do
 end
 
 mod.vb.seedCount = 0
-mod.vb.phase = 1
 
 function mod:LeapTarget(targetname, uId)
 	if not targetname then return end
@@ -101,7 +100,7 @@ end
 
 function mod:OnCombatStart(delay)
 	self.vb.seedCount = 0
-	self.vb.phase = 1
+	self:SetStage(1)
 	timerRainOfFireCD:Start(15-delay)
 end
 
@@ -209,19 +208,19 @@ end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
 	if spellId == 156919 then--Demonology Transformation
-		self.vb.phase = 2
+		self:SetStage(2)
 		timerDrainLifeCD:Cancel()
 		timerRainOfFireCD:Cancel()
 		timerChaosWaveCD:Start(10)
 		timerDemonicLeapCD:Start(23)
 	elseif spellId == 156863 then--Affliction Transformation
-		self.vb.phase = 2
+		self:SetStage(2)
 		timerRainOfFireCD:Cancel()
 		--timerSeedOfMelevolenceCD:Start(5)
 		--timerDrainLifeCD:Start()--Update timer here
 		--no timers. need logs.
 	elseif spellId == 156866 then--Destruction Transformation
-		self.vb.phase = 2
+		self:SetStage(2)
 		timerDrainLifeCD:Cancel()
 		if self:IsDifficulty("challenge5") then-- (in CM, it says he goes into this form but it's a lie)
 			timerSeedOfMelevolenceCD:Start(5)
