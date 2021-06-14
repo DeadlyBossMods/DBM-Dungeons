@@ -3,7 +3,7 @@ local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(24200, 24201)
-mod:SetEncounterID(573, 574, 2024)
+mod:SetEncounterID(2024)
 mod:SetModelID(26349)
 
 mod:RegisterCombat("combat")

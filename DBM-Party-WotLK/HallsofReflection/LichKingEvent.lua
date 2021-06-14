@@ -2,7 +2,7 @@ local mod = DBM:NewMod(603, "DBM-Party-WotLK", 16, 276)
 local L = mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
---mod:SetEncounterID(843, 844, 1990)
+--mod:SetEncounterID(1990)--TODO, why was this unreliable?
 
 mod:RegisterEvents(
 	"SPELL_AURA_REMOVED 69708",

@@ -5,8 +5,8 @@ mod.statTypes = "normal,heroic,timewalker"
 
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(26668)
-mod:SetEncounterID(577, 578, 2030)
-mod:DisableESCombatDetection()
+mod:SetEncounterID(2030)
+mod:DisableESCombatDetection()--TODO, why is it disabled?
 
 mod:RegisterCombat("combat")
 

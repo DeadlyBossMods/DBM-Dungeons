@@ -3,7 +3,7 @@ local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(26632)
-mod:SetEncounterID(375, 376, 1975)
+mod:SetEncounterID(1975)
 mod:SetModelID(27072)--Does not scale, but at least it's on face. Leaving on for now.
 
 mod:RegisterCombat("combat")

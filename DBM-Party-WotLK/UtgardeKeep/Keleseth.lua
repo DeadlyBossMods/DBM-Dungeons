@@ -3,16 +3,16 @@ local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(23953)
-mod:SetEncounterID(571, 572, 2026)
+mod:SetEncounterID(2026)
 
 mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
-	"SPELL_AURA_APPLIED",
-	"SPELL_AURA_REMOVED"
+	"SPELL_AURA_APPLIED 48400",
+	"SPELL_AURA_REMOVED 48400"
 )
 
-local warningTomb	= mod:NewTargetAnnounce(48400, 4)
+local warningTomb	= mod:NewTargetNoFilterAnnounce(48400, 4)
 local timerTomb		= mod:NewTargetTimer(10, 48400)
 
 function mod:SPELL_AURA_APPLIED(args)
