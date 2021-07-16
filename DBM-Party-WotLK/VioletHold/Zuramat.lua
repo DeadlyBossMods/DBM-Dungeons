@@ -29,7 +29,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		timerVoidShifted:Start(args.destName)
 	elseif args:IsSpellID(59745, 54524) then		-- Shroud of Darkness    59745 (HC)   54524 (nonHC)
 		if self.Options.SpecWarn59745dispel then
-			specWarnShroud:Show()
+			specWarnShroud:Show(args.destName)
 			specWarnShroud:Play("dispelboss")
 		else
 			warningShroudofDarkness:Show(args.destName)
