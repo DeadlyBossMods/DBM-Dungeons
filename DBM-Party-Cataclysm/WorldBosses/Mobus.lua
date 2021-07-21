@@ -6,6 +6,7 @@ mod.statTypes = "normal,timewalker"
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(50009)
 mod:SetModelID(37338)
+mod:EnableWBEngageSync()--Enable syncing engage in outdoors
 
 mod:RegisterCombat("combat")
 

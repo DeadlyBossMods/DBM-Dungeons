@@ -7,6 +7,7 @@ mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(50089)
 mod:SetModelID(24301)
 mod:SetUsedIcons(8, 7)
+mod:EnableWBEngageSync()--Enable syncing engage in outdoors
 
 mod:RegisterCombat("combat")
 
