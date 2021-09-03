@@ -29,7 +29,7 @@ local specWarnBloat			= mod:NewSpecialWarningYou(106546)
 local specWarnBlackoutBrew	= mod:NewSpecialWarningMove(106851)--Moving clears this debuff, it should never increase unless you're doing fight wrong (think Hodir)
 local specWarnFizzyBubbles	= mod:NewSpecialWarning("SpecWarnFizzyBubbles")
 
-local timerBloatCD			= mod:NewNextTimer(14.5, 106546, nil, nil, nil, 3)
+local timerBloatCD			= mod:NewCDTimer(13.3, 106546, nil, nil, nil, 3)
 local timerBloat			= mod:NewBuffFadesTimer(30, 106546)
 local timerBlackoutBrewCD	= mod:NewNextTimer(10.5, 106851, nil, nil, nil, 3)
 local timerBubbleShieldCD	= mod:NewNextTimer(42, 106563)
