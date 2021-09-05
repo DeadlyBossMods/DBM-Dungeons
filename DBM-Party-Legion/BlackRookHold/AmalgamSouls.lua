@@ -12,7 +12,7 @@ mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 195254 194966 194956 196078"
 )
 
-local warnSwirlingScythe			= mod:NewTargetAnnounce(195254, 2)
+local warnSwirlingScythe			= mod:NewTargetNoFilterAnnounce(195254, 2)
 local warnSoulEchoes				= mod:NewTargetAnnounce(194966, 2)
 local warnCallSouls					= mod:NewSpellAnnounce(196078, 2)--Change to important warning if it becomes more relevant.
 

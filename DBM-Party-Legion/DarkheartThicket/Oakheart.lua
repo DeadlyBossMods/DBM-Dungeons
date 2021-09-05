@@ -43,12 +43,6 @@ function mod:OnCombatStart(delay)
 	timerThrowCD:Start(29-delay)
 end
 
-function mod:OnCombatEnd()
---	if self.Options.RangeFrame then
---		DBM.RangeCheck:Hide()
---	end
-end
-
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
 	if spellId == 204646 then

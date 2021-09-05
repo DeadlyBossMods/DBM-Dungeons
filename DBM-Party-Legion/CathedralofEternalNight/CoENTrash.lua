@@ -85,8 +85,7 @@ function mod:SPELL_AURA_APPLIED(args)
 	end
 end
 
-function mod:UNIT_SPELLCAST_START(uId, _, bfaSpellId, _, legacySpellId)
-	local spellId = legacySpellId or bfaSpellId
+function mod:UNIT_SPELLCAST_START(uId, _, spellId)
 	if spellId == 238653 then
 		self:SendSync("ShadowWave")
 	end
