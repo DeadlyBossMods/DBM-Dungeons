@@ -1,6 +1,8 @@
 local mod	= DBM:NewMod(663, "DBM-Party-MoP", 7, 246)
 local L		= mod:GetLocalizedStrings()
 
+mod.statTypes = "normal,heroic,challenge,timewalker"
+
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(59184)--59220 seem to be her mirror images
 mod:SetEncounterID(1427)

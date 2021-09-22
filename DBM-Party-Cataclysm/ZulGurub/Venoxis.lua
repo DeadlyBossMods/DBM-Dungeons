@@ -57,6 +57,10 @@ function mod:OnCombatStart(delay)
 	end
 end
 
+function mod:OnCombatEnd()
+	self:UnregisterShortTermEvents()
+end
+
 function mod:SPELL_AURA_APPLIED(args)
 	if args.spellId == 96477 then
 		toxicLinkTargets[#toxicLinkTargets + 1] = args.destName

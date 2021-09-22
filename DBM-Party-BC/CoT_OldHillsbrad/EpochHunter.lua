@@ -8,4 +8,17 @@ mod:SetEncounterID(1906)
 mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
+	"SPELL_AURA_APPLIED 33834 31914"
 )
+
+local warnSandBreath		= mod:NewSpellAnnounce(31914, 2)
+
+local timerManaDisruption	= mod:NewBuffActiveTimer(15, 33834, nil, nil, nil, 1)
+
+function mod:SPELL_AURA_APPLIED(args)
+	if args.spellId == 33834 then
+		timerManaDisruption:Show()
+	elseif args.spellId == 31914 then
+		warnSandBreath:Show()
+	end
+end

@@ -11,15 +11,15 @@ mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
 	"CHAT_MSG_MONSTER_YELL",
-	"SPELL_AURA_APPLIED 39019 37162 39017",
-	"SPELL_AURA_REMOVED 39019 37162 39017",
-	"UNIT_HEALTH boss1"
+	"SPELL_AURA_APPLIED 39019 37162 36924 36929 39017 39021",
+	"SPELL_AURA_REMOVED 39019 37162 36924 36929 39017 39021",
+	"UNIT_HEALTH"
 )
 
-local warnSplitSoon     = mod:NewSoonAnnounce("ej5335", 2)
-local warnSplit         = mod:NewSpellAnnounce("ej5335", 3)
+local warnSplitSoon     = mod:NewAnnounce("warnSplitSoon", 2)
+local warnSplit         = mod:NewAnnounce("warnSplit", 3)
 local warnMindControl   = mod:NewTargetNoFilterAnnounce(39019, 4)
-local warnMindRend      = mod:NewTargetAnnounce(39017, 2)
+local warnMindRend      = mod:NewTargetNoFilterAnnounce(39017, 2)
 
 local timerMindControl  = mod:NewTargetTimer(6, 39019, nil, nil, nil, 3)
 local timerMindRend     = mod:NewTargetTimer(6, 39017, nil, false, 2, 3)
@@ -36,7 +36,7 @@ function mod:SPELL_AURA_APPLIED(args)
 	if args:IsSpellID(39019, 37162) then
 		warnMindControl:Show(args.destName)
 		timerMindControl:Start(args.destName)
-	elseif args.spellId == 39017 then
+	elseif args:IsSpellID(36924, 36929, 39017, 39021) then
 		warnMindRend:Show(args.destName)
 		timerMindRend:Start(args.destName)
 	end
@@ -45,7 +45,7 @@ end
 function mod:SPELL_AURA_REMOVED(args)
 	if args:IsSpellID(39019, 37162) then
 		timerMindControl:Stop(args.destName)
-	elseif args.spellId == 39017 then
+	elseif args:IsSpellID(36924, 36929, 39017, 39021) then
 		timerMindRend:Stop(args.destName)
 	end
 end
@@ -56,12 +56,16 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	end
 end
 
-function mod:UNIT_HEALTH(uId)
-	if not self.vb.warnedSplit1 and self:GetUnitCreatureId(uId) == 20912 and UnitHealth(uId) / UnitHealthMax(uId) <= 0.70 then
-		self.vb.warnedSplit1 = true
-		warnSplitSoon:Show()
-	elseif not self.vb.warnedSplit2 and self:IsDifficulty("heroic5", "timewalker") and self:GetUnitCreatureId(uId) == 20912 and UnitHealth(uId) / UnitHealthMax(uId) <= 0.37 then
-		self.vb.warnedSplit2 = true
-		warnSplitSoon:Show()
+do
+	local UnitHealth, UnitHealthMax = UnitHealth, UnitHealthMax
+
+	function mod:UNIT_HEALTH(uId)
+		if not self.vb.warnedSplit1 and self:GetUnitCreatureId(uId) == 20912 and UnitHealth(uId) / UnitHealthMax(uId) <= 0.70 then
+			self.vb.warnedSplit1 = true
+			warnSplitSoon:Show()
+		elseif not self.vb.warnedSplit2 and self:IsHeroic() and self:GetUnitCreatureId(uId) == 20912 and UnitHealth(uId) / UnitHealthMax(uId) <= 0.37 then
+			self.vb.warnedSplit2 = true
+			warnSplitSoon:Show()
+		end
 	end
 end

@@ -1,6 +1,8 @@
 local mod	= DBM:NewMod(659, "DBM-Party-MoP", 7, 246)
 local L		= mod:GetLocalizedStrings()
 
+mod.statTypes = "normal,heroic,challenge,timewalker"
+
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(58633, 58664)--58633 is boss, 58664 is Phylactery. We register BOTH to avoid pre mature combat ending cause boss dies twice.
 --To re-emphesize again (although it was already spelled out in comments. THE BOSS DIES TWICE, if you only register 58633 then the boss will fire EndCombat at end of phase 1.

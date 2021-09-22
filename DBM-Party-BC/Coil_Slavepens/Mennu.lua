@@ -10,14 +10,22 @@ mod:SetEncounterID(1939)
 mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
-	"SPELL_SUMMON 31991"
+	"SPELL_SUMMON 31991 31985 34980"
 )
 
-local specWarnCorruptedNova		= mod:NewSpecialWarningSwitch(31991, "Dps", nil, nil, 1, 2)
+--TODO, add a switch warning for the totem you actually want to kill (healing one probably)
+local WarnStoneskinTotem		= mod:NewSpellAnnounce(31985, 2)
+local WarnHealingWard			= mod:NewSpellAnnounce(34980, 3)
+
+local specWarnCorruptedNova		= mod:NewSpecialWarningMove(31991, false, nil, nil, 1, 2)
 
 function mod:SPELL_SUMMON(args)
 	if args.spellId == 31991 then
 		specWarnCorruptedNova:Show()
-		specWarnCorruptedNova:Play("attacktotem")
+		specWarnCorruptedNova:Play("runaway")
+	elseif args.spellId == 31985 then
+		WarnStoneskinTotem:Show()
+	elseif args.spellId == 34980 then
+		WarnHealingWard:Show()
 	end
 end

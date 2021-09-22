@@ -4,13 +4,13 @@ local L		= mod:GetLocalizedStrings()
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(17537, 17307)
 mod:SetEncounterID(1892)
+mod:SetBossHPInfoToHighest()
 
 mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
 	"SPELL_AURA_APPLIED 30689",
 	"SPELL_AURA_REMOVED 30689"
---	"UNIT_DIED"
 )
 
 local warnMark      = mod:NewTargetNoFilterAnnounce(30689)
@@ -38,9 +38,3 @@ function mod:SPELL_AURA_REMOVED(args)
 		timerMark:Stop(args.destName)
 	end
 end
---[[
-function mod:UNIT_DIED(args)
-	if self:GetCIDFromGUID(args.destGUID) == 17537 then
-		DBM:EndCombat(self)
-	end
-end--]]

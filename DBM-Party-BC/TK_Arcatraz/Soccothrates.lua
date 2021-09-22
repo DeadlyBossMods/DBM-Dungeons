@@ -11,7 +11,7 @@ mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_SUCCESS 36512",
-	"SPELL_AURA_APPLIED 35759"
+	"SPELL_AURA_APPLIED 35759 39006"
 )
 
 local warnKnockaway			= mod:NewSpellAnnounce(36512, 2, nil, nil, nil, nil, nil, 2)
@@ -26,7 +26,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 end
 
 function mod:SPELL_AURA_APPLIED(args)
-	if args.spellId == 35759 and self:CheckDispelFilter() then
+	if args:IsSpellID(35759, 39006) and self:CheckDispelFilter() then
 		specwarnFelFireShock:Show(args.destName)
 		specwarnFelFireShock:Play("dispelnow")
 	end
