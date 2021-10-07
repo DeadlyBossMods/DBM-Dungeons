@@ -16,7 +16,7 @@ mod:RegisterEventsInCombat(
 local specWarnFurlwind		= mod:NewSpecialWarningRun(112992, "Melee", nil, nil, 4, 2)
 local specWarnCarrotBreath	= mod:NewSpecialWarningDodge(112944, nil, nil, nil, 2, 2)--Evaluate, my memory fuzzy
 
-local timerFurlwind			= mod:NewBuffActiveTimer(9.5, 112992 nil, nil, nil, 5)
+local timerFurlwind			= mod:NewBuffActiveTimer(9.5, 112992, nil, nil, nil, 5)
 local timerFurlwindCD		= mod:NewNextTimer(25, 112992, nil, nil, nil, 2)--True CD, 43 seconds, but triggering off alternating abilities reduces timer spam.
 local timerBreath			= mod:NewBuffActiveTimer(18, 112944, nil, nil, nil, 6)
 local timerBreathCD			= mod:NewNextTimer(18, 112944, nil, nil, nil, 3)--true CD, 43 seconds, same as Furlwind, which is what makes their interaction with eachother predictable.
