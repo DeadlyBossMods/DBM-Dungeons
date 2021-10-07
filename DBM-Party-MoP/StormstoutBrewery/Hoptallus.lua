@@ -13,17 +13,13 @@ mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 112992 112944"
 )
 
+local specWarnFurlwind		= mod:NewSpecialWarningRun(112992, "Melee", nil, nil, 4, 2)
+local specWarnCarrotBreath	= mod:NewSpecialWarningDodge(112944, nil, nil, nil, 2, 2)--Evaluate, my memory fuzzy
 
-local warnFurlwind			= mod:NewSpellAnnounce(112992, 3)
-local warnCarrotBreath		= mod:NewSpellAnnounce(112944, 4)
-
-local specWarnFurlwind		= mod:NewSpecialWarningRun(112992, "Melee")
-local specWarnCarrotBreath	= mod:NewSpecialWarningSpell(112944, nil, nil, nil, 2)
-
-local timerFurlwind			= mod:NewBuffActiveTimer(9.5, 112992)
+local timerFurlwind			= mod:NewBuffActiveTimer(9.5, 112992 nil, nil, nil, 5)
 local timerFurlwindCD		= mod:NewNextTimer(25, 112992, nil, nil, nil, 2)--True CD, 43 seconds, but triggering off alternating abilities reduces timer spam.
-local timerBreath			= mod:NewBuffActiveTimer(18, 112944)
-local timerBreathCD			= mod:NewNextTimer(18, 112944)--true CD, 43 seconds, same as Furlwind, which is what makes their interaction with eachother predictable.
+local timerBreath			= mod:NewBuffActiveTimer(18, 112944, nil, nil, nil, 6)
+local timerBreathCD			= mod:NewNextTimer(18, 112944, nil, nil, nil, 3)--true CD, 43 seconds, same as Furlwind, which is what makes their interaction with eachother predictable.
 
 --Notes:
 --5/2 13:55:03.578  SPELL_CAST_SUCCESS,0xF130DD8D0000748B,"Hoptallus",0xa48,0x0,0x0000000000000000,nil,0x80000000,0x80000000,114366,"Hoptallus Keg Scene",0x1
@@ -38,13 +34,13 @@ end
 
 function mod:SPELL_CAST_START(args)
 	if args.spellId == 112992 then
-		warnFurlwind:Show()
 		specWarnFurlwind:Show()
+		specWarnFurlwind:Play("justrun")
 		timerFurlwind:Start()
 		timerBreathCD:Start()--Always 18 seconds after Furlwind
 	elseif args.spellId == 112944 then
-		warnCarrotBreath:Show()
 		specWarnCarrotBreath:Show()
+		specWarnCarrotBreath:Play("shockwave")
 		timerBreath:Start()
 		timerFurlwindCD:Start()--Always 25 seconds after Carrot Breath
 	end

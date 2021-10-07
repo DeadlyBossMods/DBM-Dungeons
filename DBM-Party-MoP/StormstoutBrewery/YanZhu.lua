@@ -25,17 +25,17 @@ local warnBlackoutBrew		= mod:NewSpellAnnounce(106851, 2)--Applies 3 stacks of d
 local warnBubbleShield		= mod:NewSpellAnnounce(106563, 3)
 local warnCarbonation		= mod:NewSpellAnnounce(115003, 4)
 
-local specWarnBloat			= mod:NewSpecialWarningYou(106546)
-local specWarnBlackoutBrew	= mod:NewSpecialWarningMove(106851)--Moving clears this debuff, it should never increase unless you're doing fight wrong (think Hodir)
+local specWarnBloat			= mod:NewSpecialWarningYou(106546, nil, nil, nil, 1, 2)
+local specWarnBlackoutBrew	= mod:NewSpecialWarningKeepMove(106851, nil, nil, nil, 1, 2)--Moving clears this debuff, it should never increase unless you're doing fight wrong (think Hodir)
 local specWarnFizzyBubbles	= mod:NewSpecialWarning("SpecWarnFizzyBubbles")
 
 local timerBloatCD			= mod:NewCDTimer(13.3, 106546, nil, nil, nil, 3)
-local timerBloat			= mod:NewBuffFadesTimer(30, 106546)
+local timerBloat			= mod:NewBuffFadesTimer(30, 106546, nil, nil, nil, 5)
 local timerBlackoutBrewCD	= mod:NewNextTimer(10.5, 106851, nil, nil, nil, 3)
 local timerBubbleShieldCD	= mod:NewNextTimer(42, 106563)
-local timerCarbonationCD	= mod:NewNextTimer(64, 115003)
-local timerCarbonation		= mod:NewBuffActiveTimer(23, 115003)
-local timerFizzyBubbles		= mod:NewBuffFadesTimer(20, 114459)
+local timerCarbonationCD	= mod:NewNextTimer(64, 115003, nil, nil, nil, 6)
+local timerCarbonation		= mod:NewBuffActiveTimer(23, 115003, nil, nil, nil, 6)
+local timerFizzyBubbles		= mod:NewBuffFadesTimer(20, 114459, nil, nil, nil, 5)
 
 mod:AddBoolOption("RangeFrame")
 
@@ -51,16 +51,19 @@ end
 
 function mod:SPELL_AURA_APPLIED(args)
 	if args.spellId == 106546 then
-		warnBloat:Show(args.destName)
 		if args:IsPlayer() then
 			specWarnBloat:Show()
+			specWarnBloat:Play("targetyou")
 			timerBloat:Start()
 			if self.Options.RangeFrame then
 				DBM.RangeCheck:Show(10)
 			end
+		else
+			warnBloat:Show(args.destName)
 		end
 	elseif args.spellId == 106851 and args:IsPlayer() and (args.amount or 3) >= 3 and self:AntiSpam() then
 		specWarnBlackoutBrew:Show()--Basically special warn any time you gain a stack over 3, if stack is nil, then it's initial application and stack count is 3.
+		specWarnBlackoutBrew:Play("keepmove")
 	end
 end
 mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED
