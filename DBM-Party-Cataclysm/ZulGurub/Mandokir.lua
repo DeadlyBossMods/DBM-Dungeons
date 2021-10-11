@@ -82,7 +82,7 @@ function mod:SPELL_HEAL(_, _, _, _, destGUID, _, _, _, spellId)
 		specWarnOhgan:Show()
 		specWarnOhgan:Play("bigmob")
 		if self.Options.SetIconOnOhgan then
-			self:ScanForMobs(destGUID, 0, 8, 1, 0.1, 10, "SetIconOnOhgan")
+			self:ScanForMobs(destGUID, 0, 8, 1, nil, 10, "SetIconOnOhgan")
 		end
 	end
 end
