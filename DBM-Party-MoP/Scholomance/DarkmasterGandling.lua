@@ -14,7 +14,7 @@ mod:RegisterEventsInCombat(
 	"CHAT_MSG_RAID_BOSS_EMOTE"
 )
 
-local warnLesson		= mod:NewTargetAnnounce(113395, 2)--Needs to be changed to target when transcriptor works, at present CLEU doesn't show anything.
+local warnLesson		= mod:NewTargetNoFilterAnnounce(113395, 2)--Needs to be changed to target when transcriptor works, at present CLEU doesn't show anything.
 local warnRise			= mod:NewSpellAnnounce(113143, 3)
 
 local timerLessonCD		= mod:NewNextTimer(30, 113395, nil, nil, nil, 3)

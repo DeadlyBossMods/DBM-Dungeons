@@ -22,12 +22,12 @@ mod:RegisterEventsInCombat(
 )
 
 
-local warnBoneSpike		= mod:NewTargetAnnounce(113999, 3)
+local warnBoneSpike		= mod:NewTargetNoFilterAnnounce(113999, 3)
 
-local specWarnGetBoned	= mod:NewSpecialWarning("SpecWarnGetBoned")
-local specWarnSoulFlame	= mod:NewSpecialWarningMove(114009)--Not really sure what the point of this is yet. It's stupid easy to avoid and seems to serve no fight purpose yet, besides maybe cover some of the bone's you need for buff.
-local specWarnRusting	= mod:NewSpecialWarningStack(113765, "Tank", 5)
-local SpecWarnDoctor	= mod:NewSpecialWarning("SpecWarnDoctor")
+local specWarnGetBoned	= mod:NewSpecialWarning("SpecWarnGetBoned", nil, nil, nil, 1, 2)
+local specWarnSoulFlame	= mod:NewSpecialWarningGTFO(114009, nil, nil, nil, 1, 6)--Not really sure what the point of this is yet. It's stupid easy to avoid and seems to serve no fight purpose yet, besides maybe cover some of the bone's you need for buff.
+local specWarnRusting	= mod:NewSpecialWarningStack(113765, "Tank", 5, nil, nil, 1, 6)
+local SpecWarnDoctor	= mod:NewSpecialWarning("SpecWarnDoctor", nil, nil, nil, 1, 2)
 
 local timerBoneSpikeCD	= mod:NewCDTimer(8, 113999)
 local timerRusting		= mod:NewBuffActiveTimer(15, 113765, nil, "Tank")
@@ -46,6 +46,7 @@ function mod:OnCombatStart(delay)
 	timerBoneSpikeCD:Start(6.5-delay)
 	if not DBM:UnitDebuff("player", boned) then
 		specWarnGetBoned:Show()
+		specWarnGetBoned:Play("findshield")
 	end
 	if self.Options.InfoFrame then
 		DBM.InfoFrame:SetHeader(L.PlayerDebuffs)
@@ -64,6 +65,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		timerRusting:Start()
 		if (args.amount or 0) >= 5 and self:AntiSpam(1, 3) then
 			specWarnRusting:Show(args.amount)
+			specWarnRusting:Play("stackhigh")
 		end
 	end
 end
@@ -84,14 +86,16 @@ function mod:SPELL_CAST_START(args)
 	end
 end
 
-function mod:SPELL_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId)
+function mod:SPELL_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId, spellName)
 	if spellId == 114009 and destGUID == UnitGUID("player") and self:AntiSpam(2, 2) then
-		specWarnSoulFlame:Show()
+		specWarnSoulFlame:Show(spellName)
+		specWarnSoulFlame:Play("watchfeet")
 	end
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg, npc)
 	if npc and not UnitIsFriend("player", npc) and (msg == L.TheolenSpawn or msg:find(L.TheolenSpawn)) then
 		SpecWarnDoctor:Show()
+		SpecWarnDoctor:Play("bigmob")
 	end
 end

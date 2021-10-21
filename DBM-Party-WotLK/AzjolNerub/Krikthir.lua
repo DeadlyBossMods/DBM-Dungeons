@@ -14,6 +14,7 @@ mod:RegisterEventsInCombat(
 )
 
 local warningCurse	= mod:NewSpellAnnounce(52592, 2)
+
 local timerCurseCD	= mod:NewCDTimer(20, 52592, nil, nil, nil, 2)
 
 function mod:SPELL_AURA_APPLIED(args)

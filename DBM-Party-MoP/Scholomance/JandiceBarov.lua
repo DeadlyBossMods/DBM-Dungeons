@@ -19,7 +19,7 @@ local warnWondrousRapidity		= mod:NewSpellAnnounce(114062, 3)
 local warnGravityFlux			= mod:NewTargetAnnounce(114059, 2)
 local warnWhirlofIllusion		= mod:NewSpellAnnounce(113808, 4)
 
-local specWarnWondrousRapdity	= mod:NewSpecialWarningMove(114062, "Tank")--Frontal cone fixate attack, easily dodged (in fact if you don't, i imagine it'll wreck you on heroic)
+local specWarnWondrousRapdity	= mod:NewSpecialWarningDodge(114062, "Tank", nil, nil, 1, 2)--Frontal cone fixate attack, easily dodged (in fact if you don't, i imagine it'll wreck you on heroic)
 
 local timerWondrousRapidity		= mod:NewBuffFadesTimer(7.5, 114062)
 local timerWondrousRapidityCD	= mod:NewCDTimer(14, 114062, nil, "Tank", 2, 5)
@@ -43,8 +43,12 @@ end
 
 function mod:SPELL_CAST_START(args)
 	if args.spellId == 114062 then
-		warnWondrousRapidity:Show()
-		specWarnWondrousRapdity:Show()
+		if self.Options.SpecWarn114062dodge then
+			specWarnWondrousRapdity:Show()
+			specWarnWondrousRapdity:Play("shockwave")
+		else
+			warnWondrousRapidity:Show()
+		end
 		timerWondrousRapidity:Start()
 	end
 end
