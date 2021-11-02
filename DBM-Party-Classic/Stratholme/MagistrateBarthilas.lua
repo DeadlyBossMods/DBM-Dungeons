@@ -12,7 +12,7 @@ mod:RegisterEventsInCombat(
 )
 
 local warningCrowdPummel		= mod:NewSpellAnnounce(10887, 2)
-local warningMightyBlow			= mod:NewSpellAnnounce(14099, 2)
+local warningMightyBlow			= mod:NewSpellAnnounce(14099, 2, nil, "Tank", 2)
 
 local timerCrowdPummelCD		= mod:NewAITimer(180, 10887, nil, nil, nil, 2)
 local timerMightyBlowCD			= mod:NewAITimer(180, 14099, nil, "Tank", nil, 5, nil, DBM_CORE_L.TANK_ICON)
