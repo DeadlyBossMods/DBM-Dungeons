@@ -18,6 +18,7 @@ globals = {
 	-- DBM
 	"DBM",
 	"DBM_CORE_L",
+	"DBT",
 
 	-- Lua
 	"table.wipe",
