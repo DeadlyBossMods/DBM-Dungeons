@@ -21,7 +21,7 @@ local specWarnKick					= mod:NewSpecialWarningSpell(197251, "Tank", nil, nil, 3,
 local specWarnDeepeningShadows		= mod:NewSpecialWarningMoveTo(213583, nil, nil, nil, 3, 6)
 local specWarnHiddenStarted			= mod:NewSpecialWarningSpell(192750, nil, nil, nil, 2, 2)
 local specWarnHiddenOver			= mod:NewSpecialWarningEnd(192750, nil, nil, nil, 1, 2)
-local specWarnCreepingDoom			= mod:NewSpecialWarningDodge(197422, nil, nil, nil, 2)
+local specWarnCreepingDoom			= mod:NewSpecialWarningDodge(197422, nil, nil, nil, 2, 2)
 local specWarnVengeance				= mod:NewSpecialWarningMoveTo(205004, nil, nil, nil, 3, 6)
 
 local timerKickCD					= mod:NewCDTimer(16, 197251, nil, "Tank", nil, 5, nil, DBM_CORE_L.TANK_ICON)--16-42
