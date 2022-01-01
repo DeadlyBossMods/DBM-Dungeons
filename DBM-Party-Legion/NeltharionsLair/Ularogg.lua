@@ -67,6 +67,8 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
 		--timerStanceOfMountainCD:Stop()
 		--timerStanceOfMountainCD:Start()--Only seems to do it once now
 	elseif spellId == 198631 then--Stance of mountain ending
+		timerSunderCD:Stop()
+		timerStrikeCD:Stop()
 		timerSunderCD:Start(3)
 		timerStrikeCD:Start(16)
 	end

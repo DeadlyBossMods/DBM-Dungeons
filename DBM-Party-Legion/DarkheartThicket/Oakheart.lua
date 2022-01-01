@@ -12,7 +12,7 @@ mod:RegisterEventsInCombat(
 )
 
 local warnShatteredEarth			= mod:NewSpellAnnounce(204666, 2)
-local warnThrowTarget				= mod:NewTargetAnnounce(204658, 2)--This is target the tank is THROWN at.
+local warnThrowTarget				= mod:NewTargetNoFilterAnnounce(204658, 2)--This is target the tank is THROWN at.
 
 local specWarnRoots					= mod:NewSpecialWarningDodge(204574, nil, nil, nil, 2, 2)
 local yellThrow						= mod:NewYell(204658, 2764)--yell so others can avoid splash damage. I don't think target can avoid
@@ -28,19 +28,18 @@ function mod:ThrowTarget(targetname, uId)
 	if not targetname then
 		return
 	end
+	warnThrowTarget:Show(targetname)
 	if targetname == UnitName("player") then
 		--Can this be dodged? personal warning?
 		yellThrow:Yell()
-	else
-		warnThrowTarget:Show(targetname)
 	end
 end
 
 function mod:OnCombatStart(delay)
-	timerShatteredEarthCD:Start(6-delay)
+	timerShatteredEarthCD:Start(5.8-delay)
 	timerRootsCD:Start(12-delay)
 	timerBreathCD:Start(18-delay)
-	timerThrowCD:Start(29-delay)
+	timerThrowCD:Start(28.5-delay)
 end
 
 function mod:SPELL_CAST_START(args)

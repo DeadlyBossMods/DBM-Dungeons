@@ -31,10 +31,10 @@ local timerMagmaWaveCD				= mod:NewCDTimer(60, 200404, nil, nil, nil, 2, nil, DB
 local shelterName = DBM:GetSpellInfo(200551)
 
 function mod:OnCombatStart(delay)
+	timerCrystalSpikesCD:Start(5.8-delay)
 	timerMagmaSculptorCD:Start(7.3-delay)
-	timerLandSlideCD:Start(15.8-delay)
-	timerMoltenCrashCD:Start(19-delay)
-	timerCrystalSpikesCD:Start(21.5-delay)
+	timerLandSlideCD:Start(15.5-delay)
+	timerMoltenCrashCD:Start(18.7-delay)
 	timerMagmaWaveCD:Start(65-delay)
 end
 
