@@ -20,7 +20,7 @@ mod:RegisterEventsInCombat(
 local warnCloud						= mod:NewSpellAnnounce(199143, 2)
 local warnSwarm						= mod:NewTargetAnnounce(201733, 2)
 
-local specWarnDarkblast				= mod:NewSpecialWarningDodge(198820, nil, nil, nil, 2)
+local specWarnDarkblast				= mod:NewSpecialWarningDodge(198820, nil, nil, nil, 2, 2)
 local specWarnGuile					= mod:NewSpecialWarningDodge(199193, nil, nil, nil, 2, 2)
 local specWarnGuileEnded			= mod:NewSpecialWarningEnd(199193, nil, nil, nil, 1, 2)
 local specWarnSwarm					= mod:NewSpecialWarningYou(201733)
