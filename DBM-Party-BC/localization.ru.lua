@@ -165,15 +165,15 @@ L = DBM:GetModLocalization(541)
 L = DBM:GetModLocalization(542)
 
 L:SetWarningLocalization({
-	warnStoned	= "%s returned to stone"
+	warnStoned	= "%s вернулся в камень"
 })
 
 L:SetOptionLocalization({
-	warnStoned	= "Show warning for spirits returning to stone"
+	warnStoned	= "Показать предупреждение для духов, возвращающихся в камень"
 })
 
 L:SetMiscLocalization({
-    BirdStone	= "%s returns to stone."
+    BirdStone	= "%s возвращается в камень."
 })
 
 ------------------------
@@ -238,7 +238,7 @@ L = DBM:GetModLocalization(553)
 L = DBM:GetModLocalization(554)
 
 L:SetMiscLocalization({
-    AeonusFrenzy	= "%s goes into a frenzy!"
+    AeonusFrenzy	= "%s впадает в безумие!"
 })
 
 ---------------------
@@ -251,22 +251,22 @@ L:SetGeneralLocalization({
 })
 
 L:SetWarningLocalization({
-    WarnWavePortalSoon	= "New portal soon",
-    WarnWavePortal		= "Portal %d",
-    WarnBossPortalSoon	= "Boss incoming soon",
-    WarnBossPortal		= "Boss incoming"
+    WarnWavePortalSoon	= "Скоро новый портал",
+    WarnWavePortal		= "Портал %d",
+    WarnBossPortalSoon	= "Скоро следующий босс",
+    WarnBossPortal		= "Следующий босс"
 })
 
 L:SetTimerLocalization({
-	TimerNextPortal		= "Portal %d"
+	TimerNextPortal		= "Портал %d"
 })
 
 L:SetOptionLocalization({
-    WarnWavePortalSoon	= "Show pre-warning for new portal",
-    WarnWavePortal		= "Show warning for new portal",
-    WarnBossPortalSoon	= "Show pre-warning for boss incoming",
-    WarnBossPortal		= "Show warning for boss incoming",
-	TimerNextPortal		= "Show timer for portal number"
+    WarnWavePortalSoon	= "Показать предварительное предупреждение для нового портала",
+    WarnWavePortal		= "Показать предупреждение для нового портала",
+    WarnBossPortalSoon	= "Показать предварительное предупреждение о следующем боссе",
+    WarnBossPortal		= "Показывать предупреждение о следующем боссе",
+	TimerNextPortal		= "Показать таймер для номера портала"
 })
 
 L:SetMiscLocalization({
@@ -384,7 +384,7 @@ L = DBM:GetModLocalization(531)
 L = DBM:GetModLocalization(532)
 
 L:SetMiscLocalization({
---	DelrissaPull	= "Annihilate them.",
+--	DelrissaPull	= "Уничтожить их.",
 	DelrissaEnd		= "Not what I had... planned."
 })
 
