@@ -10,7 +10,7 @@ local L
 L = DBM:GetModLocalization("AtalDazarTrash")
 
 L:SetGeneralLocalization({
-	name =	"Atal'Dazar Trash"
+	name =	"Трэш мобы Атал'Дазар"
 })
 
 -----------------------
@@ -28,7 +28,7 @@ L:SetWarningLocalization({
 
 L:SetOptionLocalization({
 	warnGoodBrew		= "Предупреждение при применении хорошего пойла",
-	specWarnBrewOnBoss	= "Спец-предупреждение когда хорошее пойло под боссом"
+	specWarnBrewOnBoss	= "Спецпредупреждение, когда хорошее пойло под боссом"
 })
 
 L:SetMiscLocalization({
@@ -51,7 +51,7 @@ L:SetMiscLocalization({
 L = DBM:GetModLocalization("FreeholdTrash")
 
 L:SetGeneralLocalization({
-	name =	"Freehold Trash"
+	name =	"Трэш мобы Вольная Гавань"
 })
 
 -----------------------
@@ -63,7 +63,7 @@ L:SetGeneralLocalization({
 L = DBM:GetModLocalization("KingsRestTrash")
 
 L:SetGeneralLocalization({
-	name =	"Kings' Rest Trash"
+	name =	"Трэш мобы Гробница Королей"
 })
 
 -----------------------
@@ -81,7 +81,7 @@ L:SetMiscLocalization({
 L = DBM:GetModLocalization("SotSTrash")
 
 L:SetGeneralLocalization({
-	name =	"SotS Trash"
+	name =	"Трэш мобы Святилище Штормов"
 })
 
 -----------------------
@@ -93,7 +93,7 @@ L:SetGeneralLocalization({
 L = DBM:GetModLocalization("BoralusTrash")
 
 L:SetGeneralLocalization({
-	name =	"Siege of Boralus Trash"
+	name =	"Трэш мобы Осада Боралуса"
 })
 
 -----------------------
@@ -105,7 +105,7 @@ L:SetGeneralLocalization({
 L = DBM:GetModLocalization("SethralissTrash")
 
 L:SetGeneralLocalization({
-	name =	"Temple of Sethraliss Trash"
+	name =	"Трэш мобы Храм Сетралисс"
 })
 
 -----------------------
@@ -117,7 +117,7 @@ L:SetGeneralLocalization({
 L = DBM:GetModLocalization("UndermineTrash")
 
 L:SetGeneralLocalization({
-	name =	"The MOTHERLODE!! Trash"
+	name =	"Трэш мобы ЗОЛОТАЯ ЖИЛА!!!"
 })
 
 -----------------------
@@ -129,7 +129,7 @@ L:SetGeneralLocalization({
 L = DBM:GetModLocalization("UnderrotTrash")
 
 L:SetGeneralLocalization({
-	name =	"The Underrot Trash"
+	name =	"Трэш мобы Подгнилье"
 })
 
 -----------------------
@@ -141,7 +141,7 @@ L:SetGeneralLocalization({
 L = DBM:GetModLocalization("TolDagorTrash")
 
 L:SetGeneralLocalization({
-	name =	"Tol Dagor Trash"
+	name =	"Трэш мобы Тол Дагор"
 })
 
 -----------------------
@@ -153,7 +153,7 @@ L:SetGeneralLocalization({
 L = DBM:GetModLocalization("WaycrestTrash")
 
 L:SetGeneralLocalization({
-	name =	"Waycrest Manor Trash"
+	name =	"Трэш мобы Усадьба Уэйкрестов"
 })
 
 -----------------------
@@ -174,5 +174,5 @@ L:SetMiscLocalization({
 L = DBM:GetModLocalization("MechagonTrash")
 
 L:SetGeneralLocalization({
-	name =	"Mechagon Trash"
+	name =	"Трэш мобы Мехагон"
 })
