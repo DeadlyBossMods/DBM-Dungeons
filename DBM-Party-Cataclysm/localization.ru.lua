@@ -19,7 +19,7 @@ L:SetWarningLocalization({
 })
 
 L:SetOptionLocalization({
-	WarnAdd		= "Сообщать когда на помощнике истекает эффект $spell:75608"
+	WarnAdd		= "Сообщать, когда на помощнике истекает эффект $spell:75608"
 })
 
 -----------------------
@@ -301,10 +301,10 @@ L:SetTimerLocalization({
 })
 
 L:SetOptionLocalization({
-	WarnAirphase				= "Показывать предупреждения когда Камнешкур взлетает",
-	WarnGroundphase				= "Показывать предупреждения когда Камнешкур приземляется",
-	TimerAirphase				= "Показывать таймер следующей воздушной фаза",
-	TimerGroundphase			= "Показывать таймер следующей наземной фаза",
+	WarnAirphase				= "Показывать предупреждения, когда Камнешкур взлетает",
+	WarnGroundphase				= "Показывать предупреждения, когда Камнешкур приземляется",
+	TimerAirphase				= "Показывать таймер следующей воздушной фазы",
+	TimerGroundphase			= "Показывать таймер следующей наземной фазы",
 	specWarnCrystalStorm		= "Показывать особое предупреждение для $spell:92265"
 })
 
@@ -384,7 +384,7 @@ L= DBM:GetModLocalization(187)
 L:SetWarningLocalization{
 	WarnBear		= "Облик медведя",
 	WarnBearSoon	= "Облик медведя через 5 секунд",
-	WarnNormal		= "Обычныый облик",
+	WarnNormal		= "Обычный облик",
 	WarnNormalSoon	= "Обычный облик через 5 секунд"
 }
 
@@ -541,7 +541,7 @@ L:SetWarningLocalization{
 }
 
 L:SetOptionLocalization{
-	SpecWarnToxic	= "Спец-предупреждение, когда на вас нет $spell:96328",
+	SpecWarnToxic	= "Спецпредупреждение, когда на вас нет $spell:96328",
 	InfoFrame		= "Показывать игроков без $spell:96328",
 	SetIconOnGaze	= DBM_CORE_L.AUTO_ICONS_OPTION_TEXT:format(96342)
 }
