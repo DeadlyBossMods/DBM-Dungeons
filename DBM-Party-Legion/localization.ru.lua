@@ -30,7 +30,7 @@ L= DBM:GetModLocalization(1672)
 L = DBM:GetModLocalization("BRHTrash")
 
 L:SetGeneralLocalization({
-	name =	"Black Rook Hold Trash"
+	name =	"Трэш мобы Крепость Чёрной Ладьи"
 })
 
 -----------------------
@@ -62,7 +62,7 @@ L= DBM:GetModLocalization(1657)
 L = DBM:GetModLocalization("DHTTrash")
 
 L:SetGeneralLocalization({
-	name =	"Darkheart Thicket Trash"
+	name =	"Трэш мобы Чаща Тёмного Сердца"
 })
 
 
@@ -105,7 +105,7 @@ L= DBM:GetModLocalization(1492)
 L = DBM:GetModLocalization("EoATrash")
 
 L:SetGeneralLocalization({
-	name =	"Eye of Azshara Trash"
+	name =	"Трэш мобы Око Азшары"
 })
 
 -----------------------
@@ -146,7 +146,7 @@ L:SetMiscLocalization({
 L = DBM:GetModLocalization("HoVTrash")
 
 L:SetGeneralLocalization({
-	name =	"Halls of Valor Trash"
+	name =	"Трэш мобы Чертоги Доблести"
 })
 
 -----------------------
@@ -178,7 +178,7 @@ L= DBM:GetModLocalization(1687)
 L = DBM:GetModLocalization("NLTrash")
 
 L:SetGeneralLocalization({
-	name =	"Neltharion's Lair Trash"
+	name =	"Трэш мобы Логово Нелтариона"
 })
 
 -----------------------
@@ -200,7 +200,7 @@ L= DBM:GetModLocalization(1498)
 L= DBM:GetModLocalization(1499)
 
 L:SetMiscLocalization({
-	batSpawn		=	"Подкрепления ко мне! СЕЙЧАС!"-- needs checking
+	batSpawn		=	"Подкрепления ко мне! СЕЙЧАС!"
 })
 
 -----------------------
@@ -219,7 +219,7 @@ L= DBM:GetModLocalization(1501)
 L = DBM:GetModLocalization("ArcwayTrash")
 
 L:SetGeneralLocalization({
-	name =	"The Arcway Trash"
+	name =	"Трэш мобы Катакомбы Сурамара"
 })
 
 -----------------------
@@ -246,7 +246,7 @@ L= DBM:GetModLocalization(1720)
 L = DBM:GetModLocalization("CoSTrash")
 
 L:SetGeneralLocalization({
-	name =	"Court of Stars Trash"
+	name =	"Трэш мобы Квартал Звёзд"
 })
 
 L:SetOptionLocalization({
@@ -342,7 +342,7 @@ L= DBM:GetModLocalization(1663)
 L = DBM:GetModLocalization("MawTrash")
 
 L:SetGeneralLocalization({
-	name =	"Maw of Souls Trash"
+	name =	"Трэш мобы Утроба Душ"
 })
 
 -----------------------
@@ -394,7 +394,7 @@ L= DBM:GetModLocalization(1711)
 L = DBM:GetModLocalization("AVHTrash")
 
 L:SetGeneralLocalization({
-	name =	"Assault Violet Hold Trash"
+	name =	"Трэш мобы Аметистовая Крепость"
 })
 
 L:SetWarningLocalization({
@@ -452,7 +452,7 @@ L= DBM:GetModLocalization(1470)
 L = DBM:GetModLocalization("VoWTrash")
 
 L:SetGeneralLocalization({
-	name =	"Vault of Wardens Trash"
+	name =	"Трэш мобы Казематы Стражей"
 })
 
 -----------------------
@@ -523,7 +523,7 @@ L:SetGeneralLocalization({
 L = DBM:GetModLocalization("RTKTrash")
 
 L:SetGeneralLocalization({
-	name =	"Трэш: Возвращение в каражан"
+	name =	"Трэш: Возвращение в Каражан"
 })
 
 L:SetMiscLocalization({
