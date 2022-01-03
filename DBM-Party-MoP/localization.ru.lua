@@ -52,7 +52,7 @@ L:SetWarningLocalization({
 })
 
 L:SetOptionLocalization({
-	SpecWarnFizzyBubbles	= "Спец-предупреждение, когда на вас нет $spell:114459"
+	SpecWarnFizzyBubbles	= "Спецпредупреждение, когда на Вас нет $spell:114459"
 })
 
 -----------------------
@@ -81,7 +81,7 @@ L:SetOptionLocalization({
 })
 
 L:SetMiscLocalization({
-	NovicesPulled	= "Это ваша вина! Вы позволили ша пробудиться после стольких лет!",
+	NovicesPulled	= "Это ваша вина! Вы позволили Ша пробудиться после стольких лет!",
 	NovicesDefeated = "Вы победили новичков. Теперь вы сразитесь с двумя моими самыми опытными учениками.",
 --	Defeat			= "I am bested.  Give me a moment and we will venture forth together to face the Sha."
 })
@@ -215,7 +215,7 @@ L:SetWarningLocalization({
 })
 
 L:SetOptionLocalization({
-	SpecWarnGetBoned	= "Спец-предупреждение, когда на вас нет $spell:113996 debuff",
+	SpecWarnGetBoned	= "Спецпредупреждение, когда на Вас нет $spell:113996 debuff",
 	InfoFrame			= "Показывать информационное окно для игроков без $spell:113996"
 })
 
