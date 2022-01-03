@@ -455,7 +455,7 @@ L:SetOptionLocalization({
 })
 
 L:SetMiscLocalization({
-	Sealbroken	= "Мы прорвались через тюремные ворота! Дорога в Даларан открыта! Теперь мы наконец прекратим войну Нексуса!",
+	Sealbroken	= "Мы прорвались через тюремные ворота! Дорога в Даларан открыта! Теперь мы, наконец, прекратим войну Нексуса!",
 	WavePortal	= "Открыто порталов: (%d+)/18"
 })
 
@@ -613,5 +613,5 @@ L:SetOptionLocalization({
 
 L:SetMiscLocalization({
 	ACombatStart	= "Он слишком силен. Мы должны выбраться отсюда как можно скорее. Моя магия задержит его, но не надолго. Быстрее, герои!",
-	HCombatStart	= "He's... too powerful. Heroes, quickly... come to me! We must leave this place at once! I will do what I can to hold him in place while we flee."
+	HCombatStart	= "Он... слишком силён. Герои, быстрее... идите ко мнe! Мы должны немедленно покинуть это место! Я сделаю все возможное, чтобы удержать его на месте, пока мы бежим."
 })
