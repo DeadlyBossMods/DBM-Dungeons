@@ -48,7 +48,7 @@ end
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
 	if spellId == 255371 then
-		specWarnFear:Show(DBM_CORE_L.BREAK_LOS)
+		specWarnFear:Show(DBM_COMMON_L.BREAK_LOS)
 		specWarnFear:Play("findshelter")
 		timerFearCD:Start()
 	elseif spellId == 257407 then

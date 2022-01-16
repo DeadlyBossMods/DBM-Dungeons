@@ -70,7 +70,7 @@ function mod:SPELL_CAST_START(args)
 		timerCripShivCD:Stop()
 		timerFlashingDaggerCD:Stop()
 	elseif spellId == 257785 then
-		specWarnFlashingDagger:Show(DBM_CORE_L.BREAK_LOS)
+		specWarnFlashingDagger:Show(DBM_COMMON_L.BREAK_LOS)
 		specWarnFlashingDagger:Play("findshelter")
 		timerFlashingDaggerCD:Start()
 	end

@@ -176,7 +176,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		warnFulminatingZap:Show(args.destName)
 	elseif spellId == 303885 then
 		if args:IsPlayer() then
-			specWarnFulminatingBurst:Show(DBM_CORE_L.ALLY)
+			specWarnFulminatingBurst:Show(DBM_COMMON_L.ALLY)
 			yellFulminatingBurst:Yell()
 			yellFulminatingBurstFades:Countdown(spellId)
 		else
@@ -185,7 +185,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		specWarnFulminatingBurst:Play("gathershare")
 	elseif spellId == 303252 then
 		if args:IsPlayer() then
-			specWarnAntiTresField:Show(DBM_CORE_L.ALLY)
+			specWarnAntiTresField:Show(DBM_COMMON_L.ALLY)
 			yellAntiTresField:Yell()
 		else
 			specWarnAntiTresField:Show(args.destName)

@@ -30,7 +30,7 @@ local timerReapSoulCD				= mod:NewNextTimer(13, 194956, nil, nil, nil, 5, nil, D
 
 function mod:ScytheTarget(targetname, uId)
 	if not targetname then
-		warnSwirlingScythe:Show(DBM_CORE_L.UNKNOWN)
+		warnSwirlingScythe:Show(DBM_COMMON_L.UNKNOWN)
 		return
 	end
 	if targetname == UnitName("player") then

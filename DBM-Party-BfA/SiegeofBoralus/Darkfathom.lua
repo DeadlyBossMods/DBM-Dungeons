@@ -33,7 +33,7 @@ function mod:SPELL_CAST_START(args)
 		specWarnBreakWater:Play("watchstep")
 		timerBreakWaterCD:Start()
 	elseif spellId == 276068 then
-		specWarnTidalSurge:Show(DBM_CORE_L.BREAK_LOS)
+		specWarnTidalSurge:Show(DBM_COMMON_L.BREAK_LOS)
 		specWarnTidalSurge:Play("findshelter")
 		timerTidalSurgeCD:Start()--Unknown, pulls to short
 	end

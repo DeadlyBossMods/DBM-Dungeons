@@ -48,7 +48,7 @@ mod:AddSetIconOption("SetIconOnDarkRush", 197478, true, false, {1, 2, 3})
 
 function mod:BrutalGlaiveTarget(targetname, uId)
 	if not targetname then
-		warnBrutalGlaive:Show(DBM_CORE_L.UNKNOWN)
+		warnBrutalGlaive:Show(DBM_COMMON_L.UNKNOWN)
 		return
 	end
 	if targetname == UnitName("player") then

@@ -46,7 +46,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		specWarnMindRend:Play("helpdispel")
 	elseif spellId == 269131 then
 		if args:IsPlayer() then
-			specWarnAncientMindbenderYou:Show(DBM_CORE_L.ORB)
+			specWarnAncientMindbenderYou:Show(DBM_COMMON_L.ORB)
 			specWarnAncientMindbenderYou:Play("takedamage")
 			yellAncientMindbender:Yell()
 		else

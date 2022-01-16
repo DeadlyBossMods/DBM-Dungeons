@@ -21,7 +21,7 @@ local timerExplosion		= mod:NewCastTimer(8, 51110, nil, nil, nil, 2, nil, DBM_CO
 
 function mod:SPELL_CAST_START(args)
 	if args:IsSpellID(51110, 59377) then
-		specWarnExplosion:Show(DBM_CORE_L.BREAK_LOS)
+		specWarnExplosion:Show(DBM_COMMON_L.BREAK_LOS)
 		specWarnExplosion:Play("findshelter")
 		timerExplosion:Start()
 	end

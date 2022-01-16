@@ -57,7 +57,7 @@ end
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
 	if spellId == 291946 then
-		specWarnVentingFlames:Show(DBM_CORE_L.BREAK_LOS)
+		specWarnVentingFlames:Show(DBM_COMMON_L.BREAK_LOS)
 		specWarnVentingFlames:Play("findshelter")
 		--15.5, 33.9, 34.0, 34.0"
 		timerVentingFlamesCD:Start()

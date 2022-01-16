@@ -29,7 +29,7 @@ local timerNightfallCD			= mod:NewCDTimer(14.5, 198401, nil, nil, nil, 3)
 
 function mod:LeapTarget(targetname, uId)
 	if not targetname then
-		warnLeap:Show(DBM_CORE_L.UNKNOWN)
+		warnLeap:Show(DBM_COMMON_L.UNKNOWN)
 		return
 	end
 	warnLeap:Show(targetname)
