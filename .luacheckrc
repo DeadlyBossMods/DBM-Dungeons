@@ -18,6 +18,7 @@ globals = {
 	-- DBM
 	"DBM",
 	"DBM_CORE_L",
+	"DBM_COMMON_L",
 	"DBT",
 
 	-- Lua
