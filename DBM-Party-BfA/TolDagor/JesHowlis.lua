@@ -23,9 +23,9 @@ local specWarnCripShiv				= mod:NewSpecialWarningDispel(257777, "RemovePoison", 
 local specWarnHowlingFear			= mod:NewSpecialWarningInterrupt(257791, "HasInterrupt", nil, nil, 1, 2)
 local specWarnFlashingDagger		= mod:NewSpecialWarningMoveTo(257785, nil, nil, nil, 3, 2)
 
-local timerCripShivCD				= mod:NewCDTimer(16.1, 257777, nil, "Healer|RemovePoison", nil, 5, nil, DBM_CORE_L.HEALER_ICON..DBM_CORE_L.POISON_ICON)
-local timerHowlingFearCD			= mod:NewCDTimer(13.4, 257791, nil, "HasInterrupt", nil, 4, nil, DBM_CORE_L.INTERRUPT_ICON)
-local timerFlashingDaggerCD			= mod:NewCDTimer(31.6, 257785, nil, nil, nil, 2, nil, DBM_CORE_L.DEADLY_ICON)
+local timerCripShivCD				= mod:NewCDTimer(16.1, 257777, nil, "Healer|RemovePoison", nil, 5, nil, DBM_COMMON_L.HEALER_ICON..DBM_COMMON_L.POISON_ICON)
+local timerHowlingFearCD			= mod:NewCDTimer(13.4, 257791, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerFlashingDaggerCD			= mod:NewCDTimer(31.6, 257785, nil, nil, nil, 2, nil, DBM_COMMON_L.DEADLY_ICON)
 
 function mod:OnCombatStart(delay)
 	timerCripShivCD:Start(7.2-delay)--SUCCESS

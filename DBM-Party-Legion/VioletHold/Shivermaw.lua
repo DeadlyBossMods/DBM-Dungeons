@@ -23,9 +23,9 @@ local specWarnFrigidWinds			= mod:NewSpecialWarningMoveAway(201672, nil, nil, ni
 local specWarnIceBomb				= mod:NewSpecialWarningDodge(201960, nil, nil, nil, 3, 2)
 
 local timerRelentlessStormCD		= mod:NewNextTimer(14, 201672, nil, nil, nil, 3)--14, 47 alternating
-local timerFrigidWindsCD			= mod:NewNextTimer(61, 202062, nil, nil, nil, 3, nil, DBM_CORE_L.HEROIC_ICON)
-local timerIceBombCD				= mod:NewNextTimer(61, 201960, nil, nil, nil, 3, nil, DBM_CORE_L.DEADLY_ICON)
-local timerFrostBreathCD			= mod:NewNextTimer(61, 201379, nil, "Tank", nil, 5, nil, DBM_CORE_L.TANK_ICON)
+local timerFrigidWindsCD			= mod:NewNextTimer(61, 202062, nil, nil, nil, 3, nil, DBM_COMMON_L.HEROIC_ICON)
+local timerIceBombCD				= mod:NewNextTimer(61, 201960, nil, nil, nil, 3, nil, DBM_COMMON_L.DEADLY_ICON)
+local timerFrostBreathCD			= mod:NewNextTimer(61, 201379, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 
 mod:AddRangeFrameOption(8, 202062)
 

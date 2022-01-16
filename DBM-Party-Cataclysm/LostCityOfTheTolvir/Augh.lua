@@ -18,7 +18,7 @@ local warnSmokeBomb			= mod:NewSpellAnnounce(84768, 3)
 local warnParalyticDart		= mod:NewTargetNoFilterAnnounce(84799, 3, nil, false, 2)
 local warnWhirlWind			= mod:NewSpellAnnounce(91408, 3)
 
-local timerParalyticDart	= mod:NewTargetTimer(9, 84799, nil, "RemovePoison", 3, 5, nil, DBM_CORE_L.POISON_ICON)
+local timerParalyticDart	= mod:NewTargetTimer(9, 84799, nil, "RemovePoison", 3, 5, nil, DBM_COMMON_L.POISON_ICON)
 
 function mod:OnCombatStart(delay)
 

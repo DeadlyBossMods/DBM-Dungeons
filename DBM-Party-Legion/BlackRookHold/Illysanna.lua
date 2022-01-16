@@ -39,7 +39,7 @@ local specWarnBonebreakingStrike	= mod:NewSpecialWarningDodge(197974, "Tank", ni
 local specWarnArcaneBlitz			= mod:NewSpecialWarningInterrupt(197797, "HasInterrupt", nil, nil, 1, 2)
 
 local timerBrutalGlaiveCD			= mod:NewCDTimer(15, 197546, nil, nil, nil, 3)
-local timerVengefulShearCD			= mod:NewCDTimer(11, 197418, nil, "Tank", nil, 5, nil, DBM_CORE_L.TANK_ICON)--11-16, delayed by dark rush
+local timerVengefulShearCD			= mod:NewCDTimer(11, 197418, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON)--11-16, delayed by dark rush
 local timerDarkRushCD				= mod:NewCDTimer(30, 197478, nil, nil, nil, 3)
 local timerEyeBeamCD				= mod:NewNextTimer(15.5, 197687, nil, nil, nil, 3)
 

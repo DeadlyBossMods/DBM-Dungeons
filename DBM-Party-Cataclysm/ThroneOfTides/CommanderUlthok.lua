@@ -21,8 +21,8 @@ local warnEnrage			= mod:NewSpellAnnounce(76100, 2, nil, "Tank")
 local specWarnCurse			= mod:NewSpecialWarningDispel(76094, "RemoveCurse", nil, 2, 1, 2)
 local specWarnFissure		= mod:NewSpecialWarningDodge(76047, "Tank", nil, nil, 1, 2)
 
-local timerDarkFissureCD	= mod:NewCDTimer(18.4, 76047, nil, nil, nil, 5, nil, DBM_CORE_L.TANK_ICON)
-local timerSqueeze			= mod:NewTargetTimer(6, 76026, nil, nil, nil, 5, nil, DBM_CORE_L.DAMAGE_ICON)
+local timerDarkFissureCD	= mod:NewCDTimer(18.4, 76047, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+local timerSqueeze			= mod:NewTargetTimer(6, 76026, nil, nil, nil, 5, nil, DBM_COMMON_L.DAMAGE_ICON)
 local timerSqueezeCD		= mod:NewCDTimer(29, 76026, nil, nil, nil, 3)
 local timerEnrage			= mod:NewBuffActiveTimer(10, 76100, nil, "Tank", 2, 5)
 

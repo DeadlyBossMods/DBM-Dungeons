@@ -25,7 +25,7 @@ local specWarnTotem		= mod:NewSpecialWarningSwitch(43302, nil, nil, nil, 1, 2)
 local specWarnTotemWater= mod:NewSpecialWarningMove(97499, "Tank", nil, nil, 1, 2)
 local specWarnEnrage	= mod:NewSpecialWarningDispel(43139, "RemoveEnrage", nil, nil, 1, 2)
 
-local timerShock		= mod:NewTargetTimer(12, 43303, nil, "Healer", 2, 5, nil, DBM_CORE_L.HEALER_ICON..DBM_CORE_L.MAGIC_ICON)
+local timerShock		= mod:NewTargetTimer(12, 43303, nil, "Healer", 2, 5, nil, DBM_COMMON_L.HEALER_ICON..DBM_COMMON_L.MAGIC_ICON)
 
 local berserkTimer		= mod:NewBerserkTimer(600)
 

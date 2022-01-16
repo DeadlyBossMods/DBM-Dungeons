@@ -28,10 +28,10 @@ local warnRevive 			= mod:NewAnnounce("WarnRevive", 2, 96484, false)
 local specWarnSlam			= mod:NewSpecialWarningDodge(96740, nil, nil, nil, 1, 2)
 local specWarnOhgan			= mod:NewSpecialWarning("SpecWarnOhgan", nil, nil, nil, 1, 2)
 
-local timerSummonOhgan		= mod:NewNextTimer(20, 96717, nil, nil, nil, 1, nil, DBM_CORE_L.DAMAGE_ICON)--Engage only
-local timerResOhgan			= mod:NewCDTimer(40, 96724, nil, nil, nil, 1, nil, DBM_CORE_L.DAMAGE_ICON)--rez cd
+local timerSummonOhgan		= mod:NewNextTimer(20, 96717, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)--Engage only
+local timerResOhgan			= mod:NewCDTimer(40, 96724, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)--rez cd
 local timerDecapitate		= mod:NewNextTimer(35, 96684, nil, nil, nil, 3)
-local timerBloodletting		= mod:NewTargetTimer(10, 96776, nil, nil, nil, 5, nil, DBM_CORE_L.HEALER_ICON)
+local timerBloodletting		= mod:NewTargetTimer(10, 96776, nil, nil, nil, 5, nil, DBM_COMMON_L.HEALER_ICON)
 local timerBloodlettingCD	= mod:NewCDTimer(25, 96776, nil, nil, nil, 3)
 local timerOhgan			= mod:NewCastTimer(2.5, 96724, nil, nil, nil, 1)
 

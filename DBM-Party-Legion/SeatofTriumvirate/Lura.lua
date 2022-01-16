@@ -27,8 +27,8 @@ local specWarnFragmentOfDespair			= mod:NewSpecialWarningSpell(245164, nil, nil,
 local specWarnGrandShift				= mod:NewSpecialWarningDodge(249009, nil, nil, nil, 2, 2)
 
 --local timerCalltoVoidCD					= mod:NewAITimer(12, 247795, nil, nil, nil, 1)
-local timerGrandShiftCD					= mod:NewCDTimer(14.6, 249009, nil, nil, nil, 3, nil, DBM_CORE_L.HEROIC_ICON)
-local timerUmbralCadenceCD				= mod:NewCDTimer(10.9, 247930, nil, nil, nil, 2, nil, DBM_CORE_L.HEALER_ICON)
+local timerGrandShiftCD					= mod:NewCDTimer(14.6, 249009, nil, nil, nil, 3, nil, DBM_COMMON_L.HEROIC_ICON)
+local timerUmbralCadenceCD				= mod:NewCDTimer(10.9, 247930, nil, nil, nil, 2, nil, DBM_COMMON_L.HEALER_ICON)
 local timerBacklash						= mod:NewBuffActiveTimer(12.5, 247816, nil, nil, nil, 6)
 
 function mod:OnCombatStart(delay)

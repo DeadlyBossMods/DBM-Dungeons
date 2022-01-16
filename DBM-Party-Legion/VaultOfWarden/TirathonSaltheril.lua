@@ -28,7 +28,7 @@ local specWarnFuriousBlast			= mod:NewSpecialWarningInterrupt(191823, "HasInterr
 local specWarnFelMortar				= mod:NewSpecialWarningDodge(202913, nil, nil, nil, 2, 2)
 local specWarnFelMortarGTFO			= mod:NewSpecialWarningMove(202919, nil, nil, nil, 1, 2)
 
-local timerDarkStrikes				= mod:NewBuffActiveTimer(11, 191941, nil, "Tank", nil, 5, nil, DBM_CORE_L.TANK_ICON)--tooltip says 15 but every log was 10-11
+local timerDarkStrikes				= mod:NewBuffActiveTimer(11, 191941, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON)--tooltip says 15 but every log was 10-11
 
 --function mod:OnCombatStart(delay)
 

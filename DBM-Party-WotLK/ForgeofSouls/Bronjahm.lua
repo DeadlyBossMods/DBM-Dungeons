@@ -41,7 +41,7 @@ end
 function mod:SPELL_AURA_APPLIED(args)
 	if args.spellId == 68839 then							-- Corrupt Soul
 		if args:IsPlayer() then
-			specwarnCorruptedSoul:Show(DBM_CORE_L.ROOM_EDGE)
+			specwarnCorruptedSoul:Show(DBM_COMMON_L.ROOM_EDGE)
 			specwarnCorruptedSoul:Play("runtoedge")
 		else
 			warnCorruptSoul:Show(args.destName)

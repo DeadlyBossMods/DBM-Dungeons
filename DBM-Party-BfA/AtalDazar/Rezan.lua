@@ -22,7 +22,7 @@ local yellPursuit				= mod:NewYell(257407)
 local specWarnPursuit			= mod:NewSpecialWarningRun(257407, nil, nil, nil, 4, 2)
 local specWarnBoneQuake			= mod:NewSpecialWarningSpell(260683, nil, nil, nil, 2, 2)
 
-local timerTeethCD				= mod:NewCDTimer(38, 255434, nil, "Tank", nil, 5, nil, DBM_CORE_L.TANK_ICON)--38-43.7?
+local timerTeethCD				= mod:NewCDTimer(38, 255434, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON)--38-43.7?
 local timerFearCD				= mod:NewCDTimer(40.9, 255371, nil, nil, nil, 2)
 local timerPursuitCD			= mod:NewNextTimer(41.2, 257407, nil, nil, nil, 3)
 

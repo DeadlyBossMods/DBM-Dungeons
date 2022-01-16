@@ -23,7 +23,7 @@ local specWarnFixate				= mod:NewSpecialWarningYou(209906)
 local specWarnSpikedTongue			= mod:NewSpecialWarningRun(199176, nil, nil, nil, 4, 2)
 --local specWarnRancidMaw			= mod:NewSpecialWarningMove(188494)--Needs confirmation this is pool damage and not constant fight aoe damage
 
-local timerSpikedTongueCD			= mod:NewNextTimer(55, 199176, nil, "Tank|Healer", nil, 5, nil, DBM_CORE_L.DEADLY_ICON..DBM_CORE_L.TANK_ICON)
+local timerSpikedTongueCD			= mod:NewNextTimer(55, 199176, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.DEADLY_ICON..DBM_COMMON_L.TANK_ICON)
 local timerAddsCD					= mod:NewCDTimer(65, 199817, nil, nil, nil, 1, 226361)
 local timerRancidMawCD				= mod:NewCDTimer(18, 205549, nil, false, nil, 3)--Needed?
 local timerToxicRetchCD				= mod:NewCDTimer(14.3, 210150, nil, false, nil, 3)--Needed?

@@ -24,7 +24,7 @@ local yellLeap					= mod:NewYell(196346)
 local specWarnRampage			= mod:NewSpecialWarningDefensive(198379, "Tank", nil, nil, 1, 2)
 
 local timerLeapCD				= mod:NewCDTimer(12.9, 196346, nil, nil, nil, 3)
-local timerRampageCD			= mod:NewCDTimer(15.8, 198379, nil, "Tank", nil, 5, nil, DBM_CORE_L.TANK_ICON)
+local timerRampageCD			= mod:NewCDTimer(15.8, 198379, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerNightfallCD			= mod:NewCDTimer(14.5, 198401, nil, nil, nil, 3)
 
 function mod:LeapTarget(targetname, uId)

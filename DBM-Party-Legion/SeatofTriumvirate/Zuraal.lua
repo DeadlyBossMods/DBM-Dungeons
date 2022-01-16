@@ -32,7 +32,7 @@ local specWarnUmbraShift				= mod:NewSpecialWarningYou(244433, nil, nil, nil, 1,
 local specWarnFixate					= mod:NewSpecialWarningRun(244657, nil, nil, nil, 4, 2)
 
 local timerNullPalmCD					= mod:NewCDTimer(10.9, 246134, nil, nil, nil, 3)
-local timerDeciminateCD					= mod:NewCDTimer(12.1, 244579, nil, nil, nil, 5, nil, DBM_CORE_L.TANK_ICON)
+local timerDeciminateCD					= mod:NewCDTimer(12.1, 244579, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerCoalescedVoidCD				= mod:NewCDTimer(12.1, 244579, nil, nil, nil, 1, nil, DBM_CORE_L.DAMAGER_ICON)
 local timerUmbraShiftCD					= mod:NewCDTimer(12, 244433, nil, nil, nil, 6)
 local timerVoidTear						= mod:NewBuffActiveTimer(20, 244621, nil, nil, nil, 6)

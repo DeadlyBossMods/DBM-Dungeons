@@ -33,8 +33,8 @@ local specWarnInhale			= mod:NewSpecialWarningRun(153804, nil, nil, 2, 4, 2)
 local specWarnNecroticPitch		= mod:NewSpecialWarningMove(153692, nil, nil, nil, 1, 8)
 
 local timerBodySlamCD			= mod:NewCDSourceTimer(28, 154175, nil, nil, nil, 3)
-local timerInhaleCD				= mod:NewCDTimer(34, 153804, nil, nil, nil, 6, nil, DBM_CORE_L.DEADLY_ICON)
-local timerInhale				= mod:NewBuffActiveTimer(9, 153804, nil, nil, nil, 6, nil, DBM_CORE_L.DEADLY_ICON)
+local timerInhaleCD				= mod:NewCDTimer(34, 153804, nil, nil, nil, 6, nil, DBM_COMMON_L.DEADLY_ICON)
+local timerInhale				= mod:NewBuffActiveTimer(9, 153804, nil, nil, nil, 6, nil, DBM_COMMON_L.DEADLY_ICON)
 local timerCorpseBreathCD		= mod:NewCDTimer(28, 165578, nil, false, nil, 5)--32-37 Variation, also not that important so off by default since there will already be up to 3 smash timers
 --local timerSubmergeCD			= mod:NewCDTimer(80, 177694, nil, nil, nil, 6)
 

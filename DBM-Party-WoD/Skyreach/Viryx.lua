@@ -31,7 +31,7 @@ local specWarnAdd			= mod:NewSpecialWarning("specWarnAdd", "Dps", nil, nil, 1, 2
 local specWarnShielding		= mod:NewSpecialWarningInterrupt(154055, "HasInterrupt", nil, 2, 1, 2)
 
 local timerLenseFlareCD		= mod:NewCDTimer(38, 154032, nil, nil, nil, 3)
-local timerCastDownCD		= mod:NewCDTimer(28, 153954, nil, nil, nil, 1, nil, DBM_CORE_L.DAMAGE_ICON)
+local timerCastDownCD		= mod:NewCDTimer(28, 153954, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)
 
 mod:AddSetIconOption("SetIconOnCastDown", 153954, true, false, {1})
 

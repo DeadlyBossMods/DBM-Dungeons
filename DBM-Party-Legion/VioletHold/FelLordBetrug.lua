@@ -29,8 +29,8 @@ local yellSeedsofDestruction	= mod:NewYell(210879)
 
 --local timerFelSlashCD			= mod:NewCDTimer(18, 203641, nil, nil, nil, 3)--Too unreliable do to smash/executions
 local timerMightySmashCD		= mod:NewCDTimer(50, 202328, nil, nil, nil, 2)--50-57
-local timerSeedsCD				= mod:NewCDTimer(21.8, 210879, nil, nil, nil, 3, nil, DBM_CORE_L.HEROIC_ICON)--22-40
-local timerExecute				= mod:NewTargetTimer(20, 205233, nil, nil, nil, 3, nil, DBM_CORE_L.DEADLY_ICON)--22-40
+local timerSeedsCD				= mod:NewCDTimer(21.8, 210879, nil, nil, nil, 3, nil, DBM_COMMON_L.HEROIC_ICON)--22-40
+local timerExecute				= mod:NewTargetTimer(20, 205233, nil, nil, nil, 3, nil, DBM_COMMON_L.DEADLY_ICON)--22-40
 
 mod:AddSetIconOption("SetIconOnSeeds", 210879, true, false, {1, 2, 3})
 

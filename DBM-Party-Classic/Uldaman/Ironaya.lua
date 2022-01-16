@@ -19,10 +19,10 @@ if knockAway then--Not classic, only initialize these warnings/timers on retail
 	warnKnockAway					= mod:NewSpellAnnounce(110762, 2)
 end
 
-local timerArcingSmashCD			= mod:NewAITimer(180, 8374, nil, "Tank", nil, 5, nil, DBM_CORE_L.TANK_ICON)
+local timerArcingSmashCD			= mod:NewAITimer(180, 8374, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerWarStompCD				= mod:NewAITimer(180, 11876, nil, nil, nil, 2)
 if knockAway then--Not classic, only initialize these warnings/timers on retail
-	timerKnockAwayCD				= mod:NewAITimer(180, 110762, nil, "Tank", nil, 5, nil, DBM_CORE_L.TANK_ICON)
+	timerKnockAwayCD				= mod:NewAITimer(180, 110762, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 end
 
 function mod:OnCombatStart(delay)

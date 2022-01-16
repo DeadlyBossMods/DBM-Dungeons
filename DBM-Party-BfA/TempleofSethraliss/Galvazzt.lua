@@ -20,7 +20,7 @@ local warnCapacitance				= mod:NewCountAnnounce(266511, 2)
 local specWarnConsumeCharge			= mod:NewSpecialWarningSpell(266512, nil, nil, nil, 2, 2)
 local specWarnElectroshock			= mod:NewSpecialWarningStack(266923, nil, 5, nil, nil, 1, 6)
 
---local timerReapSoulCD				= mod:NewNextTimer(13, 194956, nil, nil, nil, 5, nil, DBM_CORE_L.TANK_ICON..DBM_CORE_L.DEADLY_ICON)
+--local timerReapSoulCD				= mod:NewNextTimer(13, 194956, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON..DBM_COMMON_L.DEADLY_ICON)
 
 mod:AddInfoFrameOption(265973, true)
 

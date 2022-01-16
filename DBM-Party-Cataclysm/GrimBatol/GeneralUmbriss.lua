@@ -31,7 +31,7 @@ local yellBlitz				= mod:NewYell(74670)
 local specWarnBlitzNear		= mod:NewSpecialWarningClose(74670, nil, nil, nil, 1, 2)
 local specWarnSummonSkardyn	= mod:NewSpecialWarningSwitch("ej3358", "Dps", nil, nil, 1, 2)--Seems health based, pull,and 50%?
 
-local timerBleedingWoundCD	= mod:NewCDTimer(20.5, 74846, nil, "Tank|Healer", nil, 5, nil, DBM_CORE_L.TANK_ICON)
+local timerBleedingWoundCD	= mod:NewCDTimer(20.5, 74846, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerBlitz			= mod:NewCDTimer(21.8, 74670, nil, nil, nil, 3)
 local timerMalice			= mod:NewBuffActiveTimer(20, 90170, nil, "Tank|Healer", 2, 5)
 

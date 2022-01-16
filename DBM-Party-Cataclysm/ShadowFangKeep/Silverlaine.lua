@@ -16,7 +16,7 @@ mod:RegisterEventsInCombat(
 local warnVeilShadow	= mod:NewSpellAnnounce(93956, 3)
 local warnWorgenSpirit	= mod:NewSpellAnnounce(93857, 3)
 
-local timerVeilShadow	= mod:NewBuffFadesTimer(8, 93956, nil, nil, nil, 5, nil, DBM_CORE_L.MAGIC_ICON)
+local timerVeilShadow	= mod:NewBuffFadesTimer(8, 93956, nil, nil, nil, 5, nil, DBM_COMMON_L.MAGIC_ICON)
 
 local veilShadowCast = 0
 

@@ -24,8 +24,8 @@ local yellChokingBrine				= mod:NewFadesYell(264560, DBM_CORE_L.AUTO_YELL_CUSTOM
 local specWarnUndertow				= mod:NewSpecialWarningYou(264144, nil, nil, nil, 3, 2)
 
 local timerSurgingRushCD			= mod:NewCDTimer(13, 264101, nil, nil, nil, 3)
-local timerChokingBrineCD			= mod:NewCDTimer(13, 264560, nil, nil, nil, 5, nil, DBM_CORE_L.HEALER_ICON..DBM_CORE_L.MAGIC_ICON)
-local timerUndertowCD				= mod:NewCDTimer(13, 264144, nil, nil, nil, 3, nil, DBM_CORE_L.DEADLY_ICON)
+local timerChokingBrineCD			= mod:NewCDTimer(13, 264560, nil, nil, nil, 5, nil, DBM_COMMON_L.HEALER_ICON..DBM_COMMON_L.MAGIC_ICON)
+local timerUndertowCD				= mod:NewCDTimer(13, 264144, nil, nil, nil, 3, nil, DBM_COMMON_L.DEADLY_ICON)
 
 function mod:UndertowTarget(targetname)
 	if not targetname then return end

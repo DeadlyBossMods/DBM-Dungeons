@@ -23,7 +23,7 @@ local specWarnOmenOfDeathNear	= mod:NewSpecialWarningClose(154350, nil, nil, nil
 local yellOmenOfDeath			= mod:NewYell(154350)
 local specWarnMalevolence		= mod:NewSpecialWarningDodge(154442, nil, nil, nil, 2, 2)
 
-local timerRitualOfBonesCD		= mod:NewCDTimer(50.5, 154671, nil, nil, nil, 1, nil, DBM_CORE_L.DAMAGE_ICON)
+local timerRitualOfBonesCD		= mod:NewCDTimer(50.5, 154671, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)
 local timerOmenOfDeathCD		= mod:NewCDTimer(10.5, 154350, nil, nil, nil, 3)
 
 function mod:OmenOfDeathTarget(targetname, uId)

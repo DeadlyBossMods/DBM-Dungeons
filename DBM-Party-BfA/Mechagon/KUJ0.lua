@@ -30,8 +30,8 @@ local specWarnVentingFlames			= mod:NewSpecialWarningMoveTo(291946, nil, nil, ni
 
 local timerAurDropCD				= mod:NewNextTimer(34, 291930, nil, nil, nil, 3)
 local timerExplosiveLeapCD			= mod:NewCDTimer(33.4, 291972, nil, nil, nil, 3)
-local timerVentingFlamesCD			= mod:NewCDTimer(13.4, 291946, nil, nil, nil, 2, nil, DBM_CORE_L.DEADLY_ICON)
-local timerBlazingChompCD			= mod:NewCDTimer(15.8, 294929, nil, "Tank|Healer", nil, 5, nil, DBM_CORE_L.TANK_ICON)
+local timerVentingFlamesCD			= mod:NewCDTimer(13.4, 291946, nil, nil, nil, 2, nil, DBM_COMMON_L.DEADLY_ICON)
+local timerBlazingChompCD			= mod:NewCDTimer(15.8, 294929, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 
 mod:AddRangeFrameOption(10, 291972)
 

@@ -34,9 +34,9 @@ local specWarnAuraofDread			= mod:NewSpecialWarningKeepMove(268088, nil, nil, ni
 local specWarnJaggedNettles			= mod:NewSpecialWarningTarget(260741, nil, nil, 2, 1, 2)
 local specWarnSoulManipulation		= mod:NewSpecialWarningSwitch(260907, nil, nil, nil, 1, 2)
 
-local timerJaggedNettlesCD			= mod:NewNextTimer(13.3, 260741, nil, nil, nil, 5, nil, DBM_CORE_L.HEALER_ICON)
-local timerSoulManipulationCD		= mod:NewNextTimer(13.3, 260907, nil, nil, nil, 3, nil, DBM_CORE_L.TANK_ICON)--Always tank? if not, remove tank icon
-local timerUnstableRunicMarkCD		= mod:NewNextTimer(13.3, 260703, nil, nil, nil, 3, nil, DBM_CORE_L.CURSE_ICON)
+local timerJaggedNettlesCD			= mod:NewNextTimer(13.3, 260741, nil, nil, nil, 5, nil, DBM_COMMON_L.HEALER_ICON)
+local timerSoulManipulationCD		= mod:NewNextTimer(13.3, 260907, nil, nil, nil, 3, nil, DBM_COMMON_L.TANK_ICON)--Always tank? if not, remove tank icon
+local timerUnstableRunicMarkCD		= mod:NewNextTimer(13.3, 260703, nil, nil, nil, 3, nil, DBM_COMMON_L.CURSE_ICON)
 
 mod:AddRangeFrameOption(6, 260703)
 mod:AddInfoFrameOption(260773, true)
