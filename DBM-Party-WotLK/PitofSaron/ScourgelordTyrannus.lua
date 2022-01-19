@@ -8,6 +8,8 @@ mod:SetCreatureID(36658, 36661)
 mod:SetEncounterID(2000)
 mod:DisableESCombatDetection()
 mod:SetUsedIcons(8)
+mod:SetHotfixNoticeRev(20220119000000)
+mod:SetMinSyncRevision(20220119000000)
 
 mod:RegisterCombat("combat")
 

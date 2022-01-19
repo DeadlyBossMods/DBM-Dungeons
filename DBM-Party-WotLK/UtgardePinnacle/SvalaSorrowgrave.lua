@@ -7,6 +7,8 @@ mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(26668)
 mod:SetEncounterID(2030)
 mod:DisableESCombatDetection()--TODO, why is it disabled?
+mod:SetHotfixNoticeRev(20220119000000)
+mod:SetMinSyncRevision(20220119000000)
 
 mod:RegisterCombat("combat")
 
