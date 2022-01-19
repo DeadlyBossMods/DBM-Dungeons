@@ -10,14 +10,14 @@ mod:SetEncounterID(1971)
 mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
-	"SPELL_AURA_APPLIED 52592 59368"
+	"SPELL_CAST_SUCCESS 52592 59368"
 )
 
 local warningCurse	= mod:NewSpellAnnounce(52592, 2)
 
 local timerCurseCD	= mod:NewCDTimer(20, 52592, nil, nil, nil, 2)
 
-function mod:SPELL_AURA_APPLIED(args)
+function mod:SPELL_CAST_SUCCESS(args)
 	if args:IsSpellID(52592, 59368) then
 		warningCurse:Show()
 		timerCurseCD:Start()
