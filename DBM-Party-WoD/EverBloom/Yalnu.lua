@@ -19,7 +19,7 @@ local warnFontofLife			= mod:NewSpellAnnounce(169120, 3)--Does this need a switc
 
 local specWarnColossalBlow		= mod:NewSpecialWarningDodge(169179, nil, nil, nil, 2, 2)
 local specWarnEntanglement		= mod:NewSpecialWarningSwitch(169251, "Dps", nil, nil, 1, 2)
-local specWarnGenesis			= mod:NewSpecialWarningSpell(169613, nil, nil, nil, 1, 2)--Everyone. "Switch" is closest generic to "run around stomping flowers"
+local specWarnGenesis			= mod:NewSpecialWarningSpell(169613, nil, nil, nil, 1, 12)--Everyone. "Switch" is closest generic to "run around stomping flowers"
 
 --Only timers that were consistent, others are all over the place.
 local timerFontOfLife			= mod:NewNextTimer(15, 169120, nil, nil, nil, 1)
@@ -38,7 +38,7 @@ function mod:SPELL_CAST_START(args)
 		specWarnColossalBlow:Play("shockwave")
 	elseif spellId == 169613 then
 		specWarnGenesis:Show()
-		specWarnGenesis:Play("169613")
+		specWarnGenesis:Play("runoverflowers")
 		timerGenesis:Start()
 		timerGenesisCD:Start()
 	end

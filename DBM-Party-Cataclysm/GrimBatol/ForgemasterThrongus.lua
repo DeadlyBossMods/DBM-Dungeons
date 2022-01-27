@@ -25,7 +25,7 @@ local warnDisorientingRoar	= mod:NewSpellAnnounce(74976, 3)
 local specWarnCaveIn		= mod:NewSpecialWarningMove(74987, nil, nil, nil, 1, 2)
 local specWarnLavaPatch		= mod:NewSpecialWarningMove(90754, nil, nil, nil, 1, 2)
 local specWarnEncumbered	= mod:NewSpecialWarningRun(75007, "Tank", nil, nil, 4, 2)
-local specWarnFlamingShield	= mod:NewSpecialWarningDodge(90819, nil, nil, nil, 2, 2)
+local specWarnFlamingShield	= mod:NewSpecialWarningDodge(90819, nil, nil, nil, 2, 12)
 
 local timerDualBlades		= mod:NewBuffActiveTimer(30, 74981, nil, nil, nil, 6)
 local timerEncumbered		= mod:NewBuffActiveTimer(30, 75007, nil, nil, nil, 6)
@@ -72,6 +72,6 @@ end
 function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
 	if spellId == 75071 then--Fixate effect (cast twice during phalanx phase, when boss prepares fire breath
 		specWarnFlamingShield:Show()
-		specWarnFlamingShield:Play("159202")
+		specWarnFlamingShield:Play("flamejet")
 	end
 end

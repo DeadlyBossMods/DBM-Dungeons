@@ -29,7 +29,7 @@ local warnSubmerge				= mod:NewSpellAnnounce(177694, 1)
 local warnInhaleEnd				= mod:NewEndAnnounce(153804, 1)
 
 local specWarnBodySlam			= mod:NewSpecialWarningDodge(154175, nil, nil, nil, 2, 2)
-local specWarnInhale			= mod:NewSpecialWarningRun(153804, nil, nil, 2, 4, 2)
+local specWarnInhale			= mod:NewSpecialWarningRun(153804, nil, nil, 2, 4, 12)
 local specWarnNecroticPitch		= mod:NewSpecialWarningMove(153692, nil, nil, nil, 1, 8)
 
 local timerBodySlamCD			= mod:NewCDSourceTimer(28, 154175, nil, nil, nil, 3)
@@ -92,7 +92,7 @@ function mod:RAID_BOSS_EMOTE(msg)
 	if msg:find("spell:153804") then--Slightly faster than combat log
 		self.vb.inhaleActive = true
 		specWarnInhale:Show()
-		specWarnInhale:Play("153804")
+		specWarnInhale:Play("inhalegetinpuddle")
 		timerInhaleCD:Start()
 	end
 end
