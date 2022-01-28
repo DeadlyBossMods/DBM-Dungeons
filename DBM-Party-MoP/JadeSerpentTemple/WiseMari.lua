@@ -37,8 +37,8 @@ mod.vb.firstAdd = false
 local addsName = DBM:EJ_GetSectionInfo(5616)
 
 function mod:UNIT_TARGET_UNFILTERED()
-	if self.Options.SetIconOnAdds and not DBM.Options.DontSetIcons and UnitName("target") == addsName then
-		SetRaidTarget("target", 8)
+	if self.Options.SetIconOnAdds and UnitName("target") == addsName then
+		self:SetIcon("target", 8)
 	end
 end
 

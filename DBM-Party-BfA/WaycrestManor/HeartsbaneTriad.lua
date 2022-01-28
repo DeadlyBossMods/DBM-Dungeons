@@ -178,7 +178,7 @@ do
 					self.vb.activeTriad = nil
 					local icon = GetRaidTargetIndex(uId)
 					if not icon then
-						SetRaidTarget(uId.."target", 8)
+						self:SetIcon(uId.."target", 8)
 						break
 					end
 				end
