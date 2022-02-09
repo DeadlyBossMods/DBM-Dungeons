@@ -64,7 +64,7 @@ function mod:SPELL_AURA_APPLIED(args)
 	if spellId == 260189 then--Configuration: Drill
 		timerGatlingGunCD:Stop()
 		timerHomingMissileCD:Stop()
-		timerDrillSmashCD:Start(22.4)
+		timerDrillSmashCD:Start(17.3)
 	elseif spellId == 260190 then--Configuration: Combat
 		timerDrillSmashCD:Stop()
 		timerHomingMissileCD:Start(7)

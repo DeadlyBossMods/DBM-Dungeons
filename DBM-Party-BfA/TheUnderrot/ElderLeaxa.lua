@@ -27,7 +27,7 @@ mod:AddInfoFrameOption(260685, "Healer")
 
 function mod:OnCombatStart(delay)
 	--timerBloodBoltCD:Start(1-delay)--Instantly
-	timerCreepingRotCD:Start(12.2-delay)
+	timerCreepingRotCD:Start(10.8-delay)
 	timerBloodMirrorCD:Start(15.8-delay)
 	if not self:IsNormal() then--Exclude normal, but allow heroic/mythic/mythic+
 		timerSanguineFeastCD:Start(6.8-delay)

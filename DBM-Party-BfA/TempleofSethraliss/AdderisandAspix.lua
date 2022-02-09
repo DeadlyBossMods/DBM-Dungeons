@@ -51,7 +51,7 @@ local timerGaleForceCD				= mod:NewCDTimer(14.5, 263776, nil, nil, nil, 3, nil, 
 --Adderis
 ----Wind
 local timerArcingBladeCD			= mod:NewCDTimer(13.4, 263234, nil, nil, nil, 5, nil, DBM_COMMON_L.HEROIC_ICON)
-local timerCycloneStrikeCD			= mod:NewCDTimer(14.6, 263573, nil, nil, nil, 3, nil, DBM_COMMON_L.DEADLY_ICON)
+local timerCycloneStrikeCD			= mod:NewCDTimer(13.3, 263573, nil, nil, nil, 3, nil, DBM_COMMON_L.DEADLY_ICON)
 ----Lighting
 local timerArcDashCD				= mod:NewCDTimer(23, 263424, nil, nil, nil, 3)
 
@@ -76,12 +76,12 @@ end
 function mod:OnCombatStart(delay)
 	self.vb.noLitShield = nil
 	--Adderis should be in winds, Aspix timers started by Lightning Shield buff
-	timerCycloneStrikeCD:Start(9-delay)
+	timerCycloneStrikeCD:Start(8.5-delay)
 	if not self:IsNormal() then
 		timerArcingBladeCD:Start(7.3-delay)
 	end
 	--Aspix
-	timerArcDashCD:Start(14-delay)--Seems to be used regardless of shield
+--	timerArcDashCD:Start(14-delay)--Can be used instantly on pull, so no timer
 	if self.Options.InfoFrame then
 		DBM.InfoFrame:SetHeader(DBM_CORE_L.INFOFRAME_POWER)
 		DBM.InfoFrame:Show(3, "enemypower", 10)

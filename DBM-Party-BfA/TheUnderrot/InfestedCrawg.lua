@@ -93,7 +93,7 @@ function mod:SPELL_CAST_START(args)
 				end
 			end
 		else
-			timerIndigestionCD:Start(45)
+			timerIndigestionCD:Start(43.7)
 			--(will probably never be accurate, since WCL lacks tools to search for normal dungeons)
 		end
 	elseif spellId == 260292 then

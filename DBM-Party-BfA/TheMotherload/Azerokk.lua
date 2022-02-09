@@ -72,7 +72,7 @@ function mod:OnCombatStart(delay)
 	self.vb.addCount = 0
 	timerCallEarthragerCD:Start(60-delay, 1)
 	--timerInfusionCD:Start(1-delay)--19.6
-	timerResonantPulseCD:Start(10.6-delay)
+	timerResonantPulseCD:Start(8.6-delay)
 	if not self:IsNormal() then
 		timerTectonicSmashCD:Start(5-delay)
 	end

@@ -76,7 +76,7 @@ function mod:SPELL_AURA_REMOVED(args)
 	elseif spellId == 269686 then
 		timerPlague:Stop(args.destName)
 	elseif spellId == 274149 then--Life Force Ending
-		timerPulseCD:Start(11)
+		timerPulseCD:Start(9.4)
 	end
 end
 

@@ -92,7 +92,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, spellId)
 		warnPhase2:Play("ptwo")
 		timerVilebombardmentCD:Start(6.2)
 		timerPowderShotCD:Start(7.3)--5.4 (old)
-		timerBrewCD:Start(20.6)--15.8 (old)
+--		timerBrewCD:Start(9.7)--5-20. This timer just doesn't appear to be consistent at all, so not worth showing on stage 2 start
 		if not self:IsNormal() then
 			timerDiveBombCD:Start(17.7)
 		end
