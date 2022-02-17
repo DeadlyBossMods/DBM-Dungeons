@@ -28,7 +28,7 @@ local warnEvoOver					= mod:NewEndAnnounce(227254, 2)
 local specWarnPowerDischarge		= mod:NewSpecialWarningMove(227465, nil, nil, nil, 1, 2)
 
 local timerSummonAddCD				= mod:NewNextTimer(9.7, 227267, nil, nil, nil, 1)
-local timerPowerDischargeCD			= mod:NewCDTimer(12.2, 227279, nil, nil, nil, 3)
+local timerPowerDischargeCD			= mod:NewCDTimer(12.2, 227465, nil, nil, nil, 3)
 local timerEvoCD					= mod:NewNextTimer(70, 227254, nil, nil, nil, 6, nil, nil, nil, 1, 4)
 local timerEvo						= mod:NewBuffActiveTimer(20, 227254, nil, nil, nil, 6, nil, nil, nil, 1, 4)
 

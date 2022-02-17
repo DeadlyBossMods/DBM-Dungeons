@@ -25,7 +25,7 @@ local specWarnCreepingDoom			= mod:NewSpecialWarningDodge(197422, nil, nil, nil,
 local specWarnVengeance				= mod:NewSpecialWarningMoveTo(205004, nil, nil, nil, 3, 12)
 
 local timerKickCD					= mod:NewCDTimer(16, 197251, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON)--16-42
-local timerDeepeningShadowsCD		= mod:NewCDTimer(30.5, 213576, nil, nil, nil, 3)
+local timerDeepeningShadowsCD		= mod:NewCDTimer(30.5, 213583, nil, nil, nil, 3)
 local timerCreepingDoom				= mod:NewBuffActiveTimer(35, 197422, nil, nil, nil, 6)--35-40
 local timerVengeanceCD				= mod:NewCDTimer(35, 205004, nil, nil, nil, 1)--35-40
 

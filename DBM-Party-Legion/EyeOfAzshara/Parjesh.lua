@@ -16,7 +16,7 @@ mod:RegisterEventsInCombat(
 --TODO, interrupt warnings for adds maybe.
 local warnImpalingSpear				= mod:NewTargetNoFilterAnnounce(192094, 4)
 
-local specWarnReinforcements		= mod:NewSpecialWarningSwitch(196563, "Tank", nil, nil, 1, 2)
+local specWarnReinforcements		= mod:NewSpecialWarningSwitch(192072, "Tank", nil, nil, 1, 2)
 local specWarnCrashingwave			= mod:NewSpecialWarningDodge(191900, nil, nil, nil, 2, 2)
 local specWarnImpalingSpear			= mod:NewSpecialWarningMoveTo(192094, nil, nil, nil, 3, 8)
 local yellImpalingSpear				= mod:NewYell(192094)
