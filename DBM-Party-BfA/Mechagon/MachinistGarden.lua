@@ -27,7 +27,7 @@ local warnSelfTrimmingHedge			= mod:NewSpellAnnounce(294954, 2)
 local warnPlant						= mod:NewSpellAnnounce(294853, 2)
 
 local specWarnFlameCannon			= mod:NewSpecialWarningSpell(285440, nil, nil, nil, 2, 2)
-local specWarnDiscomBomb			= mod:NewSpecialWarningDispel(285460, "RemoveMagic", nil, nil, 2, 2)
+local specWarnDiscomBomb			= mod:NewSpecialWarningDispel(285454, "RemoveMagic", nil, nil, 2, 2)
 --local specWarnGTFO				= mod:NewSpecialWarningGTFO(238028, nil, nil, nil, 1, 8)
 
 local timerDiscomBombCD				= mod:NewNextTimer(18.2, 285454, nil, nil, nil, 3)

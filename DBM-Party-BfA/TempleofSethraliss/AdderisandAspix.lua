@@ -20,44 +20,43 @@ mod:RegisterEventsInCombat(
 
 --TODO, target scan/warn Gale Force target if possible
 --TODO, get a LONG pull so timer work can be actually figured out. VIDEO too
+--General
 local warnLightningShield			= mod:NewTargetNoFilterAnnounce(263246, 3)
---Aspix
-local warnConduction				= mod:NewTargetAnnounce(263371, 2)
---Adderis
 
+mod:AddRangeFrameOption("8")
+mod:AddInfoFrameOption(263246, true)
+mod:AddSetIconOption("SetIconOnNoLit", 263246, true, true, {8})
 --Aspix
+mod:AddTimerLine(DBM:EJ_GetSectionInfo(18484))
 ----Lighting
+local warnConduction				= mod:NewTargetAnnounce(263371, 2)
+
 local specWarnJolt					= mod:NewSpecialWarningInterrupt(263318, "HasInterrupt", nil, nil, 1, 2)
 local specWarnConduction			= mod:NewSpecialWarningMoveAway(263371, nil, nil, nil, 3, 2)
 local yellConduction				= mod:NewYell(263371)
 local yellConductionFades			= mod:NewShortFadesYell(263371)
 local specWarnStaticShock			= mod:NewSpecialWarningSpell(263257, nil, nil, nil, 2, 2)
-----Wind
-local specWarnGust					= mod:NewSpecialWarningInterrupt(263775, "HasInterrupt", nil, nil, 1, 2)
-local specWarnGaleForce				= mod:NewSpecialWarningSpell(263776, nil, nil, nil, 2, 2)
---Adderis
---local specWarnGTFO				= mod:NewSpecialWarningGTFO(238028, nil, nil, nil, 1, 8)
-local specWarnCycloneStrike			= mod:NewSpecialWarningYou(263573, nil, nil, nil, 3, 2)
-local specWarnCycloneStrikeOther	= mod:NewSpecialWarningDodge(263573, nil, nil, nil, 3, 2)
-local yellCycloneStrike				= mod:NewYell(263573)
-local specWarnPearlofThunder		= mod:NewSpecialWarningRun(263365, nil, nil, nil, 4, 2)
 
---Aspix
-----Lighting
 local timerConductionCD				= mod:NewCDTimer(13, 263371, nil, nil, nil, 3)--NYI
 local timerStaticShockCD			= mod:NewCDTimer(13, 263257, nil, nil, nil, 2, nil, DBM_COMMON_L.HEALER_ICON)
 ----Wind
+local specWarnGust					= mod:NewSpecialWarningInterrupt(263775, "HasInterrupt", nil, nil, 1, 2)
+local specWarnGaleForce				= mod:NewSpecialWarningSpell(263776, nil, nil, nil, 2, 2)
+
 local timerGaleForceCD				= mod:NewCDTimer(14.5, 263776, nil, nil, nil, 3, nil, DBM_COMMON_L.HEROIC_ICON)
 --Adderis
+mod:AddTimerLine(DBM:EJ_GetSectionInfo(18485))
+----Lightning
+local specWarnPearlofThunder		= mod:NewSpecialWarningRun(263365, nil, nil, nil, 4, 2)
+
+local timerArcDashCD				= mod:NewCDTimer(23, 263424, nil, nil, nil, 3)
 ----Wind
+local specWarnCycloneStrike			= mod:NewSpecialWarningYou(263573, nil, nil, nil, 3, 2)
+local specWarnCycloneStrikeOther	= mod:NewSpecialWarningDodge(263573, nil, nil, nil, 3, 2)
+local yellCycloneStrike				= mod:NewYell(263573)
+
 local timerArcingBladeCD			= mod:NewCDTimer(13.4, 263234, nil, nil, nil, 5, nil, DBM_COMMON_L.HEROIC_ICON)
 local timerCycloneStrikeCD			= mod:NewCDTimer(13.3, 263573, nil, nil, nil, 3, nil, DBM_COMMON_L.DEADLY_ICON)
-----Lighting
-local timerArcDashCD				= mod:NewCDTimer(23, 263424, nil, nil, nil, 3)
-
-mod:AddRangeFrameOption("8")
-mod:AddInfoFrameOption(263246, true)
-mod:AddSetIconOption("SetIconOnNoLit", 263246, true, true, {8})
 
 mod.vb.noLitShield = nil
 
