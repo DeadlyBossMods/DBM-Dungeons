@@ -21,13 +21,12 @@ local warnInvokeLightning		= mod:NewSpellAnnounce(106984, 2, nil, false)
 local warnStaticField			= mod:NewAnnounce("warnStaticField", 3, 106923)--Target scanning verified working
 local warnChargingSoul			= mod:NewSpellAnnounce(110945, 3)--Phase 2
 local warnLightningBreath		= mod:NewSpellAnnounce(102573, 3)
-local warnMagneticShroud		= mod:NewSpellAnnounce(107140, 4)
 local warnOverchargedSoul		= mod:NewSpellAnnounce(110852, 3)--Phase 3
 
-local specWarnStaticField		= mod:NewSpecialWarningMove(106923)
-local specWarnStaticFieldNear	= mod:NewSpecialWarningClose(106923)
+local specWarnStaticField		= mod:NewSpecialWarningMoveAway(106923, nil, nil, nil, 1, 2)
+local specWarnStaticFieldNear	= mod:NewSpecialWarningClose(106923, nil, nil, nil, 1, 2)
 local yellStaticField			= mod:NewYell(106923)
-local specWarnMagneticShroud	= mod:NewSpecialWarningSpell(107140)
+local specWarnMagneticShroud	= mod:NewSpecialWarningSpell(107140, nil, nil, nil, 2, 2)
 
 local timerInvokeLightningCD	= mod:NewNextTimer(6, 106984)--Phase 1 ability
 local timerStaticFieldCD		= mod:NewNextTimer(8, 106923, nil, nil, nil, 3)--^^
@@ -54,12 +53,14 @@ function mod:StaticFieldTarget(targetname, uId)
 		warnStaticField:Show(staticFieldText)
 		if targetname == UnitName("player") then
 			specWarnStaticField:Show()
+			specWarnStaticField:Play("runout")
 			yellStaticField:Yell()
 		else
 			if uId then
 				local inRange = DBM.RangeCheck:GetDistance("player", uId)
 				if inRange and inRange < 6 then
 					specWarnStaticFieldNear:Show(targetname)
+					specWarnStaticFieldNear:Play("runaway")
 				end
 			end
 		end
@@ -101,8 +102,8 @@ function mod:SPELL_CAST_START(args)
 		warnLightningBreath:Show()
 		timerLightningBreathCD:Start()
 	elseif args.spellId == 107140 then
-		warnMagneticShroud:Show()
 		specWarnMagneticShroud:Show()
+		specWarnMagneticShroud:Play("healall")
 		timerMagneticShroudCD:Start()
 	end
 end

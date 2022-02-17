@@ -21,20 +21,19 @@ mod:RegisterEventsInCombat(
 )
 
 --Chi blast warns very spammy. and not useful.
-local warnFistsOfFury		= mod:NewSpellAnnounce(106853, 3)
 local warnTornadoKick		= mod:NewSpellAnnounce(106434, 3)
 local warnPhase2			= mod:NewPhaseAnnounce(2)
 local warnChaseDown			= mod:NewTargetAnnounce(118961, 3)--Targeting spell for Tornado Slam (106352)
 -- phase3 ability not found yet.
 local warnPhase3			= mod:NewPhaseAnnounce(3)
 
-local specWarnFists			= mod:NewSpecialWarningMove(106853, "Tank")
-local specWarnChaseDown		= mod:NewSpecialWarningYou(118961)
+local specWarnFists			= mod:NewSpecialWarningDodge(106853, "Tank", nil, nil, 1, 2)
+local specWarnChaseDown		= mod:NewSpecialWarningYou(118961, nil, nil, nil, 4, 2)
 
-local timerFistsOfFuryCD	= mod:NewCDTimer(23, 106853)--Not enough data to really verify this
-local timerTornadoKickCD	= mod:NewCDTimer(32, 106434)--Or this
+local timerFistsOfFuryCD	= mod:NewCDTimer(23, 106853, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)--Not enough data to really verify this
+local timerTornadoKickCD	= mod:NewCDTimer(32, 106434, nil, nil, nil, 2)--Or this
 --local timerChaseDownCD		= mod:NewCDTimer(22, 118961)--Unknown
-local timerChaseDown		= mod:NewTargetTimer(11, 118961)
+local timerChaseDown		= mod:NewTargetTimer(11, 118961, nil, nil, nil, 5)
 
 function mod:OnCombatStart(delay)
 	self:SetStage(1)
@@ -42,11 +41,13 @@ end
 
 function mod:SPELL_AURA_APPLIED(args)
 	if args.spellId == 118961 then
-		warnChaseDown:Show(args.destName)
 		timerChaseDown:Start(args.destName)
 --		timerChaseDownCD:Start()
 		if args:IsPlayer() then
 			specWarnChaseDown:Show()
+			specWarnChaseDown:Play("justrun")
+		else
+			warnChaseDown:Show(args.destName)
 		end
 	end
 end
@@ -59,8 +60,8 @@ end
 
 function mod:SPELL_CAST_START(args)
 	if args.spellId == 106853 then
-		warnFistsOfFury:Show()
 		specWarnFists:Show()
+		specWarnFists:Play("shockwave")
 		timerFistsOfFuryCD:Start()
 	elseif args.spellId == 106434 then
 		warnTornadoKick:Show()

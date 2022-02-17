@@ -22,13 +22,12 @@ mod:RegisterEventsInCombat(
 local warnBubbleBurst			= mod:NewCastAnnounce(106612, 3)
 local warnAddsLeft				= mod:NewAddsLeftAnnounce("ej5616", 2, 106526)
 
-local specWarnLivingWater		= mod:NewSpecialWarningSwitch("ej5616", "-Healer")
-local specWarnCorruptingWaters	= mod:NewSpecialWarningMove(115167)
-local specWarnShaResidue		= mod:NewSpecialWarningMove(106653)
+local specWarnLivingWater		= mod:NewSpecialWarningSwitch("ej5616", "-Healer", nil, nil, 1, 2)
+local specWarnGTFO				= mod:NewSpecialWarningGTFO(115167, nil, nil, nil, 1, 8)
 
-local timerLivingWater			= mod:NewCastTimer(5.5, 106526)
+local timerLivingWater			= mod:NewCastTimer(5.5, 106526, nil, nil, nil, 1)
 --local timerLivingWaterCD		= mod:NewCDTimer(13, 106526, nil, nil, nil, 1)
-local timerWashAway				= mod:NewNextTimer(8, 106334)
+local timerWashAway				= mod:NewNextTimer(8, 106334, nil, nil, nil, 3)
 
 mod:AddSetIconOption("SetIconOnAdds", "ej5616", false, true, {8})
 
@@ -50,7 +49,8 @@ end
 
 function mod:SPELL_AURA_APPLIED(args)
 	if args.spellId == 106653 and args:IsPlayer() and self:AntiSpam(4, 1) then
-		specWarnShaResidue:Show()
+		specWarnGTFO:Show(args.spellName)
+		specWarnGTFO:Play("watchfeet")
 	end
 end
 
@@ -62,15 +62,17 @@ function mod:SPELL_CAST_START(args)
 			timerLivingWater:Start()
 		end
 		specWarnLivingWater:Schedule(5.5)
+		specWarnLivingWater:ScheduleVoice(5.5, "killmob")
 	elseif args.spellId == 106612 then--Bubble Burst (phase 2)
 		warnBubbleBurst:Show()
 		timerWashAway:Start()
 	end
 end
 
-function mod:SPELL_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId)
+function mod:SPELL_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId, spellName)
 	if spellId == 115167 and destGUID == UnitGUID("player") and self:AntiSpam(2, 1) then
-		specWarnCorruptingWaters:Show()
+		specWarnGTFO:Show(spellName)
+		specWarnGTFO:Play("watchfeet")
 	end
 end
 mod.SPELL_MISSED = mod.SPELL_DAMAGE

@@ -16,15 +16,13 @@ mod:RegisterEventsInCombat(
 )
 
 local warnRingofMalice		= mod:NewSpellAnnounce(131521, 3)
-local warnGrippingHatred	= mod:NewSpellAnnounce(115002, 2)
 local warnHazeofHate		= mod:NewTargetAnnounce(107087, 4)
-local warnRisingHate		= mod:NewCastAnnounce(107356, 4, 5)
 
-local specWarnGrippingHatred= mod:NewSpecialWarningSwitch("ej5817")
-local specWarnHazeofHate	= mod:NewSpecialWarningYou(107087)
-local specWarnRisingHate	= mod:NewSpecialWarningInterrupt(107356, "-Healer")
+local specWarnGrippingHatred= mod:NewSpecialWarningSwitch("ej5817", nil, nil, nil, 1, 2)
+local specWarnHazeofHate	= mod:NewSpecialWarningYou(107087, nil, nil, nil, 1, 2)
+local specWarnRisingHate	= mod:NewSpecialWarningInterrupt(107356, "-Healer", nil, nil, 1, 2)
 
-local timerRingofMalice		= mod:NewBuffActiveTimer(15, 131521)
+local timerRingofMalice		= mod:NewBuffActiveTimer(15, 131521, nil, nil, nil, 2)
 local timerGrippingHatredCD	= mod:NewNextTimer(45.5, 115002, nil, nil, nil, 1)
 
 mod:AddBoolOption("InfoFrame", true)
@@ -49,20 +47,22 @@ function mod:SPELL_AURA_APPLIED(args)
 		warnRingofMalice:Show()
 		timerRingofMalice:Start()
 	elseif args.spellId == 107087 then
-		warnHazeofHate:Show(args.destName)
 		if args:IsPlayer() then
 			specWarnHazeofHate:Show()
+			specWarnHazeofHate:Play("targetyou")--lazy voice, forgot to get one added for "use extra action button"
+		else
+			warnHazeofHate:Show(args.destName)
 		end
 	elseif args.spellId == 107356 then
-		warnRisingHate:Show()
 		specWarnRisingHate:Show(args.destName)
+		specWarnRisingHate:Play("kickast")
 	end
 end
 
 function mod:SPELL_CAST_START(args)
 	if args.spellId == 115002 and self:AntiSpam(5, 2) then
-		warnGrippingHatred:Show()
 		specWarnGrippingHatred:Show()
+		specWarnGrippingHatred:Play("killmob")
 		timerGrippingHatredCD:Start()
 	end
 end

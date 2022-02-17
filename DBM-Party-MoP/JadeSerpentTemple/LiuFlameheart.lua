@@ -25,12 +25,11 @@ local warnPhase2				= mod:NewPhaseAnnounce(2)
 local warnJadeDragonStrike		= mod:NewSpellAnnounce(106841, 3)
 local warnPhase3				= mod:NewPhaseAnnounce(3)
 
-local specWarnJadeDragonWave	= mod:NewSpecialWarningMove(118540)
-local specWarnJadeFire			= mod:NewSpecialWarningMove(107110)
+local specWarnGTFO				= mod:NewSpecialWarningGTFO(118540, nil, nil, nil, 1, 8)
 
-local timerDragonStrikeCD		= mod:NewNextTimer(10.5, 106823)
-local timerJadeDragonStrikeCD	= mod:NewNextTimer(10.5, 106841)
-local timerJadeFireCD			= mod:NewNextTimer(3.5, 107045)
+local timerDragonStrikeCD		= mod:NewNextTimer(10.5, 106823, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+local timerJadeDragonStrikeCD	= mod:NewNextTimer(10.5, 106841, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+local timerJadeFireCD			= mod:NewNextTimer(3.5, 107045, nil, nil, nil, 3)
 
 function mod:OnCombatStart(delay)
 --	timerDragonStrikeCD:Start(-delay)--Unknown, tank pulled before i could start a log to get an accurate first timer.
@@ -62,16 +61,18 @@ function mod:SPELL_CAST_START(args)
 	end
 end
 
-function mod:SPELL_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId)
+function mod:SPELL_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId, spellName)
 	if spellId == 107110 and destGUID == UnitGUID("player") and self:AntiSpam() then
-		specWarnJadeFire:Show()
+		specWarnGTFO:Show(spellName)
+		specWarnGTFO:Play("watchfeet")
 	end
 end
 mod.SPELL_MISSED = mod.SPELL_DAMAGE
 
-function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId)
+function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId, spellName)
 	if spellId == 118540 and destGUID == UnitGUID("player") and self:AntiSpam() then
-		specWarnJadeFire:Show()
+		specWarnGTFO:Show(spellName)
+		specWarnGTFO:Play("watchfeet")
 	end
 end
 mod.SPELL_PERIODIC_MISSED = mod.SPELL_PERIODIC_DAMAGE

@@ -19,8 +19,6 @@ mod:RegisterEventsInCombat(
 local warnGroundPound		= mod:NewSpellAnnounce(106807, 3)
 local warnBananas			= mod:NewStackAnnounce(106651, 2)
 
-local specWarnGroundPound	= mod:NewSpecialWarningMove(106807, "Tank")--Evaluate in timewalking
-
 --local timerGroundPoundCD	= mod:NewCDTimer(4.8, 106807, nil, "Melee", 2, 5)
 
 function mod:OnCombatStart(delay)
@@ -50,7 +48,6 @@ I'd like more data to decide on if it has pattern
 function mod:SPELL_CAST_START(args)
 	if args.spellId == 106807 then
 		warnGroundPound:Show()
-		specWarnGroundPound:Show()
 --		timerGroundPoundCD:Start()
 	end
 end

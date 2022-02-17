@@ -16,17 +16,14 @@ mod:RegisterEventsInCombat(
 )
 
 local warnHeadbutt				= mod:NewSpellAnnounce(111668, 2)
-local warnScreechingSwarm		= mod:NewTargetAnnounce(111600, 4, nil, false)--Can be spam if adds not die.
-local warnBrokenCarapace		= mod:NewSpellAnnounce(107146, 2)--Phase 2
-local warnFixate				= mod:NewTargetAnnounce(111723, 4)
+local warnScreechingSwarm		= mod:NewTargetNoFilterAnnounce(111600, 4, nil, false)--Can be spam if adds not die.
+local warnBrokenCarapace		= mod:NewSpellAnnounce(107146, 1)--Phase 2
+local warnFixate				= mod:NewTargetNoFilterAnnounce(111723, 4)
 local warnStomp					= mod:NewCountAnnounce(111728, 3)
 
-local specWarnScreechingSwarm	= mod:NewSpecialWarningDispel(111600, false)--Can be spam if adds not die.
-local specWarnBrokenCarapace	= mod:NewSpecialWarningSpell(107146, "Dps")
-
-local timerHeadbuttCD			= mod:NewNextTimer(33, 111668)
-local timerScreechingSwarm		= mod:NewTargetTimer(10, 111600)
-local timerFixate				= mod:NewTargetTimer(15, 111723)
+local timerHeadbuttCD			= mod:NewNextTimer(33, 111668, nil, nil, nil, 3)
+local timerScreechingSwarm		= mod:NewTargetTimer(10, 111600, nil, nil, nil, 5)
+local timerFixate				= mod:NewTargetTimer(15, 111723, nil, nil, nil, 5)
 local timerFixateCD				= mod:NewNextTimer(20.5, 111723, nil, nil, nil, 3)
 local timerStompCD				= mod:NewNextCountTimer(20.5, 111728, nil, nil, nil, 2)
 
@@ -39,7 +36,6 @@ end
 function mod:SPELL_AURA_APPLIED(args)
 	if args.spellId == 107146 then
 		warnBrokenCarapace:Show()
-		specWarnBrokenCarapace:Show()
 		timerHeadbuttCD:Cancel()
 		timerFixateCD:Start(5.5)--Timing for target pick, not cast start.
 		timerStompCD:Start(20.5, 1)
@@ -49,7 +45,6 @@ function mod:SPELL_AURA_APPLIED(args)
 		timerFixateCD:Start()
 	elseif args.spellId == 111600 then
 		warnScreechingSwarm:Show(args.destName)
-		specWarnScreechingSwarm:Show(args.destName)
 		timerScreechingSwarm:Start(args.destName)
 	end
 end

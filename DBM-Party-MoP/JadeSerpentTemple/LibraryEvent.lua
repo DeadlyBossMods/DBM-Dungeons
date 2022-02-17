@@ -26,11 +26,11 @@ mod:RegisterEvents(
 local warnIntensity			= mod:NewStackAnnounce(113315, 3)
 local warnUltimatePower		= mod:NewTargetAnnounce(113309, 4)
 
-local specWarnIntensity		= mod:NewSpecialWarning("SpecWarnIntensity")
-local specWarnUltimatePower	= mod:NewSpecialWarningTarget(113309, nil, nil, nil, 2)
+local specWarnIntensity		= mod:NewSpecialWarning("SpecWarnIntensity", nil, nil, nil, 1, 2)
+local specWarnUltimatePower	= mod:NewSpecialWarningTarget(113309, nil, nil, nil, 2, 2)
 
 local timerRP				= mod:NewRPTimer(10)
-local timerUltimatePower	= mod:NewTargetTimer(15, 113309)
+local timerUltimatePower	= mod:NewTargetTimer(15, 113309, nil, nil, nil, 5)
 
 mod.vb.bossesDead = 0
 
@@ -43,6 +43,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		warnIntensity:Show(args.destName, args.amount or 1)
 	elseif args.spellId == 113309 then
 		specWarnUltimatePower:Show(args.destName)
+		specWarnUltimatePower:Play("aesoon")
 		timerUltimatePower:Start(args.destName)
 	end
 end
@@ -58,6 +59,7 @@ function mod:SPELL_AURA_APPLIED_DOSE(args)
 		if args.amount % 2 == 0 then--only warn every 2
 			if args.amount >= 6 then--Start point of special warnings subject to adjustment based on live tuning.
 				specWarnIntensity:Show(args.spellName, args.destName, args.amount)
+				specWarnIntensity:Play("targetchange")
 			else
 				warnIntensity:Show(args.destName, args.amount)
 			end
