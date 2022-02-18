@@ -14,7 +14,6 @@ mod:SetWipeTime(30)--Based on data, phase transitions are 10-16 seconds, 20 shou
 
 mod:RegisterEventsInCombat(
 	"SPELL_AURA_APPLIED 119946 123655 120201",
-	"SPELL_AURA_REMOVED 119946",
 	"SPELL_CAST_START 119922 119981 123654",
 	"CHAT_MSG_MONSTER_YELL",
 	"UNIT_DIED"
@@ -57,12 +56,6 @@ function mod:SPELL_AURA_APPLIED(args)
 	elseif args.spellId == 120201 then
 		warnConflag:Show(args.destName)
 		timerConflagCD:Start()
-	end
-end
-
-function mod:SPELL_AURA_REMOVED(args)
-	if args.spellId == 119946 then
-		timerRavage:Cancel(args.destName)
 	end
 end
 
