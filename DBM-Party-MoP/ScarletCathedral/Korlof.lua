@@ -12,16 +12,14 @@ mod:RegisterEventsInCombat(
 	"SPELL_AURA_APPLIED 114460"
 )
 
-local warnFlyingKick		= mod:NewSpellAnnounce(113764, 4)--This is always followed instantly by Firestorm kick, so no reason to warn both.
-local warnBlazingFists		= mod:NewSpellAnnounce(114807, 3)
 --local warnScorchedEarth		= mod:NewCountAnnounce(114460, 3)--only aoe warn will be enough.
 
-local specWarnFlyingKick	= mod:NewSpecialWarningSpell(113764, nil, nil, nil, 2)
-local specWarnScorchedEarth	= mod:NewSpecialWarningMove(114460)
-local specWarnBlazingFists	= mod:NewSpecialWarningMove(114807, "Tank") -- Everything is dangerous in challenge mode, entry level heriocs will also be dangerous when they aren't overtuning your gear with an ilvl buff.if its avoidable, you should avoid it, in good practice, to create good habit for challenge modes.
+local specWarnFlyingKick	= mod:NewSpecialWarningDodge(113764, nil, nil, nil, 2, 2)--This is always followed instantly by Firestorm kick, so no reason to warn both.
+local specWarnScorchedEarth	= mod:NewSpecialWarningGTFO(114460, nil, nil, nil, 1, 8)
+local specWarnBlazingFists	= mod:NewSpecialWarningDodge(114807, "Tank", nil, nil, 1, 2) -- Everything is dangerous in challenge mode, entry level heriocs will also be dangerous when they aren't overtuning your gear with an ilvl buff.if its avoidable, you should avoid it, in good practice, to create good habit for challenge modes.
 
-local timerFlyingKickCD		= mod:NewCDTimer(25, 113764)--25-30 second variation
-local timerFirestormKick	= mod:NewBuffActiveTimer(6, 113764)
+local timerFlyingKickCD		= mod:NewCDTimer(25, 113764, nil, nil, nil, 3)--25-30 second variation
+local timerFirestormKick	= mod:NewBuffActiveTimer(6, 113764, nil, nil, nil, 2)
 local timerBlazingFistsCD	= mod:NewNextTimer(30, 114807, nil, "Tank", 2, 5)
 
 function mod:OnCombatStart(delay)
@@ -35,13 +33,13 @@ end
 
 function mod:SPELL_CAST_SUCCESS(args)
 	if args.spellId == 113764 then
-		warnFlyingKick:Show()
 		specWarnFlyingKick:Show()
+		specWarnFlyingKick:Play("watchstep")
 		timerFirestormKick:Start()
 		timerFlyingKickCD:Start()
 	elseif args.spellId == 114807 then
-		warnBlazingFists:Show()
 		specWarnBlazingFists:Show()
+		specWarnBlazingFists:Play("shockwave")
 		timerBlazingFistsCD:Start()
 	end
 end
@@ -55,9 +53,10 @@ function mod:SPELL_AURA_APPLIED(args)
 	end
 end
 
-function mod:SPELL_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId, _, _, _, overkill)
+function mod:SPELL_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId, spellName)
 	if spellId == 114465 and destGUID == UnitGUID("player") and self:AntiSpam(3) then
-		specWarnScorchedEarth:Show()
+		specWarnScorchedEarth:Show(spellName)
+		specWarnScorchedEarth:Play("watchfeet")
 	end
 end
 mod.SPELL_MISSED = mod.SPELL_DAMAGE

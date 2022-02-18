@@ -53,7 +53,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		else
 			warnHazeofHate:Show(args.destName)
 		end
-	elseif args.spellId == 107356 then
+	elseif args.spellId == 107356 and self:CheckInterruptFilter(args.sourceGUID, false, true) then
 		specWarnRisingHate:Show(args.destName)
 		specWarnRisingHate:Play("kickast")
 	end

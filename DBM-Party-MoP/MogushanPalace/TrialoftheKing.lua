@@ -21,24 +21,20 @@ mod:RegisterEventsInCombat(
 )
 
 --TODO, rework phase changes with UNIT events?
-local warnRavage			= mod:NewTargetAnnounce(119946, 3)--Mu'Shiba's Fixate attack
+--TODO, rework combat detection to use ES/EE?
+local warnRavage			= mod:NewTargetNoFilterAnnounce(119946, 3)--Mu'Shiba's Fixate attack
 local warnShockwave			= mod:NewSpellAnnounce(119922, 4)--Kuai's Attack
 local warnWhirlingDervish	= mod:NewSpellAnnounce(119981, 3)--Ming's Attack
-local warnTraumaticBlow		= mod:NewTargetAnnounce(123655, 3)--Haiyan's Attack
-local warnConflag			= mod:NewTargetAnnounce(120201, 3)--Haiyan's Attack
+local warnTraumaticBlow		= mod:NewTargetNoFilterAnnounce(123655, 3, nil, "Healer")--Haiyan's Attack
+local warnConflag			= mod:NewTargetNoFilterAnnounce(120201, 3, nil, "Healer")--Haiyan's Attack
 
-local specWarnRavage		= mod:NewSpecialWarningTarget(119946, "Healer")
-local specWarnShockwave		= mod:NewSpecialWarningMove(119922, "Tank")--Not sure if he always faced it toward tank, or did it blackhorn style, if it's blackhorn style this needs to be changed to a targetscan if possible
-local specWarnLightningBolt	= mod:NewSpecialWarningInterrupt(123654, false)
-local specWarnConflag		= mod:NewSpecialWarningTarget(120201, "Healer")
+local specWarnShockwave		= mod:NewSpecialWarningDodge(119922, "Tank", nil, nil, 1, 2)--Not sure if he always faced it toward tank, or did it blackhorn style, if it's blackhorn style this needs to be changed to a targetscan if possible
+local specWarnLightningBolt	= mod:NewSpecialWarningInterrupt(123654, false, nil, nil, 1, 2)
 
-local timerRavage			= mod:NewTargetTimer(11, 119946)
 local timerRavageCD			= mod:NewCDTimer(20, 119946, nil, nil, nil, 3)
-local timerShockwaveCD		= mod:NewCDTimer(10.9, 119922, nil, nil, nil, 3)
-local timerWhirlingDervishCD= mod:NewCDTimer(22, 119981)
-local timerTraumaticBlow	= mod:NewTargetTimer(5, 123655)
-local timerTraumaticBlowCD	= mod:NewCDTimer(17, 123655)--17-21sec variation
-local timerConflag			= mod:NewTargetTimer(5, 120201, nil)
+local timerShockwaveCD		= mod:NewCDTimer(10.9, 119922, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+local timerWhirlingDervishCD= mod:NewCDTimer(22, 119981, nil, nil, nil, 3)
+local timerTraumaticBlowCD	= mod:NewCDTimer(17, 123655, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)--17-21sec variation
 local timerConflagCD		= mod:NewCDTimer(22, 120201, nil, nil, nil, 3)--Limited data, may not be completely accurate
 local timerMeteorCD			= mod:NewNextTimer(55, 120195, nil, nil, nil, 3)--Assumed based on limited data
 
@@ -47,24 +43,19 @@ local kuai = DBM:EJ_GetSectionInfo(6015)
 local ming = DBM:EJ_GetSectionInfo(6019)
 local haiyan = DBM:EJ_GetSectionInfo(6023)
 
-function mod:OnCombatStart(delay)
+--function mod:OnCombatStart(delay)
 
-end
+--end
 
 function mod:SPELL_AURA_APPLIED(args)
 	if args.spellId == 119946 then
 		warnRavage:Show(args.destName)
-		specWarnRavage:Show(args.destName)
-		timerRavage:Start(args.destName)
 		timerRavageCD:Start()
 	elseif args.spellId == 123655 then
 		warnTraumaticBlow:Show(args.destName)
-		timerTraumaticBlow:Start(args.destName)
 		timerTraumaticBlowCD:Start()
 	elseif args.spellId == 120201 then
 		warnConflag:Show(args.destName)
-		specWarnConflag:Show(args.destName)
-		timerConflag:Start(args.destName)
 		timerConflagCD:Start()
 	end
 end
@@ -77,14 +68,15 @@ end
 
 function mod:SPELL_CAST_START(args)
 	if args.spellId == 119922 then
-		warnShockwave:Show()
 		specWarnShockwave:Show()
+		specWarnShockwave:Play("shockwave")
 		timerShockwaveCD:Start(shockwaveCD)
 	elseif args.spellId == 119981 then
 		warnWhirlingDervish:Show()
 		timerWhirlingDervishCD:Start()
-	elseif args.spellId == 123654 then
+	elseif args.spellId == 123654 and self:CheckInterruptFilter(args.sourceGUID, false, true) then
 		specWarnLightningBolt:Show(args.sourceName)
+		specWarnLightningBolt:Play("kickcast")
 	end
 end
 

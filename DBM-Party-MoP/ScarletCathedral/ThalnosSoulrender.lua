@@ -14,15 +14,13 @@ mod:RegisterEventsInCombat(
 	"SPELL_SUMMON 115250"
 )
 
-local warnEvictSoul				= mod:NewTargetAnnounce(115297, 3)
-local warnRaiseCrusade			= mod:NewSpellAnnounce(115139, 3)
-local warnSummonSpirits			= mod:NewSpellAnnounce(115147, 4)
+local warnEvictSoul				= mod:NewTargetNoFilterAnnounce(115297, 3)
 local warnEmpowerZombie			= mod:NewSpellAnnounce(115250, 4)
 
-local specWarnFallenCrusader	= mod:NewSpecialWarningSwitch("ej5863", "-Healer")--Need more data, nots sure if they are meaningful enough to kill or ignore.
-local specWarnEmpoweredSpirit	= mod:NewSpecialWarningSwitch("ej5869", "-Healer")--These need to die before they become zombies. Cannot see a way in combat log to detect target, i'll have to watch for target scanning next time to warn that player to run away from dead crusaders.
+local specWarnFallenCrusader	= mod:NewSpecialWarningSwitch("ej5863", "-Healer", nil, nil, 1)--Need more data, nots sure if they are meaningful enough to kill or ignore.
+local specWarnEmpoweredSpirit	= mod:NewSpecialWarningSwitch("ej5869", "-Healer", nil, nil, 1)--These need to die before they become zombies. Cannot see a way in combat log to detect target, i'll have to watch for target scanning next time to warn that player to run away from dead crusaders.
 
-local timerEvictSoul			= mod:NewTargetTimer(6, 115297)
+local timerEvictSoul			= mod:NewTargetTimer(6, 115297, nil, nil, nil, 5)
 local timerEvictSoulCD			= mod:NewCDTimer(41, 115297, nil, nil, nil, 3)
 local timerRaiseCrusadeCD		= mod:NewNextTimer(60, 115139, nil, nil, nil, 1)--Both of these are 40 second cds in challenge modes
 local timerSummonSpiritsCD		= mod:NewNextTimer(60, 115147, nil, nil, nil, 1)--Although correction is only needed in one spot
@@ -49,12 +47,12 @@ function mod:SPELL_CAST_SUCCESS(args)
 	if args.spellId == 115297 then--Trigger CD off success, since we can resist it. do NOT add ID 115548, it's a similcast to 115297
 		timerEvictSoulCD:Start()
 	elseif args.spellId == 115147 then--Summon Empowering Spirits
-		warnSummonSpirits:Show()
 		specWarnEmpoweredSpirit:Show()
+		specWarnEmpoweredSpirit:Play("killmob")
 		timerRaiseCrusadeCD:Start(20)--Raise crusaders always 20 seconds after spirits in all modes
 	elseif args.spellId == 115139 then--Raise Fallen Crusade
-		warnRaiseCrusade:Show()
 		specWarnFallenCrusader:Show()
+		specWarnFallenCrusader:Play("killmob")
 		if self:IsDifficulty("challenge5") then
 			timerSummonSpiritsCD:Start(20)
 		else

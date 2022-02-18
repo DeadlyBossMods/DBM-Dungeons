@@ -16,17 +16,14 @@ mod:RegisterEventsInCombat(
 	"UNIT_SPELLCAST_SUCCEEDED boss1"
 )
 
-
-local warnDetonate			= mod:NewSpellAnnounce(120001, 3)
-
-local specWarnSapResidue	= mod:NewSpecialWarningStack(119941, true, 6)
-local specWarnDetonate		= mod:NewSpecialWarningSpell(120001, "Healer", nil, nil, 2)
-local specWarnGlob			= mod:NewSpecialWarningSwitch("ej6494", "-Healer")
+local specWarnSapResidue	= mod:NewSpecialWarningStack(119941, nil, 6, nil, nil, 1, 8)
+local specWarnDetonate		= mod:NewSpecialWarningSpell(120001, nil, nil, nil, 2, 2)
+local specWarnGlob			= mod:NewSpecialWarningSwitch("ej6494", "-Healer", nil, nil, 2, 2)
 
 local timerDetonateCD		= mod:NewNextTimer(45.5, 120001, nil, nil, nil, 2)
-local timerDetonate			= mod:NewCastTimer(5, 120001)
-local timerSapResidue		= mod:NewBuffFadesTimer(10, 119941)
---local timerGlobCD			= mod:NewNextTimer(45.5, 119990)--Need more logs
+local timerDetonate			= mod:NewCastTimer(5, 120001, nil, nil, nil, 5)
+local timerSapResidue		= mod:NewBuffFadesTimer(10, 119941, nil, nil, nil, 5)
+--local timerGlobCD			= mod:NewNextTimer(45.5, 119990, nil, nil, nil, 1)--Need more logs
 
 function mod:OnCombatStart(delay)
 	timerDetonateCD:Start(30-delay)
@@ -35,8 +32,9 @@ end
 function mod:SPELL_AURA_APPLIED(args)
 	if args.spellId == 119941 and args:IsPlayer() then
 		timerSapResidue:Start()
-		if (args.amount or 1) >= 6 and self:AntiSpam(1, 2) then
+		if (args.amount or 1) >= 6 and self:AntiSpam(3, 1) then
 			specWarnSapResidue:Show(args.amount)
+			specWarnSapResidue:Play("stackhigh")
 		end
 	end
 end
@@ -44,8 +42,8 @@ mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED
 
 function mod:SPELL_CAST_SUCCESS(args)
 	if args.spellId == 120001 then
-		warnDetonate:Show()
 		specWarnDetonate:Show()
+		specWarnDetonate:Play("aesoon")
 		timerDetonate:Start()
 		timerDetonateCD:Start()
 	end
@@ -54,5 +52,6 @@ end
 function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
 	if spellId == 119990 then
 		specWarnGlob:Show()
+		specWarnGlob:Play("killmob")
 	end
 end
