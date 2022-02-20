@@ -18,17 +18,26 @@ mod:RegisterEventsInCombat(
 	"UNIT_SPELLCAST_SUCCEEDED boss1 boss2 boss3"
 )
 
-local warnOgreTraps				= mod:NewCastAnnounce(163390, 3)
+--Ahri'ok Dugru
+mod:AddTimerLine(DBM:EJ_GetSectionInfo(10449))
 local warnSphereEnd				= mod:NewEndAnnounce(163689, 1)
 
 local specWarnSanguineSphere	= mod:NewSpecialWarningReflect(163689, "-Healer", nil, 2, 1, 2)
-local specWarnFlamingSlash		= mod:NewSpecialWarningDodge(163665, nil, nil, nil, 3, 2)--Devastating in challenge modes. move or die.
-local specWarnLavaSwipe			= mod:NewSpecialWarningSpell(165152, nil, nil, nil, 2, 2)
-local specWarnBigBoom			= mod:NewSpecialWarningSpell(163379, nil, nil, nil, 2, 2)--maybe use switch.
 
 local timerSanguineSphere		= mod:NewTargetTimer(15, 163689, nil, nil, nil, 5, nil, DBM_COMMON_L.DAMAGE_ICON)
+--Makogg Emberblade
+mod:AddTimerLine(DBM:EJ_GetSectionInfo(10453))
+local specWarnFlamingSlash		= mod:NewSpecialWarningDodge(163665, nil, nil, nil, 3, 2)--Devastating in challenge modes. move or die.
+local specWarnLavaSwipe			= mod:NewSpecialWarningSpell(165152, nil, nil, nil, 2, 2)
+
 local timerFlamingSlashCD		= mod:NewNextTimer(29, 163665, nil, nil, nil, 3, nil, nil, nil, 1, 4)
 local timerLavaSwipeCD			= mod:NewNextTimer(29, 165152, nil, nil, nil, 3)
+--Neesa Nox
+mod:AddTimerLine(DBM:EJ_GetSectionInfo(10456))
+local warnOgreTraps				= mod:NewCastAnnounce(163390, 3)
+
+local specWarnBigBoom			= mod:NewSpecialWarningSpell(163379, nil, nil, nil, 2, 2)--maybe use switch.
+
 local timerOgreTrapsCD			= mod:NewCDTimer(25, 163390, nil, nil, nil, 3)--25-30 variation.
 
 function mod:OnCombatStart(delay)

@@ -27,7 +27,7 @@ local specWarnVilebloodSerum		= mod:NewSpecialWarningMove(161288, nil, nil, nil,
 local timerDebilitatingCD			= mod:NewNextTimer(20, 161199, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON, nil, mod:IsTank() and 2, 4)--Every 20 seconds exactly, at least in challenge mode.
 local timerEruptionCD				= mod:NewCDTimer(10, 155037, nil, false, nil, 5)--10-15 sec variation. May be distracting or spammy since two of them
 --local timerRejuvSerumCD			= mod:NewCDTimer(33, 161203, nil, "MagicDispeller", nil, 5)--33-40sec variation. Could also be health based so disabled for now.
-local timerVilebloodSerumCD			= mod:NewCDTimer(9.5, 161209, nil, nil, nil, 3)--every 9-10 seconds
+local timerVilebloodSerumCD			= mod:NewCDTimer(9.5, 161288, nil, nil, nil, 3)--every 9-10 seconds
 
 function mod:OnCombatStart(delay)
 --	timerRejuvSerumCD:Start(22.5-delay)--Insufficent sample size

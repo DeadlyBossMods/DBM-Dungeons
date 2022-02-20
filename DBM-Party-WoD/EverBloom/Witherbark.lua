@@ -29,6 +29,8 @@ local specWarnParchedGrasp		= mod:NewSpecialWarningSpell(164357, "Tank", nil, ni
 
 local timerParchedGrasp			= mod:NewCDTimer(12, 164357, nil, "Tank", 2, 5, nil, DBM_COMMON_L.TANK_ICON)
 
+mod:GroupSpells(164294, "ej10098")
+
 function mod:OnCombatStart(delay)
 	timerParchedGrasp:Start(7-delay)
 	if not self:IsTrivial() then

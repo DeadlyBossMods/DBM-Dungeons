@@ -25,12 +25,12 @@ local warnShielding			= mod:NewTargetNoFilterAnnounce(154055, 2)
 
 local specWarnCastDownSoon	= mod:NewSpecialWarningSoon(153954, nil, nil, nil, 1, 2)--Everyone, becaus it can grab healer too, which affects healer/tank
 local specWarnCastDown		= mod:NewSpecialWarningSwitch(153954, "Dps", nil, nil, 3, 2)--Only dps, because it's their job to stop it.
-local specWarnLensFlareCast	= mod:NewSpecialWarningSpell(154032, nil, nil, nil, 2, 2)--If there is any way to find actual target, like maybe target scanning, this will be changed.
-local specWarnLensFlare		= mod:NewSpecialWarningMove(154043, nil, nil, nil, 1, 8)
+local specWarnLensFlareCast	= mod:NewSpecialWarningSpell(154043, nil, nil, nil, 2, 2)--If there is any way to find actual target, like maybe target scanning, this will be changed.
+local specWarnLensFlare		= mod:NewSpecialWarningGTFO(154043, nil, nil, nil, 1, 8)
 local specWarnAdd			= mod:NewSpecialWarning("specWarnAdd", "Dps", nil, nil, 1, 2)
 local specWarnShielding		= mod:NewSpecialWarningInterrupt(154055, "HasInterrupt", nil, 2, 1, 2)
 
-local timerLenseFlareCD		= mod:NewCDTimer(38, 154032, nil, nil, nil, 3)
+local timerLenseFlareCD		= mod:NewCDTimer(38, 154043, nil, nil, nil, 3)
 local timerCastDownCD		= mod:NewCDTimer(28, 153954, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)
 
 mod:AddSetIconOption("SetIconOnCastDown", 153954, true, false, {1})
@@ -70,9 +70,9 @@ function mod:SPELL_CAST_START(args)
 	end
 end
 
-function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId, _, _, _, overkill)
+function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId, spellName)
 	if spellId == 154043 and destGUID == UnitGUID("player") and self:AntiSpam(2) then
-		specWarnLensFlare:Show()
+		specWarnLensFlare:Show(spellName)
 		specWarnLensFlare:Play("watchfeet")
 	end
 end

@@ -18,7 +18,7 @@ mod:RegisterEventsInCombat(
 
 
 local warnInvokeLightning		= mod:NewSpellAnnounce(106984, 2, nil, false)
-local warnStaticField			= mod:NewAnnounce("warnStaticField", 3, 106923)--Target scanning verified working
+local warnStaticField			= mod:NewAnnounce("warnStaticField", 3, 106923, nil, nil, nil, 106923)--Target scanning verified working
 local warnChargingSoul			= mod:NewSpellAnnounce(110945, 3)--Phase 2
 local warnLightningBreath		= mod:NewSpellAnnounce(102573, 3)
 local warnOverchargedSoul		= mod:NewSpellAnnounce(110852, 3)--Phase 3

@@ -22,12 +22,15 @@ mod:RegisterEventsInCombat(
 --(ability.id = 258338 or ability.id = 256589 or ability.id = 257117) and type = "begincast" or ability.id = 258381 and type = "cast"
 --General
 ----Announce Brews
-local warnGoodBrew					= mod:NewAnnounce("warnGoodBrew", 1, 265088)
+--text, color, icon, optionDefault, optionName, soundOption, spellID
+local warnGoodBrew					= mod:NewAnnounce("warnGoodBrew", 1, 265088, nil, nil, nil, 264605)
 local warnCausticBrew				= mod:NewCastAnnounce(265168, 4)
 
 local specWarnBrewOnBoss			= mod:NewSpecialWarning("specWarnBrewOnBoss", "Tank", nil, nil, 1, 2)
 
 local timerTendingBarCD				= mod:NewNextTimer(8, 264605, nil, nil, nil, 3)
+
+mod:GroupSpells(264605, 265168)--Group good brew and bad brew with "tending Bar"
 --Jolly
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(17025))
 local warnLuckySevens				= mod:NewSpellAnnounce(257117, 1)

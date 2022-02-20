@@ -21,23 +21,31 @@ mod:RegisterEventsInCombat(
 )
 
 --Timers are too difficult to do, rapidTides messes up any chance of ever having decent timers.
-local warnGraspingVine				= mod:NewTargetNoFilterAnnounce(168375, 2)
+--General
 local warnShapersFortitude			= mod:NewTargetNoFilterAnnounce(168520, 3)
 
-local specWarnRevitalizingWaters	= mod:NewSpecialWarningInterrupt(168082, "HasInterrupt", nil, 2, 1, 2)
-local specWarnBriarskin				= mod:NewSpecialWarningInterrupt(168041, false, nil, nil, 1, 2)--if you have more than one interruptor, great. but off by default because we can't assume you can interrupt every bosses abilities. and heal takes priority
-local specWarnBriarskinDispel		= mod:NewSpecialWarningDispel(168041, false, nil, nil, 1, 2)--Not as important as rapid Tides and to assume you have at least two dispellers is big assumption
-local specWarnRapidTidesDispel		= mod:NewSpecialWarningDispel(168105, "MagicDispeller", nil, nil, 3, 2)
-local specWarnSlash					= mod:NewSpecialWarningDodge(168383, nil, nil, nil, 2, 2)
-local yellSlash						= mod:NewYell(168383)
-local specWarnNoxious				= mod:NewSpecialWarningRun(175997, nil, nil, 2, 4, 2)
-local specWarnBramble				= mod:NewSpecialWarningMove(167977, nil, nil, nil, 1, 8)
-
 local timerShapersFortitude			= mod:NewTargetTimer(8, 168520, nil, false, 2, 5)
-local timerNoxiousCD				= mod:NewCDTimer(16, 175997, nil, "Melee", nil, 2)
-local timerGraspingVineCD			= mod:NewNextTimer(30.4, 168375, nil, nil, nil, 3)
 
 mod:AddNamePlateOption("NPAuraOnFort", 168520)
+--Life Warden Gola
+mod:AddTimerLine(DBM:EJ_GetSectionInfo(10409))
+local specWarnRevitalizingWaters	= mod:NewSpecialWarningInterrupt(168082, "HasInterrupt", nil, 2, 1, 2)
+local specWarnRapidTidesDispel		= mod:NewSpecialWarningDispel(168105, "MagicDispeller", nil, nil, 3, 2)
+--Earthshaper Telu
+mod:AddTimerLine(DBM:EJ_GetSectionInfo(10413))
+local specWarnBramble				= mod:NewSpecialWarningGTFO(167977, nil, nil, nil, 1, 8)
+local specWarnBriarskin				= mod:NewSpecialWarningInterrupt(168041, false, nil, nil, 1, 2)--if you have more than one interruptor, great. but off by default because we can't assume you can interrupt every bosses abilities. and heal takes priority
+local specWarnBriarskinDispel		= mod:NewSpecialWarningDispel(168041, false, nil, nil, 1, 2)--Not as important as rapid Tides and to assume you have at least two dispellers is big assumption
+--Dulhu
+mod:AddTimerLine(DBM:EJ_GetSectionInfo(10417))
+local warnGraspingVine				= mod:NewTargetNoFilterAnnounce(168375, 2)
+
+local specWarnNoxious				= mod:NewSpecialWarningRun(175997, nil, nil, 2, 4, 2)
+local specWarnSlash					= mod:NewSpecialWarningDodge(168383, nil, nil, nil, 2, 2)
+local yellSlash						= mod:NewYell(168383)
+
+local timerNoxiousCD				= mod:NewCDTimer(16, 175997, nil, "Melee", nil, 2)
+local timerGraspingVineCD			= mod:NewNextTimer(30.4, 168375, nil, nil, nil, 3)
 
 mod.vb.lastGrasping = nil
 
@@ -123,9 +131,9 @@ function mod:SPELL_AURA_REMOVED(args)
 	end
 end
 
-function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId)
+function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId, spellName)
 	if spellId == 167977 and destGUID == UnitGUID("player") and self:AntiSpam(2, 1) then
-		specWarnBramble:Show()
+		specWarnBramble:Show(spellName)
 		specWarnBramble:Play("watchfeet")
 	end
 end
