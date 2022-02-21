@@ -26,7 +26,7 @@ local specWarnOverload		= mod:NewSpecialWarningMoveAway(52658, nil, nil, nil, 1,
 local timerOverload			= mod:NewTargetTimer(10, 52658, nil, nil, nil, 3)
 
 mod:AddRangeFrameOption(10, 52658)
-mod:AddSetIconOption("SetIconOnOverloadTarget", 59795, true, false, {8})
+mod:AddSetIconOption("SetIconOnOverloadTarget", 52658, true, false, {8})
 
 local warnedDisperse = false
 

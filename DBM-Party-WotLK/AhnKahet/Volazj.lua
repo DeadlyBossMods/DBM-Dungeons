@@ -17,11 +17,11 @@ mod:RegisterEventsInCombat(
 	"UNIT_SPELLCAST_START boss1"
 )
 
-local warnShadowCrash			= mod:NewTargetAnnounce(60848, 4)
+local warnShadowCrash			= mod:NewTargetAnnounce(62660, 4)
 local warningInsanity			= mod:NewCastAnnounce(57496, 3)--Not currently working, no CLEU for it
 
-local specWarnShadowCrash		= mod:NewSpecialWarningDodge(60848, nil, nil, nil, 1, 2)
-local specWarnShadowCrashNear	= mod:NewSpecialWarningClose(60848, nil, nil, nil, 1, 2)
+local specWarnShadowCrash		= mod:NewSpecialWarningDodge(62660, nil, nil, nil, 1, 2)
+local specWarnShadowCrashNear	= mod:NewSpecialWarningClose(62660, nil, nil, nil, 1, 2)
 local yellShadowCrash			= mod:NewYell(62660)
 
 local timerInsanity				= mod:NewCastTimer(5, 57496, nil, nil, nil, 6)

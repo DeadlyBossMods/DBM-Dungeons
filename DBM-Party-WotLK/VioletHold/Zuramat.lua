@@ -18,6 +18,8 @@ local specWarnShroud			= mod:NewSpecialWarningDispel(59745, "MagicDispeller", ni
 
 local timerVoidShifted			= mod:NewTargetTimer(15, 54343)
 
+mod:GroupSpells(59743, 54343)
+
 function mod:SPELL_AURA_APPLIED(args)
 	if args:IsSpellID(59743, 54361) then			-- Void Shift            59743 (HC)  54361 (nonHC)
 		warningVoidShift:Show(args.destName)

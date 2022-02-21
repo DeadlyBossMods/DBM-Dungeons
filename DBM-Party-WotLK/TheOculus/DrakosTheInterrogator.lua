@@ -11,7 +11,7 @@ mod:RegisterEventsInCombat(
 	"UNIT_DIED"
 )
 
-mod:AddBoolOption("MakeitCountTimer", true, "timer")
+mod:AddBoolOption("MakeitCountTimer", true, "timer", nil, nil, nil, "at1868")
 
 function mod:UNIT_DIED(args)
 	if not self:IsDifficulty("normal5") then
