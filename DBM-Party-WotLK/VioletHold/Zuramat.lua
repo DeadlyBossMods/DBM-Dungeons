@@ -16,7 +16,7 @@ local warningShroudofDarkness	= mod:NewTargetNoFilterAnnounce(59745, 3)
 local specWarnVoidShifted		= mod:NewSpecialWarningYou(54343, nil, nil, nil, 1, 2)
 local specWarnShroud			= mod:NewSpecialWarningDispel(59745, "MagicDispeller", nil, nil, 1, 2)
 
-local timerVoidShifted			= mod:NewTargetTimer(15, 54343)
+local timerVoidShifted			= mod:NewTargetTimer(15, 54343, nil, nil, nil, 5)
 
 mod:GroupSpells(59743, 54343)
 

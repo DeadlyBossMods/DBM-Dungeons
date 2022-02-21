@@ -14,7 +14,7 @@ mod:RegisterEventsInCombat(
 	"SPELL_AURA_REMOVED 56130 59467"
 )
 
-local warningPlague	= mod:NewTargetAnnounce(56130, 2, nil, "Healer")
+local warningPlague	= mod:NewTargetNoFilterAnnounce(56130, 2, nil, "Healer")
 
 local timerPlague	= mod:NewTargetTimer(30, 56130, nil, "Healer", nil, 3)
 

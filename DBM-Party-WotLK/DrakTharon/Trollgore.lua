@@ -7,5 +7,5 @@ mod:SetEncounterID(1974)
 
 mod:RegisterCombat("combat")
 
-mod:RegisterEventsInCombat(
-)
+--mod:RegisterEventsInCombat(
+--)

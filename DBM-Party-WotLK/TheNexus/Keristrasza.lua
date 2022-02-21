@@ -14,7 +14,7 @@ mod:RegisterEventsInCombat(
 	"SPELL_AURA_REMOVED 50997"
 )
 
-local warningChains		= mod:NewTargetAnnounce(50997, 4)
+local warningChains		= mod:NewTargetNoFilterAnnounce(50997, 4)
 local warningNova		= mod:NewSpellAnnounce(48179, 3)
 local warningEnrage		= mod:NewSpellAnnounce(8599, 3, nil, "Tank|Healer", 2)
 

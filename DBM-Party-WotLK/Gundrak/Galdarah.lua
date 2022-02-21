@@ -10,5 +10,5 @@ mod:SetModelID(27061)
 --
 mod:RegisterCombat("combat")
 
-mod:RegisterEventsInCombat(
-)
+--mod:RegisterEventsInCombat(
+--)
