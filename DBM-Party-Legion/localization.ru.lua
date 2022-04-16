@@ -254,7 +254,7 @@ L:SetGeneralLocalization({
 })
 
 L:SetOptionLocalization({
-	SpyHelper	= "Помочь идентифицировать шпиона"
+	SpyHelper	= "Помочь идентифицировать шпиона",
 	SendToChat	= "Также отправлять подсказки в чат (требуется включенная выше опция)"
 })
 
