@@ -2,7 +2,7 @@
 ## X-Min-Interface: 80000
 ## Title:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cff69ccf0Dungeons (BC)|r
 ## Title-deDE:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cff69ccf0Gruppe-BC|r
-## Title-ruRU:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cff69ccf0Групповые подземелья-BC|r
+## Title-ruRU:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cff69ccf0Подземелья (Пылающий Легион)|r
 ## Title-esES:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cff69ccf0Mazmorras (TBC)|r
 ## Title-koKR:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cff69ccf05인던전-불타는 성전|r
 ## Title-zhTW:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cff69ccf0隊伍首領-燃燒的遠征|r
@@ -25,7 +25,7 @@
 ## X-DBM-Mod-SubCategories-zhCN: 地狱火堡垒,鲜血熔炉,破碎大厅,奴隶围栏,幽暗沼泽,蒸汽地窖,奥金尼地穴,法力陵墓,赛泰克大厅,暗影迷宮,逃离敦霍尔德,开启黑暗之门,能源舰,生态船,禁魔监狱,博学者殿堂
 ## X-DBM-Mod-Name: Dungeons (BC)
 ## X-DBM-Mod-Name-deDE: Gruppe (BC)
-## X-DBM-Mod-Name-ruRU: Групповые подземелья-BC
+## X-DBM-Mod-Name-ruRU: Подземелья (Пылающий Легион)
 ## X-DBM-Mod-Name-esES: Mazmorras (TBC)
 ## X-DBM-Mod-Name-koKR: 5인 던전(불타는 성전)
 ## X-DBM-Mod-Name-zhTW: 隊伍首領 (燃燒的遠征)
