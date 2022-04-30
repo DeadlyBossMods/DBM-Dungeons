@@ -4,7 +4,7 @@
 ## Title-frFR:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cff69ccf0Groupe-Cataclysm|r
 ## Title-deDE:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cff69ccf0Gruppe-Cataclysm|r
 ## Title-zhTW:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cff69ccf0隊伍首領-浩劫與重生|r
-## Title-ruRU:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cff69ccf0Групповые подземелья-Катаклизм|r
+## Title-ruRU:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cff69ccf0Подземелья (Катаклизм)|r
 ## Title-koKR:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cff69ccf05인던전-대격변|r
 ## Title-esES:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cff69ccf0Mazmorras (Cataclysm)|r
 ## Title-zhCN:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cff69ccf05人小队-大地的裂变|r
@@ -30,7 +30,7 @@
 ## X-DBM-Mod-Name: Dungeons (Cataclysm)
 ## X-DBM-Mod-Name-frFR: Groupe (Cataclysm)
 ## X-DBM-Mod-Name-deDE: Gruppe (Cataclysm)
-## X-DBM-Mod-Name-ruRU: Групповые подземелья (Катаклизм)
+## X-DBM-Mod-Name-ruRU: Подземелья (Катаклизм)
 ## X-DBM-Mod-Name-zhTW: 隊伍首領 (浩劫與重生)
 ## X-DBM-Mod-Name-zhCN: 5人小队（大地的裂变）
 ## X-DBM-Mod-Name-esES: Mazmorras (Cataclysm)
