@@ -19,7 +19,7 @@ mod:RegisterEventsInCombat(
 
 local warnPowerConduitLeft			= mod:NewAddsLeftAnnounce(166168, 2)
 
-local specWarnPowerConduit			= mod:NewSpecialWarningSpell(166168, nil, nil, nil, 2)
+local specWarnPowerConduit			= mod:NewSpecialWarningSpell(166168, nil, nil, nil, 2, 2)
 local specWarnPowerConduitEnded		= mod:NewSpecialWarningEnd(166168)
 local specWarnShrapnelNova			= mod:NewSpecialWarningRun(154448, "-Tank")
 
