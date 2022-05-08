@@ -6,7 +6,7 @@
 ## Title-esES:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cff69ccf0Mazmorras (MoP)|r
 ## Title-zhCN:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cff69ccf05人队-熊猫人之谜|r
 ## Title-frFR:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cff69ccf0Groupe-MoP|r
-## Title-ruRU:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cff69ccf0Групповые подземелья-MoP|r
+## Title-ruRU:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cff69ccf0Подземелья (Пандария)|r
 ## Title-zhTW:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cff69ccf0隊伍首領-潘達利亞之謎|r
 ## LoadOnDemand: 1
 ## RequiredDeps: DBM-Core
@@ -20,7 +20,7 @@
 ## X-DBM-Mod-Name: Dungeons (MoP)
 ## X-DBM-Mod-Name-koKR: 5인 던전(판다리아의 안개)
 ## X-DBM-Mod-Name-deDE: Gruppe (MoP)
-## X-DBM-Mod-Name-ruRU: Групповые подземелья (MoP)
+## X-DBM-Mod-Name-ruRU: Подземелья (Пандария)
 ## X-DBM-Mod-Name-esES: Mazmorras (MoP)
 ## X-DBM-Mod-Name-esMX: Mazmorras (MoP)
 ## X-DBM-Mod-Name-ptBR: Masmorras (MoP)
