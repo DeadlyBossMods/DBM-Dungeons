@@ -61,7 +61,7 @@ L= DBM:GetModLocalization(90)
 L= DBM:GetModLocalization(91)
 
 L:SetOptionLocalization{
-	HarvestIcon		= DBM_CORE_L.AUTO_ICONS_OPTION_TEXT:format(88495)
+	HarvestIcon		= DBM_CORE_L.AUTO_ICONS_OPTION_TARGETS:format(88495)
 }
 
 ----------------------
@@ -329,7 +329,7 @@ L:SetMiscLocalization{
 L= DBM:GetModLocalization(115)
 
 L:SetOptionLocalization({
-	BreathIcon	= DBM_CORE_L.AUTO_ICONS_OPTION_TEXT:format(88308)
+	BreathIcon	= DBM_CORE_L.AUTO_ICONS_OPTION_TARGETS:format(88308)
 })
 
 -----------
@@ -417,7 +417,7 @@ L:SetMiscLocalization{
 L= DBM:GetModLocalization(188)
 
 L:SetOptionLocalization{
-	FlameIcon		= DBM_CORE_L.AUTO_ICONS_OPTION_TEXT:format(43140)
+	FlameIcon		= DBM_CORE_L.AUTO_ICONS_OPTION_TARGETS:format(43140)
 }
 
 L:SetMiscLocalization{
@@ -475,8 +475,8 @@ L:SetTimerLocalization{
 L:SetOptionLocalization{
 	timerNextForm	= "Show timer for form changes.",
 	InfoFrame		= "Show info frame for players affected by $spell:42402",
-	ThrowIcon		= DBM_CORE_L.AUTO_ICONS_OPTION_TEXT:format(43093),
-	ClawRageIcon	= DBM_CORE_L.AUTO_ICONS_OPTION_TEXT:format(43150)
+	ThrowIcon		= DBM_CORE_L.AUTO_ICONS_OPTION_TARGETS:format(43093),
+	ClawRageIcon	= DBM_CORE_L.AUTO_ICONS_OPTION_TARGETS:format(43150)
 }
 
 L:SetMiscLocalization{
@@ -562,7 +562,7 @@ L:SetWarningLocalization{
 
 L:SetOptionLocalization{
 	WarnBarrierDown	= "Announce when Hakkar's Chains barrier down",
-	BodySlamIcon	= DBM_CORE_L.AUTO_ICONS_OPTION_TEXT:format(97198)
+	BodySlamIcon	= DBM_CORE_L.AUTO_ICONS_OPTION_TARGETS:format(97198)
 }
 
 L:SetMiscLocalization{

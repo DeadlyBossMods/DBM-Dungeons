@@ -70,7 +70,7 @@ L= DBM:GetModLocalization(90)
 L= DBM:GetModLocalization(91)
 
 L:SetOptionLocalization{
-	HarvestIcon		= DBM_CORE_L.AUTO_ICONS_OPTION_TEXT:format(88495)
+	HarvestIcon		= DBM_CORE_L.AUTO_ICONS_OPTION_TARGETS:format(88495)
 }
 
 ----------------------
@@ -339,7 +339,7 @@ L:SetMiscLocalization{
 L= DBM:GetModLocalization(115)
 
 L:SetOptionLocalization({
-	BreathIcon	= DBM_CORE_L.AUTO_ICONS_OPTION_TEXT:format(88308)
+	BreathIcon	= DBM_CORE_L.AUTO_ICONS_OPTION_TARGETS:format(88308)
 })
 
 -----------
@@ -419,7 +419,7 @@ L:SetMiscLocalization{
 L= DBM:GetModLocalization(188)
 
 L:SetOptionLocalization{
-	FlameIcon		= DBM_CORE_L.AUTO_ICONS_OPTION_TEXT:format(43140)
+	FlameIcon		= DBM_CORE_L.AUTO_ICONS_OPTION_TARGETS:format(43140)
 }
 
 L:SetMiscLocalization{
@@ -477,8 +477,8 @@ L:SetTimerLocalization{
 L:SetOptionLocalization{
 	timerNextForm	= "计时条：变形",
 	InfoFrame		= "信息框：拥有$spell:42402效果的团员的列表",
-	ThrowIcon		= DBM_CORE_L.AUTO_ICONS_OPTION_TEXT:format(97639),
-	ClawRageIcon	= DBM_CORE_L.AUTO_ICONS_OPTION_TEXT:format(97672)
+	ThrowIcon		= DBM_CORE_L.AUTO_ICONS_OPTION_TARGETS:format(97639),
+	ClawRageIcon	= DBM_CORE_L.AUTO_ICONS_OPTION_TARGETS:format(97672)
 }
 
 L:SetMiscLocalization{
@@ -493,7 +493,7 @@ L:SetMiscLocalization{
 L= DBM:GetModLocalization(175)
 
 L:SetOptionLocalization{
-	SetIconOnToxicLink	= DBM_CORE_L.AUTO_ICONS_OPTION_TEXT:format(96477)
+	SetIconOnToxicLink	= DBM_CORE_L.AUTO_ICONS_OPTION_TARGETS:format(96477)
 }
 
 ------------------------
@@ -551,7 +551,7 @@ L:SetWarningLocalization{
 L:SetOptionLocalization{
 	SpecWarnToxic	= "特殊警报：当你缺少$spell:96328效果时",
 	InfoFrame		= "信息框：没有$spell:96328效果的团员的列表",
-	SetIconOnGaze	= DBM_CORE_L.AUTO_ICONS_OPTION_TEXT:format(96342)
+	SetIconOnGaze	= DBM_CORE_L.AUTO_ICONS_OPTION_TARGETS:format(96342)
 }
 
 L:SetMiscLocalization{
@@ -569,7 +569,7 @@ L:SetWarningLocalization{
 
 L:SetOptionLocalization{
 	WarnBarrierDown	= "警报：哈卡之链的壁垒被摧毁",
-	BodySlamIcon	= DBM_CORE_L.AUTO_ICONS_OPTION_TEXT:format(97198)
+	BodySlamIcon	= DBM_CORE_L.AUTO_ICONS_OPTION_TARGETS:format(97198)
 }
 
 L:SetMiscLocalization{

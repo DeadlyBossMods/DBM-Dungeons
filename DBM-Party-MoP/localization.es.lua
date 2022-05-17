@@ -121,7 +121,7 @@ L:SetOptionLocalization({
 L= DBM:GetModLocalization(655)
 
 L:SetOptionLocalization({
-	IconOnSabotage	= DBM_CORE_L.AUTO_ICONS_OPTION_TEXT:format(107268)
+	IconOnSabotage	= DBM_CORE_L.AUTO_ICONS_OPTION_TARGETS:format(107268)
 })
 
 ----------------------
