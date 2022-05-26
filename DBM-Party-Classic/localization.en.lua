@@ -746,12 +746,12 @@ L:SetGeneralLocalization{
 }
 
 -----------------------------
---  Narub'enkan  --
+--  Nerub'enkan  --
 -----------------------------
 L = DBM:GetModLocalization(452)
 
 L:SetGeneralLocalization{
-	name 		= "Narub'enkan"
+	name 		= "Nerub'enkan"
 }
 
 -----------------------------
