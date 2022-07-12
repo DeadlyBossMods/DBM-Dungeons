@@ -24,7 +24,7 @@ local specWarnShrapnelblast				= mod:NewSpecialWarningDodge(166675, "Tank", nil,
 local specWarnThunderzone				= mod:NewSpecialWarningMove(166340, nil, nil, nil, 1, 8)
 
 function mod:SPELL_AURA_APPLIED(args)
-	if not self.Options.Enabled or self:IsDifficulty("normal5") or self:IsTrivial() then return end
+	if not self.Options.Enabled then return end
 	local spellId = args.spellId
 	if spellId == 176025 then
 		if args:IsPlayer() then
@@ -41,7 +41,7 @@ end
 mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED
 
 function mod:SPELL_CAST_START(args)
-	if not self.Options.Enabled or self:IsDifficulty("normal5") or self:IsTrivial() then return end
+	if not self.Options.Enabled then return end
 	local spellId = args.spellId
 	if spellId == 166675 and self:AntiSpam(2, 1) then
 		specWarnShrapnelblast:Show()
@@ -55,7 +55,7 @@ function mod:SPELL_CAST_START(args)
 end
 
 function mod:SPELL_CAST_SUCCESS(args)
-	if not self.Options.Enabled or self:IsDifficulty("normal5") or self:IsTrivial() then return end
+	if not self.Options.Enabled then return end
 	local spellId = args.spellId
 	if spellId == 163966 and self:AntiSpam(3, 3) then
 		specWarnActivating:Show(args.sourceName)

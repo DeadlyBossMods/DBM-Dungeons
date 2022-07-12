@@ -2,6 +2,7 @@ local mod	= DBM:NewMod(1133, "DBM-Party-WoD", 3, 536)
 local L		= mod:GetLocalizedStrings()
 
 mod.statTypes = "normal,heroic,mythic,challenge,timewalker"
+mod.upgradedMPlus = true
 
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(80005)
@@ -17,7 +18,7 @@ mod:RegisterEventsInCombat(
 )
 
 local warnFreezingSnare			= mod:NewTargetAnnounce(162066, 3)
-local warnMark					= mod:NewTargetAnnounce(163447, 3)
+local warnMark					= mod:NewTargetNoFilterAnnounce(163447, 3)
 
 local specWarnFreezingSnare		= mod:NewSpecialWarningYou(162066, nil, nil, nil, 1, 2)
 local specWarnFreezingSnareNear	= mod:NewSpecialWarningClose(162066, nil, nil, nil, 1, 2)
@@ -29,7 +30,7 @@ local yellMark					= mod:NewYell(163447)
 
 local timerFreezingSnareCD		= mod:NewNextTimer(20, 162066, nil, nil, nil, 3)
 local timerSpinningSpearCD		= mod:NewNextTimer(20, 162058, nil, "Tank", 2, 5, nil, DBM_COMMON_L.TANK_ICON)
-local timerMark					= mod:NewTargetTimer(5, 163447)
+local timerMark					= mod:NewTargetTimer(5, 163447, nil, nil, nil, 5)
 local timerMarkCD				= mod:NewNextTimer(20, 163447, nil, nil, nil, 3)
 
 mod:AddRangeFrameOption(8, 163447)

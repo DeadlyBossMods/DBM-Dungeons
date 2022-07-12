@@ -2,6 +2,7 @@ local mod	= DBM:NewMod(1138, "DBM-Party-WoD", 3, 536)
 local L		= mod:GetLocalizedStrings()
 
 mod.statTypes = "normal,heroic,mythic,challenge,timewalker"
+mod.upgradedMPlus = true
 
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(77803, 77816)
@@ -46,9 +47,9 @@ local function getBorkaID(self)
 end
 
 function mod:OnCombatStart(delay)
+	borkaID = nil
 	self.vb.VXCast = 0
 	self.vb.SlamCast = 0
-	getBorkaID(self)
 	timerSlamCD:Start(9-delay)
 	timerX2101AMissileCD:Start(18.5-delay)
 end
@@ -70,7 +71,7 @@ function mod:SPELL_CAST_START(args)
 		timerX2101AMissileCD:Start()
 	elseif spellId == 161090 then
 		self.vb.SlamCast = 0
-		if not borkaID then--failsafe 1
+		if not borkaID then
 			getBorkaID(self)
 		end
 		if borkaID and self:IsTanking("player", borkaID) then--failsafe 2

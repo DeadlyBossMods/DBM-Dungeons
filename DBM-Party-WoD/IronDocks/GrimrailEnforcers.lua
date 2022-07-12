@@ -2,6 +2,7 @@ local mod	= DBM:NewMod(1236, "DBM-Party-WoD", 4, 558)
 local L		= mod:GetLocalizedStrings()
 
 mod.statTypes = "normal,heroic,mythic,challenge,timewalker"
+mod.upgradedMPlus = true
 
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(80805, 80816, 80808)
@@ -107,7 +108,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
 		specWarnLavaSwipe:Show()
 		specWarnLavaSwipe:Play("shockwave")
 		if self:IsHeroic() then
-			timerLavaSwipeCD:Start()
+			timerLavaSwipeCD:Start()--29
 		else
 			timerLavaSwipeCD:Start(41.5)
 		end

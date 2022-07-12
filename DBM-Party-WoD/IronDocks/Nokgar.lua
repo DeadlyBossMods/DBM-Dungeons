@@ -2,6 +2,7 @@ local mod	= DBM:NewMod(1235, "DBM-Party-WoD", 4, 558)
 local L		= mod:GetLocalizedStrings()
 
 mod.statTypes = "normal,heroic,mythic,challenge,timewalker"
+mod.upgradedMPlus = true
 
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(81297, 81305)
@@ -17,6 +18,7 @@ mod:RegisterEventsInCombat(
 	"UNIT_TARGETABLE_CHANGED"
 )
 
+--TODO, see if boss is missing UnitID in stage 1 in M+ version
 local warnNokgar						= mod:NewSpellAnnounce("ej10433", 3, "134170")
 
 local specWarnBurningArrows				= mod:NewSpecialWarningSpell(164635, nil, nil, nil, 2, 2)
@@ -25,8 +27,8 @@ local specWarnRecklessProvocation		= mod:NewSpecialWarningReflect(164426, nil, n
 local specWarnRecklessProvocationEnd	= mod:NewSpecialWarningEnd(164426, nil, nil, nil, 1, 2)
 local specWarnEnrage					= mod:NewSpecialWarningDispel(164835, "RemoveEnrage", nil, nil, 1, 2)
 
-local timerRecklessProvocation			= mod:NewBuffActiveTimer(5, 164426)
---local timerBurningArrowsCD			= mod:NewNextTimer(25, 164635)--25~42 variable (patterned?)
+local timerRecklessProvocation			= mod:NewBuffActiveTimer(5, 164426, nil, nil, nil, 5, nil, DBM_COMMON_L.DAMAGE_ICON)
+--local timerBurningArrowsCD			= mod:NewNextTimer(25, 164635, nil, nil, nil, 3)--25~42 variable (patterned?)
 
 function mod:SPELL_AURA_APPLIED(args)
 	if args.spellId == 164426 then
