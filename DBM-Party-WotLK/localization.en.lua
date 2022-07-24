@@ -596,5 +596,8 @@ L:SetOptionLocalization({
 
 L:SetMiscLocalization({
 	ACombatStart	= "He is too powerful. We must leave this place at once! My magic can hold him in place for only a short time. Come quickly, heroes!",
-	HCombatStart	= "He's... too powerful. Heroes, quickly... come to me! We must leave this place at once! I will do what I can to hold him in place while we flee."
+	HCombatStart	= "He's... too powerful. Heroes, quickly... come to me! We must leave this place at once! I will do what I can to hold him in place while we flee.",
+	Ghoul			= "Ghoul",
+	Doctor			= "Witch Doctor",
+	Abom			= "Abomination"
 })

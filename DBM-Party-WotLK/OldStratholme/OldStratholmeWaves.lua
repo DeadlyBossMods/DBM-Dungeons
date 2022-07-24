@@ -15,21 +15,18 @@ local warningWaveNow	= mod:NewAnnounce("WarningWaveNow", 3)
 local timerWaveIn		= mod:NewTimer(20, "TimerWaveIn", 57687, nil, nil, 1)
 local timerRoleplay		= mod:NewTimer(162, "TimerRoleplay")
 
-local meathook = EJ_GetEncounterInfo(611)
-local salramm = EJ_GetEncounterInfo(612)
-
 --TODO, fix waves
 local wavesNormal = {
 	{2, L.Devouring},
 	{2, L.Devouring},
 	{2, L.Devouring},
 	{2, L.Devouring},
-	{meathook},
+	{DBM_COMMON_L.BOSS},
 	{2, L.Devouring},
 	{2, L.Devouring},
 	{2, L.Devouring},
 	{2, L.Devouring},
-	{salramm},
+	{DBM_COMMON_L.BOSS},
 }
 
 local wavesHeroic = {
@@ -37,12 +34,12 @@ local wavesHeroic = {
 	{1, L.Devouring, 1, L.Enraged, 1, L.Necro},
 	{1, L.Devouring, 1, L.Enraged, 1, L.Necro, 1, L.Fiend},
 	{1, L.Necro, 4, L.Acolyte, 1, L.Fiend},
-	{meathook},
+	{DBM_COMMON_L.BOSS},
 	{1, L.Devouring, 1, L.Necro, 1, L.Fiend, 1, L.Stalker},
 	{1, L.Devouring, 2, L.Enraged, 1, L.Abom},
 	{1, L.Devouring, 1, L.Enraged, 1, L.Necro, 1, L.Abom},
 	{1, L.Devouring, 1, L.Necro, 1, L.Fiend, 1, L.Abom},
-	{salramm},
+	{DBM_COMMON_L.BOSS},
 }
 
 local lastWave	= 0
