@@ -1,12 +1,14 @@
-package-as: DBM-Party-BC
+package-as: DBM-Party-Dragonflight
 enable-nolib-creation: no
 
 move-folders:
-    DBM-Party-BC/DBM-Party-Cataclysm: DBM-Party-Cataclysm
-    DBM-Party-BC/DBM-Party-Classic: DBM-Party-Classic
-    DBM-Party-BC/DBM-Party-Legion: DBM-Party-Legion
-    DBM-Party-BC/DBM-Party-MoP: DBM-Party-MoP
-    DBM-Party-BC/DBM-Party-WoD: DBM-Party-WoD
-    DBM-Party-BC/DBM-Party-WotLK: DBM-Party-WotLK
-    DBM-Party-BC/DBM-Party-BC: DBM-Party-BC
-    DBM-Party-BC/DBM-Party-BfA: DBM-Party-BfA
+    DBM-Party-Dragonflight/DBM-Party-Cataclysm: DBM-Party-Cataclysm
+    DBM-Party-Dragonflight/DBM-Party-Classic: DBM-Party-Classic
+    DBM-Party-Dragonflight/DBM-Party-Legion: DBM-Party-Legion
+    DBM-Party-Dragonflight/DBM-Party-MoP: DBM-Party-MoP
+    DBM-Party-Dragonflight/DBM-Party-WoD: DBM-Party-WoD
+    DBM-Party-Dragonflight/DBM-Party-WotLK: DBM-Party-WotLK
+    DBM-Party-Dragonflight/DBM-Party-BC: DBM-Party-BC
+    DBM-Party-Dragonflight/DBM-Party-BfA: DBM-Party-BfA
+    DBM-Party-Dragonflight/DBM-Party-Shadowlands: DBM-Party-Shadowlands
+    DBM-Party-Dragonflight/DBM-Party-Dragonflight: DBM-Party-Dragonflight
