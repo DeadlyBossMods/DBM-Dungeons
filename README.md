@@ -8,16 +8,12 @@ Deadly Boss Mods: Dungeons
 
 Description
 -----------
-This mod will add support for 5 man Dungeons, spanning Classic all the way to Battle for Azeroth, to Deadly Boss Mods (DBM).
+This mod will add support for 5 man Dungeons, spanning Classic all the way to Dragonflight, to Deadly Boss Mods (DBM).
 
 Features:
 * Helpful combat warnings, timers, and infoframes for 5 man dungeons
 * This includes all dungeons ever made into a Timewalker dungeon in a single package
 * All warnings are configurable through DBM GUI
-
-**Note about current dungeon content:**
-
-Dungeons for current expansion will always be included as part of base Deadly Boss Mods download. So at this time, Shadowlands dungeon mods are not part of this package but already included in DBM-Core package.
 
 Looking for Raid mods?
 ----------------------
