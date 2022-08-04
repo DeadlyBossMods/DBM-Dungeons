@@ -7,7 +7,7 @@
 ## Title-zhTW:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cff69ccf0隊伍首領-巫妖王之怒|r
 ## Title-zhCN:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cff69ccf0队伍-WotLK|r
 ## Title-ruRU:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cff69ccf0Подземелья (Король-лич)|r
-## Title-koKR:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cff69ccf05인던전-리치왕의 분노|r
+## Title-koKR:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cff69ccf0던전 (리분)|r
 ## Author: Arta
 ## LoadOnDemand: 1
 ## RequiredDeps: DBM-Core
@@ -33,7 +33,7 @@
 ## X-DBM-Mod-Name-zhTW: 隊伍首領 (巫妖王之怒)
 ## X-DBM-Mod-Name-zhCN: 队伍首领-WotLK
 ## X-DBM-Mod-Name-esES: Mazmorras (WotLK)
-## X-DBM-Mod-Name-koKR: 5인 던전(리치왕의 분노)
+## X-DBM-Mod-Name-koKR: 던전 (리분)
 ## X-DBM-Mod-Name-esMX: Mazmorras-WotLK
 ## X-DBM-Mod-Sort: 915
 ## X-DBM-Mod-MapID: 619,601,595,600,604,602,599,576,578,574,575,608,658,632,668,650

@@ -3,7 +3,7 @@
 ## Title:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cff69ccf0Dungeons (Classic)|r
 ## Title-deDE:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cff69ccf0Gruppe-Classic|r
 ## Title-esES:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cff69ccf0Mazmorras (Clásico)|r
-## Title-koKR:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cff69ccf05인던전-오리지널|r
+## Title-koKR:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cff69ccf0던전 (클래식)|r
 ## Title-zhTW:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cff69ccf0隊伍首領-傳統|r
 ## Title-zhCN:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cff69ccf0队伍首领(经典旧世)|r
 ## Title-ruRU:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cff69ccf0Классические подземелья|r
@@ -20,7 +20,7 @@
 ## X-DBM-Mod-Name: Dungeons (Classic)
 ## X-DBM-Mod-Name-deDE: Gruppe (Classic)
 ## X-DBM-Mod-Name-esES: Mazmorras (Clásico)
-## X-DBM-Mod-Name-koKR: 5인 던전(오리지널)
+## X-DBM-Mod-Name-koKR: 던전 (클래식)
 ## X-DBM-Mod-Name-zhTW: 隊伍首領 (傳統)
 ## X-DBM-Mod-Name-zhCN: 队伍首领(经典旧世)
 ## X-DBM-Mod-Name-ruRU: Классические подземелья
@@ -35,6 +35,7 @@
 localization.en.lua
 localization.es.lua
 localization.cn.lua
+localization.kr.lua
 BlackfathomDeeps\GhamooRa.lua
 BlackfathomDeeps\Domina.lua
 BlackfathomDeeps\Korul.lua

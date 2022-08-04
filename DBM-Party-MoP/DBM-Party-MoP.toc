@@ -1,7 +1,7 @@
 ## Interface: 90205
 ## X-Min-Interface: 80000
 ## Title:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cff69ccf0Dungeons (MoP)|r
-## Title-koKR:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cff69ccf05인던전-판다리아의 안개|r
+## Title-koKR:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cff69ccf0던전 (판다)|r
 ## Title-deDE:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cff69ccf0Gruppe-MoP|r
 ## Title-esES:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cff69ccf0Mazmorras (MoP)|r
 ## Title-zhCN:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cff69ccf05人队-熊猫人之谜|r
@@ -18,7 +18,7 @@
 ## X-DBM-StatTypes: normal,heroic,challenge
 ## X-DBM-Mod-SubCategoriesID: 960, 961, 959, 962, 994, 1011, 1007, 1001, 1004
 ## X-DBM-Mod-Name: Dungeons (MoP)
-## X-DBM-Mod-Name-koKR: 5인 던전(판다리아의 안개)
+## X-DBM-Mod-Name-koKR: 던전 (판다)
 ## X-DBM-Mod-Name-deDE: Gruppe (MoP)
 ## X-DBM-Mod-Name-ruRU: Подземелья (Пандария)
 ## X-DBM-Mod-Name-esES: Mazmorras (MoP)

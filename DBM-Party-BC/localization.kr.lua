@@ -237,7 +237,7 @@ L = DBM:GetModLocalization(553)
 L = DBM:GetModLocalization(554)
 
 L:SetMiscLocalization({
-    AeonusFrenzy	= "%s|1이;가; 광란의 상태에 빠집니다!"--확인필요
+    AeonusFrenzy	= "%s|1이;가; 분노합니다!"
 })
 
 ---------------------
@@ -269,7 +269,7 @@ L:SetOptionLocalization({
 
 L:SetMiscLocalization({
 	PortalCheck			= "시간의 균열 열림: (%d+)/18",
-	Shielddown			= "No! Damn this feeble, mortal coil!"--확인필요
+	Shielddown			= "안 돼! 이런 나약한 무리에게 당하다니!"
 })
 
 --------------------
@@ -293,7 +293,7 @@ L:SetGeneralLocalization({
 })
 
 L:SetMiscLocalization({
-	JackHammer				= "%s|1이;가; 자신의 망치를 위협적으로 치켜듭니다..."--확인필요
+	JackHammer				= "%s|1이;가; 자신의 망치를 위협적으로 치켜듭니다..."
 })
 
 ------------------------------

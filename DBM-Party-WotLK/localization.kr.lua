@@ -604,6 +604,6 @@ L:SetOptionLocalization({
 })
 
 L:SetMiscLocalization({
-	ACombatStart	= "He is too powerful. We must leave this place at once! My magic can hold him in place for only a short time. Come quickly, heroes!",--확인필요
+	ACombatStart	= "그는 너무 강하군요. 당장 여길 떠나야 해요! 내 마법으로는 그를 잠깐만 저지할 수 있어요. 영웅들이여, 서두르세요!",
 	HCombatStart	= "그는... 너무 강하다. 영웅들이여, 어서... 이쪽으로 오라! 즉시 이곳을 떠나야 한다! 도망치는 동안 그를 잡아놓을 수 있도록 조치를 취하겠다."
 })

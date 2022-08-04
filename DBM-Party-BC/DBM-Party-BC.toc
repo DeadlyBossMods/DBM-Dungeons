@@ -4,7 +4,7 @@
 ## Title-deDE:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cff69ccf0Gruppe-BC|r
 ## Title-ruRU:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cff69ccf0Подземелья (BC)|r
 ## Title-esES:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cff69ccf0Mazmorras (TBC)|r
-## Title-koKR:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cff69ccf05인던전-불타는 성전|r
+## Title-koKR:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cff69ccf0던전 (불성)|r
 ## Title-zhTW:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cff69ccf0隊伍首領-燃燒的遠征|r
 ## Title-zhCN:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cff69ccf0队伍首领-燃烧的远征|r
 ## Author: Arta/MysticalOS
@@ -27,7 +27,7 @@
 ## X-DBM-Mod-Name-deDE: Gruppe (BC)
 ## X-DBM-Mod-Name-ruRU: Подземелья (BC)
 ## X-DBM-Mod-Name-esES: Mazmorras (TBC)
-## X-DBM-Mod-Name-koKR: 5인 던전(불타는 성전)
+## X-DBM-Mod-Name-koKR: 던전 (불성)
 ## X-DBM-Mod-Name-zhTW: 隊伍首領 (燃燒的遠征)
 ## X-DBM-Mod-Name-zhCN: 队伍首领 (燃烧的远征)
 ## X-DBM-Mod-Sort: 1015
