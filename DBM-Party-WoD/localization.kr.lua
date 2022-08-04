@@ -30,7 +30,7 @@ L= DBM:GetModLocalization(1225)
 L = DBM:GetModLocalization("AuchTrash")
 
 L:SetGeneralLocalization({
-	name =	"아킨둔: 일반구간"
+	name =	"아킨둔 일반몹"
 })
 
 -----------------------
@@ -62,7 +62,7 @@ L= DBM:GetModLocalization(889)
 L = DBM:GetModLocalization("BSMTrash")
 
 L:SetGeneralLocalization({
-	name =	"피망치 잿가루 광산: 일반구간"
+	name =	"피망치 잿가루 광산 일반몹"
 })
 
 -----------------------
@@ -79,8 +79,8 @@ L= DBM:GetModLocalization(1138)
 L= DBM:GetModLocalization(1163)
 
 L:SetWarningLocalization({
-	warnGrenadeDown			= "%s 떨어짐",
-	warnMortarDown			= "%s 떨어짐"
+	warnGrenadeDown			= "%s 떨굼",
+	warnMortarDown			= "%s 떨굼"
 })
 
 -----------------------
@@ -94,7 +94,7 @@ L= DBM:GetModLocalization(1133)
 L = DBM:GetModLocalization("GRDTrash")
 
 L:SetGeneralLocalization({
-	name =	"파멸철로 정비소: 일반구간"
+	name =	"파멸철로 정비소 일반몹"
 })
 
 -----------------------
@@ -205,7 +205,7 @@ L:SetWarningLocalization({
 
 L:SetOptionLocalization({
 	warnAdd			= "하늘탑 보호 피조물 알림 보기",
-	specWarnAdd		= "하늘탑 보호 피조물 대상 전환 특수 경고 보기"
+	specWarnAdd		= "하늘탑 보호 피조물로 대상 변경 특수 알림 보기"
 })
 
 -------------
@@ -214,7 +214,7 @@ L:SetOptionLocalization({
 L = DBM:GetModLocalization("SkyreachTrash")
 
 L:SetGeneralLocalization({
-	name =	"하늘탑: 일반구간"
+	name =	"하늘탑 일반몹"
 })
 
 -----------------------
@@ -250,7 +250,7 @@ L:SetTimerLocalization({
 })
 
 L:SetOptionLocalization({
-	timerZaelaReturns	= "젤라 착지 바 보기"
+	timerZaelaReturns	= "젤라 착지 타이머 바 보기"
 })
 
 -------------
@@ -259,5 +259,5 @@ L:SetOptionLocalization({
 L = DBM:GetModLocalization("UBRSTrash")
 
 L:SetGeneralLocalization({
-	name =	"검은바위 첨탑 상층: 일반구간"
+	name =	"검은바위 첨탑 상층 일반몹"
 })
