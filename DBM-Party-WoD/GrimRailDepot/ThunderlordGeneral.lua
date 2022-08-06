@@ -11,12 +11,17 @@ mod:SetEncounterID(1736)
 mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
+	"SPELL_CAST_START 162066 162058",
 	"SPELL_AURA_APPLIED 163447 161588",
 	"SPELL_AURA_APPLIED_DOSE 161588",
-	"SPELL_AURA_REMOVED 163447",
-	"SPELL_CAST_START 162066 162058"
+	"SPELL_AURA_REMOVED 163447"
 )
 
+--[[
+(ability.id = 162066 or ability.id = 162058) and type = "begincast"
+ or (ability.id = 171900 or ability.id = 163447) and (type = "applybuff" or type = "applydebuff")
+ or type = "dungeonencounterstart" or type = "dungeonencounterend"
+--]]
 local warnFreezingSnare			= mod:NewTargetAnnounce(162066, 3)
 local warnMark					= mod:NewTargetNoFilterAnnounce(163447, 3)
 
@@ -57,13 +62,25 @@ function mod:FreezingSnareTarget(targetname, uId)
 	end
 end
 
-function mod:OnCombatStart(delay)
+--function mod:OnCombatStart(delay)
 
-end
+--end
 
 function mod:OnCombatEnd()
 	if self.Options.RangeFrame then
 		DBM.RangeCheck:Hide()
+	end
+end
+
+function mod:SPELL_CAST_START(args)
+	local spellId = args.spellId
+	if spellId == 162066 then
+		self:BossTargetScanner(80005, "FreezingSnareTarget", 0.04, 15)
+		timerFreezingSnareCD:Start()
+	elseif spellId == 162058 then
+		specWarnSpinningSpear:Show()
+		specWarnSpinningSpear:Play("shockwave")
+		timerSpinningSpearCD:Start()
 	end
 end
 
@@ -98,17 +115,5 @@ function mod:SPELL_AURA_REMOVED(args)
 		if self.Options.RangeFrame then
 			DBM.RangeCheck:Hide()
 		end
-	end
-end
-
-function mod:SPELL_CAST_START(args)
-	local spellId = args.spellId
-	if spellId == 162066 then
-		self:BossTargetScanner(80005, "FreezingSnareTarget", 0.04, 15)
-		timerFreezingSnareCD:Start()
-	elseif spellId == 162058 then
-		specWarnSpinningSpear:Show()
-		specWarnSpinningSpear:Play("shockwave")
-		timerSpinningSpearCD:Start()
 	end
 end
