@@ -17,7 +17,7 @@ mod:RegisterEvents(
 
 --TODO, add https://www.wowhead.com/spell=166380/reckless-slash ?
 local warnLavaWreath					= mod:NewTargetNoFilterAnnounce(176025, 4)
-local warnThunderousBreath		= mod:NewSpellAnnounce(171900, 3)
+local warnThunderousBreath				= mod:NewSpellAnnounce(171900, 3)
 
 local specWarnActivating				= mod:NewSpecialWarningInterrupt(163966, false, nil, 2, 1, 8)
 local specWarnLavaWreath				= mod:NewSpecialWarningMoveAway(176025, nil, nil, nil, 1, 2)

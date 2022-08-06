@@ -14,7 +14,8 @@ mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 162066 162058",
 	"SPELL_AURA_APPLIED 163447 161588",
 	"SPELL_AURA_APPLIED_DOSE 161588",
-	"SPELL_AURA_REMOVED 163447"
+	"SPELL_AURA_REMOVED 163447",
+	"CHAT_MSG_MONSTER_YELL"
 )
 
 --[[
@@ -32,11 +33,13 @@ local specWarnDiffusedEnergy	= mod:NewSpecialWarningMove(161588, nil, nil, nil, 
 local specWarnSpinningSpear		= mod:NewSpecialWarningDodge(162058, nil, nil, 3, 2, 2)
 local specWarnMark				= mod:NewSpecialWarningMoveAway(163447, nil, nil, nil, 1, 2)
 local yellMark					= mod:NewYell(163447)
+local specWarnThunderousBreath	= mod:NewSpecialWarningDodge(171900, nil, nil, nil, 2, 2)
 
 local timerFreezingSnareCD		= mod:NewNextTimer(20, 162066, nil, nil, nil, 3)
 local timerSpinningSpearCD		= mod:NewNextTimer(20, 162058, nil, "Tank", 2, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerMark					= mod:NewTargetTimer(5, 163447, nil, nil, nil, 5)
 local timerMarkCD				= mod:NewNextTimer(20, 163447, nil, nil, nil, 3)
+local timerThunderousBreathCD	= mod:NewAITimer(20, 171900, nil, nil, nil, 3)
 
 mod:AddRangeFrameOption(8, 163447)
 
@@ -115,5 +118,21 @@ function mod:SPELL_AURA_REMOVED(args)
 		if self.Options.RangeFrame then
 			DBM.RangeCheck:Hide()
 		end
+	end
+end
+
+function mod:CHAT_MSG_MONSTER_YELL(msg, _, _, _, target)
+	if not self:IsInCombat() then return end
+	if target == L.Rakun then
+		self:SendSync("Breath")
+	end
+end
+
+function mod:OnSync(msg)
+	if not self:IsInCombat() then return end
+	if msg == "Breath" then
+		specWarnThunderousBreath:Show()
+		specWarnThunderousBreath:Play("breathsoon")
+		timerThunderousBreathCD:Start()
 	end
 end
