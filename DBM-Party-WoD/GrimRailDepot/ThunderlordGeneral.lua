@@ -35,11 +35,11 @@ local specWarnMark				= mod:NewSpecialWarningMoveAway(163447, nil, nil, nil, 1, 
 local yellMark					= mod:NewYell(163447)
 local specWarnThunderousBreath	= mod:NewSpecialWarningDodge(171900, nil, nil, nil, 2, 2)
 
-local timerFreezingSnareCD		= mod:NewNextTimer(20, 162066, nil, nil, nil, 3)
-local timerSpinningSpearCD		= mod:NewNextTimer(20, 162058, nil, "Tank", 2, 5, nil, DBM_COMMON_L.TANK_ICON)
+local timerFreezingSnareCD		= mod:NewCDTimer(16.6, 162066, nil, nil, nil, 3)
+local timerSpinningSpearCD		= mod:NewCDTimer(17, 162058, nil, "Tank", 2, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerMark					= mod:NewTargetTimer(5, 163447, nil, nil, nil, 5)
-local timerMarkCD				= mod:NewNextTimer(20, 163447, nil, nil, nil, 3)
-local timerThunderousBreathCD	= mod:NewAITimer(20, 171900, nil, nil, nil, 3)
+local timerMarkCD				= mod:NewCDTimer(20, 163447, nil, nil, nil, 3)
+local timerThunderousBreathCD	= mod:NewCDTimer(17.5, 171900, nil, nil, nil, 3)
 
 mod:AddRangeFrameOption(8, 163447)
 
