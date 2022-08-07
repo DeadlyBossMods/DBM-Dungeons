@@ -1,9 +1,5 @@
 if GetLocale() ~= "ruRU" then return end
-
 local L
-
-local optionWarning		= "Предупреждение для %s"
-local optionPreWarning	= "Предупреждать заранее о %s"
 
 ----------------------------------
 --  Ahn'Kahet: The Old Kingdom  --
@@ -47,11 +43,7 @@ L = DBM:GetModLocalization(586)
 -------------------------
 --  Anub'arak (Party)  --
 -------------------------
-L = DBM:GetModLocalization("Anubarak")
-
-L:SetGeneralLocalization({
-	name = "Ануб'арак (группа)"
-})
+L = DBM:GetModLocalization(587)
 
 ---------------------------------------
 --  Caverns of Time: Old Stratholme  --
@@ -98,7 +90,7 @@ L:SetTimerLocalization({
 })
 
 L:SetOptionLocalization({
-	WarningWaveNow	= optionWarning:format("новой волны"),
+	WarningWaveNow	= "Предупреждение о новой волне",
 	TimerWaveIn		= "Отсчет времени до cледующей волны (после босса 5-ой волны)",
 	TimerRoleplay	= "Отсчет времени для вступительного представления"
 })
@@ -230,7 +222,7 @@ L:SetTimerLocalization({
 })
 
 L:SetOptionLocalization({
-	WarningPhase	= optionWarning:format("фаз"),
+	WarningPhase	= "Предупреждение о смене фазы",
 	timerEvent		= "Отсчет времени продолжительности события"
 })
 
@@ -296,10 +288,8 @@ L:SetOptionLocalization({
 	MakeitCountTimer	= "Отсчет времени для Вам всем зачтется (достижение)"
 })
 
-local makeItCountName = select(2, GetAchievementInfo(1868))
-
 L:SetMiscLocalization({
-	MakeitCountTimer	= makeItCountName
+	MakeitCountTimer	= "Вам всем зачтется"
 })
 
 ----------------------
@@ -322,7 +312,7 @@ L = DBM:GetModLocalization(623)
 L = DBM:GetModLocalization(625)
 
 L:SetMiscLocalization({
-	MakeitCountTimer	= makeItCountName
+	MakeitCountTimer	= "Вам всем зачтется"
 })
 
 --------------------
@@ -447,9 +437,9 @@ L:SetTimerLocalization({
 })
 
 L:SetOptionLocalization({
-	WarningPortalNow		= optionWarning:format("нового портала"),
-	WarningPortalSoon		= optionPreWarning:format("новом портале"),
-	WarningBossNow			= optionWarning:format("прибытия босса"),
+	WarningPortalNow		= "Предупреждение для нового портала",
+	WarningPortalSoon		= "Предварительное предупреждение для нового портала",
+	WarningBossNow			= "Предупреждение о появлении босса",
 	TimerPortalIn			= "Отсчет времени до следующего портала (после босса)",
 	ShowAllPortalTimers		= "Отсчет времени для всех порталов (неточный)"
 })
@@ -537,7 +527,7 @@ L = DBM:GetModLocalization(610)
 L:SetMiscLocalization({
 	CombatStart	= "Увы, бесстрашные герои, ваша навязчивость ускорила развязку. Вы слышите громыхание костей и скрежет стали за вашими спинами? Это предвестники скорой погибели.",
 	HoarfrostTarget	= "Ледяной змей Иней смотрит на (%S+), готовя морозную атаку!",
-	YellCombatEnd	= "Не может быть... Иней… Предупреди…"
+	YellCombatEnd	= "Не может быть... Иней... Предупреди..."
 })
 
 ----------------------
