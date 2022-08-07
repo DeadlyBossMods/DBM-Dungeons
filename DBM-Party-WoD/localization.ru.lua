@@ -30,7 +30,7 @@ L= DBM:GetModLocalization(1225)
 L = DBM:GetModLocalization("AuchTrash")
 
 L:SetGeneralLocalization({
-	name =	"Трэш мобы"
+	name =	"Трэш мобы Аукиндон"
 })
 
 -----------------------
@@ -62,7 +62,7 @@ L= DBM:GetModLocalization(889)
 L = DBM:GetModLocalization("BSMTrash")
 
 L:SetGeneralLocalization({
-	name =	"Трэш мобы"
+	name =	"Трэш мобы Шлаковые шахты Кровавого Молота"
 })
 
 -----------------------
@@ -88,13 +88,17 @@ L:SetWarningLocalization({
 -----------------------
 L= DBM:GetModLocalization(1133)
 
+L:SetMiscLocalization({
+	Rakun	= "Ракун"
+})
+
 -------------
 --  GRD Trash  --
 -------------
 L = DBM:GetModLocalization("GRDTrash")
 
 L:SetGeneralLocalization({
-	name =	"Трэш мобы"
+	name =	"Трэш мобы Депо Мрачных Путей"
 })
 
 -----------------------
@@ -144,7 +148,7 @@ L= DBM:GetModLocalization(1208)
 L= DBM:GetModLocalization(1209)
 
 L:SetMiscLocalization({
-	Pull	= "Xeri'tac begins unleashing Toxic Spiderlings down on you!"
+	Pull	= "Зери'так выпускает на вас ядовитых паучков!"
 })
 
 -----------------------
@@ -198,13 +202,23 @@ L= DBM:GetModLocalization(967)
 -----------------------
 L= DBM:GetModLocalization(968)
 
+L:SetWarningLocalization({
+	warnAdd			= DBM_CORE_L.AUTO_ANNOUNCE_TEXTS.spell:format("Голем-защитник Небесного Пути"),
+	specWarnAdd		= DBM_CORE_L.AUTO_SPEC_WARN_TEXTS.switch:format("Голем-защитник Небесного Пути")
+})
+
+L:SetOptionLocalization({
+	warnAdd			= "Показать предупреждение для Голем-защитник Небесного Пути",
+	specWarnAdd		= "Показать спецпредупреждение о переключении целей для Голем-защитник Небесного Пути"
+})
+
 -------------
 --  Skyreach Trash  --
 -------------
 L = DBM:GetModLocalization("SkyreachTrash")
 
 L:SetGeneralLocalization({
-	name =	"Трэш мобы"
+	name =	"Трэш мобы Небесный путь"
 })
 
 -----------------------
@@ -249,5 +263,5 @@ L:SetOptionLocalization({
 L = DBM:GetModLocalization("UBRSTrash")
 
 L:SetGeneralLocalization({
-	name =	"Трэш мобы"
+	name =	"Трэш мобы Верхняя часть пика Черной горы"
 })
