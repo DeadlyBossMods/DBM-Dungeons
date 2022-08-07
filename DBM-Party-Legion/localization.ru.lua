@@ -132,7 +132,7 @@ L= DBM:GetModLocalization(1487)
 L= DBM:GetModLocalization(1488)
 
 L:SetMiscLocalization({
-	SkovaldRP		= "No! I, too, have proved my worth, Odyn. I am God-King Skovald! These mortals dare not challenge my claim to the aegis!"
+	SkovaldRP		= "Нет! Я, Король-бог Сковальд, тоже доказал, что достоин. Эти смертные не посмеют оспорить мое право владеть Эгидой!"
 })
 
 -----------------------
@@ -141,7 +141,7 @@ L:SetMiscLocalization({
 L= DBM:GetModLocalization(1489)
 
 L:SetMiscLocalization({
-	tempestModeMessage		=	"Not tempest sequence: %s. Rechecking in 8 seconds."
+	tempestModeMessage		=	"Нет последовательности бури: %s. Перепроверка через 8 секунд."
 })
 
 -----------------------
@@ -549,7 +549,7 @@ L= DBM:GetModLocalization(1905)
 L= DBM:GetModLocalization(1906)
 
 L:SetMiscLocalization({
-	bookCase	=	"Behind bookcase"
+	bookCase	=	"За книжным шкафом"
 })
 
 -----------------------
@@ -568,7 +568,7 @@ L= DBM:GetModLocalization(1878)
 L = DBM:GetModLocalization("CoENTrash")
 
 L:SetGeneralLocalization({
-	name =	"Собор Вечной Ночи"
+	name =	"Трэш мобы Собор Вечной Ночи"
 })
 
 -----------------------
