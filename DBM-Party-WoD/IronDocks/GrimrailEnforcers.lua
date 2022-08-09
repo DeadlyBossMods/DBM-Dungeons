@@ -19,6 +19,9 @@ mod:RegisterEventsInCombat(
 	"UNIT_SPELLCAST_SUCCEEDED boss1 boss2 boss3"
 )
 
+--[[
+(ability.id = 163689 or ability.id = 163390 or ability.id = 163379) and type = "begincast"
+--]]
 --Ahri'ok Dugru
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(10449))
 local warnSphereEnd				= mod:NewEndAnnounce(163689, 1)
@@ -107,7 +110,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
 	if spellId == 164956 and self:AntiSpam(5, 2) then
 		specWarnLavaSwipe:Show()
 		specWarnLavaSwipe:Play("shockwave")
-		if self:IsHeroic() then
+		if self:IsHard() then
 			timerLavaSwipeCD:Start()--29
 		else
 			timerLavaSwipeCD:Start(41.5)
