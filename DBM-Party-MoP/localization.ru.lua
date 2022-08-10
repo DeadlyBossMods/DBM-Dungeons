@@ -19,6 +19,14 @@ L:SetWarningLocalization({
 	SpecWarnIntensity	= "%s на %s (%d)"
 })
 
+L:SetOptionLocalization({
+	SpecWarnIntensity	= DBM_CORE_L.AUTO_SPEC_WARN_OPTIONS.stack:format(6, 113315)
+})
+
+L:SetMiscLocalization({
+	Event1	= "Ах, это еще не конец. Насколько я могу судить, сейчас мы увидим испытание яунгола. Слушайте..."
+})
+
 -----------------------
 -- Liu Flameheart --
 -----------------------
@@ -52,7 +60,8 @@ L:SetWarningLocalization({
 })
 
 L:SetOptionLocalization({
-	SpecWarnFizzyBubbles	= "Спецпредупреждение, когда на Вас нет $spell:114459"
+	SpecWarnFizzyBubbles	= "Спецпредупреждение, когда на Вас нет $spell:114459",
+	RangeFrame				= DBM_CORE_L.AUTO_RANGE_OPTION_TEXT:format(10, 106546)
 })
 
 -----------------------
@@ -65,6 +74,10 @@ L= DBM:GetModLocalization(673)
 
 L:SetWarningLocalization({
 	warnStaticField	= "%s"
+})
+
+L:SetOptionLocalization({
+	warnStaticField	= DBM_CORE_L.AUTO_ANNOUNCE_OPTIONS.spell:format(106923)
 })
 
 -----------------------
@@ -111,6 +124,10 @@ L:SetOptionLocalization({
 -- Kiptilak --
 ---------------------
 L= DBM:GetModLocalization(655)
+
+L:SetOptionLocalization({
+	IconOnSabotage	= DBM_CORE_L.AUTO_ICONS_OPTION_TARGETS:format(107268)
+})
 
 -------------
 -- Gadok --
@@ -211,16 +228,19 @@ L= DBM:GetModLocalization(663)
 L= DBM:GetModLocalization(665)
 
 L:SetWarningLocalization({
-	SpecWarnGetBoned	= "Возьмите костяной доспех"
+	SpecWarnGetBoned	= "Возьмите костяной доспех",
+	SpecWarnDoctor		= "А вот и доктор!"
 })
 
 L:SetOptionLocalization({
-	SpecWarnGetBoned	= "Спецпредупреждение, когда на Вас нет $spell:113996 debuff",
+	SpecWarnGetBoned	= "Спецпредупреждение, когда на Вас нет $spell:113996",
+	SpecWarnDoctor		= "Спецпредупреждение, когда появляется Доктор Теолен Крастинов",
 	InfoFrame			= "Показывать информационное окно для игроков без $spell:113996"
 })
 
 L:SetMiscLocalization({
-	PlayerDebuffs	= "Нет костяного доспеха"
+	PlayerDebuffs	= "Нет костяного доспеха",
+	TheolenSpawn	= "А вот и доктор!"
 })
 
 -----------------------

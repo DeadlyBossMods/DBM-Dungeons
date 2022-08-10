@@ -1,5 +1,4 @@
 if GetLocale() ~= "ruRU" then return end
-
 local L
 
 -------------------------
@@ -13,6 +12,10 @@ L = DBM:GetModLocalization(527)
 --  Omor the Unscarred  --
 --------------------------
 L = DBM:GetModLocalization(528)
+
+L:SetOptionLocalization({
+	RangeFrame			= DBM_CORE_L.AUTO_RANGE_OPTION_TEXT:format(15, 37566)
+})
 
 ------------------------
 --  Nazan & Vazruden  --
@@ -110,7 +113,7 @@ L = DBM:GetModLocalization(573)
 L = DBM:GetModLocalization(574)
 
 L:SetMiscLocalization({
-	Mechs	= "Tune 'em up good boys!"
+	Mechs	= "Эй, ребята, тут надо кое-что настроить!"
 })
 
 --------------------------
@@ -169,7 +172,7 @@ L:SetWarningLocalization({
 })
 
 L:SetOptionLocalization({
-	warnStoned	= "Показать предупреждение для духов, возвращающихся в камень"
+	warnStoned	= "Предупреждение для духов, возвращающихся в камень"
 })
 
 L:SetMiscLocalization({
@@ -262,11 +265,11 @@ L:SetTimerLocalization({
 })
 
 L:SetOptionLocalization({
-    WarnWavePortalSoon	= "Показать предварительное предупреждение для нового портала",
-    WarnWavePortal		= "Показать предупреждение для нового портала",
-    WarnBossPortalSoon	= "Показать предварительное предупреждение о следующем боссе",
-    WarnBossPortal		= "Показывать предупреждение о следующем боссе",
-	TimerNextPortal		= "Показать таймер для номера портала"
+    WarnWavePortalSoon	= "Предварительное предупреждение для нового портала",
+    WarnWavePortal		= "Предупреждение для нового портала",
+    WarnBossPortal		= "Предупреждение о появлении босса",
+	TimerNextPortal		= "Отсчет времени до следующего портала (после босса)",
+	ShowAllPortalTimers	= "Отсчет времени для всех порталов (неточный)"
 })
 
 L:SetMiscLocalization({
@@ -295,7 +298,7 @@ L:SetGeneralLocalization({
 })
 
 L:SetMiscLocalization({
-	JackHammer	= "%s raises his hammer menacingly..."
+	JackHammer	= "%s грозно поднимает свой молот..."
 })
 
 ------------------------------
@@ -363,7 +366,7 @@ L = DBM:GetModLocalization(550)
 L = DBM:GetModLocalization(551)
 
 L:SetMiscLocalization({
-	Split	= "We span the universe, as countless as the stars!"
+	Split	= "Мы бесчисленны, как звезды! Мы заполоним вселенную!"
 })
 
 --------------------------
@@ -384,19 +387,14 @@ L = DBM:GetModLocalization(531)
 L = DBM:GetModLocalization(532)
 
 L:SetMiscLocalization({
---	DelrissaPull	= "Уничтожить их.",
-	DelrissaEnd		= "Not what I had... planned."
+	DelrissaEnd		= "На это... я... не рассчитывала..."
 })
 
 ------------------------------------
 --  Kael'thas Sunstrider (Party)  --
 ------------------------------------
-L = DBM:GetModLocalization("Kael")
-
-L:SetGeneralLocalization({
-	name = "Кель'тас Солнечный Скиталец (группа)"
-})
+L = DBM:GetModLocalization(533)
 
 L:SetMiscLocalization({
-	KaelP2	= "I'll turn your world... upside... down."
+	KaelP2	= "Я переверну ваш мир... вверх... дном."
 })
