@@ -88,6 +88,10 @@ L:SetWarningLocalization({
 -----------------------
 L= DBM:GetModLocalization(1133)
 
+L:SetMiscLocalization({
+	Rakun	= "라쿤"
+})
+
 -------------
 --  GRD Trash  --
 -------------
