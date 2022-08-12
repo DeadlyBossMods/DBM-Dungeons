@@ -47,6 +47,7 @@ local timerOgreTrapsCD			= mod:NewCDTimer(25, 163390, nil, nil, nil, 3)--25-30 v
 function mod:OnCombatStart(delay)
 	timerFlamingSlashCD:Start(5-delay)
 	timerOgreTrapsCD:Start(19.5-delay)
+	timerLavaSwipeCD:Start(15 - delay)
 end
 
 function mod:SPELL_CAST_START(args)
