@@ -81,7 +81,7 @@ function mod:SPELL_CAST_START(args)
 	elseif spellId == 387151 then
 		timerIcyDevastatorCD:Start()
 		self:ScheduleMethod(0.2, "BossTargetScanner", args.sourceGUID, "EruptionTarget", 0.1, 6, true)
-	elseif spellId === 388008 then
+	elseif spellId == 388008 then
 		specWarBelowZero:Show(vaultRuin)
 		specWarBelowZero:Play("findshelter")
 		timerBelowZeroCD:Start()
