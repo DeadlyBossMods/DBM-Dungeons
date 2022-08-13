@@ -14,9 +14,9 @@ mod:RegisterCombat("combat")
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 384416 384827 385435 384633 384353",
 	"SPELL_CAST_SUCCESS 385356",
-	"SPELL_AURA_APPLIED 385356 384425 384764 384725 384638 384148",
+	"SPELL_AURA_APPLIED 385356 384425 384764 384725 384638 384148 387889",
 --	"SPELL_AURA_APPLIED_DOSE",
-	"SPELL_AURA_REMOVED 384725 384638"
+	"SPELL_AURA_REMOVED 384725 384638 387889"
 --	"SPELL_PERIODIC_DAMAGE",
 --	"SPELL_PERIODIC_MISSED",
 --	"UNIT_SPELLCAST_SUCCEEDED boss1"
@@ -54,6 +54,7 @@ mod:AddRangeFrameOption(4, 384558)
 mod:AddNamePlateOption("NPAuraOnFixate", 384725)
 mod:AddNamePlateOption("NPAuraOnMastersCall", 384638)
 mod:AddNamePlateOption("NPAuraOnEnsnaringTrap", 384148)
+mod:AddNamePlateOption("NPAuraOnHunterleadersTactics", 387889)
 
 mod:GroupSpells(384764, 384725)--Group the two frenzy IDs
 
@@ -63,7 +64,7 @@ function mod:OnCombatStart(delay)
 	timerCallHyenasCD:Start(1-delay)
 	timerMastersCallCD:Start(1-delay)
 	timerGutShotCD:Start(1-delay)
-	if self.Options.NPAuraOnFixate or self.Options.NPAuraOnMastersCall or self.Options.NPAuraOnEnsnaringTrap then
+	if self.Options.NPAuraOnFixate or self.Options.NPAuraOnMastersCall or self.Options.NPAuraOnEnsnaringTrap or self.Options.NPAuraOnHunterleadersTactics then
 		DBM:FireEvent("BossMod_EnableHostileNameplates")
 	end
 	if self.Options.RangeFrame then
@@ -78,7 +79,7 @@ function mod:OnCombatEnd()
 --	if self.Options.InfoFrame then
 --		DBM.InfoFrame:Hide()
 --	end
-	if self.Options.NPAuraOnFixate or self.Options.NPAuraOnMastersCall or self.Options.NPAuraOnEnsnaringTrap then
+	if self.Options.NPAuraOnFixate or self.Options.NPAuraOnMastersCall or self.Options.NPAuraOnEnsnaringTrap or self.Options.NPAuraOnHunterleadersTactics then
 		DBM.Nameplate:Hide(true, nil, nil, nil, true, true)
 	end
 end
@@ -142,6 +143,10 @@ function mod:SPELL_AURA_APPLIED(args)
 		if self.Options.NPAuraOnEnsnaringTrap then
 			DBM.Nameplate:Show(true, args.destGUID, spellId, nil, 6)
 		end
+	elseif spellId == 387889 then
+		if self.Options.NPAuraOnHunterleadersTactics then
+			DBM.Nameplate:Show(true, args.destGUID, spellId)
+		end
 	end
 end
 --mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED
@@ -159,6 +164,10 @@ function mod:SPELL_AURA_REMOVED(args)
 	elseif spellId == 384148 and args:IsDestTypeHostile() then
 		if self.Options.NPAuraOnEnsnaringTrap then
 			DBM.Nameplate:Hide(true, args.destGUID, spellId)
+		end
+	elseif spellId == 387889 then
+		if self.Options.NPAuraOnHunterleadersTactics then
+			DBM.Nameplate:Show(true, args.destGUID, spellId)
 		end
 	end
 end
