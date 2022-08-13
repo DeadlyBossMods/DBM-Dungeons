@@ -4,7 +4,7 @@ local L		= mod:GetLocalizedStrings()
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(186644)
 mod:SetEncounterID(2582)
---mod:SetUsedIcons(1, 2, 3)
+mod:SetUsedIcons(1, 2, 3)
 --mod:SetHotfixNoticeRev(20220322000000)
 --mod:SetMinSyncRevision(20211203000000)
 --mod.respawnTime = 29
@@ -12,37 +12,57 @@ mod:SetEncounterID(2582)
 mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
---	"SPELL_CAST_START",
+	"SPELL_CAST_START 374364 374567 374720 386660",
 --	"SPELL_CAST_SUCCESS",
---	"SPELL_AURA_APPLIED",
+	"SPELL_AURA_APPLIED 374567",
 --	"SPELL_AURA_APPLIED_DOSE",
---	"SPELL_AURA_REMOVED",
+	"SPELL_AURA_REMOVED 374567"
 --	"SPELL_PERIODIC_DAMAGE",
 --	"SPELL_PERIODIC_MISSED",
 --	"UNIT_SPELLCAST_SUCCEEDED boss1"
 )
 
+--TODO, verify number of players affected by explosive eruption
+--TODO, who does Errupting Fissure target?
+local warnLeylineSprouts						= mod:NewSpellAnnounce(374364, 3)
+local warnExplosiveEruption						= mod:NewTargetNoFilterAnnounce(374567, 4)
 
---local warnStaggeringBarrage						= mod:NewSpellAnnounce(361018, 3)
-
---local specWarnInfusedStrikes					= mod:NewSpecialWarningStack(361966, nil, 8, nil, nil, 1, 6)
---local specWarnInfusedStrikesTaunt				= mod:NewSpecialWarningTaunt(361966, nil, nil, nil, 1, 2)
---local yellInfusedStrikes						= mod:NewYell(361966)
---local specWarnDominationBolt					= mod:NewSpecialWarningInterrupt(363607, "HasInterrupt", nil, nil, 1, 2)
+local specWarnExplosiveEruption					= mod:NewSpecialWarningYouPos(374567, nil, nil, nil, 1, 2)
+local yellExplosiveEruption						= mod:NewShortPosYell(374567)
+local yellExplosiveEruptionFades				= mod:NewIconFadesYell(374567)
+local specWarnConsumingStomp					= mod:NewSpecialWarningSpell(374720, nil, nil, nil, 2, 2)
+local specWarnEruptingFissure					= mod:NewSpecialWarningDodge(386660, nil, nil, nil, 2, 2)
+local yellEruptingFissure						= mod:NewYell(386660)
+local specWarnInfusedStrike						= mod:NewSpecialWarningDefensive(374789, nil, nil, nil, 1, 2)
 --local specWarnGTFO							= mod:NewSpecialWarningGTFO(340324, nil, nil, nil, 1, 8)
 
---mod:AddTimerLine(BOSS)
---local timerStaggeringBarrageCD					= mod:NewAITimer(35, 361018, nil, nil, nil, 3)
---local timerDecaySprayCD							= mod:NewAITimer(35, 376811, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+local timerLeylineSproutsCD						= mod:NewAITimer(35, 374364, nil, nil, nil, 3)
+local timerExplosiveEruptionCD					= mod:NewAITimer(35, 374567, nil, nil, nil, 3)
+local timerConsumingStompCD						= mod:NewAITimer(35, 374720, nil, nil, nil, 2, nil, DBM_COMMON_L.DEADLY_ICON)
+local timerEruptingFissureCD					= mod:NewAITimer(35, 386660, nil, nil, nil, 3)
+local timerInfusedStrikeCD						= mod:NewAITimer(35, 374789, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 
 --local berserkTimer							= mod:NewBerserkTimer(600)
 
 --mod:AddRangeFrameOption("8")
 --mod:AddInfoFrameOption(361651, true)
---mod:AddSetIconOption("SetIconOnStaggeringBarrage", 361018, true, false, {1, 2, 3})
+mod:AddSetIconOption("SetIconOnExplosiveEruption", 374567, true, false, {1, 2, 3})
+
+mod.vb.DebuffIcon = 1
+
+function mod:EruptionTarget(targetname)
+	if not targetname then return end
+	if targetname == UnitName("player") then
+		yellEruptingFissure:Yell()
+	end
+end
 
 function mod:OnCombatStart(delay)
-
+	timerLeylineSproutsCD:Start(1-delay)
+	timerExplosiveEruptionCD:Start(1-delay)
+	timerConsumingStompCD:Start(1-delay)
+	timerEruptingFissureCD:Start(1-delay)
+	timerInfusedStrikeCD:Start(1-delay)
 end
 
 function mod:OnCombatEnd()
@@ -56,30 +76,65 @@ end
 
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
-	if spellId == 359483 then
-
+	if spellId == 374364 then
+		warnLeylineSprouts:Show()
+		timerLeylineSproutsCD:Start()
+	elseif spellId == 374567 then
+		self.vb.DebuffIcon = 1
+		timerExplosiveEruptionCD:Start()
+	elseif spellId == 374720 then
+		specWarnConsumingStomp:Show()
+		specWarnConsumingStomp:Play("aesoon")
+		timerConsumingStompCD:Start()
+	elseif spellId == 386660 then
+		self:ScheduleMethod(0.2, "BossTargetScanner", args.sourceGUID, "EruptionTarget", 0.1, 8, true)
+		specWarnEruptingFissure:Show()
+		specWarnEruptingFissure:Play("shockwave")
+		timerEruptingFissureCD:Start()
+	elseif spellId == 374789 then
+		if self:IsTanking("player", "boss1", nil, true) then
+			specWarnInfusedStrike:Show()
+			specWarnInfusedStrike:Play("defensive")
+		end
+		timerInfusedStrikeCD:Start()
 	end
 end
 
+--[[
 function mod:SPELL_CAST_SUCCESS(args)
 	local spellId = args.spellId
 	if spellId == 362805 then
 
 	end
 end
+--]]
 
 function mod:SPELL_AURA_APPLIED(args)
 	local spellId = args.spellId
-	if spellId == 361966 then
-
+	if spellId == 374567 then
+		local icon = self.vb.DebuffIcon
+		if self.Options.SetIconOnExplosiveEruption then
+			self:SetIcon(args.destName, icon)
+		end
+		if args:IsPlayer() then
+			specWarnExplosiveEruption:Show(self:IconNumToTexture(icon))
+			specWarnExplosiveEruption:Play("mm"..icon)
+			yellExplosiveEruption:Yell(icon, icon)
+			yellExplosiveEruptionFades:Countdown(spellId, nil, icon)
+		else
+			warnExplosiveEruption:CombinedShow(0.5, args.destName)
+		end
+		self.vb.DebuffIcon = self.vb.DebuffIcon + 1
 	end
 end
 --mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED
 
 function mod:SPELL_AURA_REMOVED(args)
 	local spellId = args.spellId
-	if spellId == 361966 then
-
+	if spellId == 374567 then
+		if self.Options.SetIconOnExplosiveEruption then
+			self:SetIcon(args.destName, 0)
+		end
 	end
 end
 
