@@ -24,7 +24,6 @@ mod:RegisterEventsInCombat(
 --	"UNIT_SPELLCAST_SUCCEEDED boss1"
 )
 
---TODO, which ID for Rira's Bladestorm targetting, it has two targetting debuffs, or just buff on boss (377827), for now it's using generic target alert
 --TODO, two version of decayed senses, which used? Both?
 --TODO, move marked for butchery timer start
 --TODO, add https://www.wowhead.com/beta/spell=378155/earth-bolt ?
@@ -126,7 +125,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		end
 	elseif spellId == 377827 then
 		timerBladestormCD:Start()
-	elseif args:IsSpellID(381835, 377844) then
+	elseif args:IsSpellID(381835, 377844) then--381835 initial, 377844 target swaps
 		warnBladestorm:Show(args.destName)
 	elseif args:IsSpellID(381387, 381379) and self:CheckDispelFilter() then
 		specWarnDecayedSenses:Show(args.destName)
