@@ -79,7 +79,7 @@ function mod:SPELL_CAST_START(args)
 		self.vb.eruptionCount = self.vb.eruptionCount + 1
 		specWarnEruption:Show(self.vb.eruptionCount)
 		specWarnEruption:Play("aesoon")
-		timerEruptionCD:Start(1-delay)
+		timerEruptionCD:Start()
 	elseif spellId == 388817 or spellId == 385657 then--388817 confirmed on heroic/normal, 385657 might be mythic/plus
 		self.vb.shardsCount = self.vb.shardsCount + 1
 		warnShardsofStone:Show(self.vb.shardsCount)
