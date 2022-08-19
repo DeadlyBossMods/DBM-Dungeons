@@ -61,16 +61,16 @@ Neltharus\Magmatusk.lua
 Neltharus\WarlordSargha.lua
 Neltharus\NeltharusTrash.lua
 
-TazalgethAcademy\Crawth.lua
 TazalgethAcademy\Vexamus.lua
 TazalgethAcademy\AccidentalAmalgamation.lua
+TazalgethAcademy\Crawth.lua
 TazalgethAcademy\Headmaster.lua
 TazalgethAcademy\TazalgethAcademyTrash.lua
 
-TheAzurevault\Umbrelskul.lua
+TheAzurevault\Leymor.lua
 TheAzurevault\Azureblade.lua
 TheAzurevault\TalashGreywing.lua
-TheAzurevault\Leymor.lua
+TheAzurevault\Umbrelskul.lua
 TheAzurevault\TheAzurevaultTrash.lua
 
 RubyLifePools\MelidrussaChillworn.lua
