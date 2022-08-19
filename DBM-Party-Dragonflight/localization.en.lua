@@ -148,14 +148,14 @@ L:SetGeneralLocalization({
 --L= DBM:GetModLocalization(2509)
 
 -----------------------
--- Accidental Amalgamation --
+-- Overgrown Ancient --
 -----------------------
 --L= DBM:GetModLocalization(2512)
 
 -----------------------
--- Headmaster Doragosa --
+-- Echo of Doragosa --
 -----------------------
---L= DBM:GetModLocalization(2513)
+--L= DBM:GetModLocalization(2514)
 
 ---------
 --Trash--
