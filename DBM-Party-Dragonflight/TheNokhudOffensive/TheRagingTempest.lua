@@ -22,7 +22,10 @@ mod:RegisterEventsInCombat(
 --	"UNIT_SPELLCAST_SUCCEEDED boss1"
 )
 
-
+--TODO, timer updates with longer logs
+--[[
+(ability.id = 384316 or ability.id = 384620 or ability.id = 384686) and type = "begincast"
+--]]
 local warnElectricalStorm						= mod:NewSpellAnnounce(384620, 3)
 local warnEnergySurge							= mod:NewSpellAnnounce(384686, 3, nil, "Tank|Healer")
 
