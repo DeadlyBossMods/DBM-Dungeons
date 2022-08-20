@@ -24,7 +24,13 @@ mod:RegisterEventsInCombat(
 --	"UNIT_SPELLCAST_SUCCEEDED boss1"
 )
 
-
+--TODO, fix spear creatureid?
+--TODO, timers with longer logs
+--[[
+(ability.id = 388283 or ability.id = 388817 or ability.id = 385916 or ability.id = 385916 or ability.id = 386921 or ability.id = 386530) and type = "begincast"
+ or spellid = 362805
+ or target.id = 194367 and type = "death"
+--]]
 local warnShardsofStone							= mod:NewCountAnnounce(388817, 3)
 local warnDragonkillerLance						= mod:NewCastAnnounce(386530, 1)
 local warnReload								= mod:NewCastAnnounce(386921, 2)
@@ -64,14 +70,14 @@ function mod:OnCombatStart(delay)
 	timerSummonSaboteurCD:Start(15-delay)
 end
 
-function mod:OnCombatEnd()
+--function mod:OnCombatEnd()
 --	if self.Options.RangeFrame then
 --		DBM.RangeCheck:Hide()
 --	end
 --	if self.Options.InfoFrame then
 --		DBM.InfoFrame:Hide()
 --	end
-end
+--end
 
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
