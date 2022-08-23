@@ -17,6 +17,12 @@ mod:RegisterEventsInCombat(
 	"UNIT_DIED"
 )
 
+--[[
+(ability.id = 168227 or ability.id = 168929 or ability.id = 169129) and type = "begincast"
+ or ability.id = 168398 and type = "applydebuff"
+ or type = "interrupt"
+ or type = "dungeonencounterstart" or type = "dungeonencounterend"
+--]]
 --TODO, verify gron smash numbers and see if it is time based or damage based.
 local warnRapidFire			= mod:NewTargetNoFilterAnnounce(168398, 3)
 local warnBackdraft			= mod:NewCastAnnounce(169129, 4)
@@ -27,10 +33,10 @@ local specWarnGronSmash		= mod:NewSpecialWarningSpell(168227, nil, nil, nil, 2, 
 local specWarnCannonBarrage	= mod:NewSpecialWarningSpell(168929, nil, nil, nil, 3, 2)--Use the one time cast trigger instead of drycode when relogging
 local specWarnCannonBarrageE= mod:NewSpecialWarningEnd(168929, nil, nil, nil, 1, 2)
 
-local timerRapidFireCD		= mod:NewNextTimer(12, 168398, nil, nil, nil, 3)
+local timerRapidFireCD		= mod:NewCDTimer(11.5, 168398, nil, nil, nil, 3)
 local timerRapidFire		= mod:NewTargetTimer(5, 168398, nil, "-Tank", nil, 5)
-local timerGronSmashCD		= mod:NewCDTimer(70, 168227, nil, nil, nil, 2)--Timer is too variable, which is why i never enabled. every time i kill boss it's diff. today 2nd gron smash happened at 49 seconds, 21 seconds sooner than this timer
-
+local timerGronSmashCD		= mod:NewCDTimer(54.1, 168227, nil, nil, nil, 2)--Timer is too variable, 49-70, but the avereage is 54-60, so if users want to keep complaining about their timer, they can have an iffy timer
+local timerBackdraftCD		= mod:NewCDTimer(13.3, 169129, nil, nil, nil, 3)
 mod.vb.flameCast = false
 
 function mod:OnCombatStart(delay)
@@ -55,10 +61,13 @@ end
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
 	if spellId == 168227 then
-		timerRapidFireCD:Cancel()
+		timerRapidFireCD:Stop()
 		specWarnGronSmash:Show()
 		specWarnGronSmash:Play("carefly")
---		timerGronSmashCD:Start()
+		if self:IsHard() then
+			timerBackdraftCD:Start()
+		end
+		timerGronSmashCD:Start()
 		self.vb.flameCast = false
 	elseif spellId == 168929 then
 		specWarnCannonBarrage:Show()
