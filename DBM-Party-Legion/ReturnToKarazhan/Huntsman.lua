@@ -27,19 +27,11 @@ local specWarnMezair				= mod:NewSpecialWarningDodge(227339, nil, nil, nil, 1, 2
 local specWarnMortalStrike			= mod:NewSpecialWarningDefensive(227493, "Tank", nil, nil, 2, 2)
 local specWarnSharedSuffering		= mod:NewSpecialWarningMoveTo(228852, nil, nil, nil, 3, 2)
 local yellSharedSuffering			= mod:NewYell(228852)
-local yellIntangiblePresence		= mod:NewYell(227404)
 
-local timerPresenceCD				= mod:NewAITimer(11, 227404, nil, "Healer", nil, 5, nil, DBM_COMMON_L.HEALER_ICON)--FIXME, one day
 local timerMortalStrikeCD			= mod:NewNextTimer(11, 227493, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerSharedSufferingCD		= mod:NewNextTimer(19, 228852, nil, nil, nil, 3, nil, nil, nil, 1, 4)
 
 mod:AddSetIconOption("SetIconOnSharedSuffering", 228852, true, false, {1})
-
-local hackyShit
-
-function mod:OnCombatStart(delay)
-	hackyShit = nil
-end
 
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
@@ -79,14 +71,6 @@ function mod:SPELL_CAST_START(args)
 	end
 end
 
-function mod:VEHICLE_ANGLE_UPDATE()
-	if not hackyShit then return end
-	if GetTime() - hackyShit < 1 then
-		yellIntangiblePresence:Yell()
-		hackyShit = nil
-	end
-end
-
 function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
 	if spellId == 227338 then--Riderless
 		timerPresenceCD:Stop()
@@ -96,9 +80,6 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
 		timerMortalStrikeCD:Stop()
 		timerSharedSufferingCD:Stop()
 		timerPresenceCD:Start(2)
-	elseif spellId == 227404 then--Intangible Presence
-		timerPresenceCD:Start()
-		hackyShit = GetTime()
 	end
 end
 
