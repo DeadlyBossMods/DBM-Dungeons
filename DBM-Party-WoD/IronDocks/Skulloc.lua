@@ -13,7 +13,7 @@ mod:RegisterCombat("combat")
 mod:RegisterEventsInCombat(
 	"SPELL_AURA_APPLIED 168398",
 	"SPELL_CAST_START 168929 168227 169129",
-	"UNIT_SPELLCAST_INTERRUPTED boss1",
+	"UNIT_SPELLCAST_INTERRUPTED boss1 boss2 boss3",
 	"UNIT_DIED"
 )
 
@@ -65,7 +65,7 @@ function mod:SPELL_CAST_START(args)
 		specWarnGronSmash:Show()
 		specWarnGronSmash:Play("carefly")
 		if self:IsHard() then
-			timerBackdraftCD:Start()
+			timerBackdraftCD:Start(13.3)
 		end
 		timerGronSmashCD:Start()
 		self.vb.flameCast = false
@@ -75,6 +75,7 @@ function mod:SPELL_CAST_START(args)
 	elseif spellId == 169129 and not self.vb.flameCast then
 		self.vb.flameCast = true
 		warnBackdraft:Show()
+		--timerBackdraftCD:Start()
 	end
 end
 
@@ -83,6 +84,7 @@ function mod:UNIT_SPELLCAST_INTERRUPTED(uId, _, spellId)
 	if spellId == 168929 then
 		specWarnCannonBarrageE:Show()
 		specWarnCannonBarrageE:Play("phasechange")
+		timerBackdraftCD:Stop()
 	end
 end
 
