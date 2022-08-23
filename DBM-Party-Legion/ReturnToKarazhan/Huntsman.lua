@@ -73,13 +73,11 @@ end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
 	if spellId == 227338 then--Riderless
-		timerPresenceCD:Stop()
 		timerMortalStrikeCD:Start()
 		timerSharedSufferingCD:Start()
 	elseif spellId == 227584 or spellId == 227601 then--Mounted or Intermission
 		timerMortalStrikeCD:Stop()
 		timerSharedSufferingCD:Stop()
-		timerPresenceCD:Start(2)
 	end
 end
 
