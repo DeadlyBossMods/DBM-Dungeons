@@ -12,10 +12,10 @@ mod:SetEncounterID(2609)
 mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
-	"SPELL_CAST_START 372107 372863 373017 373087",
+	"SPELL_CAST_START 372107 372863 373017 373087 384823",
 	"SPELL_CAST_SUCCESS 372858",
-	"SPELL_AURA_APPLIED 372858",
---	"SPELL_AURA_APPLIED_DOSE",
+	"SPELL_AURA_APPLIED 372858 389808",
+	"SPELL_AURA_APPLIED_DOSE 389808",
 --	"SPELL_AURA_REMOVED"
 	"SPELL_PERIODIC_DAMAGE 372820",
 	"SPELL_PERIODIC_MISSED 372820"
@@ -24,12 +24,15 @@ mod:RegisterEventsInCombat(
 
 --TODO, track https://www.wowhead.com/beta/spell=372860/searing-wounds stacks? there isn't a tank swap so it feels like something that naturally falls off somehow
 --TODO, verify Molten Boulder target scan
+--TODO, does Mythic mechanic Predatory Instincts affect ability CDs or just cast times?
 --[[
 (ability.id = 372107 or ability.id = 372863) and type = "begincast"
  or ability.id = 372858 and type = "cast"
  or (ability.id = 373017 or ability.id = 373087) and type = "begincast"
 --]]
 local warnBurnout								= mod:NewCastAnnounce(373087, 4)
+local warnInferno								= mod:NewCastAnnounce(384823, 3)
+local warnPredatoryInstincts					= mod:NewCountAnnounce(389808, 4)
 
 local specWarnSearingBlows						= mod:NewSpecialWarningDefensive(372858, nil, nil, nil, 1, 2)
 local specWarnMoltenBoulder						= mod:NewSpecialWarningDodge(372107, nil, nil, nil, 1, 2)
@@ -92,6 +95,8 @@ function mod:SPELL_CAST_START(args)
 		else
 			warnBurnout:Show()
 		end
+	elseif spellId == 384823 then
+		warnInferno:Show()
 	end
 end
 
@@ -109,9 +114,11 @@ function mod:SPELL_AURA_APPLIED(args)
 			specWarnSearingBlows:Show()
 			specWarnSearingBlows:Play("defensive")
 		end
+	elseif spellId == 389808 then
+		warnPredatoryInstincts:Show(args.amount or 1)
 	end
 end
---mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED
+mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED
 
 --[[
 function mod:SPELL_AURA_REMOVED(args)
