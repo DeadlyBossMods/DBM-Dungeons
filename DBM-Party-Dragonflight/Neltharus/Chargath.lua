@@ -15,6 +15,7 @@ mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 373733 373742 373424 375056",
 --	"SPELL_CAST_SUCCESS",
 	"SPELL_AURA_APPLIED 374655",
+--	"SPELL_AURA_APPLIED_DOSE 374655",
 	"SPELL_AURA_REFRESH 374655",
 --	"SPELL_AURA_APPLIED_DOSE",
 	"SPELL_AURA_REMOVED 374655",
@@ -27,6 +28,7 @@ mod:RegisterEventsInCombat(
 --TODO, Need a LOT more data to properly update timers around Fetter, right now sample size is literally 2 pulls
 --TODO, same for uninterrupted Blade Lock
 --TODO, boss has two diff sets of timers. One hwere he does magma at 15 seconds but dragon is 21 second cd, and one where he skips first magma but dragon is now 12sec cd
+--TODO, mythic logs to fix fetter behavior for mythic
 --[[
 (ability.id = 373733 or ability.id = 373742 or ability.id = 373424 or ability.id = 375056) and type = "begincast"
  or ability.id = 374655 or ability.id = 375055 and (type = "applybuff" or type = "removebuff")
@@ -112,7 +114,13 @@ function mod:SPELL_CAST_START(args)
 		specWarnMagmaWave:Play("watchwave")
 		timerMagmaWaveCD:Start()
 	elseif spellId == 373424 then
-		self:ScheduleMethod(0.2, "BossTargetScanner", args.sourceGUID, "SpearTarget", 0.1, 8, true)
+		if not  self:IsMythic() then
+			self:ScheduleMethod(0.2, "BossTargetScanner", args.sourceGUID, "SpearTarget", 0.1, 8, true)
+		else--On mythic, everyone gets it
+			specWarnGroundingSpear:Show()
+			specWarnGroundingSpear:Play("targetyou")
+			yellGroundingSpear:Yell()
+		end
 		timerGroundingSpearCD:Start()
 	elseif spellId == 375056 then
 		specWarnBladeLock:Show()
