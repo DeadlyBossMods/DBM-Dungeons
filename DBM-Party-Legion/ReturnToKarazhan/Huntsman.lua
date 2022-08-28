@@ -18,7 +18,6 @@ mod:RegisterEventsInCombat(
 	"UNIT_SPELLCAST_SUCCEEDED boss1 boss2"
 )
 
---TODO: Intangible Presence doesn't seem possible to support. How to tell right from wrong dispel is obfuscated
 --Most of midnights timers are too short to really be worth including. he either spams charge or spams spectral chargers.
 local specWarnMightyStomp			= mod:NewSpecialWarningCast(227363, "SpellCaster", nil, nil, 1, 2)
 local specWarnSpectralCharge		= mod:NewSpecialWarningDodge(227365, nil, nil, nil, 2, 2)
