@@ -23,6 +23,12 @@ mod:RegisterEventsInCombat(
 --	"UNIT_SPELLCAST_SUCCEEDED boss1"
 )
 
+--[[
+(ability.id = 385551 or ability.id = 385181 or ability.id = 385531 or ability.id = 385442) and type = "begincast"
+ or ability.id = 385743
+ or type = "dungeonencounterstart" or type = "dungeonencounterend"
+ or (source.type = "NPC" and source.firstSeen = timestamp) or (target.type = "NPC" and target.firstSeen = timestamp)
+--]]
 --TODO, actually detect gulp target or is it no one specific?
 local warnHangry								= mod:NewSpellAnnounce(385743, 2, nil, "Tank|Healer")
 local warnBodySlam								= mod:NewTargetNoFilterAnnounce(385531, 3)
