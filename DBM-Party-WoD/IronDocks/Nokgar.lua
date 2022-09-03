@@ -62,7 +62,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 		timerBurningArrowsCD:Stop()
 		timerBloodlettingHowlCD:Stop()
 --		timerBurningArrowsCD:Start()
-	elseif spellId == 164635 then
+	elseif args.spellId == 164635 then
 		specWarnBurningArrows:Show()
 		specWarnBurningArrows:Play("watchfeet")
 		timerBurningArrowsCD:Start(self.vb.phase == 1 and 25 or 40)
