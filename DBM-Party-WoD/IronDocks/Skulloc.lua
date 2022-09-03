@@ -20,6 +20,7 @@ mod:RegisterEventsInCombat(
 --[[
 (ability.id = 168227 or ability.id = 168929 or ability.id = 169129) and type = "begincast"
  or ability.id = 168398 and type = "applydebuff"
+ or ability.id = 181089
  or type = "interrupt"
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
 --]]

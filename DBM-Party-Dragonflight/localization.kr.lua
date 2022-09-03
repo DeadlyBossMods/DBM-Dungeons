@@ -136,7 +136,7 @@ L:SetGeneralLocalization({
 })
 
 -----------------------
--- <<<Taz'algeth Academy >>> --
+-- <<<Algeth'ar Academy >>> --
 -----------------------
 -----------------------
 -- Crawth --

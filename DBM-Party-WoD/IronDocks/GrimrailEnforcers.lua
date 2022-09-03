@@ -21,6 +21,7 @@ mod:RegisterEventsInCombat(
 
 --[[
 (ability.id = 163689 or ability.id = 163390 or ability.id = 163379) and type = "begincast"
+ or ability.id = 181089
 --]]
 --Ahri'ok Dugru
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(10449))

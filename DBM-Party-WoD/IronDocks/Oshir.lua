@@ -17,6 +17,11 @@ mod:RegisterEventsInCombat(
 	"UNIT_SPELLCAST_SUCCEEDED boss1"
 )
 
+--[[
+ability.id = 163054 and type = "begincast"
+ or (ability.id = 178124 or ability.id = 161239) and type = "cast"
+ or ability.id = 162415 and type = "applydebuff"
+--]]
 --TODO, Roar cd 37 seconds? Verify
 --TODO, time to feed seems MUCH longer CD now, unfortunately because of this, fight too short to get good cooldown data
 local warnTimeToFeed			= mod:NewTargetNoFilterAnnounce(162415, 3)
