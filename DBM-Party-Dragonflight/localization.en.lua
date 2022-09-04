@@ -160,10 +160,10 @@ L:SetGeneralLocalization({
 ---------
 --Trash--
 ---------
-L = DBM:GetModLocalization("TazalgethAcademyTrash")
+L = DBM:GetModLocalization("AlgetharAcademyTrash")
 
 L:SetGeneralLocalization({
-	name =	"Taz'algeth Academy Trash"
+	name =	"Algeth'ar Academy Trash"
 })
 
 -----------------------

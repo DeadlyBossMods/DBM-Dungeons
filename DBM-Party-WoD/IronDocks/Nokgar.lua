@@ -22,8 +22,8 @@ mod:RegisterEventsInCombat(
 --[[
 (ability.id = 164635 or ability.id = 175755 or ability.id = 164835) and type = "cast"
  or ability.id = 164426 and type = "begincast"
- or (source.type = "NPC" and source.firstSeen = timestamp) or (target.type = "NPC" and target.firstSeen = timestamp)
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
+ or (source.type = "NPC" and source.firstSeen = timestamp) or (target.type = "NPC" and target.firstSeen = timestamp)
 --]]
 local warnBloodLettingHowl				= mod:NewSpellAnnounce(164835, 3)
 local warnNokgar						= mod:NewSpellAnnounce("ej10433", 3, "134170")

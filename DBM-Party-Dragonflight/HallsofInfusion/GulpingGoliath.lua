@@ -51,7 +51,7 @@ local timerToxicEffluviaaCD						= mod:NewAITimer(35, 385442, nil, nil, nil, 5, 
 --local berserkTimer							= mod:NewBerserkTimer(600)
 
 mod:AddRangeFrameOption(12, 385531)
-mod:AddInfoFrameOption(374389, true)
+mod:AddInfoFrameOption(374389, "RemovePoison")
 --mod:AddSetIconOption("SetIconOnStaggeringBarrage", 361018, true, false, {1, 2, 3})
 
 local toxinStacks = {}

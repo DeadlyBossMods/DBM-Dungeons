@@ -161,7 +161,7 @@ L:SetGeneralLocalization({
 ---------
 --Trash--
 ---------
-L = DBM:GetModLocalization("TazalgethAcademyTrash")
+L = DBM:GetModLocalization("AlgetharAcademyTrash")
 
 L:SetGeneralLocalization({
 	name =	"타즈알게스 대학 일반몹"

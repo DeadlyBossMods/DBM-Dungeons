@@ -62,10 +62,10 @@ Neltharus\WarlordSargha.lua
 Neltharus\NeltharusTrash.lua
 
 AlgetharAcademy\Vexamus.lua
-AlgetharAcademy\AccidentalAmalgamation.lua
+AlgetharAcademy\OvergrownAncient.lua
 AlgetharAcademy\Crawth.lua
-AlgetharAcademy\Headmaster.lua
-AlgetharAcademy\TazalgethAcademyTrash.lua
+AlgetharAcademy\EchoofDoragosa.lua
+AlgetharAcademy\AlgetharAcademyTrash.lua
 
 TheAzurevault\Leymor.lua
 TheAzurevault\Azureblade.lua
