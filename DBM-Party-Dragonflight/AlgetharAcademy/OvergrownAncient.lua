@@ -98,12 +98,14 @@ function mod:SPELL_CAST_START(args)
 	end
 end
 
+--[[
 function mod:SPELL_CAST_SUCCESS(args)
 	local spellId = args.spellId
 	if spellId == 362805 then
 
 	end
 end
+--]]
 
 function mod:SPELL_AURA_APPLIED(args)
 	local spellId = args.spellId
@@ -147,7 +149,6 @@ function mod:SPELL_AURA_REMOVED_DOSE(args)
 		end
 	end
 end
-
 
 function mod:UNIT_DIED(args)
 	local cid = self:GetCIDFromGUID(args.destGUID)
