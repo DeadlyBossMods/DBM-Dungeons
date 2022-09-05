@@ -71,6 +71,7 @@ function mod:OnCombatStart(delay)
 end
 
 function mod:OnCombatEnd()
+	table.wipe(WitheringRotStacks)
 	if self.Options.RangeFrame then
 		DBM.RangeCheck:Hide()
 	end

@@ -136,7 +136,7 @@ L:SetGeneralLocalization({
 })
 
 -----------------------
--- <<<Taz'algeth Academy >>> --
+-- <<<Algeth'ar Academy >>> --
 -----------------------
 -----------------------
 -- Crawth --
@@ -161,7 +161,7 @@ L:SetGeneralLocalization({
 ---------
 --Trash--
 ---------
-L = DBM:GetModLocalization("TazalgethAcademyTrash")
+L = DBM:GetModLocalization("AlgetharAcademyTrash")
 
 L:SetGeneralLocalization({
 	name =	"Трэш мобы Академия Таз'алгет"

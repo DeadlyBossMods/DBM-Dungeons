@@ -12,9 +12,9 @@ mod:SetEncounterID(2617)
 mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
---	"SPELL_CAST_START",
---	"SPELL_CAST_SUCCESS",
---	"SPELL_AURA_APPLIED",
+	"SPELL_CAST_START 386757 386559 390111",
+	"SPELL_CAST_SUCCESS 385963",
+	"SPELL_AURA_APPLIED 385963"
 --	"SPELL_AURA_APPLIED_DOSE",
 --	"SPELL_AURA_REMOVED",
 --	"SPELL_PERIODIC_DAMAGE",
@@ -22,18 +22,25 @@ mod:RegisterEventsInCombat(
 --	"UNIT_SPELLCAST_SUCCEEDED boss1"
 )
 
+--[[
+(ability.id = 386757 or ability.id = 386559 or ability.id = 390111) and type = "begincast"
+ or ability.id = 385963 and type = "cast"
+ or type = "dungeonencounterstart" or type = "dungeonencounterend"
+--]]
+--TODO, review longer logs since heroic is undertuned
+local warnFrostCyclone							= mod:NewTargetNoFilterAnnounce(390111, 3)
 
---local warnStaggeringBarrage						= mod:NewSpellAnnounce(361018, 3)
-
---local specWarnInfusedStrikes					= mod:NewSpecialWarningStack(361966, nil, 8, nil, nil, 1, 6)
---local specWarnInfusedStrikesTaunt				= mod:NewSpecialWarningTaunt(361966, nil, nil, nil, 1, 2)
---local yellInfusedStrikes						= mod:NewYell(361966)
---local specWarnDominationBolt					= mod:NewSpecialWarningInterrupt(363607, "HasInterrupt", nil, nil, 1, 2)
+local specWarnHailstorm							= mod:NewSpecialWarningMoveTo(386757, nil, nil, nil, 2, 2)
+local specWarnGlacialSurge						= mod:NewSpecialWarningDodge(386559, nil, nil, nil, 2, 2)
+local specWarnFrostCyclone						= mod:NewSpecialWarningMoveAway(390111, nil, nil, nil, 1, 2, 4)
+local yellFrostCyclone							= mod:NewYell(390111)
+local specWarnFrostShock						= mod:NewSpecialWarningDispel(385963, "RemoveMagic", nil, nil, 1, 2)
 --local specWarnGTFO							= mod:NewSpecialWarningGTFO(340324, nil, nil, nil, 1, 8)
 
---mod:AddTimerLine(DBM:EJ_GetSectionInfo(24883))
---local timerStaggeringBarrageCD					= mod:NewAITimer(35, 361018, nil, nil, nil, 3)
---local timerDecaySprayCD							= mod:NewAITimer(35, 376811, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+local timerHailstormCD							= mod:NewCDTimer(25, 386757, nil, nil, nil, 2, nil, DBM_COMMON_L.DEADLY_ICON)
+local timerGlacialSurgeCD						= mod:NewCDTimer(22, 386559, nil, nil, nil, 3)
+local timerFrostCycloneCD						= mod:NewAITimer(35, 390111, nil, nil, nil, 3, nil, DBM_COMMON_L.MYTHIC_ICON)
+local timerFrostShockCD							= mod:NewCDTimer(36.1, 385963, nil, nil, nil, 3, nil, DBM_COMMON_L.MAGIC_ICON)
 
 --local berserkTimer							= mod:NewBerserkTimer(600)
 
@@ -41,8 +48,26 @@ mod:RegisterEventsInCombat(
 --mod:AddInfoFrameOption(361651, true)
 --mod:AddSetIconOption("SetIconOnStaggeringBarrage", 361018, true, false, {1, 2, 3})
 
-function mod:OnCombatStart(delay)
+local boulder = DBM:GetSpellInfo(386222)
 
+function mod:FrostCycloneTarget(targetname)
+	if not targetname then return end
+	if targetname == UnitName("player") then
+		specWarnFrostCyclone:Show()
+		specWarnFrostCyclone:Play("runout")
+		yellFrostCyclone:Yell()
+	else
+		warnFrostCyclone:Show(targetname)
+	end
+end
+
+function mod:OnCombatStart(delay)
+	timerFrostShockCD:Start(6-delay)
+	timerHailstormCD:Start(10-delay)
+	timerGlacialSurgeCD:Start(22-delay)
+	if self:IsMythic() then
+		timerFrostCycloneCD:Start(1-delay)
+	end
 end
 
 --function mod:OnCombatEnd()
@@ -56,22 +81,32 @@ end
 
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
-	if spellId == 359483 then
-
+	if spellId == 386757 then
+		specWarnHailstorm:Show(boulder)
+		specWarnHailstorm:Play("findshelter")
+		timerHailstormCD:Start()
+	elseif spellId == 386559 then
+		specWarnGlacialSurge:Show()
+		specWarnGlacialSurge:Play("watchstep")--or watchring maybe?
+		timerGlacialSurgeCD:Start()
+	elseif spellId == 390111 then
+		self:ScheduleMethod(0.1, "BossTargetScanner", args.sourceGUID, "FrostCycloneTarget", 0.1, 6, true)
+		timerFrostCycloneCD:Start()
 	end
 end
 
 function mod:SPELL_CAST_SUCCESS(args)
 	local spellId = args.spellId
-	if spellId == 362805 then
-
+	if spellId == 385963 then
+		timerFrostShockCD:Start()
 	end
 end
 
 function mod:SPELL_AURA_APPLIED(args)
 	local spellId = args.spellId
-	if spellId == 361966 then
-
+	if spellId == 361966 and self:CheckDispelFilter() then
+		specWarnFrostShock:Show(args.destName)
+		specWarnFrostShock:Play("helpdispel")
 	end
 end
 --mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED

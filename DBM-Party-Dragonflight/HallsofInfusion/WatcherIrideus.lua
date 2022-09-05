@@ -25,6 +25,7 @@ mod:RegisterEventsInCombat(
 --[[
 (ability.id = 389179 or ability.id = 384351 or ability.id = 384014 or ability.id = 384524 or ability.id = 389446) and type = "begincast"
  or ability.id = 383840
+ or type = "dungeonencounterstart" or type = "dungeonencounterend"
  or (source.type = "NPC" and source.firstSeen = timestamp) or (target.type = "NPC" and target.firstSeen = timestamp)
 --]]
 --Stage One: A Chance at Redemption

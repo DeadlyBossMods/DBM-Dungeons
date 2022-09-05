@@ -75,6 +75,7 @@ function mod:OnCombatStart(delay)
 end
 
 function mod:OnCombatEnd()
+	table.wipe(chillStacks)
 --	if self.Options.RangeFrame then
 --		DBM.RangeCheck:Hide()
 --	end
