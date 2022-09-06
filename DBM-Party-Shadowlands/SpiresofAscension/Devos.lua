@@ -22,7 +22,7 @@ mod:RegisterEventsInCombat(
  or (ability.id = 322818 or ability.id = 322893 or ability.id = 322908) and type = "cast"
  --]]
 --General
-local warnPhase						= mod:NewPhaseChangeAnnounce(2, nil, nil, nil, nil, nil, 2)
+local warnPhase						= mod:NewPhaseChangeAnnounce(2, nil, nil, nil, nil, nil, nil, 2)
 --Stage 1
 local warnLostConfidence			= mod:NewTargetNoFilterAnnounce(322818, 2)
 local warnRunThrough				= mod:NewTargetNoFilterAnnounce(323943, 3)
