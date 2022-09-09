@@ -20,7 +20,7 @@ mod:RegisterEventsInCombat(
 local warningVacuum		= mod:NewSpellAnnounce(58694, 1)
 local warningBlizzard	= mod:NewSpellAnnounce(58693, 3)
 
-local specwarnMana		= mod:NewSpecialWarningDispel(59374, "Healer", nil, nil, 1, 2)
+local specwarnMana		= mod:NewSpecialWarningDispel(59374, "RemoveMagic", nil, 2, 1, 2)
 
 local timerVacuumCD		= mod:NewCDTimer(35, 58694, nil, nil, nil, 2)
 local timerMana			= mod:NewTargetTimer(8, 59374, nil, "Healer", nil, 5, nil, DBM_COMMON_L.MAGIC_ICON)

@@ -18,7 +18,7 @@ local specWarnLavaBurst					= mod:NewSpecialWarningInterrupt(151558, "HasInterru
 local specWarnSuppressionField			= mod:NewSpecialWarningInterrupt(151581, "HasInterrupt", nil, 2, 1, 2)--Maybe healer need warning too, if interrupt gets off, healer can't heal for 5 seconds
 local specWarnStoneBulwark				= mod:NewSpecialWarningDispel(164597, "MagicDispeller", nil, nil, 1, 2)
 local specWarnBloodRage					= mod:NewSpecialWarningDispel(151548, "MagicDispeller", nil, nil, 1, 2)
-local specWarnSubjugate					= mod:NewSpecialWarningDispel(151697, "Healer", nil, nil, 1, 2)
+local specWarnSubjugate					= mod:NewSpecialWarningDispel(151697, "RemoveMagic", nil, 2, 1, 2)
 local specWarnSlaversRage				= mod:NewSpecialWarningDispel(151965, "RemoveEnrage", nil, nil, 1, 2)
 
 function mod:SPELL_AURA_APPLIED(args)

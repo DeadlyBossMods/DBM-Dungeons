@@ -36,7 +36,7 @@ local warnWitheringFilth			= mod:NewTargetNoFilterAnnounce(322410, 3, nil, "Heal
 
 --General
 local specWarnSlimeLunge			= mod:NewSpecialWarningSpell(329217, nil, nil, nil, 2, 2)
-local specWarnSlimeInjection		= mod:NewSpecialWarningDispel(329110, "Healer", nil, 2, 1, 2)
+local specWarnSlimeInjection		= mod:NewSpecialWarningDispel(329110, "RemoveMagic", nil, 3, 1, 2)
 --local specWarnSlitheringOoze		= mod:NewSpecialWarningMoveTo(334579, nil, nil, nil, 1, 2)
 local specWarnVirulentExplosion		= mod:NewSpecialWarningSpell(321406, nil, nil, nil, 2, 2)--Change to MoveTo warning for Congealed Bile?
 local specWarnPestilenceSurge		= mod:NewSpecialWarningSwitch(332617, "Dps", nil, nil, 1, 2)

@@ -17,7 +17,7 @@ mod:RegisterEventsInCombat(
 local warnCalling		= mod:NewSpellAnnounce(100686, 4)
 local warnSacrifice		= mod:NewSpellAnnounce(101348, 2, nil, false)
 
-local specWarnShriek	= mod:NewSpecialWarningDispel(101412, "Healer", nil, nil, 1, 2)
+local specWarnShriek	= mod:NewSpecialWarningDispel(101412, "RemoveMagic", nil, 2, 1, 2)
 
 local timerCalling		= mod:NewNextTimer(40, 100686, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)	-- guessed she can do it more than once
 local timerSacrifice	= mod:NewNextTimer(30, 101348, nil, nil, nil, 3)

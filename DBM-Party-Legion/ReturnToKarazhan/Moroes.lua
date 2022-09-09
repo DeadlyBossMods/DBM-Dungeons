@@ -34,7 +34,7 @@ local warnEmpoweredArms				= mod:NewTargetAnnounce(227616, 3)
 
 --Moroes
 local specWarnCoatCheck				= mod:NewSpecialWarningDefensive(227832, nil, nil, nil, 1, 2)
-local specWarnCoatCheckHealer		= mod:NewSpecialWarningDispel(227832, "Healer", nil, nil, 1, 2)
+local specWarnCoatCheckHealer		= mod:NewSpecialWarningDispel(227832, "RemoveMagic", nil, 2, 1, 2)
 --Lord Crispin Ference
 local specWarnWillBreaker			= mod:NewSpecialWarningSpell(227672, "Tank", nil, nil, 1, 2)
 
