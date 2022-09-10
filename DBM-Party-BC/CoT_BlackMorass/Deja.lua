@@ -16,7 +16,7 @@ mod:RegisterEventsInCombat(
 
 local warnArcaneDischarge		= mod:NewSpellAnnounce(38539, 2)
 
-local specwarnTimeLapse			= mod:NewSpecialWarningDispel(31467, "Healer", nil, nil, 1, 2)
+local specwarnTimeLapse			= mod:NewSpecialWarningDispel(31467, "RemoveMagic", nil, 2, 1, 2)
 
 function mod:SPELL_CAST_START(args)
 	if args:IsSpellID(38539, 31472) then

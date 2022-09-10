@@ -16,7 +16,7 @@ mod:RegisterEventsInCombat(
 
 local warnKnockaway			= mod:NewSpellAnnounce(36512, 2, nil, nil, nil, nil, nil, 2)
 
-local specwarnFelFireShock	= mod:NewSpecialWarningDispel(35759, "Healer", nil, nil, 1, 2)
+local specwarnFelFireShock	= mod:NewSpecialWarningDispel(35759, "RemoveMagic", nil, 2, 1, 2)
 
 function mod:SPELL_CAST_SUCCESS(args)
 	if args.spellId == 36512 then

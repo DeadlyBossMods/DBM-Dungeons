@@ -26,6 +26,7 @@ mod:RegisterEventsInCombat(
 --TODO, target scan thundering slam to notify direction of attack?
 --TODO, rangecheck for chain lighting? it doesn't tell what range of "nearby enemy" means
 --TODO, more of timers may be sequenced/alternating, just need multiple long pulls
+--TODO, https://www.wowhead.com/beta/spell=369674/stone-spike added in newer build but seems like low prio interrupt over Chain Lightning
 --[[
 (ability.id = 369754 or ability.id = 369703 or ability.id = 382303) and type = "begincast"
  or ability.id = 369605 and type = "cast"
