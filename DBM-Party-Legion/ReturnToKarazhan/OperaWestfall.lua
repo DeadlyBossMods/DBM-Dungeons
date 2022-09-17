@@ -28,7 +28,7 @@ local specWarnLegSweep				= mod:NewSpecialWarningRun(227568, "Melee", nil, nil, 
 local specWarnThunderRitual			= mod:NewSpecialWarningMoveAway(227777, nil, nil, nil, 1, 2)
 local yellThunderRitual				= mod:NewYell(227777)
 local specWarnBubbleBlast			= mod:NewSpecialWarningInterrupt(227420, "HasInterrupt", nil, nil, 1, 2)
-local specWarnWashAway				= mod:NewSpecialWarningDodge(227783, nil, nil, nil, 1, 2)
+local specWarnWashAway				= mod:NewSpecialWarningDodge(227783, nil, nil, 2, 2, 2)
 
 --Stage One: Defias Brotherhood
 local timerLegSweepCD				= mod:NewAITimer(40, 227568, nil, "Melee", nil, 2)
