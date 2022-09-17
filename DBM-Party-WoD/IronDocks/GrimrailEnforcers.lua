@@ -86,7 +86,7 @@ function mod:SPELL_AURA_APPLIED(args)
 				timerSanguineSphere:Start(expires-GetTime(), args.destName)
 			end
 		end
-	elseif spellId == 181089 then--Encounter event
+	elseif args.spellId == 181089 then--Encounter event
 		specWarnLavaSwipe:Show()
 		specWarnLavaSwipe:Play("shockwave")
 		if self:IsHard() then
