@@ -17,6 +17,10 @@ mod:RegisterEventsInCombat(
 	"UNIT_TARGETABLE_CHANGED"
 )
 
+--[[
+(ability.id = 163550 or ability.id = 160680 or ability.id = 160943) and type = "begincast"
+ or ability.id = 181089 and type = "applybuff"
+--]]
 local warnMortar				= mod:NewSpellAnnounce(163550, 3)
 local warnPhase2				= mod:NewPhaseAnnounce(2, 2, nil, nil, nil, nil, nil, 2)
 local warnSupressiveFire		= mod:NewTargetNoFilterAnnounce(160681, 2)--In a repeating loop

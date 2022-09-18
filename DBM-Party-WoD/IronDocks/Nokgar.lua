@@ -40,7 +40,7 @@ local timerBloodlettingHowlCD			= mod:NewCDTimer(25, 164835, nil, nil, nil, 5, n
 
 function mod:OnCombatStart(delay)
 	self:SetStage(1)
-	--timerBurningArrowsCD:Start()--Unknown
+	timerBurningArrowsCD:Start(15-delay)
 	--timerBloodlettingHowlCD:Start(33.9-delay)--Iffy
 	--timerRecklessProvocationCD:Start(43.7-delay)--Iffy
 end
@@ -61,11 +61,13 @@ function mod:SPELL_CAST_SUCCESS(args)
 		timerRecklessProvocationCD:Stop()
 		timerBurningArrowsCD:Stop()
 		timerBloodlettingHowlCD:Stop()
---		timerBurningArrowsCD:Start()
+		timerBloodlettingHowlCD:Start(4.8)
+		timerBurningArrowsCD:Start(15.7)--15.7-18.2 depending on whether it gets spell queued behind Reckless
+		timerRecklessProvocationCD:Start(16.9)
 	elseif args.spellId == 164635 then
 		specWarnBurningArrows:Show()
 		specWarnBurningArrows:Play("watchfeet")
-		timerBurningArrowsCD:Start(self.vb.phase == 1 and 25 or 40)
+		timerBurningArrowsCD:Start(self.vb.phase == 1 and 30 or 40)
 	end
 end
 
