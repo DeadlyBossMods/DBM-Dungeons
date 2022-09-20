@@ -79,7 +79,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		if args:IsPlayer() then
 			specWarnVenomfangStrike:Show()
 			specWarnVenomfangStrike:Play("defensive")
-		elseif self:CheckDispelFilter() then
+		elseif self:CheckDispelFilter("poison") then
 			specWarnVenomfangStrikeDispel:Show(args.destName)
 			specWarnVenomfangStrikeDispel:Play("helpdispel")
 		end

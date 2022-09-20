@@ -91,10 +91,10 @@ function mod:SPELL_AURA_APPLIED(args)
 	if spellId == 334673 and args:IsDestTypeHostile() and self:AntiSpam(3, 5) then
 		specWarnSanctifiedMists:Show()
 		specWarnSanctifiedMists:Play("mobout")
-	elseif spellId == 326836 and args:IsDestTypePlayer() and self:CheckDispelFilter() and self:AntiSpam(3, 5) then
+	elseif spellId == 326836 and args:IsDestTypePlayer() and self:CheckDispelFilter("curse") and self:AntiSpam(3, 5) then
 		specWarnCurseofSuppressionDispel:Show(args.destName)
 		specWarnCurseofSuppressionDispel:Play("helpdispel")
-	elseif spellId == 321038 and args:IsDestTypePlayer() and self:CheckDispelFilter() and self:AntiSpam(3, 5) then
+	elseif spellId == 321038 and args:IsDestTypePlayer() and self:CheckDispelFilter("magic") and self:AntiSpam(3, 5) then
 		specWarnWrackSoulDispel:Show(args.destName)
 		specWarnWrackSoulDispel:Play("helpdispel")
 	elseif spellId == 324089 then

@@ -29,7 +29,7 @@ function mod:SPELL_AURA_APPLIED(args)
 	if args.spellId == 79351 and args:IsDestTypePlayer() then
 		warnGrip:Show(args.destName)
 		timerGrip:Start(args.destName)
-	elseif args.spellId == 79345 and self:CheckDispelFilter() then
+	elseif args.spellId == 79345 and self:CheckDispelFilter("curse") then
 		specWarnCurse:Show(args.destName)
 		specWarnCurse:Play("helpdispel")
 	end

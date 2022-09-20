@@ -33,7 +33,7 @@ function mod:SPELL_AURA_APPLIED(args)
 	if args.spellId == 74938 then
 		warnShield:Show()
 	elseif args.spellId == 75592 then
-		if self.Options.SpecWarn75592dispel and self:CheckDispelFilter() then
+		if self.Options.SpecWarn75592dispel and self:CheckDispelFilter("magic") then
 			specWarnDivineReckoning:Show(args.destName)
 			specWarnDivineReckoning:Play("helpdispel")
 		else

@@ -96,7 +96,7 @@ end
 function mod:SPELL_AURA_APPLIED(args)
 	local spellId = args.spellId
 	if spellId == 319603 then
-		if self.Options.SpecWarn319603dispel and self:CheckDispelFilter() then
+		if self.Options.SpecWarn319603dispel and self:CheckDispelFilter("curse") then
 			specWarnCurseofStoneDispel:CombinedShow(0.3, args.destName)
 			specWarnCurseofStoneDispel:ScheduleVoice(0.3, "helpdispel")
 		elseif args:IsPlayer() then

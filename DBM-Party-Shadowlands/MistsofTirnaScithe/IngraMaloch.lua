@@ -103,7 +103,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		--Droman
 		timerBewilderingPollenCD:Stop()
 		timerTearsoftheForestCD:Stop()
-	elseif spellId == 323137 and self:CheckDispelFilter() then
+	elseif spellId == 323137 and self:CheckDispelFilter("magic") then
 		specWarnBewilderingPollenDispel:CombinedShow(0.3, args.destName)
 		specWarnBewilderingPollenDispel:ScheduleVoice(0.3, "helpdispel")
 	end

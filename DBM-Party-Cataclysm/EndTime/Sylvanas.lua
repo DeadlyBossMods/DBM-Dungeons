@@ -27,7 +27,7 @@ function mod:OnCombatStart(delay)
 end
 
 function mod:SPELL_AURA_APPLIED(args)
-	if args.spellId == 101412 and self:CheckDispelFilter() then
+	if args.spellId == 101412 and self:CheckDispelFilter("magic") then
 		specWarnShriek:Show(args.destName)
 		specWarnShriek:Play("helpdispel")
 	end

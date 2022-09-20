@@ -122,14 +122,14 @@ function mod:SPELL_AURA_APPLIED(args)
 	elseif spellId == 270927 and self:AntiSpam(3, 6) then
 		specWarnBladestorm:Show()
 		specWarnBladestorm:Play("justrun")
-	elseif spellId == 270920 and self:CheckDispelFilter() then
+	elseif spellId == 270920 and self:CheckDispelFilter("magic") then
 		specWarnSeduction:Show(args.destName)
 		specWarnSeduction:Play("helpdispel")
 	elseif spellId == 270865 and args:IsDestTypePlayer() and self:AntiSpam(3, args.destName) then
 		if args:IsPlayer() then
 			specWarnHiddenBlade:Show()
 			specWarnHiddenBlade:Play("runout")
-		elseif self:CheckDispelFilter() then
+		elseif self:CheckDispelFilter("poison") then
 			specWarnHiddenBladeDispel:Show(args.destName)
 			specWarnHiddenBladeDispel:Play("helpdispel")
 		end

@@ -64,7 +64,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		if args:IsPlayer() then
 			specWarnGooped:Show()
 			specWarnGooped:Play("targetyou")
-		elseif self.Options.SpecWarn298259dispel and self:CheckDispelFilter() then
+		elseif self.Options.SpecWarn298259dispel and self:CheckDispelFilter("disease") then
 			specWarnGoopedDispel:Show(args.destName)
 			specWarnGoopedDispel:Play("helpdispel")
 		else
@@ -74,7 +74,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		if args:IsPlayer() then
 			specWarnGooped:Show()
 			specWarnGooped:Play("targetyou")
-		elseif self.Options.SpecWarn297913dispel and self:CheckDispelFilter() then
+		elseif self.Options.SpecWarn297913dispel and self:CheckDispelFilter("disease") then
 			specWarnToxicGoopDispel:Show(args.destName)
 			specWarnToxicGoopDispel:Play("helpdispel")
 		end

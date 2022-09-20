@@ -165,7 +165,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		else
 			warnStaticSpear:Show(args.destName)
 		end
-	elseif spellId == 376827 and self:CheckDispelFilter() then
+	elseif spellId == 376827 and self:CheckDispelFilter("magic") then
 		specWarnConductiveStrikeDispel:Show(args.destName)
 		specWarnConductiveStrikeDispel:Play("helpdispel")
 	end

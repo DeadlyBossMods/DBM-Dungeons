@@ -111,8 +111,5 @@ function mod:SPELL_AURA_APPLIED(args)
 	elseif spellId == 333241 and args:IsPlayer() and self:AntiSpam(3, 7) then
 		specWarnGTFO:Show(args.spellName)
 		specWarnGTFO:Play("watchfeet")
---	elseif spellId == 258323 and args:IsDestTypePlayer() and self:CheckDispelFilter() and self:AntiSpam(3, 5) then
---		specWarnBestialWrath:Show(args.destName)
---		specWarnBestialWrath:Play("helpdispel")
 	end
 end

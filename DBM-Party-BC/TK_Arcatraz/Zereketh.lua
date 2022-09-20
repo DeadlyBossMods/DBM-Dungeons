@@ -64,7 +64,7 @@ end
 
 function mod:SPELL_AURA_APPLIED(args)
 	if args:IsSpellID(39367, 32863) then
-		if self:CheckDispelFilter() then
+		if self:CheckDispelFilter("magic") then
 			specwarnSoC:Show(args.destName)
 			specwarnSoC:Play("dispelnow")
 		end

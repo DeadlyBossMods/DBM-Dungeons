@@ -84,7 +84,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		end
 	elseif spellId == 319626 then
 		local dispelWarned = false
-		if self.Options.SpecWarn319626dispel and args:IsDestTypePlayer() and self:CheckDispelFilter() then
+		if self.Options.SpecWarn319626dispel and args:IsDestTypePlayer() and self:CheckDispelFilter("magic") then
 			specWarnPhantasmalParasiteDPL:Show(args.destName)
 			specWarnPhantasmalParasiteDPL:Play("helpdispel")
 			dispelWarned = true

@@ -43,13 +43,13 @@ function mod:SPELL_AURA_APPLIED(args)
 	elseif args.spellId == 66620 then									-- Old Wounds
 		warnOldWounds:Show(args.destName)
 	elseif args.spellId == 66538 and args:IsDestTypePlayer() then	-- Holy Fire
-		if self:CheckDispelFilter() then
+		if self:CheckDispelFilter("magic") then
 			specwarnHolyFire:Show(args.destName)
 			specwarnHolyFire:Play("helpdispel")
 		end
 		timerHolyFire:Show(args.destName)
 	elseif args.spellId == 66619 and args:IsDestTypePlayer() then			-- Shadows of the Past
-		if self:CheckDispelFilter() then
+		if self:CheckDispelFilter("magic") then
 			specwarnShadows:Show(args.destName)
 			specwarnShadows:Play("helpdispel")
 		end

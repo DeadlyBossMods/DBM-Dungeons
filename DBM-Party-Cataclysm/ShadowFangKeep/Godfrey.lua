@@ -34,7 +34,7 @@ function mod:SPELL_AURA_APPLIED(args)
 	elseif args.spellId == 93707 then
 		warnGhouls:Show()
 		timerGhouls:Start()
-	elseif args.spellId == 93629 and self:CheckDispelFilter() then
+	elseif args.spellId == 93629 and self:CheckDispelFilter("curse") then
 		specWarnCursedBullets:Show(args.destName)
 		specWarnCursedBullets:Play("helpdispel")
 	end

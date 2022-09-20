@@ -114,7 +114,7 @@ function mod:SPELL_AURA_APPLIED(args)
 	local spellId = args.spellId
 	if spellId == 156965 then
 		warnDoom:Show(args.destName)
-	elseif spellId == 156842 and self:CheckDispelFilter() then
+	elseif spellId == 156842 and self:CheckDispelFilter("magic") then
 		specWarnCorruption:Show(args.destName)
 		specWarnCorruption:Play("dispelnow")
 	elseif spellId == 156921 and args:IsDestTypePlayer() then--This debuff can be spread to the boss. bugged?
@@ -141,11 +141,11 @@ function mod:SPELL_AURA_APPLIED(args)
 		else
 			warnFixate:Show(args.destName)
 		end
-	elseif spellId == 164841 and self:CheckDispelFilter() then
+	elseif spellId == 164841 and self:CheckDispelFilter("curse") then
 		specWarnExhaustion:Show(args.destName)
 		specWarnExhaustion:Play("dispelnow")
 		--timerExhaustionCD:Start()
-	elseif spellId == 156964 and self:CheckDispelFilter() then--Base version cast only in phase 1
+	elseif spellId == 156964 and self:CheckDispelFilter("magic") then--Base version cast only in phase 1
 		specWarnImmolate:Show(args.destName)
 		timerImmolateCD:Start()
 		specWarnImmolate:Play("dispelnow")

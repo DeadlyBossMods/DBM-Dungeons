@@ -71,7 +71,7 @@ local specWarnSuffocatingSmogDispel	= mod:NewSpecialWarningDispel(300650, "Remov
 local specWarnOverclockDispel		= mod:NewSpecialWarningDispel(299588, "MagicDispeller", nil, nil, 1, 2)--Pistonhead Mechanic/Mechagon Mechanic
 local specWarnEnlargeDispel			= mod:NewSpecialWarningDispel(301629, "MagicDispeller", nil, nil, 1, 2)--Mechagon Renormalizer
 local specWarnDefensiveCounter		= mod:NewSpecialWarningDispel(303941, "MagicDispeller", nil, nil, 1, 2)--Anodized Coilbearer/Defense Bot Mk III
-local specWarnShrinkDispel			= mod:NewSpecialWarningDispel(284219, "RemoveMagic", nil, nil, 1, 2)--Mechagon Renormalizer
+--local specWarnShrinkDispel			= mod:NewSpecialWarningDispel(284219, "RemoveMagic", nil, nil, 1, 2)--Mechagon Renormalizer
 local specWarnFlamingRefuseDispel	= mod:NewSpecialWarningDispel(294180, "RemoveMagic", nil, nil, 1, 2)--Junkyard D.0.G.
 local specWarnArcingZap				= mod:NewSpecialWarningDispel(294195, "RemoveMagic", nil, nil, 1, 2)--Defense Bot Mk I/Defense Bot Mk III
 local specWarnEnrageDispel			= mod:NewSpecialWarningDispel(300414, "RemoveEnrage", nil, nil, 1, 2)--Scrapbone Grinder/Scrapbone Bully
@@ -224,7 +224,7 @@ end
 function mod:SPELL_AURA_APPLIED(args)
 	if not self.Options.Enabled then return end
 	local spellId = args.spellId
-	if spellId == 300650 and args:IsDestTypePlayer() and self:CheckDispelFilter() and self:AntiSpam(5, 3) then
+	if spellId == 300650 and args:IsDestTypePlayer() and self:CheckDispelFilter("disease") and self:AntiSpam(5, 3) then
 		specWarnSuffocatingSmogDispel:Show(args.destName)
 		specWarnSuffocatingSmogDispel:Play("helpdispel")
 	elseif (spellId == 299588 or spellId == 293930) and not args:IsDestTypePlayer() and self:AntiSpam(3, 3) then
@@ -248,16 +248,16 @@ function mod:SPELL_AURA_APPLIED(args)
 				self:Unschedule(shrunkYellRepeater)
 				self:Schedule(2, shrunkYellRepeater, self)
 			end
-		elseif self.Options.SpecWarn284219dispel and self:CheckDispelFilter() then
-			specWarnShrinkDispel:Show(args.destName)
-			specWarnShrinkDispel:Play("helpdispel")
+--		elseif self.Options.SpecWarn284219dispel and self:CheckDispelFilter() then
+--			specWarnShrinkDispel:Show(args.destName)
+--			specWarnShrinkDispel:Play("helpdispel")
 		else
 			warnShrunk:Show(args.destName)
 		end
-	elseif spellId == 294180 and self:CheckDispelFilter() then
+	elseif spellId == 294180 and self:CheckDispelFilter("magic") then
 		specWarnFlamingRefuseDispel:Show(args.destName)
 		specWarnFlamingRefuseDispel:Play("helpdispel")
-	elseif spellId == 294195 and self:CheckDispelFilter() then
+	elseif spellId == 294195 and self:CheckDispelFilter("magic") then
 		specWarnArcingZap:CombinedShow(1, args.destName)
 		specWarnArcingZap:ScheduleVoice(1, "helpdispel")
 	elseif spellId == 294103 and self:AntiSpam(3, 2) then

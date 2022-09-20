@@ -69,7 +69,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		warnSpiritBoltsSoon:Schedule(31)
 		timerSpiritBolts:Start()
 		timerSpiritBoltsNext:Start()
-	elseif args.spellId == 43421 and self:CheckDispelFilter() then
+	elseif args.spellId == 43421 then
 		specWarnLifebloom:Show(args.destName)
 		specWarnLifebloom:Play("dispelboss")
 	end

@@ -79,15 +79,13 @@ function mod:SPELL_AURA_APPLIED(args)
 			specWarnFirestorm:Play("helpkick")
 		end
 	elseif spellId == 149975 then
-		if self:CheckDispelFilter() then--only show once. (prevent loud sound)
+		if self:CheckDispelFilter("magic") then--only show once. (prevent loud sound)
 			specWarnDancingFlames:CombinedShow(0.3, args.destName)
-			if self:AntiSpam(2, 2) then
-				specWarnDancingFlames:Play("dispelnow")
-			end
+			specWarnDancingFlames:ScheduleVoice(0.3, "dispelnow")
 		else
 			warnDancingFlames:CombinedShow(0.3, args.destName)--heroic is 2 targets so combined.
 		end
-	elseif spellId == 150032 and self:CheckDispelFilter() then
+	elseif spellId == 150032 and self:CheckDispelFilter("magic") then
 		specWarnWitheringFlames:Show(args.destName)
 		specWarnWitheringFlames:Play("dispelnow")
 	end
