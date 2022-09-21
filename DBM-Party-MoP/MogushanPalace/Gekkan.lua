@@ -40,7 +40,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		warnIronProtector:Show(args.destName)
 		timerIronProtector:Start(args.destName)
 	elseif args.spellId == 118903 then
-		if self:CheckDispelFilter() then
+		if self:CheckDispelFilter("magic") then
 			specWarnHexDispel:Show(args.destName)
 			specWarnHexDispel:Play("helpdispel")
 		end

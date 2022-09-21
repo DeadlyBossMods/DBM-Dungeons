@@ -42,7 +42,7 @@ end
 
 function mod:SPELL_AURA_APPLIED(args)
 	if args.spellId == 59374 then
-		if self:CheckDispelFilter() then
+		if self:CheckDispelFilter("magic") then
 			specwarnMana:Show(args.destName)
 			specwarnMana:Play("helpdispel")
 		end

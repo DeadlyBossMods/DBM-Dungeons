@@ -100,7 +100,7 @@ function mod:SPELL_AURA_APPLIED(args)
 	local spellId = args.spellId
 	if spellId == 384978 then
 		local uId = DBM:GetRaidUnitId(args.destName)
-		if self:IsTanking(uId) and self:CheckDispelFilter() then
+		if self:IsTanking(uId) and self:CheckDispelFilter("magic") then
 			specWarnDragonStompDebuff:Show(args.destName)
 			specWarnDragonStompDebuff:Play("helpdispel")
 		end

@@ -40,7 +40,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		specWarnRejuvSerum:Show(args.destName)
 --		timerRejuvSerumCD:Start()
 		specWarnRejuvSerum:Play("dispelboss")
-	elseif spellId == 162600 and self:CheckDispelFilter() then
+	elseif spellId == 162600 and self:CheckDispelFilter("poison") then
 		specWarnToxicFumes:Show(args.destName)
 		specWarnToxicFumes:Play("dispelnow")
 	end

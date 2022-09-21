@@ -61,7 +61,7 @@ end
 
 function mod:SPELL_AURA_APPLIED(args)
 	local spellId = args.spellId
-	if spellId == 259853 and self:CheckDispelFilter() then
+	if spellId == 259853 and self:CheckDispelFilter("magic") then
 		specWarnChemBurn:CombinedShow(1, args.destName)
 		specWarnChemBurn:ScheduleVoice(1, "dispelnow")
 	end

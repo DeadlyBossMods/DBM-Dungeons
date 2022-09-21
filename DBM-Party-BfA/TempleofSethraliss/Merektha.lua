@@ -55,7 +55,7 @@ end
 
 function mod:SPELL_AURA_APPLIED(args)
 	local spellId = args.spellId
-	if spellId == 263957 and self:CheckDispelFilter() then
+	if spellId == 263957 and self:CheckDispelFilter("poison") then
 		specWarnHadotoxinOther:Show(args.destName)
 		specWarnHadotoxinOther:Play("helpdispel")
 	elseif spellId == 267050 then--Obscured

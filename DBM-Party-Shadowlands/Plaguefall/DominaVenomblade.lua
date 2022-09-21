@@ -77,7 +77,7 @@ end
 function mod:SPELL_AURA_APPLIED(args)
 	local spellId = args.spellId
 	if spellId == 325552 then
-		if self.Options.SpecWarn325552dispel and self:CheckDispelFilter() then
+		if self.Options.SpecWarn325552dispel and self:CheckDispelFilter("poison") then
 			specWarnCytotoxicSlash:Show(args.destName)
 			specWarnCytotoxicSlash:Play("helpdispel")
 		elseif args:IsPlayer() then

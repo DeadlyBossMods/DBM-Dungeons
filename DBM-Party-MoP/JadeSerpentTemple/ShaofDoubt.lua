@@ -51,7 +51,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		timerBoundsOfReality:Start()
 		timerBoundsOfRealityCD:Start()
 	elseif args.spellId == 106113 then
-		if self:CheckDispelFilter() then
+		if self:CheckDispelFilter("magic") then
 			specWarnTouchOfNothingness:Show(args.destName)
 			specWarnTouchOfNothingness:Play("helpdispel")
 		end

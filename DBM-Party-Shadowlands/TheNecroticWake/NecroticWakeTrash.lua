@@ -134,7 +134,7 @@ function mod:SPELL_AURA_APPLIED(args)
 			yellSharedAgony:Yell()
 		end
 	elseif spellId == 323347 and args:IsDestTypePlayer() and self:AntiSpam(3, 5) then
-		if self.Options.SpecWarn323347dispel and  self:CheckDispelFilter() then
+		if self.Options.SpecWarn323347dispel and  self:CheckDispelFilter("magic") then
 			specWarnClingingDarkness:Show(args.destName)
 			specWarnClingingDarkness:Play("helpdispel")
 		else
@@ -146,7 +146,7 @@ function mod:SPELL_AURA_APPLIED(args)
 	elseif spellId == 324372 then
 		specWarnReapingWinds:Show()
 		specWarnReapingWinds:Play("justrun")
-	elseif spellId == 338353 and args:IsDestTypePlayer() and self:CheckDispelFilter() and self:AntiSpam(3, 5) then
+	elseif spellId == 338353 and args:IsDestTypePlayer() and self:CheckDispelFilter("disease") and self:AntiSpam(3, 5) then
 		specWarnGoresplatterDispel:Show(args.destName)
 		specWarnGoresplatterDispel:Play("helpdispel")
 	elseif spellId == 340288 and args:IsDestTypePlayer() then

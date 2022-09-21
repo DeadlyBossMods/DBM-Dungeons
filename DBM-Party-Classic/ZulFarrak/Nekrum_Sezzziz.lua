@@ -54,7 +54,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 end
 
 function mod:SPELL_AURA_APPLIED(args)
-	if args.spellId == 8600 and self:CheckDispelFilter() then
+	if args.spellId == 8600 and self:CheckDispelFilter("disease") then
 		warningFeveredPlague:Show(args.destName)
 	end
 end

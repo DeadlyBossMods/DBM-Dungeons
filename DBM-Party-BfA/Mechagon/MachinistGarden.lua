@@ -66,7 +66,7 @@ end
 
 function mod:SPELL_AURA_APPLIED(args)
 	local spellId = args.spellId
-	if spellId == 285460 and self:CheckDispelFilter() then
+	if spellId == 285460 and self:CheckDispelFilter("magic") then
 		specWarnDiscomBomb:Show(args.destName)
 		specWarnDiscomBomb:Play("helpdispel")
 	end

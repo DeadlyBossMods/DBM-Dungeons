@@ -97,7 +97,7 @@ end
 
 function mod:SPELL_AURA_APPLIED(args)
 	local spellId = args.spellId
-	if spellId == 324652 and self:CheckDispelFilter() then
+	if spellId == 324652 and self:CheckDispelFilter("disease") then
 		specWarnDebilitatingPlague:CombinedShow(0.3, args.destName)
 		specWarnDebilitatingPlague:ScheduleVoice(0.3, args.destName)
 	end

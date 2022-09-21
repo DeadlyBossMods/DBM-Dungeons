@@ -54,7 +54,7 @@ end
 function mod:SPELL_AURA_APPLIED(args)
 	if args.spellId == 8040 then
 		warningDruidSlumber:Show(args.destName)
-	elseif args.spellId == 17330 and self:CheckDispelFilter() then
+	elseif args.spellId == 17330 and self:CheckDispelFilter("poison") then
 		warningPoison:Show(args.destName)
 	end
 end

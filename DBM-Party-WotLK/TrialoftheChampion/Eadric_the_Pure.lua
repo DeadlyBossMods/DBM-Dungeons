@@ -31,7 +31,7 @@ function mod:SPELL_CAST_START(args)
 end
 
 function mod:SPELL_AURA_APPLIED(args)
-	if args.spellId == 66940 and self:CheckDispelFilter() then
+	if args.spellId == 66940 and self:CheckDispelFilter("magic") then
 		specwarnHammerofJustice:Show(args.destName)
 		specwarnHammerofJustice:Play("helpdispel")
 	elseif args.spellId == 66889 then
