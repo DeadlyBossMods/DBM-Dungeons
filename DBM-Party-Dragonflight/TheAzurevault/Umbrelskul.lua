@@ -24,6 +24,7 @@ mod:RegisterEventsInCombat(
 
 --TODO, Current under-tuning makes the crystals and fracture completely inconsiquential. Until that changes, not much to do with those.
 --TODO, target scan arcane eruption?
+--TODO, it looks like blizzard killed off 385527 mechanic
 local warnArcaneEruption						= mod:NewSpellAnnounce(385075, 3)
 
 --local specWarnInfusedStrikes					= mod:NewSpecialWarningStack(361966, nil, 8, nil, nil, 1, 6)
@@ -42,7 +43,7 @@ local timerArcaneEruptionCD						= mod:NewAITimer(35, 385075, nil, nil, nil, 3)
 --local berserkTimer							= mod:NewBerserkTimer(600)
 
 --mod:AddRangeFrameOption("8")
-mod:AddInfoFrameOption(385527, "RemoveCurse")
+--mod:AddInfoFrameOption(385527, "RemoveCurse")
 --mod:AddSetIconOption("SetIconOnStaggeringBarrage", 361018, true, false, {1, 2, 3})
 
 function mod:OnCombatStart(delay)
@@ -50,10 +51,10 @@ function mod:OnCombatStart(delay)
 	timerCrystallineRoarCD:Start(1-delay)
 	timerUnleashedDestructionCD:Start(1-delay)
 	timerArcaneEruptionCD:Start(1-delay)
-	if self.Options.InfoFrame then
-		DBM.InfoFrame:SetHeader(DBM:GetSpellInfo(385527))
-		DBM.InfoFrame:Show(5, "playerdebuffremaining", 385527)
-	end
+--	if self.Options.InfoFrame then
+--		DBM.InfoFrame:SetHeader(DBM:GetSpellInfo(385527))
+--		DBM.InfoFrame:Show(5, "playerdebuffremaining", 385527)
+--	end
 end
 
 function mod:OnCombatEnd()
