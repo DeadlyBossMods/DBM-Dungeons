@@ -58,7 +58,7 @@ local timerStormslamCD							= mod:NewCDTimer(10, 381512, nil, "Tank|RemoveMagic
 local timerZephyrCD								= mod:NewCDTimer(18, 385558, nil, nil, nil, 2)
 
 --mod:AddRangeFrameOption("8")
-mod:AddInfoFrameOption(381862, true)
+mod:AddInfoFrameOption(381862, true)--Infernocore
 --mod:AddSetIconOption("SetIconOnStaggeringBarrage", 361018, true, false, {1, 2, 3})
 
 --Seems to work
