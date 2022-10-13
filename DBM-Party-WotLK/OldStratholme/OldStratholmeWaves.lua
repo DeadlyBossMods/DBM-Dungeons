@@ -66,7 +66,7 @@ end
 
 function mod:UPDATE_UI_WIDGET(table)
 	local id = table.widgetID
-	if id ~= 541 then return end
+	if id ~= 541 and id ~= 3870 then return end
 	local widgetInfo = C_UIWidgetManager.GetIconAndTextWidgetVisualizationInfo(id)
 	local text = widgetInfo.text
 	if not text then return end
