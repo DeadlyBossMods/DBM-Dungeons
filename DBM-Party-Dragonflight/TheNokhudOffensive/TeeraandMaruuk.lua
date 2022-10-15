@@ -108,7 +108,7 @@ function mod:SPELL_CAST_START(args)
 		warnSpiritLeap:Show()
 		timerSpiritLeapCD:Start()
 	elseif spellId == 382836 then
-		if self:IsTanking("player", nil, nil, nil, args.sourceGUID) then
+		if self:IsTanking("player", nil, nil, true, args.sourceGUID) then
 			specWarnBrutalize:Show()
 			specWarnBrutalize:Play("defensive")
 		end

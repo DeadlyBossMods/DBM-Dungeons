@@ -97,7 +97,7 @@ end
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
 	if spellId == 350916 or spellId == 359028 then
-		if self:IsTanking("player", nil, nil, nil, args.sourceGUID) then
+		if self:IsTanking("player", nil, nil, true, args.sourceGUID) then
 			specWarnSecuritySlam:Show()
 			specWarnSecuritySlam:Play("defensive")
 		else

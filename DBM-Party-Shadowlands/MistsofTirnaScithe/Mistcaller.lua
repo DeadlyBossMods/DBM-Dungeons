@@ -77,7 +77,7 @@ function mod:SPELL_CAST_START(args)
 		warnFreezeTag:Show()
 		timerFreezeTagCD:Start()
 	elseif spellId == 321828 then
-		if self:IsTanking("player", "boss1", nil, nil, nil, true) then
+		if self:IsTanking("player", "boss1", nil, true, nil, true) then
 			--Only target of spell can interrupt it
 			specWarnPattyCake:Show(args.sourceName)
 			specWarnPattyCake:Play("kickcast")

@@ -74,7 +74,7 @@ function mod:SPELL_CAST_START(args)
 		if not borkaID then
 			getBorkaID(self)
 		end
-		if borkaID and self:IsTanking("player", borkaID) then--failsafe 2
+		if borkaID and self:IsTanking("player", borkaID, nil, true) then--failsafe 2
 			specWarnMadDashInterrupt:Show(rocketsName)
 			specWarnMadDashInterrupt:Play("targetyou")--bleh voice choice
 		else
