@@ -36,7 +36,7 @@ local specWarnChaoticShadows		= mod:NewSpecialWarningYou(229159, nil, nil, nil, 
 local yellChaoticShadows			= mod:NewPosYell(229159, DBM_CORE_L.AUTO_YELL_CUSTOM_POSITION2)
 local specWarnBurningBlast			= mod:NewSpecialWarningInterruptCount(229083, "HasInterrupt", nil, nil, 1, 2)
 --Phase 1
-local specWarnFelBeam				= mod:NewSpecialWarningRun(229242, nil, nil, nil, 1, 2)
+local specWarnFelBeam				= mod:NewSpecialWarningRun(229242, nil, nil, 2, 4, 2)
 local yellFelBeam					= mod:NewYell(229242)
 
 --ALL

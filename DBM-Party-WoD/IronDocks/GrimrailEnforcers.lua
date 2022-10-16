@@ -43,7 +43,7 @@ local warnOgreTraps				= mod:NewCastAnnounce(163390, 3)
 
 local specWarnBigBoom			= mod:NewSpecialWarningSpell(163379, nil, nil, nil, 2, 2)--maybe use switch.
 
-local timerOgreTrapsCD			= mod:NewCDTimer(25, 163390, nil, nil, nil, 3)--25-30 variation.
+local timerOgreTrapsCD			= mod:NewCDTimer(24.4, 163390, nil, nil, nil, 3)--25-30 variation.
 
 function mod:OnCombatStart(delay)
 	timerFlamingSlashCD:Start(4.6-delay)

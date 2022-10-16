@@ -68,9 +68,8 @@ function mod:SPELL_AURA_APPLIED(args)
 			specWarnElectricalCharge:Show()
 			specWarnElectricalCharge:Play("targetyou")
 			yellElectricalCharge:Yell()
-		else
-			warnElectricalCharge:Show(args.destName)
 		end
+		warnElectricalCharge:CombinedShow(0.5, args.destName)
 	end
 end
 --mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED

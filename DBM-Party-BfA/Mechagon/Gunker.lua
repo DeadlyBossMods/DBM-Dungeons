@@ -28,7 +28,7 @@ local specWarnToxicGoopDispel		= mod:NewSpecialWarningDispel(297913, false, nil,
 local specWarnCoalesce				= mod:NewSpecialWarningDodge(297835, nil, nil, nil, 2, 2)
 
 local timerToxicWaveCD				= mod:NewCDTimer(49.8, 297834, nil, nil, nil, 2)
-local timerSplatterCD				= mod:NewCDTimer(25.1, 297985, nil, nil, nil, 3)
+local timerSplatterCD				= mod:NewCDTimer(24.2, 297985, nil, nil, nil, 3)
 local timerCoalesceCD				= mod:NewCDTimer(49.8, 297835, nil, nil, nil, 3)
 
 function mod:OnCombatStart(delay)

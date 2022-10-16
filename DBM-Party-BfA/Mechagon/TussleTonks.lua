@@ -42,9 +42,9 @@ local yellFoeFlipper				= mod:NewYell(285153)
 
 local timerRP						= mod:NewRPTimer(68)
 local timerLayMineCD				= mod:NewCDTimer(12.1, 285351, nil, nil, nil, 3)
-local timerWhirlingEdgeCD			= mod:NewNextTimer(32.8, 285020, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+local timerWhirlingEdgeCD			= mod:NewNextTimer(32.4, 285020, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 --local timerFoeFlipperCD				= mod:NewCDTimer(13.4, 285153, nil, nil, nil, 3)
-local timerVentJetsCD				= mod:NewCDTimer(43.8, 285388, nil, nil, nil, 2)
+local timerVentJetsCD				= mod:NewCDTimer(40.1, 285388, nil, nil, nil, 2)
 local timerMaxThrustCD				= mod:NewCDTimer(45.8, 283565, nil, nil, nil, 3)
 
 function mod:ThrustTarget(targetname)
