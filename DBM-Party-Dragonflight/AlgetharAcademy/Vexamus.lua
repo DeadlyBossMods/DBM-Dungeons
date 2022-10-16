@@ -152,9 +152,9 @@ function mod:SPELL_ENERGIZE(_, _, _, _, destGUID, _, _, _, spellId, _, _, amount
 		local remaining = 40-bossPower
 		if remaining > 0 then
 			local newTimer = 40-remaining
-			timerShatteringSmashCD:Update(newTimer, 40)
+			timerArcaneFissureCD:Update(newTimer, 40)
 		else
-			timerShatteringSmashCD:Stop()
+			timerArcaneFissureCD:Stop()
 		end
 	end
 end
