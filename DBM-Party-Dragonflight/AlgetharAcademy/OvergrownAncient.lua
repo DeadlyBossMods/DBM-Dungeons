@@ -24,10 +24,10 @@ mod:RegisterEventsInCombat(
 --	"UNIT_SPELLCAST_SUCCEEDED boss1"
 )
 
---TODO, Fix Germinate event.
 --TODO, Branch Out target scan? it says "at a location" not "at a player"
 --TODO, longer pull with two bursts to fine tune burst timer
 --TODO, longer pull to confirm if bark and germ are alternating timers, or timer reset by burst that may not always alternate
+--TODO, do stuff with Splinterbark/Abunance mythic mechanic? Seems self explanatory. You get a bleedd on spawn, and clear it on death with target goal to be "don't ignore adds"
 --[[
 (ability.id = 388923 or ability.id = 388623 or ability.id = 396640 or ability.id = 388544) and type = "begincast"
  or ability.id = 388796 and type = "applybuff"
