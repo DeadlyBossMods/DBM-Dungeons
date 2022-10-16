@@ -50,7 +50,7 @@ local specWarnLaunchHERockets		= mod:NewSpecialWarningDodge(294015, nil, nil, ni
 local specWarnCapacitorDischarge	= mod:NewSpecialWarningDodge(295169, nil, nil, nil, 3, 2)--Blastatron X-80
 local specWarnConsume				= mod:NewSpecialWarningRun(300687, nil, nil, nil, 4, 2)--Toxic Monstrosity
 local specWarnGyroScrap				= mod:NewSpecialWarningRun(300159, "Melee", nil, nil, 4, 2)--Heavy Scrapbot
-local specWarnMegaDrill				= mod:NewSpecialWarningRun(294324, "Tank", nil, nil, 4, 2)--Waste Processing Unit
+local specWarnMegaDrill				= mod:NewSpecialWarningRun(294324, "Melee", nil, nil, 4, 2)--Waste Processing Unit
 local specWarnProcessWaste			= mod:NewSpecialWarningSpell(294290, nil, nil, nil, 1, 2)--Waste Processing Unit
 local specWarnSlimeBolt				= mod:NewSpecialWarningInterrupt(300764, "HasInterrupt", nil, nil, 1, 2)--Slime Elemental
 local specWarnSuffocatingSmog		= mod:NewSpecialWarningInterrupt(300650, "HasInterrupt", nil, nil, 1, 2)--Toxic Lurker
@@ -195,7 +195,7 @@ function mod:SPELL_CAST_START(args)
 		specWarnMegaDrill:Play("justrun")
 	elseif spellId == 294290 and self:AntiSpam(3, 5) then
 		specWarnProcessWaste:Show()
-		if self:IsTank() then
+		if self:IsTanking("player", nil, nil, true, args.sourceGUID) then
 			specWarnProcessWaste:Play("defensive")
 		else
 			specWarnProcessWaste:Play("shockwave")

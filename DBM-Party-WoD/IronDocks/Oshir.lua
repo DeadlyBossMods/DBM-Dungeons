@@ -47,7 +47,6 @@ end
 
 function mod:SPELL_AURA_APPLIED(args)
 	if args.spellId == 162415 then
-		timerTimeToFeedCD:Start()
 		if args:IsPlayer() then
 			specWarnTimeToFeed:Show()
 			specWarnTimeToFeed:Play("defensive")

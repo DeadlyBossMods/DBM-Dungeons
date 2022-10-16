@@ -118,7 +118,7 @@ function mod:SPELL_CAST_START(args)
 		warnWindsofChange:Show()
 		timerWindsofChangeCD:Start()
 	elseif spellId == 381512 then
-		if self:IsTanking("player", nil, nil, nil, args.sourceGUID) then--Using GUID check because might be boss1 or boss2
+		if self:IsTanking("player", nil, nil, true, args.sourceGUID) then--Using GUID check because might be boss1 or boss2
 			specWarnStormslam:Show()
 			specWarnStormslam:Play("defensive")
 		end
