@@ -13,8 +13,8 @@ mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 374361 388822",
-	"SPELL_CAST_SUCCESS 374350",
-	"SPELL_AURA_APPLIED 389011 374350",
+	"SPELL_CAST_SUCCESS 374343",
+	"SPELL_AURA_APPLIED 389011 374350 389007",
 	"SPELL_AURA_APPLIED_DOSE 389011",
 	"SPELL_AURA_REMOVED 374350"
 --	"SPELL_PERIODIC_DAMAGE",
@@ -26,6 +26,11 @@ mod:RegisterEventsInCombat(
 --TOOD, how frequent is https://www.wowhead.com/beta/spell=388951/uncontrolled-energy , announce them if not frequent? Seems like it'll ramp up fast though
 --TODO, GTFO for arcane rift, could not find damage spellId for it
 --TODO, add arcane missiles? i feel like this is something she probably casts very frequently
+--[[
+(ability.id = 374361 or ability.id = 388822) and type = "begincast"
+ or ability.id = 374343 and type = "cast"
+ or type = "dungeonencounterstart" or type = "dungeonencounterend"
+--]]
 local warnOverwhelmingPoweer					= mod:NewCountAnnounce(389011, 3, nil, nil, DBM_CORE_L.AUTO_ANNOUNCE_OPTIONS.stack:format(389011))--Typical stack warnings have amount and playername, but since used as personal, using count object to just display amount then injecting option text for stack
 local warnEnergyBomb							= mod:NewTargetAnnounce(374352, 3)
 
@@ -35,11 +40,11 @@ local specWarnPowerVacuum						= mod:NewSpecialWarningRun(388822, nil, nil, nil,
 local specWarnEnergyBomb						= mod:NewSpecialWarningMoveAway(374352, nil, nil, nil, 1, 2)
 local yellEnergyBomb							= mod:NewYell(374352)
 local yellEnergyBombFades						= mod:NewShortFadesYell(374352)
---local specWarnGTFO							= mod:NewSpecialWarningGTFO(340324, nil, nil, nil, 1, 8)
+local specWarnGTFO								= mod:NewSpecialWarningGTFO(389007, nil, nil, nil, 1, 8)
 
-local timerAstralBreathCD						= mod:NewAITimer(35, 374361, nil, nil, nil, 3)
-local timerPowerVacuumCD						= mod:NewAITimer(35, 388822, nil, nil, nil, 2)
-local timerEnergyBombCD							= mod:NewAITimer(35, 374352, nil, nil, nil, 3)
+local timerAstralBreathCD						= mod:NewCDTimer(61.5, 374361, nil, nil, nil, 3)
+local timerPowerVacuumCD						= mod:NewCDTimer(23.4, 388822, nil, nil, nil, 2)--23-28
+local timerEnergyBombCD							= mod:NewCDTimer(14.1, 374352, nil, nil, nil, 3)--14.1-20
 --local timerDecaySprayCD						= mod:NewAITimer(35, 376811, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 
 --local berserkTimer							= mod:NewBerserkTimer(600)
@@ -49,9 +54,9 @@ mod:AddInfoFrameOption(389011, true)
 --mod:AddSetIconOption("SetIconOnStaggeringBarrage", 361018, true, false, {1, 2, 3})
 
 function mod:OnCombatStart(delay)
-	timerAstralBreathCD:Start(1-delay)
-	timerPowerVacuumCD:Start(1-delay)
-	timerEnergyBombCD:Start(1-delay)
+	timerEnergyBombCD:Start(15.9-delay)
+	timerPowerVacuumCD:Start(24.9-delay)
+	timerAstralBreathCD:Start(28.1-delay)
 	if self.Options.InfoFrame then
 		DBM.InfoFrame:SetHeader(DBM:GetSpellInfo(389011))
 		DBM.InfoFrame:Show(5, "playerdebuffstacks", 389011)
@@ -82,7 +87,7 @@ end
 
 function mod:SPELL_CAST_SUCCESS(args)
 	local spellId = args.spellId
-	if spellId == 374350 then
+	if spellId == 374343 then
 		timerEnergyBombCD:Start()
 	end
 end
@@ -105,6 +110,9 @@ function mod:SPELL_AURA_APPLIED(args)
 			yellEnergyBomb:Yell()
 			yellEnergyBombFades:Countdown(spellId)
 		end
+	elseif spellId == 389007 and args:IsPlayer() and self:AntiSpam(2, 4) then
+		specWarnGTFO:Show(args.spellName)
+		specWarnGTFO:Play("watchfeet")
 	end
 end
 mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED
