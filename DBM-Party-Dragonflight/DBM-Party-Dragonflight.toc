@@ -33,6 +33,7 @@ localization.en.lua
 localization.kr.lua
 localization.ru.lua
 localization.cn.lua
+localization.tw.lua
 
 # Commented lines aren't in dungeon journal yet
 
