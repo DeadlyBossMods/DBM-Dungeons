@@ -67,7 +67,7 @@ L:SetGeneralLocalization({
 L = DBM:GetModLocalization("UldamanLegacyofTyrTrash")
 
 L:SetGeneralLocalization({
-	name =	"Трэш мобы Ульдаман: Наследие Тира"
+	name =	"Трэш мобы Ульдаман: наследие Тира"
 })
 
 -----------------------
@@ -164,7 +164,7 @@ L:SetGeneralLocalization({
 L = DBM:GetModLocalization("AlgetharAcademyTrash")
 
 L:SetGeneralLocalization({
-	name =	"Трэш мобы Академия Таз'алгет"
+	name =	"Трэш мобы Академия Алгет'ар"
 })
 
 -----------------------
@@ -196,7 +196,7 @@ L:SetGeneralLocalization({
 L = DBM:GetModLocalization("TheAzurevaultTrash")
 
 L:SetGeneralLocalization({
-	name =	"Трэш мобы Лазурное Хранилище"
+	name =	"Трэш мобы Лазурное хранилище"
 })
 
 -----------------------
@@ -223,7 +223,7 @@ L:SetGeneralLocalization({
 L = DBM:GetModLocalization("RubyLifePoolsTrash")
 
 L:SetGeneralLocalization({
-	name =	"Трэш мобы Рубиновые омуты Жизни"
+	name =	"Трэш мобы Рубиновые Омуты Жизни"
 })
 
 -----------------------
