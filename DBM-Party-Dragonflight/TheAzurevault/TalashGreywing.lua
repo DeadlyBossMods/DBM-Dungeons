@@ -86,7 +86,7 @@ function mod:SPELL_CAST_START(args)
 		--If time remaining on frost bomb less than 6, time remaining increased to 6
 		if timerFrostBombCD:GetRemaining(self.vb.crystalCount+1) < 6 then
 			local elapsed, total = timerFrostBombCD:GetTime()
-			local extend = ICD - (total-elapsed)
+			local extend = 6 - (total-elapsed)
 			DBM:Debug("timerFrostBombCD extended by: "..extend, 2)
 			timerFrostBombCD:Update(elapsed, total+extend)
 		end
