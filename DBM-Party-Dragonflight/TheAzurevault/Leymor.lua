@@ -23,7 +23,7 @@ mod:RegisterEventsInCombat(
 )
 
 --TODO, verify number of players affected by explosive eruption
---TODO, who does Errupting Fissure target?
+--TODO, who does Errupting Fissure target? verify target scan
 --[[
 (ability.id = 374364 or ability.id = 374567 or ability.id = 386660 or ability.id = 374789) and type = "begincast"
  or ability.id =  374720 and type = "cast"
