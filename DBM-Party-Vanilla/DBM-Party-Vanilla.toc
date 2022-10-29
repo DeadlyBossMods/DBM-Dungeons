@@ -10,8 +10,8 @@
 ## Author: MysticalOS
 ## LoadOnDemand: 1
 ## RequiredDeps: DBM-Core
-## SavedVariables: DBMPartyClassic_AllSavedVars
-## SavedVariablesPerCharacter: DBMPartyClassic_SavedStats
+## SavedVariables: DBMPartyVanilla_AllSavedVars
+## SavedVariablesPerCharacter: DBMPartyVanilla_SavedStats
 ## X-DBM-Mod: 1
 ## X-DBM-Mod-Type: PARTY
 ## X-DBM-Mod-Category: Classic
