@@ -3,7 +3,7 @@ enable-nolib-creation: no
 
 move-folders:
     DBM-Party-Dragonflight/DBM-Party-Cataclysm: DBM-Party-Cataclysm
-    DBM-Party-Dragonflight/DBM-Party-Classic: DBM-Party-Classic
+    DBM-Party-Dragonflight/DBM-Party-Vanilla: DBM-Party-Vanilla
     DBM-Party-Dragonflight/DBM-Party-Legion: DBM-Party-Legion
     DBM-Party-Dragonflight/DBM-Party-MoP: DBM-Party-MoP
     DBM-Party-Dragonflight/DBM-Party-WoD: DBM-Party-WoD
