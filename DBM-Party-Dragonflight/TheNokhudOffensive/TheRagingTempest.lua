@@ -22,6 +22,7 @@ mod:RegisterEventsInCombat(
 --	"UNIT_SPELLCAST_SUCCEEDED boss1"
 )
 
+--TODO, do anything with Electrical Overload? I don't see much to do with it at mod level
 --[[
 (ability.id = 384316 or ability.id = 384620 or ability.id = 384686) and type = "begincast"
  or type = "dungeonencounterstart" or type = "dungeonencounterend"

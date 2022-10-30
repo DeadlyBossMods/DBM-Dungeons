@@ -188,7 +188,7 @@ function mod:SPELL_AURA_REMOVED(args)
 		self:SetStage(2)
 		self.vb.comboCount = 0
 		warnPhase2:Show()
-		timerConductiveStrikeCD:Start(8)
+		timerConductiveStrikeCD:Start(8, 1)
 		timerStaticSpearCD:Start(18)
 		timerCracklingUpheavalCD:Start(37)
 	end

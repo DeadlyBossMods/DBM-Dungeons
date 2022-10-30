@@ -15,9 +15,9 @@ mod:RegisterCombat("combat")
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 382670 386063 385339 386547 385434 382836",
 --	"SPELL_CAST_SUCCESS",
-	"SPELL_AURA_APPLIED 384808",
+	"SPELL_AURA_APPLIED 384808 392198",
 --	"SPELL_AURA_APPLIED_DOSE",
---	"SPELL_AURA_REMOVED"
+	"SPELL_AURA_REMOVED 392198",
 --	"SPELL_PERIODIC_DAMAGE",
 --	"SPELL_PERIODIC_MISSED",
 	"UNIT_DIED"
@@ -59,6 +59,7 @@ local timerBrutalizeCD							= mod:NewCDTimer(18.2, 382836, nil, "Tank|Healer", 
 --mod:AddRangeFrameOption("8")
 --mod:AddInfoFrameOption(361651, true)
 --mod:AddSetIconOption("SetIconOnStaggeringBarrage", 361018, true, false, {1, 2, 3})
+mod:AddNamePlateOption("NPAuraOnAncestralBond", 392198)
 
 --[[
 --Use for spirit leap if it's on players and scanable
@@ -83,16 +84,22 @@ function mod:OnCombatStart(delay)
 	timerBrutalizeCD:Start(8.1-delay)--8-10.8
 	timerFrightfulRoarCD:Start(14.3-delay)--14.3-19.4
 	timerEarthSplitterCD:Start(27-delay)
+	if self.Options.NPAuraOnAncestralBond then
+		DBM:FireEvent("BossMod_EnableHostileNameplates")
+	end
 end
 
---function mod:OnCombatEnd()
+function mod:OnCombatEnd()
 --	if self.Options.RangeFrame then
 --		DBM.RangeCheck:Hide()
 --	end
 --	if self.Options.InfoFrame then
 --		DBM.InfoFrame:Hide()
 --	end
---end
+	if self.Options.NPAuraOnAncestralBond then
+		DBM.Nameplate:Hide(true, nil, nil, nil, true, true)
+	end
+end
 
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
@@ -147,6 +154,19 @@ function mod:SPELL_AURA_APPLIED(args)
 	if spellId == 384808 and self:CheckInterruptFilter(args.sourceGUID, false, true) then
 		specWarnGuardianWind:Show(args.sourceName)
 		specWarnGuardianWind:Play("kickcast")
+	elseif spellId == 392198 then
+		if self.Options.NPAuraOnAncestralBond then
+			DBM.Nameplate:Show(true, args.destGUID, spellId)
+		end
+	end
+end
+
+function mod:SPELL_AURA_REMOVED(args)
+	local spellId = args.spellId
+	if spellId == 392198 then
+		if self.Options.NPAuraOnAncestralBond then
+			DBM.Nameplate:Hide(true, args.destGUID, spellId)
+		end
 	end
 end
 
