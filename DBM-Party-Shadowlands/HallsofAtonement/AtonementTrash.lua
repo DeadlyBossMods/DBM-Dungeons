@@ -51,7 +51,7 @@ function mod:SPELL_CAST_START(args)
 		specWarnSiphonLife:Show(args.sourceName)
 		specWarnSiphonLife:Play("kickcast")
 	elseif spellId == 326607 then
-		if self:CheckInterruptFilter(args.sourceGUID, false, true)
+		if self:CheckInterruptFilter(args.sourceGUID, false, true) then
 			specWarnTurntoStone:Show(args.sourceName)
 			specWarnTurntoStone:Play("kickcast")
 		elseif self:AntiSpam(3, 2) then
