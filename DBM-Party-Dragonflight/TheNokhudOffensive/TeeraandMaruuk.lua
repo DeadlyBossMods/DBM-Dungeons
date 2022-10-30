@@ -27,6 +27,7 @@ mod:RegisterEventsInCombat(
 --[[
 (ability.id = 382670 or ability.id = 386063 or ability.id = 385339 or ability.id = 386547 or ability.id = 385434 or ability.id = 382836) and type = "begincast"
  or (target.id = 186339 or target.id = 186338) and type = "death"
+ or type = "dungeonencounterstart" or type = "dungeonencounterend"
 --]]
 --Teera
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(25552))

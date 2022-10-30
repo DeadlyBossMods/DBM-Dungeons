@@ -29,6 +29,7 @@ mod:RegisterEventsInCombat(
 (ability.id = 375943 or ability.id = 376892 or ability.id = 375937 or ability.id = 376827 or ability.id = 375929 or ability.id = 376829 or ability.id = 376723) and type = "begincast"
  or (ability.id = 376634 or ability.id = 376730 or ability.id = 376864) and type = "cast"
  or target.id = 190294 and type = "death"
+ or type = "dungeonencounterstart" or type = "dungeonencounterend"
 --]]
 --Stage One: Balakar's Might
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(25185))
