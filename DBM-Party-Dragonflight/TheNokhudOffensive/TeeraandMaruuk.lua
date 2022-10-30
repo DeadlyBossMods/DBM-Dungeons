@@ -40,7 +40,7 @@ local specWarnGuardianWind						= mod:NewSpecialWarningInterrupt(384808, "HasInt
 
 local timerGaleArrowCD							= mod:NewCDTimer(30.3, 382670, nil, false, nil, 3)--Off by default since it should always be cast immediately after roar
 local timerRepelCD								= mod:NewCDTimer(36.3, 386547, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
-local timerSpiritLeapCD							= mod:NewCDTimer(20, 385434, nil, nil, nil, 3)--20-38.4 (if guardian wind isn't interrupted this can get delayed by repel recast)
+local timerSpiritLeapCD							= mod:NewCDTimer(20.4, 385434, nil, nil, nil, 3)--20-38.4 (if guardian wind isn't interrupted this can get delayed by repel recast)
 
 --Maruuk
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(25546))
@@ -76,13 +76,13 @@ end
 
 function mod:OnCombatStart(delay)
 	--Terra
-	timerSpiritLeapCD:Start(3.2-delay)--3-4
+	timerSpiritLeapCD:Start(3.1-delay)--3-4
 	timerGaleArrowCD:Start(14.4-delay)--14.4-21.1
 	timerRepelCD:Start(26.3-delay)--26-28
 	--Maruuk
 	timerBrutalizeCD:Start(8.1-delay)--8-10.8
 	timerFrightfulRoarCD:Start(14.3-delay)--14.3-19.4
-	timerEarthSplitterCD:Start(29-delay)
+	timerEarthSplitterCD:Start(27-delay)
 end
 
 --function mod:OnCombatEnd()
