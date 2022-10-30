@@ -67,7 +67,7 @@ L:SetGeneralLocalization({
 L = DBM:GetModLocalization("UldamanLegacyofTyrTrash")
 
 L:SetGeneralLocalization({
-	name =	"울다만: 유산 일반몹"
+	name =	"울다만: 티르의 유산 일반몹"
 })
 
 -----------------------
@@ -164,7 +164,7 @@ L:SetGeneralLocalization({
 L = DBM:GetModLocalization("AlgetharAcademyTrash")
 
 L:SetGeneralLocalization({
-	name =	"알게스라 대학 일반몹"
+	name =	"알게타르 대학 일반몹"
 })
 
 -----------------------
