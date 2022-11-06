@@ -34,7 +34,7 @@ mod:RegisterEventsInCombat(
 local warnOverwhelmingPoweer					= mod:NewCountAnnounce(389011, 3, nil, nil, DBM_CORE_L.AUTO_ANNOUNCE_OPTIONS.stack:format(389011))--Typical stack warnings have amount and playername, but since used as personal, using count object to just display amount then injecting option text for stack
 local warnEnergyBomb							= mod:NewTargetAnnounce(374352, 3)
 
-local specWarnOverwhelmingPower					= mod:NewSpecialWarningStack(389011, false, 2, nil, nil, 1, 6)
+local specWarnOverwhelmingPower					= mod:NewSpecialWarningStack(389011, false, 3, nil, nil, 1, 6)
 local specWarnAstralBreath						= mod:NewSpecialWarningDodge(374361, nil, nil, nil, 2, 2)
 local specWarnPowerVacuum						= mod:NewSpecialWarningRun(388822, nil, nil, nil, 4, 2)
 local specWarnEnergyBomb						= mod:NewSpecialWarningMoveAway(374352, nil, nil, nil, 1, 2)
@@ -96,7 +96,7 @@ function mod:SPELL_AURA_APPLIED(args)
 	local spellId = args.spellId
 	if spellId == 389011 and args:IsPlayer() then
 		local amount = args.amount or 1
-		if self.Options.SpecWarn389011stack and amount == 2 then
+		if self.Options.SpecWarn389011stack and amount == 3 then
 			specWarnOverwhelmingPower:Show(amount)
 			specWarnOverwhelmingPower:Play("stackhigh")
 		else
