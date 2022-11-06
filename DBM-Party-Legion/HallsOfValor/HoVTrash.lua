@@ -17,6 +17,8 @@ local yellCrackle					= mod:NewYell(199805)
 local specWarnCleansingFlame		= mod:NewSpecialWarningInterrupt(192563, "HasInterrupt", nil, nil, 1, 2)
 local specWarnUnrulyYell			= mod:NewSpecialWarningInterrupt(199726, "HasInterrupt", nil, nil, 1, 2)
 
+--Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 generalized, 7 GTFO
+
 function mod:CrackleTarget(targetname, uId)
 	if not targetname then
 		warnCrackle:Show(DBM_COMMON_L.UNKNOWN)
