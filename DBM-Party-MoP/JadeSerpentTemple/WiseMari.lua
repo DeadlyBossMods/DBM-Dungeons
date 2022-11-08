@@ -15,9 +15,9 @@ mod:RegisterCombat("combat")
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 397783 397801",
 	"SPELL_AURA_APPLIED 397797 397799",
-	"SPELL_AURA_REMOVED 397797",
-	"SPELL_DAMAGE 115167",
-	"SPELL_MISSED 115167"
+	"SPELL_AURA_REMOVED 397797"
+--	"SPELL_DAMAGE 115167",
+--	"SPELL_MISSED 115167"
 )
 
 --This verion of mod is for the retail redesign
@@ -48,7 +48,8 @@ function mod:OnCombatStart(delay)
 end
 
 function mod:SPELL_CAST_START(args)
-	if args.spellId == 397783 then
+	local spellId = args.spellId
+	if spellId == 397783 then
 		specWarnWashAway:Show()
 		specWarnWashAway:Play("watchstep")
 		timerWashAwayCD:Start()
@@ -60,7 +61,8 @@ function mod:SPELL_CAST_START(args)
 end
 
 function mod:SPELL_AURA_APPLIED(args)
-	if args.spellId == 397797 then
+	local spellId = args.spellId
+	if spellId == 397797 then
 		if self:AntiSpam(5, 1) then
 			timerCorruptedVortexCD:Start()
 		end
@@ -68,9 +70,9 @@ function mod:SPELL_AURA_APPLIED(args)
 			specWarnCorruptedVortex:Show()
 			specWarnCorruptedVortex:Play("runout")
 			yellCorruptedVortex:Yell()
-			yellCorruptedVortexFades:Countdown(args.spellId)
+			yellCorruptedVortexFades:Countdown(spellId)
 		end
-	elseif args.spellId == 397799 and args:IsPlayer() and self:AntiSpam(4, 2) then
+	elseif spellId == 397799 and args:IsPlayer() and self:AntiSpam(4, 2) then
 		specWarnGTFO:Show(args.spellName)
 		specWarnGTFO:Play("watchfeet")
 	end
