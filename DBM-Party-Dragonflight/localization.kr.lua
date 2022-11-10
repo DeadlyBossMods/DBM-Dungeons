@@ -103,6 +103,10 @@ L:SetGeneralLocalization({
 	name =	"노쿠드 공격대 일반몹"
 })
 
+L:SetMiscLocalization({
+	Soul = "영혼"
+})
+
 -----------------------
 -- <<<Neltharus >>> --
 -----------------------
