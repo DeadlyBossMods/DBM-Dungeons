@@ -123,7 +123,7 @@ function mod:SPELL_CAST_START(args)
 		end
 		timerStormslamCD:Start()--self.vb.phase == 1 and 10 or 14
 	elseif spellId == 385558 or spellId == 381516 then
-		if spellId == 381516 and self.Option.SpecWarn381516cast then--Mythic
+		if spellId == 381516 and self.Options.SpecWarn381516cast then--Mythic
 			specWarnInterruptingCloudburst:Show()
 			specWarnInterruptingCloudburst:Play("stopcast")
 		else--Normal/Heroic
