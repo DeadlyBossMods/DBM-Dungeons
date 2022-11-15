@@ -13,8 +13,7 @@ mod:RegisterEvents(
 --	"SPELL_AURA_REMOVED 339525"
 )
 
---TODO, icon mark shared suffering? Maybe when they fix ENCOUNTER_START, for now I don't want to risk trash mod messing with a boss mods icon marking
---Lady's Trash, minus bottled anima, which will need a unit event to detect it looks like
+
 local warnPiercingShards					= mod:NewCastAnnounce(370764, 4)
 local warnSplinteringShards					= mod:NewTargetAnnounce(371007, 2)
 
@@ -32,9 +31,11 @@ local yellSplinteringShards					= mod:NewYell(371007)
 
 function mod:ShoulderSlamTarget(targetname)
 	if not targetname then return end
-	if targetname == UnitName("player") and self:AntiSpam(4, 5) then
-		specWarnShoulderSlam:Show()
-		specWarnShoulderSlam:Play("runout")
+	if targetname == UnitName("player") then
+		if self:AntiSpam(4, 5) then
+			specWarnShoulderSlam:Show()
+			specWarnShoulderSlam:Play("runout")
+		end
 		yellShoulderSlam:Yell()
 	end
 end

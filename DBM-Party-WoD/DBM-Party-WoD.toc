@@ -70,6 +70,7 @@ SMBurialGrounds\SadanaBloodfury.lua
 SMBurialGrounds\Nhallish.lua
 SMBurialGrounds\Bonemaw.lua
 SMBurialGrounds\Nerzhul.lua
+SMBurialGrounds\SMBGTrash.lua
 Skyreach\SkyreachTrash.lua
 Skyreach\Ranjit.lua
 Skyreach\Araknath.lua
