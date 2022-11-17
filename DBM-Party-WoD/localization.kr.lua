@@ -179,6 +179,15 @@ L= DBM:GetModLocalization(1140)
 -----------------------
 L= DBM:GetModLocalization(1160)
 
+-------------
+--  SMBG Trash  --
+-------------
+L = DBM:GetModLocalization("SMBGTrash")
+
+L:SetGeneralLocalization({
+	name =	"어둠달 지하묘지 일반몹"
+})
+
 -----------------------
 -- <<<Skyreach>>> --
 -----------------------
