@@ -35,6 +35,15 @@ L= DBM:GetModLocalization(658)
 -----------------------
 L= DBM:GetModLocalization(335)
 
+-------------
+--  Temple of the Jade Serpent Trash  --
+-------------
+L = DBM:GetModLocalization("JadeTempleTrash")
+
+L:SetGeneralLocalization({
+	name =	"Jade Temple Trash"
+})
+
 -----------------------
 -- <<<Stormstout Brewery>>> --
 -----------------------

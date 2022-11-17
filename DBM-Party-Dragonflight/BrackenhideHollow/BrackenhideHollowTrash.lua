@@ -12,8 +12,7 @@ mod.isTrashMod = true
 --	"SPELL_AURA_REMOVED 339525"
 --)
 
---TODO, icon mark shared suffering? Maybe when they fix ENCOUNTER_START, for now I don't want to risk trash mod messing with a boss mods icon marking
---Lady's Trash, minus bottled anima, which will need a unit event to detect it looks like
+
 --local warnConcentrateAnima					= mod:NewTargetNoFilterAnnounce(339525, 3)
 
 --local specWarnConcentrateAnima				= mod:NewSpecialWarningMoveAway(310780, nil, nil, nil, 1, 2)

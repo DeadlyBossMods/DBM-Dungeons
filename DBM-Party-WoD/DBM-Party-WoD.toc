@@ -1,4 +1,4 @@
-## Interface: 100000
+## Interface: 100002
 ## X-Min-Interface: 80000
 ## Title:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cff69ccf0Dungeons (WoD)|r
 ## Title-koKR:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cff69ccf0던전 (드군)|r
@@ -70,6 +70,7 @@ SMBurialGrounds\SadanaBloodfury.lua
 SMBurialGrounds\Nhallish.lua
 SMBurialGrounds\Bonemaw.lua
 SMBurialGrounds\Nerzhul.lua
+SMBurialGrounds\SMBGTrash.lua
 Skyreach\SkyreachTrash.lua
 Skyreach\Ranjit.lua
 Skyreach\Araknath.lua

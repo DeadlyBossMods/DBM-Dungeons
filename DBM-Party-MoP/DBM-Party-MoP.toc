@@ -1,4 +1,4 @@
-## Interface: 100000
+## Interface: 100002
 ## X-Min-Interface: 80000
 ## Title:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cff69ccf0Dungeons (MoP)|r
 ## Title-koKR:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cff69ccf0던전 (판다)|r
@@ -48,6 +48,7 @@ JadeSerpentTemple\WiseMari.lua
 JadeSerpentTemple\LibraryEvent.lua
 JadeSerpentTemple\LiuFlameheart.lua
 JadeSerpentTemple\ShaofDoubt.lua
+JadeSerpentTemple\JadeTempleTrash.lua
 StormstoutBrewery\OokOok.lua
 StormstoutBrewery\Hoptallus.lua
 StormstoutBrewery\YanZhu.lua
