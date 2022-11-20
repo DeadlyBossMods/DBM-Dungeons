@@ -18,6 +18,10 @@ L:SetWarningLocalization({
 	SpecWarnIntensity	= "%s : %s (%d)"
 })
 
+L:SetMiscLocalization({
+	Event1	= "아, 아직 끝나지 않았네. 내가 보기엔 아직 야운골의 시험이 남았네. 내가 실마리를 주지..."
+})
+
 -----------------------
 -- Liu Flameheart --
 -----------------------
@@ -27,6 +31,15 @@ L= DBM:GetModLocalization(658)
 -- Sha of Doubt --
 -----------------------
 L= DBM:GetModLocalization(335)
+
+-------------
+--  Temple of the Jade Serpent Trash  --
+-------------
+L = DBM:GetModLocalization("JadeTempleTrash")
+
+L:SetGeneralLocalization({
+	name =	"옥룡사 일반몹"
+})
 
 -----------------------
 -- <<<Stormstout Brewery>>> --
