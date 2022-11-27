@@ -30,14 +30,12 @@ local warnBoundsOfReality		= mod:NewSpellAnnounce(117665, 3)
 local specWarnTouchOfNothingness= mod:NewSpecialWarningDispel(106113, "RemoveMagic", nil, nil, 1, 2)
 local specWarnShadowsOfDoubt	= mod:NewSpecialWarningGTFO(110099, nil, nil, nil, 1, 8)--Actually used by his trash, but in a speed run, you tend to pull it all together
 
----local timerWitherWillCD			= mod:NewCDTimer(6, 106736, nil, false, 2)--6-10 second variations.
 local timerTouchofNothingnessCD	= mod:NewCDTimer(15.5, 106113, nil, "Heaker", 2, 5, nil, DBM_COMMON_L.MAGIC_ICON)--15.5~20 second variations.
 local timerTouchofNothingness	= mod:NewTargetTimer(30, 106113, nil, nil, nil, 3, nil, DBM_COMMON_L.MAGIC_ICON)
 local timerBoundsOfRealityCD	= mod:NewCDTimer(58.2, 117665, nil, nil, nil, 6)
 local timerBoundsOfReality		= mod:NewBuffFadesTimer(30, 117665, nil, nil, nil, 6)
 
 function mod:OnCombatStart(delay)
---	timerWitherWillCD:Start(-delay)
 	timerTouchofNothingnessCD:Start(10.9-delay)
 	timerBoundsOfRealityCD:Start(20.3-delay)
 end
@@ -46,7 +44,6 @@ end
 function mod:SPELL_CAST_SUCCESS(args)
 	if args.spellId == 106736 then
 		warnWitherWill:Show()
-		timerWitherWillCD:Start()
 --	elseif args.spellId == 106113 then
 --		timerTouchofNothingnessCD:Start()
 	end
@@ -56,7 +53,6 @@ end
 function mod:SPELL_AURA_APPLIED(args)
 	if args.spellId == 117665 then
 		warnBoundsOfReality:Show()
-		timerWitherWillCD:Cancel()
 		timerTouchofNothingnessCD:Cancel()
 		timerBoundsOfReality:Start()
 		timerBoundsOfRealityCD:Start(self:IsMythicPlus() and 68.2 or 58.2)--TODO, confirm if non mythic plus still 58
