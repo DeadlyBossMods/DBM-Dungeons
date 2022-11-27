@@ -36,7 +36,7 @@ local specWarnPrimalChill						= mod:NewSpecialWarningStack(372682, nil, 8, nil,
 local specWarnHailbombs							= mod:NewSpecialWarningDodge(396044, nil, nil, nil, 2, 2)
 local yellChillstorm							= mod:NewYell(372851)
 local yellChillstormFades						= mod:NewShortFadesYell(372851)
-local specWarnFrostOverload						= mod:NewSpecialWarningInterrupt(373680, "HasInterrupt", nil, nil, 1, 2)
+local specWarnFrostOverload						= mod:NewSpecialWarningInterrupt(373680, "HasInterrupt", nil, nil, 1, 2, 4)
 local specWarnAwakenWhelps						= mod:NewSpecialWarningSwitch(373046, "-Healer", nil, nil, 1, 2)
 local specWarnGTFO								= mod:NewSpecialWarningGTFO(372851, nil, nil, nil, 1, 8)
 
@@ -114,7 +114,7 @@ function mod:SPELL_AURA_APPLIED(args)
 	elseif spellId == 372988 then
 		warnIceBulwark:Show()
 	elseif spellId == 385518 then
-		warnChillstorm:(args.destName)
+		warnChillstorm:Show(args.destName)
 		if args:IsPlayer() then
 			yellChillstorm:Yell()
 			yellChillstormFades:Countdown(3.5, 2)--Debuff says 1sec but combat log shows 3.5 on M+ at least, not checked lower difficulties since harder to search on WCL
