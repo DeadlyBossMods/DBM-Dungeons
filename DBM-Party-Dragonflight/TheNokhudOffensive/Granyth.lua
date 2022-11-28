@@ -145,7 +145,7 @@ function mod:SPELL_AURA_REMOVED(args)
 	if spellId == 361966 then--Lanced!
 		--Resets these timers
 		timerShardsofStoneCD:Start(10)
-		timerTectonicStompCD:Start(16.2)
+		timerTectonicStompCD:Start(15.3)
 		timerEruptionCD:Start(28.6)
 	end
 end
