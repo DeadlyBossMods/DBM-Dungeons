@@ -7,6 +7,7 @@ mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(56448)
 mod:SetEncounterID(1418)
 mod:SetUsedIcons(8)
+mod:SetHotfixNoticeRev(20221127000000)
 
 mod:RegisterCombat("combat")
 
