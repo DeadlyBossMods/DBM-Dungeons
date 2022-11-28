@@ -13,7 +13,7 @@ mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 377034 377004 376997",
-	"SPELL_CAST_SUCCESS 377182 377004 376781",
+	"SPELL_CAST_SUCCESS 377004 376781",
 	"SPELL_AURA_APPLIED 376781 181089",
 --	"SPELL_AURA_APPLIED_DOSE",
 	"SPELL_AURA_REMOVED 376781"
@@ -30,7 +30,7 @@ mod:RegisterEventsInCombat(
  or ability.id = 181089
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
 --]]
---local warnPlayBall							= mod:NewSpellAnnounce(377182, 2, nil, nil, nil, nil, nil, 2)
+local warnPlayBall								= mod:NewSpellAnnounce(377182, 2, nil, nil, nil, nil, nil, 2)
 
 local specWarnFirestorm							= mod:NewSpecialWarningDodge(376448, nil, nil, nil, 2, 2)
 --local specWarnGaleForce						= mod:NewSpecialWarningSpell(376467, nil, nil, nil, 2, 2)
@@ -99,10 +99,7 @@ end
 
 function mod:SPELL_CAST_SUCCESS(args)
 	local spellId = args.spellId
-	if spellId == 377182 then
---		warnPlayBall:Show()
---		warnPlayBall:Play("phasechange")
-	elseif spellId == 377004 then
+	if spellId == 377004 then
 		if self.Options.RangeFrame then
 			DBM.RangeCheck:Hide()
 		end
