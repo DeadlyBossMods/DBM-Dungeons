@@ -179,6 +179,15 @@ L= DBM:GetModLocalization(1140)
 -----------------------
 L= DBM:GetModLocalization(1160)
 
+-------------
+--  SMBG Trash  --
+-------------
+L = DBM:GetModLocalization("SMBGTrash")
+
+L:SetGeneralLocalization({
+	name =	"Трэш мобы Некрополь Призрачной Луны"
+})
+
 -----------------------
 -- <<<Skyreach>>> --
 -----------------------
