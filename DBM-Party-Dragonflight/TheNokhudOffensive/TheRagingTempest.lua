@@ -30,7 +30,7 @@ mod:RegisterEventsInCombat(
 local warnElectricalStorm						= mod:NewSpellAnnounce(384620, 3)
 local warnEnergySurge							= mod:NewSpellAnnounce(384686, 3, nil, "Tank|Healer")
 
-local specWarnLightingStrike					= mod:NewSpecialWarningDodge(384316, nil, nil, nil, 2, 2)
+local specWarnLightingStrike					= mod:NewSpecialWarningMoveAway(384316, nil, nil, nil, 2, 2)
 --local yellInfusedStrikes						= mod:NewYell(361966)
 local specWarnEnergySurge						= mod:NewSpecialWarningDispel(384686, "MagicDispeller", nil, nil, 1, 2)
 --local specWarnGTFO							= mod:NewSpecialWarningGTFO(340324, nil, nil, nil, 1, 8)
@@ -68,7 +68,7 @@ function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
 	if spellId == 384316 then
 		specWarnLightingStrike:Show()
-		specWarnLightingStrike:Play("watchstep")
+		specWarnLightingStrike:Play("scatter")
 		timerLightingStrikeCD:Start()
 	elseif spellId == 384620 then
 		warnElectricalStorm:Show()

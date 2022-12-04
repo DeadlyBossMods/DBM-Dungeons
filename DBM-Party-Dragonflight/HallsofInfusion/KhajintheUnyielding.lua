@@ -40,7 +40,7 @@ local specWarnFrostShock						= mod:NewSpecialWarningDispel(385963, "RemoveMagic
 local timerHailstormCD							= mod:NewCDTimer(25, 386757, nil, nil, nil, 2, nil, DBM_COMMON_L.DEADLY_ICON)
 local timerGlacialSurgeCD						= mod:NewCDTimer(22, 386559, nil, nil, nil, 3)
 local timerFrostCycloneCD						= mod:NewAITimer(35, 390111, nil, nil, nil, 3, nil, DBM_COMMON_L.MYTHIC_ICON)
-local timerFrostShockCD							= mod:NewCDTimer(36.1, 385963, nil, nil, nil, 3, nil, DBM_COMMON_L.MAGIC_ICON)
+local timerFrostShockCD							= mod:NewCDTimer(11, 385963, nil, nil, nil, 3, nil, DBM_COMMON_L.MAGIC_ICON)
 
 --local berserkTimer							= mod:NewBerserkTimer(600)
 

@@ -89,7 +89,7 @@ function mod:SPELL_CAST_START(args)
 	if spellId == 388283 then
 		self.vb.eruptionCount = self.vb.eruptionCount + 1
 		specWarnEruption:Show(self.vb.eruptionCount)
-		specWarnEruption:Play("aesoon")
+		specWarnEruption:Play("interruptsoon")
 --		timerEruptionCD:Start()--In between times not known yet since doing fight correctly shouldn't see in betweens
 	elseif spellId == 388817 then--388817 confirmed on mythic/heroic/normal, 385657 unused?
 		self.vb.shardsCount = self.vb.shardsCount + 1
