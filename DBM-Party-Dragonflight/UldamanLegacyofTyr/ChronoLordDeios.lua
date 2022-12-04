@@ -39,7 +39,7 @@ local yellTimeSink								= mod:NewYell(377405)
 local specWarnGTFO								= mod:NewSpecialWarningGTFO(376325, nil, nil, nil, 1, 8)
 local specWarnSandBreath						= mod:NewSpecialWarningDefensive(375727, nil, nil, nil, 1, 2)
 
-local timerEternalOrbCD							= mod:NewCDCountTimer(6, 376292, nil, nil, nil, 3)--6-9
+local timerEternalOrbCD							= mod:NewCDCountTimer(3.6, 376292, nil, nil, nil, 3)--6-9
 local timerRewindTimeflowCD						= mod:NewCDCountTimer(52.3, 376208, nil, nil, nil, 6)
 local timerRewindTimeflow						= mod:NewBuffActiveTimer(14, 376208, nil, nil, nil, 5)--12+2sec cast
 local timerWingBuffetCD							= mod:NewCDCountTimer(27.9, 376049, nil, nil, nil, 2)

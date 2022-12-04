@@ -62,7 +62,7 @@ function mod:OnCombatStart(delay)
 	self.vb.orbCount = 0
 	self.vb.manaCount = 0
 	timerArcaneOrbsCD:Start(2.1-delay, 1)
-	timerArcaneExpulsionCD:Start(13-delay)
+	timerArcaneExpulsionCD:Start(12.1-delay)
 	timerManaBombsCD:Start(23.9-delay)
 	timerArcaneFissureCD:Start(40.7-delay)
 	if self.Options.InfoFrame then
