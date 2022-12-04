@@ -14,7 +14,7 @@ mod:RegisterCombat("combat")
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 373733 373742 373424 375056",
 --	"SPELL_CAST_SUCCESS",
-	"SPELL_AURA_APPLIED 374655",
+	"SPELL_AURA_APPLIED 374655 375057",
 --	"SPELL_AURA_APPLIED_DOSE 374655",
 	"SPELL_AURA_REFRESH 374655",
 --	"SPELL_AURA_APPLIED_DOSE",
@@ -65,17 +65,6 @@ function mod:DragonStrikeTarget(targetname)
 	warnDragonStrike:Show(targetname)
 end
 
-function mod:SpearTarget(targetname)
-	if not targetname then return end
-	if targetname == UnitName("player") then
-		specWarnGroundingSpear:Show()
-		specWarnGroundingSpear:Play("targetyou")
-		yellGroundingSpear:Yell()
-	else
-		warnGroundingSpear:Show(targetname)
-	end
-end
-
 --Notes:
 --Boss has spell queung problems on top of varying timers, which can cause abilities to come in different orders and timings
 --First magmawave is usually 15 sec into boss, but also soemtimes 26 and sometimes not cast at all before first blade lock
@@ -114,13 +103,6 @@ function mod:SPELL_CAST_START(args)
 		specWarnMagmaWave:Play("watchwave")
 		timerMagmaWaveCD:Start()
 	elseif spellId == 373424 then
-		if not  self:IsMythic() then
-			self:ScheduleMethod(0.2, "BossTargetScanner", args.sourceGUID, "SpearTarget", 0.1, 8, true)
-		else--On mythic, everyone gets it
-			specWarnGroundingSpear:Show()
-			specWarnGroundingSpear:Play("targetyou")
-			yellGroundingSpear:Yell()
-		end
 		timerGroundingSpearCD:Start()
 	elseif spellId == 375056 then
 		specWarnBladeLock:Show()
@@ -150,6 +132,14 @@ function mod:SPELL_AURA_APPLIED(args)
 		timerMagmaWaveCD:Stop()
 		timerDragonStrikeCD:Stop()
 		timerBladeLockCD:Stop()
+	elseif spellId == 375057 then
+		if args:IsPlayer() then
+			specWarnGroundingSpear:Show()
+			specWarnGroundingSpear:Play("targetyou")
+			yellGroundingSpear:Yell()
+		elseif not self:IsMythic() then--On non mythic only one target, else everyone gets it so no need to target announce
+			warnGroundingSpear:Show(args.destName)
+		end
 	end
 end
 mod.SPELL_AURA_REFRESHED = mod.SPELL_AURA_APPLIED
