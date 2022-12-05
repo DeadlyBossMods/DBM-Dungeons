@@ -65,7 +65,7 @@ end
 function mod:SPELL_AURA_APPLIED(args)
 	if not self.Options.Enabled then return end
 	local spellId = args.spellId
-	if spellId == 339525 then
+	if spellId == 373693 then
 		warnLivingBomb:CombinedShow(0.3, args.destName)
 		if args:IsPlayer() then
 			specWarnLivingBomb:Show()
