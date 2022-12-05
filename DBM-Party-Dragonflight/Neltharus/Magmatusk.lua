@@ -69,7 +69,7 @@ function mod:OnCombatStart(delay)
 	timerLavaSrayCD:Start(7.2-delay)
 --	timerMagmaLobCD:Start(8-delay)
 	timerBlazingChargeCD:Start(19.7-delay)
-	timerVolatileMutationCD:Start(25.8-delay)
+	timerVolatileMutationCD:Start(25-delay)
 end
 
 --function mod:OnCombatEnd()

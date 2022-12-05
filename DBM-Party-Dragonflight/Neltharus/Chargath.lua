@@ -47,7 +47,7 @@ local specWarnBladeLock							= mod:NewSpecialWarningInterrupt(375056, nil, nil,
 local specWarnGTFO								= mod:NewSpecialWarningGTFO(374854, nil, nil, nil, 1, 8)
 
 local timerDragonStrikeCD						= mod:NewCDTimer(12.1, 373733, nil, nil, nil, 3, nil, DBM_COMMON_L.BLEED_ICON)--12 but lowest spell queue priority, it's often delayed by several more seconds
-local timerMagmaWaveCD							= mod:NewCDTimer(17.8, 373742, nil, nil, nil, 3)--Actual CD still not known, since you'd never fully see it unhindered by blade lock or reset by fetter
+local timerMagmaWaveCD							= mod:NewCDTimer(12.1, 373742, nil, nil, nil, 3)--Actual CD still not known, since you'd never fully see it unhindered by blade lock or reset by fetter
 local timerGroundingSpearCD						= mod:NewCDTimer(8.9, 373424, nil, nil, nil, 3)
 local timerFetter								= mod:NewTargetTimer(8, 374655, nil, nil, nil, 5, nil, DBM_COMMON_L.DAMAGE_ICON)
 local timerBladeLockCD							= mod:NewCDTimer(35, 375056, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON..DBM_COMMON_L.DEADLY_ICON)
@@ -79,7 +79,7 @@ function mod:OnCombatStart(delay)
 	self.vb.magmawaveCount = 0
 	timerDragonStrikeCD:Start(3.3-delay)
 	timerGroundingSpearCD:Start(10.5-delay)
-	timerMagmaWaveCD:Start(15-delay)--usually 15 but in rare cases boss flips ability order and this gets queued as far out as 32 which can cause it not to be ast at all before bladelock/fetter (which resets cd on magma)
+	timerMagmaWaveCD:Start(6.2-delay)
 	timerBladeLockCD:Start(29.2-delay)--29.2-44 variance even without fetter stuns done before first lock cast
 end
 

@@ -6,7 +6,7 @@ mod:SetRevision("@file-date-integer@")
 mod.isTrashMod = true
 
 mod:RegisterEvents(
-	"SPELL_CAST_START 391136 370764 386526 387564 377105",
+	"SPELL_CAST_START 391136 370764 386526 387564 377105 370766",
 	"SPELL_CAST_SUCCESS 374885 371358",
 	"SPELL_AURA_APPLIED 371007 395492 375596"
 --	"SPELL_AURA_APPLIED_DOSE 339528",
@@ -14,6 +14,7 @@ mod:RegisterEvents(
 )
 
 --TODO, I don't think shoulder slam target scan worked, maybe try again though.
+local warnNullStomp							= mod:NewCastAnnounce(386526, 2)
 local warnShoulderSlam						= mod:NewCastAnnounce(391136, 2)
 local warnPiercingShards					= mod:NewCastAnnounce(370764, 4)
 local warnIceCutter							= mod:NewCastAnnounce(377105, 4, nil, nil, "Tank|Healer")
@@ -23,7 +24,8 @@ local warnErraticGrowth						= mod:NewTargetNoFilterAnnounce(375596, 2)
 
 local specWarnUnstablePower					= mod:NewSpecialWarningDodge(374885, nil, nil, nil, 2, 2)
 local specWarnForbiddenKnowledge			= mod:NewSpecialWarningDodge(371358, nil, nil, nil, 2, 2)
-local specWarnNullStomp						= mod:NewSpecialWarningDodge(386526, nil, nil, nil, 2, 2)
+local specWarnNullStomp						= mod:NewSpecialWarningDodge(386526, false, nil, 2, 2, 2)
+local specWarnCrystallineRupture			= mod:NewSpecialWarningDodge(370766, nil, nil, nil, 2, 2)
 --local specWarnShoulderSlam					= mod:NewSpecialWarningMoveAway(391136, nil, nil, nil, 1, 2)
 --local yellShoulderSlam						= mod:NewYell(391136)
 local specWarnSplinteringShards				= mod:NewSpecialWarningMoveAway(371007, nil, nil, nil, 1, 2)
@@ -59,8 +61,15 @@ function mod:SPELL_CAST_START(args)
 	elseif spellId == 377105 and self:AntiSpam(3, 6) then
 		warnIceCutter:Show()
 	elseif spellId == 386526 and self:AntiSpam(3, 2) then
-		specWarnNullStomp:Show()
-		specWarnNullStomp:Play("watchstep")
+		if self.Options.SpecWarn386526dodge then
+			specWarnNullStomp:Show()
+			specWarnNullStomp:Play("watchstep")
+		else
+			warnNullStomp:Show()
+		end
+	elseif spellId == 370766 and self:AntiSpam(3, 2) then
+		specWarnCrystallineRupture:Show()
+		specWarnCrystallineRupture:Play("watchstep")
 	elseif spellId == 387564 and self:CheckInterruptFilter(args.sourceGUID, false, true) then
 		specWarnMysticVapors:Show(args.sourceName)
 		specWarnMysticVapors:Play("kickcast")
