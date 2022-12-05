@@ -37,7 +37,7 @@ local specWarnGTFO								= mod:NewSpecialWarningGTFO(378054, nil, nil, nil, 1, 
 local specWarnVineWhip							= mod:NewSpecialWarningDefensive(377559, nil, nil, nil, 1, 2)
 
 local timerGraspingVinesCD						= mod:NewAITimer(35, 376933, nil, nil, nil, 6)
-local timerConsume								= mod:NewTargetTimer(10, 377222, nil, nil, nil, 3, nil, DBM_COMMON_L.DAMAGE_ICON)
+local timerConsume								= mod:NewTargetTimer(10, 377222, nil, false, 2, 3, nil, DBM_COMMON_L.DAMAGE_ICON)
 local timerDecaySprayCD							= mod:NewAITimer(35, 376811, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)
 
 --local berserkTimer							= mod:NewBerserkTimer(600)
@@ -105,7 +105,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		timerGraspingVinesCD:Start()--Probably not right place to start
 		--Update timers?
 	elseif spellId == 377222 then--On Player
-		warnConsume:Show(args.destName)
+		warnConsume:CombinedShow(0.3, args.destName)
 		timerConsume:Start(args.destName)
 	elseif spellId == 378022 then--On Boss
 		if self.Options.InfoFrame then
