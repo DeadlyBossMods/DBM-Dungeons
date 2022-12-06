@@ -145,9 +145,8 @@ function mod:SPELL_AURA_APPLIED(args)
 			DBM.InfoFrame:UpdateTable(toxinStacks, 0.2)
 		end
 		if args:IsPlayer() and amount >= 12 and self:AntiSpam(3.5, 1) then
-			specWarnLasherToxin:Cancel()--Possible to get multiple applications at once so we throttle by scheduling
-			specWarnLasherToxin:Schedule(0.2, amount)
-			specWarnLasherToxin:ScheduleVoice(0.2, "stackhigh")
+			specWarnLasherToxin:Show(amount)
+			specWarnLasherToxin:Play("stackhigh")
 		end
 	end
 end
