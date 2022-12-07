@@ -40,7 +40,7 @@ local specWarnRogueWaves						= mod:NewSpecialWarningDodge(388760, nil, nil, nil
 --local specWarnGTFO							= mod:NewSpecialWarningGTFO(340324, nil, nil, nil, 1, 8)
 
 local timerSquallBuffetCD						= mod:NewCDTimer(35, 387504, DBM_COMMON_L.TANKCOMBO, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)--Squall Buffet/Focused Deluge tank combo
-local timerRogueWavesCD							= mod:NewCDTimer(15, 388760, nil, nil, nil, 3, nil, DBM_COMMON_L.MYTHIC_ICON)
+local timerRogueWavesCD							= mod:NewCDTimer(13, 388760, nil, nil, nil, 3, nil, DBM_COMMON_L.MYTHIC_ICON)
 local timerInfusedGlobuleCD						= mod:NewCDTimer(19.1, 387474, nil, nil, nil, 3)
 local timerTempestsFuryCD						= mod:NewCDTimer(29.9, 388424, nil, nil, nil, 2)
 
