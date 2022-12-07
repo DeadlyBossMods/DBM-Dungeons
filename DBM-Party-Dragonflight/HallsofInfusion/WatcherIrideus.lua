@@ -15,13 +15,14 @@ mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 389179 384351 384014 384524 389446",
 	"SPELL_AURA_APPLIED 389179 383840 389443",
 --	"SPELL_AURA_APPLIED_DOSE",
-	"SPELL_AURA_REMOVED 389179",
+	"SPELL_AURA_REMOVED 389179 383840",
 	"SPELL_PERIODIC_DAMAGE 389181",
 	"SPELL_PERIODIC_MISSED 389181"
 --	"UNIT_SPELLCAST_SUCCEEDED boss1"
 )
 
 --TODO, longer pulls since heroic is vastly undertuned
+--TODO, actually remember to log boss when doing longer pulls
 --[[
 (ability.id = 389179 or ability.id = 384351 or ability.id = 384014 or ability.id = 384524 or ability.id = 389446) and type = "begincast"
  or ability.id = 383840
