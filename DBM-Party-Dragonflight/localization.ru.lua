@@ -103,6 +103,10 @@ L:SetGeneralLocalization({
 	name =	"Трэш мобы Наступление клана Нокхуд"
 })
 
+L:SetMiscLocalization({
+	Soul = "Душа"
+})
+
 -----------------------
 -- <<<Neltharus >>> --
 -----------------------
