@@ -22,7 +22,6 @@ mod:RegisterEventsInCombat(
 )
 
 --TODO: Warn Undertow? It's only used if tank is messing up
---TODO: Literally ANY phase 2 data. Again, fight is so undertuned on heroic that no one has even seen this bosses stage 2 because it dies in 20-30 seconds
 --[[
 (ability.id = 387504 or ability.id = 387571 or ability.id = 388760 or ability.id = 388424 or ability.id = 387559) and type = "begincast"
  or ability.id = 387585
@@ -55,8 +54,11 @@ local timerSubmergedCD							= mod:NewCDTimer(29.9, 387585, nil, nil, nil, 6)
 --mod:AddInfoFrameOption(361651, true)
 --mod:AddSetIconOption("SetIconOnStaggeringBarrage", 361018, true, false, {1, 2, 3})
 
+mod.vb.rogueCount = 0
+
 function mod:OnCombatStart(delay)
 	self:SetStage(1)
+	self.vb.rogueCount = 0
 	timerTempestsFuryCD:Start(4-delay)
 	timerInfusedGlobuleCD:Start(8-delay)--12
 	timerSquallBuffetCD:Start(18-delay)
@@ -86,9 +88,10 @@ function mod:SPELL_CAST_START(args)
 	elseif spellId == 387571 then
 		warnFocusedDeluge:Show()
 	elseif spellId == 388760 then
+		self.vb.rogueCount = self.vb.rogueCount + 1
 		specWarnRogueWaves:Show()
 		specWarnRogueWaves:Play("watchwave")
-		timerRogueWavesCD:Start()
+		timerRogueWavesCD:Start(self.vb.rogueCount == 1 and 15 or 13)
 	elseif spellId == 388424 then
 		warnTempestsFury:Show()
 		timerTempestsFuryCD:Start()
@@ -115,17 +118,18 @@ end
 
 function mod:SPELL_AURA_REMOVED(args)
 	local spellId = args.spellId
-	if spellId == 387585 and self.vb.phase == 2 then--Assumed
+	if spellId == 387585 and self.vb.phase == 2 then--Submerged
 		self:SetStage(1)
+		self.vb.rogueCount = 0
 		warnSubmerged:Show()
-		timerSquallBuffetCD:Start(7)
+		timerTempestsFuryCD:Start(7)
 		timerInfusedGlobuleCD:Start(11)
-		--NEED MORE DATA
---		timerTempestsFuryCD:Start(3)
---		timerSubmergedCD:Start(3)
---		if self:IsMythic() then
---			timerRogueWavesCD:Start(3)
---		end
+		--NEED MORE DATA, drycoded
+		timerSquallBuffetCD:Start(21)
+		timerSubmergedCD:Start(55)
+		if self:IsMythic() then
+			timerRogueWavesCD:Start(18)
+		end
 	end
 end
 
