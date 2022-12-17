@@ -26,7 +26,7 @@ mod:RegisterEvents(
 (ability.id = 193659 or ability.id = 193668 or ability.id = 193826 or ability.id = 194112) and type = "begincast"
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
 --]]
-local warnAegis						= mod:NewTargetAnnounce(202711, 1)
+local warnAegis						= mod:NewTargetNoFilterAnnounce(202711, 1)
 local warnFelblazeRush				= mod:NewTargetAnnounce(193659, 2)
 local warnClaimAegis				= mod:NewSpellAnnounce(194112, 2)
 
