@@ -20,7 +20,7 @@ mod:RegisterEventsInCombat(
  or ability.id = 188404 and type = "cast"
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
 --]]
-local warnBreath					= mod:NewCountAnnounce(193235, 3)
+local warnBreath					= mod:NewCountAnnounce(193235, 4)
 local warnDancingBlade				= mod:NewCountAnnounce(193235, 3)
 local warnSweep						= mod:NewSpellAnnounce(193092, 2, nil, "Tank")
 

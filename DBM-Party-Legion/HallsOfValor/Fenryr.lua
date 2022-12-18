@@ -25,8 +25,8 @@ mod:RegisterEventsInCombat(
 --]]
 local warnLeap							= mod:NewTargetAnnounce(197556, 2)
 local warnPhase2						= mod:NewPhaseAnnounce(2, 2, nil, nil, nil, nil, nil, 2)
-local warnFixate						= mod:NewTargetAnnounce(196838, 3)
-local warnClawFrenzy					= mod:NewSpellAnnounce(196512, 2, nil, "Tank")
+local warnFixate						= mod:NewTargetAnnounce(196838, 2)
+local warnClawFrenzy					= mod:NewSpellAnnounce(196512, 3, nil, nil, 2)
 
 local specWarnLeap						= mod:NewSpecialWarningMoveAway(197556, nil, nil, nil, 1, 2)
 local yellLeap							= mod:NewYell(197556)
