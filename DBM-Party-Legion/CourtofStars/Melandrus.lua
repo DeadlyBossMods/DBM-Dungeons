@@ -68,7 +68,7 @@ function mod:SPELL_CAST_START(args)
 		self.vb.slicingMaelstromCount = self.vb.slicingMaelstromCount + 1
 		specWarnSlicingMaelstrom:Show()
 		specWarnSlicingMaelstrom:Play("aesoon")
-		timerMaelstromCD:Start(24.2, self.vb.slicingMaelstromCount+1)
+		timerMaelstromCD:Start(22, self.vb.slicingMaelstromCount+1)
 	elseif spellId == 209628 and self:AntiSpam(5, 1) then
 		specWarnGale:Show()
 		specWarnGale:Play("watchstep")
