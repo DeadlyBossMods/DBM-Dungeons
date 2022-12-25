@@ -30,6 +30,7 @@ local timerMaelstromCD				= mod:NewCDCountTimer(24.2, 209676, nil, nil, nil, 3)
 local timerGaleCD					= mod:NewCDTimer(23.8, 209628, nil, nil, nil, 2)
 
 local trashmod = DBM:GetModByName("CoSTrash")
+mod.vb.slicingMaelstromCount = 0
 
 function mod:SurgeTarget(targetname, uId)
 	if not targetname then
