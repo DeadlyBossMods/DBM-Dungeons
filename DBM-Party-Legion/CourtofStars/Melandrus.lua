@@ -49,7 +49,7 @@ function mod:OnCombatStart(delay)
 	self.vb.slicingMaelstromCount = 0
 	timerSurgeCD:Start(5-delay)
 	timerGaleCD:Start(10-delay)--10
-	timerMaelstromCD:Start(24.2-delay, 1)
+	timerMaelstromCD:Start(22-delay, 1)
 	--Not ideal to do every pull, but cleanest way to ensure it's done
 	if not trashmod then
 		trashmod = DBM:GetModByName("CoSTrash")
@@ -68,7 +68,7 @@ function mod:SPELL_CAST_START(args)
 		self.vb.slicingMaelstromCount = self.vb.slicingMaelstromCount + 1
 		specWarnSlicingMaelstrom:Show()
 		specWarnSlicingMaelstrom:Play("aesoon")
-		timerMaelstromCD:Start(22, self.vb.slicingMaelstromCount+1)
+		timerMaelstromCD:Start(24.2, self.vb.slicingMaelstromCount+1)
 	elseif spellId == 209628 and self:AntiSpam(5, 1) then
 		specWarnGale:Show()
 		specWarnGale:Play("watchstep")
