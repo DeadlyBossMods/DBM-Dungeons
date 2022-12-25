@@ -24,7 +24,7 @@ local warnBreath					= mod:NewCountAnnounce(188404, 4)
 local warnDancingBlade				= mod:NewCountAnnounce(193235, 3)
 local warnSweep						= mod:NewSpellAnnounce(193092, 2, nil, "Tank")
 
-local specWarnHornOfValor			= mod:NewSpecialWarningSoon(188404, nil, nil, nil, 2, 2)
+local specWarnHornOfValor			= mod:NewSpecialWarningSpell(191284, nil, nil, nil, 2, 2)
 local specWarnDancingBlade			= mod:NewSpecialWarningGTFO(193235, nil, nil, nil, 1, 8)
 --local yellDancingBlade				= mod:NewYell(193235)
 
@@ -68,14 +68,6 @@ function mod:SPELL_CAST_START(args)
 		end
 	elseif spellId == 193092 then
 		warnSweep:Show()
-	end
-end
-
-function mod:SPELL_CAST_START(args)
-	local spellId = args.spellId
-	if spellId == 188404 and self:AntiSpam(5, 2) then
-		warnBreath:Show()
-		warnBreath:Play("watchstep")
 	end
 end
 

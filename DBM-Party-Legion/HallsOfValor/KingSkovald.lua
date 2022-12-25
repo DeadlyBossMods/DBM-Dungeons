@@ -12,7 +12,7 @@ mod:RegisterCombat("combat")
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 193659 193668 193826 194112",
 	"SPELL_CAST_SUCCESS 193659",
-	"SPELL_AURA_APPLIED 202711",
+	"SPELL_AURA_APPLIED 193783",
 	"SPELL_AURA_REMOVED 193826",
 	"SPELL_PERIODIC_DAMAGE 193702",
 	"SPELL_PERIODIC_MISSED 193702"
@@ -26,7 +26,7 @@ mod:RegisterEvents(
 (ability.id = 193659 or ability.id = 193668 or ability.id = 193826 or ability.id = 194112) and type = "begincast"
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
 --]]
-local warnAegis						= mod:NewTargetNoFilterAnnounce(202711, 1)
+local warnAegis						= mod:NewTargetNoFilterAnnounce(193783, 1)
 local warnFelblazeRush				= mod:NewTargetAnnounce(193659, 2)
 local warnClaimAegis				= mod:NewSpellAnnounce(194112, 2)
 
@@ -96,7 +96,7 @@ end
 
 function mod:SPELL_AURA_APPLIED(args)
 	local spellId = args.spellId
-	if spellId == 202711 and args:IsDestTypePlayer() then
+	if spellId == 193783 and args:IsDestTypePlayer() then
 		warnAegis:Show(args.destName)
 	end
 end
