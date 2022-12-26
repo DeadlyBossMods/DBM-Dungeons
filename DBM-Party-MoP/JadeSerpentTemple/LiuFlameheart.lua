@@ -45,7 +45,8 @@ function mod:OnCombatStart(delay)
 end
 
  function mod:SPELL_CAST_START(args)
-	if args.spellId == 106797 then--Jade Essence (Phase 2 trigger)
+	local spellId = args.spellId
+	if spellId == 106797 then--Jade Essence (Phase 2 trigger)
 		warnPhase2:Show()
 		timerDragonStrikeCD:Cancel()
 		timerJadeDragonStrikeCD:Start(2.7)
@@ -57,7 +58,7 @@ end
 			warnDragonStrike:Show()
 		end
 		timerDragonStrikeCD:Start()
-	elseif args.spellId == 106841 then--phase 2 dragonstrike
+	elseif spellId == 106841 then--phase 2 dragonstrike
 		if self:IsTanking("player", "boss1", nil, true) then
 			specWarnJadeDragonStrike:Show()
 			specWarnJadeDragonStrike:Play("defensive")
