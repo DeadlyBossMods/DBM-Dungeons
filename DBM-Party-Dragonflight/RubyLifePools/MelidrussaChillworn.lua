@@ -78,7 +78,7 @@ function mod:SPELL_CAST_START(args)
 		timerChillstormCD:Start()
 	elseif spellId == 396044 then
 		specWarnHailbombs:Show()
-		specWarnHailbombs:Play("shockwave")
+		specWarnHailbombs:Play("watchstep")
 		timerHailbombsCD:Start()
 	elseif spellId == 373046 then
 		specWarnAwakenWhelps:Show()

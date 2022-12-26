@@ -140,7 +140,8 @@ L:SetMiscLocalization({
 L= DBM:GetModLocalization(1489)
 
 L:SetMiscLocalization({
-	tempestModeMessage		=	"Not tempest sequence: %s. Rechecking in 8 seconds."
+	tempestModeMessage		= "Not tempest sequence: %s. Rechecking in 8 seconds.",
+	OdynRP					= "There is one final trial that awaits: me. Should you triumph, I will carve your names in these sacred halls myself and grant you a reward worthy of your valor."
 })
 
 -----------------------

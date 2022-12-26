@@ -98,7 +98,7 @@ function mod:SPELL_AURA_APPLIED(args)
 			yellnViciousAmbush:Yell()
 		end
 	elseif spellId == 387843 then
-		warnAstralBombTargets:Show(args.destName)
+		warnAstralBombTargets:CombinedShow(1, args.destName)
 		if args:IsPlayer() then
 			specWarnAstralBomb:Show()
 			specWarnAstralBomb:Play("runout")

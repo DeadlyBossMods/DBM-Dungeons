@@ -26,10 +26,11 @@ local specWarnSlicingMaelstrom		= mod:NewSpecialWarningSpell(209676, nil, nil, n
 local specWarnGale					= mod:NewSpecialWarningDodge(209628, nil, nil, nil, 2, 2)
 
 local timerSurgeCD					= mod:NewCDTimer(12.1, 209602, nil, nil, nil, 3)
-local timerMaelstromCD				= mod:NewCDTimer(24.2, 209676, nil, nil, nil, 3)
+local timerMaelstromCD				= mod:NewCDCountTimer(24.2, 209676, nil, nil, nil, 3)
 local timerGaleCD					= mod:NewCDTimer(23.8, 209628, nil, nil, nil, 2)
 
 local trashmod = DBM:GetModByName("CoSTrash")
+mod.vb.slicingMaelstromCount = 0
 
 function mod:SurgeTarget(targetname, uId)
 	if not targetname then
@@ -46,9 +47,10 @@ function mod:SurgeTarget(targetname, uId)
 end
 
 function mod:OnCombatStart(delay)
+	self.vb.slicingMaelstromCount = 0
 	timerSurgeCD:Start(5-delay)
 	timerGaleCD:Start(10-delay)--10
-	timerMaelstromCD:Start(22-delay)
+	timerMaelstromCD:Start(22-delay, 1)
 	--Not ideal to do every pull, but cleanest way to ensure it's done
 	if not trashmod then
 		trashmod = DBM:GetModByName("CoSTrash")
@@ -64,9 +66,10 @@ function mod:SPELL_CAST_START(args)
 		timerSurgeCD:Start()
 		self:BossTargetScanner(104218, "SurgeTarget", 0.1, 16, true, nil, nil, nil, true)
 	elseif spellId == 209676 then
+		self.vb.slicingMaelstromCount = self.vb.slicingMaelstromCount + 1
 		specWarnSlicingMaelstrom:Show()
 		specWarnSlicingMaelstrom:Play("aesoon")
-		timerMaelstromCD:Start()
+		timerMaelstromCD:Start(24.2, self.vb.slicingMaelstromCount+1)
 	elseif spellId == 209628 and self:AntiSpam(5, 1) then
 		specWarnGale:Show()
 		specWarnGale:Play("watchstep")
