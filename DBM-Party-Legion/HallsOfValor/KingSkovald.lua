@@ -22,6 +22,7 @@ mod:RegisterEvents(
 )
 
 --TODO, longer/more pulls, a timer sequence may be better than on fly timer correction.
+--TODO, Fix Savage blade, which sometimes doesn't reset after ragnarok?
 --[[
 (ability.id = 193659 or ability.id = 193668 or ability.id = 193826 or ability.id = 194112) and type = "begincast"
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
@@ -82,7 +83,7 @@ function mod:SPELL_CAST_START(args)
 		specWarnRagnarok:Show(SHIELDSLOT)
 		specWarnRagnarok:Play("findshield")
 		timerRushCD:Restart(12)
-		timerSavageBladeCD:Restart(29.9)
+--		timerSavageBladeCD:Restart(29.9)--Needs New Review
 	elseif spellId == 194112 then
 		warnClaimAegis:Show()
 	end

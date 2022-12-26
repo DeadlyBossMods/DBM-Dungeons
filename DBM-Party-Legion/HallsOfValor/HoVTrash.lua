@@ -7,18 +7,21 @@ mod:SetRevision("@file-date-integer@")
 mod.isTrashMod = true
 
 mod:RegisterEvents(
-	"SPELL_CAST_START 199805 192563 199726 191508 199210",
+	"SPELL_CAST_START 199805 192563 199726 191508 199210 198892",
 	"SPELL_AURA_APPLIED 215430",
 	"SPELL_AURA_REMOVED 215430"
 )
 
 --TODO wicked dagger (199674)?
 local warnCrackle					= mod:NewTargetAnnounce(199805, 2)
+local warnCracklingStorm			= mod:NewTargetAnnounce(198892, 2)
 
 local specWarnBlastofLight			= mod:NewSpecialWarningDodge(191508, nil, nil, nil, 2, 2)
 local specWarnPenetratingShot		= mod:NewSpecialWarningDodge(199210, nil, nil, nil, 2, 2)
-local specWarnCrackle				= mod:NewSpecialWarningDodge(199805, nil, nil, nil, 1, 2)
+local specWarnCrackle				= mod:NewSpecialWarningYou(199805, nil, nil, nil, 1, 2)
 local yellCrackle					= mod:NewShortYell(199805)
+local specWarnCracklingStorm		= mod:NewSpecialWarningYou(198892, nil, nil, nil, 1, 2)
+local yellCracklingStorm			= mod:NewShortYell(198892)
 local specWarnThunderstrike			= mod:NewSpecialWarningMoveAway(215430, nil, nil, nil, 1, 2)
 local yellThunderstrike				= mod:NewShortYell(215430)
 local specWarnCleansingFlame		= mod:NewSpecialWarningInterrupt(192563, "HasInterrupt", nil, nil, 1, 2)
@@ -33,10 +36,24 @@ function mod:CrackleTarget(targetname, uId)
 	end
 	if targetname == UnitName("player") then
 		specWarnCrackle:Show()
-		specWarnCrackle:Play("watchstep")
+		specWarnCrackle:Play("targetyou")
 		yellCrackle:Yell()
 	else
 		warnCrackle:Show(targetname)
+	end
+end
+
+function mod:CracklingStormTarget(targetname, uId)
+	if not targetname then
+		warnCracklingStorm:Show(DBM_COMMON_L.UNKNOWN)
+		return
+	end
+	if targetname == UnitName("player") then
+		specWarnCracklingStorm:Show()
+		specWarnCracklingStorm:Play("targetyou")
+		yellCracklingStorm:Yell()
+	else
+		warnCracklingStorm:Show(targetname)
 	end
 end
 
@@ -45,6 +62,8 @@ function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
 	if spellId == 199805 then
 		self:BossTargetScanner(args.sourceGUID, "CrackleTarget", 0.1, 9)
+	elseif spellId == 198892 then
+		self:BossTargetScanner(args.sourceGUID, "CracklingStormTarget", 0.1, 9)
 	elseif spellId == 192563 and self:CheckInterruptFilter(args.sourceGUID, false, true) then
 		specWarnCleansingFlame:Show(args.sourceName)
 		specWarnCleansingFlame:Play("kickcast")

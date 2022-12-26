@@ -24,7 +24,9 @@ mod:RegisterEventsInCombat(
 --	"UNIT_SPELLCAST_SUCCEEDED boss1"
 )
 
+--TODO, add RP timer, almost had it but OS crashed and lost entire nights worth of transcriptor logs. Maybe next week!
 --TODO, Branch Out target scan? it says "at a location" not "at a player"
+--TODO, recheck and fix barkbreaker since alternating timer failed in my run
 --TODO, do stuff with Splinterbark/Abunance mythic mechanic? Seems self explanatory. You get a bleedd on spawn, and clear it on death with target goal to be "don't ignore adds"
 --[[
 (ability.id = 388923 or ability.id = 388623 or ability.id = 396640 or ability.id = 388544) and type = "begincast"
@@ -104,12 +106,12 @@ function mod:SPELL_CAST_START(args)
 		end
 	elseif spellId == 388544 then
 		self.vb.barkCount = self.vb.barkCount + 1
-		--4.6, 30.3, 18.2, 29.2
-		if self.vb.germinateCount % 2 == 0 then
+		--4.6, 30.3, 18.2, 29.2 (Pattern does not always hold, needs review)
+--		if self.vb.germinateCount % 2 == 0 then
 			timerBarkbreakerCD:Start(18.2, self.vb.barkCount+1)
-		else
-			timerBarkbreakerCD:Start(29.2, self.vb.barkCount+1)
-		end
+--		else
+--			timerBarkbreakerCD:Start(29.2, self.vb.barkCount+1)
+--		end
 		if self:IsTanking("player", "boss1", nil, true) then
 			specWarnBarkbreaker:Show()
 			specWarnBarkbreaker:Play("defensive")

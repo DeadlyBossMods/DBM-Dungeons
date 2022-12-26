@@ -58,7 +58,7 @@ function mod:SPELL_CAST_START(args)
 		if self.vb.bladeCount % 2 == 0 then
 			timerDancingBladeCD:Start(11.2)
 		else
-			timerDancingBladeCD:Start(32.5)
+			timerDancingBladeCD:Start(31.1)
 		end
 	elseif spellId == 188404 then
 		self.vb.breathCount = self.vb.breathCount + 1
