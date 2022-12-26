@@ -24,16 +24,19 @@ mod:RegisterEventsInCombat(
 --NOTE, 106736 no longer in combat log
 --NOTE: 106113 no longer fires a SUCCESS event
 --TODO, verify bounds of reality on more logs, including non mythic+
---local warnWitherWill			= mod:NewSpellAnnounce(106736, 3, nil, false, 2)
-local warnBoundsOfReality		= mod:NewSpellAnnounce(117665, 3)
+--local warnWitherWill					= mod:NewSpellAnnounce(106736, 3, nil, false, 2)
+local warnBoundsOfReality				= mod:NewSpellAnnounce(117665, 3)
+local warnTouchofNothingness			= mod:NewTargetAnnounce(106113, 3)
 
-local specWarnTouchOfNothingness= mod:NewSpecialWarningDispel(106113, "RemoveMagic", nil, nil, 1, 2)
-local specWarnShadowsOfDoubt	= mod:NewSpecialWarningGTFO(110099, nil, nil, nil, 1, 8)--Actually used by his trash, but in a speed run, you tend to pull it all together
+local specWarnTouchOfNothingness		= mod:NewSpecialWarningMoveAway(106113, nil, nil, nil, 2, 2)
+local yellTouchOfNothingness			= mod:NewYell(106113)
+local specWarnTouchOfNothingnessDispel	= mod:NewSpecialWarningDispel(106113, "RemoveMagic", nil, nil, 1, 2)
+local specWarnShadowsOfDoubt			= mod:NewSpecialWarningGTFO(110099, nil, nil, nil, 1, 8)--Actually used by his trash, but in a speed run, you tend to pull it all together
 
-local timerTouchofNothingnessCD	= mod:NewCDTimer(15.5, 106113, nil, "Heaker", 2, 5, nil, DBM_COMMON_L.MAGIC_ICON)--15.5~20 second variations.
-local timerTouchofNothingness	= mod:NewTargetTimer(30, 106113, nil, nil, nil, 3, nil, DBM_COMMON_L.MAGIC_ICON)
-local timerBoundsOfRealityCD	= mod:NewCDTimer(58.2, 117665, nil, nil, nil, 6)
-local timerBoundsOfReality		= mod:NewBuffFadesTimer(30, 117665, nil, nil, nil, 6)
+local timerTouchofNothingnessCD			= mod:NewCDTimer(15.5, 106113, nil, nil, 3, 3, nil, DBM_COMMON_L.MAGIC_ICON)--15.5~20 second variations.
+local timerTouchofNothingness			= mod:NewTargetTimer(30, 106113, nil, false, 2, 5, nil, DBM_COMMON_L.MAGIC_ICON)
+local timerBoundsOfRealityCD			= mod:NewCDTimer(58.2, 117665, nil, nil, nil, 6)
+local timerBoundsOfReality				= mod:NewBuffFadesTimer(30, 117665, nil, nil, nil, 6)
 
 function mod:OnCombatStart(delay)
 	timerTouchofNothingnessCD:Start(10.9-delay)
@@ -60,10 +63,15 @@ function mod:SPELL_AURA_APPLIED(args)
 		if self:AntiSpam() then
 			timerTouchofNothingnessCD:Start()
 		end
-		if self:CheckDispelFilter("magic") then
+		if args:IsPlayer() then
+			specWarnTouchOfNothingness:Show()
+			specWarnTouchOfNothingness:Play("scatter")
+			yellTouchOfNothingness:Yell()
+		elseif self:CheckDispelFilter("magic") then
 			specWarnTouchOfNothingness:Show(args.destName)
 			specWarnTouchOfNothingness:Play("helpdispel")
 		end
+		warnTouchofNothingness:CombinedShow(0.3, args.destName)
 		timerTouchofNothingness:Start(args.destName)
 	elseif args.spellId == 110099 and args:IsPlayer() then
 		specWarnShadowsOfDoubt:Show(args.spellName)

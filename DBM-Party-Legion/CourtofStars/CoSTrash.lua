@@ -115,7 +115,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		specWarnGTFO:Show(args.spellName)
 		specWarnGTFO:Play("watchfeet")
 	elseif spellId == 397907 then
-		warnImpendingDoom:CombinedShow(0.5, args.destname)
+		warnImpendingDoom:CombinedShow(0.5, args.destName)
 		if args:IsPlayer() then
 			specWarnImpendingDoom:Show()
 			specWarnImpendingDoom:Play("scatter")
