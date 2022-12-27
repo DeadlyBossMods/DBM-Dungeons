@@ -141,7 +141,8 @@ L:SetMiscLocalization({
 L= DBM:GetModLocalization(1489)
 
 L:SetMiscLocalization({
-	tempestModeMessage		=	"폭풍우 시퀀스 아님: %s. 8초 후 다시 검사합니다."
+	tempestModeMessage		=	"폭풍우 시퀀스 아님: %s. 8초 후 다시 검사합니다.",
+	OdynRP					= "이제 마지막 시험만이 남았다. 바로 나다. 너희가 승리한다면, 이 신성한 전당에 내가 직접 너희 이름을 새기고, 그 용기에 걸맞은 보상을 내려 주마."
 })
 
 -----------------------
