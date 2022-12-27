@@ -45,7 +45,7 @@ local yellImpendingDoomFades		= mod:NewShortFadesYell(397907)
 local specWarnGTFO					= mod:NewSpecialWarningGTFO(209512, nil, nil, nil, 1, 8)
 
 mod:AddBoolOption("SpyHelper", true)
-mod:AddBoolOption("SendToChat", false)
+mod:AddBoolOption("SendToChat2", true)
 
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 generalized, 7 GTFO
 
@@ -274,11 +274,12 @@ do
 				local clue = clues[C_GossipInfo.GetText()]
 				if clue and not hints[clue] then
 					C_GossipInfo.CloseGossip()
-					if self.Options.SendToChat then
+					if self.Options.SendToChat2 then
+						local text = hintTranslations[clue] or clue
 						if IsInGroup(LE_PARTY_CATEGORY_INSTANCE) then
-							SendChatMessage(hintTranslations[clue], "INSTANCE_CHAT")
+							SendChatMessage(text, "INSTANCE_CHAT")
 						elseif IsInGroup(LE_PARTY_CATEGORY_HOME) then
-							SendChatMessage(hintTranslations[clue], "PARTY")
+							SendChatMessage(text, "PARTY")
 						end
 					end
 					hints[clue] = true
