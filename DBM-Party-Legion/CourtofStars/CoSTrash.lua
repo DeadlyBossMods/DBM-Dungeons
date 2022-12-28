@@ -4,6 +4,7 @@ local L		= mod:GetLocalizedStrings()
 mod:SetRevision("@file-date-integer@")
 --mod:SetModelID(47785)
 mod:SetOOCBWComms()
+mod:SetMinSyncRevision(20221228000000)
 
 mod.isTrashMod = true
 
@@ -137,105 +138,89 @@ end
 
 do
 	local hintTranslations = {
-		["gloves"] = L.Gloves,
-		["no gloves"] = L.NoGloves,
-		["cape"] = L.Cape,
-		["no cape"] = L.Nocape,
-		["light vest"] = L.LightVest,
-		["dark vest"] = L.DarkVest,
-		["female"] = L.Female,
-		["male"] = L.Male,
-		["short sleeves"] = L.ShortSleeve,
-		["long sleeves"] = L.LongSleeve,
-		["potions"] = L.Potions,
-		["no potion"] = L.NoPotions,
-		["book"] = L.Book,
-		["pouch"] = L.Pouch
+		[1] = L.Cape or "cape",
+		[2] = L.Nocape or "no cape",
+		[3] = L.Pouch or "pouch",
+		[4] = L.Potions or "potions",
+		[5] = L.LongSleeve or "long sleeves",
+		[6] = L.ShortSleeve or "short sleeves",
+		[7] = L.Gloves or "gloves",
+		[8] = L.NoGloves or "no gloves",
+		[9] = L.Male or "male",
+		[10] = L.Female or "female",
+		[11] = L.LightVest or "light vest",
+		[12] = L.DarkVest or "dark vest",
+		[13] = L.NoPotions or "no potions",
+		[14] = L.Book or "book",
 	}
 	local hints = {}
 	local clues = {
-		[L.Gloves1] = "gloves",
-		[L.Gloves2] = "gloves",
-		[L.Gloves3] = "gloves",
-		[L.Gloves4] = "gloves",
+		[L.Cape1] = 1,
+		[L.Cape2] = 1,
 
-		[L.NoGloves1] = "no gloves",
-		[L.NoGloves2] = "no gloves",
-		[L.NoGloves3] = "no gloves",
-		[L.NoGloves4] = "no gloves",
+		[L.NoCape1] = 2,
+		[L.NoCape2] = 2,
 
-		[L.Cape1] = "cape",
-		[L.Cape2] = "cape",
+		[L.Pouch1] = 3,
+		[L.Pouch2] = 3,
+		[L.Pouch3] = 3,
+		[L.Pouch4] = 3,
 
-		[L.NoCape1] = "no cape",
-		[L.NoCape2] = "no cape",
+		[L.Potions1] = 4,
+		[L.Potions2] = 4,
+		[L.Potions3] = 4,
+		[L.Potions4] = 4,
 
-		[L.LightVest1] = "light vest",
-		[L.LightVest2] = "light vest",
-		[L.LightVest3] = "light vest",
+		[L.LongSleeve1] = 5,
+		[L.LongSleeve2] = 5,
+		[L.LongSleeve3] = 5,
+		[L.LongSleeve4] = 5,
 
-		[L.DarkVest1] = "dark vest",
-		[L.DarkVest2] = "dark vest",
-		[L.DarkVest3] = "dark vest",
-		[L.DarkVest4] = "dark vest",
+		[L.ShortSleeve1] = 6,
+		[L.ShortSleeve2] = 6,
+		[L.ShortSleeve3] = 6,
+		[L.ShortSleeve4] = 6,
 
-		[L.Female1] = "female",
-		[L.Female2] = "female",
-		[L.Female3] = "female",
-		[L.Female4] = "female",
+		[L.Gloves1] = 7,
+		[L.Gloves2] = 7,
+		[L.Gloves3] = 7,
+		[L.Gloves4] = 7,
 
-		[L.Male1] = "male",
-		[L.Male2] = "male",
-		[L.Male3] = "male",
-		[L.Male4] = "male",
+		[L.NoGloves1] = 8,
+		[L.NoGloves2] = 8,
+		[L.NoGloves3] = 8,
+		[L.NoGloves4] = 8,
 
-		[L.ShortSleeve1] = "short sleeves",
-		[L.ShortSleeve2] = "short sleeves",
-		[L.ShortSleeve3] = "short sleeves",
-		[L.ShortSleeve4] = "short sleeves",
+		[L.Male1] = 9,
+		[L.Male2] = 9,
+		[L.Male3] = 9,
+		[L.Male4] = 9,
 
-		[L.LongSleeve1] = "long sleeves",
-		[L.LongSleeve2] = "long sleeves",
-		[L.LongSleeve3] = "long sleeves",
-		[L.LongSleeve4] = "long sleeves",
+		[L.Female1] = 10,
+		[L.Female2] = 10,
+		[L.Female3] = 10,
+		[L.Female4] = 10,
 
-		[L.Potions1] = "potions",
-		[L.Potions2] = "potions",
-		[L.Potions3] = "potions",
-		[L.Potions4] = "potions",
+		[L.LightVest1] = 11,
+		[L.LightVest2] = 11,
+		[L.LightVest3] = 11,
 
-		[L.NoPotions1] = "no potion",
-		[L.NoPotions2] = "no potion",
+		[L.DarkVest1] = 12,
+		[L.DarkVest2] = 12,
+		[L.DarkVest3] = 12,
+		[L.DarkVest4] = 12,
 
-		[L.Book1] = "book",
-		[L.Book2] = "book",
+		[L.NoPotions1] = 13,
+		[L.NoPotions2] = 13,
 
-		[L.Pouch1] = "pouch",
-		[L.Pouch2] = "pouch",
-		[L.Pouch3] = "pouch",
-		[L.Pouch4] = "pouch"
-	}
-	local bwClues = {
-		[1] = "cape",
-		[2] = "no cape",
-		[3] = "pouch",
-		[4] = "potions",
-		[5] = "long sleeves",
-		[6] = "short sleeves",
-		[7] = "gloves",
-		[8] = "no gloves",
-		[9] = "male",
-		[10] = "female",
-		[11] = "light vest",
-		[12] = "dark vest",
-		[13] = "no potion",
-		[14] = "book"
+		[L.Book1] = 14,
+		[L.Book2] = 14
 	}
 
 	local function updateInfoFrame()
 		local lines = {}
 		for hint, _ in pairs(hints) do
-			local text = hintTranslations[hint] or hint
+			local text = hintTranslations[hint]
 			lines[text] = ""
 		end
 		return lines
@@ -266,7 +251,7 @@ do
 				if clue and not hints[clue] then
 					C_GossipInfo.CloseGossip()
 					if self.Options.SendToChat2 then
-						local text = hintTranslations[clue] or clue
+						local text = hintTranslations[clue]
 						if IsInGroup(LE_PARTY_CATEGORY_INSTANCE) then
 							SendChatMessage(text, "INSTANCE_CHAT")
 						elseif IsInGroup(LE_PARTY_CATEGORY_HOME) then
@@ -295,8 +280,7 @@ do
 		extra = tonumber(extra)
 		if extra and extra > 0 and extra < 15 then
 			DBM:Debug("Recieved BigWigs Comm:"..extra)
-			local bwClue = bwClues[extra]
-			hints[bwClue] = true
+			hints[extra] = true
 			DBM.InfoFrame:Show(5, "function", updateInfoFrame)
 		end
 	end
