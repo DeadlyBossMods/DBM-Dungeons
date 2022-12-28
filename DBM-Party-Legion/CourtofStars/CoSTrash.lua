@@ -257,16 +257,7 @@ do
 		local guid = UnitGUID("target")
 		if not guid then return end
 		local cid = self:GetCIDFromGUID(guid)
-
-		if cid == 106468 then-- Disguise NPC
-			local table = C_GossipInfo.GetOptions()
-			if table[1] and table[1].gossipOptionID then
-				C_GossipInfo.SelectOption(table[1].gossipOptionID)
-				C_GossipInfo.CloseGossip()
-			end
-		end
-
-		if cid == 107486 then-- Suspicious noble
+		if cid == 107486 then--Chatty Rumormonger
 			local table = C_GossipInfo.GetOptions()
 			if table[1] and table[1].gossipOptionID then
 				C_GossipInfo.SelectOption(table[1].gossipOptionID)
