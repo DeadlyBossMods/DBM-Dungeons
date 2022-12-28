@@ -23,6 +23,9 @@ mod:RegisterEventsInCombat(
 	"UNIT_DIED"
 --	"UNIT_SPELLCAST_SUCCEEDED boss1"
 )
+mod:RegisterEvents(
+	"CHAT_MSG_MONSTER_SAY"
+)
 
 --TODO, add RP timer, almost had it but OS crashed and lost entire nights worth of transcriptor logs. Maybe next week!
 --TODO, Branch Out target scan? it says "at a location" not "at a player"
@@ -43,6 +46,7 @@ local specWarnHealingTouch						= mod:NewSpecialWarningInterrupt(396640, "HasInt
 local specWarnBarkbreaker						= mod:NewSpecialWarningDefensive(388544, nil, nil, nil, 1, 2)
 --local specWarnGTFO							= mod:NewSpecialWarningGTFO(340324, nil, nil, nil, 1, 8)
 
+local timerRP									= mod:NewRPTimer(17)
 local timerGerminateCD							= mod:NewCDCountTimer(29.1, 388796, nil, nil, nil, 3)
 local timerBurstForthCD							= mod:NewCDTimer(49.8, 388923, nil, nil, nil, 2, nil, DBM_COMMON_L.HEALER_ICON)--Assumed it's on same cycle as branch out, CD not confirmed
 local timerBranchOutCD							= mod:NewCDTimer(49.8, 388623, nil, nil, nil, 3)
@@ -196,3 +200,17 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
 	end
 end
 --]]
+
+--<38.95 21:51:16> [CHAT_MSG_MONSTER_SAY] Perfect, we are just about--wait, Ichistrasz! There is too much life magic! What are you doing?#Professor Mystakria###Omegal##0#0##0#3723#nil#0#fa
+--<56.01 21:51:33> [DBM_Debug] ENCOUNTER_START event fired: 2563 Overgrown Ancient 8 5#nil", -- [250]
+function mod:CHAT_MSG_MONSTER_YELL(msg)
+	if (msg == L.TreeRP or msg:find(L.TreeRP)) then
+		self:SendSync("TreeRP")--Syncing to help unlocalized clients
+	end
+end
+
+function mod:OnSync(msg, targetname)
+	if msg == "TreeRP" and self:AntiSpam(10, 2) then
+		timerRP:Start()
+	end
+end
