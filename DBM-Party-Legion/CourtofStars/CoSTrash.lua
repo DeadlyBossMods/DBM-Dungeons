@@ -49,8 +49,8 @@ local specWarnGTFO					= mod:NewSpecialWarningGTFO(209512, nil, nil, nil, 1, 8)
 mod:AddBoolOption("AGBoat", true)
 mod:AddBoolOption("AGDisguise", true)
 mod:AddBoolOption("SpyHelper", true)
-mod:AddBoolOption("SpyHelperClose", true)
 mod:AddBoolOption("SendToChat2", true)
+mod:AddBoolOption("SpyHelperClose", true)
 
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 generalized, 7 GTFO
 
