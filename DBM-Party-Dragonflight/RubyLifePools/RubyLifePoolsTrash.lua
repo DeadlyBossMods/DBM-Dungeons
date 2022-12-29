@@ -55,7 +55,7 @@ end
 
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
-	if spellId == 310780 and self:AntiSpam(3, 6) then
+	if spellId == 372087 and self:AntiSpam(3, 6) then
 		warnBlazingRush:Show()
 	elseif spellId == 391726 then
 		if self:AntiSpam(3, 2) then
