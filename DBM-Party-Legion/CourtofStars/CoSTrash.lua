@@ -190,7 +190,7 @@ do
 	end
 
 	function mod:CHAT_MSG_MONSTER_SAY(msg, _, _, _, target)
-		if msg:find(L.Found) then
+		if msg:find(L.Found) or msg == L.Found then
 			self:SendSync("Finished", target)
 		end
 	end
