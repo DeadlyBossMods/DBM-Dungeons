@@ -254,6 +254,7 @@ L:SetGeneralLocalization({
 })
 
 L:SetOptionLocalization({
+	AGBoat		= "Auto select gossip to summon boat when clicking lantern",
 	SpyHelper	= "Help identify the spy",
 	SendToChat2	= "Also send hints to chat (requires above option enabled)"
 })
