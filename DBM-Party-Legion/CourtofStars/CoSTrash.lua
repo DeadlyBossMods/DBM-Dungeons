@@ -269,8 +269,11 @@ do
 	function mod:OnSync(msg, clue)
 		if not self.Options.SpyHelper then return end
 		if msg == "CoS" and clue then
-			hints[clue] = true
-			DBM.InfoFrame:Show(5, "function", updateInfoFrame)
+			clue = tonumber(clue)
+			if clue then
+				hints[clue] = true
+				DBM.InfoFrame:Show(5, "function", updateInfoFrame)
+			end
 		elseif msg == "Finished" then
 			self:ResetGossipState()
 			if clue then
