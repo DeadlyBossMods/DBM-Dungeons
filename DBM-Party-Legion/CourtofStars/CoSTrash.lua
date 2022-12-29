@@ -231,9 +231,9 @@ do
 		DBM.InfoFrame:Hide()
 	end
 
-	function mod:CHAT_MSG_MONSTER_SAY(msg)
+	function mod:CHAT_MSG_MONSTER_SAY(msg, _, _, _, target)
 		if msg:find(L.Found) then
-			self:SendSync("Finished")
+			self:SendSync("Finished", target)
 		end
 	end
 
@@ -249,7 +249,7 @@ do
 			else
 				local clue = clues[C_GossipInfo.GetText()]
 				if clue and not hints[clue] then
-					C_GossipInfo.CloseGossip()
+--					C_GossipInfo.CloseGossip()
 					if self.Options.SendToChat2 then
 						local text = hintTranslations[clue]
 						if IsInGroup(LE_PARTY_CATEGORY_INSTANCE) then
@@ -273,6 +273,10 @@ do
 			DBM.InfoFrame:Show(5, "function", updateInfoFrame)
 		elseif msg == "Finished" then
 			self:ResetGossipState()
+			if clue then
+				local targetname = DBM:GetUnitFullName(clue)
+				DBM:AddMsg(L.Found:format(targetname))
+			end
 		end
 	end
 	function mod:OnBWSync(msg, extra)

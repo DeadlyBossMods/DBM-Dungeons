@@ -321,7 +321,9 @@ L:SetMiscLocalization({
 	Potions		= "potions",
 	NoPotions	= "no potions",
 	Book		= "book",
-	Pouch		= "pouch"
+	Pouch		= "pouch",
+
+	Found 		= "Spy has been found by >%<"
 })
 
 
