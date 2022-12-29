@@ -153,6 +153,11 @@ L:SetGeneralLocalization({
 	name =	"Halls of Valor Trash"
 })
 
+L:SetOptionLocalization({
+	AGSkovaldTrash	= "Auto select gossip to start fight when interacting with 4 elites before Skovald",
+	AGStartOdyn		= "Auto select gossip to start fight when interacting with Odyn"
+})
+
 -----------------------
 -- <<<Neltharion's Lair>>> --
 -----------------------
@@ -254,9 +259,11 @@ L:SetGeneralLocalization({
 })
 
 L:SetOptionLocalization({
-	AGBoat		= "Auto select gossip to summon boat when clicking lantern",
-	SpyHelper	= "Help identify the spy",
-	SendToChat2	= "Also send hints to chat (requires above option enabled)"
+	AGBoat			= "Auto select gossip to summon boat when interacting with lantern",
+	AGDisguise		= "Auto select gossip to activate disguise when interacting with Ly'leth Lunastre",
+	SpyHelper		= "Help identify the spy by automatically scanning gossip when interacting with Chatty Rumormonger npcs and displaying it on infoframe (also syncs to other DBM/BWs users",
+	SpyHelperClose	= "Auto close gossip window after 0.5 second (delay allows other mods or WAs to have time to scan gossip)",
+	SendToChat2		= "Also send hints to chat (requires above option enabled)"
 })
 
 L:SetMiscLocalization({

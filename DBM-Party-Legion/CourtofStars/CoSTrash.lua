@@ -5,6 +5,7 @@ mod:SetRevision("@file-date-integer@")
 --mod:SetModelID(47785)
 mod:SetOOCBWComms()
 mod:SetMinSyncRevision(20221228000000)
+mod:SetZone(1571)
 
 mod.isTrashMod = true
 
@@ -45,7 +46,10 @@ local yellImpendingDoom				= mod:NewYell(397907)
 local yellImpendingDoomFades		= mod:NewShortFadesYell(397907)
 local specWarnGTFO					= mod:NewSpecialWarningGTFO(209512, nil, nil, nil, 1, 8)
 
+mod:AddBoolOption("AGBoat", true)
+mod:AddBoolOption("AGDisguise", true)
 mod:AddBoolOption("SpyHelper", true)
+mod:AddBoolOption("SpyHelperClose", true)
 mod:AddBoolOption("SendToChat2", true)
 
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 generalized, 7 GTFO
@@ -154,68 +158,6 @@ do
 		[14] = L.Book or "book",
 	}
 	local hints = {}
-	local clues = {
-		[L.Cape1] = 1,
-		[L.Cape2] = 1,
-
-		[L.NoCape1] = 2,
-		[L.NoCape2] = 2,
-
-		[L.Pouch1] = 3,
-		[L.Pouch2] = 3,
-		[L.Pouch3] = 3,
-		[L.Pouch4] = 3,
-
-		[L.Potions1] = 4,
-		[L.Potions2] = 4,
-		[L.Potions3] = 4,
-		[L.Potions4] = 4,
-
-		[L.LongSleeve1] = 5,
-		[L.LongSleeve2] = 5,
-		[L.LongSleeve3] = 5,
-		[L.LongSleeve4] = 5,
-
-		[L.ShortSleeve1] = 6,
-		[L.ShortSleeve2] = 6,
-		[L.ShortSleeve3] = 6,
-		[L.ShortSleeve4] = 6,
-
-		[L.Gloves1] = 7,
-		[L.Gloves2] = 7,
-		[L.Gloves3] = 7,
-		[L.Gloves4] = 7,
-
-		[L.NoGloves1] = 8,
-		[L.NoGloves2] = 8,
-		[L.NoGloves3] = 8,
-		[L.NoGloves4] = 8,
-
-		[L.Male1] = 9,
-		[L.Male2] = 9,
-		[L.Male3] = 9,
-		[L.Male4] = 9,
-
-		[L.Female1] = 10,
-		[L.Female2] = 10,
-		[L.Female3] = 10,
-		[L.Female4] = 10,
-
-		[L.LightVest1] = 11,
-		[L.LightVest2] = 11,
-		[L.LightVest3] = 11,
-
-		[L.DarkVest1] = 12,
-		[L.DarkVest2] = 12,
-		[L.DarkVest3] = 12,
-		[L.DarkVest4] = 12,
-
-		[L.NoPotions1] = 13,
-		[L.NoPotions2] = 13,
-
-		[L.Book1] = 14,
-		[L.Book2] = 14
-	}
 	local clueIds = {
 		[45674] = 1,--Cape
 		[45675] = 2,--No Cape
@@ -230,7 +172,7 @@ do
 		[45636] = 11,--Light Vest
 		[45635] = 12,--Dark Vest
 		[45667] = 13,--No Potions
-		[45600] = 14--Book (Not valid value yet)
+		[45659] = 14--Book
 	}
 
 	local function updateInfoFrame()
@@ -254,29 +196,30 @@ do
 	end
 
 	function mod:GOSSIP_SHOW()
-		if not self.Options.SpyHelper then return end
-		local guid = UnitGUID("target")
-		if not guid then return end
-		local cid = self:GetCIDFromGUID(guid)
-		if cid == 107486 then--Chatty Rumormonger
-			local table = C_GossipInfo.GetOptions()
-			if table[1] and table[1].gossipOptionID then
-				C_GossipInfo.SelectOption(table[1].gossipOptionID)
-			else
-				local clue = clues[C_GossipInfo.GetText()]
-				if clue and not hints[clue] then
---					C_GossipInfo.CloseGossip()
-					if self.Options.SendToChat2 then
-						local text = hintTranslations[clue]
-						if IsInGroup(LE_PARTY_CATEGORY_INSTANCE) then
-							SendChatMessage(text, "INSTANCE_CHAT")
-						elseif IsInGroup(LE_PARTY_CATEGORY_HOME) then
-							SendChatMessage(text, "PARTY")
-						end
+		local table = C_GossipInfo.GetOptions()
+		if table[1] and table[1].gossipOptionID then
+			local gossipOptionID = table[1].gossipOptionID
+			if self.Options.AGBoat and gossipOptionID == 45624 then -- Boat
+				C_GossipInfo.SelectOption(gossipOptionID)
+			elseif self.Options.AGDisguise and gossipOptionID == 45656 then -- Boat
+				C_GossipInfo.SelectOption(gossipOptionID)
+			elseif clueIds[gossipOptionID] then -- SpyHelper
+				if not self.Options.SpyHelper then return end
+				local clue = clueIds[gossipOptionID]
+				if self.Options.SendToChat2 then
+					local text = hintTranslations[clue]
+					if IsInGroup(LE_PARTY_CATEGORY_INSTANCE) then
+						SendChatMessage(text, "INSTANCE_CHAT")
+					elseif IsInGroup(LE_PARTY_CATEGORY_HOME) then
+						SendChatMessage(text, "PARTY")
 					end
-					hints[clue] = true
-					self:SendSync("CoS", clue)
-					DBM.InfoFrame:Show(5, "function", updateInfoFrame)
+				end
+				hints[clue] = true
+				self:SendSync("CoS", clue)
+				DBM.InfoFrame:Show(5, "function", updateInfoFrame)
+				if self.Options.SpyHelperClose then
+					--Delay used so DBM doesn't prevent other mods or WAs from parsing data
+					C_Timer.After(0.5, function() C_GossipInfo.CloseGossip()) end)
 				end
 			end
 		end
