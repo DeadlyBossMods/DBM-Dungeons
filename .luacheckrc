@@ -25,6 +25,7 @@ globals = {
 	"table.wipe",
 
 	-- Utility functions
+	"C_Timer",
 	"tContains",
 
 	-- WoW
