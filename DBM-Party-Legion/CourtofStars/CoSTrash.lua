@@ -219,7 +219,7 @@ do
 				DBM.InfoFrame:Show(5, "function", updateInfoFrame)
 				if self.Options.SpyHelperClose then
 					--Delay used so DBM doesn't prevent other mods or WAs from parsing data
-					C_Timer.After(0.5, function() C_GossipInfo.CloseGossip()) end)
+					C_Timer.After(0.5, function() C_GossipInfo.CloseGossip() end)
 				end
 			end
 		end
