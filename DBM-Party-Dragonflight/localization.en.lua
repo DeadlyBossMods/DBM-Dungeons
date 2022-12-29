@@ -154,7 +154,11 @@ L:SetGeneralLocalization({
 -----------------------
 -- Overgrown Ancient --
 -----------------------
---L= DBM:GetModLocalization(2512)
+L= DBM:GetModLocalization(2512)
+
+L:SetMiscLocalization({
+	TreeRP	= "Perfect, we are just about--wait, Ichistrasz! There is too much life magic! What are you doing?"
+})
 
 -----------------------
 -- Echo of Doragosa --

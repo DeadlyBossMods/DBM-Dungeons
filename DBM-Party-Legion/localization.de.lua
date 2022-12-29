@@ -141,7 +141,8 @@ L:SetMiscLocalization({
 L= DBM:GetModLocalization(1489)
 
 L:SetMiscLocalization({
-	tempestModeMessage		=	"Nicht Orkanabfolge: %s. Prüfe erneut in 8 Sekunden."
+	tempestModeMessage		=	"Nicht Orkanabfolge: %s. Prüfe erneut in 8 Sekunden.",
+	OdynRP					=	"Höchst beeindruckend! Ich hielt die Kräfte der Valarjar stets für unerreicht... und dennoch steht Ihr hier vor mir.."
 })
 
 -----------------------
@@ -305,7 +306,7 @@ L:SetMiscLocalization({
 	Pouch2			= "Ein Freund behauptet, dass der Spion Gold liebt und einen Gürtelbeutel voll davon hat.",
 	Pouch3			= "Ich hörte, dass der Gürtelbeutel des Spions mit ausgefallenem Garn gesäumt wurde.",
 	Pouch4			= "Mir ist zu Ohren gekommen, dass der Gürtelbeutel des Spions mit Gold gefüllt ist, um besonders extravagant zu erscheinen.",
-	Found			= "Now now, let's not be hasty",--translate (trigger)
+	Found			= "Na, na, wir wollen doch nicht voreilig sein",
 	--
 	Gloves			= "Handschuhe",
 	NoGloves		= "keine Handschuhe",

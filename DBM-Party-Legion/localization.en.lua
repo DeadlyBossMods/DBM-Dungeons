@@ -141,7 +141,7 @@ L= DBM:GetModLocalization(1489)
 
 L:SetMiscLocalization({
 	tempestModeMessage		= "Not tempest sequence: %s. Rechecking in 8 seconds.",
-	OdynRP					= "There is one final trial that awaits: me. Should you triumph, I will carve your names in these sacred halls myself and grant you a reward worthy of your valor."
+	OdynRP					= "Most impressive! I never thought I would meet anyone who could match the Valarjar's strength... and yet here you stand."
 })
 
 -----------------------
@@ -151,6 +151,11 @@ L = DBM:GetModLocalization("HoVTrash")
 
 L:SetGeneralLocalization({
 	name =	"Halls of Valor Trash"
+})
+
+L:SetOptionLocalization({
+	AGSkovaldTrash	= "Auto select gossip to start fight when interacting with 4 elites before Skovald",
+	AGStartOdyn		= "Auto select gossip to start fight when interacting with Odyn"
 })
 
 -----------------------
@@ -254,8 +259,11 @@ L:SetGeneralLocalization({
 })
 
 L:SetOptionLocalization({
-	SpyHelper	= "Help identify the spy",
-	SendToChat	= "Also send hints to chat (requires above option enabled)"
+	AGBoat			= "Auto select gossip to summon boat when interacting with lantern",
+	AGDisguise		= "Auto select gossip to activate disguise when interacting with Ly'leth Lunastre",
+	SpyHelper		= "Help identify the spy by automatically scanning gossip when interacting with Chatty Rumormonger npcs and displaying it on infoframe (also syncs to other DBM/BWs users",
+	SpyHelperClose	= "Auto close gossip window after 0.5 second (delay allows other mods or WAs to have time to scan gossip)",
+	SendToChat2		= "Also send hints to chat (requires above option enabled)"
 })
 
 L:SetMiscLocalization({
@@ -321,7 +329,9 @@ L:SetMiscLocalization({
 	Potions		= "potions",
 	NoPotions	= "no potions",
 	Book		= "book",
-	Pouch		= "pouch"
+	Pouch		= "pouch",
+
+	SpyFound 	= "Spy has been found by >%s<"
 })
 
 

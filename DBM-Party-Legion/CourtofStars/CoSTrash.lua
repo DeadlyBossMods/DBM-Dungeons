@@ -4,6 +4,8 @@ local L		= mod:GetLocalizedStrings()
 mod:SetRevision("@file-date-integer@")
 --mod:SetModelID(47785)
 mod:SetOOCBWComms()
+mod:SetMinSyncRevision(20221228000000)
+mod:SetZone(1571)
 
 mod.isTrashMod = true
 
@@ -44,8 +46,11 @@ local yellImpendingDoom				= mod:NewYell(397907)
 local yellImpendingDoomFades		= mod:NewShortFadesYell(397907)
 local specWarnGTFO					= mod:NewSpecialWarningGTFO(209512, nil, nil, nil, 1, 8)
 
+mod:AddBoolOption("AGBoat", true)
+mod:AddBoolOption("AGDisguise", true)
 mod:AddBoolOption("SpyHelper", true)
-mod:AddBoolOption("SendToChat", false)
+mod:AddBoolOption("SpyHelperClose", true)
+mod:AddBoolOption("SendToChat2", true)
 
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 generalized, 7 GTFO
 
@@ -137,105 +142,43 @@ end
 
 do
 	local hintTranslations = {
-		["gloves"] = L.Gloves,
-		["no gloves"] = L.NoGloves,
-		["cape"] = L.Cape,
-		["no cape"] = L.Nocape,
-		["light vest"] = L.LightVest,
-		["dark vest"] = L.DarkVest,
-		["female"] = L.Female,
-		["male"] = L.Male,
-		["short sleeves"] = L.ShortSleeve,
-		["long sleeves"] = L.LongSleeve,
-		["potions"] = L.Potions,
-		["no potion"] = L.NoPotions,
-		["book"] = L.Book,
-		["pouch"] = L.Pouch
+		[1] = L.Cape or "cape",
+		[2] = L.Nocape or "no cape",
+		[3] = L.Pouch or "pouch",
+		[4] = L.Potions or "potions",
+		[5] = L.LongSleeve or "long sleeves",
+		[6] = L.ShortSleeve or "short sleeves",
+		[7] = L.Gloves or "gloves",
+		[8] = L.NoGloves or "no gloves",
+		[9] = L.Male or "male",
+		[10] = L.Female or "female",
+		[11] = L.LightVest or "light vest",
+		[12] = L.DarkVest or "dark vest",
+		[13] = L.NoPotions or "no potions",
+		[14] = L.Book or "book",
 	}
 	local hints = {}
-	local clues = {
-		[L.Gloves1] = "gloves",
-		[L.Gloves2] = "gloves",
-		[L.Gloves3] = "gloves",
-		[L.Gloves4] = "gloves",
-
-		[L.NoGloves1] = "no gloves",
-		[L.NoGloves2] = "no gloves",
-		[L.NoGloves3] = "no gloves",
-		[L.NoGloves4] = "no gloves",
-
-		[L.Cape1] = "cape",
-		[L.Cape2] = "cape",
-
-		[L.NoCape1] = "no cape",
-		[L.NoCape2] = "no cape",
-
-		[L.LightVest1] = "light vest",
-		[L.LightVest2] = "light vest",
-		[L.LightVest3] = "light vest",
-
-		[L.DarkVest1] = "dark vest",
-		[L.DarkVest2] = "dark vest",
-		[L.DarkVest3] = "dark vest",
-		[L.DarkVest4] = "dark vest",
-
-		[L.Female1] = "female",
-		[L.Female2] = "female",
-		[L.Female3] = "female",
-		[L.Female4] = "female",
-
-		[L.Male1] = "male",
-		[L.Male2] = "male",
-		[L.Male3] = "male",
-		[L.Male4] = "male",
-
-		[L.ShortSleeve1] = "short sleeves",
-		[L.ShortSleeve2] = "short sleeves",
-		[L.ShortSleeve3] = "short sleeves",
-		[L.ShortSleeve4] = "short sleeves",
-
-		[L.LongSleeve1] = "long sleeves",
-		[L.LongSleeve2] = "long sleeves",
-		[L.LongSleeve3] = "long sleeves",
-		[L.LongSleeve4] = "long sleeves",
-
-		[L.Potions1] = "potions",
-		[L.Potions2] = "potions",
-		[L.Potions3] = "potions",
-		[L.Potions4] = "potions",
-
-		[L.NoPotions1] = "no potion",
-		[L.NoPotions2] = "no potion",
-
-		[L.Book1] = "book",
-		[L.Book2] = "book",
-
-		[L.Pouch1] = "pouch",
-		[L.Pouch2] = "pouch",
-		[L.Pouch3] = "pouch",
-		[L.Pouch4] = "pouch"
-	}
-	local bwClues = {
-		[1] = "cape",
-		[2] = "no cape",
-		[3] = "pouch",
-		[4] = "potions",
-		[5] = "long sleeves",
-		[6] = "short sleeves",
-		[7] = "gloves",
-		[8] = "no gloves",
-		[9] = "male",
-		[10] = "female",
-		[11] = "light vest",
-		[12] = "dark vest",
-		[13] = "no potion",
-		[14] = "book"
+	local clueIds = {
+		[45674] = 1,--Cape
+		[45675] = 2,--No Cape
+		[45660] = 3,--Pouch
+		[45666] = 4,--Potions
+		[45676] = 5,--Long Sleeves
+		[45677] = 6,--Short Sleeves
+		[45673] = 7,--Gloves
+		[45672] = 8,--No Gloves
+		[45657] = 9,--Male
+		[45658] = 10,--Female
+		[45636] = 11,--Light Vest
+		[45635] = 12,--Dark Vest
+		[45667] = 13,--No Potions
+		[45659] = 14--Book
 	}
 
 	local function updateInfoFrame()
 		local lines = {}
 		for hint, _ in pairs(hints) do
-			local text = hintTranslations[hint] or hint
+			local text = hintTranslations[hint]
 			lines[text] = ""
 		end
 		return lines
@@ -246,44 +189,37 @@ do
 		DBM.InfoFrame:Hide()
 	end
 
-	function mod:CHAT_MSG_MONSTER_SAY(msg)
+	function mod:CHAT_MSG_MONSTER_SAY(msg, _, _, _, target)
 		if msg:find(L.Found) then
-			self:SendSync("Finished")
+			self:SendSync("Finished", target)
 		end
 	end
 
 	function mod:GOSSIP_SHOW()
-		if not self.Options.SpyHelper then return end
-		local guid = UnitGUID("target")
-		if not guid then return end
-		local cid = self:GetCIDFromGUID(guid)
-
-		if cid == 106468 then-- Disguise NPC
-			local table = C_GossipInfo.GetOptions()
-			if table[1] and table[1].gossipOptionID then
-				C_GossipInfo.SelectOption(table[1].gossipOptionID)
-				C_GossipInfo.CloseGossip()
-			end
-		end
-
-		if cid == 107486 then-- Suspicious noble
-			local table = C_GossipInfo.GetOptions()
-			if table[1] and table[1].gossipOptionID then
-				C_GossipInfo.SelectOption(table[1].gossipOptionID)
-			else
-				local clue = clues[C_GossipInfo.GetText()]
-				if clue and not hints[clue] then
-					C_GossipInfo.CloseGossip()
-					if self.Options.SendToChat then
-						if IsInGroup(LE_PARTY_CATEGORY_INSTANCE) then
-							SendChatMessage(hintTranslations[clue], "INSTANCE_CHAT")
-						elseif IsInGroup(LE_PARTY_CATEGORY_HOME) then
-							SendChatMessage(hintTranslations[clue], "PARTY")
-						end
+		local table = C_GossipInfo.GetOptions()
+		if table[1] and table[1].gossipOptionID then
+			local gossipOptionID = table[1].gossipOptionID
+			if self.Options.AGBoat and gossipOptionID == 45624 then -- Boat
+				C_GossipInfo.SelectOption(gossipOptionID)
+			elseif self.Options.AGDisguise and gossipOptionID == 45656 then -- Boat
+				C_GossipInfo.SelectOption(gossipOptionID)
+			elseif clueIds[gossipOptionID] then -- SpyHelper
+				if not self.Options.SpyHelper then return end
+				local clue = clueIds[gossipOptionID]
+				if self.Options.SendToChat2 then
+					local text = hintTranslations[clue]
+					if IsInGroup(LE_PARTY_CATEGORY_INSTANCE) then
+						SendChatMessage(text, "INSTANCE_CHAT")
+					elseif IsInGroup(LE_PARTY_CATEGORY_HOME) then
+						SendChatMessage(text, "PARTY")
 					end
-					hints[clue] = true
-					self:SendSync("CoS", clue)
-					DBM.InfoFrame:Show(5, "function", updateInfoFrame)
+				end
+				hints[clue] = true
+				self:SendSync("CoS", clue)
+				DBM.InfoFrame:Show(5, "function", updateInfoFrame)
+				if self.Options.SpyHelperClose then
+					--Delay used so DBM doesn't prevent other mods or WAs from parsing data
+					C_Timer.After(0.5, function() C_GossipInfo.CloseGossip() end)
 				end
 			end
 		end
@@ -292,10 +228,17 @@ do
 	function mod:OnSync(msg, clue)
 		if not self.Options.SpyHelper then return end
 		if msg == "CoS" and clue then
-			hints[clue] = true
-			DBM.InfoFrame:Show(5, "function", updateInfoFrame)
+			clue = tonumber(clue)
+			if clue then
+				hints[clue] = true
+				DBM.InfoFrame:Show(5, "function", updateInfoFrame)
+			end
 		elseif msg == "Finished" then
 			self:ResetGossipState()
+			if clue then
+				local targetname = DBM:GetUnitFullName(clue)
+				DBM:AddMsg(L.SpyFound:format(targetname))
+			end
 		end
 	end
 	function mod:OnBWSync(msg, extra)
@@ -303,8 +246,7 @@ do
 		extra = tonumber(extra)
 		if extra and extra > 0 and extra < 15 then
 			DBM:Debug("Recieved BigWigs Comm:"..extra)
-			local bwClue = bwClues[extra]
-			hints[bwClue] = true
+			hints[extra] = true
 			DBM.InfoFrame:Show(5, "function", updateInfoFrame)
 		end
 	end
