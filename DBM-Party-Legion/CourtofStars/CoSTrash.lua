@@ -216,6 +216,22 @@ do
 		[L.Book1] = 14,
 		[L.Book2] = 14
 	}
+	local clueIds = {
+		[45674] = 1,--Cape
+		[45675] = 2,--No Cape
+		[45660] = 3,--Pouch
+		[45666] = 4,--Potions
+		[45676] = 5,--Long Sleeves
+		[45677] = 6,--Short Sleeves
+		[45673] = 7,--Gloves
+		[45672] = 8,--No Gloves
+		[45657] = 9,--Male
+		[45658] = 10,--Female
+		[45636] = 11,--Light Vest
+		[45635] = 12,--Dark Vest
+		[45667] = 13,--No Potions
+		[45600] = 14--Book (Not valid value yet)
+	}
 
 	local function updateInfoFrame()
 		local lines = {}
