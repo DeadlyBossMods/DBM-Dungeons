@@ -141,7 +141,8 @@ L:SetMiscLocalization({
 L= DBM:GetModLocalization(1489)
 
 L:SetMiscLocalization({
-	tempestModeMessage		=	"Nicht Orkanabfolge: %s. Prüfe erneut in 8 Sekunden."
+	tempestModeMessage		=	"Nicht Orkanabfolge: %s. Prüfe erneut in 8 Sekunden.",
+	OdynRP					=	"Höchst beeindruckend! Ich hielt die Kräfte der Valarjar stets für unerreicht... und dennoch steht Ihr hier vor mir.."
 })
 
 -----------------------
