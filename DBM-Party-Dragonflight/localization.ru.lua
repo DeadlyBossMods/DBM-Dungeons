@@ -153,14 +153,18 @@ L:SetGeneralLocalization({
 --L= DBM:GetModLocalization(2509)
 
 -----------------------
--- Accidental Amalgamation --
+-- Overgrown Ancient --
 -----------------------
---L= DBM:GetModLocalization(2512)
+L= DBM:GetModLocalization(2512)
+
+L:SetMiscLocalization({
+	TreeRP	= "Превосходно, мы как раз собирались... стой, Ихистраз! Магии жизни слишком много! Что ты делаешь?"
+})
 
 -----------------------
--- Headmaster --
+-- Echo of Doragosa --
 -----------------------
---L= DBM:GetModLocalization(2513)
+--L= DBM:GetModLocalization(2514)
 
 ---------
 --Trash--
