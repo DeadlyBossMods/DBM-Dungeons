@@ -141,7 +141,7 @@ L:SetMiscLocalization({
 L= DBM:GetModLocalization(1489)
 
 L:SetMiscLocalization({
-	tempestModeMessage		=	"Нет последовательности бури: %s. Перепроверка через 8 секунд."
+	tempestModeMessage		=	"Нет последовательности бури: %s. Перепроверка через 8 секунд.",
 	OdynRP					= 	"Удивительно! Я не верил, что кто-то сможет сравниться с валарьярами... Но вы доказали, что это возможно."
 })
 
