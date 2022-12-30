@@ -20,6 +20,11 @@ mod:RegisterEvents(
 --TODO, at least 1-2 more GTFOs I forgot names of
 --TODO, verify if Disintegration beam is interruptable at 207980 or 207981
 --TODO, target scan https://www.wowhead.com/beta/spell=397897/crushing-leap ?
+--TODO, few more auto gossips
+--Buffs/Utility (professions and classs perks)
+--45278 Haste Buff Court of Stars (cooking/herbalism?)
+--Distractions (to separate boss)
+--45473 Warrior Distraction Court of Stars
 local warnImpendingDoom				= mod:NewTargetAnnounce(397907, 2)
 local warnCrushingLeap				= mod:NewCastAnnounce(397897, 3)
 local warnEyeStorm					= mod:NewCastAnnounce(212784, 3)
@@ -49,8 +54,8 @@ local specWarnGTFO					= mod:NewSpecialWarningGTFO(209512, nil, nil, nil, 1, 8)
 mod:AddBoolOption("AGBoat", true)
 mod:AddBoolOption("AGDisguise", true)
 mod:AddBoolOption("SpyHelper", true)
-mod:AddBoolOption("SpyHelperClose", true)
 mod:AddBoolOption("SendToChat2", true)
+mod:AddBoolOption("SpyHelperClose", true)
 
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 generalized, 7 GTFO
 
@@ -141,6 +146,7 @@ function mod:SPELL_AURA_REMOVED(args)
 end
 
 do
+	local clueTotal = 0
 	local hintTranslations = {
 		[1] = L.Cape or "cape",
 		[2] = L.Nocape or "no cape",
@@ -184,13 +190,20 @@ do
 		return lines
 	end
 
+	local function callUpdate()
+		clueTotal = clueTotal + 1
+		DBM.InfoFrame:SetHeader(L.CluesFound:format(clueTotal))
+		DBM.InfoFrame:Show(5, "function", updateInfoFrame)
+	end
+
 	function mod:ResetGossipState()--/run DBM:GetModByName("CoSTrash"):ResetGossipState()
 		table.wipe(hints)
+		clueTotal = 0
 		DBM.InfoFrame:Hide()
 	end
 
 	function mod:CHAT_MSG_MONSTER_SAY(msg, _, _, _, target)
-		if msg:find(L.Found) then
+		if msg:find(L.Found) or msg == L.Found then
 			self:SendSync("Finished", target)
 		end
 	end
@@ -199,27 +212,30 @@ do
 		local table = C_GossipInfo.GetOptions()
 		if table[1] and table[1].gossipOptionID then
 			local gossipOptionID = table[1].gossipOptionID
+			DBM:Debug("GOSSIP_SHOW triggered with a gossip ID of: "..gossipOptionID)
 			if self.Options.AGBoat and gossipOptionID == 45624 then -- Boat
 				C_GossipInfo.SelectOption(gossipOptionID)
-			elseif self.Options.AGDisguise and gossipOptionID == 45656 then -- Boat
+			elseif self.Options.AGDisguise and gossipOptionID == 45656 then -- Disguise
 				C_GossipInfo.SelectOption(gossipOptionID)
 			elseif clueIds[gossipOptionID] then -- SpyHelper
 				if not self.Options.SpyHelper then return end
 				local clue = clueIds[gossipOptionID]
-				if self.Options.SendToChat2 then
-					local text = hintTranslations[clue]
-					if IsInGroup(LE_PARTY_CATEGORY_INSTANCE) then
-						SendChatMessage(text, "INSTANCE_CHAT")
-					elseif IsInGroup(LE_PARTY_CATEGORY_HOME) then
-						SendChatMessage(text, "PARTY")
+				if not hints[clue] then
+					if self.Options.SendToChat2 then
+						local text = hintTranslations[clue]
+						if IsInGroup(LE_PARTY_CATEGORY_INSTANCE) then
+							SendChatMessage(text, "INSTANCE_CHAT")
+						elseif IsInGroup(LE_PARTY_CATEGORY_HOME) then
+							SendChatMessage(text, "PARTY")
+						end
 					end
+					hints[clue] = true
+					self:SendSync("CoS", clue)
+					callUpdate()
 				end
-				hints[clue] = true
-				self:SendSync("CoS", clue)
-				DBM.InfoFrame:Show(5, "function", updateInfoFrame)
 				if self.Options.SpyHelperClose then
 					--Delay used so DBM doesn't prevent other mods or WAs from parsing data
-					C_Timer.After(0.5, function() C_GossipInfo.CloseGossip() end)
+					C_Timer.After(0.3, function() C_GossipInfo.CloseGossip() end)
 				end
 			end
 		end
@@ -229,25 +245,25 @@ do
 		if not self.Options.SpyHelper then return end
 		if msg == "CoS" and clue then
 			clue = tonumber(clue)
-			if clue then
+			if clue and not hints[clue] then
 				hints[clue] = true
-				DBM.InfoFrame:Show(5, "function", updateInfoFrame)
+				callUpdate()
 			end
 		elseif msg == "Finished" then
 			self:ResetGossipState()
 			if clue then
 				local targetname = DBM:GetUnitFullName(clue)
-				DBM:AddMsg(L.SpyFound:format(targetname))
+				DBM:AddMsg(L.SpyFound:format(targetname), nil, true)
 			end
 		end
 	end
 	function mod:OnBWSync(msg, extra)
 		if msg ~= "clue" then return end
 		extra = tonumber(extra)
-		if extra and extra > 0 and extra < 15 then
+		if extra and extra > 0 and extra < 15 and not hints[extra] then
 			DBM:Debug("Recieved BigWigs Comm:"..extra)
 			hints[extra] = true
-			DBM.InfoFrame:Show(5, "function", updateInfoFrame)
+			callUpdate()
 		end
 	end
 end

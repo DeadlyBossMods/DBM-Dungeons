@@ -29,8 +29,6 @@ local timerChemBurnCD				= mod:NewCDTimer(13, 259853, nil, nil, 2, 5, nil, DBM_C
 --local timerPropellantBlastCD		= mod:NewCDTimer(13, 259940, nil, nil, nil, 3)--Longer pull/more data needed (32.5, 6.0, 36.1)
 --local timerGushingCatalystCD		= mod:NewCDTimer(13, 275992, nil, nil, nil, 3, nil, DBM_COMMON_L.HEROIC_ICON)
 
---mod:AddRangeFrameOption(5, 194966)
-
 mod.vb.chemBurnCast = 0
 mod.vb.azeriteCataCast = 0
 

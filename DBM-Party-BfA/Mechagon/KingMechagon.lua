@@ -51,8 +51,6 @@ local timerCuttingBeam				= mod:NewCastTimer(6, 291626, nil, nil, nil, 3)
 local timerMagnetoArmCD				= mod:NewCDTimer(61.9, 283143, nil, nil, nil, 2)
 local timerHardModeCD				= mod:NewCDTimer(42.5, 292750, nil, nil, nil, 5, nil, DBM_COMMON_L.MYTHIC_ICON)--42.5-46.1
 
---mod:AddRangeFrameOption(5, 194966)
-
 mod.vb.recalibrateCount = 0
 mod.vb.zapCount = 0
 local P1RecalibrateTimers = {5.9, 12, 27.9, 15.6, 19.4}

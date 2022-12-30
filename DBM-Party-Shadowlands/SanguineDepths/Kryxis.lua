@@ -107,15 +107,6 @@ function mod:SPELL_CAST_SUCCESS(args)
 	end
 end
 
---[[
-function mod:SPELL_AURA_APPLIED(args)
-	local spellId = args.spellId
-	if spellId == 194966 then
-
-	end
-end
---]]
-
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg, npc, _, _, target)
 	if msg:find("spell:319713") then
 		local targetname = DBM:GetUnitFullName(target)

@@ -12,7 +12,7 @@ mod:RegisterEvents(
 )
 
 local warnTorment				= mod:NewTargetAnnounce(202615, 3)
-local warnNightmares			= mod:NewTargetAnnounce(202615, 4)
+local warnNightmares			= mod:NewTargetAnnounce(193069, 4)
 
 local specWarnUnleashedFury		= mod:NewSpecialWarningSpell(196799, nil, nil, nil, 2, 2)
 local specWarnNightmares		= mod:NewSpecialWarningInterrupt(193069, "HasInterrupt", nil, nil, 1, 2)

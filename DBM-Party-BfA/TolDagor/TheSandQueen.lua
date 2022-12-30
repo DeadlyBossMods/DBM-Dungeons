@@ -27,8 +27,6 @@ local timerSandTrapCD				= mod:NewCDTimer(14.2, 257092, nil, nil, nil, 3)--14.2-
 local timerUpheavelCD				= mod:NewCDTimer(38.5, 257617, nil, nil, nil, 3)
 local timerSandstormCD				= mod:NewCDTimer(34, 257495, nil, nil, nil, 2)--Health based?
 
---mod:AddRangeFrameOption(5, 194966)
-
 function mod:OnCombatStart(delay)
 	timerSandTrapCD:Start(8.1-delay)
 	timerUpheavelCD:Start(20.2-delay)

@@ -41,7 +41,7 @@ end
 
 function mod:SPELL_AURA_APPLIED(args)
 	local spellId = args.spellId
-	if spellId == 194966 and args:IsDestTypePlayer() then
+	if spellId == 257314 and args:IsDestTypePlayer() then
 		if args:IsPlayer() then
 			specWarnBlackPowder:Show()
 			specWarnBlackPowder:Play("justrun")

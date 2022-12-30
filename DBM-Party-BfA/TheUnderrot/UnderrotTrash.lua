@@ -13,8 +13,6 @@ mod:RegisterEvents(
 	"SPELL_CAST_SUCCESS 265523"
 )
 
---local warnSoulEchoes				= mod:NewTargetAnnounce(194966, 2)
-
 --local yellArrowBarrage			= mod:NewYell(200343)
 local specWarnMaddeningGaze			= mod:NewSpecialWarningDodge(272609, nil, nil, nil, 2, 2)
 local specWarnSavageCleave			= mod:NewSpecialWarningDodge(265019, nil, nil, nil, 2, 2)
