@@ -252,7 +252,9 @@ do
 			self:ResetGossipState()
 			if clue then
 				local targetname = DBM:GetUnitFullName(clue)
-				DBM:AddMsg(L.SpyFound:format(targetname), nil, true)
+				if targetname then
+					DBM:AddMsg(L.SpyFound:format(targetname))
+				end
 			end
 		end
 	end
