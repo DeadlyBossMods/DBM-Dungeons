@@ -273,9 +273,9 @@ L:SetOptionLocalization({
 
 L:SetMiscLocalization({
 	Found			= "Теперь, давайте не будем торопиться",
-	--Add translationss, but keep english termss for cross language groups since these post to chat
+	CluesFound	= "Найдено подсказок: %d/5",
+	--Add translationss, but keep english terms for cross language groups since these post to chat
 	--Format "localized / english"
-	CluesFound	= "Найдено подсказок: %d/5 / Clues Found: %d/5",
 	Gloves		= "Носит перчатки / Wears gloves",
 	NoGloves	= "Без перчаток / No gloves",
 	Cape		= "Носит плащ / Wearing a cape",
