@@ -255,7 +255,7 @@ do
 	function mod:OnBWSync(msg, extra)
 		if msg ~= "clue" then return end
 		extra = tonumber(extra)
-		if extra and extra > 0 and extra < 15 and not hints[clue] then
+		if extra and extra > 0 and extra < 15 and not hints[extra] then
 			DBM:Debug("Recieved BigWigs Comm:"..extra)
 			hints[extra] = true
 			callUpdate()
