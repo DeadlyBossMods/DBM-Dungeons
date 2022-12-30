@@ -10,7 +10,8 @@ mod.isTrashMod = true
 mod:RegisterEvents(
 	"SPELL_CAST_START 199805 192563 199726 191508 199210 198892",
 	"SPELL_AURA_APPLIED 215430",
-	"SPELL_AURA_REMOVED 215430"
+	"SPELL_AURA_REMOVED 215430",
+	"GOSSIP_SHOW"
 )
 
 --TODO wicked dagger (199674)?
@@ -28,6 +29,8 @@ local yellThunderstrike				= mod:NewShortYell(215430)
 local specWarnCleansingFlame		= mod:NewSpecialWarningInterrupt(192563, "HasInterrupt", nil, nil, 1, 2)
 local specWarnUnrulyYell			= mod:NewSpecialWarningInterrupt(199726, "HasInterrupt", nil, nil, 1, 2)
 
+mod:AddBoolOption("AGSkovaldTrash", true)
+mod:AddBoolOption("AGStartOdyn", true)
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 generalized, 7 GTFO
 
 function mod:CrackleTarget(targetname, uId)
@@ -72,10 +75,8 @@ function mod:SPELL_CAST_START(args)
 		specWarnUnrulyYell:Show(args.sourceName)
 		specWarnUnrulyYell:Play("kickcast")
 	elseif spellId == 191508 then
-		if self:IsTanking("player", nil, nil, true, args.sourceGUID) then
-			specWarnBlastofLight:Show()
-			specWarnBlastofLight:Play("shockwave")
-		end
+		specWarnBlastofLight:Show()
+		specWarnBlastofLight:Play("shockwave")
 	elseif spellId == 199210 and self:AntiSpam(3, 2) then
 		specWarnPenetratingShot:Show()
 		specWarnPenetratingShot:Play("shockwave")
@@ -102,6 +103,19 @@ function mod:SPELL_AURA_REMOVED(args)
 	if args.spellId == 215430 and args:IsPlayer() then
 		if self.Options.RangeFrame then
 			DBM.RangeCheck:Hide()
+		end
+	end
+end
+
+function mod:GOSSIP_SHOW()
+	local table = C_GossipInfo.GetOptions()
+	if table[1] and table[1].gossipOptionID then
+		local gossipOptionID = table[1].gossipOptionID
+		DBM:Debug("GOSSIP_SHOW triggered with a gossip ID of: "..gossipOptionID)
+		if self.Options.AGSkovaldTrash and (gossipOptionID == 44755 or gossipOptionID == 44801 or gossipOptionID == 44802 or gossipOptionID == 44754) then -- Skovald Trash
+			C_GossipInfo.SelectOption(gossipOptionID)
+		elseif self.Options.AGStartOdyn and gossipOptionID == 44910 then -- Odyn
+			C_GossipInfo.SelectOption(gossipOptionID)
 		end
 	end
 end
