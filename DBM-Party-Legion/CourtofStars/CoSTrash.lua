@@ -199,27 +199,30 @@ do
 		local table = C_GossipInfo.GetOptions()
 		if table[1] and table[1].gossipOptionID then
 			local gossipOptionID = table[1].gossipOptionID
+			DBM:Debug("GOSSIP_SHOW triggered with a gossip ID of: "..gossipOptionID)
 			if self.Options.AGBoat and gossipOptionID == 45624 then -- Boat
 				C_GossipInfo.SelectOption(gossipOptionID)
-			elseif self.Options.AGDisguise and gossipOptionID == 45656 then -- Boat
+			elseif self.Options.AGDisguise and gossipOptionID == 45656 then -- Disguise
 				C_GossipInfo.SelectOption(gossipOptionID)
 			elseif clueIds[gossipOptionID] then -- SpyHelper
 				if not self.Options.SpyHelper then return end
 				local clue = clueIds[gossipOptionID]
-				if self.Options.SendToChat2 then
-					local text = hintTranslations[clue]
-					if IsInGroup(LE_PARTY_CATEGORY_INSTANCE) then
-						SendChatMessage(text, "INSTANCE_CHAT")
-					elseif IsInGroup(LE_PARTY_CATEGORY_HOME) then
-						SendChatMessage(text, "PARTY")
+				if not hints[clue] then
+					if self.Options.SendToChat2 then
+						local text = hintTranslations[clue]
+						if IsInGroup(LE_PARTY_CATEGORY_INSTANCE) then
+							SendChatMessage(text, "INSTANCE_CHAT")
+						elseif IsInGroup(LE_PARTY_CATEGORY_HOME) then
+							SendChatMessage(text, "PARTY")
+						end
 					end
+					hints[clue] = true
+					self:SendSync("CoS", clue)
+					DBM.InfoFrame:Show(5, "function", updateInfoFrame)
 				end
-				hints[clue] = true
-				self:SendSync("CoS", clue)
-				DBM.InfoFrame:Show(5, "function", updateInfoFrame)
 				if self.Options.SpyHelperClose then
 					--Delay used so DBM doesn't prevent other mods or WAs from parsing data
-					C_Timer.After(0.5, function() C_GossipInfo.CloseGossip() end)
+					C_Timer.After(0.3, function() C_GossipInfo.CloseGossip() end)
 				end
 			end
 		end
