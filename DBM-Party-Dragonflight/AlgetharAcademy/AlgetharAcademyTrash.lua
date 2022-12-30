@@ -3,6 +3,8 @@ local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
 --mod:SetModelID(47785)
+mod:SetZone(2526)
+
 mod.isTrashMod = true
 
 mod:RegisterEvents(
@@ -10,7 +12,8 @@ mod:RegisterEvents(
 	"SPELL_CAST_SUCCESS 390915",
 	"SPELL_AURA_APPLIED 388984 387843",
 --	"SPELL_AURA_APPLIED_DOSE 339528",
-	"SPELL_AURA_REMOVED 387843"
+	"SPELL_AURA_REMOVED 387843",
+	"GOSSIP_SHOW"
 )
 
 --TODO: add https://www.wowhead.com/spell=386026/surge ?
@@ -113,5 +116,16 @@ function mod:SPELL_AURA_REMOVED(args)
 	local spellId = args.spellId
 	if spellId == 387843 and args:IsPlayer() then
 		yellAstralBombFades:Cancel()
+	end
+end
+
+function mod:GOSSIP_SHOW()
+	local table = C_GossipInfo.GetOptions()
+	if table[1] and table[1].gossipOptionID then
+		local gossipOptionID = table[1].gossipOptionID
+		DBM:Debug("GOSSIP_SHOW triggered with a gossip ID of: "..gossipOptionID)
+--		if self.Options.AGSkovaldTrash and (gossipOptionID == 44755 or gossipOptionID == 44801 or gossipOptionID == 44802 or gossipOptionID == 44754) then -- Buffs
+--			C_GossipInfo.SelectOption(gossipOptionID)
+--		end
 	end
 end
