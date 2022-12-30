@@ -52,8 +52,6 @@ local specWarnCannonBarrage			= mod:NewSpecialWarningDodge(257540, nil, nil, nil
 --local timerSteelTempestCD			= mod:NewCDTimer(13, 260924, nil, nil, nil, 3)
 --local timerHangmansNooseCD			= mod:NewCDTimer(13, 261428, nil, nil, nil, 3, nil, DBM_COMMON_L.DEADLY_ICON)
 
---mod:AddRangeFrameOption(5, 194966)
-
 function mod:OnCombatStart()
 	if dungeonID == 2132 then--Redhook
 		--timerOntheHookCD:Start(1-delay)
