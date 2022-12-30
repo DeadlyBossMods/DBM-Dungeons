@@ -8,7 +8,7 @@ mod:SetZone(2515)
 mod.isTrashMod = true
 
 mod:RegisterEvents(
-	"SPELL_CAST_START 391136 370764 386526 387564 377105 370766",
+	"SPELL_CAST_START 391136 370764 386526 387564 377105 370766 386546",
 	"SPELL_CAST_SUCCESS 374885 371358 375652",
 	"SPELL_AURA_APPLIED 371007 395492 375596",
 --	"SPELL_AURA_APPLIED_DOSE 339528",
@@ -17,10 +17,12 @@ mod:RegisterEvents(
 )
 
 --TODO, I don't think shoulder slam target scan worked, maybe try again though.
+--TODO, add erratic growth interrupt?
 local warnNullStomp							= mod:NewCastAnnounce(386526, 2)
 local warnShoulderSlam						= mod:NewCastAnnounce(391136, 2)
 local warnPiercingShards					= mod:NewCastAnnounce(370764, 4)
 local warnIceCutter							= mod:NewCastAnnounce(377105, 4, nil, nil, "Tank|Healer")
+local warnWakingBane						= mod:NewCastAnnounce(386546, 3)
 local warnSplinteringShards					= mod:NewTargetAnnounce(371007, 2)
 local warScornfulHaste						= mod:NewTargetNoFilterAnnounce(395492, 2)
 local warnErraticGrowth						= mod:NewTargetNoFilterAnnounce(375596, 2)
@@ -35,6 +37,7 @@ local specWarnWildEruption					= mod:NewSpecialWarningDodge(375652, nil, nil, ni
 local specWarnSplinteringShards				= mod:NewSpecialWarningMoveAway(371007, nil, nil, nil, 1, 2)
 local yellSplinteringShards					= mod:NewYell(371007)
 local yellErraticGrowth						= mod:NewYell(375596)
+--local specWarnErraticGrowth					= mod:NewSpecialWarningInterrupt(375596, "HasInterrupt", nil, nil, 1, 2)
 local specWarnMysticVapors					= mod:NewSpecialWarningInterrupt(387564, "HasInterrupt", nil, nil, 1, 2)
 local specWarnWakingBane					= mod:NewSpecialWarningInterrupt(386546, "HasInterrupt", nil, nil, 1, 2)
 
@@ -79,9 +82,13 @@ function mod:SPELL_CAST_START(args)
 	elseif spellId == 387564 and self:CheckInterruptFilter(args.sourceGUID, false, true) then
 		specWarnMysticVapors:Show(args.sourceName)
 		specWarnMysticVapors:Play("kickcast")
-	elseif spellId == 386546 and self:CheckInterruptFilter(args.sourceGUID, false, true) then
-		specWarnWakingBane:Show(args.sourceName)
-		specWarnWakingBane:Play("kickcast")
+	elseif spellId == 386546 then
+		if self.Options.SpecWarn386546interrupt and  self:CheckInterruptFilter(args.sourceGUID, false, true) then
+			specWarnWakingBane:Show(args.sourceName)
+			specWarnWakingBane:Play("kickcast")
+		elseif self:AntiSpam(3, 5) then
+			warnWakingBane:Show()
+		end
 	end
 end
 
