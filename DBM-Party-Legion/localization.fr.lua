@@ -254,7 +254,8 @@ L:SetOptionLocalization({
 })
 
 L:SetMiscLocalization({
-	--
+	--Add translationss, but keep english termss for cross language groups since these post to chat
+	--Format "localized / english"
 	Gloves		= "gloves",
 	NoGloves	= "no gloves",
 	Cape		= "cape",

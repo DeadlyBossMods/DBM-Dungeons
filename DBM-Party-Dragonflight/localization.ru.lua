@@ -175,6 +175,10 @@ L:SetGeneralLocalization({
 	name =	"Трэш мобы Академия Алгет'ар"
 })
 
+L:SetOptionLocalization({
+	AGBuffs		= "Автоматический выбор диалога для активации баффов при взаимодействии с драконьими NPC"
+})
+
 -----------------------
 -- <<<The Azure Vault>>> --
 -----------------------
@@ -205,6 +209,10 @@ L = DBM:GetModLocalization("TheAzurevaultTrash")
 
 L:SetGeneralLocalization({
 	name =	"Трэш мобы Лазурное хранилище"
+})
+
+L:SetOptionLocalization({
+	AGBook			= "Автоматический выбор диалога для телепортации при взаимодействии с книгами"
 })
 
 -----------------------
