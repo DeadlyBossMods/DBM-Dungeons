@@ -251,10 +251,8 @@ do
 		elseif msg == "Finished" then
 			self:ResetGossipState()
 			if clue then
-				local targetname = DBM:GetUnitFullName(clue)
-				if targetname then
-					DBM:AddMsg(L.SpyFound:format(targetname))
-				end
+				local targetname = DBM:GetUnitFullName(clue) or clue
+				DBM:AddMsg(L.SpyFound:format(targetname))
 			end
 		end
 	end
