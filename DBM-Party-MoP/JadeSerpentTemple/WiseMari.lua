@@ -15,9 +15,10 @@ mod:RegisterCombat("combat")
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 397783 397801",
 	"SPELL_AURA_APPLIED 397797 397799",
-	"SPELL_AURA_REMOVED 397797"
+	"SPELL_AURA_REMOVED 397797",
 --	"SPELL_DAMAGE 115167",
 --	"SPELL_MISSED 115167"
+	"UNIT_SPELLCAST_SUCCEEDED boss1"
 )
 
 --This verion of mod is for the retail redesign
@@ -28,6 +29,7 @@ ability.id = 397783 and type = "begincast"
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
 --]]
 local warnCorruptedVortex			= mod:NewTargetAnnounce(397797, 3)
+local warnCorruptedGeyser			= mod:NewSpellAnnounce(397793, 3)
 
 local specWarnWashAway				= mod:NewSpecialWarningDodge(397783, nil, nil, nil, 2, 2)
 local specWarnCorruptedVortex		= mod:NewSpecialWarningMoveAway(397797, nil, nil, nil, 1, 2)
@@ -95,3 +97,9 @@ function mod:SPELL_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId, spellName)
 end
 mod.SPELL_MISSED = mod.SPELL_DAMAGE
 --]]
+
+function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
+	if spellId == 397800 then
+		warnCorruptedGeyser:Show()
+	end
+end

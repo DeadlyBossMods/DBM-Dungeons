@@ -10,7 +10,7 @@ mod:SetEncounterID(1439)
 mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
---	"SPELL_CAST_SUCCESS 106736 106113",
+	"SPELL_CAST_SUCCESS 106113",--106736
 	"SPELL_AURA_APPLIED 117665 106113 110099",
 	"SPELL_AURA_REMOVED 117665 106113"
 )
@@ -43,15 +43,15 @@ function mod:OnCombatStart(delay)
 	timerBoundsOfRealityCD:Start(20.3-delay)
 end
 
---[[
+
 function mod:SPELL_CAST_SUCCESS(args)
-	if args.spellId == 106736 then
-		warnWitherWill:Show()
---	elseif args.spellId == 106113 then
---		timerTouchofNothingnessCD:Start()
+	if args.spellId == 106113 then
+		timerTouchofNothingnessCD:Start()
+--	elseif args.spellId == 106736 then
+--		warnWitherWill:Show()
 	end
 end
---]]
+
 
 function mod:SPELL_AURA_APPLIED(args)
 	if args.spellId == 117665 then
@@ -60,9 +60,9 @@ function mod:SPELL_AURA_APPLIED(args)
 		timerBoundsOfReality:Start()
 		timerBoundsOfRealityCD:Start(self:IsMythicPlus() and 68.2 or 58.2)--TODO, confirm if non mythic plus still 58
 	elseif args.spellId == 106113 then
-		if self:AntiSpam() then
-			timerTouchofNothingnessCD:Start()
-		end
+--		if self:AntiSpam() then
+--			timerTouchofNothingnessCD:Start()
+--		end
 		if args:IsPlayer() then
 			specWarnTouchOfNothingness:Show()
 			specWarnTouchOfNothingness:Play("scatter")
