@@ -141,6 +141,7 @@ function mod:SPELL_AURA_REMOVED(args)
 end
 
 do
+	local clueTotal = 0
 	local hintTranslations = {
 		[1] = L.Cape or "cape",
 		[2] = L.Nocape or "no cape",
@@ -184,8 +185,15 @@ do
 		return lines
 	end
 
+	local function callUpdate()
+		clueTotal = clueTotal + 1
+		DBM.InfoFrame:SetHeader(L.CluesFound:format(clueTotal))
+		DBM.InfoFrame:Show(5, "function", updateInfoFrame)
+	end
+
 	function mod:ResetGossipState()--/run DBM:GetModByName("CoSTrash"):ResetGossipState()
 		table.wipe(hints)
+		clueTotal = 0
 		DBM.InfoFrame:Hide()
 	end
 
@@ -218,7 +226,7 @@ do
 					end
 					hints[clue] = true
 					self:SendSync("CoS", clue)
-					DBM.InfoFrame:Show(5, "function", updateInfoFrame)
+					callUpdate()
 				end
 				if self.Options.SpyHelperClose then
 					--Delay used so DBM doesn't prevent other mods or WAs from parsing data
@@ -232,9 +240,9 @@ do
 		if not self.Options.SpyHelper then return end
 		if msg == "CoS" and clue then
 			clue = tonumber(clue)
-			if clue then
+			if clue and not hints[clue] then
 				hints[clue] = true
-				DBM.InfoFrame:Show(5, "function", updateInfoFrame)
+				callUpdate()
 			end
 		elseif msg == "Finished" then
 			self:ResetGossipState()
@@ -247,10 +255,10 @@ do
 	function mod:OnBWSync(msg, extra)
 		if msg ~= "clue" then return end
 		extra = tonumber(extra)
-		if extra and extra > 0 and extra < 15 then
+		if extra and extra > 0 and extra < 15 and not hints[clue] then
 			DBM:Debug("Recieved BigWigs Comm:"..extra)
 			hints[extra] = true
-			DBM.InfoFrame:Show(5, "function", updateInfoFrame)
+			callUpdate()
 		end
 	end
 end
