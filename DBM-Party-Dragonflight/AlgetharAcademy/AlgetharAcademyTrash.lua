@@ -39,6 +39,8 @@ local yellAstralBombFades						= mod:NewShortFadesYell(387843)
 --local specWarnSharedSuffering					= mod:NewSpecialWarningYou(339607, nil, nil, nil, 1, 2)
 --local specWarnDirgefromBelow					= mod:NewSpecialWarningInterrupt(310839, "HasInterrupt", nil, nil, 1, 2)
 
+mod:AddBoolOption("AGBuffs", true)
+
 --local playerName = UnitName("player")
 
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc
@@ -124,8 +126,9 @@ function mod:GOSSIP_SHOW()
 	if table[1] and table[1].gossipOptionID then
 		local gossipOptionID = table[1].gossipOptionID
 		DBM:Debug("GOSSIP_SHOW triggered with a gossip ID of: "..gossipOptionID)
---		if self.Options.AGSkovaldTrash and (gossipOptionID == 44755 or gossipOptionID == 44801 or gossipOptionID == 44802 or gossipOptionID == 44754) then -- Buffs
---			C_GossipInfo.SelectOption(gossipOptionID)
---		end
+		--Black, Bronze, Blue, Red, Green
+		if self.Options.AGBuffs and (gossipOptionID == 107065 or gossipOptionID == 107081 or gossipOptionID == 107082 or gossipOptionID == 107088 or gossipOptionID == 107083) then -- Buffs
+			C_GossipInfo.SelectOption(gossipOptionID)
+		end
 	end
 end
