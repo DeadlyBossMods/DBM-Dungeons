@@ -260,21 +260,22 @@ L:SetOptionLocalization({
 
 L:SetMiscLocalization({
 	Found		= "자, 너무 그렇게 다그치지 마십시오",
-	--
-	Gloves		= "장갑",
-	NoGloves	= "장갑 없음",
-	Cape		= "망토",
-	Nocape		= "망토 없음",
-	LightVest	= "밝은색 조끼",
-	DarkVest	= "어두운색 조끼",
-	Female		= "여자",
-	Male		= "남자",
-	ShortSleeve = "짧은 소매",
-	LongSleeve	= "긴 소매",
-	Potions		= "물약",
-	NoPotions	= "물약 없음",
-	Book		= "책",
-	Pouch		= "주머니"
+	--Add translationss, but keep english termss for cross language groups since these post to chat
+	--Format "localized / english"
+	Gloves		= "장갑 / gloves",
+	NoGloves	= "장갑 없음 / no gloves",
+	Cape		= "망토 / cape",
+	Nocape		= "망토 없음 / no cape",
+	LightVest	= "밝은색 조끼 / light vest",
+	DarkVest	= "어두운색 조끼 / dark vest",
+	Female		= "여자 / female",
+	Male		= "남자 / male",
+	ShortSleeve = "짧은 소매 / short sleeve",
+	LongSleeve	= "긴 소매 / long sleeve",
+	Potions		= "물약 / potions",
+	NoPotions	= "물약 없음 / no potions",
+	Book		= "책 / book",
+	Pouch		= "주머니 / pouch"
 })
 
 

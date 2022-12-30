@@ -260,21 +260,22 @@ L:SetOptionLocalization({
 
 L:SetMiscLocalization({
 	Found			= "Na, na, wir wollen doch nicht voreilig sein",
-	--
-	Gloves			= "Handschuhe",
-	NoGloves		= "keine Handschuhe",
-	Cape			= "Umhang",
-	Nocape			= "kein Umhang",
-	LightVest		= "helle Weste",
-	DarkVest		= "dunkle Weste",
-	Female			= "weiblich",
-	Male			= "männlich",
-	ShortSleeve		= "kurze Ärmel",
-	LongSleeve		= "lange Ärmel",
-	Potions			= "Tränke",
-	NoPotions		= "keine Tränke",
-	Book			= "Buch",
-	Pouch			= "Beutel"
+	--Add translationss, but keep english termss for cross language groups since these post to chat
+	--Format "localized / english"
+	Gloves			= "Handschuhe / gloves",
+	NoGloves		= "keine Handschuhe / no gloves",
+	Cape			= "Umhang / cape",
+	Nocape			= "kein Umhang / no cape",
+	LightVest		= "helle Weste / light vest",
+	DarkVest		= "dunkle Weste / dark vest",
+	Female			= "weiblich / female",
+	Male			= "männlich / male",
+	ShortSleeve		= "kurze Ärmel / short sleeve",
+	LongSleeve		= "lange Ärmel / long sleeve",
+	Potions			= "Tränke / potions",
+	NoPotions		= "keine Tränke / no potions",
+	Book			= "Buch / book",
+	Pouch			= "Beutel / pouch"
 })
 
 
