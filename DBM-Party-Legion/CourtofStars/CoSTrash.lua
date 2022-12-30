@@ -20,6 +20,11 @@ mod:RegisterEvents(
 --TODO, at least 1-2 more GTFOs I forgot names of
 --TODO, verify if Disintegration beam is interruptable at 207980 or 207981
 --TODO, target scan https://www.wowhead.com/beta/spell=397897/crushing-leap ?
+--TODO, few more auto gossips
+--Buffs/Utility (professions and classs perks)
+--45278 Haste Buff Court of Stars (cooking/herbalism?)
+--Distractions (to separate boss)
+--45473 Warrior Distraction Court of Stars
 local warnImpendingDoom				= mod:NewTargetAnnounce(397907, 2)
 local warnCrushingLeap				= mod:NewCastAnnounce(397897, 3)
 local warnEyeStorm					= mod:NewCastAnnounce(212784, 3)
@@ -248,7 +253,7 @@ do
 			self:ResetGossipState()
 			if clue then
 				local targetname = DBM:GetUnitFullName(clue)
-				DBM:AddMsg(L.SpyFound:format(targetname))
+				DBM:AddMsg(L.SpyFound:format(targetname), nil, true)
 			end
 		end
 	end

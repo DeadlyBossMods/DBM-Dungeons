@@ -13,6 +13,9 @@ mod:RegisterCombat("combat")
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 209602 209676 209628"
 )
+mod:RegisterEvents(
+	"CHAT_MSG_MONSTER_SAY"
+)
 
 --[[
 (ability.id = 209602 or ability.id = 209676 or ability.id = 209628) and type = "begincast"
@@ -25,6 +28,7 @@ local yellSurge						= mod:NewYell(209602)
 local specWarnSlicingMaelstrom		= mod:NewSpecialWarningSpell(209676, nil, nil, nil, 2, 2)
 local specWarnGale					= mod:NewSpecialWarningDodge(209628, nil, nil, nil, 2, 2)
 
+local timerRP						= mod:NewRPTimer(32.9)
 local timerSurgeCD					= mod:NewCDTimer(12.1, 209602, nil, nil, nil, 3)
 local timerMaelstromCD				= mod:NewCDCountTimer(24.2, 209676, nil, nil, nil, 3)
 local timerGaleCD					= mod:NewCDTimer(23.8, 209628, nil, nil, nil, 2)
@@ -74,5 +78,19 @@ function mod:SPELL_CAST_START(args)
 		specWarnGale:Show()
 		specWarnGale:Play("watchstep")
 		timerGaleCD:Start()
+	end
+end
+
+--"<13.69 20:34:35> [CHAT_MSG_MONSTER_SAY] Must you leave so soon, Grand Magistrix?#Advisor Melandrus###Omegal##0#0##0#343#nil#0#false#false#false#false", -- [4]
+--"<46.59 20:35:08> [ENCOUNTER_START] 1870#Advisor Melandrus#23#5", -- [18]
+function mod:CHAT_MSG_MONSTER_YELL(msg)
+	if (msg == L.MelRP or msg:find(L.MelRP)) then
+		self:SendSync("MelRP")--Syncing to help unlocalized clients
+	end
+end
+
+function mod:OnSync(msg)
+	if msg == "MelRP" and self:AntiSpam(10, 2) then
+		timerRP:Start()
 	end
 end

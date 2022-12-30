@@ -249,6 +249,10 @@ L= DBM:GetModLocalization(1719)
 -----------------------
 L= DBM:GetModLocalization(1720)
 
+L:SetMiscLocalization({
+	MelRP		= "Must you leave so soon, Grand Magistrix?"
+})
+
 -----------------------
 --Court of Stars Trash
 -----------------------
@@ -285,7 +289,7 @@ L:SetMiscLocalization({
 	Book		= "book",
 	Pouch		= "pouch",
 
-	SpyFound 	= "Spy has been found by >%s<"
+	SpyFound 	= "Spy has been found by %s"
 })
 
 
