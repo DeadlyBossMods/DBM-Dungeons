@@ -155,7 +155,11 @@ L:SetGeneralLocalization({
 -----------------------
 -- Overgrown Ancient --
 -----------------------
---L= DBM:GetModLocalization(2512)
+L= DBM:GetModLocalization(2512)
+
+L:SetMiscLocalization({
+	TreeRP	= "완벽해요, 이제 곧... 잠깐, 이치스트라즈 님! 생명 마법이 너무 과하잖아요! 뭐 하시는 거예요?"
+})
 
 -----------------------
 -- Echo of Doragosa --
@@ -169,6 +173,10 @@ L = DBM:GetModLocalization("AlgetharAcademyTrash")
 
 L:SetGeneralLocalization({
 	name =	"알게타르 대학 일반몹"
+})
+
+L:SetOptionLocalization({
+	AGBuffs		= "용군단 NPC에게 말을 걸면 버프 받기 대화 자동 선택"
 })
 
 -----------------------
@@ -201,6 +209,10 @@ L = DBM:GetModLocalization("TheAzurevaultTrash")
 
 L:SetGeneralLocalization({
 	name =	"하늘빛 보관소 일반몹"
+})
+
+L:SetOptionLocalization({
+	AGBook			= "책을 클릭하면 순간이동 대화 자동 선택"
 })
 
 -----------------------
