@@ -142,7 +142,7 @@ L= DBM:GetModLocalization(1489)
 
 L:SetMiscLocalization({
 	tempestModeMessage		=	"폭풍우 시퀀스 아님: %s. 8초 후 다시 검사합니다.",
-	OdynRP					= "이제 마지막 시험만이 남았다. 바로 나다. 너희가 승리한다면, 이 신성한 전당에 내가 직접 너희 이름을 새기고, 그 용기에 걸맞은 보상을 내려 주마."
+	OdynRP					= "정말 놀랍군! 발라리아르의 힘에 견줄 만큼 강력한 자를 보게 될 줄은 몰랐거늘, 이렇게 너희가 나타나다니."
 })
 
 -----------------------
@@ -152,6 +152,11 @@ L = DBM:GetModLocalization("HoVTrash")
 
 L:SetGeneralLocalization({
 	name =	"용맹의 전당 일반몹"
+})
+
+L:SetOptionLocalization({
+	AGSkovaldTrash	= "스코발드 앞 정예 4마리에 말을 걸면 전투 시작 대화 자동 선택",
+	AGStartOdyn		= "오딘에 말을 걸면 전투 시작 대화 자동 선택"
 })
 
 -----------------------
@@ -245,6 +250,10 @@ L= DBM:GetModLocalization(1719)
 -----------------------
 L= DBM:GetModLocalization(1720)
 
+L:SetMiscLocalization({
+	MelRP		= "벌써 떠나셔야 합니까, 대마법학자님?"
+})
+
 -----------------------
 --Court of Stars Trash
 -----------------------
@@ -255,12 +264,17 @@ L:SetGeneralLocalization({
 })
 
 L:SetOptionLocalization({
-	SpyHelper	= "첩자 색출 도우미"
+	AGBoat		= "등불 클릭하면 배 소환 대화 자동 선택",
+	AGDisguise		= "라일레스 루나스트르에게 말을 걸면 변장하기 대화 자동 선택",
+	SpyHelper		= "첩자 색출을 위해 수다쟁이 호사가 NPC에게 말을 걸면 대화 내용을 자동으로 감지하여 정보 창에 표시 (다른 DBM/BW 사용자와 동기화)",
+	SpyHelperClose	= "0.3초 후 대화창 자동 닫기 (다른 모드나 WA가 대화 내역을 감지할 시간을 주기 위한 지연)",
+	SendToChat2	= "대화창에도 힌트 알려주기 (위의 설정을 켜야 작동)"
 })
 
 L:SetMiscLocalization({
 	Found		= "자, 너무 그렇게 다그치지 마십시오",
 	--
+	CluesFound	= "단서 발견: %d/5",
 	Gloves		= "장갑",
 	NoGloves	= "장갑 없음",
 	Cape		= "망토",
@@ -274,7 +288,9 @@ L:SetMiscLocalization({
 	Potions		= "물약",
 	NoPotions	= "물약 없음",
 	Book		= "책",
-	Pouch		= "주머니"
+	Pouch		= "주머니",
+
+	SpyFound 	= "%s|1이;가; 첩자를 발견했습니다"
 })
 
 
