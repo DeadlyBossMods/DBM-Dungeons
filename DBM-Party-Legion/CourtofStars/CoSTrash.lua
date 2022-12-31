@@ -9,13 +9,6 @@ mod:SetZone(1571)
 
 mod.isTrashMod = true
 
-mod:RegisterEvents(
-	"SPELL_CAST_START 209027 212031 209485 209410 209413 211470 211464 209404 209495 225100 211299 209378 397892 397897 207979 212784",
-	"SPELL_AURA_APPLIED 209033 209512 397907 373552",
-	"SPELL_AURA_REMOVED 397907",
-	"CHAT_MSG_MONSTER_SAY",
-	"GOSSIP_SHOW"
-)
 --LW solution, unregister/reregister other addons/WA frames from GOSSIP_SHOW
 --This is to prevent things like https://wago.io/M+Timer/114 from breaking clue helper do to advancing
 --dialog before we get a chance to read gossipID
@@ -23,10 +16,16 @@ local frames = {GetFramesRegisteredForEvent("GOSSIP_SHOW")}
 for i = 1, #frames do
 	frames[i]:UnregisterEvent("GOSSIP_SHOW")
 end
-self:RegisterEvent("GOSSIP_SHOW")
 for i = 1, #frames do
 	frames[i]:RegisterEvent("GOSSIP_SHOW")
 end
+mod:RegisterEvents(
+	"SPELL_CAST_START 209027 212031 209485 209410 209413 211470 211464 209404 209495 225100 211299 209378 397892 397897 207979 212784",
+	"SPELL_AURA_APPLIED 209033 209512 397907 373552",
+	"SPELL_AURA_REMOVED 397907",
+	"CHAT_MSG_MONSTER_SAY",
+	"GOSSIP_SHOW"
+)
 
 --TODO, at least 1-2 more GTFOs I forgot names of
 --TODO, target scan https://www.wowhead.com/beta/spell=397897/crushing-leap ?
