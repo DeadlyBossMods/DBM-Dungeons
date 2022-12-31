@@ -16,6 +16,17 @@ mod:RegisterEvents(
 	"CHAT_MSG_MONSTER_SAY",
 	"GOSSIP_SHOW"
 )
+--LW solution, unregister/reregister other addons/WA frames from GOSSIP_SHOW
+--This is to prevent things like https://wago.io/M+Timer/114 from breaking clue helper do to advancing
+--dialog before we get a chance to read gossipID
+local frames = {GetFramesRegisteredForEvent("GOSSIP_SHOW")}
+for i = 1, #frames do
+	frames[i]:UnregisterEvent("GOSSIP_SHOW")
+end
+self:RegisterEvent("GOSSIP_SHOW")
+for i = 1, #frames do
+	frames[i]:RegisterEvent("GOSSIP_SHOW")
+end
 
 --TODO, at least 1-2 more GTFOs I forgot names of
 --TODO, target scan https://www.wowhead.com/beta/spell=397897/crushing-leap ?
