@@ -48,6 +48,7 @@ globals = {
 	"CheckInteractDistance",
 	"EJ_GetEncounterInfo",
 	"GetAchievementInfo",
+	"GetFramesRegisteredForEvent",
 	"GetLocale",
 	"GetRaidTargetIndex",
 	"GetTime",
