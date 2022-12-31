@@ -18,7 +18,6 @@ mod:RegisterEvents(
 )
 
 --TODO, at least 1-2 more GTFOs I forgot names of
---TODO, verify if Disintegration beam is interruptable at 207980 or 207981
 --TODO, target scan https://www.wowhead.com/beta/spell=397897/crushing-leap ?
 --TODO, few more auto gossips
 --Buffs/Utility (professions and classs perks)
@@ -252,8 +251,8 @@ do
 		elseif msg == "Finished" then
 			self:ResetGossipState()
 			if clue then
-				local targetname = DBM:GetUnitFullName(clue)
-				DBM:AddMsg(L.SpyFound:format(targetname), nil, true)
+				local targetname = DBM:GetUnitFullName(clue) or clue
+				DBM:AddMsg(L.SpyFound:format(targetname))
 			end
 		end
 	end

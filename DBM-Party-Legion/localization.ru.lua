@@ -142,7 +142,7 @@ L= DBM:GetModLocalization(1489)
 
 L:SetMiscLocalization({
 	tempestModeMessage		=	"Нет последовательности бури: %s. Перепроверка через 8 секунд.",
-	OdynRP					= 	"Удивительно! Я не верил, что кто-то сможет сравниться с валарьярами... Но вы доказали, что это возможно."
+	OdynRP					= 	"Удивительно! Я не верил, что кто-то может сравниться с валарьярами... Но вы доказали, что это возможно."
 })
 
 -----------------------
@@ -273,7 +273,8 @@ L:SetOptionLocalization({
 
 L:SetMiscLocalization({
 	Found			= "Теперь, давайте не будем торопиться",
-	--Add translationss, but keep english termss for cross language groups since these post to chat
+	CluesFound	= "Найдено подсказок: %d/5",
+	--Add translationss, but keep english terms for cross language groups since these post to chat
 	--Format "localized / english"
 	Gloves		= "Носит перчатки / Wears gloves",
 	NoGloves	= "Без перчаток / No gloves",
