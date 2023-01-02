@@ -241,7 +241,9 @@ do
 					hints[clue] = true
 					self:SendSync("CoS", clue)
 					callUpdate()
-					C_GossipInfo.SelectOption(gossipOptionID)--Still required to advance dialog or demon hunters can't use spectral sight
+					--Still required to advance dialog or demon hunters can't use spectral sight
+					--We try to delay it by .1 so other mods can still parse gossip ID in theory
+					C_Timer.After(0.1, function() C_GossipInfo.SelectOption(gossipOptionID) end)
 				end
 				if self.Options.SpyHelperClose then
 					--Delay used so DBM doesn't prevent other mods or WAs from parsing data
