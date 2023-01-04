@@ -22,7 +22,6 @@ mod:RegisterEventsInCombat(
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
 --]]
 --NOTE, 106736 no longer in combat log
---NOTE: 106113 no longer fires a SUCCESS event
 --TODO, verify bounds of reality on more logs, including non mythic+
 --local warnWitherWill					= mod:NewSpellAnnounce(106736, 3, nil, false, 2)
 local warnBoundsOfReality				= mod:NewSpellAnnounce(117665, 3)
