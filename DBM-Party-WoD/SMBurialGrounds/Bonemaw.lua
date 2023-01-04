@@ -48,7 +48,7 @@ mod.vb.inhaleActive = false
 function mod:OnCombatStart(delay)
 	self.vb.inhaleActive = false
 	timerBodySlamCD:Start(15-delay, UnitName("boss1") or BOSS, UnitGUID("boss1"))--17?
-	timerInhaleCD:Start(27.1-delay)--36.4?
+--	timerInhaleCD:Start(15-delay)--it's like 15-60 variation, disabling for now
 --	timerSubmergeCD:Start(-delay)
 end
 
