@@ -6,6 +6,7 @@ mod.statTypes = "normal,heroic,challenge,timewalker"
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(56439)
 mod:SetEncounterID(1439)
+mod:SetHotfixNoticeRev(20230103000000)
 
 mod:RegisterCombat("combat")
 
@@ -18,7 +19,6 @@ mod:RegisterEventsInCombat(
 --[[
 (ability.id = 106736 or ability.id = 106113) and type = "cast"
  or ability.id = 117665 and (type = "begincast" or type = "removebuff")
- or ability.id = 106113 and type = "applydebuff"
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
 --]]
 --NOTE, 106736 no longer in combat log
@@ -33,7 +33,7 @@ local yellTouchOfNothingness			= mod:NewYell(106113)
 local specWarnTouchOfNothingnessDispel	= mod:NewSpecialWarningDispel(106113, "RemoveMagic", nil, nil, 1, 2)
 local specWarnShadowsOfDoubt			= mod:NewSpecialWarningGTFO(110099, nil, nil, nil, 1, 8)--Actually used by his trash, but in a speed run, you tend to pull it all together
 
-local timerTouchofNothingnessCD			= mod:NewCDTimer(15.5, 106113, nil, nil, 3, 3, nil, DBM_COMMON_L.MAGIC_ICON)--15.5~20 second variations.
+local timerTouchofNothingnessCD			= mod:NewCDTimer(20.5, 106113, nil, nil, 3, 3, nil, DBM_COMMON_L.MAGIC_ICON)--15.5~20 second variations.
 local timerTouchofNothingness			= mod:NewTargetTimer(30, 106113, nil, false, 2, 5, nil, DBM_COMMON_L.MAGIC_ICON)
 local timerBoundsOfRealityCD			= mod:NewCDTimer(58.2, 117665, nil, nil, nil, 6)
 local timerBoundsOfReality				= mod:NewBuffFadesTimer(30, 117665, nil, nil, nil, 6)
