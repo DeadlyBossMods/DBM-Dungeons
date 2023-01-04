@@ -58,7 +58,7 @@ function mod:OnCombatStart(delay)
 	timerSummonDraconicImageCD:Start(3.7-delay)
 	timerArcaneCleaveCD:Start(5-delay)
 	timerAncientOrbCD:Start(10.1-delay)
-	timerOverwhelmingenergyCD:Start(28-delay)
+	timerOverwhelmingenergyCD:Start(26.7-delay)
 end
 
 --function mod:OnCombatEnd()
@@ -113,7 +113,7 @@ function mod:SPELL_AURA_REMOVED(args)
 		timerSummonDraconicImageCD:Start(4.7)--4.7-5.7
 		timerArcaneCleaveCD:Start(7.1)--7.1-8.1
 		timerAncientOrbCD:Start(12)--12-13
-		timerOverwhelmingenergyCD:Start(53.3)
+		timerOverwhelmingenergyCD:Start(55.4)
 	end
 end
 
