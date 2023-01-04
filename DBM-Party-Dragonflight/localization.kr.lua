@@ -150,7 +150,12 @@ L:SetGeneralLocalization({
 -----------------------
 -- Vexamus --
 -----------------------
---L= DBM:GetModLocalization(2509)
+L= DBM:GetModLocalization(2509)
+
+L:SetMiscLocalization({
+	VexRP		= "아! 수업 자료가 여기 있었네. 어흠! 아주 먼 옛날, 푸른용군단의 구성원들이 실수로 비전 정령을 과부하시킨 적 있었답니다. 그 결과 벡사무스라는 강력한 피조물이 탄생해 난동을 부리기 시작했죠!"
+})
+
 
 -----------------------
 -- Overgrown Ancient --
@@ -158,7 +163,7 @@ L:SetGeneralLocalization({
 L= DBM:GetModLocalization(2512)
 
 L:SetMiscLocalization({
-	TreeRP	= "완벽해요, 이제 곧... 잠깐, 이치스트라즈 님! 생명 마법이 너무 과하잖아요! 뭐 하시는 거예요?"
+	TreeRP	= "완벽해요. 이제 곧... 잠깐, 이치스트라즈 님! 생명 마법이 너무 과하잖아요! 뭐 하시는 거예요?"
 })
 
 -----------------------
