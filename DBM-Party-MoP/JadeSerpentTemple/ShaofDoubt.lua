@@ -67,8 +67,8 @@ function mod:SPELL_AURA_APPLIED(args)
 			specWarnTouchOfNothingness:Play("scatter")
 			yellTouchOfNothingness:Yell()
 		elseif self:CheckDispelFilter("magic") then
-			specWarnTouchOfNothingness:Show(args.destName)
-			specWarnTouchOfNothingness:Play("helpdispel")
+			specWarnTouchOfNothingnessDispel:CombinedShow(0.3, args.destName)
+			specWarnTouchOfNothingnessDispel:ScheduleVoice(0.3, "helpdispel")
 		end
 		warnTouchofNothingness:CombinedShow(0.3, args.destName)
 		timerTouchofNothingness:Start(args.destName)

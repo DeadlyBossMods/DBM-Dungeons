@@ -47,7 +47,7 @@ function mod:SPELL_CAST_START(args)
 	elseif spellId == 151447 then
 		specWarnCrush:Show()
 		specWarnCrush:Play("shockwave")
-	elseif spellId == 151545 and self:IsValidWarning(args.sourceGUID) and self:CheckInterruptFilter(args.sourceGUID, false, true) then--Antispam
+	elseif spellId == 151545 and self:IsValidWarning(args.sourceGUID) and self:CheckInterruptFilter(args.sourceGUID, false, true) then
 		specWarnRoar:Show(args.sourceName)
 		specWarnRoar:Play("kickcast")
 	elseif spellId == 151558 and self:IsValidWarning(args.sourceGUID) and self:CheckInterruptFilter(args.sourceGUID, false, true) then
