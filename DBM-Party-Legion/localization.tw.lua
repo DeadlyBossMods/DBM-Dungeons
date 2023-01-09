@@ -290,7 +290,7 @@ L:SetMiscLocalization({
 	NoPotions	= "無藥水瓶 / no potions",
 	Book		= "書本 / book",
 	Pouch		= "腰袋 / pouch",
-	
+
 	SpyFound 	= "間諜已經被 %s 找到"
 })
 
