@@ -58,6 +58,7 @@ function mod:SPELL_CAST_START(args)
 			specWarnTempest:Play("kickcast")
 		elseif self:AntiSpam(3, 5) then
 			warnTempest:Show()
+		end
 	elseif spellId == 387411 and self:CheckInterruptFilter(args.sourceGUID, false, true) then
 		specWarnDeathBoltVolley:Show(args.sourceName)
 		specWarnDeathBoltVolley:Play("kickcast")
