@@ -235,7 +235,14 @@ L:SetOptionLocalization({
 -----------------------
 -- Kyrakka and Erkhart Stormvein --
 -----------------------
---L= DBM:GetModLocalization(2503)
+L= DBM:GetModLocalization(2503)
+
+L:SetMiscLocalization({
+	North	= "На север",
+	West	= "На запад",
+	South	= "На юг",
+	East	= "На восток"
+})
 
 ---------
 --Trash--
