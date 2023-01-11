@@ -149,12 +149,11 @@ end
 ? Book 5 return
 --]]
 function mod:GOSSIP_SHOW()
-	local table = C_GossipInfo.GetOptions()
-	if table[1] and table[1].gossipOptionID then
-		local gossipOptionID = table[1].gossipOptionID
+	local gossipOptionID = self:GetGossipID()
+	if gossipOptionID then
 		DBM:Debug("GOSSIP_SHOW triggered with a gossip ID of: "..gossipOptionID)
 		if self.Options.AGBook and (gossipOptionID == 56056 or gossipOptionID == 56057 or gossipOptionID == 56247 or gossipOptionID == 56379 or gossipOptionID == 56248 or gossipOptionID == 56378 or gossipOptionID == 56250 or gossipOptionID == 107756 or gossipOptionID == 56251) then -- Books
-			C_GossipInfo.SelectOption(gossipOptionID)
+			self:SelectGossip(gossipOptionID)
 		end
 	end
 end
