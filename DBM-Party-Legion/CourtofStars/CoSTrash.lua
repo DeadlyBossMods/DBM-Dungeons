@@ -269,6 +269,7 @@ do
 		end
 	end
 	function mod:OnBWSync(msg, extra)
+		if not self.Options.SpyHelper then return end
 		if msg ~= "clue" then return end
 		extra = tonumber(extra)
 		if extra and extra > 0 and extra < 15 and not hints[extra] then
