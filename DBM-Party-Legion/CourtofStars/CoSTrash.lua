@@ -64,7 +64,7 @@ mod:AddBoolOption("AGBoat", true)
 mod:AddBoolOption("AGDisguise", true)
 mod:AddBoolOption("SpyHelper", true)
 mod:AddBoolOption("SendToChat2", true)
-mod:AddBoolOption("SpyHelperClose", true)
+mod:AddBoolOption("SpyHelperClose2", false)
 
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 generalized, 7 GTFO
 
@@ -244,7 +244,7 @@ do
 					--We try to delay it by .1 so other mods can still parse gossip ID in theory
 					C_Timer.After(0.1, function() self:SelectGossip(gossipOptionID) end)
 				end
-				if self.Options.SpyHelperClose then
+				if self.Options.SpyHelperClose2 then
 					--Delay used so DBM doesn't prevent other mods or WAs from parsing data
 					C_Timer.After(0.3, function() C_GossipInfo.CloseGossip() end)
 				end
