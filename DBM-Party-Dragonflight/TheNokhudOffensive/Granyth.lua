@@ -143,7 +143,7 @@ end
 
 function mod:SPELL_AURA_REMOVED(args)
 	local spellId = args.spellId
-	if spellId == 361966 then--Lanced!
+	if spellId == 387155 then--Lanced!
 		--Resets these timers
 		if self:IsMythic() then
 			timerSummonSaboteurCD:Start(5.6, self.vb.addCount+1)

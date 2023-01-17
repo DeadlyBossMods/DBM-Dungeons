@@ -114,7 +114,7 @@ function mod:SPELL_CAST_START(args)
 		--timerSteelTempestCD:Start()
 	elseif spellId == 261428 then
 		--timerHangmansNooseCD:Start()
-	elseif spellId == 260954 then
+--	elseif spellId == 260954 then
 		--timerIronGazeCD:Start()
 	end
 end

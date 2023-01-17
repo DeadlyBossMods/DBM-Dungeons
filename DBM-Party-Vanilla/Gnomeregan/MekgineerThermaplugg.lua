@@ -35,7 +35,7 @@ function mod:SPELL_CAST_START(args)
 	end
 end
 
-function mod:SPELL_CAST_SUCESS(args)
+function mod:SPELL_CAST_SUCCESS(args)
 	if args.spellId == 74720 then
 		timerSteamBlastCD:Start()
 	end

@@ -204,6 +204,9 @@ function mod:SPELL_CAST_START(args)
 		warnVolatileWaste:Show()
 	elseif spellId == 293854 and self:AntiSpam(3, 6) then
 		warnSummonSquirrel:Show()
+	elseif spellId == 293986 and self:AntiSpam(3, 2) then
+		specWarnSonicPulse:Show()
+		specWarnSonicPulse:Play("shockwave")
 	end
 end
 
@@ -263,9 +266,6 @@ function mod:SPELL_AURA_APPLIED(args)
 	elseif spellId == 294103 and self:AntiSpam(3, 2) then
 		specWarnRocketBarrage:Show()
 		specWarnRocketBarrage:Play("watchstep")
-	elseif spellId == 293986 and self:AntiSpam(3, 2) then
-		specWarnSonicPulse:Show()
-		specWarnSonicPulse:Play("shockwave")
 	end
 end
 

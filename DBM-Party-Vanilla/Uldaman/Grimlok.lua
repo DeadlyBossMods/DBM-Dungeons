@@ -10,7 +10,7 @@ mod:RegisterCombat("combat")
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 8292 12167",
 	"SPELL_CAST_SUCCESS 6742",
-	"SPELL_AURA_APPLIED 6742 9906"
+	"SPELL_AURA_APPLIED 6742 9906 3636"
 )
 
 local warningBloodlust				= mod:NewTargetNoFilterAnnounce(6742, 3)

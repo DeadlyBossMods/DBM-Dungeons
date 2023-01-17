@@ -9,7 +9,7 @@ mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 8040 23381",
-	"SPELL_CAST_SUCCESS 7965",
+	"SPELL_CAST_SUCCESS 7965 17330",
 	"SPELL_AURA_APPLIED 8040 17330"
 )
 

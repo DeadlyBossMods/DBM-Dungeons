@@ -23,7 +23,7 @@ function mod:OnCombatStart(delay)
 end
 
 function mod:SPELL_AURA_APPLIED(args)
-	if args.spellId == 69029 then--Mana Rage, triggers right before CHAT_MSG_RAID_BOSS_EMOTE
+	if args.spellId == 44320 then--Mana Rage, triggers right before CHAT_MSG_RAID_BOSS_EMOTE
 		specWarnChannel:Show()
 		specWarnChannel:Play("targetchange")
 		timerChannelCD:Start()

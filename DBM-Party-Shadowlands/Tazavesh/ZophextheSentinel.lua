@@ -112,7 +112,7 @@ end
 
 function mod:SPELL_AURA_REMOVED(args)
 	local spellId = args.spellId
-	if spellId == 322681 then
+	if spellId == 345770 then
 		if args:IsPlayer() then
 			warnInpoundContrabandEnded:Show()
 		end

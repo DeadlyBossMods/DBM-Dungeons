@@ -17,7 +17,7 @@ for i = 1, #frames do
 	frames[i]:UnregisterEvent("GOSSIP_SHOW")
 end
 mod:RegisterEvents(
-	"SPELL_CAST_START 209027 212031 209485 209410 209413 211470 211464 209404 209495 225100 211299 209378 397892 397897 207979 212784",
+	"SPELL_CAST_START 209027 212031 209485 209410 209413 211470 211464 209404 209495 225100 211299 209378 397892 397897 207979 212784 207980",
 	"SPELL_AURA_APPLIED 209033 209512 397907 373552",
 	"SPELL_AURA_REMOVED 397907",
 	"CHAT_MSG_MONSTER_SAY",
@@ -64,7 +64,7 @@ mod:AddBoolOption("AGBoat", true)
 mod:AddBoolOption("AGDisguise", true)
 mod:AddBoolOption("SpyHelper", true)
 mod:AddBoolOption("SendToChat2", true)
-mod:AddBoolOption("SpyHelperClose", true)
+mod:AddBoolOption("SpyHelperClose2", false)
 
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 generalized, 7 GTFO
 
@@ -244,7 +244,7 @@ do
 					--We try to delay it by .1 so other mods can still parse gossip ID in theory
 					C_Timer.After(0.1, function() self:SelectGossip(gossipOptionID) end)
 				end
-				if self.Options.SpyHelperClose then
+				if self.Options.SpyHelperClose2 then
 					--Delay used so DBM doesn't prevent other mods or WAs from parsing data
 					C_Timer.After(0.3, function() C_GossipInfo.CloseGossip() end)
 				end

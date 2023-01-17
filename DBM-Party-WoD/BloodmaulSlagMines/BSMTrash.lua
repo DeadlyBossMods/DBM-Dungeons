@@ -7,8 +7,8 @@ mod:SetRevision("@file-date-integer@")
 mod.isTrashMod = true
 
 mod:RegisterEvents(
-	"SPELL_AURA_APPLIED 164597 151548 151697 151965 151558 151581",
-	"SPELL_CAST_START 152298 151447 151545"
+	"SPELL_AURA_APPLIED 164597 151548 151697 151965",
+	"SPELL_CAST_START 152298 151447 151545 151558 151581"
 )
 local warnCinderSplash					= mod:NewSpellAnnounce(152298, 3)
 

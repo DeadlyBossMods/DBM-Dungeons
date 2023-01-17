@@ -11,7 +11,7 @@ mod:SetModelID(22906)--Here for a reason?
 mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
-	"SPELL_CAST_START 36819",
+	"SPELL_CAST_START 36819 44224",
 	"SPELL_CAST_SUCCESS 44194 36819",
 	"SPELL_AURA_APPLIED 46165",
 	"SPELL_AURA_REMOVED 46165",
