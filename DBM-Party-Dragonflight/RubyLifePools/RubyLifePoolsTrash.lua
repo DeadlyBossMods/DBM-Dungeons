@@ -120,7 +120,7 @@ end
 
 function mod:SPELL_AURA_REMOVED(args)
 	local spellId = args.spellId
-	if spellId == 339525 and args:IsPlayer() then
+	if spellId == 373693 and args:IsPlayer() then
 		yellLivingBombFades:Cancel()
 	end
 end
