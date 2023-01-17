@@ -169,7 +169,7 @@ function mod:SPELL_CAST_START(args)
 		specWarnStaticShock:Show()
 		specWarnStaticShock:Play("aesoon")
 		--timerStaticShockCD:Start()
-	elseif spellId == 267818 and self:CheckInterruptFilter(args.sourceGUID, false, true) then
+	elseif spellId == 263318 and self:CheckInterruptFilter(args.sourceGUID, false, true) then
 		specWarnJolt:Show(args.sourceName)
 		specWarnJolt:Play("kickcast")
 	elseif spellId == 263775 and self:CheckInterruptFilter(args.sourceGUID, false, true) then

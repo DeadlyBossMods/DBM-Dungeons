@@ -106,7 +106,7 @@ function mod:SPELL_CAST_START(args)
 end
 
 function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId, spellName)
-	if spellId == 15011 and destGUID == UnitGUID("player") and self:AntiSpam(2, 1) then--need to check spell ids again
+	if spellId == 150011 and destGUID == UnitGUID("player") and self:AntiSpam(2, 1) then--need to check spell ids again
 		specWarnMagmaBarrage:Show(spellName)
 		specWarnMagmaBarrage:Play("watchfeet")
 	end

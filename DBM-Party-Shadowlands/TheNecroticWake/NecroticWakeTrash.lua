@@ -149,7 +149,7 @@ function mod:SPELL_AURA_APPLIED(args)
 	elseif spellId == 338353 and args:IsDestTypePlayer() and self:CheckDispelFilter("disease") and self:AntiSpam(3, 5) then
 		specWarnGoresplatterDispel:Show(args.destName)
 		specWarnGoresplatterDispel:Play("helpdispel")
-	elseif spellId == 340288 and args:IsDestTypePlayer() then
+	elseif spellId == 338357 and args:IsDestTypePlayer() then
 		local amount = args.amount or 1
 		if amount >= 2 then
 			warnTenderize:Show(args.destName, args.amount or 1)

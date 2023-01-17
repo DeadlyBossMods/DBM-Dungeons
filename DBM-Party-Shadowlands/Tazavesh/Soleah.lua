@@ -182,7 +182,7 @@ mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED
 
 function mod:SPELL_AURA_REMOVED(args)
 	local spellId = args.spellId
-	if spellId == 322681 and args:IsPlayer() then
+	if spellId == 350804 and args:IsPlayer() then
 		warnCollapsingEnergyOver:Show()
 	elseif spellId == 351086 then
 		warnPowerOverwhelmingEnded:Show()
