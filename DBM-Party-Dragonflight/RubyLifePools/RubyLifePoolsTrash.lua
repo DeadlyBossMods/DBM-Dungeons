@@ -116,6 +116,7 @@ function mod:SPELL_CAST_START(args)
 		specWarnCinderbolt:Show(args.sourceName)
 		specWarnCinderbolt:Play("kickcast")
 	elseif spellId == 392486 then
+		local cid = self:GetCIDFromGUID(args.sourceGUID)
 		if cid == 197535 then
 			timerLightningStormCD:Start(21.8, args.sourceGUID)
 		else
