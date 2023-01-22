@@ -29,7 +29,7 @@ local warnUltimatePower		= mod:NewTargetAnnounce(113309, 4)
 local specWarnIntensity		= mod:NewSpecialWarning("SpecWarnIntensity", nil, nil, nil, 1, 2)
 local specWarnUltimatePower	= mod:NewSpecialWarningTarget(113309, nil, nil, nil, 2, 2)
 
-local timerRP				= mod:NewRPTimer(10)
+local timerRP				= mod:NewRPTimer(17.4)
 local timerUltimatePower	= mod:NewTargetTimer(15, 113309, nil, nil, nil, 5)
 
 mod.vb.bossesDead = 0
@@ -79,17 +79,25 @@ function mod:UNIT_DIED(args)
 	end
 end
 
---As the tale goes, the yaungol was traveling across the Kun'lai plains when suddenly he was ambushed by two strange creatures
---"<31.42 19:12:48> [ENCOUNTER_START] ENCOUNTER_START#1417#Lorewalker Stonestep#2#5", -- [26]
+--"<19.62 23:24:18> [CHAT_MSG_MONSTER_YELL] Ah, it is not yet over. From what I see, we face the trial of the yaungol. Let me shed some light...#Lorewalker Stonestep#####0#0##0#4721#nil#0#false#false#false#false", -- [23]
+--"<28.33 23:24:27> [CHAT_MSG_MONSTER_YELL] As the tale goes, the yaungol was traveling across the Kun'lai plains when suddenly he was ambushed by two strange creatures!#Lorewalker Stonestep#####0#0##0#4722#nil#0#false#false#false#false", -- [29]
+--"<37.08 23:24:35> [ENCOUNTER_START] 1417#Lorewalker Stonestep#1#5", -- [32]
+--
+--"<21.88 20:20:20> [CHAT_MSG_MONSTER_YELL] Oh, my. If I am not mistaken, it appears that the tale of Zao Sunseeker has come to life before us.#Lorewalker Stonestep#####0#0##0#1161#nil#0#false#false#false#false", -- [17]
+--"<53.36 20:20:52> [ENCOUNTER_START] 1417#Lorewalker Stonestep#2#5", -- [22]
 function mod:CHAT_MSG_MONSTER_YELL(msg, npc, _, _, target)
 	if (msg == L.Event1 or msg:find(L.Event1)) then
 		self:SendSync("LibraryRP1")
+	elseif (msg == L.Event2 or msg:find(L.Event2)) then
+		self:SendSync("LibraryRP2")
 	end
 end
 
 function mod:OnSync(msg, targetname)
 	if msg == "LibraryRP1" then
-		timerRP:Start()
+		timerRP:Start(17.4)
+	elseif msg == "LibraryRP2" then
+		timerRP:Start(31.4)
 	end
 end
 

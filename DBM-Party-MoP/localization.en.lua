@@ -22,7 +22,8 @@ L:SetOptionLocalization({
 })
 
 L:SetMiscLocalization({
-	Event1	= "Ah, it is not yet over. From what I see, we face the trial of the yaungol. Let me shed some light..."
+	Event1	= "Ah, it is not yet over. From what I see, we face the trial of the yaungol. Let me shed some light...",
+	Event2	= "Oh, my. If I am not mistaken, it appears that the tale of Zao Sunseeker has come to life before us."
 })
 
 -----------------------
