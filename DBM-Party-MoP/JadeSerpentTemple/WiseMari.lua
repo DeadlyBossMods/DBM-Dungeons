@@ -21,7 +21,6 @@ mod:RegisterEventsInCombat(
 )
 
 --This verion of mod is for the retail redesign
---TODO, Corrupted Geyser spawn is not in combat log so I can't implement it in this mod yet til its added
 --[[
 ability.id = 397783 and type = "begincast"
  or ability.id = 397797 and type = "applydebuff"
