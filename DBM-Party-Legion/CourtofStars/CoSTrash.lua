@@ -214,6 +214,14 @@ do
 	function mod:CHAT_MSG_MONSTER_SAY(msg, _, _, _, target)
 		if msg:find(L.Found) or msg == L.Found then
 			self:SendSync("Finished", target)
+			if self.Options.SpyHelper and self.Options.SendToChat2 and target == UnitName("player") then
+				local text = L.SpyFoundP
+				if IsInGroup(LE_PARTY_CATEGORY_INSTANCE) then
+					SendChatMessage("DBM: "..text, "INSTANCE_CHAT")
+				elseif IsInGroup(LE_PARTY_CATEGORY_HOME) then
+					SendChatMessage("DBM: "..text, "PARTY")
+				end
+			end
 		end
 	end
 
@@ -232,9 +240,9 @@ do
 					if self.Options.SendToChat2 then
 						local text = hintTranslations[clue]
 						if IsInGroup(LE_PARTY_CATEGORY_INSTANCE) then
-							SendChatMessage(text, "INSTANCE_CHAT")
+							SendChatMessage("DBM: "..text, "INSTANCE_CHAT")
 						elseif IsInGroup(LE_PARTY_CATEGORY_HOME) then
-							SendChatMessage(text, "PARTY")
+							SendChatMessage("DBM: "..text, "PARTY")
 						end
 					end
 					hints[clue] = true
