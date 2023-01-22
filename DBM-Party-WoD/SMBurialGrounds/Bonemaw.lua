@@ -114,7 +114,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
 end
 
 function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, destName, _, _, spellId)
-	if spellId == 153692 and not self.vb.inhaleActive and destGUID == UnitGUID("player") and self:AntiSpam(2, 1) then
+	if spellId == 153692 and not self.vb.inhaleActive and destGUID == UnitGUID("player") and self:AntiSpam(3, 1) then
 		specWarnNecroticPitch:Show()
 		specWarnNecroticPitch:Play("watchfeet")
 	end
