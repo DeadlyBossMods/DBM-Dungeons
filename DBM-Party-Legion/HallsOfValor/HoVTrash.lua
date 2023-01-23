@@ -141,7 +141,7 @@ function mod:GOSSIP_SHOW()
 		if self.Options.AGSkovaldTrash and (gossipOptionID == 44755 or gossipOptionID == 44801 or gossipOptionID == 44802 or gossipOptionID == 44754) then -- Skovald Trash
 			self:SelectGossip(gossipOptionID)
 		elseif self.Options.AGStartOdyn and gossipOptionID == 44910 then -- Odyn
-			self:SelectGossip(gossipOptionID)
+			self:SelectGossip(gossipOptionID, true)
 		end
 	end
 end
