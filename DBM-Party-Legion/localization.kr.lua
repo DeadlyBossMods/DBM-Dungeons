@@ -291,6 +291,7 @@ L:SetMiscLocalization({
 	Book		= "책 / book",
 	Pouch		= "주머니 / pouch",
 
+	SpyFoundP 	= "첩자 발견",
 	SpyFound 	= "%s|1이;가; 첩자를 발견했습니다"
 })
 
