@@ -130,6 +130,7 @@ end
 
 function mod:OnSync(msg, targetname)
 	if msg == "SkovaldRP" and self:AntiSpam(10, 2) then
-		timerRP:Start()
+--		timerRP:Start()
+		DBM:AddMsg("Old RP timer disabled for Jan 23rd hotfix, new timer will be added soon")
 	end
 end
