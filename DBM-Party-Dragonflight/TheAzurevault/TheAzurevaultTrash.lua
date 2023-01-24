@@ -83,7 +83,7 @@ function mod:SPELL_CAST_START(args)
 		specWarnMysticVapors:Show(args.sourceName)
 		specWarnMysticVapors:Play("kickcast")
 	elseif spellId == 386546 then
-		timerWakingBaneCD:Start(20, args.source.GUID)
+		timerWakingBaneCD:Start(20, args.sourceGUID)
 		if self.Options.SpecWarn386546interrupt and self:CheckInterruptFilter(args.sourceGUID, false, true) then
 			specWarnWakingBane:Show(args.sourceName)
 			specWarnWakingBane:Play("kickcast")
