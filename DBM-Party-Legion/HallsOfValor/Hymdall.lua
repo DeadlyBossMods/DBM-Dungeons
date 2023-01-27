@@ -67,6 +67,7 @@ function mod:SPELL_CAST_START(args)
 		end
 	elseif spellId == 193092 then
 		warnSweep:Show()
+		timerSweepCD:Start()
 	end
 end
 
