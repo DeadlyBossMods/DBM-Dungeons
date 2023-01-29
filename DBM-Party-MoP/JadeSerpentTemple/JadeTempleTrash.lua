@@ -6,7 +6,7 @@ mod:SetRevision("@file-date-integer@")
 mod.isTrashMod = true
 
 mod:RegisterEvents(
-	"SPELL_CAST_START 398300 395859 397899 397881 397889 396001 395872 396073 396018",
+	"SPELL_CAST_START 398300 395859 397899 397881 397889 396001 395872 396073 396018 397931",
 	"SPELL_AURA_APPLIED 396020 396018"
 --	"SPELL_AURA_APPLIED_DOSE",
 --	"SPELL_AURA_REMOVED"
@@ -19,6 +19,7 @@ local warnHauntingScream					= mod:NewCastAnnounce(395859, 4)
 local warnSleepySililoquy					= mod:NewCastAnnounce(395872, 3)
 local warnCatNap							= mod:NewCastAnnounce(396073, 3)
 local warnFitofRage							= mod:NewCastAnnounce(396018, 3)
+local warnDarkClaw							= mod:NewCastAnnounce(397931, 4, nil, nil, "Tank|Healer")
 local warnGoldenBarrier						= mod:NewTargetNoFilterAnnounce(396020, 2)
 
 local specWarnFlamesofDoubt					= mod:NewSpecialWarningDodge(398300, nil, nil, nil, 2, 2)
@@ -67,6 +68,8 @@ function mod:SPELL_CAST_START(args)
 		warnCatNap:Show()
 	elseif spellId == 396018 and self:AntiSpam(3, 5) then
 		warnFitofRage:Show()
+	elseif spellId == 397931 and self:AntiSpam(3, 5) then
+		warnDarkClaw:Show()
 	end
 end
 
