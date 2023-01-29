@@ -97,21 +97,19 @@ function mod:SPELL_CAST_START(args)
 		end
 		castsPerGUID[args.sourceGUID] = castsPerGUID[args.sourceGUID] + 1
 		local count = castsPerGUID[args.sourceGUID]
-		if self:CheckInterruptFilter(args.sourceGUID, false, false) then--Count interrupt, so cooldown is not checked
-			specWarnRoaringBlaze:Show(args.sourceName, count)
-			if count == 1 then
-				specWarnRoaringBlaze:Play("kick1r")
-			elseif count == 2 then
-				specWarnRoaringBlaze:Play("kick2r")
-			elseif count == 3 then
-				specWarnRoaringBlaze:Play("kick3r")
-			elseif count == 4 then
-				specWarnRoaringBlaze:Play("kick4r")
-			elseif count == 5 then
-				specWarnRoaringBlaze:Play("kick5r")
-			else
-				specWarnRoaringBlaze:Play("kickcast")
-			end
+		specWarnRoaringBlaze:Show(args.sourceName, count)
+		if count == 1 then
+			specWarnRoaringBlaze:Play("kick1r")
+		elseif count == 2 then
+			specWarnRoaringBlaze:Play("kick2r")
+		elseif count == 3 then
+			specWarnRoaringBlaze:Play("kick3r")
+		elseif count == 4 then
+			specWarnRoaringBlaze:Play("kick4r")
+		elseif count == 5 then
+			specWarnRoaringBlaze:Play("kick5r")
+		else
+			specWarnRoaringBlaze:Play("kickcast")
 		end
 	elseif spellId == 373087 then
 		if self.Options.SpecWarn373087run then
