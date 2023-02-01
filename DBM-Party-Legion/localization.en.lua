@@ -292,6 +292,7 @@ L:SetMiscLocalization({
 
 	SpyFoundP 	= "I found the spy",
 	SpyFound 	= "Spy has been found by %s"
+	SpyGoingAway= "The spy helper will likely be going away with nerfs in patch 10.0.7. Get used to using Demon Hunters or voice coordination for this dungeon, as blizzard intended"
 })
 
 
