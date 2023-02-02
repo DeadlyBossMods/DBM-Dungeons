@@ -34,6 +34,8 @@ end
 --45278 Haste Buff Court of Stars (cooking/herbalism?)
 --Distractions (to separate boss)
 --45473 Warrior Distraction Court of Stars
+--45168 Cooking Interaction buff
+--45332 Engineering interaction to break robots
 local warnImpendingDoom				= mod:NewTargetAnnounce(397907, 2)
 local warnCrushingLeap				= mod:NewCastAnnounce(397897, 3)
 local warnEyeStorm					= mod:NewCastAnnounce(212784, 3)
