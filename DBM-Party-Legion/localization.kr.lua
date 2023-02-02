@@ -292,7 +292,8 @@ L:SetMiscLocalization({
 	Pouch		= "주머니 / pouch",
 
 	SpyFoundP 	= "첩자 발견",
-	SpyFound 	= "%s|1이;가; 첩자를 발견했습니다"
+	SpyFound 	= "%s|1이;가; 첩자를 발견했습니다",
+	SpyGoingAway= "첩자 색출 도우미는 10.0.7 패치에서 너프로 없어질 예정입니다. 이 던전에 대한 블리자드의 의도는 악마 사냥꾼을 활용하거나 보이스챗으로 협력해서 찾으라는 것입니다"
 })
 
 
