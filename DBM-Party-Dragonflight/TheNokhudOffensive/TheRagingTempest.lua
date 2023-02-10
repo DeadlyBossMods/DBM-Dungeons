@@ -12,9 +12,9 @@ mod:SetHotfixNoticeRev(20221029000000)
 mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
-	"SPELL_CAST_START 384316 384620 384686"
+	"SPELL_CAST_START 384316 384620 384686",
 --	"SPELL_CAST_SUCCESS",
---	"SPELL_AURA_APPLIED 384686"
+	"SPELL_AURA_APPLIED 384686"
 --	"SPELL_AURA_APPLIED_DOSE",
 --	"SPELL_AURA_REMOVED",
 --	"SPELL_PERIODIC_DAMAGE",
@@ -82,14 +82,6 @@ function mod:SPELL_CAST_START(args)
 	end
 end
 
---[[
-function mod:SPELL_CAST_SUCCESS(args)
-	local spellId = args.spellId
-	if spellId == 362805 then
-
-	end
-end
-
 function mod:SPELL_AURA_APPLIED(args)
 	local spellId = args.spellId
 	if spellId == 384686 and args:IsDestTypeHostile() then
@@ -99,6 +91,7 @@ function mod:SPELL_AURA_APPLIED(args)
 end
 --mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED
 
+--[[
 function mod:SPELL_AURA_REMOVED(args)
 	local spellId = args.spellId
 	if spellId == 361966 then
