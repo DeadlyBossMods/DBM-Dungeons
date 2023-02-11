@@ -62,7 +62,11 @@ function mod:SPELL_CAST_SUCCESS(args)
 	if spellId == 207278 then--Success since jumping on cast start too early
 		specWarnArcaneLockdown:Show()
 		specWarnArcaneLockdown:Play("keepjump")
-		timerArcaneLockdownCD:Start()
+		if self.vb.phase == 2 then
+			timerArcaneLockdownCD:Start(26.7)
+		else
+			timerArcaneLockdownCD:Start(27.9)
+		end
 	elseif spellId == 219488 then
 		warnStreetsweeper:Show(args.destName)
 		timerStreetsweeperCD:Start()
