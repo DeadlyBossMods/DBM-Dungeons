@@ -36,6 +36,18 @@ function mod:OnCombatStart(delay)
 	timerResonantSlashCD:Start(6.2-delay)
 	timerStreetsweeperCD:Start(11.1)
 	timerArcaneLockdownCD:Start(15-delay)
+	--Allow trash mod to enable in combat since it's not uncommon to pull boss with some trash (usually by accident)
+	local trashMod = DBM:GetModByName("CoSTrash")
+	if trashMod then
+		trashMod.isTrashModBossFightAllowed = true
+	end
+end
+
+function mod:OnCombatEnd()
+	local trashMod = DBM:GetModByName("CoSTrash")
+	if trashMod then
+		trashMod.isTrashModBossFightAllowed = false
+	end
 end
 
 function mod:SPELL_CAST_START(args)
@@ -62,7 +74,11 @@ function mod:SPELL_CAST_SUCCESS(args)
 	if spellId == 207278 then--Success since jumping on cast start too early
 		specWarnArcaneLockdown:Show()
 		specWarnArcaneLockdown:Play("keepjump")
-		timerArcaneLockdownCD:Start()
+		if self.vb.phase == 2 then
+			timerArcaneLockdownCD:Start(26.7)
+		else
+			timerArcaneLockdownCD:Start(27.9)
+		end
 	elseif spellId == 219488 then
 		warnStreetsweeper:Show(args.destName)
 		timerStreetsweeperCD:Start()

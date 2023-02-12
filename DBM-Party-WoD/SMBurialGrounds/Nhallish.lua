@@ -25,7 +25,7 @@ mod:RegisterEventsInCombat(
 local specWarnVoidVortex		= mod:NewSpecialWarningRun(152801, nil, nil, 2, 4, 2)
 local specWarnSoulShred			= mod:NewSpecialWarningSpell(152979, nil, nil, nil, 1, 2)
 local specWarnVoidDevastation	= mod:NewSpecialWarningSpell(153067, nil, nil, nil, 2, 2)
-local specWarnVoidDevastationM	= mod:NewSpecialWarningMove(153070, nil, nil, nil, 1, 8)
+local specWarnVoidDevastationM	= mod:NewSpecialWarningGTFO(153070, nil, nil, nil, 1, 8)
 
 local timerVoidVortexCD			= mod:NewCDTimer(77, 152801, nil, nil, nil, 2)
 local timerSoulShredCD			= mod:NewNextTimer(77, 152979, nil, nil, nil, 6)
@@ -67,9 +67,9 @@ function mod:SPELL_AURA_REMOVED(args)
 	end
 end
 
-function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, destName, _, _, spellId)
+function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, destName, _, _, spellId, spellName)
 	if spellId == 153070 and destGUID == UnitGUID("player") and self:AntiSpam(2, 1) then
-		specWarnVoidDevastationM:Show()
+		specWarnVoidDevastationM:Show(spellName)
 		specWarnVoidDevastationM:Play("watchfeet")
 	end
 end

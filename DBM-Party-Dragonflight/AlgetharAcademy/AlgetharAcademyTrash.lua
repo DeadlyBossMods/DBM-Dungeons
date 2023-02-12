@@ -54,6 +54,7 @@ end
 
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
+	if not self:IsValidWarning(args.sourceGUID) then return end
 	if spellId == 387910 and self:AntiSpam(4, 6) then
 		warnAstralWhirlwind:Show()
 	elseif spellId == 388863 and self:AntiSpam(4, 6) then

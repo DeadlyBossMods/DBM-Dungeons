@@ -17,7 +17,7 @@ for i = 1, #frames do
 	frames[i]:UnregisterEvent("GOSSIP_SHOW")
 end
 mod:RegisterEvents(
-	"SPELL_CAST_START 209027 212031 209485 209410 209413 211470 211464 209404 209495 225100 211299 209378 397892 397897 207979 212784 207980",
+	"SPELL_CAST_START 209027 212031 209485 209410 209413 211470 211464 209404 209495 225100 211299 209378 397892 397897 207979 212784 207980 212773",
 	"SPELL_AURA_APPLIED 209033 209512 397907 373552",
 	"SPELL_AURA_REMOVED 397907",
 	"CHAT_MSG_MONSTER_SAY",
@@ -37,6 +37,7 @@ end
 --45168 Cooking Interaction buff
 --45332 Engineering interaction to break robots
 local warnImpendingDoom				= mod:NewTargetAnnounce(397907, 2)
+local warnSubdue					= mod:NewCastAnnounce(212773, 3)
 local warnCrushingLeap				= mod:NewCastAnnounce(397897, 3)
 local warnEyeStorm					= mod:NewCastAnnounce(212784, 3)
 local warnHypnosisBat				= mod:NewTargetNoFilterAnnounce(373552, 3)
@@ -44,8 +45,9 @@ local warnHypnosisBat				= mod:NewTargetNoFilterAnnounce(373552, 3)
 local specWarnFortification			= mod:NewSpecialWarningDispel(209033, "MagicDispeller", nil, nil, 1, 2)
 local specWarnQuellingStrike		= mod:NewSpecialWarningDodge(209027, "Melee", nil, 2, 1, 2)
 local specWarnChargedBlast			= mod:NewSpecialWarningDodge(212031, "Tank", nil, nil, 1, 2)
-local specWarnChargedSmash			= mod:NewSpecialWarningDodge(209495, "Tank", nil, nil, 1, 2)
+local specWarnChargedSmash			= mod:NewSpecialWarningDodge(209495, "Melee", nil, 2, 1, 2)
 local specWarnShockwave				= mod:NewSpecialWarningDodge(207979, nil, nil, nil, 2, 2)
+local specWarnSubdue				= mod:NewSpecialWarningInterrupt(212773, "HasInterrupt", nil, nil, 1, 2)
 local specWarnDrainMagic			= mod:NewSpecialWarningInterrupt(209485, "HasInterrupt", nil, nil, 1, 2)
 local specWarnNightfallOrb			= mod:NewSpecialWarningInterrupt(209410, "HasInterrupt", nil, nil, 1, 2)
 local specWarnSuppress				= mod:NewSpecialWarningInterrupt(209413, "HasInterrupt", nil, nil, 1, 2)
@@ -72,6 +74,7 @@ mod:AddBoolOption("SpyHelperClose2", false)
 
 function mod:SPELL_CAST_START(args)
 	if not self.Options.Enabled then return end
+	if not self:IsValidWarning(args.sourceGUID) then return end
 	local spellId = args.spellId
 	if spellId == 209027 and self:AntiSpam(3, 2) then
 		specWarnQuellingStrike:Show()
@@ -103,6 +106,13 @@ function mod:SPELL_CAST_START(args)
 	elseif spellId == 207980 and self:CheckInterruptFilter(args.sourceGUID, false, true) then
 		specWarnDisintegrationBeam:Show(args.sourceName)
 		specWarnDisintegrationBeam:Play("kickcast")
+	elseif spellId == 212773 then
+		if self.Options.SpecWarn212773interrupt and self:CheckInterruptFilter(args.sourceGUID, false, true) then
+			specWarnSubdue:Show(args.sourceName)
+			specWarnSubdue:Play("kickcast")
+		elseif self:AntiSpam(3, 5) then
+			warnSubdue:Show()
+		end
 	elseif spellId == 211464 and self:AntiSpam(3, 4) then
 		specWarnFelDetonation:Show(DBM_COMMON_L.BREAK_LOS)
 		specWarnFelDetonation:Play("findshelter")
@@ -110,9 +120,8 @@ function mod:SPELL_CAST_START(args)
 		specWarnSealMagic:Show()
 		specWarnSealMagic:Play("runout")
 	elseif spellId == 209495 then
-		--Don't want to move too early, just be moving already as cast is finishing
-		specWarnChargedSmash:Schedule(1.2)
-		specWarnChargedSmash:ScheduleVoice(1.2, "chargemove")
+		specWarnChargedSmash:Show()
+		specWarnChargedSmash:Play("watchstep")
 	elseif spellId == 209378 and self:AntiSpam(3, 1) then
 		specWarnWhirlingBlades:Show()
 		specWarnWhirlingBlades:Play("runout")

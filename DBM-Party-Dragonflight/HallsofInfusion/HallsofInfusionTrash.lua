@@ -32,6 +32,7 @@ local specWarnBlastingGust					= mod:NewSpecialWarningInterrupt(374080, "HasInte
 
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
+	if not self:IsValidWarning(args.sourceGUID) then return end
 	if spellId == 390290 and self:AntiSpam(3, 6) then
 		specWarnFlashFlood:Show()
 		specWarnFlashFlood:Play("carefly")

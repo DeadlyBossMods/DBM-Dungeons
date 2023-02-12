@@ -55,6 +55,7 @@ mod:AddBoolOption("AGBook", true)
 
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
+	if not self:IsValidWarning(args.sourceGUID) then return end
 	if spellId == 391136 then
 		timerShoulderSlamCD:Start(10.9, args.sourceGUID)
 		if self:AntiSpam(3, 2) then
