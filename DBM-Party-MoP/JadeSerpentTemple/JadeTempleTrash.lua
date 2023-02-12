@@ -38,6 +38,7 @@ local specWarnSleepySililoquy				= mod:NewSpecialWarningInterrupt(395872, "HasIn
 
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
+	if not self:IsValidWarning(args.sourceGUID) then return end
 	if spellId == 398300 and self:AntiSpam(3, 2) then
 		specWarnFlamesofDoubt:Show()
 		specWarnFlamesofDoubt:Play("shockwave")

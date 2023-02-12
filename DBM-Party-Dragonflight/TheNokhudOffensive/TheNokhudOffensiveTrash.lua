@@ -51,6 +51,7 @@ end
 
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
+	if not self:IsValidWarning(args.sourceGUID) then return end
 	if spellId == 387145 and self:AntiSpam(5, 4) then
 		warnTotemicOverload:Show()
 	elseif spellId == 386024 then
@@ -75,7 +76,7 @@ function mod:SPELL_CAST_START(args)
 	elseif spellId == 384336 and self:AntiSpam(3, 2) then
 		specWarnWarStomp:Show()
 		specWarnWarStomp:Play("watchstep")
-	elseif spellId == 387629 and self:IsValidWarning(args.sourceGUID) and self:AntiSpam(3, 2) then
+	elseif spellId == 387629 and self:AntiSpam(3, 2) then
 		specWarnRottingWind:Show()
 		specWarnRottingWind:Play("shockwave")
 	elseif spellId == 382233 and self:AntiSpam(3, 2) then

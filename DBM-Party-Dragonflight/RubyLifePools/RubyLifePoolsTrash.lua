@@ -74,6 +74,7 @@ end
 
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
+	if not self:IsValidWarning(args.sourceGUID) then return end
 	if spellId == 372087 then
 		if self:AntiSpam(3, 2) then
 			specWarnBlazingRush:Show()

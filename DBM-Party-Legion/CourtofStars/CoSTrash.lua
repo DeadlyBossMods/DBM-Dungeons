@@ -74,6 +74,7 @@ mod:AddBoolOption("SpyHelperClose2", false)
 
 function mod:SPELL_CAST_START(args)
 	if not self.Options.Enabled then return end
+	if not self:IsValidWarning(args.sourceGUID) then return end
 	local spellId = args.spellId
 	if spellId == 209027 and self:AntiSpam(3, 2) then
 		specWarnQuellingStrike:Show()

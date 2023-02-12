@@ -30,6 +30,7 @@ local specWarnSpikedCarapace				= mod:NewSpecialWarningInterrupt(369823, "HasInt
 
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
+	if not self:IsValidWarning(args.sourceGUID) then return end
 	if spellId == 369811 and self:AntiSpam(5, 2) then
 		specWarnBrutalSlam:Show()
 		specWarnBrutalSlam:Play("watchstep")
