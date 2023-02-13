@@ -9,7 +9,7 @@ mod.isTrashMod = true
 
 mod:RegisterEvents(
 	"SPELL_CAST_START 391136 370764 386526 387564 377105 370766 386546 387067",
-	"SPELL_CAST_SUCCESS 374885 371358 375652 375596",
+	"SPELL_CAST_SUCCESS 374885 371358 375652 375596 391136",
 	"SPELL_AURA_APPLIED 371007 395492 375596",
 --	"SPELL_AURA_APPLIED_DOSE 339528",
 --	"SPELL_AURA_REMOVED 339525",
@@ -57,7 +57,6 @@ function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
 	if not self:IsValidWarning(args.sourceGUID) then return end
 	if spellId == 391136 then
-		timerShoulderSlamCD:Start(10.9, args.sourceGUID)
 		if self:AntiSpam(3, 2) then
 			if self.Options.SpecWarn391136dodge then
 				specWarnShoulderSlam:Show()
@@ -113,6 +112,8 @@ function mod:SPELL_CAST_SUCCESS(args)
 		specWarnWildEruption:Play("watchstep")
 	elseif spellId == 375596 then
 		timerErraticGrowthCD:Start(21.5, args.sourceGUID)
+	elseif spellId == 391136 then
+		timerShoulderSlamCD:Start(8.9, args.sourceGUID)
 	end
 end
 
