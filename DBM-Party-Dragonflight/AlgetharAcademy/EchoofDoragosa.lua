@@ -16,7 +16,7 @@ mod:RegisterEventsInCombat(
 	"SPELL_CAST_SUCCESS 374343",
 	"SPELL_AURA_APPLIED 389011 374350 389007",
 	"SPELL_AURA_APPLIED_DOSE 389011",
-	"SPELL_AURA_REMOVED 374350"
+	"SPELL_AURA_REMOVED 374350 389011"
 --	"SPELL_PERIODIC_DAMAGE",
 --	"SPELL_PERIODIC_MISSED",
 --	"UNIT_SPELLCAST_SUCCEEDED boss1"
@@ -132,6 +132,8 @@ function mod:SPELL_AURA_REMOVED(args)
 		if args:IsPlayer() then
 			yellEnergyBombFades:Cancel()
 		end
+	elseif spellId == 389011 and args:IsPlayer() then
+		playerDebuffCount = 0
 	end
 end
 
