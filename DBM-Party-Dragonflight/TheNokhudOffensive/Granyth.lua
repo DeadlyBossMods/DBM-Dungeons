@@ -50,7 +50,7 @@ local timerEruptionCD							= mod:NewCDTimer(35, 388283, nil, nil, nil, 2)
 local timerShardsofStoneCD						= mod:NewCDTimer(13.3, 388817, nil, nil, nil, 2)
 local timerTectonicStompCD						= mod:NewCDTimer(35, 385916, nil, nil, nil, 3)--Technically also aoe, but limited aoe range, so targeted aoe
 local timerSummonSaboteurCD						= mod:NewNextCountTimer(14.9, 386320, nil, nil, nil, 1, nil, DBM_COMMON_L.MYTHIC_ICON)
-local timerReload								= mod:NewCastTimer(25, 386320, nil, nil, nil, 5)
+local timerReload								= mod:NewCastTimer(25, 386921, nil, nil, nil, 5)
 --local timerDecaySprayCD							= mod:NewAITimer(35, 376811, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 
 --local berserkTimer							= mod:NewBerserkTimer(600)
@@ -123,7 +123,6 @@ function mod:SPELL_SUMMON(args)
 	if spellId == 386747 or spellId == 386748 or spellId == 386320 then--386747 Lance 1, 386748 Lance 2, 386320 Lance 3
 		self.vb.addCount = self.vb.addCount + 1
 		warnAdd:Show(self.vb.addCount)
---		timerSummonSaboteurCD:Start(nil, self.vb.addCount+1)--No longer starts here
 		if self.Options.SetIconOnAdd then--195821, 195820, 195580
 			self:ScanForMobs(args.destGUID, 2, 8, 1, nil, 12, "SetIconOnAdd")
 		end
