@@ -24,6 +24,8 @@ local warnRuneOfHealing				= mod:NewCastAnnounce(198934, 3)
 local specWarnBlastofLight			= mod:NewSpecialWarningDodge(191508, nil, nil, nil, 2, 2)
 local specWarnPenetratingShot		= mod:NewSpecialWarningDodge(199210, nil, nil, nil, 2, 2)
 local specWarnChargePulse			= mod:NewSpecialWarningDodge(210875, nil, nil, nil, 2, 2)
+local specWarnSanctify				= mod:NewSpecialWarningDodge(192158, nil, nil, nil, 2, 5)
+local specWarnEyeofStorm			= mod:NewSpecialWarningMoveTo(200901, nil, nil, nil, 2, 2)
 local specWarnCrackle				= mod:NewSpecialWarningYou(199805, nil, nil, nil, 1, 2)
 local yellCrackle					= mod:NewShortYell(199805)
 local specWarnCracklingStorm		= mod:NewSpecialWarningYou(198892, nil, nil, nil, 1, 2)
@@ -108,6 +110,12 @@ function mod:SPELL_CAST_START(args)
 	elseif spellId == 210875 and self:AntiSpam(3, 2) then
 		specWarnChargePulse:Show()
 		specWarnChargePulse:Play("watchstep")
+	if spellId == 192158 then--P1 2 adds
+		specWarnSanctify:Show()
+		specWarnSanctify:Play("watchorb")
+	elseif spellId == 200901 and args:GetSrcCreatureID() ~= 95833 then
+		specWarnEyeofStorm:Show(eyeShortName)
+		specWarnEyeofStorm:Play("findshelter")
 	end
 end
 

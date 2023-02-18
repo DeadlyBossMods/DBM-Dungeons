@@ -32,7 +32,7 @@ local specWarnGust								= mod:NewSpecialWarningDodge(377383, nil, nil, nil, 2,
 local yellGust									= mod:NewYell(377383)
 local specWarnViciousAmbush						= mod:NewSpecialWarningYou(388984, nil, nil, nil, 1, 2)--You warning not move away, because some strategies involve actually baiting charge into melee instead of out
 local yellnViciousAmbush						= mod:NewYell(388984)
-local specWarnAstralBomb						= mod:NewSpecialWarningMoveAway(387843, nil, nil, nil, 2, 2)
+local specWarnAstralBomb						= mod:NewSpecialWarningMoveTo(387843, nil, nil, nil, 2, 2)
 local yellAstralBomb							= mod:NewYell(387843)
 local yellAstralBombFades						= mod:NewShortFadesYell(387843)
 --local yellConcentrateAnimaFades				= mod:NewShortFadesYell(339525)
@@ -106,8 +106,8 @@ function mod:SPELL_AURA_APPLIED(args)
 	elseif spellId == 387843 then
 		warnAstralBombTargets:CombinedShow(1, args.destName)
 		if args:IsPlayer() then
-			specWarnAstralBomb:Show()
-			specWarnAstralBomb:Play("runout")
+			specWarnAstralBomb:Show(DBM_COMMON_L.ADDS)
+			specWarnAstralBomb:Play("targetyou")
 			yellAstralBomb:Yell()
 			yellAstralBombFades:Countdown(spellId, 2)
 		end

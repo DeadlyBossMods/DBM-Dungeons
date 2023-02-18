@@ -32,7 +32,7 @@ local warnExpelLight				= mod:NewTargetAnnounce(192048, 3)
 local warnPhase2					= mod:NewPhaseAnnounce(2, 2, nil, nil, nil, nil, nil, 2)
 
 local specWarnShieldOfLight			= mod:NewSpecialWarningDefensive(192018, "Tank", nil, nil, 3, 2)--Journal lies, this is NOT dodgable
-local specWarnSanctify				= mod:NewSpecialWarningDodge(192158, nil, nil, nil, 2, 5)
+local specWarnSanctify				= mod:NewSpecialWarningDodge(192307, nil, nil, nil, 2, 5)
 local specWarnEyeofStorm			= mod:NewSpecialWarningMoveTo(200901, nil, nil, nil, 2, 2)
 local specWarnExpelLight			= mod:NewSpecialWarningMoveAway(192048, nil, nil, nil, 2, 2)
 local yellExpelLight				= mod:NewYell(192048)
@@ -47,7 +47,7 @@ mod:AddRangeFrameOption(8, 192048)
 local eyeShortName = DBM:GetSpellInfo(91320)--Inner Eye
 
 function mod:OnCombatStart(delay)
-	self:SetStage(1)
+--	self:SetStage(1)
 end
 
 function mod:OnCombatEnd()
@@ -58,22 +58,18 @@ end
 
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
-	if spellId == 192158 or spellId == 192307 then--P1 2 adds, P2 boss
+	if spellId == 192307 then--P2 boss
 		specWarnSanctify:Show()
 		specWarnSanctify:Play("watchorb")
-		if spellId == 192307 then
-			timerSpecialCD:Start()
-		end
+		timerSpecialCD:Start()
 	elseif spellId == 192018 then
 		specWarnShieldOfLight:Show()
 		specWarnShieldOfLight:Play("defensive")
 		timerShieldOfLightCD:Start()
-	elseif spellId == 200901 then
+	elseif spellId == 200901 and args:GetSrcCreatureID() == 95833 then
 		specWarnEyeofStorm:Show(eyeShortName)
 		specWarnEyeofStorm:Play("findshelter")
-		if self.vb.phase == 2 then
-			timerSpecialCD:Start()
-		end
+		timerSpecialCD:Start()
 	elseif spellId == 192288 and self:CheckInterruptFilter(args.sourceGUID, false, true) then
 		specWarnSearingLight:Show(args.sourceName)
 		specWarnSearingLight:Play("kickcast")
@@ -114,9 +110,9 @@ end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
 	if spellId == 192130 then--Actual boss engaging after 2 adds dying
-		self:SetStage(2)
-		warnPhase2:Show()
-		warnPhase2:Play("ptwo")
+--		self:SetStage(2)
+--		warnPhase2:Show()
+--		warnPhase2:Play("ptwo")
 		timerSpecialCD:Start(8.5)
 		timerShieldOfLightCD:Start(24)
 	end

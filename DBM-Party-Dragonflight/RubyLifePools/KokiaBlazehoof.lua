@@ -91,7 +91,7 @@ function mod:SPELL_CAST_START(args)
 		specWarnRitualofBlazebinding:Play("killmob")
 		timerRitualofBlazebindingCD:Start()
 		warnBaitAdd:ScheduleVoice(29.2, "bait")--3.5 seconds before
-	elseif spellId == 373017 and self:CheckInterruptFilter(args.sourceGUID, false, true) then
+	elseif spellId == 373017 then
 		if not castsPerGUID[args.sourceGUID] then
 			castsPerGUID[args.sourceGUID] = 0
 		end
