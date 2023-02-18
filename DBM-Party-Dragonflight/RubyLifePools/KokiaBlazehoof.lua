@@ -32,7 +32,7 @@ mod:RegisterEventsInCombat(
 local warnBurnout								= mod:NewCastAnnounce(373087, 4)
 local warnInferno								= mod:NewCastAnnounce(384823, 3)
 local warnBaitBoulder							= mod:NewBaitAnnounce(372107, 3, nil, nil, nil, nil, 8)
-local warnBaitAdd								= mod:NewBaitAnnounce(372863, 3, nil, nil, nil, nil, 8)
+local warnBaitAdd								= mod:NewBaitAnnounce(372863, 3, nil, false, 2, nil, 8)
 
 local specWarnSearingBlows						= mod:NewSpecialWarningDefensive(372858, nil, nil, nil, 1, 2)
 local specWarnMoltenBoulder						= mod:NewSpecialWarningDodge(372107, nil, nil, nil, 1, 2)
