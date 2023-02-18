@@ -8,7 +8,7 @@ mod:SetZone(1477)
 mod.isTrashMod = true
 
 mod:RegisterEvents(
-	"SPELL_CAST_START 199805 192563 199726 191508 199210 198892 198934 215433 210875",
+	"SPELL_CAST_START 199805 192563 199726 191508 199210 198892 198934 215433 210875 192158 200901",
 	"SPELL_AURA_APPLIED 215430",
 	"SPELL_AURA_REMOVED 215430",
 	"GOSSIP_SHOW"
@@ -110,7 +110,7 @@ function mod:SPELL_CAST_START(args)
 	elseif spellId == 210875 and self:AntiSpam(3, 2) then
 		specWarnChargePulse:Show()
 		specWarnChargePulse:Play("watchstep")
-	if spellId == 192158 then--P1 2 adds
+	elseif spellId == 192158 then--P1 2 adds
 		specWarnSanctify:Show()
 		specWarnSanctify:Play("watchorb")
 	elseif spellId == 200901 and args:GetSrcCreatureID() ~= 95833 then
