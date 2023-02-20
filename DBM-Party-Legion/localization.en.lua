@@ -131,7 +131,8 @@ L= DBM:GetModLocalization(1487)
 L= DBM:GetModLocalization(1488)
 
 L:SetMiscLocalization({
-	SkovaldRP		= "No! I, too, have proved my worth, Odyn. I am God-King Skovald! These mortals dare not challenge my claim to the aegis!"
+	SkovaldRP		= "No! I, too, have proved my worth, Odyn. I am God-King Skovald! These mortals dare not challenge my claim to the aegis!",--Keeping around in case it's still there in non M+
+	SkovaldRPTwo	= "If these false champions will not yield the aegis by choice... then they will surrender it in death!"
 })
 
 -----------------------

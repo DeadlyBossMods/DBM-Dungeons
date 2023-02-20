@@ -123,14 +123,20 @@ end
 mod.SPELL_PERIODIC_MISSED = mod.SPELL_PERIODIC_DAMAGE
 
 function mod:CHAT_MSG_MONSTER_YELL(msg, npc, _, _, target)
-	if (msg == L.SkovaldRP or msg:find(L.SkovaldRP)) then
+	if (msg == L.SkovaldRP or msg:find(L.SkovaldRP)) then--Pre hotfix original start point
 		self:SendSync("SkovaldRP")--Syncing to help unlocalized clients
+	elseif (msg == L.SkovaldRPTwo or msg:find(L.SkovaldRPTwo)) then--Post hotfix, this is only line he does
+		self:SendSync("SkovaldRPTwo")--Syncing to help unlocalized clients
 	end
 end
 
+--"<5.00 03:10:33> [CHAT_MSG_MONSTER_YELL] If these false champions will not yield the aegis by choice... then they will surrender it in death!#God-King Skovald###Omegal##0#0##
+--"<15.54 03:10:43> [ENCOUNTER_START] 1808#God-King Skovald#8#5", -- [22]
 function mod:OnSync(msg, targetname)
 	if msg == "SkovaldRP" and self:AntiSpam(10, 2) then
---		timerRP:Start()
-		DBM:AddMsg("Old RP timer disabled for Jan 23rd hotfix, new timer will be added soon")
+		timerRP:Start()
+	elseif msg == "SkovaldRPTwo" and self:AntiSpam(10, 2) then
+		timerRP:Stop()
+		timerRP:Start(10)
 	end
 end
