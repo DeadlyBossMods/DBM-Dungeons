@@ -296,7 +296,7 @@ do
 		if extra and extra > 0 and extra < 15 and not hints[extra] then
 			DBM:Debug("Recieved BigWigs Comm:"..extra)
 			hints[extra] = true
-			callUpdate(clue)
+			callUpdate(extra)
 		end
 	end
 end
