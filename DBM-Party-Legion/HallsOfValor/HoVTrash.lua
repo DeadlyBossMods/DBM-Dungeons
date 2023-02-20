@@ -8,7 +8,7 @@ mod:SetZone(1477)
 mod.isTrashMod = true
 
 mod:RegisterEvents(
-	"SPELL_CAST_START 199805 192563 199726 191508 199210 198892 198934 215433 210875",
+	"SPELL_CAST_START 199805 192563 199726 191508 199210 198892 198934 215433 210875 192158 200901",
 	"SPELL_AURA_APPLIED 215430",
 	"SPELL_AURA_REMOVED 215430",
 	"GOSSIP_SHOW"
@@ -24,6 +24,8 @@ local warnRuneOfHealing				= mod:NewCastAnnounce(198934, 3)
 local specWarnBlastofLight			= mod:NewSpecialWarningDodge(191508, nil, nil, nil, 2, 2)
 local specWarnPenetratingShot		= mod:NewSpecialWarningDodge(199210, nil, nil, nil, 2, 2)
 local specWarnChargePulse			= mod:NewSpecialWarningDodge(210875, nil, nil, nil, 2, 2)
+local specWarnSanctify				= mod:NewSpecialWarningDodge(192158, nil, nil, nil, 2, 5)
+local specWarnEyeofStorm			= mod:NewSpecialWarningMoveTo(200901, nil, nil, nil, 2, 2)
 local specWarnCrackle				= mod:NewSpecialWarningYou(199805, nil, nil, nil, 1, 2)
 local yellCrackle					= mod:NewShortYell(199805)
 local specWarnCracklingStorm		= mod:NewSpecialWarningYou(198892, nil, nil, nil, 1, 2)
@@ -38,6 +40,8 @@ local specWarnUnrulyYell			= mod:NewSpecialWarningInterrupt(199726, "HasInterrup
 mod:AddBoolOption("AGSkovaldTrash", true)
 mod:AddBoolOption("AGStartOdyn", true)
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 generalized, 7 GTFO
+
+local eyeShortName = DBM:GetSpellInfo(91320)--Inner Eye
 
 function mod:CrackleTarget(targetname, uId)
 	if not targetname then
@@ -108,6 +112,12 @@ function mod:SPELL_CAST_START(args)
 	elseif spellId == 210875 and self:AntiSpam(3, 2) then
 		specWarnChargePulse:Show()
 		specWarnChargePulse:Play("watchstep")
+	elseif spellId == 192158 then--P1 2 adds
+		specWarnSanctify:Show()
+		specWarnSanctify:Play("watchorb")
+	elseif spellId == 200901 and args:GetSrcCreatureID() ~= 95833 then
+		specWarnEyeofStorm:Show(eyeShortName)
+		specWarnEyeofStorm:Play("findshelter")
 	end
 end
 
