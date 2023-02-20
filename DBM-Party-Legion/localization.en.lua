@@ -276,6 +276,7 @@ L:SetMiscLocalization({
 	--Add translationss, but keep english termss for cross language groups since these post to chat
 	--Format "localized / english"
 	CluesFound	= "Clues Found: %d/5",
+	ClueShort	= "Clue %d/5: %s",
 	Gloves		= "gloves",
 	NoGloves	= "no gloves",
 	Cape		= "cape",
