@@ -38,7 +38,7 @@ local specWarnHydrolance			= mod:NewSpecialWarningInterrupt(397801, "HasInterrup
 local specWarnGTFO					= mod:NewSpecialWarningGTFO(397799, nil, nil, nil, 1, 8)
 
 local timerWashAwayCD				= mod:NewCDTimer(41.3, 397783, nil, nil, nil, 2, nil, DBM_COMMON_L.DEADLY_ICON)--41-44
-local timerCorruptedVortexCD		= mod:NewCDTimer(14.2, 397797, nil, nil, nil, 3, nil, DBM_COMMON_L.HEALER_ICON)
+local timerCorruptedVortexCD		= mod:NewCDTimer(13, 397797, nil, nil, nil, 3, nil, DBM_COMMON_L.HEALER_ICON)
 local timerCorruptedGeyserCD		= mod:NewCDCountTimer("d5", 397793, nil, nil, nil, 3)
 
 function mod:OnCombatStart(delay)

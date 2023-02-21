@@ -210,10 +210,12 @@ do
 		return lines
 	end
 
-	local function callUpdate()
+	local function callUpdate(clue)
 		clueTotal = clueTotal + 1
 		DBM.InfoFrame:SetHeader(L.CluesFound:format(clueTotal))
 		DBM.InfoFrame:Show(5, "function", updateInfoFrame)
+		local text = hintTranslations[clue]
+		DBM:AddMsg(L.ClueShort:format(clueTotal, text))
 	end
 
 	function mod:ResetGossipState()--/run DBM:GetModByName("CoSTrash"):ResetGossipState()
@@ -258,7 +260,7 @@ do
 					end
 					hints[clue] = true
 					self:SendSync("CoS", clue)
-					callUpdate()
+					callUpdate(clue)
 					--Still required to advance dialog or demon hunters can't use spectral sight
 					--We try to delay it by .1 so other mods can still parse gossip ID in theory
 					C_Timer.After(0.1, function() self:SelectGossip(gossipOptionID) end)
@@ -277,7 +279,7 @@ do
 			clue = tonumber(clue)
 			if clue and not hints[clue] then
 				hints[clue] = true
-				callUpdate()
+				callUpdate(clue)
 			end
 		elseif msg == "Finished" then
 			self:ResetGossipState()
@@ -294,7 +296,7 @@ do
 		if extra and extra > 0 and extra < 15 and not hints[extra] then
 			DBM:Debug("Recieved BigWigs Comm:"..extra)
 			hints[extra] = true
-			callUpdate()
+			callUpdate(extra)
 		end
 	end
 end

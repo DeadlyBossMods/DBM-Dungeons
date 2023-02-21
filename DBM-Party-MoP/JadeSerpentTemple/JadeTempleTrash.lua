@@ -6,19 +6,20 @@ mod:SetRevision("@file-date-integer@")
 mod.isTrashMod = true
 
 mod:RegisterEvents(
-	"SPELL_CAST_START 398300 395859 397899 397881 397889 396001 395872 396073 396018 397931 114646",
+	"SPELL_CAST_START 398300 395859 397899 397881 397889 396001 395872 396073 396018 397931 114646 397914",
 	"SPELL_AURA_APPLIED 396020 396018"
 --	"SPELL_AURA_APPLIED_DOSE",
 --	"SPELL_AURA_REMOVED"
 )
 
---TODO, maybe add https://www.wowhead.com/spell=397914/defiling-mist interrupt warning?
+--TODO, add https://www.wowhead.com/spell=110125/shattered-resolve when i better understand if ground stuff is on applied or removed
 local warnSurgingDeluge						= mod:NewSpellAnnounce(397881, 2)
 local warnTidalburst						= mod:NewCastAnnounce(397889, 3)
 local warnHauntingScream					= mod:NewCastAnnounce(395859, 4)
 local warnSleepySililoquy					= mod:NewCastAnnounce(395872, 3)
 local warnCatNap							= mod:NewCastAnnounce(396073, 3)
 local warnFitofRage							= mod:NewCastAnnounce(396018, 3)
+local warnDefilingMists						= mod:NewCastAnnounce(397914, 3)
 local warnHauntingGaze						= mod:NewCastAnnounce(114646, 3, nil, nil, "Tank|Healer")
 local warnDarkClaw							= mod:NewCastAnnounce(397931, 4, nil, nil, "Tank|Healer")
 local warnGoldenBarrier						= mod:NewTargetNoFilterAnnounce(396020, 2)
@@ -31,10 +32,12 @@ local specWarnTerritorialDisplay			= mod:NewSpecialWarningDodge(396001, nil, nil
 local specWarnFitOfRage						= mod:NewSpecialWarningDispel(396018, "RemoveEnrage", nil, nil, 1, 2)
 local specWarnHauntingScream				= mod:NewSpecialWarningInterrupt(395859, "HasInterrupt", nil, nil, 1, 2)
 local specWarnSleepySililoquy				= mod:NewSpecialWarningInterrupt(395872, "HasInterrupt", nil, nil, 1, 2)
+local specWarnDefilingMists					= mod:NewSpecialWarningInterrupt(397914, "HasInterrupt", nil, nil, 1, 2)
+local specWarnTidalburst					= mod:NewSpecialWarningInterrupt(397889, "HasInterrupt", nil, nil, 1, 2)
 
 --local playerName = UnitName("player")
 
---Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc
+--Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc, 7 off interrupt
 
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
@@ -52,20 +55,32 @@ function mod:SPELL_CAST_START(args)
 		if self.Options.SpecWarn395859interrupt and self:CheckInterruptFilter(args.sourceGUID, false, true) then
 			specWarnHauntingScream:Show(args.sourceName)
 			specWarnHauntingScream:Play("kickcast")
-		elseif self:AntiSpam(3, 5) then
+		elseif self:AntiSpam(3, 7) then
 			warnHauntingScream:Show()
 		end
 	elseif spellId == 395872 then
 		if self.Options.SpecWarn395872interrupt and self:CheckInterruptFilter(args.sourceGUID, false, true) then
 			specWarnSleepySililoquy:Show(args.sourceName)
 			specWarnSleepySililoquy:Play("kickcast")
-		elseif self:AntiSpam(3, 5) then
+		elseif self:AntiSpam(3, 7) then
 			warnSleepySililoquy:Show()
 		end
 	elseif spellId == 397881 and self:AntiSpam(3, 6) then--Basically de-emphasized dodge warnings but using diff antispam so they don't squelch emphasized dodge warnings
 		warnSurgingDeluge:Show()
-	elseif spellId == 397889 and self:AntiSpam(3, 6) then--Basically de-emphasized dodge warnings but using diff antispam so they don't squelch emphasized dodge warnings
-		warnTidalburst:Show()
+	elseif spellId == 397889 then
+		if self.Options.SpecWarn397889interrupt and self:CheckInterruptFilter(args.sourceGUID, false, true) then
+			specWarnTidalburst:Show(args.sourceName)
+			specWarnTidalburst:Play("kickcast")
+		elseif self:AntiSpam(3, 7) then
+			warnTidalburst:Show()
+		end
+	elseif spellId == 397914 then
+		if self.Options.SpecWarn397914interrupt and self:CheckInterruptFilter(args.sourceGUID, false, true) then
+			specWarnDefilingMists:Show(args.sourceName)
+			specWarnDefilingMists:Play("kickcast")
+		elseif self:AntiSpam(3, 7) then
+			warnDefilingMists:Show()
+		end
 	elseif spellId == 396073 and self:AntiSpam(3, 5) then
 		warnCatNap:Show()
 	elseif spellId == 396018 and self:AntiSpam(3, 5) then
