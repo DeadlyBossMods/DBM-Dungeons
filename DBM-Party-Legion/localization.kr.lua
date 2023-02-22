@@ -132,7 +132,8 @@ L= DBM:GetModLocalization(1487)
 L= DBM:GetModLocalization(1488)
 
 L:SetMiscLocalization({
-	SkovaldRP		= "안 돼! 나도 내 가치를 증명했다, 오딘. 나는 신왕 스코발드다! 나의 아이기스에 어찌 감히 필멸자가 손을 댄단 말이냐!"
+	SkovaldRP		= "안 돼! 나도 내 가치를 증명했다, 오딘. 나는 신왕 스코발드다! 나의 아이기스에 어찌 감히 필멸자가 손을 댄단 말이냐!",
+	SkovaldRPTwo	= "이 가짜 용사들이 아이기스를 포기하지 않는다면... 목숨을 포기해야 할 거다!"
 })
 
 -----------------------
@@ -276,6 +277,7 @@ L:SetMiscLocalization({
 	--Add translationss, but keep english termss for cross language groups since these post to chat
 	--Format "localized / english"
 	CluesFound	= "단서 발견: %d/5",
+	ClueShort	= "단서 %d/5: %s",
 	Gloves		= "장갑 / gloves",
 	NoGloves	= "장갑 없음 / no gloves",
 	Cape		= "망토 / cape",
