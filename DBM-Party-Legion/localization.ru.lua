@@ -132,7 +132,8 @@ L= DBM:GetModLocalization(1487)
 L= DBM:GetModLocalization(1488)
 
 L:SetMiscLocalization({
-	SkovaldRP		= "Нет! Я, Король-бог Сковальд, тоже доказал, что достоин. Эти смертные не посмеют оспорить мое право владеть Эгидой!"
+	SkovaldRP		= "Нет! Я, Король-бог Сковальд, тоже доказал, что достоин. Эти смертные не посмеют оспорить мое право владеть Эгидой!",
+	SkovaldRPTwo	= "Или эти псевдогерои сами отдадут Эгиду... Или я вырву ее из их мертвых рук!"
 })
 
 -----------------------
@@ -274,8 +275,7 @@ L:SetOptionLocalization({
 L:SetMiscLocalization({
 	Found			= "Теперь, давайте не будем торопиться",
 	CluesFound	= "Найдено подсказок: %d/5",
-	--Add translationss, but keep english terms for cross language groups since these post to chat
-	--Format "localized / english"
+	ClueShort	= "Подсказка %d/5: %s",
 	Gloves		= "Носит перчатки / Wears gloves",
 	NoGloves	= "Без перчаток / No gloves",
 	Cape		= "Носит плащ / Wearing a cape",
@@ -291,6 +291,7 @@ L:SetMiscLocalization({
 	Book		= "Книга / Book",
 	Pouch		= "Кошель / Pouch",
 
+	SpyFoundP 	= "Я нашел шпиона",
 	SpyFound 	= "Шпион был обнаружен %s"
 })
 
