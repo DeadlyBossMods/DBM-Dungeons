@@ -6,6 +6,7 @@ mod:SetRevision("@file-date-integer@")
 mod:SetZone(1477)
 
 mod.isTrashMod = true
+mod.isTrashModBossFightAllowed = true
 
 mod:RegisterEvents(
 	"SPELL_CAST_START 199805 192563 199726 191508 199210 198892 198934 215433 210875 192158 200901",
@@ -115,7 +116,8 @@ function mod:SPELL_CAST_START(args)
 	elseif spellId == 192158 then--P1 2 adds
 		specWarnSanctify:Show()
 		specWarnSanctify:Play("watchorb")
-	elseif spellId == 200901 and args:GetSrcCreatureID() ~= 95833 then
+	--2/22 01:53:53.948  SPELL_CAST_START,Creature-0-3019-1477-12381-97219-000075B856,"Solsten",0x10a48,0x0,0000000000000000,nil,0x80000000,0x80000000,200901,"Eye of the Storm",0x8
+	elseif spellId == 200901 and args:GetSrcCreatureID() == 97219 then
 		specWarnEyeofStorm:Show(eyeShortName)
 		specWarnEyeofStorm:Play("findshelter")
 	end
