@@ -6,6 +6,7 @@ mod:SetRevision("@file-date-integer@")
 mod:SetZone(1477)
 
 mod.isTrashMod = true
+mod.isTrashModBossFightAllowed = true
 
 mod:RegisterEvents(
 	"SPELL_CAST_START 199805 192563 199726 191508 199210 198892 198934 215433 210875 192158 200901",
@@ -73,26 +74,27 @@ end
 
 function mod:SPELL_CAST_START(args)
 	if not self.Options.Enabled then return end
+	if not self:IsValidWarning(args.sourceGUID) then return end
 	local spellId = args.spellId
-	if spellId == 199805 and self:IsValidWarning(args.sourceGUID) then
+	if spellId == 199805 then
 		self:BossTargetScanner(args.sourceGUID, "CrackleTarget", 0.1, 9)
-	elseif spellId == 198892 and self:IsValidWarning(args.sourceGUID) then
+	elseif spellId == 198892 then
 		self:BossTargetScanner(args.sourceGUID, "CracklingStormTarget", 0.1, 9)
-	elseif spellId == 192563 and self:IsValidWarning(args.sourceGUID) then
+	elseif spellId == 192563 then
 		if self.Options.SpecWarn192563interrupt and self:CheckInterruptFilter(args.sourceGUID, false, true) then
 			specWarnCleansingFlame:Show(args.sourceName)
 			specWarnCleansingFlame:Play("kickcast")
 		elseif self:AntiSpam(3, 5) then
 			warnCleansingFlame:Show()
 		end
-	elseif spellId == 215433 and self:IsValidWarning(args.sourceGUID) then
+	elseif spellId == 215433 then
 		if self.Options.SpecWarn215433interrupt and self:CheckInterruptFilter(args.sourceGUID, false, true) then
 			specWarnHolyRadiance:Show(args.sourceName)
 			specWarnHolyRadiance:Play("kickcast")
 		elseif self:AntiSpam(3, 5) then
 			warnHolyRadiance:Show()
 		end
-	elseif spellId == 198934 and self:IsValidWarning(args.sourceGUID) then
+	elseif spellId == 198934 then
 		if self.Options.SpecWarn198934interrupt and self:CheckInterruptFilter(args.sourceGUID, false, true) then
 			specWarnRuneOfHealing:Show(args.sourceName)
 			specWarnRuneOfHealing:Play("kickcast")
@@ -102,13 +104,13 @@ function mod:SPELL_CAST_START(args)
 	elseif spellId == 199726 and self:CheckInterruptFilter(args.sourceGUID, false, true) then
 		specWarnUnrulyYell:Show(args.sourceName)
 		specWarnUnrulyYell:Play("kickcast")
-	elseif spellId == 191508 and self:IsValidWarning(args.sourceGUID) and self:AntiSpam(3, 2) then
+	elseif spellId == 191508 and self:AntiSpam(3, 2) then
 		specWarnBlastofLight:Show()
 		specWarnBlastofLight:Play("shockwave")
-	elseif spellId == 199210 and self:IsValidWarning(args.sourceGUID) and self:AntiSpam(3, 2) then
+	elseif spellId == 199210 and self:AntiSpam(3, 2) then
 		specWarnPenetratingShot:Show()
 		specWarnPenetratingShot:Play("shockwave")
-	elseif spellId == 210875 and self:IsValidWarning(args.sourceGUID) and self:AntiSpam(3, 2) then
+	elseif spellId == 210875 and self:AntiSpam(3, 2) then
 		specWarnChargePulse:Show()
 		specWarnChargePulse:Play("watchstep")
 	elseif spellId == 192158 then--P1 2 adds

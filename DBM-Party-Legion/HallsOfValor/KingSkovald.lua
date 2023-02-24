@@ -88,7 +88,6 @@ function mod:SPELL_CAST_START(args)
 		specWarnRagnarok:Play("findshield")
 		timerRushCD:Restart(12)
 --		timerSavageBladeCD:Restart(29.9)--Needs New Review
-		timerRagnarokCD:Start()
 	elseif spellId == 194112 then
 		warnClaimAegis:Show()
 	end
@@ -110,7 +109,7 @@ end
 function mod:SPELL_AURA_REMOVED(args)
 	local spellId = args.spellId
 	if spellId == 193826 then
---		timerRagnarokCD:Start()
+		timerRagnarokCD:Start()
 		--timerRushCD:Start(25)--Verify
 	end
 end
