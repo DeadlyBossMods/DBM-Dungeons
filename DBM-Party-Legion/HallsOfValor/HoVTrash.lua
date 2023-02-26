@@ -11,6 +11,7 @@ mod:RegisterEvents(
 	"SPELL_CAST_START 199805 192563 199726 191508 199210 198892 198934 215433 210875 192158 200901",
 	"SPELL_AURA_APPLIED 215430",
 	"SPELL_AURA_REMOVED 215430",
+	"UNIT_DIED",
 	"GOSSIP_SHOW"
 )
 
@@ -36,6 +37,11 @@ local specWarnHolyRadiance			= mod:NewSpecialWarningInterrupt(215433, "HasInterr
 local specWarnRuneOfHealing			= mod:NewSpecialWarningInterrupt(198934, false, nil, nil, 1, 2)
 local specWarnCleansingFlame		= mod:NewSpecialWarningInterrupt(192563, "HasInterrupt", nil, nil, 1, 2)
 local specWarnUnrulyYell			= mod:NewSpecialWarningInterrupt(199726, "HasInterrupt", nil, nil, 1, 2)
+
+local timerRuneOfHealingCD			= mod:NewCDTimer(17, 198934, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--17-18.2
+local timerHolyRadianceCD			= mod:NewCDTimer(18.1, 215433, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--17-18.2
+local timerCleansingFlameCD			= mod:NewCDTimer(6.1, 192563, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--6-9
+local timerBlastofLightCD			= mod:NewCDTimer(18.5, 191508, nil, nil, nil, 3, nil, DBM_COMMON_L.DEADLY_ICON)--May be lower
 
 mod:AddBoolOption("AGSkovaldTrash", true)
 mod:AddBoolOption("AGStartOdyn", true)
@@ -80,6 +86,7 @@ function mod:SPELL_CAST_START(args)
 	elseif spellId == 198892 then
 		self:BossTargetScanner(args.sourceGUID, "CracklingStormTarget", 0.1, 9)
 	elseif spellId == 192563 then
+		timerCleansingFlameCD:Start()
 		if self.Options.SpecWarn192563interrupt and self:CheckInterruptFilter(args.sourceGUID, false, true) then
 			specWarnCleansingFlame:Show(args.sourceName)
 			specWarnCleansingFlame:Play("kickcast")
@@ -87,6 +94,7 @@ function mod:SPELL_CAST_START(args)
 			warnCleansingFlame:Show()
 		end
 	elseif spellId == 215433 then
+		timerHolyRadianceCD:Start(nil, args.sourceGUID)
 		if self.Options.SpecWarn215433interrupt and self:CheckInterruptFilter(args.sourceGUID, false, true) then
 			specWarnHolyRadiance:Show(args.sourceName)
 			specWarnHolyRadiance:Play("kickcast")
@@ -94,6 +102,7 @@ function mod:SPELL_CAST_START(args)
 			warnHolyRadiance:Show()
 		end
 	elseif spellId == 198934 then
+		timerRuneOfHealingCD:Start(nil, args.sourceGUID)
 		if self.Options.SpecWarn198934interrupt and self:CheckInterruptFilter(args.sourceGUID, false, true) then
 			specWarnRuneOfHealing:Show(args.sourceName)
 			specWarnRuneOfHealing:Play("kickcast")
@@ -103,9 +112,12 @@ function mod:SPELL_CAST_START(args)
 	elseif spellId == 199726 and self:CheckInterruptFilter(args.sourceGUID, false, true) then
 		specWarnUnrulyYell:Show(args.sourceName)
 		specWarnUnrulyYell:Play("kickcast")
-	elseif spellId == 191508 and self:AntiSpam(3, 2) then
-		specWarnBlastofLight:Show()
-		specWarnBlastofLight:Play("shockwave")
+	elseif spellId == 191508 then
+		if self:AntiSpam(3, 2) then
+			specWarnBlastofLight:Show()
+			specWarnBlastofLight:Play("shockwave")
+		end
+		timerBlastofLightCD:Start()
 	elseif spellId == 199210 and self:AntiSpam(3, 2) then
 		specWarnPenetratingShot:Show()
 		specWarnPenetratingShot:Play("shockwave")
@@ -143,6 +155,18 @@ function mod:SPELL_AURA_REMOVED(args)
 		if self.Options.RangeFrame then
 			DBM.RangeCheck:Hide()
 		end
+	end
+end
+
+function mod:UNIT_DIED(args)
+	local cid = self:GetCIDFromGUID(args.destGUID)
+	if cid == 101637 then--Valarjar Aspirant
+		timerBlastofLightCD:Stop()
+	elseif cid == 95834 then--Valajar Mystic
+		timerRuneOfHealingCD:Stop(args.destGUID)
+		timerHolyRadianceCD:Stop(args.destGUID)
+	elseif cid == 97197 then--Valajar Purifier
+		timerCleansingFlameCD:Stop()
 	end
 end
 
