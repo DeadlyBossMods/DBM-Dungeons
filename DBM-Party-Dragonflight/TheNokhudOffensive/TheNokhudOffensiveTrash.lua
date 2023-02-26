@@ -125,9 +125,6 @@ function mod:SPELL_CAST_START(args)
 			specWarnWarStomp:Show()
 			specWarnWarStomp:Play("watchstep")
 		end
-	elseif spellId == 384476 and self:AntiSpam(3, 2) then
-		specWarnRainofArrows:Show()
-		specWarnRainofArrows:Play("watchstep")
 	elseif spellId == 387629 and self:AntiSpam(3, 2) then
 		specWarnRottingWind:Show()
 		specWarnRottingWind:Play("shockwave")
