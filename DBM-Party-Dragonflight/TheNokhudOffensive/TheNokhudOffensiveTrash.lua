@@ -178,7 +178,7 @@ function mod:UNIT_DIED(args)
 		timerDisruptingShoutCD:Stop(args.destGUID)
 	elseif cid == 194894 then--Primalist Stormspeaker
 		timerTempestCD:Stop(args.destGUID)
-	elseif cid == 195878--Uthel Beastcaller
+	elseif cid == 195878 then--Uthel Beastcaller
 		timerDesecratingRoarCD:Stop(args.destGUID)
 	elseif cid == 195928 or cid == 195927 or cid == 195930 or cid == 195929 then--All 4 Soulharvesters
 		timerDeathBoltVolleyCD:Stop(args.destGUID)
