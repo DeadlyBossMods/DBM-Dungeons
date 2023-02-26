@@ -182,7 +182,7 @@ function mod:UNIT_DIED(args)
 		timerDesecratingRoarCD:Stop(args.destGUID)
 	elseif cid == 195928 or cid == 195927 or cid == 195930 or cid == 195929 then--All 4 Soulharvesters
 		timerDeathBoltVolleyCD:Stop(args.destGUID)
-	elseif cid == 193462--Batak
+	elseif cid == 193462 then--Batak
 		timerBloodcurdlingShoutCD:Stop(args.destGUID)
 	end
 end
