@@ -8,7 +8,7 @@ mod:SetZone(1477)
 mod.isTrashMod = true
 
 mod:RegisterEvents(
-	"SPELL_CAST_START 199805 192563 199726 191508 199210 198892 198934 215433 210875 192158 200901",
+	"SPELL_CAST_START 199805 192563 199726 191508 199210 198892 198934 215433 210875 192158 200901 198595",
 	"SPELL_AURA_APPLIED 215430",
 	"SPELL_AURA_REMOVED 215430",
 	"UNIT_DIED",
@@ -18,6 +18,7 @@ mod:RegisterEvents(
 --TODO wicked dagger (199674)?
 local warnCrackle					= mod:NewTargetAnnounce(199805, 2)
 local warnCracklingStorm			= mod:NewTargetAnnounce(198892, 2)
+local warnThunderousBolt			= mod:NewCastAnnounce(198595, 3)
 local warnCleansingFlame			= mod:NewCastAnnounce(192563, 4)
 local warnHolyRadiance				= mod:NewCastAnnounce(215433, 3)
 local warnRuneOfHealing				= mod:NewCastAnnounce(198934, 3)
@@ -33,11 +34,13 @@ local specWarnCracklingStorm		= mod:NewSpecialWarningYou(198892, nil, nil, nil, 
 local yellCracklingStorm			= mod:NewShortYell(198892)
 local specWarnThunderstrike			= mod:NewSpecialWarningMoveAway(215430, nil, nil, nil, 1, 2)
 local yellThunderstrike				= mod:NewShortYell(215430)
+local specWarnThunderousBolt		= mod:NewSpecialWarningInterrupt(198595, "HasInterrupt", nil, nil, 1, 2)
 local specWarnHolyRadiance			= mod:NewSpecialWarningInterrupt(215433, "HasInterrupt", nil, nil, 1, 2)
-local specWarnRuneOfHealing			= mod:NewSpecialWarningInterrupt(198934, false, nil, nil, 1, 2)
+local specWarnRuneOfHealing			= mod:NewSpecialWarningInterrupt(198934, false, nil, nil, 1, 2)--Mob can be moved out of it so Holy more important spell to kick
 local specWarnCleansingFlame		= mod:NewSpecialWarningInterrupt(192563, "HasInterrupt", nil, nil, 1, 2)
 local specWarnUnrulyYell			= mod:NewSpecialWarningInterrupt(199726, "HasInterrupt", nil, nil, 1, 2)
 
+local timerThunderousBoltCD			= mod:NewCDTimer(6.1, 198595, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--6-7
 local timerRuneOfHealingCD			= mod:NewCDTimer(17, 198934, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--17-18.2
 local timerHolyRadianceCD			= mod:NewCDTimer(18.1, 215433, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--17-18.2
 local timerCleansingFlameCD			= mod:NewCDTimer(6.1, 192563, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--6-9
@@ -90,7 +93,7 @@ function mod:SPELL_CAST_START(args)
 		if self.Options.SpecWarn192563interrupt and self:CheckInterruptFilter(args.sourceGUID, false, true) then
 			specWarnCleansingFlame:Show(args.sourceName)
 			specWarnCleansingFlame:Play("kickcast")
-		elseif self:AntiSpam(3, 5) then
+		elseif self:AntiSpam(2, 5) then
 			warnCleansingFlame:Show()
 		end
 	elseif spellId == 215433 then
@@ -98,7 +101,7 @@ function mod:SPELL_CAST_START(args)
 		if self.Options.SpecWarn215433interrupt and self:CheckInterruptFilter(args.sourceGUID, false, true) then
 			specWarnHolyRadiance:Show(args.sourceName)
 			specWarnHolyRadiance:Play("kickcast")
-		elseif self:AntiSpam(3, 5) then
+		elseif self:AntiSpam(2, 5) then
 			warnHolyRadiance:Show()
 		end
 	elseif spellId == 198934 then
@@ -106,7 +109,7 @@ function mod:SPELL_CAST_START(args)
 		if self.Options.SpecWarn198934interrupt and self:CheckInterruptFilter(args.sourceGUID, false, true) then
 			specWarnRuneOfHealing:Show(args.sourceName)
 			specWarnRuneOfHealing:Play("kickcast")
-		elseif self:AntiSpam(3, 5) then
+		elseif self:AntiSpam(2, 5) then
 			warnRuneOfHealing:Show()
 		end
 	elseif spellId == 199726 and self:CheckInterruptFilter(args.sourceGUID, false, true) then
@@ -118,6 +121,14 @@ function mod:SPELL_CAST_START(args)
 			specWarnBlastofLight:Play("shockwave")
 		end
 		timerBlastofLightCD:Start()
+	elseif spellId == 198595 then
+		timerThunderousBoltCD:Start(nil, args.sourceGUID)
+		if self.Options.SpecWarn198595interrupt and self:CheckInterruptFilter(args.sourceGUID, false, true) then
+			specWarnThunderousBolt:Show(args.sourceName)
+			specWarnThunderousBolt:Play("kickcast")
+		elseif self:AntiSpam(2, 5) then
+			warnThunderousBolt:Show()
+		end
 	elseif spellId == 199210 and self:AntiSpam(3, 2) then
 		specWarnPenetratingShot:Show()
 		specWarnPenetratingShot:Play("shockwave")
@@ -167,6 +178,8 @@ function mod:UNIT_DIED(args)
 		timerHolyRadianceCD:Stop(args.destGUID)
 	elseif cid == 97197 then--Valajar Purifier
 		timerCleansingFlameCD:Stop()
+	elseif cid ==  95842 then--Valjar Thundercaller
+		timerThunderousBoltCD:Stop(args.destGUID)
 	end
 end
 
