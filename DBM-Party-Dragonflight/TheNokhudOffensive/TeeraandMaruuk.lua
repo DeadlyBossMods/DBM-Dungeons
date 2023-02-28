@@ -30,6 +30,8 @@ mod:RegisterEventsInCombat(
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
  or type = "interrupt"
 --]]
+--General
+local timerRP									= mod:NewRPTimer(34.4)
 --Teera
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(25552))
 local warnRepel									= mod:NewCastAnnounce(386547, 3, nil, nil, nil, nil, nil, 2)
@@ -232,6 +234,18 @@ function mod:UNIT_DIED(args)
 		timerEarthSplitterCD:Stop()
 		timerFrightfulRoarCD:Stop()
 		timerBrutalizeCD:Stop()
+	end
+end
+
+--"<67.75 20:59:56> [CLEU] SPELL_AURA_APPLIED#Creature-0-3019-2516-29682-186338-00007D601C#Maruuk#Creature-0-3019-2516-29682-186339-00007D601C#Teera#345561#Life Link#DEBUFF#nil", -- [445]
+--"<67.75 20:59:56> [CLEU] SPELL_AURA_APPLIED#Creature-0-3019-2516-29682-186339-00007D601C#Teera#Creature-0-3019-2516-29682-186338-00007D601C#Maruuk#345561#Life Link#DEBUFF#nil", -- [446]
+--"<67.90 20:59:56> [CHAT_MSG_MONSTER_YELL] Why has our rest been disturbed?#Teera###Omegal##0#0##0#1387#nil#0#false#false#false#false", -- [447]
+--"<88.73 21:00:17> [CHAT_MSG_MONSTER_YELL] Necromancers? On our sacred grounds?#Teera###Gravelord Monkh##0#0##0#1388#nil#0#false#false#false#false", -- [468]
+--"<94.47 21:00:23> [CHAT_MSG_MONSTER_YELL] This is what has become of our legacy?#Maruuk###Gravelord Monkh##0#0##0#1389#nil#0#false#false#false#false", -- [473]
+--"<95.30 21:00:24> [DBM_Debug] ENCOUNTER_START event fired: 2581 Teera and Maruuk 1 5#nil", -- [474]
+function mod:OnSync(msg)
+	if msg == "TeeraRP" and self:AntiSpam(10, 9) then--Sync sent from trash mod since trash mod is already monitoring out of combat CLEU events
+		timerRP:Start(26.7)
 	end
 end
 

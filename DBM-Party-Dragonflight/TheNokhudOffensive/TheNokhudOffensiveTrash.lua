@@ -8,7 +8,7 @@ mod.isTrashMod = true
 mod:RegisterEvents(
 	"SPELL_CAST_START 387145 386024 387127 384336 387629 387614 387411 382233 373395 383823 384365 386694 387125 387440",
 	"SPELL_CAST_SUCCESS 384476",
-	"SPELL_AURA_APPLIED 395035 334610 386223",
+	"SPELL_AURA_APPLIED 395035 334610 386223 345561",
 --	"SPELL_AURA_APPLIED_DOSE 339528",
 --	"SPELL_AURA_REMOVED 339525",
 	"UNIT_DIED"
@@ -56,6 +56,8 @@ local timerDeathBoltVolleyCD				= mod:NewCDTimer(10.9, 387411, nil, "HasInterrup
 local timerBloodcurdlingShoutCD				= mod:NewCDTimer(19.1, 373395, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 
 --local playerName = UnitName("player")
+
+local teeramod = DBM:GetModByName("2478")
 
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc, 7 off interrupt
 
@@ -162,6 +164,8 @@ function mod:SPELL_AURA_APPLIED(args)
 	elseif spellId == 386223 and args:IsDestTypeHostile() and self:AntiSpam(3, 5) then
 		specWarnStormshield:Show(args.destName)
 		specWarnStormshield:Play("helpdispel")
+	elseif spellId == 345561 and self:AntiSpam(5, 8) then--Life Link
+		teeramod:SendSync("TeeraRP")
 	end
 end
 mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED
