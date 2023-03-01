@@ -64,7 +64,7 @@ function mod:OnCombatStart(delay)
 	table.wipe(toxinStacks)
 	self.vb.germinateCount = 0
 	self.vb.barkCount = 0
-	timerBarkbreakerCD:Start(9.7-delay, 1)
+	timerBarkbreakerCD:Start(9.3-delay, 1)
 	timerGerminateCD:Start(18.2-delay, 1)
 	timerBranchOutCD:Start(30-delay)
 	timerBurstForthCD:Start(56-delay)

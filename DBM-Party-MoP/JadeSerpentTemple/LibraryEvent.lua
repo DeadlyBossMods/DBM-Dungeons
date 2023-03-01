@@ -10,7 +10,7 @@ mod:SetEncounterID(1417)
 mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
-	"SPELL_AURA_APPLIED 113315 113309",
+	"SPELL_AURA_APPLIED 113309",
 	"SPELL_AURA_APPLIED_DOSE 113315",
 	"SPELL_CAST_SUCCESS 122714",
 	"UNIT_DIED"
@@ -39,9 +39,7 @@ function mod:OnCombatStart(delay)
 end
 
 function mod:SPELL_AURA_APPLIED(args)
-	if args.spellId == 113315 then
-		warnIntensity:Show(args.destName, args.amount or 1)
-	elseif args.spellId == 113309 then
+	if args.spellId == 113309 then
 		specWarnUltimatePower:Show(args.destName)
 		specWarnUltimatePower:Play("aesoon")
 		timerUltimatePower:Start(args.destName)
