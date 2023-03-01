@@ -17,9 +17,8 @@ mod:RegisterEventsInCombat(
 	"SPELL_AURA_APPLIED 384686"
 --	"SPELL_AURA_APPLIED_DOSE",
 --	"SPELL_AURA_REMOVED",
---	"SPELL_PERIODIC_DAMAGE",
---	"SPELL_PERIODIC_MISSED",
---	"UNIT_SPELLCAST_SUCCEEDED boss1"
+	"SPELL_PERIODIC_DAMAGE 386916",
+	"SPELL_PERIODIC_MISSED 386916"
 )
 
 --TODO, do anything with Electrical Overload? I don't see much to do with it at mod level
@@ -28,13 +27,13 @@ mod:RegisterEventsInCombat(
 (ability.id = 384316 or ability.id = 384620 or ability.id = 384686) and type = "begincast"
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
 --]]
-local warnElectricalStorm						= mod:NewSpellAnnounce(384620, 3)
 local warnEnergySurge							= mod:NewSpellAnnounce(384686, 3, nil, "Tank|Healer")
 
+local specWarnElectricalStorm					= mod:NewSpecialWarningCount(384620, nil, nil, nil, 2, 2)
 local specWarnLightingStrike					= mod:NewSpecialWarningMoveAway(384316, nil, nil, nil, 2, 2)
 --local yellInfusedStrikes						= mod:NewYell(361966)
 local specWarnEnergySurge						= mod:NewSpecialWarningDispel(384686, "MagicDispeller", nil, nil, 1, 2)
---local specWarnGTFO							= mod:NewSpecialWarningGTFO(340324, nil, nil, nil, 1, 8)
+local specWarnGTFO								= mod:NewSpecialWarningGTFO(386916, nil, nil, nil, 1, 8)
 
 local timerLightingStrikeCD						= mod:NewCDTimer(20.2, 384316, nil, nil, nil, 3)
 local timerElectricStormCD						= mod:NewCDTimer(63.1, 384620, nil, nil, nil, 2, nil, DBM_COMMON_L.HEALER_ICON)--60-61+3sec cast
@@ -46,7 +45,10 @@ local timerEnergySurgeCD						= mod:NewCDTimer(16.5, 384686, nil, "Tank|MagicDis
 mod:AddInfoFrameOption(382628, false)
 --mod:AddSetIconOption("SetIconOnStaggeringBarrage", 361018, true, false, {1, 2, 3})
 
+mod.vb.stormCount = 0
+
 function mod:OnCombatStart(delay)
+	self.vb.stormCount = 0
 	timerEnergySurgeCD:Start(7-delay)
 	timerLightingStrikeCD:Start(10.6-delay)
 	timerElectricStormCD:Start(30.1-delay)
@@ -72,7 +74,9 @@ function mod:SPELL_CAST_START(args)
 		specWarnLightingStrike:Play("scatter")
 		timerLightingStrikeCD:Start()
 	elseif spellId == 384620 then
-		warnElectricalStorm:Show()
+		self.vb.stormCount = self.vb.stormCount + 1
+		specWarnElectricalStorm:Show(self.vb.stormCount)
+		specWarnElectricalStorm:Play("aesoon")
 		timerElectricStormCD:Start()
 		timerLightingStrikeCD:Restart(18.2)
 		timerEnergySurgeCD:Restart(20.6)
@@ -98,18 +102,12 @@ function mod:SPELL_AURA_REMOVED(args)
 
 	end
 end
+--]]
 
 function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId, spellName)
-	if spellId == 340324 and destGUID == UnitGUID("player") and self:AntiSpam(2, 4) then
+	if spellId == 386916 and destGUID == UnitGUID("player") and self:AntiSpam(2, 4) then
 		specWarnGTFO:Show(spellName)
 		specWarnGTFO:Play("watchfeet")
 	end
 end
 mod.SPELL_PERIODIC_MISSED = mod.SPELL_PERIODIC_DAMAGE
-
-function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
-	if spellId == 353193 then
-
-	end
-end
---]]
