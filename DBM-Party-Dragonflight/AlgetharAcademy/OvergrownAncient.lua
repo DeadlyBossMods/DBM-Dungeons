@@ -34,6 +34,7 @@ mod:RegisterEvents(
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
 --]]
 local warnHealingTouch							= mod:NewCastAnnounce(396640, 3)
+local warnLasherToxin							= mod:NewStackAnnounce(389033, 2, nil, "Tank|Healer|RemoveDisease")
 
 local specWarnGerminate							= mod:NewSpecialWarningDodge(388796, nil, nil, nil, 2, 2)
 local specWarnLasherToxin						= mod:NewSpecialWarningStack(389033, nil, 12, nil, nil, 1, 6)
@@ -53,7 +54,7 @@ local timerBarkbreakerCD						= mod:NewCDCountTimer(27.9, 388544, nil, "Tank|Hea
 --local berserkTimer							= mod:NewBerserkTimer(600)
 
 --mod:AddRangeFrameOption("8")
-mod:AddInfoFrameOption(389033, "RemovePoison")
+mod:AddInfoFrameOption(389033, "Tank|Healer|RemovePoison")
 --mod:AddSetIconOption("SetIconOnStaggeringBarrage", 361018, true, false, {1, 2, 3})
 
 local toxinStacks = {}
@@ -144,9 +145,11 @@ function mod:SPELL_AURA_APPLIED(args)
 		if self.Options.InfoFrame then
 			DBM.InfoFrame:UpdateTable(toxinStacks, 0.2)
 		end
-		if args:IsPlayer() and amount >= 12 and self:AntiSpam(3.5, 1) then
+		if args:IsPlayer() and amount >= (self:IsTank() and 20 or 12) and self:AntiSpam(3.5, 1) then
 			specWarnLasherToxin:Show(amount)
 			specWarnLasherToxin:Play("stackhigh")
+		elseif amount % 8 == 0 then
+			warnLasherToxin:Show(args.destName, amount)
 		end
 	end
 end

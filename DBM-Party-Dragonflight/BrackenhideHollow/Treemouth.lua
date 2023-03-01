@@ -132,9 +132,9 @@ function mod:SPELL_AURA_APPLIED(args)
 		end
 	elseif spellId == 377864 then
 		local amount = args.amount or 1
-		if amount % 8 == 0 then
-			warnInfectiousSpit:Show(args.destName, args.amount or 1)
-		end
+--		if amount % 2 == 0 then
+			warnInfectiousSpit:Show(args.destName, amount)
+--		end
 	end
 end
 mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED
