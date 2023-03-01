@@ -131,7 +131,10 @@ function mod:SPELL_AURA_APPLIED(args)
 			DBM.InfoFrame:Show(2, "enemyabsorb", nil, args.amount, "boss1")
 		end
 	elseif spellId == 377864 then
-		warnInfectiousSpit:Show(args.destName, args.amount or 1)
+		local amount = args.amount or 1
+		if amount % 8 == 0 then
+			warnInfectiousSpit:Show(args.destName, args.amount or 1)
+		end
 	end
 end
 mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED

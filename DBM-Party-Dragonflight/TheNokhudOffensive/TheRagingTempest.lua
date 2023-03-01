@@ -13,10 +13,8 @@ mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 384316 384620 384686",
---	"SPELL_CAST_SUCCESS",
-	"SPELL_AURA_APPLIED 384686"
---	"SPELL_AURA_APPLIED_DOSE",
---	"SPELL_AURA_REMOVED",
+	"SPELL_AURA_APPLIED 384686 394875",
+	"SPELL_AURA_APPLIED_DOSE 394875",
 	"SPELL_PERIODIC_DAMAGE 386916",
 	"SPELL_PERIODIC_MISSED 386916"
 )
@@ -28,10 +26,10 @@ mod:RegisterEventsInCombat(
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
 --]]
 local warnEnergySurge							= mod:NewSpellAnnounce(384686, 3, nil, "Tank|Healer")
+local warnSurgeBoss								= mod:NewStackAnnounce(394875, 4)
 
 local specWarnElectricalStorm					= mod:NewSpecialWarningCount(384620, nil, nil, nil, 2, 2)
 local specWarnLightingStrike					= mod:NewSpecialWarningMoveAway(384316, nil, nil, nil, 2, 2)
---local yellInfusedStrikes						= mod:NewYell(361966)
 local specWarnEnergySurge						= mod:NewSpecialWarningDispel(384686, "MagicDispeller", nil, nil, 1, 2)
 local specWarnGTFO								= mod:NewSpecialWarningGTFO(386916, nil, nil, nil, 1, 8)
 
@@ -41,9 +39,7 @@ local timerEnergySurgeCD						= mod:NewCDTimer(16.5, 384686, nil, "Tank|MagicDis
 
 --local berserkTimer							= mod:NewBerserkTimer(600)
 
---mod:AddRangeFrameOption("8")
 mod:AddInfoFrameOption(382628, false)
---mod:AddSetIconOption("SetIconOnStaggeringBarrage", 361018, true, false, {1, 2, 3})
 
 mod.vb.stormCount = 0
 
@@ -59,9 +55,6 @@ function mod:OnCombatStart(delay)
 end
 
 function mod:OnCombatEnd()
---	if self.Options.RangeFrame then
---		DBM.RangeCheck:Hide()
---	end
 	if self.Options.InfoFrame then
 		DBM.InfoFrame:Hide()
 	end
@@ -91,18 +84,11 @@ function mod:SPELL_AURA_APPLIED(args)
 	if spellId == 384686 and args:IsDestTypeHostile() then
 		specWarnEnergySurge:Show(args.destName)
 		specWarnEnergySurge:Play("dispelboss")
+	elseif spellId == 394875 then
+		warnSurgeBoss:Show(args.destName, args.amount or 1)
 	end
 end
---mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED
-
---[[
-function mod:SPELL_AURA_REMOVED(args)
-	local spellId = args.spellId
-	if spellId == 361966 then
-
-	end
-end
---]]
+mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED
 
 function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId, spellName)
 	if spellId == 386916 and destGUID == UnitGUID("player") and self:AntiSpam(2, 4) then
