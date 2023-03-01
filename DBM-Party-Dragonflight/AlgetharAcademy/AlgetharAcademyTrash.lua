@@ -46,7 +46,7 @@ local specWarnMonotonousLecture					= mod:NewSpecialWarningInterrupt(388392, "Ha
 local specWarnMysticBlast						= mod:NewSpecialWarningInterrupt(396812, "HasInterrupt", nil, nil, 1, 2)
 local specWarnCalloftheFlock					= mod:NewSpecialWarningInterrupt(377389, "HasInterrupt", nil, nil, 1, 2)
 
-local timerMonotonousLectureCD					= mod:NewCDTimer(17.8, 388392, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerMonotonousLectureCD					= mod:NewCDTimer(15.8, 388392, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerMysticBlastCD						= mod:NewCDTimer(20.6, 396812, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerCalloftheFlockCD						= mod:NewCDTimer(36, 377389, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerDeadlyWindsCD						= mod:NewCDTimer(10.9, 378003, nil, nil, nil, 3)
