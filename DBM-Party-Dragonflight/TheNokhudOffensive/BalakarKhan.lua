@@ -105,7 +105,11 @@ function mod:SPELL_CAST_START(args)
 --		timerUpheavalCD:Start()
 	elseif spellId == 376892 then
 		specWarnCracklingUpheaval:Show()
-		specWarnCracklingUpheaval:Play("watchstep")
+		if self:IsMythic() then
+			specWarnCracklingUpheaval:Play("runout")
+		else
+			specWarnCracklingUpheaval:Play("watchstep")
+		end
 		timerCracklingUpheavalCD:Start()
 	elseif spellId == 375937 then
 		self.vb.comboCount = self.vb.comboCount + 1
