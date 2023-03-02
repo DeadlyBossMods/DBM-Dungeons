@@ -17,9 +17,10 @@ for i = 1, #frames do
 	frames[i]:UnregisterEvent("GOSSIP_SHOW")
 end
 mod:RegisterEvents(
-	"SPELL_CAST_START 209027 212031 209485 209410 209413 211470 211464 209404 209495 225100 211299 209378 397892 397897 207979 212784 207980 212773",
+	"SPELL_CAST_START 209027 212031 209485 209410 209413 211470 211464 209404 209495 225100 211299 209378 397892 397897 207979 212784 207980 212773 210261 209033",
 	"SPELL_AURA_APPLIED 209033 209512 397907 373552",
 	"SPELL_AURA_REMOVED 397907",
+	"UNIT_DIED",
 	"CHAT_MSG_MONSTER_SAY",
 	"GOSSIP_SHOW"
 )
@@ -36,18 +37,26 @@ end
 --45473 Warrior Distraction Court of Stars
 --45168 Cooking Interaction buff
 --45332 Engineering interaction to break robots
+--[[
+(ability.id = 209033 or ability.id = 209027 or ability.id = 212031 or ability.id = 207979 or ability.id = 209485 or ability.id = 209410
+ or ability.id = 209413 or ability.id = 211470 or ability.id = 225100 or ability.id = 211299 or ability.id = 207980 or ability.id = 212773
+ or ability.id = 211464 or ability.id = 209404 or ability.id = 209495 or ability.id = 209378 or ability.id = 397892 or ability.id = 397897
+ or ability.id = 212784) and type = "begincast"
+--]]
 local warnImpendingDoom				= mod:NewTargetAnnounce(397907, 2)
+local warnSoundAlarm				= mod:NewCastAnnounce(210261, 4)
 local warnSubdue					= mod:NewCastAnnounce(212773, 3)
 local warnCrushingLeap				= mod:NewCastAnnounce(397897, 3)
-local warnEyeStorm					= mod:NewCastAnnounce(212784, 3)
+local warnEyeStorm					= mod:NewCastAnnounce(212784, 4)
 local warnHypnosisBat				= mod:NewTargetNoFilterAnnounce(373552, 3)
 
-local specWarnFortification			= mod:NewSpecialWarningDispel(209033, "MagicDispeller", nil, nil, 1, 2)
+local specWarnFortificationDispel	= mod:NewSpecialWarningDispel(209033, "MagicDispeller", nil, nil, 1, 2)
 local specWarnQuellingStrike		= mod:NewSpecialWarningDodge(209027, "Melee", nil, 2, 1, 2)
 local specWarnChargedBlast			= mod:NewSpecialWarningDodge(212031, "Tank", nil, nil, 1, 2)
 local specWarnChargedSmash			= mod:NewSpecialWarningDodge(209495, "Melee", nil, 2, 1, 2)
 local specWarnShockwave				= mod:NewSpecialWarningDodge(207979, nil, nil, nil, 2, 2)
 local specWarnSubdue				= mod:NewSpecialWarningInterrupt(212773, "HasInterrupt", nil, nil, 1, 2)
+local specWarnFortification			= mod:NewSpecialWarningInterrupt(209033, false, nil, nil, 1, 2)--Opt in. There are still higher prio interrupts in most packs with guards and this can be dispelled after the fact
 local specWarnDrainMagic			= mod:NewSpecialWarningInterrupt(209485, "HasInterrupt", nil, nil, 1, 2)
 local specWarnNightfallOrb			= mod:NewSpecialWarningInterrupt(209410, "HasInterrupt", nil, nil, 1, 2)
 local specWarnSuppress				= mod:NewSpecialWarningInterrupt(209413, "HasInterrupt", nil, nil, 1, 2)
@@ -64,6 +73,21 @@ local yellImpendingDoom				= mod:NewYell(397907)
 local yellImpendingDoomFades		= mod:NewShortFadesYell(397907)
 local specWarnGTFO					= mod:NewSpecialWarningGTFO(209512, nil, nil, nil, 1, 8)
 
+local timerQuellingStrikeCD			= mod:NewCDTimer(12, 209027, nil, "Tank", nil, 3, nil, DBM_COMMON_L.TANK_ICON)--Mostly for tank to be aware of mob positioning before CD comes off
+local timerFortificationCD			= mod:NewCDTimer(18.1, 209033, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerSealMagicCD				= mod:NewCDTimer(18.1, 209404, nil, "SpellCaster", nil, 3)
+local timerChargingStationCD		= mod:NewCDTimer(13.3, 225100, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerSuppressCD				= mod:NewCDTimer(17, 209413, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerSearingGlareCD			= mod:NewCDTimer(9.8, 211299, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerEyeStormCD				= mod:NewCDTimer(20.6, 212784, nil, nil, nil, 5)--Role color cause it needs a disrupt (stun, knockback) to interrupt.
+local timerBewitchCD				= mod:NewCDTimer(17, 211470, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerFelDetonationCD			= mod:NewCDTimer(12.1, 211464, nil, nil, nil, 2)
+local timerScreamofPainCD			= mod:NewCDTimer(14.6, 397892, nil, nil, nil, 2)
+local timerWhirlingBladesCD			= mod:NewCDTimer(18.2, 209378, nil, "Melee", nil, 2)
+local timerDisintegrationBeamCD		= mod:NewCDTimer(7.2, 207980, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerShockwaveCD				= mod:NewCDTimer(8.4, 207979, nil, nil, nil, 3)
+local timerCrushingLeapCD			= mod:NewCDTimer(16.9, 397897, nil, nil, nil, 3)
+
 mod:AddBoolOption("AGBoat", true)
 mod:AddBoolOption("AGDisguise", true)
 mod:AddBoolOption("SpyHelper", true)
@@ -76,36 +100,63 @@ function mod:SPELL_CAST_START(args)
 	if not self.Options.Enabled then return end
 	if not self:IsValidWarning(args.sourceGUID) then return end
 	local spellId = args.spellId
-	if spellId == 209027 and self:AntiSpam(3, 2) then
-		specWarnQuellingStrike:Show()
-		specWarnQuellingStrike:Play("shockwave")
+	if spellId == 209027 then
+		timerQuellingStrikeCD:Start(nil, args.sourceGUID)
+		if self:AntiSpam(3, 2) then
+			specWarnQuellingStrike:Show()
+			specWarnQuellingStrike:Play("shockwave")
+		end
 	elseif spellId == 212031 and self:AntiSpam(3, 2) then
 		specWarnChargedBlast:Show()
 		specWarnChargedBlast:Play("shockwave")
-	elseif spellId == 207979 and self:AntiSpam(3, 2) then
-		specWarnShockwave:Show()
-		specWarnShockwave:Play("shockwave")
+	elseif spellId == 207979 then
+		timerShockwaveCD:Start()
+		if self:AntiSpam(3, 2) then
+			specWarnShockwave:Show()
+			specWarnShockwave:Play("shockwave")
+		end
+	elseif spellId == 209033 then
+		timerFortificationCD:Start(nil, args.sourceGUID)
+		if self:CheckInterruptFilter(args.sourceGUID, false, true) then
+			specWarnFortification:Show(args.sourceName)
+			specWarnFortification:Play("kickcast")
+		end
 	elseif spellId == 209485 and self:CheckInterruptFilter(args.sourceGUID, false, true) then
 		specWarnDrainMagic:Show(args.sourceName)
 		specWarnDrainMagic:Play("kickcast")
 	elseif spellId == 209410 and self:CheckInterruptFilter(args.sourceGUID, false, true) then
 		specWarnNightfallOrb:Show(args.sourceName)
 		specWarnNightfallOrb:Play("kickcast")
-	elseif spellId == 209413 and self:CheckInterruptFilter(args.sourceGUID, false, true) then
-		specWarnSuppress:Show(args.sourceName)
-		specWarnSuppress:Play("kickcast")
-	elseif spellId == 211470 and self:CheckInterruptFilter(args.sourceGUID, false, true) then
-		specWarnBewitch:Show(args.sourceName)
-		specWarnBewitch:Play("kickcast")
-	elseif spellId == 225100 and self:CheckInterruptFilter(args.sourceGUID, false, true) then
-		specWarnChargingStation:Show(args.sourceName)
-		specWarnChargingStation:Play("kickcast")
-	elseif spellId == 211299 and self:CheckInterruptFilter(args.sourceGUID, false, true) then
-		specWarnSearingGlare:Show(args.sourceName)
-		specWarnSearingGlare:Play("kickcast")
-	elseif spellId == 207980 and self:CheckInterruptFilter(args.sourceGUID, false, true) then
-		specWarnDisintegrationBeam:Show(args.sourceName)
-		specWarnDisintegrationBeam:Play("kickcast")
+	elseif spellId == 209413 then
+		timerSuppressCD:Start(nil, args.sourceGUID)
+		if self:CheckInterruptFilter(args.sourceGUID, false, true) then
+			specWarnSuppress:Show(args.sourceName)
+			specWarnSuppress:Play("kickcast")
+		end
+	elseif spellId == 211470 then
+		timerBewitchCD:Start(nil, args.sourceGUID)
+		if self:CheckInterruptFilter(args.sourceGUID, false, true) then
+			specWarnBewitch:Show(args.sourceName)
+			specWarnBewitch:Play("kickcast")
+		end
+	elseif spellId == 225100 then
+		timerChargingStationCD:Start(nil, args.sourceGUID)
+		if self:CheckInterruptFilter(args.sourceGUID, false, true) then
+			specWarnChargingStation:Show(args.sourceName)
+			specWarnChargingStation:Play("kickcast")
+		end
+	elseif spellId == 211299 then
+		timerSearingGlareCD:Start(nil, args.sourceGUID)
+		if self:CheckInterruptFilter(args.sourceGUID, false, true) then
+			specWarnSearingGlare:Show(args.sourceName)
+			specWarnSearingGlare:Play("kickcast")
+		end
+	elseif spellId == 207980 then
+		timerDisintegrationBeamCD:Start()
+		if self:CheckInterruptFilter(args.sourceGUID, false, true) then
+			specWarnDisintegrationBeam:Show(args.sourceName)
+			specWarnDisintegrationBeam:Play("kickcast")
+		end
 	elseif spellId == 212773 then
 		if self.Options.SpecWarn212773interrupt and self:CheckInterruptFilter(args.sourceGUID, false, true) then
 			specWarnSubdue:Show(args.sourceName)
@@ -113,25 +164,43 @@ function mod:SPELL_CAST_START(args)
 		elseif self:AntiSpam(3, 5) then
 			warnSubdue:Show()
 		end
-	elseif spellId == 211464 and self:AntiSpam(3, 4) then
-		specWarnFelDetonation:Show(DBM_COMMON_L.BREAK_LOS)
-		specWarnFelDetonation:Play("findshelter")
-	elseif spellId == 209404 and self:AntiSpam(3, 5) then
-		specWarnSealMagic:Show()
-		specWarnSealMagic:Play("runout")
+	elseif spellId == 211464 then
+		timerFelDetonationCD:Start(nil, args.sourceGUID)
+		if self:AntiSpam(3, 4) then
+			specWarnFelDetonation:Show(DBM_COMMON_L.BREAK_LOS)
+			specWarnFelDetonation:Play("findshelter")
+		end
+	elseif spellId == 209404 then
+		timerSealMagicCD:Start(nil, args.sourceGUID)
+		if self:AntiSpam(3, 5) then
+			specWarnSealMagic:Show()
+			specWarnSealMagic:Play("runout")
+		end
 	elseif spellId == 209495 then
 		specWarnChargedSmash:Show()
 		specWarnChargedSmash:Play("watchstep")
-	elseif spellId == 209378 and self:AntiSpam(3, 1) then
-		specWarnWhirlingBlades:Show()
-		specWarnWhirlingBlades:Play("runout")
+	elseif spellId == 209378 then
+		timerWhirlingBladesCD:Start()
+		if self:AntiSpam(3, 1) then
+			specWarnWhirlingBlades:Show()
+			specWarnWhirlingBlades:Play("runout")
+		end
 	elseif spellId == 397892 then
 		specWarnScreamofPain:Show()
 		specWarnScreamofPain:Play("stopcast")
-	elseif spellId == 397897 and self:AntiSpam(3, 6) then
-		warnCrushingLeap:Show()
-	elseif spellId == 212784 and self:AntiSpam(3, 6) then
-		warnEyeStorm:Show()
+		timerScreamofPainCD:Start()
+	elseif spellId == 397897 then
+		timerCrushingLeapCD:Start()
+		if self:AntiSpam(3, 6) then
+			warnCrushingLeap:Show()
+		end
+	elseif spellId == 212784 then
+		timerEyeStormCD:Start(nil, args.sourceGUID)
+		if self:AntiSpam(3, 6) then
+			warnEyeStorm:Show()
+		end
+	elseif spellId == 210261 then--No throttle
+		warnSoundAlarm:Show()
 	end
 end
 
@@ -139,8 +208,8 @@ function mod:SPELL_AURA_APPLIED(args)
 	if not self.Options.Enabled then return end
 	local spellId = args.spellId
 	if spellId == 209033 and not args:IsDestTypePlayer() and self:CheckDispelFilter("magic") then
-		specWarnFortification:Show(args.destName)
-		specWarnFortification:Play("dispelnow")
+		specWarnFortificationDispel:Show(args.destName)
+		specWarnFortificationDispel:Play("dispelnow")
 	elseif spellId == 209512 and args:IsPlayer() and self:AntiSpam(3, 7) then
 		specWarnGTFO:Show(args.spellName)
 		specWarnGTFO:Play("watchfeet")
@@ -162,6 +231,34 @@ function mod:SPELL_AURA_REMOVED(args)
 	local spellId = args.spellId
 	if spellId == 397907 and args:IsPlayer() then
 		yellImpendingDoomFades:Cancel()
+	end
+end
+
+function mod:UNIT_DIED(args)
+	local cid = self:GetCIDFromGUID(args.destGUID)
+	if cid == 104246 then--Duskwatch Guard
+		timerQuellingStrikeCD:Stop(args.destGUID)
+		timerFortificationCD:Stop(args.destGUID)
+	elseif cid == 104247 then--Duskwatch Arcanist
+		timerSealMagicCD:Stop(args.destGUID)
+	elseif cid == 104270 then--Guardian Construct
+		timerChargingStationCD:Stop(args.destGUID)
+		timerSuppressCD:Stop(args.destGUID)
+	elseif cid == 105715 then--Watchful Inquisitor
+		timerSearingGlareCD:Stop(args.destGUID)
+		timerEyeStormCD:Stop(args.destGUID)
+	elseif cid == 104300 then--Shadow Mistress
+		timerBewitchCD:Stop(args.destGUID)
+	elseif cid == 104278 then--Felbound Enforcer
+		timerFelDetonationCD:Stop(args.destGUID)
+	elseif cid == 104275 then--Imacu'tya
+		timerScreamofPainCD:Stop()
+		timerWhirlingBladesCD:Stop()
+	elseif cid == 104274 then--Baalgar the Watchful
+		timerDisintegrationBeamCD:Stop()
+	elseif cid == 104273 then--Jazshariu
+		timerShockwaveCD:Start()
+		timerCrushingLeapCD:Stop()
 	end
 end
 
