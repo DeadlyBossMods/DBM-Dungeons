@@ -13,7 +13,6 @@ mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 193659 193668 193826 194112",
 	"SPELL_CAST_SUCCESS 193659",
 	"SPELL_AURA_APPLIED 193783",
-	"SPELL_AURA_REMOVED 193826",
 	"SPELL_PERIODIC_DAMAGE 193702",
 	"SPELL_PERIODIC_MISSED 193702"
 )
@@ -76,18 +75,16 @@ function mod:SPELL_CAST_START(args)
 	elseif spellId == 193668 then
 		specWarnSavageBlade:Show()
 		specWarnSavageBlade:Play("defensive")
-		local elapsed, total = timerRagnarokCD:GetTime()
-		local remaining = total - elapsed
-		if remaining < 20 then
-			--Do nothing, ragnaros will reset it
-		else
+--		local elapsed, total = timerRagnarokCD:GetTime()
+--		local remaining = total - elapsed
+--		if remaining >= 20 then
 			timerSavageBladeCD:Start()
-		end
+--		end
 	elseif spellId == 193826 then
 		specWarnRagnarok:Show(SHIELDSLOT)
 		specWarnRagnarok:Play("findshield")
-		timerRushCD:Restart(12)
---		timerSavageBladeCD:Restart(29.9)--Needs New Review
+		timerRagnarokCD:Start()
+		--Other timers can be extended but they aren't restarted, they just get spell queued behind ragnarok
 	elseif spellId == 194112 then
 		warnClaimAegis:Show()
 	end
@@ -103,14 +100,6 @@ function mod:SPELL_AURA_APPLIED(args)
 	local spellId = args.spellId
 	if spellId == 193783 and args:IsDestTypePlayer() then
 		warnAegis:Show(args.destName)
-	end
-end
-
-function mod:SPELL_AURA_REMOVED(args)
-	local spellId = args.spellId
-	if spellId == 193826 then
-		timerRagnarokCD:Start()
-		--timerRushCD:Start(25)--Verify
 	end
 end
 
