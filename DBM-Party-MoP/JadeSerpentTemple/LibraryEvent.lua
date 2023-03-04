@@ -54,7 +54,7 @@ end
 
 function mod:SPELL_AURA_APPLIED_DOSE(args)
 	if args.spellId == 113315 then
-		if args.amount >= 7 then--Start point of special warnings subject to adjustment based on live tuning.
+		if args.amount == 7 then--Start point of special warnings subject to adjustment based on live tuning.
 			specWarnIntensity:Show(args.spellName, args.destName, args.amount)
 			specWarnIntensity:Play("targetchange")
 		elseif args.amount % 2 == 0 then

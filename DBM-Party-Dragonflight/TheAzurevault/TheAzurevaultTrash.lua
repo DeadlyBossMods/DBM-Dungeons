@@ -8,7 +8,7 @@ mod:SetZone(2515)
 mod.isTrashMod = true
 
 mod:RegisterEvents(
-	"SPELL_CAST_START 391136 370764 386526 387564 377105 370766 386546 387067",
+	"SPELL_CAST_START 391136 370764 386526 387564 377105 370766 386546 387067 377488 396991",
 	"SPELL_CAST_SUCCESS 374885 371358 375652 375596 391136",
 	"SPELL_AURA_APPLIED 371007 395492 375596",
 --	"SPELL_AURA_APPLIED_DOSE 339528",
@@ -23,7 +23,9 @@ local warnNullStomp							= mod:NewCastAnnounce(386526, 2)
 local warnShoulderSlam						= mod:NewCastAnnounce(391136, 2)
 local warnPiercingShards					= mod:NewCastAnnounce(370764, 4)
 local warnIceCutter							= mod:NewCastAnnounce(377105, 4, nil, nil, "Tank|Healer")
+local warnIcyBindings						= mod:NewCastAnnounce(377488, 3)
 local warnWakingBane						= mod:NewCastAnnounce(386546, 3)
+local warnBestialRoar						= mod:NewCastAnnounce(396991, 3)
 local warnSplinteringShards					= mod:NewTargetAnnounce(371007, 2)
 local warScornfulHaste						= mod:NewTargetNoFilterAnnounce(395492, 2)
 local warnErraticGrowth						= mod:NewTargetNoFilterAnnounce(375596, 2)
@@ -38,10 +40,11 @@ local specWarnArcaneBash					= mod:NewSpecialWarningDefensive(387067, nil, nil, 
 local specWarnSplinteringShards				= mod:NewSpecialWarningMoveAway(371007, nil, nil, nil, 1, 2)
 local yellSplinteringShards					= mod:NewYell(371007)
 local yellErraticGrowth						= mod:NewYell(375596)
---local specWarnErraticGrowth					= mod:NewSpecialWarningInterrupt(375596, "HasInterrupt", nil, nil, 1, 2)
+local specWarnIcyBindings					= mod:NewSpecialWarningInterrupt(377488, "HasInterrupt", nil, nil, 1, 2)
 local specWarnMysticVapors					= mod:NewSpecialWarningInterrupt(387564, "HasInterrupt", nil, nil, 1, 2)
 local specWarnWakingBane					= mod:NewSpecialWarningInterrupt(386546, "HasInterrupt", nil, nil, 1, 2)
 
+local timerIcyBindingsCD					= mod:NewCDTimer(17.1, 377488, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerWakingBaneCD						= mod:NewCDTimer(20.5, 386546, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerErraticGrowthCD					= mod:NewCDTimer(21.5, 375596, nil, nil, nil, 3, nil, DBM_COMMON_L.MAGIC_ICON)
 local timerShoulderSlamCD					= mod:NewCDTimer(10.9, 391136, nil, nil, nil, 3)
@@ -65,9 +68,11 @@ function mod:SPELL_CAST_START(args)
 				warnShoulderSlam:Show()
 			end
 		end
-	elseif spellId == 370764 and self:AntiSpam(5, 6) then
+	elseif spellId == 370764 and self:AntiSpam(5, 4) then
 		warnPiercingShards:Show()
-	elseif spellId == 377105 and self:AntiSpam(3, 6) then
+	elseif spellId == 396991 and self:AntiSpam(4, 3) then
+		warnBestialRoar:Show()
+	elseif spellId == 377105 and self:AntiSpam(3, 4) then
 		warnIceCutter:Show()
 	elseif spellId == 386526 and self:AntiSpam(3, 2) then
 		if self.Options.SpecWarn386526dodge then
@@ -89,6 +94,14 @@ function mod:SPELL_CAST_START(args)
 			specWarnWakingBane:Play("kickcast")
 		elseif self:AntiSpam(3, 5) then
 			warnWakingBane:Show()
+		end
+	elseif spellId == 377488 then
+		timerIcyBindingsCD:Start(20, args.sourceGUID)
+		if self.Options.SpecWarn386546interrupt and self:CheckInterruptFilter(args.sourceGUID, false, true) then
+			specWarnIcyBindings:Show(args.sourceName)
+			specWarnIcyBindings:Play("kickcast")
+		elseif self:AntiSpam(3, 5) then
+			warnIcyBindings:Show()
 		end
 	elseif spellId == 387067 then
 		timerArcaneBashCD:Start(18.2, args.sourceGUID)
@@ -157,6 +170,8 @@ function mod:UNIT_DIED(args)
 		timerWakingBaneCD:Stop(args.destGUID)
 	elseif cid == 196115 or cid == 191164 then--Arcane Tender (one by entrance is diff id than ones before boss)
 		timerErraticGrowthCD:Stop(args.destGUID)
+	elseif cid == 187155 then--Rune Seal Keeper
+		timerIcyBindingsCD:Stop(args.destGUID)
 	end
 end
 
