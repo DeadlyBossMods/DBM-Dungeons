@@ -10,7 +10,8 @@ mod:RegisterEvents(
 	"SPELL_AURA_APPLIED 396020 396018",
 --	"SPELL_AURA_APPLIED_DOSE",
 --	"SPELL_AURA_REMOVED",
-	"UNIT_DIED"
+	"UNIT_DIED",
+	"UNIT_SPELLCAST_SUCCEEDED_UNFILTERED"
 )
 --[[
 (ability.id = 395872 or ability.id = 395859 or ability.id = 397914 or ability.id = 397889 or ability.id = 398300) and type = "begincast"
@@ -31,6 +32,7 @@ local warnGoldenBarrier						= mod:NewTargetNoFilterAnnounce(396020, 2)
 local specWarnFlamesofDoubt					= mod:NewSpecialWarningDodge(398300, nil, nil, nil, 2, 2)
 local specWarnLegSweep						= mod:NewSpecialWarningDodge(397899, nil, nil, nil, 2, 2)
 local specWarnTerritorialDisplay			= mod:NewSpecialWarningDodge(396001, nil, nil, nil, 2, 2)
+local specWarnShatterResolve				= mod:NewSpecialWarningDodge(110125, nil, nil, nil, 2, 2)
 --local yellConcentrateAnima					= mod:NewYell(339525)
 --local yellConcentrateAnimaFades				= mod:NewShortFadesYell(339525)
 local specWarnFitOfRage						= mod:NewSpecialWarningDispel(396018, "RemoveEnrage", nil, nil, 1, 2)
@@ -157,5 +159,12 @@ function mod:UNIT_DIED(args)
 		timerDarkClawCD:Stop(args.destGUID)
 	elseif cid == 59873 then--Corrupted Living Water
 		timerTaintedRippleCD:Stop(args.destGUID)
+	end
+end
+
+function mod:UNIT_SPELLCAST_SUCCEEDED_UNFILTERED(uId, _, spellId)
+	if spellId == 397928 and self:AntiSpam(3, 2) then
+		specWarnShatterResolve:Show()
+		specWarnShatterResolve:Play("watchstep")
 	end
 end
