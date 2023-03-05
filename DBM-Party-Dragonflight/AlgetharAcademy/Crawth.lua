@@ -42,12 +42,14 @@ local specWarnSavagePeck						= mod:NewSpecialWarningDefensive(376997, nil, nil,
 
 local timerFirestorm							= mod:NewBuffActiveTimer(12, 376448, nil, nil, nil, 1)
 local timerOverpoweringGustCD					= mod:NewCDTimer(28.2, 377034, nil, nil, nil, 3)
-local timerDeafeningScreechCD					= mod:NewCDTimer(22.7, 377004, nil, nil, nil, 3)
+local timerDeafeningScreechCD					= mod:NewCDCountTimer(22.7, 377004, nil, nil, nil, 3)
 local timerSavagePeckCD							= mod:NewCDTimer(13.6, 376997, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)--Spell queued intoo oblivion often
 
 --local berserkTimer							= mod:NewBerserkTimer(600)
 
 mod:AddRangeFrameOption(4, 377004)
+
+mod.vb.ScreechCount = 0
 
 function mod:GustTarget(targetname)
 	if not targetname then return end
@@ -57,6 +59,7 @@ function mod:GustTarget(targetname)
 end
 
 function mod:OnCombatStart(delay)
+	self.vb.ScreechCount = 0
 	timerSavagePeckCD:Start(3.6-delay)
 	timerDeafeningScreechCD:Start(10.1-delay)
 	timerOverpoweringGustCD:Start(15.7-delay)
@@ -76,9 +79,10 @@ function mod:SPELL_CAST_START(args)
 		specWarnOverpoweringGust:Play("shockwave")
 		timerOverpoweringGustCD:Start()
 	elseif spellId == 377004 then
-		specWarnDeafeningScreech:Show()
+		self.vb.ScreechCount = self.vb.ScreechCount + 1
+		specWarnDeafeningScreech:Show(self.vb.ScreechCount)
 		specWarnDeafeningScreech:Play("scatter")
-		timerDeafeningScreechCD:Start()
+		timerDeafeningScreechCD:Start(nil, self.vb.ScreechCount+1)
 		if self.Options.RangeFrame then
 			DBM.RangeCheck:Show(4)
 		end
@@ -109,11 +113,21 @@ function mod:SPELL_AURA_APPLIED(args)
 		timerFirestorm:Start()
 		--Regardless of time remaining, crawth will cast these coming out of stun
 		timerOverpoweringGustCD:Restart(12)
-		timerDeafeningScreechCD:Restart(16.7)
+		timerDeafeningScreechCD:Restart(16.7, 1)
 		timerSavagePeckCD:Stop()--24.6, This one probably restarts too but also gets wierd spell queue and MIGHT not happen
-	elseif spellId == 181089 and args:GetDestCreatureID() == 191736 then--Crawth getting buff is play ball starting
-		warnPlayBall:Show()
-		warnPlayBall:Play("phasechange")
+	elseif spellId == 181089 then
+		if args:GetDestCreatureID() == 191736 then--Crawth getting buff is play ball starting
+			warnPlayBall:Show()
+			warnPlayBall:Play("phasechange")
+		else--if it's not Crawth, then it's goals activating
+			--Swap timer back to same timer with a new count
+			local elapsed, total = timerDeafeningScreechCD:GetTime(self.vb.ScreechCount+1)
+			if total and total ~= 0 then
+				timerDeafeningScreechCD:Stop()--Stop old one
+				timerDeafeningScreechCD:Update(elapsed, total, self.vb.ScreechCount+1)--Generate new one with update
+			end
+			self.vb.ScreechCount = 0
+		end
 	end
 end
 --mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED
