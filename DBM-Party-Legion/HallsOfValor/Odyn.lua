@@ -121,19 +121,19 @@ function mod:SPELL_AURA_APPLIED(args)
 	local spellId = args.spellId
 	if spellId == 197963 and args:IsPlayer() then--Purple K (NE)
 		specWarnRunicBrand:Show("|TInterface\\Icons\\Boss_OdunRunes_Purple.blp:12:12|tNE|TInterface\\Icons\\Boss_OdunRunes_Purple.blp:12:12|t")
-		specWarnRunicBrand:Play("frontright")
+		specWarnRunicBrand:Play("targetyou")--frontright
 	elseif spellId == 197964 and args:IsPlayer() then--Orange N (SE)
 		specWarnRunicBrand:Show("|TInterface\\Icons\\Boss_OdunRunes_Orange.blp:12:12|tSE|TInterface\\Icons\\Boss_OdunRunes_Orange.blp:12:12|t")
-		specWarnRunicBrand:Play("backright")
+		specWarnRunicBrand:Play("targetyou")--backright
 	elseif spellId == 197965 and args:IsPlayer() then--Yellow H (SW)
 		specWarnRunicBrand:Show("|TInterface\\Icons\\Boss_OdunRunes_Yellow.blp:12:12|tSW|TInterface\\Icons\\Boss_OdunRunes_Yellow.blp:12:12|t")
-		specWarnRunicBrand:Play("backleft")
+		specWarnRunicBrand:Play("targetyou")--backleft
 	elseif spellId == 197966 and args:IsPlayer() then--Blue fishies (NW)
 		specWarnRunicBrand:Show("|TInterface\\Icons\\Boss_OdunRunes_Blue.blp:12:12|tNW|TInterface\\Icons\\Boss_OdunRunes_Blue.blp:12:12|t")
-		specWarnRunicBrand:Play("frontleft")
+		specWarnRunicBrand:Play("targetyou")--frontleft
 	elseif spellId == 197967 and args:IsPlayer() then--Green box (N)
 		specWarnRunicBrand:Show("|TInterface\\Icons\\Boss_OdunRunes_Green.blp:12:12|tN|TInterface\\Icons\\Boss_OdunRunes_Green.blp:12:12|t")
-		specWarnRunicBrand:Play("frontcenter")--Does not exist yet
+		specWarnRunicBrand:Play("targetyou")--Does not exist yet frontcenter
 	end
 end
 
