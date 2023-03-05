@@ -36,7 +36,7 @@ local specWarnFirestorm							= mod:NewSpecialWarningDodge(376448, nil, nil, nil
 --local specWarnGaleForce						= mod:NewSpecialWarningSpell(376467, nil, nil, nil, 2, 2)
 local specWarnOverpoweringGust					= mod:NewSpecialWarningDodge(377034, nil, nil, nil, 2, 2)
 local yellOverpoweringGust						= mod:NewYell(377034)
-local specWarnDeafeningScreech					= mod:NewSpecialWarningMoveAway(377004, nil, nil, nil, 2, 2)
+local specWarnDeafeningScreech					= mod:NewSpecialWarningMoveAwayCount(377004, nil, nil, nil, 2, 2)
 local specWarnSavagePeck						= mod:NewSpecialWarningDefensive(376997, nil, nil, nil, 1, 2)
 --local specWarnGTFO							= mod:NewSpecialWarningGTFO(340324, nil, nil, nil, 1, 8)
 
