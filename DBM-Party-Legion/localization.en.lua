@@ -140,6 +140,14 @@ L:SetMiscLocalization({
 -----------------------
 L= DBM:GetModLocalization(1489)
 
+L:SetOptionLocalization({
+	RuneBehavior		= "Set mod behavior for Runic Brand.",
+	Icon				= "Gives voice alerts give icon based directions (such as using flares)",
+	Entrance			= "Gives voice alerts based on cardinal directions as if entrance is south and throne is north",
+	Minimap				= "Gives voice alerts based on cardinal directions based on minimap, where throne is south and entrance is north",
+	Generic				= "Gives generic voice alert that just says you're targeted. No direction indication is given"--Default
+})
+
 L:SetMiscLocalization({
 	tempestModeMessage		= "Not tempest sequence: %s. Rechecking in 8 seconds.",
 	OdynRP					= "Most impressive! I never thought I would meet anyone who could match the Valarjar's strength... and yet here you stand."
