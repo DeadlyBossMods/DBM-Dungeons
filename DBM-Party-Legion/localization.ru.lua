@@ -306,7 +306,7 @@ L:SetMiscLocalization({
 	Pouch		= "Кошель / Pouch",
 
 	SpyFoundP 	= "Я нашел шпиона",
-	SpyFound 	= "Шпион был обнаружен %s"
+	SpyFound 	= "Шпион был обнаружен %s",
 
 	Nightshade					= "Закуски ночной тени",
 	UmbralBloom					= "Теневой цветок",
