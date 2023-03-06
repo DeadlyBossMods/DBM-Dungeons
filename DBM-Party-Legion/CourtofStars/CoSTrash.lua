@@ -664,7 +664,6 @@ do
 				local targetname = DBM:GetUnitFullName(clue) or clue
 				DBM:AddMsg(L.SpyFound:format(targetname))
 			end
-			self:AntiSpam("Spy")
 		end
 	end
 	function mod:OnBWSync(msg, extra, sender)
