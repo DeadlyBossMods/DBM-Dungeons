@@ -31,13 +31,6 @@ end
 
 --TODO, at least 1-2 more GTFOs I forgot names of
 --TODO, target scan https://www.wowhead.com/beta/spell=397897/crushing-leap ?
---TODO, few more auto gossips
---Buffs/Utility (professions and classs perks)
---45278 Haste Buff Court of Stars (cooking/herbalism?)
---Distractions (to separate boss)
---45473 Warrior Distraction Court of Stars
---45168 Cooking Interaction buff
---45332 Engineering interaction to break robots
 --[[
 (ability.id = 209033 or ability.id = 209027 or ability.id = 212031 or ability.id = 207979 or ability.id = 209485 or ability.id = 209410
  or ability.id = 209413 or ability.id = 211470 or ability.id = 225100 or ability.id = 211299 or ability.id = 207980 or ability.id = 212773
@@ -701,7 +694,7 @@ do
 				end
 				professionCache[icon][#professionCache[icon]+1] = {name=sender, skill=skill}
 			end
-			self:AntiSpam(300, "Prof")
+			self:AntiSpam(300, "CoSProf")
 		end
 	end
 end
