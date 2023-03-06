@@ -22,7 +22,8 @@ mod:RegisterEvents(
 	"SPELL_AURA_REMOVED 397907",
 	"UNIT_DIED",
 	"CHAT_MSG_MONSTER_SAY",
-	"GOSSIP_SHOW"
+	"GOSSIP_SHOW",
+	"UPDATE_MOUSEOVER_UNIT"
 )
 for i = 1, #frames do
 	frames[i]:RegisterEvent("GOSSIP_SHOW")
@@ -30,19 +31,13 @@ end
 
 --TODO, at least 1-2 more GTFOs I forgot names of
 --TODO, target scan https://www.wowhead.com/beta/spell=397897/crushing-leap ?
---TODO, few more auto gossips
---Buffs/Utility (professions and classs perks)
---45278 Haste Buff Court of Stars (cooking/herbalism?)
---Distractions (to separate boss)
---45473 Warrior Distraction Court of Stars
---45168 Cooking Interaction buff
---45332 Engineering interaction to break robots
 --[[
 (ability.id = 209033 or ability.id = 209027 or ability.id = 212031 or ability.id = 207979 or ability.id = 209485 or ability.id = 209410
  or ability.id = 209413 or ability.id = 211470 or ability.id = 225100 or ability.id = 211299 or ability.id = 207980 or ability.id = 212773
  or ability.id = 211464 or ability.id = 209404 or ability.id = 209495 or ability.id = 209378 or ability.id = 397892 or ability.id = 397897
  or ability.id = 212784) and type = "begincast"
 --]]
+local warnAvailableItems			= mod:NewAnnounce("warnAvailableItems", 1)
 local warnImpendingDoom				= mod:NewTargetAnnounce(397907, 2)
 local warnSoundAlarm				= mod:NewCastAnnounce(210261, 4)
 local warnSubdue					= mod:NewCastAnnounce(212773, 3)
@@ -90,6 +85,7 @@ local timerCrushingLeapCD			= mod:NewCDTimer(16.9, 397897, nil, nil, nil, 3)
 
 mod:AddBoolOption("AGBoat", true)
 mod:AddBoolOption("AGDisguise", true)
+mod:AddBoolOption("AGBuffs", true)
 mod:AddBoolOption("SpyHelper", true)
 mod:AddBoolOption("SendToChat2", true)
 mod:AddBoolOption("SpyHelperClose2", false)
@@ -263,6 +259,278 @@ function mod:UNIT_DIED(args)
 end
 
 do
+	--Court notable NPC stuff
+	--Old professions icon Ids/skill levels maintained in case classic ever gets up to legion
+	--Parts of code modified from littlewigs with permission for max intermod operability and no wheel re-inventing
+	local professionCache = {}
+
+	local notableBuffNPCs = {
+		--Buffs
+		[105160] = { -- Fel Orb
+			["name"] = DBM:GetSpellInfo(208275),
+			["buffid"] = 211081,
+			["class"] = {
+				["PALADIN"] = true,
+				["PRIEST"] = true,
+				["WARLOCK"] = true,
+				["DEMONHUNTER"] = true
+			}
+		},
+		[105249] = { -- Nightshade Refreshments
+			["name"] = L.Nightshade,
+			["buffid"] = 211102,
+			["raceids"] = {
+				[24] = true,--Pandaren (Neutral). DoubleAgent may find a way to get here?
+				[25] = true,--Pandaren (Alliance)
+				[26] = true--Pandaren (Horde)
+			},
+			["professionicons"] = {
+--				[133971] = 800,--Cooking (old)
+				[4620671] = 50,--Cooking (DF)
+--				[136246] = 800,--Herbalist (old)
+				[4620675] = 50--Herbalist (DF)
+			}
+		},
+		[105340] = { -- Umbral Bloom
+			["name"] = L.UmbralBloom,
+			["buffid"] = 211110,
+			["class"] = {
+				["DRUID"] = true
+			},
+			["professionicons"] = {
+--				[136246] = 800,--Herbalist (old)
+				[4620675] = 50--Herbalist (DF)
+			}
+		},
+		[105831] = { -- Infernal Tome
+			["name"] = L.InfernalTome,
+			["buffid"] = 211080,
+			["class"] = {
+				["PALADIN"] = true,
+				["PRIEST"] = true,
+				["DEMONHUNTER"] = true
+			}
+		},
+		[106024] = { -- Magical Lantern
+			["name"] = L.MagicalLantern,
+			["buffid"] = 211093,
+			["class"] = {
+				["MAGE"] = true
+			},
+			["raceids"] = {
+				[4] = true,--Night Elf
+				[10] = true--Blood Elf
+			},
+			["professionicons"] = {
+--				[136244] = 800,--Enchanting (Old)
+				[4620672] = 50--Enchanting (New)
+			}
+		},
+		[106108] = { -- Starlight Rose Brew
+			["name"] = L.StarlightRoseBrew,
+			["buffid"] = 211071,
+			["class"] = {
+				["DEATHKNIGHT"] = true,
+				["MONK"] = true
+			},
+		},
+		[106110] = { -- Waterlogged Scroll
+			["name"] = L.WaterloggedScroll,
+			["buffid"] = 211084,
+			["class"] = {
+				["SHAMAN"] = true
+			},
+			["professionicons"] = {
+--				[134366] = 800,--Skinning (Old)
+				[4620680] = 50,--Skinning (New)
+--				[237171] = 800,--Inscription (Old)
+				[4620676] = 50--Inscription (New)
+			}
+		},
+		--Debuffs
+		[105117] = { -- Flask of the Solemn Night
+			["name"] = DBM:GetSpellInfo(207815),
+			["class"] = {
+				["ROGUE"] = true
+			},
+			["professionicons"] = {
+--				[136240] = 800, -- Alchemy (old)
+				[4620669] = 50 -- Alchemy (DF)
+			}
+		},
+		[105157] = {-- Arcane Power Conduit
+			["name"] = DBM:GetSpellInfo(210466),
+			["raceids"] = {
+				[7] = true,--Gnome
+				[9] = true--Goblin
+			},
+			["professionicons"] = {
+--				[136243] = 800, -- Engineering (old)
+				[4620673] = 50 -- Engineering (DF)
+			}
+		}
+	}
+
+	local notableNonBuffNPCs = {
+		--Alerts
+		[105215] = { -- Discarded Junk
+			["name"] = L.DiscardedJunk,
+			["class"] = {
+				["HUNTER"] = true
+			},
+			["professionicons"] = {
+--				[136241] = 800, -- Blacksmithing (old)
+				[4620670] = 50 -- Blacksmithing (DF)
+			},
+		},
+		[106018] = { -- Bazaar Goods
+			["name"] = L.BazaarGoods,
+			["class"] = {
+				["WARRIOR"] = true,
+				["ROGUE"] = true,
+			},
+			["professionicons"] = {
+--				[136247] = 800, -- Leatherworking (old)
+				[4620678] = 50 -- Leatherworking (DF)
+			}
+		},
+		[106112] = { -- Wounded Nightborne Civilian
+			["name"] = L.WoundedNightborneCivilian,
+			["professionicons"] = {
+--				[136249] = 800, -- Tailoring (old)
+				[4620681] = 50 -- Tailoring (DF)
+			},
+			["roles"] = {
+				["Healer"] = true,
+			}
+		},
+		[106113] = { -- Lifesized Nightborne Statue
+			["name"] = L.LifesizedNightborneStatue,
+			["professionicons"] = {
+--				[134708] = 800, -- Mining (old)
+				[4620679] = 50, -- Mining (DF)
+--				[134071] = 800, -- JC (old)
+				[4620677] = 50 -- JC (DF)
+			}
+		}
+	}
+
+	local raceIcons = {
+		[4] = "|T236449:0|t",
+		[7] = "|T236445:0|t",
+		[9] = "|T632354:0|t",
+		[10] = "|T236439:0|t",
+		[24] = "|T626190:0|t",
+		[25] = "|T626190:0|t",
+		[26] = "|T626190:0|t"
+	}
+
+	local function getClassIcon(class)
+		return ("|TInterface/Icons/classicon_%s:0|t"):format(strlower(class))
+	end
+
+	local function getIconById(id)
+		return ("|T%d:0|t"):format(id)
+	end
+
+	local roleIcons = {
+		["Healer"] = "|T337497:0:0:0:0:64:64:20:39:1:20|t",
+	}
+
+	local function alertUsable(self, cid, item)
+		self:SendBigWigsSync("itemAvailable", cid)
+		local players = {} -- who can use the item
+		local icons = {}
+		if item.professionicons then
+			for profIcon, requiredSkill in pairs(item.professionicons) do
+				if professionCache[profIcon] then
+					for _,v in pairs(professionCache[profIcon]) do
+						if v.skill >= requiredSkill then
+							players[v.name] = true
+						end
+					end
+				end
+				icons[#icons+1] = getIconById(profIcon)
+			end
+		end
+		if item.raceids then
+			for race, _ in pairs(item.raceids) do
+				for unit in DBM:GetGroupMembers() do
+					local _, _, unitRaceID = UnitRace(unit)
+					if unitRaceID == race then
+						players[DBM:GetUnitFullName(unit)] = true
+					end
+				end
+				icons[#icons+1] = raceIcons[race]
+			end
+		end
+		if item.class then
+			for class, _ in pairs(item.class) do
+				for unit in DBM:GetGroupMembers() do
+					local _, unitClass = UnitClass(unit)
+					if unitClass == class then
+						players[DBM:GetUnitFullName(unit)] = true
+					end
+				end
+				icons[#icons+1] = getClassIcon(class)
+			end
+		end
+		if item.roles then
+			for role, _ in pairs(item.roles) do
+				for unit in DBM:GetGroupMembers() do
+					if UnitGroupRolesAssigned(unit) == role then
+						players[DBM:GetUnitFullName(unit)] = true
+					end
+				end
+				icons[#icons+1] = roleIcons[role]
+			end
+		end
+
+		local message = (L.Available):format(table.concat(icons, ""), item.name)
+
+		if next(players) then
+			local list = ""
+			for player in pairs(players) do
+				if UnitInParty(player) then -- don't announce players from previous groups
+					list = list .. ">" .. player .. "<, "
+				end
+			end
+			if list:len() > 0 then
+				message = message .. " - ".. L.UsableBy:format(list:sub(0, list:len()-2))
+			end
+		end
+		warnAvailableItems:Show(message)
+	end
+
+	local function assessUsable(self, cid, item)
+		--Don't alert if buff already active
+		if notableBuffNPCs[cid] and notableBuffNPCs[cid].buffid and DBM:UnitBuff("player", notableBuffNPCs[cid].buffid) then return end
+		--Don't alert if we alerted within last 5 minutes
+		if self:AntiSpam(300, "CoS"..cid) then
+			local delayAnnouncement = false
+			if item.professionicons then
+				if self:AntiSpam(300, "CoSProf") then
+					self:SendBigWigsSync("getProfessions")
+					delayAnnouncement = true
+				end
+			end
+			if delayAnnouncement then
+				self:Schedule(0.5, alertUsable, self, cid, item)
+			else
+				alertUsable(self, cid, item)
+			end
+		end
+	end
+
+	function mod:UPDATE_MOUSEOVER_UNIT()
+		local cid = DBM:GetUnitCreatureId("mouseover")
+		local item = notableBuffNPCs[cid] or notableNonBuffNPCs[cid]
+		if item then
+			assessUsable(self, cid, item)
+		end
+	end
+
+	--Court Clue Stuff
 	local clueTotal = 0
 	local hintTranslations = {
 		[1] = L.Cape or "cape",
@@ -336,6 +604,11 @@ do
 	end
 
 	function mod:GOSSIP_SHOW()
+		local cid = DBM:GetUnitCreatureId("npc")
+		if self.Options.AGBuffs and notableBuffNPCs[cid] then
+			self:SelectGossip(1)
+			return
+		end
 		local gossipOptionID = self:GetGossipID()
 		if gossipOptionID then
 			DBM:Debug("GOSSIP_SHOW triggered with a gossip ID of: "..gossipOptionID)
@@ -386,14 +659,42 @@ do
 			end
 		end
 	end
-	function mod:OnBWSync(msg, extra)
-		if not self.Options.SpyHelper then return end
-		if msg ~= "clue" then return end
-		extra = tonumber(extra)
-		if extra and extra > 0 and extra < 15 and not hints[extra] then
-			DBM:Debug("Recieved BigWigs Comm:"..extra)
-			hints[extra] = true
-			callUpdate(extra)
+	function mod:OnBWSync(msg, extra, sender)
+		if self.Options.SpyHelper and msg == "clue" then
+			extra = tonumber(extra)
+			if extra and extra > 0 and extra < 15 and not hints[extra] then
+				hints[extra] = true
+				callUpdate(extra)
+			end
+		elseif msg == "itemAvailable" and extra then
+			extra = tonumber(extra)
+			local item = notableBuffNPCs[extra] or notableNonBuffNPCs[extra]
+			if item then
+				assessUsable(self, extra, item)
+			end
+		elseif msg == "getProfessions" then
+			--Answer BW profession requests using BW comms
+			local professions = {}
+			for _,id in pairs({GetProfessions()}) do
+				local _, icon, skill = GetProfessionInfo(id) -- name is localized, so use icon instead
+				professions[icon] = skill
+			end
+			local profString = ""
+			for k,v in pairs(professions) do
+				profString = profString .. k .. ":" .. v .. "#"
+			end
+			self:SendBigWigsSync("professions", profString)
+		elseif msg == "professions" and extra then
+			--DBM and BW will both just parse the bigiwgs comms for profession data
+			for icon, skill in extra:gmatch("(%d+):(%d+)#") do
+				icon = tonumber(icon)
+				skill = tonumber(skill)
+				if not professionCache[icon] then
+					professionCache[icon] = {}
+				end
+				professionCache[icon][#professionCache[icon]+1] = {name=sender, skill=skill}
+			end
+			self:AntiSpam(300, "CoSProf")
 		end
 	end
 end

@@ -36,6 +36,7 @@ local warnFlamespit								= mod:NewTargetNoFilterAnnounce(381605, 3)
 local warnInfernoCore							= mod:NewYouAnnounce(381862, 4)
 
 local yellFlamespit								= mod:NewYell(381605)
+local specWarnInfernoCore						= mod:NewSpecialWarningMoveAway(381862, nil, nil, nil, 1, 2)
 local specWarnRoaringFirebreath					= mod:NewSpecialWarningDodge(381525, nil, nil, nil, 2, 2)
 --local yellRoaringFirebreath					= mod:NewYell(381525)
 --local specWarnGTFO							= mod:NewSpecialWarningGTFO(340324, nil, nil, nil, 1, 8)
@@ -56,7 +57,7 @@ local timerStormslamCD							= mod:NewCDTimer(17, 381512, nil, "Tank|RemoveMagic
 local timerCloudburstCD							= mod:NewCDTimer(19.3, 385558, nil, nil, nil, 2)--Used for both mythic and non mythic versions of spell
 
 --mod:AddRangeFrameOption("8")
-mod:AddInfoFrameOption(381862, true)--Infernocore
+mod:AddInfoFrameOption(381862, false)--Infernocore
 --mod:AddSetIconOption("SetIconOnStaggeringBarrage", 361018, true, false, {1, 2, 3})
 
 mod.vb.windDirection = 0
@@ -153,7 +154,12 @@ function mod:SPELL_AURA_APPLIED(args)
 		timerRoaringFirebreathCD:Restart(7.3)--9.7 now?
 		--Rest not reset
 	elseif spellId == 381862 and args:IsPlayer() then
-		warnInfernoCore:Show()
+		if self.Options.SpecWarn381862moveaway and self:AntiSpam(3, 1) then
+			specWarnInfernoCore:Show()
+			specWarnInfernoCore:Play("runout")
+		else
+			warnInfernoCore:Show()
+		end
 	end
 end
 --mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED

@@ -108,7 +108,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
 		timerInhaleCD:Stop()
 		local name, guid = UnitName(uId), UnitGUID(uId)
 		timerBodySlamCD:Stop(name, guid)
-		timerInhaleCD:Start(26.8)
+		timerInhaleCD:Start(17.8)
 --		timerSubmergeCD:Start()
 	end
 end

@@ -140,6 +140,14 @@ L:SetMiscLocalization({
 -----------------------
 L= DBM:GetModLocalization(1489)
 
+L:SetOptionLocalization({
+	RuneBehavior		= "Set mod behavior for Runic Brand.",
+	Icon				= "Gives voice alerts based on icon assignments that match rune colors (such as using flares)",
+	Entrance			= "Gives voice alerts based on cardinal directions as if entrance is south and throne is north",
+	Minimap				= "Gives voice alerts based on cardinal directions based on minimap, where throne is south and entrance is north",
+	Generic				= "Gives generic voice alert that just says you're targeted. No direction indication is given"--Default
+})
+
 L:SetMiscLocalization({
 	tempestModeMessage		= "Not tempest sequence: %s. Rechecking in 8 seconds.",
 	OdynRP					= "Most impressive! I never thought I would meet anyone who could match the Valarjar's strength... and yet here you stand."
@@ -263,38 +271,58 @@ L:SetGeneralLocalization({
 	name =	"Court of Stars Trash"
 })
 
+L:SetWarningLocalization({
+	warnAvailableItems	= "%s"
+})
+
 L:SetOptionLocalization({
-	AGBoat			= "Auto select gossip to summon boat when interacting with lantern",
-	AGDisguise		= "Auto select gossip to activate disguise when interacting with Ly'leth Lunastre",
-	SpyHelper		= "Help identify the spy by automatically scanning gossip when interacting with Chatty Rumormonger npcs and displaying it on infoframe (also syncs to other DBM/BWs users)",
-	SpyHelperClose2	= "Auto close gossip window after 0.3 second (delay allows other mods or WAs to have time to scan gossip)",
-	SendToChat2		= "Also send hints to chat (requires above option enabled)"
+	warnAvailableItems	= "Announce available interactions in zone based on group",
+	AGBoat				= "Auto select gossip to summon boat when interacting with lantern",
+	AGDisguise			= "Auto select gossip to activate disguise when interacting with Ly'leth Lunastre",
+	AGBuffs				= "Auto select gossip to activate usable buffs",
+	SpyHelper			= "Help identify the spy by automatically scanning gossip when interacting with Chatty Rumormonger npcs and displaying it on infoframe (also syncs to other DBM/BWs users)",
+	SpyHelperClose2		= "Auto close gossip window after 0.3 second (delay allows other mods or WAs to have time to scan gossip)",
+	SendToChat2			= "Also send hints to chat (requires above option enabled)"
 })
 
 L:SetMiscLocalization({
-	Found		= "Now now, let's not be hasty",
+	Found						= "Now now, let's not be hasty",
 	--Add translationss, but keep english termss for cross language groups since these post to chat
 	--Format "localized / english"
-	CluesFound	= "Clues Found: %d/5",
-	ClueShort	= "Clue %d/5: %s",
-	Gloves		= "gloves",
-	NoGloves	= "no gloves",
-	Cape		= "cape",
-	Nocape		= "no cape",
-	LightVest	= "light vest",
-	DarkVest	= "dark vest",
-	Female		= "female",
-	Male		= "male",
-	ShortSleeve = "short sleeves",
-	LongSleeve	= "long sleeves",
-	Potions		= "potions",
-	NoPotions	= "no potions",
-	Book		= "book",
-	Pouch		= "pouch",
+	CluesFound					= "Clues Found: %d/5",
+	ClueShort					= "Clue %d/5: %s",
+	Gloves						= "gloves",
+	NoGloves					= "no gloves",
+	Cape						= "cape",
+	Nocape						= "no cape",
+	LightVest					= "light vest",
+	DarkVest					= "dark vest",
+	Female						= "female",
+	Male						= "male",
+	ShortSleeve 				= "short sleeves",
+	LongSleeve					= "long sleeves",
+	Potions						= "potions",
+	NoPotions					= "no potions",
+	Book						= "book",
+	Pouch						= "pouch",
 
-	SpyFoundP 	= "I found the spy",
-	SpyFound 	= "Spy has been found by %s",
-	SpyGoingAway= "The spy helper will likely be going away with nerfs in patch 10.0.7. Get used to using Demon Hunters or voice coordination for this dungeon, as blizzard intended"
+	SpyFoundP 					= "I found the spy",
+	SpyFound 					= "Spy has been found by %s",
+	SpyGoingAway				= "The spy helper will likely be going away with nerfs in patch 10.0.7. Get used to using Demon Hunters or voice coordination for this dungeon, as blizzard intended",
+	--Profession				 stuff
+	Nightshade					= "Nightshade Refreshments",
+	UmbralBloom					= "Umbral Bloom",
+	InfernalTome				= "Infernal Tome",
+	MagicalLantern				= "Magical Lantern",
+	StarlightRoseBrew			= "Starlight Rose Brew",
+	WaterloggedScroll			= "Waterlogged Scroll",
+	DiscardedJunk				= "Discarded Junk",
+	BazaarGoods					= "Bazaar Goods",
+	WoundedNightborneCivilian	= "Wounded Nightborne Civilian",
+	LifesizedNightborneStatue	= "Lifesized Nightborne Statue",
+	--
+	Available					= "%s|cffffffff%s|r available",
+	UsableBy					= "usable by %s"
 })
 
 

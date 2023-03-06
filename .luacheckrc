@@ -27,6 +27,7 @@ globals = {
 	-- Utility functions
 	"C_Timer",
 	"tContains",
+	"strlower",
 
 	-- WoW
 	"ALTERNATE_POWER_INDEX",
@@ -63,6 +64,11 @@ globals = {
 	"UnitCastingInfo",
 	"UnitClass",
 	"UnitExists",
+	"UnitRace",
+	"UnitGroupRolesAssigned",
+	"UnitInParty",
+	"GetProfessions",
+	"GetProfessionInfo",
 	"UnitFactionGroup",
 	"UnitGetTotalAbsorbs",
 	"UnitGUID",

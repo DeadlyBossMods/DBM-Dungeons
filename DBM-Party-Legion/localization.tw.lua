@@ -132,13 +132,22 @@ L= DBM:GetModLocalization(1487)
 L= DBM:GetModLocalization(1488)
 
 L:SetMiscLocalization({
-	SkovaldRP		= "神御之王斯寇瓦德"
+	SkovaldRP		= "我是神御之王斯寇瓦德",
+	SkovaldRPTwo	= "我就只好從他們的屍體上搶了！"
 })
 
 -----------------------
 -- Odyn --
 -----------------------
 L= DBM:GetModLocalization(1489)
+
+L:SetOptionLocalization({
+	RuneBehavior		= "設置符文標記的模組行為。",
+	Icon				= "根據符合的符文顏色圖示分配提供語音警報（例如使用光柱）",
+	Entrance			= "根據基本方向發出語音警報，像是入口在南方，王座在北。",
+	Minimap				= "根據基於小地圖的基本方向提供語音警報，該王座位於南邊，入口在北邊",
+	Generic				= "給出通用的語音警報，只是說您被鎖定目標。 沒有方位指示"--Default
+})
 
 L:SetMiscLocalization({
 	tempestModeMessage		="不是耀眼風暴循環: %s。8秒後重新檢查。",
@@ -251,7 +260,7 @@ L= DBM:GetModLocalization(1719)
 L= DBM:GetModLocalization(1720)
 
 L:SetMiscLocalization({
-	MelRP		= "大博學者，你一定要先離開嗎？?"
+	MelRP		= "大博學者，你一定要先離開嗎？"
 })
 
 -----------------------
@@ -264,11 +273,13 @@ L:SetGeneralLocalization({
 })
 
 L:SetOptionLocalization({
-	AGBoat			= "當與燈籠互動時，自動選擇對話以召喚小舟。",
-	AGDisguise		= "當與 黎利斯．路納斯特 互動時，自動選擇對話以啟用偽裝。",
-	SpyHelper		= "當與 長舌造謠者 NPC互動時，通過自動掃描對話來幫助識別間諜，並顯示在資訊框架上 (也與其他 DBM/BW 的使用者同步)",
-	SpyHelperClose2	= "在 0.3 秒後自動關閉對話視窗 (延遲允許其他mod或WA有時間掃描對話)",
-	SendToChat2		= "同時也發送提示到聊天 (需要上述選項啟用)"
+	warnAvailableItems	= "通告基於小隊的區域中的可用互動",
+	AGBoat				= "當與燈籠互動時，自動選擇對話以召喚小舟。",
+	AGDisguise			= "當與 黎利斯．路納斯特 互動時，自動選擇對話以啟用偽裝。",
+	AGBuffs				= "自動選擇對話以啟動可用增益",
+	SpyHelper			= "當與 長舌造謠者 NPC互動時，通過自動掃描對話來幫助識別間諜，並顯示在資訊框架上 (也與其他 DBM/BW 的使用者同步)",
+	SpyHelperClose2		= "在 0.3 秒後自動關閉對話視窗 (延遲允許其他mod或WA有時間掃描對話)",
+	SendToChat2			= "同時也發送提示到聊天 (需要上述選項啟用)"
 })
 
 L:SetMiscLocalization({
@@ -291,7 +302,23 @@ L:SetMiscLocalization({
 	Book		= "書本 / book",
 	Pouch		= "腰袋 / pouch",
 
-	SpyFound 	= "間諜已經被 %s 找到"
+	SpyFoundP 	= "我找到間諜了",
+	SpyFound 	= "間諜已經被 %s 找到",
+	SpyGoingAway				= "間諜助手可能會在升級10.0.7後被NERF而一起消失。 如同暴雪的意圖，習慣於使用惡魔獵人或語音協調。",
+	--Profession				 stuff
+	Nightshade					= "夜影餐",
+	UmbralBloom					= "暗影之花",
+	InfernalTome				= "煉獄秘典",
+	MagicalLantern				= "魔法燈籠",
+	StarlightRoseBrew			= "星輝玫瑰酒",
+	WaterloggedScroll			= "浸水的卷軸",
+	DiscardedJunk				= "拋棄的雜物",
+	BazaarGoods					= "市集商品",
+	WoundedNightborneCivilian	= "受傷的夜裔平民",
+	LifesizedNightborneStatue	= "等身大小的夜裔雕像",
+	--
+	Available					= "%s|cffffffff%s|r 可用",
+	UsableBy					= "%s 可以使用"
 })
 
 -----------------------
