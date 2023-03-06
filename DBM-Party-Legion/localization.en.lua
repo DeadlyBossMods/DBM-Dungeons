@@ -271,13 +271,18 @@ L:SetGeneralLocalization({
 	name =	"Court of Stars Trash"
 })
 
+L:SetWarningLocalization({
+	warnAvailableItems	= "%s"
+})
+
 L:SetOptionLocalization({
-	AGBoat			= "Auto select gossip to summon boat when interacting with lantern",
-	AGDisguise		= "Auto select gossip to activate disguise when interacting with Ly'leth Lunastre",
-	AGBuffs			= "Auto select gossip to activate usable buffs",
-	SpyHelper		= "Help identify the spy by automatically scanning gossip when interacting with Chatty Rumormonger npcs and displaying it on infoframe (also syncs to other DBM/BWs users)",
-	SpyHelperClose2	= "Auto close gossip window after 0.3 second (delay allows other mods or WAs to have time to scan gossip)",
-	SendToChat2		= "Also send hints to chat (requires above option enabled)"
+	warnAvailableItems	= "Announce available interactions in zone based on group",
+	AGBoat				= "Auto select gossip to summon boat when interacting with lantern",
+	AGDisguise			= "Auto select gossip to activate disguise when interacting with Ly'leth Lunastre",
+	AGBuffs				= "Auto select gossip to activate usable buffs",
+	SpyHelper			= "Help identify the spy by automatically scanning gossip when interacting with Chatty Rumormonger npcs and displaying it on infoframe (also syncs to other DBM/BWs users)",
+	SpyHelperClose2		= "Auto close gossip window after 0.3 second (delay allows other mods or WAs to have time to scan gossip)",
+	SendToChat2			= "Also send hints to chat (requires above option enabled)"
 })
 
 L:SetMiscLocalization({
@@ -314,7 +319,10 @@ L:SetMiscLocalization({
 	DiscardedJunk				= "Discarded Junk",
 	BazaarGoods					= "Bazaar Goods",
 	WoundedNightborneCivilian	= "Wounded Nightborne Civilian",
-	LifesizedNightborneStatue	= "Lifesized Nightborne Statue"
+	LifesizedNightborneStatue	= "Lifesized Nightborne Statue",
+	--
+	Available					= "%s|cffffffff%s|r available",
+	UsableBy					= "usable by %s"
 })
 
 
