@@ -47,6 +47,19 @@ function mod:OnCombatEnd()
 	end
 end
 
+function mod:SPELL_CAST_SUCCESS(args)
+	local spellId = args.spellId
+	if spellId == 196562 then
+		timerVolatileMagicCD:Start()
+	elseif spellId == 196804 then
+		timerNetherLinkCD:Start()
+	elseif spellId == 196392 then
+		specWarnOverchargeMana:Show(args.sourceName)
+		specWarnOverchargeMana:Play("kickcast")
+		timerOverchargeManaCD:Start()
+	end
+end
+
 function mod:SPELL_AURA_APPLIED(args)
 	local spellId = args.spellId
 	if spellId == 196562 then
@@ -72,19 +85,6 @@ function mod:SPELL_AURA_REMOVED(args)
 	local spellId = args.spellId
 	if spellId == 196562 and args:IsPlayer() and self.Options.RangeFrame then
 		DBM.RangeCheck:Hide()
-	end
-end
-
-function mod:SPELL_CAST_SUCCESS(args)
-	local spellId = args.spellId
-	if spellId == 196562 then
-		timerVolatileMagicCD:Start()
-	elseif spellId == 196804 then
-		timerNetherLinkCD:Start()
-	elseif spellId == 196392 then
-		specWarnOverchargeMana:Show(args.sourceName)
-		specWarnOverchargeMana:Play("kickcast")
-		timerOverchargeManaCD:Start()
 	end
 end
 

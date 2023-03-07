@@ -5,19 +5,18 @@ mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(95674, 99868)--First engage, Second engage
 mod:SetEncounterID(1807)
 mod:DisableEEKillDetection()--ENCOUNTER_END fires a wipe when fenryr casts stealth and runs to new location (P2)
-mod:SetHotfixNoticeRev(20221127000000)
+mod:SetHotfixNoticeRev(20230306000000)
 
 mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
-	"SPELL_CAST_START 196838 196543 197558",
+	"SPELL_CAST_START 196838 196543 197558 196512",
 	"SPELL_CAST_SUCCESS 196567 196512 207707",
 	"SPELL_AURA_APPLIED 197556 196838",
 	"SPELL_AURA_REMOVED 197556 196838",
 	"UNIT_DIED"
 )
 
---TODO, Keep checking/fixing timers
 --[[
 (ability.id = 196838 or ability.id = 196543 or ability.id = 197558) and type = "begincast"
  or (ability.id = 196567 or ability.id = 196512 or ability.id = 207707) and type = "cast"
@@ -36,12 +35,14 @@ local specWarnFixate					= mod:NewSpecialWarningRun(196838, nil, nil, nil, 4, 2)
 local specWarnWolves					= mod:NewSpecialWarningSwitch("ej12600", "Tank", nil, nil, 1, 2)
 
 local timerLeapCD						= mod:NewCDTimer(31, 197556, nil, nil, nil, 3)--31-36
---local timerClawFrenzyCD					= mod:NewCDTimer(9.7, 196512, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON)--it is 10 sec, but is spell queued half the time it's not very accurate to enable
-local timerHowlCD						= mod:NewCDTimer(31.5, 196543, nil, "SpellCaster", nil, 2)--32ish unless spell queued a little
-local timerFixateCD						= mod:NewCDTimer(34.4, 196838, nil, nil, nil, 3)--Poor data, needs more to see if it has lower times
-local timerWolvesCD						= mod:NewCDTimer(33.8, "ej12600", nil, nil, nil, 1, 199184)--33.8-41.2
+local timerClawFrenzyCD					= mod:NewCDCountTimer(9.7, 196512, nil, nil, nil, 2, nil, DBM_COMMON_L.HEALER_ICON)--it is 10 sec, but is spell queued half the time
+local timerHowlCD						= mod:NewCDTimer(31.5, 196543, nil, "SpellCaster", nil, 2)--32ish unless spell queued
+local timerScentCD						= mod:NewCDTimer(37.6, 196838, nil, nil, nil, 3)--seems 37 now, up from old 34
+local timerWolvesCD						= mod:NewCDTimer(33.8, "ej12600", nil, nil, nil, 1, 199184)--33.8-56
 
 mod:AddRangeFrameOption(10, 197556)
+
+mod.vb.clawCount = 0
 
 function mod:FixateTarget(targetname, uId)
 	if not targetname then return end
@@ -56,12 +57,47 @@ function mod:FixateTarget(targetname, uId)
 	end
 end
 
+--Even though wolves timer is all over the place, it's NOT affected by any of the spell queue ICDs, which makes me wonder if wolves just isn't a timer at all but health trigger?
+local function updateAllTimers(self, ICD)
+	DBM:Debug("updateAllTimers running", 3)
+	--Abilities that exist in P1 and P2
+	if timerClawFrenzyCD:GetRemaining(self.vb.clawCount+1) < ICD then
+		local elapsed, total = timerClawFrenzyCD:GetTime(self.vb.clawCount+1)
+		local extend = ICD - (total-elapsed)
+		DBM:Debug("timerClawFrenzyCD extended by: "..extend, 2)
+		timerClawFrenzyCD:Update(elapsed, total+extend, self.vb.clawCount+1)
+	end
+	if timerLeapCD:GetRemaining() < ICD then
+		local elapsed, total = timerLeapCD:GetTime()
+		local extend = ICD - (total-elapsed)
+		DBM:Debug("timerLeapCD extended by: "..extend, 2)
+		timerLeapCD:Update(elapsed, total+extend)
+	end
+	if timerHowlCD:GetRemaining() < ICD then
+		local elapsed, total = timerHowlCD:GetTime()
+		local extend = ICD - (total-elapsed)
+		DBM:Debug("timerHowlCD extended by: "..extend, 2)
+		timerHowlCD:Update(elapsed, total+extend)
+	end
+	--Specific Phase ability timers
+	if self.vb.phase == 2 then--Abilities that only exist in phase 2
+		if timerScentCD:GetRemaining() < ICD then
+			local elapsed, total = timerScentCD:GetTime()
+			local extend = ICD - (total-elapsed)
+			DBM:Debug("timerScentCD extended by: "..extend, 2)
+			timerScentCD:Update(elapsed, total+extend)
+		end
+	end
+end
+
 function mod:OnCombatStart(delay)
+	self.vb.clawCount = 0
 	self:SetWipeTime(5)
-	--Initial timers also iffy as hell cause bilities can be a randomized order
---	timerHowlCD:Start(5-delay)
---	timerLeapCD:Start(8.1-delay)
---	timerClawFrenzyCD:Start(19-delay)--22
+	--If howl isn't cast within that 1 second of cooldown window before leap comes off CD, leap takes higher priority and is cast instead and flips order rest of pull
+	--Claw frenzy can be 2nd or 3rd as well, depending on spell queue. for most part initial timers can't be fully trusted until first 2 of 3 casts happen and correct them
+	timerHowlCD:Start(5-delay)
+	timerLeapCD:Start(6-delay)
+	timerClawFrenzyCD:Start(17-delay, 1)
 end
 
 function mod:OnCombatEnd()
@@ -74,13 +110,22 @@ end
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
 	if spellId == 196838 then
-		timerFixateCD:Start()
+		timerScentCD:Start()
 		self:BossTargetScanner(99868, "FixateTarget", 0.2, 12, true, nil, nil, nil, true)--Target scanning used to grab target 2-3 seconds faster. Doesn't seem to anymore?
+		updateAllTimers(self, 18.1)--18.1-19.2 based on distance to return to tank
 	elseif spellId == 196543 then
 		specWarnHowl:Show()
 		specWarnHowl:Play("stopcast")
+		timerHowlCD:Start()
+		updateAllTimers(self, 5.8)
 	elseif spellId == 197558 then
 		timerLeapCD:Start()
+		updateAllTimers(self, 10.9)
+	elseif spellId == 196512 and self:AntiSpam(3, 1) then
+		self.vb.clawCount = self.vb.clawCount + 1
+		warnClawFrenzy:Show(self.vb.clawCount)
+		timerClawFrenzyCD:Start(self.vb.phase == 2 and 8.5 or 9.7, self.vb.clawCount+1)
+		updateAllTimers(self, 4.8)
 	end
 end
 
@@ -95,15 +140,17 @@ function mod:SPELL_CAST_SUCCESS(args)
 		self:SetWipeTime(1800)
 		--Scan for Boss to be re-enraged
 		self:RegisterShortTermEvents(
-			"ENCOUNTER_START",
-			"ZONE_CHANGED_NEW_AREA"
+			"ENCOUNTER_START"
 		)
-	elseif spellId == 196512 then
-		warnClawFrenzy:Show()
-	elseif spellId == 207707 and self:AntiSpam(2, 1) then--Wolves spawning out of stealth
+	elseif spellId == 196512 and self:AntiSpam(3, 1) then
+		self.vb.clawCount = self.vb.clawCount + 1
+		warnClawFrenzy:Show(self.vb.clawCount)
+		timerClawFrenzyCD:Start(nil, self.vb.clawCount+1)
+		updateAllTimers(self, 3.8)
+	elseif spellId == 207707 and self:AntiSpam(2, 2) then--Wolves spawning out of stealth
 		specWarnWolves:Show()
 		specWarnWolves:Play("killmob")
-		timerWolvesCD:Start()
+--		timerWolvesCD:Start()--Too much variation that doesn't look as easily correctable as other timers, maybe it's health based outside of initial set?
 	end
 end
 
@@ -145,17 +192,16 @@ end
 function mod:ENCOUNTER_START(encounterID)
 	--Re-engaged, kill scans and long wipe time
 	if encounterID == 1807 and self:IsInCombat() then
+		self.vb.clawCount = 0
 --		self:SetWipeTime(5)
 --		self:UnregisterShortTermEvents()
 		warnPhase2:Show()
 		warnPhase2:Play("ptwo")
-		--Timers are still iffy but they will be watched in fenryr 2.0
---		timerHowlCD:Start(4.4)
---		timerWolvesCD:Start(6)
-		--Any timers after this are even more iffy. I suspect boss retains boss energy or something and needs a better calculation
-		--timerLeapCD:Start(9.3)--12-15
-		--timerClawFrenzyCD:Start(12)--12-23
-		--timerFixateCD:Start(20.2)--25-27.8
+		timerHowlCD:Start(4.4)
+		timerWolvesCD:Start(6)
+		timerLeapCD:Start(9.3)--9.3-15
+		timerClawFrenzyCD:Start(12, 1)--12-45 (massive variation cause if it's not cast immediately it gets spell queued behind leap, howl and then casts at 22-25 unless scent also spell queues it then it's 42-45sec ater p2 start
+		timerScentCD:Start(20.2)--20-27.8
 	end
 end
 
@@ -163,11 +209,4 @@ function mod:UNIT_DIED(args)
 	if self:GetCIDFromGUID(args.destGUID) == 99868 then
 		DBM:EndCombat(self)
 	end
-end
-
-function mod:ZONE_CHANGED_NEW_AREA()
-	--Left zone
-	--Normal wipes respawn you inside
-	self:SetWipeTime(5)
-	self:UnregisterShortTermEvents()
 end

@@ -46,6 +46,15 @@ function mod:OnCombatStart(delay)
 	timerWebCD:Start(35-delay)
 end
 
+function mod:SPELL_CAST_START(args)
+	local spellId = args.spellId
+	if spellId == 200227 then
+		timerWebCD:Start()
+	elseif spellId == 200024 and self:AntiSpam(5, 3) then
+		timerVenomCD:Start()
+	end
+end
+
 function mod:SPELL_AURA_APPLIED(args)
 	local spellId = args.spellId
 	if spellId == 200284 then
@@ -60,15 +69,6 @@ function mod:SPELL_AURA_REMOVED(args)
 	local spellId = args.spellId
 	if spellId == 200284 and self.Options.SetIconOnWeb then
 		self:SetIcon(args.destName, 0)
-	end
-end
-
-function mod:SPELL_CAST_START(args)
-	local spellId = args.spellId
-	if spellId == 200227 then
-		timerWebCD:Start()
-	elseif spellId == 200024 and self:AntiSpam(5, 3) then
-		timerVenomCD:Start()
 	end
 end
 
