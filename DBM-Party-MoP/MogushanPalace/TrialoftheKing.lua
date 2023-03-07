@@ -46,19 +46,6 @@ local haiyan = DBM:EJ_GetSectionInfo(6023)
 
 --end
 
-function mod:SPELL_AURA_APPLIED(args)
-	if args.spellId == 119946 then
-		warnRavage:Show(args.destName)
-		timerRavageCD:Start()
-	elseif args.spellId == 123655 then
-		warnTraumaticBlow:Show(args.destName)
-		timerTraumaticBlowCD:Start()
-	elseif args.spellId == 120201 then
-		warnConflag:Show(args.destName)
-		timerConflagCD:Start()
-	end
-end
-
 function mod:SPELL_CAST_START(args)
 	if args.spellId == 119922 then
 		specWarnShockwave:Show()
@@ -70,6 +57,19 @@ function mod:SPELL_CAST_START(args)
 	elseif args.spellId == 123654 and self:CheckInterruptFilter(args.sourceGUID, false, true) then
 		specWarnLightningBolt:Show(args.sourceName)
 		specWarnLightningBolt:Play("kickcast")
+	end
+end
+
+function mod:SPELL_AURA_APPLIED(args)
+	if args.spellId == 119946 then
+		warnRavage:Show(args.destName)
+		timerRavageCD:Start()
+	elseif args.spellId == 123655 then
+		warnTraumaticBlow:Show(args.destName)
+		timerTraumaticBlowCD:Start()
+	elseif args.spellId == 120201 then
+		warnConflag:Show(args.destName)
+		timerConflagCD:Start()
 	end
 end
 

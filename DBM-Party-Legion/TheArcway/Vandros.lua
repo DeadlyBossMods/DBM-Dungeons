@@ -40,6 +40,33 @@ function mod:OnCombatStart(delay)
 	timerForceBombD:Start(16.7-delay)
 end
 
+function mod:SPELL_CAST_START(args)
+	local spellId = args.spellId
+	if spellId == 202974 then
+		specWarnForceBomb:Show()
+		specWarnForceBomb:Play("forcenovacoming")
+		timerForceBombD:Start()
+	elseif spellId == 203882 then
+		timerForceBombD:Cancel()
+		timerEvent:Start()
+	elseif spellId == 203176 then
+		if self.vb.interruptCount == 3 then self.vb.interruptCount = 0 end
+		self.vb.interruptCount = self.vb.interruptCount + 1
+		local kickCount = self.vb.interruptCount
+		specWarnBlast:Show(args.sourceName, kickCount)
+		--Takes 3 to block all casts, it only takes 2 in a row to break his stacks though.
+		--3 count still makes sense for 2 though because you know which cast to skip to maintain order. Kick 1-2, skip 3, easy
+		--A group with only one interruptor won't be able to prevent his stacks and need to use dispels on boss instead
+		if kickCount == 1 then
+			specWarnBlast:Play("kick1r")
+		elseif kickCount == 2 then
+			specWarnBlast:Play("kick2r")
+		elseif kickCount == 3 then
+			specWarnBlast:Play("kick3r")
+		end
+	end
+end
+
 function mod:SPELL_AURA_APPLIED(args)
 	local spellId = args.spellId
 	if spellId == 203957 then
@@ -67,33 +94,6 @@ function mod:SPELL_AURA_APPLIED_DOSE(args)
 		if args.amount >= 5 then
 			specWarnBlastStacks:Show(args.destName)
 			specWarnBlastStacks:Play("dispelboss")
-		end
-	end
-end
-
-function mod:SPELL_CAST_START(args)
-	local spellId = args.spellId
-	if spellId == 202974 then
-		specWarnForceBomb:Show()
-		specWarnForceBomb:Play("forcenovacoming")
-		timerForceBombD:Start()
-	elseif spellId == 203882 then
-		timerForceBombD:Cancel()
-		timerEvent:Start()
-	elseif spellId == 203176 then
-		if self.vb.interruptCount == 3 then self.vb.interruptCount = 0 end
-		self.vb.interruptCount = self.vb.interruptCount + 1
-		local kickCount = self.vb.interruptCount
-		specWarnBlast:Show(args.sourceName, kickCount)
-		--Takes 3 to block all casts, it only takes 2 in a row to break his stacks though.
-		--3 count still makes sense for 2 though because you know which cast to skip to maintain order. Kick 1-2, skip 3, easy
-		--A group with only one interruptor won't be able to prevent his stacks and need to use dispels on boss instead
-		if kickCount == 1 then
-			specWarnBlast:Play("kick1r")
-		elseif kickCount == 2 then
-			specWarnBlast:Play("kick2r")
-		elseif kickCount == 3 then
-			specWarnBlast:Play("kick3r")
 		end
 	end
 end

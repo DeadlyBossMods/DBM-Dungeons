@@ -26,6 +26,7 @@ local timerSlashCD					= mod:NewCDTimer(25, 212030, nil, nil, nil, 3, nil, DBM_C
 local timerSlamCD					= mod:NewCDTimer(47, 197810, nil, nil, nil, 2)--Possibly 40 but delayed by ICD triggering
 
 --Boss seems to have intenal 6 second ICD and cannot cast any two spells within 6 seconds of another (minus summon bats)
+--This spell queuing was disabled at some point late legion, but will need review if dungeon comes back
 --[[
 local function updateAlltimers(ICD)
 	if timerFissureCD:GetRemaining() < ICD then

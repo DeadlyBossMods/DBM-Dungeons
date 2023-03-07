@@ -32,6 +32,19 @@ local timerHex					= mod:NewTargetTimer(20, 118903, nil, "Healer", nil, 5, nil, 
 --function mod:OnCombatStart(delay)
 --end
 
+function mod:SPELL_CAST_START(args)
+	if args.spellId == 118903 and self:CheckInterruptFilter(args.sourceGUID, false, true) then
+		specWarnHexInterrupt:Show(args.sourceName)
+		specWarnHexInterrupt:Play("kickcast")
+	elseif args.spellId == 118963 and self:CheckInterruptFilter(args.sourceGUID, false, true) then
+		specWarnShank:Show(args.sourceName)
+		specWarnShank:Play("kickcast")
+	elseif args.spellId == 118940 and self:CheckInterruptFilter(args.sourceGUID, false, true) then
+		specWarnCleansingFlame:Show(args.sourceName)
+		specWarnCleansingFlame:Play("kickcast")
+	end
+end
+
 function mod:SPELL_AURA_APPLIED(args)
 	if args:IsSpellID(118988, 129262) then
 		warnRecklessInspiration:Show(args.destName, 1)
@@ -62,19 +75,6 @@ function mod:SPELL_AURA_REMOVED(args)
 		timerHex:Cancel(args.destName)
 	elseif args.spellId == 118958 then
 		timerIronProtector:Cancel(args.destName)
-	end
-end
-
-function mod:SPELL_CAST_START(args)
-	if args.spellId == 118903 and self:CheckInterruptFilter(args.sourceGUID, false, true) then
-		specWarnHexInterrupt:Show(args.sourceName)
-		specWarnHexInterrupt:Play("kickcast")
-	elseif args.spellId == 118963 and self:CheckInterruptFilter(args.sourceGUID, false, true) then
-		specWarnShank:Show(args.sourceName)
-		specWarnShank:Play("kickcast")
-	elseif args.spellId == 118940 and self:CheckInterruptFilter(args.sourceGUID, false, true) then
-		specWarnCleansingFlame:Show(args.sourceName)
-		specWarnCleansingFlame:Play("kickcast")
 	end
 end
 
