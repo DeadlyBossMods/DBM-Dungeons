@@ -124,55 +124,55 @@ function mod:SPELL_AURA_APPLIED(args)
 	local spellId = args.spellId
 	if spellId == 197963 and args:IsPlayer() then--Purple K (NE)
 		specWarnRunicBrand:Show("|TInterface\\Icons\\Boss_OdunRunes_Purple.blp:12:12|tNE|TInterface\\Icons\\Boss_OdunRunes_Purple.blp:12:12|t")
-		if self.Options.PairingBehavior == "Entrance" then
+		if self.Options.RuneBehavior == "Entrance" then
 			specWarnRunicBrand:Play("frontleft")
-		elseif self.Options.PairingBehavior == "Icon" then
+		elseif self.Options.RuneBehavior == "Icon" then
 			specWarnRunicBrand:Play("mm3")--Purple Diamond
-		elseif self.Options.PairingBehavior == "Minimap" then
+		elseif self.Options.RuneBehavior == "Minimap" then
 			specWarnRunicBrand:Play("frontright")
 		else
 			specWarnRunicBrand:Play("targetyou")
 		end
 	elseif spellId == 197964 and args:IsPlayer() then--Orange N (SE)
 		specWarnRunicBrand:Show("|TInterface\\Icons\\Boss_OdunRunes_Orange.blp:12:12|tSE|TInterface\\Icons\\Boss_OdunRunes_Orange.blp:12:12|t")
-		if self.Options.PairingBehavior == "Entrance" then
+		if self.Options.RuneBehavior == "Entrance" then
 			specWarnRunicBrand:Play("backleft")
-		elseif self.Options.PairingBehavior == "Icon" then
+		elseif self.Options.RuneBehavior == "Icon" then
 			specWarnRunicBrand:Play("mm2")--Orange Circle
-		elseif self.Options.PairingBehavior == "Minimap" then
+		elseif self.Options.RuneBehavior == "Minimap" then
 			specWarnRunicBrand:Play("backright")
 		else
 			specWarnRunicBrand:Play("targetyou")
 		end
 	elseif spellId == 197965 and args:IsPlayer() then--Yellow H (SW)
 		specWarnRunicBrand:Show("|TInterface\\Icons\\Boss_OdunRunes_Yellow.blp:12:12|tSW|TInterface\\Icons\\Boss_OdunRunes_Yellow.blp:12:12|t")
-		if self.Options.PairingBehavior == "Entrance" then
+		if self.Options.RuneBehavior == "Entrance" then
 			specWarnRunicBrand:Play("backright")
-		elseif self.Options.PairingBehavior == "Icon" then
+		elseif self.Options.RuneBehavior == "Icon" then
 			specWarnRunicBrand:Play("mm1")--Yellow Star
-		elseif self.Options.PairingBehavior == "Minimap" then
+		elseif self.Options.RuneBehavior == "Minimap" then
 			specWarnRunicBrand:Play("backleft")
 		else
 			specWarnRunicBrand:Play("targetyou")
 		end
 	elseif spellId == 197966 and args:IsPlayer() then--Blue fishies (NW)
 		specWarnRunicBrand:Show("|TInterface\\Icons\\Boss_OdunRunes_Blue.blp:12:12|tNW|TInterface\\Icons\\Boss_OdunRunes_Blue.blp:12:12|t")
-		if self.Options.PairingBehavior == "Entrance" then
+		if self.Options.RuneBehavior == "Entrance" then
 			specWarnRunicBrand:Play("frontright")
-		elseif self.Options.PairingBehavior == "Icon" then
+		elseif self.Options.RuneBehavior == "Icon" then
 			specWarnRunicBrand:Play("mm6")--Blue Square
-		elseif self.Options.PairingBehavior == "Minimap" then
+		elseif self.Options.RuneBehavior == "Minimap" then
 			specWarnRunicBrand:Play("frontleft")
 		else
 			specWarnRunicBrand:Play("targetyou")
 		end
 	elseif spellId == 197967 and args:IsPlayer() then--Green box (N)
 		specWarnRunicBrand:Show("|TInterface\\Icons\\Boss_OdunRunes_Green.blp:12:12|tN|TInterface\\Icons\\Boss_OdunRunes_Green.blp:12:12|t")
-		if self.Options.PairingBehavior == "Entrance" then
+		if self.Options.RuneBehavior == "Entrance" then
 			specWarnRunicBrand:Play("frontcenter")
-		elseif self.Options.PairingBehavior == "Icon" then
+		elseif self.Options.RuneBehavior == "Icon" then
 			specWarnRunicBrand:Play("mm4")--Green Triangle
-		elseif self.Options.PairingBehavior == "Minimap" then
+		elseif self.Options.RuneBehavior == "Minimap" then
 			specWarnRunicBrand:Play("frontcenter")
 		else
 			specWarnRunicBrand:Play("targetyou")
