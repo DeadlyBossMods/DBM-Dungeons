@@ -60,6 +60,7 @@ BlackrockCaverns\Corla.lua
 BlackrockCaverns\KarshSteelBender.lua
 BlackrockCaverns\Beauty.lua
 BlackrockCaverns\AscendantLordObsidius.lua
+BlackrockCaverns\BlackrockCavernsTrash.lua
 Deadmines\Glubtok.lua
 Deadmines\Helix.lua
 Deadmines\FoeReaper.lua

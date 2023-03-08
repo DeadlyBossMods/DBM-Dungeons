@@ -43,6 +43,15 @@ L= DBM:GetModLocalization(108)
 -----------------------------
 L= DBM:GetModLocalization(109)
 
+---------
+--Trash--
+---------
+L = DBM:GetModLocalization("BlackrockCavernsTrash")
+
+L:SetGeneralLocalization({
+	name =	"Blackrock Caverns Trash"
+})
+
 ---------------------
 --  The Deadmines  --
 ---------------------
