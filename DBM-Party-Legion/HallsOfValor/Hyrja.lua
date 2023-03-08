@@ -13,8 +13,8 @@ mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 192018 192307 200901 192288",
 	"SPELL_CAST_SUCCESS 192044",
 	"SPELL_AURA_APPLIED 192048 192133 192132",
-	"SPELL_AURA_REMOVED 192048",
-	"UNIT_SPELLCAST_SUCCEEDED boss1"
+	"SPELL_AURA_REMOVED 192048"
+--	"UNIT_SPELLCAST_SUCCEEDED boss1"
 )
 
 --Notes: expel light could be supported with AGGRESSIVE timer correction around spell queuing and ability turning on and off, it's just not worth effort
@@ -38,7 +38,7 @@ local specWarnExpelLight			= mod:NewSpecialWarningMoveAway(192048, nil, nil, nil
 local yellExpelLight				= mod:NewYell(192048)
 local specWarnSearingLight			= mod:NewSpecialWarningInterrupt(192288, "HasInterrupt", nil, nil, 1, 2)
 
-local timerShieldOfLightCD			= mod:NewCDTimer(28, 192018, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON, nil, mod:IsTank() and 2, 4)--28-34
+local timerShieldOfLightCD			= mod:NewCDTimer(26.6, 192018, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON, nil, mod:IsTank() and 2, 4)--26.6-34
 local timerSpecialCD				= mod:NewCDSpecialTimer(30, nil, nil, nil, nil, 2, nil, DBM_COMMON_L.DEADLY_ICON, nil, 1, 4)--Shared timer by eye of storm and Sanctify
 --local timerExpelLightCD				= mod:NewCDTimer(24, 192048, nil, nil, nil, 3)
 
@@ -48,6 +48,8 @@ local eyeShortName = DBM:GetSpellInfo(91320)--Inner Eye
 
 function mod:OnCombatStart(delay)
 --	self:SetStage(1)
+	timerSpecialCD:Start(8.5)
+	timerShieldOfLightCD:Start(24)
 end
 
 function mod:OnCombatEnd()
@@ -108,12 +110,15 @@ function mod:SPELL_AURA_REMOVED(args)
 	end
 end
 
+--[[
+--Might be needed again for classic legion if that happens otherwise this is retired as of blizz moving encounter start from two adds to phase 2
 function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
 	if spellId == 192130 then--Actual boss engaging after 2 adds dying
 --		self:SetStage(2)
 --		warnPhase2:Show()
 --		warnPhase2:Play("ptwo")
-		timerSpecialCD:Start(8.5)
-		timerShieldOfLightCD:Start(24)
+--		timerSpecialCD:Start(8.5)
+--		timerShieldOfLightCD:Start(24)
 	end
 end
+--]]
