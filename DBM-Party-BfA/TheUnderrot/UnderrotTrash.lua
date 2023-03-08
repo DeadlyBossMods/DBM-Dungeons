@@ -28,16 +28,18 @@ local specWarnDecayingMind			= mod:NewSpecialWarningInterrupt(278961, "HasInterr
 local specWarnSpiritDrainTotem		= mod:NewSpecialWarningInterrupt(265523, "HasInterrupt", nil, nil, 1, 2)
 local specWarnSpiritDrainTotemKill	= mod:NewSpecialWarningDodge(265523, nil, nil, nil, 2, 2)
 
+--Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc
+
 function mod:SPELL_CAST_START(args)
 	if not self.Options.Enabled then return end
 	local spellId = args.spellId
-	if spellId == 272609 and self:AntiSpam(2.5, 1) then
+	if spellId == 272609 and self:AntiSpam(3, 2) then
 		specWarnMaddeningGaze:Show()
 		specWarnMaddeningGaze:Play("shockwave")
-	elseif spellId == 265019 and self:AntiSpam(2.5, 1) then
+	elseif spellId == 265019 and self:AntiSpam(3, 2) then
 		specWarnSavageCleave:Show()
 		specWarnSavageCleave:Play("shockwave")
-	elseif spellId == 265540 and self:AntiSpam(2.5, 1) then
+	elseif spellId == 265540 and self:AntiSpam(3, 2) then
 		specWarnRottenBile:Show()
 		specWarnRottenBile:Play("shockwave")
 	elseif spellId == 266106 and self:CheckInterruptFilter(args.sourceGUID, false, true) then
@@ -67,10 +69,10 @@ end
 function mod:SPELL_AURA_APPLIED(args)
 	if not self.Options.Enabled then return end
 	local spellId = args.spellId
-	if spellId == 265568 and args:IsPlayer() then
+	if spellId == 265568 and args:IsPlayer() and self:AntiSpam(3, 5) then
 		specWarnDarkOmen:Show()
 		specWarnDarkOmen:Play("range5")
-	elseif spellId == 266107 and args:IsPlayer() then
+	elseif spellId == 266107 and args:IsPlayer() and self:AntiSpam(3, 1) then
 		specWarnThirstforBlood:Show()
 		specWarnThirstforBlood:Play("justrun")
 	end
@@ -79,7 +81,7 @@ end
 function mod:SPELL_CAST_SUCCESS(args)
 	if not self.Options.Enabled then return end
 	local spellId = args.spellId
-	if spellId == 265523 then
+	if spellId == 265523 and self:AntiSpam(3, 2) then
 		specWarnSpiritDrainTotemKill:Show()
 		specWarnSpiritDrainTotemKill:Play("watchstep")
 	end

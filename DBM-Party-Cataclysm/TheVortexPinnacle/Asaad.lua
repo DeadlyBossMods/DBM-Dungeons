@@ -14,7 +14,7 @@ mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 87618"
 )
 
-local warnStaticCling			= mod:NewSpellAnnounce(87618, 3)
+--local warnStaticCling			= mod:NewSpellAnnounce(87618, 3)
 
 local specWarnStaticCling		= mod:NewSpecialWarningJump(87618, nil, nil, nil, 1, 2)
 local specWarnGroundingField	= mod:NewSpecialWarningMoveTo(86911, nil, DBM_CORE_L.AUTO_SPEC_WARN_OPTIONS.run:format(86911), nil, nil, 3)
@@ -32,7 +32,7 @@ end
 
 function mod:SPELL_CAST_START(args)
 	if args.spellId == 87618 then
-		warnStaticCling:Show(args.spellName)
+--		warnStaticCling:Show(args.spellName)
 		specWarnStaticCling:Schedule(0.625)--delay message since jumping at start of cast is no longer correct in 4.0.6+
 		specWarnStaticCling:ScheduleVoice(0.625, "jumpnow")
 	end

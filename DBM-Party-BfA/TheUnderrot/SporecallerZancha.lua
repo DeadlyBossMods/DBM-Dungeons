@@ -15,6 +15,7 @@ mod:RegisterEventsInCombat(
 	"UNIT_SPELLCAST_SUCCEEDED boss1"
 )
 
+--TODO, re-evalulate all timers from DF M+ logs
 --local warnBoundlessrot				= mod:NewSpellAnnounce(259830, 3)--Use if too spammy as special warning
 local warnUpheaval					= mod:NewTargetAnnounce(259718, 3)
 
@@ -73,6 +74,7 @@ function mod:SPELL_CAST_START(args)
 		specWarnFesteringHarvest:Play("specialsoon")
 		timerFesteringHarvestCD:Start()
 		if DBM.Options.DebugMode then
+			DBM:Debug("Why is this scoped to debug only?. This looks like an unfinished train of thought. Do timers restart or get spell queued here?")
 			timerShockwaveCD:Stop()
 			timerUpheavalCD:Stop()
 			timerVolatilePodsCD:Stop()

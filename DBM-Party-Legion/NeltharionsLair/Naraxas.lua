@@ -19,9 +19,9 @@ mod:RegisterEventsInCombat(
 local warnFixate					= mod:NewTargetAnnounce(209906, 2, nil, false)--Could be spammy, optional
 
 local specWarnAdds					= mod:NewSpecialWarningSwitch(199817, "Dps", nil, nil, 1, 2)
-local specWarnFixate				= mod:NewSpecialWarningYou(209906)
+local specWarnFixate				= mod:NewSpecialWarningYou(209906, nil, nil, nil, 1, 2)
 local specWarnSpikedTongue			= mod:NewSpecialWarningRun(199176, nil, nil, nil, 4, 2)
---local specWarnRancidMaw			= mod:NewSpecialWarningMove(188494)--Needs confirmation this is pool damage and not constant fight aoe damage
+--local specWarnRancidMaw			= mod:NewSpecialWarningGTFO(188494)--Needs confirmation this is pool damage and not constant fight aoe damage
 
 local timerSpikedTongueCD			= mod:NewNextTimer(55, 199176, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.DEADLY_ICON..DBM_COMMON_L.TANK_ICON)
 local timerAddsCD					= mod:NewCDTimer(65, 199817, nil, nil, nil, 1, 226361)
@@ -38,9 +38,11 @@ end
 function mod:SPELL_AURA_APPLIED(args)
 	local spellId = args.spellId
 	if spellId == 209906 then
-		warnFixate:Show(args.destName)
 		if args:IsPlayer() and self:AntiSpam(4, 1) then
 			specWarnFixate:Show()
+			specWarnFixate:Play("targetyou")
+		else
+			warnFixate:Show(args.destName)
 		end
 	end
 end
@@ -61,9 +63,10 @@ function mod:SPELL_CAST_START(args)
 	end
 end
 --[[
-function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId)
+function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId, spellName)
 	if spellId == 188494 and destGUID == UnitGUID("player") and self:AntiSpam(3, 2) then
-		specWarnRancidMaw:Show()
+		specWarnRancidMaw:Show(spellName)
+		specWarnRancidMaw:Play("watchfeet")
 	end
 end
 mod.SPELL_PERIODIC_MISSED = mod.SPELL_PERIODIC_DAMAGE

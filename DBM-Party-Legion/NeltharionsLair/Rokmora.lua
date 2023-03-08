@@ -17,7 +17,7 @@ mod:RegisterEventsInCombat(
 local warnShatter					= mod:NewSpellAnnounce(188114, 2)
 
 local specWarnRazorShards			= mod:NewSpecialWarningSpell(188169, "Tank", nil, nil, 1, 2)
-local specWarnGas					= mod:NewSpecialWarningMove(192800, nil, nil, nil, 1, 2)
+local specWarnGas					= mod:NewSpecialWarningGTFO(192800, nil, nil, nil, 1, 8)
 
 local timerShatterCD				= mod:NewCDTimer(24.2, 188114, nil, nil, nil, 2)
 local timerRazorShardsCD			= mod:NewCDTimer(25, 188169, nil, "Tank", nil, 5)--29?
@@ -39,10 +39,10 @@ function mod:SPELL_CAST_START(args)
 	end
 end
 
-function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId)
+function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId, spellName)
 	if spellId == 192800 and destGUID == UnitGUID("player") and self:AntiSpam(2.5, 1) then
-		specWarnGas:Show()
-		specWarnGas:Play("runaway")
+		specWarnGas:Show(spellName)
+		specWarnGas:Play("watchfeet")
 	end
 end
 mod.SPELL_PERIODIC_MISSED = mod.SPELL_PERIODIC_DAMAGE

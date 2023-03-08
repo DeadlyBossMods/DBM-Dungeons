@@ -91,6 +91,7 @@ ShadowFangKeep\Godfrey.lua
 TheVortexPinnacle\GrandVizierErtan.lua
 TheVortexPinnacle\Altairus.lua
 TheVortexPinnacle\Asaad.lua
+TheVortexPinnacle\VortexPinnacleTrash.lua
 TheStonecore\Corborus.lua
 TheStonecore\Slabhide.lua
 TheStonecore\Ozruk.lua

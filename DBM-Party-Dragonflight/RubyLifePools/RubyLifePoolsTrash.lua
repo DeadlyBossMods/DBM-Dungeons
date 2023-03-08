@@ -26,6 +26,7 @@ local warnFireMaw							= mod:NewCastAnnounce(392394, 3, nil, nil, "Tank|Healer"
 local warnSteelBarrage						= mod:NewCastAnnounce(372047, 3, nil, nil, "Tank|Healer")
 local warnFlashfire							= mod:NewCastAnnounce(392451, 4)
 local warnFlameDance						= mod:NewCastAnnounce(385536, 4, 6)
+local warnTectonicSlam						= mod:NewCastAnnounce(372735, 4)
 
 local specWarnLightningStorm				= mod:NewSpecialWarningSpell(392486, nil, nil, nil, 2, 2)
 local specWarnBlazeofGlory					= mod:NewSpecialWarningSpell(373972, nil, nil, nil, 2, 2)
@@ -39,7 +40,6 @@ local yellStormBreath						= mod:NewShortYell(391726)
 local specWarnFlameBreath					= mod:NewSpecialWarningDodge(391723, nil, nil, nil, 2, 2)
 local yellFlameBreath						= mod:NewShortYell(391723)
 local specWarnExcavatingBlast				= mod:NewSpecialWarningDodge(372696, nil, nil, nil, 2, 2)
-local specWarnTectonicSlam					= mod:NewSpecialWarningDodge(372735, nil, nil, nil, 2, 2)
 local specWarnBurnout						= mod:NewSpecialWarningRun(373614, "Melee", nil, nil, 4, 2)
 local specWarnThunderJaw					= mod:NewSpecialWarningDefensive(392395, nil, nil, nil, 1, 2)
 --local specWarnSharedSuffering				= mod:NewSpecialWarningYou(339607, nil, nil, nil, 1, 2)
@@ -112,9 +112,8 @@ function mod:SPELL_CAST_START(args)
 		end
 	elseif spellId == 372735 then
 		--TODO, Timer?
-		if self:AntiSpam(3, 2) then
-			specWarnTectonicSlam:Show()
-			specWarnTectonicSlam:Play("watchstep")
+		if self:AntiSpam(3, 6) then
+			warnTectonicSlam:Show()
 		end
 	elseif spellId == 392395 then
 		timerThunderjawCD:Start()
