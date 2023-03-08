@@ -54,7 +54,7 @@ local function updateAllTimers(self, ICD)
 		timerShieldOfLightCD:Update(elapsed, total+extend)
 	end
 	if timerExpelLightCD:GetRemaining() < ICD then
-		local elapsed, total = timerLeapCD:GetTime()
+		local elapsed, total = timerExpelLightCD:GetTime()
 		local extend = ICD - (total-elapsed)
 		DBM:Debug("timerExpelLightCD extended by: "..extend, 2)
 		timerExpelLightCD:Update(elapsed, total+extend)
