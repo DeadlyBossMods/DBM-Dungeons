@@ -8,7 +8,7 @@ mod:SetZone(1477)
 mod.isTrashMod = true
 
 mod:RegisterEvents(
-	"SPELL_CAST_START 199805 192563 199726 191508 199210 198892 198934 215433 210875 192158 200901 198595",
+	"SPELL_CAST_START 199805 192563 199726 191508 199210 198892 198934 215433 210875 192158 200901 198595 192288",
 	"SPELL_AURA_APPLIED 215430",
 	"SPELL_AURA_REMOVED 215430",
 	"UNIT_DIED",
@@ -39,12 +39,15 @@ local specWarnHolyRadiance			= mod:NewSpecialWarningInterrupt(215433, "HasInterr
 local specWarnRuneOfHealing			= mod:NewSpecialWarningInterrupt(198934, false, nil, nil, 1, 2)--Mob can be moved out of it so Holy more important spell to kick
 local specWarnCleansingFlame		= mod:NewSpecialWarningInterrupt(192563, "HasInterrupt", nil, nil, 1, 2)
 local specWarnUnrulyYell			= mod:NewSpecialWarningInterrupt(199726, "HasInterrupt", nil, nil, 1, 2)
+local specWarnSearingLight			= mod:NewSpecialWarningInterrupt(192288, "HasInterrupt", nil, nil, 1, 2)
 
 local timerThunderousBoltCD			= mod:NewCDTimer(4.8, 198595, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--6-7
 local timerRuneOfHealingCD			= mod:NewCDTimer(17, 198934, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--17-18.2
 local timerHolyRadianceCD			= mod:NewCDTimer(18.1, 215433, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--17-18.2
 local timerCleansingFlameCD			= mod:NewCDTimer(6.1, 192563, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--6-9
 local timerBlastofLightCD			= mod:NewCDTimer(18.5, 191508, nil, nil, nil, 3, nil, DBM_COMMON_L.DEADLY_ICON)--May be lower
+local timerEyeofStormCD				= mod:NewCDTimer(25, 200901, nil, nil, nil, 2, nil, DBM_COMMON_L.DEADLY_ICON)
+local timerSanctifyCD				= mod:NewCDTimer(25, 192158, nil, nil, nil, 3)--25-30 based on searing light casts since searing light has 6sec ICD lockout
 
 mod:AddBoolOption("AGSkovaldTrash", true)
 mod:AddBoolOption("AGStartOdyn", true)
@@ -138,10 +141,24 @@ function mod:SPELL_CAST_START(args)
 	elseif spellId == 192158 then--P1 2 adds
 		specWarnSanctify:Show()
 		specWarnSanctify:Play("watchorb")
+		timerSanctifyCD:Start()
 	--2/22 01:53:53.948  SPELL_CAST_START,Creature-0-3019-1477-12381-97219-000075B856,"Solsten",0x10a48,0x0,0000000000000000,nil,0x80000000,0x80000000,200901,"Eye of the Storm",0x8
 	elseif spellId == 200901 and args:GetSrcCreatureID() == 97219 then
 		specWarnEyeofStorm:Show(eyeShortName)
 		specWarnEyeofStorm:Play("findshelter")
+		timerEyeofStormCD:Start()
+	elseif spellId == 192288 then
+		if self:CheckInterruptFilter(args.sourceGUID, false, true) then
+			specWarnSearingLight:Show(args.sourceName)
+			specWarnSearingLight:Play("kickcast")
+		end
+		--On fly correct santify which is delayed by the forced ICD of Searing Light casts
+		if timerSanctifyCD:GetRemaining() < 6 then
+			local elapsed, total = timerSanctifyCD:GetTime()
+			local extend = 6 - (total-elapsed)
+			DBM:Debug("timerSanctifyCD extended by: "..extend, 2)
+			timerSanctifyCD:Update(elapsed, total+extend)
+		end
 	end
 end
 
@@ -180,6 +197,10 @@ function mod:UNIT_DIED(args)
 		timerCleansingFlameCD:Stop()
 	elseif cid ==  95842 then--Valjar Thundercaller
 		timerThunderousBoltCD:Stop(args.destGUID)
+	elseif cid == 97219 then--Solsten
+		timerEyeofStormCD:Stop()
+	elseif cid == 97202 then--Olmyr
+		timerSanctifyCD:Stop()
 	end
 end
 
