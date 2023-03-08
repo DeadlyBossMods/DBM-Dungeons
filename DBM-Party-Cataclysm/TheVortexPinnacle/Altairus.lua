@@ -15,14 +15,14 @@ mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 88308"
 )
 
-local warnBreath		= mod:NewTargetNoFilterAnnounce(88308, 2)
-local warnUpwind		= mod:NewSpellAnnounce(88282, 1)
+local warnBreath			= mod:NewTargetNoFilterAnnounce(88308, 2)
+local warnUpwind			= mod:NewSpellAnnounce(88282, 1)
 
-local specWarnBreath	= mod:NewSpecialWarningYou(88308, "-Tank", nil, 2, 1, 2)
-local specWarnBreathNear= mod:NewSpecialWarningClose(88308, nil, nil, nil, 1, 2)
-local specWarnDownwind	= mod:NewSpecialWarningMove(88286, nil, nil, nil, 1, 2)
+local specWarnBreath		= mod:NewSpecialWarningYou(88308, "-Tank", nil, 2, 1, 2)
+local specWarnBreathNear	= mod:NewSpecialWarningClose(88308, nil, nil, nil, 1, 2)
+local specWarnDownwind		= mod:NewSpecialWarningLookAway(88286, nil, nil, nil, 1, 2)
 
-local timerBreathCD		= mod:NewCDTimer(10.5, 88308, nil, nil, nil, 3)
+local timerBreathCD			= mod:NewCDTimer(10.5, 88308, nil, nil, nil, 3)
 
 mod:AddSetIconOption("BreathIcon", 88308, true, false, {8})
 

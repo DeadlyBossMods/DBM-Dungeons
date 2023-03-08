@@ -300,10 +300,6 @@ L= DBM:GetModLocalization(114)
 --------------
 L= DBM:GetModLocalization(115)
 
-L:SetOptionLocalization({
-	BreathIcon	= DBM_CORE_L.AUTO_ICONS_OPTION_TARGETS:format(88308)
-})
-
 -----------
 -- Asaad --
 -----------

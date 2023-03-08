@@ -22,7 +22,7 @@ local yellRicochetingThrow				= mod:NewYell(272402)
 local yellDuelistDash					= mod:NewYell(274400)
 local specWarnOiledBladeSelf			= mod:NewSpecialWarningDefensive(257908, nil, nil, nil, 1, 2)
 local specWarnBrutalBackhand			= mod:NewSpecialWarningDodge(257426, nil, nil, nil, 1, 2)
-local specWarnShatteringToss			= mod:NewSpecialWarningSpell(274860, "Tank", nil, nil, 1, 2)
+local specWarnShatteringToss			= mod:NewSpecialWarningSpell(274860, "Tank", nil, nil, 1, 12)
 local specWarnGoinBan					= mod:NewSpecialWarningRun(257756, "Melee", nil, nil, 4, 2)
 local specWarnBladeBarrage				= mod:NewSpecialWarningRun(257870, "Melee", nil, nil, 4, 2)
 local specWarnGroundShatter				= mod:NewSpecialWarningRun(258199, "Melee", nil, nil, 4, 2)
@@ -39,6 +39,8 @@ local specWarnBlindRage					= mod:NewSpecialWarningDispel(257739, "RemoveEnrage"
 local specWarnInfectedWound				= mod:NewSpecialWarningDispel(258323, "RemoveDisease", nil, nil, 1, 2)
 local specWarnOiledBlade				= mod:NewSpecialWarningDispel(257908, "RemoveMagic", nil, 2, 1, 2)
 local specWarnGTFO						= mod:NewSpecialWarningGTFO(257274, nil, nil, nil, 1, 8)
+
+--Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc
 
 function mod:RicochetingTarget(targetname)
 	if not targetname then return end
@@ -81,27 +83,27 @@ function mod:SPELL_CAST_START(args)
 		if self:CheckInterruptFilter(args.sourceGUID, false, true) and self.Options.SpecWarn257732interrupt then
 			specWarnShatteringBellowKick:Show(args.sourceName)
 			specWarnShatteringBellowKick:Play("kickcast")
-		elseif self:AntiSpam(3, 1) then--Else, can't interrupt or interrupt warning is disabled and user is a caster, warn to stop casting.
+		elseif self:AntiSpam(3, 6) then--Else, can't interrupt or interrupt warning is disabled and user is a caster, warn to stop casting.
 			specWarnShatteringBellow:Show()
 			specWarnShatteringBellow:Play("stopcast")
 		end
-	elseif spellId == 257756 and self:AntiSpam(5, 3) then
+	elseif spellId == 257756 and self:AntiSpam(4, 1) then
 		specWarnGoinBan:Show()
 		specWarnGoinBan:Play("justrun")
-	elseif spellId == 257870 and self:AntiSpam(5, 3) then
+	elseif spellId == 257870 and self:AntiSpam(4, 1) then
 		specWarnBladeBarrage:Show()
 		specWarnBladeBarrage:Play("justrun")
-	elseif spellId == 274860 and self:AntiSpam(3, 4) then
+	elseif spellId == 274860 and self:AntiSpam(3, 5) then
 		specWarnShatteringToss:Show()
-		specWarnShatteringToss:Play("carefly")--"toss coming" would be better but i can't remember media file
-	elseif spellId == 257426 and self:AntiSpam(3, 5) then
+		specWarnShatteringToss:Play("tosscoming")
+	elseif spellId == 257426 and self:AntiSpam(3, 2) then
 		specWarnBrutalBackhand:Show()
 		specWarnBrutalBackhand:Play("shockwave")
 	elseif spellId == 274400 then
 		self:ScheduleMethod(0.1, "BossTargetScanner", args.sourceGUID, "DashTarget", 0.1, 8)
-	elseif spellId == 274383 and self:AntiSpam(3, 9) then
+	elseif spellId == 274383 and self:AntiSpam(3, 6) then
 		warnRatTrap:Show()
-	elseif spellId == 258199 and self:AntiSpam(3, 3) then
+	elseif spellId == 258199 and self:AntiSpam(3, 1) then
 		specWarnGroundShatter:Show()
 		specWarnGroundShatter:Play("justrun")
 	elseif spellId == 272402 then
@@ -115,10 +117,10 @@ function mod:SPELL_AURA_APPLIED(args)
 	if spellId == 257274 and args:IsPlayer() and self:AntiSpam(2, 2) then
 		specWarnGTFO:Show(args.spellName)
 		specWarnGTFO:Play("watchfeet")
-	elseif spellId == 257476 and self:AntiSpam(3, 6) then
+	elseif spellId == 257476 and self:AntiSpam(3, 5) then
 		specWarnBestialWrath:Show(args.destName)
 		specWarnBestialWrath:Play("helpdispel")
-	elseif spellId == 257739 and self:AntiSpam(3, 10) then
+	elseif spellId == 257739 and self:AntiSpam(3, 5) then
 		--If it can be dispelled by affected player, no reason to tell them to run away, dispel is priority
 		if self.Options.SpecWarn257739dispel then
 			specWarnBlindRage:Show(args.destName)
@@ -127,7 +129,7 @@ function mod:SPELL_AURA_APPLIED(args)
 			specWarnBlindRagePlayer:Show()
 			specWarnBlindRagePlayer:Play("justrun")
 		end
-	elseif spellId == 257908 and args:IsDestTypePlayer() and self:AntiSpam(3, 12) then
+	elseif spellId == 257908 and args:IsDestTypePlayer() and self:AntiSpam(3, 5) then
 		--If tank can dispel self, no reason to tell tank to defensive through it, dispel is priority
 		if self.Options.SpecWarn257908dispel and self:CheckDispelFilter("magic") then
 			specWarnOiledBlade:Show(args.destName)
@@ -136,7 +138,7 @@ function mod:SPELL_AURA_APPLIED(args)
 			specWarnOiledBladeSelf:Show()
 			specWarnOiledBladeSelf:Play("defensive")
 		end
-	elseif spellId == 258323 and args:IsDestTypePlayer() and self:CheckDispelFilter("disease") and self:AntiSpam(3, 7) then
+	elseif spellId == 258323 and args:IsDestTypePlayer() and self:CheckDispelFilter("disease") and self:AntiSpam(3, 5) then
 		specWarnInfectedWound:Show(args.destName)
 		specWarnInfectedWound:Play("helpdispel")
 	end
