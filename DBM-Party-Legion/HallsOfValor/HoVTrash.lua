@@ -155,7 +155,7 @@ function mod:SPELL_CAST_START(args)
 		--On fly correct santify which is delayed by the forced ICD of Searing Light casts
 		if timerSanctifyCD:GetRemaining() < 6 then
 			local elapsed, total = timerSanctifyCD:GetTime()
-			local extend = ICD - (total-elapsed)
+			local extend = 6 - (total-elapsed)
 			DBM:Debug("timerSanctifyCD extended by: "..extend, 2)
 			timerSanctifyCD:Update(elapsed, total+extend)
 		end
