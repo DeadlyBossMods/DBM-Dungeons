@@ -343,6 +343,15 @@ L= DBM:GetModLocalization(115)
 -----------
 L= DBM:GetModLocalization(116)
 
+---------
+--Trash--
+---------
+L = DBM:GetModLocalization("VortexPinnacleTrash")
+
+L:SetGeneralLocalization({
+	name =	"Трэш мобы Вершина Смерча"
+})
+
 ---------------------------
 --  The Throne of Tides  --
 ---------------------------
