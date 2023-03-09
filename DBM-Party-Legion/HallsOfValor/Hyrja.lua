@@ -72,7 +72,7 @@ function mod:OnCombatStart(delay)
 --	self:SetStage(1)
 	timerSpecialCD:Start(8.5)
 	timerShieldOfLightCD:Start(24)
-	timerExpelLightCD(32.5)
+	timerExpelLightCD:Start(32.5)
 end
 
 function mod:OnCombatEnd()

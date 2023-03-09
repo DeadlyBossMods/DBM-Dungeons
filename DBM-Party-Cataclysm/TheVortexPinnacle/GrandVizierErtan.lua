@@ -20,6 +20,7 @@ local timerSummonTempest	= mod:NewCDTimer(16.8, 86340, nil, nil, nil, 1)
 local timerShield			= mod:NewNextTimer(30.5, 86292, nil, nil, nil, 6)
 
 function mod:OnCombatStart(delay)
+	timerSummonTempest:Start(-delay)
 	timerShield:Start(24-delay)
 end
 
