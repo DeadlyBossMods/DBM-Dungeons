@@ -286,9 +286,9 @@ do
 			},
 			["professionicons"] = {
 --				[133971] = 800,--Cooking (old)
-				[4620671] = 25,--Cooking (DF)
+				[4620671] = 1,--Cooking (DF)
 --				[136246] = 800,--Herbalist (old)
-				[4620675] = 25--Herbalist (DF)
+				[4620675] = 1--Herbalist (DF)
 			}
 		},
 		[105340] = { -- Umbral Bloom
@@ -298,8 +298,10 @@ do
 				["DRUID"] = true
 			},
 			["professionicons"] = {
+--				[133971] = 800,--Cooking (old)
+				[4620671] = 1,--Cooking (DF)
 --				[136246] = 800,--Herbalist (old)
-				[4620675] = 25--Herbalist (DF)
+				[4620675] = 1--Herbalist (DF)
 			}
 		},
 		[105831] = { -- Infernal Tome
@@ -323,7 +325,7 @@ do
 			},
 			["professionicons"] = {
 --				[136244] = 800,--Enchanting (Old)
-				[4620672] = 25--Enchanting (New)
+				[4620672] = 1--Enchanting (New)
 			}
 		},
 		[106108] = { -- Starlight Rose Brew
@@ -342,9 +344,9 @@ do
 			},
 			["professionicons"] = {
 --				[134366] = 800,--Skinning (Old)
-				[4620680] = 25,--Skinning (New)
+				[4620680] = 1,--Skinning (New)
 --				[237171] = 800,--Inscription (Old)
-				[4620676] = 25--Inscription (New)
+				[4620676] = 1--Inscription (New)
 			}
 		},
 		--Debuffs
@@ -355,7 +357,7 @@ do
 			},
 			["professionicons"] = {
 --				[136240] = 800, -- Alchemy (old)
-				[4620669] = 25 -- Alchemy (DF)
+				[4620669] = 1 -- Alchemy (DF)
 			}
 		},
 		[105157] = {-- Arcane Power Conduit
@@ -366,7 +368,7 @@ do
 			},
 			["professionicons"] = {
 --				[136243] = 800, -- Engineering (old)
-				[4620673] = 25 -- Engineering (DF)
+				[4620673] = 1 -- Engineering (DF)
 			}
 		}
 	}
@@ -380,7 +382,7 @@ do
 			},
 			["professionicons"] = {
 --				[136241] = 800, -- Blacksmithing (old)
-				[4620670] = 25 -- Blacksmithing (DF)
+				[4620670] = 1 -- Blacksmithing (DF)
 			},
 		},
 		[106018] = { -- Bazaar Goods
@@ -391,14 +393,14 @@ do
 			},
 			["professionicons"] = {
 --				[136247] = 800, -- Leatherworking (old)
-				[4620678] = 25 -- Leatherworking (DF)
+				[4620678] = 1 -- Leatherworking (DF)
 			}
 		},
 		[106112] = { -- Wounded Nightborne Civilian
 			["name"] = L.WoundedNightborneCivilian,
 			["professionicons"] = {
 --				[136249] = 800, -- Tailoring (old)
-				[4620681] = 25 -- Tailoring (DF)
+				[4620681] = 1 -- Tailoring (DF)
 			},
 			["roles"] = {
 				["Healer"] = true,
@@ -408,9 +410,9 @@ do
 			["name"] = L.LifesizedNightborneStatue,
 			["professionicons"] = {
 --				[134708] = 800, -- Mining (old)
-				[4620679] = 25, -- Mining (DF)
+				[4620679] = 1, -- Mining (DF)
 --				[134071] = 800, -- JC (old)
-				[4620677] = 25 -- JC (DF)
+				[4620677] = 1 -- JC (DF)
 			}
 		}
 	}
