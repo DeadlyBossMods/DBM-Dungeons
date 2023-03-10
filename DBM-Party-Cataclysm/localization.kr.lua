@@ -48,6 +48,15 @@ L:SetOptionLocalization({
 	SetIconOnBoss	= "$spell:76200 후 본체에게 전술 목표 아이콘 설정 "
 })
 
+---------
+--Trash--
+---------
+L = DBM:GetModLocalization("BlackrockCavernsTrash")
+
+L:SetGeneralLocalization({
+	name =	"검은바위 동굴 일반몹"
+})
+
 ---------------------
 --  The Deadmines  --
 ---------------------
@@ -333,6 +342,15 @@ L= DBM:GetModLocalization(115)
 -- Asaad --
 -----------
 L= DBM:GetModLocalization(116)
+
+---------
+--Trash--
+---------
+L = DBM:GetModLocalization("VortexPinnacleTrash")
+
+L:SetGeneralLocalization({
+	name =	"소용돌이 누각 일반몹"
+})
 
 ---------------------------
 --  The Throne of Tides  --
