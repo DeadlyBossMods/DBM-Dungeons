@@ -63,7 +63,7 @@ end
 --[[
 function mod:SPELL_SUMMON(args)
 	if args.spellId == 154350 then
-		self:BossTargetScanner(76407, "OmenOfDeathTarget", 0.04, 15)
+		self:BossTargetScanner(args.sourceGUID, "OmenOfDeathTarget", 0.04, 15)
 		timerOmenOfDeathCD:Start()
 	end
 end
@@ -76,7 +76,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
 --		specWarnRitualOfBones:ScheduleVoice(48.5, "specialsoon")
 		timerRitualOfBonesCD:Start()
 	elseif spellId == 177691 then
-		self:BossTargetScanner(76407, "OmenOfDeathTarget", 0.04, 15)
+		self:BossTargetScanner(args.sourceGUID, "OmenOfDeathTarget", 0.04, 15)
 		timerOmenOfDeathCD:Start()
 	end
 end
