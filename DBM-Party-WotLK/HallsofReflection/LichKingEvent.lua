@@ -6,7 +6,7 @@ mod:SetRevision("@file-date-integer@")
 
 mod:RegisterEvents(
 	"SPELL_AURA_REMOVED 69708",
-	"UNIT_SPELLCAST_SUCCEEDED boss1"
+	"UNIT_SPELLCAST_SUCCEEDED boss1"--Might fail in classic, hard to say.
 )
 
 local WarnWave		= mod:NewAnnounce("WarnWave", 2)

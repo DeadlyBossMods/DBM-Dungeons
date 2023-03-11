@@ -1,7 +1,9 @@
 local mod	= DBM:NewMod(619, "DBM-Party-WotLK", 8, 281)
 local L		= mod:GetLocalizedStrings()
 
-mod.statTypes = "normal,heroic,timewalker"
+if not mod:IsClassic() then
+	mod.statTypes = "normal,heroic,timewalker"
+end
 
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(26763)
@@ -10,8 +12,7 @@ mod:SetEncounterID(2009)
 mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
-	"SPELL_SUMMON 47743",
-	"UNIT_HEALTH boss1"
+	"SPELL_SUMMON 47743"
 )
 
 local warningRiftSoon	= mod:NewSoonAnnounce(47743, 2)
@@ -21,6 +22,19 @@ local warnedRift		= false
 
 function mod:OnCombatStart()
 	warnedRift = false
+	if self:IsClassic() then
+		self:RegisterShortTermEvents(
+			"UNIT_HEALTH"
+		)
+	else
+		self:RegisterShortTermEvents(
+			"UNIT_HEALTH boss1"
+		)
+	end
+end
+
+function mod:OnCombatEnd()
+	self:UnregisterShortTermEvents()
 end
 
 function mod:SPELL_SUMMON(args)
@@ -32,7 +46,7 @@ end
 function mod:UNIT_HEALTH(uId)
 	if UnitName(uId) == L.name then
 		local h = UnitHealth(uId) / UnitHealthMax(uId)
-		if (h > 0.80) or (h < 0.70 and h > 0.55) or (h < 0.45 and h > 0.30) then
+		if warnedRift and ((h > 0.80) or (h < 0.70 and h > 0.55) or (h < 0.45 and h > 0.30)) then
 			warnedRift = false
 		end
 		if not warnedRift then

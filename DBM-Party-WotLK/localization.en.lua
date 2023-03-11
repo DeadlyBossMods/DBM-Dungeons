@@ -7,25 +7,45 @@ local L
 -----------------------
 L = DBM:GetModLocalization(581)
 
+L:SetGeneralLocalization{
+	name 		= "Prince Taldaram"
+}
+
 -------------------
 --  Elder Nadox  --
 -------------------
 L = DBM:GetModLocalization(580)
+
+L:SetGeneralLocalization{
+	name 		= "Elder Nadox"
+}
 
 ---------------------------
 --  Jedoga Shadowseeker  --
 ---------------------------
 L = DBM:GetModLocalization(582)
 
+L:SetGeneralLocalization{
+	name 		= "Jedoga Shadowseeker"
+}
+
 ---------------------
 --  Herald Volazj  --
 ---------------------
 L = DBM:GetModLocalization(584)
 
+L:SetGeneralLocalization{
+	name 		= "Herald Volazj"
+}
+
 ----------------
 --  Amanitar  --
 ----------------
 L = DBM:GetModLocalization(583)
+
+L:SetGeneralLocalization{
+	name 		= "Amanitar"
+}
 
 -------------------
 --  Azjol-Nerub  --
@@ -34,15 +54,27 @@ L = DBM:GetModLocalization(583)
 ---------------------------------
 L = DBM:GetModLocalization(585)
 
+L:SetGeneralLocalization{
+	name 		= "Krik'thir the Gatewatcher"
+}
+
 ----------------
 --  Hadronox  --
 ----------------
 L = DBM:GetModLocalization(586)
 
+L:SetGeneralLocalization{
+	name 		= "Hadronox"
+}
+
 -------------------------
 --  Anub'arak (Party)  --
 -------------------------
 L = DBM:GetModLocalization(587)
+
+L:SetGeneralLocalization{
+	name 		= "Anub'arak (Dungeon)"
+}
 
 ---------------------------------------
 --  Caverns of Time: Old Stratholme  --
@@ -51,20 +83,36 @@ L = DBM:GetModLocalization(587)
 ----------------
 L = DBM:GetModLocalization(611)
 
+L:SetGeneralLocalization{
+	name 		= "Meathook"
+}
+
 --------------------------------
 --  Salramm the Fleshcrafter  --
 --------------------------------
 L = DBM:GetModLocalization(612)
+
+L:SetGeneralLocalization{
+	name 		= "Salramm the Fleshcrafter"
+}
 
 -------------------------
 --  Chrono-Lord Epoch  --
 -------------------------
 L = DBM:GetModLocalization(613)
 
+L:SetGeneralLocalization{
+	name 		= "Chrono-Lord Epoch"
+}
+
 -----------------
 --  Mal'Ganis  --
 -----------------
 L = DBM:GetModLocalization(614)
+
+L:SetGeneralLocalization{
+	name 		= "Mal'Ganis"
+}
 
 L:SetMiscLocalization({
 	Outro	= "Your journey has just begun, young prince. Gather your forces and meet me in the arctic land of Northrend. It is there that we shall settle the score between us. It is there that your true destiny will unfold."
@@ -118,10 +166,18 @@ L:SetMiscLocalization({
 -----------------
 L = DBM:GetModLocalization(588)
 
+L:SetGeneralLocalization{
+	name 		= "Trollgore"
+}
+
 --------------------------
 --  Novos the Summoner  --
 --------------------------
 L = DBM:GetModLocalization(589)
+
+L:SetGeneralLocalization{
+	name 		= "Novos the Summoner"
+}
 
 L:SetMiscLocalization({
 	YellPull		= "The chill you feel is the herald of your doom!",
@@ -135,10 +191,18 @@ L:SetMiscLocalization({
 -----------------
 L = DBM:GetModLocalization(590)
 
+L:SetGeneralLocalization{
+	name 		= "King Dred"
+}
+
 -----------------------------
 --  The Prophet Tharon'ja  --
 -----------------------------
 L = DBM:GetModLocalization(591)
+
+L:SetGeneralLocalization{
+	name 		= "The Prophet Tharon'ja"
+}
 
 ---------------
 --  Gundrak  --
@@ -147,25 +211,45 @@ L = DBM:GetModLocalization(591)
 ----------------
 L = DBM:GetModLocalization(592)
 
+L:SetGeneralLocalization{
+	name 		= "Slad'ran"
+}
+
 ---------------
 --  Moorabi  --
 ---------------
 L = DBM:GetModLocalization(594)
+
+L:SetGeneralLocalization{
+	name 		= "Moorabi"
+}
 
 -------------------------
 --  Drakkari Colossus  --
 -------------------------
 L = DBM:GetModLocalization(593)
 
+L:SetGeneralLocalization{
+	name 		= "Drakkari Colossus"
+}
+
 -----------------
 --  Gal'darah  --
 -----------------
 L = DBM:GetModLocalization(596)
 
+L:SetGeneralLocalization{
+	name 		= "Gal'darah"
+}
+
 -------------------------
 --  Eck the Ferocious  --
 -------------------------
 L = DBM:GetModLocalization(595)
+
+L:SetGeneralLocalization{
+	name 		= "Eck the Ferocious"
+}
 
 --------------------------
 --  Halls of Lightning  --
@@ -174,20 +258,36 @@ L = DBM:GetModLocalization(595)
 -------------------------
 L = DBM:GetModLocalization(597)
 
+L:SetGeneralLocalization{
+	name 		= "General Bjarngrim"
+}
+
 -------------
 --  Ionar  --
 -------------
 L = DBM:GetModLocalization(599)
+
+L:SetGeneralLocalization{
+	name 		= "Ionar"
+}
 
 ---------------
 --  Volkhan  --
 ---------------
 L = DBM:GetModLocalization(598)
 
+L:SetGeneralLocalization{
+	name 		= "Volkhan"
+}
+
 -------------
 --  Loken  --
 -------------
 L = DBM:GetModLocalization(600)
+
+L:SetGeneralLocalization{
+	name 		= "Loken"
+}
 
 ----------------------
 --  Halls of Stone  --
@@ -196,20 +296,36 @@ L = DBM:GetModLocalization(600)
 -----------------------
 L = DBM:GetModLocalization(605)
 
+L:SetGeneralLocalization{
+	name 		= "Maiden of Grief"
+}
+
 ------------------
 --  Krystallus  --
 ------------------
 L = DBM:GetModLocalization(604)
+
+L:SetGeneralLocalization{
+	name 		= "Krystallus"
+}
 
 ------------------------------
 --  Sjonnir the Ironshaper  --
 ------------------------------
 L = DBM:GetModLocalization(607)
 
+L:SetGeneralLocalization{
+	name 		= "Sjonnir the Ironshaper"
+}
+
 --------------------------------------
 --  Brann Bronzebeard Escort Event  --
 --------------------------------------
 L = DBM:GetModLocalization(606)
+
+L:SetGeneralLocalization{
+	name 		= "Brann Event"
+}
 
 L:SetWarningLocalization({
 	WarningPhase	= "Phase %d"
@@ -239,15 +355,27 @@ L:SetMiscLocalization({
 ----------------
 L = DBM:GetModLocalization(619)
 
+L:SetGeneralLocalization{
+	name 		= "Anomalus"
+}
+
 -------------------------------
 --  Ormorok the Tree-Shaper  --
 -------------------------------
 L = DBM:GetModLocalization(620)
 
+L:SetGeneralLocalization{
+	name 		= "Ormorok the Tree-Shaper"
+}
+
 ----------------------------
 --  Grand Magus Telestra  --
 ----------------------------
 L = DBM:GetModLocalization(618)
+
+L:SetGeneralLocalization{
+	name 		= "Grand Magus Telestra"
+}
 
 L:SetMiscLocalization({
 	SplitTrigger1		= "There's plenty of me to go around.",			-- translate
@@ -258,6 +386,10 @@ L:SetMiscLocalization({
 --  Keristrasza  --
 -------------------
 L = DBM:GetModLocalization(621)
+
+L:SetGeneralLocalization{
+	name 		= "Keristrasza"
+}
 
 -----------------------------------
 --  Commander Kolurg/Stoutbeard  --
@@ -282,6 +414,10 @@ L:SetGeneralLocalization({
 -------------------------------
 L = DBM:GetModLocalization(622)
 
+L:SetGeneralLocalization{
+	name 		= "Drakos the Interrogator"
+}
+
 L:SetOptionLocalization({
 	MakeitCountTimer	= "Show timer for Make It Count (achievement)"
 })
@@ -295,6 +431,10 @@ L:SetMiscLocalization({
 ----------------------
 L = DBM:GetModLocalization(624)
 
+L:SetGeneralLocalization{
+	name 		= "Mage-Lord Urom"
+}
+
 L:SetMiscLocalization({
 	CombatStart		= "Poor blind fools!"
 })
@@ -304,10 +444,18 @@ L:SetMiscLocalization({
 --------------------------
 L = DBM:GetModLocalization(623)
 
+L:SetGeneralLocalization{
+	name 		= "Varos Cloudstrider"
+}
+
 ---------------------------
 --  Ley-Guardian Eregos  --
 ---------------------------
 L = DBM:GetModLocalization(625)
+
+L:SetGeneralLocalization{
+	name 		= "Ley-Guardian Eregos"
+}
 
 L:SetMiscLocalization({
 	MakeitCountTimer	= "Make It Count"
@@ -320,16 +468,28 @@ L:SetMiscLocalization({
 -----------------------
 L = DBM:GetModLocalization(638)
 
+L:SetGeneralLocalization{
+	name 		= "Prince Keleseth"
+}
+
 --------------------------------
 --  Skarvald the Constructor  --
 --  & Dalronn the Controller  --
 --------------------------------
 L = DBM:GetModLocalization(639)
 
+L:SetGeneralLocalization{
+	name 		= "Skarvald and Dalronn"
+}
+
 ----------------------------
 --  Ingvar the Plunderer  --
 ----------------------------
 L = DBM:GetModLocalization(640)
+
+L:SetGeneralLocalization{
+	name 		= "Ingvar the Plunderer"
+}
 
 L:SetMiscLocalization({
 	YellCombatEnd	= "No! I can do... better! I can..."
@@ -342,6 +502,10 @@ L:SetMiscLocalization({
 --------------------------
 L = DBM:GetModLocalization(643)
 
+L:SetGeneralLocalization{
+	name 		= "Skadi the Ruthless"
+}
+
 L:SetMiscLocalization({
 	CombatStart		= "What mongrels dare intrude here? Look alive, my brothers!  A feast for the one that brings me their heads!",
 	Phase2			= "You motherless knaves! Your corpses will make fine morsels for my new drake!"
@@ -352,10 +516,18 @@ L:SetMiscLocalization({
 -------------------
 L = DBM:GetModLocalization(644)
 
+L:SetGeneralLocalization{
+	name 		= "King Ymiron"
+}
+
 -------------------------
 --  Svala Sorrowgrave  --
 -------------------------
 L = DBM:GetModLocalization(641)
+
+L:SetGeneralLocalization{
+	name 		= "Svala Sorrowgrave"
+}
 
 L:SetTimerLocalization({
 	timerRoleplay		= "Svala Sorrowgrave active"
@@ -374,12 +546,20 @@ L:SetMiscLocalization({
 -----------------------
 L = DBM:GetModLocalization(642)
 
+L:SetGeneralLocalization{
+	name 		= "Gortok Palehoof"
+}
+
 -----------------------
 --  The Violet Hold  --
 -----------------------
 --  Cyanigosa  --
 -----------------
 L = DBM:GetModLocalization(632)
+
+L:SetGeneralLocalization{
+	name 		= "Cyanigosa"
+}
 
 L:SetMiscLocalization({
 	CyanArrived	= "A valiant defense, but this city must be razed. I will fulfill Malygos's wishes myself!"
@@ -390,30 +570,54 @@ L:SetMiscLocalization({
 --------------
 L = DBM:GetModLocalization(626)
 
+L:SetGeneralLocalization{
+	name 		= "Erekem"
+}
+
 ---------------
 --  Ichoron  --
 ---------------
 L = DBM:GetModLocalization(628)
+
+L:SetGeneralLocalization{
+	name 		= "Ichoron"
+}
 
 -----------------
 --  Lavanthor  --
 -----------------
 L = DBM:GetModLocalization(630)
 
+L:SetGeneralLocalization{
+	name 		= "Lavanthor"
+}
+
 --------------
 --  Moragg  --
 --------------
 L = DBM:GetModLocalization(627)
+
+L:SetGeneralLocalization{
+	name 		= "Moragg"
+}
 
 --------------
 --  Xevozz  --
 --------------
 L = DBM:GetModLocalization(629)
 
+L:SetGeneralLocalization{
+	name 		= "Xevozz"
+}
+
 -------------------------------
 --  Zuramat the Obliterator  --
 -------------------------------
 L = DBM:GetModLocalization(631)
+
+L:SetGeneralLocalization{
+	name 		= "Zuramat the Obliterator"
+}
 
 ---------------------
 --  Portal Timers  --
@@ -453,6 +657,10 @@ L:SetMiscLocalization({
 ------------------------
 L = DBM:GetModLocalization(637)
 
+L:SetGeneralLocalization{
+	name 		= "The Black Knight"
+}
+
 L:SetOptionLocalization({
 	AchievementCheck		= "Announce 'I've Had Worse' achievement failure to party"
 })
@@ -468,6 +676,10 @@ L:SetMiscLocalization({
 -----------------------
 L = DBM:GetModLocalization(634)
 
+L:SetGeneralLocalization{
+	name 		= "Grand Champions"
+}
+
 L:SetMiscLocalization({
 	YellCombatEnd	= "Well fought! Your next challenge comes from the Crusade's own ranks. You will be tested against their considerable prowess."
 })
@@ -477,6 +689,10 @@ L:SetMiscLocalization({
 ----------------------------------
 L = DBM:GetModLocalization(636)
 
+L:SetGeneralLocalization{
+	name 		= "Argent Confessor Paletress"
+}
+
 L:SetMiscLocalization({
 	YellCombatEnd	= "Excellent work!"
 })
@@ -485,6 +701,10 @@ L:SetMiscLocalization({
 --  Eadric the Pure  --
 -----------------------
 L = DBM:GetModLocalization(635)
+
+L:SetGeneralLocalization{
+	name 		= "Eadric the Pure"
+}
 
 L:SetMiscLocalization({
 	YellCombatEnd	= "I yield! I submit. Excellent work. May I run away now?"
@@ -497,6 +717,10 @@ L:SetMiscLocalization({
 ---------------------
 L = DBM:GetModLocalization(609)
 
+L:SetGeneralLocalization{
+	name 		= "Ick and Krick"
+}
+
 L:SetMiscLocalization({
 	Barrage	= "%s begins rapidly conjuring explosive mines!"
 })
@@ -505,6 +729,10 @@ L:SetMiscLocalization({
 --  Forgemaster Garfrost  --
 ----------------------------
 L = DBM:GetModLocalization(608)
+
+L:SetGeneralLocalization{
+	name 		= "Forgemaster Garfrost"
+}
 
 L:SetOptionLocalization({
 	AchievementCheck			= "Announce 'Doesn't Go to Eleven' achievement warnings to party"
@@ -521,8 +749,12 @@ L:SetMiscLocalization({
 ----------------------------
 L = DBM:GetModLocalization(610)
 
+L:SetGeneralLocalization{
+	name 		= "Scourgelord Tyrannus"
+}
+
 L:SetMiscLocalization({
-	CombatStart	= "Alas, brave, brave adventurers, your meddling has reached its end. Do you hear the clatter of bone and steel coming up the tunnel behind you? That is the sound of your impending demise.",
+	CombatStart		= "Alas, brave, brave adventurers, your meddling has reached its end. Do you hear the clatter of bone and steel coming up the tunnel behind you? That is the sound of your impending demise.",
 	HoarfrostTarget	= "The frostwyrm Rimefang gazes at (%S+) and readies an icy attack!",
 	YellCombatEnd	= "Impossible.... Rimefang.... warn...."
 })
@@ -534,10 +766,18 @@ L:SetMiscLocalization({
 ----------------
 L = DBM:GetModLocalization(615)
 
+L:SetGeneralLocalization{
+	name 		= "Bronjahm"
+}
+
 -------------------------
 --  Devourer of Souls  --
 -------------------------
 L = DBM:GetModLocalization(616)
+
+L:SetGeneralLocalization{
+	name 		= "Devourer of Souls"
+}
 
 ---------------------------
 --  Halls of Reflection  --
@@ -572,15 +812,27 @@ L:SetOptionLocalization({
 --------------
 L = DBM:GetModLocalization(601)
 
+L:SetGeneralLocalization{
+	name 		= "Falric"
+}
+
 --------------
 --  Marwyn  --
 --------------
 L = DBM:GetModLocalization(602)
 
+L:SetGeneralLocalization{
+	name 		= "Marwyn"
+}
+
 -----------------------
 --  Lich King Event  --
 -----------------------
 L = DBM:GetModLocalization(603)
+
+L:SetGeneralLocalization{
+	name 		= "Lich King Event"
+}
 
 L:SetWarningLocalization({
 	WarnWave		= "%s"
