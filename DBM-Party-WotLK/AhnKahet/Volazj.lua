@@ -67,7 +67,7 @@ end
 
 function mod:UNIT_SPELLCAST_START(uId, _, spellId)
    if spellId == 57496 then -- Insanity
-		if self:IsClassic() then then
+		if self:IsClassic() then
 			self:SendSync("Insanity")
 		else
 			warningInsanity:Show()
