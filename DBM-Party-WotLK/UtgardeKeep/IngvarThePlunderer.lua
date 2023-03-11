@@ -80,7 +80,7 @@ end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
 	if spellId == 42863 then -- Scourge Resurrection
-		if self:IsClassic() then then
+		if self:IsClassic() then
 			self:SendSync("Stage2")
 		else
 			self:SetStage(2)
