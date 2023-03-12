@@ -36,9 +36,9 @@ mod:RegisterEvents(
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
 --]]
 local warnArcaneOrbs							= mod:NewCountAnnounce(385974, 3)
-local warnManaBombs								= mod:NewTargetAnnounce(386173, 3)
+local warnManaBombs								= mod:NewTargetNoFilterAnnounce(386173, 3)
 
-local specWarnArcaneFissure						= mod:NewSpecialWarningDodge(388537, nil, nil, nil, 1, 2)
+local specWarnArcaneFissure						= mod:NewSpecialWarningDodgeCount(388537, nil, nil, nil, 1, 2)
 local specWarnManaBomb							= mod:NewSpecialWarningMoveAway(386181, nil, nil, nil, 1, 2)
 local yellManaBomb								= mod:NewYell(386181)
 local yellManaBombFades							= mod:NewShortFadesYell(386181)
@@ -61,10 +61,12 @@ mod:GroupSpells(386173, 386181)--Mana Bombs with Mana Bomb
 
 mod.vb.orbCount = 0
 mod.vb.manaCount = 0
+mod.vb.fissureCount = 0
 
 function mod:OnCombatStart(delay)
 	self.vb.orbCount = 0
 	self.vb.manaCount = 0
+	self.vb.fissureCount = 0
 	timerArcaneOrbsCD:Start(2.1-delay, 1)
 	timerArcaneExpulsionCD:Start(12.1-delay)
 	timerManaBombsCD:Start(23.9-delay)
@@ -87,8 +89,8 @@ end
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
 	if spellId == 388537 then
-		specWarnArcaneFissure:Show()
-		specWarnArcaneFissure:Play("watchstep")
+		specWarnArcaneFissure:Show(self.vb.fissureCount)
+		specWarnArcaneFissure:Play("aesoon")
 		--Add 3.5 to existing manabomb and expulsion timers (Working Theory, need longer logs/larger sample)
 		--It seems to hold so far though, and if they are also energy based it would make sense since he doesn't gain energy for 3 seccond cast
 		--Of course if they are energy based, it also means the timers need to be corrected by SPELL_ENERGIZE as well :\
@@ -126,6 +128,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 --			timerArcaneOrbsCD:Start(23.6, self.vb.orbCount+1)
 --		end
 	elseif spellId == 388537 then
+		specWarnArcaneFissure:Play("watchstep")
 		timerArcaneFissureCD:Start()
 	end
 end

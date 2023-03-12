@@ -36,7 +36,7 @@ local specWarnNullStomp						= mod:NewSpecialWarningDodge(386526, false, nil, 2,
 local specWarnShoulderSlam					= mod:NewSpecialWarningDodge(391136, false, nil, nil, 2, 2)
 local specWarnCrystallineRupture			= mod:NewSpecialWarningDodge(370766, nil, nil, nil, 2, 2)
 local specWarnWildEruption					= mod:NewSpecialWarningDodge(375652, nil, nil, nil, 2, 2)
-local specWarnArcaneBash					= mod:NewSpecialWarningDefensive(387067, nil, nil, nil, 1, 2)
+local specWarnArcaneBash					= mod:NewSpecialWarningDodge(387067, nil, nil, nil, 2, 2)
 local specWarnSplinteringShards				= mod:NewSpecialWarningMoveAway(371007, nil, nil, nil, 1, 2)
 local yellSplinteringShards					= mod:NewYell(371007)
 local yellErraticGrowth						= mod:NewYell(375596)
@@ -107,7 +107,7 @@ function mod:SPELL_CAST_START(args)
 		timerArcaneBashCD:Start(18.2, args.sourceGUID)
 		if self:IsTanking("player", nil, nil, true, args.sourceGUID) and self:AntiSpam(3, 5) then
 			specWarnArcaneBash:Show()
-			specWarnArcaneBash:Play("carefly")
+			specWarnArcaneBash:Play("shockwave")
 		end
 	end
 end
