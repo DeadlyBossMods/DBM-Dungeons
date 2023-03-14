@@ -25,11 +25,11 @@ local warnChantoftheDead					= mod:NewCastAnnounce(387614, 3)
 local warnTempest							= mod:NewCastAnnounce(373395, 4)
 local warnDeathBoltVolley					= mod:NewCastAnnounce(387411, 3)
 local warnBloodcurdlingShout				= mod:NewCastAnnounce(373395, 3)
-local warnRallytheClan						= mod:NewCastAnnounce(383823, 4)--Has to be stunned/disrupted
+local warnRallytheClan						= mod:NewCastAnnounce(383823, 4, nil, nil, nil, nil, nil, 3)--Has to be stunned/disrupted
 local warnDisruptiveShout					= mod:NewCastAnnounce(384365, 3)
 local warnStormsurge						= mod:NewCastAnnounce(386694, 3)
 local warnThunderstrike						= mod:NewCastAnnounce(387125, 3, nil, nil, "Tank")
-local warnDesecratingRoar					= mod:NewCastAnnounce(387440, 4)--Has to be stunned/disrupted
+local warnDesecratingRoar					= mod:NewCastAnnounce(387440, 4, nil, nil, nil, nil, nil, 3)--Has to be stunned/disrupted
 
 local specWarnShatterSoul					= mod:NewSpecialWarningMoveTo(395035, nil, nil, nil, 1, 2)
 local specWarnChainLightning				= mod:NewSpecialWarningMoveAway(387127, nil, nil, nil, 1, 2)
@@ -105,11 +105,13 @@ function mod:SPELL_CAST_START(args)
 		timerRallytheClanCD:Start(nil, args.sourceGUID)
 		if self:AntiSpam(3, 5) then
 			warnRallytheClan:Show()
+			warnRallytheClan:Play("crowdcontrol")
 		end
 	elseif spellId == 387440 then
 		timerDesecratingRoarCD:Start(nil, args.sourceGUID)
 		if self:AntiSpam(3, 5) then
 			warnDesecratingRoar:Show()
+			warnDesecratingRoar:Play("crowdcontrol")
 		end
 	elseif spellId == 384365 then
 		timerDisruptingShoutCD:Start(nil, args.sourceGUID)
