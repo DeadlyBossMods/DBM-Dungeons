@@ -19,9 +19,8 @@ mod:RegisterEventsInCombat(
 --	"UNIT_DIED"
 )
 
---TODO, number of images spawned for tracking
 --TODO, change arcane orb to personal alert if target scanner works or remove yell if it doesn't
---TODO, timers restart on overwhelming energy end? Does timer for next overwhelming start at cast of previous, or end of previous?
+--TODO, verify post hotfix timers for new mana drain rate 03-13-23
 --[[
 (ability.id = 372222 or ability.id = 385578 or ability.id = 384223 or ability.id = 384132) and type = "begincast"
  or ability.id = 384132 and type = "removebuff"
@@ -58,7 +57,7 @@ function mod:OnCombatStart(delay)
 	timerSummonDraconicImageCD:Start(3.7-delay)
 	timerArcaneCleaveCD:Start(5-delay)
 	timerAncientOrbCD:Start(10.1-delay)
-	timerOverwhelmingenergyCD:Start(26.7-delay)
+	timerOverwhelmingenergyCD:Start(31.7-delay)--26.7 old (31.7 assumed by boss starting at 50% energy, with new mana drain rate
 end
 
 --function mod:OnCombatEnd()
@@ -113,7 +112,7 @@ function mod:SPELL_AURA_REMOVED(args)
 		timerSummonDraconicImageCD:Start(4.7)--4.7-5.7
 		timerArcaneCleaveCD:Start(7.1)--7.1-8.1
 		timerAncientOrbCD:Start(12)--12-13
-		timerOverwhelmingenergyCD:Start(55.4)
+		timerOverwhelmingenergyCD:Start(63.4)
 	end
 end
 
