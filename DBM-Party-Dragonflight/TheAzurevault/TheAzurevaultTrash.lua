@@ -10,7 +10,7 @@ mod.isTrashMod = true
 mod:RegisterEvents(
 	"SPELL_CAST_START 391136 370764 386526 387564 377105 370766 386546 387067 377488 396991",
 	"SPELL_CAST_SUCCESS 374885 371358 375652 375596 391136",
-	"SPELL_AURA_APPLIED 371007 395492 375596",
+	"SPELL_AURA_APPLIED 371007 395492 375596 374778",
 --	"SPELL_AURA_APPLIED_DOSE 339528",
 --	"SPELL_AURA_REMOVED 339525",
 	"UNIT_DIED",
@@ -43,6 +43,7 @@ local yellErraticGrowth						= mod:NewYell(375596)
 local specWarnIcyBindings					= mod:NewSpecialWarningInterrupt(377488, "HasInterrupt", nil, nil, 1, 2)
 local specWarnMysticVapors					= mod:NewSpecialWarningInterrupt(387564, "HasInterrupt", nil, nil, 1, 2)
 local specWarnWakingBane					= mod:NewSpecialWarningInterrupt(386546, "HasInterrupt", nil, nil, 1, 2)
+local specWarnBrilliantScales				= mod:NewSpecialWarningDispel(374778, "MagicDispeller", nil, nil, 1, 2)
 
 local timerIcyBindingsCD					= mod:NewCDTimer(17.1, 377488, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerWakingBaneCD						= mod:NewCDTimer(20.5, 386546, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
@@ -147,6 +148,9 @@ function mod:SPELL_AURA_APPLIED(args)
 		if args:IsPlayer() then
 			yellErraticGrowth:Yell()
 		end
+	elseif spellId == 374778 and not args:IsDestTypePlayer() and self:AntiSpam(3, 5) then
+		specWarnBrilliantScales:Show(args.destName)
+		specWarnBrilliantScales:Play("helpdispel")
 	end
 end
 --mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED

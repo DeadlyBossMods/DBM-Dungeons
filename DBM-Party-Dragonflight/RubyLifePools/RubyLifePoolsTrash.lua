@@ -25,8 +25,8 @@ local warnRollingThunder					= mod:NewTargetNoFilterAnnounce(392641, 3)
 local warnFireMaw							= mod:NewCastAnnounce(392394, 3, nil, nil, "Tank|Healer")
 local warnSteelBarrage						= mod:NewCastAnnounce(372047, 3, nil, nil, "Tank|Healer")
 local warnFlashfire							= mod:NewCastAnnounce(392451, 4)
-local warnFlameDance						= mod:NewCastAnnounce(385536, 4, 6)
-local warnTectonicSlam						= mod:NewCastAnnounce(372735, 4)
+local warnFlameDance						= mod:NewCastAnnounce(385536, 4, 6, nil, nil, nil, nil, 3)
+local warnTectonicSlam						= mod:NewCastAnnounce(372735, 4, nil, nil, nil, nil, nil, 3)
 
 local specWarnLightningStorm				= mod:NewSpecialWarningSpell(392486, nil, nil, nil, 2, 2)
 local specWarnBlazeofGlory					= mod:NewSpecialWarningSpell(373972, nil, nil, nil, 2, 2)
@@ -114,6 +114,8 @@ function mod:SPELL_CAST_START(args)
 		--TODO, Timer?
 		if self:AntiSpam(3, 6) then
 			warnTectonicSlam:Show()
+			warnTectonicSlam:Play("aesoon")
+			warnTectonicSlam:Schedule(1.5, "crowdcontrol")
 		end
 	elseif spellId == 392395 then
 		timerThunderjawCD:Start()
@@ -162,6 +164,8 @@ function mod:SPELL_CAST_SUCCESS(args)
 	if not self:IsValidWarning(args.sourceGUID) then return end
 	if spellId == 385536 and self:AntiSpam(3, 6) then
 		warnFlameDance:Show()
+		warnFlameDance:Play("aesoon")
+		warnFlameDance:Schedule(1.5, "crowdcontrol")
 	end
 end
 
