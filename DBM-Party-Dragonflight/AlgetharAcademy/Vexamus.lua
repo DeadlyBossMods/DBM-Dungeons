@@ -89,6 +89,7 @@ end
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
 	if spellId == 388537 then
+		self.vb.fissureCount = self.vb.fissureCount + 1
 		specWarnArcaneFissure:Show(self.vb.fissureCount)
 		specWarnArcaneFissure:Play("aesoon")
 		--Add 3.5 to existing manabomb and expulsion timers (Working Theory, need longer logs/larger sample)

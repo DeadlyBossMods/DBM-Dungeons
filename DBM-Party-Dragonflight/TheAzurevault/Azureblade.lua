@@ -19,14 +19,14 @@ mod:RegisterEventsInCombat(
 --	"UNIT_DIED"
 )
 
---TODO, number of images spawned for tracking
 --TODO, change arcane orb to personal alert if target scanner works or remove yell if it doesn't
---TODO, timers restart on overwhelming energy end? Does timer for next overwhelming start at cast of previous, or end of previous?
+--TODO, verify post hotfix timers for new mana drain rate 03-13-23
 --[[
 (ability.id = 372222 or ability.id = 385578 or ability.id = 384223 or ability.id = 384132) and type = "begincast"
  or ability.id = 384132 and type = "removebuff"
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
 --]]
+--https://www.warcraftlogs.com/reports/1fvXGDK69nmq3MA7#fight=1&pins=2%24Off%24%23244F4B%24expression%24(ability.id%20%3D%20372222%20or%20ability.id%20%3D%20385578%20or%20ability.id%20%3D%20384223%20or%20ability.id%20%3D%20384132)%20and%20type%20%3D%20%22begincast%22%0A%20or%20ability.id%20%3D%20384132%20and%20type%20%3D%20%22removebuff%22%0A%20or%20type%20%3D%20%22dungeonencounterstart%22%20or%20type%20%3D%20%22dungeonencounterend%22&view=events
 local warnSummonDraconicImage					= mod:NewSpellAnnounce(384223, 3)
 
 local specWarnArcaneCleave						= mod:NewSpecialWarningSpell(372222, nil, nil, nil, 1, 2)
@@ -55,10 +55,10 @@ function mod:OrbTarget(targetname)
 end
 
 function mod:OnCombatStart(delay)
-	timerSummonDraconicImageCD:Start(3.7-delay)
+	timerSummonDraconicImageCD:Start(3.5-delay)
 	timerArcaneCleaveCD:Start(5-delay)
 	timerAncientOrbCD:Start(10.1-delay)
-	timerOverwhelmingenergyCD:Start(26.7-delay)
+	timerOverwhelmingenergyCD:Start(38.7-delay)
 end
 
 --function mod:OnCombatEnd()
@@ -113,7 +113,7 @@ function mod:SPELL_AURA_REMOVED(args)
 		timerSummonDraconicImageCD:Start(4.7)--4.7-5.7
 		timerArcaneCleaveCD:Start(7.1)--7.1-8.1
 		timerAncientOrbCD:Start(12)--12-13
-		timerOverwhelmingenergyCD:Start(55.4)
+		timerOverwhelmingenergyCD:Start(73.4)
 	end
 end
 
