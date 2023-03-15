@@ -92,6 +92,7 @@ function mod:SPELL_CAST_START(args)
 		self.vb.fissureCount = self.vb.fissureCount + 1
 		specWarnArcaneFissure:Show(self.vb.fissureCount)
 		specWarnArcaneFissure:Play("aesoon")
+		specWarnArcaneFissure:Schedule(1.5, "watchstep")
 		--Add 3.5 to existing manabomb and expulsion timers (Working Theory, need longer logs/larger sample)
 		--It seems to hold so far though, and if they are also energy based it would make sense since he doesn't gain energy for 3 seccond cast
 		--Of course if they are energy based, it also means the timers need to be corrected by SPELL_ENERGIZE as well :\
@@ -129,7 +130,6 @@ function mod:SPELL_CAST_SUCCESS(args)
 --			timerArcaneOrbsCD:Start(23.6, self.vb.orbCount+1)
 --		end
 	elseif spellId == 388537 then
-		specWarnArcaneFissure:Play("watchstep")
 		timerArcaneFissureCD:Start()
 	end
 end
