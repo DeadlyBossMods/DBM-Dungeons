@@ -113,7 +113,7 @@ function mod:SPELL_AURA_REMOVED(args)
 		timerSummonDraconicImageCD:Start(4.7)--4.7-5.7
 		timerArcaneCleaveCD:Start(7.1)--7.1-8.1
 		timerAncientOrbCD:Start(12)--12-13
-		timerOverwhelmingenergyCD:Start(73.4)
+		timerOverwhelmingenergyCD:Start(70)
 	end
 end
 
