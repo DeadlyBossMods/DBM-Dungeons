@@ -62,6 +62,7 @@ function mod:OnCombatStart(delay)
 	timerTitanicFistCD:Start(6-delay)
 	timerStaticSurgeCD:Start(10.7-delay, 1)
 	timerPowerOverloadCD:Start(20.6-delay)
+	timerSparkVolleyCD:Start(37.4-delay)
 end
 
 --function mod:OnCombatEnd()
