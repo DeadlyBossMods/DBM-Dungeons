@@ -5,7 +5,7 @@ mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(189722)
 mod:SetEncounterID(2616)
 --mod:SetUsedIcons(1, 2, 3)
-mod:SetHotfixNoticeRev(20221207000000)
+mod:SetHotfixNoticeRev(20230319000000)
 --mod:SetMinSyncRevision(20211203000000)
 --mod.respawnTime = 29
 
@@ -43,7 +43,7 @@ local yellBodySlam								= mod:NewYell(385531)
 --local specWarnDominationBolt					= mod:NewSpecialWarningInterrupt(363607, "HasInterrupt", nil, nil, 1, 2)
 --local specWarnGTFO							= mod:NewSpecialWarningGTFO(340324, nil, nil, nil, 1, 8)
 
-local timerGulpCD								= mod:NewCDTimer(47.3, 385551, nil, nil, nil, 3)
+local timerGulpCD								= mod:NewCDTimer(38.8, 385551, nil, nil, nil, 3)
 local timerOverpoweringCroakCD					= mod:NewCDTimer(38.8, 385187, nil, nil, nil, 2)--Tough to classify, it's aoe, it's targeted dodge, and it's adds
 local timerBellySlamCD							= mod:NewCDTimer(38.8, 385531, nil, nil, nil, 3)
 local timerToxicEffluviaaCD						= mod:NewCDTimer(26.7, 385442, nil, nil, nil, 5, nil, DBM_COMMON_L.HEALER_ICON)
