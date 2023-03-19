@@ -5,14 +5,14 @@ mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(189719)
 mod:SetEncounterID(2615)
 --mod:SetUsedIcons(1, 2, 3)
-mod:SetHotfixNoticeRev(20221207000000)
+mod:SetHotfixNoticeRev(20230319000000)
 --mod:SetMinSyncRevision(20211203000000)
 --mod.respawnTime = 29
 
 mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
-	"SPELL_CAST_START 389179 384014 384524 389446",
+	"SPELL_CAST_START 389179 384014 384524 389446 384351",
 	"SPELL_AURA_APPLIED 389179 383840 389443",
 --	"SPELL_AURA_APPLIED_DOSE",
 	"SPELL_AURA_REMOVED 389179 383840",
@@ -21,8 +21,6 @@ mod:RegisterEventsInCombat(
 --	"UNIT_SPELLCAST_SUCCEEDED boss1"
 )
 
---TODO, Is every ability really just cast once between shields, on loop? what hapepns if shield phase super fast or fight drags on long?
---TODO, spark volley doesn't seem to be in combat log, transcribe later to add it?
 --[[
 (ability.id = 389179 or ability.id = 384351 or ability.id = 384014 or ability.id = 384524 or ability.id = 389446) and type = "begincast"
  or ability.id = 383840
@@ -36,16 +34,15 @@ local warnPowerLoverload						= mod:NewTargetAnnounce(389179, 3)
 local specWarnPowerOverload						= mod:NewSpecialWarningMoveAway(389179, nil, nil, nil, 1, 2)
 local yellPowerOverload							= mod:NewYell(389179)
 local yellPowerOverloadFades					= mod:NewShortFadesYell(389179)
---local specWarnSparkVolley						= mod:NewSpecialWarningDodge(384351, nil, nil, nil, 2, 2)
-local specWarnStaticSurge						= mod:NewSpecialWarningInterrupt(384014, "HasInterrupt", nil, nil, 1, 2)
+local specWarnSparkVolley						= mod:NewSpecialWarningDodge(384351, nil, nil, nil, 2, 2)
+local specWarnStaticSurge						= mod:NewSpecialWarningCount(384014, nil, nil, nil, 2, 2)
 local specWarnGTFO								= mod:NewSpecialWarningGTFO(389181, nil, nil, nil, 1, 8)
-local specWarnTitanticFist						= mod:NewSpecialWarningDefensive(384524, nil, nil, nil, 1, 2)
+local specWarnTitanticFist						= mod:NewSpecialWarningDodge(384524, nil, nil, nil, 1, 2)
 
-local timerPowerOverloadCD						= mod:NewCDTimer(35, 389179, nil, nil, nil, 3, nil, DBM_COMMON_L.MAGIC_ICON)
---local timerSparkVolleyCD						= mod:NewAITimer(35, 384351, nil, nil, nil, 3, nil, DBM_COMMON_L.MAGIC_ICON)
-local timerStaticSurgeCD						= mod:NewCDTimer(35, 384014, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
-local timerTitanicFistCD						= mod:NewCDTimer(35, 384524, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
-local timerAblativeBarrierCD					= mod:NewCDTimer(35, 383840, nil, nil, nil, 6)
+local timerPowerOverloadCD						= mod:NewCDTimer(33.9, 389179, nil, nil, nil, 3, nil, DBM_COMMON_L.MAGIC_ICON)
+local timerSparkVolleyCD						= mod:NewCDTimer(33.9, 384351, nil, nil, nil, 3, nil, DBM_COMMON_L.MAGIC_ICON)
+local timerStaticSurgeCD						= mod:NewCDCountTimer(16.9, 384014, nil, nil, nil, 2)
+local timerTitanicFistCD						= mod:NewCDTimer(16.9, 384524, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 --Stage Two: Watcher's Last Stand
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(25744))
 local warnAblativeBarrier						= mod:NewSpellAnnounce(383840, 2)
@@ -57,13 +54,15 @@ local warnPurifyingBlast						= mod:NewTargetNoFilterAnnounce(389443, 3, nil, fa
 --mod:AddInfoFrameOption(361651, true)
 --mod:AddSetIconOption("SetIconOnStaggeringBarrage", 361018, true, false, {1, 2, 3})
 
+mod.vb.surgeCount = 0
+
 function mod:OnCombatStart(delay)
+	self.vb.surgeCount = 0
 	self:SetStage(1)
-	timerTitanicFistCD:Start(6.2-delay)--6.4
---	timerSparkVolleyCD:Start(1-delay)
-	timerStaticSurgeCD:Start(10.7-delay)--10.1
-	timerPowerOverloadCD:Start(20.8-delay)
-	timerAblativeBarrierCD:Start(27.7-delay)
+	timerTitanicFistCD:Start(6-delay)
+	timerStaticSurgeCD:Start(10.7-delay, 1)
+	timerPowerOverloadCD:Start(20.6-delay)
+	timerSparkVolleyCD:Start(37.4-delay)
 end
 
 --function mod:OnCombatEnd()
@@ -78,22 +77,21 @@ end
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
 	if spellId == 389179 then
---		timerPowerOverloadCD:Start()
---	elseif spellId == 384351 then
---		specWarnSparkVolley:Show()
---		specWarnSparkVolley:Play("watchstep")
---		timerSparkVolleyCD:Start()
+		timerPowerOverloadCD:Start()
+	elseif spellId == 384351 then
+		specWarnSparkVolley:Show()
+		specWarnSparkVolley:Play("watchstep")
+		timerSparkVolleyCD:Start()
 	elseif spellId == 384014 then
---		timerStaticSurgeCD:Start()
-		if self:CheckInterruptFilter(args.sourceGUID, false, true) then
-			specWarnStaticSurge:Show(args.sourceName)
-			specWarnStaticSurge:Play("kickcast")
-		end
+		self.vb.surgeCount = self.vb.surgeCount + 1
+		specWarnStaticSurge:Show(self.vb.surgeCount)
+		specWarnStaticSurge:Play("aesoon")
+		timerStaticSurgeCD:Start(nil, self.vb.surgeCount+1)
 	elseif spellId == 384524 then
---		timerTitanicFistCD:Start()
+		timerTitanicFistCD:Start()
 		if self:IsTanking("player", "boss1", nil, true) then
 			specWarnTitanticFist:Show()
-			specWarnTitanticFist:Play("defensive")
+			specWarnTitanticFist:Play("shockwave")
 		end
 	elseif spellId == 389446 and self:AntiSpam(3, 1) then
 		warnNullifyingPulse:Show()
@@ -115,7 +113,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		if self.vb.phase == 1 then
 			self:SetStage(2)
 			timerPowerOverloadCD:Stop()
---			timerSparkVolleyCD:Stop()
+			timerSparkVolleyCD:Stop()
 			timerStaticSurgeCD:Stop()
 			timerTitanicFistCD:Stop()
 		end
@@ -134,11 +132,10 @@ function mod:SPELL_AURA_REMOVED(args)
 	elseif spellId == 383840 then
 		warnAblativeBarrierOver:Show()
 		self:SetStage(1)
---		timerSparkVolleyCD:Start(2)
 		timerTitanicFistCD:Start(6.2)
 		timerStaticSurgeCD:Start(10.7)
 		timerPowerOverloadCD:Start(20.7)
-		timerAblativeBarrierCD:Start(27.7)
+		timerSparkVolleyCD:Start(37.8)
 	end
 end
 

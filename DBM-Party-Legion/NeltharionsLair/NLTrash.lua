@@ -15,7 +15,7 @@ local warnBurningHatred			= mod:NewTargetAnnounce(200154, 3)
 
 local specWarnBurningHatred		= mod:NewSpecialWarningYou(200154, nil, nil, nil, 1, 2)
 local specWarnAcidSplatter		= mod:NewSpecialWarningMove(183407, nil, nil, nil, 1, 2)
-local specWarnAvalanche			= mod:NewSpecialWarningDodge(183088, "Tank", nil, nil, 1, 2)
+local specWarnAvalanche			= mod:NewSpecialWarningDodge(183088, "Melee", nil, 2, 1, 2)
 
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc
 
@@ -24,7 +24,7 @@ function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
 	if spellId == 183088 and self:AntiSpam(2, 2) then
 		specWarnAvalanche:Show()
-		specWarnAvalanche:Play("shockwave")
+		specWarnAvalanche:Play("watchstep")
 	end
 end
 

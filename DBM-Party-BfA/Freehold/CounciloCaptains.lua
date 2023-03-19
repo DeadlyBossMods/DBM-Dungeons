@@ -12,13 +12,14 @@ mod:RegisterCombat("combat")
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 258338 256589 257117 267522 272884 267533 272902 265088 264608 265168 256979",
 	"SPELL_CAST_SUCCESS 258381",
-	"SPELL_AURA_APPLIED 265056 278467",
+--	"SPELL_AURA_APPLIED 265056 278467",
 	"SPELL_DAMAGE 272397",
 	"SPELL_MISSED 272397",
 	"UNIT_DIED"
 )
 
 --TODO: target scan Blackout Barrel?
+--TODO, rework brews if target scanning of which boss it's being casting toward is possible.
 --(ability.id = 258338 or ability.id = 256589 or ability.id = 257117) and type = "begincast" or ability.id = 258381 and type = "cast"
 --General
 ----Announce Brews
@@ -26,7 +27,7 @@ mod:RegisterEventsInCombat(
 local warnGoodBrew					= mod:NewAnnounce("warnGoodBrew", 1, 265088, nil, nil, nil, 264605)
 local warnCausticBrew				= mod:NewCastAnnounce(265168, 4)
 
-local specWarnBrewOnBoss			= mod:NewSpecialWarning("specWarnBrewOnBoss", "Tank", nil, nil, 1, 2)
+--local specWarnBrewOnBoss			= mod:NewSpecialWarning("specWarnBrewOnBoss", "Tank", nil, nil, 1, 2)
 
 local timerTendingBarCD				= mod:NewNextTimer(8, 264605, nil, nil, nil, 3)
 
@@ -197,16 +198,16 @@ function mod:SPELL_CAST_SUCCESS(args)
 	end
 end
 
-function mod:SPELL_AURA_APPLIED(args)
-	local spellId = args.spellId
-	if (spellId == 265056 or spellId == 278467) and self:AntiSpam(3, 2) then
-		local unitId = self:GetUnitIdFromGUID(args.destGUID, true)
-		if unitId and UnitIsEnemy("player", unitId) then
-			specWarnBrewOnBoss:Show(args.destName)
-			specWarnBrewOnBoss:Play("moveboss")
-		end
-	end
-end
+--function mod:SPELL_AURA_APPLIED(args)
+--	local spellId = args.spellId
+--	if (spellId == 265056 or spellId == 278467) and self:AntiSpam(3, 2) then
+--		local unitId = self:GetUnitIdFromGUID(args.destGUID, true)
+--		if unitId and UnitIsEnemy("player", unitId) then
+--			specWarnBrewOnBoss:Show(args.destName)
+--			specWarnBrewOnBoss:Play("moveboss")
+--		end
+--	end
+--end
 
 function mod:SPELL_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId, spellName)
 	if spellId == 272397 and destGUID == UnitGUID("player") and self:AntiSpam(2, 1) and not self:IsTank() then
