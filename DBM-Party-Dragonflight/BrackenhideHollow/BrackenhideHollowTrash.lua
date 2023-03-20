@@ -18,7 +18,7 @@ mod:RegisterEvents(
 --TODO: can https://www.wowhead.com/ptr/spell=383385/rotting-surge be interrupted?
 --TODO, can burst of decay be interrupted/stunned?
 --TODO, can screech be interrupted or does it need stun?
-local warnBurstofDecay						= mod:NewCastAnnounce(374544, 4)
+local warnBurstofDecay						= mod:NewCastAnnounce(374544, 4)--Change to target scan?
 local warnHidiousCackle						= mod:NewCastAnnounce(367500, 4)
 local warnScreech							= mod:NewCastAnnounce(385029, 4)
 local warnDecayClaws						= mod:NewCastAnnounce(382787, 4, nil, nil, "Tank|Healer")
