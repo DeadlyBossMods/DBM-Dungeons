@@ -56,7 +56,7 @@ end
 function mod:SPELL_CAST_SUCCESS(args)
 	if not self.Options.Enabled then return end
 	local spellId = args.spellId
-	if spellId == 183088 and self:AntiSpam(3, 5) then
+	if spellId == 183433 and self:AntiSpam(3, 5) then
 		warnSubmerge:Show()
 	end
 end
