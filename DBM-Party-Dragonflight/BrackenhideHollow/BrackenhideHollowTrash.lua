@@ -93,7 +93,7 @@ end
 function mod:SPELL_AURA_APPLIED(args)
 	if not self.Options.Enabled then return end
 	local spellId = args.spellId
-	if spellId == 382555 and self:AntiSpam(3, 5) then
+	if spellId == 382555 and self:AntiSpam(3, 3) then
 		specWarnRagestormDispel:Show(args.destName)
 		specWarnRagestormDispel:Play("enrage")
 	elseif spellId == 383087 then

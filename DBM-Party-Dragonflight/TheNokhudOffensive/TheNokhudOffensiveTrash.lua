@@ -163,7 +163,7 @@ function mod:SPELL_AURA_APPLIED(args)
 	elseif spellId == 334610 and args:IsPlayer() and not self:IsTank() and self:AntiSpam(3, 5) then
 		specWarnHuntPrey:Show()
 		specWarnHuntPrey:Play("targetyou")
-	elseif spellId == 386223 and args:IsDestTypeHostile() and self:AntiSpam(3, 5) then
+	elseif spellId == 386223 and args:IsDestTypeHostile() and self:AntiSpam(3, 3) then
 		specWarnStormshield:Show(args.destName)
 		specWarnStormshield:Play("helpdispel")
 	elseif spellId == 345561 and self:AntiSpam(5, 8) then--Life Link

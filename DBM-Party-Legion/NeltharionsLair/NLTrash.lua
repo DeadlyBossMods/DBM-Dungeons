@@ -79,7 +79,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		specWarnGTFO:Play("watchfeet")
 	elseif spellId == 193803 and self:AntiSpam(3, 6) then
 		warnMetamorphosis:Show(args.destName)
-	elseif spellId == 201983 and self:AntiSpam(3, 5) then
+	elseif spellId == 201983 and self:AntiSpam(3, 3) then
 		specWarnFrenzy:Show(args.destName)
 		specWarnFrenzy:Play("enrage")
 	end

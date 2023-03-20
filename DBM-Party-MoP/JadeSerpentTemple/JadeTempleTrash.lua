@@ -127,7 +127,7 @@ function mod:SPELL_AURA_APPLIED(args)
 	local spellId = args.spellId
 	if spellId == 396020 then
 		warnGoldenBarrier:Show(args.destName)
-	elseif spellId == 396018 then
+	elseif spellId == 396018 and self:AntiSpam(3, 3) then
 		specWarnFitOfRage:Show(args.destName)
 		specWarnFitOfRage:Play("enrage")
 	end
