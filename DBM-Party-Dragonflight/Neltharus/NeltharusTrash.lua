@@ -99,7 +99,7 @@ function mod:SPELL_AURA_APPLIED(args)
 			specWarnScorchingFusillade:Play("scatter")
 			yellScorchingFusillade:Yell()
 		end
-	elseif spellId == 371875 and self:AntiSpam(3, 5) then
+	elseif spellId == 371875 and self:AntiSpam(3, 3) then
 		specWarnFiredUp:Show(args.destName)
 		specWarnFiredUp:Play("enrage")
 	end
