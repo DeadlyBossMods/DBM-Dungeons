@@ -45,7 +45,7 @@ local specWarnMysticVapors					= mod:NewSpecialWarningInterrupt(387564, "HasInte
 local specWarnWakingBane					= mod:NewSpecialWarningInterrupt(386546, "HasInterrupt", nil, nil, 1, 2)
 local specWarnBrilliantScales				= mod:NewSpecialWarningDispel(374778, "MagicDispeller", nil, nil, 1, 2)
 
-local timerIcyBindingsCD					= mod:NewCDTimer(17.1, 377488, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerIcyBindingsCD					= mod:NewCDTimer(14, 377488, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerWakingBaneCD						= mod:NewCDTimer(20.5, 386546, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerErraticGrowthCD					= mod:NewCDTimer(21.5, 375596, nil, nil, nil, 3, nil, DBM_COMMON_L.MAGIC_ICON)
 local timerShoulderSlamCD					= mod:NewCDTimer(10.9, 391136, nil, nil, nil, 3)

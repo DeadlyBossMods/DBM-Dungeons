@@ -25,8 +25,8 @@ local specWarnWhispers			= mod:NewSpecialWarningSpell(153094, nil, nil, nil, 2, 
 local specWarnDarkEclipse		= mod:NewSpecialWarningSpell(164974, nil, nil, nil, 3, 12)
 
 local timerDaggerfallCD			= mod:NewCDTimer(15.7, 153240, nil, nil, nil, 3)--15-20, or 57
-local timerDarkCommunionCD		= mod:NewCDTimer(46.1, 153153, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)--Can get delayed by a lot
-local timerWhispersCD			= mod:NewCDTimer(40.1, 153094, nil, nil, nil, 2, nil, DBM_COMMON_L.HEALER_ICON)--40-48
+local timerDarkCommunionCD		= mod:NewCDTimer(45.7, 153153, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)--Can get delayed by a lot
+local timerWhispersCD			= mod:NewCDTimer(30.4, 153094, nil, nil, nil, 2, nil, DBM_COMMON_L.HEALER_ICON)--30.4-48
 local timerDarkEclipseCD		= mod:NewCDTimer(45.5, 164974, nil, nil, nil, 6)--Can get delayed by a lot
 
 function mod:OnCombatStart(delay)

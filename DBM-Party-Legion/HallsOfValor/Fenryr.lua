@@ -117,7 +117,7 @@ function mod:SPELL_CAST_START(args)
 		specWarnHowl:Show()
 		specWarnHowl:Play("stopcast")
 		timerHowlCD:Start()
-		updateAllTimers(self, 5.8)
+		updateAllTimers(self, 4.8)
 	elseif spellId == 197558 then
 		timerLeapCD:Start()
 		updateAllTimers(self, 10.9)
@@ -125,7 +125,7 @@ function mod:SPELL_CAST_START(args)
 		self.vb.clawCount = self.vb.clawCount + 1
 		warnClawFrenzy:Show(self.vb.clawCount)
 		timerClawFrenzyCD:Start(self.vb.phase == 2 and 8.5 or 9.7, self.vb.clawCount+1)
-		updateAllTimers(self, 4.8)
+		updateAllTimers(self, 3.8)
 	end
 end
 

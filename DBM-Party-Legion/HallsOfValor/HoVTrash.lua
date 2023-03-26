@@ -45,7 +45,7 @@ local timerThunderousBoltCD			= mod:NewCDTimer(4.8, 198595, nil, nil, nil, 4, ni
 local timerRuneOfHealingCD			= mod:NewCDTimer(17, 198934, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--17-18.2
 local timerHolyRadianceCD			= mod:NewCDTimer(18.1, 215433, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--17-18.2
 local timerCleansingFlameCD			= mod:NewCDTimer(6.1, 192563, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--6-9
-local timerBlastofLightCD			= mod:NewCDTimer(18.5, 191508, nil, nil, nil, 3, nil, DBM_COMMON_L.DEADLY_ICON)--May be lower
+local timerBlastofLightCD			= mod:NewCDTimer(18, 191508, nil, nil, nil, 3, nil, DBM_COMMON_L.DEADLY_ICON)--May be lower
 local timerEyeofStormCD				= mod:NewCDTimer(25, 200901, nil, nil, nil, 2, nil, DBM_COMMON_L.DEADLY_ICON)
 local timerSanctifyCD				= mod:NewCDTimer(25, 192158, nil, nil, nil, 3)--25-30 based on searing light casts since searing light has 6sec ICD lockout
 
