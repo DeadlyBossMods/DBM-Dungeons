@@ -79,7 +79,7 @@ local timerBewitchCD				= mod:NewCDTimer(17, 211470, nil, "HasInterrupt", nil, 4
 local timerFelDetonationCD			= mod:NewCDTimer(12.1, 211464, nil, nil, nil, 2)
 local timerScreamofPainCD			= mod:NewCDTimer(14.6, 397892, nil, nil, nil, 2)
 local timerWhirlingBladesCD			= mod:NewCDTimer(18.2, 209378, nil, "Melee", nil, 2)
-local timerDisintegrationBeamCD		= mod:NewCDTimer(7.2, 207980, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerDisintegrationBeamCD		= mod:NewCDTimer(6.4, 207980, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerShockwaveCD				= mod:NewCDTimer(8.4, 207979, nil, nil, nil, 3)
 local timerCrushingLeapCD			= mod:NewCDTimer(16.9, 397897, nil, nil, nil, 3)
 
