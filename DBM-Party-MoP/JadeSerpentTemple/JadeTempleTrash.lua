@@ -18,7 +18,6 @@ mod:RegisterEvents(
 --]]
 --TODO, add https://www.wowhead.com/spell=110125/shattered-resolve when i better understand if ground stuff is on applied or removed
 local warnSurgingDeluge						= mod:NewSpellAnnounce(397881, 2)
-local warnTaintedRipple						= mod:NewCastAnnounce(397878, 3)
 local warnTidalburst						= mod:NewCastAnnounce(397889, 3)
 local warnHauntingScream					= mod:NewCastAnnounce(395859, 4)
 local warnSleepySililoquy					= mod:NewCastAnnounce(395872, 3)
@@ -29,6 +28,7 @@ local warnHauntingGaze						= mod:NewCastAnnounce(114646, 3, nil, nil, "Tank|Hea
 local warnDarkClaw							= mod:NewCastAnnounce(397931, 4, nil, nil, "Tank|Healer")
 local warnGoldenBarrier						= mod:NewTargetNoFilterAnnounce(396020, 2)
 
+local specWarnTaintedRipple					= mod:NewSpecialWarningMoveTo(397878, nil, nil, nil, 2, 2)
 local specWarnFlamesofDoubt					= mod:NewSpecialWarningDodge(398300, nil, nil, nil, 2, 2)
 local specWarnLegSweep						= mod:NewSpecialWarningDodge(397899, nil, nil, nil, 2, 2)
 local specWarnTerritorialDisplay			= mod:NewSpecialWarningDodge(396001, nil, nil, nil, 2, 2)
@@ -116,7 +116,8 @@ function mod:SPELL_CAST_START(args)
 	elseif spellId == 397878 then
 		timerTaintedRippleCD:Start(nil, args.sourceGUID)
 		if self:AntiSpam(3, 4) then
-			warnTaintedRipple:Show()
+			specWarnTaintedRipple:Show(DBM_COMMON_L.BREAK_LOS)
+			specWarnTaintedRipple:Play("findshelter")
 		end
 	end
 end
