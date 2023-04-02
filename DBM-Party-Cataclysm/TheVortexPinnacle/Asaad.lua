@@ -15,6 +15,7 @@ mod:RegisterEventsInCombat(
 )
 
 --If cataclysm classic is pre nerf, static cling has shorter cast and needs faster alert
+--TODO, verify changes on non mythic+ in 10.1
 --local warnStaticCling			= mod:NewSpellAnnounce(87618, 3)
 
 local specWarnStaticCling		= mod:NewSpecialWarningJump(87618, nil, nil, nil, 1, 2)
@@ -22,7 +23,7 @@ local specWarnGroundingField	= mod:NewSpecialWarningMoveTo(86911, nil, DBM_CORE_
 
 local timerStaticClingCD		= mod:NewCDTimer(15.8, 87618, nil, nil, nil, 2)
 local timerGroundingField		= mod:NewCastTimer(10, 86911, nil, nil, nil, 2)
-local timerGroundingFieldCD		= mod:NewCDTimer(46.1, 86911, nil, nil, nil, 2, nil, DBM_COMMON_L.DEADLY_ICON)
+local timerGroundingFieldCD		= mod:NewCDTimer(45.7, 86911, nil, nil, nil, 2, nil, DBM_COMMON_L.DEADLY_ICON)
 
 function mod:OnCombatStart(delay)
 	timerStaticClingCD:Start(10.7-delay)
@@ -32,15 +33,15 @@ end
 function mod:SPELL_AURA_APPLIED(args)
 	if args.spellId == 86911 and self:AntiSpam(5, 1) then
 		specWarnGroundingField:Show(args.spellName)
+		specWarnGroundingField:Play("findshelter")
 		timerGroundingField:Start()
-		timerStaticClingCD:Start(12)
+		timerStaticClingCD:Start(self:IsMythicPlus() and 21.5 or 12)--21.5
 		timerGroundingFieldCD:Start()
 	end
 end
 
 function mod:SPELL_CAST_START(args)
 	if args.spellId == 87618 then
---		warnStaticCling:Show(args.spellName)
 		specWarnStaticCling:Schedule(0.3)--delay message since jumping at start of cast is no longer correct in 4.0.6+
 		specWarnStaticCling:ScheduleVoice(0.3, "jumpnow")
 		if timerGroundingFieldCD:GetRemaining() < 15.8 then

@@ -16,6 +16,7 @@ mod:RegisterEventsInCombat(
 	"UNIT_SPELLCAST_SUCCEEDED boss1"
 )
 
+--TODO, verify changes on non mythic+ in 10.1
 local warnBreath			= mod:NewTargetNoFilterAnnounce(88308, 2)
 local warnCalltheWind		= mod:NewSpellAnnounce(88276, 2)
 local warnUpwind			= mod:NewSpellAnnounce(88282, 1)
@@ -24,7 +25,7 @@ local specWarnBreath		= mod:NewSpecialWarningYou(88308, "-Tank", nil, 2, 1, 2)
 local specWarnBreathNear	= mod:NewSpecialWarningClose(88308, nil, nil, nil, 1, 2)
 local specWarnDownwind		= mod:NewSpecialWarningSpell(88286, nil, nil, nil, 1, 14)
 
-local timerCalltheWindCD	= mod:NewCDTimer(21.9, 88276, nil, nil, nil, 6)
+local timerCalltheWindCD	= mod:NewCDTimer(20.6, 88276, nil, nil, nil, 6)
 local timerBreathCD			= mod:NewCDTimer(13.4, 88308, nil, nil, nil, 3)--May be 10.5 pre nerf for cata classic
 
 mod:AddSetIconOption("BreathIcon", 88308, true, false, {8})
@@ -68,7 +69,7 @@ end
 function mod:SPELL_CAST_START(args)
 	if args.spellId == 88308 then
 		self:ScheduleMethod(0.2, "BreathTarget")
-		timerBreathCD:Start()
+		timerBreathCD:Start(self:IsMythicPlus() and 19.4 or 13.4)
 	end
 end
 
