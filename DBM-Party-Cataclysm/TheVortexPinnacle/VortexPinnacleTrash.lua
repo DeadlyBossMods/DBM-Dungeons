@@ -31,7 +31,7 @@ mod:RegisterEvents(
 --NOTE: if 10.1 values differ from 10.0 values for timers, retain both for classic cataclysm
 local warnCyclone								= mod:NewTargetNoFilterAnnounce(88010, 4)
 local warnGaleStrike							= mod:NewCastAnnounce(88061, 3, nil, nil, "Tank|Healer|MagicDispeller")
-local warnChillingBlast							= mod:NewCastAnnounce(88194, 3, nil, nil, "Tank|Healer")
+local warnIcyBuffet								= mod:NewCastAnnounce(88194, 3, nil, nil, "Tank|Healer")
 local warnRally									= mod:NewCastAnnounce(87761, 3, nil, nil, "Tank|Healer")
 local warnHealingWell							= mod:NewCastAnnounce(88201, 2)
 local warnCloudGuard							= mod:NewCastAnnounce(411000, 2)
@@ -54,8 +54,8 @@ local timerCycloneCD							= mod:NewCDTimer(19.4, 88010, nil, nil, nil, 3)--19.4
 local timerStormSurgeCD							= mod:NewCDTimer(16.1, 88055, nil, nil, nil, 2)--Retail 10.0 value
 local timerGaleStrikeCD							= mod:NewCDTimer(17, 88061, nil, "Tank|Healer|MagicDispeller", nil, 5, nil, DBM_COMMON_L.MAGIC_ICON)--Retail 10.0 value
 local timerRallyCD								= mod:NewCDTimer(31.6, 87761, nil, nil, nil, 5)--Retail 10.0 value
-local timerShockwaveCD							= mod:NewCDTimer(20.2, 87759, nil, "Tank|Healer", nil, 3)--Retail 10.0 value
-local timerChillingBlastCD						= mod:NewCDTimer(23, 88194, nil, "Tank|Healer", nil, 3)--Retail 10.0 value
+local timerShockwaveCD							= mod:NewCDTimer(20.2, 87759, nil, "Tank|Healer", nil, 3)--Retail 10.022.6
+local timerIcyBuffetCD							= mod:NewCDTimer(22.6, 88194, nil, "Tank|Healer", nil, 3)--Retail 10.0 and 10.1 values match
 local timerWindBlastCD							= mod:NewCDTimer(10.1, 87923, nil, "Tank|MagicDispeller", nil, 5, nil, DBM_COMMON_L.MAGIC_ICON)--Retail 10.0 value
 local timerCloudGuardCD							= mod:NewCDTimer(19.1, 411000, nil, nil, nil, 5)
 local timerPressurizedBlastCD					= mod:NewCDTimer(20.1, 410999, nil, nil, nil, 2)
@@ -90,9 +90,9 @@ function mod:SPELL_CAST_START(args)
 	elseif spellId == 88201 then--No throttle on purpose. this particular spell always needs awareness
 		warnHealingWell:Show()
 	elseif spellId == 88194 then
-		timerChillingBlastCD:Start(nil, args.sourceGUID)
+		timerIcyBuffetCD:Start(nil, args.sourceGUID)
 		if self:AntiSpam(3, 5) then
-			warnChillingBlast:Show()
+			warnIcyBuffet:Show()
 		end
 	elseif spellId == 87761 then
 		timerRallyCD:Start(nil, args.sourceGUID)
@@ -185,7 +185,7 @@ function mod:UNIT_DIED(args)
 		timerCloudGuardCD:Stop(args.destGUID)--New
 		timerPressurizedBlastCD:Stop(args.destGUID)--New
 	elseif cid == 45919 then--Young Storm Dragon
-		timerChillingBlastCD:Stop(args.destGUID)
+		timerIcyBuffetCD:Stop(args.destGUID)
 	elseif cid == 45912 then--Wild Vortex
 		timerCycloneCD:Stop(args.destGUID)
 	elseif cid == 45477 then--Gust Soldier
