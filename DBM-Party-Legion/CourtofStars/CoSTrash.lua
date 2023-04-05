@@ -613,7 +613,6 @@ do
 		end
 		local gossipOptionID = self:GetGossipID()
 		if gossipOptionID then
-			DBM:Debug("GOSSIP_SHOW triggered with a gossip ID of: "..gossipOptionID)
 			if self.Options.AGBoat and gossipOptionID == 45624 then -- Boat
 				self:SelectGossip(gossipOptionID)
 			elseif self.Options.AGDisguise and gossipOptionID == 45656 then -- Disguise
@@ -639,7 +638,7 @@ do
 				end
 				if self.Options.SpyHelperClose2 then
 					--Delay used so DBM doesn't prevent other mods or WAs from parsing data
-					C_Timer.After(0.3, function() C_GossipInfo.CloseGossip() end)
+					C_Timer.After(0.2, function() C_GossipInfo.CloseGossip() end)
 				end
 			end
 		end

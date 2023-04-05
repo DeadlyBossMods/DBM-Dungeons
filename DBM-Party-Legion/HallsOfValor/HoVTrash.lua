@@ -207,7 +207,6 @@ end
 function mod:GOSSIP_SHOW()
 	local gossipOptionID = self:GetGossipID()
 	if gossipOptionID then
-		DBM:Debug("GOSSIP_SHOW triggered with a gossip ID of: "..gossipOptionID)
 		if self.Options.AGSkovaldTrash and (gossipOptionID == 44755 or gossipOptionID == 44801 or gossipOptionID == 44802 or gossipOptionID == 44754) then -- Skovald Trash
 			self:SelectGossip(gossipOptionID)
 		elseif self.Options.AGStartOdyn and gossipOptionID == 44910 then -- Odyn
