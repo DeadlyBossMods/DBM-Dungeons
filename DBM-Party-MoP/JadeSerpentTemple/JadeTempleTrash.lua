@@ -156,7 +156,7 @@ function mod:UNIT_DIED(args)
 		timerFlamesofDoubtCD:Stop(args.destGUID)
 	elseif cid == 200137 then--Depraved mistweaver
 		timerDefilingMistsCD:Stop(args.destGUID)
-	elseif cid == 57109 then--Minion of Doubt
+	elseif cid == 57109 or cid == 65362 then--Minion of Doubt
 		timerDarkClawCD:Stop(args.destGUID)
 	elseif cid == 59873 then--Corrupted Living Water
 		timerTaintedRippleCD:Stop(args.destGUID)
