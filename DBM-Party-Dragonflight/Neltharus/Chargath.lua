@@ -105,7 +105,7 @@ function mod:SPELL_CAST_START(args)
 	elseif spellId == 373424 then
 		timerGroundingSpearCD:Start()
 	elseif spellId == 375056 then
-		specWarnBladeLock:Show()
+		specWarnBladeLock:Show(args.sourceName)
 		specWarnBladeLock:Play("chainboss")
 		timerBladeLockCD:Start()
 		--Blade lock does NOT reset existing CD timers
