@@ -115,7 +115,7 @@ function mod:SPELL_CAST_START(args)
 		if self:AntiSpam(3, 6) then
 			warnTectonicSlam:Show()
 			warnTectonicSlam:Play("aesoon")
-			warnTectonicSlam:Schedule(1.5, "crowdcontrol")
+			warnTectonicSlam:ScheduleVoice(1.5, "crowdcontrol")
 		end
 	elseif spellId == 392395 then
 		timerThunderjawCD:Start()
