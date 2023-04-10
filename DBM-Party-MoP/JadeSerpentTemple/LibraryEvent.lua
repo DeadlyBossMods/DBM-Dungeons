@@ -11,6 +11,7 @@ mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
 	"SPELL_AURA_APPLIED 113309",
+	"SPELL_AURA_REMOVED 113309",
 	"SPELL_AURA_APPLIED_DOSE 113315",
 	"SPELL_CAST_SUCCESS 122714",
 	"UNIT_DIED"
@@ -46,6 +47,12 @@ function mod:SPELL_AURA_APPLIED(args)
 	end
 end
 
+function mod:SPELL_AURA_REMOVED(args)
+	if args.spellId == 113309 then
+		timerUltimatePower:Stop(args.destName)
+	end
+end
+
 function mod:SPELL_CAST_SUCCESS(args)
 	if args.spellId == 122714 then
 		DBM:EndCombat(self)--Alternte win detection, UNIT_DIED not fire for 59051 (Strife), 59726 (Anger)
@@ -55,10 +62,10 @@ end
 function mod:SPELL_AURA_APPLIED_DOSE(args)
 	if args.spellId == 113315 then
 		if args.amount == 7 then--Start point of special warnings subject to adjustment based on live tuning.
-			specWarnIntensity:Show(args.spellName, args.destName, args.amount)
+			specWarnIntensity:Show(args.spellName, args.destName or "", args.amount)
 			specWarnIntensity:Play("targetchange")
 		elseif args.amount % 2 == 0 then
-			warnIntensity:Show(args.destName, args.amount)
+			warnIntensity:Show(args.destName or "", args.amount)
 		end
 	end
 end
