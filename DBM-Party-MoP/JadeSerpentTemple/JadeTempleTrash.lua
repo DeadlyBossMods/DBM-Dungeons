@@ -28,7 +28,7 @@ local warnHauntingGaze						= mod:NewCastAnnounce(114646, 3, nil, nil, "Tank|Hea
 local warnDarkClaw							= mod:NewCastAnnounce(397931, 4, nil, nil, "Tank|Healer")
 local warnGoldenBarrier						= mod:NewTargetNoFilterAnnounce(396020, 2)
 
-local specWarnTaintedRipple					= mod:NewSpecialWarningMoveTo(397878, nil, nil, nil, 2, 2)
+local specWarnTaintedRipple					= mod:NewSpecialWarningMoveTo(397878, nil, nil, nil, 2, 13)
 local specWarnFlamesofDoubt					= mod:NewSpecialWarningDodge(398300, nil, nil, nil, 2, 2)
 local specWarnLegSweep						= mod:NewSpecialWarningDodge(397899, nil, nil, nil, 2, 2)
 local specWarnTerritorialDisplay			= mod:NewSpecialWarningDodge(396001, nil, nil, nil, 2, 2)
@@ -117,7 +117,7 @@ function mod:SPELL_CAST_START(args)
 		timerTaintedRippleCD:Start(nil, args.sourceGUID)
 		if self:AntiSpam(3, 4) then
 			specWarnTaintedRipple:Show(DBM_COMMON_L.BREAK_LOS)
-			specWarnTaintedRipple:Play("findshelter")
+			specWarnTaintedRipple:Play("breaklos")
 		end
 	end
 end

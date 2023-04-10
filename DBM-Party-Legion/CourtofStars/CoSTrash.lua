@@ -59,7 +59,7 @@ local specWarnBewitch				= mod:NewSpecialWarningInterrupt(211470, "HasInterrupt"
 local specWarnChargingStation		= mod:NewSpecialWarningInterrupt(225100, "HasInterrupt", nil, nil, 1, 2)
 local specWarnSearingGlare			= mod:NewSpecialWarningInterrupt(211299, "HasInterrupt", nil, nil, 1, 2)
 local specWarnDisintegrationBeam	= mod:NewSpecialWarningInterrupt(207980, "HasInterrupt", nil, nil, 1, 2)
-local specWarnFelDetonation			= mod:NewSpecialWarningMoveTo(211464, nil, nil, nil, 2, 2)
+local specWarnFelDetonation			= mod:NewSpecialWarningMoveTo(211464, nil, nil, nil, 2, 13)
 local specWarnSealMagic				= mod:NewSpecialWarningRun(209404, false, nil, 2, 4, 2)
 local specWarnWhirlingBlades		= mod:NewSpecialWarningRun(209378, "Melee", nil, nil, 4, 2)
 local specWarnScreamofPain			= mod:NewSpecialWarningCast(397892, "SpellCaster", nil, nil, 1, 2)
@@ -164,7 +164,7 @@ function mod:SPELL_CAST_START(args)
 		timerFelDetonationCD:Start(nil, args.sourceGUID)
 		if self:AntiSpam(3, 4) then
 			specWarnFelDetonation:Show(DBM_COMMON_L.BREAK_LOS)
-			specWarnFelDetonation:Play("findshelter")
+			specWarnFelDetonation:Play("breaklos")
 		end
 	elseif spellId == 209404 then
 		timerSealMagicCD:Start(nil, args.sourceGUID)
