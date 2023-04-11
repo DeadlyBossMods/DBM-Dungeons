@@ -106,7 +106,7 @@ function mod:SPELL_CAST_START(args)
 		specWarnLivingWater:ScheduleVoice(5.5, "killmob")
 	elseif args.spellId == 106612 then--Bubble Burst (phase 2)
 		warnBubbleBurst:Show()
-		timerWashAway:Start()
+		timerWashAwayCD:Start()
 	end
 end
 
