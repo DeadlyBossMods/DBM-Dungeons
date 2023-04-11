@@ -7,20 +7,16 @@ mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(56448)
 mod:SetEncounterID(1418)
 mod:SetUsedIcons(8)
-mod:SetHotfixNoticeRev(20230116000000)
-mod:SetMinSyncRevision(20221108000000)
+mod:SetHotfixNoticeRev(20230410000000)
+mod:SetMinSyncRevision(20230410000000)
 
 mod:RegisterCombat("combat")
 
-mod:RegisterEventsInCombat(
-	"SPELL_CAST_START 397783 397801",
-	"SPELL_AURA_APPLIED 397797 397799",
-	"SPELL_AURA_REMOVED 397797"
---	"SPELL_DAMAGE 115167",
---	"SPELL_MISSED 115167"
-)
+--mod:RegisterEventsInCombat(
 
---This verion of mod is for the retail redesign
+--)
+
+--Hybrid mod that works for both Season 1 Dragonflight version and original version you seen in timewalking
 --[[
 ability.id = 397783 and type = "begincast"
  or ability.id = 397797 and type = "applydebuff"
@@ -28,27 +24,59 @@ ability.id = 397783 and type = "begincast"
 --]]
 local warnCorruptedVortex			= mod:NewTargetAnnounce(397797, 3)
 local warnCorruptedGeyser			= mod:NewCountAnnounce(397793, 3)
+local warnBubbleBurst				= mod:NewCastAnnounce(106612, 3)
+local warnAddsLeft					= mod:NewAddsLeftAnnounce("ej5616", 2, 106526)
 
+local specWarnLivingWater			= mod:NewSpecialWarningSwitch("ej5616", "-Healer", nil, nil, 1, 2)
 local specWarnWashAway				= mod:NewSpecialWarningDodge(397783, nil, nil, nil, 2, 2)
 local specWarnCorruptedVortex		= mod:NewSpecialWarningMoveAway(397797, nil, nil, nil, 1, 2)
 local yellCorruptedVortex			= mod:NewYell(397797)
 local yellCorruptedVortexFades		= mod:NewShortFadesYell(397797)
---local specWarnCorruptedGeyser		= mod:NewSpecialWarningDodge(397793, nil, nil, nil, 2, 2)
 local specWarnHydrolance			= mod:NewSpecialWarningInterrupt(397801, "HasInterrupt", nil, nil, 1, 2)
 local specWarnGTFO					= mod:NewSpecialWarningGTFO(397799, nil, nil, nil, 1, 8)
 
 local timerWashAwayCD				= mod:NewCDTimer(41.3, 397783, nil, nil, nil, 2, nil, DBM_COMMON_L.DEADLY_ICON)--41-44
 local timerCorruptedVortexCD		= mod:NewCDTimer(13, 397797, nil, nil, nil, 3, nil, DBM_COMMON_L.HEALER_ICON)
 local timerCorruptedGeyserCD		= mod:NewCDCountTimer("d5", 397793, nil, nil, nil, 3)
+local timerLivingWater				= mod:NewCastTimer(5.5, 106526, nil, nil, nil, 1)
+
+mod:AddSetIconOption("SetIconOnAdds", "ej5616", false, true, {8})
+
+mod.vb.addsRemaining = 4--Also 4 on heroic?
+mod.vb.firstAdd = false
+local addsName = DBM:EJ_GetSectionInfo(5616)
 
 function mod:OnCombatStart(delay)
-	timerCorruptedVortexCD:Start(8.5-delay)
-	timerWashAwayCD:Start(20.6-delay)
-	--timerCorruptedGeyserCD:Start(1-delay)
+	if self:IsMythicPlus() then
+		timerCorruptedVortexCD:Start(8.5-delay)
+		timerWashAwayCD:Start(20.6-delay)
+		self:RegisterShortTermEvents(
+			"SPELL_CAST_START 397783 397801",
+			"SPELL_AURA_APPLIED 397797 397799",
+			"SPELL_AURA_REMOVED 397797"
+		)
+	else
+		self.vb.addsRemaining = 4
+		self.vb.firstAdd = false
+		timerLivingWater:Start(13-delay)
+		self:RegisterShortTermEvents(
+			"SPELL_AURA_APPLIED 106653",
+			"SPELL_CAST_START 106526 106612",
+			"SPELL_DAMAGE 115167",
+			"SPELL_MISSED 115167",
+			"UNIT_DIED",
+			"UNIT_TARGET_UNFILTERED"
+		)
+	end
+end
+
+function mod:OnCombatEnd()
+	self:UnregisterShortTermEvents()
 end
 
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
+	--Retail M+ stuff
 	if spellId == 397783 then
 		specWarnWashAway:Show()
 		specWarnWashAway:Play("watchstep")
@@ -67,6 +95,18 @@ function mod:SPELL_CAST_START(args)
 	elseif spellId == 397801 and self:CheckInterruptFilter(args.sourceGUID, false, true) then
 		specWarnHydrolance:Show(args.sourceName)
 		specWarnHydrolance:Play("kickcast")
+	--Classic and retail timewalking/non mythic+
+	elseif args.spellId == 106526 then--Call Water
+		if not self.vb.firstAdd then
+			self.vb.firstAdd = true
+		else
+			timerLivingWater:Start()
+		end
+		specWarnLivingWater:Schedule(5.5)
+		specWarnLivingWater:ScheduleVoice(5.5, "killmob")
+	elseif args.spellId == 106612 then--Bubble Burst (phase 2)
+		warnBubbleBurst:Show()
+		timerWashAwayCD:Start()
 	end
 end
 
@@ -82,7 +122,7 @@ function mod:SPELL_AURA_APPLIED(args)
 			yellCorruptedVortex:Yell()
 			yellCorruptedVortexFades:Countdown(spellId)
 		end
-	elseif spellId == 397799 and args:IsPlayer() and self:AntiSpam(4, 2) then
+	elseif (spellId == 106653 or spellId == 397799) and args:IsPlayer() and self:AntiSpam(3, 2) then
 		specWarnGTFO:Show(args.spellName)
 		specWarnGTFO:Play("watchfeet")
 	end
@@ -96,12 +136,18 @@ function mod:SPELL_AURA_REMOVED(args)
 	end
 end
 
---[[
 function mod:SPELL_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId, spellName)
-	if spellId == 115167 and destGUID == UnitGUID("player") and self:AntiSpam(2, 2) then
+	if spellId == 115167 and destGUID == UnitGUID("player") and self:AntiSpam(3, 2) then
 		specWarnGTFO:Show(spellName)
 		specWarnGTFO:Play("watchfeet")
 	end
 end
 mod.SPELL_MISSED = mod.SPELL_DAMAGE
---]]
+
+function mod:UNIT_DIED(args)
+	local cid = self:GetCIDFromGUID(args.destGUID)
+	if cid == 56511 then--Corrupt Living Water
+		self.vb.addsRemaining = self.vb.addsRemaining - 1
+		warnAddsLeft:Show(self.vb.addsRemaining)
+	end
+end
