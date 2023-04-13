@@ -12,6 +12,7 @@
 ## RequiredDeps: DBM-Core
 ## SavedVariables: DBMPartyVanilla_AllSavedVars
 ## SavedVariablesPerCharacter: DBMPartyVanilla_SavedStats
+## IconTexture: Interface\AddOns\DBM-Core\textures\dbm_airhorn
 ## X-DBM-Mod: 1
 ## X-DBM-Mod-Type: PARTY
 ## X-DBM-Mod-Category: Classic

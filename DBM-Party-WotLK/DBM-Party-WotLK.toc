@@ -15,6 +15,7 @@
 ## RequiredDeps: DBM-Core
 ## SavedVariables: DBMPartyWotLK_AllSavedVars
 ## SavedVariablesPerCharacter: DBMPartyWotLK_SavedStats
+## IconTexture: Interface\AddOns\DBM-Core\textures\dbm_airhorn
 ## X-DBM-Mod: 1
 ## X-DBM-Mod-Type: PARTY
 ## X-DBM-Mod-Category: WOTLK

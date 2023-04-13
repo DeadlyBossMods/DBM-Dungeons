@@ -10,6 +10,7 @@
 ## RequiredDeps: DBM-Core
 ## SavedVariables: DBMPartyShadowlands_AllSavedVars
 ## SavedVariablesPerCharacter: DBMPartyShadowlands_SavedStats
+## IconTexture: Interface\AddOns\DBM-Core\textures\dbm_airhorn
 ## X-DBM-Mod: 1
 ## X-DBM-Mod-Type: PARTY
 ## X-DBM-Mod-Category: SHADOWLANDS
