@@ -24,11 +24,12 @@ mod:RegisterEventsInCombat(
 
 --[[
 (ability.id = 374365 or ability.id = 375068 or ability.id = 375251 or ability.id = 375439) and type = "begincast"
- or ability.id = 375436 and type = "cast"
+ or (ability.id = 376169 or ability.id = 375436) and type = "cast"
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
 --]]
 --TODO, verify target scan for lava spray, or maybe use RAID_BOSS_WHISPER?
 --NOTE: Magma Lob is cast by EACH tentacle, it's downgraded to normal warning by defaulta and timer disabled because it gets spammy later fight
+
 local warnMagmaLob								= mod:NewSpellAnnounce(375068, 3)
 local warnVolatileMutation						= mod:NewCountAnnounce(374365, 3)
 local warnLavaSpray								= mod:NewTargetNoFilterAnnounce(375251, 3)
@@ -40,6 +41,7 @@ local specWarnBlazingCharge						= mod:NewSpecialWarningDodge(375436, nil, nil, 
 local yellBlazingCharge							= mod:NewYell(375436)
 local specWarnGTFO								= mod:NewSpecialWarningGTFO(375204, nil, nil, nil, 1, 8)
 
+local timerRP									= mod:NewRPTimer(34.4)
 local timerVolatileMutationCD					= mod:NewCDTimer(31.5, 374365, nil, nil, nil, 5, nil, DBM_COMMON_L.DAMAGE_ICON)
 --local timerMagmaLobCD							= mod:NewCDTimer(8, 375068, nil, nil, nil, 3)--8 unless delayed by other casts
 local timerLavaSrayCD							= mod:NewCDTimer(19.9, 375251, nil, nil, nil, 3)
@@ -139,6 +141,12 @@ function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId, spell
 	end
 end
 mod.SPELL_PERIODIC_MISSED = mod.SPELL_PERIODIC_DAMAGE
+
+function mod:OnSync(msg)
+	if msg == "TuskRP" and self:AntiSpam(10, 9) then--Sync sent from trash mod since trash mod is already monitoring out of combat CLEU events
+		timerRP:Start(9.9)
+	end
+end
 
 --[[
 function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
