@@ -15,6 +15,7 @@ mod:RegisterEventsInCombat(
 )
 
 --If cataclysm classic is pre nerf, static cling has shorter cast and needs faster alert
+--TODO add https://www.wowhead.com/ptr/spell=413263/skyfall-nova spawn with new Ids?
 --TODO, verify changes on non mythic+ in 10.1
 --local warnStaticCling			= mod:NewSpellAnnounce(87618, 3)
 

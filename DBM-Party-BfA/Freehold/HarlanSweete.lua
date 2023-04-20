@@ -9,7 +9,7 @@ mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
 	"SPELL_AURA_APPLIED 257314 257305",
-	"SPELL_CAST_START 257402 257458",
+	"SPELL_CAST_START 257402 257458 413145 413147 413131",
 	"SPELL_CAST_SUCCESS 257316 257278",
 	"UNIT_SPELLCAST_SUCCEEDED boss1"
 )
@@ -20,6 +20,7 @@ mod:RegisterEventsInCombat(
  --]]
 local warnBlackPowder				= mod:NewTargetAnnounce(257314, 4)
 local warnCannonBarrage				= mod:NewTargetAnnounce(257305, 3)
+local warnWhirlingDagger			= mod:NewCountAnnounce(413131, 3)
 
 local specWarnBlackPowder			= mod:NewSpecialWarningRun(257314, nil, nil, nil, 4, 2)
 local yellBlackPowder				= mod:NewYell(257314)
@@ -29,14 +30,21 @@ local specWarnCannonBarrage			= mod:NewSpecialWarningDodge(257305, nil, nil, nil
 local yellCannonBarrage				= mod:NewYell(257305)
 
 local timerAvastyeCD				= mod:NewCDTimer(13, 257316, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)
-local timerSwiftwindSaberCD			= mod:NewCDTimer(15.8, 257278, nil, nil, nil, 3)
+local timerSwiftwindSaberCD			= mod:NewCDTimer(15.8, 257278, nil, nil, nil, 3)--Swap option key to 413147 if non M+ version also is changed
 local timerCannonBarrageCD			= mod:NewCDTimer(17.4, 257305, nil, nil, nil, 3)
+local timerWhirlingDaggerCD			= mod:NewAITimer(17.4, 413131, nil, nil, nil, 5, nil, DBM_COMMON_L.HEALER_ICON..DBM_COMMON_L.BLEED_ICON)
+
+mod.vb.daggerCount = 0
 
 function mod:OnCombatStart(delay)
+	self.vb.daggerCount = 0
 	self:SetStage(1)
 	timerSwiftwindSaberCD:Start(10.4-delay)
 	timerCannonBarrageCD:Start(20-delay)
 	timerAvastyeCD:Start(31.6-delay)
+	if self:IsMythicPlus() then
+		timerWhirlingDaggerCD:Start(1-delay)
+	end
 end
 
 function mod:SPELL_AURA_APPLIED(args)
@@ -77,6 +85,14 @@ function mod:SPELL_CAST_START(args)
 		timerCannonBarrageCD:Stop()
 		timerCannonBarrageCD:Start(17)
 		timerAvastyeCD:Start(23)
+	elseif spellId == 413145 or spellId == 413147 then--Shadowlands S2 version
+		specWarnSwiftwindSaber:Show()
+		specWarnSwiftwindSaber:Play("watchwave")
+		timerSwiftwindSaberCD:Start()
+	elseif spellId == 413131 then
+		self.vb.daggerCount = self.vb.daggerCount + 1
+		warnWhirlingDagger:Show(self.vb.daggerCount)
+		timerWhirlingDaggerCD:Start()
 	end
 end
 
@@ -90,7 +106,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 		else
 			timerAvastyeCD:Start(18)
 		end
-	elseif spellId == 257278 then
+	elseif spellId == 257278 then--Legacy version
 		specWarnSwiftwindSaber:Show()
 		specWarnSwiftwindSaber:Play("watchwave")
 		timerSwiftwindSaberCD:Start()
