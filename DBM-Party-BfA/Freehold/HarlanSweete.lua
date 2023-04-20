@@ -32,7 +32,7 @@ local yellCannonBarrage				= mod:NewYell(257305)
 local timerAvastyeCD				= mod:NewCDTimer(13, 257316, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)
 local timerSwiftwindSaberCD			= mod:NewCDTimer(15.8, 257278, nil, nil, nil, 3)--Swap option key to 413147 if non M+ version also is changed
 local timerCannonBarrageCD			= mod:NewCDTimer(17.4, 257305, nil, nil, nil, 3)
-local timerWhirlingDaggerCD			= mod:NewAITimer(17.4, 413131, nil, nil, nil, 5, nil, DBM_COMMON_L.HEALER_ICON..BM_COMMON_L.BLEED_ICON)
+local timerWhirlingDaggerCD			= mod:NewAITimer(17.4, 413131, nil, nil, nil, 5, nil, DBM_COMMON_L.HEALER_ICON..DBM_COMMON_L.BLEED_ICON)
 
 mod.vb.daggerCount = 0
 
