@@ -92,7 +92,7 @@ function mod:SPELL_CAST_START(args)
 	elseif spellId == 198892 then
 		self:BossTargetScanner(args.sourceGUID, "CracklingStormTarget", 0.1, 9)
 	elseif spellId == 192563 then
-		timerCleansingFlameCD:Start()
+		timerCleansingFlameCD:Start(nil, args.sourceGUID)
 		if self.Options.SpecWarn192563interrupt and self:CheckInterruptFilter(args.sourceGUID, false, true) then
 			specWarnCleansingFlame:Show(args.sourceName)
 			specWarnCleansingFlame:Play("kickcast")
@@ -123,7 +123,7 @@ function mod:SPELL_CAST_START(args)
 			specWarnBlastofLight:Show()
 			specWarnBlastofLight:Play("shockwave")
 		end
-		timerBlastofLightCD:Start()
+		timerBlastofLightCD:Start(nil, args.sourceGUID)
 	elseif spellId == 198595 then
 		timerThunderousBoltCD:Start(nil, args.sourceGUID)
 		if self.Options.SpecWarn198595interrupt and self:CheckInterruptFilter(args.sourceGUID, false, true) then
@@ -141,12 +141,12 @@ function mod:SPELL_CAST_START(args)
 	elseif spellId == 192158 then--P1 2 adds
 		specWarnSanctify:Show()
 		specWarnSanctify:Play("watchorb")
-		timerSanctifyCD:Start()
+		timerSanctifyCD:Start(nil, args.sourceGUID)
 	--2/22 01:53:53.948  SPELL_CAST_START,Creature-0-3019-1477-12381-97219-000075B856,"Solsten",0x10a48,0x0,0000000000000000,nil,0x80000000,0x80000000,200901,"Eye of the Storm",0x8
 	elseif spellId == 200901 and args:GetSrcCreatureID() == 97219 then
 		specWarnEyeofStorm:Show(eyeShortName)
 		specWarnEyeofStorm:Play("findshelter")
-		timerEyeofStormCD:Start()
+		timerEyeofStormCD:Start(nil, args.sourceGUID)
 	elseif spellId == 192288 then
 		if self:CheckInterruptFilter(args.sourceGUID, false, true) then
 			specWarnSearingLight:Show(args.sourceName)
@@ -189,18 +189,18 @@ end
 function mod:UNIT_DIED(args)
 	local cid = self:GetCIDFromGUID(args.destGUID)
 	if cid == 101637 then--Valarjar Aspirant
-		timerBlastofLightCD:Stop()
+		timerBlastofLightCD:Stop(args.destGUID)
 	elseif cid == 95834 then--Valajar Mystic
 		timerRuneOfHealingCD:Stop(args.destGUID)
 		timerHolyRadianceCD:Stop(args.destGUID)
 	elseif cid == 97197 then--Valajar Purifier
-		timerCleansingFlameCD:Stop()
+		timerCleansingFlameCD:Stop(args.destGUID)
 	elseif cid ==  95842 then--Valjar Thundercaller
 		timerThunderousBoltCD:Stop(args.destGUID)
 	elseif cid == 97219 then--Solsten
-		timerEyeofStormCD:Stop()
+		timerEyeofStormCD:Stop(args.destGUID)
 	elseif cid == 97202 then--Olmyr
-		timerSanctifyCD:Stop()
+		timerSanctifyCD:Stop(args.destGUID)
 	end
 end
 

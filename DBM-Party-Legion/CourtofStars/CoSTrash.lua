@@ -106,7 +106,7 @@ function mod:SPELL_CAST_START(args)
 		specWarnChargedBlast:Show()
 		specWarnChargedBlast:Play("shockwave")
 	elseif spellId == 207979 then
-		timerShockwaveCD:Start()
+		timerShockwaveCD:Start(nil, args.sourceGUID)
 		if self:AntiSpam(3, 2) then
 			specWarnShockwave:Show()
 			specWarnShockwave:Play("shockwave")
@@ -148,7 +148,7 @@ function mod:SPELL_CAST_START(args)
 			specWarnSearingGlare:Play("kickcast")
 		end
 	elseif spellId == 207980 then
-		timerDisintegrationBeamCD:Start()
+		timerDisintegrationBeamCD:Start(nil, args.sourceGUID)
 		if self:CheckInterruptFilter(args.sourceGUID, false, true) then
 			specWarnDisintegrationBeam:Show(args.sourceName)
 			specWarnDisintegrationBeam:Play("kickcast")
@@ -176,7 +176,7 @@ function mod:SPELL_CAST_START(args)
 		specWarnChargedSmash:Show()
 		specWarnChargedSmash:Play("watchstep")
 	elseif spellId == 209378 then
-		timerWhirlingBladesCD:Start()
+		timerWhirlingBladesCD:Start(nil, args.sourceGUID)
 		if self:AntiSpam(3, 1) then
 			specWarnWhirlingBlades:Show()
 			specWarnWhirlingBlades:Play("runout")
@@ -184,9 +184,9 @@ function mod:SPELL_CAST_START(args)
 	elseif spellId == 397892 then
 		specWarnScreamofPain:Show()
 		specWarnScreamofPain:Play("stopcast")
-		timerScreamofPainCD:Start()
+		timerScreamofPainCD:Start(nil, args.sourceGUID)
 	elseif spellId == 397897 then
-		timerCrushingLeapCD:Start()
+		timerCrushingLeapCD:Start(nil, args.sourceGUID)
 		if self:AntiSpam(3, 6) then
 			warnCrushingLeap:Show()
 		end
@@ -248,13 +248,13 @@ function mod:UNIT_DIED(args)
 	elseif cid == 104278 then--Felbound Enforcer
 		timerFelDetonationCD:Stop(args.destGUID)
 	elseif cid == 104275 then--Imacu'tya
-		timerScreamofPainCD:Stop()
-		timerWhirlingBladesCD:Stop()
+		timerScreamofPainCD:Stop(args.destGUID)
+		timerWhirlingBladesCD:Stop(args.destGUID)
 	elseif cid == 104274 then--Baalgar the Watchful
-		timerDisintegrationBeamCD:Stop()
+		timerDisintegrationBeamCD:Stop(args.destGUID)
 	elseif cid == 104273 then--Jazshariu
-		timerShockwaveCD:Start()
-		timerCrushingLeapCD:Stop()
+		timerShockwaveCD:Stop(args.destGUID)
+		timerCrushingLeapCD:Stop(args.destGUID)
 	end
 end
 

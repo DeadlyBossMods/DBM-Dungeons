@@ -77,7 +77,7 @@ function mod:SPELL_CAST_START(args)
 			warnHauntingScream:Show()
 		end
 	elseif spellId == 395872 then
-		timerSleepySililoquyCD:Start()
+		timerSleepySililoquyCD:Start(nil, args.sourceGUID)
 		if self.Options.SpecWarn395872interrupt and self:CheckInterruptFilter(args.sourceGUID, false, true) then
 			specWarnSleepySililoquy:Show(args.sourceName)
 			specWarnSleepySililoquy:Play("kickcast")
@@ -151,7 +151,7 @@ function mod:UNIT_DIED(args)
 	elseif cid == 59555 then--Haunting Sha
 		timerHauntingScreamCD:Stop(args.destGUID)
 	elseif cid == 59546 then--The Talking Fish
-		timerSleepySililoquyCD:Stop()
+		timerSleepySililoquyCD:Stop(args.destGUID)
 	elseif cid == 200387 then--Shambling Infester
 		timerFlamesofDoubtCD:Stop(args.destGUID)
 	elseif cid == 200137 then--Depraved mistweaver
