@@ -85,7 +85,7 @@ function mod:SPELL_CAST_START(args)
 		end
 		timerBlazingRushCD:Start(17, args.sourceGUID)
 	elseif spellId == 391726 then
-		timerStormBreathCD:Start(15.7)
+		timerStormBreathCD:Start(15.7, args.sourceGUID)
 		if self:AntiSpam(3, 2) then
 			specWarnStormBreath:Show()
 			specWarnStormBreath:Play("breathsoon")
@@ -118,7 +118,7 @@ function mod:SPELL_CAST_START(args)
 			warnTectonicSlam:ScheduleVoice(1.5, "crowdcontrol")
 		end
 	elseif spellId == 392395 then
-		timerThunderjawCD:Start()
+		timerThunderjawCD:Start(nil, args.sourceGUID)
 		if self:IsTanking("player", nil, nil, true, args.sourceGUID) then
 			specWarnThunderJaw:Show()
 			specWarnThunderJaw:Play("carefly")
@@ -142,7 +142,7 @@ function mod:SPELL_CAST_START(args)
 			warnFireMaw:Show()
 		end
 	elseif spellId == 392640 then--Rolling Thunder
-		timerRollingThunderCD:Start()
+		timerRollingThunderCD:Start(nil, args.sourceGUID)
 	elseif spellId == 392451 then
 		timerFlashfireCD:Start(12.1, args.sourceGUID)
 		if self.Options.SpecWarn392451interrupt and self:CheckInterruptFilter(args.sourceGUID, false, true) then
@@ -197,7 +197,7 @@ function mod:SPELL_AURA_REMOVED(args)
 	if spellId == 373693 and args:IsPlayer() then
 		yellLivingBombFades:Cancel()
 	elseif spellId == 391050 then
-		timerTempestStormshieldCD:Start()
+		timerTempestStormshieldCD:Start(nil, args.destGUID)
 	end
 end
 
@@ -209,15 +209,15 @@ function mod:UNIT_DIED(args)
 		timerSteelBarrageCD:Stop(args.destGUID)
 		timerBlazingRushCD:Stop(args.destGUID)
 	elseif cid == 197698 then--Thunderhead
-		timerStormBreathCD:Stop()
-		timerRollingThunderCD:Stop()
-		timerThunderjawCD:Stop()
+		timerStormBreathCD:Stop(args.destGUID)
+		timerRollingThunderCD:Stop(args.destGUID)
+		timerThunderjawCD:Stop(args.destGUID)
 	elseif cid == 198047 then--Tempest Channeler
 		timerLightningStormCD:Stop(args.destGUID)
 	elseif cid == 197985 then--Flame Channeler
 		timerFlashfireCD:Stop(args.destGUID)
 	elseif cid == 197535 then--High Channeler Ryvati
 		timerLightningStormCD:Stop(args.destGUID)
-		timerTempestStormshieldCD:Stop()
+		timerTempestStormshieldCD:Stop(args.destGUID)
 	end
 end
