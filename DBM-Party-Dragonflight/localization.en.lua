@@ -284,3 +284,7 @@ L = DBM:GetModLocalization("HallsofInfusionTrash")
 L:SetGeneralLocalization({
 	name =	"Halls of Infusion Trash"
 })
+
+L:SetOptionLocalization({
+	AGBuffs		= "Auto select gossip to activate usable buffs for engineering and herbalism"
+})
