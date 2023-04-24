@@ -107,7 +107,7 @@ function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
 	if spellId == 381605 or spellId == 381602 then--One is for bosses split and one is for bosses combined.
 		self:ScheduleMethod(0.2, "BossTargetScanner", args.sourceGUID, "SpitTarget", 0.1, 8, true)
-		timerFlamespitCD:Start(self.vb.phase == 1 and 21.1 or 15)
+		timerFlamespitCD:Start(self:GetStage(1) and 21.1 or 15)
 	elseif spellId == 381525 then
 		specWarnRoaringFirebreath:Show()
 		specWarnRoaringFirebreath:Play("breathsoon")
@@ -119,7 +119,7 @@ function mod:SPELL_CAST_START(args)
 			specWarnStormslam:Show()
 			specWarnStormslam:Play("defensive")
 		end
-		timerStormslamCD:Start()--self.vb.phase == 1 and 10 or 14
+		timerStormslamCD:Start()--self:GetStage(1) and 10 or 14
 	elseif spellId == 385558 or spellId == 381516 then
 		if spellId == 381516 and self.Options.SpecWarn381516cast then--Mythic
 			specWarnInterruptingCloudburst:Show()

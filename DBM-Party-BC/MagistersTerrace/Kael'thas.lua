@@ -50,7 +50,7 @@ function mod:SPELL_CAST_START(args)
 		WarnGravityLapse:Show()
 		timerGravityLapse:Start()
 		timerGravityLapseCD:Schedule(35)--Show after current lapse has ended
-		if self.vb.phase < 2 then
+		if self:GetStage(1) then
 			self:SetStage(2)
 			timerShockBarrior:Stop()
 			timerPhoenix:Stop()
@@ -86,7 +86,7 @@ end
 --	"<231.31 20:53:15> [UNIT_SPELLCAST_SUCCEEDED] Kael'thas Sunstrider(Omegal) [[target:Clear Flight::0:44232]]", -- [530]
 --	"<231.31 20:53:15> [UNIT_SPELLCAST_SUCCEEDED] Kael'thas Sunstrider(Omegal) [[target:Power Feedback::0:47109]]", -- [531]
 function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
-	if spellId == 47109 and self.vb.phase < 2 then--Power Feedback
+	if spellId == 47109 and self:GetStage(1) then--Power Feedback
 		self:SetStage(2)
 		timerShockBarrior:Stop()
 		timerPhoenix:Stop()
@@ -94,7 +94,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
-	if msg == L.KaelP2 and self.vb.phase < 2 then
+	if msg == L.KaelP2 and self:GetStage(1) then
 		self:SetStage(2)
 		timerShockBarrior:Stop()
 		timerPhoenix:Stop()

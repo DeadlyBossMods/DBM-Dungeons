@@ -45,7 +45,7 @@ function mod:SPELL_AURA_APPLIED(args)
 	elseif args.spellId == 96592 then
 		warnRavage:Show(args.destName)
 		timerRavage:Start(args.destName)
-	elseif args.spellId == 97380 and self.vb.phase < 2 then
+	elseif args.spellId == 97380 and self:GetStage(2, 1) then
 		self:SetStage(2)
 		warnPhase2:Show()
 	end

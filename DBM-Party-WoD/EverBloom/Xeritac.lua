@@ -67,7 +67,7 @@ function mod:UNIT_DIED(args)
 end
 
 function mod:UNIT_TARGETABLE_CHANGED()
-	if self.vb.phase == 1 then
+	if self:GetStage(1) then
 		self:SetStage(2)
 		warnPhase2:Show()
 		warnPhase2:Play("ptwo")

@@ -75,7 +75,7 @@ function mod:SPELL_CAST_START(args)
 	elseif spellId == 192617 then
 		specWarnMassiveDeluge:Show()
 		specWarnMassiveDeluge:Play("shockwave")
-		if self.vb.phase == 2 then
+		if self:GetStage(2) then
 			timerMassiveDelugeCD:Start(35)
 		else
 			timerMassiveDelugeCD:Start()
@@ -100,7 +100,7 @@ end
 function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
 	if spellId == 192680 then--Mythic Tornado
 		warnMythicTornado:Show()
-		if self.vb.phase == 2 then
+		if self:GetStage(2) then
 			timerMythicTornadoCD:Start(15)
 		else
 			timerMythicTornadoCD:Start()

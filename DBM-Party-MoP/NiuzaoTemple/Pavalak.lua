@@ -66,7 +66,7 @@ function mod:SPELL_CAST_START(args)
 		specWarnTempest:Show()
 		specWarnTempest:Play("specialsoon")
 		timerBladeRushCD:Start(7)--always 7-7.5 seconds after tempest.
-		if self.vb.phase == 2 then
+		if self:GetStage(2) then
 			timerTempestCD:Start(33)--seems to be cast more often between 66-33% health. (might be 100-33 but didn't get 2 casts before first bulwark)
 		else
 			timerTempestCD:Start()

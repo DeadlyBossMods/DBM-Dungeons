@@ -72,7 +72,7 @@ end
 function mod:UNIT_DIED(args)
 	local cid = self:GetCIDFromGUID(args.destGUID)
 	if cid == 23954 then--Only trigger kill for unit_died if he dies in phase 2 with at least one player alive, otherwise it's an auto wipe.
-		if DBM:NumRealAlivePlayers() > 0 and self.vb.phase == 2 then
+		if DBM:NumRealAlivePlayers() > 0 and self:GetStage(2) then
 			DBM:EndCombat(self)
 		end
 	end

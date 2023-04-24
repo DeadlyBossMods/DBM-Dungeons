@@ -64,7 +64,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		timerTorrentCD:Stop()
 		warnSubmerged:Show(args.destName)
 		timerSubmerged:Start()
-		if self.vb.phase == 1 then
+		if self:GetStage(1) then
 			self:SetStage(2)
 		end
 	elseif spellId == 197262 then
@@ -90,7 +90,7 @@ end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
 	if spellId == 197596 then--Piercing Tentacle
-		if self.vb.phase == 1 then
+		if self:GetStage(1) then
 			timerPiercingTentacleCD:Start()
 		else
 			timerPiercingTentacleCD:Start(6)

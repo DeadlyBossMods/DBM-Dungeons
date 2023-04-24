@@ -106,14 +106,14 @@ function mod:SPELL_CAST_SUCCESS(args)
 		timerDisintegrateCD:Stop()
 		timerChaoticShadowsCD:Stop()
 		timerBombardmentCD:Stop()
-		if self.vb.phase == 2 then
+		if self:GetStage(2) then
 			warnPhase2:Show()
 			timerFelBeamCD:Stop()
 			--Variable based on how long it takesto engage boss
 			--timerDisintegrateCD:Start(15)--Cast when boss engaged
 			timerBombardmentCD:Start(41)
 			timerChaoticShadowsCD:Start(45)
-		elseif self.vb.phase == 3 then
+		elseif self:GetStage(3) then
 			warnPhase3:Show()
 			--Variable based on how long it takesto engage boss
 			timerChaoticShadowsCD:Start(41)

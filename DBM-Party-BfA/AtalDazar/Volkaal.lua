@@ -62,7 +62,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 			specWarnNoxiousStench:Show(args.sourceName)
 			specWarnNoxiousStench:Play("kickcast")
 		end
-		if self.vb.phase == 2 then
+		if self:GetStage(2) then
 			timerNoxiousStenchCD:Start(18.2)
 		else
 			timerNoxiousStenchCD:Start(20.6)

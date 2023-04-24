@@ -60,7 +60,7 @@ function mod:SPELL_AURA_APPLIED(args)
 			specWarnAvastye:Play("killmob")
 		end
 	elseif spellId == 257305 then
-		if self.vb.phase >= 2 then--Multiple targets
+		if self:GetStage(2, 2) then--Multiple targets
 			warnCannonBarrage:CombinedShow(0.3, args.destName)
 		end
 		if args:IsPlayer() then
@@ -69,7 +69,7 @@ function mod:SPELL_AURA_APPLIED(args)
 			--specWarnCannonBarrage:ScheduleVoice(1.5, "keepmove")
 			yellCannonBarrage:Yell()
 		else
-			if self.vb.phase == 1 then--Only one target
+			if self:GetStage(1) then--Only one target
 				warnCannonBarrage:Show(args.destName)
 			end
 		end
@@ -99,9 +99,9 @@ end
 function mod:SPELL_CAST_SUCCESS(args)
 	local spellId = args.spellId
 	if spellId == 257316 then
-		if self.vb.phase == 1 then
+		if self:GetStage(1) then
 			timerAvastyeCD:Start(20.5)
-		elseif self.vb.phase == 2 then
+		elseif self:GetStage(2) then
 			timerAvastyeCD:Start(24)
 		else
 			timerAvastyeCD:Start(18)

@@ -210,7 +210,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
 		timerTotemsCD:Stop()
 		self:SetStage(0)
 		local cid = self:GetUnitCreatureId(uId)
-		if self.vb.phase == 2 then
+		if self:GetStage(2) then
 			self.vb.bossOne = cid
 			--Start Boss 1 Timer (17sec)
 			if cid == 135475 then -- Kula the Butcher

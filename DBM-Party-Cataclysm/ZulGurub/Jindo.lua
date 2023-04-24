@@ -76,7 +76,7 @@ mod.SPELL_AURA_REMOVED_DOSE = mod.SPELL_AURA_REMOVED
 function mod:SPELL_CAST_START(args)
 	if args.spellId == 97172 then
 		warnShadowsOfHakkar:Show()
-	elseif args.spellId == 97158 and self.vb.phase < 2 then
+	elseif args.spellId == 97158 and self:GetStage(2, 1) then
 		self:SetStage(2)
 		warnPhase2:Show()
 	end
