@@ -103,7 +103,7 @@ end
 
 function mod:SPELL_AURA_APPLIED(args)
 	local spellId = args.spellId
-	if spellId == 387585 then--Submerged
+	if spellId == 387585 and self:GetStage(1) then--Submerged
 		self:SetStage(2)
 		warnSubmerged:Show()
 		timerSquallBuffetCD:Stop()
@@ -118,7 +118,7 @@ end
 
 function mod:SPELL_AURA_REMOVED(args)
 	local spellId = args.spellId
-	if spellId == 387585 and self.vb.phase == 2 then--Submerged
+	if spellId == 387585 and self:GetStage(2) then--Submerged
 		self:SetStage(1)
 		self.vb.rogueCount = 0
 		warnSubmerged:Show()

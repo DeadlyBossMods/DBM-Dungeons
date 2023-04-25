@@ -8,7 +8,7 @@ mod:SetZone(657)
 mod.isTrashMod = true
 
 mod:RegisterEvents(
-	"SPELL_CAST_START 88061 88010 88201 88194 87762 87761 87779 411012 411000 410870 410999 411002",
+	"SPELL_CAST_START 88061 88010 88201 88194 87762 87761 87779 411012 411000 410870 410999 411002 411001",
 	"SPELL_CAST_SUCCESS 88055 87759 87923 411004 410998",
 	"SPELL_AURA_APPLIED 88171 88186 88010 410870",
 --	"SPELL_AURA_APPLIED_DOSE",
@@ -25,7 +25,6 @@ mod:RegisterEvents(
 --TODO, timer for Air Nova-87933 ?
 --TODO, maybe wind blast timer off by default? a lot of those mobs can be up at once
 --TODO, hurricane has a 17 second cd but packs with this mob have 4-8 of them with desynced timers, That's reason timer is omitted.
---TODO, "Lethal Current-411001-npc:204337-000027125B = pull:30.7", -- [50] ?
 --TODO, "Rushing Wind-410873-npc:45477-0001271105 = pull:144.6, 17.0", -- [70] ?
 --TODO, spell interrupt for https://www.wowhead.com/ptr/spell=410760/wind-bolt ?
 --NOTE: if 10.1 values differ from 10.0 values for timers, retain both for classic cataclysm
@@ -39,6 +38,7 @@ local warnWindblast								= mod:NewSpellAnnounce(87923, 2, nil, "RemoveMagic|Ta
 local warnPressurizedBlast						= mod:NewCastAnnounce(410999, 4)
 local warnBombCyclone							= mod:NewSpellAnnounce(411005, 3)
 local warnWindFlurry							= mod:NewSpellAnnounce(410998, 3, nil, "Tank|Healer")
+local warnLethalCurrent							= mod:NewCastAnnounce(411001, 4)
 
 local specWarnTurbulence						= mod:NewSpecialWarningSpell(411002, nil, nil, nil, 2, 2)
 local specWarnChillingBreath					= mod:NewSpecialWarningDodge(411012, nil, nil, nil, 2, 2)
@@ -119,6 +119,8 @@ function mod:SPELL_CAST_START(args)
 			specWarnTurbulence:Play("aesoon")
 		end
 --		specWarnTurbulence:ScheduleVoice("pushbackincoming")
+	elseif spellId == 411002 and self:AntiSpam(3, 6) then
+		warnLethalCurrent:Show()
 	end
 end
 

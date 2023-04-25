@@ -46,7 +46,7 @@ end
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
 	if spellId == 198820 then
-		if self.vb.phase == 1 then
+		if self:GetStage(1) then
 			specWarnDarkblast:Show()
 			specWarnDarkblast:Play("watchstep")
 			timerDarkBlastCD:Start()

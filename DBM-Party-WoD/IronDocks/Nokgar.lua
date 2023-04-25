@@ -67,7 +67,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 	elseif args.spellId == 164635 then
 		specWarnBurningArrows:Show()
 		specWarnBurningArrows:Play("watchfeet")
-		timerBurningArrowsCD:Start(self.vb.phase == 1 and 30 or 40)
+		timerBurningArrowsCD:Start(self:GetStage(1) and 30 or 40)
 	end
 end
 

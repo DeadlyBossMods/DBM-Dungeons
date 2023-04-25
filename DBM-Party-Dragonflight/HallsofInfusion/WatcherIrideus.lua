@@ -110,7 +110,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		end
 	elseif spellId == 383840 then
 		warnAblativeBarrier:Show()
-		if self.vb.phase == 1 then
+		if self:GetStage(1) then
 			self:SetStage(2)
 			timerPowerOverloadCD:Stop()
 			timerSparkVolleyCD:Stop()

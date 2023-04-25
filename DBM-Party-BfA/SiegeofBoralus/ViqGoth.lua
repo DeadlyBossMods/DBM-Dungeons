@@ -115,7 +115,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, spellId)
 		timerDemolisherTerrorCD:Start(20)
 	elseif spellId == 269984 then--Damage Boss 35% (can use SPELL_CAST_START of 269456 alternatively)
 		--Might actually be at Repair event instead (269366)
-		if self.vb.phase < 3 then
+		if self:GetStage(3, 1) then
 			self:SetStage(0)
 		end
 	end

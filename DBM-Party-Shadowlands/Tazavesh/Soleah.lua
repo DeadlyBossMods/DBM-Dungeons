@@ -95,7 +95,7 @@ function mod:SPELL_CAST_START(args)
 	elseif spellId == 353635 then
 		self.vb.starCount = self.vb.starCount + 1
 		warnCollapsingStar:Show(self.vb.starCount)
-		if self.vb.phase == 1 then
+		if self:GetStage(1) then
 			timerCollapsingStarCD:Start(60)
 		end
 	elseif spellId == 351119 then

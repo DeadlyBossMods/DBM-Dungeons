@@ -55,7 +55,7 @@ function mod:SPELL_CAST_START(args)
 	if spellId == 207261 then
 		specWarnResonantSlash:Show()
 		specWarnResonantSlash:Play("watchstep")
-		if self.vb.phase == 2 then
+		if self:GetStage(2) then
 			timerResonantSlashCD:Start(10)
 		else
 			timerResonantSlashCD:Start()
@@ -74,7 +74,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 	if spellId == 207278 then--Success since jumping on cast start too early
 		specWarnArcaneLockdown:Show()
 		specWarnArcaneLockdown:Play("keepjump")
-		if self.vb.phase == 2 then
+		if self:GetStage(2) then
 			timerArcaneLockdownCD:Start(26.7)
 		else
 			timerArcaneLockdownCD:Start(27.9)
