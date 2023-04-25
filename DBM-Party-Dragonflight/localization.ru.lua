@@ -284,3 +284,7 @@ L = DBM:GetModLocalization("HallsofInfusionTrash")
 L:SetGeneralLocalization({
 	name =	"Трэш мобы Чертоги Насыщения"
 })
+
+L:SetOptionLocalization({
+	AGBuffs		= "Автоматически выбирать диалоги, чтобы активировать полезные баффы для инженерии и травничества"
+})
