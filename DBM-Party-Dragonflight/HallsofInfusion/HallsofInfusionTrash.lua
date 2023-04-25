@@ -10,6 +10,7 @@ mod:RegisterEvents(
 	"SPELL_AURA_APPLIED 374724 374615 391610 391613 377384 377402",
 	"SPELL_AURA_APPLIED_DOSE 374389",
 --	"SPELL_AURA_REMOVED",
+	"UNIT_DIED",
 	"GOSSIP_SHOW"
 )
 
@@ -27,7 +28,7 @@ local warnContainmentBeam					= mod:NewCastAnnounce(374020, 2, nil, nil, false)-
 local warnExpulse							= mod:NewCastAnnounce(374045, 3)
 local warnDemoralizingShout					= mod:NewCastAnnounce(374339, 2)
 local warnElementalFocus					= mod:NewCastAnnounce(395694, 4)
-local warnCauterize							= mod:NewCastAnnounce(374699, 3)
+local warnCauterize							= mod:NewCastAnnounce(374699, 3)--20.6?
 local warnWhirlingFury						= mod:NewCastAnnounce(375079, 3)
 local warnZephyrsCall						= mod:NewCastAnnounce(374823, 2)
 local warnTidalDivergence					= mod:NewCastAnnounce(377341, 3)
@@ -60,6 +61,18 @@ local specWarnPyreticBurst					= mod:NewSpecialWarningInterrupt(374706, false, n
 local specWarnTidalDivergence				= mod:NewSpecialWarningInterrupt(377341, "HasInterrupt", nil, nil, 1, 2)
 local specWarnAqueousBarrier				= mod:NewSpecialWarningInterrupt(377402, "HasInterrupt", nil, nil, 1, 2)
 
+local timerDemoShoutCD						= mod:NewCDTimer(30, 374339, nil, nil, nil, 2)
+local timerDazzleCD							= mod:NewCDTimer(18.1, 374563, nil, nil, nil, 3)
+local timerZephyrsCallCD					= mod:NewCDTimer(23.1, 374823, nil, nil, nil, 1)
+local timerWhirlingFuryCD					= mod:NewCDTimer(19, 375079, nil, nil, nil, 2)
+local timerMoltenSubductionCD				= mod:NewCDTimer(25, 374724, nil, nil, nil, 3)
+local timerOceanicBreathCD					= mod:NewCDTimer(18.1, 375351, nil, nil, nil, 3)
+local timerGustingBreathCD					= mod:NewCDTimer(19.3, 375348, nil, nil, nil, 3)--Could also be 18.1, but need bigger sample
+local timerTectonicBreathCD					= mod:NewCDTimer(18.1, 375327, nil, nil, nil, 3)
+local timerThunderstormCD					= mod:NewCDTimer(19.4, 385141, nil, nil, nil, 3)
+local timerAqueousBarrierCD					= mod:NewCDTimer(17.3, 377402, nil, nil, nil, 5)
+local timerFlashFloodCD						= mod:NewCDTimer(23, 390290, nil, nil, nil, 2)
+
 mod:AddBoolOption("AGBuffs", true)
 
 --local playerName = UnitName("player")
@@ -78,10 +91,13 @@ end
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
 	if not self:IsValidWarning(args.sourceGUID) then return end
-	if spellId == 390290 and self:AntiSpam(3, 6) then
-		specWarnFlashFlood:Show()
-		specWarnFlashFlood:Play("justrun")
-		specWarnFlashFlood:ScheduleVoice(1.2, "carefly")
+	if spellId == 390290 then
+		timerFlashFloodCD:Start(nil, args.sourceGUID)
+		if self:AntiSpam(3, 6) then
+			specWarnFlashFlood:Show()
+			specWarnFlashFlood:Play("justrun")
+			specWarnFlashFlood:ScheduleVoice(1.2, "carefly")
+		end
 	elseif spellId == 374080 then
 		if self.Options.SpecWarn374080interrupt and self:CheckInterruptFilter(args.sourceGUID, false, true) then
 			specWarnBlastingGust:Show(args.sourceName)
@@ -97,6 +113,7 @@ function mod:SPELL_CAST_START(args)
 			warnExpulse:Show()
 		end
 	elseif spellId == 374339 then
+		timerDemoShoutCD:Start(nil, args.sourceGUID)
 		if self.Options.SpecWarn374339interrupt and self:CheckInterruptFilter(args.sourceGUID, false, true) then
 			specWarnDemoShout:Show(args.sourceName)
 			specWarnDemoShout:Play("kickcast")
@@ -139,6 +156,7 @@ function mod:SPELL_CAST_START(args)
 			warnTidalDivergence:Show()
 		end
 	elseif spellId == 377402 then
+		timerAqueousBarrierCD:Start(nil, args.sourceGUID)
 		if self.Options.SpecWarn377402interrupt and self:CheckInterruptFilter(args.sourceGUID, false, true) then
 			specWarnAqueousBarrier:Show(args.sourceName)
 			specWarnAqueousBarrier:Play("kickcast")
@@ -147,26 +165,45 @@ function mod:SPELL_CAST_START(args)
 		end
 	elseif spellId == 374020 and self:AntiSpam(3, 6) then
 		warnContainmentBeam:Show()
-	elseif spellId == 375351 and self:AntiSpam(3, 2) then
-		specWarnOceanicBreath:Show()
-		specWarnOceanicBreath:Play("breathsoon")
-	elseif spellId == 375348 and self:AntiSpam(3, 2) then
-		specWarnGustingBreath:Show()
-		specWarnGustingBreath:Play("breathsoon")
-	elseif spellId == 375327 and self:AntiSpam(3, 2) then
-		specWarnTectonicBreath:Show()
-		specWarnTectonicBreath:Play("breathsoon")
+	elseif spellId == 375351 then
+		timerOceanicBreathCD:Start(nil, args.sourceGUID)
+		if self:AntiSpam(3, 2) then
+			specWarnOceanicBreath:Show()
+			specWarnOceanicBreath:Play("breathsoon")
+		end
+	elseif spellId == 375348 then
+		timerGustingBreathCD:Start(nil, args.sourceGUID)
+		if self:AntiSpam(3, 2) then
+			specWarnGustingBreath:Show()
+			specWarnGustingBreath:Play("breathsoon")
+		end
+	elseif spellId == 375327 then
+		timerTectonicBreathCD:Start(nil, args.sourceGUID)
+		if self:AntiSpam(3, 2) then
+			specWarnTectonicBreath:Show()
+			specWarnTectonicBreath:Play("breathsoon")
+		end
 	elseif spellId == 375384 and self:AntiSpam(3, 2) then
 		specWarnRumblingEarth:Show()
 		specWarnRumblingEarth:Play("watchstep")
-	elseif spellId == 374563 and self:AntiSpam(3, 2) then
-		specWarnDazzle:Show()
-		specWarnDazzle:Play("shockwave")
-	elseif spellId == 375079 and self:AntiSpam(3, 6) then
-		warnWhirlingFury:Show()
-	elseif spellId == 374823 and self:AntiSpam(3, 5) then
-		warnZephyrsCall:Show()
+	elseif spellId == 374563 then
+		timerDazzleCD:Start(nil, args.sourceGUID)
+		if self:AntiSpam(3, 2) then
+			specWarnDazzle:Show()
+			specWarnDazzle:Play("shockwave")
+		end
+	elseif spellId == 375079 then
+		timerWhirlingFuryCD:Start(nil, args.sourceGUID)
+		if self:AntiSpam(3, 6) then
+			warnWhirlingFury:Show()
+		end
+	elseif spellId == 374823 then
+		timerZephyrsCallCD:Start(nil, args.sourceGUID)
+		if self:AntiSpam(3, 5) then
+			warnZephyrsCall:Show()
+		end
 	elseif spellId == 385141 then
+		timerThunderstormCD:Start(nil, args.sourceGUID)
 		self:ScheduleMethod(0.1, "BossTargetScanner", args.sourceGUID, "ThunderstormTarget", 0.1, 8)
 	end
 end
@@ -182,6 +219,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		end
 	elseif spellId == 374724 then
 		warnMoltenSubduction:Show(args.destName)
+		timerMoltenSubductionCD:Start(nil, args.sourceGUID)
 	elseif spellId == 374615 then
 		warnCheapShot:Show(args.destName)
 	elseif spellId == 391610 and args:IsDestTypePlayer() and self:CheckDispelFilter("magic") and self:AntiSpam(3, 3) then
@@ -213,6 +251,31 @@ function mod:SPELL_AURA_REMOVED(args)
 	end
 end
 --]]
+
+function mod:UNIT_DIED(args)
+	local cid = self:GetCIDFromGUID(args.destGUID)
+	if cid == 190340 then--Refi Defender
+		timerDemoShoutCD:Stop(args.destGUID)
+	elseif cid == 190362 then--Dazzling Dragonfly
+		timerDazzleCD:Stop(args.destGUID)
+	elseif cid == 190370 then--Spellcaller Cryaz
+		timerZephyrsCallCD:Stop(args.destGUID)
+		timerWhirlingFuryCD:Stop(args.destGUID)
+	elseif cid == 190403 then--Glacial Proto-Dragon
+		timerOceanicBreathCD:Stop(args.destGUID)
+	elseif cid == 190405 then--Infuser Sariya
+		timerAqueousBarrierCD:Stop(args.destGUID)
+		timerFlashFloodCD:Stop(args.destGUID)
+	elseif cid == 190368 then--Flamecaller Aymi
+		timerMoltenSubductionCD:Stop(args.destGUID)
+	elseif cid == 190401 then--Gusting Proto-Dragon
+		timerGustingBreathCD:Stop(args.destGUID)
+	elseif cid == 190373 then----Primalist Galeslinger
+		timerThunderstormCD:Stop(args.destGUID)
+	elseif cid == 190404 then
+		timerTectonicBreathCD:Stop(args.destGUID)
+	end
+end
 
 --TODO, actually get correct IDs, these are in guide but haven't collected Ids yet
 function mod:GOSSIP_SHOW()
