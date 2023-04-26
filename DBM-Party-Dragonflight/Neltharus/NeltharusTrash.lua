@@ -256,7 +256,7 @@ end
 function mod:SPELL_AURA_REMOVED(args)
 	local spellId = args.spellId
 	if spellId == 383654 then--Molten Barrier
-		if cachedGUIDS[args.destGUID]--still casting
+		if cachedGUIDS[args.destGUID] then--still casting
 			specWarnMoltenArmy:Show(args.destName)
 			specWarnMoltenArmy:Play("kickcast")
 		end
