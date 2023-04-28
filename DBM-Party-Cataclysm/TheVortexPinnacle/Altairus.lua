@@ -106,7 +106,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 			if self.vb.windCount % 4 == 2 then--2, 6, 10, etc
 				timerCalltheWindCD:Start(19.4, self.vb.windCount+1)
 			else
-				timerCalltheWindCD:Start(15.4 self.vb.windCount+1)
+				timerCalltheWindCD:Start(15.4, self.vb.windCount+1)
 			end
 		else
 			timerCalltheWindCD:Start(20.6, self.vb.windCount+1)
