@@ -225,7 +225,7 @@ function mod:SPELL_AURA_APPLIED(args)
 	if spellId == 384161 then
 		if args:IsPlayer() then
 			specWarnMoteofCombustionYou:Show()
-			specWarnMoteofCombustionYou:Play("runout")
+			specWarnMoteofCombustionYou:Play("targetyou")
 			yellMoteofCombustion:Yell()
 		end
 	elseif spellId == 372543 then
