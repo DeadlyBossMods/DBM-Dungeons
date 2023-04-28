@@ -285,3 +285,7 @@ L = DBM:GetModLocalization("HallsofInfusionTrash")
 L:SetGeneralLocalization({
 	name =	"주입의 전당 일반몹"
 })
+
+L:SetOptionLocalization({
+	AGBuffs		= "기계공학 약초채집용 버프 받기 대화 자동 선택"
+})
