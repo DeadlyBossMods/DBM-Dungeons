@@ -36,7 +36,7 @@ local warnDecayingRoots						= mod:NewCastAnnounce(373897, 3)
 local warnBurst								= mod:NewCastAnnounce(374569, 4)
 local warnWitheringContagion				= mod:NewTargetAnnounce(383087, 3)
 local warnWitheringBurst					= mod:NewTargetAnnounce(367503, 3)
-local warnInfuseCorruption					= mod:NewTargetNofilterAnnounce(372711, 3)--Used as target warning but is off interrupt too
+local warnInfuseCorruption					= mod:NewTargetNoFilterAnnounce(372711, 3)--Used as target warning but is off interrupt too
 local warnStealth							= mod:NewSpellAnnounce(384930, 3)
 --local warnSummontotem						= mod:NewSpellAnnounce(374057, 4)--Despite tooltip showing cast time, only event in log is SPELL_SUMMON
 

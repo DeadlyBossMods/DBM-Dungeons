@@ -280,3 +280,7 @@ L = DBM:GetModLocalization("HallsofInfusionTrash")
 L:SetGeneralLocalization({
 	name =	"灌注迴廊小怪"
 })
+
+L:SetOptionLocalization({
+	AGBuffs		= "為工程學以及草藥學自動選擇對話，以啟動可用的增益。"
+})
