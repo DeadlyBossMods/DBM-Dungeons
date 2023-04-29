@@ -55,7 +55,7 @@ local specWarnSlipperySudsYou			= mod:NewSpecialWarningYou(274507, nil, nil, nil
 local specWarnHealingBalm				= mod:NewSpecialWarningInterrupt(257397, "HasInterrupt", nil, nil, 1, 2)
 local specWarnPainfulMotivation			= mod:NewSpecialWarningInterrupt(257899, false, nil, 2, 1, 2)--Off by default since it'll be common strategy NOT to interrupt this ever for dps gain
 local specWarnThunderingSquall			= mod:NewSpecialWarningInterrupt(257736, "HasInterrupt", nil, nil, 1, 2)
-local specWarnSeaSpout					= mod:NewSpecialWarningInterrupt(258777, "HasInterrupt", nil, nil, 1, 2)
+local specWarnSeaSpoutKick				= mod:NewSpecialWarningInterrupt(258777, "HasInterrupt", nil, nil, 1, 2)
 local specWarnFrostBlast				= mod:NewSpecialWarningInterrupt(257784, "HasInterrupt", nil, nil, 1, 2)--Might prune or disable by default if it conflicts with higher priority interrupts in area
 local specWarnShatteringBellowKick		= mod:NewSpecialWarningInterrupt(257732, "HasInterrupt", nil, nil, 1, 2)
 local specWarnSlipperySuds				= mod:NewSpecialWarningInterrupt(274507, "HasInterrupt", nil, nil, 1, 2)
@@ -131,8 +131,8 @@ function mod:SPELL_CAST_START(args)
 	elseif spellId == 258777 then
 		timerSeaSpoutCD:Start(nil, args.sourceGUID)
 		if self:CheckInterruptFilter(args.sourceGUID, false, true) then
-			specWarnSeaSpout:Show(args.sourceName)
-			specWarnSeaSpout:Play("kickcast")
+			specWarnSeaSpoutKick:Show(args.sourceName)
+			specWarnSeaSpoutKick:Play("kickcast")
 		end
 	elseif spellId == 257784 and self:CheckInterruptFilter(args.sourceGUID, false, true) then
 		specWarnFrostBlast:Show(args.sourceName)
