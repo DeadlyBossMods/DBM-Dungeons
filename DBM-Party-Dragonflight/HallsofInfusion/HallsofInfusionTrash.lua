@@ -281,7 +281,7 @@ end
 function mod:GOSSIP_SHOW()
 --	local gossipOptionID = self:GetGossipID()
 --	if gossipOptionID then
---		if self.Options.AGBuffs and (gossipOptionID == 45624 or gossipOptionID == 45624) then -- Engineer/Herb Buff
+--		if self.Options.AGBuffs and (gossipOptionID == 107192 or gossipOptionID == 107205) then -- Engineer/Herb Buff
 --			self:SelectGossip(gossipOptionID)
 --		end
 --	end
