@@ -78,7 +78,7 @@ local timerGoinBanCD					= mod:NewCDTimer(17, 257756, nil, nil, nil, 3)
 local timerSlipperySudsCD				= mod:NewCDTimer(20.6, 274507, nil, nil, nil, 3)
 local timerGroundShatterCD				= mod:NewCDTimer(19.3, 258199, nil, nil, nil, 3)
 local timerBoulderThrowCD				= mod:NewCDTimer(19.3, 258181, nil, nil, nil, 3)
-local timerPainfulMotivationCD			= mod:NewCDTimer(18.1, 257899, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerPainfulMotivationCD			= mod:NewCDTimer(18.1, 257899, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerBladeBarrageCD				= mod:NewCDTimer(18.2, 257870, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerThunderingSquallCD			= mod:NewCDTimer(27.8, 257736, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 
@@ -182,6 +182,7 @@ function mod:SPELL_CAST_START(args)
 		end
 	elseif spellId == 274400 then
 --		self:ScheduleMethod(0.1, "BossTargetScanner", args.sourceGUID, "DashTarget", 0.1, 8)
+		DBM:AddMsg("274400 added back to combat log, report in DBM discord if you can")
 	elseif spellId == 274383 then
 		timerRatTrapsCD:Start(nil, args.sourceGUID)
 		if self:AntiSpam(3, 2) then
