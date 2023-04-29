@@ -236,7 +236,7 @@ function mod:SPELL_AURA_APPLIED(args)
 	elseif spellId == 377384 and self:AntiSpam(3, 3) then
 		specWarnBoilingRage:Show(args.destName)
 		specWarnBoilingRage:Play("enrage")
-	elseif spellId == 377402 and self:AntiSpam(3, 3) then
+	elseif spellId == 377402 and not args:IsDestTypePlayer() and self:AntiSpam(3, 3) then
 		specWarnAqueousBarrierDispel:Show(args.destName)
 		specWarnAqueousBarrierDispel:Play("helpdispel")
 	end
