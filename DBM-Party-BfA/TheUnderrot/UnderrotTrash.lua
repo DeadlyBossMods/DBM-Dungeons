@@ -128,6 +128,7 @@ function mod:SPELL_CAST_START(args)
 			specWarnDeathBolt:Play("kickcast")
 		elseif self:AntiSpam(2, 7) then
 			warnDeathBolt:Show()
+		end
 	elseif spellId == 265568 and self:AntiSpam(3, 5) then
 		warnDarkOmen:Show()
 		warnDarkOmen:Play("crowdcontrol")
