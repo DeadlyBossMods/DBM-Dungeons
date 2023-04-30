@@ -24,7 +24,7 @@ mod:RegisterEvents(
 --TODO can chilling Blast be side stepped?
 --TODO, timer for Air Nova-87933 ?
 --TODO, maybe wind blast timer off by default? a lot of those mobs can be up at once
---TODO, hurricane has a 17 second cd but packs with this mob have 4-8 of them with desynced timers, That's reason timer is omitted.
+--TODO, hurricane no longer exists in 10.1?
 --TODO, "Rushing Wind-410873-npc:45477-0001271105 = pull:144.6, 17.0", -- [70] ?
 --TODO, spell interrupt for https://www.wowhead.com/ptr/spell=410760/wind-bolt ?
 --NOTE: if 10.1 values differ from 10.0 values for timers, retain both for classic cataclysm
@@ -66,7 +66,7 @@ local timerIcyBuffetCD							= mod:NewCDTimer(22.6, 88194, nil, "Tank|Healer", n
 local timerWindBlastCD							= mod:NewCDTimer(10.1, 87923, nil, "Tank|MagicDispeller", nil, 5, nil, DBM_COMMON_L.MAGIC_ICON)--Retail 10.0 value
 local timerCloudGuardCD							= mod:NewCDTimer(19.1, 411000, nil, nil, nil, 5)
 local timerPressurizedBlastCD					= mod:NewCDTimer(21.8, 410999, nil, nil, nil, 2)
-local timerBombCycloneCD						= mod:NewCDTimer(15.9, 411005, nil, nil, nil, 3)--15.9-17.1
+local timerBombCycloneCD						= mod:NewCDTimer(15.7, 411005, nil, nil, nil, 3)--15.9-17.1
 local timerTurbulenceCD							= mod:NewCDTimer(32.8, 411002, nil, nil, nil, 2)
 local timerWindFlurryCD							= mod:NewCDTimer(10.1, 410998, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerLightningLashCD						= mod:NewCDTimer(19, 87762, nil, nil, nil, 3)

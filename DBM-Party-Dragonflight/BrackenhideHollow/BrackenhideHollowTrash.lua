@@ -17,13 +17,17 @@ mod:RegisterEvents(
 	"UNIT_DIED"
 )
 
+--TODO, half the mobs in zone cast Bloody Bite, is it worth having a Cd bar? cause it's pretty hard to vet for so many diff mobs
 --TODO: can https://www.wowhead.com/ptr/spell=383385/rotting-surge can be stunned (but not interrupted)
 --TODO, can burst of decay be interrupted/stunned or target scanned?
 --TODO, Add https://www.wowhead.com/spell=382593/crushing-smash?
 --TODO, add https://www.wowhead.com/spell=382410/witherbolt interrupt warning?
 --TODO, ragestorm cd might not start til last one is stopped? need more data
+--TODO, auto detect and correct CD timers if mob affected by https://www.wowhead.com/spell=367510/pack-tactics ?
+--TODO, add https://www.wowhead.com/spell=384899/bone-bolt-volley
+--TODO, add https://www.wowhead.com/spell=382883/siphon-decay ?
 --[[
-(ability.id = 382555 or ability.id = 367500 or ability.id = 388060 or ability.id = 388046 or ability.id = 382474 or ability.id = 382787 or ability.id = 374544 or ability.id = 385029 or ability.id = 383062 or ability.id = 367503 or ability.id = 373897 or ability.id = 382712 or ability.id = 373943 or ability.id = 374569 or ability.id = 385832) and type = "begincast"
+(ability.id = 384899 or ability.id = 367481 or ability.id = 382555 or ability.id = 367500 or ability.id = 388060 or ability.id = 388046 or ability.id = 382474 or ability.id = 382787 or ability.id = 374544 or ability.id = 385029 or ability.id = 383062 or ability.id = 367503 or ability.id = 373897 or ability.id = 382712 or ability.id = 373943 or ability.id = 374569 or ability.id = 385832) and type = "begincast"
  or (ability.id = 368287 or ability.id = 383385 or ability.id = 382435 or ability.id = 384930 or ability.id = 372711) and type = "cast"
  or ability.id = 374057
 --]]
@@ -60,18 +64,19 @@ local yellWitheringContagion				= mod:NewYell(383087)
 local specWarnWitheringBurst				= mod:NewSpecialWarningYou(367503, nil, nil, nil, 1, 2)
 local yellWitheringBurst					= mod:NewYell(367503)
 local specWarnBurstofDecay					= mod:NewSpecialWarningInterrupt(374544, "HasInterrupt", nil, nil, 1, 2)
-local specWarnHidiousCackle					= mod:NewSpecialWarningInterrupt(367500, "HasInterrupt", nil, nil, 1, 2)
+local specWarnHidiousCackle					= mod:NewSpecialWarningInterrupt(367500, "HasInterrupt", nil, nil, 1, 2)--46?
 local specWarnDecaySurge					= mod:NewSpecialWarningInterrupt(382474, "HasInterrupt", nil, nil, 1, 2)
 local specWarnScreech						= mod:NewSpecialWarningInterrupt(385029, "HasInterrupt", nil, nil, 1, 2)
 local specWarnNecroticBreath				= mod:NewSpecialWarningInterrupt(382712, "HasInterrupt", nil, nil, 1, 2)--26.7-40?
 local specWarnGTFO							= mod:NewSpecialWarningGTFO(383399, nil, nil, nil, 1, 8)
 
 local timerDecayClawsCD						= mod:NewCDTimer(10.2, 382787, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
-local timerWitheringBurstCD					= mod:NewCDTimer(23, 367503, nil, nil, nil, 3)
-local timerSummonLashersCD					= mod:NewCDTimer(12.2, 383062, nil, nil, nil, 1)
+local timerWitheringBurstCD					= mod:NewCDTimer(19.4, 367503, nil, nil, nil, 3)--19-26
+local timerSummonLashersCD					= mod:NewCDTimer(12.2, 383062, nil, nil, nil, 1)--12-15
 local timerStinkBreathCD					= mod:NewCDTimer(17, 388060, nil, nil, nil, 3)
 local timerViolentWhirlwindCD				= mod:NewCDTimer(17, 388046, nil, nil, nil, 2)
 local timerStompCD							= mod:NewCDTimer(20.6, 373943, nil, nil, nil, 2)
+local timerRottingSurgeCD					= mod:NewCDTimer(23, 383385, nil, nil, nil, 3)--TODO, limited data
 
 --local playerName = UnitName("player")
 
@@ -161,7 +166,11 @@ function mod:SPELL_CAST_START(args)
 		if self:AntiSpam(3, 5) then
 			warnSummonLashers:Show()
 		end
-		timerSummonLashersCD:Start(nil, args.sourceGUID)
+		if args:GetSrcCreatureID() == 186229 then--Wilted Oak
+			timerSummonLashersCD:Start(46, args.sourceGUID)
+		else--Decayed Elder (189531)
+			timerSummonLashersCD:Start(12.2, args.sourceGUID)
+		end
 	elseif spellId == 367503 then
 		self:ScheduleMethod(0.1, "BossTargetScanner", args.sourceGUID, "BurstTarget", 0.1, 8)
 		timerWitheringBurstCD:Start(nil, args.sourceGUID)
@@ -178,9 +187,12 @@ function mod:SPELL_CAST_SUCCESS(args)
 	if spellId == 368287 and self:AntiSpam(3, 2) then
 		specWarnToxicTrap:Show()
 		specWarnToxicTrap:Play("watchstep")
-	elseif spellId == 383385 and self:AntiSpam(3, 2) then
-		specWarnRottingSurge:Show()
-		specWarnRottingSurge:Play("watchstep")
+	elseif spellId == 383385 then
+		timerRottingSurgeCD:Start(nil, args.sourceGUID)
+		if self:AntiSpam(3, 2) then
+			specWarnRottingSurge:Show()
+			specWarnRottingSurge:Play("watchstep")
+		end
 	elseif spellId == 382435 and self:AntiSpam(3, 5) then
 		specWarnRotchantingTotem:Show()
 		specWarnRotchantingTotem:Play("attacktotem")
@@ -265,5 +277,8 @@ function mod:UNIT_DIED(args)
 		timerDecayClawsCD:Stop(args.destGUID)
 	elseif cid == 186229 then--Wilted Oak
 		timerStompCD:Stop(args.destGUID)
+		timerSummonLashersCD:Stop(args.destGUID)
+	elseif cid == 185656 then--Filth Caller
+		timerRottingSurgeCD:Stop(args.destGUID)
 	end
 end
