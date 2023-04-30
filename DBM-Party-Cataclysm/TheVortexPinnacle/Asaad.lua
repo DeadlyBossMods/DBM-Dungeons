@@ -77,8 +77,8 @@ function mod:SPELL_CAST_START(args)
 	if args.spellId == 87618 then
 		--1.25 post nerf in classic, 1 sec pre nerf
 		--3.5 lol giga nerf in M+
-		specWarnStaticCling:Schedule(2.5)--delay message since jumping at start of cast is no longer correct in 4.0.6+
-		specWarnStaticCling:ScheduleVoice(2.5, "jumpnow")
+		specWarnStaticCling:Schedule(2.4)--delay message since jumping at start of cast is no longer correct in 4.0.6+
+		specWarnStaticCling:ScheduleVoice(2.4, "jumpnow")
 		if not self:IsMythicPlus() and timerGroundingFieldCD:GetRemaining() < 15.8 then
 			timerStaticClingCD:Start()
 		end
