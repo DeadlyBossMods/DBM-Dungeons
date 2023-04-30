@@ -7,7 +7,7 @@ mod:SetRevision("@file-date-integer@")
 mod.isTrashMod = true
 
 mod:RegisterEvents(
-	"SPELL_CAST_START 257732 257397 257899 257736 258777 257784 257756 274860 257426 274383 258199 272402 257870 274400 257436 258672 258181 274507",
+	"SPELL_CAST_START 257732 257397 257899 257736 258777 257784 257756 274860 257426 274383 258199 272402 257870 274400 257436 258672 258181 274507 257908",
 	"SPELL_CAST_SUCCESS 257747 258777 257272",
 	"SPELL_AURA_APPLIED 257274 257476 258323 257739 257908 257397 257775 274507",
 	"SPELL_AURA_APPLIED_DOSE 274555",
@@ -21,7 +21,7 @@ mod:RegisterEvents(
 --TODO, alert for https://www.wowhead.com/spell=272413/dragging-harpoon ?
 --TODO, Healing Balm CD? can't find any logs it was cast twice by single mob
 --[[
-(ability.id = 257732 or ability.id = 257397 or ability.id = 257899 or ability.id = 257736 or ability.id = 258777 or ability.id = 257784 or ability.id = 257756 or ability.id = 274860 or ability.id = 257426 or ability.id = 274383 or ability.id = 258199 or ability.id = 272402 or ability.id = 257870 or ability.id = 274400 or ability.id = 257436 or ability.id = 258672 or ability.id = 258181 or ability.id = 274507) and type = "begincast"
+(ability.id = 257732 or ability.id = 257397 or ability.id = 257899 or ability.id = 257736 or ability.id = 258777 or ability.id = 257784 or ability.id = 257756 or ability.id = 274860 or ability.id = 257426 or ability.id = 274383 or ability.id = 258199 or ability.id = 272402 or ability.id = 257870 or ability.id = 274400 or ability.id = 257436 or ability.id = 258672 or ability.id = 258181 or ability.id = 274507 or ability.id = 257908) and type = "begincast"
  or (ability.id = 257747 or ability.id = 258777 or ability.id = 257272 or ability.id = 274400) and type = "cast"
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
 --]]
@@ -53,9 +53,9 @@ local specWarnGroundShatter				= mod:NewSpecialWarningRun(258199, "Melee", nil, 
 local specWarnBlindRagePlayer			= mod:NewSpecialWarningRun(257739, nil, nil, nil, 4, 2)
 local specWarnSlipperySudsYou			= mod:NewSpecialWarningYou(274507, nil, nil, nil, 1, 2)
 local specWarnHealingBalm				= mod:NewSpecialWarningInterrupt(257397, "HasInterrupt", nil, nil, 1, 2)
-local specWarnPainfulMotivation			= mod:NewSpecialWarningInterrupt(257899, false, nil, 2, 1, 2)--Off by default since it'll be common strategy NOT to interrupt this ever for dps gain
+local specWarnPainfulMotivation			= mod:NewSpecialWarningInterrupt(257899, nil, nil, nil, 1, 2)
 local specWarnThunderingSquall			= mod:NewSpecialWarningInterrupt(257736, "HasInterrupt", nil, nil, 1, 2)
-local specWarnSeaSpoutKick				= mod:NewSpecialWarningInterrupt(258777, "HasInterrupt", nil, nil, 1, 2)
+--local specWarnSeaSpoutKick				= mod:NewSpecialWarningInterrupt(258777, "HasInterrupt", nil, nil, 1, 2)
 local specWarnFrostBlast				= mod:NewSpecialWarningInterrupt(257784, "HasInterrupt", nil, nil, 1, 2)--Might prune or disable by default if it conflicts with higher priority interrupts in area
 local specWarnShatteringBellowKick		= mod:NewSpecialWarningInterrupt(257732, "HasInterrupt", nil, nil, 1, 2)
 local specWarnSlipperySuds				= mod:NewSpecialWarningInterrupt(274507, "HasInterrupt", nil, nil, 1, 2)
@@ -70,7 +70,7 @@ local specWarnGTFO						= mod:NewSpecialWarningGTFO(257274, nil, nil, nil, 1, 8)
 local timerVileBombardmentCD			= mod:NewCDTimer(16, 257272, nil, nil, nil, 3)
 local timerShatteringBellowCD			= mod:NewCDTimer(27.8, 257732, nil, nil, nil, 2)
 local timerBrutalBackhandCD				= mod:NewCDTimer(18.2, 257426, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
-local timerSeaSpoutCD					= mod:NewCDTimer(17, 258777, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerSeaSpoutCD					= mod:NewCDTimer(17, 258777, nil, nil, nil, 3)
 local timerRatTrapsCD					= mod:NewCDTimer(20.6, 274383, nil, nil, nil, 3)
 local timerRicochetingThrowCD			= mod:NewCDTimer(8.4, 272402, nil, nil, nil, 3)
 local timerEarthShakerCD				= mod:NewCDTimer(8.4, 257747, nil, nil, nil, 3)--Instance cast, not really worth announcing every 8 sec, but def worth having a timer for
@@ -78,9 +78,10 @@ local timerGoinBanCD					= mod:NewCDTimer(17, 257756, nil, nil, nil, 3)
 local timerSlipperySudsCD				= mod:NewCDTimer(20.6, 274507, nil, nil, nil, 3)
 local timerGroundShatterCD				= mod:NewCDTimer(19.3, 258199, nil, nil, nil, 3)
 local timerBoulderThrowCD				= mod:NewCDTimer(19.3, 258181, nil, nil, nil, 3)
-local timerPainfulMotivationCD			= mod:NewCDTimer(18.1, 257899, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+local timerPainfulMotivationCD			= mod:NewCDTimer(18.1, 257899, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerBladeBarrageCD				= mod:NewCDTimer(18.2, 257870, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerThunderingSquallCD			= mod:NewCDTimer(27.8, 257736, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerOiledBladeCD					= mod:NewCDTimer(13.4, 257908, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc, 7 off interrupt
 
@@ -130,10 +131,10 @@ function mod:SPELL_CAST_START(args)
 		end
 	elseif spellId == 258777 then
 		timerSeaSpoutCD:Start(nil, args.sourceGUID)
-		if self:CheckInterruptFilter(args.sourceGUID, false, true) then
-			specWarnSeaSpoutKick:Show(args.sourceName)
-			specWarnSeaSpoutKick:Play("kickcast")
-		end
+		--if self:CheckInterruptFilter(args.sourceGUID, false, true) then
+		--	specWarnSeaSpoutKick:Show(args.sourceName)
+		--	specWarnSeaSpoutKick:Play("kickcast")
+		--end
 	elseif spellId == 257784 and self:CheckInterruptFilter(args.sourceGUID, false, true) then
 		specWarnFrostBlast:Show(args.sourceName)
 		specWarnFrostBlast:Play("kickcast")
@@ -202,7 +203,15 @@ function mod:SPELL_CAST_START(args)
 		warnPoisoningStrike:Show()
 	elseif spellId == 258672 and self:AntiSpam(3, 2) then
 		specWarnAzeriteGrenade:Show()
-		specWarnAzeriteGrenade:Play("watachstep")
+		specWarnAzeriteGrenade:Play("watchstep")
+	elseif spellId == 257908 then
+		timerOiledBladeCD:Start(nil, args.sourceGUID)
+		if self:AntiSpam(3, 5) then
+			if self:IsTanking("player", nil, nil, true, args.sourceGUID) then
+				specWarnOiledBladeSelf:Show()
+				specWarnOiledBladeSelf:Play("defensive")
+			end
+		end
 	end
 end
 
@@ -244,9 +253,6 @@ function mod:SPELL_AURA_APPLIED(args)
 		if self.Options.SpecWarn257908dispel and self:CheckDispelFilter("magic") then
 			specWarnOiledBlade:Show(args.destName)
 			specWarnOiledBlade:Play("helpdispel")
-		elseif args:IsPlayer() then
-			specWarnOiledBladeSelf:Show()
-			specWarnOiledBladeSelf:Play("defensive")
 		end
 	elseif spellId == 258323 and args:IsDestTypePlayer() and self:CheckDispelFilter("disease") and self:AntiSpam(3, 3) then
 		specWarnInfectedWound:Show(args.destName)
@@ -289,12 +295,15 @@ function mod:UNIT_DIED(args)
 	elseif cid == 130400 then--Irontide Crusher
 		timerGroundShatterCD:Stop(args.destGUID)
 		timerBoulderThrowCD:Stop(args.destGUID)
-	elseif cid == 130012 then--Irontide Ravager
+	elseif cid == 130012 or cid == 130012 then--Irontide Ravager
 		timerPainfulMotivationCD:Stop(args.destGUID)
 	elseif cid == 130011 then--Irontide Buccaneer
 		timerBladeBarrageCD:Stop(args.destGUID)
 	elseif cid == 126919 then--Irontide Stormcaller
 		timerThunderingSquallCD:Stop(args.destGUID)
+	elseif cid == 127106 then--Irontide Officer
+		timerOiledBladeCD:Stop(args.destGUID)
+		timerPainfulMotivationCD:Stop(args.destGUID)
 	end
 end
 

@@ -65,7 +65,7 @@ local timerAncientPowerCD					= mod:NewCDTimer(6, 377738, nil, nil, nil, 5)
 local timerHailofStoneCD					= mod:NewCDTimer(21.8, 369465, nil, nil, nil, 5)
 local timerStoneBoltCD						= mod:NewCDTimer(7.2, 369399, nil, false, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--7-11, off by default to giev prio to Hail of stone
 local timerEarthquakeCD						= mod:NewCDTimer(25.4, 369328, nil, nil, nil, 2)
-local timerFissuringSlamCD					= mod:NewCDTimer(9.7, 369328, nil, nil, nil, 2)--9.7-15
+local timerFissuringSlamCD					= mod:NewCDTimer(9.7, 369335, nil, nil, nil, 2)--9.7-15
 local timerCleaveCD							= mod:NewCDTimer(15.7, 369409, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerPounceCD							= mod:NewCDTimer(15.7, 369423, nil, nil, nil, 3)
 local timerThunderousClapCD					= mod:NewCDTimer(19.4, 381593, nil, nil, nil, 2)
@@ -121,7 +121,7 @@ function mod:SPELL_CAST_START(args)
 			specWarnSpikedCarapace:Show(args.sourceName)
 			specWarnSpikedCarapace:Play("kickcast")
 		end
-	elseif spellId == 369675 and args.GetSrcCreatureID() == 184022 then--184022 is trash version of mob (186658 is boss version)
+	elseif spellId == 369675 and args:GetSrcCreatureID() == 184022 then--184022 is trash version of mob (186658 is boss version)
 --		self:ScheduleMethod(0.2, "BossTargetScanner", args.sourceGUID, "LitTarget", 0.1, 8, true)
 		timerChainLightningCD:Start(nil, args.sourceGUID)
 		if self.Options.SpecWarn369675interrupt and self:CheckInterruptFilter(args.sourceGUID, false, true) then
