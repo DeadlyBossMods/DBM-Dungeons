@@ -78,7 +78,7 @@ end
 
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
-	if spellId == 369675 and args.GetSrcCreatureID() == 186658 and self:CheckInterruptFilter(args.sourceGUID, false, true) then--186658 boss version of mob
+	if spellId == 369675 and args:GetSrcCreatureID() == 186658 and self:CheckInterruptFilter(args.sourceGUID, false, true) then--186658 boss version of mob
 		specWarnChainLightning:Show(args.sourceName)
 		specWarnChainLightning:Play("kickcast")
 	elseif spellId == 369754 then

@@ -68,21 +68,21 @@ local timerExplosiveConcoctionCD			= mod:NewCDTimer(18.2, 378827, nil, nil, nil,
 local timerBindingSpearCD					= mod:NewCDTimer(25.4, 372561, nil, nil, nil, 3)
 local timerMendingClayCD					= mod:NewCDTimer(25.4, 372223, nil, nil, nil, 1)
 local timerBurningRoarCD					= mod:NewCDTimer(20.5, 395427, nil, nil, nil, 1)
-local timerEruptiveCrushCD					= mod:NewCDTimer(19.4, 376186, nil, nil, nil, 3)
+local timerEruptiveCrushCD					= mod:NewCDTimer(15.7, 376186, nil, nil, nil, 3)
 local timerScorchingBreathCD				= mod:NewCDTimer(16.9, 372201, nil, nil, nil, 3)
 local timerMoteofCombustionCD				= mod:NewCDTimer(18.2, 384161, nil, nil, nil, 3)
 local timerThrowLavaCD						= mod:NewCDTimer(12.1, 379406, nil, nil, nil, 3)
-local timerPierceMarrowCD					= mod:NewCDTimer(15.7, 372262, nil, nil, nil, 3)
+local timerPierceMarrowCD					= mod:NewCDTimer(10.9, 372262, nil, nil, nil, 3)
 local timerScorchingFusilladeCD				= mod:NewCDTimer(23, 372543, nil, nil, nil, 3)
 local timerConflagrantBatteryCD				= mod:NewCDTimer(22.6, 372296, nil, nil, nil, 3)
-local timerReverbSlamCD						= mod:NewCDTimer(17, 372971, nil, nil, nil, 3)
+--local timerReverbSlamCD						= mod:NewCDTimer(17, 372971, nil, nil, nil, 3)--8-17? needs further review
 local timerCandescentTempestCD				= mod:NewCDTimer(27.8, 381663, nil, nil, nil, 2)
 
 --local playerName = UnitName("player")
 
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc, 7 off interrupt
 
-local magmaMod = DBM:GetModByName("2610")
+local magmaMod = DBM:GetModByName("2494")
 
 local cachedGUIDS = {}
 
@@ -192,7 +192,7 @@ function mod:SPELL_CAST_START(args)
 			warnBrutalStrike:Show()
 		end
 	elseif spellId == 372971 then
-		timerReverbSlamCD:Start(nil, args.sourceGUID)
+--		timerReverbSlamCD:Start(nil, args.sourceGUID)
 		if self:AntiSpam(3, 5) then
 			warnReverberatingSlam:Show()
 		end
@@ -293,7 +293,7 @@ function mod:UNIT_DIED(args)
 		timerScorchingFusilladeCD:Stop(args.destGUID)
 		timerConflagrantBatteryCD:Stop(args.destGUID)
 	elseif cid == 189471 then--Qalashi Blacksmith
-		timerReverbSlamCD:Start(args.destGUID)
+--		timerReverbSlamCD:Start(args.destGUID)
 	elseif cid == 193291 then--Apex Blazewing
 		timerCandescentTempestCD:Stop(args.destGUID)
 	end

@@ -8,11 +8,11 @@ mod:SetZone(657)
 mod.isTrashMod = true
 
 mod:RegisterEvents(
-	"SPELL_CAST_START 88061 88010 88201 88194 87762 87761 87779 411012 411000 410870 410999 411002 411001",
+	"SPELL_CAST_START 88061 88010 88201 88194 87762 87761 87779 411012 411000 410870 410999 411002 411001 413385",
 	"SPELL_CAST_SUCCESS 88055 87759 87923 411004 410998",
-	"SPELL_AURA_APPLIED 88171 88186 88010 410870",
+	"SPELL_AURA_APPLIED 88171 88186 88010 410870 87726",
 --	"SPELL_AURA_APPLIED_DOSE",
---	"SPELL_AURA_REMOVED",
+	"SPELL_AURA_REMOVED 87726",
 	"UNIT_DIED"
 )
 
@@ -24,10 +24,14 @@ mod:RegisterEvents(
 --TODO can chilling Blast be side stepped?
 --TODO, timer for Air Nova-87933 ?
 --TODO, maybe wind blast timer off by default? a lot of those mobs can be up at once
---TODO, hurricane has a 17 second cd but packs with this mob have 4-8 of them with desynced timers, That's reason timer is omitted.
+--TODO, hurricane no longer exists in 10.1?
 --TODO, "Rushing Wind-410873-npc:45477-0001271105 = pull:144.6, 17.0", -- [70] ?
 --TODO, spell interrupt for https://www.wowhead.com/ptr/spell=410760/wind-bolt ?
 --NOTE: if 10.1 values differ from 10.0 values for timers, retain both for classic cataclysm
+--[[
+(ability.id = 88061 or ability.id = 88010 or ability.id = 88201 or ability.id = 88194 or ability.id = 87762 or ability.id = 87761 or ability.id = 87779 or ability.id = 411012 or ability.id = 411000 or ability.id = 410870 or ability.id = 410999 or ability.id = 411002 or ability.id = 411001 or ability.id = 413385) and type = "begincast"
+ or (ability.id = 88055 or ability.id = 87759 or ability.id = 87923 or ability.id = 411004 or ability.id = 410998) and type = "cast"
+--]]
 local warnCyclone								= mod:NewTargetNoFilterAnnounce(88010, 4)
 local warnGaleStrike							= mod:NewCastAnnounce(88061, 3, nil, nil, "Tank|Healer|MagicDispeller")
 local warnIcyBuffet								= mod:NewCastAnnounce(88194, 3, nil, nil, "Tank|Healer")
@@ -39,33 +43,51 @@ local warnPressurizedBlast						= mod:NewCastAnnounce(410999, 4)
 local warnBombCyclone							= mod:NewSpellAnnounce(411005, 3)
 local warnWindFlurry							= mod:NewSpellAnnounce(410998, 3, nil, "Tank|Healer")
 local warnLethalCurrent							= mod:NewCastAnnounce(411001, 4)
+local warnOverloadGroundingField				= mod:NewCastAnnounce(413385, 4)
+local warnLightningLash							= mod:NewTargetAnnounce(87762, 3)
 
 local specWarnTurbulence						= mod:NewSpecialWarningSpell(411002, nil, nil, nil, 2, 2)
 local specWarnChillingBreath					= mod:NewSpecialWarningDodge(411012, nil, nil, nil, 2, 2)
 local specWarnStormSurge						= mod:NewSpecialWarningRun(88055, nil, nil, nil, 4, 2)--Mob is immune to displacements and interrupts, this is an 8 yard range run out
+local specWarnOverloadGroundingField			= mod:NewSpecialWarningRun(413385, nil, nil, nil, 4, 2)
+local specWarnLightningLash						= mod:NewSpecialWarningMoveTo(87762, nil, nil, nil, 1, 2)
 --local yellnViciousAmbush						= mod:NewYell(388984)
 local specWarnCyclone							= mod:NewSpecialWarningInterrupt(88010, "HasInterrupt", nil, nil, 1, 2)
-local specWarnLightningLash						= mod:NewSpecialWarningInterrupt(87762, "HasInterrupt", nil, nil, 1, 2)--6sec cd on 10.0 but probably changed in 10.1?
 local specWarnGreaterHeal						= mod:NewSpecialWarningInterrupt(87779, "HasInterrupt", nil, nil, 1, 2)
 local specWarnVaporForm							= mod:NewSpecialWarningDispel(88186, "MagicDispeller", nil, nil, 1, 2)
 local specWarnGTFO								= mod:NewSpecialWarningGTFO(88171, nil, nil, nil, 1, 8)
 
 local timerCycloneCD							= mod:NewCDTimer(19.4, 88010, nil, nil, nil, 3)--19.4-21
-local timerStormSurgeCD							= mod:NewCDTimer(16.1, 88055, nil, nil, nil, 2)--Retail 10.0 value
+local timerStormSurgeCD							= mod:NewCDTimer(16.1, 88055, nil, nil, nil, 2)
 local timerGaleStrikeCD							= mod:NewCDTimer(17, 88061, nil, "Tank|Healer|MagicDispeller", nil, 5, nil, DBM_COMMON_L.MAGIC_ICON)--Retail 10.0 value
-local timerRallyCD								= mod:NewCDTimer(31.6, 87761, nil, nil, nil, 5)--Retail 10.0 value
-local timerShockwaveCD							= mod:NewCDTimer(20.2, 87759, nil, "Tank|Healer", nil, 3)--Retail 10.022.6
-local timerIcyBuffetCD							= mod:NewCDTimer(22.6, 88194, nil, "Tank|Healer", nil, 3)--Retail 10.0 and 10.1 values match
+local timerRallyCD								= mod:NewCDTimer(27.8, 87761, nil, nil, nil, 5)
+local timerShockwaveCD							= mod:NewCDTimer(20.2, 87759, nil, "Tank|Healer", nil, 3)
+local timerIcyBuffetCD							= mod:NewCDTimer(22.6, 88194, nil, "Tank|Healer", nil, 3)
 local timerWindBlastCD							= mod:NewCDTimer(10.1, 87923, nil, "Tank|MagicDispeller", nil, 5, nil, DBM_COMMON_L.MAGIC_ICON)--Retail 10.0 value
 local timerCloudGuardCD							= mod:NewCDTimer(19.1, 411000, nil, nil, nil, 5)
-local timerPressurizedBlastCD					= mod:NewCDTimer(20.1, 410999, nil, nil, nil, 2)
-local timerBombCycloneCD						= mod:NewCDTimer(15.9, 411005, nil, nil, nil, 3)--15.9-17.1
-local timerTurbulenceCD							= mod:NewCDTimer(32.8, 411002, nil, nil, nil, 2)--15.9-17.1
+local timerPressurizedBlastCD					= mod:NewCDTimer(21.8, 410999, nil, nil, nil, 2)
+local timerBombCycloneCD						= mod:NewCDTimer(15.7, 411005, nil, nil, nil, 3)--15.9-17.1
+local timerTurbulenceCD							= mod:NewCDTimer(32.8, 411002, nil, nil, nil, 2)
 local timerWindFlurryCD							= mod:NewCDTimer(10.1, 410998, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+local timerLightningLashCD						= mod:NewCDTimer(19, 87762, nil, nil, nil, 3)
+local timerOverloadGroundingFieldCD				= mod:NewCDTimer(20.5, 413385, nil, nil, nil, 3)
 
 --local playerName = UnitName("player")
 
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc, 7 GTFO
+
+local groundingName = DBM:GetSpellInfo(87726)
+local playerGrounded = false
+
+function mod:LitTarget(targetname)
+	if not targetname then return end
+	if targetname == UnitName("player") then
+		specWarnLightningLash:Show(groundingName)
+		specWarnLightningLash:Play("findshelter")
+	else
+		warnLightningLash:Show(targetname)
+	end
+end
 
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
@@ -81,9 +103,9 @@ function mod:SPELL_CAST_START(args)
 			specWarnCyclone:Show()
 			specWarnCyclone:Play("kickcast")
 		end
-	elseif spellId == 87762 and self:CheckInterruptFilter(args.sourceGUID, false, true) then
-		specWarnLightningLash:Show()
-		specWarnLightningLash:Play("kickcast")
+	elseif spellId == 87762 then
+		timerLightningLashCD:Start(nil, args.sourceGUID)
+		self:ScheduleMethod(0.2, "BossTargetScanner", args.sourceGUID, "LitTarget", 0.1, 8, true)
 	elseif spellId == 87779 and self:CheckInterruptFilter(args.sourceGUID, false, true) then
 		specWarnGreaterHeal:Show()
 		specWarnGreaterHeal:Play("kickcast")
@@ -121,6 +143,16 @@ function mod:SPELL_CAST_START(args)
 --		specWarnTurbulence:ScheduleVoice("pushbackincoming")
 	elseif spellId == 411002 and self:AntiSpam(3, 6) then
 		warnLethalCurrent:Show()
+	elseif spellId == 413385 then
+		timerOverloadGroundingFieldCD:Start(nil, args.sourceGUID)
+		if self:AntiSpam(3, 1) then
+			if playerGrounded then
+				specWarnOverloadGroundingField:Show()
+				specWarnOverloadGroundingField:Play("justrun")
+			else
+				warnOverloadGroundingField:Show()
+			end
+		end
 	end
 end
 
@@ -163,18 +195,18 @@ function mod:SPELL_AURA_APPLIED(args)
 	elseif spellId == 88186 and self:AntiSpam(2, 5) then
 		specWarnVaporForm:Show(args.destName)
 		specWarnVaporForm:Play("helpdispel")
+	elseif spellId == 87726 and args:IsPlayer() then
+		playerGrounded = true
 	end
 end
 --mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED
 
---[[
 function mod:SPELL_AURA_REMOVED(args)
 	local spellId = args.spellId
-	if spellId == 387843 and args:IsPlayer() then
-
+	if spellId == 87726 and args:IsPlayer() then
+		playerGrounded = false
 	end
 end
---]]
 
 function mod:UNIT_DIED(args)
 	local cid = self:GetCIDFromGUID(args.destGUID)
@@ -196,6 +228,9 @@ function mod:UNIT_DIED(args)
 	elseif cid == 45917 then--Cloud Prince
 		timerBombCycloneCD:Stop(args.destGUID)
 		timerTurbulenceCD:Stop(args.destGUID)
+	elseif cid == 45930 then--Minster of Air
+		timerLightningLashCD:Stop(args.destGUID)
+		timerOverloadGroundingFieldCD:Stop(args.destGUID)
 	end
 end
 
