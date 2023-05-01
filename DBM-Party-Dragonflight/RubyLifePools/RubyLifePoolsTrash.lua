@@ -114,8 +114,7 @@ function mod:SPELL_CAST_START(args)
 		--TODO, Timer?
 		if self:AntiSpam(3, 6) then
 			warnTectonicSlam:Show()
-			warnTectonicSlam:Play("aesoon")
-			warnTectonicSlam:ScheduleVoice(1.5, "crowdcontrol")
+			warnTectonicSlam:Play("crowdcontrol")
 		end
 	elseif spellId == 392395 then
 		timerThunderjawCD:Start(nil, args.sourceGUID)
@@ -164,8 +163,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 	if not self:IsValidWarning(args.sourceGUID) then return end
 	if spellId == 385536 and self:AntiSpam(3, 6) then
 		warnFlameDance:Show()
-		warnFlameDance:Play("aesoon")
-		warnFlameDance:Schedule(1.5, "crowdcontrol")
+		warnFlameDance:Play("crowdcontrol")
 	end
 end
 
