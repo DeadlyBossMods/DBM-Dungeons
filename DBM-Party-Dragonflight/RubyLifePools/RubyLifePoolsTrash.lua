@@ -54,6 +54,8 @@ local timerRollingThunderCD					= mod:NewCDTimer(21.8, 392641, nil, nil, nil, 3)
 local timerThunderjawCD						= mod:NewCDTimer(19, 392395, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerLightningStormCD					= mod:NewCDTimer(20.6, 392486, nil, nil, nil, 2, nil, DBM_COMMON_L.HEALER_ICON)
 local timerFlashfireCD						= mod:NewCDTimer(12.1, 392451, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerFlameDanceCD						= mod:NewCDTimer(26.6, 385536, nil, nil, nil, 5)
+local timerTectonicSlamCD					= mod:NewCDTimer(17, 372735, nil, nil, nil, 5)--17-21
 local timerTempestStormshieldCD				= mod:NewCDTimer(18.2, 391050, nil, nil, nil, 5, nil, DBM_COMMON_L.DAMAGE_ICON)
 
 
@@ -111,7 +113,7 @@ function mod:SPELL_CAST_START(args)
 			specWarnExcavatingBlast:Play("watchstep")
 		end
 	elseif spellId == 372735 then
-		--TODO, Timer?
+		timerTectonicSlamCD:Start(nil, args.sourceGUID)
 		if self:AntiSpam(3, 6) then
 			warnTectonicSlam:Show()
 			warnTectonicSlam:Play("crowdcontrol")
@@ -161,9 +163,12 @@ end
 function mod:SPELL_CAST_SUCCESS(args)
 	local spellId = args.spellId
 	if not self:IsValidWarning(args.sourceGUID) then return end
-	if spellId == 385536 and self:AntiSpam(3, 6) then
-		warnFlameDance:Show()
-		warnFlameDance:Play("crowdcontrol")
+	if spellId == 385536 then
+		timerFlameDanceCD:Start(nil, args.sourceGUID)
+		if self:AntiSpam(3, 6) then
+			warnFlameDance:Show()
+			warnFlameDance:Play("crowdcontrol")
+		end
 	end
 end
 
@@ -217,5 +222,9 @@ function mod:UNIT_DIED(args)
 	elseif cid == 197535 then--High Channeler Ryvati
 		timerLightningStormCD:Stop(args.destGUID)
 		timerTempestStormshieldCD:Stop(args.destGUID)
+	elseif cid == 190206 then--Primalist Flamedancer
+		timerFlameDanceCD:Stop(args.destGUID)
+	elseif cid == 187969 then--Flashfrost Earthshaper
+		timerTectonicSlamCD:Stop(args.destGUID)
 	end
 end
