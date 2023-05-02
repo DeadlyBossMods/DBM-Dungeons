@@ -292,7 +292,7 @@ L:SetOptionLocalization({
 
 L:SetMiscLocalization({ --神坑
 	Found		= "喂喂，别急着下结论", --给s大大疯狂打电话
-	--Add translationss, but keep english termss for cross language groups since these post to chat
+	--Add translations, but keep english termss for cross language groups since these post to chat
 	--Format "localized / english"
 	Gloves		= "手套 / gloves",
 	NoGloves	= "没手套 / no gloves",
@@ -307,7 +307,7 @@ L:SetMiscLocalization({ --神坑
 	Potions		= "腰上药水 / potions",
 	NoPotions	= "没有药水 / no potions",
 	Book		= "带书 / book",
-	Pouch		= "挂腰包 / pouch"
+	Pouch		= "挂腰包 / pouch",
 
 	SpyFoundP 					= "我找到间谍了",
 	SpyFound 					= "间谍已经被%s找到了",
