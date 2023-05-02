@@ -151,6 +151,7 @@ L:SetOptionLocalization({
 	Entrance			= "通过语音提示位置，入口是南边，王座是北边",
 	Minimap				= "通过语音提示位置，王座是南边，入口是北边",
 	Generic				= "只提示你被标记，不提供位置信息" --默认
+})
 
 L:SetMiscLocalization({
 	tempestModeMessage		=	"非明光风暴序列: %s. 8秒后再检查.",
