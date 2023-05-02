@@ -229,8 +229,8 @@ function mod:SPELL_AURA_APPLIED(args)
 		specWarnThirstforBlood:Show()
 		specWarnThirstforBlood:Play("justrun")
 	elseif spellId == 266209 and self:AntiSpam(3, 5) then
-		specWarnWickedFrenzy:Show(args.destName)
-		specWarnWickedFrenzy:Play("enrage")
+		specWarnWickedFrenzyDispel:Show(args.destName)
+		specWarnWickedFrenzyDispel:Play("enrage")
 	elseif spellId == 265091 and not args:IsDestTypePlayer() and self:AntiSpam(3, 3) then
 		specWarnGiftofGhuunDispel:Show(args.destName)
 		specWarnGiftofGhuunDispel:Play("helpdispel")
