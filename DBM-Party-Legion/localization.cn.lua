@@ -325,7 +325,7 @@ L:SetMiscLocalization({ --神坑
 	LifesizedNightborneStatue	= "夜之子等身雕像",
 	--
 	Available					= "%s|cffffffff%s|r 可用",
-	UsableBy					= "被%s使用"			
+	UsableBy					= "被%s使用"
 })
 -----------------------
 -- <<<The Maw of Souls>>> --
