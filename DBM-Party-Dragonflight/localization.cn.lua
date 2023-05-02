@@ -1,4 +1,4 @@
---Mini Dragon <流浪者酒馆-Brilla@金色平原> 20230116
+--Mini Dragon <流浪者酒馆-Brilla@金色平原> 20230502
 --夏一可，暴雪娱乐
 
 if GetLocale() ~= "zhCN" then return end
@@ -184,7 +184,7 @@ L:SetGeneralLocalization({
 })
 
 L:SetOptionLocalization({
-	AGBuffs		= "与龙族 NPC 交互时自动选择交谈以激活增益"
+	AGBuffs		= "与龙族NPC对话时自动选择激活增益"
 })
 
 -----------------------
@@ -220,7 +220,7 @@ L:SetGeneralLocalization({
 })
 
 L:SetOptionLocalization({
-	AGBook			= "与魔法书交互时自动选择传送"
+	AGBook			= "与魔法书对话时自动选择传送"
 })
 
 -----------------------
@@ -287,4 +287,8 @@ L = DBM:GetModLocalization("HallsofInfusionTrash")
 
 L:SetGeneralLocalization({
 	name =	"注能大厅小怪"
+})
+
+L:SetOptionLocalization({
+	AGBuffs		= "自动对话，以便激活工程学和草药学的buff"
 })

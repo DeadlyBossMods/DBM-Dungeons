@@ -1,7 +1,7 @@
 -- Mini Dragon(projecteurs@gmail.com)
 -- 夏一可
 -- Blizzard Entertainment
--- Last update: 2018/04/04
+-- Last update: 20230502
 
 if GetLocale() ~= "zhCN" then return end
 local L
@@ -136,7 +136,8 @@ L= DBM:GetModLocalization(1487)
 L= DBM:GetModLocalization(1488)
 
 L:SetMiscLocalization({
-	SkovaldRP		= 	"不！我也证明了自己，奥丁。我是神王斯科瓦尔德！这些凡人休想抢走我的圣盾！"
+	SkovaldRP		= 	"不！我也证明了自己，奥丁。我是神王斯科瓦尔德！这些凡人休想抢走我的圣盾！",
+	SkovaldRPTwo	= 	"如果这些所谓的“勇士”不肯放弃圣盾……那就让他们去死吧！"
 })
 
 -----------------------
@@ -144,8 +145,17 @@ L:SetMiscLocalization({
 -----------------------
 L= DBM:GetModLocalization(1489)
 
+L:SetOptionLocalization({
+	RuneBehavior		= "设置符文烙印的模组行为",
+	Icon				= "通过语音提示符文的颜色",
+	Entrance			= "通过语音提示位置，入口是南边，王座是北边",
+	Minimap				= "通过语音提示位置，王座是南边，入口是北边",
+	Generic				= "只提示你被标记，不提供位置信息" --默认
+})
+
 L:SetMiscLocalization({
-	tempestModeMessage		=	"非明光风暴序列: %s. 8秒后再检查."
+	tempestModeMessage		=	"非明光风暴序列: %s. 8秒后再检查.",
+	OdynRP					=	"真了不起！没想到还有人能对抗瓦拉加尔的力量……而他们就站在我面前。"
 })
 
 -----------------------
@@ -155,6 +165,11 @@ L = DBM:GetModLocalization("HoVTrash")
 
 L:SetGeneralLocalization({
 	name =	"英灵殿小怪"
+})
+
+L:SetOptionLocalization({
+	AGSkovaldTrash	= "与4个神王斯科瓦尔德的精英对话时自动开怪",
+	AGStartOdyn		= "与奥丁对话时自动开怪"
 })
 
 -----------------------
@@ -248,6 +263,10 @@ L= DBM:GetModLocalization(1719)
 -----------------------
 L= DBM:GetModLocalization(1720)
 
+L:SetMiscLocalization({
+	MelRP		= "这么快就走了吗，大魔导师？"
+})
+
 -----------------------
 --Court of Stars Trash
 -----------------------
@@ -257,13 +276,23 @@ L:SetGeneralLocalization({
 	name =	"群星庭院小怪"
 })
 
+L:SetWarningLocalization({
+	warnAvailableItems	= "%s"
+})
+
 L:SetOptionLocalization({
-	SpyHelper	= "帮忙识别密探"
+	warnAvailableItems	= "根据小组在区域内通告可用交互",
+	AGBoat				= "当与灯笼对话时自动召唤小船",
+	AGDisguise			= "当与莉莉丝·月郡对话时自动开启伪装",
+	AGBuffs				= "当点击可用buff时自动生效",
+	SpyHelper			= "在对话时帮忙识别密探，并在信息窗显示（同步DBM/BW用户）",
+	SpyHelperClose2		= "0.3秒后自动关闭对话窗（给与其他插件扫描延迟）",
+	SendToChat2			= "自动在聊天中显示提示（需要上面那个功能开启）"
 })
 
 L:SetMiscLocalization({ --神坑
 	Found		= "喂喂，别急着下结论", --给s大大疯狂打电话
-	--Add translationss, but keep english termss for cross language groups since these post to chat
+	--Add translations, but keep english termss for cross language groups since these post to chat
 	--Format "localized / english"
 	Gloves		= "手套 / gloves",
 	NoGloves	= "没手套 / no gloves",
@@ -278,9 +307,26 @@ L:SetMiscLocalization({ --神坑
 	Potions		= "腰上药水 / potions",
 	NoPotions	= "没有药水 / no potions",
 	Book		= "带书 / book",
-	Pouch		= "挂腰包 / pouch"
-})
+	Pouch		= "挂腰包 / pouch",
 
+	SpyFoundP 					= "我找到间谍了",
+	SpyFound 					= "间谍已经被%s找到了",
+	SpyGoingAway				= "暴雪貌似不让我们用这个功能了",
+	--Profession				stuff
+	Nightshade					= "夜影小食",
+	UmbralBloom					= "深黯之花",
+	InfernalTome				= "地狱火宝典",
+	MagicalLantern				= "魔法灯笼",
+	StarlightRoseBrew			= "星光玫瑰茶",
+	WaterloggedScroll			= "浸水的卷轴",
+	DiscardedJunk				= "丢弃的垃圾",
+	BazaarGoods					= "集市货物",
+	WoundedNightborneCivilian	= "受伤的夜之子平民",
+	LifesizedNightborneStatue	= "夜之子等身雕像",
+	--
+	Available					= "%s|cffffffff%s|r 可用",
+	UsableBy					= "被%s使用"
+})
 -----------------------
 -- <<<The Maw of Souls>>> --
 -----------------------
@@ -470,6 +516,15 @@ L= DBM:GetModLocalization(1818)
 -- Viz'aduum the Watcher --
 -----------------------
 L= DBM:GetModLocalization(1838)
+
+-----------------------
+--Nightbane
+-----------------------
+L = DBM:GetModLocalization("Nightbane")
+
+L:SetGeneralLocalization({
+	name =	"夜之魇"
+})
 
 -----------------------
 --Return To Karazhan Trash
