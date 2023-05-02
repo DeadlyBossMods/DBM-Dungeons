@@ -8,8 +8,8 @@ mod.isTrashMod = true
 
 
 mod:RegisterEvents(
-	"SPELL_CAST_START 272609 266106 265019 265089 265091 265433 265540 272183 278961 265523 278755 265568 265487 272592 265081 272180 266209",
-	"SPELL_CAST_SUCCESS 265523 265016 266201",
+	"SPELL_CAST_START 272609 266106 265019 265089 265091 265433 265540 272183 278961 278755 265568 265487 272592 265081 272180 266209 413044",
+	"SPELL_CAST_SUCCESS 265523 265016 266201 266265 265668",
 	"SPELL_AURA_APPLIED 265568 266107 266209 265091 278789 278961 266201",
 	"UNIT_DIED"
 )
@@ -18,21 +18,22 @@ mod:RegisterEvents(
 --TODO, maybe alert if multiple https://www.wowhead.com/spell=265376/barbed-spear target you at once
 --TODO, gift of ghuun and reconstruction timers. they are pretty long and rarely see double cast from a single mob
 --[[
-(ability.id = 272609 or ability.id = 266106 or ability.id = 265019 or ability.id = 265089 or ability.id = 265091 or ability.id = 265433 or ability.id = 265540 or ability.id = 272183 or ability.id = 278961 or ability.id = 265523 or ability.id = 278755 or ability.id = 265568 or ability.id = 265487 or ability.id = 272592 or ability.id = 265081 or ability.id = 272180 or ability.id = 266209 or ability.id = 265016) and type = "begincast"
- or ability.id = 266201 and type = "cast"
+(ability.id = 413044 or ability.id = 272609 or ability.id = 266106 or ability.id = 265019 or ability.id = 265089 or ability.id = 265091 or ability.id = 265433 or ability.id = 265540 or ability.id = 272183 or ability.id = 278961 or ability.id = 265523 or ability.id = 278755 or ability.id = 265568 or ability.id = 265487 or ability.id = 272592 or ability.id = 265081 or ability.id = 272180 or ability.id = 266209 or ability.id = 265016) and type = "begincast"
+ or (ability.id = 265668 or ability.id = 266107 or ability.id = 266201 or ability.id = 266265) and type = "cast"
 --]]
 local warnBloodHarvest				= mod:NewTargetNoFilterAnnounce(265016, 3)
 local warnGiftOfGhuun				= mod:NewCastAnnounce(265091, 3)
 local warnDarkReconstitution		= mod:NewCastAnnounce(265089, 3)
 local warnDarkOmen					= mod:NewCastAnnounce(265568, 3, nil, nil, nil, nil, nil, 3)
 local warnSonicSreech				= mod:NewCastAnnounce(266106, 3)
-local warnRaiseDead					= mod:NewCastAnnounce(272183, 3)
+local warnRaiseDead					= mod:NewCastAnnounce(272183, 3)--No longer exists in M+ but maybe still exists in timewalking/leveling version?
 local warnShadowBoltVolley			= mod:NewCastAnnounce(265487, 3)
 local warnWitheringCurse			= mod:NewCastAnnounce(265433, 3)
 local warnWarcry					= mod:NewCastAnnounce(265081, 4)
 local warnHarrowingDespair			= mod:NewCastAnnounce(278755, 3)
 local warnWickedFrenzy				= mod:NewCastAnnounce(266209, 3)
-local warnDeathBolt					= mod:NewCastAnnounce(272180, 4)--AKA Void Split, not sure which name is valid since data doesn't agree with logs
+local warnVoidSpit					= mod:NewCastAnnounce(272180, 2, nil, nil, false)--AKA Dark Bolt prior to 10.1
+local warnDarkEchoes				= mod:NewCastAnnounce(413044, 4)
 
 local specWarnMaddeningGaze			= mod:NewSpecialWarningDodge(272609, nil, nil, nil, 2, 2)
 local yellBloodHarvest				= mod:NewShortYell(265016)--Pre Savage Cleave target awareness
@@ -50,9 +51,10 @@ local specWarnWitheringCurse		= mod:NewSpecialWarningInterrupt(265433, "HasInter
 local specWarnRaiseDead				= mod:NewSpecialWarningInterrupt(272183, "HasInterrupt", nil, nil, 1, 2)
 local specWarnDecayingMind			= mod:NewSpecialWarningInterrupt(278961, "HasInterrupt", nil, nil, 1, 2)
 local specWarnHarrowingDespair		= mod:NewSpecialWarningInterrupt(278755, "HasInterrupt", nil, nil, 1, 2)
-local specWarnSpiritDrainTotem		= mod:NewSpecialWarningInterrupt(265523, false, nil, 2, 1, 2)--Lowest priority of 3 interrupts on a single mob, so off by default (32?)
-local specWarnDeathBolt				= mod:NewSpecialWarningInterrupt(272180, "HasInterrupt", nil, nil, 1, 2)
-local specWarnWickedFrenzy			= mod:NewSpecialWarningDispel(266209, "RemoveEnrage", nil, nil, 1, 2)
+local specWarnVoidSpit				= mod:NewSpecialWarningInterrupt(272180, "HasInterrupt", nil, nil, 1, 2)
+local specWarnDarkEchoes			= mod:NewSpecialWarningInterrupt(413044, "HasInterrupt", nil, nil, 1, 2)
+local specWarnWickedFrenzy			= mod:NewSpecialWarningInterrupt(266209, "HasInterrupt", nil, nil, 1, 2)
+local specWarnWickedFrenzyDispel	= mod:NewSpecialWarningDispel(266209, "RemoveEnrage", nil, nil, 1, 2)
 local specWarnDecayingMindDispel	= mod:NewSpecialWarningDispel(278961, "RemoveDisease", nil, nil, 1, 2)
 local specWarnGiftofGhuunDispel		= mod:NewSpecialWarningDispel(265091, "MagicDispeller", nil, nil, 1, 2)
 local specWarnBoneShieldDispel		= mod:NewSpecialWarningDispel(266201, "MagicDispeller", nil, nil, 1, 2)--Unlike BFA version, 10.1 version now instant cast, no interrupt just dispel
@@ -61,11 +63,14 @@ local specWarnGTFO					= mod:NewSpecialWarningGTFO(278789, nil, nil, nil, 1, 8)
 
 local timerBloodHarvestCD			= mod:NewCDTimer(12.1, 265016, nil, nil, nil, 3)
 local timerRottenBileCD				= mod:NewCDTimer(10.7, 265540, nil, nil, nil, 3)
+local timerWaveofDecayCD			= mod:NewCDTimer(10.7, 265668, nil, false, nil, 3)--Off by default to reduce clutter, but optional for those that want it
 local timerWarcryCD					= mod:NewCDTimer(25.2, 265081, nil, nil, nil, 2)
 local timerDecayingMindCD			= mod:NewCDTimer(27.7, 278961, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerSonicScreechCD			= mod:NewCDTimer(25.4, 266106, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
-local timerDeathboltCD				= mod:NewCDTimer(9.7, 272180, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerVoidSpitCD				= mod:NewCDTimer(9.7, 272180, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerDarkEchoesCD				= mod:NewCDTimer(20.6, 413044, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerBoneShieldCD				= mod:NewCDTimer(25.4, 266201, nil, nil, nil, 5, nil, DBM_COMMON_L.MAGIC_ICON)
+local timerWickedEmbraceCD			= mod:NewCDTimer(8.5, 266265, nil, "RemoveMagic", nil, 5, nil, DBM_COMMON_L.MAGIC_ICON)
 local timerWickedFrenzyCD			= mod:NewCDTimer(25.4, 266209, nil, nil, nil, 5, nil, DBM_COMMON_L.ENRAGE_ICON)
 local timerWitheringCurseCD			= mod:NewCDTimer(25.4, 272180, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerShadowBoltVolleyCD		= mod:NewCDTimer(25.4, 265487, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--25.4-27.7
@@ -135,9 +140,6 @@ function mod:SPELL_CAST_START(args)
 			specWarnDecayingMind:Show(args.sourceName)
 			specWarnDecayingMind:Play("kickcast")
 		end
-	elseif spellId == 265523 and self:CheckInterruptFilter(args.sourceGUID, false, true) then
-		specWarnSpiritDrainTotem:Show(args.sourceName)
-		specWarnSpiritDrainTotem:Play("kickcast")
 	elseif spellId == 278755 then
 		if self.Options.SpecWarn278755interrupt and self:CheckInterruptFilter(args.sourceGUID, false, true) then
 			specWarnHarrowingDespair:Show(args.sourceName)
@@ -146,12 +148,12 @@ function mod:SPELL_CAST_START(args)
 			warnHarrowingDespair:Show()
 		end
 	elseif spellId == 272180 then
-		timerDeathboltCD:Start(nil, args.sourceGUID)
+		timerVoidSpitCD:Start(nil, args.sourceGUID)
 		if self.Options.SpecWarn272180interrupt and self:CheckInterruptFilter(args.sourceGUID, false, true) then
-			specWarnDeathBolt:Show(args.sourceName)
-			specWarnDeathBolt:Play("kickcast")
+			specWarnVoidSpit:Show(args.sourceName)
+			specWarnVoidSpit:Play("kickcast")
 		elseif self:AntiSpam(2, 7) then
-			warnDeathBolt:Show()
+			warnVoidSpit:Show()
 		end
 	elseif spellId == 265568 and self:AntiSpam(3, 5) then
 		warnDarkOmen:Show()
@@ -177,8 +179,19 @@ function mod:SPELL_CAST_START(args)
 		end
 	elseif spellId == 266209 then
 		timerWickedFrenzyCD:Start(nil, args.sourceGUID)
-		if self:AntiSpam(3, 5) then
+		if self.Options.SpecWarn266209interrupt and self:CheckInterruptFilter(args.sourceGUID, false, true) then
+			specWarnWickedFrenzy:Show(args.sourceName)
+			specWarnWickedFrenzy:Play("kickcast")
+		elseif self:AntiSpam(2, 7) then
 			warnWickedFrenzy:Show()
+		end
+	elseif spellId == 413044 then
+		timerDarkEchoesCD:Start(nil, args.sourceGUID)
+		if self.Options.SpecWarn413044interrupt and self:CheckInterruptFilter(args.sourceGUID, false, true) then
+			specWarnDarkEchoes:Show(args.sourceName)
+			specWarnDarkEchoes:Play("kickcast")
+		elseif self:AntiSpam(2, 7) then
+			warnDarkEchoes:Show()
 		end
 	end
 end
@@ -198,6 +211,10 @@ function mod:SPELL_CAST_SUCCESS(args)
 		end
 	elseif spellId == 266201 then
 		timerBoneShieldCD:Start(nil, args.sourceGUID)
+	elseif spellId == 266265 then
+		timerWickedEmbraceCD:Start(nil, args.sourceGUID)
+	elseif spellId == 265668 then
+		timerWaveofDecayCD:Start(nil, args.sourceGUID)
 	end
 end
 
@@ -241,9 +258,11 @@ function mod:UNIT_DIED(args)
 	elseif cid == 133835 then--Feral Bloodswarmer
 		timerSonicScreechCD:Stop(args.destGUID)
 	elseif cid == 138187 then--Grotesque Horror
-		timerDeathboltCD:Stop(args.destGUID)
+		timerVoidSpitCD:Stop(args.destGUID)
+		timerDarkEchoesCD:Stop(args.destGUID)
 	elseif cid == 134284 then--Fallen Deathspeaker
 		timerWickedFrenzyCD:Stop(args.destGUID)
+		timerWickedEmbraceCD:Stop(args.destGUID)
 	elseif cid == 133912 then--Broodsworn Defiler
 		timerWitheringCurseCD:Stop(args.destGUID)
 		timerShadowBoltVolleyCD:Stop(args.destGUID)
@@ -252,5 +271,7 @@ function mod:UNIT_DIED(args)
 		timerMaddeningGazeCD:Stop(args.destGUID)
 	elseif cid == 133836 then--Reanimated Guardian
 		timerBoneShieldCD:Stop(args.destGUID)
+	elseif cid == 133852 then--Living Rot
+		timerWaveofDecayCD:Start(args.destGUID)
 	end
 end
