@@ -8,6 +8,7 @@ mod:SetEncounterID(2563)
 mod:SetHotfixNoticeRev(20230103000000)
 --mod:SetMinSyncRevision(20211203000000)
 --mod.respawnTime = 29
+mod.sendMainBossGUID = true
 
 mod:RegisterCombat("combat")
 
@@ -100,9 +101,9 @@ function mod:SPELL_CAST_START(args)
 		specWarnBranchOut:Play("watchstep")
 		specWarnBranchOut:ScheduleVoice(2.5, "bigmob")
 		timerBranchOutCD:Start()
-		timerHealingTouchCD:Start(5)
+		timerHealingTouchCD:Start(5)--Add guid not known yet here, so it'll assign first timer to boss1 :\
 	elseif spellId == 396640 then
-		timerHealingTouchCD:Start()
+		timerHealingTouchCD:Start(nil, args.sourceGUID)
 		if self.Options.SpecWarn396640interrupt and self:CheckInterruptFilter(args.sourceGUID, false, true) then
 			specWarnHealingTouch:Show(args.sourceName)
 			specWarnHealingTouch:Play("kickcast")
@@ -178,7 +179,7 @@ end
 function mod:UNIT_DIED(args)
 	local cid = self:GetCIDFromGUID(args.destGUID)
 	if cid == 196548 then--Ancient Branch
-		timerHealingTouchCD:Stop()
+		timerHealingTouchCD:Stop(args.destGUID)
 	end
 end
 
