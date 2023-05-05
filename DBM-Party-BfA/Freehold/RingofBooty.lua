@@ -106,7 +106,7 @@ function mod:SPELL_AURA_REMOVED_DOSE(args)
 end
 mod.SPELL_AURA_REMOVED = mod.SPELL_AURA_REMOVED_DOSE
 
-function mod:SPELL_DAMAGE(sourceGUID, _, _, _, destGUID, destName, _, _, spellId)
+function mod:SPELL_DAMAGE(sourceGUID, _, _, _, destGUID, destName, _, _, spellId, spellName)
 	if spellId == 256477 and self:AntiSpam(3, 1) then--Aggregate, we only want first person to take damage in combat log, they're the original target
 		local cid = self:GetCIDFromGUID(sourceGUID)
 		if cid == 129448 then--Hammer Shark hitting a player on spawn
