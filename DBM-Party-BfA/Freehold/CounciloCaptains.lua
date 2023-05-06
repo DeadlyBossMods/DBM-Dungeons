@@ -73,12 +73,12 @@ local timerGrapeShotCD				= mod:NewNextTimer(30.3, 258381, nil, nil, nil, 3, nil
 local timerChainShotCD				= mod:NewNextTimer(15.3, 272902, nil, nil, nil, 5)
 
 local function scanCaptains(self, isPull, delay)
-
 	local foundOne, foundTwo, foundThree
 	for i = 1, 3 do
 		local unitID = "boss"..i
 		if UnitExists(unitID) then
 			local cid = self:GetUnitCreatureId(unitID)
+			local bossGUID = UnitGUID(unitID)
 			if not UnitIsFriend("player", unitID) then
 				if not foundOne then foundOne = cid
 				elseif not foundTwo then foundTwo = cid
@@ -86,27 +86,27 @@ local function scanCaptains(self, isPull, delay)
 				--Set hostile timers
 				if isPull then--Only do on pull, if recovery, these will be synced when vb table sent
 					if cid == 126845 then--Jolly
-						timerCuttingSurgeCD:Start(4.1-delay)
-						timerWhirlpoolofBladesCD:Start(9.8-delay)
+						timerCuttingSurgeCD:Start(4.1-delay, bossGUID)
+						timerWhirlpoolofBladesCD:Start(9.8-delay, bossGUID)
 						if self.Options.RangeFrame then
 							DBM.RangeCheck:Show(5)
 						end
 					elseif cid == 126847 then--Raoul
-						timerBarrelSmashCD:Start(6.1-delay)
-						timerBlackoutBarrelCD:Start(20.7-delay)
+						timerBarrelSmashCD:Start(6.1-delay, bossGUID)
+						timerBlackoutBarrelCD:Start(20.7-delay, bossGUID)
 					else--Eudora
-						timerGrapeShotCD:Start(7.4-delay)
+						timerGrapeShotCD:Start(7.4-delay, bossGUID)
 					end
 				end
 			else--Friendly
 				--Set friendly Timers
 				if isPull then--Only do on pull, if recovery, these will be synced when vb table sent
 					if cid == 126845 then--Jolly
-						timerLuckySevensCD:Start(9.8-delay)
+						timerLuckySevensCD:Start(9.8-delay, bossGUID)
 					elseif cid == 126847 then--Raoul
-						timerTappedKegCD:Start(12.2-delay)
+						timerTappedKegCD:Start(12.2-delay, bossGUID)
 					else--Eudora
-						timerChainShotCD:Start(4.2-delay)
+						timerChainShotCD:Start(4.2-delay, bossGUID)
 					end
 				end
 			end
@@ -153,28 +153,28 @@ function mod:SPELL_CAST_START(args)
 	if spellId == 258338 then
 		specWarnBlackoutBarrel:Show()
 		specWarnBlackoutBarrel:Play("changetarget")
-		timerBlackoutBarrelCD:Start()
+		timerBlackoutBarrelCD:Start(nil, args.sourceGUID)
 	elseif spellId == 256589 then
 		specWarnBarrelSmash:Show()
 		specWarnBarrelSmash:Play("justrun")
-		timerBarrelSmashCD:Start()
+		timerBarrelSmashCD:Start(nil, args.sourceGUID)
 	elseif spellId == 257117 then
 		warnLuckySevens:Show()
-		timerLuckySevensCD:Start()
+		timerLuckySevensCD:Start(nil, args.sourceGUID)
 	elseif spellId == 267522 then
 		specWarnCuttingSurge:Show()
 		specWarnCuttingSurge:Play("chargemove")
-		timerCuttingSurgeCD:Start()
+		timerCuttingSurgeCD:Start(nil, args.sourceGUID)
 	elseif spellId == 272884 then
 		warnTappedKeg:Show()
-		timerTappedKegCD:Start()
+		timerTappedKegCD:Start(nil, args.sourceGUID)
 	elseif spellId == 267533 then
 		specWarnWhirlpoolofBlades:Show()
 		specWarnWhirlpoolofBlades:Play("watchstep")
-		timerWhirlpoolofBladesCD:Start()
+		timerWhirlpoolofBladesCD:Start(nil, args.sourceGUID)
 	elseif spellId == 272902 then
 		warnChainShot:Show()
-		timerChainShotCD:Start()
+		timerChainShotCD:Start(nil, args.sourceGUID)
 	elseif spellId == 265088 or spellId == 264608 or spellId == 265168 then
 		if spellId == 265168 then
 			warnCausticBrew:Show()
@@ -194,7 +194,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 	if spellId == 258381 then
 		specWarnGrapeShot:Show()
 		specWarnGrapeShot:Play("stilldanger")
-		timerGrapeShotCD:Start()
+		timerGrapeShotCD:Start(nil, args.sourceGUID)
 	end
 end
 
@@ -220,16 +220,16 @@ mod.SPELL_MISSED = mod.SPELL_DAMAGE
 function mod:UNIT_DIED(args)
 	local cid = self:GetCIDFromGUID(args.destGUID)
 	if cid == 126845 then--Captain Jolly
-		timerCuttingSurgeCD:Stop()
-		timerWhirlpoolofBladesCD:Stop()
-		timerLuckySevensCD:Stop()
+		timerCuttingSurgeCD:Stop(args.destGUID)
+		timerWhirlpoolofBladesCD:Stop(args.destGUID)
+		timerLuckySevensCD:Stop(args.destGUID)
 	elseif cid == 126847 then--Captain Raoul
-		timerBarrelSmashCD:Stop()
-		timerBlackoutBarrelCD:Stop()
-		timerTappedKegCD:Stop()
+		timerBarrelSmashCD:Stop(args.destGUID)
+		timerBlackoutBarrelCD:Stop(args.destGUID)
+		timerTappedKegCD:Stop(args.destGUID)
 	elseif cid == 126848 then--Captain Eudora
-		timerGrapeShotCD:Stop()
-		timerChainShotCD:Stop()
+		timerGrapeShotCD:Stop(args.destGUID)
+		timerChainShotCD:Stop(args.destGUID)
 	elseif cid == 133219 then--Rummy Mancomb (You bastard, you killed Rummy!)
 		timerTendingBarCD:Stop()
 	end

@@ -8,6 +8,7 @@ mod:SetEncounterID(2583)
 mod:SetHotfixNoticeRev(20221027000000)
 --mod:SetMinSyncRevision(20211203000000)
 --mod.respawnTime = 29
+mod.sendMainBossGUID = true
 
 mod:RegisterCombat("combat")
 

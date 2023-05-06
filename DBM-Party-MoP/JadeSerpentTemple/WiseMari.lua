@@ -9,6 +9,7 @@ mod:SetEncounterID(1418)
 mod:SetUsedIcons(8)
 mod:SetHotfixNoticeRev(20230410000000)
 mod:SetMinSyncRevision(20230410000000)
+mod.sendMainBossGUID = true
 
 mod:RegisterCombat("combat")
 

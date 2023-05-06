@@ -78,16 +78,29 @@ local directions = {
 	[3] = L.East
 }
 
+local function scanBosses(self, delay)
+	local foundOne, foundTwo, foundThree
+	for i = 1, 2 do
+		local unitID = "boss"..i
+		if UnitExists(unitID) then
+			local cid = self:GetUnitCreatureId(unitID)
+			local bossGUID = UnitGUID(unitID)
+			if cid == 193435 then--Kyrakka
+				timerRoaringFirebreathCD:Start(1.1-delay, bossGUID)
+				timerFlamespitCD:Start(16.1-delay, bossGUID)--17-24?
+			else--Erkhart Stormvein
+				timerStormslamCD:Start(4-delay, bossGUID)
+				timerCloudburstCD:Start(8.4-delay, bossGUID)
+			end
+		end
+	end
+end
+
 function mod:OnCombatStart(delay)
 	self.vb.windDirection = 0
 	self:SetStage(1)
-	--Kyrakka
-	timerRoaringFirebreathCD:Start(2.1-delay)
-	timerFlamespitCD:Start(17.1-delay)--17-24?
-	--Erkhart Stormvein
-	timerStormslamCD:Start(5-delay)
-	timerCloudburstCD:Start(9.4-delay)
 	timerWindsofChangeCD:Start(17.1-delay, L.North)
+	self:Schedule(1, scanBosses, self, delay)--1 second delay to give IEEU time to populate boss guids
 	if self.Options.InfoFrame then
 		DBM.InfoFrame:SetHeader(DBM:GetSpellInfo(381862))
 		DBM.InfoFrame:Show(5, "playerdebuffremaining", 381862)
@@ -107,11 +120,11 @@ function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
 	if spellId == 381605 or spellId == 381602 then--One is for bosses split and one is for bosses combined.
 		self:ScheduleMethod(0.2, "BossTargetScanner", args.sourceGUID, "SpitTarget", 0.1, 8, true)
-		timerFlamespitCD:Start(self:GetStage(1) and 21.1 or 15)
+		timerFlamespitCD:Start(self:GetStage(1) and 21.1 or 15, args.sourceGUID)
 	elseif spellId == 381525 then
 		specWarnRoaringFirebreath:Show()
 		specWarnRoaringFirebreath:Play("breathsoon")
-		timerRoaringFirebreathCD:Start(18)--18-27
+		timerRoaringFirebreathCD:Start(18, args.sourceGUID)--18-27
 	elseif spellId == 381517 then
 		warnWindsofChange:Show(directions[self.vb.windDirection])
 	elseif spellId == 381512 then
@@ -119,7 +132,7 @@ function mod:SPELL_CAST_START(args)
 			specWarnStormslam:Show()
 			specWarnStormslam:Play("defensive")
 		end
-		timerStormslamCD:Start()--self:GetStage(1) and 10 or 14
+		timerStormslamCD:Start(nil, args.sourceGUID)--self:GetStage(1) and 10 or 14
 	elseif spellId == 385558 or spellId == 381516 then
 		if spellId == 381516 and self.Options.SpecWarn381516cast then--Mythic
 			specWarnInterruptingCloudburst:Show()
@@ -127,7 +140,7 @@ function mod:SPELL_CAST_START(args)
 		else--Normal/Heroic
 			warnCloudburst:Show()
 		end
-		timerCloudburstCD:Start()
+		timerCloudburstCD:Start(nil, args.sourceGUID)
 	end
 end
 
@@ -150,8 +163,18 @@ function mod:SPELL_AURA_APPLIED(args)
 	elseif spellId == 181089 then
 		self:SetStage(2)
 		--Timers reset by staging
-		timerFlamespitCD:Restart(2.2)--3.6 now?
-		timerRoaringFirebreathCD:Restart(7.3)--9.7 now?
+		for i = 1, 2 do
+			local unitID = "boss"..i
+			if UnitExists(unitID) then
+				local cid = self:GetUnitCreatureId(unitID)
+				if cid == 193435 then--Kyrakka
+					local bossGUID = UnitGUID(unitID)
+					timerFlamespitCD:Restart(2.2, UnitGUID)--3.6 now?
+					timerRoaringFirebreathCD:Restart(7.3, UnitGUID)--9.7 now?
+					break
+				end
+			end
+		end
 		--Rest not reset
 	elseif spellId == 381862 and args:IsPlayer() then
 		if self.Options.SpecWarn381862moveaway and self:AntiSpam(3, 1) then
@@ -176,12 +199,12 @@ end
 function mod:UNIT_DIED(args)
 	local cid = self:GetCIDFromGUID(args.destGUID)
 	if cid == 193435 then--Kyrakka
-		timerFlamespitCD:Stop()
-		timerRoaringFirebreathCD:Stop()
+		timerFlamespitCD:Stop(args.destGUID)
+		timerRoaringFirebreathCD:Stop(args.destGUID)
 	elseif cid == 190485 then--Erkhart
-		timerWindsofChangeCD:Stop()
-		timerStormslamCD:Stop()
-		timerCloudburstCD:Stop()
+		timerWindsofChangeCD:Stop(args.destGUID)
+		timerStormslamCD:Stop(args.destGUID)
+		timerCloudburstCD:Stop(args.destGUID)
 	end
 end
 
