@@ -9,7 +9,8 @@ mod.isTrashMod = true
 mod:RegisterEvents(
 	"SPELL_CAST_START 183088 226296 202108 193505 226287 183548 193585 226406 202181 193941 226347 183539",
 	"SPELL_CAST_SUCCESS 183433 183526",
-	"SPELL_AURA_APPLIED 200154 183407 186576 193803 201983 226388 186616"
+	"SPELL_AURA_APPLIED 200154 183407 186576 193803 201983 226388 186616",
+	"UNIT_DIED"
 )
 
 --[[
@@ -115,7 +116,6 @@ function mod:SPELL_CAST_START(args)
 			specWarnStoneGaze:Play("kickcast")
 		end
 	elseif spellId == 226347 then
-		if
 		timerStoneShatterCD:Start(nil, args.sourceGUID)
 		if self:AntiSpam(3, 5) then
 			warnStoneShatter:Show()
