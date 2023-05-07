@@ -5,7 +5,7 @@ mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(186116)--194745 for Rotfang Hyena
 mod:SetEncounterID(2567)
 --mod:SetUsedIcons(1, 2, 3)
-mod:SetHotfixNoticeRev(20230114000000)
+mod:SetHotfixNoticeRev(20230507000000)
 --mod:SetMinSyncRevision(20211203000000)
 --mod.respawnTime = 29
 mod.sendMainBossGUID = true
@@ -50,7 +50,7 @@ local timerEnsnaringTrapCD						= mod:NewCDTimer(17, 384148, nil, nil, nil, 3)--
 local timerMeatTossCD							= mod:NewCDTimer(21.8, 384416, nil, nil, nil, 3)
 local timerCallHyenasCD							= mod:NewCDTimer(31.6, 384827, nil, nil, nil, 1)
 --local timerMastersCallCD						= mod:NewCDTimer(35, 384638, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--Doesn't seem to have an actual CD?
-local timerGutShotCD							= mod:NewCDTimer(21.8, 384343, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+local timerGutShotCD							= mod:NewCDTimer(19.3, 384343, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 
 --local berserkTimer							= mod:NewBerserkTimer(600)
 
