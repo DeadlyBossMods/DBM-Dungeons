@@ -6,13 +6,17 @@ mod:SetRevision("@file-date-integer@")
 mod.isTrashMod = true
 
 mod:RegisterEvents(
-	"SPELL_CAST_START 152818 152964 153395 398150 153268 398206 156718",
+	"SPELL_CAST_START 152818 152964 153395 398150 153268 398206 156718 394512",
 	"SPELL_CAST_SUCCESS 394512",
-	"SPELL_AURA_APPLIED 152819"
+	"SPELL_AURA_APPLIED 152819",
 --	"SPELL_AURA_APPLIED_DOSE 339528",
---	"SPELL_AURA_REMOVED 339525"
+--	"SPELL_AURA_REMOVED 339525",
+	"UNIT_DIED"
 )
 
+--[[
+(ability.id = 152818 or ability.id = 152964 or ability.id = 153395 or ability.id = 398150 or ability.id = 153268 or ability.id = 398206 or ability.id = 156718 or ability.id = 394512) and type = "begincast"
+--]]
 local warnDomination						= mod:NewCastAnnounce(398150, 4)
 local warnExhume							= mod:NewCastAnnounce(153268, 2)
 local warnVoidPulse							= mod:NewSpellAnnounce(152964, 3)
@@ -28,42 +32,58 @@ local specWarnNecroticBurst					= mod:NewSpecialWarningInterrupt(156718, "HasInt
 local specWarnVoidEruptions					= mod:NewSpecialWarningDodge(394512, nil, nil, nil, 2, 2)
 local specWarnBodySlam						= mod:NewSpecialWarningDodge(153395, "Tank", nil, nil, 2, 2)
 
+local timerShadowMendCD						= mod:NewCDTimer(8.5, 152818, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerVoidEruptionsCD					= mod:NewCDTimer(19.4, 394512, nil, nil, nil, 3, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerNecroticBurstCD					= mod:NewCDTimer(19.4, 156718, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerBodySlamCD						= mod:NewCDTimer(14.5, 153395, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+
 --local playerName = UnitName("player")
 
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc
 
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
-	if spellId == 152818 and self:CheckInterruptFilter(args.sourceGUID, false, true) then
-		specWarnShadowMend:Show(args.sourceName)
-		specWarnShadowMend:Play("kickcast")
+	if spellId == 152818 then
+		timerShadowMendCD:Start(nil, args.sourceGUID)
+		if self:CheckInterruptFilter(args.sourceGUID, false, true) then
+			specWarnShadowMend:Show(args.sourceName)
+			specWarnShadowMend:Play("kickcast")
+		end
 	elseif spellId == 398206 and self:CheckInterruptFilter(args.sourceGUID, false, true) then
 		specWarnDeathblast:Show(args.sourceName)
 		specWarnDeathblast:Play("kickcast")
-	elseif spellId == 156718 and self:CheckInterruptFilter(args.sourceGUID, false, true) then
-		specWarnNecroticBurst:Show(args.sourceName)
-		specWarnNecroticBurst:Play("kickcast")
+	elseif spellId == 156718 then
+		timerNecroticBurstCD:Start(nil, args.sourceGUID)
+		if self:CheckInterruptFilter(args.sourceGUID, false, true) then
+			specWarnNecroticBurst:Show(args.sourceName)
+			specWarnNecroticBurst:Play("kickcast")
+		end
 	elseif spellId == 152964 and self:AntiSpam(3, 4) then
 		warnVoidPulse:Show()
-	elseif spellId == 153395 and self:AntiSpam(5, 4) then
-		if self.Options.SpecWarn153395dodge then
-			specWarnBodySlam:Show()
-			specWarnBodySlam:Play("shockwave")
-		else
-			warnBodySlam:Show()
+	elseif spellId == 153395 then
+		timerBodySlamCD:Start(nil, args.sourceGUID)--NO clean cancel, cause mob doesn't die, it leaves
+		if self:AntiSpam(5, 4) then
+			if self.Options.SpecWarn153395dodge then
+				specWarnBodySlam:Show()
+				specWarnBodySlam:Play("shockwave")
+			else
+				warnBodySlam:Show()
+			end
 		end
 	elseif spellId == 398150 and self:AntiSpam(5, 5) then
 		warnDomination:Show()
 	elseif spellId == 153268 and self:AntiSpam(5, 6) then
 		warnExhume:Show()
+	elseif spellId == 394512 then
+		timerVoidEruptionsCD:Start(nil, args.sourceGUID)
 	end
 end
 
 function mod:SPELL_CAST_SUCCESS(args)
 	local spellId = args.spellId
 	if spellId == 394512 and self:AntiSpam(3, 2) then
-		specWarnShadowMend:Show()
-		specWarnShadowMend:Play("watchstep")
+		specWarnVoidEruptions:Show()
+		specWarnVoidEruptions:Play("watchstep")
 	end
 end
 
@@ -90,3 +110,14 @@ function mod:SPELL_AURA_REMOVED(args)
 	end
 end
 --]]
+
+function mod:UNIT_DIED(args)
+	local cid = self:GetCIDFromGUID(args.destGUID)
+	if cid == 75713 then--Shadowmoon Bone-Mender
+		timerShadowMendCD:Stop(args.destGUID)
+	elseif cid == 75652 then--Void Spawn
+		timerVoidEruptionsCD:Stop(args.destGUID)
+	elseif cid == 76104 then--Corpse Spider
+		timerNecroticBurstCD:Stop(args.destGUID)
+	end
+end
