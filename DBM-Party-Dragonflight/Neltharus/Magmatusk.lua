@@ -5,7 +5,7 @@ mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(181861)
 mod:SetEncounterID(2610)
 --mod:SetUsedIcons(1, 2, 3)
---mod:SetHotfixNoticeRev(20220322000000)
+mod:SetHotfixNoticeRev(20230507000000)
 --mod:SetMinSyncRevision(20211203000000)
 --mod.respawnTime = 29
 mod.sendMainBossGUID = true
@@ -42,10 +42,10 @@ local specWarnBlazingCharge						= mod:NewSpecialWarningDodge(375436, nil, nil, 
 local yellBlazingCharge							= mod:NewYell(375436)
 local specWarnGTFO								= mod:NewSpecialWarningGTFO(375204, nil, nil, nil, 1, 8)
 
-local timerRP									= mod:NewRPTimer(34.4)
-local timerVolatileMutationCD					= mod:NewCDTimer(31.5, 374365, nil, nil, nil, 5, nil, DBM_COMMON_L.DAMAGE_ICON)
+local timerRP									= mod:NewRPTimer(9.9)
+local timerVolatileMutationCD					= mod:NewCDTimer(27.9, 374365, nil, nil, nil, 5, nil, DBM_COMMON_L.DAMAGE_ICON)--Can get spell queued behind other abilities
 --local timerMagmaLobCD							= mod:NewCDTimer(8, 375068, nil, nil, nil, 3)--8 unless delayed by other casts
-local timerLavaSrayCD							= mod:NewCDTimer(19.9, 375251, nil, nil, nil, 3)
+local timerLavaSrayCD							= mod:NewCDTimer(19.4, 375251, nil, nil, nil, 3)
 local timerBlazingChargeCD						= mod:NewCDTimer(23, 375436, nil, nil, nil, 3)
 
 --local berserkTimer							= mod:NewBerserkTimer(600)
@@ -71,7 +71,7 @@ function mod:OnCombatStart(delay)
 	self.vb.mutationCount = 0
 	timerLavaSrayCD:Start(7.2-delay)
 --	timerMagmaLobCD:Start(8-delay)
-	timerBlazingChargeCD:Start(19.7-delay)
+	timerBlazingChargeCD:Start(19.3-delay)
 	timerVolatileMutationCD:Start(25-delay)
 end
 

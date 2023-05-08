@@ -54,10 +54,10 @@ local timerForgestormCD							= mod:NewNextTimer(30.3, 374969, nil, nil, nil, 2)
 --mod:AddSetIconOption("SetIconOnStaggeringBarrage", 361018, true, false, {1, 2, 3})
 
 function mod:OnCombatStart(delay)
-	timerMightoftheForgeCD:Start(3.2-delay)
+	timerMightoftheForgeCD:Start(3.1-delay)
 	timerBlazinAegisCD:Start(11.5-delay)
-	timerHeatedSwingsCD:Start(20.2-delay)
-	timerForgestormCD:Start(26.7-delay)
+	timerHeatedSwingsCD:Start(20.1-delay)
+	timerForgestormCD:Start(26.6-delay)
 end
 
 --function mod:OnCombatEnd()

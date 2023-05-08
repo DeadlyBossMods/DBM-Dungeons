@@ -5,7 +5,7 @@ mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(189901)
 mod:SetEncounterID(2611)
 --mod:SetUsedIcons(1, 2, 3)
---mod:SetHotfixNoticeRev(20220322000000)
+mod:SetHotfixNoticeRev(20230507000000)
 --mod:SetMinSyncRevision(20211203000000)
 --mod.respawnTime = 29
 mod.sendMainBossGUID = true
@@ -25,6 +25,7 @@ mod:RegisterEventsInCombat(
 
 --Molten Gold/hardened gold are just so inconsiquential that I suspect blizzard will change or scrap it
 --TODO, verify Kiln target scan
+--TODO, timers if shield doesn't get removed.
 --[[
 ability.id = 376780 and (type = "begincast" or type = "applybuff" or type = "removebuff")
  or (ability.id = 377017 or ability.id = 377204 or ability.id = 377473) and type = "begincast"
@@ -62,8 +63,8 @@ end
 
 function mod:OnCombatStart(delay)
 	timerDragonsKilnCD:Start(7-delay)
-	timerMoltenGoldCD:Start(14.7-delay)
-	timerBurningEmberCD:Start(22-delay)
+	timerMoltenGoldCD:Start(14.3-delay)
+	timerBurningEmberCD:Start(21.6-delay)
 	timerMagmaShieldCD:Start(34.1-delay)
 end
 
@@ -81,7 +82,7 @@ function mod:SPELL_CAST_START(args)
 	if spellId == 376780 then
 --		timerMagmaShieldCD:Start()
 	elseif spellId == 377017 then
-		timerMoltenGoldCD:Start()
+--		timerMoltenGoldCD:Start()
 	elseif spellId == 377204 then
 		self:ScheduleMethod(0.2, "BossTargetScanner", args.sourceGUID, "DragonsKilnTarget", 0.1, 8, true)
 		specWarnDragonsKiln:Show()
@@ -90,7 +91,7 @@ function mod:SPELL_CAST_START(args)
 	elseif spellId == 377473 then
 		specWarnBurningEmber:Show()
 		specWarnBurningEmber:Play("watchstep")
-		timerBurningEmberCD:Start()
+--		timerBurningEmberCD:Start()
 	end
 end
 
@@ -140,7 +141,7 @@ function mod:SPELL_AURA_REMOVED(args)
 		timerMoltenGoldCD:Start(10)
 		timerBurningEmberCD:Start(14.3) -- ~1
 		timerDragonsKilnCD:Start(18.6) -- ~1
-		timerMagmaShieldCD:Start(30.9)
+		timerMagmaShieldCD:Start(30.1)
 	end
 end
 
