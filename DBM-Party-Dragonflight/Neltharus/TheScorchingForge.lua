@@ -82,7 +82,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 	local spellId = args.spellId
 	if spellId == 374635 then
 		specWarnMightoftheForge:Show()
-		specWarnMightoftheForge:Play("specialsoon")
+		specWarnMightoftheForge:Play("aesoon")
 		timerMightoftheForgeCD:Start()
 	elseif spellId == 374842 then
 		timerBlazinAegisCD:Start()
@@ -97,14 +97,14 @@ function mod:SPELL_AURA_APPLIED(args)
 		warnBlazinAegis:CombinedShow(0.3, args.destName)
 		if args:IsPlayer() then
 			specWarnBlazinAegis:Show()
-			specWarnBlazinAegis:Play("runout")
+			specWarnBlazinAegis:Play("scatter")
 			yellBlazinAegis:Yell()
 			yellBlazinAegisFades:Countdown(spellId)
 		end
 	elseif spellId == 374534 then
 		if args:IsPlayer() then
 			specWarnHeatedSwings:Show()
-			specWarnHeatedSwings:Play("runout")
+			specWarnHeatedSwings:Play("specialsoon")
 			yellHeatedSwings:Yell()
 			yellHeatedSwingsFades:Countdown(spellId)
 		else

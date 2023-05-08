@@ -28,7 +28,7 @@ mod:RegisterEventsInCombat(
  or (ability.id = 376169 or ability.id = 375436) and type = "cast"
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
 --]]
---TODO, verify target scan for lava spray, or maybe use RAID_BOSS_WHISPER?
+--NOTE, target scan for lava spray is veru slow, so only used for yell and target announce, everyone will get shockwave warning right away.
 --NOTE: Magma Lob is cast by EACH tentacle, it's downgraded to normal warning by defaulta and timer disabled because it gets spammy later fight
 
 local warnMagmaLob								= mod:NewSpellAnnounce(375068, 3)
@@ -36,7 +36,7 @@ local warnVolatileMutation						= mod:NewCountAnnounce(374365, 3)
 local warnLavaSpray								= mod:NewTargetNoFilterAnnounce(375251, 3)
 
 local specWarnMagmaLob							= mod:NewSpecialWarningDodge(375068, false, nil, 2, 2, 2)
-local specWarnLavaSpray							= mod:NewSpecialWarningYou(375251, nil, nil, nil, 1, 2)
+local specWarnLavaSpray							= mod:NewSpecialWarningDodge(375251, nil, nil, nil, 2, 2)
 local yellLavaSpray								= mod:NewYell(375251)
 local specWarnBlazingCharge						= mod:NewSpecialWarningDodge(375436, nil, nil, nil, 2, 2)
 local yellBlazingCharge							= mod:NewYell(375436)
@@ -58,12 +58,9 @@ mod.vb.mutationCount = 0
 
 function mod:LavaSprayTarget(targetname)
 	if not targetname then return end
+	warnLavaSpray:Show(targetname)
 	if targetname == UnitName("player") then
-		specWarnLavaSpray:Show()
-		specWarnLavaSpray:Play("targetyou")
 		yellLavaSpray:Yell()
-	else
-		warnLavaSpray:Show(targetname)
 	end
 end
 
@@ -99,7 +96,9 @@ function mod:SPELL_CAST_START(args)
 		end
 --		timerMagmaLobCD:Start()
 	elseif spellId == 375251 then
-		self:ScheduleMethod(0.2, "BossTargetScanner", args.sourceGUID, "LavaSprayTarget", 0.1, 8, true)
+		self:ScheduleMethod(0.2, "BossTargetScanner", args.sourceGUID, "LavaSprayTarget", 0.2, 12, true)
+		specWarnLavaSpray:Show()
+		specWarnLavaSpray:Play("shockwave")
 		timerLavaSrayCD:Start()
 --	elseif spellId == 375439 then--Backup Trigger for Blazing Charge
 

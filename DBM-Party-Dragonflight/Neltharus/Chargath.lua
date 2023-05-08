@@ -25,10 +25,7 @@ mod:RegisterEventsInCombat(
 --	"UNIT_SPELLCAST_SUCCEEDED boss1"
 )
 
---WIP, needs more testing/fixing in heroic and Mythic 0 this week as best I can, but want to get preliminary fixes in first to test those fixes
 --TODO, verify dragon strike target scan and spear target scan
---TODO, Need a LOT more data to properly update timers around Fetter, right now sample size is still too small AND boss is still buggy (doesn't always reset on fetter)
---TODO, boss has two diff sets of timers. One hwere he does magma at 15 seconds but dragon is 21 second cd, and one where he skips first magma but dragon is now 12sec cd
 --[[
 (ability.id = 373733 or ability.id = 373742 or ability.id = 373424 or ability.id = 375056) and type = "begincast"
  or ability.id = 374655 or (ability.id = 388523 or ability.id = 375055) and (type = "applybuff" or type = "removebuff" or type = "applydebuff" or type = "removedebuff")
@@ -74,8 +71,8 @@ function mod:OnCombatStart(delay)
 	self.vb.bossFettered = false
 	if self:IsMythic() then
 		timerDragonStrikeCD:Start(3.3-delay)
+		timerMagmaWaveCD:Start(5.1-delay)
 		timerGroundingSpearCD:Start(10.5-delay)
-		timerMagmaWaveCD:Start(6.2-delay)
 		timerFieryFocusCD:Start(29.2-delay)
 	else--Heroic, needs more sample data, cause it could just be a variant starter order if first dragon strike not cast within it's first CD window
 		timerMagmaWaveCD:Start(6.2-delay)
@@ -181,8 +178,7 @@ function mod:SPELL_AURA_REMOVED(args)
 	elseif spellId == 375055 then--Fiery Focus Removed
 		self.vb.focusInProgress = false
 		if not self.vb.bossFettered then
-			--Heroic vetted, needs mythic and mythic+ review
-			timerMagmaWaveCD:Start(7.5)
+			timerMagmaWaveCD:Start(6.8)
 			timerDragonStrikeCD:Start(13.4)
 			timerGroundingSpearCD:Start(25.7)
 			timerFieryFocusCD:Start(30.2)

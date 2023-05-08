@@ -34,7 +34,7 @@ local warnMoteofCombustion					= mod:NewCastAnnounce(384161, 4)
 local warnMendingClay						= mod:NewCastAnnounce(372223, 3)
 local warnBoldAmbush						= mod:NewTargetNoFilterAnnounce(372566, 3)
 local warnBindingSpear						= mod:NewTargetNoFilterAnnounce(372561, 3)
-local warnMoltenBarrier						= mod:NewTargetNoFilterAnnounce(383654, 4)
+local warnMoltenBarrier						= mod:NewTargetNoFilterAnnounce(382791, 4)
 
 local specWarnTempest						= mod:NewSpecialWarningSpell(381663, nil, nil, nil, 2, 13)--pushbackincoming
 local specWarnVolcanicGuard					= mod:NewSpecialWarningDodge(382708, nil, nil, nil, 1, 2)
