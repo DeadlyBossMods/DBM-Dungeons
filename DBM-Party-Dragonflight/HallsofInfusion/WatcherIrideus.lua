@@ -5,7 +5,7 @@ mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(189719)
 mod:SetEncounterID(2615)
 --mod:SetUsedIcons(1, 2, 3)
-mod:SetHotfixNoticeRev(20230319000000)
+mod:SetHotfixNoticeRev(20230507000000)
 --mod:SetMinSyncRevision(20211203000000)
 --mod.respawnTime = 29
 mod.sendMainBossGUID = true
@@ -40,9 +40,9 @@ local specWarnStaticSurge						= mod:NewSpecialWarningCount(384014, nil, nil, ni
 local specWarnGTFO								= mod:NewSpecialWarningGTFO(389181, nil, nil, nil, 1, 8)
 local specWarnTitanticFist						= mod:NewSpecialWarningDodge(384524, nil, nil, nil, 1, 2)
 
-local timerPowerOverloadCD						= mod:NewCDTimer(33.9, 389179, nil, nil, nil, 3, nil, DBM_COMMON_L.MAGIC_ICON)
-local timerSparkVolleyCD						= mod:NewCDTimer(33.9, 384351, nil, nil, nil, 3, nil, DBM_COMMON_L.MAGIC_ICON)
-local timerStaticSurgeCD						= mod:NewCDCountTimer(16.9, 384014, nil, nil, nil, 2)
+local timerPowerOverloadCD						= mod:NewCDTimer(27.5, 389179, nil, nil, nil, 3, nil, DBM_COMMON_L.MAGIC_ICON)
+local timerSparkVolleyCD						= mod:NewCDTimer(31.6, 384351, nil, nil, nil, 3, nil, DBM_COMMON_L.MAGIC_ICON)
+local timerStaticSurgeCD						= mod:NewCDCountTimer(27.5, 384014, nil, nil, nil, 2)
 local timerTitanicFistCD						= mod:NewCDTimer(16.9, 384524, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 --Stage Two: Watcher's Last Stand
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(25744))
@@ -61,9 +61,9 @@ function mod:OnCombatStart(delay)
 	self.vb.surgeCount = 0
 	self:SetStage(1)
 	timerTitanicFistCD:Start(6-delay)
-	timerStaticSurgeCD:Start(10.7-delay, 1)
-	timerPowerOverloadCD:Start(20.6-delay)
-	timerSparkVolleyCD:Start(37.4-delay)
+	timerStaticSurgeCD:Start(10-delay, 1)
+	timerPowerOverloadCD:Start(23.4-delay)--20.6 (old?)
+	timerSparkVolleyCD:Start(30.7-delay)--37.4 (old?)
 end
 
 --function mod:OnCombatEnd()
@@ -133,10 +133,10 @@ function mod:SPELL_AURA_REMOVED(args)
 	elseif spellId == 383840 then
 		warnAblativeBarrierOver:Show()
 		self:SetStage(1)
-		timerTitanicFistCD:Start(6.2)
-		timerStaticSurgeCD:Start(10.7)
-		timerPowerOverloadCD:Start(20.7)
-		timerSparkVolleyCD:Start(37.8)
+		timerTitanicFistCD:Start(6.1)
+		timerStaticSurgeCD:Start(10.7, self.vb.surgeCount+1)
+		timerPowerOverloadCD:Start(24.3)
+		timerSparkVolleyCD:Start(31.6)
 	end
 end
 

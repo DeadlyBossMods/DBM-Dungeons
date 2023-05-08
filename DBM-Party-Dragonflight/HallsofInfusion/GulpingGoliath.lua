@@ -5,7 +5,7 @@ mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(189722)
 mod:SetEncounterID(2616)
 --mod:SetUsedIcons(1, 2, 3)
-mod:SetHotfixNoticeRev(20230319000000)
+mod:SetHotfixNoticeRev(20230507000000)
 --mod:SetMinSyncRevision(20211203000000)
 --mod.respawnTime = 29
 mod.sendMainBossGUID = true
@@ -36,7 +36,7 @@ local warnBodySlam								= mod:NewTargetNoFilterAnnounce(385531, 3)
 local warnToxicEff								= mod:NewSpellAnnounce(385442, 3)
 
 local specWarnGulpSwogToxin						= mod:NewSpecialWarningStack(374389, nil, 8, nil, nil, 1, 6)
-local specWarnGulp								= mod:NewSpecialWarningRun(385551, nil, nil, nil, 4, 2)
+local specWarnGulp								= mod:NewSpecialWarningRunCount(385551, nil, nil, nil, 4, 2)
 local specWarnHangry							= mod:NewSpecialWarningDispel(385743, "RemoveEnrage", nil, nil, 1, 2)
 local specWarnOverpoweringCroak					= mod:NewSpecialWarningDodge(385187, nil, nil, nil, 2, 2)--385181 is cast but lacks tooltip, so damage Id used for tooltip/option
 local specWarnBodySlam							= mod:NewSpecialWarningMoveAway(385531, nil, nil, nil, 1, 2)
@@ -44,7 +44,7 @@ local yellBodySlam								= mod:NewYell(385531)
 --local specWarnDominationBolt					= mod:NewSpecialWarningInterrupt(363607, "HasInterrupt", nil, nil, 1, 2)
 --local specWarnGTFO							= mod:NewSpecialWarningGTFO(340324, nil, nil, nil, 1, 8)
 
-local timerGulpCD								= mod:NewCDTimer(38.8, 385551, nil, nil, nil, 3)
+local timerGulpCD								= mod:NewCDCountTimer(38.8, 385551, nil, nil, nil, 3)
 local timerOverpoweringCroakCD					= mod:NewCDTimer(38.8, 385187, nil, nil, nil, 2)--Tough to classify, it's aoe, it's targeted dodge, and it's adds
 local timerBellySlamCD							= mod:NewCDTimer(38.8, 385531, nil, nil, nil, 3)
 local timerToxicEffluviaaCD						= mod:NewCDTimer(26.7, 385442, nil, nil, nil, 5, nil, DBM_COMMON_L.HEALER_ICON)
@@ -56,6 +56,8 @@ mod:AddInfoFrameOption(374389, "RemovePoison")
 --mod:AddSetIconOption("SetIconOnStaggeringBarrage", 361018, true, false, {1, 2, 3})
 
 local toxinStacks = {}
+
+mod.vb.gulpCount = 0
 
 function mod:BodySlamTarget(targetname)
 	if not targetname then return end
@@ -70,6 +72,7 @@ end
 
 function mod:OnCombatStart(delay)
 	table.wipe(toxinStacks)
+	self.vb.gulpCount = 0
 	timerOverpoweringCroakCD:Start(8-delay)
 	timerGulpCD:Start(17.8-delay)
 	timerToxicEffluviaaCD:Start(29.9-delay)
@@ -95,9 +98,10 @@ end
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
 	if spellId == 385551 then
-		specWarnGulp:Show()
+		self.vb.gulpCount = self.vb.gulpCount + 1
+		specWarnGulp:Show(self.vb.gulpCount)
 		specWarnGulp:Play("justrun")
-		timerGulpCD:Start()
+		timerGulpCD:Start(self.vb.gulpCount == 1 and 47.3 or 38.8, self.vb.gulpCount+1)
 	elseif spellId == 385181 then
 		specWarnOverpoweringCroak:Show()
 		specWarnOverpoweringCroak:Play("aesoon")
