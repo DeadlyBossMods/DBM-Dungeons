@@ -72,10 +72,17 @@ function mod:OnCombatStart(delay)
 	self.vb.magmawaveCount = 0
 	self.vb.focusInProgress = false
 	self.vb.bossFettered = false
-	timerDragonStrikeCD:Start(3.3-delay)
-	timerGroundingSpearCD:Start(10.5-delay)
-	timerMagmaWaveCD:Start(6.2-delay)
-	timerFieryFocusCD:Start(29.2-delay)--29.2-44 variance even without fetter stuns done before first lock cast
+	if self:IsMythic() then
+		timerDragonStrikeCD:Start(3.3-delay)
+		timerGroundingSpearCD:Start(10.5-delay)
+		timerMagmaWaveCD:Start(6.2-delay)
+		timerFieryFocusCD:Start(29.2-delay)
+	else--Heroic, needs more sample data, cause it could just be a variant starter order if first dragon strike not cast within it's first CD window
+		timerMagmaWaveCD:Start(6.2-delay)
+		timerDragonStrikeCD:Start(13.1-delay)
+		timerGroundingSpearCD:Start(25.3-delay)
+		timerFieryFocusCD:Start(31-delay)
+	end
 end
 
 --function mod:OnCombatEnd()
@@ -174,11 +181,11 @@ function mod:SPELL_AURA_REMOVED(args)
 	elseif spellId == 375055 then--Fiery Focus Removed
 		self.vb.focusInProgress = false
 		if not self.vb.bossFettered then
-			--Others need review but Fiery Focus is safe to assume will come back again
---			timerMagmaWaveCD:Start(9)
---			timerDragonStrikeCD:Start(15.1)
---			timerGroundingSpearCD:Start(27.2)
-			timerFieryFocusCD:Start(30.9)
+			--Heroic vetted, needs mythic and mythic+ review
+			timerMagmaWaveCD:Start(7.5)
+			timerDragonStrikeCD:Start(13.4)
+			timerGroundingSpearCD:Start(25.7)
+			timerFieryFocusCD:Start(30.2)
 		end
 	end
 end
