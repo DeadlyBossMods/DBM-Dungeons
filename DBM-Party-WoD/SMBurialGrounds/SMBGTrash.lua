@@ -6,7 +6,7 @@ mod:SetRevision("@file-date-integer@")
 mod.isTrashMod = true
 
 mod:RegisterEvents(
-	"SPELL_CAST_START 152818 152964 153395 398150 153268 398206 156718 394512",
+	"SPELL_CAST_START 152818 152964 153395 398150 153268 398206 156718 394512 164907",
 	"SPELL_CAST_SUCCESS 394512",
 	"SPELL_AURA_APPLIED 152819",
 --	"SPELL_AURA_APPLIED_DOSE 339528",
@@ -15,8 +15,9 @@ mod:RegisterEvents(
 )
 
 --[[
-(ability.id = 152818 or ability.id = 152964 or ability.id = 153395 or ability.id = 398150 or ability.id = 153268 or ability.id = 398206 or ability.id = 156718 or ability.id = 394512) and type = "begincast"
+(ability.id = 152818 or ability.id = 152964 or ability.id = 153395 or ability.id = 398150 or ability.id = 153268 or ability.id = 398206 or ability.id = 156718 or ability.id = 394512 or ability.id = 164907) and type = "begincast"
 --]]
+local warnVoidSlash							= mod:NewCastAnnounce(164907, 4, nil, nil, "Tank|Healer")
 local warnDomination						= mod:NewCastAnnounce(398150, 4)
 local warnExhume							= mod:NewCastAnnounce(153268, 2)
 local warnVoidPulse							= mod:NewSpellAnnounce(152964, 3)
@@ -33,6 +34,7 @@ local specWarnVoidEruptions					= mod:NewSpecialWarningDodge(394512, nil, nil, n
 local specWarnBodySlam						= mod:NewSpecialWarningDodge(153395, "Tank", nil, nil, 2, 2)
 
 local timerShadowMendCD						= mod:NewCDTimer(8.5, 152818, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerVoidSlashCD						= mod:NewCDTimer(10.9, 164907, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerVoidEruptionsCD					= mod:NewCDTimer(19.4, 394512, nil, nil, nil, 3, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerNecroticBurstCD					= mod:NewCDTimer(19.4, 156718, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerBodySlamCD						= mod:NewCDTimer(14.5, 153395, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
@@ -76,6 +78,11 @@ function mod:SPELL_CAST_START(args)
 		warnExhume:Show()
 	elseif spellId == 394512 then
 		timerVoidEruptionsCD:Start(nil, args.sourceGUID)
+	elseif spellId == 164907 then
+		timerVoidSlashCD:Start(nil, args.sourceGUID)
+		if self:AntiSpam(3, 5) then
+			warnVoidSlash:Show()
+		end
 	end
 end
 
@@ -119,5 +126,7 @@ function mod:UNIT_DIED(args)
 		timerVoidEruptionsCD:Stop(args.destGUID)
 	elseif cid == 76104 then--Corpse Spider
 		timerNecroticBurstCD:Stop(args.destGUID)
+	elseif cid == 76518 then--Ritual Bones
+		timerVoidSlashCD:Stop(args.destGUID)
 	end
 end
