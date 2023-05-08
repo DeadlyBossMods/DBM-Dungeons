@@ -138,6 +138,10 @@ L:SetGeneralLocalization({
 	name =	"Neltharus Trash"
 })
 
+L:SetOptionLocalization({
+	AGBuffs		= "Auto select gossip to activate buffs when interacting with blacksmithing"
+})
+
 -----------------------
 -- <<<Algeth'ar Academy >>> --
 -----------------------
