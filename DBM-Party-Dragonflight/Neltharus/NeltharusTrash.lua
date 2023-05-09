@@ -6,23 +6,23 @@ mod:SetRevision("@file-date-integer@")
 mod.isTrashMod = true
 
 mod:RegisterEvents(
-	"SPELL_CAST_START 382708 376186 372566 372311 372201 381663 378282 397011 378847 372615 372561 395427 379406 384161 372262 372971 372223 373084 378827",
-	"SPELL_CAST_SUCCESS 378827 376169 372296",
-	"SPELL_AURA_APPLIED 384161 372543 371875 373540 372461 383654 383651",
+	"SPELL_CAST_START 382708 376186 372566 372311 372201 381663 378282 397011 378847 372615 372561 395427 379406 384161 372262 372971 372223 373084 378827 384623",
+	"SPELL_CAST_SUCCESS 376169 372296",
+	"SPELL_AURA_APPLIED 384161 373089 371875 373540 372461 382791 383651",
 --	"SPELL_AURA_APPLIED_DOSE 339528",
-	"SPELL_AURA_REMOVED 383654 383651",
-	"UNIT_DIED"
+	"SPELL_AURA_REMOVED 382791 383651",
+	"UNIT_DIED",
+	"GOSSIP_SHOW"
 )
 
 --NOTE: Many alerts are drycodes from https://www.wowhead.com/guide/dungeons/neltharus-strategy and could have invalid IDs/events
 --TODO, throw lava dodge at start or success? depends on when ground visual appears/locks on.
 --TODO, add https://www.wowhead.com/spell=372538/melt ? mob packs have higher prio spells so that's why this one iffy interrupt
 --TODO, off interrupt, CC alert for https://www.wowhead.com/spell=372225/dragonbone-axe ?
---TODO, wowhead guide says https://www.wowhead.com/spell=384623/forgestomp interrupts spellcasting but I can find zero evidence of this
 --TODO, auto gossip the cooking buff? (https://www.wowhead.com/spell=383376/qalashi-goulash)
 --[[
-(ability.id = 382708 or ability.id = 376186 or ability.id = 372566 or ability.id = 372311 or ability.id = 372201 or ability.id = 381663 or ability.id = 378282 or ability.id = 397011 or ability.id = 378847 or ability.id = 372615 or ability.id = 372561 or ability.id = 395427 or ability.id = 379406 or ability.id = 384161 or ability.id = 372262 or ability.id = 372971 or ability.id = 372223 or ability.id = 373084) and type = "begincast"
- or (ability.id = 378827 or ability.id = 376169 or ability.id = 372296) and type = "cast"
+(ability.id = 384623 or ability.id = 378827 or ability.id = 382708 or ability.id = 376186 or ability.id = 372566 or ability.id = 372311 or ability.id = 372201 or ability.id = 381663 or ability.id = 378282 or ability.id = 397011 or ability.id = 378847 or ability.id = 372615 or ability.id = 372561 or ability.id = 395427 or ability.id = 379406 or ability.id = 384161 or ability.id = 372262 or ability.id = 372971 or ability.id = 372223 or ability.id = 373084) and type = "begincast"
+ or (ability.id = 376169 or ability.id = 372296) and type = "cast"
  or ability.id = 383654
 --]]
 local warnBlazingSlash						= mod:NewCastAnnounce(397011, 3, nil, nil, "Tank|Healer")
@@ -31,9 +31,11 @@ local warnReverberatingSlam					= mod:NewCastAnnounce(372971, 3, nil, nil, "Tank
 local warnMoltencore						= mod:NewCastAnnounce(378282, 4)
 local warnBurningRoar						= mod:NewCastAnnounce(395427, 4)
 local warnMoteofCombustion					= mod:NewCastAnnounce(384161, 4)
+local warnMendingClay						= mod:NewCastAnnounce(372223, 3)
+local warnForgestomp						= mod:NewCastAnnounce(384623, 3)
 local warnBoldAmbush						= mod:NewTargetNoFilterAnnounce(372566, 3)
 local warnBindingSpear						= mod:NewTargetNoFilterAnnounce(372561, 3)
-local warnMoltenBarrier						= mod:NewTargetNoFilterAnnounce(383654, 4)
+local warnMoltenBarrier						= mod:NewTargetNoFilterAnnounce(382791, 4)
 
 local specWarnTempest						= mod:NewSpecialWarningSpell(381663, nil, nil, nil, 2, 13)--pushbackincoming
 local specWarnVolcanicGuard					= mod:NewSpecialWarningDodge(382708, nil, nil, nil, 1, 2)
@@ -69,14 +71,17 @@ local timerBindingSpearCD					= mod:NewCDTimer(25.4, 372561, nil, nil, nil, 3)
 local timerMendingClayCD					= mod:NewCDTimer(25.4, 372223, nil, nil, nil, 1)
 local timerBurningRoarCD					= mod:NewCDTimer(20.5, 395427, nil, nil, nil, 1)
 local timerEruptiveCrushCD					= mod:NewCDTimer(15.7, 376186, nil, nil, nil, 3)
-local timerScorchingBreathCD				= mod:NewCDTimer(16.9, 372201, nil, nil, nil, 3)
+local timerScorchingBreathCD				= mod:NewCDTimer(16.1, 372201, nil, nil, nil, 3)
 local timerMoteofCombustionCD				= mod:NewCDTimer(18.2, 384161, nil, nil, nil, 3)
 local timerThrowLavaCD						= mod:NewCDTimer(12.1, 379406, nil, nil, nil, 3)
 local timerPierceMarrowCD					= mod:NewCDTimer(10.9, 372262, nil, nil, nil, 3)
 local timerScorchingFusilladeCD				= mod:NewCDTimer(23, 372543, nil, nil, nil, 3)
 local timerConflagrantBatteryCD				= mod:NewCDTimer(22.6, 372296, nil, nil, nil, 3)
---local timerReverbSlamCD						= mod:NewCDTimer(17, 372971, nil, nil, nil, 3)--8-17? needs further review
+--local timerReverbSlamCD					= mod:NewCDTimer(17, 372971, nil, nil, nil, 3)--8-17? needs further review
 local timerCandescentTempestCD				= mod:NewCDTimer(27.8, 381663, nil, nil, nil, 2)
+local timerForgestompCD						= mod:NewCDTimer(17.3, 384623, nil, nil, nil, 2)
+
+mod:AddBoolOption("AGBuffs", true)
 
 --local playerName = UnitName("player")
 
@@ -116,7 +121,7 @@ function mod:SPELL_CAST_START(args)
 		end
 	elseif spellId == 372561 then
 		timerBindingSpearCD:Start(nil, args.sourceGUID)
-		if self:AntiSpam(3, 2) then
+		if self:AntiSpam(2, 2) then
 			specWarnBindingSpear:Show()
 			specWarnBindingSpear:Play("watchstep")
 		end
@@ -157,9 +162,11 @@ function mod:SPELL_CAST_START(args)
 		specWarnEmberReach:Play("kickcast")
 	elseif spellId == 372223 then
 		timerMendingClayCD:Start(nil, args.sourceGUID)
-		if self:CheckInterruptFilter(args.sourceGUID, false, true) then
+		if self.Options.SpecWarn372223interrupt and self:CheckInterruptFilter(args.sourceGUID, false, true) then
 			specWarnMendingClay:Show(args.sourceName)
 			specWarnMendingClay:Play("kickcast")
+		elseif self:AntiSpam(3, 7) then
+			warnMendingClay:Show()
 		end
 	elseif spellId == 378282 then
 		if self.Options.SpecWarn378282interrupt and self:CheckInterruptFilter(args.sourceGUID, false, true) then
@@ -200,15 +207,21 @@ function mod:SPELL_CAST_START(args)
 		timerScorchingFusilladeCD:Start(nil, args.sourceGUID)
 	elseif spellId == 378827 then
 		timerExplosiveConcoctionCD:Start(nil, args.sourceGUID)
+		if self:AntiSpam(3, 2) then
+			specWarnExplosiveConcoction:Show()
+			specWarnExplosiveConcoction:Play("watchstep")
+		end
+	elseif spellId == 384623 then
+		timerForgestompCD:Start(nil, args.sourceGUID)
+		if self:AntiSpam(3, 4) then
+			warnForgestomp:Show()
+		end
 	end
 end
 
 function mod:SPELL_CAST_SUCCESS(args)
 	local spellId = args.spellId
-	if spellId == 378827 and self:AntiSpam(3, 2) then
-		specWarnExplosiveConcoction:Show()
-		specWarnExplosiveConcoction:Play("watchstep")
-	elseif spellId == 376169 and self:AntiSpam(5, 8) then--Throw Experimental Concoction
+	if spellId == 376169 and self:AntiSpam(5, 8) then--Throw Experimental Concoction
 		magmaMod:SendSync("TuskRP")
 	elseif spellId == 372296 then
 		timerConflagrantBatteryCD:Start(nil, args.sourceGUID)
@@ -228,7 +241,7 @@ function mod:SPELL_AURA_APPLIED(args)
 			specWarnMoteofCombustionYou:Play("targetyou")
 			yellMoteofCombustion:Yell()
 		end
-	elseif spellId == 372543 then
+	elseif spellId == 373089 then
 		if args:IsPlayer() then
 			specWarnScorchingFusillade:Show()
 			specWarnScorchingFusillade:Play("scatter")
@@ -245,7 +258,7 @@ function mod:SPELL_AURA_APPLIED(args)
 	elseif spellId == 372461 and args:IsDestTypePlayer() and self:CheckDispelFilter("magic") and self:AntiSpam(3, 3) then
 		specWarnImbuedMagma:Show(args.destName)
 		specWarnImbuedMagma:Play("helpdispel")
-	elseif spellId == 383654 then
+	elseif spellId == 382791 then
 		warnMoltenBarrier:Show(args.destName)
 	elseif spellId == 383651 then--Army Buff
 		cachedGUIDS[args.destGUID] = true
@@ -255,7 +268,7 @@ end
 
 function mod:SPELL_AURA_REMOVED(args)
 	local spellId = args.spellId
-	if spellId == 383654 then--Molten Barrier
+	if spellId == 382791 then--Molten Barrier
 		if cachedGUIDS[args.destGUID] then--still casting
 			specWarnMoltenArmy:Show(args.destName)
 			specWarnMoltenArmy:Play("kickcast")
@@ -294,7 +307,17 @@ function mod:UNIT_DIED(args)
 		timerConflagrantBatteryCD:Stop(args.destGUID)
 	elseif cid == 189471 then--Qalashi Blacksmith
 --		timerReverbSlamCD:Start(args.destGUID)
+		timerForgestompCD:Stop(args.destGUID)
 	elseif cid == 193291 then--Apex Blazewing
 		timerCandescentTempestCD:Stop(args.destGUID)
+	end
+end
+
+function mod:GOSSIP_SHOW()
+	local gossipOptionID = self:GetGossipID()
+	if gossipOptionID then
+		if self.Options.AGBuffs and (gossipOptionID == 107310) then -- Blacksmith Buff
+			self:SelectGossip(gossipOptionID)
+		end
 	end
 end

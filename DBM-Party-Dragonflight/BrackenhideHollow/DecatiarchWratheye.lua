@@ -5,7 +5,7 @@ mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(186121)
 mod:SetEncounterID(2569)
 mod:SetUsedIcons(8)
-mod:SetHotfixNoticeRev(20221505000000)
+mod:SetHotfixNoticeRev(20230507000000)
 --mod:SetMinSyncRevision(20211203000000)
 --mod.respawnTime = 29
 mod.sendMainBossGUID = true
@@ -17,7 +17,7 @@ mod:RegisterEventsInCombat(
 	"SPELL_SUMMON 373944",
 	"SPELL_AURA_APPLIED 373896",
 	"SPELL_AURA_APPLIED_DOSE 373896",
-	"SPELL_AURA_REMOVED 373896",
+	"SPELL_AURA_REMOVED 373896 374186",
 	"SPELL_AURA_REMOVED_DOSE 373896"
 --	"SPELL_PERIODIC_DAMAGE",
 --	"SPELL_PERIODIC_MISSED",
@@ -26,6 +26,7 @@ mod:RegisterEventsInCombat(
 --[[
 (ability.id = 373960 or ability.id = 376170 or ability.id = 373912) and type = "begincast"
  or ability.id = 373944 and type = "summon"
+ or ability.id = 374186 and type = "removebuff"
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
 --]]
 --TODO, longer pulls for decaying strength timer (needs more data, single pull with 3 casts but still all over the place)
@@ -36,7 +37,7 @@ local specWarnChokingRotcloud					= mod:NewSpecialWarningDodge(376170, nil, nil,
 local specWarnDecaystrike						= mod:NewSpecialWarningDefensive(373917, nil, nil, nil, 1, 2)
 --local specWarnGTFO							= mod:NewSpecialWarningGTFO(340324, nil, nil, nil, 1, 8)
 
-local timerDecayingStrengthCD					= mod:NewCDTimer(69.2, 373960, nil, nil, nil, 2)--Likely still bugged
+local timerDecayingStrengthCD					= mod:NewCDTimer(40.5, 373960, nil, nil, nil, 2)
 local timerRotburstTotemCD						= mod:NewCDTimer(18.2, 373944, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)--18-21
 local timerChokingRotcloutCD					= mod:NewCDTimer(42.5, 376170, nil, nil, nil, 3, nil, DBM_COMMON_L.MYTHIC_ICON)
 local timerDecayStrikeCD						= mod:NewCDTimer(19.4, 373917, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
@@ -58,7 +59,7 @@ function mod:OnCombatStart(delay)
 	end
 	timerDecayStrikeCD:Start(10.8-delay)
 	timerRotburstTotemCD:Start(19.1-delay)
-	timerDecayingStrengthCD:Start(41.1-delay)
+	timerDecayingStrengthCD:Start(40-delay)
 	if self.Options.InfoFrame then
 		DBM.InfoFrame:SetHeader(DBM:GetSpellInfo(373896))
 		DBM.InfoFrame:Show(5, "table", WitheringRotStacks, 1)
@@ -82,7 +83,6 @@ function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
 	if spellId == 373960 then
 		warnDecayigStrength:Show()
---		timerDecayingStrengthCD:Start()--69.2, 100.8
 	elseif spellId == 376170 then
 		specWarnChokingRotcloud:Show()
 		specWarnChokingRotcloud:Play("shockwave")
@@ -127,6 +127,8 @@ function mod:SPELL_AURA_REMOVED(args)
 		if self.Options.InfoFrame then
 			DBM.InfoFrame:UpdateTable(WitheringRotStacks, 0.2)
 		end
+	elseif spellId == 374186 then
+		timerDecayingStrengthCD:Start()
 	end
 end
 

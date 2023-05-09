@@ -277,12 +277,11 @@ function mod:UNIT_DIED(args)
 	end
 end
 
---TODO, actually get correct IDs, these are in guide but haven't collected Ids yet
 function mod:GOSSIP_SHOW()
---	local gossipOptionID = self:GetGossipID()
---	if gossipOptionID then
---		if self.Options.AGBuffs and (gossipOptionID == 107192 or gossipOptionID == 107205) then -- Engineer/Herb Buff
---			self:SelectGossip(gossipOptionID)
---		end
---	end
+	local gossipOptionID = self:GetGossipID()
+	if gossipOptionID then
+		if self.Options.AGBuffs and (gossipOptionID == 107192 or gossipOptionID == 107206) then -- Engineer/Herb Buff
+			self:SelectGossip(gossipOptionID)
+		end
+	end
 end

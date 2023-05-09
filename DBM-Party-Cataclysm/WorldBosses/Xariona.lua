@@ -15,7 +15,7 @@ mod:RegisterEventsInCombat(
 	"SPELL_CAST_SUCCESS 93553",
 	"SPELL_AURA_APPLIED 93551",
 	"SPELL_AURA_REMOVED 93551",
-	"UNIT_POWER_FREQUENT",
+	"UNIT_POWER_UPDATE",
 	"UNIT_SPELLCAST_SUCCEEDED"
 )
 
@@ -88,7 +88,7 @@ function mod:SPELL_AURA_REMOVED(args)
 	end
 end
 
-function mod:UNIT_POWER_FREQUENT(uId)
+function mod:UNIT_POWER_UPDATE(uId)
 	if self:GetUnitCreatureId(uId) == 50061 and UnitPower(uId) == 70 and specialCharging then
 		warnUnleashedMagicSoon:Schedule(8)
 		timerUnleashedMagicCD:Start(18)--Start a bar in case one doesn't exist, so update function can do it's thing after.

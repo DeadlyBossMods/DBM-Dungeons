@@ -5,7 +5,7 @@ mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(181861)
 mod:SetEncounterID(2610)
 --mod:SetUsedIcons(1, 2, 3)
---mod:SetHotfixNoticeRev(20220322000000)
+mod:SetHotfixNoticeRev(20230507000000)
 --mod:SetMinSyncRevision(20211203000000)
 --mod.respawnTime = 29
 mod.sendMainBossGUID = true
@@ -28,7 +28,7 @@ mod:RegisterEventsInCombat(
  or (ability.id = 376169 or ability.id = 375436) and type = "cast"
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
 --]]
---TODO, verify target scan for lava spray, or maybe use RAID_BOSS_WHISPER?
+--NOTE, target scan for lava spray is veru slow, so only used for yell and target announce, everyone will get shockwave warning right away.
 --NOTE: Magma Lob is cast by EACH tentacle, it's downgraded to normal warning by defaulta and timer disabled because it gets spammy later fight
 
 local warnMagmaLob								= mod:NewSpellAnnounce(375068, 3)
@@ -36,16 +36,16 @@ local warnVolatileMutation						= mod:NewCountAnnounce(374365, 3)
 local warnLavaSpray								= mod:NewTargetNoFilterAnnounce(375251, 3)
 
 local specWarnMagmaLob							= mod:NewSpecialWarningDodge(375068, false, nil, 2, 2, 2)
-local specWarnLavaSpray							= mod:NewSpecialWarningYou(375251, nil, nil, nil, 1, 2)
+local specWarnLavaSpray							= mod:NewSpecialWarningDodge(375251, nil, nil, nil, 2, 2)
 local yellLavaSpray								= mod:NewYell(375251)
 local specWarnBlazingCharge						= mod:NewSpecialWarningDodge(375436, nil, nil, nil, 2, 2)
 local yellBlazingCharge							= mod:NewYell(375436)
 local specWarnGTFO								= mod:NewSpecialWarningGTFO(375204, nil, nil, nil, 1, 8)
 
-local timerRP									= mod:NewRPTimer(34.4)
-local timerVolatileMutationCD					= mod:NewCDTimer(31.5, 374365, nil, nil, nil, 5, nil, DBM_COMMON_L.DAMAGE_ICON)
+local timerRP									= mod:NewRPTimer(9.9)
+local timerVolatileMutationCD					= mod:NewCDTimer(27.9, 374365, nil, nil, nil, 5, nil, DBM_COMMON_L.DAMAGE_ICON)--Can get spell queued behind other abilities
 --local timerMagmaLobCD							= mod:NewCDTimer(8, 375068, nil, nil, nil, 3)--8 unless delayed by other casts
-local timerLavaSrayCD							= mod:NewCDTimer(19.9, 375251, nil, nil, nil, 3)
+local timerLavaSrayCD							= mod:NewCDTimer(19.4, 375251, nil, nil, nil, 3)
 local timerBlazingChargeCD						= mod:NewCDTimer(23, 375436, nil, nil, nil, 3)
 
 --local berserkTimer							= mod:NewBerserkTimer(600)
@@ -58,12 +58,9 @@ mod.vb.mutationCount = 0
 
 function mod:LavaSprayTarget(targetname)
 	if not targetname then return end
+	warnLavaSpray:Show(targetname)
 	if targetname == UnitName("player") then
-		specWarnLavaSpray:Show()
-		specWarnLavaSpray:Play("targetyou")
 		yellLavaSpray:Yell()
-	else
-		warnLavaSpray:Show(targetname)
 	end
 end
 
@@ -71,7 +68,7 @@ function mod:OnCombatStart(delay)
 	self.vb.mutationCount = 0
 	timerLavaSrayCD:Start(7.2-delay)
 --	timerMagmaLobCD:Start(8-delay)
-	timerBlazingChargeCD:Start(19.7-delay)
+	timerBlazingChargeCD:Start(19.3-delay)
 	timerVolatileMutationCD:Start(25-delay)
 end
 
@@ -99,7 +96,9 @@ function mod:SPELL_CAST_START(args)
 		end
 --		timerMagmaLobCD:Start()
 	elseif spellId == 375251 then
-		self:ScheduleMethod(0.2, "BossTargetScanner", args.sourceGUID, "LavaSprayTarget", 0.1, 8, true)
+		self:ScheduleMethod(0.2, "BossTargetScanner", args.sourceGUID, "LavaSprayTarget", 0.2, 12, true)
+		specWarnLavaSpray:Show()
+		specWarnLavaSpray:Play("shockwave")
 		timerLavaSrayCD:Start()
 --	elseif spellId == 375439 then--Backup Trigger for Blazing Charge
 

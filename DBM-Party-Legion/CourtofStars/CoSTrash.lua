@@ -17,7 +17,7 @@ for i = 1, #frames do
 	frames[i]:UnregisterEvent("GOSSIP_SHOW")
 end
 mod:RegisterEvents(
-	"SPELL_CAST_START 209027 212031 209485 209410 209413 211470 211464 209404 209495 225100 211299 209378 397892 397897 207979 212784 207980 212773 210261 209033",
+	"SPELL_CAST_START 209027 212031 209485 209410 209413 211470 211464 209404 209495 225100 211299 209378 397892 397897 207979 212784 207980 212773 210261 209033 211473",
 	"SPELL_AURA_APPLIED 209033 209512 397907 373552",
 	"SPELL_AURA_REMOVED 397907",
 	"UNIT_DIED",
@@ -35,7 +35,7 @@ end
 (ability.id = 209033 or ability.id = 209027 or ability.id = 212031 or ability.id = 207979 or ability.id = 209485 or ability.id = 209410
  or ability.id = 209413 or ability.id = 211470 or ability.id = 225100 or ability.id = 211299 or ability.id = 207980 or ability.id = 212773
  or ability.id = 211464 or ability.id = 209404 or ability.id = 209495 or ability.id = 209378 or ability.id = 397892 or ability.id = 397897
- or ability.id = 212784) and type = "begincast"
+ or ability.id = 212784 or ability.id = 211473) and type = "begincast"
 --]]
 local warnAvailableItems			= mod:NewAnnounce("warnAvailableItems", 1)
 local warnImpendingDoom				= mod:NewTargetAnnounce(397907, 2)
@@ -43,6 +43,7 @@ local warnSoundAlarm				= mod:NewCastAnnounce(210261, 4)
 local warnSubdue					= mod:NewCastAnnounce(212773, 3)
 local warnCrushingLeap				= mod:NewCastAnnounce(397897, 3)
 local warnEyeStorm					= mod:NewCastAnnounce(212784, 4)
+local warnShadowSlash				= mod:NewCastAnnounce(211473, 4, nil, nil, "Tank|Healer")
 local warnHypnosisBat				= mod:NewTargetNoFilterAnnounce(373552, 3)
 
 local specWarnFortificationDispel	= mod:NewSpecialWarningDispel(209033, "MagicDispeller", nil, nil, 1, 2)
@@ -76,6 +77,7 @@ local timerSuppressCD				= mod:NewCDTimer(17, 209413, nil, "HasInterrupt", nil, 
 local timerSearingGlareCD			= mod:NewCDTimer(9.8, 211299, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerEyeStormCD				= mod:NewCDTimer(20.6, 212784, nil, nil, nil, 5)--Role color cause it needs a disrupt (stun, knockback) to interrupt.
 local timerBewitchCD				= mod:NewCDTimer(17, 211470, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerShadowSlashCD			= mod:NewCDTimer(18.2, 211473, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerFelDetonationCD			= mod:NewCDTimer(12.1, 211464, nil, nil, nil, 2)
 local timerScreamofPainCD			= mod:NewCDTimer(14.6, 397892, nil, nil, nil, 2)
 local timerWhirlingBladesCD			= mod:NewCDTimer(18.2, 209378, nil, "Melee", nil, 2)
@@ -197,6 +199,11 @@ function mod:SPELL_CAST_START(args)
 		end
 	elseif spellId == 210261 then--No throttle
 		warnSoundAlarm:Show()
+	elseif spellId == 211473 then
+		timerShadowSlashCD:Start(nil, args.sourceGUID)
+		if self:AntiSpam(3, 5) then
+			warnShadowSlash:Show()
+		end
 	end
 end
 
@@ -245,6 +252,7 @@ function mod:UNIT_DIED(args)
 		timerEyeStormCD:Stop(args.destGUID)
 	elseif cid == 104300 then--Shadow Mistress
 		timerBewitchCD:Stop(args.destGUID)
+		timerShadowSlashCD:Stop(args.destGUID)
 	elseif cid == 104278 then--Felbound Enforcer
 		timerFelDetonationCD:Stop(args.destGUID)
 	elseif cid == 104275 then--Imacu'tya

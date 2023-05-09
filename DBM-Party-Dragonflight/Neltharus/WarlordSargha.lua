@@ -5,7 +5,7 @@ mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(189901)
 mod:SetEncounterID(2611)
 --mod:SetUsedIcons(1, 2, 3)
---mod:SetHotfixNoticeRev(20220322000000)
+mod:SetHotfixNoticeRev(20230508000000)
 --mod:SetMinSyncRevision(20211203000000)
 --mod.respawnTime = 29
 mod.sendMainBossGUID = true
@@ -15,7 +15,7 @@ mod:RegisterCombat("combat")
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 376780 377017 377204 377473",
 --	"SPELL_CAST_SUCCESS",
-	"SPELL_AURA_APPLIED 376780 377018 377022 377522",
+	"SPELL_AURA_APPLIED 376780 377018 377022 377522 377014",
 --	"SPELL_AURA_APPLIED_DOSE",
 	"SPELL_AURA_REMOVED 376780",
 	"SPELL_PERIODIC_DAMAGE 377542",
@@ -28,6 +28,7 @@ mod:RegisterEventsInCombat(
 --[[
 ability.id = 376780 and (type = "begincast" or type = "applybuff" or type = "removebuff")
  or (ability.id = 377017 or ability.id = 377204 or ability.id = 377473) and type = "begincast"
+ or ability.id = 377014
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
 --]]
 local warnMagmaShield							= mod:NewTargetNoFilterAnnounce(376780, 3)
@@ -62,8 +63,8 @@ end
 
 function mod:OnCombatStart(delay)
 	timerDragonsKilnCD:Start(7-delay)
-	timerMoltenGoldCD:Start(14.7-delay)
-	timerBurningEmberCD:Start(22-delay)
+	timerMoltenGoldCD:Start(14.3-delay)
+	timerBurningEmberCD:Start(21.6-delay)
 	timerMagmaShieldCD:Start(34.1-delay)
 end
 
@@ -81,7 +82,7 @@ function mod:SPELL_CAST_START(args)
 	if spellId == 376780 then
 --		timerMagmaShieldCD:Start()
 	elseif spellId == 377017 then
-		timerMoltenGoldCD:Start()
+--		timerMoltenGoldCD:Start()
 	elseif spellId == 377204 then
 		self:ScheduleMethod(0.2, "BossTargetScanner", args.sourceGUID, "DragonsKilnTarget", 0.1, 8, true)
 		specWarnDragonsKiln:Show()
@@ -90,7 +91,7 @@ function mod:SPELL_CAST_START(args)
 	elseif spellId == 377473 then
 		specWarnBurningEmber:Show()
 		specWarnBurningEmber:Play("watchstep")
-		timerBurningEmberCD:Start()
+--		timerBurningEmberCD:Start()
 	end
 end
 
@@ -126,6 +127,13 @@ function mod:SPELL_AURA_APPLIED(args)
 		else
 			warnBurningPursuit:Show(args.destName)
 		end
+	elseif spellId == 377014 then--Backdraft
+		--Backdraft is 10 seconds tun when barrier is removed, and has a diff sequence of timers as a result
+		--So we immediately restart timers if backdraft successful
+		timerMoltenGoldCD:Restart(10)
+		timerBurningEmberCD:Restart(14.3) -- ~1
+		timerDragonsKilnCD:Restart(18.6) -- ~1
+		timerMagmaShieldCD:Restart(30.1)
 	end
 end
 --mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED
@@ -137,10 +145,11 @@ function mod:SPELL_AURA_REMOVED(args)
 		if self.Options.InfoFrame then
 			DBM.InfoFrame:Hide()
 		end
-		timerMoltenGoldCD:Start(10)
-		timerBurningEmberCD:Start(14.3) -- ~1
-		timerDragonsKilnCD:Start(18.6) -- ~1
-		timerMagmaShieldCD:Start(30.9)
+		--Start initial timers
+		timerMoltenGoldCD:Start(6)
+		timerDragonsKilnCD:Start(11) -- ~1
+		timerBurningEmberCD:Start(16.9) -- ~1
+		timerMagmaShieldCD:Start(30.1)
 	end
 end
 

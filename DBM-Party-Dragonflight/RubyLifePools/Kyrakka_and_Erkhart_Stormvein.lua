@@ -79,7 +79,6 @@ local directions = {
 }
 
 local function scanBosses(self, delay)
-	local foundOne, foundTwo, foundThree
 	for i = 1, 2 do
 		local unitID = "boss"..i
 		if UnitExists(unitID) then

@@ -5,7 +5,7 @@ mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(186120)
 mod:SetEncounterID(2568)
 mod:SetUsedIcons(8, 7, 6, 5)
---mod:SetHotfixNoticeRev(20220322000000)
+mod:SetHotfixNoticeRev(20230507000000)
 --mod:SetMinSyncRevision(20211203000000)
 --mod.respawnTime = 29
 mod.sendMainBossGUID = true
@@ -29,6 +29,7 @@ mod:RegisterEventsInCombat(
 --[[
 (ability.id = 376811 or ability.id = 377559 or ability.id = 376934) and type = "begincast"
  or ability.id = 377859 and type = "cast"
+ or ability.id = 378022 and type = "removebuff"
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
  or ability.id = 381770 and type = "begincast"
 --]]
@@ -62,8 +63,8 @@ mod.vb.addIcon = 8
 function mod:OnCombatStart(delay)
 	timerVineWhipCD:Start(6-delay)
 	timerDecaySprayCD:Start(12.1-delay)
-	timerGraspingVinesCD:Start(15.8-delay)
-	timerInfectiousSpitCD:Start(26-delay)
+	timerGraspingVinesCD:Start(15.7-delay)
+--	timerInfectiousSpitCD:Start(25.9-delay)--Restarted by vines anyways
 end
 
 function mod:OnCombatEnd()
@@ -96,11 +97,12 @@ function mod:SPELL_CAST_START(args)
 		else
 			warnGraspingVines:Show()
 		end
-		timerGraspingVinesCD:Start()--47.3
+		--Grasping vines does start a timer here, and if he does NOT consume a player, this timer will be used for next cast
+		timerGraspingVinesCD:Start(42.5)
 		--Timer restarts
 		timerInfectiousSpitCD:Restart(10.2)
 		timerVineWhipCD:Restart(10.9)
-		timerDecaySprayCD:Restart(17)--17-20, but it does still restart here
+		timerDecaySprayCD:Restart(17)--17-20, but it does still restart here, just depends how fast consuming is removed
 	end
 end
 
@@ -148,6 +150,8 @@ function mod:SPELL_AURA_REMOVED(args)
 		if self.Options.InfoFrame then
 			DBM.InfoFrame:Hide()
 		end
+		--If boss consumes someone, it restarts grasping vines timer
+		timerGraspingVinesCD:Restart(29.7)
 	end
 end
 
