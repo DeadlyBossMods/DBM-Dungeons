@@ -74,7 +74,6 @@ local timerGreaterHealingRapidsCD				= mod:NewCDCountTimer(15.7, 377950, nil, ni
 mod.vb.healingRapidsCount = 0
 
 local function scanBosses(self, delay)
-	local foundOne, foundTwo, foundThree
 	for i = 1, 3 do
 		local unitID = "boss"..i
 		if UnitExists(unitID) then

@@ -6,8 +6,8 @@ mod:SetCreatureID(184580, 184581, 184582)
 mod:SetEncounterID(2555)
 --mod:SetUsedIcons(1, 2, 3)
 mod:SetBossHPInfoToHighest()
---mod:SetHotfixNoticeRev(20220322000000)
---mod:SetMinSyncRevision(20211203000000)
+mod:SetHotfixNoticeRev(20230508000000)
+mod:SetMinSyncRevision(20230508000000)
 --mod.respawnTime = 29
 
 mod:RegisterCombat("combat")
@@ -22,12 +22,10 @@ mod:RegisterEventsInCombat(
 	"SPELL_PERIODIC_MISSED 377825"
 )
 
---TODO, dwarves who are "defeated" don't die, they go on boat at 10%, so we need to detect them leaving to stop timers properly
 --TODO, verify target scanners. If they work, maybe upgrade it to UNIT_TARGET method
 --TODO, can wild cleave be dodged? Once known, create special warning to dodge it or defensive it.
 --TODO, verify defensive bulwark and if it's actually interruptable
---TODO, timerLongboatRaidCD is disabled until i know how to detect a boss casting it because of energy/CD and one casting it because they hit 10%
---TODO, genuinely need a no dps pull to see if any abilities actually can be cast twice after first raid, or if each ability is only cast once per raid cycle
+--https://www.warcraftlogs.com/reports/wjYgPmDaLMxqJWFN#fight=last&pins=2%24Off%24%23244F4B%24expression%24(ability.id%20%3D%20369573%20or%20ability.id%20%3D%20369563%20or%20ability.id%20%3D%20369791%20or%20ability.id%20%3D%20369677%20or%20ability.id%20%3D%20375924)%20and%20type%20%3D%20%22begincast%22%20%20or%20ability.id%20%3D%20369602%20%20or%20type%20%3D%20%22dungeonencounterstart%22%20or%20type%20%3D%20%22dungeonencounterend%22&view=events
 --[[
 (ability.id = 369573 or ability.id = 369563 or ability.id = 369791 or ability.id = 369677 or ability.id = 375924) and type = "begincast"
  or ability.id = 369602
@@ -41,8 +39,8 @@ local warnWildCleave							= mod:NewSpellAnnounce(369563, 3, nil, "Tank")
 local specWarnHeavyArrow						= mod:NewSpecialWarningYou(369573, nil, nil, nil, 1, 2)
 local yellHeavyArrow							= mod:NewYell(369573)
 
-local timerHeavyArrowCD							= mod:NewCDTimer(35, 369573, nil, nil, nil, 3)
-local timerWildCleaveCD							= mod:NewCDTimer(35, 369563, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)--Council fights can be messy, on for everyone for now
+local timerHeavyArrowCD							= mod:NewCDTimer(20.6, 369573, nil, nil, nil, 3)
+local timerWildCleaveCD							= mod:NewCDTimer(17, 369563, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)--Council fights can be messy, on for everyone for now
 
 --Eric "The Swift"
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(24781))
@@ -51,7 +49,7 @@ local warnSkullcracker							= mod:NewTargetNoFilterAnnounce(369791, 3)
 local specWarnSkullcracker						= mod:NewSpecialWarningYou(369791, nil, nil, nil, 1, 2)
 local yellSkullcracker							= mod:NewYell(369791)
 
-local timerSkullcrackerCD						= mod:NewCDTimer(35, 369791, nil, nil, nil, 3)
+local timerSkullcrackerCD						= mod:NewCDTimer(26.6, 369791, nil, nil, nil, 3)
 --Olaf
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(24782))
 local warnRicochetingShield						= mod:NewTargetNoFilterAnnounce(369677, 3)
@@ -60,7 +58,7 @@ local specWarnRicochetingShield					= mod:NewSpecialWarningYou(369677, nil, nil,
 local yellRicochetingShield						= mod:NewYell(369677)
 local specWarnDefensiveBulwark					= mod:NewSpecialWarningInterrupt(369602, "HasInterrupt", nil, nil, 1, 2)
 
-local timerRicochetingShieldCD					= mod:NewCDTimer(35, 369677, nil, nil, nil, 3)
+local timerRicochetingShieldCD					= mod:NewCDTimer(16.9, 369677, nil, nil, nil, 3)
 local timerDefensiveBulwarkCD					= mod:NewCDTimer(35, 369602, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 --Longboat Raid!
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(24783))
@@ -107,17 +105,27 @@ function mod:ShieldTarget(targetname)
 	end
 end
 
+local function scanBosses(self, delay)
+	for i = 1, 3 do
+		local unitID = "boss"..i
+		if UnitExists(unitID) then
+			local cid = self:GetUnitCreatureId(unitID)
+			local bossGUID = UnitGUID(unitID)
+			if cid == 184581 then--Baelog
+				timerWildCleaveCD:Start(7.1-delay, bossGUID)
+				timerHeavyArrowCD:Start(19.6-delay, bossGUID)
+			elseif cid == 184580 then--Olaf
+				timerRicochetingShieldCD:Start(11.1-delay, bossGUID)
+				timerDefensiveBulwarkCD:Start(16.2-delay, bossGUID)
+			elseif cid == 184582 then--Eric "The Swift"
+				timerSkullcrackerCD:Start(5-delay, bossGUID)
+			end
+		end
+	end
+end
+
 function mod:OnCombatStart(delay)
-	--Baelog
-	timerWildCleaveCD:Start(8.1-delay)
-	timerHeavyArrowCD:Start(20.6-delay)
-	--Eric
-	timerSkullcrackerCD:Start(6-delay)
-	--Olaf
-	timerRicochetingShieldCD:Start(12.1-delay)
-	timerDefensiveBulwarkCD:Start(17.2-delay)
-	--Raid
-	timerLongboatRaidCD:Start(24-delay)
+	self:Schedule(1, scanBosses, self, delay)--1 second delay to give IEEU time to populate boss guids
 	if self.Options.RangeFrame then
 		DBM.RangeCheck:Show(5)
 	end
@@ -136,27 +144,42 @@ function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
 	if spellId == 369573 then
 		self:ScheduleMethod(0.2, "BossTargetScanner", args.sourceGUID, "ArrowTarget", 0.1, 8, true)
---		timerHeavyArrowCD:Start()
+		timerHeavyArrowCD:Start(nil, args.sourceGUID)
 	elseif spellId == 369563 then
 		warnWildCleave:Show()
---		timerWildCleaveCD:Start()
+		timerWildCleaveCD:Start(nil, args.sourceGUID)
 	elseif spellId == 369791 then
 		self:ScheduleMethod(0.2, "BossTargetScanner", args.sourceGUID, "SkullTarget", 0.1, 8, true)
---		timerSkullcrackerCD:Start()
+		timerSkullcrackerCD:Start(nil, args.sourceGUID)
 	elseif spellId == 369677 then
 		self:ScheduleMethod(0.2, "BossTargetScanner", args.sourceGUID, "ShieldTarget", 0.1, 8, true)
---		timerRicochetingShieldCD:Start()
-	elseif spellId == 375924 and self:AntiSpam(8, 1) then
-		timerLongboatRaidCD:Start()
+		timerRicochetingShieldCD:Start(nil, args.sourceGUID)
+	elseif spellId == 375924 then
+		local bossUid = DBM:GetUnitIdFromGUID(args.sourceGUID)
+		local bossPower = UnitPower(bossUid)--If boss power is ever less than 100 when this is cast, they're defeated
+		if bossPower == 100 and self:AntiSpam(8, 1) then--at least one caster is alive, start next timer
+			timerLongboatRaidCD:Start(79)
+		end
 		local cid = self:GetCIDFromGUID(args.sourceGUID)
 		if cid == 184581 then--Baelog
-			timerHeavyArrowCD:Stop()
-			timerWildCleaveCD:Stop()
+			timerHeavyArrowCD:Stop(args.sourceGUID)
+			timerWildCleaveCD:Stop(args.sourceGUID)
+			if bossPower == 100 then--Alive, restart timers
+				timerWildCleaveCD:Start(24.9, args.sourceGUID)
+				timerHeavyArrowCD:Start(35, args.sourceGUID)
+			end
 		elseif cid == 184580 then--Olaf
-			timerRicochetingShieldCD:Stop()
-			timerDefensiveBulwarkCD:Stop()
+			timerRicochetingShieldCD:Stop(args.sourceGUID)
+			timerDefensiveBulwarkCD:Stop(args.sourceGUID)
+			if bossPower == 100 then--Alive, restart timers
+				timerRicochetingShieldCD:Start(30, args.sourceGUID)
+				timerDefensiveBulwarkCD:Start(35, args.sourceGUID)
+			end
 		elseif cid == 184582 then--Eric "The Swift"
-			timerSkullcrackerCD:Stop()
+			timerSkullcrackerCD:Stop(args.sourceGUID)
+			if bossPower == 100 then--Alive, restart timers
+				timerSkullcrackerCD:Start(24.9, args.sourceGUID)
+			end
 		end
 	end
 end
@@ -173,7 +196,7 @@ end
 function mod:SPELL_AURA_APPLIED(args)
 	local spellId = args.spellId
 	if spellId == 369602 then
---		timerDefensiveBulwarkCD:Start()
+		timerDefensiveBulwarkCD:Start(nil, args.sourceGUID)
 		if self:CheckInterruptFilter(args.sourceGUID, false, true) then
 			specWarnDefensiveBulwark:Show(args.sourceName)
 			specWarnDefensiveBulwark:Play("kickcast")

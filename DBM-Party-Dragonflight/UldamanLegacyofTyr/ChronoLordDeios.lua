@@ -43,8 +43,8 @@ local specWarnSandBreath						= mod:NewSpecialWarningDefensive(375727, nil, nil,
 local timerEternalOrbCD							= mod:NewCDCountTimer(3.6, 376292, nil, nil, nil, 3)--3-9
 local timerRewindTimeflowCD						= mod:NewCDCountTimer(42.3, 376208, nil, nil, nil, 6)
 local timerRewindTimeflow						= mod:NewBuffActiveTimer(14, 376208, nil, nil, nil, 5)--12+2sec cast
-local timerWingBuffetCD							= mod:NewCDCountTimer(27.9, 376049, nil, nil, nil, 2)
-local timerTimeSinkCD							= mod:NewCDCountTimer(15.7, 377405, nil, nil, nil, 3, nil, DBM_COMMON_L.HEROIC_ICON..DBM_COMMON_L.MAGIC_ICON)
+local timerWingBuffetCD							= mod:NewCDTimer(27.9, 376049, nil, nil, nil, 2)
+local timerTimeSinkCD							= mod:NewCDTimer(15.7, 377405, nil, nil, nil, 3, nil, DBM_COMMON_L.HEROIC_ICON..DBM_COMMON_L.MAGIC_ICON)
 local timerSandBreathCD							= mod:NewCDCountTimer(18.2, 375727, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 
 --local berserkTimer							= mod:NewBerserkTimer(600)
@@ -66,9 +66,9 @@ function mod:OnCombatStart(delay)
 	self.vb.sinkCount = 0
 	timerEternalOrbCD:Start(2.1-delay, 1)
 	if self:IsHard() then
-		timerTimeSinkCD:Start(5.5-delay, 1)
+		timerTimeSinkCD:Start(5.5-delay)
 	end
-	timerWingBuffetCD:Start(6.9-delay, 1)
+	timerWingBuffetCD:Start(6.9-delay)
 	timerSandBreathCD:Start(13-delay, 1)
 	timerRewindTimeflowCD:Start(22.7-delay, 1)--22-27
 end
@@ -97,10 +97,10 @@ function mod:SPELL_CAST_START(args)
 		timerRewindTimeflow:Start()
 		--Reboot Timers
 		timerSandBreathCD:Restart(14.5, 1)
-		timerWingBuffetCD:Restart(18.1, 1)
+		timerWingBuffetCD:Restart(18.1)
 		timerEternalOrbCD:Restart(21.8, 1)
 		if self:IsHard() then
-			timerTimeSinkCD:Restart(22.8, 1)
+			timerTimeSinkCD:Restart(22.8)
 		end
 		timerRewindTimeflowCD:Start(42.5, self.vb.rewindCount+1)
 	elseif spellId == 376049 then
