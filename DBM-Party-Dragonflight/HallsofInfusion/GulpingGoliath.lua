@@ -45,8 +45,8 @@ local yellBodySlam								= mod:NewYell(385531)
 --local specWarnGTFO							= mod:NewSpecialWarningGTFO(340324, nil, nil, nil, 1, 8)
 
 local timerGulpCD								= mod:NewCDCountTimer(38.8, 385551, nil, nil, nil, 3)
-local timerOverpoweringCroakCD					= mod:NewCDTimer(38.8, 385187, nil, nil, nil, 2)--Tough to classify, it's aoe, it's targeted dodge, and it's adds
-local timerBellySlamCD							= mod:NewCDTimer(38.8, 385531, nil, nil, nil, 3)
+local timerOverpoweringCroakCD					= mod:NewCDTimer(37.7, 385187, nil, nil, nil, 2)--Tough to classify, it's aoe, it's targeted dodge, and it's adds
+local timerBellySlamCD							= mod:NewCDTimer(37.7, 385531, nil, nil, nil, 3)
 local timerToxicEffluviaaCD						= mod:NewCDTimer(26.7, 385442, nil, nil, nil, 5, nil, DBM_COMMON_L.HEALER_ICON)
 
 --local berserkTimer							= mod:NewBerserkTimer(600)

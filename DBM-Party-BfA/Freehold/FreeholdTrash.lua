@@ -57,7 +57,6 @@ local specWarnPainfulMotivation			= mod:NewSpecialWarningInterrupt(257899, nil, 
 local specWarnThunderingSquall			= mod:NewSpecialWarningInterrupt(257736, "HasInterrupt", nil, nil, 1, 2)
 --local specWarnSeaSpoutKick				= mod:NewSpecialWarningInterrupt(258777, "HasInterrupt", nil, nil, 1, 2)
 local specWarnFrostBlast				= mod:NewSpecialWarningInterrupt(257784, "HasInterrupt", nil, nil, 1, 2)--Might prune or disable by default if it conflicts with higher priority interrupts in area
-local specWarnShatteringBellowKick		= mod:NewSpecialWarningInterrupt(257732, "HasInterrupt", nil, nil, 1, 2)
 local specWarnSlipperySuds				= mod:NewSpecialWarningInterrupt(274507, "HasInterrupt", nil, nil, 1, 2)
 local specWarnBestialWrath				= mod:NewSpecialWarningDispel(257476, "RemoveEnrage", nil, 2, 1, 2)
 local specWarnBlindRage					= mod:NewSpecialWarningDispel(257739, "RemoveEnrage", nil, 2, 1, 2)
@@ -140,10 +139,7 @@ function mod:SPELL_CAST_START(args)
 		specWarnFrostBlast:Play("kickcast")
 	elseif spellId == 257732 then
 		timerShatteringBellowCD:Start(nil, args.sourceGUID)
-		if self:CheckInterruptFilter(args.sourceGUID, false, true) and self.Options.SpecWarn257732interrupt then
-			specWarnShatteringBellowKick:Show(args.sourceName)
-			specWarnShatteringBellowKick:Play("kickcast")
-		elseif self:AntiSpam(3, 7) then
+		if self:AntiSpam(3, 7) then
 			warnShatteringBellow:Show()
 		end
 	elseif spellId == 274507 then
@@ -162,7 +158,7 @@ function mod:SPELL_CAST_START(args)
 		end
 	elseif spellId == 257870 then
 		timerBladeBarrageCD:Start(nil, args.sourceGUID)
-		if self:AntiSpam(3, 2) then
+		if self:AntiSpam(2, 2) then
 			specWarnBladeBarrage:Show()
 			specWarnBladeBarrage:Play("shockwave")
 		end
@@ -171,7 +167,7 @@ function mod:SPELL_CAST_START(args)
 		specWarnShatteringToss:Play("tosscoming")
 	elseif spellId == 257426 then
 		timerBrutalBackhandCD:Start(nil, args.sourceGUID)
-		if self:AntiSpam(3, 2) then
+		if self:AntiSpam(2, 2) then
 			specWarnBrutalBackhand:Show()
 			specWarnBrutalBackhand:Play("shockwave")
 		end

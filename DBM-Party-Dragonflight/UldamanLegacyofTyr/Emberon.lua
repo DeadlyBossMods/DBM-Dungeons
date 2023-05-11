@@ -8,6 +8,7 @@ mod:SetEncounterID(2558)
 --mod:SetHotfixNoticeRev(20220322000000)
 --mod:SetMinSyncRevision(20211203000000)
 --mod.respawnTime = 29
+mod.sendMainBossGUID = true
 
 mod:RegisterCombat("combat")
 
@@ -24,7 +25,6 @@ mod:RegisterEventsInCombat(
 )
 
 --TODO, detect purging flames ending so timer for next one can start (assuming that is what it's based on)
---TODO, auto mark adds?
 --TODO, target scan to warn warn for https://www.wowhead.com/beta/spell=369049/seeking-flame targets? doesn't seem like you can do much about it (no interrupts, no splash, just repheal)
 --TODO, verify timer resets on boss switching in and out of Puring Flames stage
 --TODO, timers were changed, but sine boss is so radically undertuned, don't see 2 of his major abilities literally at all anymore
@@ -84,9 +84,9 @@ function mod:SPELL_CAST_START(args)
 	if spellId == 368990 then
 		self.vb.purgingCount = self.vb.purgingCount + 1
 		specWarnPurgingFlames:Show(self.vb.purgingCount)
-		specWarnPurgingFlames:Play("farfromline")
+		specWarnPurgingFlames:Play("laserrun")
 
-		--Stop timers here if we enter intermissions.
+		--Stop timers here as we enter intermissions.
 		timerUnstableEmbersCD:Stop()
 		timerSearingClapCD:Stop()
 	elseif spellId == 369110 or spellId == 369198 then--110 confirmed, 198 unknown
@@ -114,7 +114,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		warnUnstableEmbers:CombinedShow(0.5, args.destName)
 		if args:IsPlayer() then
 			specWarnUnstableEmbers:Show()
-			specWarnUnstableEmbers:Play("runout")
+			specWarnUnstableEmbers:Play("scatter")
 			yellUnstableEmbers:Yell()
 			yellUnstableEmbersFades:Countdown(spellId)
 		end

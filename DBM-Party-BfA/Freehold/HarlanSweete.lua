@@ -60,6 +60,7 @@ function mod:SPELL_CAST_START(args)
 		timerSwiftwindSaberCD:Stop()
 		timerAvastyeCD:Stop()
 		timerCannonBarrageCD:Stop()
+		timerWhirlingDaggerCD:Stop()
 		timerSwiftwindSaberCD:Start(10.9)
 		timerCannonBarrageCD:Start(15.7)
 		timerAvastyeCD:Start(21.8)
@@ -73,6 +74,7 @@ function mod:SPELL_CAST_START(args)
 		timerSwiftwindSaberCD:Stop()
 		timerAvastyeCD:Stop()
 		timerCannonBarrageCD:Stop()
+		timerWhirlingDaggerCD:Stop()
 		timerSwiftwindSaberCD:Start(10.9)
 		timerCannonBarrageCD:Start(15.7)
 		timerAvastyeCD:Start(21.8)
@@ -82,7 +84,6 @@ function mod:SPELL_CAST_START(args)
 	elseif spellId == 413145 or spellId == 413147 then--Shadowlands S2 version
 		specWarnSwiftwindSaber:Show()
 		specWarnSwiftwindSaber:Play("watchwave")
-		timerSwiftwindSaberCD:Start()
 		if self:GetStage(3) then
 			timerSwiftwindSaberCD:Start(12.5)--12.5-14
 		else
@@ -94,7 +95,7 @@ function mod:SPELL_CAST_START(args)
 		if self:GetStage(3) then
 			timerWhirlingDaggerCD:Start(11.7, self.vb.daggerCount+1)--11.7-15
 		else
-			timerWhirlingDaggerCD:Start(18.8, self.vb.daggerCount+1)
+			timerWhirlingDaggerCD:Start(18.2, self.vb.daggerCount+1)
 		end
 	end
 end
