@@ -36,18 +36,14 @@ mod:AddTimerLine(DBM:EJ_GetSectionInfo(24740))
 local warnHeavyArrow							= mod:NewTargetNoFilterAnnounce(369573, 3)
 local warnWildCleave							= mod:NewSpellAnnounce(369563, 3, nil, "Tank")
 
-local specWarnHeavyArrow						= mod:NewSpecialWarningYou(369573, nil, nil, nil, 1, 2)
-local yellHeavyArrow							= mod:NewYell(369573)
+local specWarnHeavyArrow						= mod:NewSpecialWarningDodge(369573, nil, nil, nil, 2, 2)
 
 local timerHeavyArrowCD							= mod:NewCDTimer(20.6, 369573, nil, nil, nil, 3)
 local timerWildCleaveCD							= mod:NewCDTimer(17, 369563, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)--Council fights can be messy, on for everyone for now
 
 --Eric "The Swift"
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(24781))
-local warnSkullcracker							= mod:NewTargetNoFilterAnnounce(369791, 3)
-
-local specWarnSkullcracker						= mod:NewSpecialWarningYou(369791, nil, nil, nil, 1, 2)
-local yellSkullcracker							= mod:NewYell(369791)
+local specWarnSkullcracker						= mod:NewSpecialWarningDodge(369791, nil, nil, nil, 2, 2)
 
 local timerSkullcrackerCD						= mod:NewCDTimer(26.6, 369791, nil, nil, nil, 3)
 --Olaf
@@ -71,28 +67,6 @@ local specWarnGTFO								= mod:NewSpecialWarningGTFO(377825, nil, nil, nil, 1, 
 mod:AddRangeFrameOption(5, 369677)
 --mod:AddInfoFrameOption(361651, true)
 --mod:AddSetIconOption("SetIconOnStaggeringBarrage", 361018, true, false, {1, 2, 3})
-
-function mod:ArrowTarget(targetname)
-	if not targetname then return end
-	if targetname == UnitName("player") then
-		specWarnHeavyArrow:Show()
-		specWarnHeavyArrow:Play("targetyou")
-		yellHeavyArrow:Yell()
-	else
-		warnHeavyArrow:Show(targetname)
-	end
-end
-
-function mod:SkullTarget(targetname)
-	if not targetname then return end
-	if targetname == UnitName("player") then
-		specWarnSkullcracker:Show()
-		specWarnSkullcracker:Play("targetyou")
-		yellSkullcracker:Yell()
-	else
-		warnSkullcracker:Show(targetname)
-	end
-end
 
 function mod:ShieldTarget(targetname)
 	if not targetname then return end
@@ -143,13 +117,15 @@ end
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
 	if spellId == 369573 then
-		self:ScheduleMethod(0.2, "BossTargetScanner", args.sourceGUID, "ArrowTarget", 0.1, 8, true)
+		specWarnHeavyArrow:Show()
+		specWarnHeavyArrow:Play("shockwave")
 		timerHeavyArrowCD:Start(nil, args.sourceGUID)
 	elseif spellId == 369563 then
 		warnWildCleave:Show()
 		timerWildCleaveCD:Start(nil, args.sourceGUID)
 	elseif spellId == 369791 then
-		self:ScheduleMethod(0.2, "BossTargetScanner", args.sourceGUID, "SkullTarget", 0.1, 8, true)
+		specWarnSkullcracker:Show()
+		specWarnSkullcracker:Play("chargemove")
 		timerSkullcrackerCD:Start(nil, args.sourceGUID)
 	elseif spellId == 369677 then
 		self:ScheduleMethod(0.2, "BossTargetScanner", args.sourceGUID, "ShieldTarget", 0.1, 8, true)

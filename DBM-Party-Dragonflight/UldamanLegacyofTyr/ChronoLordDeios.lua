@@ -5,7 +5,7 @@ mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(184125)
 mod:SetEncounterID(2559)
 --mod:SetUsedIcons(1, 2, 3)
---mod:SetHotfixNoticeRev(20220322000000)
+mod:SetHotfixNoticeRev(20230510000000)
 --mod:SetMinSyncRevision(20211203000000)
 --mod.respawnTime = 29
 mod.sendMainBossGUID = true
@@ -40,12 +40,12 @@ local yellTimeSink								= mod:NewYell(377405)
 local specWarnGTFO								= mod:NewSpecialWarningGTFO(376325, nil, nil, nil, 1, 8)
 local specWarnSandBreath						= mod:NewSpecialWarningDefensive(375727, nil, nil, nil, 1, 2)
 
-local timerEternalOrbCD							= mod:NewCDCountTimer(3.6, 376292, nil, nil, nil, 3)--3-9
+local timerEternalOrbCD							= mod:NewCDCountTimer(6.8, 376292, nil, false, 2, 3)--3-9
 local timerRewindTimeflowCD						= mod:NewCDCountTimer(42.3, 376208, nil, nil, nil, 6)
 local timerRewindTimeflow						= mod:NewBuffActiveTimer(14, 376208, nil, nil, nil, 5)--12+2sec cast
-local timerWingBuffetCD							= mod:NewCDTimer(27.9, 376049, nil, nil, nil, 2)
+local timerWingBuffetCD							= mod:NewCDTimer(23, 376049, nil, nil, nil, 2)
 local timerTimeSinkCD							= mod:NewCDTimer(15.7, 377405, nil, nil, nil, 3, nil, DBM_COMMON_L.HEROIC_ICON..DBM_COMMON_L.MAGIC_ICON)
-local timerSandBreathCD							= mod:NewCDCountTimer(18.2, 375727, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+local timerSandBreathCD							= mod:NewCDCountTimer(18.1, 375727, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 
 --local berserkTimer							= mod:NewBerserkTimer(600)
 
@@ -68,9 +68,9 @@ function mod:OnCombatStart(delay)
 	if self:IsHard() then
 		timerTimeSinkCD:Start(5.5-delay)
 	end
-	timerWingBuffetCD:Start(6.9-delay)
-	timerSandBreathCD:Start(13-delay, 1)
-	timerRewindTimeflowCD:Start(22.7-delay, 1)--22-27
+	timerWingBuffetCD:Start(6-delay)
+	timerSandBreathCD:Start(12.3-delay, 1)
+	timerRewindTimeflowCD:Start(39-delay, 1)
 end
 
 function mod:OnCombatEnd()
@@ -102,24 +102,23 @@ function mod:SPELL_CAST_START(args)
 		if self:IsHard() then
 			timerTimeSinkCD:Restart(22.8)
 		end
-		timerRewindTimeflowCD:Start(42.5, self.vb.rewindCount+1)
+		timerRewindTimeflowCD:Start(57.1, self.vb.rewindCount+1)
 	elseif spellId == 376049 then
 		self.vb.buffetCount = self.vb.buffetCount + 1
 		specWarnWingBuffet:Show(self.vb.buffetCount)
 		specWarnWingBuffet:Play("carefly")
-		--Now that cycles happen faster, no longer cast twice per cycle
---		if self.vb.buffetCount == 1 and self.vb.rewindCount >= 1 then
---			timerWingBuffetCD:Start(nil, 2)
---		end
+		if self.vb.buffetCount == 1 and self.vb.rewindCount >= 1 then
+			timerWingBuffetCD:Start(nil, 2)
+		end
 	elseif spellId == 375727 then
 		self.vb.breathCount = self.vb.breathCount + 1
 		if self:IsTanking("player", "boss1", nil, true) then
 			specWarnSandBreath:Show()
 			specWarnSandBreath:Play("defensive")
 		end
-		--Still cast twice per cycle with it's lower CD
-		if self.vb.breathCount == 1 then
-			timerSandBreathCD:Start(nil, 2)
+		local maxBreath = (self.vb.rewindCount == 0) and 2 or 3
+		if self.vb.breathCount < maxBreath then
+			timerSandBreathCD:Start(nil, self.vb.breathCount+1)
 		end
 	end
 end

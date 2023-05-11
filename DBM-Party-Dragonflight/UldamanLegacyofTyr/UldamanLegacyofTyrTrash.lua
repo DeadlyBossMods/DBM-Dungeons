@@ -7,7 +7,7 @@ mod.isTrashMod = true
 
 mod:RegisterEvents(
 	"SPELL_CAST_START 369811 382578 369674 369823 369675 369806 377732 369399 369335 369400 369365 369423 369411 381593 382696 377500 369409",
-	"SPELL_CAST_SUCCESS 377738 369465 369328",
+	"SPELL_CAST_SUCCESS 377738 369465 369328 377732 382696",
 	"SPELL_AURA_APPLIED 369365 369828 369823 369818 369400 369366 377500",
 	"SPELL_AURA_APPLIED_DOSE 369828 377738 369419",
 --	"SPELL_AURA_REMOVED 339525",
@@ -60,7 +60,7 @@ local timerBrutalSlamCD						= mod:NewCDTimer(20.1, 369811, nil, nil, nil, 3)
 local timerSpikedCarapaceCD					= mod:NewCDTimer(18.2, 369823, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerStoneSpikeCD						= mod:NewCDTimer(6, 369674, nil, false, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--Short CD, may interfere with Chain LIghting CD timer, opt in
 local timerChainLightningCD					= mod:NewCDTimer(25.5, 369675, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
-local timerJaggedBiteCD						= mod:NewCDTimer(13.3, 377732, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+local timerJaggedBiteCD						= mod:NewCDTimer(11.8, 377732, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerAncientPowerCD					= mod:NewCDTimer(6, 377738, nil, nil, nil, 5)
 local timerHailofStoneCD					= mod:NewCDTimer(21.8, 369465, nil, nil, nil, 5)
 local timerStoneBoltCD						= mod:NewCDTimer(7.2, 369399, nil, false, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--7-11, off by default to giev prio to Hail of stone
@@ -68,8 +68,8 @@ local timerEarthquakeCD						= mod:NewCDTimer(25.4, 369328, nil, nil, nil, 2)
 local timerFissuringSlamCD					= mod:NewCDTimer(9.7, 369335, nil, nil, nil, 2)--9.7-15
 local timerCleaveCD							= mod:NewCDTimer(15.7, 369409, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerPounceCD							= mod:NewCDTimer(15.7, 369423, nil, nil, nil, 3)
-local timerThunderousClapCD					= mod:NewCDTimer(19.4, 381593, nil, nil, nil, 2)
-local timerBulwarkSlamCD					= mod:NewCDTimer(12.1, 382696, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+local timerThunderousClapCD					= mod:NewCDTimer(19, 381593, nil, nil, nil, 2)
+local timerBulwarkSlamCD					= mod:NewCDTimer(10.6, 382696, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerHastenCD							= mod:NewCDTimer(23, 377500, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 
 --local playerName = UnitName("player")
@@ -133,7 +133,6 @@ function mod:SPELL_CAST_START(args)
 	elseif spellId == 369806 and self:AntiSpam(3, 5) then
 		warnRecklessRage:Show()
 	elseif spellId == 377732 then
-		timerJaggedBiteCD:Start(nil, args.sourceGUID)
 		if self:AntiSpam(3, 5) then
 			warnJaggedBite:Show()
 		end
@@ -174,7 +173,6 @@ function mod:SPELL_CAST_START(args)
 			warnSonicBurst:Show()
 		end
 	elseif spellId == 382696 then
-		timerBulwarkSlamCD:Start(nil, args.sourceGUID)
 		if self:AntiSpam(3, 5) then
 			warnBulwarkSlam:Show()
 		end
@@ -207,6 +205,10 @@ function mod:SPELL_CAST_SUCCESS(args)
 			specWarnEarthquake:Show()
 			specWarnEarthquake:Play("aesoon")
 		end
+	elseif spellId == 377732 then
+		timerJaggedBiteCD:Start(nil, args.sourceGUID)
+	elseif spellId == 382696 then
+		timerBulwarkSlamCD:Start(nil, args.sourceGUID)
 	end
 end
 

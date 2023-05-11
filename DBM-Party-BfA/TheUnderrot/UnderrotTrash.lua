@@ -8,7 +8,7 @@ mod.isTrashMod = true
 
 
 mod:RegisterEvents(
-	"SPELL_CAST_START 272609 266106 265019 265089 265091 265433 265540 272183 278961 278755 265568 265487 272592 265081 272180 266209 413044",
+	"SPELL_CAST_START 272609 266106 265019 265089 265091 265433 265540 272183 278961 278755 265487 272592 265081 272180 266209 413044",
 	"SPELL_CAST_SUCCESS 265523 265016 266201 266265 265668",
 	"SPELL_AURA_APPLIED 265568 266107 266209 265091 278789 278961 266201",
 	"UNIT_DIED"
@@ -24,7 +24,6 @@ mod:RegisterEvents(
 local warnBloodHarvest				= mod:NewTargetNoFilterAnnounce(265016, 3)
 local warnGiftOfGhuun				= mod:NewCastAnnounce(265091, 3)
 local warnDarkReconstitution		= mod:NewCastAnnounce(265089, 3)
-local warnDarkOmen					= mod:NewCastAnnounce(265568, 3, nil, nil, nil, nil, nil, 3)
 local warnSonicSreech				= mod:NewCastAnnounce(266106, 3)
 local warnRaiseDead					= mod:NewCastAnnounce(272183, 3)--No longer exists in M+ but maybe still exists in timewalking/leveling version?
 local warnShadowBoltVolley			= mod:NewCastAnnounce(265487, 3)
@@ -67,7 +66,7 @@ local timerWaveofDecayCD			= mod:NewCDTimer(10.7, 265668, nil, false, nil, 3)--O
 local timerWarcryCD					= mod:NewCDTimer(25.2, 265081, nil, nil, nil, 2)
 local timerDecayingMindCD			= mod:NewCDTimer(27.7, 278961, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerSonicScreechCD			= mod:NewCDTimer(25.4, 266106, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
-local timerVoidSpitCD				= mod:NewCDTimer(9.7, 272180, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+--local timerVoidSpitCD				= mod:NewCDTimer(9.7, 272180, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerDarkEchoesCD				= mod:NewCDTimer(20.6, 413044, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerBoneShieldCD				= mod:NewCDTimer(25.4, 266201, nil, nil, nil, 5, nil, DBM_COMMON_L.MAGIC_ICON)
 local timerWickedEmbraceCD			= mod:NewCDTimer(8.5, 266265, nil, "RemoveMagic", nil, 5, nil, DBM_COMMON_L.MAGIC_ICON)
@@ -148,16 +147,13 @@ function mod:SPELL_CAST_START(args)
 			warnHarrowingDespair:Show()
 		end
 	elseif spellId == 272180 then
-		timerVoidSpitCD:Start(nil, args.sourceGUID)
+--		timerVoidSpitCD:Start(nil, args.sourceGUID)
 		if self.Options.SpecWarn272180interrupt and self:CheckInterruptFilter(args.sourceGUID, false, true) then
 			specWarnVoidSpit:Show(args.sourceName)
 			specWarnVoidSpit:Play("kickcast")
 		elseif self:AntiSpam(2, 7) then
 			warnVoidSpit:Show()
 		end
-	elseif spellId == 265568 and self:AntiSpam(3, 5) then
-		warnDarkOmen:Show()
-		warnDarkOmen:Play("crowdcontrol")
 	elseif spellId == 265487 then
 		timerShadowBoltVolleyCD:Start(nil, args.sourceGUID)
 		if self.Options.SpecWarn265487interrupt and self:CheckInterruptFilter(args.sourceGUID, false, true) then
@@ -258,7 +254,7 @@ function mod:UNIT_DIED(args)
 	elseif cid == 133835 then--Feral Bloodswarmer
 		timerSonicScreechCD:Stop(args.destGUID)
 	elseif cid == 138187 then--Grotesque Horror
-		timerVoidSpitCD:Stop(args.destGUID)
+--		timerVoidSpitCD:Stop(args.destGUID)
 		timerDarkEchoesCD:Stop(args.destGUID)
 	elseif cid == 134284 then--Fallen Deathspeaker
 		timerWickedFrenzyCD:Stop(args.destGUID)
