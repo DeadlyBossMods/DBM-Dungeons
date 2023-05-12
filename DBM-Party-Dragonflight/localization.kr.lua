@@ -139,6 +139,10 @@ L:SetGeneralLocalization({
 	name =	"넬타루스 일반몹"
 })
 
+L:SetOptionLocalization({
+	AGBuffs		= "대장기술 버프 받기 대화 자동 선택"
+})
+
 -----------------------
 -- <<<Algeth'ar Academy >>> --
 -----------------------
