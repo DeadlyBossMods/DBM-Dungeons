@@ -16,7 +16,7 @@ mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 87618 87622",
-	"SPELL_CAST_SUCCESS 413263",
+--	"SPELL_CAST_SUCCESS 413263",
 	"SPELL_AURA_APPLIED 86911",
 	"UNIT_SPELLCAST_SUCCEEDED boss1"
 )
@@ -43,6 +43,7 @@ local yellChainLit				= mod:NewYell(87622)
 
 local timerChainLightningCD		= mod:NewCDTimer(13.4, 87622, nil, nil, nil, 3)
 local timerStaticClingCD		= mod:NewCDTimer(15.8, 87618, nil, nil, nil, 2)
+local timerStaticCling			= mod:NewCastTimer(10, 87618, nil, nil, nil, 5)
 local timerStorm				= mod:NewCastTimer(10, 86930, nil, nil, nil, 2)
 local timerGroundingFieldCD		= mod:NewCDCountTimer(45.7, 86911, nil, nil, nil, 2, nil, DBM_COMMON_L.DEADLY_ICON)
 local timerNovaCD				= mod:NewCDTimer(12.1, isRetail and 413263 or 96260, nil, nil, nil, 1)
@@ -80,10 +81,11 @@ end
 function mod:SPELL_CAST_START(args)
 	if args.spellId == 87618 then
 		--1.25 post nerf in classic, 1 sec pre nerf
-		--3.5 lol giga nerf in M+
+		--3 lol giga nerf in M+
 		warnStaticCling:Show()
 		specWarnStaticCling:Schedule(2.3)--delay message since jumping at start of cast is no longer correct in 4.0.6+
 		specWarnStaticCling:ScheduleVoice(2.3, "jumpnow")
+		timerStaticCling:Start(3)
 		if not self:IsMythicPlus() and timerGroundingFieldCD:GetRemaining() < 15.8 then
 			timerStaticClingCD:Start()
 		end
@@ -96,11 +98,9 @@ function mod:SPELL_CAST_START(args)
 	end
 end
 
+--[[
 function mod:SPELL_CAST_SUCCESS(args)
 	if args.spellId == 413263 and self:AntiSpam(5, 2) then
-		self.vb.novaCount = self.vb.novaCount + 1
-		specWarnNova:Show(self.vb.novaCount)
-		specWarnNova:Play("killmob")
 		if self:IsMythicPlus() then
 			if timerGroundingFieldCD:GetRemaining() < 25.4 then
 				timerNovaCD:Start(25.4)
@@ -112,6 +112,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 		end
 	end
 end
+--]]
 
 function mod:SPELL_AURA_APPLIED(args)
 	if args.spellId == 86911 and self:AntiSpam(5, 1) then
@@ -137,12 +138,11 @@ end
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, spellId)
 	if spellId == 96260 then
 		self.vb.novaCount = self.vb.novaCount + 1
+		specWarnNova:Show(self.vb.novaCount)
+		specWarnNova:Play("killmob")
 		if self:IsMythicPlus() then
-			--TODO, find longer data to verify this far out
-			if self.vb.novaCount % 3 == 2 then
-				timerNovaCD:Start(30)
-			else
-				timerNovaCD:Start(49.2)
+			if timerGroundingFieldCD:GetRemaining() < 25.4 then
+				timerNovaCD:Start(25.4)
 			end
 		else
 			if timerGroundingFieldCD:GetRemaining() < 12.1 then
