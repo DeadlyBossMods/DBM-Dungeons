@@ -22,7 +22,7 @@ mod:RegisterEventsInCombat(
  or (ability.id = 257305 or ability.id = 257314) and type = "applydebuff"
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
  --]]
- local warnPhase					= mod:NewPhaseChangeAnnounce(2, nil, nil, nil, nil, nil, nil, 2)
+local warnPhase						= mod:NewPhaseChangeAnnounce(2, nil, nil, nil, nil, nil, nil, 2)
 local warnBlackPowder				= mod:NewTargetAnnounce(257314, 4)
 local warnCannonBarrage				= mod:NewTargetAnnounce(257305, 3)
 local warnWhirlingDagger			= mod:NewCountAnnounce(413131, 3)
