@@ -57,8 +57,8 @@ function mod:OnCombatStart(delay)
 	if self:IsMythic() then
 		timerChokingRotcloutCD:Start(5.1-delay)
 	end
-	timerDecayStrikeCD:Start(10.8-delay)
-	timerRotburstTotemCD:Start(19.1-delay)
+	timerDecayStrikeCD:Start(10.5-delay)
+	timerRotburstTotemCD:Start(18.9-delay)
 	timerDecayingStrengthCD:Start(40-delay)
 	if self.Options.InfoFrame then
 		DBM.InfoFrame:SetHeader(DBM:GetSpellInfo(373896))
@@ -129,6 +129,9 @@ function mod:SPELL_AURA_REMOVED(args)
 		end
 	elseif spellId == 374186 then
 		timerDecayingStrengthCD:Start()
+		if DBM.Options.DebugMode then
+			timerDecayStrikeCD:Restart(18.5)--18.5-20
+		end
 	end
 end
 
