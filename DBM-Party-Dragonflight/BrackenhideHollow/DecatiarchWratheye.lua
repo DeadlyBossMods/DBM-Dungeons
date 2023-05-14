@@ -5,7 +5,7 @@ mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(186121)
 mod:SetEncounterID(2569)
 mod:SetUsedIcons(8)
-mod:SetHotfixNoticeRev(20230507000000)
+mod:SetHotfixNoticeRev(20230513000000)
 --mod:SetMinSyncRevision(20211203000000)
 --mod.respawnTime = 29
 mod.sendMainBossGUID = true
@@ -17,7 +17,7 @@ mod:RegisterEventsInCombat(
 	"SPELL_SUMMON 373944",
 	"SPELL_AURA_APPLIED 373896",
 	"SPELL_AURA_APPLIED_DOSE 373896",
-	"SPELL_AURA_REMOVED 373896 374186",
+	"SPELL_AURA_REMOVED 373896",
 	"SPELL_AURA_REMOVED_DOSE 373896"
 --	"SPELL_PERIODIC_DAMAGE",
 --	"SPELL_PERIODIC_MISSED",
@@ -55,7 +55,7 @@ function mod:OnCombatStart(delay)
 	table.wipe(WitheringRotStacks)
 	self.vb.waterCount = 0
 	if self:IsMythic() then
-		timerChokingRotcloutCD:Start(5.1-delay)
+		timerChokingRotcloutCD:Start(5.7-delay)
 	end
 	timerDecayStrikeCD:Start(10.5-delay)
 	timerRotburstTotemCD:Start(18.9-delay)
@@ -83,10 +83,14 @@ function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
 	if spellId == 373960 then
 		warnDecayigStrength:Show()
+		timerChokingRotcloutCD:Restart(10)
+		timerDecayStrikeCD:Restart(14.5)
+		timerRotburstTotemCD:Restart(22.9)
+		timerDecayingStrengthCD:Start(44.9)
 	elseif spellId == 376170 then
 		specWarnChokingRotcloud:Show()
 		specWarnChokingRotcloud:Play("shockwave")
-		timerChokingRotcloutCD:Start()
+--		timerChokingRotcloutCD:Start()
 	elseif spellId == 373912 then
 		timerDecayStrikeCD:Start()
 		if args:IsPlayer() then
@@ -126,11 +130,6 @@ function mod:SPELL_AURA_REMOVED(args)
 		WitheringRotStacks[args.destName] = nil
 		if self.Options.InfoFrame then
 			DBM.InfoFrame:UpdateTable(WitheringRotStacks, 0.2)
-		end
-	elseif spellId == 374186 then
-		timerDecayingStrengthCD:Start()
-		if DBM.Options.DebugMode then
-			timerDecayStrikeCD:Restart(18.5)--18.5-20
 		end
 	end
 end
