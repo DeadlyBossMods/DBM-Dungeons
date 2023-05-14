@@ -86,7 +86,7 @@ function mod:SPELL_CAST_START(args)
 	elseif spellId == 369703 then
 		self.vb.thunderingCount = self.vb.thunderingCount + 1
 		specWarnThunderingSlam:Show(self.vb.thunderingCount)
-		specWarnThunderingSlam:Play("shockwave")
+		specWarnThunderingSlam:Play("watchstep")
 		timerThunderingSlamCD:Start(nil, self.vb.thunderingCount+1)
 	elseif spellId == 382303 then
 		specWarnQuakingTotem:Show()
