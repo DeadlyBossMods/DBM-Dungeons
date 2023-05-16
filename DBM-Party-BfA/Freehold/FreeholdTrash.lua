@@ -307,7 +307,7 @@ function mod:UNIT_DIED(args)
 end
 
 --in 10.1 for some reason blizzard removed start from combat log, even though it existed in BFA
-unction mod:UNIT_SPELLCAST_START_UNFILTERED(uId, _, spellId)
+function mod:UNIT_SPELLCAST_START_UNFILTERED(uId, _, spellId)
 	if spellId == 274400 then
 		local guid = UnitGUID(uId)
 		self:ScheduleMethod(0.1, "BossTargetScanner", guid, "DashTarget", 0.1, 8)
