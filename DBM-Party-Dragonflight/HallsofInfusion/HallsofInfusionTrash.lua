@@ -6,7 +6,7 @@ mod:SetRevision("@file-date-integer@")
 mod.isTrashMod = true
 
 mod:RegisterEvents(
-	"SPELL_CAST_START 390290 374080 375351 375348 375327 375384 374563 374045 374339 374066 374020 395694 374699 374706 375079 374823 385141 377341 377402",
+	"SPELL_CAST_START 390290 374080 375351 375348 375327 375384 374563 374045 374339 374066 374020 395694 374699 374706 375079 374823 385141 377341 377402 376171",
 	"SPELL_AURA_APPLIED 374724 374615 391610 391613 377384 377402",
 	"SPELL_AURA_APPLIED_DOSE 374389",
 --	"SPELL_AURA_REMOVED",
@@ -18,7 +18,6 @@ mod:RegisterEvents(
 --TODO, who does dazzle target? just the tank, everyone?
 --TODO, should rumbling earth be a dodge or interrupt?
 --TODO, tweak thunderstorm alert sound/text?
---TODO, https://www.wowhead.com/spell=376171/refreshing-tides ? it's not in guide, and has no tooltip, is it even still used?
 --[[
 (ability.id = 390290 or ability.id = 374080 or ability.id = 375351 or ability.id = 375348 or ability.id = 375327 or ability.id = 375384 or ability.id = 374563 or ability.id = 374045 or ability.id = 374339 or ability.id = 374066 or ability.id = 374020 or ability.id = 395694 or ability.id = 374699 or ability.id = 374706 or ability.id = 375079 or ability.id = 374823 or ability.id = 385141 or ability.id = 377341 or ability.id = 377402) and type = "begincast"
  or ability.id = 374724 and type = "applydebuff"
@@ -33,6 +32,7 @@ local warnWhirlingFury						= mod:NewCastAnnounce(375079, 3)
 local warnZephyrsCall						= mod:NewCastAnnounce(374823, 2)
 local warnTidalDivergence					= mod:NewCastAnnounce(377341, 3)
 local warnAqueousBarrier					= mod:NewCastAnnounce(377402, 4)
+local warnRefreshingTides					= mod:NewCastAnnounce(376171, 3)
 local warnCheapShot							= mod:NewTargetNoFilterAnnounce(374615, 4)
 local warnMoltenSubduction					= mod:NewTargetNoFilterAnnounce(374724, 3)
 
@@ -60,8 +60,9 @@ local specWarnCauterize						= mod:NewSpecialWarningInterrupt(374699, "HasInterr
 local specWarnPyreticBurst					= mod:NewSpecialWarningInterrupt(374706, false, nil, nil, 1, 2)
 local specWarnTidalDivergence				= mod:NewSpecialWarningInterrupt(377341, "HasInterrupt", nil, nil, 1, 2)
 local specWarnAqueousBarrier				= mod:NewSpecialWarningInterrupt(377402, "HasInterrupt", nil, nil, 1, 2)
+local specWarnRefreshingTides				= mod:NewSpecialWarningInterrupt(376171, "HasInterrupt", nil, nil, 1, 2)
 
-local timerDemoShoutCD						= mod:NewCDTimer(30, 374339, nil, nil, nil, 2)
+local timerDemoShoutCD						= mod:NewCDTimer(30, 374339, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerDazzleCD							= mod:NewCDTimer(17, 374563, nil, nil, nil, 3)
 local timerZephyrsCallCD					= mod:NewCDTimer(23.1, 374823, nil, nil, nil, 1)
 local timerWhirlingFuryCD					= mod:NewCDTimer(18.7, 375079, nil, nil, nil, 2)
@@ -70,8 +71,9 @@ local timerOceanicBreathCD					= mod:NewCDTimer(18.1, 375351, nil, nil, nil, 3)
 local timerGustingBreathCD					= mod:NewCDTimer(19.3, 375348, nil, nil, nil, 3)--Could also be 18.1, but need bigger sample
 local timerTectonicBreathCD					= mod:NewCDTimer(18.1, 375327, nil, nil, nil, 3)
 local timerThunderstormCD					= mod:NewCDTimer(19.4, 385141, nil, nil, nil, 3)
-local timerAqueousBarrierCD					= mod:NewCDTimer(17.3, 377402, nil, nil, nil, 5)
+local timerAqueousBarrierCD					= mod:NewCDTimer(17.3, 377402, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerFlashFloodCD						= mod:NewCDTimer(23, 390290, nil, nil, nil, 2)
+local timerRefreshingTidesCD				= mod:NewCDTimer(30, 376171, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 
 mod:AddBoolOption("AGBuffs", true)
 
@@ -162,6 +164,14 @@ function mod:SPELL_CAST_START(args)
 			specWarnAqueousBarrier:Play("kickcast")
 		elseif self:AntiSpam(3, 7) then
 			warnAqueousBarrier:Show()
+		end
+	elseif spellId == 376171 then
+		timerRefreshingTidesCD:Start(nil, args.sourceGUID)
+		if self.Options.SpecWarn374339interrupt and self:CheckInterruptFilter(args.sourceGUID, false, true) then
+			specWarnRefreshingTides:Show(args.sourceName)
+			specWarnRefreshingTides:Play("kickcast")
+		elseif self:AntiSpam(3, 7) then
+			warnRefreshingTides:Show()
 		end
 	elseif spellId == 374020 and self:AntiSpam(3, 6) then
 		warnContainmentBeam:Show()
@@ -270,10 +280,12 @@ function mod:UNIT_DIED(args)
 		timerMoltenSubductionCD:Stop(args.destGUID)
 	elseif cid == 190401 then--Gusting Proto-Dragon
 		timerGustingBreathCD:Stop(args.destGUID)
-	elseif cid == 190373 then----Primalist Galeslinger
+	elseif cid == 190373 then--Primalist Galeslinger
 		timerThunderstormCD:Stop(args.destGUID)
 	elseif cid == 190404 then
 		timerTectonicBreathCD:Stop(args.destGUID)
+	elseif cid == 190377 then--Primalist Icecaller
+		timerRefreshingTidesCD:Stop(args.destGUID)
 	end
 end
 
