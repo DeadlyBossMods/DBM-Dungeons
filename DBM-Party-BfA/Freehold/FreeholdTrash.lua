@@ -12,7 +12,7 @@ mod:RegisterEvents(
 	"SPELL_AURA_APPLIED 257274 257476 258323 257739 257908 257397 257775 274507",
 	"SPELL_AURA_APPLIED_DOSE 274555",
 	"UNIT_DIED",
-	"UNIT_SPELLCAST_START_UNFILTERED",
+--	"UNIT_SPELLCAST_START_UNFILTERED",
 	"ENCOUNTER_START"
 )
 
@@ -178,8 +178,11 @@ function mod:SPELL_CAST_START(args)
 			specWarnBoulderThrow:Play("watchstep")
 		end
 	elseif spellId == 274400 then
---		self:ScheduleMethod(0.1, "BossTargetScanner", args.sourceGUID, "DashTarget", 0.1, 8)
-		DBM:AddMsg("274400 added back to combat log, report in DBM discord if you can")
+		self:ScheduleMethod(0.1, "BossTargetScanner", args.sourceGUID, "DashTarget", 0.1, 8)
+		if self:AntiSpam(3, 2) then
+			specWarnDuelistDash:Show()
+			specWarnDuelistDash:Play("chargemove")
+		end
 	elseif spellId == 274383 then
 		timerRatTrapsCD:Start(nil, args.sourceGUID)
 		if self:AntiSpam(3, 2) then
@@ -304,16 +307,16 @@ function mod:UNIT_DIED(args)
 end
 
 --in 10.1 for some reason blizzard removed start from combat log, even though it existed in BFA
-function mod:UNIT_SPELLCAST_START_UNFILTERED(uId, _, spellId)
-	if spellId == 274400 then
-		local guid = UnitGUID(uId)
-		self:ScheduleMethod(0.1, "BossTargetScanner", guid, "DashTarget", 0.1, 8)
-		if self:AntiSpam(3, 2) then
-			specWarnDuelistDash:Show()
-			specWarnDuelistDash:Play("chargemove")
-		end
-	end
-end
+--function mod:UNIT_SPELLCAST_START_UNFILTERED(uId, _, spellId)
+--	if spellId == 274400 then
+--		local guid = UnitGUID(uId)
+--		self:ScheduleMethod(0.1, "BossTargetScanner", guid, "DashTarget", 0.1, 8)
+--		if self:AntiSpam(3, 2) then
+--			specWarnDuelistDash:Show()
+--			specWarnDuelistDash:Play("chargemove")
+--		end
+--	end
+--end
 
 function mod:ENCOUNTER_START(eID)
 	if eID == 2093 then--Skycap'n Kragg
