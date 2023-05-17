@@ -109,19 +109,15 @@ function mod:SPELL_CAST_START(args)
 			warnHidiousCackle:Show()
 		end
 	elseif spellId == 382474 then
-		--if self.Options.SpecWarn382474interrupt and self:CheckInterruptFilter(args.sourceGUID, false, true) then
+		if self:CheckInterruptFilter(args.sourceGUID, false, true) then
 			specWarnDecaySurge:Show(args.sourceName)
 			specWarnDecaySurge:Play("kickcast")
-		--elseif self:AntiSpam(3, 7) then
-		--	warnHidiousCackle:Show()
-		--end
+		end
 	elseif spellId == 382712 then
-		--if self.Options.SpecWarn382712interrupt and self:CheckInterruptFilter(args.sourceGUID, false, true) then
+		if self:CheckInterruptFilter(args.sourceGUID, false, true) then
 			specWarnNecroticBreath:Show(args.sourceName)
 			specWarnNecroticBreath:Play("kickcast")
-		--elseif self:AntiSpam(3, 7) then
-		--	warnHidiousCackle:Show()
-		--end
+		end
 	elseif spellId == 388060 then
 		if self:AntiSpam(3, 2) then
 			specWarnStinkBreath:Show()

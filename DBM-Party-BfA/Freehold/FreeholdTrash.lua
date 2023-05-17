@@ -177,9 +177,12 @@ function mod:SPELL_CAST_START(args)
 			specWarnBoulderThrow:Show()
 			specWarnBoulderThrow:Play("watchstep")
 		end
-	elseif spellId == 274400 then
+--	elseif spellId == 274400 then
 --		self:ScheduleMethod(0.1, "BossTargetScanner", args.sourceGUID, "DashTarget", 0.1, 8)
-		DBM:AddMsg("274400 added back to combat log, report in DBM discord if you can")
+--		if self:AntiSpam(3, 2) then
+--			specWarnDuelistDash:Show()
+--			specWarnDuelistDash:Play("chargemove")
+--		end
 	elseif spellId == 274383 then
 		timerRatTrapsCD:Start(nil, args.sourceGUID)
 		if self:AntiSpam(3, 2) then
