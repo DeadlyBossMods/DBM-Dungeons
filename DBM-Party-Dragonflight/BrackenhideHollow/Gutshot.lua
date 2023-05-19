@@ -106,7 +106,7 @@ function mod:SPELL_CAST_START(args)
 	elseif spellId == 384353 then
 		if self:IsTanking("player", "boss1", nil, true) then
 			specWarnGutShot:Show()
-			specWarnGutShot:Play("defensive")
+			specWarnGutShot:Play("carefly")
 		end
 		timerGutShotCD:Start()
 	end

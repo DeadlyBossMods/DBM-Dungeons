@@ -16,6 +16,11 @@ mod:RegisterEventsInCombat(
 	"UNIT_SPELLCAST_SUCCEEDED boss1"
 )
 
+--[[
+(ability.id = 198496 or ability.id = 216290 or ability.id = 193375) and type = "begincast"
+ or ability.id = 216290 and type = "cast"
+ or type = "dungeonencounterstart" or type = "dungeonencounterend"
+--]]
 local warnStrikeofMountain			= mod:NewTargetAnnounce(216290, 2)
 local warnBellowofDeeps				= mod:NewSpellAnnounce(193375, 2)--Change to special warning if they become important enough to switch to
 local warnStanceofMountain			= mod:NewSpellAnnounce(216249, 2)
