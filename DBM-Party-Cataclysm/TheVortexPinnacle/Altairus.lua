@@ -36,7 +36,7 @@ local warnUpwind			= mod:NewSpellAnnounce(88282, 1)
 --local specWarnBreath		= mod:NewSpecialWarningYou(88308, "-Tank", nil, 2, 1, 2)
 --local specWarnBreathNear	= mod:NewSpecialWarningClose(88308, nil, nil, nil, 1, 2)
 local specWarnBreath		= mod:NewSpecialWarningDodgeCount(88308, nil, nil, nil, 2, 2)
-local specWarnDownburst		= mod:NewSpecialWarningCount(413295, nil, nil, nil, 2, 2, 4)
+local specWarnDownburst		= mod:NewSpecialWarningMoveTo(413295, nil, nil, nil, 2, 14, 4)
 local specWarnDownwind		= mod:NewSpecialWarningSpell(88286, nil, nil, nil, 1, 14)
 local specWarnGTFO			= mod:NewSpecialWarningGTFO(413275, nil, nil, nil, 1, 8)
 
@@ -50,6 +50,7 @@ mod.vb.activeWind = "none"
 mod.vb.windCount = 0
 mod.vb.burstCount = 0
 mod.vb.breathCount = 0
+local tornado = DBM:GetSpellInfo(86133)
 
 --[[
 function mod:BreathTarget()
@@ -98,9 +99,9 @@ end
 function mod:SPELL_CAST_SUCCESS(args)
 	if args.spellId == 413295 then
 		self.vb.burstCount = self.vb.burstCount + 1
-		specWarnDownburst:Show(self.vb.burstCount)
-		specWarnDownburst:Play("specialsoon")
-		timerDownburstCD:Start()
+		specWarnDownburst:Show(tornado)
+		specWarnDownburst:Play("getknockedup")
+		timerDownburstCD:Start(nil, self.vb.burstCount+1)
 	elseif args.spellId == 181089 then--Encounter Event
 		self.vb.windCount = self.vb.windCount + 1
 		warnCalltheWind:Show(self.vb.windCount)
