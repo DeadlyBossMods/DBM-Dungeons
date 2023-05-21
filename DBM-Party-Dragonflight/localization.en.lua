@@ -292,3 +292,56 @@ L:SetGeneralLocalization({
 L:SetOptionLocalization({
 	AGBuffs		= "Auto select gossip to activate usable buffs for engineering and herbalism"
 })
+
+-----------------------
+-- Chronikar --
+-----------------------
+--L= DBM:GetModLocalization(2521)
+
+-----------------------
+-- Manifested Timeways --
+-----------------------
+--L= DBM:GetModLocalization(2528)
+
+-----------------------
+-- Blight of Galakrond --
+-----------------------
+--L= DBM:GetModLocalization(2535)
+
+-----------------------
+-- Iridikron the Stonescaled --
+-----------------------
+--L= DBM:GetModLocalization(2537)
+
+-----------------------
+-- Tyr, the infinite Keeper --
+-----------------------
+--L= DBM:GetModLocalization(2526)
+
+-----------------------
+-- Morchie --
+-----------------------
+--L= DBM:GetModLocalization(2536)
+
+-----------------------
+-- Time-Lost Battlefield  --
+-----------------------
+L= DBM:GetModLocalization(2533)--Alliance ID used for both factions (2534 is horde id)
+
+L:SetGeneralLocalization({
+	name =	"Time-Lost Battlefield"--Manual local because auto inserts Alliance or horde to name and mod combines them since singular encounter ID
+})
+
+-----------------------
+-- Chrono-Lord Deios --
+-----------------------
+--L= DBM:GetModLocalization(2538)
+
+---------
+--Trash--
+---------
+L = DBM:GetModLocalization("DawnoftheInfiniteTrash")
+
+L:SetGeneralLocalization({
+	name =	"DotI Trash"
+})

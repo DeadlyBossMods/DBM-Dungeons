@@ -32,12 +32,13 @@ mod:RegisterEvents(
  --Note, most ability timers not consistent enough for decent timers, so disabled on purpose. They'd be misleading and non constructive
 local warnSharkToss					= mod:NewTargetNoFilterAnnounce(256358, 4)
 local warnGreasy					= mod:NewCountAnnounce(257829, 2)
+local warnRearm						= mod:NewSpellAnnounce(256489, 4)
 
 local specWarnSharkToss				= mod:NewSpecialWarningYou(256358, nil, nil, nil, 1, 2)
 local specWarnSharkTossNear			= mod:NewSpecialWarningClose(256358, nil, nil, nil, 1, 2)
 local yellSharkToss					= mod:NewYell(256358)
 local specWarnSharknado				= mod:NewSpecialWarningRun(256405, nil, nil, nil, 4, 2)
-local specWarnRearm					= mod:NewSpecialWarningDodge(256489, nil, nil, nil, 2, 2)
+--local specWarnRearm					= mod:NewSpecialWarningDodge(256489, nil, nil, nil, 2, 2)
 local specWarnGTFO					= mod:NewSpecialWarningGTFO(256552, nil, nil, nil, 1, 8)
 
 local timerRP						= mod:NewRPTimer(68)
@@ -68,8 +69,9 @@ function mod:SPELL_CAST_START(args)
 		specWarnSharknado:Play("justrun")
 		timerSharknadoCD:Start()
 	elseif spellId == 256489 or spellId == 256494 then
-		specWarnRearm:Show()
-		specWarnRearm:Play("farfromline")
+		if self:AntiSpam(3, 3) then
+			warnRearm:Show()
+		end
 		if spellId == 256494 then
 			timerRearmCD:Start(8, 2)--8-12
 			timerRearmCD:Start(19.3, 1)--19-33.9

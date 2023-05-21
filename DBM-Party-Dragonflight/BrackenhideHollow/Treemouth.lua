@@ -5,7 +5,7 @@ mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(186120)
 mod:SetEncounterID(2568)
 mod:SetUsedIcons(8, 7, 6, 5)
-mod:SetHotfixNoticeRev(20230507000000)
+mod:SetHotfixNoticeRev(20230516000000)
 --mod:SetMinSyncRevision(20211203000000)
 --mod.respawnTime = 29
 mod.sendMainBossGUID = true
@@ -14,10 +14,10 @@ mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 376811 381770 377559 376934",
-	"SPELL_CAST_SUCCESS 377859",
+--	"SPELL_CAST_SUCCESS 377859",
 	"SPELL_SUMMON 376797",
-	"SPELL_AURA_APPLIED 377222 378022 377864",
-	"SPELL_AURA_APPLIED_DOSE 377864",
+	"SPELL_AURA_APPLIED 377222 378022",--377864
+--	"SPELL_AURA_APPLIED_DOSE 377864",
 	"SPELL_AURA_REMOVED 377222 378022",
 	"SPELL_PERIODIC_DAMAGE 378054",
 	"SPELL_PERIODIC_MISSED 378054"
@@ -29,14 +29,14 @@ mod:RegisterEventsInCombat(
 --[[
 (ability.id = 376811 or ability.id = 377559 or ability.id = 376934) and type = "begincast"
  or ability.id = 377859 and type = "cast"
- or ability.id = 378022 and type = "removebuff"
+ or ability.id = 378022 and (type = "removebuff" or type = "applybuff")
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
  or ability.id = 381770 and type = "begincast"
 --]]
 local warnGraspingVines							= mod:NewSpellAnnounce(376933, 2)
 local warnConsume								= mod:NewTargetNoFilterAnnounce(377222, 4)
 local warnDecaySpray							= mod:NewSpellAnnounce(376811, 2)
-local warnInfectiousSpit						= mod:NewStackAnnounce(377864, 2, nil, "Healer|RemoveDisease")
+--local warnInfectiousSpit						= mod:NewStackAnnounce(377864, 2, nil, "Healer|RemoveDisease")
 
 --local yellInfusedStrikes						= mod:NewShortFadesYell(361966)
 local specWarnGraspingVines						= mod:NewSpecialWarningRun(376933, nil, nil, nil, 4, 2)
@@ -46,9 +46,9 @@ local specWarnVineWhip							= mod:NewSpecialWarningDefensive(377559, nil, nil, 
 
 local timerGraspingVinesCD						= mod:NewCDTimer(47.3, 376933, nil, nil, nil, 6)
 local timerConsume								= mod:NewTargetTimer(10, 377222, nil, false, 2, 3, nil, DBM_COMMON_L.DAMAGE_ICON)
-local timerDecaySprayCD							= mod:NewCDTimer(22.5, 376811, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)
-local timerInfectiousSpitCD						= mod:NewCDTimer(20.1, 377864, nil, nil, nil, 3, nil, DBM_COMMON_L.DISEASE_ICON)
-local timerVineWhipCD							= mod:NewCDTimer(14.1, 377559, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+local timerDecaySprayCD							= mod:NewCDTimer(42.4, 376811, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)
+--local timerInfectiousSpitCD					= mod:NewCDTimer(20.1, 377864, nil, nil, nil, 3, nil, DBM_COMMON_L.DISEASE_ICON)
+local timerVineWhipCD							= mod:NewCDTimer(16.9, 377559, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 
 --local berserkTimer							= mod:NewBerserkTimer(600)
 
@@ -62,8 +62,8 @@ mod.vb.addIcon = 8
 
 function mod:OnCombatStart(delay)
 	timerVineWhipCD:Start(6-delay)
-	timerDecaySprayCD:Start(12.1-delay)
-	timerGraspingVinesCD:Start(15.7-delay)
+	timerDecaySprayCD:Start(16-delay)
+	timerGraspingVinesCD:Start(23.2-delay)
 --	timerInfectiousSpitCD:Start(25.9-delay)--Restarted by vines anyways
 end
 
@@ -80,7 +80,7 @@ function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
 	if spellId == 376811 then
 		self.vb.addIcon = 8
-		timerDecaySprayCD:Start()
+		timerDecaySprayCD:Start()--42-46
 	elseif spellId == 381770 and self:CheckInterruptFilter(args.sourceGUID, false, true) then
 		specWarnGushingOoze:Show(args.sourceName)
 		specWarnGushingOoze:Play("kickcast")
@@ -89,7 +89,7 @@ function mod:SPELL_CAST_START(args)
 			specWarnVineWhip:Show()
 			specWarnVineWhip:Play("defensive")
 		end
-		timerVineWhipCD:Start()
+		timerVineWhipCD:Start()--16-24 now thanks to worse spell queue than before
 	elseif spellId == 376934 then
 		if DBM:UnitDebuff("player", 383875) then--Partially Digested
 			specWarnGraspingVines:Show()
@@ -97,21 +97,22 @@ function mod:SPELL_CAST_START(args)
 		else
 			warnGraspingVines:Show()
 		end
-		--Grasping vines does start a timer here, and if he does NOT consume a player, this timer will be used for next cast
-		timerGraspingVinesCD:Start(42.5)
+		timerGraspingVinesCD:Start(54.6)
 		--Timer restarts
-		timerInfectiousSpitCD:Restart(10.2)
-		timerVineWhipCD:Restart(10.9)
-		timerDecaySprayCD:Restart(17)--17-20, but it does still restart here, just depends how fast consuming is removed
+--		timerInfectiousSpitCD:Restart(10.2)--No longer exists at all?
+		timerVineWhipCD:Restart(9)--9 second timer is started here, but will queue up if consume happens and be used near immediately when consume fades
+--		timerDecaySprayCD:Restart(33.2)--No longer restarts here
 	end
 end
 
+--[[
 function mod:SPELL_CAST_SUCCESS(args)
 	local spellId = args.spellId
 	if spellId == 377859 then
-		timerInfectiousSpitCD:Start()
+--		timerInfectiousSpitCD:Start()
 	end
 end
+--]]
 
 function mod:SPELL_SUMMON(args)
 	local spellId = args.spellId
@@ -133,10 +134,10 @@ function mod:SPELL_AURA_APPLIED(args)
 			DBM.InfoFrame:SetHeader(args.spellName)
 			DBM.InfoFrame:Show(2, "enemyabsorb", nil, args.amount, "boss1")
 		end
-	elseif spellId == 377864 then
-		local amount = args.amount or 1
+--	elseif spellId == 377864 then
+--		local amount = args.amount or 1
 --		if amount % 2 == 0 then
-			warnInfectiousSpit:Show(args.destName, amount)
+--			warnInfectiousSpit:Show(args.destName, amount)
 --		end
 	end
 end
@@ -150,8 +151,6 @@ function mod:SPELL_AURA_REMOVED(args)
 		if self.Options.InfoFrame then
 			DBM.InfoFrame:Hide()
 		end
-		--If boss consumes someone, it restarts grasping vines timer
-		timerGraspingVinesCD:Restart(29.7)
 	end
 end
 

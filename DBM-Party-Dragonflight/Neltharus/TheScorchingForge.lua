@@ -13,8 +13,8 @@ mod.sendMainBossGUID = true
 mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
-	"SPELL_CAST_START 374969",
-	"SPELL_CAST_SUCCESS 374635 374842 374534",
+	"SPELL_CAST_START 374969 374839",
+	"SPELL_CAST_SUCCESS 374635 374534",
 	"SPELL_AURA_APPLIED 374842 374534",
 --	"SPELL_AURA_APPLIED_DOSE",
 	"SPELL_AURA_REMOVED 374534 374842"
@@ -24,8 +24,8 @@ mod:RegisterEventsInCombat(
 )
 
 --[[
-(ability.id = 374969) and type = "begincast"
- or (ability.id = 374635 or ability.id = 374842 or ability.id = 374534) and type = "cast"
+(ability.id = 374969 or ability.id = 374839) and type = "begincast"
+ or (ability.id = 374635 or ability.id = 374534) and type = "cast"
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
 --]]
 local warnBlazinAegis							= mod:NewTargetNoFilterAnnounce(374842, 3)
@@ -75,6 +75,8 @@ function mod:SPELL_CAST_START(args)
 		specWarnForgestorm:Show()
 		specWarnForgestorm:Play("watchstep")
 		timerForgestormCD:Start()
+	elseif spellId == 374839 then
+		timerBlazinAegisCD:Start()
 	end
 end
 
@@ -84,8 +86,6 @@ function mod:SPELL_CAST_SUCCESS(args)
 		specWarnMightoftheForge:Show()
 		specWarnMightoftheForge:Play("aesoon")
 		timerMightoftheForgeCD:Start()
-	elseif spellId == 374842 then
-		timerBlazinAegisCD:Start()
 	elseif spellId == 374534 then
 		timerHeatedSwingsCD:Start()
 	end
