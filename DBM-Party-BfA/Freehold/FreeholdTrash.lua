@@ -8,7 +8,7 @@ mod.isTrashMod = true
 
 mod:RegisterEvents(
 	"SPELL_CAST_START 257732 257397 257899 257736 258777 257784 257756 274860 257426 274383 258199 272402 257870 274400 257436 258672 258181 274507 257908",
-	"SPELL_CAST_SUCCESS 257747 258777 257272",
+	"SPELL_CAST_SUCCESS 257747 258777 257272 257908",
 	"SPELL_AURA_APPLIED 257274 257476 258323 257739 257908 257397 257775 274507",
 	"SPELL_AURA_APPLIED_DOSE 274555",
 	"UNIT_DIED",
@@ -81,7 +81,7 @@ local timerBoulderThrowCD				= mod:NewCDTimer(19.3, 258181, nil, nil, nil, 3)
 local timerPainfulMotivationCD			= mod:NewCDTimer(18.1, 257899, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerBladeBarrageCD				= mod:NewCDTimer(18.2, 257870, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerThunderingSquallCD			= mod:NewCDTimer(27.8, 257736, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
-local timerOiledBladeCD					= mod:NewCDTimer(13.4, 257908, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+local timerOiledBladeCD					= mod:NewCDTimer(12.4, 257908, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerFrostBlastCD					= mod:NewCDTimer(31.5, 257784, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc, 7 off interrupt
@@ -105,7 +105,7 @@ function mod:DashTarget(targetname)
 end
 
 function mod:SPELL_CAST_START(args)
-	if not self.Options.Enabled then return end
+	if not self:IsValidWarning(args.sourceGUID) then return end
 	local spellId = args.spellId
 	if spellId == 257397 then
 		if self.Options.SpecWarn257397interrupt and self:CheckInterruptFilter(args.sourceGUID, false, true) then
@@ -211,7 +211,6 @@ function mod:SPELL_CAST_START(args)
 		specWarnAzeriteGrenade:Show()
 		specWarnAzeriteGrenade:Play("watchstep")
 	elseif spellId == 257908 then
-		timerOiledBladeCD:Start(nil, args.sourceGUID)
 		if self:AntiSpam(3, 5) then
 			if self:IsTanking("player", nil, nil, true, args.sourceGUID) then
 				specWarnOiledBladeSelf:Show()
@@ -233,6 +232,8 @@ function mod:SPELL_CAST_SUCCESS(args)
 		specWarnVileBombardment:Show()
 		specWarnVileBombardment:Play("watchstep")
 		timerVileBombardmentCD:Start()--No GUID needed, SharkBait isn't in nameplate range at this time
+	elseif spellId == 257908 then
+		timerOiledBladeCD:Start(nil, args.sourceGUID)
 	end
 end
 
