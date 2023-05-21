@@ -323,8 +323,6 @@ L:SetOptionLocalization({
 -----------------------
 --L= DBM:GetModLocalization(2536)
 
---TODO, maybe split mods if combine is awkward?
-
 -----------------------
 -- Time-Lost Battlefield  --
 -----------------------
