@@ -4,19 +4,25 @@ local L		= mod:GetLocalizedStrings()
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(131383)
 mod:SetEncounterID(2112)
+mod:SetHotfixNoticeRev(20230520000000)
 mod.sendMainBossGUID = true
 
 mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
-	"SPELL_AURA_APPLIED 259718",
-	"SPELL_AURA_REMOVED 259718",
 	"SPELL_CAST_START 259732 272457",
-	"SPELL_CAST_SUCCESS 259830 259718 259732",
+	"SPELL_CAST_SUCCESS 259830 259718 259732",--273285
+	"SPELL_AURA_APPLIED 259718",
+	"SPELL_AURA_REMOVED 259718"
 	"UNIT_SPELLCAST_SUCCEEDED boss1"
 )
 
 --TODO, re-evalulate all timers from DF M+ logs
+--[[
+(ability.id = 259732 or ability.id = 272457) and type = "begincast"
+ or (ability.id = 259830 or ability.id = 259718 or ability.id = 259732 or ability.id = 273285) and type = "cast"
+ or type = "dungeonencounterstart" or type = "dungeonencounterend"
+--]]
 --local warnBoundlessrot				= mod:NewSpellAnnounce(259830, 3)--Use if too spammy as special warning
 local warnUpheaval					= mod:NewTargetAnnounce(259718, 3)
 
@@ -28,20 +34,58 @@ local yellUpheaval					= mod:NewYell(259718)
 local yellUpheavalFades				= mod:NewShortFadesYell(259718)
 local specWarnUpheavalNear			= mod:NewSpecialWarningClose(259718, nil, nil, nil, 1, 2)
 
-local timerFesteringHarvestCD		= mod:NewCDTimer(51, 259732, nil, nil, nil, 2, nil, DBM_COMMON_L.DEADLY_ICON)
---local timerBoundlessRotCD			= mod:NewCDTimer(13, 259830, nil, nil, nil, 3)
-local timerVolatilePodsCD			= mod:NewCDTimer(27.5, 273271, nil, nil, nil, 3)
+local timerFesteringHarvestCD		= mod:NewCDTimer(50.9, 259732, nil, nil, nil, 2, nil, DBM_COMMON_L.DEADLY_ICON)
+local timerBoundlessRotCD			= mod:NewCDTimer(13, 259830, nil, nil, nil, 3)
+local timerVolatilePodsCD			= mod:NewCDTimer(25.4, 273271, nil, nil, nil, 3)
 local timerShockwaveCD				= mod:NewCDTimer(14.6, 272457, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerUpheavalCD				= mod:NewCDTimer(15.8, 259718, nil, nil, nil, 3)--15.8-20
 
 function mod:OnCombatStart(delay)
-	--timerBoundlessRotCD:Start(1-delay)
+	--timerBoundlessRotCD:Start(1-delay)--Immediately on pull
 	timerShockwaveCD:Start(10-delay)
-	timerUpheavalCD:Start(17-delay)
+	timerUpheavalCD:Start(16.7-delay)
 	if not self:IsNormal() then
 		timerVolatilePodsCD:Start(20.4-delay)
 	end
-	timerFesteringHarvestCD:Start(34.9-delay)
+	timerFesteringHarvestCD:Start(45.8-delay)
+end
+
+function mod:SPELL_CAST_START(args)
+	local spellId = args.spellId
+	if spellId == 259732 then
+		specWarnFesteringHarvest:Show()
+		specWarnFesteringHarvest:Play("specialsoon")
+		timerFesteringHarvestCD:Start()
+		timerShockwaveCD:Stop()
+		timerUpheavalCD:Stop()
+		timerBoundlessRotCD:Start(8.5)
+	elseif spellId == 272457 then
+		specWarnShockwave:Show()
+		specWarnShockwave:Play("shockwave")
+		timerShockwaveCD:Start()
+	end
+end
+
+function mod:SPELL_CAST_SUCCESS(args)
+	local spellId = args.spellId
+	if spellId == 259830 then
+		--timerBoundlessRotCD:Start()
+	elseif spellId == 259718 and self:AntiSpam(3, 1) then
+		timerUpheavalCD:Start(20.6)
+		if timerShockwaveCD:GetRemaining(s) < 8.5 then
+			local elapsed, total = timerShockwaveCD:GetTime()
+			local extend = 8.5 - (total-elapsed)
+			DBM:Debug("timerShockwaveCD extended by: "..extend, 2)
+			timerShockwaveCD:Update(elapsed, total+extend)
+		end
+	elseif spellId == 259732 then--Festering Harvvest
+		timerUpheavalCD:Start(10.5)
+		timerShockwaveCD:Start(19)
+--	elseif spellId == 273285 then
+--		specWarnVolatilePods:Show()
+--		specWarnVolatilePods:Play("watchstep")
+--		timerVolatilePodsCD:Start()
+	end
 end
 
 function mod:SPELL_AURA_APPLIED(args)
@@ -68,40 +112,7 @@ function mod:SPELL_AURA_REMOVED(args)
 	end
 end
 
-function mod:SPELL_CAST_START(args)
-	local spellId = args.spellId
-	if spellId == 259732 then
-		specWarnFesteringHarvest:Show()
-		specWarnFesteringHarvest:Play("specialsoon")
-		timerFesteringHarvestCD:Start()
-		if DBM.Options.DebugMode then
-			DBM:Debug("Why is this scoped to debug only?. This looks like an unfinished train of thought. Do timers restart or get spell queued here?")
-			timerShockwaveCD:Stop()
-			timerUpheavalCD:Stop()
-			timerVolatilePodsCD:Stop()
-		end
-	elseif spellId == 272457 then
-		specWarnShockwave:Show()
-		specWarnShockwave:Play("shockwave")
-		timerShockwaveCD:Start()
-	end
-end
-
-function mod:SPELL_CAST_SUCCESS(args)
-	local spellId = args.spellId
-	if spellId == 259830 then
-		--timerBoundlessRotCD:Start()
-	elseif spellId == 259718 and self:AntiSpam(3, 1) then
-		timerUpheavalCD:Start(20.6)
-	elseif spellId == 259732 then
-		timerUpheavalCD:Start(10.5)
-		if not self:IsNormal() then
-			timerVolatilePodsCD:Start(12)
-		end
-		timerShockwaveCD:Start(19)
-	end
-end
-
+--Singular event, vs throttling success casts
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, spellId)
 	if spellId == 273271 then--Volatile Pods
 		specWarnVolatilePods:Show()
