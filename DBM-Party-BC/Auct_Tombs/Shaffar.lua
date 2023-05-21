@@ -22,6 +22,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, spellId)
 end
 
 function mod:OnSync(msg)
+	if not self:IsInCombat() then return end
 	if msg == "Adds" and self:AntiSpam(5, 1) then
 		specWarnAdds:Show()
 		specWarnAdds:Play("killmob")
