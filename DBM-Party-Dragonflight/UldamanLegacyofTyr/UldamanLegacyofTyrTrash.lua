@@ -74,7 +74,7 @@ local timerHastenCD							= mod:NewCDTimer(23, 377500, nil, nil, nil, 4, nil, DB
 
 --local playerName = UnitName("player")
 
---Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc, 7 off interrupt
+--Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc, 7 off interrupt, 8 off dodge (can't be interrupted/CCed and too spammy to be special warning)
 
 --[[
 function mod:LitTarget(targetname)
@@ -98,7 +98,7 @@ function mod:SPELL_CAST_START(args)
 		end
 	elseif spellId == 381593 then
 		timerThunderousClapCD:Start(nil, args.sourceGUID)
-		if self:AntiSpam(3, 6) then
+		if self:AntiSpam(3, 8) then
 			warnThunderousClap:Show()
 		end
 	elseif spellId == 382578 and self:AntiSpam(3, 5) then
