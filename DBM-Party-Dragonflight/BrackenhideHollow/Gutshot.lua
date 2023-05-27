@@ -177,7 +177,7 @@ function mod:SPELL_AURA_REMOVED(args)
 		end
 	elseif spellId == 387889 then
 		if self.Options.NPAuraOnHunterleadersTactics then
-			DBM.Nameplate:Show(true, args.destGUID, spellId)
+			DBM.Nameplate:Hide(true, args.destGUID, spellId)
 		end
 	end
 end
