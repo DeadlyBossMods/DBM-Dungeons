@@ -45,7 +45,7 @@ local timerStaticClingCD		= mod:NewCDTimer(15.8, 87618, nil, nil, nil, 2)
 local timerStaticCling			= mod:NewCastTimer(10, 87618, nil, nil, nil, 5)
 local timerStorm				= mod:NewCastTimer(10, 86930, nil, nil, nil, 2)
 local timerGroundingFieldCD		= mod:NewCDCountTimer(45.7, 86911, nil, nil, nil, 2, nil, DBM_COMMON_L.DEADLY_ICON)
-local timerNovaCD				= mod:NewCDTimer(12.1, isRetail and 413263 or 96260, nil, nil, nil, 1)
+local timerNovaCD				= mod:NewCDCountTimer(12.1, isRetail and 413263 or 96260, nil, nil, nil, 1)
 
 mod.vb.groundingCount = 0
 mod.vb.novaCount = 0
@@ -66,11 +66,11 @@ function mod:OnCombatStart(delay)
 	self.vb.novaCount = 0
 	if self:IsMythicPlus() then
 		timerChainLightningCD:Start(12.1-delay)
-		timerNovaCD:Start(19.7)
+		timerNovaCD:Start(18.1, 1)
 		timerStaticClingCD:Start(25.3-delay)
 		timerGroundingFieldCD:Start(30.3-delay, 1)
 	else--TODO, check non M+ on 10.1
-		timerNovaCD:Start(10.7)
+		timerNovaCD:Start(10.7, 1)
 		timerStaticClingCD:Start(10.7-delay)
 		timerChainLightningCD:Start(13.1-delay)
 		timerGroundingFieldCD:Start(16.9-delay, 1)
@@ -122,13 +122,13 @@ function mod:SPELL_AURA_APPLIED(args)
 		timerStorm:Start()
 		if self:IsMythicPlus() then
 			timerChainLightningCD:Restart(18.1)--First cast can be delayed or skipped entirely
-			timerNovaCD:Restart(26.5)
+			timerNovaCD:Restart(26.5, self.vb.novaCount+1)
 			timerStaticClingCD:Restart(33.7)
 			timerGroundingFieldCD:Start(65.5, self.vb.groundingCount+1)
 		else
 			timerStaticClingCD:Restart(12)
 			--timerChainLightningCD:Start(19.3)
-			timerNovaCD:Restart(22.9)
+			timerNovaCD:Restart(22.9, self.vb.novaCount+1)
 			timerGroundingFieldCD:Start(45.7, self.vb.groundingCount+1)--45.7
 		end
 	end
@@ -142,7 +142,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, spellId)
 		specWarnNova:Play("killmob")
 		local expectedTime = self:IsMythicPlus() and 25.1 or 12.1
 		if timerGroundingFieldCD:GetRemaining() < expectedTime then
-			timerNovaCD:Start(expectedTime)
+			timerNovaCD:Start(expectedTime, self.vb.novaCount+1)
 		end
 	end
 end

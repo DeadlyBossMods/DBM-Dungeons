@@ -5,6 +5,7 @@ mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(91005)
 mod:SetEncounterID(1792)
 mod.sendMainBossGUID = true
+mod.respawnTime = 15--10-15, trying 15 for now, def not 30
 
 mod:RegisterCombat("combat")
 
@@ -31,7 +32,7 @@ local timerRancidMawCD				= mod:NewCDTimer(18, 205549, nil, nil, nil, 2)
 local timerToxicRetchCD				= mod:NewCDTimer(14.3, 210150, nil, nil, nil, 3)
 
 function mod:OnCombatStart(delay)
-	timerAddsCD:Start(5.5-delay)
+	timerAddsCD:Start(5.2-delay)
 	timerRancidMawCD:Start(7.3-delay)
 	timerToxicRetchCD:Start(12.4-delay)
 	timerSpikedTongueCD:Start(50.5-delay)
@@ -51,7 +52,7 @@ end
 
 function mod:SPELL_AURA_REMOVED(args)
 	local spellId = args.spellId
-	if spellId == 199178 then
+	if spellId == 199178 and self:AntiSpam(4, 2) then
 		warnSpikedTongueOver:Show()
 	end
 end
@@ -73,7 +74,7 @@ function mod:SPELL_CAST_START(args)
 end
 
 function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId, spellName)
-	if spellId == 188494 and destGUID == UnitGUID("player") and self:AntiSpam(3, 2) then
+	if spellId == 188494 and destGUID == UnitGUID("player") and self:AntiSpam(3, 3) then
 		specWarnRancidMaw:Show(spellName)
 		specWarnRancidMaw:Play("watchfeet")
 	end
