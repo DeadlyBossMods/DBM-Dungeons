@@ -105,7 +105,7 @@ function mod:SPELL_CAST_START(args)
 		end
 	elseif spellId == 87762 then
 		timerLightningLashCD:Start(nil, args.sourceGUID)
-		self:ScheduleMethod(0.2, "BossTargetScanner", args.sourceGUID, "LitTarget", 0.1, 8, true)
+		self:ScheduleMethod(0.2, "BossTargetScanner", args.sourceGUID, "LitTarget", 0.1, 8)
 	elseif spellId == 87779 and self:CheckInterruptFilter(args.sourceGUID, false, true) then
 		specWarnGreaterHeal:Show()
 		specWarnGreaterHeal:Play("kickcast")
