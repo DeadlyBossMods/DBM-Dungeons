@@ -5,6 +5,7 @@ mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(133007)
 mod:SetEncounterID(2123)
 mod.sendMainBossGUID = true
+mod:SetHotfixNoticeRev(20230528000000)
 
 mod:RegisterCombat("combat")
 
@@ -18,6 +19,10 @@ mod:RegisterEventsInCombat(
 
 --TODO, target scanning cleansing light?
 --TODO, verify GTFO
+--[[
+(ability.id = 269843 or ability.id = 269310) and type = "begincast"
+ or type = "dungeonencounterstart" or type = "dungeonencounterend"
+--]]
 local warnVisage					= mod:NewAddsLeftAnnounce("ej18312", 2, 269692)
 
 local specWarnBloodVisage			= mod:NewSpecialWarningSwitch("ej18312", "-Healer", nil, nil, 1, 2)
@@ -27,7 +32,7 @@ local specWarnGTFO					= mod:NewSpecialWarningGTFO(269838, nil, nil, nil, 1, 8)
 
 local timerBloodVisageCD			= mod:NewCDTimer(15.7, "ej18312", nil, nil, nil, 1, 269692)
 local timerVileExpulsionCD			= mod:NewNextTimer(15.7, 269843, nil, nil, nil, 3)
-local timerCleansingLightCD			= mod:NewCDTimer(21.8, 269310, nil, nil, nil, 5)--21.8-37
+local timerCleansingLightCD			= mod:NewCDTimer(16.9, 269310, nil, nil, nil, 5)--21.8-37 pre 10.1, 16.9-18 now
 
 mod:AddInfoFrameOption(269301, "Healer")
 
