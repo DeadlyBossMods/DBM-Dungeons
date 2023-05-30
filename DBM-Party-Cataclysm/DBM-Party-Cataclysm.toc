@@ -38,7 +38,7 @@
 ## X-DBM-Mod-Name-koKR: 던전 (대격변)
 ## X-DBM-Mod-Name-esMX: Mazmorras (Cataclysm)
 ## X-DBM-Mod-Name-ptBR: Masmorras (Cataclysm)
-## X-DBM-Mod-Sort: 815
+## X-DBM-Mod-Sort: 802
 ## X-DBM-Mod-MapID: 755,645,36,670,644,33,643,725,657,309,859,568,938,940,939,1,0,646
 ## X-DBM-Mod-LoadCID: 50063,50056,50089,50009,50061
 ## X-DBM-Mod-MinCoreRevision: 20210721040757

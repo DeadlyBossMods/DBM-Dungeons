@@ -84,7 +84,7 @@ local timerThunderingSquallCD			= mod:NewCDTimer(27.8, 257736, nil, nil, nil, 4,
 local timerOiledBladeCD					= mod:NewCDTimer(12.4, 257908, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerFrostBlastCD					= mod:NewCDTimer(31.5, 257784, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 
---Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc, 7 off interrupt
+--Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc, 7 off interrupt, 8 extremely unique but unthrottled (except with itself)
 
 function mod:RicochetingTarget(targetname)
 	if not targetname then return end
@@ -275,7 +275,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		if amount >= 3 and self:AntiSpam(3, 5) then
 			warnSabrousBite:Show(args.destName, amount)
 		end
-	elseif spellId == 274507 and args:IsPlayer() then
+	elseif spellId == 274507 and args:IsPlayer() and self:AntiSpam(3, 8) then
 		specWarnSlipperySudsYou:Show()
 		specWarnSlipperySudsYou:Play("targetyou")
 	end

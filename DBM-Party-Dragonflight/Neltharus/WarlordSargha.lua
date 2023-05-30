@@ -23,8 +23,12 @@ mod:RegisterEventsInCombat(
 --	"UNIT_SPELLCAST_SUCCEEDED boss1"
 )
 
---Molten Gold/hardened gold are just so inconsiquential that I suspect blizzard will change or scrap it
---TODO, verify Kiln target scan
+--NOTES
+	--Based on latest analysis. These timers pause on cast start of shield
+	--They stay paused until shield is removed, then if stun happens, 10 seconds is added to all timers
+	--(they basically pause again but easier to add 10 seconds)
+	--Then there is the fact that abilities spell queue and trigger ICDs on one another, that's auto corrected as well
+	--Kiln also can be queued so bad a cast gets entirely skipped. the auto correct code will restart the timer if it's missings
 --[[
 ability.id = 376780 and (type = "begincast" or type = "applybuff" or type = "removebuff")
  or (ability.id = 377017 or ability.id = 377204 or ability.id = 377473) and type = "begincast"
@@ -38,15 +42,14 @@ local warnHardenedGold							= mod:NewYouAnnounce(377022, 2)--So inconsiquential
 local warnBurningPursuit						= mod:NewTargetNoFilterAnnounce(377522, 3)
 
 local specWarnDragonsKiln						= mod:NewSpecialWarningDodge(377204, nil, nil, nil, 2, 2)
-local yellDragonsKiln							= mod:NewYell(377204)
 local specWarnBurningEmber						= mod:NewSpecialWarningDodge(377477, nil, nil, nil, 2, 2)
 local specWarnBurningPursuit					= mod:NewSpecialWarningYou(377522, nil, nil, nil, 1, 2)
 local specWarnGTFO								= mod:NewSpecialWarningGTFO(377542, nil, nil, nil, 1, 8)
 
-local timerMagmaShieldCD						= mod:NewCDTimer(33.4, 376780, nil, nil, nil, 5, nil, DBM_COMMON_L.DAMAGE_ICON)
-local timerMoltenGoldCD							= mod:NewCDTimer(35, 377018, nil, nil, nil, 3)
+local timerMagmaShieldCD						= mod:NewCDCountTimer(33.4, 376780, nil, nil, nil, 5, nil, DBM_COMMON_L.DAMAGE_ICON)
+local timerMoltenGoldCD							= mod:NewCDTimer(26.7, 377018, nil, nil, nil, 3)
 local timerDragonsKilnCD						= mod:NewCDTimer(21, 377204, nil, nil, nil, 3)
-local timerBurningEmberCD						= mod:NewCDTimer(35, 377477, nil, nil, nil, 1)
+local timerBurningEmberCD						= mod:NewCDTimer(28.2, 377477, nil, nil, nil, 1)--Timer extrapolated by reversing spell queues and pauses then vetting it multiple times as accurate within a less than ~1 deviation
 
 --local berserkTimer							= mod:NewBerserkTimer(600)
 
@@ -54,18 +57,36 @@ local timerBurningEmberCD						= mod:NewCDTimer(35, 377477, nil, nil, nil, 1)
 mod:AddInfoFrameOption(376780, true)
 --mod:AddSetIconOption("SetIconOnStaggeringBarrage", 361018, true, false, {1, 2, 3})
 
-function mod:DragonsKilnTarget(targetname)
-	if not targetname then return end
-	if targetname == UnitName("player") then
-		yellDragonsKiln:Yell()
+mod.vb.shieldCount = 0
+
+local function updateAllTimers(self, ICD)
+	DBM:Debug("updateAllTimers running", 3)
+	if timerMoltenGoldCD:GetRemaining() < ICD then
+		local elapsed, total = timerMoltenGoldCD:GetTime()
+		local extend = ICD - (total-elapsed)
+		DBM:Debug("timerMoltenGoldCD extended by: "..extend, 2)
+		timerMoltenGoldCD:Update(elapsed, total+extend)
+	end
+	if timerDragonsKilnCD:GetRemaining() < ICD then
+		local elapsed, total = timerDragonsKilnCD:GetTime()
+		local extend = ICD - (total-elapsed)
+		DBM:Debug("timerDragonsKilnCD extended by: "..extend, 2)
+		timerDragonsKilnCD:Update(elapsed, total+extend)
+	end
+	if timerBurningEmberCD:GetRemaining() < ICD then
+		local elapsed, total = timerBurningEmberCD:GetTime()
+		local extend = ICD - (total-elapsed)
+		DBM:Debug("timerBurningEmberCD extended by: "..extend, 2)
+		timerBurningEmberCD:Update(elapsed, total+extend)
 	end
 end
 
 function mod:OnCombatStart(delay)
+	self.vb.shieldCount = 0
 	timerDragonsKilnCD:Start(7-delay)
 	timerMoltenGoldCD:Start(14.3-delay)
 	timerBurningEmberCD:Start(21.6-delay)
-	timerMagmaShieldCD:Start(34.1-delay)
+	timerMagmaShieldCD:Start(34.1-delay, 1)
 end
 
 function mod:OnCombatEnd()
@@ -80,18 +101,22 @@ end
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
 	if spellId == 376780 then
---		timerMagmaShieldCD:Start()
+		timerDragonsKilnCD:Pause()
+		timerMoltenGoldCD:Pause()
+		timerBurningEmberCD:Pause()
 	elseif spellId == 377017 then
---		timerMoltenGoldCD:Start()
+		timerMoltenGoldCD:Start()
+		updateAllTimers(self, 4.8)
 	elseif spellId == 377204 then
-		self:ScheduleMethod(0.2, "BossTargetScanner", args.sourceGUID, "DragonsKilnTarget", 0.1, 8, true)
 		specWarnDragonsKiln:Show()
 		specWarnDragonsKiln:Play("shockwave")
 		timerDragonsKilnCD:Start()
+		updateAllTimers(self, 6)
 	elseif spellId == 377473 then
 		specWarnBurningEmber:Show()
 		specWarnBurningEmber:Play("watchstep")
---		timerBurningEmberCD:Start()
+		timerBurningEmberCD:Start()
+		updateAllTimers(self, 4.6)
 	end
 end
 
@@ -107,15 +132,12 @@ end
 function mod:SPELL_AURA_APPLIED(args)
 	local spellId = args.spellId
 	if spellId == 376780 then
+		self.vb.shieldCount = self.vb.shieldCount + 1
 		warnMagmaShield:Show(args.destName)
 		if self.Options.InfoFrame then
 			DBM.InfoFrame:SetHeader(args.spellName)
 			DBM.InfoFrame:Show(2, "enemyabsorb", nil, args.amount, "boss1")
 		end
-		--Do timers stop and restart after shield, or pause and resume?
-		timerDragonsKilnCD:Stop()
-		timerMoltenGoldCD:Stop()
-		timerBurningEmberCD:Stop()
 	elseif spellId == 377018 then
 		warnMoltenGold:Show(args.destName)
 	elseif spellId == 377022 and args:IsPlayer() then
@@ -128,12 +150,10 @@ function mod:SPELL_AURA_APPLIED(args)
 			warnBurningPursuit:Show(args.destName)
 		end
 	elseif spellId == 377014 then--Backdraft
-		--Backdraft is 10 seconds tun when barrier is removed, and has a diff sequence of timers as a result
-		--So we immediately restart timers if backdraft successful
-		timerMoltenGoldCD:Restart(10)
-		timerBurningEmberCD:Restart(14.3) -- ~1
-		timerDragonsKilnCD:Restart(18.6) -- ~1
-		timerMagmaShieldCD:Restart(30.1)
+		timerDragonsKilnCD:AddTime(10)
+		timerMoltenGoldCD:AddTime(10)
+		timerBurningEmberCD:AddTime(10)
+		timerMagmaShieldCD:AddTime(10, self.vb.shieldCount+1)
 	end
 end
 --mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED
@@ -145,11 +165,10 @@ function mod:SPELL_AURA_REMOVED(args)
 		if self.Options.InfoFrame then
 			DBM.InfoFrame:Hide()
 		end
-		--Start initial timers
-		timerMoltenGoldCD:Start(6)
-		timerDragonsKilnCD:Start(11) -- ~1
-		timerBurningEmberCD:Start(16.9) -- ~1
-		timerMagmaShieldCD:Start(30.1)
+		timerDragonsKilnCD:Resume()
+		timerMoltenGoldCD:Resume()
+		timerBurningEmberCD:Resume()
+		timerMagmaShieldCD:Start(30.1, self.vb.shieldCount+1)--30-34, not even boss energy is worth a shit on this boss. bad encounter scripting is bad
 	end
 end
 

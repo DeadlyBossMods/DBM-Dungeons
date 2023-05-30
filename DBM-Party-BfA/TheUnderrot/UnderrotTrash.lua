@@ -34,7 +34,7 @@ local warnWickedFrenzy				= mod:NewCastAnnounce(266209, 3)
 local warnVoidSpit					= mod:NewCastAnnounce(272180, 2, nil, nil, false)--AKA Dark Bolt prior to 10.1
 local warnDarkEchoes				= mod:NewCastAnnounce(413044, 4)
 
-local specWarnMaddeningGaze			= mod:NewSpecialWarningDodge(272609, nil, nil, nil, 2, 2)
+local specWarnMaddeningGaze			= mod:NewSpecialWarningDodge(272609, nil, nil, 2, 3, 2)
 local yellBloodHarvest				= mod:NewShortYell(265016)--Pre Savage Cleave target awareness
 local specWarnSavageCleave			= mod:NewSpecialWarningDodge(265019, nil, nil, nil, 2, 2)
 local specWarnRottenBile			= mod:NewSpecialWarningDodge(265540, nil, nil, nil, 2, 2)
@@ -74,7 +74,7 @@ local timerWickedFrenzyCD			= mod:NewCDTimer(25.4, 266209, nil, nil, nil, 5, nil
 local timerWitheringCurseCD			= mod:NewCDTimer(25.4, 272180, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerShadowBoltVolleyCD		= mod:NewCDTimer(25.4, 265487, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--25.4-27.7
 local timerAbyssalReachCD			= mod:NewCDTimer(16.1, 272592, nil, nil, nil, 3)
-local timerMaddeningGazeCD			= mod:NewCDTimer(15.7, 272609, nil, nil, nil, 3)--15.7-17
+local timerMaddeningGazeCD			= mod:NewCDTimer(15.7, 272609, nil, nil, nil, 3, nil, nil, DBM_COMMON_L.HEALER_ICON, mod:IsTank(), 3)--15.7-17
 
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc, 7 off interrupt
 

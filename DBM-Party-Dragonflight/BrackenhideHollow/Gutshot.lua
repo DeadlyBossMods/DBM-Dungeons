@@ -50,7 +50,7 @@ local timerEnsnaringTrapCD						= mod:NewCDTimer(17, 384148, nil, nil, nil, 3)--
 local timerMeatTossCD							= mod:NewCDTimer(21.8, 384416, nil, nil, nil, 3)
 local timerCallHyenasCD							= mod:NewCDTimer(31.6, 384827, nil, nil, nil, 1)
 --local timerMastersCallCD						= mod:NewCDTimer(35, 384638, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--Doesn't seem to have an actual CD?
-local timerGutShotCD							= mod:NewCDTimer(19.3, 384343, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+local timerGutShotCD							= mod:NewCDTimer(18.2, 384343, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 
 --local berserkTimer							= mod:NewBerserkTimer(600)
 
@@ -177,7 +177,7 @@ function mod:SPELL_AURA_REMOVED(args)
 		end
 	elseif spellId == 387889 then
 		if self.Options.NPAuraOnHunterleadersTactics then
-			DBM.Nameplate:Show(true, args.destGUID, spellId)
+			DBM.Nameplate:Hide(true, args.destGUID, spellId)
 		end
 	end
 end
