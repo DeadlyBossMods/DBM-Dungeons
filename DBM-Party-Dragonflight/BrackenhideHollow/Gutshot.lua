@@ -37,7 +37,7 @@ local warnEnsnaringTrap							= mod:NewTargetNoFilterAnnounce(384148, 3)--Trap g
 local warnSmellLikeMeat							= mod:NewTargetNoFilterAnnounce(384425, 3)
 local warnCallHyenas							= mod:NewSpellAnnounce(384827, 2)
 
-local specWarnEnsnaringTrap						= mod:NewSpecialWarningYou(384148, nil, nil, nil, 1, 2)--Trap going out
+local specWarnEnsnaringTrap						= mod:NewSpecialWarningMoveAway(384148, nil, nil, nil, 1, 2)--Trap going out
 local yellEnsnaringTrap							= mod:NewYell(384148, nil, false)--Trap going out
 local specWarnFeedingFrenzy						= mod:NewSpecialWarningDispel(384764, "RemoveEnrage", nil, nil, 1, 2)--Buff on mob
 local specWarnFeedingFrenzyYou					= mod:NewSpecialWarningRun(384725, nil, nil, nil, 4, 2)--Debuff on player
@@ -125,7 +125,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		warnEnsnaringTrap:CombinedShow(0.3, args.destName)
 		if args:IsPlayer() then
 			specWarnEnsnaringTrap:Show()
-			specWarnEnsnaringTrap:Play("targetyou")
+			specWarnEnsnaringTrap:Play("scatter")
 			yellEnsnaringTrap:Yell()
 		end
 	elseif spellId == 384425 then
