@@ -32,7 +32,7 @@ mod:RegisterEventsInCombat(
 --TODO, longer pulls for decaying strength timer (needs more data, single pull with 3 casts but still all over the place)
 local warnDecayigStrength						= mod:NewSpellAnnounce(373960, 3)
 
-local specWarnRotburstTotem						= mod:NewSpecialWarningSwitch(373944, nil, nil, nil, 1, 2)
+local specWarnRotburstTotem						= mod:NewSpecialWarningSwitch(373944, "-Healer", nil, 2, 1, 2)
 local specWarnChokingRotcloud					= mod:NewSpecialWarningDodge(376170, nil, nil, nil, 2, 2, 4)
 local specWarnDecaystrike						= mod:NewSpecialWarningDefensive(373917, nil, nil, nil, 1, 2)
 --local specWarnGTFO							= mod:NewSpecialWarningGTFO(340324, nil, nil, nil, 1, 8)
@@ -89,11 +89,11 @@ function mod:SPELL_CAST_START(args)
 		timerDecayingStrengthCD:Start(44.9)
 	elseif spellId == 376170 then
 		specWarnChokingRotcloud:Show()
-		specWarnChokingRotcloud:Play("shockwave")
+		specWarnChokingRotcloud:Play("watchstep")
 --		timerChokingRotcloutCD:Start()
 	elseif spellId == 373912 then
 		timerDecayStrikeCD:Start()
-		if args:IsPlayer() then
+		if self:IsTanking("player", "boss1", nil, true) then
 			specWarnDecaystrike:Show()
 			specWarnDecaystrike:Play("defensive")
 		end
