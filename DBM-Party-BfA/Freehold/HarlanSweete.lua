@@ -69,7 +69,7 @@ function mod:SPELL_CAST_START(args)
 		end
 	elseif spellId == 257458 then--ManOWar
 		self:SetStage(3)
-		warnPhase:Show(DBM_CORE_L.AUTO_ANNOUNCE_TEXTS.stage:format(2))
+		warnPhase:Show(DBM_CORE_L.AUTO_ANNOUNCE_TEXTS.stage:format(3))
 		warnPhase:Play("pthree")
 		timerSwiftwindSaberCD:Stop()
 		timerAvastyeCD:Stop()
