@@ -35,7 +35,7 @@ mod:RegisterEventsInCombat(
 --]]
 --Rira Hackclaw
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(24732))
-local warnSavageCharge							= mod:NewTargetNoFilterAnnounce(381461, 4)--Not special waring for now, since it is 14 sec cast time
+local warnSavageCharge							= mod:NewTargetNoFilterAnnounce(381461, 4)
 local warnBladestorm							= mod:NewTargetNoFilterAnnounce(377827, 3)
 
 local specWarnSavageCharge						= mod:NewSpecialWarningYou(381461, nil, nil, nil, 1, 2)
@@ -46,11 +46,11 @@ local timerSavageChargeCD						= mod:NewCDTimer(59.4, 381461, nil, nil, nil, 3, 
 local timerBladestormCD							= mod:NewCDTimer(59.4, 377827, nil, nil, nil, 3)
 --Gashtooth
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(24733))
-local warnMarkedforButchery						= mod:NewCastAnnounce(378229, 3, nil, nil, "Healer")
+local warnMarkedforButchery						= mod:NewTargetNoFilterAnnounce(378229, 4, nil, nil, "Healer")
 
 local specWarnDecayedSenses						= mod:NewSpecialWarningDispel(381379, "RemoveMagic", nil, nil, 1, 2)
 local specWarnGashFrenzy						= mod:NewSpecialWarningSpell(378029, "Healer", nil, nil, 2, 2)
---local specWarnMarkedforButchery					= mod:NewSpecialWarningDefensive(378229, nil, nil, nil, 1, 2)
+local specWarnMarkedforButchery					= mod:NewSpecialWarningDefensive(378229, nil, nil, nil, 1, 2)
 
 local timerDecayedSensesCD						= mod:NewCDTimer(59.4, 381379, nil, nil, nil, 3)
 local timerGashFrenzyCD							= mod:NewCDTimer(59.4, 378029, nil, nil, nil, 5, nil, DBM_COMMON_L.HEALER_ICON..DBM_COMMON_L.BLEED_ICON)
@@ -96,6 +96,16 @@ local function scanBosses(self, delay)
 	end
 end
 
+function mod:MarkedTarget(targetname, uId)
+	if not targetname then return end
+	if targetname == UnitName("player") then
+		specWarnMarkedforButchery:Show()
+		specWarnMarkedforButchery:Play("defensive")
+	else
+		warnMarkedforButchery:Show(targetname)
+	end
+end
+
 function mod:OnCombatStart(delay)
 	self.vb.healingRapidsCount = 0
 	self:Schedule(1, scanBosses, self, delay)--1 second delay to give IEEU time to populate boss guids
@@ -137,8 +147,8 @@ function mod:SPELL_CAST_START(args)
 			specWarnGreaterHealingRapids:Play("kickcast")
 		end
 	elseif spellId == 378208 then
-		warnMarkedforButchery:Show()
-		timerMarkedforButcheryCD:Start(nil, args.sourceGUID)--Move to success to start as appropriate
+		timerMarkedforButcheryCD:Start(nil, args.sourceGUID)
+		self:BossTargetScanner(args.sourceGUID, "MarkedTarget", 0.2, 8, true, nil, nil, nil, true)
 	end
 end
 
