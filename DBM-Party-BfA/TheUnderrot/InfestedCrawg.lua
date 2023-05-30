@@ -120,9 +120,10 @@ function mod:SPELL_CAST_SUCCESS(args)
 	if spellId == 260333 then--Tantrum
 		self.vb.chargeCast = 0
 		self.vb.tantrumCast = self.vb.tantrumCast + 1
-		timerChargeCD:AddTime(7)--Seems to add 7 seconds static to charge timer, period. charge CD is either 20, or 27 if a tantrum was in between charges, (Unless spell queued but that is handled by auto correct)
+		timerChargeCD:AddTime(6.1)--Seems to add 7 seconds static to charge timer, period. charge CD is either 20, or 27 if a tantrum was in between charges, (Unless spell queued but that is handled by auto correct)
 		specWarnTantrum:Show(self.vb.tantrumCast)
 		specWarnTantrum:Play("aesoon")
+		timerTantrumCD:Start()
 --		updateAllTimers(self, 13.4)--Unknown but I imagine it's like 5 sec at most, some logs make it appear 6 13 or 18, but all are incorrect assumptions
 	end
 end
