@@ -68,8 +68,9 @@ local timerBrutalStrikeCD					= mod:NewCDTimer(15.7, 378847, nil, "Tank|Healer",
 local timerVolcanicGuardCD					= mod:NewCDTimer(25.4, 382708, nil, nil, nil, 3)
 local timerExplosiveConcoctionCD			= mod:NewCDTimer(18.2, 378827, nil, nil, nil, 3)
 local timerBindingSpearCD					= mod:NewCDTimer(25.4, 372561, nil, nil, nil, 3)
-local timerMendingClayCD					= mod:NewCDTimer(25.4, 372223, nil, nil, nil, 1)
-local timerBurningRoarCD					= mod:NewCDTimer(20.5, 395427, nil, nil, nil, 1)
+local timerMendingClayCD					= mod:NewCDTimer(25.4, 372223, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerBurningRoarCD					= mod:NewCDTimer(20.5, 395427, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerMoltenCoreCD						= mod:NewCDTimer(8.1, 378282, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerEruptiveCrushCD					= mod:NewCDTimer(15.7, 376186, nil, nil, nil, 3)
 local timerScorchingBreathCD				= mod:NewCDTimer(16.1, 372201, nil, nil, nil, 3)
 local timerMoteofCombustionCD				= mod:NewCDTimer(18.2, 384161, nil, nil, nil, 3)
@@ -169,6 +170,7 @@ function mod:SPELL_CAST_START(args)
 			warnMendingClay:Show()
 		end
 	elseif spellId == 378282 then
+		timerMoltenCoreCD:Start(nil, args.sourceGUID)
 		if self.Options.SpecWarn378282interrupt and self:CheckInterruptFilter(args.sourceGUID, false, true) then
 			specWarnMoltenCore:Show(args.sourceName)
 			specWarnMoltenCore:Play("kickcast")
@@ -310,6 +312,8 @@ function mod:UNIT_DIED(args)
 		timerForgestompCD:Stop(args.destGUID)
 	elseif cid == 193291 then--Apex Blazewing
 		timerCandescentTempestCD:Stop(args.destGUID)
+	elseif cid == 192788 then--Qalashi Thaumaturge
+		timerMoltenCoreCD:Stop(args.destGUID)
 	end
 end
 

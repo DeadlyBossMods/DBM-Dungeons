@@ -71,6 +71,8 @@ local timerTurbulenceCD							= mod:NewCDTimer(32.8, 411002, nil, nil, nil, 2)
 local timerWindFlurryCD							= mod:NewCDTimer(10.1, 410998, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerLightningLashCD						= mod:NewCDTimer(19, 87762, nil, nil, nil, 3)
 local timerOverloadGroundingFieldCD				= mod:NewCDTimer(20.5, 413385, nil, nil, nil, 3)
+local timerGreaterHealCD						= mod:NewCDTimer(14.1, 87779, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--Post retial May 30th 2023 hotfix, in cataclysm this will still be like 3 second CD
+
 
 --local playerName = UnitName("player")
 
@@ -106,9 +108,12 @@ function mod:SPELL_CAST_START(args)
 	elseif spellId == 87762 then
 		timerLightningLashCD:Start(nil, args.sourceGUID)
 		self:ScheduleMethod(0.2, "BossTargetScanner", args.sourceGUID, "LitTarget", 0.1, 8)
-	elseif spellId == 87779 and self:CheckInterruptFilter(args.sourceGUID, false, true) then
-		specWarnGreaterHeal:Show()
-		specWarnGreaterHeal:Play("kickcast")
+	elseif spellId == 87779 then
+		timerGreaterHealCD:Start(nil, args.sourceGUID)
+		if self:CheckInterruptFilter(args.sourceGUID, false, true) then
+			specWarnGreaterHeal:Show()
+			specWarnGreaterHeal:Play("kickcast")
+		end
 	elseif spellId == 88201 then--No throttle on purpose. this particular spell always needs awareness
 		warnHealingWell:Show()
 	elseif spellId == 88194 then
@@ -231,6 +236,8 @@ function mod:UNIT_DIED(args)
 	elseif cid == 45930 then--Minster of Air
 		timerLightningLashCD:Stop(args.destGUID)
 		timerOverloadGroundingFieldCD:Stop(args.destGUID)
+	elseif cid == 45935 then--Temple Adept
+		timerGreaterHealCD:Stop(args.destGUID)
 	end
 end
 
