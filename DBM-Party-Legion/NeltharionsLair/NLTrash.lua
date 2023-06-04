@@ -8,7 +8,7 @@ mod.isTrashMod = true
 
 mod:RegisterEvents(
 	"SPELL_CAST_START 183088 226296 202108 193505 226287 183548 193585 226406 202181 193941 226347 183539",
-	"SPELL_CAST_SUCCESS 183433 183526",
+	"SPELL_CAST_SUCCESS 183433 183526 183088",
 	"SPELL_AURA_APPLIED 200154 183407 186576 193803 201983 226388 186616",
 	"UNIT_DIED"
 )
@@ -60,7 +60,6 @@ function mod:SPELL_CAST_START(args)
 	if not self.Options.Enabled then return end
 	local spellId = args.spellId
 	if spellId == 183088 then
-		timerAvalancheCD:Start(nil, args.sourceGUID)
 		if self:AntiSpam(3, 2) then
 			specWarnAvalanche:Show()
 			specWarnAvalanche:Play("watchstep")
@@ -135,6 +134,8 @@ function mod:SPELL_CAST_SUCCESS(args)
 		end
 	elseif spellId == 183526 and self:AntiSpam(3, 5) then
 		warnWarDrums:Show()
+	elseif spellId == 183088 then
+		timerAvalancheCD:Start(18.3, args.sourceGUID)--19.4 - 1.1
 	end
 end
 
