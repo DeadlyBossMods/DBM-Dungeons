@@ -62,7 +62,7 @@ function mod:OnCombatStart(delay)
 	timerSunderCD:Start(7-delay)
 	timerStrikeCD:Start(15.8-delay)
 	timerBelowofDeepsCD:Start(20.4-delay)
-	timerStanceOfMountainCD:Start(60-delay)
+--	timerStanceOfMountainCD:Start(60-delay)--First one still seems kinda random, 35-60
 end
 
 function mod:SPELL_CAST_START(args)
