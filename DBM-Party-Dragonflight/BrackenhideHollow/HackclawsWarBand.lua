@@ -178,7 +178,7 @@ function mod:SPELL_AURA_APPLIED(args)
 			timerBladestormCD:Start(nil, args.sourceGUID)
 		end
 		warnBladestorm:Show(args.destName)
-	elseif args:IsSpellID(381387, 381379) and self:CheckDispelFilter("magic") then
+	elseif args:IsSpellID(381387, 381379) and args:IsDestTypePlayer() and self:CheckDispelFilter("magic") then
 		specWarnDecayedSenses:Show(args.destName)
 		specWarnDecayedSenses:Play("helpdispel")
 --	elseif spellId == 378229 then
