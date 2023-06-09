@@ -34,7 +34,6 @@ local specWarnStrikeofMountain		= mod:NewSpecialWarningDodge(216290, nil, nil, n
 local timerSunderCD					= mod:NewCDTimer(7.5, 198496, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerStrikeCD					= mod:NewCDTimer(15, 216290, nil, nil, nil, 3)
 local timerBelowofDeepsCD			= mod:NewCDTimer(33.9, 193375, nil, nil, nil, 1)
-local timerStanceOfMountainCD		= mod:NewCDTimer(50, 216249, nil, nil, nil, 6)
 
 local function updateAllTimers(self, ICD)
 	DBM:Debug("updateAllTimers running", 3)
@@ -62,7 +61,6 @@ function mod:OnCombatStart(delay)
 	timerSunderCD:Start(7-delay)
 	timerStrikeCD:Start(15.8-delay)
 	timerBelowofDeepsCD:Start(20.4-delay)
---	timerStanceOfMountainCD:Start(60-delay)--First one still seems kinda random, 35-60
 end
 
 function mod:SPELL_CAST_START(args)
@@ -115,6 +113,5 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
 		--timerSunderCD:Start(2)
 		--timerStrikeCD:Start(2)
 		--timerBelowofDeepsCD:Start(2)
-		timerStanceOfMountainCD:Start(50)
 	end
 end
