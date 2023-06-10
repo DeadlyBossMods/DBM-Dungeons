@@ -1,3 +1,4 @@
+if DBM:GetTOC() < 100105 then return end
 local mod	= DBM:NewMod("DawnoftheInfiniteTrash", "DBM-Party-Dragonflight", 5)
 local L		= mod:GetLocalizedStrings()
 

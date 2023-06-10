@@ -1,3 +1,4 @@
+if DBM:GetTOC() < 100105 then return end
 local creatureID
 local seratedSpellId, addAOESpellId, addDebuffSpellId, tankSpellId, frontalSpellId, rallySpellId, crySpellId
 if UnitFactionGroup("player") == "Alliance" then--TODO, might have to change this to check party leader not player, due to cross faction groups.
