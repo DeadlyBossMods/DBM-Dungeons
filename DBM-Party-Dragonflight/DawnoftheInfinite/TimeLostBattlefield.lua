@@ -57,7 +57,7 @@ local timerAddDebuffCD								= mod:NewAITimer(19.4, addDebuffSpellId, nil, nil,
 
 --mod:AddInfoFrameOption(391977, true)
 --Boss (Anduin Lothar / Grommash Hellscream
-mod:AddTimerLine(DBM:EJ_GetSectionInfo(DBM_COMMON_L.BOSS))
+mod:AddTimerLine(DBM_COMMON_L.BOSS)
 local warnBladestorm								= mod:NewSpellAnnounce(410234, 3)
 local warnRally										= mod:NewSpellAnnounce(rallySpellId, 2)
 local warnCry										= mod:NewSpellAnnounce(crySpellId, 2)
