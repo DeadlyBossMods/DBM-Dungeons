@@ -59,7 +59,7 @@ mod:AddTimerLine(DBM:EJ_GetSectionInfo(17023))
 local warnTappedKeg					= mod:NewSpellAnnounce(272884, 1)
 
 local specWarnBarrelSmash			= mod:NewSpecialWarningRun(256589, "Melee", nil, nil, 4, 2)
-local specWarnBlackoutBarrel		= mod:NewSpecialWarningSwitch(258338, nil, nil, nil, 1, 2)
+local specWarnBlackoutBarrel		= mod:NewSpecialWarningSwitch(258338, "-Healer", nil, 2, 1, 2)
 
 ----Hostile
 local timerBarrelSmashCD			= mod:NewCDTimer(22.9, 256589, nil, "Melee", nil, 3)--22.9-24.5
