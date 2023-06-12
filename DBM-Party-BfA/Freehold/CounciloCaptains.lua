@@ -99,7 +99,7 @@ local function scanCaptains(self, isPull, delay)
 							DBM.RangeCheck:Show(5)
 						end
 					elseif cid == 126847 then--Raoul
-						timerBarrelSmashCD:Start(6.1-delay, bossGUID)
+						timerBarrelSmashCD:Start(5-delay, bossGUID)
 						timerBlackoutBarrelCD:Start(16.9-delay, bossGUID)
 					else--Eudora
 						timerGrapeShotCD:Start(7.3-delay, bossGUID)
