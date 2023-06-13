@@ -135,6 +135,12 @@ function mod:SPELL_CAST_SUCCESS(args)
 	end
 end
 
+local function pointlessDelay(self)
+	timerDragonsKilnCD:AddTime(9)
+	timerMoltenGoldCD:AddTime(9)
+	timerBurningEmberCD:AddTime(9)
+	timerMagmaShieldCD:AddTime(9, self.vb.shieldCount+1)
+end
 
 function mod:SPELL_AURA_APPLIED(args)
 	local spellId = args.spellId
@@ -157,10 +163,7 @@ function mod:SPELL_AURA_APPLIED(args)
 			warnBurningPursuit:Show(args.destName)
 		end
 	elseif spellId == 377014 then--Backdraft
-		timerDragonsKilnCD:AddTime(10)
-		timerMoltenGoldCD:AddTime(10)
-		timerBurningEmberCD:AddTime(10)
-		timerMagmaShieldCD:AddTime(10, self.vb.shieldCount+1)
+		self:Schedule(1, pointlessDelay, self)
 	end
 end
 --mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED
