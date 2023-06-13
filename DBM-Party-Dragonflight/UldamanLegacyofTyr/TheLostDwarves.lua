@@ -149,7 +149,7 @@ function mod:SPELL_CAST_START(args)
 			timerDefensiveBulwarkCD:Stop(args.sourceGUID)
 			if bossPower == 100 then--Alive, restart timers
 				timerRicochetingShieldCD:Start(30, args.sourceGUID)
-				timerDefensiveBulwarkCD:Start(35, args.sourceGUID)
+				timerDefensiveBulwarkCD:Start(34.1, args.sourceGUID)
 			end
 		elseif cid == 184582 then--Eric "The Swift"
 			timerSkullcrackerCD:Stop(args.sourceGUID)

@@ -7,7 +7,7 @@ mod.isTrashMod = true
 
 mod:RegisterEvents(
 	"SPELL_CAST_START 369811 382578 369674 369823 369675 369806 377732 369399 369335 369400 369365 369423 369411 381593 382696 377500 369409",
-	"SPELL_CAST_SUCCESS 377738 369465 369328 377732 382696",
+	"SPELL_CAST_SUCCESS 377738 369465 369328 377732 382696 369811",
 	"SPELL_AURA_APPLIED 369365 369828 369823 369818 369400 369366 377500",
 	"SPELL_AURA_APPLIED_DOSE 369828 377738 369419",
 --	"SPELL_AURA_REMOVED 339525",
@@ -91,7 +91,6 @@ function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
 	if not self:IsValidWarning(args.sourceGUID) then return end
 	if spellId == 369811 then
-		timerBrutalSlamCD:Start(nil, args.sourceGUID)
 		if self:AntiSpam(3, 1) then
 			specWarnBrutalSlam:Show()
 			specWarnBrutalSlam:Play("justrun")
@@ -209,6 +208,8 @@ function mod:SPELL_CAST_SUCCESS(args)
 		timerJaggedBiteCD:Start(nil, args.sourceGUID)
 	elseif spellId == 382696 then
 		timerBulwarkSlamCD:Start(nil, args.sourceGUID)
+	elseif spellId == 369811 then
+		timerBrutalSlamCD:Start(18.1, args.sourceGUID)--20.1 - 2
 	end
 end
 
