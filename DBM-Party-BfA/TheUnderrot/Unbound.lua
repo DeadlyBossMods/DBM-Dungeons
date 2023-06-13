@@ -32,7 +32,7 @@ local specWarnGTFO					= mod:NewSpecialWarningGTFO(269838, nil, nil, nil, 1, 8)
 
 local timerBloodVisageCD			= mod:NewCDTimer(15.7, "ej18312", nil, nil, nil, 1, 269692)
 local timerVileExpulsionCD			= mod:NewNextTimer(15.7, 269843, nil, nil, nil, 3)
-local timerCleansingLightCD			= mod:NewCDTimer(16.9, 269310, nil, nil, nil, 5)--21.8-37 pre 10.1, 16.9-18 now
+local timerCleansingLightCD			= mod:NewCDTimer(15.7, 269310, nil, nil, nil, 5)--21.8-37 pre 10.1, 15.7-18 now
 
 mod:AddInfoFrameOption(269301, "Healer")
 
