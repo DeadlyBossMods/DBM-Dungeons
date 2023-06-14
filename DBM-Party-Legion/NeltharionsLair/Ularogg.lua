@@ -25,7 +25,7 @@ mod:RegisterEventsInCombat(
 --]]
 local warnStrikeofMountain			= mod:NewTargetAnnounce(216290, 2)
 local warnBellowofDeeps				= mod:NewSpellAnnounce(193375, 2)--Change to special warning if they become important enough to switch to
-local warnStanceofMountain			= mod:NewSpellAnnounce(216249, 2)
+local warnStanceofMountain			= mod:NewCountAnnounce(216249, 2)
 
 local specWarnSunder				= mod:NewSpecialWarningDefensive(198496, "Tank", nil, 2, 1, 2)
 local specWarnStrikeofMountain		= mod:NewSpecialWarningDodge(216290, nil, nil, nil, 1, 2)
@@ -34,6 +34,8 @@ local specWarnStrikeofMountain		= mod:NewSpecialWarningDodge(216290, nil, nil, n
 local timerSunderCD					= mod:NewCDTimer(7.5, 198496, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerStrikeCD					= mod:NewCDTimer(15, 216290, nil, nil, nil, 3)
 local timerBelowofDeepsCD			= mod:NewCDTimer(33.9, 193375, nil, nil, nil, 1)
+
+mod.vb.stanceCount = 0
 
 local function updateAllTimers(self, ICD)
 	DBM:Debug("updateAllTimers running", 3)
@@ -58,6 +60,7 @@ local function updateAllTimers(self, ICD)
 end
 
 function mod:OnCombatStart(delay)
+	self.vb.stanceCount = 0
 	timerSunderCD:Start(7-delay)
 	timerStrikeCD:Start(15.8-delay)
 	timerBelowofDeepsCD:Start(20.4-delay)
@@ -104,7 +107,8 @@ end
 --"<569.86 21:54:43> [UNIT_SPELLCAST_SUCCEEDED] Ularogg Cragshaper(12.1%-0.0%){Target:Gimlly} -Stance of the Mountain- [[boss1:Cast-3-4249-1458-17779-198509-0009F26003:198509]]", -- [4028]
 function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
 	if spellId == 198509 then--Stance of the Mountain
-		warnStanceofMountain:Show()
+		self.vb.stanceCount = self.vb.stanceCount + 1
+		warnStanceofMountain:Show(self.vb.stanceCount)
 		timerSunderCD:Stop()
 		timerStrikeCD:Stop()
 		timerBelowofDeepsCD:Stop()

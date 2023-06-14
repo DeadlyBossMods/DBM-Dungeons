@@ -49,7 +49,7 @@ local specWarnSearingClap						= mod:NewSpecialWarningDefensive(369061, nil, nil
 
 local timerPurgingFlamesCD						= mod:NewCDCountTimer(35, 368990, nil, nil, nil, 6)--Maybe swap for activate keepers instead
 local timerUnstableEmbersCD						= mod:NewCDCountTimer(12, 369110, nil, nil, nil, 3)
-local timerSearingClapCD						= mod:NewCDTimer(24.2, 369061, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+local timerSearingClapCD						= mod:NewCDCountTimer(24.2, 369061, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 
 --local berserkTimer							= mod:NewBerserkTimer(600)
 
@@ -60,12 +60,14 @@ local timerSearingClapCD						= mod:NewCDTimer(24.2, 369061, nil, "Tank|Healer",
 mod.vb.addsRemaining = 0
 mod.vb.embersCount = 0
 mod.vb.purgingCount = 0
+mod.vb.tankCount = 0
 
 function mod:OnCombatStart(delay)
 	self.vb.addsRemaining = 0
 	self.vb.embersCount = 0
 	self.vb.purgingCount = 0
-	timerSearingClapCD:Start(4.5-delay)
+	self.vb.tankCount = 0
+	timerSearingClapCD:Start(4.5-delay, 1)
 	timerUnstableEmbersCD:Start(13.1-delay, 1)
 	timerPurgingFlamesCD:Start(40.8-delay, 1)--Til actual aoe begin, not infusions 2 seconds before
 end
@@ -97,7 +99,7 @@ function mod:SPELL_CAST_START(args)
 			specWarnSearingClap:Show()
 			specWarnSearingClap:Play("defensive")
 		end
-		timerSearingClapCD:Start()
+		timerSearingClapCD:Start(nil, self.vb.tankCount+1)
 	end
 end
 
@@ -131,11 +133,11 @@ function mod:SPELL_AURA_REMOVED(args)
 			yellUnstableEmbersFades:Cancel()
 		end
 	elseif spellId == 368990 then--Purging Flames over
-		self.vb.embersCount = 0
+		self.vb.embersCount = 0--Resetting since it's mostly for timer control
 		self.vb.addsRemaining = 0--Reset for good measure
 		timerUnstableEmbersCD:Start(1.9, 1)
-		timerSearingClapCD:Start(5.5)
-		timerPurgingFlamesCD:Start(42.4, self.vb.purgingCount+1)
+		timerSearingClapCD:Start(5.5, self.vb.tankCount+1)--Non resetting, for healer/tank CDs
+		timerPurgingFlamesCD:Start(42.4, self.vb.purgingCount+1)--Non resetting, for healer/tank CDs
 	elseif spellId == 369043 then
 		self.vb.addsRemaining = self.vb.addsRemaining - 1
 		if self.vb.addsRemaining > 0 then

@@ -31,21 +31,21 @@ mod:RegisterEventsInCombat(
 local warnBlazinAegis							= mod:NewTargetNoFilterAnnounce(374842, 3)
 local warnHeatedSwings							= mod:NewTargetNoFilterAnnounce(374534, 3)
 
-local specWarnMightoftheForge					= mod:NewSpecialWarningSpell(374635, nil, nil, nil, 2, 2)
+local specWarnMightoftheForge					= mod:NewSpecialWarningCount(374635, nil, nil, nil, 2, 2)
 local specWarnBlazinAegis						= mod:NewSpecialWarningMoveAway(374842, nil, nil, nil, 1, 2)
 local yellBlazinAegis							= mod:NewYell(374842)
 local yellBlazinAegisFades						= mod:NewShortFadesYell(374842)
 local specWarnHeatedSwings						= mod:NewSpecialWarningMoveAway(374534, nil, nil, nil, 1, 2)
 local yellHeatedSwings							= mod:NewYell(374534)
 local yellHeatedSwingsFades						= mod:NewShortFadesYell(374534)
-local specWarnForgestorm						= mod:NewSpecialWarningDodge(374969, nil, nil, nil, 2, 2)
+local specWarnForgestorm						= mod:NewSpecialWarningDodgeCount(374969, nil, nil, nil, 2, 2)
 --local specWarnGTFO							= mod:NewSpecialWarningGTFO(340324, nil, nil, nil, 1, 8)
 
 --All timers are 30-31 ish
-local timerMightoftheForgeCD					= mod:NewNextTimer(30.3, 374635, nil, nil, nil, 6, nil, DBM_COMMON_L.HEALER_ICON)--Technically Blazing Hammer is healer icon, but it's passive of this stage
-local timerBlazinAegisCD						= mod:NewNextTimer(30.3, 374842, nil, nil, nil, 3)
-local timerHeatedSwingsCD						= mod:NewNextTimer(30.3, 374534, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)--Tracked by all since it has 8 yard splash damage
-local timerForgestormCD							= mod:NewNextTimer(30.3, 374969, nil, nil, nil, 2)
+local timerMightoftheForgeCD					= mod:NewNextCountTimer(30.3, 374635, nil, nil, nil, 6, nil, DBM_COMMON_L.HEALER_ICON)--Technically Blazing Hammer is healer icon, but it's passive of this stage
+local timerBlazinAegisCD						= mod:NewNextCountTimer(30.3, 374842, nil, nil, nil, 3)
+local timerHeatedSwingsCD						= mod:NewNextCountTimer(30.3, 374534, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)--Tracked by all since it has 8 yard splash damage
+local timerForgestormCD							= mod:NewNextCountTimer(30.3, 374969, nil, nil, nil, 2)
 
 --local berserkTimer							= mod:NewBerserkTimer(600)
 
@@ -53,11 +53,14 @@ local timerForgestormCD							= mod:NewNextTimer(30.3, 374969, nil, nil, nil, 2)
 --mod:AddInfoFrameOption(361651, true)
 --mod:AddSetIconOption("SetIconOnStaggeringBarrage", 361018, true, false, {1, 2, 3})
 
+mod.vb.setCount = 0
+
 function mod:OnCombatStart(delay)
-	timerMightoftheForgeCD:Start(3.1-delay)
-	timerBlazinAegisCD:Start(11.5-delay)
-	timerHeatedSwingsCD:Start(20.1-delay)
-	timerForgestormCD:Start(26.6-delay)
+	self.vb.setCount = 1--All timers are 30, so only need one variable that'll increment after each set of all 4 casts
+	timerMightoftheForgeCD:Start(3.1-delay, 1)
+	timerBlazinAegisCD:Start(11.5-delay, 1)
+	timerHeatedSwingsCD:Start(20.1-delay, 1)
+	timerForgestormCD:Start(26.6-delay, 1)
 end
 
 --function mod:OnCombatEnd()
@@ -72,22 +75,23 @@ end
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
 	if spellId == 374969 then
-		specWarnForgestorm:Show()
+		specWarnForgestorm:Show(self.vb.setCount)
 		specWarnForgestorm:Play("watchstep")
-		timerForgestormCD:Start()
+		timerForgestormCD:Start(nil, self.vb.setCount+1)
+		self.vb.setCount = self.vb.setCount + 1--Forgestorm is last sability of the 4 ability cast rotation, so increment for next set
 	elseif spellId == 374839 then
-		timerBlazinAegisCD:Start()
+		timerBlazinAegisCD:Start(nil, self.vb.setCount+1)
 	end
 end
 
 function mod:SPELL_CAST_SUCCESS(args)
 	local spellId = args.spellId
 	if spellId == 374635 then
-		specWarnMightoftheForge:Show()
+		specWarnMightoftheForge:Show(self.vb.setCount)
 		specWarnMightoftheForge:Play("aesoon")
-		timerMightoftheForgeCD:Start()
+		timerMightoftheForgeCD:Start(nil, self.vb.setCount+1)
 	elseif spellId == 374534 then
-		timerHeatedSwingsCD:Start()
+		timerHeatedSwingsCD:Start(nil, self.vb.setCount+1)
 	end
 end
 
@@ -103,7 +107,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		end
 	elseif spellId == 374534 then
 		if args:IsPlayer() then
-			specWarnHeatedSwings:Show()
+			specWarnHeatedSwings:Show(self.vb.setCount)
 			specWarnHeatedSwings:Play("specialsoon")
 			yellHeatedSwings:Yell()
 			yellHeatedSwingsFades:Countdown(spellId)
