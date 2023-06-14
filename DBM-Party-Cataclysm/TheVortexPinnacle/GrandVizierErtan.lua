@@ -33,7 +33,7 @@ local warnLethalCurrent		= mod:NewCastAnnounce(413151, 4)
 local specWarnGTFO			= mod:NewSpecialWarningGTFO(86292, nil, nil, nil, 1, 8)
 
 local timerSummonTempest	= mod:NewCDCountTimer(16.8, 86340, nil, nil, nil, 1)--16.8 old
-local timerShield			= mod:NewNextTimer(30.5, 86292, nil, nil, nil, 6)
+local timerShield			= mod:NewNextCountTimer(30.5, 86292, nil, nil, nil, 6)
 
 mod.vb.shieldCount = 0
 mod.vb.tempestCount = 0
@@ -43,13 +43,13 @@ function mod:OnCombatStart(delay)
 	self.vb.tempestCount = 0
 	if not self:IsMythicPlus() then--Summoned instantly on M+
 		timerSummonTempest:Start(16.8-delay)
-		timerShield:Start(23.3-delay)
+		timerShield:Start(23.3-delay, 1)
 		DBM:AddMsg("the non M+ version of these may be incorrect until confirmed/redone to match M+")
 		self:RegisterShortTermEvents(
 			"RAID_BOSS_EMOTE"
 		)
 	else
-		timerShield:Start(30-delay)
+		timerShield:Start(30-delay, 1)
 		self:RegisterShortTermEvents(
 			"SPELL_AURA_REMOVED 86295 86310"
 		)
