@@ -14,7 +14,7 @@ mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 369675 369754 369703 382303",
-	"SPELL_CAST_SUCCESS 369605",
+	"SPELL_CAST_SUCCESS 369605 369703",
 	"SPELL_AURA_APPLIED 369725"
 --	"SPELL_AURA_APPLIED_DOSE",
 --	"SPELL_AURA_REMOVED"
@@ -59,7 +59,7 @@ mod.vb.thunderingCount = 0
 
 function mod:OnCombatStart(delay)
 	self.vb.callCount = 0
-	self.vb.thunderingCount = 0
+	self.vb.thunderingCount = 1
 	timerCalloftheDeepCD:Start(5-delay, 1)
 	timerThunderingSlamCD:Start(12.1-delay, 1)
 	timerQuakingTotemCD:Start(20.4-delay)
@@ -84,10 +84,8 @@ function mod:SPELL_CAST_START(args)
 		warnBloodlust:Show()
 		timerBloodlustCD:Start()
 	elseif spellId == 369703 then
-		self.vb.thunderingCount = self.vb.thunderingCount + 1
 		specWarnThunderingSlam:Show(self.vb.thunderingCount)
 		specWarnThunderingSlam:Play("watchstep")
-		timerThunderingSlamCD:Start(nil, self.vb.thunderingCount+1)
 	elseif spellId == 382303 then
 		specWarnQuakingTotem:Show()
 		specWarnQuakingTotem:Play("attacktotem")
@@ -101,6 +99,9 @@ function mod:SPELL_CAST_SUCCESS(args)
 		self.vb.callCount = self.vb.callCount + 1
 		warnCalloftheDeep:Show(self.vb.callCount)
 		timerCalloftheDeepCD:Start(nil, self.vb.callCount+1)
+	elseif spellId == 369703 then
+		self.vb.thunderingCount = self.vb.thunderingCount + 1
+		timerThunderingSlamCD:Start(14.7, self.vb.thunderingCount+1)--18.2 - 3.5
 	end
 end
 
