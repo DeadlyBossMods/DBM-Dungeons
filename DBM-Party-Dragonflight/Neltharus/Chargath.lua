@@ -25,7 +25,7 @@ mod:RegisterEventsInCombat(
 --	"UNIT_SPELLCAST_SUCCEEDED boss1"
 )
 
---TODO, verify dragon strike target scan and spear target scan
+--TODO, verify dragon strike target scan
 --[[
 (ability.id = 373733 or ability.id = 373742 or ability.id = 373424 or ability.id = 375056) and type = "begincast"
  or ability.id = 374655 or (ability.id = 388523 or ability.id = 375055) and (type = "applybuff" or type = "removebuff" or type = "applydebuff" or type = "removedebuff")
@@ -44,11 +44,11 @@ local yellGroundingSpear						= mod:NewYell(373424)
 local specWarnFieryFocus						= mod:NewSpecialWarningInterrupt(375056, nil, nil, nil, 1, 13)
 local specWarnGTFO								= mod:NewSpecialWarningGTFO(374854, nil, nil, nil, 1, 8)
 
-local timerDragonStrikeCD						= mod:NewCDTimer(12.1, 373733, nil, nil, nil, 3, nil, DBM_COMMON_L.BLEED_ICON)--12 but lowest spell queue priority, it's often delayed by several more seconds
-local timerMagmaWaveCD							= mod:NewCDTimer(12.1, 373742, nil, nil, nil, 3)--Actual CD still not known, since you'd never fully see it unhindered by blade lock or reset by fetter
+local timerDragonStrikeCD						= mod:NewCDCountTimer(12.1, 373733, nil, nil, nil, 3, nil, DBM_COMMON_L.BLEED_ICON)--12 but lowest spell queue priority, it's often delayed by several more seconds
+local timerMagmaWaveCD							= mod:NewCDCountTimer(12.1, 373742, nil, nil, nil, 3)--Actual CD still not known, since you'd never fully see it unhindered by blade lock or reset by fetter
 local timerGroundingSpearCD						= mod:NewCDTimer(8.9, 373424, nil, nil, nil, 3)
 local timerFetter								= mod:NewTargetTimer(12, 374655, nil, nil, nil, 5, nil, DBM_COMMON_L.DAMAGE_ICON)
-local timerFieryFocusCD							= mod:NewCDTimer(30, 375056, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON..DBM_COMMON_L.DEADLY_ICON)
+local timerFieryFocusCD							= mod:NewCDCountTimer(30, 375056, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON..DBM_COMMON_L.DEADLY_ICON)
 
 --local berserkTimer							= mod:NewBerserkTimer(600)
 
@@ -57,6 +57,8 @@ local timerFieryFocusCD							= mod:NewCDTimer(30, 375056, nil, nil, nil, 5, nil
 --mod:AddSetIconOption("SetIconOnStaggeringBarrage", 361018, true, false, {1, 2, 3})
 
 mod.vb.magmawaveCount = 0
+mod.vb.dragonCount = 0
+mod.vb.focusCount = 0
 mod.vb.focusInProgress = false
 mod.vb.bossFettered = false
 
@@ -67,18 +69,20 @@ end
 
 function mod:OnCombatStart(delay)
 	self.vb.magmawaveCount = 0
+	self.vb.dragonCount = 0
+	self.vb.focusCount = 0
 	self.vb.focusInProgress = false
 	self.vb.bossFettered = false
 	if self:IsMythic() then
-		timerDragonStrikeCD:Start(3.3-delay)
-		timerMagmaWaveCD:Start(5.1-delay)
+		timerDragonStrikeCD:Start(3.3-delay, 1)
+		timerMagmaWaveCD:Start(5.1-delay, 1)
 		timerGroundingSpearCD:Start(10.5-delay)
-		timerFieryFocusCD:Start(29.2-delay)
+		timerFieryFocusCD:Start(29.2-delay, 1)
 	else--Heroic, needs more sample data, cause it could just be a variant starter order if first dragon strike not cast within it's first CD window
-		timerMagmaWaveCD:Start(6.2-delay)
-		timerDragonStrikeCD:Start(13.1-delay)
+		timerMagmaWaveCD:Start(6.2-delay, 1)
+		timerDragonStrikeCD:Start(13.1-delay, 1)
 		timerGroundingSpearCD:Start(25.3-delay)
-		timerFieryFocusCD:Start(31-delay)
+		timerFieryFocusCD:Start(31-delay, 1)
 	end
 end
 
@@ -94,16 +98,18 @@ end
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
 	if spellId == 373733 then
+		self.vb.dragonCount = self.vb.dragonCount + 1
 		self:ScheduleMethod(0.2, "BossTargetScanner", args.sourceGUID, "DragonStrikeTarget", 0.1, 8, true)
 --		timerDragonStrikeCD:Start()
 	elseif spellId == 373742 then
 		self.vb.magmawaveCount = self.vb.magmawaveCount + 1
 		specWarnMagmaWave:Show()
 		specWarnMagmaWave:Play("watchwave")
-		timerMagmaWaveCD:Start()
+		timerMagmaWaveCD:Start(nil, self.vb.magmawaveCount+1)
 --	elseif spellId == 373424 then
 --		timerGroundingSpearCD:Start()
 	elseif spellId == 375056 then
+		self.vb.focusCount = self.vb.focusCount + 1
 		self.vb.focusInProgress = true
 		specWarnFieryFocus:Show(args.sourceName)
 		specWarnFieryFocus:Play("chainboss")
@@ -165,10 +171,10 @@ function mod:SPELL_AURA_REMOVED(args)
 		timerFetter:Stop(args.destName)
 		--Fetter on other hand does seem to hard reset things, to an extent
 		if not self.vb.focusInProgress then
-			timerMagmaWaveCD:Start(9)
-			timerDragonStrikeCD:Start(15.1)
+			timerMagmaWaveCD:Start(9, self.vb.magmawaveCount+1)
+			timerDragonStrikeCD:Start(15.1, self.vb.dragonCount+1)
 			timerGroundingSpearCD:Start(27.2)
-			timerFieryFocusCD:Start(30.9)
+			timerFieryFocusCD:Start(30.9, self.vb.focusCount+1)
 		else
 			--GG, boss bugged for you and he's gonna come out of this phase and recast Fiery Focus Immediately
 			DBM:Debug("Bugged Boss Detected, Good Luck (and also review this log later)")
@@ -178,10 +184,10 @@ function mod:SPELL_AURA_REMOVED(args)
 	elseif spellId == 375055 then--Fiery Focus Removed
 		self.vb.focusInProgress = false
 		if not self.vb.bossFettered then
-			timerMagmaWaveCD:Start(6.8)
-			timerDragonStrikeCD:Start(13.4)
+			timerMagmaWaveCD:Start(6.8, self.vb.magmawaveCount+1)
+			timerDragonStrikeCD:Start(13.4, self.vb.dragonCount+1)
 			timerGroundingSpearCD:Start(25.7)
-			timerFieryFocusCD:Start(30.2)
+			timerFieryFocusCD:Start(30.2, self.vb.focusCount+1)
 		end
 	end
 end

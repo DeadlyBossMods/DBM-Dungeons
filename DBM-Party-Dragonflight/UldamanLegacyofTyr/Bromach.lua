@@ -38,14 +38,14 @@ mod:RegisterEventsInCombat(
 local warnCalloftheDeep							= mod:NewCountAnnounce(369605, 3)
 local warnBloodlust								= mod:NewSpellAnnounce(369754, 3)
 
-local specWarnQuakingTotem						= mod:NewSpecialWarningSwitch(369700, "-Healer", nil, nil, 1, 2)
+local specWarnQuakingTotem						= mod:NewSpecialWarningSwitchCount(369700, "-Healer", nil, nil, 1, 2)
 local specWarnChainLightning					= mod:NewSpecialWarningInterrupt(369675, "HasInterrupt", nil, nil, 1, 2)
 local specWarnThunderingSlam					= mod:NewSpecialWarningDodgeCount(369703, nil, nil, nil, 2, 2)
 --local yellThunderingSlam						= mod:NewYell(369703)
 --local specWarnGTFO							= mod:NewSpecialWarningGTFO(340324, nil, nil, nil, 1, 8)
 
 local timerCalloftheDeepCD						= mod:NewCDCountTimer(27.9, 369605, nil, nil, nil, 1)--28-30
-local timerQuakingTotemCD						= mod:NewCDTimer(30, 369700, nil, nil, nil, 5)
+local timerQuakingTotemCD						= mod:NewCDCountTimer(30, 369700, nil, nil, nil, 5)
 local timerBloodlustCD							= mod:NewCDTimer(30, 369754, nil, nil, nil, 5)
 local timerThunderingSlamCD						= mod:NewCDCountTimer(18.2, 369703, nil, nil, nil, 3)--18-23
 
@@ -56,13 +56,15 @@ local timerThunderingSlamCD						= mod:NewCDCountTimer(18.2, 369703, nil, nil, n
 
 mod.vb.callCount = 0
 mod.vb.thunderingCount = 0
+mod.vb.totemCount = 0
 
 function mod:OnCombatStart(delay)
 	self.vb.callCount = 0
 	self.vb.thunderingCount = 1
+	self.vb.totemCount = 0
 	timerCalloftheDeepCD:Start(5-delay, 1)
 	timerThunderingSlamCD:Start(12.1-delay, 1)
-	timerQuakingTotemCD:Start(20.4-delay)
+	timerQuakingTotemCD:Start(20.4-delay, 1)
 	timerBloodlustCD:Start(27.6-delay)
 end
 
@@ -87,9 +89,10 @@ function mod:SPELL_CAST_START(args)
 		specWarnThunderingSlam:Show(self.vb.thunderingCount)
 		specWarnThunderingSlam:Play("watchstep")
 	elseif spellId == 382303 then
-		specWarnQuakingTotem:Show()
+		self.vb.totemCount = self.vb.totemCount + 1
+		specWarnQuakingTotem:Show(self.vb.totemCount)
 		specWarnQuakingTotem:Play("attacktotem")
-		timerQuakingTotemCD:Start()
+		timerQuakingTotemCD:Start(nil, self.vb.totemCount+1)
 	end
 end
 
@@ -111,7 +114,7 @@ function mod:SPELL_AURA_APPLIED(args)
 	if spellId == 369725 then--Tremor
 		timerCalloftheDeepCD:AddTime(10, self.vb.callCount+1)
 		timerThunderingSlamCD:AddTime(10, self.vb.thunderingCount+1)
-		timerQuakingTotemCD:AddTime(10)
+		timerQuakingTotemCD:AddTime(10, self.vb.totemCount+1)
 		timerBloodlustCD:AddTime(10)
 	end
 end
