@@ -72,7 +72,7 @@ function mod:OnCombatStart(delay)
 	--he casts random ability first, it's charge like 95% of time though
 	timerIndigestionCD:Start(8.3-delay)
 	timerChargeCD:Start(8.3-delay)
-	timerTantrumCD:Start(45)
+	timerTantrumCD:Start(45, 1)
 end
 
 function mod:OnCombatEnd()

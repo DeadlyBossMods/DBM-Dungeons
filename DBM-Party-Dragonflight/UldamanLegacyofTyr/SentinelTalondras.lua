@@ -100,7 +100,7 @@ end
 function mod:SPELL_CAST_SUCCESS(args)
 	local spellId = args.spellId
 	if spellId == 372718 then
-		timerEarthenShardsCD:Start(nil, self.vb.shardsCount+1)
+		timerEarthenShardsCD:Start()
 	end
 end
 

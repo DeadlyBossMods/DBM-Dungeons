@@ -48,7 +48,7 @@ function mod:OnCombatStart(delay)
 	timerShockwaveCD:Start(10-delay)
 	timerUpheavalCD:Start(16.7-delay)
 	if not self:IsNormal() then
-		timerVolatilePodsCD:Start(20.4-delay)
+		timerVolatilePodsCD:Start(15.7-delay)
 	end
 	timerFesteringHarvestCD:Start(45.8-delay, 1)
 end
