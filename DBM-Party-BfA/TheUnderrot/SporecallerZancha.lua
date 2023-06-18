@@ -25,9 +25,9 @@ mod:RegisterEventsInCombat(
 --]]
 --local warnBoundlessrot				= mod:NewSpellAnnounce(259830, 3)--Use if too spammy as special warning
 local warnUpheaval					= mod:NewTargetAnnounce(259718, 3)
+local warnVolatilePods				= mod:NewSpellAnnounce(273271, 3)
 
-local specWarnFesteringHarvest		= mod:NewSpecialWarningCount(259732, nil, nil, nil, 2, 2)
-local specWarnVolatilePods			= mod:NewSpecialWarningDodge(273271, nil, nil, nil, 2, 2)
+local specWarnFesteringHarvest		= mod:NewSpecialWarningDodgeCount(259732, nil, nil, nil, 2, 2)
 local specWarnShockwave				= mod:NewSpecialWarningSpell(272457, "Tank", nil, nil, 1, 2)
 local specWarnUpheaval				= mod:NewSpecialWarningMoveAway(259718, nil, nil, nil, 1, 2)
 local yellUpheaval					= mod:NewYell(259718)
@@ -58,7 +58,7 @@ function mod:SPELL_CAST_START(args)
 	if spellId == 259732 then
 		self.vb.festeringCount = self.vb.festeringCount + 1
 		specWarnFesteringHarvest:Show(self.vb.festeringCount)
-		specWarnFesteringHarvest:Play("specialsoon")
+		specWarnFesteringHarvest:Play("watchorb")
 		timerFesteringHarvestCD:Start(nil, self.vb.festeringCount+1)
 		timerShockwaveCD:Stop()
 		timerUpheavalCD:Stop()
@@ -119,8 +119,7 @@ end
 --Singular event, vs throttling success casts
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, spellId)
 	if spellId == 273271 then--Volatile Pods
-		specWarnVolatilePods:Show()
-		specWarnVolatilePods:Play("watchstep")
+		warnVolatilePods:Show()
 		timerVolatilePodsCD:Start()
 	end
 end

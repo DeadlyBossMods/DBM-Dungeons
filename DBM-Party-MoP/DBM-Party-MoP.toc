@@ -28,7 +28,7 @@
 ## X-DBM-Mod-Name-zhTW: 隊伍首領 (潘達利亞之謎)
 ## X-DBM-Mod-Name-zhCN: 5人副本 (熊猫人之谜)
 ## X-DBM-Mod-Name-frFR: Groupe (MoP)
-## X-DBM-Mod-Sort: 715
+## X-DBM-Mod-Sort: 702
 ## X-DBM-Mod-MapID: 960,961,959,962,994,1011,1007,1001,1004
 ## X-DBM-Mod-MinCoreRevision: 20200524142133
 ## X-DBM-Mod-MinExpansion: 4
