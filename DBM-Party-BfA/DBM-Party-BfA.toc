@@ -25,7 +25,7 @@
 ## X-DBM-Mod-Name-zhCN: 5人小队 (争霸艾泽拉斯)
 ## X-DBM-Mod-Name-itiT: Gruppo (BfA)
 ## X-DBM-Mod-Name-ruRU: Подземелья (Битва за Азерот)
-## X-DBM-Mod-Sort: 415
+## X-DBM-Mod-Sort: 402
 ## X-DBM-Mod-MapID: 1763, 1754, 1762, 1864, 1822, 1877, 1594, 1841, 1771, 1862, 2097
 ## X-DBM-Mod-MinCoreRevision: 17286
 ## X-DBM-Mod-MinExpansion: 7
