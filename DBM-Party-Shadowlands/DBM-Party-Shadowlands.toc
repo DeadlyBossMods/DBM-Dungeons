@@ -23,7 +23,7 @@
 ## X-DBM-Mod-Name-zhTW: 隊伍首領 (暗影之境)
 ## X-DBM-Mod-Name-zhCN: 5人小队（暗影国度）
 ## X-DBM-Mod-Name-ruRU: Подземелья (Темные Земли)
-## X-DBM-Mod-Sort: 315
+## X-DBM-Mod-Sort: 302
 ## X-DBM-Mod-MapID: 2286, 2289, 2290, 2287, 2285, 2293, 2291, 2284, 2441
 ## X-DBM-Mod-MinCoreRevision: 17286
 ## X-DBM-Mod-MinExpansion: 8
