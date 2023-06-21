@@ -45,7 +45,7 @@ local timerWildCleaveCD							= mod:NewCDTimer(17, 369563, nil, nil, nil, 5, nil
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(24781))
 local specWarnSkullcracker						= mod:NewSpecialWarningDodge(369791, nil, nil, nil, 2, 2)
 
-local timerSkullcrackerCD						= mod:NewCDTimer(26.6, 369791, nil, nil, nil, 3)
+local timerSkullcrackerCD						= mod:NewCDTimer(25.5, 369791, nil, nil, nil, 3)
 --Olaf
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(24782))
 local warnRicochetingShield						= mod:NewTargetNoFilterAnnounce(369677, 3)

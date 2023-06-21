@@ -63,7 +63,7 @@ local specWarnBlackoutBarrel		= mod:NewSpecialWarningSwitch(258338, "-Healer", n
 
 ----Hostile
 local timerBarrelSmashCD			= mod:NewCDTimer(22.9, 256589, nil, "Melee", nil, 3)--22.9-24.5
-local timerBlackoutBarrelCD			= mod:NewCDTimer(47.2, 258338, nil, nil, nil, 3, nil, DBM_COMMON_L.DAMAGE_ICON)
+local timerBlackoutBarrelCD			= mod:NewCDTimer(46.1, 258338, nil, nil, nil, 3, nil, DBM_COMMON_L.DAMAGE_ICON)
 ----Friendly
 local timerTappedKegCD				= mod:NewNextTimer(22.3, 272884, nil, nil, nil, 5)
 --Eudora
