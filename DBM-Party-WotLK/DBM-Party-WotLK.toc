@@ -1,5 +1,5 @@
 ## Interface: 100100
-## Interface-Wrath: 30401
+## Interface-Wrath: 30402
 ## X-Min-Interface: 80000
 ## X-Min-Interface-Wrath: 30400
 ## Title:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cff69ccf0Dungeons (WotLK)|r
