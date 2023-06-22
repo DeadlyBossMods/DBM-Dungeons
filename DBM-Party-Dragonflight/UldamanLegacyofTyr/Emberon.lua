@@ -49,7 +49,7 @@ local specWarnSearingClap						= mod:NewSpecialWarningDefensive(369061, nil, nil
 
 local timerPurgingFlamesCD						= mod:NewCDCountTimer(35, 368990, nil, nil, nil, 6)--Maybe swap for activate keepers instead
 local timerUnstableEmbersCD						= mod:NewCDCountTimer(12, 369110, nil, nil, nil, 3)
-local timerSearingClapCD						= mod:NewCDCountTimer(24.2, 369061, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+local timerSearingClapCD						= mod:NewCDCountTimer(23, 369061, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 
 --local berserkTimer							= mod:NewBerserkTimer(600)
 
@@ -95,6 +95,7 @@ function mod:SPELL_CAST_START(args)
 		self.vb.embersCount = self.vb.embersCount + 1
 		timerUnstableEmbersCD:Start(12, 2)
 	elseif spellId == 369061 then
+		self.vb.tankCount = self.vb.tankCount + 1
 		if self:IsTanking("player", "boss1", nil, true) then
 			specWarnSearingClap:Show()
 			specWarnSearingClap:Play("defensive")

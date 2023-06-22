@@ -81,7 +81,7 @@ function mod:SPELL_AURA_REMOVED(args)
 	if args.spellId == 86295 then
 		self.vb.shieldCount = self.vb.shieldCount + 1
 		warnShield:Show(self.vb.shieldCount)
-		timerShield:Start(40, self.vb.shieldCount+1)
+		timerShield:Restart(40, self.vb.shieldCount+1)--Restart used purely to avoid a bug where when boss is killed it fires debug
 	elseif args.spellId == 86310 then
 		warnShieldEnd:Show()
 	end
