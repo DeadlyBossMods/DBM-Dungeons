@@ -76,7 +76,11 @@ local timerShadowBoltVolleyCD		= mod:NewCDTimer(25.4, 265487, nil, nil, nil, 4, 
 local timerAbyssalReachCD			= mod:NewCDTimer(16.1, 272592, nil, nil, nil, 3)
 local timerMaddeningGazeCD			= mod:NewCDTimer(15.7, 272609, nil, nil, nil, 3, nil, DBM_COMMON_L.HEALER_ICON, nil, mod:IsTank() and 2, 3)--15.7-17
 
-if mod.Options.Timer272609cdCVoice == true then mod.Options.Timer272609cdCVoice = mod:IsTank() and 2 end--Fix bad settings
+function mod:OnInitialize()
+    if self.Options.Timer272609cdCVoice == true then
+        self.Options.Timer272609cdCVoice = self:IsTank() and 2
+    end
+end
 
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc, 7 off interrupt
 
