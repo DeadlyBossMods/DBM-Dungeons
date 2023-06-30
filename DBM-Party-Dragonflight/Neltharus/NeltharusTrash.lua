@@ -7,7 +7,7 @@ mod.isTrashMod = true
 
 mod:RegisterEvents(
 	"SPELL_CAST_START 382708 376186 372566 372311 372201 381663 378282 397011 378847 372615 372561 395427 379406 384161 372262 372971 372223 373084 378827 384623",
-	"SPELL_CAST_SUCCESS 376169 372296",
+	"SPELL_CAST_SUCCESS 376169 372296 374451",
 	"SPELL_AURA_APPLIED 384161 373089 371875 373540 372461 382791 383651",
 --	"SPELL_AURA_APPLIED_DOSE 339528",
 	"SPELL_AURA_REMOVED 382791 383651",
@@ -36,6 +36,7 @@ local warnForgestomp						= mod:NewCastAnnounce(384623, 3)
 local warnBoldAmbush						= mod:NewTargetNoFilterAnnounce(372566, 3)
 local warnBindingSpear						= mod:NewTargetNoFilterAnnounce(372561, 3)
 local warnMoltenBarrier						= mod:NewTargetNoFilterAnnounce(382791, 4)
+local warnBurningChain						= mod:NewTargetNoFilterAnnounce(374451, 1)
 
 local specWarnTempest						= mod:NewSpecialWarningSpell(381663, nil, nil, nil, 2, 13)--pushbackincoming
 local specWarnVolcanicGuard					= mod:NewSpecialWarningDodge(382708, nil, nil, nil, 1, 2)
@@ -231,6 +232,8 @@ function mod:SPELL_CAST_SUCCESS(args)
 			specWarnConflagrantBattery:Show()
 			specWarnConflagrantBattery:Play("watchstep")
 		end
+	elseif spellId == 374451 then
+		warnBurningChain:Show(args.destName)
 	end
 end
 
