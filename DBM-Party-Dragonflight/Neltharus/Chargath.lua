@@ -5,7 +5,7 @@ mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(189340)
 mod:SetEncounterID(2613)
 --mod:SetUsedIcons(1, 2, 3)
-mod:SetHotfixNoticeRev(20230507000000)
+mod:SetHotfixNoticeRev(20230703000000)
 --mod:SetMinSyncRevision(20211203000000)
 --mod.respawnTime = 29
 mod.sendMainBossGUID = true
@@ -73,17 +73,10 @@ function mod:OnCombatStart(delay)
 	self.vb.focusCount = 0
 	self.vb.focusInProgress = false
 	self.vb.bossFettered = false
-	if self:IsMythic() then
-		timerDragonStrikeCD:Start(3.3-delay, 1)
-		timerMagmaWaveCD:Start(5.1-delay, 1)
-		timerGroundingSpearCD:Start(10.5-delay)
-		timerFieryFocusCD:Start(29.2-delay, 1)
-	else--Heroic, needs more sample data, cause it could just be a variant starter order if first dragon strike not cast within it's first CD window
-		timerMagmaWaveCD:Start(6.2-delay, 1)
-		timerDragonStrikeCD:Start(13.1-delay, 1)
-		timerGroundingSpearCD:Start(25.3-delay)
-		timerFieryFocusCD:Start(31-delay, 1)
-	end
+	timerMagmaWaveCD:Start(5.1-delay, 1)
+	timerDragonStrikeCD:Start(12-delay, 1)
+	timerGroundingSpearCD:Start(24.5-delay)
+	timerFieryFocusCD:Start(29.2-delay, 1)
 end
 
 --function mod:OnCombatEnd()
