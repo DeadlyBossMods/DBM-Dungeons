@@ -159,7 +159,7 @@ end
 
 function mod:SPELL_AURA_APPLIED(args)
 	local spellId = args.spellId
-	if spellId == 407147 and args:IsPlayer() and Self:AntiSpam(3, 2) then
+	if spellId == 407147 and args:IsPlayer() and self:AntiSpam(3, 2) then
 		specWarnGTFO:Show(args.spellName)
 		specWarnGTFO:Play("watchfeet")
 	elseif spellId == 415097 then--Malignant Transferal (stage 2)
