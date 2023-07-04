@@ -37,7 +37,6 @@ local specWarnSandStomp						= mod:NewSpecialWarningMoveAwayCount(401421, nil, n
 --local yellManaBombFades							= mod:NewShortFadesYell(386181)
 --local specWarnGTFO								= mod:NewSpecialWarningGTFO(386201, nil, nil, nil, 1, 8)
 
---local timerManaBombsCD							= mod:NewAITimer(19.4, 386173, nil, nil, nil, 3)
 local timerEonShatterCD						= mod:NewCDTimer(19.4, 413105, nil, nil, nil, 3, nil, DBM_COMMON_L.DEADLY_ICON)
 local timerEonResidue						= mod:NewCastCountTimer("d7.5", 401421, DBM_COMMON_L.SoakC, nil, nil, 5, nil, DBM_COMMON_L.MYTHIC_ICON)
 local timerChronoShearCD					= mod:NewCDTimer(19.4, 413013, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
