@@ -29,6 +29,7 @@ mod:RegisterEventsInCombat(
 --]]
 --NOTES: Crushing Onslaught seems utterly passive and not much point in warning for it really
 local warnExtinctionBlast						= mod:NewTargetNoFilterAnnounce(409261, 4)
+local warnEarthsurge							= mod:NewCountAnnounce(409456, 3)
 local warnEarthsurgeOver						= mod:NewEndAnnounce(409456, 1)
 local warnCataclysmicObliteration				= mod:NewCastAnnounce(414184, 4)
 
@@ -73,6 +74,7 @@ function mod:SPELL_CAST_START(args)
 		specWarnStonecrackerBarrage:Play("helpsoak")
 	elseif spellId == 409456 then
 		self.vb.surgeCount = self.vb.surgeCount + 1
+		warnEarthsurge:Show(self.vb.surgeCount)
 	elseif spellId == 409635 then
 		specWarnPulvBreath:Show(self.vb.surgeCount)
 		specWarnPulvBreath:Play("breathsoon")
