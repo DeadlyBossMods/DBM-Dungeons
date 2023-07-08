@@ -21,7 +21,7 @@ local warnUmbralMending	= mod:NewSpellAnnounce(75763, 4)
 
 local specWarnMending	= mod:NewSpecialWarningInterrupt(75763, nil, nil, nil, 1, 2)
 local specWarnGale		= mod:NewSpecialWarningSpell(75664, nil, nil, nil, 2, 2)
-local specWarnAdds		= mod:NewSpecialWarningSwitch("ej3378", "Dps", nil, nil, 3, 2)
+local specWarnAdds		= mod:NewSpecialWarningSwitch(-3378, "Dps", nil, nil, 3, 2)
 
 local timerFeebleCD		= mod:NewCDTimer(26, 75792, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerFeeble		= mod:NewTargetTimer(3, 75792, nil, "Tank|Healer", 2, 5)

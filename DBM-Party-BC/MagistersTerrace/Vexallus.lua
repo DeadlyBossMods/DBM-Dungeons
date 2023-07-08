@@ -14,7 +14,7 @@ mod:RegisterEventsInCombat(
 )
 
 --TODO, see if TW matters enough to rotate dps for this warning. In original BC dps took turns because killing spark applies debuff/dot
-local specWarnEnergy	= mod:NewSpecialWarningSwitch("ej5085", "-Healer", nil, 3, 1, 2)
+local specWarnEnergy	= mod:NewSpecialWarningSwitch(-5085, "-Healer", nil, 3, 1, 2)
 
 --[[
 	"<11.24 20:39:02> [UNIT_SPELLCAST_SUCCEEDED] Vexallus(Omegal) [target:Summon Pure Energy::0:46154]", -- [22]

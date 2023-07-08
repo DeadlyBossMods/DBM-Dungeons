@@ -14,7 +14,7 @@ mod.sendMainBossGUID = true
 mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
---	"SPELL_CAST_START",
+	"SPELL_CAST_START 404916",
 --	"SPELL_CAST_SUCCESS",
 --	"SPELL_AURA_APPLIED",
 --	"SPELL_AURA_APPLIED_DOSE",
@@ -35,13 +35,13 @@ mod:RegisterEventsInCombat(
 --local specWarnGTFO								= mod:NewSpecialWarningGTFO(386201, nil, nil, nil, 1, 8)
 
 --local timerManaBombsCD							= mod:NewAITimer(19.4, 386173, nil, nil, nil, 3)
---local timerArcaneExpulsionCD					= mod:NewAITimer(19.4, 385958, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+local timerSandBlastCD						= mod:NewAITimer(19.4, 404916, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 
 --mod:AddInfoFrameOption(391977, true)
 
---function mod:OnCombatStart(delay)
-
---end
+function mod:OnCombatStart(delay)
+	timerSandBlastCD:Start(4.6-delay, 1)
+end
 
 --function mod:OnCombatEnd()
 --	if self.Options.RangeFrame then
@@ -52,14 +52,12 @@ mod:RegisterEventsInCombat(
 --	end
 --end
 
---[[
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
-	if spellId == 388537 then
+	if spellId == 404916 then
 
 	end
 end
---]]
 
 --[[
 function mod:SPELL_CAST_SUCCESS(args)
