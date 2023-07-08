@@ -135,7 +135,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		if args:IsPlayer() then
 			specWarnSparkofTyr:Show()
 			specWarnSparkofTyr:Play("scatter")
-			yellChronofaded:Yell(icon, icon)
+			yellSparkofTyr:Yell(icon, icon)
 		end
 		warnSparkofTyr:CombinedShow(0.5, args.destName)
 		self.vb.DebuffIcon = self.vb.DebuffIcon + 1
