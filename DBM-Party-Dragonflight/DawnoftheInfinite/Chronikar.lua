@@ -15,7 +15,7 @@ mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 413105 413013 401421",
---	"SPELL_AURA_APPLIED",
+	"SPELL_AURA_APPLIED 407147",
 --	"SPELL_AURA_APPLIED_DOSE",
 	"SPELL_AURA_REMOVED 413013"
 --	"SPELL_PERIODIC_DAMAGE",
@@ -35,7 +35,7 @@ local specWarnChronoShear					= mod:NewSpecialWarningDefensive(413013, nil, nil,
 local specWarnSandStomp						= mod:NewSpecialWarningMoveAwayCount(401421, nil, nil, nil, 2, 2)
 --local yellManaBomb								= mod:NewYell(386181)
 --local yellManaBombFades							= mod:NewShortFadesYell(386181)
---local specWarnGTFO								= mod:NewSpecialWarningGTFO(386201, nil, nil, nil, 1, 8)
+local specWarnGTFO							= mod:NewSpecialWarningGTFO(407147, nil, nil, nil, 1, 8)
 
 local timerEonShatterCD						= mod:NewCDTimer(19.4, 413105, nil, nil, nil, 3, nil, DBM_COMMON_L.DEADLY_ICON)
 local timerEonResidue						= mod:NewCastCountTimer("d7.5", 401421, DBM_COMMON_L.SoakC, nil, nil, 5, nil, DBM_COMMON_L.MYTHIC_ICON)
@@ -106,15 +106,14 @@ function mod:SPELL_CAST_START(args)
 	end
 end
 
---[[
 function mod:SPELL_AURA_APPLIED(args)
 	local spellId = args.spellId
-	if spellId == 386181 then
-
+	if spellId == 407147 and args:IsPlayer() and self:AntiSpam(2, 1) then
+		specWarnGTFO:Show(args.spellName)
+		specWarnGTFO:Play("watchfeet")
 	end
 end
 --mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED
---]]
 
 function mod:SPELL_AURA_REMOVED(args)
 	local spellId = args.spellId
