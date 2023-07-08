@@ -38,8 +38,8 @@ local warnSiphonOathOver							= mod:NewEndAnnounce(400642, 1)
 local specWarnTitanicBlow							= mod:NewSpecialWarningDefensive(401248, nil, nil, nil, 1, 2)
 local specWarnInfiniteAnnihilation					= mod:NewSpecialWarningDodgeCount(401482, nil, nil, nil, 2, 2)
 local specWarnDividingStrike						= mod:NewSpecialWarningSoakCount(400641, nil, nil, nil, 2, 2)
---local yellManaBomb								= mod:NewYell(386181)
---local yellManaBombFades							= mod:NewShortFadesYell(386181)
+local specWarnSparkofTyr							= mod:NewSpecialWarningMoveAway(400649, nil, nil, nil, 1, 2)
+local yellSparkofTyr								= mod:NewShortPosYell(400649)
 local specWarnGTFO									= mod:NewSpecialWarningGTFO(403724, nil, nil, nil, 1, 8)
 
 local timerTitanicBlowCD							= mod:NewCDCountTimer(16, 401248, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
@@ -128,12 +128,14 @@ function mod:SPELL_AURA_APPLIED(args)
 		specWarnGTFO:Show(args.spellName)
 		specWarnGTFO:Play("watchfeet")
 	elseif spellId == 400681 then
+		local icon = self.vb.DebuffIcon
 		if self.Options.SetIconOnSparkofTyr then
-			self:SetIcon(args.destName, self.vb.DebuffIcon)
+			self:SetIcon(args.destName, icon)
 		end
 		if args:IsPlayer() then
-			specWarnChronofaded:Show()
-			specWarnChronofaded:Play("targetyou")
+			specWarnSparkofTyr:Show()
+			specWarnSparkofTyr:Play("scatter")
+			yellChronofaded:Yell(icon, icon)
 		end
 		warnSparkofTyr:CombinedShow(0.5, args.destName)
 		self.vb.DebuffIcon = self.vb.DebuffIcon + 1
