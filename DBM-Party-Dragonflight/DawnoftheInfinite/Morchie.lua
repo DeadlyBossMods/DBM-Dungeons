@@ -152,8 +152,8 @@ function mod:SPELL_CAST_START(args)
 		specWarnDragonBreath:Show()
 		specWarnDragonBreath:Play("breathsoon")
 	elseif spellId == 405279 then
-		elf.vb.facesCount = elf.vb.facesCount + 1
-		warnFamiliarFaces:Show(elf.vb.facesCount)
+		self.vb.facesCount = self.vb.facesCount + 1
+		warnFamiliarFaces:Show(self.vb.facesCount)
 	elseif spellId == 406481 then
 		self.vb.trapsCount = self.vb.trapsCount + 1
 		specWarnTimeTraps:Show(self.vb.trapsCount)
