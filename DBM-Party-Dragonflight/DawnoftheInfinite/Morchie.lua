@@ -53,7 +53,7 @@ mod:AddSetIconOption("SetIconOnImages", 403891, true, 5, {1, 2, 3, 4, 5, 6})
 mod:AddNamePlateOption("NPAuraOnFixate", 401200)
 
 local askShown = false
-local myGUIDAdd = nil
+--local myGUIDAdd = nil
 mod.vb.blastCount = 0
 mod.vb.problemsCount = 0
 mod.vb.problemIcons = 1
@@ -194,7 +194,7 @@ end
 function mod:SPELL_AURA_APPLIED(args)
 	local spellId = args.spellId
 	if spellId == 401200 and args:IsPlayer() then
-		myGUIDAdd = args.sourceGUID
+--		myGUIDAdd = args.sourceGUID
 		if self.Options.NPAuraOnFixate then
 			DBM.Nameplate:Show(true, args.sourceGUID, spellId)
 		end
