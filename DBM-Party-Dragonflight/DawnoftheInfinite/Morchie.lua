@@ -17,10 +17,10 @@ mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 404916 403891 404364 405279 406481",
 --	"SPELL_CAST_SUCCESS",
 	"SPELL_SUMMON 403902",
-	"SPELL_AURA_APPLIED 401200 401667",
-	"SPELL_AURA_REMOVED 401200"
---	"SPELL_PERIODIC_DAMAGE",
---	"SPELL_PERIODIC_MISSED",
+	"SPELL_AURA_APPLIED 401200 401667",--412768
+	"SPELL_AURA_REMOVED 401200",
+	"SPELL_DAMAGE 412769",
+	"SPELL_MISSED 412769"
 --	"UNIT_SPELLCAST_SUCCEEDED boss1"
 )
 
@@ -33,6 +33,7 @@ mod:RegisterEventsInCombat(
 --TODO, Initial data (literally just 2 pulls sadly, suggests timers are sequenced in a fixed pattern. If that's case then mod needs some LONG pulls to populate tables
 --TODO, announce https://www.wowhead.com/ptr-2/spell=413208/sand-buffeted for healers?
 --TODO, nameplate aura on trapped familar face? need to see how good visual is for it first
+--TODO, detect when your add breaks free from trap and warn you it's lose again?
 local warnMoreProblems								= mod:NewCountAnnounce(403891, 3)
 local warnFamiliarFaces								= mod:NewCountAnnounce(405279, 3)
 local warnTimeStasis								= mod:NewTargetNoFilterAnnounce(401667, 4)
@@ -40,7 +41,7 @@ local warnTimeStasis								= mod:NewTargetNoFilterAnnounce(401667, 4)
 local specWarnSandBlast								= mod:NewSpecialWarningCount(404916, nil, nil, nil, 2, 2)
 local specWarnDragonBreath							= mod:NewSpecialWarningDodge(404364, nil, nil, nil, 3, 2)
 local specWarnTimeTraps								= mod:NewSpecialWarningDodgeCount(406481, nil, nil, nil, 3, 2)
---local specWarnGTFO								= mod:NewSpecialWarningGTFO(386201, nil, nil, nil, 1, 8)
+local specWarnGTFO									= mod:NewSpecialWarningGTFO(412769, nil, nil, nil, 1, 8)
 
 local timerSandBlastCD								= mod:NewCDCountTimer(21.8, 404916, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)--21.8-38.8
 local timerMoreProblemsCD							= mod:NewCDCountTimer(40, 403891, nil, nil, nil, 6)--40-52
@@ -52,6 +53,7 @@ mod:AddSetIconOption("SetIconOnImages", 403891, true, 5, {1, 2, 3, 4, 5, 6})
 mod:AddNamePlateOption("NPAuraOnFixate", 401200)
 
 local askShown = false
+local myGUIDAdd = nil
 mod.vb.blastCount = 0
 mod.vb.problemsCount = 0
 mod.vb.problemIcons = 1
@@ -192,11 +194,16 @@ end
 function mod:SPELL_AURA_APPLIED(args)
 	local spellId = args.spellId
 	if spellId == 401200 and args:IsPlayer() then
+		myGUIDAdd = args.sourceGUID
 		if self.Options.NPAuraOnFixate then
 			DBM.Nameplate:Show(true, args.sourceGUID, spellId)
 		end
 	elseif spellId == 401667 then
 		warnTimeStasis:Show(args.destName)
+--	elseif spellId == 412768 then--Anachronistic Decay applying, adds free
+--		if myGUIDAdd and myGUIDAdd == args.destGUID then
+--
+--		end
 	end
 end
 --mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED
@@ -210,15 +217,13 @@ function mod:SPELL_AURA_REMOVED(args)
 	end
 end
 
---[[
-function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId, spellName)
-	if spellId == 386201 and destGUID == UnitGUID("player") and self:AntiSpam(2, 4) then
+function mod:SPELL_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId, spellName)
+	if spellId == 412769 and destGUID == UnitGUID("player") and self:AntiSpam(3, 4) then
 		specWarnGTFO:Show(spellName)
 		specWarnGTFO:Play("watchfeet")
 	end
 end
-mod.SPELL_PERIODIC_MISSED = mod.SPELL_PERIODIC_DAMAGE
---]]
+mod.SPELL_MISSED = mod.SPELL_DAMAGE
 
 --[[
 function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
