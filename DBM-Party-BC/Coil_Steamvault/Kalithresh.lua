@@ -12,7 +12,7 @@ mod:RegisterEventsInCombat(
 	"SPELL_AURA_APPLIED 31534"
 )
 
-local WarnChannel		= mod:NewSpellAnnounce("ej6001", 2, 31543)
+local WarnChannel		= mod:NewSpellAnnounce(-6001, 2, 31543)
 
 local specWarnReflect	= mod:NewSpecialWarningReflect(31534, "-Melee", nil, nil, 1, 2)--CasterDps after new core
 

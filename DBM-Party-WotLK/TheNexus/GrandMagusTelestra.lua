@@ -20,8 +20,8 @@ if mod:IsClassic() then
 	warningSplitSoon	= mod:NewSoonAnnounce(19570, 2)
 	warningSplitNow		= mod:NewSpellAnnounce(19570, 3)
 else
-	warningSplitSoon	= mod:NewSoonAnnounce("ej7395", 2)
-	warningSplitNow		= mod:NewSpellAnnounce("ej7395", 3)
+	warningSplitSoon	= mod:NewSoonAnnounce(-7395, 2)
+	warningSplitNow		= mod:NewSpellAnnounce(-7395, 3)
 end
 
 mod.vb.warnedSplit1		= false

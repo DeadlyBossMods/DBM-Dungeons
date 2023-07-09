@@ -25,7 +25,7 @@ local warnDarkSolitude				= mod:NewSpellAnnounce(234817, 2)--Can't target scan s
 local warnShadowFade				= mod:NewSpellAnnounce(233206, 2)
 local warnShadowFadeEnded			= mod:NewEndAnnounce(233206, 2)
 local warnDemonicUpheaval			= mod:NewTargetAnnounce(233963, 3)
-local warnShadowAdd					= mod:NewSpellAnnounce("ej14965", 2, 233206)
+local warnShadowAdd					= mod:NewSpellAnnounce(-14965, 2, 233206)
 
 local specWarnCarrionSwarm			= mod:NewSpecialWarningSpell(233155, "Tank", nil, nil, 1, 2)
 local specWarnDemonicUpheaval		= mod:NewSpecialWarningMoveAway(233963, nil, nil, nil, 1, 2)

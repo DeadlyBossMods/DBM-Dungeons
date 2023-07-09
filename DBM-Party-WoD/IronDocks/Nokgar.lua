@@ -26,7 +26,7 @@ mod:RegisterEventsInCombat(
  or (source.type = "NPC" and source.firstSeen = timestamp) or (target.type = "NPC" and target.firstSeen = timestamp)
 --]]
 local warnBloodLettingHowl				= mod:NewSpellAnnounce(164835, 3)
-local warnNokgar						= mod:NewSpellAnnounce("ej10433", 3, "134170")
+local warnNokgar						= mod:NewSpellAnnounce(-10433, 3, "134170")
 
 local specWarnBurningArrows				= mod:NewSpecialWarningSpell(164635, nil, nil, nil, 2, 2)
 local specWarnBurningArrowsMove			= mod:NewSpecialWarningMove(164635, nil, nil, nil, 1, 8)

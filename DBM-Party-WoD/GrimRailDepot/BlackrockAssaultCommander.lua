@@ -24,8 +24,8 @@ mod:RegisterEventsInCombat(
 local warnMortar				= mod:NewSpellAnnounce(163550, 3)
 local warnPhase2				= mod:NewPhaseAnnounce(2, 2, nil, nil, nil, nil, nil, 2)
 local warnSupressiveFire		= mod:NewTargetNoFilterAnnounce(160681, 2)--In a repeating loop
---local warnGrenadeDown			= mod:NewAnnounce("warnGrenadeDown", 1, "ej9711", nil, DBM_CORE_L.AUTO_ANNOUNCE_OPTIONS.spell:format("ej9711"))--Boss is killed by looting using these positive items on him.
---local warnMortarDown			= mod:NewAnnounce("warnMortarDown", 4, "ej9712", nil, DBM_CORE_L.AUTO_ANNOUNCE_OPTIONS.spell:format("ej9712"))--So warn when adds that drop them die
+--local warnGrenadeDown			= mod:NewAnnounce("warnGrenadeDown", 1, -9711, nil, DBM_CORE_L.AUTO_ANNOUNCE_OPTIONS.spell:format("ej9711"))--Boss is killed by looting using these positive items on him.
+--local warnMortarDown			= mod:NewAnnounce("warnMortarDown", 4, -9712, nil, DBM_CORE_L.AUTO_ANNOUNCE_OPTIONS.spell:format("ej9712"))--So warn when adds that drop them die
 local warnPhase3				= mod:NewPhaseAnnounce(3, 2, nil, nil, nil, nil, nil, 2)
 
 local specWarnSupressiveFire	= mod:NewSpecialWarningYou(160681, nil, nil, nil, 1, 2)

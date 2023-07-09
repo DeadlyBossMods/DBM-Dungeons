@@ -18,7 +18,7 @@ mod:RegisterEventsInCombat(
 	"CHAT_MSG_MONSTER_EMOTE"
 )
 
-local warnBirds             = mod:NewSpellAnnounce("ej5253", 2, 32038)
+local warnBirds             = mod:NewSpellAnnounce(-5253, 2, 32038)
 local warnStoned            = mod:NewAnnounce("warnStoned", 1, 32810, false)
 local warnCyclone           = mod:NewTargetAnnounce(40321, 2)
 local warnSpellBomb         = mod:NewTargetAnnounce(40303, 2)
