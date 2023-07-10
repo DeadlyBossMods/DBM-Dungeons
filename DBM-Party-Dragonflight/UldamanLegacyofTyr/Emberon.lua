@@ -68,7 +68,7 @@ function mod:OnCombatStart(delay)
 	self.vb.purgingCount = 0
 	self.vb.tankCount = 0
 	timerSearingClapCD:Start(4.5-delay, 1)
-	timerUnstableEmbersCD:Start(13.1-delay, 1)
+	timerUnstableEmbersCD:Start(12.2-delay, 1)
 	timerPurgingFlamesCD:Start(40.8-delay, 1)--Til actual aoe begin, not infusions 2 seconds before
 end
 
@@ -136,8 +136,8 @@ function mod:SPELL_AURA_REMOVED(args)
 	elseif spellId == 368990 then--Purging Flames over
 		self.vb.embersCount = 0--Resetting since it's mostly for timer control
 		self.vb.addsRemaining = 0--Reset for good measure
-		timerUnstableEmbersCD:Start(1.9, 1)
-		timerSearingClapCD:Start(5.5, self.vb.tankCount+1)--Non resetting, for healer/tank CDs
+		timerUnstableEmbersCD:Start(1.1, 1)
+		timerSearingClapCD:Start(4.7, self.vb.tankCount+1)--Non resetting, for healer/tank CDs
 		timerPurgingFlamesCD:Start(42.4, self.vb.purgingCount+1)--Non resetting, for healer/tank CDs
 	elseif spellId == 369043 then
 		self.vb.addsRemaining = self.vb.addsRemaining - 1

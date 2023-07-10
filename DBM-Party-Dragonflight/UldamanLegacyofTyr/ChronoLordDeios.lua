@@ -94,7 +94,6 @@ function mod:SPELL_CAST_START(args)
 		self.vb.buffetCount = 0
 --		self.vb.sinkCount = 0
 		warnRewindTimeflow:Show(self.vb.rewindCount)
-		timerRewindTimeflow:Start()
 		--Reboot Timers
 		timerSandBreathCD:Restart(14.5, 1)
 		timerWingBuffetCD:Restart(18.1, 1)
@@ -102,7 +101,7 @@ function mod:SPELL_CAST_START(args)
 		if self:IsHard() then
 			timerTimeSinkCD:Restart(22.8)
 		end
-		timerRewindTimeflowCD:Start(57.1, self.vb.rewindCount+1)
+		timerRewindTimeflowCD:Start(56.7, self.vb.rewindCount+1)
 	elseif spellId == 376049 then
 		self.vb.buffetCount = self.vb.buffetCount + 1
 		specWarnWingBuffet:Show(self.vb.buffetCount)

@@ -44,7 +44,7 @@ local specWarnCrushingStomp						= mod:NewSpecialWarningCount(372701, nil, nil, 
 --local specWarnGTFO							= mod:NewSpecialWarningGTFO(340324, nil, nil, nil, 1, 8)
 
 local timerTitanicEmpowermentCD					= mod:NewCDTimer(35, 372719, nil, nil, nil, 2, nil, DBM_COMMON_L.DEADLY_ICON)
-local timerResonatingOrbCD						= mod:NewCDTimer(26.4, 382071, nil, nil, nil, 3, nil, nil, true)--25-30ish
+local timerResonatingOrbCD						= mod:NewCDTimer(25.6, 382071, nil, nil, nil, 3, nil, nil, true)--25-30ish
 local timerCrushingStompCD						= mod:NewCDCountTimer(12.1, 372701, nil, nil, nil, 2, nil, nil, true)
 local timerEarthenShardsCD						= mod:NewCDTimer(6, 372718, nil, nil, nil, 3, nil, DBM_COMMON_L.BLEED_ICON, true)
 
@@ -61,7 +61,7 @@ function mod:OnCombatStart(delay)
 	self.vb.stompCount = 0
 --	timerResonatingOrbCD:Start(1-delay)--Instantly on pull
 	timerEarthenShardsCD:Start(4.5-delay)
-	timerCrushingStompCD:Start(8.1-delay, 1)
+	timerCrushingStompCD:Start(5.1-delay, 1)
 	if not self:IsMythic() then
 		timerTitanicEmpowermentCD:Start(25.4-delay)
 	end
