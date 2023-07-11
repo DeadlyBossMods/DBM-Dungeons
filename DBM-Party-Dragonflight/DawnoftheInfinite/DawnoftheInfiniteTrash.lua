@@ -1,4 +1,3 @@
-if DBM:GetTOC() < 100105 then return end
 local mod	= DBM:NewMod("DawnoftheInfiniteTrash", "DBM-Party-Dragonflight", 5)
 local L		= mod:GetLocalizedStrings()
 
@@ -33,7 +32,6 @@ local warnTripleStrike						= mod:NewCastAnnounce(413487, 3, nil, nil, "Tank")
 local warnRendingCleave						= mod:NewCastAnnounce(412505, 3, nil, nil, "Tank")
 local warnTitanicBulwark					= mod:NewCastAnnounce(413024, 3, nil, nil, "Tank")
 local warnStatickyPunch						= mod:NewCastAnnounce(412262, 3, nil, nil, "Tank")
-
 local warnEnervate							= mod:NewTargetAnnounce(415437, 3)
 
 local specWarnInfiniteFury					= mod:NewSpecialWarningSpell(413622, nil, nil, nil, 2, 2)

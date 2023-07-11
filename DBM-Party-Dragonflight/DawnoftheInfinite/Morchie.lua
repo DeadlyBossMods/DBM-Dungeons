@@ -1,4 +1,3 @@
-if DBM:GetTOC() < 100105 then return end
 local mod	= DBM:NewMod(2536, "DBM-Party-Dragonflight", 9, 1209)
 local L		= mod:GetLocalizedStrings()
 
