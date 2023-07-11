@@ -11,7 +11,7 @@ mod.isTrashMod = true
 mod:RegisterEvents(
 	"SPELL_CAST_START 415770 413487 415435 415437 413529 413621 413622 412806 411958 412505 400165 413607 412136 413024 413023 412922 417481 419327 412378 412262 412233 412200 413427 407205 407535 419351",
 	"SPELL_CAST_SUCCESS 411994 412012 418435",
-	"SPELL_AURA_APPLIED 412063 415554 415437 413547"
+	"SPELL_AURA_APPLIED 412063 415554 415437 413547 415436"
 --	"SPELL_AURA_APPLIED_DOSE",
 --	"SPELL_AURA_REMOVED",
 --	"UNIT_DIED",
@@ -19,7 +19,9 @@ mod:RegisterEvents(
 )
 
 --[[
-(ability.id = 415769 or ability.id = 415436 or ability.id = 413544) and type = "begincast"
+(ability.id = 415770 or ability.id = 413487 or ability.id = 415435 or ability.id = 415437 or ability.id = 413529 or ability.id = 413621 or ability.id = 413622 or ability.id = 412806 or ability.id = 411958 or ability.id = 412505 or ability.id = 400165 or ability.id = 413607 or ability.id = 412136 or ability.id = 413024 or ability.id = 413023 or ability.id = 412922 or ability.id = 417481 or ability.id = 419327 or ability.id = 412378 or ability.id = 412262 or ability.id = 412233 or ability.id = 412200 or ability.id = 413427 or ability.id = 407205 or ability.id = 407535 or ability.id = 419351 ability.id = 415769 or ability.id = 415436 or ability.id = 413544) and type = "begincast"
+ or (411994 412012 418435) and type = "cast"
+ or ability.id = 412063
 --]]
 --TODO, 407535 might be wrong for sappers, didn't get a log of this one
 local warnTemposlice						= mod:NewSpellAnnounce(412012, 3, nil, nil, nil, nil, nil, 3)
