@@ -43,14 +43,14 @@ local warnAddsLeft									= mod:NewAddsLeftAnnounce(-27151, 2, 416152)
 
 local specWarnChronalBurn							= mod:NewSpecialWarningDispel(412027, "RemoveMagic", nil, nil, 1, 2)
 local specWarnInfiniteBlast							= mod:NewSpecialWarningInterrupt(411763, "HasInterrupt", nil, nil, 1, 2)
-local specWarnTemporalbreath						= mod:NewSpecialWarningCount(416152, nil, nil, nil, 2, 2)
+local specWarnTemporalbreath						= mod:NewSpecialWarningCount(416139, nil, nil, nil, 2, 2)
 --local yellManaBomb								= mod:NewYell(386181)
 --local yellManaBombFades							= mod:NewShortFadesYell(386181)
 
 --local timerManaBombsCD							= mod:NewAITimer(19.4, 386173, nil, nil, nil, 3)
 local timerSummonInfiniteKeeperCD					= mod:NewCDCountTimer(20.2, 416152, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)
 local timerInfinityOrbCD							= mod:NewCDCountTimer(14.5, 410904, nil, nil, nil, 3)
-local timerTemporalBreathCD							= mod:NewCDCountTimer(17, 416152, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+local timerTemporalBreathCD							= mod:NewCDCountTimer(17, 416139, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 
 --Stage 2: Lord of the Infinite
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(26757))

@@ -30,24 +30,24 @@ mod:RegisterEventsInCombat(
 --]]
 --TODO, fine tune who should be soaking
 --TODO, Keep an eye on if the combo stays random order or if it gets normalized later to be static for Titanic and Dividing
-local warnSparkofTyr								= mod:NewTargetNoFilterAnnounce(400649, 3, nil, "RemoveMagic|Healer")
+local warnSparkofTyr								= mod:NewTargetNoFilterAnnounce(400681, 3, nil, "RemoveMagic|Healer")
 local warnSiphonOath								= mod:NewCountAnnounce(400642, 3)
 local warnSiphonOathOver							= mod:NewEndAnnounce(400642, 1)
 
 local specWarnTitanicBlow							= mod:NewSpecialWarningDefensive(401248, nil, nil, nil, 1, 2)
 local specWarnInfiniteAnnihilation					= mod:NewSpecialWarningDodgeCount(401482, nil, nil, nil, 2, 2)
 local specWarnDividingStrike						= mod:NewSpecialWarningSoakCount(400641, nil, nil, nil, 2, 2)
-local specWarnSparkofTyr							= mod:NewSpecialWarningMoveAway(400649, nil, nil, nil, 1, 2)
-local yellSparkofTyr								= mod:NewShortPosYell(400649)
+local specWarnSparkofTyr							= mod:NewSpecialWarningMoveAway(400681, nil, nil, nil, 1, 2)
+local yellSparkofTyr								= mod:NewShortPosYell(400681)
 local specWarnGTFO									= mod:NewSpecialWarningGTFO(403724, nil, nil, nil, 1, 8)
 
 local timerTitanicBlowCD							= mod:NewCDCountTimer(16, 401248, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerInfiniteAnnihilationCD					= mod:NewCDCountTimer(60.7, 401482, nil, nil, nil, 3)
 local timerDividingStrikeCD							= mod:NewCDCountTimer(16, 400641, nil, nil, nil, 5)
-local timerSparkofTyrCD								= mod:NewCDCountTimer(60.7, 400649, nil, nil, nil, 3, nil, DBM_COMMON_L.MAGIC_ICON)
+local timerSparkofTyrCD								= mod:NewCDCountTimer(60.7, 400681, nil, nil, nil, 3, nil, DBM_COMMON_L.MAGIC_ICON)
 local timerSiphonOathCD								= mod:NewCDCountTimer(60.7, 400642, nil, nil, nil, 6, nil, DBM_COMMON_L.DAMAGE_ICON)
 
-mod:AddSetIconOption("SetIconOnSparkofTyr", 400649, true, false, {1, 2})
+mod:AddSetIconOption("SetIconOnSparkofTyr", 400681, true, false, {1, 2})
 
 mod.vb.annihilationCount = 0
 mod.vb.sparkCount = 0
