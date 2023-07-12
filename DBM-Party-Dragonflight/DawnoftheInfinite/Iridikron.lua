@@ -5,7 +5,7 @@ mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(198933)
 mod:SetEncounterID(2669)
 --mod:SetUsedIcons(1, 2, 3)
-mod:SetHotfixNoticeRev(20230706000000)
+mod:SetHotfixNoticeRev(20230711000000)
 --mod:SetMinSyncRevision(20221015000000)
 --mod.respawnTime = 29
 mod.sendMainBossGUID = true
@@ -121,10 +121,10 @@ function mod:SPELL_AURA_REMOVED(args)
 	local spellId = args.spellId
 	if spellId == 409456 then--Earthsurge
 		warnEarthsurgeOver:Show()
-		timerPulverizingExhalationCD:Start(9.2, self.vb.surgeCount)
-		timerExtinctionBlastCD:Start(31, self.vb.surgeCount+1)
-		timerStonecrackerBarrageCD:Start(39, self.vb.surgeCount+1)
-		timerEarthSurgeCD:Start(58.9, self.vb.surgeCount+1)
+		timerPulverizingExhalationCD:Start(9.1, self.vb.surgeCount)
+		timerExtinctionBlastCD:Start(41.9, self.vb.surgeCount+1)
+		timerStonecrackerBarrageCD:Start(49.4, self.vb.surgeCount+1)
+		timerEarthSurgeCD:Start(69, self.vb.surgeCount+1)
 	end
 end
 

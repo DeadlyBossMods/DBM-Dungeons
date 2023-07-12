@@ -5,8 +5,8 @@ mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(198998)
 mod:SetEncounterID(2670)
 mod:SetUsedIcons(1, 2)
-mod:SetHotfixNoticeRev(20230715000000)
---mod:SetMinSyncRevision(20221015000000)
+mod:SetHotfixNoticeRev(20230711000000)
+mod:SetMinSyncRevision(20230716000000)--Future dated since i accidentally had an earlier version of mod future dated
 --mod.respawnTime = 29
 mod.sendMainBossGUID = true
 
@@ -29,43 +29,49 @@ mod:RegisterEventsInCombat(
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
 --]]
 --TODO, fine tune who should be soaking
---TODO, Keep an eye on if the combo stays random order or if it gets normalized later to be static for Titanic and Dividing
-local warnSparkofTyr								= mod:NewTargetNoFilterAnnounce(400649, 3, nil, "RemoveMagic|Healer")
+--TODO, Keep an eye on if the combo stays random order or if it gets normalized later to be static
+local warnSparkofTyr								= mod:NewTargetNoFilterAnnounce(400681, 3, nil, "RemoveMagic|Healer")
 local warnSiphonOath								= mod:NewCountAnnounce(400642, 3)
 local warnSiphonOathOver							= mod:NewEndAnnounce(400642, 1)
 
 local specWarnTitanicBlow							= mod:NewSpecialWarningDefensive(401248, nil, nil, nil, 1, 2)
 local specWarnInfiniteAnnihilation					= mod:NewSpecialWarningDodgeCount(401482, nil, nil, nil, 2, 2)
 local specWarnDividingStrike						= mod:NewSpecialWarningSoakCount(400641, nil, nil, nil, 2, 2)
-local specWarnSparkofTyr							= mod:NewSpecialWarningMoveAway(400649, nil, nil, nil, 1, 2)
-local yellSparkofTyr								= mod:NewShortPosYell(400649)
+local specWarnSparkofTyr							= mod:NewSpecialWarningMoveAway(400681, nil, nil, nil, 1, 2)
+local yellSparkofTyr								= mod:NewShortPosYell(400681)
 local specWarnGTFO									= mod:NewSpecialWarningGTFO(403724, nil, nil, nil, 1, 8)
 
-local timerTitanicBlowCD							= mod:NewCDCountTimer(16, 401248, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
-local timerInfiniteAnnihilationCD					= mod:NewCDCountTimer(60.7, 401482, nil, nil, nil, 3)
-local timerDividingStrikeCD							= mod:NewCDCountTimer(16, 400641, nil, nil, nil, 5)
-local timerSparkofTyrCD								= mod:NewCDCountTimer(60.7, 400649, nil, nil, nil, 3, nil, DBM_COMMON_L.MAGIC_ICON)
+--These 3
+local timerTitanicBlowCD							= mod:NewCDCountTimer(8, 401248, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+local timerInfiniteAnnihilationCD					= mod:NewCDCountTimer(8, 401482, nil, nil, nil, 3)
+local timerDividingStrikeCD							= mod:NewCDCountTimer(8, 400641, nil, nil, nil, 5)
+
+local timerSparkofTyrCD								= mod:NewCDCountTimer(60.7, 400681, nil, nil, nil, 3, nil, DBM_COMMON_L.MAGIC_ICON)
 local timerSiphonOathCD								= mod:NewCDCountTimer(60.7, 400642, nil, nil, nil, 6, nil, DBM_COMMON_L.DAMAGE_ICON)
 
-mod:AddSetIconOption("SetIconOnSparkofTyr", 400649, true, false, {1, 2})
+mod:AddSetIconOption("SetIconOnSparkofTyr", 400681, true, false, {1, 2})
 
-mod.vb.annihilationCount = 0
 mod.vb.sparkCount = 0
 mod.vb.barrierCount = 0
 mod.vb.DebuffIcon = 1
 mod.vb.sharedCount = 0--Dividing and Titanic share a count
+--Shared Keys, 1 Titan, 2 Infinite, 3 Dividing
+mod.vb.firstShared = 0
+mod.vb.secondShared = 0
 
 function mod:OnCombatStart(delay)
-	self.vb.annihilationCount = 0
 	self.vb.dividingCount = 0
 	self.vb.sparkCount = 0
 	self.vb.barrierCount = 0
-	self.vb.sharedCount = 0--0 = Not yet known, 1 = D, T, D, 2 = T, D, T
-	timerSparkofTyrCD:Start(6-delay, 1)
-	timerInfiniteAnnihilationCD:Start(12.5-delay, 1)
+	self.vb.sharedCount = 0
+	--Shared Keys, 1 Titan, 2 Infinite, 3 Dividing
+	self.vb.firstShared = 0
+	self.vb.secondShared = 0
+	timerSparkofTyrCD:Start(5.9-delay, 1)
 	--Either one of these can be first, we don't know which until time of cast
-	timerDividingStrikeCD:Start(20.5-delay, 1)
-	timerTitanicBlowCD:Start(20.5-delay, 1)
+	timerTitanicBlowCD:Start(12.5-delay, 1)
+	timerInfiniteAnnihilationCD:Start(12.5-delay, 1)
+	timerDividingStrikeCD:Start(12.5-delay, 1)
 	timerSiphonOathCD:Start(45.7-delay, 1)
 end
 
@@ -86,23 +92,88 @@ function mod:SPELL_CAST_START(args)
 			specWarnTitanicBlow:Show(self.vb.sharedCount)
 			specWarnTitanicBlow:Play("carefly")
 		end
-		--Shared Cd, alternating abilities. Dividing is next after titanic
-		if self.vb.sharedCount < 3 then
-			timerDividingStrikeCD:Start(nil, self.vb.sharedCount+1)
+		--Shared Cd between 3 abilities, have to do fancy logic stuffs
+		if self.vb.sharedCount == 1 then
+			--Shared Keys, 1 Titan, 2 Infinite, 3 Dividing
+			self.vb.firstShared = 1
+			--Still don't know what's 2nd, only that it isn't Blow
+			timerDividingStrikeCD:Start(nil, 2)
+			timerInfiniteAnnihilationCD:Start(nil, 2)
+		elseif self.vb.sharedCount == 2 then
+			--Shared Keys, 1 Titan, 2 Infinite, 3 Dividing
+			self.vb.secondShared = 1
+			if self.vb.firstShared == 2 then--We know next is dividing since first was infinite
+				timerDividingStrikeCD:Start(nil, 3)
+			else--First was dividing so next is infinite
+				timerInfiniteAnnihilationCD:Start(nil, 3)
+			end
+		elseif self.vb.sharedCount == 3 then
+			--The 4 cast in combo, is whatever cast 2 was
+			if self.vb.secondShared == 1 then
+				timerTitanicBlowCD:Start(nil, 4)
+			elseif self.vb.secondShared == 2 then
+				timerInfiniteAnnihilationCD:Start(nil, 4)
+			else
+				timerDividingStrikeCD:Start(nil, 4)
+			end
 		end
 	elseif spellId == 401482 then
-		self.vb.annihilationCount = self.vb.annihilationCount + 1
-		specWarnInfiniteAnnihilation:Show(self.vb.annihilationCount)
+		self.vb.sharedCount = self.vb.sharedCount + 1
+		specWarnInfiniteAnnihilation:Show(self.vb.sharedCount)
 		specWarnInfiniteAnnihilation:Play("shockwave")
-		--Timer not started here, since it's 1 cast per cycle at moment and we start itmer on shield end
---		timerInfiniteAnnihilationCD:Start(nil, self.vb.annihilationCount+1)
+		--Shared Cd between 3 abilities, have to do fancy logic stuffs
+		if self.vb.sharedCount == 1 then
+			--Shared Keys, 1 Titan, 2 Infinite, 3 Dividing
+			self.vb.firstShared = 2
+			--Still don't know what's 2nd, only that it isn't Infinite
+			timerDividingStrikeCD:Start(nil, 2)
+			timerTitanicBlowCD:Start(nil, 2)
+		elseif self.vb.sharedCount == 2 then
+			--Shared Keys, 1 Titan, 2 Infinite, 3 Dividing
+			self.vb.secondShared = 2
+			if self.vb.firstShared == 1 then--We know next is dividing since first was Blow
+				timerDividingStrikeCD:Start(nil, 3)
+			else--First was dividing so next is blow
+				timerTitanicBlowCD:Start(nil, 3)
+			end
+		elseif self.vb.sharedCount == 3 then
+			--The 4 cast in combo, is whatever cast 2 was
+			if self.vb.secondShared == 1 then
+				timerTitanicBlowCD:Start(nil, 4)
+			elseif self.vb.secondShared == 2 then
+				timerInfiniteAnnihilationCD:Start(nil, 4)
+			else
+				timerDividingStrikeCD:Start(nil, 4)
+			end
+		end
 	elseif spellId == 400641 then
 		self.vb.sharedCount = self.vb.sharedCount + 1
 		specWarnDividingStrike:Show(self.vb.sharedCount)
 		specWarnDividingStrike:Play("helpsoak")
-		--Shared Cd, alternating abilities. titanic is next after dividing
-		if self.vb.sharedCount < 3 then
-			timerTitanicBlowCD:Start(nil, self.vb.sharedCount+1)
+		--Shared Cd between 3 abilities, have to do fancy logic stuffs
+		if self.vb.sharedCount == 1 then
+			--Shared Keys, 1 Titan, 2 Infinite, 3 Dividing
+			self.vb.firstShared = 3
+			--Still don't know what's 2nd, only that it isn't Dividing
+			timerInfiniteAnnihilationCD:Start(nil, 2)
+			timerTitanicBlowCD:Start(nil, 2)
+		elseif self.vb.sharedCount == 2 then
+			--Shared Keys, 1 Titan, 2 Infinite, 3 Dividing
+			self.vb.secondShared = 3
+			if self.vb.firstShared == 1 then--We know next is infinite since first was Blow
+				timerInfiniteAnnihilationCD:Start(nil, 3)
+			else--First was dividing so next is blow
+				timerTitanicBlowCD:Start(nil, 3)
+			end
+		elseif self.vb.sharedCount == 3 then
+			--The 4 cast in combo, is whatever cast 2 was
+			if self.vb.secondShared == 1 then
+				timerTitanicBlowCD:Start(nil, 4)
+			elseif self.vb.secondShared == 2 then
+				timerInfiniteAnnihilationCD:Start(nil, 4)
+			else
+				timerDividingStrikeCD:Start(nil, 4)
+			end
 		end
 	elseif spellId == 400649 then
 		self.vb.DebuffIcon = 1
@@ -149,19 +220,16 @@ function mod:SPELL_AURA_REMOVED(args)
 			self:SetIcon(args.destName, 0)
 		end
 	elseif spellId == 400642 then--Siphon ending
-		--Upon ending, boss has two possible combos for abilites since it seems dividing and titanic are interchangable
-		--The two shared abilities will be 3 casts where he does ability + 8 ability + 8 ability
-		--This comes out as one of following
-		--Spark, Infinite, Dividing, Titanic Dividing
-		--Spark, Infinite, Titanic, Dividing, Titanic
 		self.vb.sharedCount = 0
+		self.vb.firstShared = 0
+		self.vb.secondShared = 0
 		warnSiphonOathOver:Show()
 		--Timers same as engage
 		timerSparkofTyrCD:Start(6, self.vb.sparkCount+1)
-		timerInfiniteAnnihilationCD:Start(12.5, self.vb.annihilationCount+1)
 		--Either one of these can be first, we don't know which until time of cast
-		timerDividingStrikeCD:Start(20.5, 1)--Count reset on the shared low Cd abiliteis that are a 3 strike combo
-		timerTitanicBlowCD:Start(20.5, 1)--Count reset on the shared low Cd abiliteis that are a 3 strike combo
+		timerTitanicBlowCD:Start(12.5, 1)
+		timerInfiniteAnnihilationCD:Start(12.5, 1)
+		timerDividingStrikeCD:Start(12.5, 1)
 		timerSiphonOathCD:Start(45.7, self.vb.barrierCount+1)
 	end
 end

@@ -5,7 +5,7 @@ mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(199000)
 mod:SetEncounterID(2673)
 --mod:SetUsedIcons(1, 2, 3)
-mod:SetHotfixNoticeRev(20230709000000)
+mod:SetHotfixNoticeRev(20230711000000)
 --mod:SetMinSyncRevision(20221015000000)
 --mod.respawnTime = 29
 mod.sendMainBossGUID = true
@@ -43,14 +43,14 @@ local warnAddsLeft									= mod:NewAddsLeftAnnounce(-27151, 2, 416152)
 
 local specWarnChronalBurn							= mod:NewSpecialWarningDispel(412027, "RemoveMagic", nil, nil, 1, 2)
 local specWarnInfiniteBlast							= mod:NewSpecialWarningInterrupt(411763, "HasInterrupt", nil, nil, 1, 2)
-local specWarnTemporalbreath						= mod:NewSpecialWarningCount(416152, nil, nil, nil, 2, 2)
+local specWarnTemporalbreath						= mod:NewSpecialWarningCount(416139, nil, nil, nil, 2, 2)
 --local yellManaBomb								= mod:NewYell(386181)
 --local yellManaBombFades							= mod:NewShortFadesYell(386181)
 
 --local timerManaBombsCD							= mod:NewAITimer(19.4, 386173, nil, nil, nil, 3)
-local timerSummonInfiniteKeeperCD					= mod:NewCDCountTimer(20.2, 416152, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)
+local timerSummonInfiniteKeeperCD					= mod:NewCDCountTimer(24.2, 416152, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)
 local timerInfinityOrbCD							= mod:NewCDCountTimer(14.5, 410904, nil, nil, nil, 3)
-local timerTemporalBreathCD							= mod:NewCDCountTimer(17, 416152, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+local timerTemporalBreathCD							= mod:NewCDCountTimer(17, 416139, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 
 --Stage 2: Lord of the Infinite
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(26757))
@@ -73,9 +73,9 @@ function mod:OnCombatStart(delay)
 	self.vb.orbCount = 0
 	self.vb.breathCount = 0
 	self.vb.addsLeft = 4
-	timerTemporalBreathCD:Start(9.6-delay, 1)
+	timerInfinityOrbCD:Start(10.7-delay, 1)
 	timerSummonInfiniteKeeperCD:Start(15-delay, 1)
-	timerInfinityOrbCD:Start(19.3-delay, 1)
+	timerTemporalBreathCD:Start(20.4-delay, 1)
 end
 
 --function mod:OnCombatEnd()
@@ -109,17 +109,18 @@ function mod:SPELL_CAST_START(args)
 		self.vb.orbCount = self.vb.orbCount + 1
 		warnInfinityOrb:Show(self.vb.orbCount)
 		if self:GetStage(1) then
-			timerInfinityOrbCD:Start(14.5, self.vb.orbCount+1)--14.5 unless delayed by temporal breath (which is like 90% of time)
+			timerInfinityOrbCD:Start(12, self.vb.orbCount+1)--12 unless delayed by temporal breath (which is like 90% of time)
 		else
-			timerInfinityOrbCD:Start(23, self.vb.orbCount+1)--23-24.3 (possibly lower, unknown due to spell queue effects)
+			timerInfinityOrbCD:Start(24.3, self.vb.orbCount+1)--23-24.3 (possibly lower, unknown due to spell queue effects)
 		end
 		--Correct timer with forced ICD of this ability
-		if timerTemporalBreathCD:GetRemaining(self.vb.breathCount+1) < 6 then
-			local elapsed, total = timerTemporalBreathCD:GetTime(self.vb.breathCount+1)
-			local extend = 6 - (total-elapsed)
-			DBM:Debug("timerTemporalBreathCD extended by: "..extend, 2)
-			timerTemporalBreathCD:Update(elapsed, total+extend, self.vb.breathCount+1)
-		end
+		--This one also doesn't happen anymore since swapping two abilites on engage, again keeping it in case more data shows it can still happen in rare cases
+		--if timerTemporalBreathCD:GetRemaining(self.vb.breathCount+1) < 6 then
+		--	local elapsed, total = timerTemporalBreathCD:GetTime(self.vb.breathCount+1)
+		--	local extend = 6 - (total-elapsed)
+		--	DBM:Debug("timerTemporalBreathCD extended by: "..extend, 2)
+		--	timerTemporalBreathCD:Update(elapsed, total+extend, self.vb.breathCount+1)
+		--end
 	elseif spellId == 416139 then
 		self.vb.breathCount = self.vb.breathCount + 1
 		specWarnTemporalbreath:Show(self.vb.breathCount)
@@ -129,9 +130,12 @@ function mod:SPELL_CAST_START(args)
 				timerTemporalBreathCD:Start(17, self.vb.breathCount+1)
 			end
 		else
-			timerTemporalBreathCD:Start(18)--24.2 most of time due to spell queues but can be as low as 18 (maybe even lower)
+--			timerTemporalBreathCD:Start(18)--24.7 most of time due to spell queues but can be as low as 18 (maybe even lower), it just doesn't happen til like 10 min into fight
+			timerTemporalBreathCD(24.7, self.vb.breathCount+1)
 		end
 		--Correct timer with forced ICD of this ability
+		--Rule is still valid, happens in stage 1 where most orbs get extended but not ALL of them
+		--Example: https://www.warcraftlogs.com/reports/3ghyqJNQLFdfWXDt#fight=last&pins=2%24Off%24%23244F4B%24expression%24(ability.id%20%3D%20410904%20or%20ability.id%20%3D%20416152%20or%20ability.id%20%3D%20416139%20or%20ability.id%20%3D%20416264)%20and%20type%20%3D%20%22begincast%22%0A%20or%20target.id%20%3D%20205212%20and%20type%20%3D%20%22death%22%0A%20or%20type%20%3D%20%22dungeonencounterstart%22%20or%20type%20%3D%20%22dungeonencounterend%22&view=events
 		if timerInfinityOrbCD:GetRemaining(self.vb.orbCount+1) < 7.2 then
 			local elapsed, total = timerInfinityOrbCD:GetTime(self.vb.orbCount+1)
 			local extend = 7.2 - (total-elapsed)
@@ -144,12 +148,14 @@ function mod:SPELL_CAST_START(args)
 		specWarnInfiniteCorruption:Play("watchstep")
 		timerInfiniteCorruptionCD:Start(24.2, self.vb.keeperCount+1)
 		--Correct timer with forced ICD of this ability
-		if timerTemporalBreathCD:GetRemaining(self.vb.breathCount+1) < 14.1 then
-			local elapsed, total = timerTemporalBreathCD:GetTime(self.vb.breathCount+1)
-			local extend = 14.1 - (total-elapsed)
-			DBM:Debug("timerTemporalBreathCD extended by: "..extend, 2)
-			timerTemporalBreathCD:Update(elapsed, total+extend, self.vb.breathCount+1)
-		end
+		--Disabled for now, blizzard tweaked around timers enough to cause this to actually always happen, at least up to 8:30 pulls, this rule ran on EVERY timer instead of only 90% of them
+		--As such, just adding the extention to all timers from the gate (when it starts)
+		--if timerTemporalBreathCD:GetRemaining(self.vb.breathCount+1) < 11.7 then
+		--	local elapsed, total = timerTemporalBreathCD:GetTime(self.vb.breathCount+1)
+		--	local extend = 11.7 - (total-elapsed)
+		--	DBM:Debug("timerTemporalBreathCD extended by: "..extend, 2)
+		--	timerTemporalBreathCD:Update(elapsed, total+extend, self.vb.breathCount+1)
+		--end
 	end
 end
 
@@ -198,9 +204,9 @@ function mod:UNIT_DIED(args)
 			self.vb.breathCount = 0
 			self.vb.orbCount = 0
 			self.vb.keeperCount = 0--Reused for Infinite Corruption
-			timerTemporalBreathCD:Restart(6.2, 1)
-			timerInfinityOrbCD:Restart(13.5, 1)
-			timerInfiniteCorruptionCD:Start(15.1, 1)
+			timerInfiniteCorruptionCD:Start(5.2, 1)
+			timerTemporalBreathCD:Restart(17, 1)
+			timerInfinityOrbCD:Restart(24.2, 1)
 		end
 	end
 end

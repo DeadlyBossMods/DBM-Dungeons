@@ -5,7 +5,7 @@ mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(198995)
 mod:SetEncounterID(2666)
 --mod:SetUsedIcons(1, 2, 3)
---mod:SetHotfixNoticeRev(20221015000000)
+mod:SetHotfixNoticeRev(20230711000000)
 --mod:SetMinSyncRevision(20221015000000)
 --mod.respawnTime = 29
 mod.sendMainBossGUID = true
@@ -38,7 +38,7 @@ local specWarnGTFO							= mod:NewSpecialWarningGTFO(407147, nil, nil, nil, 1, 8
 
 local timerEonShatterCD						= mod:NewCDTimer(19.4, 413105, nil, nil, nil, 3, nil, DBM_COMMON_L.DEADLY_ICON)
 local timerEonResidue						= mod:NewCastCountTimer("d7.5", 401421, DBM_COMMON_L.SoakC, nil, nil, 5, nil, DBM_COMMON_L.MYTHIC_ICON)
-local timerChronoShearCD					= mod:NewCDTimer(19.4, 413013, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+local timerChronoShearCD					= mod:NewCDCountTimer(19.4, 413013, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerSandStompCD						= mod:NewCDCountTimer(19.4, 401421, nil, nil, nil, 3)
 
 
@@ -52,9 +52,9 @@ function mod:OnCombatStart(delay)
 	self.vb.shatterCount = 0
 	self.vb.shearCount = 0
 	self.vb.stompCount = 0
-	timerSandStompCD:Start(7.2-delay, 1)
-	timerEonShatterCD:Start(18.1-delay)
-	timerChronoShearCD:Start(45.7, 1)
+	timerSandStompCD:Start(7.4-delay, 1)
+	timerEonShatterCD:Start(19.5-delay)
+	timerChronoShearCD:Start(48.5, 1)
 end
 
 --function mod:OnCombatEnd()
@@ -81,7 +81,7 @@ function mod:SPELL_CAST_START(args)
 			warnEonShatter:Show(self.vb.shatterCount)
 			if self.vb.shatterCount == 3 then
 				self.vb.shatterCount = 1
-				timerEonShatterCD:Start(35.5)
+				timerEonShatterCD:Start(41.7)--41.7
 --			else
 --				timerEonShatterCD:Start(5)
 			end
@@ -92,15 +92,15 @@ function mod:SPELL_CAST_START(args)
 			specWarnChronoShear:Show()
 			specWarnChronoShear:Play("defensive")
 		end
-		timerChronoShearCD:Start(48.5)
+		timerChronoShearCD:Start(52.9, self.vb.shearCount+1)
 	elseif spellId == 401421 then
 		self.vb.stompCount = self.vb.stompCount + 1
 		specWarnSandStomp:Show(self.vb.stompCount)
 		specWarnSandStomp:Play("scatter")
 		if self.vb.stompCount % 2 == 0 then
-			timerSandStompCD:Start(14.5, self.vb.stompCount+1)
+			timerSandStompCD:Start(17, self.vb.stompCount+1)
 		else--Eon Shatter causes delay
-			timerSandStompCD:Start(33.9, self.vb.stompCount+1)
+			timerSandStompCD:Start(35.2, self.vb.stompCount+1)
 		end
 	end
 end

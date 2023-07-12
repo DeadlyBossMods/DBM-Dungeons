@@ -5,7 +5,7 @@ mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(198999)
 mod:SetEncounterID(2671)
 mod:SetUsedIcons(1, 2, 3, 4, 5, 6)
-mod:SetHotfixNoticeRev(20230708000000)
+mod:SetHotfixNoticeRev(20230711000000)
 --mod:SetMinSyncRevision(20221015000000)
 --mod.respawnTime = 29
 mod.sendMainBossGUID = true
@@ -58,13 +58,13 @@ mod.vb.problemsCount = 0
 mod.vb.problemIcons = 1
 mod.vb.facesCount = 0
 mod.vb.trapsCount = 0
-local allTimers = {
+local allTimers = {--Timers up to 4:29
 	--Sand Blast
-	[404916] = {4.6, 38.8, 29.1, 21.8, 29.1, 23, 29.1},
+	[404916] = {4.6, 38.8, 29.1, 20.6, 29.1, 23, 29.1, 23, 29.2, 21.8},
 	--More Problems
-	[403891] = {10.6, 40, 48.5, 52.1},
+	[403891] = {10.6, 40, 48.5, 52.1, 50.9, 51},
 	--Time Traps
-	[406481] = {30.1, 50.9, 52.1},
+	[406481] = {30.1, 50.5, 52.1, 52.1, 51},
 }
 
 --[[

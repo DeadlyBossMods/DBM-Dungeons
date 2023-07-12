@@ -7,7 +7,7 @@ mod:SetCreatureID(198997, 201792, 201788, 201790)--It's technically just one cre
 mod:SetEncounterID(2668)
 --mod:SetUsedIcons(1, 2, 3)
 --mod:SetBossHPInfoToHighest()--may not be needed due to shared/synced health pools
-mod:SetHotfixNoticeRev(20230704000000)
+mod:SetHotfixNoticeRev(20230711000000)
 mod:SetMinSyncRevision(20230704000000)
 --mod.respawnTime = 29
 --mod.sendMainBossGUID = true--sendMainBossGUID is not sent because of stage 3 split
@@ -35,6 +35,7 @@ mod:RegisterEventsInCombat(
  --TODO, maybe target scan frost to be slightly faster? Can also use applied of 408084 but that's even slower than success
  --TODO, Possibly transition stages on REMOVED not applied?
  --TODO, attach GUID to timers in a way that's compat with multi target
+ --TODO, need much longer logs to fix many of timers again
 --]]
 local warnCorrosion							= mod:NewTargetNoFilterAnnounce(407406, 3)
 local warnCorruptedMind						= mod:NewTargetNoFilterAnnounce(418346, 4)
@@ -46,7 +47,7 @@ local yellCorrosionFades					= mod:NewShortFadesYell(407406, nil, nil, nil, "YEL
 local specWarnCorrosionClear				= mod:NewSpecialWarningMoveTo(407406, nil, nil, nil, 1, 2)
 local specWarnReclamation					= mod:NewSpecialWarningCount(407159, nil, nil, nil, 2, 2)
 local specWarnNecroticWinds					= mod:NewSpecialWarningDodgeCount(407978, nil, nil, nil, 1, 2)
-local specWarnNecrofrost					= mod:NewSpecialWarningSwitch(408029, "Dps", nil, nil, 1, 2)
+local specWarnNecrofrost					= mod:NewSpecialWarningSwitchCount(408029, "Dps", nil, nil, 1, 2)
 local yellNecrofrost						= mod:NewYell(408029, nil, nil, nil, "YELL")
 local specWarnIncinBlightBreath				= mod:NewSpecialWarningDodgeCount(408141, nil, nil, nil, 1, 2)
 local specWarnGTFO							= mod:NewSpecialWarningGTFO(407147, nil, nil, nil, 1, 8)
@@ -54,7 +55,7 @@ local specWarnGTFO							= mod:NewSpecialWarningGTFO(407147, nil, nil, nil, 1, 8
 local timerCorrosiveInfusionCD				= mod:NewCDCountTimer(19.4, 386173, nil, nil, nil, 3)
 local timerBlightReclamationCD				= mod:NewCDCountTimer(19.4, 407159, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerNecroticWindsCD					= mod:NewCDCountTimer(19.4, 407978, nil, nil, nil, 2)
-local timerNecrofrostCD						= mod:NewCDCountTimer(43.7, 408029, nil, nil, nil, 3, nil, DBM_COMMON_L.DAMAGE_ICON)
+local timerNecrofrostCD						= mod:NewCDCountTimer(19.4, 408029, nil, nil, nil, 3, nil, DBM_COMMON_L.DAMAGE_ICON)
 local timerIncineratingBlightbreathCD		= mod:NewCDCountTimer(19.4, 408141, nil, nil, nil, 3)
 
 --mod:AddInfoFrameOption(391977, true)
@@ -109,9 +110,22 @@ function mod:SPELL_CAST_START(args)
 		if self:GetStage(1) then
 			timer = 17
 		elseif self:GetStage(2) then
-			timer = 32.7
-		else
-			timer = 43.7
+			timer = 31.5
+		else--Stage 3
+			timer = 63.1
+			--Update min timers on abilities affected by this
+			if timerIncineratingBlightbreathCD:GetRemaining(self.vb.fireBreathCount+1) < 8 then
+				local elapsed, total = timerIncineratingBlightbreathCD:GetTime(self.vb.fireBreathCount+1)
+				local extend = 8 - (total-elapsed)
+				DBM:Debug("timerIncineratingBlightbreathCD extended by: "..extend, 2)
+				timerIncineratingBlightbreathCD:Update(elapsed, total+extend, self.vb.fireBreathCount+1)
+			end
+			if timerNecrofrostCD:GetRemaining(self.vb.windsCount+1) < 15.7 then
+				local elapsed, total = timerNecrofrostCD:GetTime(self.vb.windsCount+1)
+				local extend = 15.7 - (total-elapsed)
+				DBM:Debug("timerNecrofrostCD extended by: "..extend, 2)
+				timerNecrofrostCD:Update(elapsed, total+extend, self.vb.windsCount+1)
+			end
 		end
 		timerCorrosiveInfusionCD:Start(timer, self.vb.corrosiveCount+1)
 	elseif spellId == 407159 then
@@ -122,19 +136,31 @@ function mod:SPELL_CAST_START(args)
 		if self:GetStage(1) then
 			timer = 17
 		elseif self:GetStage(2) then
-			timer = 32.7
+			timer = 31.5
+			--rule only applies to stage 2. If time left on corrosive is less than 9.7, it's extended. this is what causes it to be 34 instead of 31.5 sometimes
+			if timerIncineratingBlightbreathCD:GetRemaining(self.vb.corrosiveCount+1) < 9.7 then
+				local elapsed, total = timerIncineratingBlightbreathCD:GetTime(self.vb.corrosiveCount+1)
+				local extend = 9.7 - (total-elapsed)
+				DBM:Debug("timerIncineratingBlightbreathCD extended by: "..extend, 2)
+				timerIncineratingBlightbreathCD:Update(elapsed, total+extend, self.vb.corrosiveCount+1)
+			end
 		else
-			timer = 43.7
+			timer = 63.1--Not verfied yet, assumed cause it looks same as corrosive
 		end
 		timerBlightReclamationCD:Start(timer, self.vb.reclaimCount+1)
+		if self.vb.reclaimCount == 2 then--To verify the 63.1
+			DBM:AddMsg("If you are logging this fight, please share log on DBM discord because you saw at least 2 reclamation casts in stage 3")
+		end
 	elseif spellId == 408029 then
 		self.vb.windsCount = self.vb.windsCount + 1
-		timerNecrofrostCD:Start(43.7, self.vb.windsCount+1)
+		--The timers that are delayed will be auto corrected by Corrosive cast
+		timerNecrofrostCD:Start(19.4, self.vb.windsCount+1)
 	elseif spellId == 408141 then
 		self.vb.fireBreathCount = self.vb.fireBreathCount + 1
 		specWarnIncinBlightBreath:Show(self.vb.fireBreathCount)
 		specWarnIncinBlightBreath:Play("breathsoon")
-		timerIncineratingBlightbreathCD:Start(21.1, self.vb.fireBreathCount+1)
+		--The timers that are delayed will be auto corrected by Corrosive cast
+		timerIncineratingBlightbreathCD:Start(17.1, self.vb.fireBreathCount+1)
 	end
 end
 
@@ -144,15 +170,15 @@ function mod:SPELL_CAST_SUCCESS(args)
 		if args:IsPlayer() then
 			yellNecrofrost:Yell()
 		else
-			specWarnNecrofrost:Show()
+			specWarnNecrofrost:Show(self.vb.windsCount)
 			specWarnNecrofrost:Play("targetchange")
 		end
 	elseif spellId == 407978 then
 		self.vb.windsCount = self.vb.windsCount + 1
-		specWarnNecroticWinds:Show()
+		specWarnNecroticWinds:Show(self.vb.windsCount)
 		specWarnNecroticWinds:Play("aesoon")
 		specWarnNecroticWinds:ScheduleVoice(1.5, "watchstep")
-		timerNecroticWindsCD:Start(32.7, self.vb.windsCount+1)
+		timerNecroticWindsCD:Start(31.5, self.vb.windsCount+1)
 	end
 end
 
@@ -167,9 +193,10 @@ function mod:SPELL_AURA_APPLIED(args)
 		self.vb.reclaimCount = 0
 		timerCorrosiveInfusionCD:Stop()
 		timerBlightReclamationCD:Stop()
-		timerBlightReclamationCD:Start(11.7, 1)
-		timerCorrosiveInfusionCD:Start(21.5, 1)
-		timerNecroticWindsCD:Start(31.1, 1)
+		--Starting here is less accurate than spell aura removed, causes ~1.5 variance
+		timerCorrosiveInfusionCD:Start(9.7, 1)
+		timerNecroticWindsCD:Start(19.4, 1)
+		timerBlightReclamationCD:Start(34, 1)
 	elseif spellId == 415114 then--Malignant Transferal (stage 2)
 		self:SetStage(3)
 		self.vb.corrosiveCount = 0
@@ -178,10 +205,11 @@ function mod:SPELL_AURA_APPLIED(args)
 		timerCorrosiveInfusionCD:Stop()
 		timerBlightReclamationCD:Stop()
 		timerNecroticWindsCD:Stop()
-		timerBlightReclamationCD:Start(12.1, 1)
-		timerIncineratingBlightbreathCD:Start(18.6, 1)
-		timerCorrosiveInfusionCD:Start(27.9, 1)
-		timerNecrofrostCD:Start(46.1, 1)
+		--Starting here is less accurate than spell aura removed, causes ~1.5 variance
+		timerCorrosiveInfusionCD:Start(17.8, 1)
+		timerIncineratingBlightbreathCD:Start(26.8, 1)
+		timerNecrofrostCD:Start(34.7, 1)
+		timerBlightReclamationCD:Start(67.5, 1)
 	elseif spellId == 407406 then
 		if args:IsPlayer() then
 			specWarnCorrosion:Show()

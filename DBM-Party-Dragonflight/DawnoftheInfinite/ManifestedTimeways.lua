@@ -5,7 +5,7 @@ mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(198996)
 mod:SetEncounterID(2667)
 mod:SetUsedIcons(1, 2)
---mod:SetHotfixNoticeRev(20221015000000)
+mod:SetHotfixNoticeRev(20230711000000)
 --mod:SetMinSyncRevision(20221015000000)
 --mod.respawnTime = 29
 mod.sendMainBossGUID = true
@@ -72,11 +72,11 @@ function mod:SPELL_CAST_START(args)
 	if spellId == 405696 then
 		self.vb.DebuffIcon = 1
 		self.vb.fadedCount = self.vb.fadedCount + 1
-		if self.vb.fadedCount == 2 then
-			timerChronofadedCD:Start(37.2, self.vb.fadedCount+1)
-		else
+--		if self.vb.fadedCount == 2 then
+--			timerChronofadedCD:Start(37.2, self.vb.fadedCount+1)
+--		else
 			timerChronofadedCD:Start(30.3, self.vb.fadedCount+1)
-		end
+--		end
 	elseif spellId == 405431 then
 		self.vb.fragmentsCount = self.vb.fragmentsCount + 1
 		specWarnFragmentsofTime:Show(self.vb.fragmentsCount)
@@ -88,11 +88,11 @@ function mod:SPELL_CAST_START(args)
 			specWarnUnwind:Show()
 			specWarnUnwind:Play("defensive")
 		end
-		if self.vb.unwindCount == 3 then
-			timerUnwindCD:Start(23.8, self.vb.unwindCount+1)
-		else
+--		if self.vb.unwindCount == 3 then
+--			timerUnwindCD:Start(23.8, self.vb.unwindCount+1)
+--		else
 			timerUnwindCD:Start(30.3, self.vb.unwindCount+1)
-		end
+--		end
 	end
 end
 
