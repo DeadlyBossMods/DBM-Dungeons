@@ -51,7 +51,6 @@ local timerSiphonOathCD								= mod:NewCDCountTimer(60.7, 400642, nil, nil, nil
 
 mod:AddSetIconOption("SetIconOnSparkofTyr", 400681, true, false, {1, 2})
 
-mod.vb.annihilationCount = 0
 mod.vb.sparkCount = 0
 mod.vb.barrierCount = 0
 mod.vb.DebuffIcon = 1
@@ -61,7 +60,6 @@ mod.vb.firstShared = 0
 mod.vb.secondShared = 0
 
 function mod:OnCombatStart(delay)
-	self.vb.annihilationCount = 0
 	self.vb.dividingCount = 0
 	self.vb.sparkCount = 0
 	self.vb.barrierCount = 0
@@ -121,7 +119,7 @@ function mod:SPELL_CAST_START(args)
 		end
 	elseif spellId == 401482 then
 		self.vb.sharedCount = self.vb.sharedCount + 1
-		specWarnInfiniteAnnihilation:Show(self.vb.annihilationCount)
+		specWarnInfiniteAnnihilation:Show(self.vb.sharedCount)
 		specWarnInfiniteAnnihilation:Play("shockwave")
 		--Shared Cd between 3 abilities, have to do fancy logic stuffs
 		if self.vb.sharedCount == 1 then
