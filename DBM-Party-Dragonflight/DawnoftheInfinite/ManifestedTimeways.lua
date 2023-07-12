@@ -118,7 +118,7 @@ function mod:SPELL_AURA_APPLIED(args)
 			yellChronofaded:Yell(icon, icon)
 			yellChronofadedFades:Countdown(spellId, nil, icon)
 		end
-		warnChronoFaded:CombinedShow(0.5, args.destName)
+		warnChronoFaded:CombinedShow(0.5, self.vb.fadedCount, args.destName)
 		self.vb.DebuffIcon = self.vb.DebuffIcon + 1
 	end
 end
