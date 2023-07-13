@@ -131,7 +131,7 @@ function mod:SPELL_CAST_START(args)
 			end
 		else
 --			timerTemporalBreathCD:Start(18)--24.7 most of time due to spell queues but can be as low as 18 (maybe even lower), it just doesn't happen til like 10 min into fight
-			timerTemporalBreathCD(24.7, self.vb.breathCount+1)
+			timerTemporalBreathCD:Start(24.7, self.vb.breathCount+1)
 		end
 		--Correct timer with forced ICD of this ability
 		--Rule is still valid, happens in stage 1 where most orbs get extended but not ALL of them
