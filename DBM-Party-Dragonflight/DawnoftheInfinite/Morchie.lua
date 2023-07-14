@@ -126,6 +126,7 @@ function mod:SPELL_CAST_START(args)
 		specWarnSandBlast:Show(self.vb.blastCount)
 		specWarnSandBlast:Play("shockwave")
 		timerSandBlastCD:Start(nil, self.vb.blastCount+1)
+		local timer
 		if self.vb.blastCount == 1 then--One off
 			timer = 38.8
 		elseif self.vb.blastCount == 3 then--just kidding, two off
