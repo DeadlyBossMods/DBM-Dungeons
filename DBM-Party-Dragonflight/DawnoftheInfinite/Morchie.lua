@@ -5,7 +5,7 @@ mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(198999)
 mod:SetEncounterID(2671)
 mod:SetUsedIcons(1, 2, 3, 4, 5, 6)
-mod:SetHotfixNoticeRev(20230711000000)
+mod:SetHotfixNoticeRev(20230713000000)
 --mod:SetMinSyncRevision(20221015000000)
 --mod.respawnTime = 29
 mod.sendMainBossGUID = true
@@ -58,13 +58,13 @@ mod.vb.problemsCount = 0
 mod.vb.problemIcons = 1
 mod.vb.facesCount = 0
 mod.vb.trapsCount = 0
-local allTimers = {--Timers up to 4:29
+local allTimers = {--Timers up to 6:09
 	--Sand Blast
-	[404916] = {4.6, 38.8, 29.1, 20.6, 29.1, 23, 29.1, 23, 29.2, 21.8},
+	[404916] = {4.6, 38.8, 29.1, 20.6, 29.1, 21.8, 29.1, 21.8, 29.1, 21.8, 29.1, 21.8, 29.1, 21.8},
 	--More Problems
-	[403891] = {10.6, 40, 48.5, 52.1, 50.9, 51},
+	[403891] = {10.6, 40, 48.5, 49.8, 50.9, 51, 51, 52.2},
 	--Time Traps
-	[406481] = {30.1, 50.5, 52.1, 52.1, 51},
+	[406481] = {30.1, 50.5, 51, 51, 51, 51, 51},
 }
 
 --[[
@@ -126,14 +126,19 @@ function mod:SPELL_CAST_START(args)
 		specWarnSandBlast:Show(self.vb.blastCount)
 		specWarnSandBlast:Play("shockwave")
 		timerSandBlastCD:Start(nil, self.vb.blastCount+1)
-		local timer = self:GetFromTimersTable(allTimers, false, false, spellId, self.vb.blastCount+1)
+		local timer
+		if self.vb.blastCount == 1 then--One off
+			timer = 38.8
+		elseif self.vb.blastCount == 3 then--just kidding, two off
+			timer = 20.6
+		elseif self.vb.blastCount % 2 == 0 then
+			timer = 29.1
+		else
+			timer = 21.8
+		end
+--		local timer = self:GetFromTimersTable(allTimers, false, false, spellId, self.vb.blastCount+1)
 		if timer then
 			timerSandBlastCD:Start(timer, self.vb.blastCount+1)
-		else
-			if not askShown then
-				askShown = true
-				DBM:AddMsg("Timers not known beyond this point, please share your WCL with DBM authors if you can")
-			end
 		end
 --		updateAllTimers(self, 4.9)
 	elseif spellId == 403891 then
@@ -159,14 +164,9 @@ function mod:SPELL_CAST_START(args)
 		self.vb.trapsCount = self.vb.trapsCount + 1
 		specWarnTimeTraps:Show(self.vb.trapsCount)
 		specWarnTimeTraps:Play("watchstep")
-		local timer = self:GetFromTimersTable(allTimers, false, false, spellId, self.vb.trapsCount+1)
+		local timer = self:GetFromTimersTable(allTimers, false, false, spellId, self.vb.trapsCount+1) or 51
 		if timer then
 			timerTimeTrapsCD:Start(timer, self.vb.trapsCount+1)
-		else
-			if not askShown then
-				askShown = true
-				DBM:AddMsg("Timers not known beyond this point, please share your WCL with DBM authors if you can")
-			end
 		end
 	end
 end
