@@ -333,7 +333,7 @@ L:SetGeneralLocalization({
 })
 
 L:SetMiscLocalization({
-	customWAMessage = "Use %s for Ally pulls and %s for Horde pulls"
+	customWAMessage = "Use |cff69ccf0%s|r for |cff4565ffAlly|r pulls and |cff69ccf0%s|r for |cffff0000Horde|r pulls"
 })
 
 -----------------------
