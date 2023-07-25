@@ -22,11 +22,11 @@ local warnMoltenImpact			= mod:NewSpellAnnounce(150038, 3)
 
 local specWarnMagmaBarrage		= mod:NewSpecialWarningGTFO(150011, nil, nil, nil, 1, 8)
 local specWarnRoughSmash		= mod:NewSpecialWarningDodge(149941, "Melee", nil, nil, 4, 2)
-local specWarnRuination			= mod:NewSpecialWarningSwitch("ej8622", "-Healer", nil, nil, 1, 2)
-local specWarnCalamity			= mod:NewSpecialWarningSwitch("ej8626", "-Healer", nil, nil, 1, 2)
+local specWarnRuination			= mod:NewSpecialWarningSwitch(-8622, "-Healer", nil, nil, 1, 2)
+local specWarnCalamity			= mod:NewSpecialWarningSwitch(-8626, "-Healer", nil, nil, 1, 2)
 local specWarnFirestorm			= mod:NewSpecialWarningInterrupt(149997, "HasInterrupt", nil, 2, 1, 2)
 local specWarnDancingFlames		= mod:NewSpecialWarningDispel(149975, "RemoveMagic", nil, nil, 1, 2)
-local specWarnMagmolatus		= mod:NewSpecialWarningSwitch("ej8621", nil, nil, 2, 1, 2)--Dps can turn this on too I suppose but 5 seconds after boss spawns they are switching to add anyways, so this is mainly for tank to pick it up
+local specWarnMagmolatus		= mod:NewSpecialWarningSwitch(-8621, nil, nil, 2, 1, 2)--Dps can turn this on too I suppose but 5 seconds after boss spawns they are switching to add anyways, so this is mainly for tank to pick it up
 local specWarnSlagSmash			= mod:NewSpecialWarningDodge(150023, "Melee", nil, nil, 4, 2)
 local specWarnWitheringFlames	= mod:NewSpecialWarningDispel(150032, "RemoveMagic", nil, nil, 1, 2)
 

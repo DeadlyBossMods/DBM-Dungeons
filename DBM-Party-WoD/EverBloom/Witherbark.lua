@@ -19,12 +19,12 @@ mod:RegisterEventsInCombat(
 
 local warnBrittleBark			= mod:NewSpellAnnounce(164275, 1)
 local warnBrittleBarkOver		= mod:NewEndAnnounce(164275, 2)
-local warnUncheckedGrowth		= mod:NewSpellAnnounce("ej10098", 3, 164294)
+local warnUncheckedGrowth		= mod:NewSpellAnnounce(-10098, 3, 164294)
 
 local specWarnLivingLeaves		= mod:NewSpecialWarningMove(169495, nil, nil, nil, 1, 8)
 local specWarnUncheckedGrowthYou= mod:NewSpecialWarningYou(164294, nil, nil, nil, 1, 2)
 local specWarnUncheckedGrowth	= mod:NewSpecialWarningMove(164294, nil, nil, nil, 1, 8)
-local specWarnUncheckedGrowthAdd= mod:NewSpecialWarningSwitch("ej10098", "Tank", nil, nil, 1, 2)
+local specWarnUncheckedGrowthAdd= mod:NewSpecialWarningSwitch(-10098, "Tank", nil, nil, 1, 2)
 local specWarnParchedGrasp		= mod:NewSpecialWarningSpell(164357, "Tank", nil, nil, 1, 2)
 
 local timerParchedGrasp			= mod:NewCDTimer(12, 164357, nil, "Tank", 2, 5, nil, DBM_COMMON_L.TANK_ICON)

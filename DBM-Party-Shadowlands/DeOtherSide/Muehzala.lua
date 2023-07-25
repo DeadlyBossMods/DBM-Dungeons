@@ -31,7 +31,7 @@ mod:RegisterEventsInCombat(
 local warnCosmicArtifice			= mod:NewTargetAnnounce(325725, 3)
 local warnShatterReality			= mod:NewCastAnnounce(326171, 4)
 --Stage 2: Shattered Reality
---local warnAddsRemaining				= mod:NewAddsLeftAnnounce("ej22186", 2, 264049)--A nice shackle icon
+--local warnAddsRemaining				= mod:NewAddsLeftAnnounce(-22186, 2, 264049)--A nice shackle icon
 
 --Stage 1: The Master of Death
 local specWarnMasterofDeath			= mod:NewSpecialWarningDodge(325258, nil, nil, nil, 2, 2)

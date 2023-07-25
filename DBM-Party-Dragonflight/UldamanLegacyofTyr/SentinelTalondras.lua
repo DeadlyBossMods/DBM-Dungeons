@@ -40,13 +40,13 @@ local specWarnTitanicEmpowerment				= mod:NewSpecialWarningSpell(372719, nil, ni
 local specWarnResonatingOrb						= mod:NewSpecialWarningYouPos(382071, nil, nil, nil, 1, 2)
 local yellResonatingOrb							= mod:NewShortPosYell(382071)
 local yellResonatingOrbFades					= mod:NewIconFadesYell(382071)
-local specWarnCrushingStomp						= mod:NewSpecialWarningSpell(372701, nil, nil, nil, 2, 2)
+local specWarnCrushingStomp						= mod:NewSpecialWarningCount(372701, nil, nil, nil, 2, 2)
 --local specWarnGTFO							= mod:NewSpecialWarningGTFO(340324, nil, nil, nil, 1, 8)
 
 local timerTitanicEmpowermentCD					= mod:NewCDTimer(35, 372719, nil, nil, nil, 2, nil, DBM_COMMON_L.DEADLY_ICON)
-local timerResonatingOrbCD						= mod:NewCDTimer(26.4, 382071, nil, nil, nil, 3, nil, nil, true)--25-30ish
-local timerCrushingStompCD						= mod:NewCDTimer(12.1, 372701, nil, nil, nil, 2, nil, nil, true)
-local timerEarthenShardsCD						= mod:NewCDTimer(9.3, 372718, nil, nil, nil, 3, nil, DBM_COMMON_L.BLEED_ICON, true)
+local timerResonatingOrbCD						= mod:NewCDTimer(25.6, 382071, nil, nil, nil, 3, nil, nil, true)--25-30ish
+local timerCrushingStompCD						= mod:NewCDCountTimer(12.1, 372701, nil, nil, nil, 2, nil, nil, true)
+local timerEarthenShardsCD						= mod:NewCDTimer(6, 372718, nil, nil, nil, 3, nil, DBM_COMMON_L.BLEED_ICON, true)
 
 --local berserkTimer							= mod:NewBerserkTimer(600)
 
@@ -55,11 +55,13 @@ local timerEarthenShardsCD						= mod:NewCDTimer(9.3, 372718, nil, nil, nil, 3, 
 mod:AddSetIconOption("SetIconOnOrb", 382071, true, false, {1, 2, 3})
 
 mod.vb.orbIcon = 1
+mod.vb.stompCount = 0
 
 function mod:OnCombatStart(delay)
+	self.vb.stompCount = 0
 --	timerResonatingOrbCD:Start(1-delay)--Instantly on pull
 	timerEarthenShardsCD:Start(4.5-delay)
-	timerCrushingStompCD:Start(8.1-delay)
+	timerCrushingStompCD:Start(5.1-delay, 1)
 	if not self:IsMythic() then
 		timerTitanicEmpowermentCD:Start(25.4-delay)
 	end
@@ -88,9 +90,10 @@ function mod:SPELL_CAST_START(args)
 		self.vb.orbIcon = 1
 		timerResonatingOrbCD:Start()
 	elseif spellId == 372701 then
-		specWarnCrushingStomp:Show()
+		self.vb.stompCount = self.vb.stompCount + 1
+		specWarnCrushingStomp:Show(self.vb.stompCount)
 		specWarnCrushingStomp:Play("carefly")
-		timerCrushingStompCD:Start()
+		timerCrushingStompCD:Start(nil, self.vb.stompCount+1)
 	end
 end
 

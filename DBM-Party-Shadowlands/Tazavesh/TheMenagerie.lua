@@ -50,7 +50,7 @@ mod:AddTimerLine(DBM:EJ_GetSectionInfo(23231))
 local specWarnVentingProtocol		= mod:NewSpecialWarningDodge(349987, nil, nil, nil, 2, 2)
 local specWarnPurificationProtocol	= mod:NewSpecialWarningDispel(349954, "RemoveMagic", nil, nil, 1, 2)
 
-local timerAchilliteCD				= mod:NewNextTimer(23, "ej23231", nil, nil, nil, 1, "132349")
+local timerAchilliteCD				= mod:NewNextTimer(23, -23231, nil, nil, nil, 1, "132349")
 local timerVentingProtocolCD		= mod:NewCDTimer(26.6, 349987, nil, nil, nil, 3)
 local timerFlagellationProtocolCD	= mod:NewCDTimer(23, 349934, nil, nil, nil, 3)
 local timerPurificationProtocolCD	= mod:NewCDTimer(18.2, 320200, nil, nil, nil, 3, nil, DBM_COMMON_L.MAGIC_ICON)
@@ -62,7 +62,7 @@ local specWarnWhirlingAnnihilation	= mod:NewSpecialWarningRun(350086, nil, nil, 
 local specWarnChainsofDamnation		= mod:NewSpecialWarningSwitch(350101, "-Healer", nil, nil, 1, 2)
 local yellChainsofDamnation			= mod:NewYell(350101, nil, nil, nil, "YELL")
 
-local timerVenzaCD					= mod:NewNextTimer(23, "ej23241", nil, nil, nil, 1, "132349")
+local timerVenzaCD					= mod:NewNextTimer(23, -23241, nil, nil, nil, 1, "132349")
 local timerWhirlingAnnihilationCD	= mod:NewCDTimer(30.3, 350086, nil, nil, nil, 2, nil, DBM_COMMON_L.DEADLY_ICON)
 local timerChainsofDamnationCD		= mod:NewCDCountTimer(30.3, 350101, nil, nil, nil, 1)
 

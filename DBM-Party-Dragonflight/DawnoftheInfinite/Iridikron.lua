@@ -2,10 +2,10 @@ local mod	= DBM:NewMod(2537, "DBM-Party-Dragonflight", 9, 1209)
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
---mod:SetCreatureID(194181)
+mod:SetCreatureID(198933)
 mod:SetEncounterID(2669)
 --mod:SetUsedIcons(1, 2, 3)
---mod:SetHotfixNoticeRev(20221015000000)
+mod:SetHotfixNoticeRev(20230711000000)
 --mod:SetMinSyncRevision(20221015000000)
 --mod.respawnTime = 29
 mod.sendMainBossGUID = true
@@ -13,34 +13,48 @@ mod.sendMainBossGUID = true
 mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
---	"SPELL_CAST_START",
+	"SPELL_CAST_START 409261 414535 409456 409635 414184",
 --	"SPELL_CAST_SUCCESS",
---	"SPELL_AURA_APPLIED",
---	"SPELL_AURA_APPLIED_DOSE",
---	"SPELL_AURA_REMOVED",
+	"SPELL_AURA_APPLIED 409266 414376",
+	"SPELL_AURA_REMOVED 409456"
 --	"SPELL_PERIODIC_DAMAGE",
 --	"SPELL_PERIODIC_MISSED",
---	"UNIT_SPELLCAST_SUCCEEDED boss1"
 )
 
 --[[
-
+(ability.id = 409261 or ability.id = 414535 or ability.id = 409456 or ability.id = 409635 or ability.id = 414184) and type = "begincast"
+ or ability.id = 409456 and type = "removebuff"
+ or type = "dungeonencounterstart" or type = "dungeonencounterend"
 --]]
---local warnArcaneOrbs							= mod:NewCountAnnounce(385974, 3)
+--NOTES: Crushing Onslaught seems utterly passive and not much point in warning for it really
+local warnExtinctionBlast						= mod:NewTargetNoFilterAnnounce(409261, 4)
+local warnEarthsurge							= mod:NewCountAnnounce(409456, 3)
+local warnEarthsurgeOver						= mod:NewEndAnnounce(409456, 1)
+local warnCataclysmicObliteration				= mod:NewCastAnnounce(414184, 4)
 
---local specWarnManaBomb							= mod:NewSpecialWarningMoveAway(386181, nil, nil, nil, 1, 2)
---local yellManaBomb								= mod:NewYell(386181)
---local yellManaBombFades							= mod:NewShortFadesYell(386181)
---local specWarnGTFO								= mod:NewSpecialWarningGTFO(386201, nil, nil, nil, 1, 8)
+local specWarnExtinctionBlast					= mod:NewSpecialWarningMoveTo(409261, nil, nil, nil, 2, 2)--Warn everyone
+local yellExtinctionBlast						= mod:NewYell(409261)--But have target of it do yell
+local specWarnStonecrackerBarrage				= mod:NewSpecialWarningSoakCount(414535, nil, nil, nil, 2, 2)
+local specWarnPulvBreath						= mod:NewSpecialWarningDodgeCount(409635, nil, nil, nil, 2, 2)
+local specWarnGTFO								= mod:NewSpecialWarningGTFO(414376, nil, nil, nil, 1, 8)
 
---local timerManaBombsCD							= mod:NewAITimer(19.4, 386173, nil, nil, nil, 3)
---local timerArcaneExpulsionCD					= mod:NewAITimer(19.4, 385958, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+local timerExtinctionBlastCD					= mod:NewCDCountTimer(19.4, 409261, nil, nil, nil, 3, nil, DBM_COMMON_L.DEADLY_ICON)
+local timerStonecrackerBarrageCD				= mod:NewCDCountTimer(19.4, 414535, nil, nil, nil, 5, nil, DBM_COMMON_L.IMPORTANT_ICON)
+local timerEarthSurgeCD							= mod:NewCDCountTimer(19.4, 409456, nil, nil, nil, 5, nil, DBM_COMMON_L.DAMAGE_ICON..DBM_COMMON_L.HEALER_ICON)
+local timerPulverizingExhalationCD				= mod:NewCDCountTimer(19.4, 409635, nil, nil, nil, 3, nil, DBM_COMMON_L.DEADLY_ICON)
+local timerCataclysmicObliteration				= mod:NewCastTimer(30, 414184, nil, nil, nil, 2)
 
 --mod:AddInfoFrameOption(391977, true)
 
---function mod:OnCombatStart(delay)
+mod.vb.surgeCount = 0
 
---end
+function mod:OnCombatStart(delay)
+	self:SetStage(1)
+	self.vb.surgeCount = 0
+	timerExtinctionBlastCD:Start(8.5, 1)
+	timerStonecrackerBarrageCD:Start(16.3, 1)
+	timerEarthSurgeCD:Start(35.2, 1)
+end
 
 --function mod:OnCombatEnd()
 --	if self.Options.RangeFrame then
@@ -51,14 +65,31 @@ mod:RegisterEventsInCombat(
 --	end
 --end
 
---[[
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
-	if spellId == 388537 then
-
+	if spellId == 409261 then
+	elseif spellId == 414535 then
+		specWarnStonecrackerBarrage:Show(self.vb.surgeCount+1)
+		specWarnStonecrackerBarrage:Play("helpsoak")
+	elseif spellId == 409456 then
+		self.vb.surgeCount = self.vb.surgeCount + 1
+		warnEarthsurge:Show(self.vb.surgeCount)
+	elseif spellId == 409635 then
+		specWarnPulvBreath:Show(self.vb.surgeCount)
+		specWarnPulvBreath:Play("breathsoon")
+		if self:IsMythic() then
+			specWarnPulvBreath:ScheduleVoice(2, "scatter")
+		end
+	elseif spellId == 414184 then
+		self:SetStage(2)
+		timerExtinctionBlastCD:Stop()
+		timerStonecrackerBarrageCD:Stop()
+		timerEarthSurgeCD:Stop()
+		timerPulverizingExhalationCD:Stop()
+		warnCataclysmicObliteration:Show()
+		timerCataclysmicObliteration:Start()
 	end
 end
---]]
 
 --[[
 function mod:SPELL_CAST_SUCCESS(args)
@@ -69,24 +100,33 @@ function mod:SPELL_CAST_SUCCESS(args)
 end
 --]]
 
---[[
 function mod:SPELL_AURA_APPLIED(args)
 	local spellId = args.spellId
-	if spellId == 386181 then
-
+	if spellId == 409266 then
+		if args:IsPlayer() then
+			specWarnExtinctionBlast:Show(DBM_COMMON_L.SHIELD)
+			specWarnExtinctionBlast:Play("findshelter")
+			yellExtinctionBlast:Yell()
+		else
+			warnExtinctionBlast:Show(args.destName)
+		end
+	elseif spellId == 414376 and args:IsPlayer() and self:AntiSpam(3, 1) then
+		specWarnGTFO:Show(args.spellName)
+		specWarnGTFO:Play("watchfeet")
 	end
 end
 --mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED
---]]
 
---[[
 function mod:SPELL_AURA_REMOVED(args)
 	local spellId = args.spellId
-	if spellId == 386181 then
-
+	if spellId == 409456 then--Earthsurge
+		warnEarthsurgeOver:Show()
+		timerPulverizingExhalationCD:Start(9.1, self.vb.surgeCount)
+		timerExtinctionBlastCD:Start(41.9, self.vb.surgeCount+1)
+		timerStonecrackerBarrageCD:Start(49.4, self.vb.surgeCount+1)
+		timerEarthSurgeCD:Start(69, self.vb.surgeCount+1)
 	end
 end
---]]
 
 --[[
 function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId, spellName)

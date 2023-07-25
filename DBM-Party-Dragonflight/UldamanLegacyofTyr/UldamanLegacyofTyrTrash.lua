@@ -7,7 +7,7 @@ mod.isTrashMod = true
 
 mod:RegisterEvents(
 	"SPELL_CAST_START 369811 382578 369674 369823 369675 369806 377732 369399 369335 369400 369365 369423 369411 381593 382696 377500 369409",
-	"SPELL_CAST_SUCCESS 377738 369465 369328 377732 382696",
+	"SPELL_CAST_SUCCESS 377738 369465 369328 377732 382696 369811",
 	"SPELL_AURA_APPLIED 369365 369828 369823 369818 369400 369366 377500",
 	"SPELL_AURA_APPLIED_DOSE 369828 377738 369419",
 --	"SPELL_AURA_REMOVED 339525",
@@ -66,7 +66,7 @@ local timerHailofStoneCD					= mod:NewCDTimer(21.8, 369465, nil, nil, nil, 5)
 local timerStoneBoltCD						= mod:NewCDTimer(7.2, 369399, nil, false, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--7-11, off by default to giev prio to Hail of stone
 local timerEarthquakeCD						= mod:NewCDTimer(25.4, 369328, nil, nil, nil, 2)
 local timerFissuringSlamCD					= mod:NewCDTimer(9.7, 369335, nil, nil, nil, 2)--9.7-15
-local timerCleaveCD							= mod:NewCDTimer(15.7, 369409, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+local timerCleaveCD							= mod:NewCDTimer(15, 369409, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerPounceCD							= mod:NewCDTimer(15.7, 369423, nil, nil, nil, 3)
 local timerThunderousClapCD					= mod:NewCDTimer(19, 381593, nil, nil, nil, 2)
 local timerBulwarkSlamCD					= mod:NewCDTimer(10.6, 382696, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
@@ -74,7 +74,7 @@ local timerHastenCD							= mod:NewCDTimer(23, 377500, nil, nil, nil, 4, nil, DB
 
 --local playerName = UnitName("player")
 
---Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc, 7 off interrupt
+--Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc, 7 off interrupt, 8 off dodge (can't be interrupted/CCed and too spammy to be special warning)
 
 --[[
 function mod:LitTarget(targetname)
@@ -91,14 +91,13 @@ function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
 	if not self:IsValidWarning(args.sourceGUID) then return end
 	if spellId == 369811 then
-		timerBrutalSlamCD:Start(nil, args.sourceGUID)
 		if self:AntiSpam(3, 1) then
 			specWarnBrutalSlam:Show()
 			specWarnBrutalSlam:Play("justrun")
 		end
 	elseif spellId == 381593 then
 		timerThunderousClapCD:Start(nil, args.sourceGUID)
-		if self:AntiSpam(3, 6) then
+		if self:AntiSpam(3, 8) then
 			warnThunderousClap:Show()
 		end
 	elseif spellId == 382578 and self:AntiSpam(3, 5) then
@@ -209,6 +208,8 @@ function mod:SPELL_CAST_SUCCESS(args)
 		timerJaggedBiteCD:Start(nil, args.sourceGUID)
 	elseif spellId == 382696 then
 		timerBulwarkSlamCD:Start(nil, args.sourceGUID)
+	elseif spellId == 369811 then
+		timerBrutalSlamCD:Start(18.1, args.sourceGUID)--20.1 - 2
 	end
 end
 

@@ -5,6 +5,7 @@ mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(131817)
 mod:SetEncounterID(2118)
 mod.sendMainBossGUID = true
+mod:SetHotfixNoticeRev(20230528000000)
 
 mod:RegisterCombat("combat")
 
@@ -17,36 +18,61 @@ mod:RegisterEventsInCombat(
 
 --TODO, a really long normal pull to get timer interactions correct when there are no tantrums
 --These don't exist on WCL, or at least not in a way they can be found easily :\
+--M+ Off Log
+--https://www.warcraftlogs.com/reports/cjPnRCWhkrvwd7zD#fight=last&pins=2%24Off%24%23244F4B%24expression%24ability.id%20%3D%20260333%20and%20type%20%3D%20%22cast%22%20%20or%20(ability.id%20%3D%20260793%20or%20ability.id%20%3D%20260292)%20and%20type%20%3D%20%22begincast%22%20%20or%20type%20%3D%20%22dungeonencounterstart%22%20or%20type%20%3D%20%22dungeonencounterend%22&view=events&translate=true
+--M+ Frequent Log
+--https://www.warcraftlogs.com/reports/GQa23ntY8pxJNhHB#fight=last&pins=2%24Off%24%23244F4B%24expression%24ability.id%20%3D%20260333%20and%20type%20%3D%20%22cast%22%20%20or%20(ability.id%20%3D%20260793%20or%20ability.id%20%3D%20260292)%20and%20type%20%3D%20%22begincast%22%20%20or%20type%20%3D%20%22dungeonencounterstart%22%20or%20type%20%3D%20%22dungeonencounterend%22&view=events
 --[[
 ability.id = 260333 and type = "cast"
  or (ability.id = 260793 or ability.id = 260292) and type = "begincast"
+ or type = "dungeonencounterstart" or type = "dungeonencounterend"
 --]]
 local specWarnIndigestion			= mod:NewSpecialWarningSpell(260793, "Tank", nil, nil, 1, 2)
-local specWarnCharge				= mod:NewSpecialWarningDodge(260292, nil, nil, nil, 3, 2)
+local specWarnCharge				= mod:NewSpecialWarningDodgeCount(260292, nil, nil, nil, 3, 2)
 local specWarnTantrum				= mod:NewSpecialWarningCount(260333, nil, nil, nil, 2, 2)
 --local specWarnGTFO				= mod:NewSpecialWarningGTFO(238028, nil, nil, nil, 1, 8)
 
-local timerIndigestionCD			= mod:NewCDTimer(70, 260793, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+local timerIndigestionCD			= mod:NewCDTimer(49.7, 260793, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerChargeCD					= mod:NewCDTimer(20.7, 260292, nil, nil, nil, 3, nil, DBM_COMMON_L.DEADLY_ICON)
-local timerTantrumCD				= mod:NewCDTimer(13, 260333, nil, nil, nil, 2, nil, DBM_COMMON_L.HEALER_ICON)
+local timerTantrumCD				= mod:NewCDCountTimer(44.9, 260333, nil, nil, nil, 2, nil, DBM_COMMON_L.HEALER_ICON)
 
 mod:AddNamePlateOption("NPAuraMetamorphosis", 260416)
 
-mod.vb.IndigestionCast = false--Never used more than once per cycle, whereass charge may or may not be cast twice
 mod.vb.chargeCast = 0
 mod.vb.tantrumCast = 0
 
+local function updateAllTimers(self, ICD)
+	DBM:Debug("updateAllTimers running", 3)
+	if timerTantrumCD:GetRemaining(self.vb.tantrumCast+1) < ICD then
+		local elapsed, total = timerTantrumCD:GetTime(self.vb.tantrumCast+1)
+		local extend = ICD - (total-elapsed)
+		DBM:Debug("timerTantrumCD extended by: "..extend, 2)
+		timerTantrumCD:Update(elapsed, total+extend, self.vb.tantrumCast+1)
+	end
+	if timerChargeCD:GetRemaining() < ICD then
+		local elapsed, total = timerChargeCD:GetTime()
+		local extend = ICD - (total-elapsed)
+		DBM:Debug("timerChargeCD extended by: "..extend, 2)
+		timerChargeCD:Update(elapsed, total+extend)
+	end
+	if timerIndigestionCD:GetRemaining() < ICD then
+		local elapsed, total = timerIndigestionCD:GetTime()
+		local extend = ICD - (total-elapsed)
+		DBM:Debug("timerIndigestionCD extended by: "..extend, 2)
+		timerIndigestionCD:Update(elapsed, total+extend)
+	end
+end
+
 function mod:OnCombatStart(delay)
-	self.vb.IndigestionCast = false
 	self.vb.chargeCast = 0
 	self.vb.tantrumCast = 0
 	if self.Options.NPAuraMetamorphosis then
 		DBM:FireEvent("BossMod_EnableHostileNameplates")
 	end
-	--he casts random ability first
+	--he casts random ability first, it's charge like 95% of time though
 	timerIndigestionCD:Start(8.3-delay)
 	timerChargeCD:Start(8.3-delay)
-	--timerTantrumCD:Start(45)
+	timerTantrumCD:Start(45, 1)
 end
 
 function mod:OnCombatEnd()
@@ -76,58 +102,28 @@ end
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
 	if spellId == 260793 then
-		self.vb.IndigestionCast = true
 		specWarnIndigestion:Show()
 		specWarnIndigestion:Play("breathsoon")
-		--Charge is always 12 seconds after indigiestion in EVERY combo
-		--Also, regardless of time left on charg timer, Indigestion always resets charge to 12
-		timerChargeCD:Stop()
-		timerChargeCD:Start(12)
-		if not self:IsNormal() then
-			if self.vb.chargeCast == 0 then--No charge yet, it means it's one of the two Indigestion first combos
-				if self.vb.tantrumCast == 0 then--Indigestion, charge, charge, Tantrum
-					--Very niche combat start condition. This segment slightly longer than rest
-					timerTantrumCD:Start(43.7)
-				else
-					--It's only Indigestion, charge, Tantrum
-					timerTantrumCD:Start(26.7)
-				end
-			end
-		else
-			timerIndigestionCD:Start(43.7)
-			--(will probably never be accurate, since WCL lacks tools to search for normal dungeons)
-		end
+		timerIndigestionCD:Start(49.7)
+		updateAllTimers(self, 10.9)--10.9 for tantrum, 12 for charge
 	elseif spellId == 260292 then
 		self.vb.chargeCast = self.vb.chargeCast + 1
-		specWarnCharge:Show()
+		specWarnCharge:Show(self.vb.chargeCast)
 		specWarnCharge:Play("chargemove")
-		if not self:IsNormal() then
-			--If charge is first, Indigestion will always be cast 10.9 seconds after
-			if not self.vb.IndigestionCast then--charge, indigestion, charge combo.
-				timerIndigestionCD:Start(10.9)
-				timerTantrumCD:Start(37.6)
-			else--Indigestion was first, check for niche Indigestion, charge, charge, Tantrum combo
-				if self.vb.tantrumCast == 0 then
-					timerChargeCD:Start(20)
-				end
-			end
-		else--On normal, just always start the 20 second timer, but allow it to still be corrected by Indigestion Cast
-			timerChargeCD:Start(20)
-		end
+		timerChargeCD:Start(20)
+		updateAllTimers(self, 5)--Never seen it delay indigestion but have seen it delay tantrum many times by at least 5 sec
 	end
 end
 
 function mod:SPELL_CAST_SUCCESS(args)
 	local spellId = args.spellId
-	if spellId == 260333 then
-		self.vb.IndigestionCast = false
+	if spellId == 260333 then--Tantrum
 		self.vb.chargeCast = 0
 		self.vb.tantrumCast = self.vb.tantrumCast + 1
-		timerChargeCD:Stop()
+		timerChargeCD:AddTime(6.1)--Seems to add 7 seconds static to charge timer, period. charge CD is either 20, or 27 if a tantrum was in between charges, (Unless spell queued but that is handled by auto correct)
 		specWarnTantrum:Show(self.vb.tantrumCast)
 		specWarnTantrum:Play("aesoon")
-		--Start both bars, what he uses first is random
-		timerIndigestionCD:Start(18.2)
-		timerChargeCD:Start(18.2)
+		timerTantrumCD:Start(nil, self.vb.tantrumCast+1)
+--		updateAllTimers(self, 13.4)--Unknown but I imagine it's like 5 sec at most, some logs make it appear 6 13 or 18, but all are incorrect assumptions
 	end
 end

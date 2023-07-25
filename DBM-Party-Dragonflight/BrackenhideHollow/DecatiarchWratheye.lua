@@ -32,15 +32,15 @@ mod:RegisterEventsInCombat(
 --TODO, longer pulls for decaying strength timer (needs more data, single pull with 3 casts but still all over the place)
 local warnDecayigStrength						= mod:NewSpellAnnounce(373960, 3)
 
-local specWarnRotburstTotem						= mod:NewSpecialWarningSwitch(373944, nil, nil, nil, 1, 2)
+local specWarnRotburstTotem						= mod:NewSpecialWarningSwitch(373944, "-Healer", nil, 2, 1, 2)
 local specWarnChokingRotcloud					= mod:NewSpecialWarningDodge(376170, nil, nil, nil, 2, 2, 4)
 local specWarnDecaystrike						= mod:NewSpecialWarningDefensive(373917, nil, nil, nil, 1, 2)
 --local specWarnGTFO							= mod:NewSpecialWarningGTFO(340324, nil, nil, nil, 1, 8)
 
 local timerDecayingStrengthCD					= mod:NewCDTimer(40.5, 373960, nil, nil, nil, 2)
-local timerRotburstTotemCD						= mod:NewCDTimer(18.2, 373944, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)--18-21
+local timerRotburstTotemCD						= mod:NewCDTimer(17, 373944, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)--18-21
 local timerChokingRotcloutCD					= mod:NewCDTimer(42.5, 376170, nil, nil, nil, 3, nil, DBM_COMMON_L.MYTHIC_ICON)
-local timerDecayStrikeCD						= mod:NewCDTimer(19.4, 373917, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+local timerDecayStrikeCD						= mod:NewCDCountTimer(19.4, 373917, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 
 --local berserkTimer							= mod:NewBerserkTimer(600)
 
@@ -49,15 +49,15 @@ mod:AddInfoFrameOption(373896, true)
 mod:AddSetIconOption("SetIconOnRotburstTotem", 373944, true, 5, {8})
 
 local WitheringRotStacks = {}
-mod.vb.waterCount = 0
+mod.vb.decayStrike = 0
 
 function mod:OnCombatStart(delay)
 	table.wipe(WitheringRotStacks)
-	self.vb.waterCount = 0
+	self.vb.decayStrike = 0
 	if self:IsMythic() then
 		timerChokingRotcloutCD:Start(5.7-delay)
 	end
-	timerDecayStrikeCD:Start(10.5-delay)
+	timerDecayStrikeCD:Start(10.5-delay, 1)
 	timerRotburstTotemCD:Start(18.9-delay)
 	timerDecayingStrengthCD:Start(40-delay)
 	if self.Options.InfoFrame then
@@ -89,11 +89,12 @@ function mod:SPELL_CAST_START(args)
 		timerDecayingStrengthCD:Start(44.9)
 	elseif spellId == 376170 then
 		specWarnChokingRotcloud:Show()
-		specWarnChokingRotcloud:Play("shockwave")
+		specWarnChokingRotcloud:Play("watchstep")
 --		timerChokingRotcloutCD:Start()
 	elseif spellId == 373912 then
-		timerDecayStrikeCD:Start()
-		if args:IsPlayer() then
+		self.vb.decayStrike = self.vb.decayStrike + 1
+		timerDecayStrikeCD:Start(nil, self.vb.decayStrike+1)
+		if self:IsTanking("player", "boss1", nil, true) then
 			specWarnDecaystrike:Show()
 			specWarnDecaystrike:Play("defensive")
 		end

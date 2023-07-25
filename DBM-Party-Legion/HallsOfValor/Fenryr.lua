@@ -33,13 +33,13 @@ local specWarnLeap						= mod:NewSpecialWarningMoveAway(197556, nil, nil, nil, 1
 local yellLeap							= mod:NewYell(197556)
 local specWarnHowl						= mod:NewSpecialWarningCast(196543, "SpellCaster", nil, nil, 1, 2)
 local specWarnFixate					= mod:NewSpecialWarningRun(196838, nil, nil, nil, 4, 2)
-local specWarnWolves					= mod:NewSpecialWarningSwitch("ej12600", "Tank", nil, nil, 1, 2)
+local specWarnWolves					= mod:NewSpecialWarningSwitch(-12600, "Tank", nil, nil, 1, 2)
 
 local timerLeapCD						= mod:NewCDTimer(31, 197556, nil, nil, nil, 3)--31-36
 local timerClawFrenzyCD					= mod:NewCDCountTimer(9.7, 196512, nil, nil, nil, 2, nil, DBM_COMMON_L.HEALER_ICON)--it is 10 sec, but is spell queued half the time
 local timerHowlCD						= mod:NewCDTimer(31.5, 196543, nil, "SpellCaster", nil, 2)--32ish unless spell queued
 local timerScentCD						= mod:NewCDTimer(37.6, 196838, nil, nil, nil, 3)--seems 37 now, up from old 34
-local timerWolvesCD						= mod:NewCDTimer(33.8, "ej12600", nil, nil, nil, 1, 199184)--33.8-56
+local timerWolvesCD						= mod:NewCDTimer(33.8, -12600, nil, nil, nil, 1, 199184)--33.8-56
 
 mod:AddRangeFrameOption(10, 197556)
 

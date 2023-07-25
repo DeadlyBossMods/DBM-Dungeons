@@ -56,6 +56,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
 end
 
 function mod:OnSync(msg)
+	if not self:IsInCombat() then return end
 	if msg == "bossdown" then
 		DBM:EndCombat(self)
 	end

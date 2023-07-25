@@ -8,7 +8,7 @@ mod.upgradedMPlus = true
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(43875)
 mod:SetEncounterID(1042)
-mod:SetHotfixNoticeRev(20230510000000)
+mod:SetHotfixNoticeRev(20230526000000)
 --mod:SetMinSyncRevision(20230226000000)
 mod.sendMainBossGUID = true
 
@@ -22,7 +22,6 @@ mod:RegisterEventsInCombat(
 )
 
 --If cataclysm classic is pre nerf, static cling has shorter cast and needs faster alert
---TODO add https://www.wowhead.com/ptr/spell=413263/skyfall-nova spawn with new Ids?
 --TODO, verify changes on non mythic+ in 10.1
 --TODO, diff logs can have very different results for chain lighting, seems due to boss sometimes skiping entire casts or delaying them
 --[[
@@ -46,7 +45,7 @@ local timerStaticClingCD		= mod:NewCDTimer(15.8, 87618, nil, nil, nil, 2)
 local timerStaticCling			= mod:NewCastTimer(10, 87618, nil, nil, nil, 5)
 local timerStorm				= mod:NewCastTimer(10, 86930, nil, nil, nil, 2)
 local timerGroundingFieldCD		= mod:NewCDCountTimer(45.7, 86911, nil, nil, nil, 2, nil, DBM_COMMON_L.DEADLY_ICON)
-local timerNovaCD				= mod:NewCDTimer(12.1, isRetail and 413263 or 96260, nil, nil, nil, 1)
+local timerNovaCD				= mod:NewCDCountTimer(12.1, isRetail and 413263 or 96260, nil, nil, nil, 1)
 
 mod.vb.groundingCount = 0
 mod.vb.novaCount = 0
@@ -67,11 +66,11 @@ function mod:OnCombatStart(delay)
 	self.vb.novaCount = 0
 	if self:IsMythicPlus() then
 		timerChainLightningCD:Start(12.1-delay)
-		timerNovaCD:Start(19.7)
+		timerNovaCD:Start(18.1, 1)
 		timerStaticClingCD:Start(25.3-delay)
 		timerGroundingFieldCD:Start(30.3-delay, 1)
 	else--TODO, check non M+ on 10.1
-		timerNovaCD:Start(10.7)
+		timerNovaCD:Start(10.7, 1)
 		timerStaticClingCD:Start(10.7-delay)
 		timerChainLightningCD:Start(13.1-delay)
 		timerGroundingFieldCD:Start(16.9-delay, 1)
@@ -86,14 +85,15 @@ function mod:SPELL_CAST_START(args)
 		specWarnStaticCling:Schedule(2.3)--delay message since jumping at start of cast is no longer correct in 4.0.6+
 		specWarnStaticCling:ScheduleVoice(2.3, "jumpnow")
 		timerStaticCling:Start(3)
-		if not self:IsMythicPlus() and timerGroundingFieldCD:GetRemaining() < 15.8 then
-			timerStaticClingCD:Start()
+		local expectedTimer = self:IsMythicPlus() and 29.1 or 15.8
+		if timerGroundingFieldCD:GetRemaining() < expectedTimer then
+			timerStaticClingCD:Start(expectedTimer)
 		end
 	elseif args.spellId == 87622 then
 		self:ScheduleMethod(0.2, "BossTargetScanner", args.sourceGUID, "LitTarget", 0.1, 8, true)
-		local minTime = self:IsMythicPlus() and 19.4 or 13.4
-		if not self:IsMythicPlus() and timerGroundingFieldCD:GetRemaining() < minTime then
-			timerChainLightningCD:Start(minTime)
+		local expectedTimer = self:IsMythicPlus() and 18.1 or 13.4
+		if timerGroundingFieldCD:GetRemaining() < expectedTimer then
+			timerChainLightningCD:Start(expectedTimer)
 		end
 	end
 end
@@ -121,14 +121,14 @@ function mod:SPELL_AURA_APPLIED(args)
 		specWarnGroundingField:Play("findshelter")
 		timerStorm:Start()
 		if self:IsMythicPlus() then
-			timerChainLightningCD:Start(19.3)--First cast can be delayed or skipped entirely
-			timerNovaCD:Start(27.9)
-			timerStaticClingCD:Start(58.1)
+			timerChainLightningCD:Restart(16.9)--First cast can be delayed or skipped entirely
+			timerNovaCD:Restart(25.4, self.vb.novaCount+1)
+			timerStaticClingCD:Restart(33.7)
 			timerGroundingFieldCD:Start(65.5, self.vb.groundingCount+1)
 		else
-			timerStaticClingCD:Start(12)
+			timerStaticClingCD:Restart(12)
 			--timerChainLightningCD:Start(19.3)
-			timerNovaCD:Start(22.9)
+			timerNovaCD:Restart(22.9, self.vb.novaCount+1)
 			timerGroundingFieldCD:Start(45.7, self.vb.groundingCount+1)--45.7
 		end
 	end
@@ -140,14 +140,9 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, spellId)
 		self.vb.novaCount = self.vb.novaCount + 1
 		specWarnNova:Show(self.vb.novaCount)
 		specWarnNova:Play("killmob")
-		if self:IsMythicPlus() then
-			if timerGroundingFieldCD:GetRemaining() < 25.4 then
-				timerNovaCD:Start(25.4)
-			end
-		else
-			if timerGroundingFieldCD:GetRemaining() < 12.1 then
-				timerNovaCD:Start()
-			end
+		local expectedTime = self:IsMythicPlus() and 25.1 or 12.1
+		if timerGroundingFieldCD:GetRemaining() < expectedTime then
+			timerNovaCD:Start(expectedTime, self.vb.novaCount+1)
 		end
 	end
 end

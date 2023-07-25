@@ -59,11 +59,11 @@ mod:AddTimerLine(DBM:EJ_GetSectionInfo(17023))
 local warnTappedKeg					= mod:NewSpellAnnounce(272884, 1)
 
 local specWarnBarrelSmash			= mod:NewSpecialWarningRun(256589, "Melee", nil, nil, 4, 2)
-local specWarnBlackoutBarrel		= mod:NewSpecialWarningSwitch(258338, nil, nil, nil, 1, 2)
+local specWarnBlackoutBarrel		= mod:NewSpecialWarningSwitch(258338, "-Healer", nil, 2, 1, 2)
 
 ----Hostile
 local timerBarrelSmashCD			= mod:NewCDTimer(22.9, 256589, nil, "Melee", nil, 3)--22.9-24.5
-local timerBlackoutBarrelCD			= mod:NewCDTimer(47.2, 258338, nil, nil, nil, 3, nil, DBM_COMMON_L.DAMAGE_ICON)
+local timerBlackoutBarrelCD			= mod:NewCDTimer(46.1, 258338, nil, nil, nil, 3, nil, DBM_COMMON_L.DAMAGE_ICON)
 ----Friendly
 local timerTappedKegCD				= mod:NewNextTimer(22.3, 272884, nil, nil, nil, 5)
 --Eudora
@@ -99,7 +99,7 @@ local function scanCaptains(self, isPull, delay)
 							DBM.RangeCheck:Show(5)
 						end
 					elseif cid == 126847 then--Raoul
-						timerBarrelSmashCD:Start(6.1-delay, bossGUID)
+						timerBarrelSmashCD:Start(5-delay, bossGUID)
 						timerBlackoutBarrelCD:Start(16.9-delay, bossGUID)
 					else--Eudora
 						timerGrapeShotCD:Start(7.3-delay, bossGUID)

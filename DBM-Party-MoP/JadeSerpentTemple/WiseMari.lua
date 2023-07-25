@@ -26,9 +26,9 @@ ability.id = 397783 and type = "begincast"
 local warnCorruptedVortex			= mod:NewTargetAnnounce(397797, 3)
 local warnCorruptedGeyser			= mod:NewCountAnnounce(397793, 3)
 local warnBubbleBurst				= mod:NewCastAnnounce(106612, 3)
-local warnAddsLeft					= mod:NewAddsLeftAnnounce("ej5616", 2, 106526)
+local warnAddsLeft					= mod:NewAddsLeftAnnounce(-5616, 2, 106526)
 
-local specWarnLivingWater			= mod:NewSpecialWarningSwitch("ej5616", "-Healer", nil, nil, 1, 2)
+local specWarnLivingWater			= mod:NewSpecialWarningSwitch(-5616, "-Healer", nil, nil, 1, 2)
 local specWarnWashAway				= mod:NewSpecialWarningDodge(397783, nil, nil, nil, 2, 2)
 local specWarnCorruptedVortex		= mod:NewSpecialWarningMoveAway(397797, nil, nil, nil, 1, 2)
 local yellCorruptedVortex			= mod:NewYell(397797)

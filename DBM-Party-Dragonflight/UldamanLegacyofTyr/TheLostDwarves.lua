@@ -45,7 +45,7 @@ local timerWildCleaveCD							= mod:NewCDTimer(17, 369563, nil, nil, nil, 5, nil
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(24781))
 local specWarnSkullcracker						= mod:NewSpecialWarningDodge(369791, nil, nil, nil, 2, 2)
 
-local timerSkullcrackerCD						= mod:NewCDTimer(26.6, 369791, nil, nil, nil, 3)
+local timerSkullcrackerCD						= mod:NewCDTimer(25.5, 369791, nil, nil, nil, 3)
 --Olaf
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(24782))
 local warnRicochetingShield						= mod:NewTargetNoFilterAnnounce(369677, 3)
@@ -55,7 +55,7 @@ local yellRicochetingShield						= mod:NewYell(369677)
 local specWarnDefensiveBulwark					= mod:NewSpecialWarningInterrupt(369602, "HasInterrupt", nil, nil, 1, 2)
 
 local timerRicochetingShieldCD					= mod:NewCDTimer(16.9, 369677, nil, nil, nil, 3)
-local timerDefensiveBulwarkCD					= mod:NewCDTimer(35, 369602, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerDefensiveBulwarkCD					= mod:NewCDTimer(33.8, 369602, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 --Longboat Raid!
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(24783))
 local timerLongboatRaidCD						= mod:NewCDTimer(27.4, 375924, nil, nil, nil, 6)
@@ -148,8 +148,8 @@ function mod:SPELL_CAST_START(args)
 			timerRicochetingShieldCD:Stop(args.sourceGUID)
 			timerDefensiveBulwarkCD:Stop(args.sourceGUID)
 			if bossPower == 100 then--Alive, restart timers
-				timerRicochetingShieldCD:Start(30, args.sourceGUID)
-				timerDefensiveBulwarkCD:Start(35, args.sourceGUID)
+				timerRicochetingShieldCD:Start(29.8)
+				timerDefensiveBulwarkCD:Start(34.1, args.sourceGUID)
 			end
 		elseif cid == 184582 then--Eric "The Swift"
 			timerSkullcrackerCD:Stop(args.sourceGUID)

@@ -8,7 +8,7 @@ mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(43873)
 mod:SetEncounterID(1041)
 mod:SetUsedIcons(8)
-mod:SetHotfixNoticeRev(20230427000000)
+mod:SetHotfixNoticeRev(20230527000000)
 --mod:SetMinSyncRevision(20230226000000)
 mod.sendMainBossGUID = true
 
@@ -42,7 +42,7 @@ local specWarnGTFO			= mod:NewSpecialWarningGTFO(413275, nil, nil, nil, 1, 8)
 
 local timerCalltheWindCD	= mod:NewCDCountTimer(20.6, 88276, nil, nil, nil, 6)
 local timerBreathCD			= mod:NewCDCountTimer(13.4, 88308, nil, nil, nil, 3)--May be 10.5 pre nerf for cata classic
-local timerDownburstCD		= mod:NewCDCountTimer(43.7, 413295, nil, nil, nil, 3, nil, DBM_COMMON_L.MYTHIC_ICON)
+local timerDownburstCD		= mod:NewCDCountTimer(35.1, 413295, nil, nil, nil, 3, nil, DBM_COMMON_L.MYTHIC_ICON)--35.1-44
 
 --mod:AddSetIconOption("BreathIcon", 88308, true, false, {8})
 
@@ -71,6 +71,28 @@ function mod:BreathTarget()
 end
 --]]
 
+local function updateAllTimers(self, ICD)
+	DBM:Debug("updateAllTimers running", 3)
+	if timerBreathCD:GetRemaining(self.vb.breathCount+1) < ICD then
+		local elapsed, total = timerBreathCD:GetTime(self.vb.breathCount+1)
+		local extend = ICD - (total-elapsed)
+		DBM:Debug("timerBreathCD extended by: "..extend, 2)
+		timerBreathCD:Update(elapsed, total+extend, self.vb.breathCount+1)
+	end
+	if timerCalltheWindCD:GetRemaining(self.vb.windCount+1) < ICD then
+		local elapsed, total = timerCalltheWindCD:GetTime(self.vb.windCount+1)
+		local extend = ICD - (total-elapsed)
+		DBM:Debug("timerCalltheWindCD extended by: "..extend, 2)
+		timerCalltheWindCD:Update(elapsed, total+extend, self.vb.windCount+1)
+	end
+	if timerDownburstCD:GetRemaining(self.vb.burstCount+1) < ICD then
+		local elapsed, total = timerDownburstCD:GetTime(self.vb.burstCount+1)
+		local extend = ICD - (total-elapsed)
+		DBM:Debug("timerDownburstCD extended by: "..extend, 2)
+		timerDownburstCD:Update(elapsed, total+extend, self.vb.burstCount+1)
+	end
+end
+
 function mod:OnCombatStart(delay)
 	self.vb.activeWind = "none"
 	self.vb.windCount = 0
@@ -78,8 +100,8 @@ function mod:OnCombatStart(delay)
 	self.vb.breathCount = 0
 	timerCalltheWindCD:Start(5-delay, 1)
 	if self:IsMythicPlus() then
-		timerBreathCD:Start(self:IsMythicPlus() and 13.1-delay, 1)
-		timerDownburstCD:Start(21.6-delay, 1)
+		timerBreathCD:Start(self:IsMythicPlus() and 12.1-delay, 1)
+		timerDownburstCD:Start(20.5-delay, 1)
 	else
 		--TODO, recheck on non mythic plus
 		timerBreathCD:Start(10.7-delay, 1)
@@ -93,6 +115,7 @@ function mod:SPELL_CAST_START(args)
 		specWarnBreath:Show(self.vb.breathCount)
 		specWarnBreath:Play("breathsoon")
 		timerBreathCD:Start(self:IsMythicPlus() and 21.8 or 13.4, self.vb.breathCount+1)
+		updateAllTimers(self, 6)
 	end
 end
 
@@ -102,18 +125,12 @@ function mod:SPELL_CAST_SUCCESS(args)
 		specWarnDownburst:Show(tornado)
 		specWarnDownburst:Play("getknockedup")
 		timerDownburstCD:Start(nil, self.vb.burstCount+1)
+		--updateAllTimers(self, 1.2)--accurate, but not really worth triggering
 	elseif args.spellId == 181089 then--Encounter Event
 		self.vb.windCount = self.vb.windCount + 1
 		warnCalltheWind:Show(self.vb.windCount)
-		if self:IsMythicPlus() then
-			if self.vb.windCount % 4 == 2 then--2, 6, 10, etc
-				timerCalltheWindCD:Start(19.4, self.vb.windCount+1)
-			else
-				timerCalltheWindCD:Start(15.4, self.vb.windCount+1)
-			end
-		else
-			timerCalltheWindCD:Start(20.6, self.vb.windCount+1)
-		end
+		timerCalltheWindCD:Start(self:IsMythicPlus() and 15.4 or 20.6, self.vb.windCount+1)
+		--updateAllTimers(self, 1.2)--accurate, but not really worth triggering
 	end
 end
 

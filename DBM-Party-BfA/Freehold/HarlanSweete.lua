@@ -65,11 +65,11 @@ function mod:SPELL_CAST_START(args)
 		timerCannonBarrageCD:Start(15.7)
 		timerAvastyeCD:Start(21.8)
 		if self:IsMythicPlus() then
-			timerWhirlingDaggerCD:Start(14.5, self.vb.daggerCount+1)
+			timerWhirlingDaggerCD:Start(13.3, self.vb.daggerCount+1)
 		end
 	elseif spellId == 257458 then--ManOWar
 		self:SetStage(3)
-		warnPhase:Show(DBM_CORE_L.AUTO_ANNOUNCE_TEXTS.stage:format(2))
+		warnPhase:Show(DBM_CORE_L.AUTO_ANNOUNCE_TEXTS.stage:format(3))
 		warnPhase:Play("pthree")
 		timerSwiftwindSaberCD:Stop()
 		timerAvastyeCD:Stop()

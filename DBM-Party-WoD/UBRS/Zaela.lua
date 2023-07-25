@@ -19,7 +19,7 @@ local warnReboundingBlade		= mod:NewSpellAnnounce(155705, 2, nil, false)--More f
 local warnBlackIronCyclone		= mod:NewTargetAnnounce(155721, 3)
 
 local specWarnBlackIronCyclone	= mod:NewSpecialWarningRun(155721, nil, nil, 2, 4, 2)
-local specWarnZaela				= mod:NewSpecialWarningSwitch("ej10312", nil, nil, 4, 1, 2)
+local specWarnZaela				= mod:NewSpecialWarningSwitch(-10312, nil, nil, 4, 1, 2)
 
 local timerDestructiveSmiteCD	= mod:NewNextTimer(15.5, 155673, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON, nil, 2, 4)
 local timerReboundingBladeCD	= mod:NewNextTimer(10.5, 155705, nil, false)

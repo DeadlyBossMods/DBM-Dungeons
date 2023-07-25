@@ -15,7 +15,7 @@ mod:RegisterEventsInCombat(
 
 local WarnNet			= mod:NewTargetAnnounce(35107, 2)
 
-local specWarnSummon	= mod:NewSpecialWarningSwitch("ej5999", "-Healer", nil, nil, 1, 2)
+local specWarnSummon	= mod:NewSpecialWarningSwitch(-5999, "-Healer", nil, nil, 1, 2)
 
 local timerNet			= mod:NewTargetTimer(6, 35107, nil, nil, nil, 3)
 

@@ -60,7 +60,7 @@ local specWarnGTFO								= mod:NewSpecialWarningGTFO(88171, nil, nil, nil, 1, 8
 local timerCycloneCD							= mod:NewCDTimer(19.4, 88010, nil, nil, nil, 3)--19.4-21
 local timerStormSurgeCD							= mod:NewCDTimer(16.1, 88055, nil, nil, nil, 2)
 local timerGaleStrikeCD							= mod:NewCDTimer(17, 88061, nil, "Tank|Healer|MagicDispeller", nil, 5, nil, DBM_COMMON_L.MAGIC_ICON)--Retail 10.0 value
-local timerRallyCD								= mod:NewCDTimer(27.8, 87761, nil, nil, nil, 5)
+local timerRallyCD								= mod:NewCDTimer(26.7, 87761, nil, nil, nil, 5)
 local timerShockwaveCD							= mod:NewCDTimer(20.2, 87759, nil, "Tank|Healer", nil, 3)
 local timerIcyBuffetCD							= mod:NewCDTimer(22.6, 88194, nil, "Tank|Healer", nil, 3)
 local timerWindBlastCD							= mod:NewCDTimer(10.1, 87923, nil, "Tank|MagicDispeller", nil, 5, nil, DBM_COMMON_L.MAGIC_ICON)--Retail 10.0 value
@@ -71,6 +71,8 @@ local timerTurbulenceCD							= mod:NewCDTimer(32.8, 411002, nil, nil, nil, 2)
 local timerWindFlurryCD							= mod:NewCDTimer(10.1, 410998, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerLightningLashCD						= mod:NewCDTimer(19, 87762, nil, nil, nil, 3)
 local timerOverloadGroundingFieldCD				= mod:NewCDTimer(20.5, 413385, nil, nil, nil, 3)
+local timerGreaterHealCD						= mod:NewCDTimer(14.1, 87779, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--Post retial May 30th 2023 hotfix, in cataclysm this will still be like 3 second CD
+
 
 --local playerName = UnitName("player")
 
@@ -105,10 +107,13 @@ function mod:SPELL_CAST_START(args)
 		end
 	elseif spellId == 87762 then
 		timerLightningLashCD:Start(nil, args.sourceGUID)
-		self:ScheduleMethod(0.2, "BossTargetScanner", args.sourceGUID, "LitTarget", 0.1, 8, true)
-	elseif spellId == 87779 and self:CheckInterruptFilter(args.sourceGUID, false, true) then
-		specWarnGreaterHeal:Show()
-		specWarnGreaterHeal:Play("kickcast")
+		self:ScheduleMethod(0.2, "BossTargetScanner", args.sourceGUID, "LitTarget", 0.1, 8)
+	elseif spellId == 87779 then
+		timerGreaterHealCD:Start(nil, args.sourceGUID)
+		if self:CheckInterruptFilter(args.sourceGUID, false, true) then
+			specWarnGreaterHeal:Show()
+			specWarnGreaterHeal:Play("kickcast")
+		end
 	elseif spellId == 88201 then--No throttle on purpose. this particular spell always needs awareness
 		warnHealingWell:Show()
 	elseif spellId == 88194 then
@@ -231,6 +236,8 @@ function mod:UNIT_DIED(args)
 	elseif cid == 45930 then--Minster of Air
 		timerLightningLashCD:Stop(args.destGUID)
 		timerOverloadGroundingFieldCD:Stop(args.destGUID)
+	elseif cid == 45935 then--Temple Adept
+		timerGreaterHealCD:Stop(args.destGUID)
 	end
 end
 

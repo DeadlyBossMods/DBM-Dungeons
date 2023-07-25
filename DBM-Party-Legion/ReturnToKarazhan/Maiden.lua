@@ -114,6 +114,7 @@ function mod:RAID_BOSS_WHISPER(msg)
 end
 
 function mod:OnTranscriptorSync(msg, targetName)
+	if not self:IsInCombat() then return end
 	if msg:find("spell:227789") then
 		targetName = Ambiguate(targetName, "none")
 		if self:AntiSpam(5, targetName) then--Antispam sync by target name, since this doesn't use dbms built in onsync handler.

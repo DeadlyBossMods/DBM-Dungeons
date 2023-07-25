@@ -8,7 +8,7 @@ mod.isTrashMod = true
 
 mod:RegisterEvents(
 	"SPELL_CAST_START 183088 226296 202108 193505 226287 183548 193585 226406 202181 193941 226347 183539",
-	"SPELL_CAST_SUCCESS 183433 183526",
+	"SPELL_CAST_SUCCESS 183433 183526 183088",
 	"SPELL_AURA_APPLIED 200154 183407 186576 193803 201983 226388 186616",
 	"UNIT_DIED"
 )
@@ -49,10 +49,10 @@ local timerCrushCD						= mod:NewCDTimer(18.2, 226287, nil, nil, nil, 3)
 local timerFractureCD					= mod:NewCDTimer(15.7, 193505, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)--Also acts as piercing shards timer, piercing is awlays used immediately after fracture
 local timerStoneGazeCD					= mod:NewCDTimer(20.6, 202181, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerAvalancheCD					= mod:NewCDTimer(19.4, 183088, nil, nil, nil, 3)
-local timerPetrifyingTotemCD			= mod:NewCDTimer(48.6, 202108, nil, nil, nil, 3)
+local timerPetrifyingTotemCD			= mod:NewCDTimer(35.1, 202108, nil, nil, nil, 3)
 local timerEmberSwipeCD					= mod:NewCDTimer(10.9, 226406, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerFrenzyCD						= mod:NewCDTimer(20.6, 201983, nil, "RemoveEnrage|Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
-local timerBoundCD						= mod:NewCDTimer(22.7, 193585, nil, nil, nil, 5)
+local timerBoundCD						= mod:NewCDTimer(20.6, 193585, nil, nil, nil, 5)
 
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc, 7 GTFO
 
@@ -60,7 +60,6 @@ function mod:SPELL_CAST_START(args)
 	if not self.Options.Enabled then return end
 	local spellId = args.spellId
 	if spellId == 183088 then
-		timerAvalancheCD:Start(nil, args.sourceGUID)
 		if self:AntiSpam(3, 2) then
 			specWarnAvalanche:Show()
 			specWarnAvalanche:Play("watchstep")
@@ -135,6 +134,8 @@ function mod:SPELL_CAST_SUCCESS(args)
 		end
 	elseif spellId == 183526 and self:AntiSpam(3, 5) then
 		warnWarDrums:Show()
+	elseif spellId == 183088 then
+		timerAvalancheCD:Start(18.3, args.sourceGUID)--19.4 - 1.1
 	end
 end
 

@@ -43,8 +43,8 @@ local yellBlazingCharge							= mod:NewYell(375436)
 local specWarnGTFO								= mod:NewSpecialWarningGTFO(375204, nil, nil, nil, 1, 8)
 
 local timerRP									= mod:NewRPTimer(9.9)
-local timerVolatileMutationCD					= mod:NewCDTimer(27.9, 374365, nil, nil, nil, 5, nil, DBM_COMMON_L.DAMAGE_ICON)--Can get spell queued behind other abilities
---local timerMagmaLobCD							= mod:NewCDTimer(8, 375068, nil, nil, nil, 3)--8 unless delayed by other casts
+local timerVolatileMutationCD					= mod:NewCDCountTimer(27.9, 374365, nil, nil, nil, 5, nil, DBM_COMMON_L.DAMAGE_ICON)--Can get spell queued behind other abilities
+--local timerMagmaLobCD							= mod:NewCDTimer(6.5, 375068, nil, nil, nil, 3)--8 unless delayed by other casts
 local timerLavaSrayCD							= mod:NewCDTimer(19.4, 375251, nil, nil, nil, 3)
 local timerBlazingChargeCD						= mod:NewCDTimer(23, 375436, nil, nil, nil, 3)
 
@@ -69,7 +69,7 @@ function mod:OnCombatStart(delay)
 	timerLavaSrayCD:Start(7.2-delay)
 --	timerMagmaLobCD:Start(8-delay)
 	timerBlazingChargeCD:Start(19.3-delay)
-	timerVolatileMutationCD:Start(25-delay)
+	timerVolatileMutationCD:Start(25-delay, 1)
 end
 
 --function mod:OnCombatEnd()
@@ -86,7 +86,7 @@ function mod:SPELL_CAST_START(args)
 	if spellId == 374365 then
 		self.vb.mutationCount = self.vb.mutationCount + 1
 		warnVolatileMutation:Show(self.vb.mutationCount)
-		timerVolatileMutationCD:Start()
+		timerVolatileMutationCD:Start(nil, self.vb.mutationCount+1)
 	elseif spellId == 375068 then
 		if self.Options.SpecWarn375068dodge then
 			specWarnMagmaLob:Show()
