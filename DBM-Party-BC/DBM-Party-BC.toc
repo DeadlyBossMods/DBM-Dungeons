@@ -1,12 +1,12 @@
 ## Interface: 100105
 ## X-Min-Interface: 80000
-## Title:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cff69ccf0Dungeons (BC)|r
-## Title-deDE:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cff69ccf0Gruppe-BC|r
-## Title-ruRU:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cff69ccf0Подземелья (BC)|r
-## Title-esES:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cff69ccf0Mazmorras (TBC)|r
-## Title-koKR:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cff69ccf0던전 (불성)|r
-## Title-zhTW:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cff69ccf0隊伍首領-燃燒的遠征|r
-## Title-zhCN:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cff69ccf0队伍首领-燃烧的远征|r
+## Title:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cffc030c0Dungeons (BC)|r
+## Title-deDE:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cffc030c0Gruppe-BC|r
+## Title-ruRU:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cffc030c0Подземелья (BC)|r
+## Title-esES:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cffc030c0Mazmorras (TBC)|r
+## Title-koKR:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cffc030c0던전 (불성)|r
+## Title-zhTW:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cffc030c0隊伍首領-燃燒的遠征|r
+## Title-zhCN:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cffc030c0队伍首领-燃烧的远征|r
 ## Author: Arta/MysticalOS
 ## LoadOnDemand: 1
 ## RequiredDeps: DBM-Core
