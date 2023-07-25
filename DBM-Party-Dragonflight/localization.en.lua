@@ -332,6 +332,10 @@ L:SetGeneralLocalization({
 	name =	"Time-Lost Battlefield"--Manual local because auto inserts Alliance or horde to name and mod combines them since singular encounter ID
 })
 
+L:SetMiscLocalization({
+	customWAMessage = "Use %s for Ally pulls and %s for Horde pulls"
+})
+
 -----------------------
 -- Chrono-Lord Deios --
 -----------------------
