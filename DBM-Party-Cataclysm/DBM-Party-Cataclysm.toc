@@ -1,14 +1,14 @@
 ## Interface: 100105
 ## X-Min-Interface: 80000
-## Title:|cffffe00a<|r|cffff7d0aDBM Module|r|cffffe00a>|r |cffc030c0Dungeons (Cataclysm)|r
-## Title-frFR:|cffffe00a<|r|cffff7d0aDBM Module|r|cffffe00a>|r |cffc030c0Groupe-Cataclysm|r
-## Title-deDE:|cffffe00a<|r|cffff7d0aDBM Module|r|cffffe00a>|r |cffc030c0Gruppe-Cataclysm|r
-## Title-zhTW:|cffffe00a<|r|cffff7d0aDBM Module|r|cffffe00a>|r |cffc030c0隊伍首領-浩劫與重生|r
-## Title-ruRU:|cffffe00a<|r|cffff7d0aDBM Module|r|cffffe00a>|r |cffc030c0Подземелья (Катаклизм)|r
-## Title-koKR:|cffffe00a<|r|cffff7d0aDBM Module|r|cffffe00a>|r |cffc030c0던전 (대격변)|r
-## Title-esES:|cffffe00a<|r|cffff7d0aDBM Module|r|cffffe00a>|r |cffc030c0Mazmorras (Cataclysm)|r
-## Title-zhCN:|cffffe00a<|r|cffff7d0aDBM Module|r|cffffe00a>|r |cffc030c05人小队-大地的裂变|r
-## Title-ptBR:|cffffe00a<|r|cffff7d0aDBM Module|r|cffffe00a>|r |cffc030c05Masmorras-Cataclysm|r
+## Title:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Dungeons (Cataclysm)|r
+## Title-frFR:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Groupe-Cataclysm|r
+## Title-deDE:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Gruppe-Cataclysm|r
+## Title-zhTW:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0隊伍首領-浩劫與重生|r
+## Title-ruRU:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Подземелья (Катаклизм)|r
+## Title-koKR:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0던전 (대격변)|r
+## Title-esES:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Mazmorras (Cataclysm)|r
+## Title-zhCN:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c05人小队-大地的裂变|r
+## Title-ptBR:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c05Masmorras-Cataclysm|r
 ## Author: MysticalOS
 ## LoadOnDemand: 1
 ## RequiredDeps: DBM-Core

@@ -1,13 +1,13 @@
 ## Interface: 100105
 ## X-Min-Interface: 80000
-## Title:|cffffe00a<|r|cffff7d0aDBM Module|r|cffffe00a>|r |cffc030c0Dungeons (MoP)|r
-## Title-koKR:|cffffe00a<|r|cffff7d0aDBM Module|r|cffffe00a>|r |cffc030c0던전 (판다)|r
-## Title-deDE:|cffffe00a<|r|cffff7d0aDBM Module|r|cffffe00a>|r |cffc030c0Gruppe-MoP|r
-## Title-esES:|cffffe00a<|r|cffff7d0aDBM Module|r|cffffe00a>|r |cffc030c0Mazmorras (MoP)|r
-## Title-zhCN:|cffffe00a<|r|cffff7d0aDBM Module|r|cffffe00a>|r |cffc030c05人队-熊猫人之谜|r
-## Title-frFR:|cffffe00a<|r|cffff7d0aDBM Module|r|cffffe00a>|r |cffc030c0Groupe-MoP|r
-## Title-ruRU:|cffffe00a<|r|cffff7d0aDBM Module|r|cffffe00a>|r |cffc030c0Подземелья (Пандария)|r
-## Title-zhTW:|cffffe00a<|r|cffff7d0aDBM Module|r|cffffe00a>|r |cffc030c0隊伍首領-潘達利亞之謎|r
+## Title:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Dungeons (MoP)|r
+## Title-koKR:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0던전 (판다)|r
+## Title-deDE:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Gruppe-MoP|r
+## Title-esES:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Mazmorras (MoP)|r
+## Title-zhCN:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c05人队-熊猫人之谜|r
+## Title-frFR:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Groupe-MoP|r
+## Title-ruRU:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Подземелья (Пандария)|r
+## Title-zhTW:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0隊伍首領-潘達利亞之謎|r
 ## LoadOnDemand: 1
 ## RequiredDeps: DBM-Core
 ## SavedVariables: DBMPartyMoP_AllSavedVars
