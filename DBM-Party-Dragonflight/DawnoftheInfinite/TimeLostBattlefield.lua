@@ -45,16 +45,6 @@ mod:RegisterEventsInCombat(
 --TODO, GTFO for add aoe? Logs I had nobody took damage from it so couldn't do yet
 --TODO, targetscan/detect bladestorm target?
 --The Infinite Battlefield
-
---Likely has to be called first, before options even exist, because we need to make sure the category title is created using custom key text FIRST
---Core should be able to populate and group options up after the fact
-if DBM.Options.DebugMode then--Remove after testing
-	mod:JustSetCustomKeys(rallySpellId, L.customWAMessage:format(418047, 418046))
-	mod:JustSetCustomKeys(crySpellId, L.customWAMessage:format(418062, 410496))
-	mod:JustSetCustomKeys(shockwaveSpellId, L.customWAMessage:format(418054, 408227))
-	mod:JustSetCustomKeys(tankSpellId, L.customWAMessage:format(418059, 410254))
-end
-
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(26514))
 local warnAddAoE									= mod:NewSpellAnnounce(addAOESpellId, 3)
 local warnAddDebuff									= mod:NewTargetNoFilterAnnounce(addDebuffSpellId, 3, nil, false)
@@ -82,6 +72,12 @@ local timerTankBusterCD								= mod:NewCDCountTimer(19.6, tankSpellId, nil, nil
 local timerShockwaveCD								= mod:NewCDCountTimer(29, shockwaveSpellId, nil, nil, nil, 3)
 local timerRallyCD									= mod:NewCDCountTimer(21.2, rallySpellId, nil, nil, nil, 5)
 local timerCryCD									= mod:NewCDCountTimer(10, crySpellId, nil, nil, nil, 2)
+
+--Write the custom WA keys into the spell headers
+mod:JustSetCustomKeys(rallySpellId, L.customWAMessage:format(418047, 418046))
+mod:JustSetCustomKeys(crySpellId, L.customWAMessage:format(418062, 410496))
+mod:JustSetCustomKeys(shockwaveSpellId, L.customWAMessage:format(418054, 408227))
+mod:JustSetCustomKeys(tankSpellId, L.customWAMessage:format(418059, 410254))
 
 mod.vb.bladestormCount = 0
 mod.vb.shockwaveSet = 0
