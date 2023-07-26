@@ -333,6 +333,10 @@ L:SetGeneralLocalization({
 	name =	"잃어버린 시간의 전장"--Manual local because auto inserts Alliance or horde to name and mod combines them since singular encounter ID
 })
 
+L:SetMiscLocalization({
+	customWAMessage = "|cff4565ff얼라|r가 풀링하면 |cff69ccf0%s|r|1을;를; |cffff0000호드|r가 풀링하면 |cff69ccf0%s|r|1을;를; 사용"
+})
+
 -----------------------
 -- Chrono-Lord Deios --
 -----------------------
