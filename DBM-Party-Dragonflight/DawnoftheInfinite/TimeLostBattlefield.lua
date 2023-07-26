@@ -73,6 +73,12 @@ local timerShockwaveCD								= mod:NewCDCountTimer(29, shockwaveSpellId, nil, n
 local timerRallyCD									= mod:NewCDCountTimer(21.2, rallySpellId, nil, nil, nil, 5)
 local timerCryCD									= mod:NewCDCountTimer(10, crySpellId, nil, nil, nil, 2)
 
+--Write the custom WA keys into the spell headers
+mod:JustSetCustomKeys(rallySpellId, L.customWAMessage:format(418047, 418046))
+mod:JustSetCustomKeys(crySpellId, L.customWAMessage:format(418062, 410496))
+mod:JustSetCustomKeys(shockwaveSpellId, L.customWAMessage:format(418054, 408227))
+mod:JustSetCustomKeys(tankSpellId, L.customWAMessage:format(418059, 410254))
+
 mod.vb.bladestormCount = 0
 mod.vb.shockwaveSet = 0
 mod.vb.shockwaveCount = 0
