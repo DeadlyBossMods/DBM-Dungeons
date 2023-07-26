@@ -33,7 +33,7 @@ local serpMod = DBM:GetModByName(1479)
 
 function mod:OnCombatStart(delay)
 	self:SetStage(1)
-	timerMythicTornadoCD:Start(8.5-delay)
+	timerMythicTornadoCD:Start(8.2-delay)
 	timerMassiveDelugeCD:Start(12-delay)
 	timerArcaneBombCD:Start(23-delay)
 end

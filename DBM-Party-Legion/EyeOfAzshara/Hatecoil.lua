@@ -35,7 +35,7 @@ local timerFocusedLightningCD		= mod:NewNextTimer(15.5, 193611, nil, nil, nil, 3
 
 function mod:OnCombatStart(delay)
 	timerStaticNovaCD:Start(10.5-delay)
-	timerAddsCD:Start(19-delay)
+	timerAddsCD:Start(17.4-delay)
 end
 
 function mod:SPELL_AURA_APPLIED(args)

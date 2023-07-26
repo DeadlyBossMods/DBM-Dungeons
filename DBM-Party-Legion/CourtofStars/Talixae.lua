@@ -33,7 +33,7 @@ local timerBurningIntensityCD		= mod:NewCDTimer(22.6, 207906, nil, nil, nil, 2, 
 function mod:OnCombatStart(delay)
 	timerBurningIntensityCD:Start(6-delay)
 	timerWitheringSoulCD:Start(12-delay)
-	timerInfernalEruptionCD:Start(19.5-delay)
+	timerInfernalEruptionCD:Start(self:IsMythicPlus() and 19.5 or 14.9-delay)
 	--Allow trash mod to enable in combat in case you DO pull boss with any of the 3 sub bosses still active
 	local trashMod = DBM:GetModByName("CoSTrash")
 	if trashMod then
@@ -52,7 +52,7 @@ function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
 	if spellId == 208165 then
 		warnWitheringSoul:Show()
-		timerWitheringSoulCD:Start()
+		timerWitheringSoulCD:Start(self:IsMythicPlus() and 14.5 or 13.3)
 	elseif spellId == 207881 then
 		specWarnInfernalEruption:Show()
 		specWarnInfernalEruption:Play("watchstep")
