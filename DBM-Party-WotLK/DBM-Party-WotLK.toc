@@ -7,7 +7,7 @@
 ## Title-deDE:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Gruppe-WotLK|r
 ## Title-esES:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Mazmorras (WotLK)|r
 ## Title-zhTW:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0隊伍首領-巫妖王之怒|r
-## Title-zhCN:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0队伍-WotLK|r
+## Title-zhCN:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0队伍首领 (巫妖王之怒)|r
 ## Title-ruRU:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Подземелья (Король-лич)|r
 ## Title-koKR:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0던전 (리분)|r
 ## Author: Arta
@@ -34,7 +34,7 @@
 ## X-DBM-Mod-Name-deDE: Gruppe (WotLK)
 ## X-DBM-Mod-Name-ruRU: Подземелья (Король-лич)
 ## X-DBM-Mod-Name-zhTW: 隊伍首領 (巫妖王之怒)
-## X-DBM-Mod-Name-zhCN: 队伍首领-WotLK
+## X-DBM-Mod-Name-zhCN: 队伍首领 (巫妖王之怒)
 ## X-DBM-Mod-Name-esES: Mazmorras (WotLK)
 ## X-DBM-Mod-Name-koKR: 던전 (리분)
 ## X-DBM-Mod-Name-esMX: Mazmorras-WotLK
