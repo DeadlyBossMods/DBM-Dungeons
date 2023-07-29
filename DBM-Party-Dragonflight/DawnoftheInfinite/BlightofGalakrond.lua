@@ -146,11 +146,11 @@ function mod:SPELL_CAST_START(args)
 			end
 		else
 			timer = 63.1--Not verfied yet, assumed cause it looks same as corrosive
+			if self.vb.reclaimCount == 2 then--To verify the 63.1
+				DBM:AddMsg("If you are logging this fight, please share log on DBM discord because you saw at least 2 reclamation casts in stage 3")
+			end
 		end
 		timerBlightReclamationCD:Start(timer, self.vb.reclaimCount+1)
-		if self.vb.reclaimCount == 2 then--To verify the 63.1
-			DBM:AddMsg("If you are logging this fight, please share log on DBM discord because you saw at least 2 reclamation casts in stage 3")
-		end
 	elseif spellId == 408029 then
 		self.vb.windsCount = self.vb.windsCount + 1
 		--The timers that are delayed will be auto corrected by Corrosive cast
@@ -209,7 +209,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		timerCorrosiveInfusionCD:Start(17.8, 1)
 		timerIncineratingBlightbreathCD:Start(26.8, 1)
 		timerNecrofrostCD:Start(34.7, 1)
-		timerBlightReclamationCD:Start(67.5, 1)
+		timerBlightReclamationCD:Start(67.2, 1)
 	elseif spellId == 407406 then
 		if args:IsPlayer() then
 			specWarnCorrosion:Show()
