@@ -35,7 +35,7 @@ local specWarnHinderingCleave		= mod:NewSpecialWarningDefensive(267899, "Tank", 
 
 local timerReinforcingWardCD		= mod:NewCDTimer(30.2, 267905, nil, nil, nil, 5, nil, DBM_COMMON_L.IMPORTANT_ICON)
 local timerBlessingofIronsidesCD	= mod:NewCDTimer(32.4, 267901, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
-local timerHinderingCleaveCD		= mod:NewCDTimer(18.2, 267899, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+local timerHinderingCleaveCD		= mod:NewCDTimer(17.6, 267899, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 
 mod.vb.bossTempest = false
 
@@ -44,9 +44,9 @@ function mod:OnCombatStart(delay)
 	if not self:IsNormal() then
 		timerBlessingofIronsidesCD:Start(5-delay)
 	end
-	timerHinderingCleaveCD:Start(5.8-delay)
-	timerSwiftnessWardCD:Start(16.1-delay)
-	timerReinforcingWardCD:Start(30.1-delay)
+	timerHinderingCleaveCD:Start(5.4-delay)
+	timerSwiftnessWardCD:Start(10.9-delay)
+	timerReinforcingWardCD:Start(26.7-delay)
 end
 
 function mod:SPELL_AURA_APPLIED(args)

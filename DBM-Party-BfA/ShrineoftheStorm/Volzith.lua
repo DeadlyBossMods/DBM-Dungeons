@@ -27,7 +27,7 @@ local timerGraspCD					= mod:NewNextTimer(50, 267360, nil, nil, nil, 6, nil, nil
 
 
 function mod:OnCombatStart(delay)
-	timerYawningGateCD:Start(13-delay)
+	timerYawningGateCD:Start(12.3-delay)
 	timerGraspCD:Start(20.5-delay)
 	--if not self:IsNormal() then
 		--timerCalltheAbyssCD:Start(73-delay)

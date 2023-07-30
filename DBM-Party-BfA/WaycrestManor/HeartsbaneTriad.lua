@@ -15,8 +15,7 @@ mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 260773 260741",
 	"SPELL_CAST_SUCCESS 260741 260907 260703 268088",
 	"SPELL_AURA_APPLIED 260805 260703 260741 260900",
-	"SPELL_AURA_REMOVED 260805 268088",
-	"UNIT_TARGET_UNFILTERED"
+	"SPELL_AURA_REMOVED 260805 268088"
 )
 
 --[[
@@ -51,11 +50,9 @@ local warnActiveTriad				= mod:NewTargetNoFilterAnnounce(260805, 2)
 
 local specWarnRitual				= mod:NewSpecialWarningSpell(260773, nil, nil, nil, 2, 2)
 
-mod:AddSetIconOption("SetIconOnTriad", 260805, true, true, {8})
+mod:AddSetIconOption("SetIconOnTriad", 260805, true, 5, {8})
 mod:AddInfoFrameOption(260773, true)
 
-
-mod.vb.activeTriad = nil
 local IrisBuff = DBM:GetSpellInfo(260805)
 
 function mod:NettlesTargetQuestionMark(targetname)
@@ -67,7 +64,6 @@ function mod:NettlesTargetQuestionMark(targetname)
 end
 
 function mod:OnCombatStart()
-	self.vb.activeTriad = nil
 	if self.Options.InfoFrame then
 		DBM.InfoFrame:SetHeader(DBM_CORE_L.INFOFRAME_POWER)
 		DBM.InfoFrame:Show(3, "enemypower", 2)
@@ -133,7 +129,6 @@ end
 function mod:SPELL_AURA_APPLIED(args)
 	local spellId = args.spellId
 	if spellId == 260805 then--Iris
-		self.vb.activeTriad = args.destGUID
 		warnActiveTriad:Show(args.destName)
 		local cid = self:GetCIDFromGUID(args.destGUID)
 		if cid == 135360 or cid == 131825 then--Sister Briar
@@ -145,6 +140,9 @@ function mod:SPELL_AURA_APPLIED(args)
 			end
 		elseif cid == 135359 or cid == 131824 then--Sister Solena
 			timerSoulManipulationCD:Start(11.3)--CAST SUCCESS
+		end
+		if self.Options.SetIconOnTriad then
+			self:ScanForMobs(args.destGUID, 2, 8, 1, nil, 12, "SetIconOnTriad")
 		end
 	elseif spellId == 260703 then
 		warnUnstableMark:CombinedShow(0.3, args.destName)
@@ -180,31 +178,5 @@ function mod:SPELL_AURA_REMOVED(args)
 		end
 	elseif spellId == 268088 then
 		warnAuraofDreadOver:Show()
-	end
-end
-
-do
-	local function TrySetTarget(self)
-		if DBM:GetRaidRank() >= 1 then
-			for uId in DBM:GetGroupMembers() do
-				if UnitGUID(uId.."target") == self.vb.activeTriad then
-					self.vb.activeTriad = nil
-					local icon = GetRaidTargetIndex(uId)
-					if not icon then
-						self:SetIcon(uId.."target", 8)
-						break
-					end
-				end
-				if not (self.vb.activeTriad) then
-					break
-				end
-			end
-		end
-	end
-
-	function mod:UNIT_TARGET_UNFILTERED()
-		if self.Options.SetIconOnTriad and self.vb.activeTriad then
-			TrySetTarget(self)
-		end
 	end
 end

@@ -12,7 +12,7 @@ mod:RegisterEventsInCombat(
 	"SPELL_AURA_APPLIED_DOSE 256493",
 	"SPELL_AURA_REFRESH 256493",
 	"SPELL_CAST_START 262347 257337 271903",
-	"SPELL_CAST_SUCCESS 269493",
+	"SPELL_CAST_SUCCESS 269493 262347",
 	"UNIT_SPELLCAST_SUCCEEDED boss1"
 )
 
@@ -43,7 +43,7 @@ mod.vb.coinCast = 0
 function mod:OnCombatStart(delay)
 	self.vb.coinCast = 0
 	timerStaticPulseCD:Start(5.7-delay)
-	timerFootbombLauncherCD:Start(9.4-delay)
+	timerFootbombLauncherCD:Start(9-delay)
 	timerShockingClawCD:Start(14.3-delay)
 	if not self:IsNormal() then
 		timerThrowCoinsCD:Start(18-delay)
@@ -65,7 +65,6 @@ function mod:SPELL_CAST_START(args)
 	if spellId == 262347 then
 		specWarnStaticPulse:Show()
 		specWarnStaticPulse:Play("carefly")
-		timerStaticPulseCD:Start()
 	elseif spellId == 257337 then
 		specWarnShockingClaw:Show()
 		specWarnShockingClaw:Play("shockwave")
@@ -80,6 +79,8 @@ function mod:SPELL_CAST_SUCCESS(args)
 	if spellId == 269493 then
 		warnFootbombLauncher:Show()
 		timerFootbombLauncherCD:Start()
+	elseif spellId == 262347 then
+		timerStaticPulseCD:Start(20.6)--23.1-2.5
 	end
 end
 
