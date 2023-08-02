@@ -46,7 +46,7 @@ function mod:OnCombatStart(delay)
 	end
 	timerHinderingCleaveCD:Start(5.4-delay)
 	timerSwiftnessWardCD:Start(10.9-delay)
-	timerReinforcingWardCD:Start(26.7-delay)
+	timerReinforcingWardCD:Start(21.3-delay)--21-30
 end
 
 function mod:SPELL_AURA_APPLIED(args)
