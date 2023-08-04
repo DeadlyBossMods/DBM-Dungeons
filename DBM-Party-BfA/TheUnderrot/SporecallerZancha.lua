@@ -75,7 +75,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 	if spellId == 259830 then
 		--timerBoundlessRotCD:Start()
 	elseif spellId == 259718 and self:AntiSpam(3, 1) then
-		timerUpheavalCD:Start(20.6)
+		timerUpheavalCD:Start(self:IsMythicPlus() and 20.6 or 15.7)
 		if timerShockwaveCD:GetRemaining() < 8.5 then
 			local elapsed, total = timerShockwaveCD:GetTime()
 			local extend = 8.5 - (total-elapsed)

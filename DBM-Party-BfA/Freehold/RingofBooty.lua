@@ -43,7 +43,7 @@ local specWarnGTFO					= mod:NewSpecialWarningGTFO(256552, nil, nil, nil, 1, 8)
 
 local timerRP						= mod:NewRPTimer(68)
 --local timerSharkTossCD			= mod:NewCDTimer(31.5, 194956, nil, nil, nil, 3)--Disabled until more data, seems highly variable, even pull to pull
-local timerSharknadoCD				= mod:NewCDTimer(26.9, 256405, nil, nil, nil, 3)--Only timer that's really accurate
+local timerSharknadoCD				= mod:NewCDTimer(26.7, 256405, nil, nil, nil, 3)--Only timer that's really accurate
 local timerRearmCD					= mod:NewCDCountTimer("d19", 256489, nil, nil, nil, 3)--heavily affected by spell queues and may be disabled again if it leads to confusion/complaints
 
 mod:AddRangeFrameOption(8, 256358)
