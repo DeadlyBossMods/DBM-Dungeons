@@ -36,7 +36,7 @@ function mod:OnCombatStart(delay)
 	self.vb.interruptCount = 0
 	timerMindRendCD:Start(16-delay)
 	--timerWakentheVoidCD:Start(13.1-delay)
-	timerAncientMindbenderCD:Start(19.6-delay)--SUCCESS
+	timerAncientMindbenderCD:Start(18.3-delay)--SUCCESS
 end
 
 function mod:SPELL_AURA_APPLIED(args)
