@@ -90,7 +90,7 @@ function mod:SPELL_CAST_START(args)
 		timerSearingClapCD:Stop()
 	elseif spellId == 369110 or spellId == 369198 then--110 confirmed, 198 unknown
 		self.vb.embersCount = self.vb.embersCount + 1
-		timerUnstableEmbersCD:Start(12, 2)
+		timerUnstableEmbersCD:Start(12, self.vb.embersCount+1)
 	elseif spellId == 369061 then
 		self.vb.tankCount = self.vb.tankCount + 1
 		if self:IsTanking("player", "boss1", nil, true) then
