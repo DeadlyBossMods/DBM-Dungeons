@@ -109,7 +109,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 		--As of Aug 10th hotfix, these are now same as pull, + travel time (so 0-2 sec variation)
 		--These also now replace pull timers since no point in not combining code together
 		timerSearingClapCD:Start(4.4, self.vb.tankCount+1)--Non resetting, for healer/tank CDs
-		timerUnstableEmbersCD:Start(12.9, 1)
+		timerUnstableEmbersCD:Start(12.2, 1)
 		timerPurgingFlamesCD:Start(39.7, self.vb.purgingCount+1)--40-42, due to travel time back to center of room
 	end
 end
