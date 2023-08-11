@@ -5,7 +5,7 @@ mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(184422)
 mod:SetEncounterID(2558)
 --mod:SetUsedIcons(1, 2, 3)
---mod:SetHotfixNoticeRev(20220322000000)
+mod:SetHotfixNoticeRev(20230810000000)
 --mod:SetMinSyncRevision(20211203000000)
 --mod.respawnTime = 29
 mod.sendMainBossGUID = true
@@ -14,7 +14,7 @@ mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 368990 369110 369198 369061",
-	"SPELL_CAST_SUCCESS 369049",
+	"SPELL_CAST_SUCCESS 369049 369033",
 	"SPELL_AURA_APPLIED 369110 369198 369043",
 --	"SPELL_AURA_APPLIED_DOSE",
 	"SPELL_AURA_REMOVED 369110 369198 368990 369043"
@@ -67,9 +67,6 @@ function mod:OnCombatStart(delay)
 	self.vb.embersCount = 0
 	self.vb.purgingCount = 0
 	self.vb.tankCount = 0
-	timerSearingClapCD:Start(4.5-delay, 1)
-	timerUnstableEmbersCD:Start(12.2-delay, 1)
-	timerPurgingFlamesCD:Start(40.8-delay, 1)--Til actual aoe begin, not infusions 2 seconds before
 end
 
 --function mod:OnCombatEnd()
@@ -93,7 +90,7 @@ function mod:SPELL_CAST_START(args)
 		timerSearingClapCD:Stop()
 	elseif spellId == 369110 or spellId == 369198 then--110 confirmed, 198 unknown
 		self.vb.embersCount = self.vb.embersCount + 1
-		timerUnstableEmbersCD:Start(12, 2)
+		timerUnstableEmbersCD:Start(12, self.vb.embersCount+1)
 	elseif spellId == 369061 then
 		self.vb.tankCount = self.vb.tankCount + 1
 		if self:IsTanking("player", "boss1", nil, true) then
@@ -108,6 +105,12 @@ function mod:SPELL_CAST_SUCCESS(args)
 	local spellId = args.spellId
 	if spellId == 369049 and args:IsPlayer() and self:AntiSpam(3, 1) then
 		warnSeekingFlame:Show()
+	elseif spellId == 369033 then--Activate Keepers, more accurate for starting timers after purging flames since it subtracks travel time
+		--As of Aug 10th hotfix, these are now same as pull, + travel time (so 0-2 sec variation)
+		--These also now replace pull timers since no point in not combining code together
+		timerSearingClapCD:Start(4.4, self.vb.tankCount+1)--Non resetting, for healer/tank CDs
+		timerUnstableEmbersCD:Start(12.2, 1)
+		timerPurgingFlamesCD:Start(39.7, self.vb.purgingCount+1)--40-42, due to travel time back to center of room
 	end
 end
 
@@ -136,9 +139,6 @@ function mod:SPELL_AURA_REMOVED(args)
 	elseif spellId == 368990 then--Purging Flames over
 		self.vb.embersCount = 0--Resetting since it's mostly for timer control
 		self.vb.addsRemaining = 0--Reset for good measure
-		timerUnstableEmbersCD:Start(1.1, 1)
-		timerSearingClapCD:Start(4.7, self.vb.tankCount+1)--Non resetting, for healer/tank CDs
-		timerPurgingFlamesCD:Start(42.4, self.vb.purgingCount+1)--Non resetting, for healer/tank CDs
 	elseif spellId == 369043 then
 		self.vb.addsRemaining = self.vb.addsRemaining - 1
 		if self.vb.addsRemaining > 0 then
