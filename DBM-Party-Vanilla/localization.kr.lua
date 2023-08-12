@@ -1087,3 +1087,122 @@ L = DBM:GetModLocalization(489)
 L:SetGeneralLocalization{
 	name 		= "족장 우코르즈 샌드스칼프"
 }
+
+-------------------------
+--  Scholomance 289M  --
+-----------------------------
+--  Kirtonos the Herald  --
+-----------------------------
+L = DBM:GetModLocalization("KirtonostheHerald")
+
+L:SetGeneralLocalization{
+	name 		= "사자 키르토노스"
+}
+
+-----------------------------
+--  Jandice Barov  --
+-----------------------------
+L = DBM:GetModLocalization("JandiceBarov")
+
+L:SetGeneralLocalization{
+	name 		= "잔다이스 바로브"
+}
+
+-----------------------------
+--  Rattlegore  --
+-----------------------------
+L = DBM:GetModLocalization("Rattlegore")
+
+L:SetGeneralLocalization{
+	name 		= "들창어금니"
+}
+
+-----------------------------
+--  Marduk Blackpool  --
+-----------------------------
+L = DBM:GetModLocalization("MardukBlackpool")
+
+L:SetGeneralLocalization{
+	name 		= "마르두크 블랙풀"
+}
+
+-----------------------------
+--  Vectus  --
+-----------------------------
+L = DBM:GetModLocalization("Vectus")
+
+L:SetGeneralLocalization{
+	name 		= "벡투스"
+}
+
+-----------------------------
+--  Ras Frostwhisper  --
+-----------------------------
+L = DBM:GetModLocalization("RasFrostwhisper")
+
+L:SetGeneralLocalization{
+	name 		= "라스 프로스트위스퍼"
+}
+
+-----------------------------
+--  Instructor Malicia  --
+-----------------------------
+L = DBM:GetModLocalization("InstructorMalicia")
+
+L:SetGeneralLocalization{
+	name 		= "조교 말리시아"
+}
+
+-----------------------------
+--  Doctor Theolen Krastinov  --
+-----------------------------
+L = DBM:GetModLocalization("DoctorTheolenKrastinov")
+
+L:SetGeneralLocalization{
+	name 		= "학자 테올렌 크라스티노브"
+}
+
+-----------------------------
+--  Lorekeeper Polkelt  --
+-----------------------------
+L = DBM:GetModLocalization("LorekeeperPolkelt")
+
+L:SetGeneralLocalization{
+	name 		= "현자 폴켈트"
+}
+
+-----------------------------
+--  The Ravenian  --
+-----------------------------
+L = DBM:GetModLocalization("TheRavenian")
+
+L:SetGeneralLocalization{
+	name 		= "라베니안"
+}
+
+-----------------------------
+--  Lord Alexei Barov  --
+-----------------------------
+L = DBM:GetModLocalization("LordAlexeiBarov")
+
+L:SetGeneralLocalization{
+	name 		= "군주 알렉세이 바로브"
+}
+
+-----------------------------
+--  Lady Illucia Barov  --
+-----------------------------
+L = DBM:GetModLocalization("LadyIlluciaBarov")
+
+L:SetGeneralLocalization{
+	name 		= "여군주 일루시아 바로브"
+}
+
+-----------------------------
+--  Darkmaster Gandling  --
+-----------------------------
+L = DBM:GetModLocalization("DarkmasterGandling")
+
+L:SetGeneralLocalization{
+	name 		= "암흑스승 간들링"
+}
