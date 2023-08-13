@@ -17,7 +17,7 @@
 ## X-DBM-Mod-Type: PARTY
 ## X-DBM-Mod-Category: Classic
 ## X-DBM-StatTypes: normal
-## X-DBM-Mod-SubCategoriesID: 48,230,429,90,229,349,389,129,47,329,34,109,70,43,209
+## X-DBM-Mod-SubCategoriesID: 48,230,429,90,229,349,389,129,47,329,34,109,70,43,209,289
 ## X-DBM-Mod-Name: Dungeons (Classic)
 ## X-DBM-Mod-Name-deDE: Gruppe (Classic)
 ## X-DBM-Mod-Name-esES: Mazmorras (Clásico)
@@ -26,7 +26,7 @@
 ## X-DBM-Mod-Name-zhCN: 队伍首领 (经典旧世)
 ## X-DBM-Mod-Name-ruRU: Классические подземелья
 ## X-DBM-Mod-Sort: 1102
-## X-DBM-Mod-MapID: 48,230,429,90,229,349,389,129,47,329,34,109,70,43,209
+## X-DBM-Mod-MapID: 48,230,429,90,229,349,389,129,47,329,34,109,70,43,209,289
 ## X-DBM-Mod-MinCoreRevision: 20200524142133
 ## X-DBM-Mod-MinExpansion: 0
 ## X-Curse-Project-ID: 314994
@@ -176,3 +176,17 @@ ZulFarrak\WitchDoctorZumrah.lua
 ZulFarrak\HydromancerVelrath.lua
 ZulFarrak\Nekrum_Sezzziz.lua
 ZulFarrak\ChiefUkorzSandscalp.lua
+
+Scholomance_Old\KirtonostheHerald.lua
+Scholomance_Old\JandiceBarov.lua
+Scholomance_Old\Rattlegore.lua
+Scholomance_Old\MardukBlackpool.lua
+Scholomance_Old\Vectus.lua
+Scholomance_Old\RasFrostwhisper.lua
+Scholomance_Old\InstructorMalicia.lua
+Scholomance_Old\DoctorTheolenKrastinov.lua
+Scholomance_Old\LorekeeperPolkelt.lua
+Scholomance_Old\TheRavenian.lua
+Scholomance_Old\LordAlexeiBarov.lua
+Scholomance_Old\LadyIlluciaBarov.lua
+Scholomance_Old\DarkmasterGandling.lua
