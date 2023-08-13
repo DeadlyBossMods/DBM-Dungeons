@@ -17,7 +17,7 @@ local warnRepair					= mod:NewCastAnnounce(262554, 4)
 local warnAzeriteHeartseeker		= mod:NewTargetNoFilterAnnounce(262515, 3)
 
 --local yellArrowBarrage			= mod:NewYell(200343)
-local specWarnHailofFlechettes		= mod:NewSpecialWarningSpell(267354, nil, nil, nil, 2, 2)
+local specWarnHailofFlechettes		= mod:NewSpecialWarningSpell(267354, nil, nil, nil, 2, 3)
 local specWarnCover					= mod:NewSpecialWarningMove(263275, "Tank", nil, nil, 1, 2)
 local specWarnEarthShield			= mod:NewSpecialWarningInterrupt(268709, "HasInterrupt", nil, nil, 1, 2)
 local specWarnRockLance				= mod:NewSpecialWarningInterrupt(263202, false, nil, nil, 1, 2)
@@ -77,7 +77,7 @@ function mod:SPELL_CAST_START(args)
 		specWarnForceCannon:Play("shockwave")
 	elseif spellId == 267354 and self:IsValidWarning(args.sourceGUID) and self:AntiSpam(4, 5) then
 		specWarnHailofFlechettes:Show()
-		specWarnHailofFlechettes:Play("stilldanger")--Not great, I can't find the old "crowdcontrol" sound.
+		specWarnHailofFlechettes:Play("crowdcontrol")
 	end
 end
 

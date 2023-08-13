@@ -195,8 +195,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 		timerHailofStoneCD:Start(nil, args.sourceGUID)
 		if self:AntiSpam(3, 6) then
 			warnHailofStone:Show()
-			warnHailofStone:Play("aesoon")
-			warnHailofStone:ScheduleVoice(1.5, "crowdcontrol")
+			warnHailofStone:Play("crowdcontrol")
 		end
 	elseif spellId == 369328 then
 		timerEarthquakeCD:Start(nil, args.sourceGUID)
