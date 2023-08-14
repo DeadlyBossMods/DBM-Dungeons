@@ -134,14 +134,14 @@ function mod:SPELL_CAST_START(args)
 		local bossUid = DBM:GetUnitIdFromGUID(args.sourceGUID)
 		local bossPower = UnitPower(bossUid)--If boss power is ever less than 100 when this is cast, they're defeated
 		if bossPower == 100 and self:AntiSpam(8, 1) then--at least one caster is alive, start next timer
-			timerLongboatRaidCD:Start(79)
+			timerLongboatRaidCD:Start(77.7)
 		end
 		local cid = self:GetCIDFromGUID(args.sourceGUID)
 		if cid == 184581 then--Baelog
 			timerHeavyArrowCD:Stop(args.sourceGUID)
 			timerWildCleaveCD:Stop(args.sourceGUID)
 			if bossPower == 100 then--Alive, restart timers
-				timerWildCleaveCD:Start(24.9, args.sourceGUID)
+				timerWildCleaveCD:Start(23.8, args.sourceGUID)
 				timerHeavyArrowCD:Start(35, args.sourceGUID)
 			end
 		elseif cid == 184580 then--Olaf
