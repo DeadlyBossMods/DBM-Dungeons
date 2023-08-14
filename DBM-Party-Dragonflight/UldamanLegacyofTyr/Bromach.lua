@@ -65,7 +65,7 @@ function mod:OnCombatStart(delay)
 	timerCalloftheDeepCD:Start(5-delay, 1)
 	timerThunderingSlamCD:Start(12.1-delay, 1)
 	timerQuakingTotemCD:Start(20.4-delay, 1)
-	timerBloodlustCD:Start(27.6-delay)
+	timerBloodlustCD:Start(27-delay)
 end
 
 --function mod:OnCombatEnd()

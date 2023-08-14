@@ -67,7 +67,7 @@ local timerStoneBoltCD						= mod:NewCDTimer(7.2, 369399, nil, false, nil, 4, ni
 local timerEarthquakeCD						= mod:NewCDTimer(25.4, 369328, nil, nil, nil, 2)
 local timerFissuringSlamCD					= mod:NewCDTimer(9.7, 369335, nil, nil, nil, 2)--9.7-15
 local timerCleaveCD							= mod:NewCDTimer(15, 369409, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
-local timerPounceCD							= mod:NewCDTimer(15.7, 369423, nil, nil, nil, 3)
+local timerPounceCD							= mod:NewCDTimer(15, 369423, nil, nil, nil, 3)
 local timerThunderousClapCD					= mod:NewCDTimer(19, 381593, nil, nil, nil, 2)
 local timerBulwarkSlamCD					= mod:NewCDTimer(10.6, 382696, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerHastenCD							= mod:NewCDTimer(23, 377500, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
@@ -195,8 +195,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 		timerHailofStoneCD:Start(nil, args.sourceGUID)
 		if self:AntiSpam(3, 6) then
 			warnHailofStone:Show()
-			warnHailofStone:Play("aesoon")
-			warnHailofStone:ScheduleVoice(1.5, "crowdcontrol")
+			warnHailofStone:Play("crowdcontrol")
 		end
 	elseif spellId == 369328 then
 		timerEarthquakeCD:Start(nil, args.sourceGUID)
