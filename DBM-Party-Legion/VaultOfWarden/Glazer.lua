@@ -19,7 +19,7 @@ local warnGaze						= mod:NewSpellAnnounce(194942, 2)
 local specWarnFocused				= mod:NewSpecialWarningSpell(194289, nil, nil, nil, 2, 2)
 local specWarnGazeGTFO				= mod:NewSpecialWarningGTFO(194945, nil, nil, nil, 1, 8)
 
-local timerGazeCD					= mod:NewCDTimer(19.4, 194942, nil, nil, nil, 3)
+local timerGazeCD					= mod:NewCDTimer(15.8, 194942, nil, nil, nil, 3)
 
 function mod:OnCombatStart(delay)
 	timerGazeCD:Start(11.8-delay)

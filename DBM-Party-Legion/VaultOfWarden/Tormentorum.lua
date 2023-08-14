@@ -26,7 +26,7 @@ local timerSapSoulCD			= mod:NewCDTimer(21.5, 200905, nil, nil, nil, 4, nil, DBM
 local timerTormOrbCD			= mod:NewNextTimer(15, 212567, nil, nil, nil, 1)
 
 function mod:OnCombatStart(delay)
-	timerSapSoulCD:Start(13-delay)--Might be 10-13?
+	timerSapSoulCD:Start(10.9-delay)--10-13
 	if not self:IsNormal() then
 		timerTormOrbCD:Start(20-delay)
 	end
