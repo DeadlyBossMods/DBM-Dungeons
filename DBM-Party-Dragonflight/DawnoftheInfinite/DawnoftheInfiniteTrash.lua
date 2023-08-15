@@ -10,7 +10,7 @@ mod.isTrashMod = true
 mod:RegisterEvents(
 	"SPELL_CAST_START 415770 413487 415435 415437 413529 413621 413622 412806 411958 412505 400165 413607 412136 413024 413023 412922 417481 419327 412378 412262 412233 412200 413427 407205 407535 419351",
 	"SPELL_CAST_SUCCESS 411994 412012 418435",
-	"SPELL_AURA_APPLIED 412063 415554 415437 413547 415436"
+	"SPELL_AURA_APPLIED 412063 415554 415437 413547"--415436
 --	"SPELL_AURA_APPLIED_DOSE",
 --	"SPELL_AURA_REMOVED",
 --	"UNIT_DIED",
@@ -50,7 +50,7 @@ local specWarnEnervateYou					= mod:NewSpecialWarningMoveAway(415437, nil, nil, 
 local yellEnervate							= mod:NewShortYell(415437)
 --local yellAstralBombFades						= mod:NewShortFadesYell(387843)
 local specWarnChronoburst					= mod:NewSpecialWarningDispel(415554, "RemoveMagic", nil, nil, 1, 2)
-local specWarnTaintedSands					= mod:NewSpecialWarningDispel(415436, "RemoveMagic", nil, nil, 1, 2)
+--local specWarnTaintedSands					= mod:NewSpecialWarningDispel(415436, "RemoveMagic", nil, nil, 1, 2)
 local specWarnEnervateDispel				= mod:NewSpecialWarningDispel(415437, "RemoveMagic", nil, nil, 1, 2)
 local specWarnBloom							= mod:NewSpecialWarningDispel(413547, "RemoveMagic", nil, nil, 1, 2)
 local specWarnInfiniteBoltVolley			= mod:NewSpecialWarningInterrupt(415770, "HasInterrupt", nil, nil, 1, 2)
@@ -191,9 +191,9 @@ function mod:SPELL_AURA_APPLIED(args)
 	elseif spellId == 415554 and args:IsDestTypePlayer() and self:CheckDispelFilter("magic") and self:AntiSpam(3, 3) then
 		specWarnChronoburst:Show(args.destName)
 		specWarnChronoburst:Play("helpdispel")
-	elseif spellId == 415436 and args:IsDestTypePlayer() and self:CheckDispelFilter("magic") and self:AntiSpam(3, 3) then
-		specWarnTaintedSands:Show(args.destName)
-		specWarnTaintedSands:Play("helpdispel")
+--	elseif spellId == 415436 and args:IsDestTypePlayer() and self:CheckDispelFilter("magic") and self:AntiSpam(3, 3) then
+--		specWarnTaintedSands:Show(args.destName)
+--		specWarnTaintedSands:Play("helpdispel")
 	elseif spellId == 415437 then
 --		warnViciousAmbush:Show(args.destName)
 		if self.Options.SpecWarn415437dispel and self:CheckDispelFilter("magic") and self:AntiSpam(3, 3) then
