@@ -137,10 +137,10 @@ function mod:SPELL_CAST_START(args)
 			timer = 17
 		elseif self:GetStage(2) then
 			timer = 31.5
-			--rule only applies to stage 2. If time left on corrosive is less than 9.7, it's extended. this is what causes it to be 34 instead of 31.5 sometimes
-			if timerIncineratingBlightbreathCD:GetRemaining(self.vb.corrosiveCount+1) < 9.7 then
+			--rule only applies to stage 2. If time left on corrosive is less than 5.2, it's extended. this is what causes it to be 34 instead of 31.5 sometimes
+			if timerIncineratingBlightbreathCD:GetRemaining(self.vb.corrosiveCount+1) < 5.2 then
 				local elapsed, total = timerIncineratingBlightbreathCD:GetTime(self.vb.corrosiveCount+1)
-				local extend = 9.7 - (total-elapsed)
+				local extend = 5.2 - (total-elapsed)
 				DBM:Debug("timerIncineratingBlightbreathCD extended by: "..extend, 2)
 				timerIncineratingBlightbreathCD:Update(elapsed, total+extend, self.vb.corrosiveCount+1)
 			end
@@ -206,10 +206,10 @@ function mod:SPELL_AURA_APPLIED(args)
 		timerBlightReclamationCD:Stop()
 		timerNecroticWindsCD:Stop()
 		--Starting here is less accurate than spell aura removed, causes ~1.5 variance
-		timerCorrosiveInfusionCD:Start(17.8, 1)
-		timerIncineratingBlightbreathCD:Start(26.8, 1)
-		timerNecrofrostCD:Start(34.7, 1)
-		timerBlightReclamationCD:Start(67.2, 1)
+		timerCorrosiveInfusionCD:Start(17, 1)
+		timerIncineratingBlightbreathCD:Start(25.5, 1)
+		timerNecrofrostCD:Start(32.8, 1)
+		timerBlightReclamationCD:Start(66.6, 1)
 	elseif spellId == 407406 then
 		if args:IsPlayer() then
 			specWarnCorrosion:Show()

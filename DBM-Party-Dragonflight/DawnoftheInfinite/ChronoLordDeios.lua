@@ -73,9 +73,9 @@ function mod:OnCombatStart(delay)
 	self.vb.orbCount = 0
 	self.vb.breathCount = 0
 	self.vb.addsLeft = 4
-	timerInfinityOrbCD:Start(10.7-delay, 1)
+	timerInfinityOrbCD:Start(9.5-delay, 1)
 	timerSummonInfiniteKeeperCD:Start(15-delay, 1)
-	timerTemporalBreathCD:Start(20.4-delay, 1)
+	timerTemporalBreathCD:Start(19.3-delay, 1)
 end
 
 --function mod:OnCombatEnd()

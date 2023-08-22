@@ -43,7 +43,7 @@ local specWarnTimeTraps								= mod:NewSpecialWarningDodgeCount(406481, nil, ni
 local specWarnGTFO									= mod:NewSpecialWarningGTFO(412769, nil, nil, nil, 1, 8)
 
 local timerSandBlastCD								= mod:NewCDCountTimer(21.8, 404916, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)--21.8-38.8
-local timerMoreProblemsCD							= mod:NewCDCountTimer(40, 403891, nil, nil, nil, 6)--40-52
+local timerMoreProblemsCD							= mod:NewCDCountTimer(39.7, 403891, nil, nil, nil, 6)--40-52
 local timerFamiliarFacesCD							= mod:NewCDCountTimer(23, 405279, nil, nil, nil, 5)--Only cast once
 local timerTimeTrapsCD								= mod:NewCDCountTimer(50.9, 406481, nil, nil, nil, 3)
 
@@ -62,7 +62,7 @@ local allTimers = {--Timers up to 6:09
 	--Sand Blast
 	[404916] = {4.6, 38.8, 29.1, 20.6, 29.1, 21.8, 29.1, 21.8, 29.1, 21.8, 29.1, 21.8, 29.1, 21.8},
 	--More Problems
-	[403891] = {10.6, 40, 48.5, 49.8, 50.9, 51, 51, 52.2},
+	[403891] = {10.6, 39.7, 48.5, 49.8, 50.9, 51, 51, 52.2},
 	--Time Traps
 	[406481] = {30.1, 50.5, 51, 51, 51, 51, 51},
 }
@@ -125,7 +125,6 @@ function mod:SPELL_CAST_START(args)
 		self.vb.blastCount = self.vb.blastCount + 1
 		specWarnSandBlast:Show(self.vb.blastCount)
 		specWarnSandBlast:Play("shockwave")
-		timerSandBlastCD:Start(nil, self.vb.blastCount+1)
 		local timer
 		if self.vb.blastCount == 1 then--One off
 			timer = 38.8
