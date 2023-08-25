@@ -25,7 +25,7 @@ mod:RegisterEventsInCombat(
 local warnFixate					= mod:NewTargetAnnounce(209906, 2, nil, false)--Could be spammy, optional
 local warnSpikedTongueOver			= mod:NewEndAnnounce(199176, 1)
 
-local specWarnAdds					= mod:NewSpecialWarningSwitchCount(199817, "Dps", nil, nil, 1, 2)
+local specWarnAdds					= mod:NewSpecialWarningSwitchCount(199817, "-Healer", nil, 2, 1, 2)
 local specWarnFixate				= mod:NewSpecialWarningYou(209906, nil, nil, nil, 1, 2)
 local specWarnSpikedTongue			= mod:NewSpecialWarningRunCount(199176, nil, nil, nil, 4, 2)
 local specWarnRancidMaw				= mod:NewSpecialWarningGTFO(188494, nil, nil, nil, 1, 8)
