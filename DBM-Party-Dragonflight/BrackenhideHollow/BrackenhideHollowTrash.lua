@@ -75,7 +75,7 @@ local timerWitheringBurstCD					= mod:NewCDTimer(19.4, 367503, nil, nil, nil, 3)
 local timerSummonLashersCD					= mod:NewCDTimer(12.2, 383062, nil, nil, nil, 1)--12-15
 local timerStinkBreathCD					= mod:NewCDTimer(17, 388060, nil, nil, nil, 3)
 local timerViolentWhirlwindCD				= mod:NewCDTimer(17, 388046, nil, nil, nil, 2)
-local timerStompCD							= mod:NewCDTimer(20.6, 373943, nil, nil, nil, 2)
+local timerStompCD							= mod:NewCDTimer(17, 373943, nil, nil, nil, 2)
 local timerRottingSurgeCD					= mod:NewCDTimer(23, 383385, nil, nil, nil, 3)--TODO, limited data
 
 --local playerName = UnitName("player")

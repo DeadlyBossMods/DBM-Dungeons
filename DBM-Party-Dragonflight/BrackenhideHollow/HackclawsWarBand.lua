@@ -54,7 +54,7 @@ local specWarnMarkedforButchery					= mod:NewSpecialWarningDefensive(378229, nil
 
 local timerDecayedSensesCD						= mod:NewCDTimer(59.4, 381379, nil, nil, nil, 3)
 local timerGashFrenzyCD							= mod:NewCDCountTimer(59.4, 378029, nil, nil, nil, 5, nil, DBM_COMMON_L.HEALER_ICON..DBM_COMMON_L.BLEED_ICON)
-local timerMarkedforButcheryCD					= mod:NewCDCountTimer(60.2, 378229, nil, nil, nil, 3, nil, DBM_COMMON_L.HEALER_ICON)
+local timerMarkedforButcheryCD					= mod:NewCDCountTimer(59.5, 378229, nil, nil, nil, 3, nil, DBM_COMMON_L.HEALER_ICON)
 --Tricktotem
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(24734))
 local warnHextrick								= mod:NewTargetNoFilterAnnounce(381466, 3)
@@ -82,7 +82,7 @@ local function scanBosses(self, delay)
 			local cid = self:GetUnitCreatureId(unitID)
 			local bossGUID = UnitGUID(unitID)
 			if cid == 186122 then--Rira Hackclaw
-				timerBladestormCD:Start(19.7-delay, bossGUID)
+				timerBladestormCD:Start(19.2-delay, bossGUID)
 				timerSavageChargeCD:Start(48.3-delay, bossGUID)
 			elseif cid == 186124 then--Gashtooth
 				timerGashFrenzyCD:Start(2.7-delay, 1, bossGUID)
@@ -91,7 +91,7 @@ local function scanBosses(self, delay)
 					timerMarkedforButcheryCD:Start(12.4-delay, 1, bossGUID)
 				end
 			else--Tricktotem
-				timerGreaterHealingRapidsCD:Start(11-delay, 1, bossGUID)
+				timerGreaterHealingRapidsCD:Start(10.7-delay, 1, bossGUID)
 				timerHexrickTotemCD:Start(44.8-delay, bossGUID)
 			end
 		end

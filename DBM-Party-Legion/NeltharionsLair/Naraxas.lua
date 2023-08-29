@@ -47,7 +47,7 @@ function mod:OnCombatStart(delay)
 	self.vb.mawCount = 0
 	timerAddsCD:Start(5.2-delay, 1)
 	timerRancidMawCD:Start(7.3-delay, 1)
-	timerToxicRetchCD:Start(12.4-delay, 1)
+	timerToxicRetchCD:Start(12.2-delay, 1)
 	timerSpikedTongueCD:Start(50.5-delay, 1)
 end
 

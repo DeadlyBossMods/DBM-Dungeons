@@ -32,8 +32,8 @@ local specWarnStrikeofMountain		= mod:NewSpecialWarningDodge(216290, nil, nil, n
 --local yellStrikeofMountain			= mod:NewYell(216290)
 
 local timerSunderCD					= mod:NewCDTimer(7.5, 198496, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
-local timerStrikeCD					= mod:NewCDTimer(15, 216290, nil, nil, nil, 3)
-local timerBelowofDeepsCD			= mod:NewCDTimer(33.9, 193375, nil, nil, nil, 1)
+local timerStrikeCD					= mod:NewCDTimer(14.6, 216290, nil, nil, nil, 3)
+local timerBelowofDeepsCD			= mod:NewCDTimer(33.6, 193375, nil, nil, nil, 1)
 
 mod.vb.stanceCount = 0
 
