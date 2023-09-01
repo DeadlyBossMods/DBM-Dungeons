@@ -78,7 +78,7 @@ end
 
 function mod:UNIT_DIED(args)
 	if self:GetCIDFromGUID(args.destGUID) == 60040 then--Commander Durand
-		if self:GetStage() == 3 then--Fight is over on 2nd death == 3 then--Fight is over on 2nd death
+		if self:GetStage(3) then--Fight is over on 2nd death == 3 then--Fight is over on 2nd death
 			DBM:EndCombat(self)
 		else--it's first death, he's down and whiteman is taking over
 			self:SetStage(2)
