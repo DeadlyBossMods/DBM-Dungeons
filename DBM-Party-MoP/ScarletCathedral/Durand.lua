@@ -28,10 +28,8 @@ local timerMassResCD			= mod:NewCDTimer(21, 113134, nil, nil, nil, 4, nil, DBM_C
 local timerDeepSleep			= mod:NewBuffFadesTimer(10, 9256, nil, nil, nil, 6)
 local timerMCCD					= mod:NewCDTimer(19, 130857, nil, nil, nil, 3)
 
-local phase = 1
-
 function mod:OnCombatStart(delay)
-	phase = 1
+	self:SetStage(1)
 	timerFlashofSteel:Start(9-delay)
 	timerDashingStrike:Start(24-delay)
 end
@@ -57,7 +55,7 @@ end
 --3/28 16:22:43.810  SPELL_CAST_SUCCESS,0xF1300F8900000065,"High Inquisitor Whitemane",0xa48,0x0,0x0000000000000000,nil,0x80000000,0x80000000,9256,"Deep Sleep",0x20
 function mod:SPELL_CAST_SUCCESS(args)
 	if args.spellId == 9256 then--Phase 3
-		phase = 3
+		self:SetStage(3)
 		warnDeepSleep:Show()
 		timerDeepSleep:Start()
 		timerMassResCD:Start(18)--Limited Sample size
@@ -79,12 +77,12 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
 end
 
 function mod:UNIT_DIED(args)
-	if self:GetCIDFromGUID(args.destGUID) == 60040 then
-		if phase == 3 then--Fight is over on 2nd death
+	if self:GetCIDFromGUID(args.destGUID) == 60040 then--Commander Durand
+		if self:GetStage(3) then--Fight is over on 2nd death == 3 then--Fight is over on 2nd death
 			DBM:EndCombat(self)
 		else--it's first death, he's down and whiteman is taking over
-			phase = 2
-			timerMassResCD:Start(13)
+			self:SetStage(2)
+			timerMassResCD:Start(8.9)
 			if self:IsDifficulty("challenge5") then
 				timerMCCD:Start(14)
 			end
