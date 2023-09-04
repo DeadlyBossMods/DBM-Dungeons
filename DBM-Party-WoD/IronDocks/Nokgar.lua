@@ -63,7 +63,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 		timerBloodlettingHowlCD:Stop()
 		timerBloodlettingHowlCD:Start(4.8)
 		timerBurningArrowsCD:Start(15.7)--15.7-18.2 depending on whether it gets spell queued behind Reckless
-		timerRecklessProvocationCD:Start(16.9)
+		timerRecklessProvocationCD:Start(15.8)
 	elseif args.spellId == 164635 then
 		specWarnBurningArrows:Show()
 		specWarnBurningArrows:Play("watchfeet")
