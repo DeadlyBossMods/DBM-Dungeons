@@ -14,6 +14,7 @@ mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 76047 76100"
 )
 
+--TODO, GTFO for void zones
 local warnDarkFissure		= mod:NewSpellAnnounce(76047, 4)
 local warnSqueeze			= mod:NewTargetNoFilterAnnounce(76026, 3)
 local warnEnrage			= mod:NewSpellAnnounce(76100, 2, nil, "Tank")
@@ -24,7 +25,7 @@ local specWarnFissure		= mod:NewSpecialWarningDodge(76047, "Tank", nil, nil, 1, 
 local timerDarkFissureCD	= mod:NewCDTimer(18.4, 76047, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerSqueeze			= mod:NewTargetTimer(6, 76026, nil, nil, nil, 5, nil, DBM_COMMON_L.DAMAGE_ICON)
 local timerSqueezeCD		= mod:NewCDTimer(29, 76026, nil, nil, nil, 3)
-local timerEnrage			= mod:NewBuffActiveTimer(10, 76100, nil, "Tank", 2, 5)
+local timerEnrage			= mod:NewBuffActiveTimer(10, 76100, nil, "Tank|Healer", 2, 5)
 
 function mod:SPELL_AURA_APPLIED(args)
 	if args.spellId == 76094 and self:CheckDispelFilter("curse") then
