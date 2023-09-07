@@ -5,6 +5,7 @@ mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(98949)
 mod:SetEncounterID(1834)
 mod:SetUsedIcons(1)
+mod.sendMainBossGUID = true
 
 mod:RegisterCombat("combat")
 
@@ -91,11 +92,7 @@ function mod:SPELL_CAST_START(args)
 	elseif spellId == 198245 and not superWarned then--fallback, only 0.7 seconds warning vs 1.2 if power 100 works, but better than naught.
 		superWarned = true
 		specWarnBrutalHaymaker:Show()
-		if self:IsTank() then
-			specWarnBrutalHaymaker:Play("defensive")
-		else
-			specWarnBrutalHaymaker:Play("tankheal")
-		end
+		specWarnBrutalHaymaker:Play("defensive")
 	end
 end
 
@@ -114,11 +111,7 @@ do
 		elseif power == 100 and not superWarned then--Doing here is about 0.5 seconds faster than SPELL_CAST_START, when it works.
 			superWarned = true
 			specWarnBrutalHaymaker:Show()
-			if self:IsTank() then
-				specWarnBrutalHaymaker:Play("defensive")
-			else
-				specWarnBrutalHaymaker:Play("tankheal")
-			end
+			specWarnBrutalHaymaker:Play("defensive")
 		end
 	end
 end

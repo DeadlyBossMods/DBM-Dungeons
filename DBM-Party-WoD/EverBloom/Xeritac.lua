@@ -7,6 +7,7 @@ mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(84550)
 mod:SetEncounterID(1752)--TODO: VERIFY, "Boss 4" isn't descriptive enough
 mod:SetReCombatTime(120, 3)--this boss can quickly re-enter combat if boss reset occurs.
+mod.sendMainBossGUID = true
 
 mod:RegisterCombat("combat_emotefind", L.Pull)
 

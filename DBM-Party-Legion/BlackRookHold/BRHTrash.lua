@@ -28,6 +28,7 @@ local specWarnDarkMending			= mod:NewSpecialWarningInterrupt(225573, "HasInterru
 
 function mod:SPELL_CAST_START(args)
 	if not self.Options.Enabled then return end
+	if not self:IsValidWarning(args.sourceGUID) then return end
 	local spellId = args.spellId
 	if spellId == 200261 and self:AntiSpam(2, 1) then
 		specWarnBonebreakingStrike:Show()

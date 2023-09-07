@@ -30,10 +30,24 @@ local timerDiscordantCadenzaCD		= mod:NewCDTimer(22.6, 268306, nil, nil, nil, 3)
 
 mod:AddRangeFrameOption(6, 261440)
 
+local function scanBosses(self, delay)
+	for i = 1, 2 do
+		local unitID = "boss"..i
+		if UnitExists(unitID) then
+			local cid = self:GetUnitCreatureId(unitID)
+			local bossGUID = UnitGUID(unitID)
+			if cid == 131527 then--Lord waycrest
+				timerWastingStrikeCD:Start(5-delay, bossGUID)
+				timerVirulentPathogenCD:Start(9.5-delay, bossGUID)
+			else
+				timerDiscordantCadenzaCD:Start(14.5-delay, bossGUID)
+			end
+		end
+	end
+end
+
 function mod:OnCombatStart(delay)
-	timerWastingStrikeCD:Start(6-delay)
-	timerVirulentPathogenCD:Start(10.5-delay)
-	timerDiscordantCadenzaCD:Start(15.5-delay)
+	self:Schedule(1, scanBosses, self, delay)--1 second delay to give IEEU time to populate boss unitIDs
 	if self.Options.RangeFrame then
 		DBM.RangeCheck:Show(6)
 	end
@@ -62,23 +76,25 @@ function mod:SPELL_CAST_START(args)
 	if spellId == 268306 and self:AntiSpam(6, 1) then--Antispam in case she interrupts cast to cast transfer, then casts it a second time
 		specWarnDiscordantCadenza:Show()
 		specWarnDiscordantCadenza:Play("watchstep")
-		timerDiscordantCadenzaCD:Start()
+		timerDiscordantCadenzaCD:Start(nil, args.sourceGUID)
 	elseif spellId == 261440 then
-		timerVirulentPathogenCD:Start()
+		timerVirulentPathogenCD:Start(nil, args.sourceGUID)
 	end
 end
 
 function mod:SPELL_CAST_SUCCESS(args)
 	local spellId = args.spellId
 	if spellId == 261438 then
-		timerWastingStrikeCD:Start()
+		timerWastingStrikeCD:Start(nil, args.sourceGUID)
 	end
 end
 
 function mod:UNIT_DIED(args)
 	local cid = self:GetCIDFromGUID(args.destGUID)
 	if cid == 131527 then--Lord Waycrest
-		timerWastingStrikeCD:Stop()
-		timerVirulentPathogenCD:Stop()
+		timerWastingStrikeCD:Stop(args.destGUID)
+		timerVirulentPathogenCD:Stop(args.destGUID)
+	elseif cid == 131545 then--Other one
+		timerDiscordantCadenzaCD:Stop(args.destGUID)
 	end
 end
