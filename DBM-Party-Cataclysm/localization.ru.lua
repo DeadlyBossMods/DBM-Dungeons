@@ -382,6 +382,15 @@ L:SetOptionLocalization{
 	TimerPhase		= "Показывать таймер для 2-й фазы"
 }
 
+---------
+--Trash--
+---------
+L = DBM:GetModLocalization("ThroneofTidesTrash")
+
+L:SetGeneralLocalization({
+	name =	"Трэш мобы Трон Приливов"
+})
+
 ----------------
 --  Zul'Aman  --
 ----------------
