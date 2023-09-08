@@ -157,6 +157,15 @@ L:SetMiscLocalization({
 L= DBM:GetModLocalization(1210)
 
 -----------------------
+-- Trash --
+-----------------------
+L = DBM:GetModLocalization("EverBloomTrash")
+
+L:SetGeneralLocalization({
+	name =	"Трэш мобы Вечное Цветение"
+})
+
+-----------------------
 -- <<<Shadowmoon Buriel Grounds>>> --
 -----------------------
 -----------------------
