@@ -4,6 +4,7 @@ local L		= mod:GetLocalizedStrings()
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(260551)
 mod:SetEncounterID(2114)
+mod.sendMainBossGUID = true
 
 mod:RegisterCombat("combat")
 

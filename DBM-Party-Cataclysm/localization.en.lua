@@ -381,6 +381,15 @@ L:SetOptionLocalization{
 	TimerPhase		= "Show timer for Phase 2"
 }
 
+---------
+--Trash--
+---------
+L = DBM:GetModLocalization("ThroneofTidesTrash")
+
+L:SetGeneralLocalization({
+	name =	"Throne of Tides Trash"
+})
+
 ----------------
 --  Zul'Aman  --
 ----------------

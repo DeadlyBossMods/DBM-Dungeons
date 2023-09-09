@@ -6,6 +6,7 @@ mod.statTypes = "normal,heroic,mythic,challenge,timewalker"
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(81522)
 mod:SetEncounterID(1746)
+mod.sendMainBossGUID = true
 
 mod:RegisterCombat("combat")
 

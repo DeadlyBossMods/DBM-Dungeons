@@ -21,6 +21,7 @@ mod:RegisterEventsInCombat(
 )
 
 --Timers are too difficult to do, rapidTides messes up any chance of ever having decent timers.
+--TODO, check if timers more stable in DF version, probably not
 --General
 local warnShapersFortitude			= mod:NewTargetNoFilterAnnounce(168520, 3)
 
@@ -49,6 +50,25 @@ local timerGraspingVineCD			= mod:NewNextTimer(30.4, 168375, nil, nil, nil, 3)
 
 mod.vb.lastGrasping = nil
 
+--[[
+local function scanBosses(self, delay)
+	for i = 1, 3 do
+		local unitID = "boss"..i
+		if UnitExists(unitID) then
+			local cid = self:GetUnitCreatureId(unitID)
+			local bossGUID = UnitGUID(unitID)
+			if cid == 83894 then--Dulhu
+
+			elseif cid == 83892 then--Gola
+
+			else--Telu
+
+			end
+		end
+	end
+end
+--]]
+
 function mod:OnCombatStart(delay)
 	self.vb.lastGrasping = nil
 	if self.Options.NPAuraOnFort then
@@ -75,11 +95,7 @@ function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
 	if spellId == 168082 and self:CheckInterruptFilter(args.sourceGUID, false, true) then
 		specWarnRevitalizingWaters:Show(args.sourceName)
-		if self:IsTank() then
-			specWarnRevitalizingWaters:Play("kickcast")
-		else
-			specWarnRevitalizingWaters:Play("helpkick")
-		end
+		specWarnRevitalizingWaters:Play("kickcast")
 	elseif spellId == 168041 and self:CheckInterruptFilter(args.sourceGUID, false, true) then
 		specWarnBriarskin:Show(args.sourceName)
 		specWarnBriarskin:Play("kickcast")
@@ -92,7 +108,7 @@ function mod:SPELL_CAST_START(args)
 		end
 	elseif spellId == 175997 then
 		specWarnNoxious:Show()
-		timerNoxiousCD:Start()
+		timerNoxiousCD:Start(nil, args.sourceGUID)
 		specWarnNoxious:Play("justrun")
 	end
 end
@@ -100,7 +116,7 @@ end
 function mod:SPELL_CAST_SUCCESS(args)
 	if args.spellId == 168375 then
 		self:BossTargetScanner(83894, "GraspingVineTarget", 0.05, 10)
-		timerGraspingVineCD:Start()
+		timerGraspingVineCD:Start(nil, args.sourceGUID)
 	end
 end
 

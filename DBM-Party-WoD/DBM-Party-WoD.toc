@@ -67,6 +67,7 @@ EverBloom\AncientProtectors.lua
 EverBloom\ArchmageSol.lua
 EverBloom\Xeritac.lua
 EverBloom\Yalnu.lua
+EverBloom\EverBloomTrash.lua
 SMBurialGrounds\SadanaBloodfury.lua
 SMBurialGrounds\Nhallish.lua
 SMBurialGrounds\Bonemaw.lua

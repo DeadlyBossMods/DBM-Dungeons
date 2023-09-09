@@ -17,6 +17,7 @@ mod:RegisterEventsInCombat(
 )
 
 --TODO, figure out swarm warnings, how many need to switch and kill?
+--TODO, boss guids for nameplate aura timers, i'm feeling lazy about this right now cause it'd require scanning at different timings
 local warnCloud						= mod:NewSpellAnnounce(199143, 2)
 local warnSwarm						= mod:NewTargetAnnounce(201733, 2)
 

@@ -101,6 +101,7 @@ ThroneOfTides\LadyNazjar.lua
 ThroneOfTides\CommanderUlthok.lua
 ThroneOfTides\ErunakStonespeaker.lua
 ThroneOfTides\Ozumat.lua
+ThroneOfTides\ThroneofTidesTrash.lua
 ZulAman\Akilzon5.lua
 ZulAman\Nalorakk5.lua
 ZulAman\Janalai5.lua

@@ -106,19 +106,19 @@ function mod:SPELL_CAST_SUCCESS(args)
 		--Prevent timer from starting if Cast start started before transfer of power, but Iris sister changed by time fast finished
 		local bossUnitID = self:GetUnitIdFromGUID(args.sourceGUID)
 		if bossUnitID and not DBM:UnitBuff(bossUnitID, IrisBuff) and not DBM:UnitDebuff(bossUnitID, IrisBuff) then
-			timerJaggedNettlesCD:Start()--13.3, Time until cast START
+			timerJaggedNettlesCD:Start(nil, args.sourceGUID)--13.3, Time until cast START
 		end
 	--[[elseif spellId == 260907 then
 		--Prevent timer from starting if Cast start started before transfer of power, but Iris sister changed by time fast finished
 		local bossUnitID = self:GetUnitIdFromGUID(args.sourceGUID)
 		if bossUnitID and not DBM:UnitBuff(bossUnitID, IrisBuff) and not DBM:UnitDebuff(bossUnitID, IrisBuff) then
-			timerSoulManipulationCD:Start()
+			timerSoulManipulationCD:Start(nil, args.sourceGUID)
 		end--]]
 	elseif spellId == 260703 then
 		--Prevent timer from starting if Cast start started before transfer of power, but Iris sister changed by time fast finished
 		local bossUnitID = self:GetUnitIdFromGUID(args.sourceGUID)
 		if bossUnitID and not DBM:UnitBuff(bossUnitID, IrisBuff) and not DBM:UnitDebuff(bossUnitID, IrisBuff) then
-			timerUnstableRunicMarkCD:Start()
+			timerUnstableRunicMarkCD:Start(nil, args.sourceGUID)
 		end
 	elseif spellId == 268088 then
 		specWarnAuraofDread:Show()
@@ -132,14 +132,14 @@ function mod:SPELL_AURA_APPLIED(args)
 		warnActiveTriad:Show(args.destName)
 		local cid = self:GetCIDFromGUID(args.destGUID)
 		if cid == 135360 or cid == 131825 then--Sister Briar
-			timerJaggedNettlesCD:Start(7.7)--CAST START
+			timerJaggedNettlesCD:Start(7.7, args.destGUID)--CAST START
 		elseif cid == 135358 or cid == 131823 then--Sister Malady
-			timerUnstableRunicMarkCD:Start(10.5)--CAST SUCCESS
+			timerUnstableRunicMarkCD:Start(10.5, args.destGUID)--CAST SUCCESS
 			if self.Options.RangeFrame then
 				DBM.RangeCheck:Show(6)
 			end
 		elseif cid == 135359 or cid == 131824 then--Sister Solena
-			timerSoulManipulationCD:Start(11.3)--CAST SUCCESS
+			timerSoulManipulationCD:Start(11.3, args.destGUID)--CAST SUCCESS
 		end
 		if self.Options.SetIconOnTriad then
 			self:ScanForMobs(args.destGUID, 2, 8, 1, nil, 12, "SetIconOnTriad")
@@ -167,14 +167,14 @@ function mod:SPELL_AURA_REMOVED(args)
 	if spellId == 260805 then--Iris
 		local cid = self:GetCIDFromGUID(args.destGUID)
 		if cid == 135360 or cid == 131825 then--Sister Briar
-			timerJaggedNettlesCD:Stop()
+			timerJaggedNettlesCD:Stop(args.destGUID)
 		elseif cid == 135358 or cid == 131823 then--Sister Malady
-			timerUnstableRunicMarkCD:Stop()
+			timerUnstableRunicMarkCD:Stop(args.destGUID)
 			if self.Options.RangeFrame then
 				DBM.RangeCheck:Hide()
 			end
 		elseif cid == 135359 or cid == 131824 then--Sister Solena
-			timerSoulManipulationCD:Stop()
+			timerSoulManipulationCD:Stop(args.destGUID)
 		end
 	elseif spellId == 268088 then
 		warnAuraofDreadOver:Show()

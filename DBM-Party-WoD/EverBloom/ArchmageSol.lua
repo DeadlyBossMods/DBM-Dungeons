@@ -6,6 +6,7 @@ mod.statTypes = "normal,heroic,mythic,challenge,timewalker"
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(82682)
 mod:SetEncounterID(1751)--TODO: Verify, Label was "Boss 3"
+mod.sendMainBossGUID = true
 
 mod:RegisterCombat("combat")
 

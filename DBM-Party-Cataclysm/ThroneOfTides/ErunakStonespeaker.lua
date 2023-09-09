@@ -1,7 +1,8 @@
 local mod	= DBM:NewMod(103, "DBM-Party-Cataclysm", 9, 65)
 local L		= mod:GetLocalizedStrings()
 
-mod.statTypes = "normal,heroic,timewalker"
+mod.statTypes = "normal,heroic,challenge,timewalker"
+mod.upgradedMPlus = true
 
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(40825, 40788)
@@ -28,7 +29,8 @@ local warnAgony				= mod:NewSpellAnnounce(76339, 3)
 
 local specWarnLavaBolt		= mod:NewSpecialWarningInterrupt(76171, nil, nil, nil, 1, 2)
 local specWarnAbsorbMagic	= mod:NewSpecialWarningReflect(76307, "SpellCaster", nil, nil, 1, 2)
-local specWarnEarthShards	= mod:NewSpecialWarningMove(84931, nil, nil, nil, 1, 2)
+local specWarnEarthShards	= mod:NewSpecialWarningYou(84931, nil, nil, nil, 1, 2)
+local yellEarthShards		= mod:NewShortYell(84931)
 
 local timerMagmaSplash		= mod:NewBuffActiveTimer(10, 76170, nil, "Healer", nil, 5, nil, DBM_COMMON_L.HEALER_ICON..DBM_COMMON_L.MAGIC_ICON)
 local timerAbsorbMagic		= mod:NewBuffActiveTimer(3, 76307, nil, "SpellCaster", 2, 5, nil, DBM_COMMON_L.DAMAGE_ICON)
@@ -43,12 +45,12 @@ local function showMagmaWarning()
 	timerMagmaSplash:Start()
 end
 
-function mod:EarthShardsTarget()
-	local targetname = self:GetBossTarget(40825)
+function mod:EarthShardsTarget(targetname, uId)
 	if not targetname then return end
 	if targetname == UnitName("player") then
 		specWarnEarthShards:Show()
 		specWarnEarthShards:Play("targetyou")
+		yellEarthShards:Yell()
 	else
 		warnEarthShards:Show(targetname)
 	end
@@ -94,7 +96,7 @@ function mod:SPELL_CAST_START(args)
 		specWarnLavaBolt:Show(args.sourceName)
 		specWarnLavaBolt:Play("kickcast")
 	elseif args.spellId == 84931 then
-		self:ScheduleMethod(0.1, "EarthShardsTarget")
+		self:BossTargetScanner(args.sourceGUID, "EarthShardsTarget", 0.1, 6)
 	elseif args.spellId == 76307 then
 		specWarnAbsorbMagic:Show(args.sourceName)
 		specWarnAbsorbMagic:Play("stopattack")
