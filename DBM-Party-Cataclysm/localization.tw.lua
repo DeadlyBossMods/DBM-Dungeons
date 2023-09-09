@@ -44,8 +44,13 @@ L= DBM:GetModLocalization(108)
 -----------------------------
 L= DBM:GetModLocalization(109)
 
-L:SetOptionLocalization({
-	SetIconOnBoss	= "首領施放$spell:76200後標記首領"
+---------
+--Trash--
+---------
+L = DBM:GetModLocalization("BlackrockCavernsTrash")
+
+L:SetGeneralLocalization({
+	name =	"黑石洞穴小怪"
 })
 
 ---------------------
@@ -334,6 +339,15 @@ L= DBM:GetModLocalization(115)
 -----------
 L= DBM:GetModLocalization(116)
 
+---------
+--Trash--
+---------
+L = DBM:GetModLocalization("VortexPinnacleTrash")
+
+L:SetGeneralLocalization({
+	name =	"旋渦尖塔小怪"
+})
+
 ---------------------------
 --  The Throne of Tides  --
 ---------------------------
@@ -363,6 +377,15 @@ L:SetTimerLocalization{
 L:SetOptionLocalization{
 	TimerPhase		= "為第二階段顯示計時器"
 }
+
+---------
+--Trash--
+---------
+L = DBM:GetModLocalization("ThroneofTidesTrash")
+
+L:SetGeneralLocalization({
+	name =	"潮汐王座小怪"
+})
 
 ----------------
 --  Zul'Aman  --
