@@ -21,7 +21,7 @@ local specWarnRazorShards			= mod:NewSpecialWarningSpell(188169, "Tank", nil, ni
 local specWarnGas					= mod:NewSpecialWarningGTFO(192800, nil, nil, nil, 1, 8)
 
 local timerShatterCD				= mod:NewCDTimer(24.2, 188114, nil, nil, nil, 2)
-local timerRazorShardsCD			= mod:NewCDTimer(25, 188169, nil, "Tank", nil, 5)--29?
+local timerRazorShardsCD			= mod:NewCDTimer(29, 188169, nil, "Tank", nil, 5)
 
 mod.vb.shatterCount = 0
 
