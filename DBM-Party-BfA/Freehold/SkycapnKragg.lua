@@ -14,8 +14,8 @@ mod:RegisterEventsInCombat(
 	"SPELL_CAST_SUCCESS 256005 256060",
 	"SPELL_AURA_APPLIED 256016 181089",
 	"SPELL_PERIODIC_DAMAGE 256016",
-	"SPELL_PERIODIC_MISSED 256016"
---	"UNIT_SPELLCAST_SUCCEEDED boss1"
+	"SPELL_PERIODIC_MISSED 256016",
+	"UNIT_SPELLCAST_SUCCEEDED boss1"
 )
 
 --TODO, target scan charge?
@@ -83,7 +83,7 @@ function mod:SPELL_AURA_APPLIED(args)
 	if spellId == 256016 and args:IsPlayer() and self:AntiSpam(2, 1) then
 		specWarnGTFO:Show(args.spellName)
 		specWarnGTFO:Play("watchfeet")
-	elseif spellId == 181089 then--Spawn Parrot
+	elseif spellId == 181089 and self:GetStage(1) then--Spawn Parrot
 		self:SetStage(2)
 		timerChargeCD:Stop()
 		warnPhase2:Show()
@@ -105,19 +105,17 @@ function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId, spell
 end
 mod.SPELL_PERIODIC_MISSED = mod.SPELL_PERIODIC_DAMAGE
 
---[[
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, spellId)
-	if spellId == 256056 then--Spawn Parrot
+	if spellId == 256056 and self:GetStage(1) then--Spawn Parrot
 		self:SetStage(2)
 		timerChargeCD:Stop()
 		warnPhase2:Show()
 		warnPhase2:Play("ptwo")
-		timerVilebombardmentCD:Start(6.2)
-		timerPowderShotCD:Start(7.3)--5.4 (old)
---		timerBrewCD:Start(9.7)--5-20. This timer just doesn't appear to be consistent at all, so not worth showing on stage 2 start
+		timerVilebombardmentCD:Start(2.2)
+		timerPowderShotCD:Start(5.6)
+--		timerBrewCD:Start(9.7)--No initial timer because he just doesn't activate ability utnil below x health, once activated THEN it has a CD
 		if not self:IsNormal() then
-			timerDiveBombCD:Start(17.7)
+			timerDiveBombCD:Start(12.8)
 		end
 	end
 end
---]]
