@@ -5,8 +5,9 @@ mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(126845, 126847, 126848)--Captain Jolly, Captain Raoul, Captain Eudora
 mod:SetEncounterID(2094)
 mod:DisableRegenDetection()
-mod:SetHotfixNoticeRev(20230506000000)
-mod:SetMinSyncRevision(20190806000000)--2019, 08, 06
+mod:DisableFriendlyDetection()
+mod:SetHotfixNoticeRev(20230922000000)
+mod:SetMinSyncRevision(20230922000000)
 
 mod:RegisterCombat("combat")
 
