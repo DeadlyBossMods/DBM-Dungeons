@@ -38,8 +38,8 @@ local warnFamiliarFaces								= mod:NewCountAnnounce(405279, 3)
 local warnTimeStasis								= mod:NewTargetNoFilterAnnounce(401667, 4)
 
 local specWarnSandBlast								= mod:NewSpecialWarningCount(404916, nil, nil, nil, 2, 2)
-local specWarnDragonBreath							= mod:NewSpecialWarningDodge(404364, nil, nil, nil, 3, 2)
-local specWarnTimeTraps								= mod:NewSpecialWarningDodgeCount(406481, nil, nil, nil, 3, 2)
+local specWarnDragonBreath							= mod:NewSpecialWarningDodge(404364, nil, nil, nil, 2, 2)
+local specWarnTimeTraps								= mod:NewSpecialWarningDodgeCount(406481, nil, nil, nil, 2, 2)
 local specWarnGTFO									= mod:NewSpecialWarningGTFO(412769, nil, nil, nil, 1, 8)
 
 local timerSandBlastCD								= mod:NewCDCountTimer(21.8, 404916, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)--21.8-38.8
