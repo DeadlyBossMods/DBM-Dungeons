@@ -321,6 +321,15 @@ L= DBM:GetModLocalization(112)
 ------------------------
 L= DBM:GetModLocalization(113)
 
+---------
+--Trash--
+---------
+L = DBM:GetModLocalization("StonecoreTrash")
+
+L:SetGeneralLocalization({
+	name =	"Stonecore Trash"
+})
+
 ---------------------------
 --  The Vortex Pinnacle  --
 ---------------------------
