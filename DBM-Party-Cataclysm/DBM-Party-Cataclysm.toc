@@ -97,6 +97,7 @@ TheStonecore\Corborus.lua
 TheStonecore\Slabhide.lua
 TheStonecore\Ozruk.lua
 TheStonecore\HighPriestessAzil.lua
+TheStonecore\StonecoreTrash.lua
 ThroneOfTides\LadyNazjar.lua
 ThroneOfTides\CommanderUlthok.lua
 ThroneOfTides\ErunakStonespeaker.lua
