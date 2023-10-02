@@ -322,6 +322,15 @@ L= DBM:GetModLocalization(112)
 ------------------------
 L= DBM:GetModLocalization(113)
 
+---------
+--Trash--
+---------
+L = DBM:GetModLocalization("StonecoreTrash")
+
+L:SetGeneralLocalization({
+	name =	"바위심장부 일반몹"
+})
+
 ---------------------------
 --  The Vortex Pinnacle  --
 ---------------------------
