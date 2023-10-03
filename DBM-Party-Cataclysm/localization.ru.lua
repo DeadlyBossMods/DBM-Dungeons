@@ -322,6 +322,15 @@ L= DBM:GetModLocalization(112)
 ------------------------
 L= DBM:GetModLocalization(113)
 
+---------
+--Trash--
+---------
+L = DBM:GetModLocalization("StonecoreTrash")
+
+L:SetGeneralLocalization({
+	name =	"Трэш мобы Каменные Недра"
+})
+
 ---------------------------
 --  The Vortex Pinnacle  --
 ---------------------------
