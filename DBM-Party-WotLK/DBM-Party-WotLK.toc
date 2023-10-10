@@ -1,5 +1,5 @@
 ## Interface: 100107
-## Interface-Wrath: 30402
+## Interface-Wrath: 30403
 ## X-Min-Interface: 80000
 ## X-Min-Interface-Wrath: 30400
 ## Title:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Dungeons (WotLK)|r
