@@ -17,6 +17,8 @@ mod:RegisterEvents(
 )
 
 --TODO, everything
+--TODO, nameplate timer for Bounding Whirl mandatory for Melded Berserker
+--TODO, Choking Vines interrupt
 --[[
 
 --]]
