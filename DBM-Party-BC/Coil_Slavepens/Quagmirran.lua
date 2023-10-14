@@ -1,7 +1,7 @@
 local mod	= DBM:NewMod(572, "DBM-Party-BC", 4, 260)
 local L		= mod:GetLocalizedStrings()
 
-if mod:IsRetail() then then
+if mod:IsRetail() then
 	mod.statTypes = "normal,heroic,timewalker"
 end
 
