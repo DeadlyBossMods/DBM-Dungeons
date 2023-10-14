@@ -5,6 +5,11 @@ mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(17796)
 mod:SetEncounterID(1943)
 
+if not mod:IsRetail() then
+	mod:SetModelID(18638)
+	mod:SetModelOffset(-10, 0, 1)
+end
+
 mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
@@ -15,7 +20,7 @@ mod:RegisterEventsInCombat(
 
 local WarnNet			= mod:NewTargetAnnounce(35107, 2)
 
-local specWarnSummon	= mod:NewSpecialWarningSwitch(-5999, "-Healer", nil, nil, 1, 2)
+local specWarnSummon	= mod:NewSpecialWarning("warnSummon", "-Healer", nil, nil, 1, 2)--(-5999)
 
 local timerNet			= mod:NewTargetTimer(6, 35107, nil, nil, nil, 3)
 

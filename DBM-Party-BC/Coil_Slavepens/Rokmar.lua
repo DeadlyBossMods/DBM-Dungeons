@@ -1,11 +1,18 @@
 local mod	= DBM:NewMod(571, "DBM-Party-BC", 4, 260)
 local L		= mod:GetLocalizedStrings()
 
-mod.statTypes = "normal,heroic,timewalker"
+if mod:IsRetail() then then
+	mod.statTypes = "normal,heroic,timewalker"
+end
 
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(17991)
 mod:SetEncounterID(1941)
+
+if not mod:IsRetail() then
+	mod:SetModelID(17729)
+	mod:SetModelOffset(-3, 0, -0.8)
+end
 
 mod:RegisterCombat("combat")
 

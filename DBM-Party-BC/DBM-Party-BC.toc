@@ -72,6 +72,7 @@ Auct_Tombs\Pandemonius.lua
 Auct_Tombs\Tavarok.lua
 Auct_Tombs\Shaffar.lua
 Auct_Tombs\Yor.lua
+Auct_Tombs\AuctTombsTrash.lua
 Auct_SethekkHalls\Syth.lua
 Auct_SethekkHalls\Anzu.lua
 Auct_SethekkHalls\Ikiss.lua

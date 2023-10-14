@@ -1,7 +1,7 @@
 local mod	= DBM:NewMod("PT", "DBM-Party-BC", 12)
 local L		= mod:GetLocalizedStrings()
 
-mod.statTypes = "normal,heroic,timewalker"
+mod.noStatistics = true
 
 mod:SetRevision("@file-date-integer@")
 
@@ -19,24 +19,28 @@ local warnBossPortal		= mod:NewAnnounce("WarnBossPortal", 4, 33341)
 
 local timerNextPortal		= mod:NewTimer(120, "TimerNextPortal", 57687, nil, nil, 6)
 
---mod:AddBoolOption("ShowAllPortalTimers", false, "timer")
+mod:AddBoolOption("ShowAllPortalTimers", false, "timer")
 
 local lastPortal = 0
 
 function mod:UNIT_DIED(args)
 	local cid = self:GetCIDFromGUID(args.destGUID)
-	if cid == 17879 then
-		timerNextPortal:Start(30, lastPortal + 1)
-		warnWavePortalSoon:Schedule(25)
-	elseif cid == 17880 then
-		timerNextPortal:Start(30, lastPortal + 1)
-		warnWavePortalSoon:Schedule(25)
+	if cid == 17879 or cid == 17880 then
+		if self:IsRetail() then
+			timerNextPortal:Start(30, lastPortal + 1)
+			warnWavePortalSoon:Schedule(20)
+		else
+			timerNextPortal:Start(122, lastPortal + 1)
+			warnWavePortalSoon:Schedule(112)
+		end
 	end
 end
 
 function mod:UPDATE_UI_WIDGET(table)
 	local id = table.widgetID
-	if id ~= 527 then return end
+	if id ~= (self:IsRetail() and 527 or 3120) then--TODO, confirm wrath classic still using custom ID from TBC classic of 3120
+		return
+	end
 	local widgetInfo = C_UIWidgetManager.GetIconAndTextWidgetVisualizationInfo(id)
 	local text = widgetInfo.text
 	if not text then return end
@@ -52,10 +56,10 @@ function mod:UPDATE_UI_WIDGET(table)
 			warnBossPortal:Show()
 		else
 			warnWavePortal:Show(currentPortal)
---[[		if self.Options.ShowAllPortalTimers then
-				timerNextPortal:Start(122, currentPortal + 1)--requires complete overhaul I haven't patience to do.
-				warnWavePortalSoon:Schedule(112)--because portals spawn faster and faster each time.
-			end--]]
+			if self.Options.ShowAllPortalTimers and not self:IsRetail() then
+				timerNextPortal:Start(122, currentPortal + 1)--requires complete overhaul I haven't patience to do on retail
+				warnWavePortalSoon:Schedule(112)--because portals spawn faster and faster each time with newer tech added in later years/TW versions
+			end
 		end
 		lastPortal = currentPortal
 	elseif currentPortal < lastPortal then

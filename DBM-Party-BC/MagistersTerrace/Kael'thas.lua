@@ -1,12 +1,17 @@
 local mod = DBM:NewMod(533, "DBM-Party-BC", 16, 249)
 local L = mod:GetLocalizedStrings()
 
-mod.statTypes = "normal,heroic,timewalker"
+if mod:IsRetail() then
+	mod.statTypes = "normal,heroic,timewalker"
+end
 
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(24664)
 mod:SetEncounterID(1894)
-mod:SetModelID(22906)--Here for a reason?
+
+if not mod:IsRetail() then
+	mod:SetModelID(22906)
+end
 
 mod:RegisterCombat("combat")
 
@@ -15,7 +20,7 @@ mod:RegisterEventsInCombat(
 	"SPELL_CAST_SUCCESS 44194 36819",
 	"SPELL_AURA_APPLIED 46165",
 	"SPELL_AURA_REMOVED 46165",
-	"UNIT_SPELLCAST_SUCCEEDED boss1",
+	"UNIT_SPELLCAST_SUCCEEDED",
 	"CHAT_MSG_MONSTER_YELL"
 )
 
@@ -87,14 +92,20 @@ end
 --	"<231.31 20:53:15> [UNIT_SPELLCAST_SUCCEEDED] Kael'thas Sunstrider(Omegal) [[target:Power Feedback::0:47109]]", -- [531]
 function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
 	if spellId == 47109 and self:GetStage(1) then--Power Feedback
+		self:SendSync("Stage2")
+	end
+end
+
+function mod:CHAT_MSG_MONSTER_YELL(msg)
+	if msg == L.KaelP2 and self:GetStage(1) then
 		self:SetStage(2)
 		timerShockBarrior:Stop()
 		timerPhoenix:Stop()
 	end
 end
 
-function mod:CHAT_MSG_MONSTER_YELL(msg)
-	if msg == L.KaelP2 and self:GetStage(1) then
+function mod:OnSync(msg)
+	if msg == "Stage2" and self:GetStage(1) then
 		self:SetStage(2)
 		timerShockBarrior:Stop()
 		timerPhoenix:Stop()

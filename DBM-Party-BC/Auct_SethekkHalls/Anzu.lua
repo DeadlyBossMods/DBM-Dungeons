@@ -1,12 +1,18 @@
 local mod = DBM:NewMod(542, "DBM-Party-BC", 9, 252)
 local L = mod:GetLocalizedStrings()
 
-mod.statTypes = "heroic,timewalker"
+mod.statTypes = "heroic"
 
 mod:SetRevision("@file-date-integer@")
 
 mod:SetCreatureID(23035)
 mod:SetEncounterID(1904)
+
+if not mod:IsRetail() then
+	mod:SetModelID(21492)
+	mod:SetModelScale(0.5)
+	mod:SetModelOffset(0, 1, 3)
+end
 
 mod:RegisterCombat("combat")
 
@@ -18,7 +24,7 @@ mod:RegisterEventsInCombat(
 	"CHAT_MSG_MONSTER_EMOTE"
 )
 
-local warnBirds             = mod:NewSpellAnnounce(-5253, 2, 32038)
+local warnBirds             = mod:NewAnnounce("warnBrood", 2, 32038)--(-5253)
 local warnStoned            = mod:NewAnnounce("warnStoned", 1, 32810, false)
 local warnCyclone           = mod:NewTargetAnnounce(40321, 2)
 local warnSpellBomb         = mod:NewTargetAnnounce(40303, 2)
