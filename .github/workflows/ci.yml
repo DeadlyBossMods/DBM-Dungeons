@@ -44,7 +44,7 @@ jobs:
         uses: BigWigsMods/packager@master
         if: ${{ github.event_name != 'pull_request' }}
         with:
-          args: -g wrath
+          args: -g wrath -m pkgmeta-Wrath
         env:
           CF_API_KEY: ${{ secrets.CF_API_KEY }}
           GITHUB_OAUTH: ${{ secrets.GITHUB_TOKEN }}
@@ -55,7 +55,7 @@ jobs:
         uses: BigWigsMods/packager@master
         if: ${{ github.event_name != 'pull_request' }}
         with:
-          args: -g bcc
+          args: -g bcc -m pkgmeta-BCC
         env:
           CF_API_KEY: ${{ secrets.CF_API_KEY }}
           GITHUB_OAUTH: ${{ secrets.GITHUB_TOKEN }}
@@ -66,7 +66,7 @@ jobs:
         uses: BigWigsMods/packager@master
         if: ${{ github.event_name != 'pull_request' }}
         with:
-          args: -g classic
+          args: -g classic -m pkgmeta-Classic
         env:
           CF_API_KEY: ${{ secrets.CF_API_KEY }}
           GITHUB_OAUTH: ${{ secrets.GITHUB_TOKEN }}
