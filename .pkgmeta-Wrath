@@ -1,6 +1,15 @@
 package-as: DBM-Party-WotLK
 enable-nolib-creation: no
 
+ignore:
+  - DBM-Dragonflight
+  - DBM-Cataclysm
+  - DBM-Legion
+  - DBM-MoP
+  - DBM-WoD
+  - DBM-BfA
+  - DBM-Shadowlands
+
 move-folders:
     DBM-Party-WotLK/DBM-Party-Vanilla: DBM-Party-Vanilla
     DBM-Party-WotLK/DBM-Party-WotLK: DBM-Party-WotLK
