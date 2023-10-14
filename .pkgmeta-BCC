@@ -1,0 +1,6 @@
+package-as: DBM-Party-BC
+enable-nolib-creation: no
+
+move-folders:
+    DBM-Party-BC/DBM-Party-Vanilla: DBM-Party-Vanilla
+    DBM-Party-BC/DBM-Party-BC: DBM-Party-BC

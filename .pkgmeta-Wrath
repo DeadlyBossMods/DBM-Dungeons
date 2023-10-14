@@ -1,0 +1,7 @@
+package-as: DBM-Party-WotLK
+enable-nolib-creation: no
+
+move-folders:
+    DBM-Party-WotLK/DBM-Party-Vanilla: DBM-Party-Vanilla
+    DBM-Party-WotLK/DBM-Party-WotLK: DBM-Party-WotLK
+    DBM-Party-WotLK/DBM-Party-BC: DBM-Party-BC
