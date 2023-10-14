@@ -6,6 +6,11 @@ mod:SetCreatureID(17308)
 mod:SetEncounterID(1891)
 mod:SetUsedIcons(8)
 
+if not mod:IsRetail() then
+	mod:SetModelID(18237)
+	mod:SetModelOffset(-2, 0.8, -1)
+end
+
 mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
@@ -21,7 +26,7 @@ local yellBane		= mod:NewYell(37566)
 local timerBane     = mod:NewTargetTimer(15, 37566, nil, nil, nil, 3)
 
 mod:AddSetIconOption("SetIconOnBaneTarget", 37566, true, false, {8})
-mod:AddBoolOption("RangeFrame")
+mod:AddRangeFrameOption(37566, 15)
 
 function mod:OnCombatEnd()
 	if self.Options.RangeFrame then

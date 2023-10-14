@@ -1,12 +1,19 @@
 local mod = DBM:NewMod(548, "DBM-Party-BC", 15, 254)
 local L = mod:GetLocalizedStrings()
 
-mod.statTypes = "normal,heroic,timewalker"
+if mod:IsRetail() then
+	mod.statTypes = "normal,heroic,timewalker"
+end
 
 mod:SetRevision("@file-date-integer@")
 
 mod:SetCreatureID(20870)
 mod:SetEncounterID(1916)
+
+if not mod:IsRetail() then
+	mod:SetModelID(19882)
+end
+
 mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
@@ -52,7 +59,6 @@ end
 
 do
 	local player = UnitGUID("player")
-
 	function mod:SPELL_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId, spellName)
 		if (spellId == 36121 or spellId == 39004) and destGUID == player and self:AntiSpam(4, 1) then--Flame Crash
 			specWarnGTFO:Show(spellName)

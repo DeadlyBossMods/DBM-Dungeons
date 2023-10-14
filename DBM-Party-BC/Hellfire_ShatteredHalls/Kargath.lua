@@ -1,28 +1,35 @@
 local mod	= DBM:NewMod(569, "DBM-Party-BC", 3, 259)
 local L		= mod:GetLocalizedStrings()
 
-mod.statTypes = "normal,heroic,timewalker"
+if mod:IsRetail() then
+	mod.statTypes = "normal,heroic,timewalker"
+end
 
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(16808)
 mod:SetEncounterID(1938)
 
+if not mod:IsRetail() then
+	mod:SetModelID(18237)
+	mod:SetModelOffset(-2, 0.8, -1)
+end
+
 mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
-	"UNIT_SPELLCAST_START boss1"
+	"UNIT_SPELLCAST_START"
 )
 
---186782 Some Random Orc Icon. Could not find red fel orc icon. Only green orcs or brown orcs. Brown closer to red than green is.
-local warnHeathenGuard			= mod:NewCountAnnounce(-5927, 2, 186782)
-local warnReaverGuard			= mod:NewCountAnnounce(-5930, 2, 186782)
-local warnSharpShooterGuard		= mod:NewCountAnnounce(-5934, 2, 186782)
+--134170 Some Random Orc Icon. Could not find red fel orc icon. Only green orcs or brown orcs. Brown closer to red than green is.
+local warnHeathenGuard			= mod:NewAnnounce("warnHeathen", 2, 134170)--(-5927)
+local warnReaverGuard			= mod:NewAnnounce("warnReaver", 2, 134170)--(-5930)
+local warnSharpShooterGuard		= mod:NewAnnounce("warnSharpShooter", 2, 134170)--(-5934)
 
 local specWarnBladeDance		= mod:NewSpecialWarningSpell(30739, nil, nil, nil, 2, 2)
 
-local timerHeathenCD			= mod:NewNextTimer(21, -5927, nil, nil, nil, 1, 186782)
-local timerReaverCD				= mod:NewNextTimer(21, -5930, nil, nil, nil, 1, 186782)
-local timerSharpShooterCD		= mod:NewNextTimer(21, -5934, nil, nil, nil, 1, 186782)
+local timerHeathenCD			= mod:NewTimer(21, "timerHeathen", 134170, nil, nil, 1)--(-5927)
+local timerReaverCD				= mod:NewTimer(21, "timerReaver", 134170, nil, nil, 1)--(-5930)
+local timerSharpShooterCD		= mod:NewTimer(21, "timerSharpShooter", 134170, nil, nil, 1)--(-5934)
 local timerBladeDanceCD			= mod:NewCDTimer(35, 30739, nil, nil, nil, 2)
 
 mod.vb.addSet = 0
@@ -55,9 +62,15 @@ end
 
 --Change to no sync if blizz adds IEEU(boss1)
 function mod:UNIT_SPELLCAST_START(uId, _, spellId)
-   if spellId == 30738 then -- Blade Dance Targeting
+   if spellId == 30738 and self:AntiSpam(3, 1) then -- Blade Dance Targeting
+		self:SendSync("BladeDance")
+	end
+end
+
+function mod:OnSync(msg)
+	if msg == "BladeDance" then
 		specWarnBladeDance:Show()
 		timerBladeDanceCD:Start()
 		specWarnBladeDance:Play("aesoon")
-   end
+	end
 end

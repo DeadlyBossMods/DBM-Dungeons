@@ -6,6 +6,11 @@ mod:SetCreatureID(17537, 17307)
 mod:SetEncounterID(1892)
 mod:SetBossHPInfoToHighest()
 
+if not mod:IsRetail() then
+	mod:SetModelID(18407)
+	mod:SetModelOffset(-0.2, 0, -0.3)
+end
+
 mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(

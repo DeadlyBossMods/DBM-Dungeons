@@ -7,6 +7,11 @@ mod:SetCreatureID(18667)
 mod:SetEncounterID(1909)
 mod:RegisterCombat("combat")
 
+if not mod:IsRetail() then
+	mod:SetModelID(18058)
+	mod:SetModelScale(0.95)
+end
+
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_SUCCESS 33676"
 )

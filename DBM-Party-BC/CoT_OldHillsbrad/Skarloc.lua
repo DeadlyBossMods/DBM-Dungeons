@@ -7,6 +7,10 @@ mod:SetEncounterID(1907)
 
 mod:RegisterCombat("combat")
 
+if not mod:IsRetail() then
+	mod:SetModelID(17387)
+end
+
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 29427",
 	"SPELL_AURA_APPLIED 13005",

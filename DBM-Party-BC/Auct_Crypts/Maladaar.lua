@@ -5,6 +5,11 @@ mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(18373)
 mod:SetEncounterID(1889)
 
+if not mod:IsRetail() then
+	mod:SetModelID(17715)
+	mod:SetModelScale(0.85)
+end
+
 mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(

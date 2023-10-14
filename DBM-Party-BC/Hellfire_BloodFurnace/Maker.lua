@@ -1,11 +1,18 @@
 local mod	= DBM:NewMod(555, "DBM-Party-BC", 2, 256)
 local L		= mod:GetLocalizedStrings()
 
-mod.statTypes = "normal,heroic,timewalker"
+if mod:IsRetail() then
+	mod.statTypes = "normal,heroic,timewalker"
+end
 
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(17381)
 mod:SetEncounterID(1922)
+
+if not mod:IsRetail() then
+	mod:SetModelID(18369)
+	mod:SetModelOffset(-4, 0, -0.4)
+end
 
 mod:RegisterCombat("combat")
 
@@ -14,7 +21,7 @@ mod:RegisterEventsInCombat(
 	"SPELL_AURA_REMOVED 30923"
 )
 
-local warnMindControl      = mod:NewTargetAnnounce(30923, 4)
+local warnMindControl      = mod:NewTargetNoFilterAnnounce(30923, 4)
 
 local timerMindControl     = mod:NewTargetTimer(10, 30923, nil, nil, nil, 3)
 
