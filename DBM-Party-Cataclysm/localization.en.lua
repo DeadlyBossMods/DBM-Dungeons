@@ -390,6 +390,10 @@ L:SetOptionLocalization{
 	TimerPhase		= "Show timer for Phase 2"
 }
 
+L:SetMiscLocalization{
+	RolePlay		= "The beast has returned! It must not pollute my waters!"
+}
+
 ---------
 --Trash--
 ---------

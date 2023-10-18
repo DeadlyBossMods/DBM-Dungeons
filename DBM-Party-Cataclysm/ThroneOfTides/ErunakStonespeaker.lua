@@ -19,39 +19,46 @@ mod:RegisterCombat("combat")
 if (wowToc >= 100200) then
 	--Patch 10.2 or later
 	mod:RegisterEventsInCombat(
-	--	"SPELL_CAST_START",
-	--	"SPELL_CAST_SUCCESS",
-	--	"SPELL_AURA_APPLIED",
-	--	"SPELL_AURA_APPLIED_DOSE",
-	--	"SPELL_AURA_REMOVED",
-	--	"SPELL_AURA_REMOVED_DOSE",
-	--	"SPELL_PERIODIC_DAMAGE",
-	--	"SPELL_PERIODIC_MISSED",
-	--	"UNIT_DIED",
+		"SPELL_CAST_START 429051 429037 429172",
+		"SPELL_CAST_SUCCESS 429173 429048",
+		"SPELL_AURA_APPLIED 429048"
 	--	"UNIT_SPELLCAST_SUCCEEDED boss1"
 	)
 
 	--[[
-
+(ability.id = 429051 or ability.id = 429037 or ability.id = 429172) and type = "begincast"
+ or (ability.id = 429173 or ability.id = 429048) and type = "cast"
+ or type = "dungeonencounterstart" or type = "dungeonencounterend"
 	--]]
-	--mod:AddTimerLine(DBM:EJ_GetSectionInfo(22309))
-	--local warnPhase									= mod:NewPhaseChangeAnnounce(2, nil, nil, nil, nil, nil, 2)
-	--local warnSpreadshot								= mod:NewSpellAnnounce(334404, 3)
+	--TODO, better Stage 2 detection, mind rot is kind of a crappy solution but it's all i could find on WCL
+	--TODO longer stage 2s to get repeat timer for fear
+	--Erunak Stonespeaker
+	mod:AddTimerLine(DBM:EJ_GetSectionInfo(2194))
+	local warnFlameShock								= mod:NewTargetNoFilterAnnounce(429048, 3)
 
-	--local specWarnSinseeker							= mod:NewSpecialWarningYou(335114, nil, nil, nil, 3, 2)
-	--local yellSinseeker								= mod:NewShortYell(335114)
-	--local specWarnPyroBlast							= mod:NewSpecialWarningInterrupt(396040, "HasInterrupt", nil, nil, 1, 2)
+	local specWarnEarthfury								= mod:NewSpecialWarningDodge(429051, nil, nil, nil, 2, 2)
+	local specWarnStormflurryTotem						= mod:NewSpecialWarningSwitch(429037, "-Healer", nil, nil, 1, 2)
+
 	--local specWarnGTFO								= mod:NewSpecialWarningGTFO(409058, nil, nil, nil, 1, 8)
 
-	--local timerSinseekerCD							= mod:NewAITimer(49, 335114, nil, nil, nil, 3)
-	--local timerSpreadshotCD							= mod:NewAITimer(11.8, 334404, nil, nil, nil, 2, nil, DBM_COMMON_L.TANK_ICON)
+	local timerEarthfuryCD								= mod:NewCDTimer(32.7, 429051, nil, nil, nil, 3)
+	local timerStormflurryTotemCD						= mod:NewCDTimer(26.6, 429037, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+	local timerFlameShockCD								= mod:NewCDTimer(6, 429048, nil, nil, nil, 5, nil, DBM_COMMON_L.MAGIC_ICON)
 
-	--mod:AddRangeFrameOption("5/6/10")
-	--mod:AddSetIconOption("SetIconOnSinSeeker", 335114, true, false, {1, 2, 3})
+	--Mindbender Ghur'sha
+	mod:AddTimerLine(DBM:EJ_GetSectionInfo(2199))
+	local warnPhase2									= mod:NewPhaseAnnounce(2, 2, nil, nil, nil, nil, nil, 2)
 
-	--function mod:OnCombatStart(delay)
+	local specWarnTerrifyingVision						= mod:NewSpecialWarningMoveTo(429172, nil, nil, nil, 2, 2)
 
-	--end
+	local timerTerrifyingVisionCD						= mod:NewCDTimer(100, 429051, nil, nil, nil, 2)
+
+	function mod:OnCombatStart(delay)
+		self:SetStage(1)
+		timerFlameShockCD:Start(6-delay)
+		timerStormflurryTotemCD:Start(13-delay)
+		timerEarthfuryCD:Start(20.3-delay)
+	end
 
 	--function mod:OnCombatEnd()
 	--	if self.Options.RangeFrame then
@@ -59,62 +66,46 @@ if (wowToc >= 100200) then
 	--	end
 	--end
 
-	--[[
 	function mod:SPELL_CAST_START(args)
 		local spellId = args.spellId
-		if spellId == 335114 then
-	--		if self:CheckInterruptFilter(args.sourceGUID, false, true) then
-	--
-	--		end
+		if spellId == 429051 then
+			specWarnEarthfury:Schedule(2)--2.5 second cast, I want alert at 2 so it is just slightly faster than using success
+			specWarnEarthfury:ScheduleVoice(2, "keepmove")
+			timerEarthfuryCD:Start()
+		elseif spellId == 429037 then
+			specWarnStormflurryTotem:Show()
+			specWarnStormflurryTotem:Play("attacktotem")
+			timerStormflurryTotemCD:Start()
+		elseif spellId == 429172 then
+			specWarnTerrifyingVision:Show(DBM_COMMON_L.BREAK_LOS)
+			specWarnTerrifyingVision:Play("breaklos")
+--			timerTerrifyingVisionCD:Start()
 		end
 	end
-	--]]
 
-	--[[
 	function mod:SPELL_CAST_SUCCESS(args)
 		local spellId = args.spellId
-		if spellId == 334945 then
-
+		if spellId == 429173 and self:GetStage(1) then
+			self:SetStage(2)
+			timerEarthfuryCD:Stop()
+			timerStormflurryTotemCD:Stop()
+			timerFlameShockCD:Stop()
+			warnPhase2:Show()
+			warnPhase2:Play("ptwo")
+			timerTerrifyingVisionCD:Start(7.2)
+		elseif spellId == 429048 then
+			timerFlameShockCD:Start()
 		end
 	end
-	--]]
 
-	--[[
 	function mod:SPELL_AURA_APPLIED(args)
 		local spellId = args.spellId
-		if spellId == 334971 then
-
+		if spellId == 429048 and args:IsPlayer() or self:CheckDispelFilter("magic") then
+			warnFlameShock:Show(args.destName)
 		end
 	end
-	--mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED
-	--]]
 
 	--[[
-	function mod:SPELL_AURA_REMOVED(args)
-		local spellId = args.spellId
-		if spellId == 334945 then
-
-		end
-	end
-	--mod.SPELL_AURA_REMOVED_DOSE = mod.SPELL_AURA_REMOVED
-	--]]
-
-	--[[
-	function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId, spellName)
-		if spellId == 409058 and destGUID == UnitGUID("player") and self:AntiSpam(2, 4) then
-			specWarnGTFO:Show(spellName)
-			specWarnGTFO:Play("watchfeet")
-		end
-	end
-	mod.SPELL_PERIODIC_MISSED = mod.SPELL_PERIODIC_DAMAGE
-
-	function mod:UNIT_DIED(args)
-		local cid = self:GetCIDFromGUID(args.destGUID)
-		if cid == 165067 then
-
-		end
-	end
-
 	function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
 		if spellId == 405814 then
 
