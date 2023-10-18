@@ -63,7 +63,7 @@ if (wowToc >= 100200) then
 	local specWarnInkBlast								= mod:NewSpecialWarningInterrupt(428526, "HasInterrupt", nil, nil, 1, 2)
 
 	local timerDelugeofFilthCD							= mod:NewCDCountTimer(30.3, 428594, nil, nil, nil, 1)--30-31.5
-	local timerMurkSpewCD								= mod:NewCDNPTimer(4.2, 428526, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--4.2-4.9 CD, nameplate only bar
+	local timerInkBlastCD								= mod:NewCDNPTimer(4.2, 428526, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--4.2-4.9 CD, nameplate only bar
 
 	mod.vb.barrageCount = 0
 	mod.vb.putridCount = 0
@@ -103,7 +103,7 @@ if (wowToc >= 100200) then
 		elseif spellId == 428889 then
 			warnFoulBolt:Show()
 		elseif spellId == 428526 then
-			timerMurkSpewCD:Start(nil, args.sourceGUID)
+			timerInkBlastCD:Start(nil, args.sourceGUID)
 			if self:CheckInterruptFilter(args.sourceGUID, false, true) then
 				specWarnInkBlast:Show(args.sourceName)
 				specWarnInkBlast:Play("kickcast")
