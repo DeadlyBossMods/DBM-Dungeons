@@ -391,6 +391,10 @@ L:SetOptionLocalization{
 	TimerPhase		= "2 단계 바 보기"
 }
 
+L:SetMiscLocalization{
+	RolePlay		= "야수가 돌아왔다! 놈이 물을 오염시키게 두면 안 된다!"
+}
+
 ---------
 --Trash--
 ---------
