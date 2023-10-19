@@ -5,6 +5,7 @@ local wowToc = DBM:GetTOC()
 if (wowToc >= 100200) then
 	mod.statTypes = "normal,heroic,challenge,timewalker"
 	mod.upgradedMPlus = true
+	mod.sendMainBossGUID = true
 else--TODO, refine for cata classic since no timewalker there
 	mod.statTypes = "normal,heroic,timewalker"
 end
@@ -18,108 +19,78 @@ mod:RegisterCombat("combat")
 if (wowToc >= 100200) then
 	--Patch 10.2 or later
 	mod:RegisterEventsInCombat(
-	--	"SPELL_CAST_START",
-	--	"SPELL_CAST_SUCCESS",
-	--	"SPELL_AURA_APPLIED",
-	--	"SPELL_AURA_APPLIED_DOSE",
-	--	"SPELL_AURA_REMOVED",
-	--	"SPELL_AURA_REMOVED_DOSE",
-	--	"SPELL_PERIODIC_DAMAGE",
-	--	"SPELL_PERIODIC_MISSED",
-	--	"UNIT_DIED",
-	--	"UNIT_SPELLCAST_SUCCEEDED boss1"
+		"SPELL_CAST_START 427672 427456 427668 427670",
+		"SPELL_AURA_APPLIED 427559"
 	)
 
 	--[[
-
+(ability.id = 427672 or ability.id = 427456 or ability.id = 427668 or ability.id = 427670) and type = "begincast"
+ or type = "dungeonencounterstart" or type = "dungeonencounterend"
 	--]]
-	--mod:AddTimerLine(DBM:EJ_GetSectionInfo(22309))
-	--local warnPhase									= mod:NewPhaseChangeAnnounce(2, nil, nil, nil, nil, nil, 2)
-	--local warnSpreadshot								= mod:NewSpellAnnounce(334404, 3)
+	--TODO, more timer data needed (longer pulls)
+	local warnAwakenOoze								= mod:NewCountAnnounce(427456, 3)
 
-	--local specWarnSinseeker							= mod:NewSpecialWarningYou(335114, nil, nil, nil, 3, 2)
-	--local yellSinseeker								= mod:NewShortYell(335114)
-	--local specWarnPyroBlast							= mod:NewSpecialWarningInterrupt(396040, "HasInterrupt", nil, nil, 1, 2)
-	--local specWarnGTFO								= mod:NewSpecialWarningGTFO(409058, nil, nil, nil, 1, 8)
+	local specWarnBubblingFissure						= mod:NewSpecialWarningDodge(427672, nil, nil, nil, 2, 2)
+	local specWarnFesteringShockwave					= mod:NewSpecialWarningCount(427668, nil, nil, nil, 2, 2)
+	local specWarnCrushingClaw							= mod:NewSpecialWarningDefensive(427670, nil, nil, nil, 1, 2)
+	local specWarnGTFO									= mod:NewSpecialWarningGTFO(427559, nil, nil, nil, 1, 8)
 
-	--local timerSinseekerCD							= mod:NewAITimer(49, 335114, nil, nil, nil, 3)
-	--local timerSpreadshotCD							= mod:NewAITimer(11.8, 334404, nil, nil, nil, 2, nil, DBM_COMMON_L.TANK_ICON)
+	local timerBubblingFissureCD						= mod:NewCDTimer(32.7, 427672, nil, nil, nil, 3)--32-34
+	local timerAwakenOozeCD								= mod:NewCDCountTimer(48.5, 427456, nil, nil, nil, 1)
+	local timerFesteringShockwaveCD						= mod:NewCDCountTimer(32.7, 427668, nil, nil, nil, 2, nil, DBM_COMMON_L.HEALER_ICON)
+	local timerCrushingClawCD							= mod:NewCDCountTimer(26.7, 427670, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 
-	--mod:AddRangeFrameOption("5/6/10")
-	--mod:AddSetIconOption("SetIconOnSinSeeker", 335114, true, false, {1, 2, 3})
+	mod.vb.oozeCount = 0
+	mod.vb.festeringCount = 0
+	mod.vb.clawCount = 0
+	--Delays usually caused by a 6 second lockout from Festering shockwave on just the tank ability
+	--likely a protection to keep healer from having to heal shockwave and tank at same time
+	--With more data, i'll be able to scrap table and just dynamically apply timer updates automatically, but I want to confirm theory first
+	local clawTimers = {8.2, 26.7, 29.1, 32.7}
 
-	--function mod:OnCombatStart(delay)
+	function mod:OnCombatStart(delay)
+		self.vb.oozeCount = 0
+		self.vb.festeringCount = 0
+		self.vb.clawCount = 0
+		timerCrushingClawCD:Start(8.2-delay, 1)
+		timerBubblingFissureCD:Start(15.5-delay)
+		timerFesteringShockwaveCD:Start(25.2-delay, 1)
+		timerAwakenOozeCD:Start(30.1-delay, 1)
+	end
 
-	--end
-
-	--function mod:OnCombatEnd()
-	--	if self.Options.RangeFrame then
-	--		DBM.RangeCheck:Hide()
-	--	end
-	--end
-
-	--[[
 	function mod:SPELL_CAST_START(args)
 		local spellId = args.spellId
-		if spellId == 335114 then
-	--		if self:CheckInterruptFilter(args.sourceGUID, false, true) then
-	--
-	--		end
+		if spellId == 427672 then
+			specWarnBubblingFissure:Show()
+			specWarnBubblingFissure:Play("watchstep")
+			timerBubblingFissureCD:Start()
+		elseif spellId == 427456 then
+			self.vb.oozeCount = self.vb.oozeCount + 1
+			warnAwakenOoze:Show(self.vb.oozeCount)
+			timerAwakenOozeCD:Start(nil, self.vb.oozeCount+1)
+		elseif spellId == 427668 then
+			self.vb.festeringCount = self.vb.festeringCount + 1
+			specWarnFesteringShockwave:Show(self.vb.festeringCount)
+			specWarnFesteringShockwave:Play("carefly")
+			timerFesteringShockwaveCD:Start(nil, self.vb.festeringCount+1)
+		elseif spellId == 427670 then
+			self.vb.clawCount = self.vb.clawCount + 1
+			if self:IsTanking("player", "boss1", nil, true) then
+				specWarnCrushingClaw:Show()
+				specWarnCrushingClaw:Play("defensive")
+			end
+			local timer = clawTimers[self.vb.clawCount+1] or 26.7
+			timerCrushingClawCD:Start(timer, self.vb.clawCount+1)
 		end
 	end
-	--]]
 
-	--[[
-	function mod:SPELL_CAST_SUCCESS(args)
-		local spellId = args.spellId
-		if spellId == 334945 then
-
-		end
-	end
-	--]]
-
-	--[[
 	function mod:SPELL_AURA_APPLIED(args)
 		local spellId = args.spellId
-		if spellId == 334971 then
-
-		end
-	end
-	--mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED
-	--]]
-
-	--[[
-	function mod:SPELL_AURA_REMOVED(args)
-		local spellId = args.spellId
-		if spellId == 334945 then
-
-		end
-	end
-	--mod.SPELL_AURA_REMOVED_DOSE = mod.SPELL_AURA_REMOVED
-	--]]
-
-	--[[
-	function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId, spellName)
-		if spellId == 409058 and destGUID == UnitGUID("player") and self:AntiSpam(2, 4) then
-			specWarnGTFO:Show(spellName)
+		if spellId == 427559 and args:IsPlayer() and self:AntiSpam(3, 1) then
+			specWarnGTFO:Show(args.spellName)
 			specWarnGTFO:Play("watchfeet")
 		end
 	end
-	mod.SPELL_PERIODIC_MISSED = mod.SPELL_PERIODIC_DAMAGE
-
-	function mod:UNIT_DIED(args)
-		local cid = self:GetCIDFromGUID(args.destGUID)
-		if cid == 165067 then
-
-		end
-	end
-
-	function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
-		if spellId == 405814 then
-
-		end
-	end
-	--]]
 else
 	--10.1.7 on retail, and Cataclysm classic if it happens (if it doesn't happen old version of mod will be retired)
 	mod:RegisterEventsInCombat(
