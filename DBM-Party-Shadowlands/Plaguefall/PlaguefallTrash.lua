@@ -42,7 +42,7 @@ local specWarnJaggedSpines				= mod:NewSpecialWarningDodge(320517, nil, nil, nil
 
 local timerMetamorphosis				= mod:NewCastTimer(10, 322232, nil, nil, nil, 1)
 
-mod:GroupSpells(328016, 328015)--Group two wonder grows (they use diff spell Ids because they have diff icons, so it's clearer which is interrupt and which is dispel
+--mod:GroupSpells(328016, 328015)--Group two wonder grows (they use diff spell Ids because they have diff icons, so it's clearer which is interrupt and which is dispel
 
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc
 

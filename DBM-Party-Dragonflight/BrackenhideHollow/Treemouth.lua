@@ -56,7 +56,7 @@ local timerVineWhipCD							= mod:NewCDTimer(16.9, 377559, nil, nil, nil, 5, nil
 mod:AddInfoFrameOption(378022, true)
 mod:AddSetIconOption("SetIconOnDecaySpray", 376811, true, 5, {8, 7, 6, 5})
 
-mod:GroupSpells(377222, 378022)--Consume with Consuming
+--mod:GroupSpells(377222, 378022)--Consume with Consuming
 
 mod.vb.addIcon = 8
 

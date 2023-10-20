@@ -56,7 +56,7 @@ local timerArcaneExpulsionCD					= mod:NewCDTimer(19.4, 385958, nil, nil, nil, 5
 
 mod:AddInfoFrameOption(391977, true)
 
-mod:GroupSpells(386173, 386181)--Mana Bombs with Mana Bomb
+--mod:GroupSpells(386173, 386181)--Mana Bombs with Mana Bomb
 
 mod.vb.orbCount = 0
 mod.vb.manaCount = 0

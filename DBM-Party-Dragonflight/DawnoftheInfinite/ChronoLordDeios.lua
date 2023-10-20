@@ -60,7 +60,7 @@ local specWarnGTFO									= mod:NewSpecialWarningGTFO(417413, nil, nil, nil, 1,
 local timerInfiniteCorruptionCD						= mod:NewCDCountTimer(24.2, 416264, nil, nil, nil, 3)
 
 --mod:AddInfoFrameOption(391977, true)
-mod:GroupSpells(416152, -27151)
+--mod:GroupSpells(416152, -27151)
 
 mod.vb.keeperCount = 0
 mod.vb.orbCount = 0

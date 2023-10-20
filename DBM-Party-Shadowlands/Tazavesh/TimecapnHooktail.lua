@@ -36,7 +36,7 @@ local timerInfiniteBreathCD			= mod:NewCDTimer(12, 347149, nil, "Tank", nil, 5, 
 --local timerHookSwipeCD				= mod:NewCDTimer(12, 347151, nil, nil, nil, 3, nil, DBM_COMMON_L.HEALER_ICON)
 local timerDoubleTimeCD				= mod:NewCDTimer(54.6, 350517, nil, nil, nil, 3)
 
-mod:GroupSpells(347151, 354334)--Group Hook'd debuff with Hook Swipe
+--mod:GroupSpells(347151, 354334)--Group Hook'd debuff with Hook Swipe
 --Corsair Cannoneers
 --local warnCannonBarrage				= mod:NewSpellAnnounce(347370, 3)
 local warnAnchorShot				= mod:NewTargetNoFilterAnnounce(352345, 3)

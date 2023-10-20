@@ -38,7 +38,7 @@ local specWarnBrewOnBoss			= mod:NewSpecialWarning("specWarnBrewOnBoss", "Tank",
 
 local timerTendingBarCD				= mod:NewNextTimer(8, 264605, nil, nil, nil, 3)
 
-mod:GroupSpells(264605, 265168)--Group good brew and bad brew with "tending Bar"
+--mod:GroupSpells(264605, 265168)--Group good brew and bad brew with "tending Bar"
 --Jolly
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(17025))
 local warnLuckySevens				= mod:NewSpellAnnounce(257117, 1)
