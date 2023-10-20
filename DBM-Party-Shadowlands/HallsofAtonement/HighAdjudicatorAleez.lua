@@ -40,7 +40,7 @@ local timerSpectralProcessionCD		= mod:NewCDTimer(20.6, 323597, nil, nil, nil, 1
 local timerAnimaFountainCD			= mod:NewCDTimer(24.2, 329340, nil, nil, nil, 3)
 
 mod:AddNamePlateOption("NPAuraOnFixate", 323650, true)
-mod:GroupSpells(323597, 323650)--Group spectral with associated fixate debuff
+--mod:GroupSpells(323597, 323650)--Group spectral with associated fixate debuff
 
 --local vesselName = DBM:GetSpellInfo(323848)
 

@@ -1,70 +1,187 @@
 local mod	= DBM:NewMod(1208, "DBM-Party-WoD", 5, 556)
 local L		= mod:GetLocalizedStrings()
+local wowToc = DBM:GetTOC()
 
 mod.statTypes = "normal,heroic,mythic,challenge,timewalker"
 
+if (wowToc >= 100200) then
+	mod.upgradedMPlus = true
+end
+
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(82682)
-mod:SetEncounterID(1751)--TODO: Verify, Label was "Boss 3"
-mod.sendMainBossGUID = true
+mod:SetEncounterID(1751)
+mod:SetHotfixNoticeRev(20231020000000)
+--mod:SetMinSyncRevision(20211203000000)
 
 mod:RegisterCombat("combat")
 
-mod:RegisterEventsInCombat(
-	"SPELL_CAST_START 168885",
-	"SPELL_AURA_APPLIED 166492 166572 166726 166475 166476 166477",
-	"SPELL_INTERRUPT"
-)
+if (wowToc >= 100200) then
+	--Patch 10.2 or later
+	mod:RegisterEventsInCombat(
+		"SPELL_CAST_START 428139 427863",
+		"SPELL_AURA_APPLIED 427899 428082",
+		"SPELL_PERIODIC_DAMAGE 426991",
+		"SPELL_PERIODIC_MISSED 426991"
+	)
 
---Again, too lazy to work on CD timers, someone else can do it. raid mods are putting too much strain on me to give 5 man mods as much attention
---Probalby should also add a close warning for Frozen Rain
-local warnFrostPhase			= mod:NewSpellAnnounce(166476, 2, nil, nil, nil, nil, nil, 2)
-local warnArcanePhase			= mod:NewSpellAnnounce(166477, 2, nil, nil, nil, nil, nil, 2)
+	--[[
+	(ability.id = 428139) and type = "begincast"
+	 or (ability.id = 428177 or ability.id = 427899 or ability.id = 428082) and type = "applybuff"
+	 or type = "dungeonencounterstart" or type = "dungeonencounterend"
+	 or (ability.id = 427899 or ability.id = 428082) and type = "begincast"
+	--NOTE, You can detect cinder and glacial earlier on main boss with cast start, BUT spore image only has applied.
+	--NOTE, sometimes boss bugs and starts casting random shit at random times (ie breaks order)
+	--For consistency sake, applied is used for both. Spacial has cast start for both so that's used for both
+	--TODO, visit warning types for each type, just to avoid double special alerts for overlaps which basically
+	--TODO, target scan who the boss is targetting during arcane to see who furthest distance is?
+	--]]
+	local warnCinderboltStorm							= mod:NewSpellAnnounce(427899, 4)
 
-local specWarnParasiticGrowth	= mod:NewSpecialWarningCount(168885, "Tank")--No voice ideas for this
---local specWarnFireBloom			= mod:NewSpecialWarningSpell(166492, nil, nil, nil, 2)
-local specWarnFrozenRainMove	= mod:NewSpecialWarningMove(166726, nil, nil, nil, 1, 8)
+	local specWarnGlacialFusion							= mod:NewSpecialWarningDodge(428082, nil, nil, nil, 2, 2)
+	local specWarnSpetialCompression					= mod:NewSpecialWarningCount(428139, nil, nil, nil, 2, 13)
+	local specWarnFrostbolt								= mod:NewSpecialWarningInterrupt(427863, "HasInterrupt", nil, nil, 1, 2)--Prio frostbolt interrupts over other two, because of slow
+	local specWarnGTFO									= mod:NewSpecialWarningGTFO(426991, nil, nil, nil, 1, 8)
 
-local timerParasiticGrowthCD	= mod:NewCDCountTimer(11.5, 168885, nil, "Tank|Healer", 2, 5, nil, DBM_COMMON_L.TANK_ICON)--Every 12 seconds unless comes off cd during fireball/frostbolt, then cast immediately after.
+	local timerCinderboltStormCD						= mod:NewCDSourceTimer(60, 427899, nil, nil, nil, 2)
+	local timerGlacialFusionCD							= mod:NewCDSourceTimer(60, 427899, nil, nil, nil, 3)
+	local timerSpetialCompressionCD						= mod:NewCDSourceTimer(60, 428139, nil, nil, nil, 5)
 
-mod.vb.ParasiteCount = 0
+	mod.vb.pullCount = 0
 
-function mod:OnCombatStart(delay)
-	self.vb.ParasiteCount = 0
-	timerParasiticGrowthCD:Start(32.5-delay, 1)
-end
-
-function mod:SPELL_CAST_START(args)
-	local spellId = args.spellId
-	if spellId == 168885 then
-		self.vb.ParasiteCount = self.vb.ParasiteCount + 1
-		specWarnParasiticGrowth:Show(self.vb.ParasiteCount)
-		timerParasiticGrowthCD:Stop()
-		timerParasiticGrowthCD:Start(nil, self.vb.ParasiteCount+1)
+	function mod:OnCombatStart(delay)
+		self.vb.pullCount = 0
+		timerCinderboltStormCD:Start(3, DBM_COMMON_L.BOSS)
+		if not self:IsMythic() then--Mythic schedulers timers differently
+			timerGlacialFusionCD:Start(24.1, DBM_COMMON_L.BOSS)
+			timerSpetialCompressionCD:Start(43.7, DBM_COMMON_L.BOSS)
+		end
 	end
-end
 
-function mod:SPELL_AURA_APPLIED(args)
-	local spellId = args.spellId
-	--if args:IsSpellID(166492, 166572) and self:AntiSpam(12) then--Because the dumb spell has no cast Id, we can only warn when someone gets hit by one of rings.
-		--specWarnFireBloom:Show()
-		--specWarnFireBloom:Play("firecircle")
-	if spellId == 166726 and args:IsPlayer() and self:AntiSpam(2) then--Because dumb spell has no cast Id, we can only warn when people get debuff from standing in it.
-		specWarnFrozenRainMove:Show()
-		specWarnFrozenRainMove:Play("watchfeet")
-	elseif spellId == 166476 then
-		warnFrostPhase:Show()
-		warnFrostPhase:Play("ptwo")
-	elseif spellId == 166477 then
-		warnArcanePhase:Show()
-		warnArcanePhase:Play("pthree")
+	--boss first / add second
+	--expected:
+	--fire alone
+	--ice and fire
+	--arcane and ice
+	--fire and arcane
+
+	--wtf:
+	--Fire alone
+	--ice and fire
+	--fire and arcane
+	--ice and fire
+	--https://www.warcraftlogs.com/reports/4ftYFxqJajW3PvVb#fight=6&pins=2%24Off%24%23244F4B%24expression%24%09(ability.id%20%3D%20428139)%20and%20type%20%3D%20%22begincast%22%0A%09%20or%20(ability.id%20%3D%20428177%20or%20ability.id%20%3D%20427899%20or%20ability.id%20%3D%20428082)%20and%20type%20%3D%20%22applybuff%22%0A%09%20or%20type%20%3D%20%22dungeonencounterstart%22%20or%20type%20%3D%20%22dungeonencounterend%22&view=events
+	function mod:SPELL_CAST_START(args)
+		local spellId = args.spellId
+		if spellId == 428139 then
+			self.vb.pullCount = self.vb.pullCount + 1
+			specWarnSpetialCompression:Show(self.vb.pullCount)
+			specWarnSpetialCompression:Play("pullin")
+			if self:IsMythic() then
+				if args:GetSrcCreatureID() == 82682 then--Source is Boss
+					timerGlacialFusionCD:Start(20, DBM_COMMON_L.BOSS)--Fire, Ice, Arcane, repeat
+					timerSpetialCompressionCD:Start(20, DBM_COMMON_L.ADD)--Add will recast this next
+				end
+			else
+				timerSpetialCompressionCD:Start(60, DBM_COMMON_L.BOSS)
+			end
+		elseif spellId == 427863 then
+			if self:CheckInterruptFilter(args.sourceGUID, false, true) then
+				specWarnFrostbolt:Show(args.sourceName)
+				specWarnFrostbolt:Play("kickcast")
+			end
+		end
 	end
-end
 
-function mod:SPELL_INTERRUPT(args)
-	if type(args.extraSpellId) == "number" and args.extraSpellId == 168885 then
-		timerParasiticGrowthCD:Stop()
+	function mod:SPELL_AURA_APPLIED(args)
+		local spellId = args.spellId
+		if spellId == 427899 then
+			warnCinderboltStorm:Show()
+			if self:IsMythic() then
+				if args:GetSrcCreatureID() == 82682 then--Source is Boss
+					timerGlacialFusionCD:Start(20, DBM_COMMON_L.BOSS)--Fire, Ice, Arcane, repeat
+					timerCinderboltStormCD:Start(20, DBM_COMMON_L.ADD)--Add will recast this next
+				end
+			else
+				timerCinderboltStormCD:Start(60, DBM_COMMON_L.BOSS)
+			end
+		elseif spellId == 428082 then
+			specWarnGlacialFusion:Show()
+			specWarnGlacialFusion:Play("watchorb")
+			if self:IsMythic() then
+				if args:GetSrcCreatureID() == 82682 then--Source is Boss
+					timerSpetialCompressionCD:Start(20, DBM_COMMON_L.BOSS)--Fire, Ice, Arcane, repeat
+					timerGlacialFusionCD:Start(20, DBM_COMMON_L.ADD)--Add will recast this next
+				end
+			else
+				timerGlacialFusionCD:Start(60, DBM_COMMON_L.BOSS)
+			end
+		end
+	end
+
+	function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId, spellName)
+		if spellId == 426991 and destGUID == UnitGUID("player") and self:AntiSpam(3, 1) then
+			specWarnGTFO:Show(spellName)
+			specWarnGTFO:Play("watchfeet")
+		end
+	end
+	mod.SPELL_PERIODIC_MISSED = mod.SPELL_PERIODIC_DAMAGE
+else
+	mod:RegisterEventsInCombat(
+		"SPELL_CAST_START 168885",
+		"SPELL_AURA_APPLIED 166492 166572 166726 166475 166476 166477",
+		"SPELL_INTERRUPT"
+	)
+
+	--10.1.7 on retail, and classic if it happens (if it doesn't happen old version of mod will be retired)
+	local warnFrostPhase			= mod:NewSpellAnnounce(166476, 2, nil, nil, nil, nil, nil, 2)
+	local warnArcanePhase			= mod:NewSpellAnnounce(166477, 2, nil, nil, nil, nil, nil, 2)
+
+	local specWarnParasiticGrowth	= mod:NewSpecialWarningCount(168885, "Tank")--No voice ideas for this
+	--local specWarnFireBloom			= mod:NewSpecialWarningSpell(166492, nil, nil, nil, 2)
+	local specWarnFrozenRainMove	= mod:NewSpecialWarningMove(166726, nil, nil, nil, 1, 8)
+
+	local timerParasiticGrowthCD	= mod:NewCDCountTimer(11.5, 168885, nil, "Tank|Healer", 2, 5, nil, DBM_COMMON_L.TANK_ICON)--Every 12 seconds unless comes off cd during fireball/frostbolt, then cast immediately after.
+
+	mod.vb.ParasiteCount = 0
+
+	function mod:OnCombatStart(delay)
 		self.vb.ParasiteCount = 0
-		timerParasiticGrowthCD:Start(30, 1)
+		timerParasiticGrowthCD:Start(32.5-delay, 1)
+	end
+
+	function mod:SPELL_CAST_START(args)
+		local spellId = args.spellId
+		if spellId == 168885 then
+			self.vb.ParasiteCount = self.vb.ParasiteCount + 1
+			specWarnParasiticGrowth:Show(self.vb.ParasiteCount)
+			timerParasiticGrowthCD:Stop()
+			timerParasiticGrowthCD:Start(nil, self.vb.ParasiteCount+1)
+		end
+	end
+
+	function mod:SPELL_AURA_APPLIED(args)
+		local spellId = args.spellId
+		--if args:IsSpellID(166492, 166572) and self:AntiSpam(12) then--Because the dumb spell has no cast Id, we can only warn when someone gets hit by one of rings.
+			--specWarnFireBloom:Show()
+			--specWarnFireBloom:Play("firecircle")
+		if spellId == 166726 and args:IsPlayer() and self:AntiSpam(2) then--Because dumb spell has no cast Id, we can only warn when people get debuff from standing in it.
+			specWarnFrozenRainMove:Show()
+			specWarnFrozenRainMove:Play("watchfeet")
+		elseif spellId == 166476 then
+			warnFrostPhase:Show()
+			warnFrostPhase:Play("ptwo")
+		elseif spellId == 166477 then
+			warnArcanePhase:Show()
+			warnArcanePhase:Play("pthree")
+		end
+	end
+
+	function mod:SPELL_INTERRUPT(args)
+		if type(args.extraSpellId) == "number" and args.extraSpellId == 168885 then
+			timerParasiticGrowthCD:Stop()
+			self.vb.ParasiteCount = 0
+			timerParasiticGrowthCD:Start(30, 1)
+		end
 	end
 end

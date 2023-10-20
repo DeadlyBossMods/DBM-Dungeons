@@ -32,7 +32,7 @@ local timerExplode			= mod:NewCastTimer(4, 67729, nil, nil, nil, 2)
 
 mod:AddSetIconOption("SetIconOnMarkedTarget", 67823, false, false, {8})
 mod:AddBoolOption("AchievementCheck", false, "announce")
-mod:GroupSpells(67751, 67729)
+--mod:GroupSpells(67751, 67729)
 
 local warnedfailed = false
 
