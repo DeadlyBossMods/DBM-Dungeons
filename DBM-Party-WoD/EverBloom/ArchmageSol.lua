@@ -6,116 +6,126 @@ mod.statTypes = "normal,heroic,mythic,challenge,timewalker"
 
 if (wowToc >= 100200) then
 	mod.upgradedMPlus = true
-	mod.sendMainBossGUID = true
 end
 
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(82682)
 mod:SetEncounterID(1751)
+mod:SetHotfixNoticeRev(20231020000000)
+--mod:SetMinSyncRevision(20211203000000)
 
 mod:RegisterCombat("combat")
 
 if (wowToc >= 100200) then
 	--Patch 10.2 or later
 	mod:RegisterEventsInCombat(
-	--	"SPELL_CAST_START",
-	--	"SPELL_CAST_SUCCESS",
-	--	"SPELL_AURA_APPLIED",
-	--	"SPELL_AURA_APPLIED_DOSE",
-	--	"SPELL_AURA_REMOVED",
-	--	"SPELL_AURA_REMOVED_DOSE",
-	--	"SPELL_PERIODIC_DAMAGE",
-	--	"SPELL_PERIODIC_MISSED",
-	--	"UNIT_DIED",
-	--	"UNIT_SPELLCAST_SUCCEEDED boss1"
+		"SPELL_CAST_START 428139 427863",
+		"SPELL_AURA_APPLIED 427899 428177",
+		"SPELL_PERIODIC_DAMAGE 426991",
+		"SPELL_PERIODIC_MISSED 426991"
 	)
 
-	--local warnSpreadshot								= mod:NewSpellAnnounce(334404, 3)
+	--[[
+	(ability.id = 428139) and type = "begincast"
+	 or (ability.id = 428177 or ability.id = 427899 or ability.id = 428082) and type = "applybuff"
+	 or type = "dungeonencounterstart" or type = "dungeonencounterend"
+	 or (ability.id = 427899 or ability.id = 428082) and type = "begincast"
+	--NOTE, You can detect cinder and glacial earlier on main boss with cast start, BUT spore image only has applied.
+	--NOTE, sometimes boss bugs and starts casting random shit at random times (ie breaks order)
+	--For consistency sake, applied is used for both. Spacial has cast start for both so that's used for both
+	--TODO, visit warning types for each type, just to avoid double special alerts for overlaps which basically
+	--TODO, target scan who the boss is targetting during arcane to see who furthest distance is?
+	--]]
+	local warnCinderboltStorm							= mod:NewSpellAnnounce(427899, 4)
 
-	--local specWarnSinseeker							= mod:NewSpecialWarningYou(335114, nil, nil, nil, 3, 2)
-	--local yellSinseeker								= mod:NewShortYell(335114)
-	--local specWarnPyroBlast							= mod:NewSpecialWarningInterrupt(396040, "HasInterrupt", nil, nil, 1, 2)
-	--local specWarnGTFO								= mod:NewSpecialWarningGTFO(409058, nil, nil, nil, 1, 8)
+	local specWarnGlacialFusion							= mod:NewSpecialWarningDodge(428082, nil, nil, nil, 2, 2)
+	local specWarnSpetialCompression					= mod:NewSpecialWarningCount(428139, nil, nil, nil, 2, 13)
+	local specWarnFrostbolt								= mod:NewSpecialWarningInterrupt(427863, "HasInterrupt", nil, nil, 1, 2)--Prio frostbolt interrupts over other two, because of slow
+	local specWarnGTFO									= mod:NewSpecialWarningGTFO(426991, nil, nil, nil, 1, 8)
 
-	--local timerSinseekerCD							= mod:NewAITimer(49, 335114, nil, nil, nil, 3)
-	--local timerSpreadshotCD							= mod:NewAITimer(11.8, 334404, nil, nil, nil, 2, nil, DBM_COMMON_L.TANK_ICON)
+	local timerCinderboltStormCD						= mod:NewCDSourceTimer(60, 427899, nil, nil, nil, 2)
+	local timerGlacialFusionCD							= mod:NewCDSourceTimer(60, 427899, nil, nil, nil, 3)
+	local timerSpetialCompressionCD						= mod:NewCDSourceTimer(60, 428139, nil, nil, nil, 5)
 
-	--mod:AddRangeFrameOption("5/6/10")
-	--mod:AddInfoFrameOption(407919, true)
-	--mod:AddSetIconOption("SetIconOnSinSeeker", 335114, true, false, {1, 2, 3})
+	mod.vb.pullCount = 0
 
 	function mod:OnCombatStart(delay)
-
+		self.vb.pullCount = 0
+		timerCinderboltStormCD:Start(3, DBM_COMMON_L.BOSS)
+		if not self:IsMythic() then--Mythic schedulers timers differently
+			timerGlacialFusionCD:Start(24.1, DBM_COMMON_L.BOSS)
+			timerSpetialCompressionCD:Start(43.7, DBM_COMMON_L.BOSS)
+		end
 	end
 
-	--function mod:OnCombatEnd()
-	--	if self.Options.RangeFrame then
-	--		DBM.RangeCheck:Hide()
-	--	end
-	--end
+	--boss first / add second
+	--expected:
+	--fire alone
+	--ice and fire
+	--arcane and ice
+	--fire and arcane
 
-	--[[
+	--wtf:
+	--Fire alone
+	--ice and fire
+	--fire and arcane
+	--ice and fire
+	--https://www.warcraftlogs.com/reports/4ftYFxqJajW3PvVb#fight=6&pins=2%24Off%24%23244F4B%24expression%24%09(ability.id%20%3D%20428139)%20and%20type%20%3D%20%22begincast%22%0A%09%20or%20(ability.id%20%3D%20428177%20or%20ability.id%20%3D%20427899%20or%20ability.id%20%3D%20428082)%20and%20type%20%3D%20%22applybuff%22%0A%09%20or%20type%20%3D%20%22dungeonencounterstart%22%20or%20type%20%3D%20%22dungeonencounterend%22&view=events
 	function mod:SPELL_CAST_START(args)
 		local spellId = args.spellId
-		if spellId == 335114 then
-	--		if self:CheckInterruptFilter(args.sourceGUID, false, true) then
-	--
-	--		end
+		if spellId == 428139 then
+			self.vb.pullCount = self.vb.pullCount + 1
+			specWarnSpetialCompression:Show(self.vb.pullCount)
+			specWarnSpetialCompression:Play("pullin")
+			if self:IsMythic() then
+				if args:GetSrcCreatureID() == 82682 then--Source is Boss
+					timerGlacialFusionCD:Start(20, DBM_COMMON_L.BOSS)--Fire, Ice, Arcane, repeat
+					timerSpetialCompressionCD:Start(20, DBM_COMMON_L.ADD)--Add will recast this next
+				end
+			else
+				timerSpetialCompressionCD:Start(60, DBM_COMMON_L.BOSS)
+			end
+		elseif spellId == 427863 then
+			if self:CheckInterruptFilter(args.sourceGUID, false, true) then
+				specWarnFrostbolt:Show(args.sourceName)
+				specWarnFrostbolt:Play("kickcast")
+			end
 		end
 	end
-	--]]
 
-	--[[
-	function mod:SPELL_CAST_SUCCESS(args)
-		local spellId = args.spellId
-		if spellId == 334945 then
-
-		end
-	end
-	--]]
-
-	--[[
 	function mod:SPELL_AURA_APPLIED(args)
 		local spellId = args.spellId
-		if spellId == 334971 then
-
+		if spellId == 427899 then
+			warnCinderboltStorm:Show()
+			if self:IsMythic() then
+				if args:GetSrcCreatureID() == 82682 then--Source is Boss
+					timerGlacialFusionCD:Start(20, DBM_COMMON_L.BOSS)--Fire, Ice, Arcane, repeat
+					timerCinderboltStormCD:Start(20, DBM_COMMON_L.ADD)--Add will recast this next
+				end
+			else
+				timerCinderboltStormCD:Start(60, DBM_COMMON_L.BOSS)
+			end
+		elseif spellId == 428082 then
+			specWarnGlacialFusion:Show()
+			specWarnGlacialFusion:Play("watchorb")
+			if self:IsMythic() then
+				if args:GetSrcCreatureID() == 82682 then--Source is Boss
+					timerSpetialCompressionCD:Start(20, DBM_COMMON_L.BOSS)--Fire, Ice, Arcane, repeat
+					timerGlacialFusionCD:Start(20, DBM_COMMON_L.ADD)--Add will recast this next
+				end
+			else
+				timerGlacialFusionCD:Start(60, DBM_COMMON_L.BOSS)
+			end
 		end
 	end
-	--mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED
-	--]]
 
-	--[[
-	function mod:SPELL_AURA_REMOVED(args)
-		local spellId = args.spellId
-		if spellId == 334945 then
-
-		end
-	end
-	--mod.SPELL_AURA_REMOVED_DOSE = mod.SPELL_AURA_REMOVED
-	--]]
-
-	--[[
 	function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId, spellName)
-		if spellId == 409058 and destGUID == UnitGUID("player") and self:AntiSpam(2, 4) then
+		if spellId == 426991 and destGUID == UnitGUID("player") and self:AntiSpam(3, 1) then
 			specWarnGTFO:Show(spellName)
 			specWarnGTFO:Play("watchfeet")
 		end
 	end
 	mod.SPELL_PERIODIC_MISSED = mod.SPELL_PERIODIC_DAMAGE
-
-	function mod:UNIT_DIED(args)
-		local cid = self:GetCIDFromGUID(args.destGUID)
-		if cid == 165067 then
-
-		end
-	end
-
-	function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
-		if spellId == 405814 then
-
-		end
-	end
-	--]]
 else
 	mod:RegisterEventsInCombat(
 		"SPELL_CAST_START 168885",

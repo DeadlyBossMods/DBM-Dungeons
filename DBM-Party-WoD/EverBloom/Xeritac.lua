@@ -19,12 +19,20 @@ mod:RegisterCombat("combat_emotefind", L.Pull)
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 169248 169233 169382",
 	"SPELL_PERIODIC_DAMAGE 169223",
-	"SPELL_ABSORBED 169223",
+	"SPELL_PERIODIC_MISSED 169223",
 	"UNIT_DIED",
 	"UNIT_TARGETABLE_CHANGED"
 )
 
+--[[
+(ability.id = 169248 or ability.id = 169233 or ability.id = 169382) and type = "begincast"
+ or type = "dungeonencounterstart" or type = "dungeonencounterend"
+ or ability.id = 181113 and type = "cast"
+ or (source.type = "NPC" and source.firstSeen = timestamp) or (target.type = "NPC" and target.firstSeen = timestamp)
+--]]
 --TODO, figure out why the hell emote pull doesn't work. Text is correct.
+--TODO, rework it with 10.2 version and get some working add timers, if boss is even doable on M+ that is
+--TODO, add other abilities too, but agai only if this is actually M+ mod, if it's not, not worth the time
 local warnToxicSpiderling			= mod:NewAddsLeftAnnounce(-10492, 2, "136113")
 --local warnVenomCrazedPaleOne		= mod:NewSpellAnnounce("ej10502", 3)--I can't find a way to detect these, at least not without flat out scanning all DAMAGE events but that's too much work.
 local warnInhale					= mod:NewSpellAnnounce(169233, 3)
@@ -34,10 +42,12 @@ local specWarnVenomCrazedPaleOne	= mod:NewSpecialWarningSwitch(-10502, "-Healer"
 local specWarnGaseousVolley			= mod:NewSpecialWarningSpell(169382, nil, nil, nil, 2, 2)
 local specWarnToxicGas				= mod:NewSpecialWarningMove(169223, nil, nil, nil, 1, 8)
 
-mod.vb.spiderlingCount = 4
+--local timerConsume					= mod:NewCastTimer(10, 169248, nil, nil, nil, 5, nil, DBM_COMMON_L.DAMAGE_ICON)--Maye add if easy to cancel
+
+mod.vb.spiderlingCount = 8--4 pre 10.2, 8 post 10.2
 
 function mod:OnCombatStart(delay)
-	self.vb.spiderlingCount = 4
+	self.vb.spiderlingCount = 8
 	self:SetStage(1)
 end
 
@@ -60,7 +70,7 @@ function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId)
 		specWarnToxicGas:Play("watchfeet")
 	end
 end
-mod.SPELL_ABSORBED = mod.SPELL_PERIODIC_DAMAGE
+mod.SPELL_PERIODIC_MISSED = mod.SPELL_PERIODIC_DAMAGE
 
 function mod:UNIT_DIED(args)
 	local cid = self:GetCIDFromGUID(args.destGUID)
