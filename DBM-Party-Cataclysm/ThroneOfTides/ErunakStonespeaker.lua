@@ -51,7 +51,7 @@ if (wowToc >= 100200) then
 
 	local specWarnTerrifyingVision						= mod:NewSpecialWarningMoveTo(429172, nil, nil, nil, 2, 2)
 
-	local timerTerrifyingVisionCD						= mod:NewCDTimer(100, 429051, nil, nil, nil, 2)
+	local timerTerrifyingVisionCD						= mod:NewCDTimer(100, 429172, nil, nil, nil, 2)
 
 	function mod:OnCombatStart(delay)
 		self:SetStage(1)
