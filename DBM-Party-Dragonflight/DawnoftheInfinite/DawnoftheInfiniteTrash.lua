@@ -8,7 +8,7 @@ mod:SetZone(2579)
 mod.isTrashMod = true
 
 mod:RegisterEvents(
-	"SPELL_CAST_START 415770 413487 415435 415437 413529 413621 413622 412806 411958 412505 400165 413607 412136 413024 413023 412922 417481 419327 412378 412262 412233 412200 413427 407205 407535 419351",
+	"SPELL_CAST_START 415770 413487 415435 415437 413529 413621 413622 412806 411958 412505 400165 413607 412136 413024 413023 412922 417481 419327 412378 412262 412233 412200 413427 407205 407535 419351 413544",
 	"SPELL_CAST_SUCCESS 411994 412012 418435",
 	"SPELL_AURA_APPLIED 412063 415554 415437 413547"--415436
 --	"SPELL_AURA_APPLIED_DOSE",
@@ -32,6 +32,7 @@ local warnTripleStrike						= mod:NewCastAnnounce(413487, 3, nil, nil, "Tank")
 local warnRendingCleave						= mod:NewCastAnnounce(412505, 3, nil, nil, "Tank")
 local warnTitanicBulwark					= mod:NewCastAnnounce(413024, 3, nil, nil, "Tank")
 local warnStatickyPunch						= mod:NewCastAnnounce(412262, 3, nil, nil, "Tank")
+local warnBloom								= mod:NewCastAnnounce(413544, 3)
 local warnEnervate							= mod:NewTargetAnnounce(415437, 3)
 
 local specWarnInfiniteFury					= mod:NewSpecialWarningSpell(413622, nil, nil, nil, 2, 2)
@@ -48,11 +49,12 @@ local specWarnVolatileMortar				= mod:NewSpecialWarningDodge(407205, nil, nil, n
 local specWarnBronzeExhalation				= mod:NewSpecialWarningDodge(419351, nil, nil, nil, 2, 2)
 local specWarnEnervateYou					= mod:NewSpecialWarningMoveAway(415437, nil, nil, nil, 1, 2)
 local yellEnervate							= mod:NewShortYell(415437)
---local yellAstralBombFades						= mod:NewShortFadesYell(387843)
-local specWarnChronoburst					= mod:NewSpecialWarningDispel(415554, "RemoveMagic", nil, nil, 1, 2)
---local specWarnTaintedSands					= mod:NewSpecialWarningDispel(415436, "RemoveMagic", nil, nil, 1, 2)
+--local yellAstralBombFades					= mod:NewShortFadesYell(387843)
+local specWarnChronoburst					= mod:NewSpecialWarningDispel(415769, "RemoveMagic", nil, nil, 1, 2)
+local yellChronoburst						= mod:NewShortYell(415769)
+--local specWarnTaintedSands				= mod:NewSpecialWarningDispel(415436, "RemoveMagic", nil, nil, 1, 2)
 local specWarnEnervateDispel				= mod:NewSpecialWarningDispel(415437, "RemoveMagic", nil, nil, 1, 2)
-local specWarnBloom							= mod:NewSpecialWarningDispel(413547, "RemoveMagic", nil, nil, 1, 2)
+local specWarnBloom							= mod:NewSpecialWarningDispel(413544, "RemoveMagic", nil, nil, 1, 2)
 local specWarnInfiniteBoltVolley			= mod:NewSpecialWarningInterrupt(415770, "HasInterrupt", nil, nil, 1, 2)
 local specWarnChronomelt					= mod:NewSpecialWarningInterrupt(411994, "HasInterrupt", nil, nil, 1, 2)
 local specWarnInfiniteBolt					= mod:NewSpecialWarningInterrupt(415435, "HasInterrupt", nil, nil, 1, 2)
@@ -157,6 +159,8 @@ function mod:SPELL_CAST_START(args)
 	elseif spellId == 419351 and self:AntiSpam(3, 2) then
 		specWarnBronzeExhalation:Show()
 		specWarnBronzeExhalation:Play("breathsoon")
+	elseif spellId == 413544 and self:AntiSpam(2, 5) then
+		warnBloom:Show()
 	end
 end
 
@@ -188,9 +192,15 @@ function mod:SPELL_AURA_APPLIED(args)
 	if spellId == 412063 and self:AntiSpam(3, 2) then
 		specWarnTimerip:Show()
 		specWarnTimerip:Play("watchstep")
-	elseif spellId == 415554 and args:IsDestTypePlayer() and self:CheckDispelFilter("magic") and self:AntiSpam(3, 3) then
-		specWarnChronoburst:Show(args.destName)
-		specWarnChronoburst:Play("helpdispel")
+	elseif spellId == 415554 and args:IsDestTypePlayer() then
+		if args:IsPlayer() then
+			yellChronoburst:Yell()
+		end
+		--Multi target, unknown target cap, but one dispel warning is still enough to get message across
+		if self:CheckDispelFilter("magic") and self:AntiSpam(3, 3) then
+			specWarnChronoburst:Show(args.destName)
+			specWarnChronoburst:Play("helpdispel")
+		end
 --	elseif spellId == 415436 and args:IsDestTypePlayer() and self:CheckDispelFilter("magic") and self:AntiSpam(3, 3) then
 --		specWarnTaintedSands:Show(args.destName)
 --		specWarnTaintedSands:Play("helpdispel")

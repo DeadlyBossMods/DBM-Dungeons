@@ -13,7 +13,7 @@ mod.sendMainBossGUID = true
 mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
-	"SPELL_CAST_START 404916 403891 404364 405279 406481",
+	"SPELL_CAST_START 404916 403891 404364 405279 406481 407504",
 --	"SPELL_CAST_SUCCESS",
 	"SPELL_SUMMON 403902",
 	"SPELL_AURA_APPLIED 401200 401667",--412768
@@ -24,7 +24,7 @@ mod:RegisterEventsInCombat(
 )
 
 --[[
-(ability.id = 404916 or ability.id = 403891 or ability.id = 405279 or ability.id = 406481) and type = "begincast"
+(ability.id = 404916 or ability.id = 403891 or ability.id = 405279 or ability.id = 406481 or ability.id = 407504) and type = "begincast"
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
  or ability.id = 404364 and type = "begincast"
 --]]
@@ -33,8 +33,10 @@ mod:RegisterEventsInCombat(
 --TODO, announce https://www.wowhead.com/ptr-2/spell=413208/sand-buffeted for healers?
 --TODO, nameplate aura on trapped familar face? need to see how good visual is for it first
 --TODO, detect when your add breaks free from trap and warn you it's lose again?
+--TODO Familiar Faces timers
 local warnMoreProblems								= mod:NewCountAnnounce(403891, 3)
 local warnFamiliarFaces								= mod:NewCountAnnounce(405279, 3)
+local warnFixate									= mod:NewYouAnnounce(401200, 4)
 local warnTimeStasis								= mod:NewTargetNoFilterAnnounce(401667, 4)
 
 local specWarnSandBlast								= mod:NewSpecialWarningCount(404916, nil, nil, nil, 2, 2)
@@ -44,7 +46,7 @@ local specWarnGTFO									= mod:NewSpecialWarningGTFO(412769, nil, nil, nil, 1,
 
 local timerSandBlastCD								= mod:NewCDCountTimer(21.8, 404916, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)--21.8-38.8
 local timerMoreProblemsCD							= mod:NewCDCountTimer(39.7, 403891, nil, nil, nil, 6)--40-52
-local timerFamiliarFacesCD							= mod:NewCDCountTimer(23, 405279, nil, nil, nil, 5)--Only cast once
+local timerFamiliarFacesCD							= mod:NewCDCountTimer(23, 405279, nil, nil, nil, 5)
 local timerTimeTrapsCD								= mod:NewCDCountTimer(50.9, 406481, nil, nil, nil, 3)
 
 --mod:AddInfoFrameOption(391977, true)
@@ -58,13 +60,25 @@ mod.vb.problemsCount = 0
 mod.vb.problemIcons = 1
 mod.vb.facesCount = 0
 mod.vb.trapsCount = 0
-local allTimers = {--Timers up to 6:09
+local allTimers = {--Timers up to 6:09 (< 10.2)
 	--Sand Blast
 	[404916] = {4.6, 38.8, 29.1, 20.6, 29.1, 21.8, 29.1, 21.8, 29.1, 21.8, 29.1, 21.8, 29.1, 21.8},
 	--More Problems
 	[403891] = {10.6, 39.7, 48.5, 49.8, 50.9, 51, 51, 52.2},
 	--Time Traps
 	[406481] = {30.1, 50.5, 51, 51, 51, 51, 51},
+	--Familiar Faces
+	[405279] = {38.6},
+}
+local newallTimers = {--10.2+
+	--Sand Blast
+	[404916] = {},
+	--More Problems
+	[403891] = {},
+	--Time Traps
+	[406481] = {},
+	--Familiar Faces
+	[405279] = {},
 }
 
 --[[
@@ -156,9 +170,13 @@ function mod:SPELL_CAST_START(args)
 	elseif spellId == 404364 and self:AntiSpam(3, 1) then--All 6 cast it at once
 		specWarnDragonBreath:Show()
 		specWarnDragonBreath:Play("breathsoon")
-	elseif spellId == 405279 then
+	elseif spellId == 405279 or spellId == 407504 then
 		self.vb.facesCount = self.vb.facesCount + 1
 		warnFamiliarFaces:Show(self.vb.facesCount)
+		local timer = self:GetFromTimersTable(allTimers, false, false, 405279, self.vb.facesCount+1) or 51
+		if timer then
+			timerFamiliarFacesCD:Start(timer, self.vb.facesCount+1)
+		end
 	elseif spellId == 406481 then
 		self.vb.trapsCount = self.vb.trapsCount + 1
 		specWarnTimeTraps:Show(self.vb.trapsCount)
@@ -193,6 +211,7 @@ function mod:SPELL_AURA_APPLIED(args)
 	local spellId = args.spellId
 	if spellId == 401200 and args:IsPlayer() then
 --		myGUIDAdd = args.sourceGUID
+		warnFixate:Show()
 		if self.Options.NPAuraOnFixate then
 			DBM.Nameplate:Show(true, args.sourceGUID, spellId)
 		end
