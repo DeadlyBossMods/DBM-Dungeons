@@ -16,7 +16,7 @@ mod:RegisterEventsInCombat(
 
 --ability.id = 255577 and type = "begincast" or ability.id = 255579 and type = "cast" or ability.id = 255591
 local warnTransfusion				= mod:NewSpellAnnounce(255577, 1)
-local warnMoltenGold				= mod:NewSpellAnnounce(255591, 3)
+local warnMoltenGold				= mod:NewSpellAnnounce(255582, 3)
 
 local specWarnTransfusion			= mod:NewSpecialWarningMoveTo(255577, nil, nil, nil, 3, 2)
 local specWarnClaws					= mod:NewSpecialWarningDefensive(255579, "Tank", nil, nil, 1, 2)
@@ -24,7 +24,7 @@ local specWarnClawsDispel			= mod:NewSpecialWarningDispel(255579, "MagicDispelle
 
 local timerTransfusionCD			= mod:NewNextTimer(34, 255577, nil, nil, nil, 5)
 local timerGildedClawsCD			= mod:NewCDTimer(34, 255579, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
-local timerMoltenGoldCD				= mod:NewNextTimer(34, 255591, nil, nil, nil, 3)
+local timerMoltenGoldCD				= mod:NewNextTimer(34, 255582, nil, nil, nil, 3)
 
 local taintedBlood = DBM:GetSpellInfo(255558)
 
