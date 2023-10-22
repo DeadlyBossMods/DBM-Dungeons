@@ -259,12 +259,14 @@ if (wowToc >= 100200) then
 			--]]
 			--Leave it to blizzard for some convoluted scripting, but this actually works. It's the ONLY solution that works in all 3 of them
 			--TODO, move away from hard pulling frim timers (that user might have disabled) and time stamping last cast of each of these
-			local torrRemaining = timerTorrentialFuryCD:GetRemaining(self.vb.torrentialCount+1, self.vb.golaGUID)
-			local terrRemaining = timerTerrestrialFuryCD:GetRemaining(self.vb.terrestrialCount+1, args.destGUID)
-			local revRemaining = timerRevitalizeCD:GetRemaining(self.vb.revitalizeCount+1, self.vb.golaGUID)
-			timerRevitalizeCD:HardStop(self.vb.golaGUID)
-			if torrRemaining and terrRemaining and revRemaining then
-				timerRevitalizeCD:Start(torrRemaining+terrRemaining+revRemaining, self.vb.revitalizeCount+1, self.vb.golaGUID)
+			if not self.vb.golaDead then
+				local torrRemaining = timerTorrentialFuryCD:GetRemaining(self.vb.torrentialCount+1, self.vb.golaGUID)
+				local terrRemaining = timerTerrestrialFuryCD:GetRemaining(self.vb.terrestrialCount+1, args.destGUID)
+				local revRemaining = timerRevitalizeCD:GetRemaining(self.vb.revitalizeCount+1, self.vb.golaGUID)
+				timerRevitalizeCD:HardStop(self.vb.golaGUID)
+				if torrRemaining and terrRemaining and revRemaining then
+					timerRevitalizeCD:Start(torrRemaining+terrRemaining+revRemaining, self.vb.revitalizeCount+1, self.vb.golaGUID)
+				end
 			end
 			--These timers stopped after I pull data from them for above
 			timerTerrestrialFuryCD:HardStop(args.destGUID)
