@@ -179,14 +179,6 @@ if (wowToc >= 100200) then
 			--Sets bloom interrupt timer to 30.3, cleaner than doing it by count and more accurate too
 			timerToxicBloomCD:HardStop(args.sourceGUID)
 			timerToxicBloomCD:Start(30.3, self.vb.bloomCount+1, args.sourceGUID)
-		elseif spellId == 427510 then
-			if args:IsPlayer() then
-				specWarnNoxiousCharge:Show()
-				specWarnNoxiousCharge:Play("targetyou")
-				yellNoxiousCharge:Yell()
-			else
-				warnNoxiousCharge:Show(args.destName)
-			end
 		end
 	end
 
@@ -203,6 +195,14 @@ if (wowToc >= 100200) then
 		if spellId == 168082 then
 			specWarnRevitalizeDispel:Show(args.destName)
 			specWarnRevitalizeDispel:Play("dispelboss")
+		elseif spellId == 427510 then
+			if args:IsPlayer() then
+				specWarnNoxiousCharge:Show()
+				specWarnNoxiousCharge:Play("targetyou")
+				yellNoxiousCharge:Yell()
+			else
+				warnNoxiousCharge:Show(args.destName)
+			end
 		end
 	end
 
