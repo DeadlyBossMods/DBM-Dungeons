@@ -214,14 +214,11 @@ function mod:UNIT_DIED(args)
 		timerBladestormCD:Stop(args.destGUID)
 	elseif cid == 186124 then--Gashtooth
 		timerDecayedSensesCD:Stop(args.destGUID)
-		timerGashFrenzyCD:Stop(args.destGUID)--This one is mainly for plater, which expects a GUID to be passed
-		timerGashFrenzyCD:Stop()--This will actually stop the timers regardless of count
-		timerMarkedforButcheryCD:Stop(args.destGUID)--This one is mainly for plater, which expects a GUID to be passed
-		timerMarkedforButcheryCD:Stop()--This will actually stop the timers regardless of count
+		timerGashFrenzyCD:HardStop(args.destGUID)
+		timerMarkedforButcheryCD:HardStop(args.destGUID)
 	elseif cid == 186125 then--Tricktotem
 		timerHexrickTotemCD:Stop(args.destGUID)
-		timerGreaterHealingRapidsCD:Stop(args.destGUID)--This one is mainly for plater, which expects a GUID to be passed
-		timerGreaterHealingRapidsCD:Stop()--This will actually stop the timers regardless of count
+		timerGreaterHealingRapidsCD:HardStop(args.destGUID)
 	end
 end
 

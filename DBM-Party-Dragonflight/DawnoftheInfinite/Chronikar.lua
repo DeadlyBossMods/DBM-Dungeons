@@ -14,9 +14,9 @@ mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 413105 413013 401421",
---	"SPELL_AURA_APPLIED 407147",
+	"SPELL_AURA_APPLIED 413142",
 --	"SPELL_AURA_APPLIED_DOSE",
-	"SPELL_AURA_REMOVED 413013"
+	"SPELL_AURA_REMOVED 413013 413142"
 --	"SPELL_PERIODIC_DAMAGE",
 --	"SPELL_PERIODIC_MISSED",
 --	"UNIT_SPELLCAST_SUCCEEDED boss1"
@@ -26,18 +26,18 @@ mod:RegisterEventsInCombat(
 (ability.id = 413105 or ability.id = 413013 or ability.id = 401421) and type = "begincast"
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
 --]]
-local warnEonShatter						= mod:NewCountAnnounce(413105, 3)--Second and Third Jump
+local warnEonShatter						= mod:NewCountAnnounce(413142, 3)--Second and Third Jump
 local warnChronoShear						= mod:NewFadesAnnounce(413013, 1, nil, "Healer|Tank")
 
-local specWarnEonShatter					= mod:NewSpecialWarningDodgeCount(413105, nil, nil, nil, 2, 2)
+local specWarnEonShatter					= mod:NewSpecialWarningDodgeCount(413142, nil, nil, nil, 2, 2)--Warn on initial casts
+local yellEonShatter						= mod:NewYell(413142)
+local yellEonShatterFades					= mod:NewShortFadesYell(413142)
 local specWarnChronoShear					= mod:NewSpecialWarningDefensive(413013, nil, nil, nil, 1, 2)
 local specWarnSandStomp						= mod:NewSpecialWarningMoveAwayCount(401421, nil, nil, nil, 2, 2)
---local yellManaBomb								= mod:NewYell(386181)
---local yellManaBombFades							= mod:NewShortFadesYell(386181)
 --local specWarnGTFO							= mod:NewSpecialWarningGTFO(407147, nil, nil, nil, 1, 8)
 
-local timerEonShatterCD						= mod:NewCDTimer(19.4, 413105, nil, nil, nil, 3, nil, DBM_COMMON_L.DEADLY_ICON)
-local timerEonResidue						= mod:NewCastCountTimer("d7.5", 401421, DBM_COMMON_L.SoakC, nil, nil, 5, nil, DBM_COMMON_L.MYTHIC_ICON)
+local timerEonShatterCD						= mod:NewCDTimer(19.4, 413142, nil, nil, nil, 3, nil, DBM_COMMON_L.DEADLY_ICON)
+local timerEonResidue						= mod:NewCastCountTimer("d7.5", 403486, DBM_COMMON_L.SoakC, nil, nil, 5, nil, DBM_COMMON_L.MYTHIC_ICON)
 local timerChronoShearCD					= mod:NewCDCountTimer(19.4, 413013, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerSandStompCD						= mod:NewCDCountTimer(19.4, 401421, nil, nil, nil, 3)
 
@@ -105,21 +105,26 @@ function mod:SPELL_CAST_START(args)
 	end
 end
 
---[[
+
 function mod:SPELL_AURA_APPLIED(args)
 	local spellId = args.spellId
-	if spellId == 407147 and args:IsPlayer() and self:AntiSpam(2, 1) then
-		specWarnGTFO:Show(args.spellName)
-		specWarnGTFO:Play("watchfeet")
+	if spellId == 413142 then
+		if args:IsPlayer() then
+			yellEonShatter:Yell()
+			yellEonShatterFades:Countdown(spellId)
+		end
 	end
 end
 --mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED
---]]
 
 function mod:SPELL_AURA_REMOVED(args)
 	local spellId = args.spellId
 	if spellId == 413013 then
 		warnChronoShear:Show()
+	elseif spellId == 413142 then
+		if args:IsPlayer() then
+			yellEonShatterFades:Cancel()
+		end
 	end
 end
 

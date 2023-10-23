@@ -24,6 +24,9 @@ if (wowToc >= 100200) then
 		"SPELL_AURA_APPLIED 428407 428668",
 		"UNIT_DIED"
 	)
+	mod:RegisterEvents(
+		"CHAT_MSG_MONSTER_SAY"
+	)
 
 	--[[
 (ability.id 428401 or ability.id 428868 or ability.id 428530 or ability.id 428889) and type = "begincast"

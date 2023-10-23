@@ -18,16 +18,16 @@ mod:RegisterEventsInCombat(
 
 --(ability.id = 249923 or ability.id = 250096 or ability.id = 250050 or ability.id = 249919) and type = "begincast"
 --TODO: Verify CHAT_MSG_RAID_BOSS_EMOTE for soulrend. I know i saw it but not sure I got spellId right since chatlog only grabs parsed name
-local warnSoulRend					= mod:NewTargetAnnounce(249923, 4)
+local warnSoulRend					= mod:NewTargetAnnounce(259187, 4)
 
-local specWarnSoulRend				= mod:NewSpecialWarningRun(249923, nil, nil, nil, 4, 2)
-local yellSoulRend					= mod:NewYell(249923)
+local specWarnSoulRend				= mod:NewSpecialWarningRun(259187, nil, nil, nil, 4, 2)
+local yellSoulRend					= mod:NewYell(259187)
 local specWarnWrackingPain			= mod:NewSpecialWarningInterrupt(250096, "HasInterrupt", nil, nil, 1, 2)
 local specWarnSkewer				= mod:NewSpecialWarningDefensive(249919, "Tank", nil, nil, 1, 2)
 local specWarnEchoes				= mod:NewSpecialWarningDodge(250050, nil, nil, nil, 2, 2)
 local specWarnGTFO					= mod:NewSpecialWarningGTFO(250036, nil, nil, nil, 1, 8)
 
-local timerSoulrendCD				= mod:NewCDTimer(40.6, 249923, nil, nil, nil, 3, nil, DBM_COMMON_L.DAMAGE_ICON)
+local timerSoulrendCD				= mod:NewCDTimer(40.6, 259187, nil, nil, nil, 3, nil, DBM_COMMON_L.DAMAGE_ICON)
 local timerWrackingPainCD			= mod:NewCDTimer(16.7, 250096, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--17-23
 local timerSkewerCD					= mod:NewCDTimer(12, 249919, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerEchoesCD					= mod:NewCDTimer(32.8, 250050, nil, nil, nil, 3)

@@ -12,87 +12,98 @@ end
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(83846)
 mod:SetEncounterID(1756)
+mod:SetHotfixNoticeRev(20231021000000)
+mod:SetMinSyncRevision(20231021000000)
 
 mod:RegisterCombat("combat")
 
 if (wowToc >= 100200) then
 	--Patch 10.2 or later
+	mod:SetUsedIcons(8)
 	mod:RegisterEventsInCombat(
-	--	"SPELL_CAST_START",
-	--	"SPELL_CAST_SUCCESS",
-	--	"SPELL_AURA_APPLIED",
-	--	"SPELL_AURA_APPLIED_DOSE",
-	--	"SPELL_AURA_REMOVED",
-	--	"SPELL_AURA_REMOVED_DOSE",
+		"SPELL_CAST_START 169179 169613 428823 173563 169929",
+		"SPELL_AURA_APPLIED 428948 428746",
 	--	"SPELL_PERIODIC_DAMAGE",
 	--	"SPELL_PERIODIC_MISSED",
-	--	"UNIT_DIED",
-	--	"UNIT_SPELLCAST_SUCCEEDED boss1"
+		"UNIT_DIED"
 	)
+	--[[
+	(ability.id = 169179 or ability.id = 169613 or ability.id = 428823 or ability.id = 173563 or ability.id = 169929) and type = "begincast"
+	 or ability.id = 428948 and type = "applybuff"
+	 or type = "dungeonencounterstart" or type = "dungeonencounterend"
+	 --]]
+	 --NOTE: This mod was made from old log, people apparently suck at everbloom and aren't getting to last boss this most recent test weekend
+	local warnBrushfire									= mod:NewTargetNoFilterAnnounce(428746, 1)
 
-	--local warnSpreadshot								= mod:NewSpellAnnounce(334404, 3)
-
-	--local specWarnSinseeker							= mod:NewSpecialWarningYou(335114, nil, nil, nil, 3, 2)
-	--local yellSinseeker								= mod:NewShortYell(335114)
-	--local specWarnPyroBlast							= mod:NewSpecialWarningInterrupt(396040, "HasInterrupt", nil, nil, 1, 2)
+	local specWarnColossalBlow							= mod:NewSpecialWarningDodge(169179, nil, nil, nil, 2, 2)--Still random direction or now only toward tank?
+	local specWarnVerdantEruption						= mod:NewSpecialWarningSwitchCount(428823, "-Healer", nil, nil, 1, 2)
+	local specWarnLumberingSwipe						= mod:NewSpecialWarningDodge(169929, nil, nil, nil, 2, 2)
+	local specWarnGenesis								= mod:NewSpecialWarningCount(169613, nil, nil, nil, 1, 12)
+	local specWarnLasherVenom							= mod:NewSpecialWarningInterrupt(173563, "HasInterrupt", nil, nil, 1, 2)
 	--local specWarnGTFO								= mod:NewSpecialWarningGTFO(409058, nil, nil, nil, 1, 8)
 
-	--local timerSinseekerCD							= mod:NewAITimer(49, 335114, nil, nil, nil, 3)
-	--local timerSpreadshotCD							= mod:NewAITimer(11.8, 334404, nil, nil, nil, 2, nil, DBM_COMMON_L.TANK_ICON)
+	local timerBrushfireCD								= mod:NewNextTimer(15.4, 169179, nil, nil, nil, 5, nil, DBM_COMMON_L.DAMAGE_ICON)--For buff going back up on boss, DPS can time burst CDs
+	local timerColossalBlowCD							= mod:NewCDTimer(15.3, 169179, nil, nil, nil, 3, nil, DBM_COMMON_L.TANK_ICON)
+	local timerVerdantEruptionCD						= mod:NewCDCountTimer(54.5, 428823, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)
+	local timerLumberingSwipeCD							= mod:NewCDNPTimer(11.8, 169929, nil, nil, nil, 3)
+	local timerGenesis									= mod:NewCastTimer(14, 169613, nil, nil, nil, 5)
+	local timerGenesisCD								= mod:NewCDCountTimer(54.5, 169613, nil, nil, nil, 6)
 
-	--mod:AddRangeFrameOption("5/6/10")
-	--mod:AddInfoFrameOption(407919, true)
-	--mod:AddSetIconOption("SetIconOnSinSeeker", 335114, true, false, {1, 2, 3})
+	mod:AddSetIconOption("SetIconOnAncient", -10537, true, 5, {8})
+
+	mod.vb.eruptionCount = 0
+	mod.vb.GenesisCount = 0
 
 	function mod:OnCombatStart(delay)
-
+		self.vb.eruptionCount = 0
+		self.vb.GenesisCount = 0
+		timerColossalBlowCD:Start(2.8-delay)
+		timerBrushfireCD:Start(4-delay)
+		timerVerdantEruptionCD:Start(23.2-delay, 1)
+		timerGenesisCD:Start(40.4-delay, 1)
 	end
 
-	--function mod:OnCombatEnd()
-	--	if self.Options.RangeFrame then
-	--		DBM.RangeCheck:Hide()
-	--	end
-	--end
-
-	--[[
 	function mod:SPELL_CAST_START(args)
 		local spellId = args.spellId
-		if spellId == 335114 then
-	--		if self:CheckInterruptFilter(args.sourceGUID, false, true) then
-	--
-	--		end
+		if spellId == 169179 then
+			specWarnColossalBlow:Show()
+			specWarnColossalBlow:Play("shockwave")
+			timerColossalBlowCD:Start()
+		elseif spellId == 169613 then
+			self.vb.GenesisCount = self.vb.GenesisCount + 1
+			specWarnGenesis:Show(self.vb.GenesisCount)
+			specWarnGenesis:Play("runoverflowers")
+			timerGenesis:Start()
+			timerGenesisCD:Start(nil, self.vb.GenesisCount+1)
+		elseif spellId == 428823 then
+			self.vb.eruptionCount = self.vb.eruptionCount + 1
+			specWarnVerdantEruption:Show(self.vb.eruptionCount)
+			specWarnVerdantEruption:Play("killmob")
+			timerVerdantEruptionCD:Start(nil, self.vb.eruptionCount+1)
+		elseif spellId == 173563 then
+			if self:CheckInterruptFilter(args.sourceGUID, false, true) then
+				specWarnLasherVenom:Show(args.sourceName)
+				specWarnLasherVenom:Play("kickcast")
+			end
+		elseif spellId == 169929 then
+			specWarnLumberingSwipe:Show()
+			specWarnLumberingSwipe:Play("shockwave")
+			--timerLumberingSwipeCD:Start(nil, args.sourceGUID)
 		end
 	end
-	--]]
 
-	--[[
-	function mod:SPELL_CAST_SUCCESS(args)
-		local spellId = args.spellId
-		if spellId == 334945 then
-
-		end
-	end
-	--]]
-
-	--[[
 	function mod:SPELL_AURA_APPLIED(args)
 		local spellId = args.spellId
-		if spellId == 334971 then
-
+		if spellId == 428948 and self:AntiSpam(3, 1) then--Vibrant Flourish (fires twice, we want to filter one)
+			timerLumberingSwipeCD:Start(5.5, args.destGUID)
+			timerBrushfireCD:Start()--Add dispels brushfire soon as Vibrant Flourish goes up on it
+			if self.Options.SetIconOnAncient then
+				self:ScanForMobs(args.destGUID, 2, 8, 1, nil, 12, "SetIconOnAncient")
+			end
+		elseif spellId == 428746 then
+			warnBrushfire:Show(args.destName)
 		end
 	end
-	--mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED
-	--]]
-
-	--[[
-	function mod:SPELL_AURA_REMOVED(args)
-		local spellId = args.spellId
-		if spellId == 334945 then
-
-		end
-	end
-	--mod.SPELL_AURA_REMOVED_DOSE = mod.SPELL_AURA_REMOVED
-	--]]
 
 	--[[
 	function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId, spellName)
@@ -102,20 +113,14 @@ if (wowToc >= 100200) then
 		end
 	end
 	mod.SPELL_PERIODIC_MISSED = mod.SPELL_PERIODIC_DAMAGE
+	--]]
 
 	function mod:UNIT_DIED(args)
 		local cid = self:GetCIDFromGUID(args.destGUID)
-		if cid == 165067 then
-
+		if cid == 84400 then--Flourishing Ancient
+			timerLumberingSwipeCD:Stop(args.destGUID)
 		end
 	end
-
-	function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
-		if spellId == 405814 then
-
-		end
-	end
-	--]]
 else
 	--10.1.7 on retail, and classic if it happens (if it doesn't happen old version of mod will be retired)
 	mod:RegisterEventsInCombat(

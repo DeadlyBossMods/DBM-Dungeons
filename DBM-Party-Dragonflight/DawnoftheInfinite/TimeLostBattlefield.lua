@@ -104,6 +104,8 @@ local function checkWhichBoss(self)
 			warnRally:UpdateKey(rallySpellId)
 			warnCry:UpdateKey(crySpellId)
 			warnShockwave:UpdateKey(shockwaveSpellId)
+			warnAddAoE:UpdateKey(addAOESpellId)
+			warnAddDebuff:UpdateKey(addDebuffSpellId)
 
 			specWarnTankBuster:UpdateKey(tankSpellId)
 			specWarnShockwave:UpdateKey(shockwaveSpellId)
@@ -112,6 +114,7 @@ local function checkWhichBoss(self)
 			timerShockwaveCD:UpdateKey(shockwaveSpellId, 1)
 			timerRallyCD:UpdateKey(rallySpellId, 1)
 			timerCryCD:UpdateKey(crySpellId, 1)
+			timerAddAoECD:UpdateKey(addAOESpellId)
 		end
 	end
 end

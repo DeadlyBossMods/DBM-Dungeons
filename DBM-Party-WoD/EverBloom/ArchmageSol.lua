@@ -44,7 +44,7 @@ if (wowToc >= 100200) then
 	local specWarnGTFO									= mod:NewSpecialWarningGTFO(426991, nil, nil, nil, 1, 8)
 
 	local timerCinderboltStormCD						= mod:NewCDSourceTimer(60, 427899, nil, nil, nil, 2)
-	local timerGlacialFusionCD							= mod:NewCDSourceTimer(60, 427899, nil, nil, nil, 3)
+	local timerGlacialFusionCD							= mod:NewCDSourceTimer(60, 428082, nil, nil, nil, 3)
 	local timerSpetialCompressionCD						= mod:NewCDSourceTimer(60, 428139, nil, nil, nil, 5)
 
 	mod.vb.pullCount = 0
