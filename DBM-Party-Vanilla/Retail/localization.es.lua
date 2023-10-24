@@ -539,3 +539,68 @@ L = DBM:GetModLocalization("DarkmasterGandling")
 L:SetGeneralLocalization{
 	name 		= "Maestro oscuro Gandling"
 }
+
+-------------------------
+--  Scarlet Monastery 189M (17R)  --
+-----------------------------
+--  Interrogator Vishas  --
+-----------------------------
+L = DBM:GetModLocalization("InterrogatorVishas")
+
+L:SetGeneralLocalization{
+	name 		= "Interrogador Vishas"
+}
+
+-----------------------------
+--  Bloodmage Thalnos  --
+-----------------------------
+L = DBM:GetModLocalization("BloodmageThalnos")
+
+L:SetGeneralLocalization{
+	name 		= "Mago sangriento Thalnos"
+}
+
+-----------------------------
+--  Houndmaster Loksey  --
+-----------------------------
+L = DBM:GetModLocalization("HoundmasterLoksey")
+
+L:SetGeneralLocalization{
+	name 		= "Domador de jaurías Loksey"
+}
+
+-----------------------------
+--  Arcanist Doan  --
+-----------------------------
+L = DBM:GetModLocalization("ArcanistDoan")
+
+L:SetGeneralLocalization{
+	name 		= "Arcanista Doan"
+}
+
+-----------------------------
+--  Herod  --
+-----------------------------
+L = DBM:GetModLocalization("Herod")
+
+L:SetGeneralLocalization{
+	name 		= "Herod"
+}
+
+-----------------------------
+--  Mograine & Whitemane  --
+-----------------------------
+L = DBM:GetModLocalization("Mograine_and_Whitemane")
+
+L:SetGeneralLocalization{
+	name 		= "Mograine y Melenablanca"
+}
+
+-----------------------------
+--  High Inquisitor Fairbanks  --
+-----------------------------
+L = DBM:GetModLocalization("Fairbanks")
+
+L:SetGeneralLocalization{
+	name 		= "Alto Inquisidor Ribalimpia"
+}

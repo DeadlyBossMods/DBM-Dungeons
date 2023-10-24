@@ -1206,3 +1206,68 @@ L = DBM:GetModLocalization("DarkmasterGandling")
 L:SetGeneralLocalization{
 	name 		= "암흑스승 간들링"
 }
+
+-------------------------
+--  Scarlet Monastery 189M (17R)  --
+-----------------------------
+--  Interrogator Vishas  --
+-----------------------------
+L = DBM:GetModLocalization("InterrogatorVishas")
+
+L:SetGeneralLocalization{
+	name 		= "심문관 비샤스"
+}
+
+-----------------------------
+--  Bloodmage Thalnos  --
+-----------------------------
+L = DBM:GetModLocalization("BloodmageThalnos")
+
+L:SetGeneralLocalization{
+	name 		= "혈법사 탈노스"
+}
+
+-----------------------------
+--  Houndmaster Loksey  --
+-----------------------------
+L = DBM:GetModLocalization("HoundmasterLoksey")
+
+L:SetGeneralLocalization{
+	name 		= "사냥개조련사 록시"
+}
+
+-----------------------------
+--  Arcanist Doan  --
+-----------------------------
+L = DBM:GetModLocalization("ArcanistDoan")
+
+L:SetGeneralLocalization{
+	name 		= "신비술사 도안"
+}
+
+-----------------------------
+--  Herod  --
+-----------------------------
+L = DBM:GetModLocalization("Herod")
+
+L:SetGeneralLocalization{
+	name 		= "헤로드"
+}
+
+-----------------------------
+--  Mograine & Whitemane  --
+-----------------------------
+L = DBM:GetModLocalization("Mograine_and_Whitemane")
+
+L:SetGeneralLocalization{
+	name 		= "모그레인과 화이트메인"
+}
+
+-----------------------------
+--  High Inquisitor Fairbanks  --
+-----------------------------
+L = DBM:GetModLocalization("Fairbanks")
+
+L:SetGeneralLocalization{
+	name 		= "종교재판관 페어뱅크스"
+}

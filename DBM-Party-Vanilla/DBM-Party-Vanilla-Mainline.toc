@@ -17,7 +17,7 @@
 ## X-DBM-Mod-Type: PARTY
 ## X-DBM-Mod-Category: Classic
 ## X-DBM-StatTypes: normal
-## X-DBM-Mod-SubCategoriesID: 48,230,429,90,229,349,389,129,47,329,34,109,70,43,209,289
+## X-DBM-Mod-SubCategoriesID: 48,230,429,90,229,349,389,129,47,329,34,109,70,43,209,289|Legacy,189|Legacy
 ## X-DBM-Mod-Name: Dungeons (Classic)
 ## X-DBM-Mod-Name-deDE: Gruppe (Classic)
 ## X-DBM-Mod-Name-esES: Mazmorras (Clásico)
@@ -26,7 +26,7 @@
 ## X-DBM-Mod-Name-zhCN: 队伍首领 (经典旧世)
 ## X-DBM-Mod-Name-ruRU: Классические подземелья
 ## X-DBM-Mod-Sort: 1102
-## X-DBM-Mod-MapID: 48,230,429,90,229,349,389,129,47,329,34,109,70,43,209,289
+## X-DBM-Mod-MapID: 48,230,429,90,229,349,389,129,47,329,34,109,70,43,209,289,189
 ## X-DBM-Mod-MinCoreRevision: 20200524142133
 ## X-DBM-Mod-MinExpansion: 0
 ## X-Curse-Project-ID: 314994
@@ -191,3 +191,11 @@ Shared\Scholomance_Old\TheRavenian.lua
 Shared\Scholomance_Old\LordAlexeiBarov.lua
 Shared\Scholomance_Old\LadyIlluciaBarov.lua
 Shared\Scholomance_Old\DarkmasterGandling.lua
+
+Shared\ScarletMonastery_Old\InterrogatorVishas.lua
+Shared\ScarletMonastery_Old\BloodmageThalnos.lua
+Shared\ScarletMonastery_Old\HoundmasterLoksey.lua
+Shared\ScarletMonastery_Old\ArcanistDoan.lua
+Shared\ScarletMonastery_Old\Herod.lua
+Shared\ScarletMonastery_Old\Mograine_and_Whitemane.lua
+Shared\ScarletMonastery_Old\HighInquisitorFairbanks.lua
