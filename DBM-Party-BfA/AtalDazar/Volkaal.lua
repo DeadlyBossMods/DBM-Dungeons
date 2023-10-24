@@ -4,6 +4,9 @@ local L		= mod:GetLocalizedStrings()
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(122965)
 mod:SetEncounterID(2085)
+--mod:SetHotfixNoticeRev(20231023000000)
+--mod:SetMinSyncRevision(20231021000000)
+mod.respawnTime = 29
 mod.sendMainBossGUID = true
 
 mod:RegisterCombat("combat")
@@ -11,13 +14,18 @@ mod:RegisterCombat("combat")
 mod:RegisterEventsInCombat(
 	"SPELL_AURA_APPLIED 250585",
 	"SPELL_CAST_START 250258",
-	"SPELL_CAST_SUCCESS 250368 259572 250241",
+	"SPELL_CAST_SUCCESS 259572 250241",
 	"SPELL_PERIODIC_DAMAGE 250585",
 	"SPELL_PERIODIC_MISSED 250585",
 	"UNIT_DIED"
 )
 
---ability.id = 250258 and type = "begincast" or (ability.id = 250368 or ability.id = 259572 or ability.id = 250241) and type = "cast" or target.id = 125977 and type = "death"
+--[[
+ability.id = 250258 and type = "begincast"
+ or (ability.id = 259572 or ability.id = 250241) and type = "cast"
+ or target.id = 125977 and type = "death"
+ or type = "dungeonencounterstart" or type = "dungeonencounterend"
+--]]
 --TODO, stench says it's interruptable but cannot verify this. When I determine what to do with it, improve warning
 local warnPhase2					= mod:NewPhaseAnnounce(2, 2, nil, nil, nil, nil, nil, 2)
 local warnTotemsLeft				= mod:NewAddsLeftAnnounce(250190, 2, 250192)
@@ -28,15 +36,17 @@ local specWarnNoxiousStench			= mod:NewSpecialWarningInterrupt(259572, "HasInter
 local specWarnGTFO					= mod:NewSpecialWarningGTFO(250585, nil, nil, nil, 1, 8)
 
 local timerLeapCD					= mod:NewCDTimer(5.7, 250258, nil, nil, nil, 3)--6 uness delayed by stentch, then 8
-local timerNoxiousStenchCD			= mod:NewCDTimer(18.2, 259572, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON..DBM_COMMON_L.DISEASE_ICON)
+local timerNoxiousStenchCD			= mod:NewCDCountTimer(18.2, 259572, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON..DBM_COMMON_L.DISEASE_ICON)
 
 mod.vb.totemRemaining = 3
+mod.vb.stenchCount = 0
 
 function mod:OnCombatStart(delay)
 	self.vb.totemRemaining = 3
+	self.vb.stenchCount = 0
 	self:SetStage(1)
 	timerLeapCD:Start(2-delay)
-	timerNoxiousStenchCD:Start(5.7-delay)
+	timerNoxiousStenchCD:Start(5.7-delay, 1)
 end
 
 function mod:SPELL_AURA_APPLIED(args)
@@ -58,15 +68,16 @@ end
 
 function mod:SPELL_CAST_SUCCESS(args)
 	local spellId = args.spellId
-	if spellId == 250368 or spellId == 259572 then
+	if spellId == 259572 then
+		self.vb.stenchCount = self.vb.stenchCount + 1
 		if self:CheckInterruptFilter(args.sourceGUID, false, true) then
 			specWarnNoxiousStench:Show(args.sourceName)
 			specWarnNoxiousStench:Play("kickcast")
 		end
 		if self:GetStage(2) then
-			timerNoxiousStenchCD:Start(18.2)
+			timerNoxiousStenchCD:Start(18.2, self.vb.stenchCount+1)
 		else
-			timerNoxiousStenchCD:Start(20.6)
+			timerNoxiousStenchCD:Start(20.6, self.vb.stenchCount+1)
 			timerLeapCD:AddTime(2)--Consistent with early alpha, might use more complex code if this becomes inconsistent
 		end
 	elseif spellId == 250241 then
