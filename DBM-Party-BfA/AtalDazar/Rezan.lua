@@ -139,23 +139,23 @@ function mod:RAID_BOSS_WHISPER(msg)
 end
 
 function mod:OnTranscriptorSync(msg, targetName)
-	if msg:find("255421") and targetName and self:AntiSpam(5, targetname) then
+	if msg:find("255421") and targetName and self:AntiSpam(5, targetName) then
 		targetName = Ambiguate(targetName, "none")
-		warnPursuit:Show(targetname)
+		warnPursuit:Show(targetName)
 	end
 end
 
 --Same time as SPELL_CAST_START but has target information on normal
 --Deprecated in 10.2
-function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg, _, _, _, targetname)
+function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg, _, _, _, targetName)
 	if msg:find("spell:255421") then
-		if targetname and self:AntiSpam(5, targetname) then
-			if targetname == UnitName("player") then
+		if targetName and self:AntiSpam(5, targetName) then
+			if targetName == UnitName("player") then
 				specWarnPursuit:Show()
 				specWarnPursuit:Play("justrun")
 				yellPursuit:Yell()
 			else
-				warnPursuit:Show(targetname)
+				warnPursuit:Show(targetName)
 			end
 		end
 	end
