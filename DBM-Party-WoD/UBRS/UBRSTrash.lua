@@ -27,8 +27,8 @@ local specWarnSmash						= mod:NewSpecialWarningDodge(155572, "Tank", nil, nil, 
 local specWarnFranticMauling			= mod:NewSpecialWarningDodge(154039, "Tank", nil, nil, 1, 2)
 local specWarnEruption					= mod:NewSpecialWarningDodge(155037, "Tank", nil, nil, 1, 2)
 
-local timerSmashCD						= mod:NewCDTimer(13, 155572, nil, nil, nil, 3)
-local timerEruptionCD					= mod:NewCDTimer(10, 155037, nil, false, nil, 3)--10-15 sec variation. May be distracting or spammy since two of them
+local timerSmashCD						= mod:NewCDNPTimer(13, 155572, nil, nil, nil, 3)
+local timerEruptionCD					= mod:NewCDNPTimer(10, 155037, nil, false, nil, 3)--10-15 sec variation. May be distracting or spammy since two of them
 
 function mod:SPELL_AURA_APPLIED(args)
 	if not self.Options.Enabled or self:IsDifficulty("normal5") or self:IsTrivial() then return end

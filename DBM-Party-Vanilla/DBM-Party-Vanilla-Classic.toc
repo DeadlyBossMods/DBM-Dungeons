@@ -165,13 +165,13 @@ Classic\RazorfenKraul\BlindHunter.lua
 Classic\RazorfenKraul\EarthcallerHalmgar.lua
 Classic\RazorfenKraul\CharlgaRazorflank.lua
 
-Classic\ScarletMonastery\InterrogatorVishas.lua
-Classic\ScarletMonastery\BloodmageThalnos.lua
-Classic\ScarletMonastery\HoundmasterLoksey.lua
-Classic\ScarletMonastery\ArcanistDoan.lua
-Classic\ScarletMonastery\Herod.lua
-Classic\ScarletMonastery\Mograine_and_Whitemane.lua
-Classic\ScarletMonastery\HighInquisitorFairbanks.lua
+Shared\ScarletMonastery_Old\InterrogatorVishas.lua
+Shared\ScarletMonastery_Old\BloodmageThalnos.lua
+Shared\ScarletMonastery_Old\HoundmasterLoksey.lua
+Shared\ScarletMonastery_Old\ArcanistDoan.lua
+Shared\ScarletMonastery_Old\Herod.lua
+Shared\ScarletMonastery_Old\Mograine_and_Whitemane.lua
+Shared\ScarletMonastery_Old\HighInquisitorFairbanks.lua
 
 Shared\Scholomance_Old\KirtonostheHerald.lua
 Shared\Scholomance_Old\JandiceBarov.lua

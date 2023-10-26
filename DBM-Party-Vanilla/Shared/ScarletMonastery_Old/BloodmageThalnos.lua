@@ -1,9 +1,10 @@
-local mod	= DBM:NewMod("BloodmageThalnos", "DBM-Party-Vanilla", 12)
+local mod	= DBM:NewMod("BloodmageThalnos", "DBM-Party-Vanilla", DBM:IsRetail() and 17 or 12)
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(4543)
---mod:SetEncounterID(585)
+mod:SetEncounterID(mod:IsClassic() and 2779 or mod:IsRetail() and 2818 or 445)--445 in TBC and Wrath
+mod:SetZone(189)
 
 mod:RegisterCombat("combat")
 

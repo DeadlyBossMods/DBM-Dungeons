@@ -5,6 +5,7 @@ mod.statTypes = "normal,heroic,challenge,timewalker"
 
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(58633, 58664)--58633 is boss, 58664 is Phylactery. We register BOTH to avoid pre mature combat ending cause boss dies twice.
+mod:SetZone(1007)
 --To re-emphesize again (although it was already spelled out in comments. THE BOSS DIES TWICE, if you only register 58633 then the boss will fire EndCombat at end of phase 1.
 --THIS is why we also register 58664, so end combat does not fire until the boss is actually dead
 --that said, the way dbm works, registering UNIT_DIED was overkill in original code

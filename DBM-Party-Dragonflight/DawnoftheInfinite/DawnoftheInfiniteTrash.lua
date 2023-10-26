@@ -67,8 +67,8 @@ local specWarnDizzyingSands					= mod:NewSpecialWarningInterrupt(412378, "HasInt
 local specWarnRocketBoltVolley				= mod:NewSpecialWarningInterrupt(412233, "HasInterrupt", nil, nil, 1, 2)
 local specWarnTimebeam						= mod:NewSpecialWarningInterrupt(413427, "HasInterrupt", nil, nil, 1, 2)
 --
---local timerInfiniteBoltVolleyCD						= mod:NewCDTimer(36, 415770, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
---local timerDeadlyWindsCD						= mod:NewCDTimer(10.9, 378003, nil, nil, nil, 3)
+--local timerInfiniteBoltVolleyCD				= mod:NewCDNPTimer(36, 415770, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+--local timerDeadlyWindsCD						= mod:NewCDNPTimer(10.9, 378003, nil, nil, nil, 3)
 
 --mod:AddBoolOption("AGBuffs", true)
 

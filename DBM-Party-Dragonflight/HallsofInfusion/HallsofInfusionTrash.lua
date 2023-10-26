@@ -62,18 +62,18 @@ local specWarnTidalDivergence				= mod:NewSpecialWarningInterrupt(377341, "HasIn
 local specWarnAqueousBarrier				= mod:NewSpecialWarningInterrupt(377402, "HasInterrupt", nil, nil, 1, 2)
 local specWarnRefreshingTides				= mod:NewSpecialWarningInterrupt(376171, "HasInterrupt", nil, nil, 1, 2)
 
-local timerDemoShoutCD						= mod:NewCDTimer(30, 374339, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
-local timerDazzleCD							= mod:NewCDTimer(17, 374563, nil, nil, nil, 3)
-local timerZephyrsCallCD					= mod:NewCDTimer(23.1, 374823, nil, nil, nil, 1)
-local timerWhirlingFuryCD					= mod:NewCDTimer(16.2, 375079, nil, nil, nil, 2)
-local timerMoltenSubductionCD				= mod:NewCDTimer(20.6, 374724, nil, nil, nil, 3)
-local timerOceanicBreathCD					= mod:NewCDTimer(18.1, 375351, nil, nil, nil, 3)
-local timerGustingBreathCD					= mod:NewCDTimer(19.3, 375348, nil, nil, nil, 3)--Could also be 18.1, but need bigger sample
-local timerTectonicBreathCD					= mod:NewCDTimer(18.1, 375327, nil, nil, nil, 3)
-local timerThunderstormCD					= mod:NewCDTimer(19.4, 385141, nil, nil, nil, 3)
-local timerAqueousBarrierCD					= mod:NewCDTimer(17.3, 377402, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
-local timerFlashFloodCD						= mod:NewCDTimer(23, 390290, nil, nil, nil, 2)
-local timerRefreshingTidesCD				= mod:NewCDTimer(30, 376171, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerDemoShoutCD						= mod:NewCDNPTimer(30, 374339, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerDazzleCD							= mod:NewCDNPTimer(17, 374563, nil, nil, nil, 3)
+local timerZephyrsCallCD					= mod:NewCDNPTimer(23.1, 374823, nil, nil, nil, 1)
+local timerWhirlingFuryCD					= mod:NewCDNPTimer(16.2, 375079, nil, nil, nil, 2)
+local timerMoltenSubductionCD				= mod:NewCDNPTimer(20.6, 374724, nil, nil, nil, 3)
+local timerOceanicBreathCD					= mod:NewCDNPTimer(18.1, 375351, nil, nil, nil, 3)
+local timerGustingBreathCD					= mod:NewCDNPTimer(19.3, 375348, nil, nil, nil, 3)--Could also be 18.1, but need bigger sample
+local timerTectonicBreathCD					= mod:NewCDNPTimer(18.1, 375327, nil, nil, nil, 3)
+local timerThunderstormCD					= mod:NewCDNPTimer(19.4, 385141, nil, nil, nil, 3)
+local timerAqueousBarrierCD					= mod:NewCDNPTimer(17.3, 377402, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerFlashFloodCD						= mod:NewCDNPTimer(23, 390290, nil, nil, nil, 2)
+local timerRefreshingTidesCD				= mod:NewCDNPTimer(30, 376171, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 
 mod:AddBoolOption("AGBuffs", true)
 

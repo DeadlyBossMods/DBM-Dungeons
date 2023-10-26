@@ -67,22 +67,22 @@ local specWarnOiledBlade				= mod:NewSpecialWarningDispel(257908, "RemoveMagic",
 local specWarnHealingBalmDispel			= mod:NewSpecialWarningDispel(257397, "MagicDispeller", nil, nil, 1, 2)
 local specWarnGTFO						= mod:NewSpecialWarningGTFO(257274, nil, nil, nil, 1, 8)
 
-local timerVileBombardmentCD			= mod:NewCDTimer(16, 257272, nil, nil, nil, 3)
-local timerShatteringBellowCD			= mod:NewCDTimer(27.8, 257732, nil, nil, nil, 2)
-local timerBrutalBackhandCD				= mod:NewCDTimer(18.2, 257426, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
-local timerSeaSpoutCD					= mod:NewCDTimer(17, 258777, nil, nil, nil, 3)
-local timerRatTrapsCD					= mod:NewCDTimer(20.6, 274383, nil, nil, nil, 3)
-local timerRicochetingThrowCD			= mod:NewCDTimer(8.1, 272402, nil, nil, nil, 3)
-local timerEarthShakerCD				= mod:NewCDTimer(8.4, 257747, nil, nil, nil, 3)--Instance cast, not really worth announcing every 8 sec, but def worth having a timer for
-local timerGoinBanCD					= mod:NewCDTimer(17, 257756, nil, nil, nil, 3)
-local timerSlipperySudsCD				= mod:NewCDTimer(20.6, 274507, nil, nil, nil, 3)
-local timerGroundShatterCD				= mod:NewCDTimer(19.3, 258199, nil, nil, nil, 3)
-local timerBoulderThrowCD				= mod:NewCDTimer(19.3, 258181, nil, nil, nil, 3)
-local timerPainfulMotivationCD			= mod:NewCDTimer(18.1, 257899, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
-local timerBladeBarrageCD				= mod:NewCDTimer(18.2, 257870, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
-local timerThunderingSquallCD			= mod:NewCDTimer(27.8, 257736, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
-local timerOiledBladeCD					= mod:NewCDTimer(12.4, 257908, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
-local timerFrostBlastCD					= mod:NewCDTimer(31.5, 257784, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerVileBombardmentCD			= mod:NewCDTimer(16, 257272, nil, nil, nil, 3)--Non nameplate on purpose, needs actual timer since bird way in sky
+local timerShatteringBellowCD			= mod:NewCDNPTimer(27.8, 257732, nil, nil, nil, 2)
+local timerBrutalBackhandCD				= mod:NewCDNPTimer(18.2, 257426, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+local timerSeaSpoutCD					= mod:NewCDNPTimer(17, 258777, nil, nil, nil, 3)
+local timerRatTrapsCD					= mod:NewCDNPTimer(20.6, 274383, nil, nil, nil, 3)
+local timerRicochetingThrowCD			= mod:NewCDNPTimer(8.1, 272402, nil, nil, nil, 3)
+local timerEarthShakerCD				= mod:NewCDNPTimer(8.4, 257747, nil, nil, nil, 3)--Instance cast, not really worth announcing every 8 sec, but def worth having a timer for
+local timerGoinBanCD					= mod:NewCDNPTimer(17, 257756, nil, nil, nil, 3)
+local timerSlipperySudsCD				= mod:NewCDNPTimer(20.6, 274507, nil, nil, nil, 3)
+local timerGroundShatterCD				= mod:NewCDNPTimer(19.3, 258199, nil, nil, nil, 3)
+local timerBoulderThrowCD				= mod:NewCDNPTimer(19.3, 258181, nil, nil, nil, 3)
+local timerPainfulMotivationCD			= mod:NewCDNPTimer(18.1, 257899, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerBladeBarrageCD				= mod:NewCDNPTimer(18.2, 257870, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+local timerThunderingSquallCD			= mod:NewCDNPTimer(27.8, 257736, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerOiledBladeCD					= mod:NewCDNPTimer(12.4, 257908, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+local timerFrostBlastCD					= mod:NewCDNPTimer(31.5, 257784, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc, 7 off interrupt, 8 extremely unique but unthrottled (except with itself)
 

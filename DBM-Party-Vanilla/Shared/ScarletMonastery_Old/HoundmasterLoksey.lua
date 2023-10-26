@@ -1,9 +1,10 @@
-local mod	= DBM:NewMod("HoundmasterLoksey", "DBM-Party-Vanilla", 12)
+local mod	= DBM:NewMod("HoundmasterLoksey", "DBM-Party-Vanilla", DBM:IsRetail() and 17 or 12)
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(3974)
---mod:SetEncounterID(585)
+mod:SetEncounterID(446)
+mod:SetZone(189)
 
 mod:RegisterCombat("combat")
 

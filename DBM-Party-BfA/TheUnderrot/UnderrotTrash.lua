@@ -60,21 +60,21 @@ local specWarnBoneShieldDispel		= mod:NewSpecialWarningDispel(266201, "MagicDisp
 local specWarnSpiritDrainTotemOut	= mod:NewSpecialWarningDodge(265523, nil, nil, nil, 2, 2)
 local specWarnGTFO					= mod:NewSpecialWarningGTFO(278789, nil, nil, nil, 1, 8)
 
-local timerBloodHarvestCD			= mod:NewCDTimer(12.1, 265016, nil, nil, nil, 3)
-local timerRottenBileCD				= mod:NewCDTimer(10.7, 265540, nil, nil, nil, 3)
-local timerWaveofDecayCD			= mod:NewCDTimer(10.7, 265668, nil, false, nil, 3)--Off by default to reduce clutter, but optional for those that want it
-local timerWarcryCD					= mod:NewCDTimer(25.2, 265081, nil, nil, nil, 2)
-local timerDecayingMindCD			= mod:NewCDTimer(27.7, 278961, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
-local timerSonicScreechCD			= mod:NewCDTimer(25.4, 266106, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
---local timerVoidSpitCD				= mod:NewCDTimer(9.7, 272180, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
-local timerDarkEchoesCD				= mod:NewCDTimer(18.2, 413044, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
-local timerBoneShieldCD				= mod:NewCDTimer(25.4, 266201, nil, nil, nil, 5, nil, DBM_COMMON_L.MAGIC_ICON)
-local timerWickedEmbraceCD			= mod:NewCDTimer(8.5, 266265, nil, "RemoveMagic", nil, 5, nil, DBM_COMMON_L.MAGIC_ICON)
-local timerWickedFrenzyCD			= mod:NewCDTimer(25.4, 266209, nil, nil, nil, 5, nil, DBM_COMMON_L.ENRAGE_ICON)
-local timerWitheringCurseCD			= mod:NewCDTimer(25.4, 272180, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
-local timerShadowBoltVolleyCD		= mod:NewCDTimer(25.4, 265487, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--25.4-27.7
-local timerAbyssalReachCD			= mod:NewCDTimer(16.1, 272592, nil, nil, nil, 3)
-local timerMaddeningGazeCD			= mod:NewCDTimer(15.7, 272609, nil, nil, nil, 3, nil, DBM_COMMON_L.HEALER_ICON, nil, mod:IsTank() and 2, 3)--15.7-17
+local timerBloodHarvestCD			= mod:NewCDNPTimer(12.1, 265016, nil, nil, nil, 3)
+local timerRottenBileCD				= mod:NewCDNPTimer(10.7, 265540, nil, nil, nil, 3)
+local timerWaveofDecayCD			= mod:NewCDNPTimer(10.7, 265668, nil, false, nil, 3)--Off by default to reduce clutter, but optional for those that want it
+local timerWarcryCD					= mod:NewCDNPTimer(25.2, 265081, nil, nil, nil, 2)
+local timerDecayingMindCD			= mod:NewCDNPTimer(27.7, 278961, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerSonicScreechCD			= mod:NewCDNPTimer(25.4, 266106, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+--local timerVoidSpitCD				= mod:NewCDNPTimer(9.7, 272180, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerDarkEchoesCD				= mod:NewCDNPTimer(18.2, 413044, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerBoneShieldCD				= mod:NewCDNPTimer(25.4, 266201, nil, nil, nil, 5, nil, DBM_COMMON_L.MAGIC_ICON)
+local timerWickedEmbraceCD			= mod:NewCDNPTimer(8.5, 266265, nil, "RemoveMagic", nil, 5, nil, DBM_COMMON_L.MAGIC_ICON)
+local timerWickedFrenzyCD			= mod:NewCDNPTimer(25.4, 266209, nil, nil, nil, 5, nil, DBM_COMMON_L.ENRAGE_ICON)
+local timerWitheringCurseCD			= mod:NewCDNPTimer(25.4, 272180, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerShadowBoltVolleyCD		= mod:NewCDNPTimer(25.4, 265487, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--25.4-27.7
+local timerAbyssalReachCD			= mod:NewCDNPTimer(16.1, 272592, nil, nil, nil, 3)
+local timerMaddeningGazeCD			= mod:NewCDNPTimer(15.7, 272609, nil, nil, nil, 3, nil, DBM_COMMON_L.HEALER_ICON, nil, mod:IsTank() and 2, 3)--15.7-17
 
 function mod:OnInitialize()
     if self.Options.Timer272609cdCVoice == true then
