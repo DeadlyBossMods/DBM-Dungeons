@@ -3,7 +3,7 @@ local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(3977, 3976, 99999)--Whitemane, Mograine
---mod:SetEncounterID(585)
+mod:SetEncounterID(585)
 mod:SetZone(189)
 
 mod:RegisterCombat("combat")

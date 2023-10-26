@@ -7,7 +7,8 @@ mod:SetEncounterID(2113)
 mod:DisableESCombatDetection()--ES fires For entryway trash pull sometimes, for some reason.
 mod:SetUsedIcons(8)
 mod:SetBossHPInfoToHighest()
-mod:SetMinSyncRevision(17703)
+--mod:SetHotfixNoticeRev(20231023000000)
+mod:SetMinSyncRevision(20221021000000)
 
 mod:RegisterCombat("combat")
 
@@ -21,12 +22,14 @@ mod:RegisterEventsInCombat(
 --[[
 (ability.id = 260741 or ability.id = 260907 or ability.id = 260703) and (type = "begincast" or type = "cast")
  or ability.id = 260805 and (type = "applybuff" or type = "removebuff")
+ or type = "dungeonencounterstart" or type = "dungeonencounterend"
 --]]
+--TODO, outlier timer for killing solena last and actually seeing a second soul manipulation before iris ends
 --Sister Briar
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(17738))
 local specWarnJaggedNettles			= mod:NewSpecialWarningTarget(260741, nil, nil, 2, 1, 2)
 
-local timerJaggedNettlesCD			= mod:NewNextTimer(13.3, 260741, nil, nil, nil, 5, nil, DBM_COMMON_L.HEALER_ICON)
+local timerJaggedNettlesCD			= mod:NewCDTimer(12.5, 260741, nil, nil, nil, 5, nil, DBM_COMMON_L.HEALER_ICON)
 --Sister Malady
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(17739))
 local warnUnstableMark				= mod:NewTargetAnnounce(260703, 2)
@@ -36,22 +39,24 @@ local specWarnUnstableMark			= mod:NewSpecialWarningMoveAway(260703, nil, nil, n
 local yellUnstableMark				= mod:NewYell(260703)
 local specWarnAuraofDread			= mod:NewSpecialWarningKeepMove(268088, nil, nil, nil, 1, 2)
 
-local timerUnstableRunicMarkCD		= mod:NewNextTimer(13.3, 260703, nil, nil, nil, 3, nil, DBM_COMMON_L.CURSE_ICON)
+local timerUnstableRunicMarkCD		= mod:NewCDTimer(12.5, 260703, nil, nil, nil, 3, nil, DBM_COMMON_L.CURSE_ICON)
 
 mod:AddRangeFrameOption(6, 260703)
 --Sister Solena
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(17740))
 local specWarnSoulManipulation		= mod:NewSpecialWarningSwitch(260907, nil, nil, nil, 1, 2)
 
-local timerSoulManipulationCD		= mod:NewNextTimer(13.3, 260907, nil, nil, nil, 3, nil, DBM_COMMON_L.TANK_ICON)--Always tank? if not, remove tank icon
+local timerSoulManipulationCD		= mod:NewCDTimer(12.5, 260907, nil, nil, nil, 3, nil, DBM_COMMON_L.TANK_ICON)--Always tank? if not, remove tank icon
 --Focusing Iris
 mod:AddTimerLine(DBM:GetSpellInfo(260805))
 local warnActiveTriad				= mod:NewTargetNoFilterAnnounce(260805, 2)
 
-local specWarnRitual				= mod:NewSpecialWarningSpell(260773, nil, nil, nil, 2, 2)
+local specWarnRitual				= mod:NewSpecialWarningSpell(260773, nil, nil, nil, 3, 2)
+
+local timerRitualCD					= mod:NewCDTimer(12.5, 260773, nil, nil, nil, 2, nil, DBM_COMMON_L.DEADLY_ICON)
 
 mod:AddSetIconOption("SetIconOnTriad", 260805, true, 5, {8})
-mod:AddInfoFrameOption(260773, true)
+mod:AddInfoFrameOption(260773, false)
 
 local IrisBuff = DBM:GetSpellInfo(260805)
 
@@ -106,19 +111,19 @@ function mod:SPELL_CAST_SUCCESS(args)
 		--Prevent timer from starting if Cast start started before transfer of power, but Iris sister changed by time fast finished
 		local bossUnitID = self:GetUnitIdFromGUID(args.sourceGUID)
 		if bossUnitID and not DBM:UnitBuff(bossUnitID, IrisBuff) and not DBM:UnitDebuff(bossUnitID, IrisBuff) then
-			timerJaggedNettlesCD:Start(nil, args.sourceGUID)--13.3, Time until cast START
+			timerJaggedNettlesCD:Start(nil, args.sourceGUID)--12.5, Time until cast START
 		end
 	--[[elseif spellId == 260907 then
 		--Prevent timer from starting if Cast start started before transfer of power, but Iris sister changed by time fast finished
 		local bossUnitID = self:GetUnitIdFromGUID(args.sourceGUID)
 		if bossUnitID and not DBM:UnitBuff(bossUnitID, IrisBuff) and not DBM:UnitDebuff(bossUnitID, IrisBuff) then
-			timerSoulManipulationCD:Start(nil, args.sourceGUID)
+			timerSoulManipulationCD:Start(nil, args.sourceGUID)--Time until cast SUCCESS
 		end--]]
 	elseif spellId == 260703 then
 		--Prevent timer from starting if Cast start started before transfer of power, but Iris sister changed by time fast finished
 		local bossUnitID = self:GetUnitIdFromGUID(args.sourceGUID)
 		if bossUnitID and not DBM:UnitBuff(bossUnitID, IrisBuff) and not DBM:UnitDebuff(bossUnitID, IrisBuff) then
-			timerUnstableRunicMarkCD:Start(nil, args.sourceGUID)
+			timerUnstableRunicMarkCD:Start(nil, args.sourceGUID)--Time until cast SUCCESS
 		end
 	elseif spellId == 268088 then
 		specWarnAuraofDread:Show()
@@ -132,14 +137,14 @@ function mod:SPELL_AURA_APPLIED(args)
 		warnActiveTriad:Show(args.destName)
 		local cid = self:GetCIDFromGUID(args.destGUID)
 		if cid == 135360 or cid == 131825 then--Sister Briar
-			timerJaggedNettlesCD:Start(7.7, args.destGUID)--CAST START
+			timerJaggedNettlesCD:Start(6.2, args.destGUID)--CAST START (6-9)
 		elseif cid == 135358 or cid == 131823 then--Sister Malady
-			timerUnstableRunicMarkCD:Start(10.5, args.destGUID)--CAST SUCCESS
+			timerUnstableRunicMarkCD:Start(8.6, args.destGUID)--CAST SUCCESS (8-10)
 			if self.Options.RangeFrame then
 				DBM.RangeCheck:Show(6)
 			end
 		elseif cid == 135359 or cid == 131824 then--Sister Solena
-			timerSoulManipulationCD:Start(11.3, args.destGUID)--CAST SUCCESS
+			timerSoulManipulationCD:Start(8, args.destGUID)--CAST START (8-11)
 		end
 		if self.Options.SetIconOnTriad then
 			self:ScanForMobs(args.destGUID, 2, 8, 1, nil, 12, "SetIconOnTriad")
