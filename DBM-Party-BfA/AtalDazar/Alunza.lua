@@ -99,7 +99,7 @@ end
 
 function mod:SPELL_SUMMON(args)
 	local spellId = args.spellId
-	if spellId == 259209 then--Manifested Dream
+	if spellId == 259209 then
 		self.vb.spiritCount = self.vb.spiritCount + 1
 		specWarnSpiritofGold:Show(self.vb.spiritCount)
 		specWarnSpiritofGold:Play("killmob")
