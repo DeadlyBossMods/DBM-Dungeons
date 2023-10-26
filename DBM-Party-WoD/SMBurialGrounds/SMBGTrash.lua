@@ -33,11 +33,11 @@ local specWarnNecroticBurst					= mod:NewSpecialWarningInterrupt(156718, "HasInt
 local specWarnVoidEruptions					= mod:NewSpecialWarningDodge(394512, nil, nil, nil, 2, 2)
 local specWarnBodySlam						= mod:NewSpecialWarningDodge(153395, "Tank", nil, nil, 2, 2)
 
-local timerShadowMendCD						= mod:NewCDTimer(8.5, 152818, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
-local timerVoidSlashCD						= mod:NewCDTimer(10.9, 164907, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
-local timerVoidEruptionsCD					= mod:NewCDTimer(19.4, 394512, nil, nil, nil, 3, nil, DBM_COMMON_L.INTERRUPT_ICON)
-local timerNecroticBurstCD					= mod:NewCDTimer(19.4, 156718, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
-local timerBodySlamCD						= mod:NewCDTimer(14.5, 153395, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+local timerShadowMendCD						= mod:NewCDNPTimer(8.5, 152818, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerVoidSlashCD						= mod:NewCDNPTimer(10.9, 164907, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+local timerVoidEruptionsCD					= mod:NewCDNPTimer(19.4, 394512, nil, nil, nil, 3, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerNecroticBurstCD					= mod:NewCDNPTimer(19.4, 156718, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerBodySlamCD						= mod:NewCDNPTimer(14.5, 153395, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 
 --local playerName = UnitName("player")
 

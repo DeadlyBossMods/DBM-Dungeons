@@ -30,8 +30,8 @@ mod:RegisterEvents(
 --local specWarnVaporForm							= mod:NewSpecialWarningDispel(88186, "MagicDispeller", nil, nil, 1, 2)
 --local specWarnGTFO								= mod:NewSpecialWarningGTFO(88171, nil, nil, nil, 1, 8)
 
---local timerStormSurgeCD							= mod:NewCDTimer(16.1, 88055, nil, nil, nil, 2)
---local timerGaleStrikeCD							= mod:NewCDTimer(17, 88061, nil, "MagicDispeller", nil, 5, nil, DBM_COMMON_L.MAGIC_ICON)
+--local timerStormSurgeCD							= mod:NewCDNPTimer(16.1, 88055, nil, nil, nil, 2)
+--local timerGaleStrikeCD							= mod:NewCDNPTimer(17, 88061, nil, "MagicDispeller", nil, 5, nil, DBM_COMMON_L.MAGIC_ICON)
 
 
 --local playerName = UnitName("player")

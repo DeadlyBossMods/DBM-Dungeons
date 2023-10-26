@@ -42,17 +42,17 @@ local specWarnFrenzy					= mod:NewSpecialWarningDispel(201983, "RemoveEnrage", n
 local specWarnStoneGaze					= mod:NewSpecialWarningInterrupt(202181, "HasInterrupt", nil, nil, 1, 2)
 local specWarnGTFO						= mod:NewSpecialWarningGTFO(186576, nil, nil, nil, 1, 8)
 
-local timerSubmergeCD					= mod:NewCDTimer(22.7, 183433, nil, nil, nil, 5)
-local timerStoneShatterCD				= mod:NewCDTimer(12.1, 226347, nil, nil, nil, 3)
-local timerImpalingShardCD				= mod:NewCDTimer(15.7, 193941, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
-local timerCrushCD						= mod:NewCDTimer(18.2, 226287, nil, nil, nil, 3)
-local timerFractureCD					= mod:NewCDTimer(15.7, 193505, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)--Also acts as piercing shards timer, piercing is awlays used immediately after fracture
-local timerStoneGazeCD					= mod:NewCDTimer(20.6, 202181, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
-local timerAvalancheCD					= mod:NewCDTimer(19.4, 183088, nil, nil, nil, 3)
-local timerPetrifyingTotemCD			= mod:NewCDTimer(35.1, 202108, nil, nil, nil, 3)
-local timerEmberSwipeCD					= mod:NewCDTimer(10.9, 226406, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
-local timerFrenzyCD						= mod:NewCDTimer(20.6, 201983, nil, "RemoveEnrage|Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
-local timerBoundCD						= mod:NewCDTimer(20.6, 193585, nil, nil, nil, 5)
+local timerSubmergeCD					= mod:NewCDNPTimer(22.7, 183433, nil, nil, nil, 5)
+local timerStoneShatterCD				= mod:NewCDNPTimer(12.1, 226347, nil, nil, nil, 3)
+local timerImpalingShardCD				= mod:NewCDNPTimer(15.7, 193941, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+local timerCrushCD						= mod:NewCDNPTimer(18.2, 226287, nil, nil, nil, 3)
+local timerFractureCD					= mod:NewCDNPTimer(15.7, 193505, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)--Also acts as piercing shards timer, piercing is awlays used immediately after fracture
+local timerStoneGazeCD					= mod:NewCDNPTimer(20.6, 202181, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerAvalancheCD					= mod:NewCDNPTimer(19.4, 183088, nil, nil, nil, 3)
+local timerPetrifyingTotemCD			= mod:NewCDNPTimer(35.1, 202108, nil, nil, nil, 3)
+local timerEmberSwipeCD					= mod:NewCDNPTimer(10.9, 226406, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+local timerFrenzyCD						= mod:NewCDNPTimer(20.6, 201983, nil, "RemoveEnrage|Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+local timerBoundCD						= mod:NewCDNPTimer(20.6, 193585, nil, nil, nil, 5)
 
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc, 7 GTFO
 

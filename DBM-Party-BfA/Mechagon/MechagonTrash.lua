@@ -77,7 +77,7 @@ local specWarnArcingZap				= mod:NewSpecialWarningDispel(294195, "RemoveMagic", 
 local specWarnEnrageDispel			= mod:NewSpecialWarningDispel(300414, "RemoveEnrage", nil, nil, 1, 2)--Scrapbone Grinder/Scrapbone Bully
 --local specWarnRiotShield			= mod:NewSpecialWarningReflect(258317, "CasterDps", nil, nil, 1, 2)
 
-local timerConsumeCD				= mod:NewCDTimer(20, 300687, nil, nil, nil, 2)--Toxic Monstrosity. 20 second based on guide, not actual log. might need fixing
+local timerConsumeCD				= mod:NewCDNPTimer(20, 300687, nil, nil, nil, 2)--Toxic Monstrosity. 20 second based on guide, not actual log. might need fixing
 
 local function shrunkYellRepeater(self)
 	yellShrunkRepeater:Yell()

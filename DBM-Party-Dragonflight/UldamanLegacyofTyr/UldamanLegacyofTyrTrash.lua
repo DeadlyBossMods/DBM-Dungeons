@@ -56,21 +56,21 @@ local specWarnCurseofStoneKick				= mod:NewSpecialWarningInterrupt(369365, "HasI
 local specWarnSonicBurst					= mod:NewSpecialWarningInterrupt(369411, "HasInterrupt", nil, nil, 1, 2)
 local specWarnHasten						= mod:NewSpecialWarningInterrupt(377500, "HasInterrupt", nil, nil, 1, 2)
 
-local timerBrutalSlamCD						= mod:NewCDTimer(20.1, 369811, nil, nil, nil, 3)
-local timerSpikedCarapaceCD					= mod:NewCDTimer(18.2, 369823, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
-local timerStoneSpikeCD						= mod:NewCDTimer(6, 369674, nil, false, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--Short CD, may interfere with Chain LIghting CD timer, opt in
-local timerChainLightningCD					= mod:NewCDTimer(25.5, 369675, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
-local timerJaggedBiteCD						= mod:NewCDTimer(11.8, 377732, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
-local timerAncientPowerCD					= mod:NewCDTimer(6, 377738, nil, nil, nil, 5)
-local timerHailofStoneCD					= mod:NewCDTimer(21.8, 369465, nil, nil, nil, 5)
-local timerStoneBoltCD						= mod:NewCDTimer(7.2, 369399, nil, false, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--7-11, off by default to giev prio to Hail of stone
-local timerEarthquakeCD						= mod:NewCDTimer(25.4, 369328, nil, nil, nil, 2)
-local timerFissuringSlamCD					= mod:NewCDTimer(9.7, 369335, nil, nil, nil, 2)--9.7-15
-local timerCleaveCD							= mod:NewCDTimer(15, 369409, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
-local timerPounceCD							= mod:NewCDTimer(15, 369423, nil, nil, nil, 3)
-local timerThunderousClapCD					= mod:NewCDTimer(19, 381593, nil, nil, nil, 2)
-local timerBulwarkSlamCD					= mod:NewCDTimer(10.6, 382696, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
-local timerHastenCD							= mod:NewCDTimer(23, 377500, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerBrutalSlamCD						= mod:NewCDNPTimer(20.1, 369811, nil, nil, nil, 3)
+local timerSpikedCarapaceCD					= mod:NewCDNPTimer(18.2, 369823, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerStoneSpikeCD						= mod:NewCDNPTimer(6, 369674, nil, false, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--Short CD, may interfere with Chain LIghting CD timer, opt in
+local timerChainLightningCD					= mod:NewCDNPTimer(25.5, 369675, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerJaggedBiteCD						= mod:NewCDNPTimer(11.8, 377732, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+local timerAncientPowerCD					= mod:NewCDNPTimer(6, 377738, nil, nil, nil, 5)
+local timerHailofStoneCD					= mod:NewCDNPTimer(21.8, 369465, nil, nil, nil, 5)
+local timerStoneBoltCD						= mod:NewCDNPTimer(7.2, 369399, nil, false, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--7-11, off by default to giev prio to Hail of stone
+local timerEarthquakeCD						= mod:NewCDNPTimer(25.4, 369328, nil, nil, nil, 2)
+local timerFissuringSlamCD					= mod:NewCDNPTimer(9.7, 369335, nil, nil, nil, 2)--9.7-15
+local timerCleaveCD							= mod:NewCDNPTimer(15, 369409, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+local timerPounceCD							= mod:NewCDNPTimer(15, 369423, nil, nil, nil, 3)
+local timerThunderousClapCD					= mod:NewCDNPTimer(19, 381593, nil, nil, nil, 2)
+local timerBulwarkSlamCD					= mod:NewCDNPTimer(10.6, 382696, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+local timerHastenCD							= mod:NewCDNPTimer(23, 377500, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 
 --local playerName = UnitName("player")
 

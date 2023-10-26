@@ -46,17 +46,17 @@ local specWarnThunderJaw					= mod:NewSpecialWarningDefensive(392395, nil, nil, 
 local specWarnCinderbolt					= mod:NewSpecialWarningInterrupt(384194, "HasInterrupt", nil, nil, 1, 2)
 local specWarnFlashfire						= mod:NewSpecialWarningInterrupt(392451, "HasInterrupt", nil, nil, 1, 2)
 
-local timerExcavatingBlastCD				= mod:NewCDTimer(17, 372696, nil, nil, nil, 3)
-local timerSteelBarrageCD					= mod:NewCDTimer(17, 372047, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
-local timerBlazingRushCD					= mod:NewCDTimer(17, 372087, nil, nil, nil, 3)
-local timerStormBreathCD					= mod:NewCDTimer(15.7, 391726, nil, nil, nil, 3)
-local timerRollingThunderCD					= mod:NewCDTimer(21.8, 392641, nil, nil, nil, 3)
-local timerThunderjawCD						= mod:NewCDTimer(19, 392395, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
-local timerLightningStormCD					= mod:NewCDTimer(20.6, 392486, nil, nil, nil, 2, nil, DBM_COMMON_L.HEALER_ICON)
-local timerFlashfireCD						= mod:NewCDTimer(12.1, 392451, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
-local timerFlameDanceCD						= mod:NewCDTimer(26.6, 385536, nil, nil, nil, 5)
-local timerTectonicSlamCD					= mod:NewCDTimer(17, 372735, nil, nil, nil, 5)--17-21
-local timerTempestStormshieldCD				= mod:NewCDTimer(18.2, 391050, nil, nil, nil, 5, nil, DBM_COMMON_L.DAMAGE_ICON)
+local timerExcavatingBlastCD				= mod:NewCDNPTimer(17, 372696, nil, nil, nil, 3)
+local timerSteelBarrageCD					= mod:NewCDNPTimer(17, 372047, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+local timerBlazingRushCD					= mod:NewCDNPTimer(17, 372087, nil, nil, nil, 3)
+local timerStormBreathCD					= mod:NewCDNPTimer(15.7, 391726, nil, nil, nil, 3)
+local timerRollingThunderCD					= mod:NewCDNPTimer(21.8, 392641, nil, nil, nil, 3)
+local timerThunderjawCD						= mod:NewCDNPTimer(19, 392395, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+local timerLightningStormCD					= mod:NewCDNPTimer(20.6, 392486, nil, nil, nil, 2, nil, DBM_COMMON_L.HEALER_ICON)
+local timerFlashfireCD						= mod:NewCDNPTimer(12.1, 392451, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerFlameDanceCD						= mod:NewCDNPTimer(26.6, 385536, nil, nil, nil, 5)
+local timerTectonicSlamCD					= mod:NewCDNPTimer(17, 372735, nil, nil, nil, 5)--17-21
+local timerTempestStormshieldCD				= mod:NewCDNPTimer(18.2, 391050, nil, nil, nil, 5, nil, DBM_COMMON_L.DAMAGE_ICON)
 
 
 --local playerName = UnitName("player")

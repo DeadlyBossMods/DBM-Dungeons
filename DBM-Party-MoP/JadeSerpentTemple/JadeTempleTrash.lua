@@ -41,13 +41,13 @@ local specWarnSleepySililoquy				= mod:NewSpecialWarningInterrupt(395872, "HasIn
 local specWarnDefilingMists					= mod:NewSpecialWarningInterrupt(397914, "HasInterrupt", nil, nil, 1, 2)
 local specWarnTidalburst					= mod:NewSpecialWarningInterrupt(397889, "HasInterrupt", nil, nil, 1, 2)
 
-local timerTaintedRippleCD					= mod:NewCDTimer(14.5, 397878, nil, nil, nil, 2, nil, DBM_COMMON_L.HEALER_ICON)
-local timerTidalburstCD						= mod:NewCDTimer(16.6, 397889, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
-local timerDarkClawCD						= mod:NewCDTimer(9.7, 397931, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON)--9.7-14.5
-local timerHauntingScreamCD					= mod:NewCDTimer(18.2, 395859, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
-local timerSleepySililoquyCD				= mod:NewCDTimer(10.9, 395872, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--10.9-12
-local timerFlamesofDoubtCD					= mod:NewCDTimer(15.3, 398300, nil, nil, nil, 3, nil, DBM_COMMON_L.DEADLY_ICON)
-local timerDefilingMistsCD					= mod:NewCDTimer(10.9, 397914, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerTaintedRippleCD					= mod:NewCDNPTimer(14.5, 397878, nil, nil, nil, 2, nil, DBM_COMMON_L.HEALER_ICON)
+local timerTidalburstCD						= mod:NewCDNPTimer(16.6, 397889, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerDarkClawCD						= mod:NewCDNPTimer(9.7, 397931, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON)--9.7-14.5
+local timerHauntingScreamCD					= mod:NewCDNPTimer(18.2, 395859, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerSleepySililoquyCD				= mod:NewCDNPTimer(10.9, 395872, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--10.9-12
+local timerFlamesofDoubtCD					= mod:NewCDNPTimer(15.3, 398300, nil, nil, nil, 3, nil, DBM_COMMON_L.DEADLY_ICON)
+local timerDefilingMistsCD					= mod:NewCDNPTimer(10.9, 397914, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 
 --local playerName = UnitName("player")
 

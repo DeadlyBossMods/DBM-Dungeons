@@ -70,13 +70,13 @@ local specWarnScreech						= mod:NewSpecialWarningInterrupt(385029, "HasInterrup
 local specWarnNecroticBreath				= mod:NewSpecialWarningInterrupt(382712, "HasInterrupt", nil, nil, 1, 2)--26.7-40?
 local specWarnGTFO							= mod:NewSpecialWarningGTFO(383399, nil, nil, nil, 1, 8)
 
-local timerDecayClawsCD						= mod:NewCDTimer(10.2, 382787, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
-local timerWitheringBurstCD					= mod:NewCDTimer(19.4, 367503, nil, nil, nil, 3)--19-26
-local timerSummonLashersCD					= mod:NewCDTimer(12.2, 383062, nil, nil, nil, 1)--12-15
-local timerStinkBreathCD					= mod:NewCDTimer(17, 388060, nil, nil, nil, 3)
-local timerViolentWhirlwindCD				= mod:NewCDTimer(17, 388046, nil, nil, nil, 2)
-local timerStompCD							= mod:NewCDTimer(17, 373943, nil, nil, nil, 2)
-local timerRottingSurgeCD					= mod:NewCDTimer(23, 383385, nil, nil, nil, 3)--TODO, limited data
+local timerDecayClawsCD						= mod:NewCDNPTimer(10.2, 382787, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+local timerWitheringBurstCD					= mod:NewCDNPTimer(19.4, 367503, nil, nil, nil, 3)--19-26
+local timerSummonLashersCD					= mod:NewCDNPTimer(12.2, 383062, nil, nil, nil, 1)--12-15
+local timerStinkBreathCD					= mod:NewCDNPTimer(17, 388060, nil, nil, nil, 3)
+local timerViolentWhirlwindCD				= mod:NewCDNPTimer(17, 388046, nil, nil, nil, 2)
+local timerStompCD							= mod:NewCDNPTimer(17, 373943, nil, nil, nil, 2)
+local timerRottingSurgeCD					= mod:NewCDNPTimer(23, 383385, nil, nil, nil, 3)--TODO, limited data
 
 --local playerName = UnitName("player")
 
