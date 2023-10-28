@@ -4,13 +4,16 @@ local L		= mod:GetLocalizedStrings()
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(98965, 98970)
 mod:SetEncounterID(1835)
+mod:SetHotfixNoticeRev(20231027000000)
+mod:SetMinSyncRevision(20231027000000)
+mod.respawnTime = 29
 mod:SetBossHPInfoToHighest()
 
 mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
-	"SPELL_CAST_START 198820 199143 199193 202019",
-	"SPELL_CAST_SUCCESS 198635 201733",
+	"SPELL_CAST_START 198820 199143 199193 202019 198641 201733",
+	"SPELL_CAST_SUCCESS 198635",
 	"SPELL_AURA_APPLIED 201733",
 	"SPELL_AURA_REMOVED 199193",
 	"UNIT_DIED"
@@ -18,67 +21,110 @@ mod:RegisterEventsInCombat(
 
 --TODO, figure out swarm warnings, how many need to switch and kill?
 --TODO, boss guids for nameplate aura timers, i'm feeling lazy about this right now cause it'd require scanning at different timings
-local warnCloud						= mod:NewSpellAnnounce(199143, 2)
-local warnSwarm						= mod:NewTargetAnnounce(201733, 2)
+--[[
+(ability.id = 198820 or ability.id = 199143 or ability.id = 199193 or ability.id = 202019 or ability.id = 198641 or ability.id = 201733) and type = "begincast"
+ or ability.id = 198635 and type = "cast"
+ or ability.id = 199193 and type = "removebuff"
+ or target.id = 98965 and type = "death"
+ or type = "dungeonencounterstart" or type = "dungeonencounterend"
+--]]
+--Stage One: Lord of the Keep
+mod:AddTimerLine(DBM:EJ_GetSectionInfo(12502))
+local warnWhirlingBlade				= mod:NewCountAnnounce(198641, 2)
 
-local specWarnDarkblast				= mod:NewSpecialWarningDodge(198820, nil, nil, nil, 2, 2)
-local specWarnGuile					= mod:NewSpecialWarningDodge(199193, nil, nil, nil, 2, 2)
+local specWarnDarkblast				= mod:NewSpecialWarningDodgeCount(198820, nil, nil, nil, 2, 2)
+
+local timerDarkBlastCD				= mod:NewCDCountTimer(18.1, 198820, nil, nil, nil, 3)
+local timerWhirlingBladeCD			= mod:NewCDCountTimer(23, 198641, nil, nil, nil, 3)
+local timerUnerringShearCD			= mod:NewCDCountTimer(12.1, 198635, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON, nil, mod:IsTank() and 2, 4)
+--Stage Two: Vengeance of the Ancients
+mod:AddTimerLine(DBM:EJ_GetSectionInfo(12509))
+local warnCloud						= mod:NewCountAnnounce(199143, 2)
+local warnSwarm						= mod:NewTargetNoFilterAnnounce(201733, 2)
+
+local specWarnGuile					= mod:NewSpecialWarningDodgeCount(199193, nil, nil, nil, 2, 2)
 local specWarnGuileEnded			= mod:NewSpecialWarningEnd(199193, nil, nil, nil, 1, 2)
-local specWarnSwarm					= mod:NewSpecialWarningYou(201733)
-local specWarnShadowBolt			= mod:NewSpecialWarningDefensive(202019, nil, nil, nil, 3, 2)
+local specWarnSwarm					= mod:NewSpecialWarningYou(201733, nil, nil, nil, 1, 2)
+local specWarnShadowBoltVolley		= mod:NewSpecialWarningSpell(202019, nil, nil, nil, 2, 2)
 
-local timerDarkBlastCD				= mod:NewCDTimer(18, 198820, nil, nil, nil, 3)
-local timerUnerringShearCD			= mod:NewCDTimer(12, 198635, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON, nil, mod:IsTank() and 2, 4)
-local timerGuileCD					= mod:NewCDTimer(39, 199193, nil, nil, nil, 6)
-local timerGuile					= mod:NewBuffFadesTimer(24, 199193, nil, nil, nil, 6)
-local timerCloudCD					= mod:NewCDTimer(32.8, 199143, nil, nil, nil, 3)
-local timerSwarmCD					= mod:NewCDTimer(32.8, 201733, nil, nil, nil, 3)
-local timerShadowBoltVolleyCD		= mod:NewCDTimer(8, 202019, nil, nil, nil, 2)
+local timerGuileCD					= mod:NewCDCountTimer(39, 199193, nil, nil, nil, 6)
+local timerGuile					= mod:NewBuffFadesTimer(20, 199193, nil, nil, nil, 6)
+local timerCloudCD					= mod:NewCDCountTimer(32.7, 199143, nil, nil, nil, 3)
+local timerSwarmCD					= mod:NewCDCountTimer(18.1, 201733, nil, nil, nil, 3)--18-21
+local timerShadowBoltVolleyCD		= mod:NewCDCountTimer(9.7, 202019, nil, nil, nil, 2)
 
+--Stage 1
+mod.vb.bladeCount = 0
+mod.vb.blastCount = 0
+mod.vb.shearCount = 0
+--Stage 2
 mod.vb.shadowboltCount = 0
+mod.vb.guileCount = 0
+mod.vb.cloudCount = 0
+mod.vb.swarmCount = 0
 
 function mod:OnCombatStart(delay)
 	self:SetStage(1)
+	--Stage 1
+	self.vb.bladeCount = 0
+	self.vb.blastCount = 0
+	self.vb.shearCount = 0
+	--Stage 2
 	self.vb.shadowboltCount = 0
-	timerUnerringShearCD:Start(5.5-delay)
-	timerDarkBlastCD:Start(10-delay)
+	self.vb.guileCount = 0
+	self.vb.cloudCount = 0
+	self.vb.swarmCount = 0
+	timerUnerringShearCD:Start(5.5-delay, 1)
+	timerWhirlingBladeCD:Start(10-delay, 1)--Either whirling or dark can come first, other will be immediately after
+	timerDarkBlastCD:Start(10-delay, 1)--Either whirling or dark can come first, other will be immediately after
 end
 
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
 	if spellId == 198820 then
+		self.vb.blastCount self.vb.blastCount + 1
 		if self:GetStage(1) then
-			specWarnDarkblast:Show()
+			specWarnDarkblast:Show(self.vb.blastCount)
 			specWarnDarkblast:Play("watchstep")
-			timerDarkBlastCD:Start()
+			timerDarkBlastCD:Start(nil, self.vb.blastCount+1)
 		end
 	elseif spellId == 199143 then
-		warnCloud:Show()
-		timerCloudCD:Start()
+		self.vb.cloudCount = self.vb.cloudCount + 1
+		warnCloud:Show(self.vb.cloudCount)
+		timerCloudCD:Start(nil, self.vb.cloudCount+1)
 	elseif spellId == 199193 then
-		timerCloudCD:Stop()
-		timerSwarmCD:Stop()
-		timerShadowBoltVolleyCD:Stop()
-		specWarnGuile:Show()
+		--Seems to pause and resume timers but with an extra 3 secondcs
+		--As such, just adding 23 is cleaner than actually doing the pause + 3 seconds
+		timerCloudCD:AddTime(23, self.vb.cloudCount+1)
+		timerSwarmCD:AddTime(23, self.vb.swarmCount+1)
+		timerShadowBoltVolleyCD:AddTime(23, self.vb.shadowboltCount+1)
+		self.vb.guileCount = self.vb.guileCount + 1
+		specWarnGuile:Show(self.vb.guileCount)
 		specWarnGuile:Play("watchstep")
 		specWarnGuile:ScheduleVoice(1.5, "keepmove")
 		timerGuile:Start()
 	elseif spellId == 202019 then
 		self.vb.shadowboltCount = self.vb.shadowboltCount + 1
 		if self.vb.shadowboltCount == 1 then
-			specWarnShadowBolt:Show()
-			specWarnShadowBolt:Play("defensive")
+			specWarnShadowBoltVolley:Show()
+			specWarnShadowBoltVolley:Play("aesoon")
 		end
-		--timerShadowBoltVolleyCD:Start()--Not known, and probably not important
+		timerShadowBoltVolleyCD:Start(nil, self.vb.shadowboltCount+1)
+	elseif spellId == 198641 then
+		self.vb.bladeCount = self.vb.bladeCount + 1
+		warnWhirlingBlade:Show(self.vb.bladeCount)
+		timerWhirlingBladeCD:Start(nil, self.vb.bladeCount+1)
+	elseif spellId == 201733 then
+		self.vb.swarmCount = self.vb.swarmCount + 1
+		timerSwarmCD:Start(nil, self.vb.swarmCount+1)
 	end
 end
 
 function mod:SPELL_CAST_SUCCESS(args)
 	local spellId = args.spellId
 	if spellId == 198635 then
-		timerUnerringShearCD:Start()
-	elseif spellId == 201733 then
-		timerSwarmCD:Start()
+		self.vb.shearCount = self.vb.shearCount + 1
+		timerUnerringShearCD:Start(nil, self.vb.shearCount+1)
 	end
 end
 
@@ -87,6 +133,7 @@ function mod:SPELL_AURA_APPLIED(args)
 	if spellId == 201733 then
 		if args:IsPlayer() then
 			specWarnSwarm:Show()
+			specWarnSwarm:Play("targetyou")
 		else
 			warnSwarm:Show(args.destName)
 		end
@@ -98,11 +145,7 @@ function mod:SPELL_AURA_REMOVED(args)
 	if spellId == 199193 then
 		specWarnGuileEnded:Show()
 		specWarnGuileEnded:Play("safenow")
-		timerCloudCD:Start(3)
-		if not self:IsNormal() then
-			timerSwarmCD:Start(10.5)
-		end
-		timerGuileCD:Start()
+		timerGuileCD:Start(63.8, self.vb.guileCount+1)
 	end
 end
 
@@ -112,11 +155,12 @@ function mod:UNIT_DIED(args)
 		self:SetStage(2)
 		timerDarkBlastCD:Stop()
 		timerUnerringShearCD:Stop()
+		timerWhirlingBladeCD:Stop()
+		timerShadowBoltVolleyCD:Start(17.5, 1)
 		if not self:IsNormal() then
-			timerSwarmCD:Start(9)
+			timerSwarmCD:Start(22.3, 1)
 		end
-		timerCloudCD:Start(11.5)
-		timerShadowBoltVolleyCD:Start(17.5)--Not confirmed, submitted by requesting user
-		timerGuileCD:Start(24)--24-28
+		timerCloudCD:Start(27.2, 1)
+		timerGuileCD:Start(38.1, 1)
 	end
 end
