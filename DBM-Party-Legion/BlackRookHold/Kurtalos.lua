@@ -82,7 +82,7 @@ end
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
 	if spellId == 198820 then
-		self.vb.blastCount self.vb.blastCount + 1
+		self.vb.blastCount = self.vb.blastCount + 1
 		if self:GetStage(1) then
 			specWarnDarkblast:Show(self.vb.blastCount)
 			specWarnDarkblast:Play("watchstep")
