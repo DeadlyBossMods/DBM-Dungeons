@@ -4,7 +4,6 @@ local L		= mod:GetLocalizedStrings()
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(184125)
 mod:SetEncounterID(2559)
---mod:SetUsedIcons(1, 2, 3)
 mod:SetHotfixNoticeRev(20230510000000)
 --mod:SetMinSyncRevision(20211203000000)
 --mod.respawnTime = 29
@@ -15,11 +14,9 @@ mod:RegisterCombat("combat")
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 376292 376208 376049 375727",
 	"SPELL_AURA_APPLIED 376325 377405",
---	"SPELL_AURA_APPLIED_DOSE",
 	"SPELL_AURA_REMOVED 377405",
 	"SPELL_PERIODIC_DAMAGE 376325",
 	"SPELL_PERIODIC_MISSED 376325"
---	"UNIT_SPELLCAST_SUCCEEDED boss1"
 )
 
 --TODO, mark orbs with https://www.wowhead.com/beta/spell=376293/eternity-orb ? Probably impractical
@@ -47,10 +44,7 @@ local timerWingBuffetCD							= mod:NewCDCountTimer(23, 376049, nil, nil, nil, 2
 local timerTimeSinkCD							= mod:NewCDTimer(15.7, 377405, nil, nil, nil, 3, nil, DBM_COMMON_L.HEROIC_ICON..DBM_COMMON_L.MAGIC_ICON)
 local timerSandBreathCD							= mod:NewCDCountTimer(18.1, 375727, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 
---local berserkTimer							= mod:NewBerserkTimer(600)
-
 mod:AddRangeFrameOption(5, 377405)
---mod:AddSetIconOption("SetIconOnTimeSink", 377405, true, false, {1, 2, 3})
 
 mod.vb.orbSet = 0
 mod.vb.rewindCount = 0
@@ -139,7 +133,6 @@ function mod:SPELL_AURA_APPLIED(args)
 		end
 	end
 end
---mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED
 
 function mod:SPELL_AURA_REMOVED(args)
 	local spellId = args.spellId
@@ -155,15 +148,3 @@ function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId, spell
 	end
 end
 mod.SPELL_PERIODIC_MISSED = mod.SPELL_PERIODIC_DAMAGE
-
---[[
-function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
-	if spellId == 377395 then--Time Sink cast (not in combat log)
---		self.vb.sinkCount = self.vb.sinkCount + 1
-		--Now that cycles happen faster, no longer cast twice per cycle
---		if self.vb.sinkCount == 1 then
---			timerTimeSinkCD:Start(nil, 2)
---		end
-	end
-end
---]]

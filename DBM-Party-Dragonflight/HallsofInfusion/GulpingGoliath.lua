@@ -4,7 +4,6 @@ local L		= mod:GetLocalizedStrings()
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(189722)
 mod:SetEncounterID(2616)
---mod:SetUsedIcons(1, 2, 3)
 mod:SetHotfixNoticeRev(20230507000000)
 --mod:SetMinSyncRevision(20211203000000)
 --mod.respawnTime = 29
@@ -14,14 +13,10 @@ mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 385551 385181 385531 385442",
---	"SPELL_CAST_SUCCESS",
 	"SPELL_AURA_APPLIED 385743 374389",
 	"SPELL_AURA_APPLIED_DOSE 385743 374389",
 	"SPELL_AURA_REMOVED 374389",
 	"SPELL_AURA_REMOVED_DOSE 374389"
---	"SPELL_PERIODIC_DAMAGE",
---	"SPELL_PERIODIC_MISSED",
---	"UNIT_SPELLCAST_SUCCEEDED boss1"
 )
 
 --[[
@@ -41,19 +36,14 @@ local specWarnHangry							= mod:NewSpecialWarningDispel(385743, "RemoveEnrage",
 local specWarnOverpoweringCroak					= mod:NewSpecialWarningDodgeCount(385187, nil, nil, nil, 2, 2)--385181 is cast but lacks tooltip, so damage Id used for tooltip/option
 local specWarnBodySlam							= mod:NewSpecialWarningMoveAway(385531, nil, nil, nil, 1, 2)
 local yellBodySlam								= mod:NewYell(385531)
---local specWarnDominationBolt					= mod:NewSpecialWarningInterrupt(363607, "HasInterrupt", nil, nil, 1, 2)
---local specWarnGTFO							= mod:NewSpecialWarningGTFO(340324, nil, nil, nil, 1, 8)
 
 local timerGulpCD								= mod:NewCDCountTimer(38.8, 385551, nil, nil, nil, 3)
 local timerOverpoweringCroakCD					= mod:NewCDCountTimer(37.7, 385187, nil, nil, nil, 2)--Tough to classify, it's aoe, it's targeted dodge, and it's adds
 local timerBellySlamCD							= mod:NewCDTimer(37.7, 385531, nil, nil, nil, 3)
 local timerToxicEffluviaaCD						= mod:NewCDCountTimer(26.7, 385442, nil, nil, nil, 5, nil, DBM_COMMON_L.HEALER_ICON)
 
---local berserkTimer							= mod:NewBerserkTimer(600)
-
 mod:AddRangeFrameOption(12, 385531)
 mod:AddInfoFrameOption(374389, "RemovePoison")
---mod:AddSetIconOption("SetIconOnStaggeringBarrage", 361018, true, false, {1, 2, 3})
 
 local toxinStacks = {}
 
@@ -164,19 +154,3 @@ function mod:SPELL_AURA_REMOVED_DOSE(args)
 		end
 	end
 end
-
---[[
-function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId, spellName)
-	if spellId == 340324 and destGUID == UnitGUID("player") and self:AntiSpam(2, 4) then
-		specWarnGTFO:Show(spellName)
-		specWarnGTFO:Play("watchfeet")
-	end
-end
-mod.SPELL_PERIODIC_MISSED = mod.SPELL_PERIODIC_DAMAGE
-
-function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
-	if spellId == 353193 then
-
-	end
-end
---]]

@@ -4,7 +4,6 @@ local L		= mod:GetLocalizedStrings()
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(186615)
 mod:SetEncounterID(2636)
---mod:SetUsedIcons(1, 2, 3)
 mod:SetHotfixNoticeRev(20221029000000)
 --mod:SetMinSyncRevision(20211203000000)
 --mod.respawnTime = 29
@@ -37,8 +36,6 @@ local specWarnGTFO								= mod:NewSpecialWarningGTFO(386916, nil, nil, nil, 1, 
 local timerLightingStrikeCD						= mod:NewCDTimer(20.2, 384316, nil, nil, nil, 3)
 local timerElectricStormCD						= mod:NewCDTimer(63.1, 384620, nil, nil, nil, 2, nil, DBM_COMMON_L.HEALER_ICON)--60-61+3sec cast
 local timerEnergySurgeCD						= mod:NewCDTimer(16.5, 384686, nil, "Tank|MagicDispeller", nil, 5, nil, DBM_COMMON_L.TANK_ICON..DBM_COMMON_L.MAGIC_ICON)
-
---local berserkTimer							= mod:NewBerserkTimer(600)
 
 mod:AddInfoFrameOption(382628, false)
 

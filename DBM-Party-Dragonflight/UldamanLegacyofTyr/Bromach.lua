@@ -16,11 +16,6 @@ mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 369675 369754 369703 382303",
 	"SPELL_CAST_SUCCESS 369605 369703",
 	"SPELL_AURA_APPLIED 369725"
---	"SPELL_AURA_APPLIED_DOSE",
---	"SPELL_AURA_REMOVED"
---	"SPELL_PERIODIC_DAMAGE",
---	"SPELL_PERIODIC_MISSED",
---	"UNIT_SPELLCAST_SUCCEEDED boss1"
 )
 
 --TODO, warn trogg Ambush casts?
@@ -41,18 +36,11 @@ local warnBloodlust								= mod:NewSpellAnnounce(369754, 3)
 local specWarnQuakingTotem						= mod:NewSpecialWarningSwitchCount(369700, "-Healer", nil, nil, 1, 2)
 local specWarnChainLightning					= mod:NewSpecialWarningInterrupt(369675, "HasInterrupt", nil, nil, 1, 2)
 local specWarnThunderingSlam					= mod:NewSpecialWarningDodgeCount(369703, nil, nil, nil, 2, 2)
---local yellThunderingSlam						= mod:NewYell(369703)
---local specWarnGTFO							= mod:NewSpecialWarningGTFO(340324, nil, nil, nil, 1, 8)
 
 local timerCalloftheDeepCD						= mod:NewCDCountTimer(27.9, 369605, nil, nil, nil, 1)--28-30
 local timerQuakingTotemCD						= mod:NewCDCountTimer(30, 369700, nil, nil, nil, 5)
 local timerBloodlustCD							= mod:NewCDTimer(30, 369754, nil, nil, nil, 5)
 local timerThunderingSlamCD						= mod:NewCDCountTimer(18.2, 369703, nil, nil, nil, 3)--18-23
-
---local berserkTimer							= mod:NewBerserkTimer(600)
-
---mod:AddRangeFrameOption("8")
---mod:AddInfoFrameOption(361651, true)
 
 mod.vb.callCount = 0
 mod.vb.thunderingCount = 0
@@ -67,15 +55,6 @@ function mod:OnCombatStart(delay)
 	timerQuakingTotemCD:Start(20.4-delay, 1)
 	timerBloodlustCD:Start(27-delay)
 end
-
---function mod:OnCombatEnd()
---	if self.Options.RangeFrame then
---		DBM.RangeCheck:Hide()
---	end
---	if self.Options.InfoFrame then
---		DBM.InfoFrame:Hide()
---	end
---end
 
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
@@ -118,27 +97,3 @@ function mod:SPELL_AURA_APPLIED(args)
 		timerBloodlustCD:AddTime(10)
 	end
 end
---mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED
-
---[[
-function mod:SPELL_AURA_REMOVED(args)
-	local spellId = args.spellId
-	if spellId == 361966 then
-
-	end
-end
-
-function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId, spellName)
-	if spellId == 340324 and destGUID == UnitGUID("player") and self:AntiSpam(2, 4) then
-		specWarnGTFO:Show(spellName)
-		specWarnGTFO:Play("watchfeet")
-	end
-end
-mod.SPELL_PERIODIC_MISSED = mod.SPELL_PERIODIC_DAMAGE
-
-function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
-	if spellId == 353193 then
-
-	end
-end
---]]

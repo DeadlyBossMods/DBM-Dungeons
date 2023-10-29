@@ -4,7 +4,6 @@ local L		= mod:GetLocalizedStrings()
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(186951)
 mod:SetEncounterID(2563)
---mod:SetUsedIcons(1, 2, 3)
 mod:SetHotfixNoticeRev(20230103000000)
 --mod:SetMinSyncRevision(20211203000000)
 --mod.respawnTime = 29
@@ -14,15 +13,11 @@ mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 388923 388623 396640 388544",
---	"SPELL_CAST_SUCCESS",
 	"SPELL_AURA_APPLIED 388796 389033",
 	"SPELL_AURA_APPLIED_DOSE 389033",
 	"SPELL_AURA_REMOVED 389033",
 	"SPELL_AURA_REMOVED_DOSE 389033",
---	"SPELL_PERIODIC_DAMAGE",
---	"SPELL_PERIODIC_MISSED",
 	"UNIT_DIED"
---	"UNIT_SPELLCAST_SUCCEEDED boss1"
 )
 mod:RegisterEvents(
 	"CHAT_MSG_MONSTER_SAY"
@@ -43,7 +38,6 @@ local specWarnBurstForth						= mod:NewSpecialWarningSpell(388923, nil, nil, nil
 local specWarnBranchOut							= mod:NewSpecialWarningDodge(388623, nil, nil, nil, 2, 2)
 local specWarnHealingTouch						= mod:NewSpecialWarningInterrupt(396640, "HasInterrupt", nil, nil, 1, 2)
 local specWarnBarkbreaker						= mod:NewSpecialWarningDefensive(388544, nil, nil, nil, 1, 2)
---local specWarnGTFO							= mod:NewSpecialWarningGTFO(340324, nil, nil, nil, 1, 8)
 
 local timerRP									= mod:NewRPTimer(17)
 local timerGerminateCD							= mod:NewCDCountTimer(29.1, 388796, nil, nil, nil, 3)
@@ -52,11 +46,7 @@ local timerBranchOutCD							= mod:NewCDTimer(59.8, 388623, nil, nil, nil, 3)
 local timerHealingTouchCD						= mod:NewCDTimer(12, 396640, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--First cast only, after that it's iffy
 local timerBarkbreakerCD						= mod:NewCDCountTimer(27.9, 388544, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.HEALER_ICON)
 
---local berserkTimer							= mod:NewBerserkTimer(600)
-
---mod:AddRangeFrameOption("8")
 mod:AddInfoFrameOption(389033, "Tank|Healer|RemovePoison")
---mod:AddSetIconOption("SetIconOnStaggeringBarrage", 361018, true, false, {1, 2, 3})
 
 local toxinStacks = {}
 mod.vb.germinateCount = 0
@@ -78,9 +68,6 @@ end
 
 function mod:OnCombatEnd()
 	table.wipe(toxinStacks)
---	if self.Options.RangeFrame then
---		DBM.RangeCheck:Hide()
---	end
 	if self.Options.InfoFrame then
 		DBM.InfoFrame:Hide()
 	end
@@ -119,15 +106,6 @@ function mod:SPELL_CAST_START(args)
 		end
 	end
 end
-
---[[
-function mod:SPELL_CAST_SUCCESS(args)
-	local spellId = args.spellId
-	if spellId == 362805 then
-
-	end
-end
---]]
 
 function mod:SPELL_AURA_APPLIED(args)
 	local spellId = args.spellId
@@ -182,22 +160,6 @@ function mod:UNIT_DIED(args)
 		timerHealingTouchCD:Stop(args.destGUID)
 	end
 end
-
---[[
-function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId, spellName)
-	if spellId == 340324 and destGUID == UnitGUID("player") and self:AntiSpam(2, 4) then
-		specWarnGTFO:Show(spellName)
-		specWarnGTFO:Play("watchfeet")
-	end
-end
-mod.SPELL_PERIODIC_MISSED = mod.SPELL_PERIODIC_DAMAGE
-
-function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
-	if spellId == 353193 then
-
-	end
-end
---]]
 
 --<38.95 21:51:16> [CHAT_MSG_MONSTER_SAY] Perfect, we are just about--wait, Ichistrasz! There is too much life magic! What are you doing?#Professor Mystakria###Omegal##0#0##0#3723#nil#0#fa
 --<56.01 21:51:33> [DBM_Debug] ENCOUNTER_START event fired: 2563 Overgrown Ancient 8 5#nil", -- [250]

@@ -4,7 +4,6 @@ local L		= mod:GetLocalizedStrings()
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(190609)
 mod:SetEncounterID(2565)
---mod:SetUsedIcons(1, 2, 3)
 mod:SetHotfixNoticeRev(20221015000000)
 --mod:SetMinSyncRevision(20211203000000)
 --mod.respawnTime = 29
@@ -18,9 +17,6 @@ mod:RegisterEventsInCombat(
 	"SPELL_AURA_APPLIED 389011 374350 389007",
 	"SPELL_AURA_APPLIED_DOSE 389011",
 	"SPELL_AURA_REMOVED 374350 389011"
---	"SPELL_PERIODIC_DAMAGE",
---	"SPELL_PERIODIC_MISSED",
---	"UNIT_SPELLCAST_SUCCEEDED boss1"
 )
 
 --TODO, anounce https://www.wowhead.com/beta/spell=388901/arcane-rift spawns?
@@ -47,13 +43,8 @@ local specWarnGTFO								= mod:NewSpecialWarningGTFO(389007, nil, nil, nil, 1, 
 local timerAstralBreathCD						= mod:NewCDTimer(26.3, 374361, nil, nil, nil, 3)--26-32
 local timerPowerVacuumCD						= mod:NewCDTimer(21.8, 388822, nil, nil, nil, 2)--22-29
 local timerEnergyBombCD							= mod:NewCDTimer(14.1, 374352, nil, nil, nil, 3)--14.1-20
---local timerDecaySprayCD						= mod:NewAITimer(35, 376811, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 
---local berserkTimer							= mod:NewBerserkTimer(600)
-
---mod:AddRangeFrameOption("8")
 mod:AddInfoFrameOption(389011, true)
---mod:AddSetIconOption("SetIconOnStaggeringBarrage", 361018, true, false, {1, 2, 3})
 
 local playerDebuffCount = 0
 
@@ -68,9 +59,6 @@ function mod:OnCombatStart(delay)
 end
 
 function mod:OnCombatEnd()
---	if self.Options.RangeFrame then
---		DBM.RangeCheck:Hide()
---	end
 	if self.Options.InfoFrame then
 		DBM.InfoFrame:Hide()
 	end
@@ -137,19 +125,3 @@ function mod:SPELL_AURA_REMOVED(args)
 		playerDebuffCount = 0
 	end
 end
-
---[[
-function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId, spellName)
-	if spellId == 340324 and destGUID == UnitGUID("player") and self:AntiSpam(2, 4) then
-		specWarnGTFO:Show(spellName)
-		specWarnGTFO:Play("watchfeet")
-	end
-end
-mod.SPELL_PERIODIC_MISSED = mod.SPELL_PERIODIC_DAMAGE
-
-function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
-	if spellId == 353193 then
-
-	end
-end
---]]

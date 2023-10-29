@@ -4,7 +4,6 @@ local L		= mod:GetLocalizedStrings()
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(189232)
 mod:SetEncounterID(2609)
---mod:SetUsedIcons(1, 2, 3)
 --mod:SetHotfixNoticeRev(20220322000000)
 --mod:SetMinSyncRevision(20211203000000)
 --mod.respawnTime = 29
@@ -47,12 +46,6 @@ local timerSearingBlowsCD						= mod:NewCDTimer(32.7, 372858, nil, "Tank|Healer"
 local timerMoltenBoulderCD						= mod:NewCDTimer(16.9, 372107, nil, nil, nil, 3)
 local timerRitualofBlazebindingCD				= mod:NewCDTimer(33.9, 372863, nil, nil, nil, 1)
 
---local berserkTimer							= mod:NewBerserkTimer(600)
-
---mod:AddRangeFrameOption("8")
---mod:AddInfoFrameOption(361651, true)
---mod:AddSetIconOption("SetIconOnStaggeringBarrage", 361018, true, false, {1, 2, 3})
-
 local castsPerGUID = {}
 
 function mod:BoulderTarget(targetname)
@@ -71,12 +64,6 @@ end
 
 function mod:OnCombatEnd()
 	table.wipe(castsPerGUID)
---	if self.Options.RangeFrame then
---		DBM.RangeCheck:Hide()
---	end
---	if self.Options.InfoFrame then
---		DBM.InfoFrame:Hide()
---	end
 end
 
 function mod:SPELL_CAST_START(args)
@@ -141,15 +128,6 @@ function mod:SPELL_AURA_APPLIED(args)
 	end
 end
 
---[[
-function mod:SPELL_AURA_REMOVED(args)
-	local spellId = args.spellId
-	if spellId == 361966 then
-
-	end
-end
---]]
-
 function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId, spellName)
 	if spellId == 372820 and destGUID == UnitGUID("player") and self:AntiSpam(3, 2) then
 		specWarnGTFO:Show(spellName)
@@ -157,11 +135,3 @@ function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId, spell
 	end
 end
 mod.SPELL_PERIODIC_MISSED = mod.SPELL_PERIODIC_DAMAGE
-
---[[
-function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
-	if spellId == 353193 then
-
-	end
-end
---]]

@@ -4,7 +4,6 @@ local L		= mod:GetLocalizedStrings()
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(186737)
 mod:SetEncounterID(2583)
---mod:SetUsedIcons(1, 2, 3)
 mod:SetHotfixNoticeRev(20221027000000)
 --mod:SetMinSyncRevision(20211203000000)
 --mod.respawnTime = 29
@@ -40,13 +39,9 @@ local specWarnGTFO								= mod:NewSpecialWarningGTFO(387150, nil, nil, nil, 1, 
 local timerFrostBombCD							= mod:NewCDTimer(15.3, 386781, nil, nil, nil, 3)--15-24 (mod should account for two  mechanics that cause these delays)
 local timerIcyDevastatorCD						= mod:NewCDTimer(22.6, 387151, nil, nil, nil, 3)
 local timerAbsoluteZeroCD						= mod:NewNextTimer(60, 388008, nil, nil, nil, 2)
---local timerDecaySprayCD						= mod:NewAITimer(35, 376811, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
-
---local berserkTimer							= mod:NewBerserkTimer(600)
 
 mod:AddRangeFrameOption(8, 387151)
---mod:AddInfoFrameOption(361651, true)
---mod:AddSetIconOption("SetIconOnStaggeringBarrage", 361018, true, false, {1, 2, 3})
+
 
 local vaultRuin = DBM:GetSpellInfo(388072)
 
@@ -72,9 +67,6 @@ function mod:OnCombatEnd()
 	if self.Options.RangeFrame then
 		DBM.RangeCheck:Hide()
 	end
---	if self.Options.InfoFrame then
---		DBM.InfoFrame:Hide()
---	end
 end
 
 function mod:SPELL_CAST_START(args)
@@ -111,7 +103,6 @@ function mod:SPELL_AURA_APPLIED(args)
 		end
 	end
 end
---mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED
 
 function mod:SPELL_AURA_REMOVED(args)
 	local spellId = args.spellId

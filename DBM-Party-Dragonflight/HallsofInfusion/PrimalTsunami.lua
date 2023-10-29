@@ -4,7 +4,6 @@ local L		= mod:GetLocalizedStrings()
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(189729)
 mod:SetEncounterID(2618)
---mod:SetUsedIcons(1, 2, 3)
 mod:SetHotfixNoticeRev(20230507000000)
 --mod:SetMinSyncRevision(20211203000000)
 --mod.respawnTime = 29
@@ -15,11 +14,7 @@ mod:RegisterCombat("combat")
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 387504 387571 388424 387559",
 	"SPELL_AURA_APPLIED 387585",
---	"SPELL_AURA_APPLIED_DOSE",
 	"SPELL_AURA_REMOVED 387585"
---	"SPELL_PERIODIC_DAMAGE",
---	"SPELL_PERIODIC_MISSED",
---	"UNIT_SPELLCAST_SUCCEEDED boss1"
 )
 
 --TODO: Warn Undertow? It's only used if tank is messing up
@@ -35,8 +30,6 @@ local warnInfusedGlobule						= mod:NewCountAnnounce(387474, 2)
 local warnTempestsFury							= mod:NewCountAnnounce(388424, 3)
 
 local specWarnSquallBuffet						= mod:NewSpecialWarningYou(387504, nil, nil, nil, 1, 2)
---local yellInfusedStrikes						= mod:NewYell(361966)
---local specWarnGTFO							= mod:NewSpecialWarningGTFO(340324, nil, nil, nil, 1, 8)
 
 local timerSquallBuffetCD						= mod:NewCDTimer(35, 387504, DBM_COMMON_L.TANKCOMBO, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)--Squall Buffet/Focused Deluge tank combo
 local timerInfusedGlobuleCD						= mod:NewCDCountTimer(17.5, 387474, nil, nil, nil, 3)
@@ -48,10 +41,6 @@ local warnSubmerged								= mod:NewSpellAnnounce(387585, 2)
 local warnSubmergedEnded						= mod:NewEndAnnounce(387585, 2)
 
 local timerSubmergedCD							= mod:NewCDTimer(29.9, 387585, nil, nil, nil, 6)
-
---mod:AddRangeFrameOption("8")
---mod:AddInfoFrameOption(361651, true)
---mod:AddSetIconOption("SetIconOnStaggeringBarrage", 361018, true, false, {1, 2, 3})
 
 mod.vb.GlobCount = 0
 mod.vb.tempestCount = 0
@@ -65,15 +54,6 @@ function mod:OnCombatStart(delay)
 	timerSquallBuffetCD:Start(16-delay)
 	timerSubmergedCD:Start(52.1-delay)--Phasing timer
 end
-
---function mod:OnCombatEnd()
---	if self.Options.RangeFrame then
---		DBM.RangeCheck:Hide()
---	end
---	if self.Options.InfoFrame then
---		DBM.InfoFrame:Hide()
---	end
---end
 
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
@@ -109,7 +89,6 @@ function mod:SPELL_AURA_APPLIED(args)
 		timerTempestsFuryCD:Stop()
 	end
 end
---mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED
 
 function mod:SPELL_AURA_REMOVED(args)
 	local spellId = args.spellId
@@ -124,19 +103,3 @@ function mod:SPELL_AURA_REMOVED(args)
 		timerSubmergedCD:Start(55)--NEED MORE DATA, drycoded
 	end
 end
-
---[[
-function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId, spellName)
-	if spellId == 340324 and destGUID == UnitGUID("player") and self:AntiSpam(2, 4) then
-		specWarnGTFO:Show(spellName)
-		specWarnGTFO:Play("watchfeet")
-	end
-end
-mod.SPELL_PERIODIC_MISSED = mod.SPELL_PERIODIC_DAMAGE
-
-function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
-	if spellId == 353193 then
-
-	end
-end
---]]

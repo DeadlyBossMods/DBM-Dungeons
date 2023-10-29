@@ -4,7 +4,6 @@ local L		= mod:GetLocalizedStrings()
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(184580, 184581, 184582)
 mod:SetEncounterID(2555)
---mod:SetUsedIcons(1, 2, 3)
 mod:SetBossHPInfoToHighest()
 mod:SetHotfixNoticeRev(20230508000000)
 mod:SetMinSyncRevision(20230508000000)
@@ -14,10 +13,7 @@ mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 369573 369563 369791 369677 375924",
---	"SPELL_CAST_SUCCESS",
 	"SPELL_AURA_APPLIED 369602 377825",
---	"SPELL_AURA_APPLIED_DOSE",
---	"SPELL_AURA_REMOVED"
 	"SPELL_PERIODIC_DAMAGE 377825",
 	"SPELL_PERIODIC_MISSED 377825"
 )
@@ -62,11 +58,7 @@ local timerLongboatRaidCD						= mod:NewCDTimer(27.4, 375924, nil, nil, nil, 6)
 
 local specWarnGTFO								= mod:NewSpecialWarningGTFO(377825, nil, nil, nil, 1, 8)
 
---local berserkTimer							= mod:NewBerserkTimer(600)
-
 mod:AddRangeFrameOption(5, 369677)
---mod:AddInfoFrameOption(361651, true)
---mod:AddSetIconOption("SetIconOnStaggeringBarrage", 361018, true, false, {1, 2, 3})
 
 function mod:ShieldTarget(targetname)
 	if not targetname then return end
@@ -109,9 +101,6 @@ function mod:OnCombatEnd()
 	if self.Options.RangeFrame then
 		DBM.RangeCheck:Hide()
 	end
---	if self.Options.InfoFrame then
---		DBM.InfoFrame:Hide()
---	end
 end
 
 function mod:SPELL_CAST_START(args)
@@ -160,15 +149,6 @@ function mod:SPELL_CAST_START(args)
 	end
 end
 
---[[
-function mod:SPELL_CAST_SUCCESS(args)
-	local spellId = args.spellId
-	if spellId == 362805 then
-
-	end
-end
---]]
-
 function mod:SPELL_AURA_APPLIED(args)
 	local spellId = args.spellId
 	if spellId == 369602 then
@@ -182,7 +162,6 @@ function mod:SPELL_AURA_APPLIED(args)
 		specWarnGTFO:Play("watchfeet")
 	end
 end
---mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED
 
 function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId, spellName)
 	if spellId == 377825 and destGUID == UnitGUID("player") and self:AntiSpam(3, 2) then

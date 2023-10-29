@@ -4,7 +4,6 @@ local L		= mod:GetLocalizedStrings()
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(191736)
 mod:SetEncounterID(2564)
---mod:SetUsedIcons(1, 2, 3)
 mod:SetHotfixNoticeRev(20221127000000)
 --mod:SetMinSyncRevision(20211203000000)
 --mod.respawnTime = 29
@@ -16,11 +15,7 @@ mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 377034 377004 376997",
 	"SPELL_CAST_SUCCESS 377004 376781",
 	"SPELL_AURA_APPLIED 376781 181089",
---	"SPELL_AURA_APPLIED_DOSE",
 	"SPELL_AURA_REMOVED 376781"
---	"SPELL_PERIODIC_DAMAGE",
---	"SPELL_PERIODIC_MISSED",
---	"UNIT_SPELLCAST_SUCCEEDED boss1"
 )
 
 --Gale force not in combat log
@@ -34,19 +29,15 @@ mod:RegisterEventsInCombat(
 local warnPlayBall								= mod:NewSpellAnnounce(377182, 2, nil, nil, nil, nil, nil, 2)
 
 local specWarnFirestorm							= mod:NewSpecialWarningDodge(376448, nil, nil, nil, 2, 2)
---local specWarnGaleForce						= mod:NewSpecialWarningSpell(376467, nil, nil, nil, 2, 2)
 local specWarnOverpoweringGust					= mod:NewSpecialWarningDodge(377034, nil, nil, nil, 2, 2)
 local yellOverpoweringGust						= mod:NewYell(377034)
 local specWarnDeafeningScreech					= mod:NewSpecialWarningMoveAwayCount(377004, nil, nil, nil, 2, 2)
 local specWarnSavagePeck						= mod:NewSpecialWarningDefensive(376997, nil, nil, nil, 1, 2)
---local specWarnGTFO							= mod:NewSpecialWarningGTFO(340324, nil, nil, nil, 1, 8)
 
 local timerFirestorm							= mod:NewBuffActiveTimer(12, 376448, nil, nil, nil, 1)
 local timerOverpoweringGustCD					= mod:NewCDTimer(28.2, 377034, nil, nil, nil, 3)
 local timerDeafeningScreechCD					= mod:NewCDCountTimer(22.7, 377004, nil, nil, nil, 3)
 local timerSavagePeckCD							= mod:NewCDTimer(13.6, 376997, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)--Spell queued intoo oblivion often
-
---local berserkTimer							= mod:NewBerserkTimer(600)
 
 mod:AddRangeFrameOption(4, 377004)
 
@@ -131,7 +122,6 @@ function mod:SPELL_AURA_APPLIED(args)
 		end
 	end
 end
---mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED
 
 function mod:SPELL_AURA_REMOVED(args)
 	local spellId = args.spellId
@@ -139,19 +129,3 @@ function mod:SPELL_AURA_REMOVED(args)
 		timerFirestorm:Stop()
 	end
 end
-
---[[
-function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId, spellName)
-	if spellId == 340324 and destGUID == UnitGUID("player") and self:AntiSpam(2, 4) then
-		specWarnGTFO:Show(spellName)
-		specWarnGTFO:Play("watchfeet")
-	end
-end
-mod.SPELL_PERIODIC_MISSED = mod.SPELL_PERIODIC_DAMAGE
-
-function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
-	if spellId == 353193 then
-
-	end
-end
---]]

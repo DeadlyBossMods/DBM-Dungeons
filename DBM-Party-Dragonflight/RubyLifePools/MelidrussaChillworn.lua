@@ -4,7 +4,6 @@ local L		= mod:GetLocalizedStrings()
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(188252)
 mod:SetEncounterID(2609)
---mod:SetUsedIcons(1, 2, 3)
 mod:SetHotfixNoticeRev(20221126000000)
 --mod:SetMinSyncRevision(20211203000000)
 --mod.respawnTime = 29
@@ -46,11 +45,7 @@ local timerChillstormCD							= mod:NewCDTimer(23, 372851, nil, nil, nil, 3)
 local timerHailbombsCD							= mod:NewCDTimer(23, 396044, nil, nil, nil, 3)
 local timerFrostOverloadCD						= mod:NewCDTimer(8.5, 373680, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--Cast after each whelps, which is health based
 
---local berserkTimer							= mod:NewBerserkTimer(600)
-
---mod:AddRangeFrameOption("8")
 mod:AddInfoFrameOption(372682, true)
---mod:AddSetIconOption("SetIconOnStaggeringBarrage", 361018, true, false, {1, 2, 3})
 
 local chillStacks = {}
 
@@ -66,9 +61,6 @@ end
 
 function mod:OnCombatEnd()
 	table.wipe(chillStacks)
---	if self.Options.RangeFrame then
---		DBM.RangeCheck:Hide()
---	end
 	if self.Options.InfoFrame then
 		DBM.InfoFrame:Hide()
 	end
