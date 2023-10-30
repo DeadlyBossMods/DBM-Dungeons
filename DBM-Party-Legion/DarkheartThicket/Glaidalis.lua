@@ -147,6 +147,7 @@ function mod:SPELL_SUMMON(args)
 end
 
 function mod:SPELL_AURA_APPLIED(args)
+	local spellId = args.spellId
 	if spellId == 198477 and args:IsPlayer() then
 		if self:AntiSpam(3, 2) then
 			specWarnFixate:Show()
