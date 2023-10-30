@@ -16,11 +16,7 @@ mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 374364 374567 386660 374789",
 	"SPELL_CAST_SUCCESS 374720",
 	"SPELL_AURA_APPLIED 374567",
---	"SPELL_AURA_APPLIED_DOSE",
 	"SPELL_AURA_REMOVED 374567"
---	"SPELL_PERIODIC_DAMAGE",
---	"SPELL_PERIODIC_MISSED",
---	"UNIT_SPELLCAST_SUCCEEDED boss1"
 )
 
 --TODO, verify number of players affected by explosive eruption
@@ -40,7 +36,6 @@ local specWarnConsumingStomp					= mod:NewSpecialWarningSpell(374720, nil, nil, 
 local specWarnEruptingFissure					= mod:NewSpecialWarningDodge(386660, nil, nil, nil, 2, 2)
 local yellEruptingFissure						= mod:NewYell(386660)
 local specWarnInfusedStrike						= mod:NewSpecialWarningDefensive(374789, nil, nil, nil, 1, 2)
---local specWarnGTFO							= mod:NewSpecialWarningGTFO(340324, nil, nil, nil, 1, 8)
 
 local timerLeylineSproutsCD						= mod:NewCDTimer(48.1, 374364, nil, nil, nil, 3)
 local timerExplosiveEruptionCD					= mod:NewCDTimer(48.5, 374567, nil, nil, nil, 3)
@@ -48,10 +43,6 @@ local timerConsumingStompCD						= mod:NewCDTimer(48.5, 374720, nil, nil, nil, 2
 local timerEruptingFissureCD					= mod:NewCDTimer(48.5, 386660, nil, nil, nil, 3)
 local timerInfusedStrikeCD						= mod:NewCDTimer(48.5, 374789, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 
---local berserkTimer							= mod:NewBerserkTimer(600)
-
---mod:AddRangeFrameOption("8")
---mod:AddInfoFrameOption(361651, true)
 mod:AddSetIconOption("SetIconOnExplosiveEruption", 374567, true, false, {1, 2, 3})
 
 mod.vb.DebuffIcon = 1
@@ -70,15 +61,6 @@ function mod:OnCombatStart(delay)
 	timerExplosiveEruptionCD:Start(30.7-delay)
 	timerConsumingStompCD:Start(45.3-delay)
 end
-
---function mod:OnCombatEnd()
---	if self.Options.RangeFrame then
---		DBM.RangeCheck:Hide()
---	end
---	if self.Options.InfoFrame then
---		DBM.InfoFrame:Hide()
---	end
---end
 
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
@@ -129,7 +111,6 @@ function mod:SPELL_AURA_APPLIED(args)
 		self.vb.DebuffIcon = self.vb.DebuffIcon + 1
 	end
 end
---mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED
 
 function mod:SPELL_AURA_REMOVED(args)
 	local spellId = args.spellId
@@ -139,19 +120,3 @@ function mod:SPELL_AURA_REMOVED(args)
 		end
 	end
 end
-
---[[
-function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId, spellName)
-	if spellId == 340324 and destGUID == UnitGUID("player") and self:AntiSpam(2, 4) then
-		specWarnGTFO:Show(spellName)
-		specWarnGTFO:Play("watchfeet")
-	end
-end
-mod.SPELL_PERIODIC_MISSED = mod.SPELL_PERIODIC_DAMAGE
-
-function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
-	if spellId == 353193 then
-
-	end
-end
---]]

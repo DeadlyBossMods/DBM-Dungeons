@@ -4,7 +4,6 @@ local L		= mod:GetLocalizedStrings()
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(189719)
 mod:SetEncounterID(2615)
---mod:SetUsedIcons(1, 2, 3)
 mod:SetHotfixNoticeRev(20230507000000)
 --mod:SetMinSyncRevision(20211203000000)
 --mod.respawnTime = 29
@@ -15,11 +14,9 @@ mod:RegisterCombat("combat")
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 389179 384014 384524 389446 384351",
 	"SPELL_AURA_APPLIED 389179 383840 389443",
---	"SPELL_AURA_APPLIED_DOSE",
 	"SPELL_AURA_REMOVED 389179 383840",
 	"SPELL_PERIODIC_DAMAGE 389181",
 	"SPELL_PERIODIC_MISSED 389181"
---	"UNIT_SPELLCAST_SUCCEEDED boss1"
 )
 
 --[[
@@ -51,10 +48,6 @@ local warnAblativeBarrierOver					= mod:NewEndAnnounce(383840, 1)
 local warnNullifyingPulse						= mod:NewCastAnnounce(389446, 4)
 local warnPurifyingBlast						= mod:NewTargetNoFilterAnnounce(389443, 3, nil, false)
 
---mod:AddRangeFrameOption("8")
---mod:AddInfoFrameOption(361651, true)
---mod:AddSetIconOption("SetIconOnStaggeringBarrage", 361018, true, false, {1, 2, 3})
-
 mod.vb.surgeCount = 0
 
 function mod:OnCombatStart(delay)
@@ -65,15 +58,6 @@ function mod:OnCombatStart(delay)
 	timerPowerOverloadCD:Start(23.4-delay)--20.6 (old?)
 	timerSparkVolleyCD:Start(29.1-delay)--37.4 (old?)
 end
-
---function mod:OnCombatEnd()
---	if self.Options.RangeFrame then
---		DBM.RangeCheck:Hide()
---	end
---	if self.Options.InfoFrame then
---		DBM.InfoFrame:Hide()
---	end
---end
 
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
@@ -122,7 +106,6 @@ function mod:SPELL_AURA_APPLIED(args)
 		warnPurifyingBlast:CombinedShow(1, args.destname)
 	end
 end
---mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED
 
 function mod:SPELL_AURA_REMOVED(args)
 	local spellId = args.spellId
@@ -147,11 +130,3 @@ function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId, spell
 	end
 end
 mod.SPELL_PERIODIC_MISSED = mod.SPELL_PERIODIC_DAMAGE
-
---[[
-function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
-	if spellId == 353193 then
-
-	end
-end
---]]

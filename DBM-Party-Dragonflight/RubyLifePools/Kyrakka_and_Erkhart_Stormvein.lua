@@ -4,7 +4,6 @@ local L		= mod:GetLocalizedStrings()
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(190484, 190485)
 mod:SetEncounterID(2623)
---mod:SetUsedIcons(1, 2, 3)
 mod:SetBossHPInfoToHighest()
 mod:SetHotfixNoticeRev(20230109000000)
 --mod:SetMinSyncRevision(20211203000000)
@@ -16,12 +15,7 @@ mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 381605 381602 381525 381517 381512 385558 381516",
 	"SPELL_CAST_SUCCESS 381517",
 	"SPELL_AURA_APPLIED 381515 181089 381862",
---	"SPELL_AURA_APPLIED_DOSE",
---	"SPELL_AURA_REMOVED"
---	"SPELL_PERIODIC_DAMAGE",
---	"SPELL_PERIODIC_MISSED",
 	"UNIT_DIED"
---	"UNIT_SPELLCAST_SUCCEEDED boss1"
 )
 
 --[[
@@ -38,8 +32,6 @@ local warnInfernoCore							= mod:NewYouAnnounce(381862, 4)
 local yellFlamespit								= mod:NewYell(381605)
 local specWarnInfernoCore						= mod:NewSpecialWarningMoveAway(381862, nil, nil, nil, 1, 2)
 local specWarnRoaringFirebreath					= mod:NewSpecialWarningDodge(381525, nil, nil, nil, 2, 2)
---local yellRoaringFirebreath					= mod:NewYell(381525)
---local specWarnGTFO							= mod:NewSpecialWarningGTFO(340324, nil, nil, nil, 1, 8)
 
 local timerFlamespitCD							= mod:NewCDTimer(15.7, 381605, nil, nil, nil, 3)
 local timerRoaringFirebreathCD					= mod:NewCDTimer(18, 381525, nil, nil, nil, 3)
@@ -56,9 +48,7 @@ local timerWindsofChangeCD						= mod:NewCDCountTimer(19.3, 381517, 227878, nil,
 local timerStormslamCD							= mod:NewCDTimer(17, 381512, nil, "Tank|RemoveMagic", nil, 5, nil, DBM_COMMON_L.TANK_ICON..DBM_COMMON_L.MAGIC_ICON)
 local timerCloudburstCD							= mod:NewCDTimer(19.3, 385558, nil, nil, nil, 2)--Used for both mythic and non mythic versions of spell
 
---mod:AddRangeFrameOption("8")
 mod:AddInfoFrameOption(381862, false)--Infernocore
---mod:AddSetIconOption("SetIconOnStaggeringBarrage", 361018, true, false, {1, 2, 3})
 
 mod.vb.windDirection = 0
 
@@ -107,9 +97,6 @@ function mod:OnCombatStart(delay)
 end
 
 function mod:OnCombatEnd()
---	if self.Options.RangeFrame then
---		DBM.RangeCheck:Hide()
---	end
 	if self.Options.InfoFrame then
 		DBM.InfoFrame:Hide()
 	end
@@ -184,16 +171,6 @@ function mod:SPELL_AURA_APPLIED(args)
 		end
 	end
 end
---mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED
-
---[[
-function mod:SPELL_AURA_REMOVED(args)
-	local spellId = args.spellId
-	if spellId == 361966 then
-
-	end
-end
---]]
 
 function mod:UNIT_DIED(args)
 	local cid = self:GetCIDFromGUID(args.destGUID)
@@ -206,19 +183,3 @@ function mod:UNIT_DIED(args)
 		timerCloudburstCD:Stop(args.destGUID)
 	end
 end
-
---[[
-function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId, spellName)
-	if spellId == 340324 and destGUID == UnitGUID("player") and self:AntiSpam(2, 4) then
-		specWarnGTFO:Show(spellName)
-		specWarnGTFO:Play("watchfeet")
-	end
-end
-mod.SPELL_PERIODIC_MISSED = mod.SPELL_PERIODIC_DAMAGE
-
-function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
-	if spellId == 353193 then
-
-	end
-end
---]]

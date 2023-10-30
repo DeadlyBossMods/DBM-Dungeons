@@ -4,7 +4,6 @@ local L		= mod:GetLocalizedStrings()
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(181861)
 mod:SetEncounterID(2610)
---mod:SetUsedIcons(1, 2, 3)
 mod:SetHotfixNoticeRev(20230507000000)
 --mod:SetMinSyncRevision(20211203000000)
 --mod.respawnTime = 29
@@ -15,12 +14,8 @@ mod:RegisterCombat("combat")
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 374365 375068 375251",
 	"SPELL_CAST_SUCCESS 375436",
---	"SPELL_AURA_APPLIED",
---	"SPELL_AURA_APPLIED_DOSE",
---	"SPELL_AURA_REMOVED",
 	"SPELL_PERIODIC_DAMAGE 375204",
 	"SPELL_PERIODIC_MISSED 375204"
---	"UNIT_SPELLCAST_SUCCEEDED boss1"
 )
 
 --[[
@@ -29,7 +24,7 @@ mod:RegisterEventsInCombat(
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
 --]]
 --NOTE, target scan for lava spray is veru slow, so only used for yell and target announce, everyone will get shockwave warning right away.
---NOTE: Magma Lob is cast by EACH tentacle, it's downgraded to normal warning by defaulta and timer disabled because it gets spammy later fight
+--NOTE: Magma Lob is cast by EACH tentacle, it's downgraded to normal warning by default and timer disabled because it gets spammy later fight
 
 local warnMagmaLob								= mod:NewSpellAnnounce(375068, 3)
 local warnVolatileMutation						= mod:NewCountAnnounce(374365, 3)
@@ -47,12 +42,6 @@ local timerVolatileMutationCD					= mod:NewCDCountTimer(27.9, 374365, nil, nil, 
 --local timerMagmaLobCD							= mod:NewCDTimer(6.5, 375068, nil, nil, nil, 3)--8 unless delayed by other casts
 local timerLavaSrayCD							= mod:NewCDTimer(19.4, 375251, nil, nil, nil, 3)
 local timerBlazingChargeCD						= mod:NewCDTimer(23, 375436, nil, nil, nil, 3)
-
---local berserkTimer							= mod:NewBerserkTimer(600)
-
---mod:AddRangeFrameOption("8")
---mod:AddInfoFrameOption(361651, true)
---mod:AddSetIconOption("SetIconOnStaggeringBarrage", 361018, true, false, {1, 2, 3})
 
 mod.vb.mutationCount = 0
 
@@ -72,15 +61,6 @@ function mod:OnCombatStart(delay)
 	timerVolatileMutationCD:Start(25-delay, 1)
 end
 
---function mod:OnCombatEnd()
---	if self.Options.RangeFrame then
---		DBM.RangeCheck:Hide()
---	end
---	if self.Options.InfoFrame then
---		DBM.InfoFrame:Hide()
---	end
---end
-
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
 	if spellId == 374365 then
@@ -96,7 +76,8 @@ function mod:SPELL_CAST_START(args)
 		end
 --		timerMagmaLobCD:Start()
 	elseif spellId == 375251 then
-		self:ScheduleMethod(0.2, "BossTargetScanner", args.sourceGUID, "LavaSprayTarget", 0.2, 12, true)
+		self:BossUnitTargetScanner("boss1", "LavaSprayTarget", 2.4, true)--Allow tank true
+--		self:ScheduleMethod(0.2, "BossTargetScanner", args.sourceGUID, "LavaSprayTarget", 0.2, 12, true)
 		specWarnLavaSpray:Show()
 		specWarnLavaSpray:Play("shockwave")
 		timerLavaSrayCD:Start()
@@ -117,23 +98,6 @@ function mod:SPELL_CAST_SUCCESS(args)
 	end
 end
 
---[[
-function mod:SPELL_AURA_APPLIED(args)
-	local spellId = args.spellId
-	if spellId == 361966 then
-
-	end
-end
---mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED
-
-function mod:SPELL_AURA_REMOVED(args)
-	local spellId = args.spellId
-	if spellId == 361966 then
-
-	end
-end
---]]
-
 function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId, spellName)
 	if spellId == 375204 and destGUID == UnitGUID("player") and self:AntiSpam(3, 2) then
 		specWarnGTFO:Show(spellName)
@@ -147,11 +111,3 @@ function mod:OnSync(msg)
 		timerRP:Start(9.9)
 	end
 end
-
---[[
-function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
-	if spellId == 353193 then
-
-	end
-end
---]]

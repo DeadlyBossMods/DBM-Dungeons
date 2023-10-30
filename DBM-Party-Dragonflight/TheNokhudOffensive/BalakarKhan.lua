@@ -4,7 +4,6 @@ local L		= mod:GetLocalizedStrings()
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(186151)
 mod:SetEncounterID(2580)
---mod:SetUsedIcons(1, 2, 3)
 mod:SetHotfixNoticeRev(20221214000000)
 --mod:SetMinSyncRevision(20211203000000)
 --mod.respawnTime = 29
@@ -16,12 +15,10 @@ mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 375943 375937 375929 376723 376725 376892 376827 376829 376727",
 	"SPELL_CAST_SUCCESS 376634 376730 376864",
 	"SPELL_AURA_APPLIED 376634 376864 376827",
---	"SPELL_AURA_APPLIED_DOSE",
 	"SPELL_AURA_REMOVED 376634 376864 376727",
 	"SPELL_PERIODIC_DAMAGE 376899",
 	"SPELL_PERIODIC_MISSED 376899",
 	"UNIT_DIED"
---	"UNIT_SPELLCAST_SUCCEEDED boss1"
 )
 
 --TODO, timers with longer logs to verify upheavel and iron spear P1 timers
@@ -71,12 +68,6 @@ local timerStaticSpearCD						= mod:NewCDTimer(38.3, 376864, nil, nil, nil, 3)
 local timerCracklingUpheavalCD					= mod:NewCDTimer(38.3, 376892, nil, nil, nil, 3)
 local timerConductiveStrikeCD					= mod:NewCDCountTimer(17, 376827, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)--CD used for both Condutive and Thunder
 
---local berserkTimer							= mod:NewBerserkTimer(600)
-
---mod:AddRangeFrameOption("8")
---mod:AddInfoFrameOption(361651, true)
---mod:AddSetIconOption("SetIconOnStaggeringBarrage", 361018, true, false, {1, 2, 3})
-
 mod.vb.addsLeft = 0
 mod.vb.comboCount = 0
 
@@ -88,15 +79,6 @@ function mod:OnCombatStart(delay)
 	timerIronSpearCD:Start(18-delay)
 	timerUpheavalCD:Start(37-delay)
 end
-
---function mod:OnCombatEnd()
---	if self.Options.RangeFrame then
---		DBM.RangeCheck:Hide()
---	end
---	if self.Options.InfoFrame then
---		DBM.InfoFrame:Hide()
---	end
---end
 
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
@@ -182,7 +164,6 @@ function mod:SPELL_AURA_APPLIED(args)
 		specWarnConductiveStrikeDispel:Play("helpdispel")
 	end
 end
---mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED
 
 function mod:SPELL_AURA_REMOVED(args)
 	local spellId = args.spellId
@@ -215,11 +196,3 @@ function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId, spell
 	end
 end
 mod.SPELL_PERIODIC_MISSED = mod.SPELL_PERIODIC_DAMAGE
-
---[[
-function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
-	if spellId == 353193 then
-
-	end
-end
---]]

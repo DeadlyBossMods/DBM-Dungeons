@@ -4,7 +4,6 @@ local L		= mod:GetLocalizedStrings()
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(186339, 186338)
 mod:SetEncounterID(2581)
---mod:SetUsedIcons(1, 2, 3)
 mod:SetBossHPInfoToHighest()
 mod:SetHotfixNoticeRev(20221127000000)
 mod:SetMinSyncRevision(20221105000000)
@@ -14,14 +13,9 @@ mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 382670 386063 385339 386547 385434 382836",
---	"SPELL_CAST_SUCCESS",
 	"SPELL_AURA_APPLIED 384808 392198",
---	"SPELL_AURA_APPLIED_DOSE",
 	"SPELL_AURA_REMOVED 392198",
---	"SPELL_PERIODIC_DAMAGE",
---	"SPELL_PERIODIC_MISSED",
 	"UNIT_DIED"
---	"UNIT_SPELLCAST_SUCCEEDED boss1"
 )
 
 --[[
@@ -56,11 +50,6 @@ local timerEarthSplitterCD						= mod:NewCDCountTimer(57.4, 385339, nil, false, 
 local timerFrightfulRoarCD						= mod:NewCDCountTimer(30.4, 386063, nil, nil, nil, 2, nil, DBM_COMMON_L.MAGIC_ICON)--New timer unknown
 local timerBrutalizeCD							= mod:NewCDCountTimer(18.2, 382836, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)--Delayed a lot. Doesn't alternate or sequence leanly, it just spell queues in randomness
 
---local berserkTimer							= mod:NewBerserkTimer(600)
-
---mod:AddRangeFrameOption("8")
---mod:AddInfoFrameOption(361651, true)
---mod:AddSetIconOption("SetIconOnStaggeringBarrage", 361018, true, false, {1, 2, 3})
 mod:AddNamePlateOption("NPAuraOnAncestralBond", 392198)
 
 --Gale Arrow: 21.5, 57.4, 57.5
@@ -77,20 +66,6 @@ mod.vb.splitterCount = 0
 mod.vb.leapCount = 0
 mod.vb.roarCount = 0
 mod.vb.brutalizeCount = 0
-
---[[
---Use for spirit leap if it's on players and scanable
-function mod:ArrowTarget(targetname)
-	if not targetname then return end
-	if targetname == UnitName("player") then
-		specWarnHeavyArrow:Show()
-		specWarnHeavyArrow:Play("targetyou")
-		yellHeavyArrow:Yell()
-	else
-		warnHeavyArrow:Show(targetname)
-	end
-end
---]]
 
 local function scanBosses(self, delay)
 	for i = 1, 2 do
@@ -127,12 +102,6 @@ function mod:OnCombatStart(delay)
 end
 
 function mod:OnCombatEnd()
---	if self.Options.RangeFrame then
---		DBM.RangeCheck:Hide()
---	end
---	if self.Options.InfoFrame then
---		DBM.InfoFrame:Hide()
---	end
 	if self.Options.NPAuraOnAncestralBond then
 		DBM.Nameplate:Hide(true, nil, nil, nil, true, true)
 	end
@@ -175,7 +144,6 @@ function mod:SPELL_CAST_START(args)
 		timerRepelCD:Start(nil, self.vb.repelCount+1, args.sourceGUID)
 	elseif spellId == 385434 then
 		self.vb.leapCount = self.vb.leapCount + 1
---		self:ScheduleMethod(0.2, "BossTargetScanner", args.sourceGUID, "ArrowTarget", 0.1, 8, true)
 		warnSpiritLeap:Show()
 		local timer
 		--Spirit Leap: 6.0, 24.0, 13.5, 19.9, 24.0, 13.5, 20.0, 23.9, 13.5
@@ -205,15 +173,6 @@ function mod:SPELL_CAST_START(args)
 		timerBrutalizeCD:Start(timer, self.vb.brutalizeCount+1, args.sourceGUID)
 	end
 end
-
---[[
-function mod:SPELL_CAST_SUCCESS(args)
-	local spellId = args.spellId
-	if spellId == 362805 then
-
-	end
-end
---]]
 
 function mod:SPELL_AURA_APPLIED(args)
 	local spellId = args.spellId
@@ -260,19 +219,3 @@ function mod:OnSync(msg)
 		timerRP:Start(26.7)
 	end
 end
-
---[[
-function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId, spellName)
-	if spellId == 340324 and destGUID == UnitGUID("player") and self:AntiSpam(2, 4) then
-		specWarnGTFO:Show(spellName)
-		specWarnGTFO:Play("watchfeet")
-	end
-end
-mod.SPELL_PERIODIC_MISSED = mod.SPELL_PERIODIC_DAMAGE
-
-function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
-	if spellId == 353193 then
-
-	end
-end
---]]

@@ -4,7 +4,6 @@ local L		= mod:GetLocalizedStrings()
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(184422)
 mod:SetEncounterID(2558)
---mod:SetUsedIcons(1, 2, 3)
 mod:SetHotfixNoticeRev(20230810000000)
 --mod:SetMinSyncRevision(20211203000000)
 --mod.respawnTime = 29
@@ -16,12 +15,7 @@ mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 368990 369110 369198 369061",
 	"SPELL_CAST_SUCCESS 369049 369033",
 	"SPELL_AURA_APPLIED 369110 369198 369043",
---	"SPELL_AURA_APPLIED_DOSE",
 	"SPELL_AURA_REMOVED 369110 369198 368990 369043"
---	"SPELL_PERIODIC_DAMAGE",
---	"SPELL_PERIODIC_MISSED",
---	"UNIT_DIED"
---	"UNIT_SPELLCAST_SUCCEEDED boss1"
 )
 
 --TODO, detect purging flames ending so timer for next one can start (assuming that is what it's based on)
@@ -45,17 +39,10 @@ local specWarnUnstableEmbers					= mod:NewSpecialWarningMoveAway(369110, nil, ni
 local yellUnstableEmbers						= mod:NewYell(369110)
 local yellUnstableEmbersFades					= mod:NewShortFadesYell(369110)
 local specWarnSearingClap						= mod:NewSpecialWarningDefensive(369061, nil, nil, nil, 1, 2)
---local specWarnGTFO							= mod:NewSpecialWarningGTFO(340324, nil, nil, nil, 1, 8)
 
 local timerPurgingFlamesCD						= mod:NewCDCountTimer(35, 368990, nil, nil, nil, 6)--Maybe swap for activate keepers instead
 local timerUnstableEmbersCD						= mod:NewCDCountTimer(12, 369110, nil, nil, nil, 3)
 local timerSearingClapCD						= mod:NewCDCountTimer(23, 369061, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
-
---local berserkTimer							= mod:NewBerserkTimer(600)
-
---mod:AddRangeFrameOption("8")
---mod:AddInfoFrameOption(361651, true)
---mod:AddSetIconOption("SetIconOnStaggeringBarrage", 361018, true, false, {1, 2, 3})
 
 mod.vb.addsRemaining = 0
 mod.vb.embersCount = 0
@@ -68,15 +55,6 @@ function mod:OnCombatStart(delay)
 	self.vb.purgingCount = 0
 	self.vb.tankCount = 0
 end
-
---function mod:OnCombatEnd()
---	if self.Options.RangeFrame then
---		DBM.RangeCheck:Hide()
---	end
---	if self.Options.InfoFrame then
---		DBM.InfoFrame:Hide()
---	end
---end
 
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
@@ -128,7 +106,6 @@ function mod:SPELL_AURA_APPLIED(args)
 		self.vb.addsRemaining = self.vb.addsRemaining + 1
 	end
 end
---mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED
 
 function mod:SPELL_AURA_REMOVED(args)
 	local spellId = args.spellId
@@ -146,19 +123,3 @@ function mod:SPELL_AURA_REMOVED(args)
 		end
 	end
 end
-
---[[
-function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId, spellName)
-	if spellId == 340324 and destGUID == UnitGUID("player") and self:AntiSpam(2, 2) then
-		specWarnGTFO:Show(spellName)
-		specWarnGTFO:Play("watchfeet")
-	end
-end
-mod.SPELL_PERIODIC_MISSED = mod.SPELL_PERIODIC_DAMAGE
-
-function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
-	if spellId == 353193 then
-
-	end
-end
---]]

@@ -4,7 +4,6 @@ local L		= mod:GetLocalizedStrings()
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(194181)
 mod:SetEncounterID(2562)
---mod:SetUsedIcons(1, 2, 3)
 mod:SetHotfixNoticeRev(20221015000000)
 mod:SetMinSyncRevision(20221015000000)
 --mod.respawnTime = 29
@@ -16,12 +15,10 @@ mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 388537 386173 385958",
 	"SPELL_CAST_SUCCESS 387691 388537",
 	"SPELL_AURA_APPLIED 386181",
---	"SPELL_AURA_APPLIED_DOSE",
 	"SPELL_AURA_REMOVED 386181",
 	"SPELL_PERIODIC_DAMAGE 386201",
 	"SPELL_PERIODIC_MISSED 386201",
 	"SPELL_ENERGIZE 386088"
---	"UNIT_SPELLCAST_SUCCEEDED boss1"
 )
 mod:RegisterEvents(
 	"CHAT_MSG_MONSTER_SAY"
@@ -52,8 +49,6 @@ local timerArcaneFissureCD						= mod:NewCDCountTimer(40.7, 388537, nil, nil, ni
 local timerManaBombsCD							= mod:NewCDCountTimer(19.4, 386173, nil, nil, nil, 3)
 local timerArcaneExpulsionCD					= mod:NewCDTimer(19.4, 385958, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 
---local berserkTimer							= mod:NewBerserkTimer(600)
-
 mod:AddInfoFrameOption(391977, true)
 
 --mod:GroupSpells(386173, 386181)--Mana Bombs with Mana Bomb
@@ -77,9 +72,6 @@ function mod:OnCombatStart(delay)
 end
 
 function mod:OnCombatEnd()
---	if self.Options.RangeFrame then
---		DBM.RangeCheck:Hide()
---	end
 	if self.Options.InfoFrame then
 		DBM.InfoFrame:Hide()
 	end
@@ -145,7 +137,6 @@ function mod:SPELL_AURA_APPLIED(args)
 		end
 	end
 end
---mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED
 
 function mod:SPELL_AURA_REMOVED(args)
 	local spellId = args.spellId
@@ -195,11 +186,3 @@ function mod:OnSync(msg, targetname)
 		timerRP:Start()
 	end
 end
-
---[[
-function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
-	if spellId == 353193 then
-
-	end
-end
---]]

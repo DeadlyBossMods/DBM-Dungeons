@@ -4,7 +4,6 @@ local L		= mod:GetLocalizedStrings()
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(189901)
 mod:SetEncounterID(2611)
---mod:SetUsedIcons(1, 2, 3)
 mod:SetHotfixNoticeRev(20230508000000)
 --mod:SetMinSyncRevision(20211203000000)
 --mod.respawnTime = 29
@@ -16,11 +15,9 @@ mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 376780 377017 377204 377473",
 	"SPELL_CAST_SUCCESS 377017",
 	"SPELL_AURA_APPLIED 376780 377018 377022 377522 377014",
---	"SPELL_AURA_APPLIED_DOSE",
 	"SPELL_AURA_REMOVED 376780",
 	"SPELL_PERIODIC_DAMAGE 377542",
 	"SPELL_PERIODIC_MISSED 377542"
---	"UNIT_SPELLCAST_SUCCEEDED boss1"
 )
 
 --NOTES
@@ -51,11 +48,7 @@ local timerMoltenGoldCD							= mod:NewCDTimer(26.7, 377018, nil, nil, nil, 3)
 local timerDragonsKilnCD						= mod:NewCDTimer(21, 377204, nil, nil, nil, 3)
 local timerBurningEmberCD						= mod:NewCDTimer(28.2, 377477, nil, nil, nil, 1)--Timer extrapolated by reversing spell queues and pauses then vetting it multiple times as accurate within a less than ~1 deviation
 
---local berserkTimer							= mod:NewBerserkTimer(600)
-
---mod:AddRangeFrameOption("8")
 mod:AddInfoFrameOption(376780, true)
---mod:AddSetIconOption("SetIconOnStaggeringBarrage", 361018, true, false, {1, 2, 3})
 
 mod.vb.shieldCount = 0
 local goldStarted = false
@@ -92,9 +85,6 @@ function mod:OnCombatStart(delay)
 end
 
 function mod:OnCombatEnd()
---	if self.Options.RangeFrame then
---		DBM.RangeCheck:Hide()
---	end
 	if self.Options.InfoFrame then
 		DBM.InfoFrame:Hide()
 	end
@@ -166,7 +156,6 @@ function mod:SPELL_AURA_APPLIED(args)
 		self:Schedule(1, pointlessDelay, self)
 	end
 end
---mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED
 
 function mod:SPELL_AURA_REMOVED(args)
 	local spellId = args.spellId
@@ -189,11 +178,3 @@ function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId, spell
 	end
 end
 mod.SPELL_PERIODIC_MISSED = mod.SPELL_PERIODIC_DAMAGE
-
---[[
-function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
-	if spellId == 353193 then
-
-	end
-end
---]]

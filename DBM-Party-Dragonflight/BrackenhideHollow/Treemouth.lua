@@ -14,14 +14,11 @@ mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 376811 381770 377559 376934",
---	"SPELL_CAST_SUCCESS 377859",
 	"SPELL_SUMMON 376797",
 	"SPELL_AURA_APPLIED 377222 378022",--377864
---	"SPELL_AURA_APPLIED_DOSE 377864",
 	"SPELL_AURA_REMOVED 377222 378022",
 	"SPELL_PERIODIC_DAMAGE 378054",
 	"SPELL_PERIODIC_MISSED 378054"
---	"UNIT_SPELLCAST_SUCCEEDED boss1"
 )
 
 --TODO, proper phasing and timer updates
@@ -50,9 +47,6 @@ local timerDecaySprayCD							= mod:NewCDTimer(42.4, 376811, nil, nil, nil, 1, n
 --local timerInfectiousSpitCD					= mod:NewCDTimer(20.1, 377864, nil, nil, nil, 3, nil, DBM_COMMON_L.DISEASE_ICON)
 local timerVineWhipCD							= mod:NewCDTimer(16.9, 377559, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 
---local berserkTimer							= mod:NewBerserkTimer(600)
-
---mod:AddRangeFrameOption("8")
 mod:AddInfoFrameOption(378022, true)
 mod:AddSetIconOption("SetIconOnDecaySpray", 376811, true, 5, {8, 7, 6, 5})
 
@@ -68,9 +62,6 @@ function mod:OnCombatStart(delay)
 end
 
 function mod:OnCombatEnd()
---	if self.Options.RangeFrame then
---		DBM.RangeCheck:Hide()
---	end
 	if self.Options.InfoFrame then
 		DBM.InfoFrame:Hide()
 	end
@@ -105,15 +96,6 @@ function mod:SPELL_CAST_START(args)
 	end
 end
 
---[[
-function mod:SPELL_CAST_SUCCESS(args)
-	local spellId = args.spellId
-	if spellId == 377859 then
---		timerInfectiousSpitCD:Start()
-	end
-end
---]]
-
 function mod:SPELL_SUMMON(args)
 	local spellId = args.spellId
 	if spellId == 376797 then
@@ -141,7 +123,6 @@ function mod:SPELL_AURA_APPLIED(args)
 --		end
 	end
 end
-mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED
 
 function mod:SPELL_AURA_REMOVED(args)
 	local spellId = args.spellId
@@ -161,11 +142,3 @@ function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId, spell
 	end
 end
 mod.SPELL_PERIODIC_MISSED = mod.SPELL_PERIODIC_DAMAGE
-
---[[
-function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
-	if spellId == 353193 then
-
-	end
-end
---]]

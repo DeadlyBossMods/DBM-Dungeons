@@ -16,12 +16,8 @@ mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 372719 372600 372623 372701",
 	"SPELL_CAST_SUCCESS 372718",
 	"SPELL_AURA_APPLIED 382071 372718",
---	"SPELL_AURA_APPLIED_DOSE",
 	"SPELL_AURA_REMOVED 382071 372600",
---	"SPELL_PERIODIC_DAMAGE",
---	"SPELL_PERIODIC_MISSED",
 	"UNIT_POWER_UPDATE"
---	"UNIT_SPELLCAST_SUCCEEDED boss1"
 )
 
 --TODO, review current solution is good enough. there are more elaborate ones but they may not be needed for most part except for niche cases.
@@ -41,17 +37,12 @@ local specWarnResonatingOrb						= mod:NewSpecialWarningYouPos(382071, nil, nil,
 local yellResonatingOrb							= mod:NewShortPosYell(382071)
 local yellResonatingOrbFades					= mod:NewIconFadesYell(382071)
 local specWarnCrushingStomp						= mod:NewSpecialWarningCount(372701, nil, nil, nil, 2, 2)
---local specWarnGTFO							= mod:NewSpecialWarningGTFO(340324, nil, nil, nil, 1, 8)
 
 local timerTitanicEmpowermentCD					= mod:NewCDTimer(35, 372719, nil, nil, nil, 2, nil, DBM_COMMON_L.DEADLY_ICON)
 local timerResonatingOrbCD						= mod:NewCDTimer(25.6, 382071, nil, nil, nil, 3, nil, nil, true)--25-30ish
 local timerCrushingStompCD						= mod:NewCDCountTimer(12.1, 372701, nil, nil, nil, 2, nil, nil, true)
 local timerEarthenShardsCD						= mod:NewCDTimer(6, 372718, nil, nil, nil, 3, nil, DBM_COMMON_L.BLEED_ICON, true)
 
---local berserkTimer							= mod:NewBerserkTimer(600)
-
---mod:AddRangeFrameOption("8")
---mod:AddInfoFrameOption(361651, true)
 mod:AddSetIconOption("SetIconOnOrb", 382071, true, false, {1, 2, 3})
 
 mod.vb.orbIcon = 1
@@ -66,15 +57,6 @@ function mod:OnCombatStart(delay)
 		timerTitanicEmpowermentCD:Start(25.4-delay)
 	end
 end
-
---function mod:OnCombatEnd()
---	if self.Options.RangeFrame then
---		DBM.RangeCheck:Hide()
---	end
---	if self.Options.InfoFrame then
---		DBM.InfoFrame:Hide()
---	end
---end
 
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
@@ -123,7 +105,6 @@ function mod:SPELL_AURA_APPLIED(args)
 		warnEarthenShards:CombinedShow(0.3, args.destName)--TODO: Don't combo if it's never more than 1
 	end
 end
---mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED
 
 function mod:SPELL_AURA_REMOVED(args)
 	local spellId = args.spellId
@@ -145,19 +126,3 @@ function mod:UNIT_POWER_UPDATE()
 		timerTitanicEmpowermentCD:Stop()
 	end
 end
-
---[[
-function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId, spellName)
-	if spellId == 340324 and destGUID == UnitGUID("player") and self:AntiSpam(2, 4) then
-		specWarnGTFO:Show(spellName)
-		specWarnGTFO:Play("watchfeet")
-	end
-end
-mod.SPELL_PERIODIC_MISSED = mod.SPELL_PERIODIC_DAMAGE
-
-function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
-	if spellId == 353193 then
-
-	end
-end
---]]
