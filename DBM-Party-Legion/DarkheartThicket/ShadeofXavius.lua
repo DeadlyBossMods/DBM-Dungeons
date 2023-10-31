@@ -110,7 +110,7 @@ function mod:SPELL_CAST_START(args)
 	elseif spellId == 200050 then
 		warnApocNightmare:Show()
 		updateAllTimers(self, 6)
-	elseif spellId == 200289--Slightly faster in CLEU than 200359
+	elseif spellId == 200289 then--Slightly faster in CLEU than 200359
 		self.vb.paranoiaCount = self.vb.paranoiaCount + 1
 		--27.8, 34, 24.4, 32.8
 		--27.5, 27.9, 32.7, 27.9, 32.7
