@@ -103,7 +103,7 @@ function mod:SPELL_AURA_REMOVED(args)
 		timerExtinctionBlastCD:Start(41.8, self.vb.surgeCount+1)
 		timerStonecrackerBarrageCD:Start(49.4, self.vb.surgeCount+1)
 		timerEarthSurgeCD:Start(68.5, self.vb.surgeCount+1)
-	elseif spellid == 414177 then
+	elseif spellId == 414177 then
 		timerCataclysmicObliteration:Stop()
 	end
 end
