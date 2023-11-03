@@ -5,8 +5,8 @@ mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(198998)
 mod:SetEncounterID(2670)
 mod:SetUsedIcons(1, 2)
-mod:SetHotfixNoticeRev(20230711000000)
-mod:SetMinSyncRevision(20230716000000)--Future dated since i accidentally had an earlier version of mod future dated
+mod:SetHotfixNoticeRev(20231102000000)
+mod:SetMinSyncRevision(20231102000000)
 --mod.respawnTime = 29
 mod.sendMainBossGUID = true
 
@@ -16,11 +16,9 @@ mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 401248 401482 400641 400649",
 	"SPELL_CAST_SUCCESS 400642",
 	"SPELL_AURA_APPLIED 403724 400681",
---	"SPELL_AURA_APPLIED_DOSE",
 	"SPELL_AURA_REMOVED 400681 400642"
 --	"SPELL_PERIODIC_DAMAGE",
---	"SPELL_PERIODIC_MISSED",
---	"UNIT_SPELLCAST_SUCCEEDED boss1"
+--	"SPELL_PERIODIC_MISSED"
 )
 
 --[[
@@ -41,11 +39,12 @@ local specWarnSparkofTyr							= mod:NewSpecialWarningMoveAway(400681, nil, nil,
 local yellSparkofTyr								= mod:NewShortPosYell(400681)
 local specWarnGTFO									= mod:NewSpecialWarningGTFO(403724, nil, nil, nil, 1, 8)
 
---These 3
+--These 3 are shared timers tied to Infinite Hand Technique
 local timerTitanicBlowCD							= mod:NewCDCountTimer(8, 401248, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerInfiniteAnnihilationCD					= mod:NewCDCountTimer(8, 401482, nil, nil, nil, 3)
 local timerDividingStrikeCD							= mod:NewCDCountTimer(8, 400641, nil, nil, nil, 5)
 
+--Bosses other abilities
 local timerSparkofTyrCD								= mod:NewCDCountTimer(60.7, 400681, nil, nil, nil, 3, nil, DBM_COMMON_L.MAGIC_ICON)
 local timerSiphonOathCD								= mod:NewCDCountTimer(60.7, 400642, nil, nil, nil, 6, nil, DBM_COMMON_L.DAMAGE_ICON)
 
@@ -60,6 +59,7 @@ mod.vb.firstShared = 0
 mod.vb.secondShared = 0
 
 function mod:OnCombatStart(delay)
+	self:SetStage(1)
 	self.vb.dividingCount = 0
 	self.vb.sparkCount = 0
 	self.vb.barrierCount = 0
@@ -68,21 +68,12 @@ function mod:OnCombatStart(delay)
 	self.vb.firstShared = 0
 	self.vb.secondShared = 0
 	timerSparkofTyrCD:Start(5.9-delay, 1)
-	--Either one of these can be first, we don't know which until time of cast
+	--Any of these can be first, we don't know which until time of cast
 	timerTitanicBlowCD:Start(12.5-delay, 1)
 	timerInfiniteAnnihilationCD:Start(12.5-delay, 1)
 	timerDividingStrikeCD:Start(12.5-delay, 1)
-	timerSiphonOathCD:Start(45.7-delay, 1)
+	timerSiphonOathCD:Start(44.9-delay, 1)
 end
-
---function mod:OnCombatEnd()
---	if self.Options.RangeFrame then
---		DBM.RangeCheck:Hide()
---	end
---	if self.Options.InfoFrame then
---		DBM.InfoFrame:Hide()
---	end
---end
 
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
@@ -186,6 +177,7 @@ end
 function mod:SPELL_CAST_SUCCESS(args)
 	local spellId = args.spellId
 	if spellId == 400642 then
+		self:SetStage(2)
 		self.vb.barrierCount = self.vb.barrierCount + 1
 		warnSiphonOath:Show(self.vb.barrierCount)
 --		timerSiphonOathCD:Start(nil, self.vb.barrierCount+1)
@@ -220,6 +212,7 @@ function mod:SPELL_AURA_REMOVED(args)
 			self:SetIcon(args.destName, 0)
 		end
 	elseif spellId == 400642 then--Siphon ending
+		self:SetStage(1)
 		self.vb.sharedCount = 0
 		self.vb.firstShared = 0
 		self.vb.secondShared = 0
@@ -242,12 +235,4 @@ function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId, spell
 	end
 end
 mod.SPELL_PERIODIC_MISSED = mod.SPELL_PERIODIC_DAMAGE
---]]
-
---[[
-function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
-	if spellId == 353193 then
-
-	end
-end
 --]]

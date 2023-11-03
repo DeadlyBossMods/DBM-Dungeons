@@ -5,8 +5,8 @@ mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(198999)
 mod:SetEncounterID(2671)
 mod:SetUsedIcons(1, 2, 3, 4, 5, 6)
-mod:SetHotfixNoticeRev(20230713000000)
---mod:SetMinSyncRevision(20221015000000)
+mod:SetHotfixNoticeRev(20231102000000)
+mod:SetMinSyncRevision(20231102000000)
 --mod.respawnTime = 29
 mod.sendMainBossGUID = true
 
@@ -14,13 +14,11 @@ mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 404916 403891 404364 405279 406481 407504",
---	"SPELL_CAST_SUCCESS",
 	"SPELL_SUMMON 403902",
 	"SPELL_AURA_APPLIED 401200 401667",--412768
 	"SPELL_AURA_REMOVED 401200",
 	"SPELL_DAMAGE 412769",
 	"SPELL_MISSED 412769"
---	"UNIT_SPELLCAST_SUCCEEDED boss1"
 )
 
 --[[
@@ -60,7 +58,7 @@ mod.vb.problemsCount = 0
 mod.vb.problemIcons = 1
 mod.vb.facesCount = 0
 mod.vb.trapsCount = 0
-local allTimers = {--Timers up to 6:09 (< 10.2)
+local oldallTimers = {--Timers up to 6:09 (< 10.2)
 	--Sand Blast
 	[404916] = {4.6, 38.8, 29.1, 20.6, 29.1, 21.8, 29.1, 21.8, 29.1, 21.8, 29.1, 21.8, 29.1, 21.8},
 	--More Problems
@@ -70,15 +68,16 @@ local allTimers = {--Timers up to 6:09 (< 10.2)
 	--Familiar Faces
 	[405279] = {38.6},
 }
-local newallTimers = {--10.2+
+--Even on a +25 I could not find a pull longer than this
+local allTimers = {--Timers up to 2:19 for 10.2+ (with late october timer changes).
 	--Sand Blast
-	[404916] = {},
+	[404916] = {3, 27, 19.9, 28.9, 12, 12, 11.9, 24},
 	--More Problems
-	[403891] = {},
+	[403891] = {10, 50, 60},
 	--Time Traps
-	[406481] = {},
+	[406481] = {36, 48, 24},
 	--Familiar Faces
-	[405279] = {},
+	[405279] = {43, 52.9, 48},
 }
 
 --[[
@@ -112,22 +111,16 @@ function mod:OnCombatStart(delay)
 	self.vb.problemsCount = 0
 	self.vb.facesCount = 0
 	self.vb.trapsCount = 0
-	timerSandBlastCD:Start(4.6-delay, 1)
+	timerSandBlastCD:Start(3-delay, 1)
 	timerMoreProblemsCD:Start(10-delay, 1)
-	timerTimeTrapsCD:Start(30-delay, 1)
-	timerFamiliarFacesCD:Start(38.6-delay, 1)
+	timerTimeTrapsCD:Start(36-delay, 1)
+	timerFamiliarFacesCD:Start(43-delay, 1)
 	if self.Options.NPAuraOnFixate then
 		DBM:FireEvent("BossMod_EnableHostileNameplates")
 	end
 end
 
 function mod:OnCombatEnd()
---	if self.Options.RangeFrame then
---		DBM.RangeCheck:Hide()
---	end
---	if self.Options.InfoFrame then
---		DBM.InfoFrame:Hide()
---	end
 	if self.Options.NPAuraOnFixate then
 		DBM.Nameplate:Hide(true, nil, nil, nil, true, true)
 	end
@@ -139,17 +132,18 @@ function mod:SPELL_CAST_START(args)
 		self.vb.blastCount = self.vb.blastCount + 1
 		specWarnSandBlast:Show(self.vb.blastCount)
 		specWarnSandBlast:Play("shockwave")
-		local timer
-		if self.vb.blastCount == 1 then--One off
-			timer = 38.8
-		elseif self.vb.blastCount == 3 then--just kidding, two off
-			timer = 20.6
-		elseif self.vb.blastCount % 2 == 0 then
-			timer = 29.1
-		else
-			timer = 21.8
-		end
---		local timer = self:GetFromTimersTable(allTimers, false, false, spellId, self.vb.blastCount+1)
+--		local timer
+		--Not enough data to do it this way yet for 10.2
+--		if self.vb.blastCount == 1 then--One off
+--			timer = 38.8
+--		elseif self.vb.blastCount == 3 then--just kidding, two off
+--			timer = 20.6
+--		elseif self.vb.blastCount % 2 == 0 then
+--			timer = 29.1
+--		else
+--			timer = 21.8
+--		end
+		local timer = self:GetFromTimersTable(allTimers, false, false, spellId, self.vb.blastCount+1)
 		if timer then
 			timerSandBlastCD:Start(timer, self.vb.blastCount+1)
 		end
@@ -188,15 +182,6 @@ function mod:SPELL_CAST_START(args)
 	end
 end
 
---[[
-function mod:SPELL_CAST_SUCCESS(args)
-	local spellId = args.spellId
-	if spellId == 387691 then
-
-	end
-end
---]]
-
 function mod:SPELL_SUMMON(args)
 	local spellId = args.spellId
 	if spellId == 403902 then
@@ -223,7 +208,6 @@ function mod:SPELL_AURA_APPLIED(args)
 --		end
 	end
 end
---mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED
 
 function mod:SPELL_AURA_REMOVED(args)
 	local spellId = args.spellId
@@ -241,11 +225,3 @@ function mod:SPELL_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId, spellName)
 	end
 end
 mod.SPELL_MISSED = mod.SPELL_DAMAGE
-
---[[
-function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
-	if spellId == 353193 then
-
-	end
-end
---]]
