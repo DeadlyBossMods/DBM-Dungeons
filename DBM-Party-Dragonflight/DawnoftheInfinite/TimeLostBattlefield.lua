@@ -207,14 +207,14 @@ end
 
 function mod:SPELL_CAST_SUCCESS(args)
 	local spellId = args.spellId
-	if spellId == 418062 or spellId == 410496 then--Battle Cry, War Cry
---		self.vb.cryCount = self.vb.cryCount + 1
---		warnCry:Show(self.vb.cryCount)
---		timerCryCD:Start(nil, self.vb.cryCount+1)
-	elseif spellId == 418054 or spellId == 408227 then
+	if spellId == 418054 or spellId == 408227 then
 		--Timer now started here now that it's being used as an update timer method earlier
 		timerShockwaveCD:Start(nil, self.vb.shockwaveSet+1)
 		updateAllTimers(self, 10.2, false)
+--	elseif spellId == 418062 or spellId == 410496 then--Battle Cry, War Cry
+--		self.vb.cryCount = self.vb.cryCount + 1
+--		warnCry:Show(self.vb.cryCount)
+--		timerCryCD:Start(nil, self.vb.cryCount+1)
 	end
 end
 
