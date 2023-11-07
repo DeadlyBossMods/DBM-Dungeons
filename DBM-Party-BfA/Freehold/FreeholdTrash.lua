@@ -211,11 +211,9 @@ function mod:SPELL_CAST_START(args)
 		specWarnAzeriteGrenade:Show()
 		specWarnAzeriteGrenade:Play("watchstep")
 	elseif spellId == 257908 then
-		if self:AntiSpam(3, 5) then
-			if self:IsTanking("player", nil, nil, true, args.sourceGUID) then
-				specWarnOiledBladeSelf:Show()
-				specWarnOiledBladeSelf:Play("defensive")
-			end
+		if self:IsTanking("player", nil, nil, true, args.sourceGUID) and self:AntiSpam(3, 5) then
+			specWarnOiledBladeSelf:Show()
+			specWarnOiledBladeSelf:Play("defensive")
 		end
 	end
 end
