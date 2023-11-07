@@ -174,7 +174,7 @@ function mod:SPELL_AURA_APPLIED(args)
 	elseif spellId == 426659 then
 		local amount = args.amount or 1
 		if self:AntiSpam(3, 5) then
-			warnChomp:Show(args.destName, amount)
+			warnRazorJaws:Show(args.destName, amount)
 		end
 	end
 end
