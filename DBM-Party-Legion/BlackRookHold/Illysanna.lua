@@ -49,21 +49,21 @@ local specWarnDarkRush				= mod:NewSpecialWarningYou(197478, nil, nil, nil, 1, 2
 local timerBrutalGlaiveCD			= mod:NewCDCountTimer(15.7, 197546, nil, nil, nil, 3)--15 before
 local timerVengefulShearCD			= mod:NewCDCountTimer(11, 197418, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON)--11-16, delayed by dark rush
 local timerDarkRushCD				= mod:NewCDCountTimer(31, 197478, nil, nil, nil, 3)--30 before
-local timerLeapCD					= mod:NewCDTimer(100, -12281, nil, nil, nil, 6, 197622)
+local timerLeapCD					= mod:NewStageContextTimer(100, -12281, nil, nil, nil, 6, 197622)
 
 mod:AddSetIconOption("SetIconOnDarkRush", 197478, true, 6, {1, 2, 3})
 --Stage Two: Fury
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(12281))
-local warnEyeBeam					= mod:NewTargetNoFilterAnnounce(197687, 2)
+local warnEyeBeam					= mod:NewTargetNoFilterAnnounce(197696, 2)
 
-local specWarnEyeBeam				= mod:NewSpecialWarningRun(197687, nil, nil, nil, 4, 2)
-local yellEyeBeam					= mod:NewYell(197687)
+local specWarnEyeBeam				= mod:NewSpecialWarningRun(197696, nil, nil, nil, 4, 2)
+local yellEyeBeam					= mod:NewYell(197696)
 local specWarnBonebreakingStrike	= mod:NewSpecialWarningDodge(197974, "Tank", nil, nil, 1, 2)
 local specWarnArcaneBlitz			= mod:NewSpecialWarningInterrupt(197797, "HasInterrupt", nil, nil, 1, 2)
 
-local timerEyeBeamCD				= mod:NewCDCountTimer(13.5, 197687, nil, nil, nil, 3)
+local timerEyeBeamCD				= mod:NewCDCountTimer(13.5, 197696, nil, nil, nil, 3)
 local timerBonebreakingStrikeCD		= mod:NewCDNPTimer(21.8, 197974, nil, nil, nil, 3)
-local timerGroundedCD				= mod:NewCDTimer(44.8, -12277, nil, nil, nil, 6, 197394)
+local timerGroundedCD				= mod:NewStageContextTimer(44.8, -12277, nil, nil, nil, 6, 197394)
 
 --mod:AddRangeFrameOption(5, 197546)--Range not given for Brutal Glaive
 
