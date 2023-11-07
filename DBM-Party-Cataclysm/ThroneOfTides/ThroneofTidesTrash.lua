@@ -58,8 +58,6 @@ local timerCrushCD								= mod:NewCDNPTimer(17, 429021, nil, "Tank|Healer", nil
 local timerPsionicPulseCD						= mod:NewCDNPTimer(8.5, 426905, nil, nil, nil, 2)
 local timerMindFlayCD							= mod:NewCDNPTimer(8.5, 426783, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 
---local playerName = UnitName("player")
-
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc, 7 off interrupt, 8 GTFO
 
 function mod:SPELL_CAST_START(args)
