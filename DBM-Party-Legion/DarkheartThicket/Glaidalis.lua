@@ -30,18 +30,18 @@ ability.id = 198379 and type = "begincast"
 --]]
 --NOTE: Leap will be broken until 10.2 but that's fine. in TW or while leveling dungeon is easy
 --TODO, min timers could still possibly need tweaking/lowering. Same with min ICD of each ability
-local warnLeap					= mod:NewCountAnnounce(196346, 2)
-local warnNightFall				= mod:NewSpellAnnounce(198401, 2)
+local warnLeap					= mod:NewCountAnnounce(196354, 2)
+local warnNightFall				= mod:NewSpellAnnounce(212464, 2)
 
-local specWarnNightfall			= mod:NewSpecialWarningMove(198408, nil, nil, nil, 1, 2)
---local specWarnLeap			= mod:NewSpecialWarningDodge(196346, nil, nil, nil, 1)
-local yellLeap					= mod:NewYell(196346)
+local specWarnNightfall			= mod:NewSpecialWarningMove(212464, nil, nil, nil, 1, 2)
+--local specWarnLeap			= mod:NewSpecialWarningDodge(196354, nil, nil, nil, 1)
+local yellLeap					= mod:NewYell(196354)
 local specWarnRampage			= mod:NewSpecialWarningDefensive(198379, "Tank", nil, nil, 1, 2)
 local specWarnFixate			= mod:NewSpecialWarningYou(198477, nil, nil, nil, 1, 2)
 
-local timerLeapCD				= mod:NewCDCountTimer(13.2, 196346, nil, nil, nil, 3)--13.2-17 depending on travel time and spell queuing (timer could be even shorter, small sample)
+local timerLeapCD				= mod:NewCDCountTimer(13.2, 196354, nil, nil, nil, 3)--13.2-17 depending on travel time and spell queuing (timer could be even shorter, small sample)
 local timerRampageCD			= mod:NewCDCountTimer(26.7, 198379, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON)--26.7-32.7
-local timerNightfallCD			= mod:NewCDCountTimer(20.6, 198408, nil, nil, nil, 3)--20.6--30.4
+local timerNightfallCD			= mod:NewCDCountTimer(20.6, 212464, nil, nil, nil, 3)--20.6--30.4
 
 mod:AddSetIconOption("SetIconOnAdd", -13302, true, 5, {8, 7})
 mod:AddNamePlateOption("NPAuraOnFixate", 198477)

@@ -27,11 +27,11 @@ mod:RegisterEventsInCombat(
 local warnRoar						= mod:NewCountAnnounce(199389, 2)
 
 local specWarnDownDraft				= mod:NewSpecialWarningCount(199345, nil, nil, nil, 2, 2)
-local specWarnBreath				= mod:NewSpecialWarningDodgeCount(199332, "Tank", nil, nil, 1, 2)
+local specWarnBreath				= mod:NewSpecialWarningDodgeCount(191325, "Tank", nil, nil, 1, 2)
 --local yellBreath					= mod:NewYell(199332)
 local specWarnFallingRocks			= mod:NewSpecialWarningGTFO(199460, nil, nil, nil, 1, 8)
 
-local timerBreathCD					= mod:NewCDTimer(22, 199332, nil, "Tank", nil, 5)--22/30 alternating? need more logs to confirm
+local timerBreathCD					= mod:NewCDTimer(22, 191325, nil, "Tank", nil, 5)--22/30 alternating? need more logs to confirm
 local timerEarthShakerCD			= mod:NewCDTimer(30.3, 199389, nil, nil, nil, 3)--OLD: 21
 local timerDownDraftCD				= mod:NewCDTimer(30.3, 199345, nil, nil, nil, 2)--OLD: 30-42 (health based or varaible?)
 

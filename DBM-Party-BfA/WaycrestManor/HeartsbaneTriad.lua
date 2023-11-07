@@ -33,11 +33,11 @@ local timerJaggedNettlesCD			= mod:NewCDTimer(12.5, 260741, nil, nil, nil, 5, ni
 --Sister Malady
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(17739))
 local warnUnstableMark				= mod:NewTargetAnnounce(260703, 2)
-local warnAuraofDreadOver			= mod:NewEndAnnounce(268088, 1)
+local warnAuraofDreadOver			= mod:NewEndAnnounce(268086, 1)
 
 local specWarnUnstableMark			= mod:NewSpecialWarningMoveAway(260703, nil, nil, nil, 1, 2)
 local yellUnstableMark				= mod:NewYell(260703)
-local specWarnAuraofDread			= mod:NewSpecialWarningKeepMove(268088, nil, nil, nil, 1, 2)
+local specWarnAuraofDread			= mod:NewSpecialWarningKeepMove(268086, nil, nil, nil, 1, 2)
 
 local timerUnstableRunicMarkCD		= mod:NewCDTimer(12.5, 260703, nil, nil, nil, 3, nil, DBM_COMMON_L.CURSE_ICON)
 
