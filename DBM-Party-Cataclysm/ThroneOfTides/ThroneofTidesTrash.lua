@@ -9,7 +9,7 @@ mod:SetZone(643)
 mod.isTrashMod = true
 
 mod:RegisterEvents(
-	"SPELL_CAST_START 76813 76815 76820 426741 426684 426645 428926 76590 429021 426783 428542 429176",
+	"SPELL_CAST_START 76813 76815 76820 426741 426684 426645 428926 76590 429021 426783 428542 429176 426905",
 --	"SPELL_CAST_SUCCESS",
 	"SPELL_AURA_APPLIED 76820 428542 426618 426659",
 	"SPELL_AURA_APPLIED_DOSE 426659",
@@ -22,7 +22,7 @@ mod:RegisterEvents(
 --TODO, additional spells not covered in wowhead guide?
 --TODO, hybrid the mod for cataclysm classic (which basically would only have like 3-4 spells of this entire list
 --[[
-(ability.id = 76813 or ability.id = 76815 or ability.id = 76820 or ability.id = 426741 or ability.id = 426684 or ability.id = 426645 or ability.id = 428926 or ability.id = 76590 or ability.id = 429021 or ability.id = 426783 or ability.id = 428542 or ability.id = 429176) and type = "begincast"
+(ability.id = 76813 or ability.id = 76815 or ability.id = 76820 or ability.id = 426741 or ability.id = 426684 or ability.id = 426645 or ability.id = 428926 or ability.id = 76590 or ability.id = 429021 or ability.id = 426783 or ability.id = 428542 or ability.id = 429176 or ability.id = 426905) and type = "begincast"
 --]]
 --https://www.wowhead.com/guide/mythic-plus-dungeons/throne-of-the-tides-strategy
 local warnCrushingDepths						= mod:NewTargetNoFilterAnnounce(428542, 4)
