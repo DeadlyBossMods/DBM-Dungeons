@@ -243,7 +243,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		specWarnGTFO:Play("watchfeet")
 	elseif spellId == 257476 and self:AntiSpam(3, 3) then
 		specWarnBestialWrath:Show(args.destName)
-		specWarnBestialWrath:Play("helpdispel")
+		specWarnBestialWrath:Play("enrage")
 	elseif spellId == 257739 and self:AntiSpam(3, 3) then
 		--If it can be dispelled by affected player, no reason to tell them to run away, dispel is priority
 		if self.Options.SpecWarn257739dispel then
