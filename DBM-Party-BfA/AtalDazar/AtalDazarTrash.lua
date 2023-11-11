@@ -203,7 +203,7 @@ function mod:SPELL_AURA_APPLIED(args)
 	elseif spellId == 255824 then
 		specWarnFanaticsRageDispel:Show(args.destName)
 		specWarnFanaticsRageDispel:Play("enrage")
-	elseif spellId == 256849 then
+	elseif spellId == 256849 and not args:IsDestTypePlayer() then
 		specWarnDinoMightDispel:Show(args.destName)
 		specWarnDinoMightDispel:Play("helpdispel")
 	elseif spellId == 252781 and args:IsPlayer() then
@@ -257,5 +257,3 @@ function mod:UNIT_DIED(args)
 		timerVenomfangStrikeCD:Stop(args.destGUID)
 	end
 end
-
-
