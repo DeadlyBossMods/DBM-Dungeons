@@ -197,7 +197,7 @@ function mod:SPELL_AURA_APPLIED(args)
 	elseif spellId == 88171 and args:IsPlayer() and self:AntiSpam(2, 7) then
 		specWarnGTFO:Show(args.spellName)
 		specWarnGTFO:Play("watchfeet")
-	elseif spellId == 88186 and self:AntiSpam(2, 5) then
+	elseif spellId == 88186 and self:AntiSpam(4, 5) then
 		specWarnVaporForm:Show(args.destName)
 		specWarnVaporForm:Play("helpdispel")
 	elseif spellId == 87726 and args:IsPlayer() then

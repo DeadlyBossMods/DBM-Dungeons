@@ -241,10 +241,10 @@ function mod:SPELL_AURA_APPLIED(args)
 	if spellId == 257274 and args:IsPlayer() and self:AntiSpam(2, 2) then--Vile Coating
 		specWarnGTFO:Show(args.spellName)
 		specWarnGTFO:Play("watchfeet")
-	elseif spellId == 257476 and self:AntiSpam(3, 3) then
+	elseif spellId == 257476 and self:AntiSpam(4, 3) then
 		specWarnBestialWrath:Show(args.destName)
-		specWarnBestialWrath:Play("helpdispel")
-	elseif spellId == 257739 and self:AntiSpam(3, 3) then
+		specWarnBestialWrath:Play("enrage")
+	elseif spellId == 257739 and self:AntiSpam(4, 3) then
 		--If it can be dispelled by affected player, no reason to tell them to run away, dispel is priority
 		if self.Options.SpecWarn257739dispel then
 			specWarnBlindRage:Show(args.sourceName)
@@ -253,16 +253,13 @@ function mod:SPELL_AURA_APPLIED(args)
 			specWarnBlindRagePlayer:Show()
 			specWarnBlindRagePlayer:Play("justrun")
 		end
-	elseif spellId == 257908 and args:IsDestTypePlayer() and self:AntiSpam(3, 3) then
-		--If tank can dispel self, no reason to tell tank to defensive through it, dispel is priority
-		if self.Options.SpecWarn257908dispel and self:CheckDispelFilter("magic") then
-			specWarnOiledBlade:Show(args.destName)
-			specWarnOiledBlade:Play("helpdispel")
-		end
+	elseif spellId == 257908 and args:IsDestTypePlayer() and self:CheckDispelFilter("magic") and self:AntiSpam(3, 3) then
+		specWarnOiledBlade:Show(args.destName)
+		specWarnOiledBlade:Play("helpdispel")
 	elseif spellId == 258323 and args:IsDestTypePlayer() and self:CheckDispelFilter("disease") and self:AntiSpam(3, 3) then
 		specWarnInfectedWound:Show(args.destName)
 		specWarnInfectedWound:Play("helpdispel")
-	elseif spellId == 257397 and not args:IsDestTypePlayer() and self:AntiSpam(3, 3) then
+	elseif spellId == 257397 and not args:IsDestTypePlayer() and self:AntiSpam(4, 3) then
 		specWarnHealingBalmDispel:Show(args.destName)
 		specWarnHealingBalmDispel:Play("helpdispel")
 	elseif spellId == 257775 and args:IsDestTypePlayer() and self:CheckDispelFilter("disease") and self:AntiSpam(3, 3) then

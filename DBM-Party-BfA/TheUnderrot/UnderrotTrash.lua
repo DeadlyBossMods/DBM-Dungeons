@@ -233,10 +233,10 @@ function mod:SPELL_AURA_APPLIED(args)
 	elseif spellId == 266209 and self:AntiSpam(3, 5) then
 		specWarnWickedFrenzyDispel:Show(args.destName)
 		specWarnWickedFrenzyDispel:Play("enrage")
-	elseif spellId == 265091 and not args:IsDestTypePlayer() and self:AntiSpam(3, 3) then
+	elseif spellId == 265091 and not args:IsDestTypePlayer() and self:AntiSpam(4, 3) then
 		specWarnGiftofGhuunDispel:Show(args.destName)
 		specWarnGiftofGhuunDispel:Play("helpdispel")
-	elseif spellId == 266201 and not args:IsDestTypePlayer() and self:AntiSpam(3, 3) then
+	elseif spellId == 266201 and not args:IsDestTypePlayer() and self:AntiSpam(4, 3) then
 		specWarnBoneShieldDispel:Show(args.destName)
 		specWarnBoneShieldDispel:Play("helpdispel")
 	elseif spellId == 278789 and args:IsPlayer() and self:AntiSpam(3, 8) then

@@ -23,7 +23,7 @@ mod:RegisterEventsInCombat(
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
  or ability.id = 268202 and type = "begincast"
 --]]
---NOTE, death lense is cast 5.2-5.7 seconds after add spawns, but sadly grabbing add GUID to attach a nameplate Id isn't very easy
+--NOTE, death lens is cast 5.2-5.7 seconds after add spawns, but sadly grabbing add GUID to attach a nameplate Id isn't very easy
 local warnDeathlens					= mod:NewCastAnnounce(268202, 2)
 local warnDeathlensTarget			= mod:NewTargetNoFilterAnnounce(268202, 4)
 local warnFire						= mod:NewSpellAnnounce(266198, 1)
