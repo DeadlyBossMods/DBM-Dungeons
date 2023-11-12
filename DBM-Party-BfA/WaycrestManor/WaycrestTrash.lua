@@ -289,10 +289,10 @@ function mod:SPELL_AURA_APPLIED(args)
 			yellRunicMark:Yell()
 			yellRunicMarkFades:Countdown(spellId)
 		end
-	elseif spellId == 265368 and not args:IsDestTypePlayer() and self:AntiSpam(3, 3) then
+	elseif spellId == 265368 and not args:IsDestTypePlayer() and self:AntiSpam(4, 3) then
 		specWarnSpiritedDefenseDispel:Show(args.destName)
 		specWarnSpiritedDefenseDispel:Play("helpdispel")
-	elseif spellId == 257260 and self:AntiSpam(3, 3) then
+	elseif spellId == 257260 and self:AntiSpam(4, 3) then
 		specWarnEnrage:Show(args.destName)
 		specWarnEnrage:Play("enrage")
 	elseif spellId == 263943 and args:IsPlayer() or self:IsHealer() then--Antispam if needed

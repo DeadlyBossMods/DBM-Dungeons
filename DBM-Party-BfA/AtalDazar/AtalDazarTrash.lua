@@ -200,10 +200,10 @@ function mod:SPELL_AURA_APPLIED(args)
 	if spellId == 260666 and args:IsPlayer() then
 		specWarnTransfusion:Show(taintedBlood)
 		specWarnTransfusion:Play("takedamage")
-	elseif spellId == 255824 then
+	elseif spellId == 255824 and self:AntiSpam(4, 3) then
 		specWarnFanaticsRageDispel:Show(args.destName)
 		specWarnFanaticsRageDispel:Play("enrage")
-	elseif spellId == 256849 and not args:IsDestTypePlayer() then
+	elseif spellId == 256849 and not args:IsDestTypePlayer() and self:AntiSpam(4, 3) then
 		specWarnDinoMightDispel:Show(args.destName)
 		specWarnDinoMightDispel:Play("helpdispel")
 	elseif spellId == 252781 and args:IsPlayer() then
