@@ -150,7 +150,7 @@ function mod:SPELL_CAST_START(args)
 		timerSacrificeSoulCD:Start(nil, args.sourceGUID)
 	elseif spellId == 196916 then
 		timerGlaiveTossCD:Start(nil, args.sourceGUID)
-		if self:AntiSpam(3, 6 then
+		if self:AntiSpam(3, 6) then
 			warnGlaiveToss:Show()
 		end
 	elseif spellId == 194966 then
