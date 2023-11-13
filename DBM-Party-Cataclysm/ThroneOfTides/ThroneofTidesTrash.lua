@@ -25,38 +25,38 @@ mod:RegisterEvents(
 (ability.id = 76813 or ability.id = 76815 or ability.id = 76820 or ability.id = 426741 or ability.id = 426684 or ability.id = 426645 or ability.id = 428926 or ability.id = 76590 or ability.id = 429021 or ability.id = 426783 or ability.id = 428542 or ability.id = 429176 or ability.id = 426905) and type = "begincast"
 --]]
 --https://www.wowhead.com/guide/mythic-plus-dungeons/throne-of-the-tides-strategy
-local warnCrushingDepths						= mod:NewTargetNoFilterAnnounce(428542, 4)
-local warnSlitheringAssault						= mod:NewTargetNoFilterAnnounce(426618, 2, nil, "RemoveEnrage")
-local warnHealingWave							= mod:NewCastAnnounce(76813, 3)
-local warnHex									= mod:NewCastAnnounce(76820, 2)
-local warnClenchingTentacles					= mod:NewCastAnnounce(428926, 4, nil, nil, nil, nil, nil, 13)
-local warnPsionicPulse							= mod:NewCastAnnounce(426905, 4, nil, nil, nil, nil, nil, 3)
-local warnRazorJaws								= mod:NewStackAnnounce(426659, 2, nil, "Tank|Healer")
+local warnCrushingDepths			= mod:NewTargetNoFilterAnnounce(428542, 4)
+local warnSlitheringAssault			= mod:NewTargetNoFilterAnnounce(426618, 2, nil, "RemoveEnrage")
+local warnHealingWave				= mod:NewCastAnnounce(76813, 3)
+local warnHex						= mod:NewCastAnnounce(76820, 2)
+local warnClenchingTentacles		= mod:NewCastAnnounce(428926, 4, nil, nil, nil, nil, nil, 13)
+local warnPsionicPulse				= mod:NewCastAnnounce(426905, 4, nil, nil, nil, nil, nil, 3)
+local warnRazorJaws					= mod:NewStackAnnounce(426659, 2, nil, "Tank|Healer")
 
-local specWarnShadowSmash						= mod:NewSpecialWarningRun(76590, nil, nil, nil, 4, 2)
-local specWarnVolatileBolt						= mod:NewSpecialWarningDodge(426684, nil, nil, nil, 2, 2)
-local specWarnAcidBarrageOther					= mod:NewSpecialWarningDodge(426645, false, nil, nil, 2, 2)--Non Tank Version (off by default, tank SHOULD aim it away from group, but an option for those who want to be mindful of it)
-local specWarnAcidBarrageTank					= mod:NewSpecialWarningDefensive(426645, nil, nil, nil, 1, 2)--Tank Version
-local specWarnShellbreaker						= mod:NewSpecialWarningDefensive(426741, nil, nil, nil, 1, 2)
-local specWarnCrush								= mod:NewSpecialWarningDefensive(429021, nil, nil, nil, 1, 2)
---local yellnViciousAmbush						= mod:NewYell(388984)
-local specWarnHealingWave						= mod:NewSpecialWarningInterrupt(76813, "HasInterrupt", nil, nil, 1, 2)
-local specWarnWrath								= mod:NewSpecialWarningInterrupt(76815, false, nil, nil, 1, 2)--TODO, Is this even used in 10.2 version? no log of it
-local specWarnMindFlay							= mod:NewSpecialWarningInterrupt(426783, "HasInterrupt", nil, nil, 1, 2)
-local specWarnAquablast							= mod:NewSpecialWarningInterrupt(429176, "HasInterrupt", nil, nil, 1, 2)
-local specWarnHex								= mod:NewSpecialWarningDispel(76820, "RemoveMagic", nil, nil, 1, 2)
-local specWarnGTFO								= mod:NewSpecialWarningGTFO(426688, nil, nil, nil, 1, 8)
+local specWarnShadowSmash			= mod:NewSpecialWarningRun(76590, nil, nil, nil, 4, 2)
+local specWarnVolatileBolt			= mod:NewSpecialWarningDodge(426684, nil, nil, nil, 2, 2)
+local specWarnAcidBarrageOther		= mod:NewSpecialWarningDodge(426645, false, nil, nil, 2, 2)--Non Tank Version (off by default, tank SHOULD aim it away from group, but an option for those who want to be mindful of it)
+local specWarnAcidBarrageTank		= mod:NewSpecialWarningDefensive(426645, nil, nil, nil, 1, 2)--Tank Version
+local specWarnShellbreaker			= mod:NewSpecialWarningDefensive(426741, nil, nil, nil, 1, 2)
+local specWarnCrush					= mod:NewSpecialWarningDefensive(429021, nil, nil, nil, 1, 2)
+--local yellnViciousAmbush			= mod:NewYell(388984)
+local specWarnHealingWave			= mod:NewSpecialWarningInterrupt(76813, "HasInterrupt", nil, nil, 1, 2)
+local specWarnWrath					= mod:NewSpecialWarningInterrupt(76815, false, nil, nil, 1, 2)--TODO, Is this even used in 10.2 version? no log of it
+local specWarnMindFlay				= mod:NewSpecialWarningInterrupt(426783, "HasInterrupt", nil, nil, 1, 2)
+local specWarnAquablast				= mod:NewSpecialWarningInterrupt(429176, "HasInterrupt", nil, nil, 1, 2)
+local specWarnHex					= mod:NewSpecialWarningDispel(76820, "RemoveMagic", nil, nil, 1, 2)
+local specWarnGTFO					= mod:NewSpecialWarningGTFO(426688, nil, nil, nil, 1, 8)
 
-local timerHealingWaveCD						= mod:NewCDNPTimer(17, 76813, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--17-18.2
-local timerHexCD								= mod:NewCDNPTimer(20.4, 76820, nil, nil, nil, 5, nil, DBM_COMMON_L.MAGIC_ICON)--Weak sample size, could be wrong
-local timerCrushingDepthsCD						= mod:NewCDNPTimer(27.9, 428542, nil, nil, nil, 5, nil, DBM_COMMON_L.HEALER_ICON)--Weak sample size, could be wrong
-local timerShellbreakerCD						= mod:NewCDNPTimer(17, 426741, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)--17-19
-local timerVolatileBoltCD						= mod:NewCDNPTimer(20.6, 426684, nil, nil, nil, 3)--20.6-24.2
-local timerAcidBarrageCD						= mod:NewCDNPTimer(13.3, 426645, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)--13.3-
-local timerClenchingTentaclesCD					= mod:NewCDNPTimer(24.3, 428926, nil, nil, nil, 2)--24.3-25.5
-local timerCrushCD								= mod:NewCDNPTimer(17, 429021, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
-local timerPsionicPulseCD						= mod:NewCDNPTimer(8.5, 426905, nil, nil, nil, 2)
-local timerMindFlayCD							= mod:NewCDNPTimer(8.5, 426783, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerHealingWaveCD			= mod:NewCDNPTimer(17, 76813, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--17-18.2
+local timerHexCD					= mod:NewCDNPTimer(20.4, 76820, nil, nil, nil, 5, nil, DBM_COMMON_L.MAGIC_ICON)--Weak sample size, could be wrong
+local timerCrushingDepthsCD			= mod:NewCDNPTimer(27.9, 428542, nil, nil, nil, 5, nil, DBM_COMMON_L.HEALER_ICON)--Weak sample size, could be wrong
+local timerShellbreakerCD			= mod:NewCDNPTimer(17, 426741, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)--17-19
+local timerVolatileBoltCD			= mod:NewCDNPTimer(20.6, 426684, nil, nil, nil, 3)--20.6-24.2
+local timerAcidBarrageCD			= mod:NewCDNPTimer(13.3, 426645, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)--13.3-
+local timerClenchingTentaclesCD		= mod:NewCDNPTimer(24.3, 428926, nil, nil, nil, 2)--24.3-25.5
+local timerCrushCD					= mod:NewCDNPTimer(17, 429021, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+local timerPsionicPulseCD			= mod:NewCDNPTimer(8.5, 426905, nil, nil, nil, 2)
+local timerMindFlayCD				= mod:NewCDNPTimer(8.5, 426783, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc, 7 off interrupt, 8 GTFO
 
