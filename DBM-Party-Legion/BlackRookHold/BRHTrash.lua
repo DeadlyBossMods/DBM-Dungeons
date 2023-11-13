@@ -106,6 +106,7 @@ function mod:SPELL_CAST_START(args)
 		if self:AntiSpam(3, 1) then
 			specWarnOverDetonation:Show()
 			specWarnOverDetonation:Play("justrun")
+		end
 	elseif spellId == 225573 then
 		if self:CheckInterruptFilter(args.sourceGUID, false, true) then
 			specWarnDarkMending:Show(args.sourceName)
