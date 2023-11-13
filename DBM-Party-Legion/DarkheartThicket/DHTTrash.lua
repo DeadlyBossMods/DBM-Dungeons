@@ -8,15 +8,15 @@ mod:SetZone(1466)
 mod.isTrashMod = true
 
 mod:RegisterEvents(
-	"SPELL_CAST_START 200630 200580 200642 200658 200768 198904 201226 201399 201839",
-	"SPELL_CAST_SUCCESS 218755 204243 201272 201129 201361",
+	"SPELL_CAST_START 200630 200580 200642 200658 200768 198904 201226 201399 201839 225562",
+	"SPELL_CAST_SUCCESS 218755 204243 201272 201129 201361 201399",
 	"SPELL_SUMMON 198910",
 	"SPELL_AURA_APPLIED 225484 198904 204246 201839 201365",
 	"UNIT_DIED"
 )
 
 --[[
-(ability.id = 200630 or ability.id = 200580 or ability.id = 200642 or ability.id = 200658 or ability.id = 200768 or ability.id = 198904 or ability.id = 201226 or ability.id = 201399 or ability.id = 201839) and type = "begincast"
+(ability.id = 225562 or ability.id = 200630 or ability.id = 200580 or ability.id = 200642 or ability.id = 200658 or ability.id = 200768 or ability.id = 198904 or ability.id = 201226 or ability.id = 201399 or ability.id = 201839) and type = "begincast"
  or (ability.id = 218755 or ability.id = 204243 or ability.id = 201272 or ability.id = 201129 or ability.id = 201361) and type = "cast"
  or ability.id = 198910
  or ability.id = 225484 and type = "applydebuff"
@@ -138,7 +138,7 @@ end
 function mod:SPELL_CAST_SUCCESS(args)
 	if not self.Options.Enabled then return end
 	local spellId = args.spellId
-	if spellId == 200343 then
+	if spellId == 218755 then
 		timerSpewCorruptionCD:Start(nil, args.sourceGUID)
 		if self:AntiSpam(3, 6) then
 			warnSpewCorruption:Show()
