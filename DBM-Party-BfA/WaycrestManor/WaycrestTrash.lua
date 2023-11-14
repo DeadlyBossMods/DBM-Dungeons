@@ -31,7 +31,7 @@ local warnPallidGlare				= mod:NewCastAnnounce(265346, 4)--Off Interrupt for HIg
 local warnHorrificVisage			= mod:NewCastAnnounce(264407, 4)--Off Interrupt for HIgh prio
 local warnFocusedStrike				= mod:NewSpellAnnounce(265371, 3, nil, nil, "Tank")
 local warnTearingStrike				= mod:NewSpellAnnounce(264556, 3, nil, nil, "Tank")
-local warnEtch						= mod:NewtargetNoFilterAnnounce(263943, 3)
+local warnEtch						= mod:NewTargetNoFilterAnnounce(263943, 3)
 
 local specWarnShadowCleave			= mod:NewSpecialWarningDodge(265372, nil, nil, nil, 2, 2)
 local specWarnSplinterSpike			= mod:NewSpecialWarningDodge(265759, nil, nil, nil, 2, 2)
