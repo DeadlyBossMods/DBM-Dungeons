@@ -23,6 +23,7 @@ mod:RegisterEventsInCombat(
  or ability.id = 196587 and type = "cast"
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
 --]]
+--NOTE, trash uses 194966 just like boss, the expression will pick up both
 local warnSwirlingScythe			= mod:NewTargetNoFilterAnnounce(195254, 2)
 local warnSoulEchoes				= mod:NewTargetAnnounce(194966, 2)
 local warnCallSouls					= mod:NewSpellAnnounce(196078, 2)--Change to important warning if it becomes more relevant.
