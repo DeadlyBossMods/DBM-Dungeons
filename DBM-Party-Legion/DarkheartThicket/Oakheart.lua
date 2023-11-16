@@ -32,7 +32,7 @@ local specWarnBreath				= mod:NewSpecialWarningDefensive(204667, "Tank", nil, ni
 
 local timerShatteredEarthCD			= mod:NewCDCountTimer(35, 204666, nil, nil, nil, 2)--35-60 (basically same as OG)
 local timerCrushingGripCD			= mod:NewCDCountTimer(27.9, 204611, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON, nil, mod:IsTank() and 2, 4)--27.9-36 (basically same as OG)
-local timerRootsCD					= mod:NewCDCountTimer(23, 204574, nil, nil, nil, 3)--23-35.1 (basically same as OG)
+local timerRootsCD					= mod:NewCDCountTimer(20.6, 204574, nil, nil, nil, 3)--20.6-35.1 (basically same as OG)
 local timerBreathCD					= mod:NewCDCountTimer(26.5, 204667, nil, nil, nil, 5)--26-35 (basically same as OG)
 local timerUprootCD					= mod:NewCDCountTimer(32.7, 212786, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)--32.7-37.6 (Probably also OG timer, but didn't have it in OG mod)
 
@@ -42,11 +42,12 @@ mod.vb.rootsCount = 0
 mod.vb.breathCount = 0
 mod.vb.uprootCount = 0
 
---Nightmare Breath triggers 9.7 ICD
+--Nightmare Breath triggers 7.2 (formerly 9.7) ICD
 --Crushing Grip triggers 6 ICD (well technically it triggers 1, and second Id triggers 5 more)
 --Uproot triggers 3.6 ICD
 --Strangling Roots triggers 2.4 ICD
 --Shattering Earth triggers 7.2 ICD
+--Shattering Roots itself is unaffected by ICDs of other spells
 local function updateAllTimers(self, ICD)
 	DBM:Debug("updateAllTimers running", 3)
 	if timerShatteredEarthCD:GetRemaining(self.vb.shatteredCount+1) < ICD then
@@ -61,7 +62,8 @@ local function updateAllTimers(self, ICD)
 		DBM:Debug("timerCrushingGripCD extended by: "..extend, 2)
 		timerCrushingGripCD:Update(elapsed, total+extend, self.vb.crushingCount+1)
 	end
-	if timerRootsCD:GetRemaining(self.vb.rootsCount+1) < ICD then
+	--Roots only affected by crushing grip ICD now?
+	if ICD == 6 and (timerRootsCD:GetRemaining(self.vb.rootsCount+1) < ICD) then
 		local elapsed, total = timerRootsCD:GetTime(self.vb.rootsCount+1)
 		local extend = ICD - (total-elapsed)
 		DBM:Debug("timerRootsCD extended by: "..extend, 2)
@@ -99,8 +101,8 @@ function mod:OnCombatStart(delay)
 	self.vb.rootsCount = 0
 	self.vb.breathCount = 0
 	self.vb.uprootCount = 0
-	timerShatteredEarthCD:Start(7.3-delay, 1)--7.3, 8.1, 8.5
-	timerRootsCD:Start(12.2-delay, 1)--12.2, 15.8, 12.2, 12.9
+	timerShatteredEarthCD:Start(7.2-delay, 1)--7.3, 8.1, 8.5
+	timerRootsCD:Start(10.2-delay, 1)--12.2, 15.8, 12.2, 12.9
 	timerBreathCD:Start(18.2-delay, 1)--21.4, 21.5, 18.2
 	--Uproot and Crushing can swap places pull to pull then stay that way rest of fight
 	timerCrushingGripCD:Start(27.9-delay, 1)--27.9, 34, 34.8 (34 if it's after uproot)
@@ -130,7 +132,7 @@ function mod:SPELL_CAST_START(args)
 		specWarnBreath:Play("defensive")
 		--32.7, 27.9 / 29.1, 32.7, 36.4 / 29.1, 32.8, 27.9
 		timerBreathCD:Start(nil, self.vb.breathCount+1)
-		updateAllTimers(self, 9.7)
+		updateAllTimers(self, 7.2)
 	elseif spellId == 204611 then--Primary Crushnig Grip Cast
 		self.vb.crushingCount = self.vb.crushingCount + 1
 		--32.7, 35.1 / 33.5, 36.4 / 32.7, 27.9, 32.7
