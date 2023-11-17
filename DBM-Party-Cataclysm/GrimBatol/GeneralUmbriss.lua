@@ -28,7 +28,7 @@ local specWarnMalice		= mod:NewSpecialWarningDefensive(90170, "Tank", nil, nil, 
 local specWarnGroundSiege	= mod:NewSpecialWarningDodge(74634, "Melee", nil, nil, 2, 2)
 local specWarnBlitz			= mod:NewSpecialWarningYou(74670, nil, nil, nil, 1, 2)
 local yellBlitz				= mod:NewYell(74670)
-local specWarnBlitzNear		= mod:NewSpecialWarningClose(74670, nil, nil, nil, 1, 2)
+
 local specWarnSummonSkardyn	= mod:NewSpecialWarningSwitch(-3358, "Dps", nil, nil, 1, 2)--Seems health based, pull,and 50%?
 
 local timerBleedingWoundCD	= mod:NewCDTimer(20.5, 74846, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
@@ -73,9 +73,6 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg, _, _, _, target)
 			specWarnBlitz:Show()
 			specWarnBlitz:Play("targetyou")
 			yellBlitz:Yell()
-		elseif self:CheckNearby(6, target) then
-			specWarnBlitzNear:Show(target)
-			specWarnBlitzNear:Play("runaway")
 		else
 			warnBlitz:Show(target)
 		end

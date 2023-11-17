@@ -22,7 +22,6 @@ local warnQuakingLeap				= mod:NewTargetAnnounce(268932, 2)
 
 local specWarnQuakingLeap			= mod:NewSpecialWarningYou(268932, nil, nil, nil, 1, 2)
 local yellQuakingLeap				= mod:NewYell(268932)
-local specWarnQuakingLeapNear		= mod:NewSpecialWarningClose(268932, nil, nil, nil, 1, 2)
 local specWarnBladeCombo			= mod:NewSpecialWarningDefensive(268586, nil, nil, nil, 1, 2)
 local specWarnImpalingSpear			= mod:NewSpecialWarningDodge(268796, nil, nil, nil, 2, 2)
 ----ADDS
@@ -73,9 +72,6 @@ function mod:LeapTarget(targetname)
 		specWarnQuakingLeap:Show()
 		specWarnQuakingLeap:Play("targetyou")
 		yellQuakingLeap:Yell()
-	elseif self:CheckNearby(10, targetname) then
-		specWarnQuakingLeapNear:Show(targetname)
-		specWarnQuakingLeapNear:Play("runaway")
 	else
 		warnQuakingLeap:Show(targetname)
 	end

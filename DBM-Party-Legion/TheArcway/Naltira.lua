@@ -28,7 +28,6 @@ local warnWeb					= mod:NewTargetAnnounce(200284, 3)
 
 local specWarnBlink				= mod:NewSpecialWarningRun(199811, nil, nil, nil, 4, 2)
 local yellBlink					= mod:NewYell(199811, nil, false)
-local specWarnBlinkNear			= mod:NewSpecialWarningClose(199811, nil, nil, nil, 1, 2)
 local specWarnVenomGTFO			= mod:NewSpecialWarningMove(200040, nil, nil, nil, 1, 2)
 
 local timerBlinkCD				= mod:NewNextTimer(30, 199811, nil, nil, nil, 3)
@@ -100,9 +99,6 @@ function mod:UNIT_SPELLCAST_CHANNEL_START(uId, _, spellId)
 			specWarnBlink:Show()
 			specWarnBlink:Play("runaway")
 			yellBlink:Yell()
-		elseif self:CheckNearby(5, targetname) and self:AntiSpam(2.5, 2) then
-			specWarnBlinkNear:Show(targetname)
-			specWarnBlinkNear:Play("runaway")
 		else
 			warnBlink:Show(targetname)
 		end

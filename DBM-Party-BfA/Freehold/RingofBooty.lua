@@ -35,7 +35,6 @@ local warnGreasy					= mod:NewCountAnnounce(257829, 2)
 local warnRearm						= mod:NewSpellAnnounce(256489, 4)
 
 local specWarnSharkToss				= mod:NewSpecialWarningYou(256358, nil, nil, nil, 1, 2)
-local specWarnSharkTossNear			= mod:NewSpecialWarningClose(256358, nil, nil, nil, 1, 2)
 local yellSharkToss					= mod:NewYell(256358)
 local specWarnSharknado				= mod:NewSpecialWarningRun(256405, nil, nil, nil, 4, 2)
 --local specWarnRearm					= mod:NewSpecialWarningDodge(256489, nil, nil, nil, 2, 2)
@@ -86,9 +85,6 @@ function mod:SPELL_CAST_SUCCESS(args)
 			specWarnSharkToss:Show()
 			specWarnSharkToss:Play("runaway")
 			yellSharkToss:Yell()
-		elseif self:CheckNearby(10, args.destName) then
-			specWarnSharkTossNear:Show(args.destName)
-			specWarnSharkTossNear:Play("watchstep")
 		else
 			warnSharkToss:Show(args.destName)
 		end
@@ -117,9 +113,6 @@ function mod:SPELL_DAMAGE(sourceGUID, _, _, _, destGUID, destName, _, _, spellId
 				specWarnSharkToss:Show()
 				specWarnSharkToss:Play("runaway")
 				yellSharkToss:Yell()
-			elseif self:CheckNearby(10, destName) then
-				specWarnSharkTossNear:Show(destName)
-				specWarnSharkTossNear:Play("watchstep")
 			else
 				warnSharkToss:Show(destName)
 			end

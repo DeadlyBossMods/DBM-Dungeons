@@ -27,7 +27,6 @@ local warnFreezingSnare			= mod:NewTargetAnnounce(162066, 3)
 local warnMark					= mod:NewTargetNoFilterAnnounce(163447, 3)
 
 local specWarnFreezingSnare		= mod:NewSpecialWarningYou(162066, nil, nil, nil, 1, 2)
-local specWarnFreezingSnareNear	= mod:NewSpecialWarningClose(162066, nil, nil, nil, 1, 2)
 local yellFreezingSnare			= mod:NewYell(162066)
 local specWarnDiffusedEnergy	= mod:NewSpecialWarningMove(161588, nil, nil, nil, 1, 8)
 local specWarnSpinningSpear		= mod:NewSpecialWarningDodge(162058, nil, nil, 3, 2, 2)
@@ -57,9 +56,6 @@ function mod:FreezingSnareTarget(targetname, uId)
 		specWarnFreezingSnare:Show()
 		yellFreezingSnare:Yell()
 		specWarnFreezingSnare:Play("runaway")
-	elseif self:CheckNearby(8, targetname) then
-		specWarnFreezingSnareNear:Show(targetname)
-		specWarnFreezingSnareNear:Play("watchstep")
 	else
 		warnFreezingSnare:Show(targetname)
 	end

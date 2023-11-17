@@ -37,7 +37,6 @@ local specWarnLostConfidence		= mod:NewSpecialWarningMoveAway(322818, nil, nil, 
 local yellLostConfidence			= mod:NewYell(322818)
 local specWarnRunThrough			= mod:NewSpecialWarningMoveAway(323943, nil, nil, nil, 1, 2)
 local yellRunThrough				= mod:NewYell(323943)
-local specWarnRunThroughNear		= mod:NewSpecialWarningClose(323943, nil, nil, nil, 1, 2)
 --local specWarnGTFO					= mod:NewSpecialWarningGTFO(322817, nil, nil, nil, 1, 8)
 
 --Stage 1
@@ -124,9 +123,6 @@ do
 				specWarnRunThrough:Show()
 				specWarnRunThrough:Play("targetyou")
 				yellRunThrough:Yell()
-			elseif self:CheckNearby(8, targetname) then
-				specWarnRunThroughNear:Show(targetname)
-				specWarnRunThroughNear:Play("runaway")
 			else
 				warnRunThrough:Show(targetname)
 			end

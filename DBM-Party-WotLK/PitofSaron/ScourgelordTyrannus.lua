@@ -36,7 +36,6 @@ local warnHoarfrost				= mod:NewTargetAnnounce(69246, 2)
 
 local specWarnHoarfrost			= mod:NewSpecialWarningMoveAway(69246, nil, nil, nil, 1, 2)
 local yellHoarfrost				= mod:NewYell(69246)
-local specWarnHoarfrostNear		= mod:NewSpecialWarningClose(69246, nil, nil, nil, 1, 2)
 local specWarnIcyBlast			= mod:NewSpecialWarningMove(69238, nil, nil, nil, 1, 2)
 local specWarnOverlordsBrand	= mod:NewSpecialWarningReflect(69172, nil, nil, nil, 3, 2)
 local specWarnUnholyPower		= mod:NewSpecialWarningSpell(69167, "Tank", nil, nil, 1, 2)--Spell for now. may change to run away if damage is too high for defensive
@@ -123,9 +122,6 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg, _, _, _, target)
 			if self.Options.RangeFrame then
 				DBM.RangeCheck:Show(8, nil, nil, nil, nil, 5)
 			end
-		elseif self:CheckNearby(8, target) then
-			specWarnHoarfrostNear:Show(target)
-			specWarnHoarfrostNear:Play("watchstep")
 		else
 			warnHoarfrost:Show(target)
 		end

@@ -29,7 +29,6 @@ local warnDarkExile					= mod:NewTargetNoFilterAnnounce(321894, 3)
 
 local specWarnCometStorm			= mod:NewSpecialWarningDodge(320772, nil, nil, nil, 2, 2)
 local specWarnFrozenBinds			= mod:NewSpecialWarningYou(323730, nil, nil, nil, 1, 2)
-local specWarnFrozenBindsNear		= mod:NewSpecialWarningClose(323730, nil, nil, nil, 1, 2)
 local yellFrozenBinds				= mod:NewYell(323730)
 local yellFrozenBindsFades			= mod:NewShortYell(323730)
 local specWarnDarkExile				= mod:NewSpecialWarningYou(321894, nil, nil, nil, 1, 5)
@@ -89,9 +88,6 @@ function mod:SPELL_AURA_APPLIED(args)
 			specWarnFrozenBinds:Play("targetyou")
 			yellFrozenBinds:Yell()
 			yellFrozenBindsFades:Countdown(spellId)
-		elseif self:CheckNearby(16, args.destName) and not DBM:UnitDebuff("player", spellId) then
-			specWarnFrozenBindsNear:CombinedShow(0.5, args.destName)
-			specWarnFrozenBindsNear:ScheduleVoice(0.5, "runaway")
 		else
 			warnFrozenBinds:CombinedShow(0.5, args.destName)
 		end

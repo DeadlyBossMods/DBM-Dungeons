@@ -27,7 +27,6 @@ local specWarnArcaneMissiles		= mod:NewSpecialWarningDefensive(227628, "Tank", n
 local specWarnFrostbite				= mod:NewSpecialWarningInterrupt(227592, "HasInterrupt", nil, nil, 1, 2)
 local specWarnInfernoBoltMoveTo		= mod:NewSpecialWarningMoveTo(227615, nil, nil, nil, 1, 2)
 local specWarnInfernoBoltMoveAway	= mod:NewSpecialWarningMoveAway(227615, nil, nil, nil, 1, 2)
-local specWarnInfernoBoltNear		= mod:NewSpecialWarningClose(227615, nil, nil, nil, 1, 2)
 local specWarnCeaselessWinter		= mod:NewSpecialWarningSpell(227779, nil, nil, nil, 2, 2)
 local specWarnFlameWreath			= mod:NewSpecialWarningYou(228261, nil, nil, nil, 3, 2)
 local yellFlameWreath				= mod:NewYell(228261)
@@ -93,9 +92,6 @@ function mod:SPELL_AURA_APPLIED(args)
 				specWarnInfernoBoltMoveTo:Show(frostBiteName)
 				specWarnInfernoBoltMoveTo:Play("gather")
 			end
-		elseif self:CheckNearby(8, args.destName) and not DBM:UnitDebuff("player", frostBiteName) and not DBM:UnitDebuff("player", flameWreathName) then
-			specWarnInfernoBoltNear:Show(args.destName)
-			specWarnInfernoBoltNear:Play("scatter")
 		else
 			warnInfernoBolt:Show(args.destName)
 		end
