@@ -33,14 +33,11 @@ local specWarnReapSoul				= mod:NewSpecialWarningDodge(194956, "Tank", nil, nil,
 local specWarnSoulEchos				= mod:NewSpecialWarningRun(194966, nil, nil, nil, 1, 2)
 local specWarnSwirlingScythe		= mod:NewSpecialWarningDodge(195254, nil, nil, nil, 1, 2)
 local yellSwirlingScythe			= mod:NewYell(195254)
-local specWarnSwirlingScytheNear	= mod:NewSpecialWarningClose(195254, nil, nil, nil, 1, 2)
 local specWarnSoulBurst				= mod:NewSpecialWarningCount(196587, nil, nil, nil, 2, 2)
 
 local timerSwirlingScytheCD			= mod:NewCDTimer(20.5, 195254, nil, nil, nil, 3)--20-27
 local timerSoulEchoesCD				= mod:NewNextTimer(27.5, 194966, nil, nil, nil, 3)
 local timerReapSoulCD				= mod:NewNextTimer(13, 194956, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON..DBM_COMMON_L.DEADLY_ICON)
-
---mod:AddRangeFrameOption(5, 194966)
 
 mod.vb.scytheCount = 0
 mod.vb.echoesCount = 0
@@ -56,9 +53,6 @@ function mod:ScytheTarget(targetname, uId)
 		specWarnSwirlingScythe:Show()
 		specWarnSwirlingScythe:Play("runaway")
 		yellSwirlingScythe:Yell()
-	elseif self:CheckNearby(6, targetname) then
-		specWarnSwirlingScytheNear:Show(targetname)
-		specWarnSwirlingScytheNear:Play("runaway")
 	else
 		warnSwirlingScythe:Show(targetname)
 	end

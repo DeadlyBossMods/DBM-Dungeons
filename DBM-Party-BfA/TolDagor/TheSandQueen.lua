@@ -19,7 +19,6 @@ local warnUpheavelCast				= mod:NewCastAnnounce(257617, 2, 5)--Cast time until w
 local specWarnSandTrap				= mod:NewSpecialWarningDodge(257092, nil, nil, nil, 2, 2)
 local specWarnUpheavel				= mod:NewSpecialWarningYou(257617, nil, nil, nil, 2, 2)
 local yellUpheavel					= mod:NewYell(257617)
-local specWarnUpheavelNear			= mod:NewSpecialWarningClose(257617, nil, nil, nil, 2, 2)
 local specWarnSandstorm				= mod:NewSpecialWarningSpell(257495, nil, nil, nil, 2, 2)
 
 --local timerReapSoulCD				= mod:NewNextTimer(13, 194956, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON..DBM_COMMON_L.DEADLY_ICON)
@@ -56,9 +55,6 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg, _, _, _, targetname)
 				specWarnUpheavel:Show()
 				specWarnUpheavel:Play("targetyou")
 				yellUpheavel:Yell()
-			elseif self:CheckNearby(10, targetname) then
-				specWarnUpheavelNear:Show(targetname)
-				specWarnUpheavelNear:Play("watchstep")
 			else
 				warnUpheavel:Show(targetname)
 			end

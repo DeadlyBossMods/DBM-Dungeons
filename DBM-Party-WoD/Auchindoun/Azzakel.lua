@@ -25,7 +25,6 @@ local warnFelLash					= mod:NewTargetAnnounce(153234, 3, nil, "Tank|Healer", 2)
 local warnFelPool					= mod:NewSpellAnnounce(153616, 1)
 
 local specWarnCurtainOfFlame		= mod:NewSpecialWarningMoveAway(153396, nil, nil, nil, 1, 2)
-local specWarnCurtainOfFlameNear	= mod:NewSpecialWarningClose(153396, nil, nil, nil, 1, 2)
 local yellWarnCurtainOfFlame		= mod:NewYell(153396)
 local specWarnFelLash				= mod:NewSpecialWarningYou(153234, nil, nil, 2, 1, 2)
 local specWarnFelStomp				= mod:NewSpecialWarningDodge(157173, "Melee", nil, 2, 1, 2)
@@ -86,11 +85,6 @@ function mod:SPELL_AURA_APPLIED(args)
 			specWarnCurtainOfFlame:Show()
 			yellWarnCurtainOfFlame:Yell()
 			specWarnCurtainOfFlame:Play("runout")
-		else
-			if self:CheckNearby(5, targetname) then
-				specWarnCurtainOfFlameNear:Show(targetname)
-				specWarnCurtainOfFlameNear:Play("runaway")
-			end
 		end
 		if self.Options.RangeFrame then
 			if DBM:UnitDebuff("player", curtainDebuff) then--You have debuff, show everyone

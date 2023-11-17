@@ -22,7 +22,6 @@ local warnPoropellantBlast			= mod:NewTargetNoFilterAnnounce(259940, 2)
 local specWarnChemBurn				= mod:NewSpecialWarningDispel(259853, "RemoveMagic", nil, 2, 1, 2)
 local specWarnPoropellantBlast		= mod:NewSpecialWarningYou(259940, nil, nil, nil, 1, 2)
 local yellPoropellantBlast			= mod:NewYell(259940)
-local specWarnPoropellantBlastNear	= mod:NewSpecialWarningClose(259940, nil, nil, nil, 1, 2)
 
 local timerAxeriteCatalystCD		= mod:NewCDTimer(13, 259022, nil, nil, nil, 3)
 local timerChemBurnCD				= mod:NewCDTimer(13, 259853, nil, nil, 2, 5, nil, DBM_COMMON_L.HEALER_ICON..DBM_COMMON_L.MAGIC_ICON)
@@ -38,9 +37,6 @@ function mod:BlastTarget(targetname)
 		specWarnPoropellantBlast:Show()
 		specWarnPoropellantBlast:Play("targetyou")
 		yellPoropellantBlast:Yell()
-	elseif self:CheckNearby(10, targetname) then
-		specWarnPoropellantBlastNear:Show(targetname)
-		specWarnPoropellantBlastNear:Play("runaway")
 	else
 		warnPoropellantBlast:Show(targetname)
 	end

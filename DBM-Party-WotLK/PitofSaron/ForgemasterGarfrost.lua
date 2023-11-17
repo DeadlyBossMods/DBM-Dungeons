@@ -27,7 +27,6 @@ local warnSaroniteRock			= mod:NewTargetAnnounce(68789, 3)
 
 local specWarnSaroniteRock		= mod:NewSpecialWarningYou(68789, nil, nil, nil, 1, 2)
 local yellRock					= mod:NewYell(68789)
-local specWarnSaroniteRockNear	= mod:NewSpecialWarningClose(68789, nil, nil, nil, 1, 2)
 local specWarnPermafrost		= mod:NewSpecialWarningStack(68786, nil, 9, nil, nil, 1, 2)
 
 local timerSaroniteRockCD		= mod:NewCDTimer(15.5, 68789, nil, nil, nil, 3)--15.5-20
@@ -104,12 +103,7 @@ function mod:CHAT_MSG_ADDON(prefix, msg, channel, targetName)
 		if self:AntiSpam(5, targetName) then--Antispam sync by target name, since this doesn't use dbms built in onsync handler.
 			local uId = DBM:GetRaidUnitId(targetName)
 			if uId and not UnitIsUnit(uId, "player") then
-				if self:CheckNearby(10, targetName) then
-					specWarnSaroniteRockNear:Show(targetName)
-					specWarnSaroniteRockNear:Play("watchstep")
-				else
-					warnSaroniteRock:Show(targetName)
-				end
+				warnSaroniteRock:Show(targetName)
 			end
 			if self.Options.SetIconOnSaroniteRockTarget then
 				self:SetIcon(targetName, 8, 5)

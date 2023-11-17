@@ -26,7 +26,6 @@ local warnShadowCrash			= mod:NewTargetAnnounce(62660, 4)
 local warningInsanity			= mod:NewCastAnnounce(57496, 3)--Not currently working, no CLEU for it
 
 local specWarnShadowCrash		= mod:NewSpecialWarningDodge(62660, nil, nil, nil, 1, 2)
-local specWarnShadowCrashNear	= mod:NewSpecialWarningClose(62660, nil, nil, nil, 1, 2)
 local yellShadowCrash			= mod:NewYell(62660)
 
 local timerInsanity				= mod:NewCastTimer(5, 57496, nil, nil, nil, 6)
@@ -50,9 +49,6 @@ function mod:ShadowCrashTarget(targetname, uId)
 			specWarnShadowCrash:Show()
 			specWarnShadowCrash:Play("watchstep")
 			yellShadowCrash:Yell()
-		elseif self:CheckNearby(5, targetname) then
-			specWarnShadowCrashNear:Show(targetname)
-			specWarnShadowCrashNear:Play("watchstep")
 		else
 			warnShadowCrash:Show(targetname)
 		end

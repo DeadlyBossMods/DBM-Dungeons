@@ -26,7 +26,6 @@ local warnSummonBooma				= mod:NewSpellAnnounce(276212, 2)
 local specWarnGatlingGun			= mod:NewSpecialWarningDodge(260280, nil, nil, nil, 3, 8)
 local specWarnHomingMissile			= mod:NewSpecialWarningMoveAway(260811, nil, nil, nil, 1, 2)
 local yellHomingMissile				= mod:NewYell(260811)
-local specWarnHomingMissileNear		= mod:NewSpecialWarningClose(260811, nil, nil, nil, 1, 2)
 --Stage Two: Drill
 local specWarnDrillSmash			= mod:NewSpecialWarningMoveTo(271456, nil, nil, nil, 1, 2)
 local yellDrillSmash				= mod:NewYell(271456)
@@ -85,9 +84,6 @@ function mod:SPELL_AURA_APPLIED(args)
 			specWarnHomingMissile:Show()
 			specWarnHomingMissile:Play("runout")
 			yellHomingMissile:Yell()
-		elseif self:CheckNearby(20, args.destName) then
-			specWarnHomingMissileNear:Show(args.destName)
-			specWarnHomingMissileNear:Play("watchstep")
 		else
 			warnHomingMissile:Show(args.destName)
 		end
