@@ -274,7 +274,7 @@ function mod:SPELL_CAST_START(args)
 		end
 	elseif spellId == 413023 then
 		timerAncientRadianceCD:Start(nil, args.sourceGUID)
-		if self:AntiSpam(3, 4) then
+		if self:AntiSpam(3, 5) then
 			specWarnAncientRadiance:Show()
 			specWarnAncientRadiance:Play("aesoon")
 		end
