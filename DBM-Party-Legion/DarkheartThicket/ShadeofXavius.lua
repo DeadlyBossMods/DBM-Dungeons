@@ -40,8 +40,8 @@ local specWarnParanoia				= mod:NewSpecialWarningMoveAway(200289, nil, nil, nil,
 local yellParanoia					= mod:NewYell(200289)--Say is standard for avoid
 
 local timerFesteringRipCD			= mod:NewCDCountTimer(19.3, 200182, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.MAGIC_ICON)--17-21
-local timerNightmareBoltCD			= mod:NewCDCountTimer(24.3, 200185, nil, nil, nil, 3)--24.3-36.5
-local timerParanoiaCD				= mod:NewCDCountTimer(24.3, 200289, nil, nil, nil, 3)--24.3-34 (200359 matches journal, but better to sync up with debuff for WA keys)
+local timerNightmareBoltCD			= mod:NewCDCountTimer(23.1, 200185, nil, nil, nil, 3)--24.3-36.5
+local timerParanoiaCD				= mod:NewCDCountTimer(22, 200289, nil, nil, nil, 3)--22-34 (200359 matches journal, but better to sync up with debuff for WA keys)
 local timerFeedOnTheWeakCD			= mod:NewCDCountTimer(18.2, 200238, nil, nil, nil, 5, nil, DBM_COMMON_L.HEALER_ICON)
 
 mod:AddSetIconOption("SetIconOnNightmare", 200243, true, false, {1})
@@ -91,9 +91,9 @@ function mod:OnCombatStart(delay)
 	self.vb.feedCount = 0
 	self.vb.paranoiaCount = 0
 	timerFesteringRipCD:Start(3.2-delay, 1)
-	timerNightmareBoltCD:Start(6.8-delay, 1)
-	timerFeedOnTheWeakCD:Start(16.6-delay, 1)
-	timerParanoiaCD:Start(23-delay, 1)
+	timerNightmareBoltCD:Start(6-delay, 1)
+	timerFeedOnTheWeakCD:Start(15.7-delay, 1)
+	timerParanoiaCD:Start(21.9-delay, 1)
 end
 
 --<1631.04 22:47:56> [CLEU] SPELL_CAST_START#Creature-0-5770-1466-11160-99192-000021BD9C#Shade of Xavius(78.8%-100.0%)##nil#200289#Growing Paranoia#nil#nil", -- [20172]

@@ -82,7 +82,6 @@ function mod:SPELL_CAST_START(args)
 		else--2, 4, etc
 			timerRottenExpulsionCD:Start(20.2, self.vb.rottenCount+1)
 		end
-		timerRottenExpulsionCD:Start(nil, self.vb.rottenCount+1)
 	elseif spellId == 264734 then
 		warnConsumeAll:Show()
 	end
