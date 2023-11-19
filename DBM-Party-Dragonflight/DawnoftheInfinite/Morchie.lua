@@ -58,24 +58,14 @@ mod.vb.problemsCount = 0
 mod.vb.problemIcons = 1
 mod.vb.facesCount = 0
 mod.vb.trapsCount = 0
-local oldallTimers = {--Timers up to 6:09 (< 10.2)
-	--Sand Blast
-	[404916] = {4.6, 38.8, 29.1, 20.6, 29.1, 21.8, 29.1, 21.8, 29.1, 21.8, 29.1, 21.8, 29.1, 21.8},
-	--More Problems
-	[403891] = {10.6, 39.7, 48.5, 49.8, 50.9, 51, 51, 52.2},
-	--Time Traps
-	[406481] = {30.1, 50.5, 51, 51, 51, 51, 51},
-	--Familiar Faces
-	[405279] = {38.6},
-}
 --Even on a +25 I could not find a pull longer than this
 local allTimers = {--Timers up to 2:19 for 10.2+ (with late october timer changes).
 	--Sand Blast
-	[404916] = {3, 27, 19.9, 28.9, 12, 12, 11.9, 24},
+	[404916] = {3, 27, 19.9, 28.9, 12, 12, 11.9, 24, 11.9, 12.0},
 	--More Problems
 	[403891] = {10, 50, 60},
 	--Time Traps
-	[406481] = {36, 48, 24},
+	[406481] = {36, 48, 24, 47.9},
 	--Familiar Faces
 	[405279] = {43, 52.9, 48},
 }

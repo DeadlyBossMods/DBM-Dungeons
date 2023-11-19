@@ -86,7 +86,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		if args:IsPlayer() then
 			yellThorns:Yell()
 		else
-			specWarnThorns:Show(self.vb.thornsCount)
+			specWarnThorns:Show(self.vb.thornsCount+1)--+1 because event is lagged behind timer event
 			specWarnThorns:Play("targetchange")
 		end
 	elseif spellId == 260541 then

@@ -30,7 +30,7 @@ local warnHealingWaters							= mod:NewCastAnnounce(164887, 3)
 local warnVenomBurst							= mod:NewTargetNoFilterAnnounce(165123, 4)
 local warnGnarledroots							= mod:NewTargetNoFilterAnnounce(426500, 3)
 
-local specWarnBoundingWhirl						= mod:NewSpecialWarningSpell(164965, "Melee", nil, nil, 4, 2)
+local specWarnBoundingWhirl						= mod:NewSpecialWarningSpell(172578, "Melee", nil, nil, 4, 2)
 local specWarnCinderboltSalvo					= mod:NewSpecialWarningSpell(427223, nil, nil, nil, 2, 2)
 local specWarnSpatialDisruption					= mod:NewSpecialWarningSpell(426974, nil, nil, nil, 2, 13)
 local specWarnColdFusion						= mod:NewSpecialWarningDodge(426845, nil, nil, nil, 2, 2)
