@@ -13,7 +13,7 @@ mod:RegisterEvents(
 	"SPELL_CAST_SUCCESS 165213 172578 165123 426500 427223",
 	"SPELL_INTERRUPT",
 	"SPELL_AURA_APPLIED 164965 169658 165123 169495 426500",
-	"SPELL_AURA_APPLIED_DOSE 164886",
+--	"SPELL_AURA_APPLIED_DOSE 164886",
 --	"SPELL_AURA_REMOVED",
 	"UNIT_DIED"
 )
@@ -43,7 +43,7 @@ local specWarnPyroblast							= mod:NewSpecialWarningInterrupt(169839, "HasInter
 local specWarnFrostbolt							= mod:NewSpecialWarningInterrupt(169840, false, nil, nil, 1, 2)
 local specWarnChokingVinesDispel				= mod:NewSpecialWarningDispel(164965, "RemoveMagic", nil, nil, 1, 2)
 local specWarnVenomBurstDispel					= mod:NewSpecialWarningDispel(165123, "RemovePoison", nil, nil, 1, 2)
-local specWarnDreadpetalToxinDispel				= mod:NewSpecialWarningDispel(164886, "RemovePoison", nil, nil, 1, 2)
+--local specWarnDreadpetalToxinDispel				= mod:NewSpecialWarningDispel(164886, "RemovePoison", nil, nil, 1, 2)
 local specWarnPoisonClawsDispel					= mod:NewSpecialWarningDispel(169658, "RemovePoison", nil, nil, 1, 2)
 local specWarnGTFO								= mod:NewSpecialWarningGTFO(169495, nil, nil, nil, 1, 8)
 
@@ -160,12 +160,12 @@ function mod:SPELL_AURA_APPLIED(args)
 	if spellId == 164965 and args:IsDestTypePlayer() and self:CheckDispelFilter("magic") and self:AntiSpam(3, 3) then
 		specWarnChokingVinesDispel:Show(args.destName)
 		specWarnChokingVinesDispel:Play("helpdispel")
-	elseif spellId == 164886 and args:IsDestTypePlayer() then
-		local amount = args.amount or 1
-		if amount >= 6 and self:CheckDispelFilter("poison") and self:AntiSpam(3, 3) then
-			specWarnDreadpetalToxinDispel:Show(args.destName)
-			specWarnDreadpetalToxinDispel:Play("helpdispel")
-		end
+--	elseif spellId == 164886 and args:IsDestTypePlayer() then
+--		local amount = args.amount or 1
+--		if amount >= 6 and self:CheckDispelFilter("poison") and self:AntiSpam(3, 3) then
+--			specWarnDreadpetalToxinDispel:Show(args.destName)
+--			specWarnDreadpetalToxinDispel:Play("helpdispel")
+--		end
 	elseif spellId == 169658 and args:IsDestTypePlayer() and self:CheckDispelFilter("poison") and self:AntiSpam(3, 3) then
 		specWarnPoisonClawsDispel:Show(args.destName)
 		specWarnPoisonClawsDispel:Play("helpdispel")

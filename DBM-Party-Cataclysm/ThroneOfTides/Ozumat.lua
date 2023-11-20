@@ -2,17 +2,18 @@ local mod	= DBM:NewMod(104, "DBM-Party-Cataclysm", 9, 65)
 local L		= mod:GetLocalizedStrings()
 local wowToc = DBM:GetTOC()
 
+mod:SetRevision("@file-date-integer@")
 if (wowToc >= 100200) then
 	mod.statTypes = "normal,heroic,challenge,timewalker"
 	mod.upgradedMPlus = true
+	mod:SetCreatureID(213770, 42172)--P1 Ink, P2 Ozumat
+	mod:SetBossHPInfoToHighest()
 else--TODO, refine for cata classic since no timewalker there
 	mod.statTypes = "normal,heroic,timewalker"
+	mod:SetCreatureID(40792)
+	mod:SetMainBossID(42172)--42172 is Ozumat, but we need Neptulon for engage trigger.
 end
-
-mod:SetRevision("@file-date-integer@")
-mod:SetCreatureID(40792)
 mod:SetEncounterID(1047)
-mod:SetMainBossID(42172)--42172 is Ozumat, but we need Neptulon for engage trigger.
 
 mod:RegisterCombat("combat")
 
