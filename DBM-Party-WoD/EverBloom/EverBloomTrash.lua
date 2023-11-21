@@ -55,11 +55,11 @@ local timerVenomBurstCD							= mod:NewCDNPTimer(10.6, 165123, nil, nil, nil, 3)
 local timerHealingWatersCD						= mod:NewCDNPTimer(19.4, 164887, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerLivingLeavesCD						= mod:NewCDNPTimer(18.1, 169494, nil, nil, nil, 3)
 local timerGnarledRootsCD						= mod:NewCDNPTimer(18.1, 426500, nil, nil, nil, 3)
-local timerPyroblastCD							= mod:NewCDNPTimer(8, 164965, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--8-13 window, quite large
+local timerPyroblastCD							= mod:NewCDNPTimer(8, 169839, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--8-13 window, quite large
 local timerCinderboltSalvoCD					= mod:NewCDNPTimer(18.2, 427223, nil, nil, nil, 2)
 local timerFrostboltCD							= mod:NewCDNPTimer(6, 169840, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerColdfusionCD							= mod:NewCDNPTimer(21.8, 426845, nil, nil, nil, 3)--21.8-25, maybe shorter
-local timerSpatialDisruptionCD					= mod:NewCDNPTimer(21.8, 426974, nil, nil, nil, 3)
+local timerSpatialDisruptionCD					= mod:NewCDNPTimer(19.5, 426974, nil, nil, nil, 3)
 
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc, 7 off interrupt, 8 GTFO
 

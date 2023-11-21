@@ -63,7 +63,7 @@ if (wowToc >= 100200) then
 	local specWarnNoxiousCharge							= mod:NewSpecialWarningYou(427510, nil, nil, nil, 3, 2)
 	local yellNoxiousCharge								= mod:NewShortYell(427510)
 
-	local timerNoxiousChargeCD							= mod:NewCDCountTimer(17, 427510, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+	local timerNoxiousChargeCD							= mod:NewCDCountTimer(16.2, 427510, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 
 	mod.vb.revitalizeCount = 0
 	mod.vb.torrentialCount = 0
@@ -91,8 +91,8 @@ if (wowToc >= 100200) then
 					--timerTorrentialFuryCD:Start(1, bossGUID)--Cast on engage pretty much
 				else--Telu
 					self.vb.teluGUID = bossGUID
-					timerToxicBloomCD:Start(6.2, 1, bossGUID)
-					timerTerrestrialFuryCD:Start(29.3, 1, bossGUID)
+					timerToxicBloomCD:Start(5, 1, bossGUID)
+					timerTerrestrialFuryCD:Start(25.6, 1, bossGUID)
 				end
 			end
 		end
