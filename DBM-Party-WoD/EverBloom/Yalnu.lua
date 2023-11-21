@@ -44,10 +44,10 @@ if (wowToc >= 100200) then
 
 	local timerBrushfireCD								= mod:NewNextTimer(15.4, 428746, nil, nil, nil, 5, nil, DBM_COMMON_L.DAMAGE_ICON)--For buff going back up on boss, DPS can time burst CDs
 	local timerColossalBlowCD							= mod:NewCDTimer(15.3, 169179, nil, nil, nil, 3, nil, DBM_COMMON_L.TANK_ICON)
-	local timerVerdantEruptionCD						= mod:NewCDCountTimer(54.5, 428823, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)
+	local timerVerdantEruptionCD						= mod:NewCDCountTimer(53.1, 428823, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)
 	local timerLumberingSwipeCD							= mod:NewCDNPTimer(11.8, 169929, nil, nil, nil, 3)
 	local timerGenesis									= mod:NewCastTimer(14, 169613, nil, nil, nil, 5)
-	local timerGenesisCD								= mod:NewCDCountTimer(54.5, 169613, nil, nil, nil, 6)
+	local timerGenesisCD								= mod:NewCDCountTimer(53.1, 169613, nil, nil, nil, 6)
 
 	mod:AddSetIconOption("SetIconOnAncient", -10537, true, 5, {8})
 
