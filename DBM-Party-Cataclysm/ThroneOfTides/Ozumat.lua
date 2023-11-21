@@ -35,6 +35,7 @@ if (wowToc >= 100200) then
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
  or ability.id = 428526 and type = "begincast"
 	--]]
+	--NOTE: "Foul Bolt now has an 8 second initial cool up"
 	local warnPhase2									= mod:NewPhaseAnnounce(2, 2, nil, nil, nil, nil, nil, 2)
 	--Ink of Ozumat
 	mod:AddTimerLine(DBM:EJ_GetSectionInfo(28235))

@@ -35,7 +35,7 @@ local specWarnEchoes				= mod:NewSpecialWarningDodgeCount(250050, nil, nil, nil,
 local specWarnGTFO					= mod:NewSpecialWarningGTFO(250036, nil, nil, nil, 1, 8)
 
 local timerSoulrendCD				= mod:NewCDCountTimer(40.6, 259187, nil, nil, nil, 3, nil, DBM_COMMON_L.DAMAGE_ICON)
-local timerWrackingPainCD			= mod:NewCDCountTimer(16.7, 250096, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--17-23
+local timerWrackingPainCD			= mod:NewCDCountTimer(16.7, 250096, nil, nil, nil, 3)--17-23
 local timerSkewerCD					= mod:NewCDCountTimer(12, 249919, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerEchoesCD					= mod:NewCDCountTimer(31.2, 250050, nil, nil, nil, 3)
 
@@ -100,7 +100,7 @@ function mod:SPELL_CAST_START(args)
 	elseif spellId == 250096 then
 		self.vb.wrackCount = self.vb.wrackCount + 1
 		timerWrackingPainCD:Start(nil, self.vb.wrackCount+1)
-		if self:CheckInterruptFilter(args.sourceGUID, false, true) then
+		if not self:IsMythic() and self:CheckInterruptFilter(args.sourceGUID, false, true) then
 			specWarnWrackingPain:Show(args.sourceName, self.vb.wrackCount)
 			specWarnWrackingPain:Play("kickcast")
 		end
