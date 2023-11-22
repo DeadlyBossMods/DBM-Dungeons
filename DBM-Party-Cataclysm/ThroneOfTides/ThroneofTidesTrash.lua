@@ -169,7 +169,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		warnCrushingDepths:Show(args.destName)
 	elseif spellId == 426618 and self:AntiSpam(3, 5) then
 		warnSlitheringAssault:Show(args.destName)
-	elseif spellId == 426659 then
+	elseif spellId == 426659 and args:IsDestTypePlayer() then
 		local amount = args.amount or 1
 		if self:AntiSpam(3, 5) then
 			warnRazorJaws:Show(args.destName, amount)
