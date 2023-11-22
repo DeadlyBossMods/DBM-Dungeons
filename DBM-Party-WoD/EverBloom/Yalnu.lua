@@ -42,12 +42,12 @@ if (wowToc >= 100200) then
 	local specWarnLasherVenom							= mod:NewSpecialWarningInterrupt(173563, "HasInterrupt", nil, nil, 1, 2)
 	--local specWarnGTFO								= mod:NewSpecialWarningGTFO(409058, nil, nil, nil, 1, 8)
 
-	local timerBrushfireCD								= mod:NewNextTimer(15.4, 169179, nil, nil, nil, 5, nil, DBM_COMMON_L.DAMAGE_ICON)--For buff going back up on boss, DPS can time burst CDs
+	local timerBrushfireCD								= mod:NewNextTimer(15.4, 428746, nil, nil, nil, 5, nil, DBM_COMMON_L.DAMAGE_ICON)--For buff going back up on boss, DPS can time burst CDs
 	local timerColossalBlowCD							= mod:NewCDTimer(15.3, 169179, nil, nil, nil, 3, nil, DBM_COMMON_L.TANK_ICON)
-	local timerVerdantEruptionCD						= mod:NewCDCountTimer(54.5, 428823, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)
+	local timerVerdantEruptionCD						= mod:NewCDCountTimer(53.1, 428823, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)
 	local timerLumberingSwipeCD							= mod:NewCDNPTimer(11.8, 169929, nil, nil, nil, 3)
 	local timerGenesis									= mod:NewCastTimer(14, 169613, nil, nil, nil, 5)
-	local timerGenesisCD								= mod:NewCDCountTimer(54.5, 169613, nil, nil, nil, 6)
+	local timerGenesisCD								= mod:NewCDCountTimer(53.1, 169613, nil, nil, nil, 6)
 
 	mod:AddSetIconOption("SetIconOnAncient", -10537, true, 5, {8})
 
@@ -57,10 +57,10 @@ if (wowToc >= 100200) then
 	function mod:OnCombatStart(delay)
 		self.vb.eruptionCount = 0
 		self.vb.GenesisCount = 0
-		timerColossalBlowCD:Start(2.8-delay)
+		timerColossalBlowCD:Start(2.4-delay)
 		timerBrushfireCD:Start(4-delay)
-		timerVerdantEruptionCD:Start(23.2-delay, 1)
-		timerGenesisCD:Start(40.4-delay, 1)
+		timerVerdantEruptionCD:Start(22.9-delay, 1)
+		timerGenesisCD:Start(40-delay, 1)
 	end
 
 	function mod:SPELL_CAST_START(args)

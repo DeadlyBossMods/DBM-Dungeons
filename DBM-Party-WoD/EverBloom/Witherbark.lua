@@ -20,11 +20,12 @@ mod:RegisterCombat("combat")
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 164357",
 	"SPELL_CAST_SUCCESS 164302",
-	"SPELL_AURA_APPLIED 164275",
-	"SPELL_AURA_REMOVED 164275",
+	"SPELL_SUMMON 164556",
+	"SPELL_AURA_APPLIED 164275 164302",
+	"SPELL_AURA_REMOVED 164275"
 --	"UNIT_SPELLCAST_SUCCEEDED boss1",
 --	"CHAT_MSG_MONSTER_EMOTE",
-	"RAID_BOSS_WHISPER"
+--	"RAID_BOSS_WHISPER"
 )
 
 --[[
@@ -38,17 +39,18 @@ ability.id = 164357 and type = "begincast"
 --NOTE: Mod is just using 10.2 values, since fight wasn't reworked i'm not making a hybrid mod for timers that have slight differences
 local warnBrittleBark				= mod:NewSpellAnnounce(164275, 1)
 local warnBrittleBarkOver			= mod:NewEndAnnounce(164275, 2)
-local warnUncheckedGrowth			= mod:NewSpellAnnounce(-10098, 3, 164294)
+local warnUncheckedGrowth			= mod:NewTargetAnnounce(164294, 2)
+local warnUncheckedGrowthSpawn		= mod:NewSpellAnnounce(164556, 3)--Add Spawn
 
 local specWarnLivingLeaves			= mod:NewSpecialWarningMove(169495, nil, nil, nil, 1, 8)
 local specWarnUncheckedGrowthYou	= mod:NewSpecialWarningYou(164294, nil, nil, nil, 1, 2)--The add fixate is on you
 local specWarnUncheckedGrowth		= mod:NewSpecialWarningGTFO(164294, nil, nil, nil, 1, 8)--GTFO
-local specWarnUncheckedGrowthAdd	= mod:NewSpecialWarningSwitch(-10098, "Tank", nil, nil, 1, 2)--Spawn
+local specWarnUncheckedGrowthAdd	= mod:NewSpecialWarningSwitch(164556, false, nil, nil, 1, 2)--Spawn
 local specWarnParchedGrasp			= mod:NewSpecialWarningSpell(164357, "Tank", nil, nil, 1, 2)
 
 local timerParchedGrasp				= mod:NewCDTimer(16, 164357, nil, "Tank", 2, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerBrittleBarkCD			= mod:NewCDTimer(40, 164275, nil, nil, nil, 6)--30 seconds pre 10.2 https://www.warcraftlogs.com/reports/y2cYmZVWKqGkAHbn#fight=last&pins=2%24Off%24%23244F4B%24expression%24ability.id%20%3D%20164275%20or%20ability.id%20%3D%20164556&view=events&translate=true
-local timerUncheckedGrowthCD		= mod:NewCDTimer(12, 164294, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)--LW uses spellid and not joural ID for timer, so we have to match it for WAs
+local timerUncheckedGrowthCD		= mod:NewCDTimer(12, 164294, nil, nil, nil, 3)--LW uses spellid and not joural ID for timer, so we have to match it for WAs
 
 --mod:GroupSpells(164294, -10098)--No longer combined since each needs a diff WA key in UI now
 
@@ -81,11 +83,17 @@ function mod:SPELL_CAST_SUCCESS(args)
 	local spellId = args.spellId
 	if spellId == 164302 then
 		timerUncheckedGrowthCD:Start()
-		if self.Options["SpecWarn-10098switch"] then
+	end
+end
+
+function mod:SPELL_SUMMON(args)
+	local spellId = args.spellId
+	if spellId == 164556 and self:AntiSpam(4, 1) then
+		if self.Options.SpecWarn164556switch then
 			specWarnUncheckedGrowthAdd:Show()
 			specWarnUncheckedGrowthAdd:Play("killmob")
 		else
-			warnUncheckedGrowth:Show()
+			warnUncheckedGrowthSpawn:Show()
 		end
 	end
 end
@@ -98,6 +106,13 @@ function mod:SPELL_AURA_APPLIED(args)
 		if self:IsNormal() then--Heroic and above CD continues without reset
 			timerUncheckedGrowthCD:Stop()
 		end
+	elseif spellId == 164302 then
+		if args:IsPlayer() then
+			specWarnUncheckedGrowthYou:Show()
+			specWarnUncheckedGrowthYou:Play("targetyou")
+		else
+			warnUncheckedGrowth:Show(args.destName)
+		end
 	end
 end
 
@@ -107,17 +122,15 @@ function mod:SPELL_AURA_REMOVED(args)
 		warnBrittleBarkOver:Show()
 		timerParchedGrasp:Start(3.6)
 		timerBrittleBarkCD:Start(39.9)
-		--if self:IsNormal() then
-		--	timerUncheckedGrowthCD:Start()
-		--end
+		timerUncheckedGrowthCD:Restart(3.6)--Needs more review to verify
 	end
 end
 
 function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, destName, _, _, spellId, spellName)
-	if spellId == 169495 and destGUID == UnitGUID("player") and self:AntiSpam(2, 1) then--Deprecated?
+	if spellId == 169495 and destGUID == UnitGUID("player") and self:AntiSpam(2, 2) then--Deprecated?
 		specWarnLivingLeaves:Show(spellName)
 		specWarnLivingLeaves:Play("watchfeet")
-	elseif spellId == 164294 and destGUID == UnitGUID("player") and self:AntiSpam(2, 1) then
+	elseif spellId == 164294 and destGUID == UnitGUID("player") and self:AntiSpam(2, 2) then
 		specWarnUncheckedGrowth:Show(spellName)
 		specWarnUncheckedGrowth:Play("watchfeet")
 	end
@@ -142,9 +155,9 @@ function mod:CHAT_MSG_MONSTER_EMOTE(msg)--Message doesn't matter, it occurs only
 		warnUncheckedGrowth:Show()
 	end
 end
---]]
 
 function mod:RAID_BOSS_WHISPER()
 	specWarnUncheckedGrowthYou:Show()
 	specWarnUncheckedGrowthYou:Play("targetyou")
 end
+--]]
