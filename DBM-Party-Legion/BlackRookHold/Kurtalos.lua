@@ -13,7 +13,7 @@ mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 198820 199143 199193 202019 198641 201733",
-	"SPELL_CAST_SUCCESS 198635",
+	"SPELL_CAST_SUCCESS 198635 198641",
 	"SPELL_AURA_APPLIED 201733",
 	"SPELL_AURA_REMOVED 199193",
 	"UNIT_DIED"
@@ -50,7 +50,7 @@ local specWarnShadowBoltVolley		= mod:NewSpecialWarningSpell(202019, nil, nil, n
 local timerGuileCD					= mod:NewCDCountTimer(39, 199193, nil, nil, nil, 6)
 local timerGuile					= mod:NewBuffFadesTimer(20, 199193, nil, nil, nil, 6)
 local timerCloudCD					= mod:NewCDCountTimer(32.7, 199143, nil, nil, nil, 3)
-local timerSwarmCD					= mod:NewCDCountTimer(18.1, 201733, nil, nil, nil, 3)--18-21
+local timerSwarmCD					= mod:NewCDCountTimer(17, 201733, nil, nil, nil, 3)--17-21
 local timerShadowBoltVolleyCD		= mod:NewCDCountTimer(9.7, 202019, nil, nil, nil, 2)
 
 --Stage 1
@@ -111,9 +111,7 @@ function mod:SPELL_CAST_START(args)
 		end
 		timerShadowBoltVolleyCD:Start(nil, self.vb.shadowboltCount+1)
 	elseif spellId == 198641 then
-		self.vb.bladeCount = self.vb.bladeCount + 1
-		warnWhirlingBlade:Show(self.vb.bladeCount)
-		timerWhirlingBladeCD:Start(nil, self.vb.bladeCount+1)
+		warnWhirlingBlade:Show(self.vb.bladeCount+1)
 	elseif spellId == 201733 then
 		self.vb.swarmCount = self.vb.swarmCount + 1
 		timerSwarmCD:Start(nil, self.vb.swarmCount+1)
@@ -125,6 +123,9 @@ function mod:SPELL_CAST_SUCCESS(args)
 	if spellId == 198635 then
 		self.vb.shearCount = self.vb.shearCount + 1
 		timerUnerringShearCD:Start(nil, self.vb.shearCount+1)
+	elseif spellId == 198641 then
+		self.vb.bladeCount = self.vb.bladeCount + 1
+		timerWhirlingBladeCD:Start(20.5, self.vb.bladeCount+1)--23 - 2.5
 	end
 end
 

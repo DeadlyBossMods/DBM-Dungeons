@@ -113,7 +113,7 @@ function mod:SPELL_CAST_START(args)
 	elseif spellId == 197546 then
 		self.vb.glaiveCount = self.vb.glaiveCount + 1
 		timerBrutalGlaiveCD:Start(nil, self.vb.glaiveCount+1)
-		self:BossTargetScanner(98696, "BrutalGlaiveTarget", 0.1, 10, true)
+		self:BossTargetScanner(args.sourceGUID, "BrutalGlaiveTarget", 0.1, 10, true)
 	elseif spellId == 197974 then
 		specWarnBonebreakingStrike:Show()
 		specWarnBonebreakingStrike:Play("shockwave")
