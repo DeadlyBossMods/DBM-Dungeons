@@ -138,7 +138,7 @@ function mod:SPELL_CAST_START(args)
 			specWarnPallidGlare:Show(args.sourceName)
 			specWarnPallidGlare:Play("kickcast")
 		elseif self:AntiSpam(3, 7) then
-			warnPallidGlare()
+			warnPallidGlare:Show()
 		end
 	elseif spellId == 264407 then
 		timerHorrificVisageCD:Start(nil, args.sourceGUID)
