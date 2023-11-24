@@ -52,12 +52,15 @@ if (wowToc >= 100200) then
 
 	function mod:OnCombatStart(delay)
 		self.vb.pullCount = 0
-		timerCinderboltStormCD:Start(3, DBM_COMMON_L.BOSS)
+		timerCinderboltStormCD:Start(3)
 		if not self:IsMythic() then--Mythic schedulers timers differently
 			timerGlacialFusionCD:Start(24.1)
 			timerSpetialCompressionCD:Start(43.7)
 		end
 	end
+
+	--Another great log with variances
+	--https://www.warcraftlogs.com/reports/79WcKGf4znd8qgj2#pins=2%24Off%24%23244F4B%24expression%24%09(ability.id%20%3D%20428139)%20and%20type%20%3D%20%22begincast%22%0A%09%20or%20(ability.id%20%3D%20428177%20or%20ability.id%20%3D%20427899%20or%20ability.id%20%3D%20428082)%20and%20type%20%3D%20%22applybuff%22%0A%09%20or%20type%20%3D%20%22dungeonencounterstart%22%20or%20type%20%3D%20%22dungeonencounterend%22&view=events&boss=61279&difficulty=10&wipes=2
 
 	--boss first / add second
 	--expected:
