@@ -43,9 +43,10 @@ if (wowToc >= 100200) then
 	local specWarnFrostbolt								= mod:NewSpecialWarningInterrupt(427863, "HasInterrupt", nil, nil, 1, 2)--Prio frostbolt interrupts over other two, because of slow
 	local specWarnGTFO									= mod:NewSpecialWarningGTFO(426991, nil, nil, nil, 1, 8)
 
-	local timerCinderboltStormCD						= mod:NewCDSourceTimer(60, 427899, nil, nil, nil, 2)
-	local timerGlacialFusionCD							= mod:NewCDSourceTimer(60, 428082, nil, nil, nil, 3)
-	local timerSpetialCompressionCD						= mod:NewCDSourceTimer(60, 428139, nil, nil, nil, 5)
+	local timerCinderboltStormCD						= mod:NewCDTimer(60, 427899, nil, nil, nil, 2)
+	local timerGlacialFusionCD							= mod:NewCDTimer(60, 428082, nil, nil, nil, 3)
+	local timerSpetialCompressionCD						= mod:NewCDTimer(60, 428139, nil, nil, nil, 5)
+	local timerSpecialCD								= mod:NewCDSpecialTimer(20)--Used on mythic for now
 
 	mod.vb.pullCount = 0
 
@@ -53,8 +54,8 @@ if (wowToc >= 100200) then
 		self.vb.pullCount = 0
 		timerCinderboltStormCD:Start(3, DBM_COMMON_L.BOSS)
 		if not self:IsMythic() then--Mythic schedulers timers differently
-			timerGlacialFusionCD:Start(24.1, DBM_COMMON_L.BOSS)
-			timerSpetialCompressionCD:Start(43.7, DBM_COMMON_L.BOSS)
+			timerGlacialFusionCD:Start(24.1)
+			timerSpetialCompressionCD:Start(43.7)
 		end
 	end
 
@@ -78,12 +79,15 @@ if (wowToc >= 100200) then
 			specWarnSpetialCompression:Show(self.vb.pullCount)
 			specWarnSpetialCompression:Play("pullin")
 			if self:IsMythic() then
-				if args:GetSrcCreatureID() == 82682 then--Source is Boss
-					timerGlacialFusionCD:Start(20, DBM_COMMON_L.BOSS)--Fire, Ice, Arcane, repeat
-					timerSpetialCompressionCD:Start(20, DBM_COMMON_L.ADD)--Add will recast this next
+--				if args:GetSrcCreatureID() == 82682 then--Source is Boss
+--					timerGlacialFusionCD:Start(20)--Fire, Ice, Arcane, repeat (can come from either the boss or the add, but one of them will do it)
+--					timerSpetialCompressionCD:Start(20)--Add will recast this next
+--				end
+				if self:AntiSpam(5, 1) then
+					timerSpecialCD:Start(20)
 				end
 			else
-				timerSpetialCompressionCD:Start(60, DBM_COMMON_L.BOSS)
+				timerSpetialCompressionCD:Start(60)
 			end
 		elseif spellId == 427863 then
 			if self:CheckInterruptFilter(args.sourceGUID, false, true) then
@@ -98,29 +102,35 @@ if (wowToc >= 100200) then
 		if spellId == 427899 then
 			warnCinderboltStorm:Show()
 			if self:IsMythic() then
-				if args:GetSrcCreatureID() == 82682 then--Source is Boss
-					timerGlacialFusionCD:Start(19.4, DBM_COMMON_L.BOSS)--Fire, Ice, Arcane, repeat
-					timerCinderboltStormCD:Start(20, DBM_COMMON_L.ADD)--Add will recast this next
+--				if args:GetSrcCreatureID() == 82682 then--Source is Boss
+--					timerGlacialFusionCD:Start(19.4)--Fire, Ice, Arcane, repeat
+--					timerCinderboltStormCD:Start(20)--Add will recast this next
+--				end
+				if self:AntiSpam(5, 1) then
+					timerSpecialCD:Start(20)
 				end
 			else
-				timerCinderboltStormCD:Start(60, DBM_COMMON_L.BOSS)
+				timerCinderboltStormCD:Start(60)
 			end
 		elseif spellId == 428082 then
 			specWarnGlacialFusion:Show()
 			specWarnGlacialFusion:Play("watchorb")
 			if self:IsMythic() then
-				if args:GetSrcCreatureID() == 82682 then--Source is Boss
-					timerSpetialCompressionCD:Start(20, DBM_COMMON_L.BOSS)--Fire, Ice, Arcane, repeat
-					timerGlacialFusionCD:Start(20, DBM_COMMON_L.ADD)--Add will recast this next
+--				if args:GetSrcCreatureID() == 82682 then--Source is Boss
+--					timerSpetialCompressionCD:Start(20)--Fire, Ice, Arcane, repeat
+--					timerGlacialFusionCD:Start(20)--Add will recast this next
+--				end
+				if self:AntiSpam(5, 1) then
+					timerSpecialCD:Start(20)
 				end
 			else
-				timerGlacialFusionCD:Start(60, DBM_COMMON_L.BOSS)
+				timerGlacialFusionCD:Start(60)
 			end
 		end
 	end
 
 	function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId, spellName)
-		if spellId == 426991 and destGUID == UnitGUID("player") and self:AntiSpam(3, 1) then
+		if spellId == 426991 and destGUID == UnitGUID("player") and self:AntiSpam(3, 2) then
 			specWarnGTFO:Show(spellName)
 			specWarnGTFO:Play("watchfeet")
 		end
