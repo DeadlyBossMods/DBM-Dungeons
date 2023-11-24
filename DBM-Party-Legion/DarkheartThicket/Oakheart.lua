@@ -30,9 +30,9 @@ local specWarnRoots					= mod:NewSpecialWarningDodge(204574, nil, nil, nil, 2, 2
 local yellThrow						= mod:NewYell(204658, 2764)--yell so others can avoid splash damage. I don't think target can avoid
 local specWarnBreath				= mod:NewSpecialWarningDefensive(204667, "Tank", nil, nil, 1, 2)--Can tank side step? based on logs I seen some tanks completely avoiding damage so maybe change to dodge
 
-local timerShatteredEarthCD			= mod:NewCDCountTimer(35, 204666, nil, nil, nil, 2)--35-60 (basically same as OG)
+local timerShatteredEarthCD			= mod:NewCDCountTimer(34, 204666, nil, nil, nil, 2)--34-60 (basically same as OG)
 local timerCrushingGripCD			= mod:NewCDCountTimer(27.9, 204611, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON, nil, mod:IsTank() and 2, 4)--27.9-36 (basically same as OG)
-local timerRootsCD					= mod:NewCDCountTimer(20.6, 204574, nil, nil, nil, 3)--20.6-35.1 (basically same as OG)
+local timerRootsCD					= mod:NewCDCountTimer(18.2, 204574, nil, nil, nil, 3)--18.2-35.1 (basically same as OG)
 local timerBreathCD					= mod:NewCDCountTimer(26.5, 204667, nil, nil, nil, 5)--26-35 (basically same as OG)
 local timerUprootCD					= mod:NewCDCountTimer(32.7, 212786, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)--32.7-37.6 (Probably also OG timer, but didn't have it in OG mod)
 
@@ -62,10 +62,10 @@ local function updateAllTimers(self, ICD)
 		DBM:Debug("timerCrushingGripCD extended by: "..extend, 2)
 		timerCrushingGripCD:Update(elapsed, total+extend, self.vb.crushingCount+1)
 	end
-	--Roots only affected by crushing grip ICD now?
-	if ICD == 6 and (timerRootsCD:GetRemaining(self.vb.rootsCount+1) < ICD) then
+	--Roots only affected by crushing grip ICD now (and with reduced ICD, 4.8)
+	if ICD == 6 and (timerRootsCD:GetRemaining(self.vb.rootsCount+1) < 4.8) then
 		local elapsed, total = timerRootsCD:GetTime(self.vb.rootsCount+1)
-		local extend = ICD - (total-elapsed)
+		local extend = 4.8 - (total-elapsed)
 		DBM:Debug("timerRootsCD extended by: "..extend, 2)
 		timerRootsCD:Update(elapsed, total+extend, self.vb.rootsCount+1)
 	end
