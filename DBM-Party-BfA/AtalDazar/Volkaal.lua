@@ -77,7 +77,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 		if self:GetStage(2) then
 			timerNoxiousStenchCD:Start(18.2, self.vb.stenchCount+1)
 		else
-			timerNoxiousStenchCD:Start(20.6, self.vb.stenchCount+1)
+			timerNoxiousStenchCD:Start(19.5, self.vb.stenchCount+1)
 			timerLeapCD:AddTime(2)--Consistent with early alpha, might use more complex code if this becomes inconsistent
 		end
 	elseif spellId == 250241 then
