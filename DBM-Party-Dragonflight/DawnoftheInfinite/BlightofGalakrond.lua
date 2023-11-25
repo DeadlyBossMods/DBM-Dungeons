@@ -210,13 +210,13 @@ function mod:SPELL_AURA_REMOVED(args)
 		end
 	elseif spellId == 415097 then--Malignant Transferal (stage 2)
 		--Starting timers here better
-		timerCorrosiveInfusionCD:Start(6.3, 1)
+		timerCorrosiveInfusionCD:Start(6.1, 1)
 		timerNecroticWindsCD:Start(16, 1)
 		timerBlightReclamationCD:Start(30.1, 1)
 	elseif spellId == 415114 then--Malignant Transferal (stage 2)
 		--Starting timers here better
 		timerCorrosiveInfusionCD:Start(15.6, 1)
-		timerIncineratingBlightbreathCD:Start(23.8, 1)
+		timerIncineratingBlightbreathCD:Start(22.8, 1)
 		timerNecrofrostCD:Start(31.4, 1)
 		timerBlightReclamationCD:Start(64, 1)
 	end

@@ -39,7 +39,7 @@ local yellVirulentPathogenFades		= mod:NewShortFadesYell(261440)
 local timerWastingStrikeCD			= mod:NewCDCountTimer(16, 261438, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON, nil, 2, 3)--16.5-17.1
 local timerVirulentPathogenCD		= mod:NewCDCountTimer(15.4, 261440, nil, nil, nil, 3, nil, DBM_COMMON_L.DISEASE_ICON)--15.4-17
 local timerDiscordantCadenzaCD		= mod:NewCDCountTimer(23.5, 268306, nil, nil, nil, 3)--Casting transfer can delay it further since that triggers a 3 second spell lockout+cast time
-local timerWrackingChordCD			= mod:NewCDCountTimer(8, 268278, nil, nil, nil, 4, nil, DBM_COMMON_L.DISEASE_ICON)
+local timerWrackingChordCD			= mod:NewCDCountTimer(7.3, 268278, nil, nil, nil, 4, nil, DBM_COMMON_L.DISEASE_ICON)
 
 mod:AddRangeFrameOption(6, 261440)
 
@@ -89,7 +89,7 @@ function mod:SPELL_CAST_START(args)
 		specWarnDiscordantCadenza:Play("watchstep")
 	elseif spellId == 261440 then
 		self.vb.virulentCount = self.vb.virulentCount + 1
-		timerVirulentPathogenCD:Start(self:GetStage(2) and 15.7 or 17, self.vb.virulentCount+1, args.sourceGUID)
+		timerVirulentPathogenCD:Start(15.7, self.vb.virulentCount+1, args.sourceGUID)
 	elseif spellId == 268278 and self:GetStage(2) then
 		self.vb.discordCount = self.vb.discordCount + 1--Reused since not needed anymore otherwise
 		timerWrackingChordCD:Start(nil, self.vb.discordCount+1, args.sourceGUID)--8
@@ -113,7 +113,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 	elseif spellId == 268306 then
 		--only increment count and start timer on an actually successful cast since she'll abort casts for Transfer
 		self.vb.discordCount = self.vb.discordCount + 1
-		timerDiscordantCadenzaCD:Start(21.5, self.vb.discordCount+1, args.sourceGUID)--23.5 - 2
+		timerDiscordantCadenzaCD:Start(20.6, self.vb.discordCount+1, args.sourceGUID)--23.5 - 2
 	end
 end
 

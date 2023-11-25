@@ -38,7 +38,7 @@ local specWarnBrutalHaymaker		= mod:NewSpecialWarningDefensive(198245, "Tank", n
 local specWarnFelVomit				= mod:NewSpecialWarningMoveAway(198446, nil, nil, nil, 1, 2)
 local yellFelVomit					= mod:NewYell(198446)
 
-local timerStompCD					= mod:NewCDCountTimer(25.4, 198073, nil, nil, nil, 2)--Next timers but delayed by other casts (changed from 17 to 25.4 in DF)
+local timerStompCD					= mod:NewCDCountTimer(23, 198073, nil, nil, nil, 2)--Next timers but delayed by other casts (changed from 17 to 23 in DF)
 local timerHatefulGazeCD			= mod:NewCDCountTimer(25.4, 198079, nil, nil, nil, 3)--Next timers but delayed by other casts
 
 mod:AddInfoFrameOption(224188)

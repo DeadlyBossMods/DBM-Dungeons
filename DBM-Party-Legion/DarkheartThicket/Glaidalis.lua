@@ -39,7 +39,7 @@ local yellLeap					= mod:NewYell(196354)
 local specWarnRampage			= mod:NewSpecialWarningDefensive(198379, "Tank", nil, nil, 1, 2)
 local specWarnFixate			= mod:NewSpecialWarningYou(198477, nil, nil, nil, 1, 2)
 
-local timerLeapCD				= mod:NewCDCountTimer(13.2, 196354, nil, nil, nil, 3)--13.2-17 depending on travel time and spell queuing (timer could be even shorter, small sample)
+local timerLeapCD				= mod:NewCDCountTimer(12.9, 196354, nil, nil, nil, 3)--13.2-17 depending on travel time and spell queuing (timer could be even shorter, small sample)
 local timerRampageCD			= mod:NewCDCountTimer(26.7, 198379, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON)--26.7-32.7
 local timerNightfallCD			= mod:NewCDCountTimer(20.6, 212464, nil, nil, nil, 3)--20.6--30.4
 
@@ -53,7 +53,7 @@ mod.vb.leapCount = 0
 mod.vb.rampageCount = 0
 mod.vb.nightCount = 0
 
---Grievous Leap triggers 5.8 ICD (maybe also 5.7 so will use that there too)
+--Grievous Leap triggers 5.1-5.8 ICD
 --Primal rampage triggers 5.7 ICD
 --Nightfall triggers 2.6 ICD
 local function updateAllTimers(self, ICD)
@@ -132,7 +132,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 			self:BossTargetScanner(args.sourceGUID, "LeapTarget", 0.05, 6, true, nil, nil, nil, true)
 		end
 		timerLeapCD:Start(nil, self.vb.leapCount+1)
-		updateAllTimers(self, 5.7)
+		updateAllTimers(self, 5.1)
 	end
 end
 
