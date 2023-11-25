@@ -34,7 +34,7 @@ local warnApocNightmare				= mod:NewSpellAnnounce(200050, 4)
 local warnFeedOnTheWeak				= mod:NewTargetNoFilterAnnounce(200238, 2)
 
 local specWarnFesteringRip			= mod:NewSpecialWarningDispel(200182, "RemoveMagic", nil, 2, 1, 2)
-local specWarnWakingNightmare		= mod:NewSpecialWarningYou(200243, nil, nil, nil, 1, 2)
+local specWarnWakingNightmare		= mod:NewSpecialWarningMoveTo(200243, nil, nil, nil, 1, 2)
 local yellWakingNightmare			= mod:NewYell(200243, nil, nil, nil, "YELL")--Yell is standard for grou up
 local specWarnParanoia				= mod:NewSpecialWarningMoveAway(200289, nil, nil, nil, 1, 2)
 local yellParanoia					= mod:NewYell(200289)--Say is standard for avoid
@@ -147,7 +147,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		specWarnFesteringRip:Play("helpdispel")
 	elseif spellId == 200243 then
 		if args:IsPlayer() then
-			specWarnWakingNightmare:Show()
+			specWarnWakingNightmare:Show(DBM_COMMON_L.ALLY)
 			specWarnWakingNightmare:Play("gathershare")
 			yellWakingNightmare:Yell()
 		else
