@@ -36,7 +36,7 @@ local yellPursuit				= mod:NewYell(257407)
 local specWarnPursuit			= mod:NewSpecialWarningRun(257407, nil, nil, nil, 4, 2)
 local specWarnBoneQuake			= mod:NewSpecialWarningSpell(260683, nil, nil, nil, 2, 2)
 
-local timerTeethCD				= mod:NewCDCountTimer(26.2, 255434, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)--actual minimum timer not known
+local timerTeethCD				= mod:NewCDCountTimer(25, 255434, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)--actual minimum timer not known
 local timerFearCD				= mod:NewCDCountTimer(35.1, 255371, nil, nil, nil, 2)--actual minimum timer not known
 local timerPursuitCD			= mod:NewCDCountTimer(35.1, 257407, nil, nil, nil, 3)--actual minimum timer not known
 
@@ -77,7 +77,7 @@ function mod:OnCombatStart(delay)
 	self.vb.fearCount = 0
 	self.vb.pursuitCount = 0
 	timerTeethCD:Start(6-delay, 1)--8.1
-	timerFearCD:Start(12-delay, 1)
+	timerFearCD:Start(11.7-delay, 1)
 	timerPursuitCD:Start(21.7-delay, 1)
 end
 
