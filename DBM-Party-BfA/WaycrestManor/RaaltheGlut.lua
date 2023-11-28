@@ -31,7 +31,7 @@ local specWarnTenderize				= mod:NewSpecialWarningDodge(264923, nil, nil, nil, 1
 local specWarnRottenExpulsion		= mod:NewSpecialWarningDodge(264694, nil, nil, nil, 1, 2)
 local specWarnGTFO					= mod:NewSpecialWarningGTFO(264712, nil, nil, nil, 1, 8)
 
-local timerServantCD				= mod:NewCDCountTimer(43.7, 264931, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)
+local timerServantCD				= mod:NewCDCountTimer(42.5, 264931, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)
 local timerTenderizeCD				= mod:NewCDCountTimer(43.7, 264923, nil, nil, nil, 3)--Timer for first in each set of 3
 local timerRottenExpulsionCD		= mod:NewCDCountTimer(20.2, 264694, nil, nil, nil, 3)--14.6--26 (health based?)
 
@@ -78,7 +78,7 @@ function mod:SPELL_CAST_START(args)
 		if self.vb.rottenCount == 1 then--2, 4, probably 6
 			timerRottenExpulsionCD:Start(29.2, self.vb.rottenCount+1)
 		elseif self.vb.rottenCount == 3 then
-			timerRottenExpulsionCD:Start(23.1, self.vb.rottenCount+1)
+			timerRottenExpulsionCD:Start(21.7, self.vb.rottenCount+1)
 		else--2, 4, etc
 			timerRottenExpulsionCD:Start(20.2, self.vb.rottenCount+1)
 		end

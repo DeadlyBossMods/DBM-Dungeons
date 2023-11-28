@@ -57,11 +57,11 @@ mod.vb.paranoiaCount = 0
 --Nightmare Bolt triggers 4.8 ICD
 --Growing Paranoia triggers 6 ICD
 --Festering Apoc triggers 6 ICD (technically cast + 1)
-local function updateAllTimers(self, ICD, isWeak)
+local function updateAllTimers(self, ICD, isWeak, isPara)
 	DBM:Debug("updateAllTimers running", 3)
-	if timerFesteringRipCD:GetRemaining(self.vb.festerCount+1) < ICD then
+	if timerFesteringRipCD:GetRemaining(self.vb.festerCount+1) < (isPara and 2.4 or ICD) then
 		local elapsed, total = timerFesteringRipCD:GetTime(self.vb.festerCount+1)
-		local extend = ICD - (total-elapsed)
+		local extend = (isPara and 2.4 or ICD) - (total-elapsed)
 		DBM:Debug("timerFesteringRipCD extended by: "..extend, 2)
 		timerFesteringRipCD:Update(elapsed, total+extend, self.vb.festerCount+1)
 	end
@@ -116,7 +116,7 @@ function mod:SPELL_CAST_START(args)
 		--27.5, 27.9, 32.7, 27.9, 32.7
 		--27.5, 27.9, 32.7
 		timerParanoiaCD:Start(nil, self.vb.paranoiaCount+1)
-		updateAllTimers(self, 6)
+		updateAllTimers(self, 6, false, true)--Review, might be 2.4 now
 	end
 end
 

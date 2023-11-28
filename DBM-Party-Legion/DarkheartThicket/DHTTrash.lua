@@ -51,7 +51,7 @@ local specWarnDarksoulDrain			= mod:NewSpecialWarningDispel(201365, "RemoveDisea
 --local specWarnGTFO					= mod:NewSpecialWarningGTFO(201123, nil, nil, nil, 1, 8)
 
 local timerGrievousRipCD			= mod:NewCDNPTimer(18, 225484, nil, nil, nil, 3)--Kind of imprecise without an actual cast event, but should be a good approx
-local timerUnnervingScreechCD		= mod:NewCDNPTimer(14.5, 200630, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerUnnervingScreechCD		= mod:NewCDNPTimer(10.4, 200630, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerSpewCorruptionCD			= mod:NewCDNPTimer(30.3, 218755, nil, nil, nil, 3)
 local timerMaddeningRoarCD			= mod:NewCDNPTimer(22.6, 200580, nil, nil, nil, 2)
 local timerStarShowerCD				= mod:NewCDNPTimer(20.7, 200658, nil, nil, nil, 2)
@@ -61,9 +61,9 @@ local timerTormentingEyeCD			= mod:NewCDNPTimer(5.2, 204243, nil, "HasInterrupt"
 local timerBloodBombCD				= mod:NewCDNPTimer(15.7, 201272, nil, nil, nil, 2)
 local timerBloodAssaultCD			= mod:NewCDNPTimer(22.6, 201226, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerBloodMetaCD				= mod:NewCDNPTimer(10.9, 225562, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
-local timerDreadInfernoCD			= mod:NewCDNPTimer(18.2, 201399, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerDreadInfernoCD			= mod:NewCDNPTimer(17, 201399, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerCurseofIsolationCD		= mod:NewCDNPTimer(15.8, 201839, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
-local timerRootBurstCD				= mod:NewCDNPTimer(17, 201129, nil, nil, nil, 3)
+local timerRootBurstCD				= mod:NewCDNPTimer(16.2, 201129, nil, nil, nil, 3)
 local timerVileMushroomCD			= mod:NewCDNPTimer(17, 198910, nil, nil, nil, 3)
 local timerDarksoulBiteCD			= mod:NewCDNPTimer(12.1, 201361, nil, nil, nil, 5)--12.1-18.2
 

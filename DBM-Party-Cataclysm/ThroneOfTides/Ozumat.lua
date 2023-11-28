@@ -95,7 +95,7 @@ if (wowToc >= 100200) then
 			timerBlottingBarrageCD:Start(nil, self.vb.barrageCount+1)
 		elseif spellId == 428868 then
 			self.vb.putridCount = self.vb.putridCount + 1
-			specWarnPutridRoar:Show()
+			specWarnPutridRoar:Show(self.vb.putridCount)
 			specWarnPutridRoar:Play("aesoon")
 			timerPutridRoarCD:Start(nil, self.vb.putridCount+1)
 		elseif spellId == 428530 then
