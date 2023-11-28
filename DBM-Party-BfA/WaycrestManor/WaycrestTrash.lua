@@ -73,16 +73,16 @@ local timerSpiritedDefenseCD		= mod:NewCDNPTimer(23, 265368, nil, nil, nil, 4, n
 local timerRunicMarkCD				= mod:NewCDNPTimer(12.1, 264105, nil, nil, nil, 3)
 local timerEtchCD					= mod:NewCDNPTimer(12.1, 263943, nil, nil, nil, 3)
 local timerInfectedThornsCD			= mod:NewCDNPTimer(8.5, 264050, nil, nil, nil, 3)
-local timerDrainEssenceCD			= mod:NewCDNPTimer(17, 266036, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerDrainEssenceCD			= mod:NewCDNPTimer(15.7, 266036, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerTearingStrikeCD			= mod:NewCDNPTimer(10.9, 264556, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerUprootCD					= mod:NewCDNPTimer(15.2, 264038, nil, nil, nil, 3)
 local timerSplinterSpikeCD			= mod:NewCDNPTimer(15.7, 265759, nil, nil, nil, 3)
-local timerThornedBarrageCD			= mod:NewCDNPTimer(13.3, 265760, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+local timerThornedBarrageCD			= mod:NewCDNPTimer(11.7, 265760, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerRavagingLeapCD			= mod:NewCDNPTimer(8.5, 271175, nil, nil, nil, 3)
 local timerRetchCD					= mod:NewCDNPTimer(20.6, 271174, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerDinnerBellCD				= mod:NewCDNPTimer(17, 265407, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerSpellbindCD				= mod:NewCDNPTimer(19.2, 264390, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
-local timerSoulVolleyCD				= mod:NewCDNPTimer(23, 263959, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerSoulVolleyCD				= mod:NewCDNPTimer(21.8, 263959, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerWardingCandleCD			= mod:NewCDNPTimer(18.2, 263961, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerRuinousoVolleyCD			= mod:NewCDNPTimer(17, 263959, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerDreadMarkCD				= mod:NewCDNPTimer(20.7, 265880, nil, nil, nil, 3)
@@ -175,7 +175,7 @@ function mod:SPELL_CAST_START(args)
 			specWarnSoulFetish:Show(args.sourceName)
 			specWarnSoulFetish:Play("kickcast")
 		end
-	elseif spellId == 265407 then
+	elseif spellId == 265407 then--Can stutter cast, may move to success
 		timerDinnerBellCD:Start(nil, args.sourceGUID)
 		if self:CheckInterruptFilter(args.sourceGUID, false, true) then
 			specWarnDinnerBell:Show(args.sourceName)

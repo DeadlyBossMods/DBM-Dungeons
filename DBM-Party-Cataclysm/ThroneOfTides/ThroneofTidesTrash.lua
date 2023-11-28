@@ -52,11 +52,11 @@ local timerHexCD					= mod:NewCDNPTimer(20.4, 76820, nil, nil, nil, 5, nil, DBM_
 local timerCrushingDepthsCD			= mod:NewCDNPTimer(27.9, 428542, nil, nil, nil, 5, nil, DBM_COMMON_L.HEALER_ICON)--Weak sample size, could be wrong
 local timerShellbreakerCD			= mod:NewCDNPTimer(17, 426741, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)--17-19
 local timerVolatileBoltCD			= mod:NewCDNPTimer(20.6, 426684, nil, nil, nil, 3)--20.6-24.2
-local timerAcidBarrageCD			= mod:NewCDNPTimer(13.3, 426645, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)--13.3-
+local timerAcidBarrageCD			= mod:NewCDNPTimer(10.2, 426645, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)--10.2-13
 local timerClenchingTentaclesCD		= mod:NewCDNPTimer(24.3, 428926, nil, nil, nil, 2)--24.3-25.5
 local timerCrushCD					= mod:NewCDNPTimer(17, 429021, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerPsionicPulseCD			= mod:NewCDNPTimer(8.5, 426905, nil, nil, nil, 2)
-local timerMindFlayCD				= mod:NewCDNPTimer(8.5, 426783, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerMindFlayCD				= mod:NewCDNPTimer(8.1, 426783, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc, 7 off interrupt, 8 GTFO
 
