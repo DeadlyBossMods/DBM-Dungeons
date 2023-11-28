@@ -70,7 +70,7 @@ local specWarnShockwave								= mod:NewSpecialWarningDodge(shockwaveSpellId, ni
 local timerBladestormCD								= mod:NewCDCountTimer(35.1, 410235, nil, nil, nil, 3)
 local timerTankBusterCD								= mod:NewCDCountTimer(19.6, tankSpellId, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerShockwaveCD								= mod:NewCDCountTimer(35.1, shockwaveSpellId, nil, nil, nil, 3)
-local timerRallyCD									= mod:NewCDCountTimer(21.2, rallySpellId, nil, nil, nil, 5)
+local timerRallyCD									= mod:NewCDCountTimer(20.8, rallySpellId, nil, nil, nil, 5)--For the X
 local timerCryCD									= mod:NewCDCountTimer(10, crySpellId, nil, nil, nil, 2)
 
 --Write the custom WA keys into the spell headers
