@@ -34,7 +34,7 @@ local specWarnSkewer				= mod:NewSpecialWarningDefensive(249919, "Tank", nil, ni
 local specWarnEchoes				= mod:NewSpecialWarningDodgeCount(250050, nil, nil, nil, 2, 2)
 local specWarnGTFO					= mod:NewSpecialWarningGTFO(250036, nil, nil, nil, 1, 8)
 
-local timerSoulrendCD				= mod:NewCDCountTimer(40.6, 259187, nil, nil, nil, 3, nil, DBM_COMMON_L.DAMAGE_ICON)
+local timerSoulrendCD				= mod:NewCDCountTimer(39.5, 259187, nil, nil, nil, 3, nil, DBM_COMMON_L.DAMAGE_ICON)
 local timerWrackingPainCD			= mod:NewCDCountTimer(16.7, 250096, nil, nil, nil, 3)--17-23
 local timerSkewerCD					= mod:NewCDCountTimer(12, 249919, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerEchoesCD					= mod:NewCDCountTimer(31.2, 250050, nil, nil, nil, 3)
@@ -83,7 +83,7 @@ function mod:OnCombatStart(delay)
 	self.vb.echoCount = 0
 	timerWrackingPainCD:Start(3.5-delay, 1)
 	timerSkewerCD:Start(5-delay, 1)
-	timerSoulrendCD:Start(9.6-delay, 1)
+	timerSoulrendCD:Start(8.5-delay, 1)
 	timerEchoesCD:Start(15.6-delay, 1)
 end
 
@@ -97,11 +97,11 @@ function mod:SPELL_CAST_START(args)
 			specWarnSoulRend:Play("runout")
 		end
 		updateAllTimers(self, 6)
-	elseif spellId == 250096 then
+	elseif spellId == 250096 then--Can stutter cast, but since it can be kicked on non mythic+, timer can't be moved to success
 		self.vb.wrackCount = self.vb.wrackCount + 1
 		timerWrackingPainCD:Start(nil, self.vb.wrackCount+1)
 		if not self:IsMythic() and self:CheckInterruptFilter(args.sourceGUID, false, true) then
-			specWarnWrackingPain:Show(args.sourceName, self.vb.wrackCount)
+			specWarnWrackingPain:Show(args.sourceName, self.vb.wrackCount+1)
 			specWarnWrackingPain:Play("kickcast")
 		end
 	elseif spellId == 249919 then
