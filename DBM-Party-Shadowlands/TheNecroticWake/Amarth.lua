@@ -40,7 +40,7 @@ local timerFinalHarvestCD			= mod:NewCDTimer(41.2, 321247, nil, nil, nil, 2)--41
 local timerNecroticBreathCD			= mod:NewCDTimer(41.2, 333493, nil, nil, nil, 3)--41.2-48.4
 local timerUnholyFrenzyCD			= mod:NewCDTimer(41.2, 320012, nil, nil, nil, 5, nil, DBM_COMMON_L.ENRAGE_ICON..DBM_COMMON_L.TANK_ICON)--41.2-48.4
 
-mod:AddSetIconOption("SetIconOnAdds", 321226, true, true, {1, 2, 3, 4, 5, 6, 7, 8})
+mod:AddSetIconOption("SetIconOnAdds", 321226, true, 5, {1, 2, 3, 4, 5, 6, 7, 8})
 
 mod.vb.iconCount = 8
 
