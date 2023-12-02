@@ -14,7 +14,7 @@ mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 197418 197546 197974 197797",
-	"SPELL_CAST_SUCCESS 197478 197687 197622 197394",
+	"SPELL_CAST_SUCCESS 197478 197687 197622 197394 197546",
 	"SPELL_AURA_APPLIED 197478",
 	"SPELL_AURA_REMOVED 197478",
 --	"SPELL_PERIODIC_DAMAGE",
@@ -111,8 +111,6 @@ function mod:SPELL_CAST_START(args)
 		specWarnVengefulShear:Play("defensive")
 		timerVengefulShearCD:Start(nil, self.vb.shearCount+1)
 	elseif spellId == 197546 then
-		self.vb.glaiveCount = self.vb.glaiveCount + 1
-		timerBrutalGlaiveCD:Start(nil, self.vb.glaiveCount+1)
 		self:BossTargetScanner(args.sourceGUID, "BrutalGlaiveTarget", 0.1, 10, true)
 	elseif spellId == 197974 then
 		specWarnBonebreakingStrike:Show()
@@ -139,6 +137,9 @@ function mod:SPELL_CAST_SUCCESS(args)
 		else
 			warnEyeBeam:Show(args.destName)
 		end
+	elseif spellId == 197546 then
+		self.vb.glaiveCount = self.vb.glaiveCount + 1
+		timerBrutalGlaiveCD:Start(13.7, self.vb.glaiveCount+1)--Stutter casts, so moved to success event
 	elseif spellId == 197622 then--Leap
 		self.vb.eyeCount = 0
 		self:SetStage(2)
