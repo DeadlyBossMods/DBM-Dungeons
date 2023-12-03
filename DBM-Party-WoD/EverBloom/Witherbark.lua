@@ -19,11 +19,11 @@ mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 164357",
-	"SPELL_CAST_SUCCESS 164302",
+--	"SPELL_CAST_SUCCESS 164302",
 	"SPELL_SUMMON 164556",
 	"SPELL_AURA_APPLIED 164275 164302",
 	"SPELL_AURA_REMOVED 164275"
---	"UNIT_SPELLCAST_SUCCEEDED boss1",
+	"UNIT_SPELLCAST_SUCCEEDED boss1",
 --	"CHAT_MSG_MONSTER_EMOTE",
 --	"RAID_BOSS_WHISPER"
 )
@@ -79,12 +79,14 @@ function mod:SPELL_CAST_START(args)
 	end
 end
 
+--[[
 function mod:SPELL_CAST_SUCCESS(args)
 	local spellId = args.spellId
 	if spellId == 164302 then
 		timerUncheckedGrowthCD:Start()
 	end
 end
+--]]
 
 function mod:SPELL_SUMMON(args)
 	local spellId = args.spellId
@@ -137,14 +139,11 @@ function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, destName, _, _, spellId
 end
 mod.SPELL_PERIODIC_MISSED = mod.SPELL_PERIODIC_DAMAGE
 
---[[
---Why was this used over 164275 spell aura removed? since i can't verify it on WCL disabling this method for now
 function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
-	if spellId == 164718 then--Cancel Brittle Bark
-		warnBrittleBarkOver:Show()
+	if spellId == 164306 then
+		timerUncheckedGrowthCD:Start()
 	end
 end
---]]
 
 --[[
 function mod:CHAT_MSG_MONSTER_EMOTE(msg)--Message doesn't matter, it occurs only for one thing during this fight (assumption may be invalid in rework)
