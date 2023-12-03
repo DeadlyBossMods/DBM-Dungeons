@@ -35,7 +35,7 @@ if (wowToc >= 100200) then
 	local specWarnCrushingClaw							= mod:NewSpecialWarningDefensive(427670, nil, nil, nil, 1, 2)
 	local specWarnGTFO									= mod:NewSpecialWarningGTFO(427559, nil, nil, nil, 1, 8)
 
-	local timerBubblingFissureCD						= mod:NewCDTimer(32.7, 427672, nil, nil, nil, 3)--32-34
+	local timerBubblingFissureCD						= mod:NewCDTimer(32.3, 427672, nil, nil, nil, 3)--32-34
 	local timerAwakenOozeCD								= mod:NewCDCountTimer(48.5, 427456, nil, nil, nil, 1)
 	local timerFesteringShockwaveCD						= mod:NewCDCountTimer(32.7, 427668, nil, nil, nil, 2, nil, DBM_COMMON_L.HEALER_ICON)
 	local timerCrushingClawCD							= mod:NewCDCountTimer(26.7, 427670, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
@@ -46,7 +46,7 @@ if (wowToc >= 100200) then
 	--Delays usually caused by a 6 second lockout from Festering shockwave on just the tank ability
 	--likely a protection to keep healer from having to heal shockwave and tank at same time
 	--With more data, i'll be able to scrap table and just dynamically apply timer updates automatically, but I want to confirm theory first
-	local clawTimers = {8.2, 26.7, 29.1, 32.7}
+	local clawTimers = {8.2, 26.7, 27.9, 32.7}
 
 	function mod:OnCombatStart(delay)
 		self.vb.oozeCount = 0

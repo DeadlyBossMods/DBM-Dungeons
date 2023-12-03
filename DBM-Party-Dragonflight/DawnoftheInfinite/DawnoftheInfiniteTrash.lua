@@ -27,7 +27,7 @@ mod:RegisterEvents(
 local warnTemposlice						= mod:NewSpellAnnounce(412012, 3, nil, nil, nil, nil, nil, 3)--High Prio Stun
 local warnCorrodingVolley					= mod:NewCastAnnounce(413607, 3, nil, nil, nil, nil, nil, 3)--High Prio Stun
 local warnElectroJuicedGigablast			= mod:NewCastAnnounce(412200, 3, nil, nil, nil, nil, nil, 3)--High Prio Stun
-local warnInfiniteSchism					= mod:NewCastAnnounce(419327, 3, nil, nil, nil, nil, nil, 3)
+local warnInfiniteSchism					= mod:NewCastAnnounce(419327, 3)--, nil, nil, nil, nil, nil, 3
 local warnDeployGoblinSappers				= mod:NewCastAnnounce(407535, 3, nil, nil, nil, nil, nil, 3)
 local warnTripleStrike						= mod:NewCastAnnounce(413487, 3, nil, nil, "Tank")
 local warnRendingCleave						= mod:NewCastAnnounce(412505, 3, nil, nil, "Tank")--High Prio
@@ -294,9 +294,9 @@ function mod:SPELL_CAST_START(args)
 		end
 	elseif spellId == 419327 then
 		timerInfiniteSchismCD:Start(nil, args.sourceGUID)
-		if self:AntiSpam(3, 6) then
+		if self:AntiSpam(3, 4) then
 			warnInfiniteSchism:Show()
-			warnInfiniteSchism:Play("crowdcontrol")
+--			warnInfiniteSchism:Play("crowdcontrol")
 		end
 	elseif spellId == 412378 then
 		timerDizzyingSandsCD:Start(nil, args.sourceGUID)

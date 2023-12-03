@@ -186,7 +186,7 @@ if (wowToc >= 100200) then
 		local spellId = args.spellId
 		if spellId == 427510 then
 			self.vb.chargeCount = self.vb.chargeCount + 1
-			timerNoxiousChargeCD:Start(nil, args.sourceGUID)
+			timerNoxiousChargeCD:Start(nil, self.vb.chargeCount+1, args.sourceGUID)
 		end
 	end
 

@@ -56,7 +56,7 @@ if (wowToc >= 100200) then
 	function mod:OnCombatStart(delay)
 		self:SetStage(1)
 		timerFlameShockCD:Start(6-delay)
-		timerStormflurryTotemCD:Start(13-delay)
+		timerStormflurryTotemCD:Start(12.1-delay)
 		timerEarthfuryCD:Start(20.3-delay)
 	end
 
