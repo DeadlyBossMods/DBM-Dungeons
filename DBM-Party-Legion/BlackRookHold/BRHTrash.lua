@@ -8,7 +8,7 @@ mod:SetZone(1501)
 mod.isTrashMod = true
 
 mod:RegisterEvents(
-	"SPELL_CAST_START 200261 221634 221688 225573 214003 199663 200105 196916 225732 196883 194966 200248 200256 200291 200784 200913 201139 201176 182118 214001",--199663
+	"SPELL_CAST_START 200261 221634 221688 225573 214003 199663 200105 196916 225732 196883 194966 200248 200256 200291 200784 200913 201139 201176 182118 214001 227913",--199663
 	"SPELL_CAST_SUCCESS 200343 225962 203163 204896 200784",--8599
 	"SPELL_AURA_APPLIED 194966 200105 200248 8599 203163",
 	"SPELL_AURA_APPLIED_DOSE 200084 225909 200248",
@@ -33,7 +33,7 @@ local warnDrinkPotion				= mod:NewSpellAnnounce(200784, 4, nil, nil, nil, nil, n
 local warnBloodthirstyLeap			= mod:NewSpellAnnounce(225962, 2, nil, false)--Instant cast, announcing it already happened doesn't affect much agency to player
 local warnGlaiveToss				= mod:NewCastAnnounce(196916, 3)
 local warnPhasedExplosion			= mod:NewCastAnnounce(200256, 3, nil, nil, false)--They basically spam cast it, so off by default
-local warnFelFrenzy					= mod:NewCastAnnounce(182118, 4)--High prio off internet
+local warnFelFrenzy					= mod:NewCastAnnounce(227913, 4)--High prio off internet
 local warnSoulVenom					= mod:NewStackAnnounce(225909, 2)
 
 local specWarnSicBats				= mod:NewSpecialWarningYou(203163, nil, nil, nil, 1, 2)
@@ -52,7 +52,7 @@ local specWarnSpiritBlast			= mod:NewSpecialWarningInterrupt(196883, "HasInterru
 local specWarnDarkMending			= mod:NewSpecialWarningInterrupt(225573, "HasInterrupt", nil, nil, 1, 2)
 local specWarnSoulBlast				= mod:NewSpecialWarningInterrupt(199663, "HasInterrupt", nil, nil, 1, 2)
 local specWarnArcaneBlitz			= mod:NewSpecialWarningInterrupt(200248, "HasInterrupt", nil, nil, 1, 2)
-local specWarnFelFrenzy				= mod:NewSpecialWarningInterrupt(182118, "HasInterrupt", nil, nil, 1, 2)--High Priority
+local specWarnFelFrenzy				= mod:NewSpecialWarningInterrupt(227913, "HasInterrupt", nil, nil, 1, 2)--High Priority
 local specWarnSoulBlade				= mod:NewSpecialWarningDispel(200084, "RemoveMagic", nil, nil, 1, 2)
 local specWarnDrainLife				= mod:NewSpecialWarningDispel(204896, "RemoveMagic", nil, nil, 1, 2)
 local specWarnEnrage				= mod:NewSpecialWarningDispel(8599, "RemoveEnrage", nil, 2, 1, 2)
@@ -112,8 +112,8 @@ function mod:SPELL_CAST_START(args)
 			specWarnDarkMending:Show(args.sourceName)
 			specWarnDarkMending:Play("kickcast")
 		end
-	elseif spellId == 182118 then
-		if self.Options.SpecWarn182118interrupt and self:CheckInterruptFilter(args.sourceGUID, false, true) then
+	elseif spellId == 182118 or spellId == 227913 then
+		if self.Options.SpecWarn227913interrupt and self:CheckInterruptFilter(args.sourceGUID, false, true) then
 			specWarnFelFrenzy:Show(args.sourceName)
 			specWarnFelFrenzy:Play("kickcast")
 		elseif self:AntiSpam(3, 7) then
