@@ -57,7 +57,7 @@ local specWarnVenomfangStrikeDispel	= mod:NewSpecialWarningDispel(252687, "Remov
 
 local timerFieryEnchantCD			= mod:NewCDNPTimer(15.3, 253583, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--More Data needed
 local timerMendingWardCD			= mod:NewCDNPTimer(13.3, 253517, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
-local timerFerventStrikeCD			= mod:NewCDNPTimer(17, 256138, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)--17-19
+local timerFerventStrikeCD			= mod:NewCDNPTimer(12.1, 256138, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)--17-19
 local timerFanaticsRageCD			= mod:NewCDNPTimer(20.2, 255824, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerMercilessAssaultCD		= mod:NewCDNPTimer(9.8, 253239, nil, nil, nil, 3)
 local timerBwonsamdisMantleCD		= mod:NewCDNPTimer(26.7, 253544, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--More data needed
@@ -68,7 +68,7 @@ local timerBulwarkofJujuCD			= mod:NewCDNPTimer(23, 253721, nil, nil, nil, 5, ni
 local timerHexCD					= mod:NewCDNPTimer(18.1, 252781, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerFrenziedChargeCD			= mod:NewCDNPTimer(13.3, 255567, nil, nil, nil, 3)--13.3-18.2
 local timerWildThrashCD				= mod:NewCDNPTimer(13.3, 256882, nil, nil, nil, 3)--13.3-18.2
-local timerDinoMightCD				= mod:NewCDNPTimer(29.1, 256849, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--More data needed
+local timerDinoMightCD				= mod:NewCDNPTimer(14.5, 256849, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--More data needed
 local timerDeadeyeAimCD				= mod:NewCDNPTimer(10.9, 256846, nil, nil, nil, 3)--10.9-20
 
 local taintedBlood = DBM:GetSpellInfo(255558)
