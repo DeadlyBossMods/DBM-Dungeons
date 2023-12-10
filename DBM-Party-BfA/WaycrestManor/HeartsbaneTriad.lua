@@ -147,7 +147,7 @@ function mod:SPELL_AURA_APPLIED(args)
 			timerSoulManipulationCD:Start(8, args.destGUID)--CAST START (8-11)
 		end
 		if self.Options.SetIconOnTriad then
-			self:ScanForMobs(args.destGUID, 2, 8, 1, nil, 12, "SetIconOnTriad", nil, nil, nil, true)
+			self:ScanForMobs(args.destGUID, 2, 8, 1, nil, 6, "SetIconOnTriad", nil, nil, nil, true)
 		end
 	elseif spellId == 260703 then
 		warnUnstableMark:CombinedShow(0.3, args.destName)
