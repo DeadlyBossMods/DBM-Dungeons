@@ -175,7 +175,7 @@ function mod:SPELL_CAST_START(args)
 			specWarnSoulFetish:Show(args.sourceName)
 			specWarnSoulFetish:Play("kickcast")
 		end
-	elseif spellId == 265407 then--Can stutter cast, may move to success
+	elseif spellId == 265407 then--Can stutter cast (especially if pulled/kited outside), but can't be moved to success cause there may be one (if kicked).
 		timerDinnerBellCD:Start(nil, args.sourceGUID)
 		if self:CheckInterruptFilter(args.sourceGUID, false, true) then
 			specWarnDinnerBell:Show(args.sourceName)

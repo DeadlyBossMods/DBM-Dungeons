@@ -23,6 +23,7 @@ mod:RegisterEvents(
  or (ability.id = 165213 or ability.id = 172578 or ability.id = 165123 or ability.id = 426500 or ability.id = 427223) and type = "cast"
 --]]
 local warnPoisonousClaws						= mod:NewSpellAnnounce(169657, 3, nil, "Tank")
+local warnSpatialDisruption						= mod:NewSpellAnnounce(426974, 2)
 local warnEnragedGrowth							= mod:NewCastAnnounce(165213, 4)
 local warnChokingVines							= mod:NewCastAnnounce(164965, 3)
 local warnNoxiousEruption						= mod:NewCastAnnounce(169445, 3)
@@ -32,7 +33,7 @@ local warnGnarledroots							= mod:NewTargetNoFilterAnnounce(426500, 3)
 
 local specWarnBoundingWhirl						= mod:NewSpecialWarningSpell(172578, "Melee", nil, nil, 4, 2)
 local specWarnCinderboltSalvo					= mod:NewSpecialWarningSpell(427223, nil, nil, nil, 2, 2)
-local specWarnSpatialDisruption					= mod:NewSpecialWarningSpell(426974, nil, nil, nil, 2, 13)
+--local specWarnSpatialDisruption					= mod:NewSpecialWarningSpell(426974, nil, nil, nil, 2, 13)
 local specWarnColdFusion						= mod:NewSpecialWarningDodge(426845, nil, nil, nil, 2, 2)
 local specWarnVenomBurst						= mod:NewSpecialWarningMoveAway(165123, nil, nil, nil, 1, 2)
 local yellnVenomBurst							= mod:NewYell(165123)
@@ -120,8 +121,8 @@ function mod:SPELL_CAST_START(args)
 	elseif spellId == 426974 then
 		timerSpatialDisruptionCD:Start(nil, args.sourceGUID)
 		--Not antispammed on purpose, it's too unique of a mechanic to bundle with any other mechanic
-		specWarnSpatialDisruption:Show()
-		specWarnSpatialDisruption:Play("pullin")
+		warnSpatialDisruption:Show()
+		--specWarnSpatialDisruption:Play("pullin")
 	end
 end
 
