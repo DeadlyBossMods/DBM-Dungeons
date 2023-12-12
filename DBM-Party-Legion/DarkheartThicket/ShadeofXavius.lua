@@ -52,16 +52,16 @@ mod.vb.nightmareCount = 0
 mod.vb.feedCount = 0
 mod.vb.paranoiaCount = 0
 
---Feed on the Weak triggers 6 ICD
+--Feed on the Weak triggers 4.8 ICD
 --Festering Rip triggers 2.4 ICD
 --Nightmare Bolt triggers 4.8 ICD
 --Growing Paranoia triggers 6 ICD
 --Festering Apoc triggers 6 ICD (technically cast + 1)
 local function updateAllTimers(self, ICD, isWeak, isPara)
 	DBM:Debug("updateAllTimers running", 3)
-	if timerFesteringRipCD:GetRemaining(self.vb.festerCount+1) < (isPara and 2.4 or ICD) then
+	if timerFesteringRipCD:GetRemaining(self.vb.festerCount+1) < ((isPara or isPara) and 2.4 or ICD) then
 		local elapsed, total = timerFesteringRipCD:GetTime(self.vb.festerCount+1)
-		local extend = (isPara and 2.4 or ICD) - (total-elapsed)
+		local extend = ((isPara or isPara) and 2.4 or ICD) - (total-elapsed)
 		DBM:Debug("timerFesteringRipCD extended by: "..extend, 2)
 		timerFesteringRipCD:Update(elapsed, total+extend, self.vb.festerCount+1)
 	end
