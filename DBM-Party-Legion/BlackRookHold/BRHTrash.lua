@@ -68,7 +68,7 @@ local timerDrainLifeCD				= mod:NewCDNPTimer(16.8, 204896, nil, nil, nil, 3)--16
 local timerBrutalAssaultCD			= mod:NewCDNPTimer(20.6, 201139, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerDrinkPotionCD			= mod:NewCDNPTimer(21.8, 200784, nil, nil, nil, 5)
 local timerSicBatsCD				= mod:NewCDNPTimer(21.8, 203163, nil, nil, nil, 5)
-local timerCoupdeGraceCD			= mod:NewCDNPTimer(9.7, 214003, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+local timerCoupdeGraceCD			= mod:NewCDNPTimer(8.4, 214003, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerRavensDiveCD				= mod:NewCDNPTimer(16.9, 214001, nil, nil, nil, 3)
 
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc, 7 off interrupt, 8 GTFO
