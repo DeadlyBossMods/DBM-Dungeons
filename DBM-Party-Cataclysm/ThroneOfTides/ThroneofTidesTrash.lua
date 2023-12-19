@@ -99,10 +99,10 @@ function mod:SPELL_CAST_START(args)
 	elseif spellId == 426684 then
 		timerVolatileBoltCD:Start(nil, args.sourceGUID)
 		--If remaining time on acid barrage is less than 6 seconds when volatile bolt is cast, it'll be extended
-		if timerAcidBarrageCD:GetRemaining(args.sourceGUID) < 6 then
-			DBM:Debug("extending acid barrage to 6 second", 2)
+		if timerAcidBarrageCD:GetRemaining(args.sourceGUID) < 4.8 then
+			DBM:Debug("extending acid barrage to 4.8 seconds", 2)
 			timerAcidBarrageCD:Stop(args.sourceGUID)
-			timerAcidBarrageCD:Start(6, args.sourceGUID)
+			timerAcidBarrageCD:Start(4.8, args.sourceGUID)
 		end
 		if self:AntiSpam(3, 2) then
 			specWarnVolatileBolt:Show()
