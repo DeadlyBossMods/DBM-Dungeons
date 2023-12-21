@@ -84,7 +84,10 @@ function mod:OnCombatStart(delay)
 	timerReapSoulCD:Start(20-delay, 1)
 end
 
-function mod:OnCombatEnd()
+function mod:OnCombatEnd(wipe, secondRun)
+	if not wipe and not secondRun then
+		DBM:GetModByName("BRHTrash"):StartFirstRP()
+	end
 --	if self.Options.RangeFrame then
 --		DBM.RangeCheck:Hide()
 --	end

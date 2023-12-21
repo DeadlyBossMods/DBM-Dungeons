@@ -18,7 +18,7 @@ L:SetWarningLocalization({
 })
 
 L:SetOptionLocalization({
-	SpecWarnIntensity	= DBM_CORE_L.AUTO_SPEC_WARN_OPTIONS.switch:format(113315)
+	SpecWarnIntensity2	= DBM_CORE_L.AUTO_SPEC_WARN_OPTIONS.switch:format(113315)
 })
 
 L:SetMiscLocalization({

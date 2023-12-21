@@ -57,7 +57,14 @@ if (wowToc >= 100200) then
 			timerGlacialFusionCD:Start(24.1)
 			timerSpetialCompressionCD:Start(43.7)
 		end
-		DBM:AddMsg("This boss is very buggy and blizzard has ignored bug reports on the bugs. Sol sometimes resets her rotation back to cinder at random. Now, I've decided to reinstate showing what next rotation is SUPPOSED TO BE but if it's wrong don't complain to me, complain to blizzard for not fixing rotation bug")
+		--Haven't seen bug in a while, guess print did it's job. Will remove if no one reports further problems with this boss for a while.
+		--DBM:AddMsg("This boss is very buggy and blizzard has ignored bug reports on the bugs. Sol sometimes resets her rotation back to cinder at random. Now, I've decided to reinstate showing what next rotation is SUPPOSED TO BE but if it's wrong don't complain to me, complain to blizzard for not fixing rotation bug")
+	end
+
+	function mod:OnCombatEnd(wipe, secondRun)
+		if not wipe and not secondRun then
+			DBM:GetModByName("EverBloomTrash"):PortalRP()
+		end
 	end
 
 	--Another great log with variances
