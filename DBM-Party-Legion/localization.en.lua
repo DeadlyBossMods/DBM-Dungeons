@@ -64,6 +64,9 @@ L:SetGeneralLocalization({
 	name =	"Darkheart Thicket Trash"
 })
 
+L:SetMiscLocalization({
+	GlaidalisRP	= "Defilers... I can smell the Nightmare in your blood. Be gone from these woods or suffer nature's wrath!"
+})
 
 -----------------------
 -- <<<Eye of Azshara>>> --

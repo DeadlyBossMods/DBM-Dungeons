@@ -12,7 +12,8 @@ mod:RegisterEvents(
 	"SPELL_CAST_SUCCESS 218755 204243 201272 201129 201361 201399",
 	"SPELL_SUMMON 198910",
 	"SPELL_AURA_APPLIED 225484 198904 204246 201839 201365",
-	"UNIT_DIED"
+	"UNIT_DIED",
+	"CHAT_MSG_MONSTER_YELL"
 )
 
 --[[
@@ -50,6 +51,7 @@ local specWarnCurseofIsoDispel		= mod:NewSpecialWarningDispel(201839, "RemoveCur
 local specWarnDarksoulDrain			= mod:NewSpecialWarningDispel(201365, "RemoveDisease", nil, nil, 1, 2)
 --local specWarnGTFO					= mod:NewSpecialWarningGTFO(201123, nil, nil, nil, 1, 8)
 
+local timerRP						= mod:NewRPTimer(68)
 local timerGrievousRipCD			= mod:NewCDNPTimer(18, 225484, nil, nil, nil, 3)--Kind of imprecise without an actual cast event, but should be a good approx
 local timerUnnervingScreechCD		= mod:NewCDNPTimer(10.4, 200630, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerSpewCorruptionCD			= mod:NewCDNPTimer(30.3, 218755, nil, nil, nil, 3)
@@ -67,7 +69,13 @@ local timerRootBurstCD				= mod:NewCDNPTimer(16.2, 201129, nil, nil, nil, 3)
 local timerVileMushroomCD			= mod:NewCDNPTimer(17, 198910, nil, nil, nil, 3)
 local timerDarksoulBiteCD			= mod:NewCDNPTimer(12.1, 201361, nil, nil, nil, 5)--12.1-18.2
 
+mod.vb.trashRemaining = 5
+
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc, 7 off interrupt, 8 GTFO
+
+function mod:ResetSecondBossRP()
+	self.vb.trashRemaining = 5
+end
 
 function mod:SPELL_CAST_START(args)
 	if not self.Options.Enabled then return end
@@ -235,6 +243,14 @@ function mod:UNIT_DIED(args)
 		timerPoisonSpearCD:Stop(args.destGUID)
 	elseif cid == 101991 then--nightmare-dweller
 		timerTormentingEyeCD:Stop(args.destGUID)
+		--Boss RP Timer Stuff
+		--"<13.29 01:20:51> [CLEU] UNIT_DIED##nil#Creature-0-4223-1466-16781-101991-000203D8A6#Nightmare Dweller#-1#false#nil#nil", -- [65]
+		--"<18.14 01:20:55> [UNIT_SPELLCAST_SUCCEEDED] Oakheart(100.0%-0.0%){Target:??} -Cancel Deep Roots- [[focus:Cast-3-4223-1466-16781-165953-000103D947:165953]]", -- [68]
+		--"<21.41 01:20:59> [DBM_Debug] ENCOUNTER_START event fired: 1837 Oakheart 23 5#nil", -- [73]
+		self.vb.trashRemaining = self.vb.trashRemaining - 1
+		if self.vb.trashRemaining == 0 then
+			timerRP:Start(8.1)
+		end
 	elseif cid == 100531 then--bloodtainted-fury
 		timerBloodBombCD:Stop(args.destGUID)
 		timerBloodAssaultCD:Stop(args.destGUID)
@@ -250,5 +266,21 @@ function mod:UNIT_DIED(args)
 		timerVileMushroomCD:Stop(args.destGUID)
 	elseif cid == 100526 then--tormented-bloodseeker
 		timerDarksoulBiteCD:Stop(args.destGUID)
+	end
+end
+
+--"<21.73 01:19:30> [CHAT_MSG_MONSTER_YELL] Defilers... I can smell the Nightmare in your blood. Be gone from these woods or suffer nature's wrath!#Archdruid Glaidalis###Omegal##0#0##0#1578#nil#0#false#false#false#false", -- [64]
+--"<23.25 01:19:32> [CHAT_MSG_MONSTER_YELL] Kill him! Protect the grove!#Druidic Preserver###Omegal##0#0##0#1579#nil#0#false#false#false#false", -- [65]
+--"<24.56 01:19:33> [CLEU] UNIT_DIED##nil#Creature-0-4223-1466-16781-100403-000183D8A6#Druidic Preserver#-1#false#nil#nil", -- [68]
+--"<29.81 01:19:38> [DBM_Debug] ENCOUNTER_START event fired
+function mod:CHAT_MSG_MONSTER_YELL(msg)
+	if (msg == L.GlaidalisRP or msg:find(L.GlaidalisRP)) and self:LatencyCheck(1000) then
+		self:SendSync("firstBossRP")
+	end
+end
+
+function mod:OnSync(msg)
+	if msg == "firstBossRP" and self:AntiSpam(10, 9) then
+		timerRP:Start(8)
 	end
 end
