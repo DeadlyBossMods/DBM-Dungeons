@@ -97,7 +97,7 @@ function mod:OnCombatStart(delay)
 	end
 end
 
-function mod:OnCombatEnd((wipe, secondRun)
+function mod:OnCombatEnd(wipe, secondRun)
 	if self.Options.NPAuraOnFixate then
 		DBM.Nameplate:Hide(true, nil, nil, nil, true, true)
 	end
