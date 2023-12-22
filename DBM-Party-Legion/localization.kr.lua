@@ -65,6 +65,9 @@ L:SetGeneralLocalization({
 	name =	"어둠심장 숲 일반몹"
 })
 
+L:SetMiscLocalization({
+	GlaidalisRP	= "타락한 자들아... 너희 피에서 악몽의 냄새가 난다. 이 숲에서 꺼지지 않으면, 자연의 분노를 맛보게 되리라!"
+})
 
 -----------------------
 -- <<<Eye of Azshara>>> --
@@ -602,4 +605,3 @@ L = DBM:GetModLocalization("SoTTrash")
 L:SetGeneralLocalization({
 	name =	"삼두정의 권좌 일반몹"
 })
-
