@@ -40,8 +40,7 @@ if (wowToc >= 100200) then
 
 	local specWarnShockBlast							= mod:NewSpecialWarningMoveAway(428054, nil, nil, nil, 1, 2)
 	local yellShockBlast								= mod:NewShortYell(428054)
-	local specWarnFocusedTempest						= mod:NewSpecialWarningMoveAway(428374, nil, nil, nil, 1, 2)
-	local yellFocusedTempest							= mod:NewShortYell(428374)
+	local specWarnFocusedTempest						= mod:NewSpecialWarningCount(428374, nil, nil, nil, 2, 2)
 	local specWarnWaterbolt								= mod:NewSpecialWarningInterrupt(428263, "HasInterrupt", nil, nil, 1, 2)
 	local specWarnTridentFlurry							= mod:NewSpecialWarningDodge(428293, nil, nil, nil, 2, 2)
 	local specWarnFrostbolt								= mod:NewSpecialWarningInterrupt(428103, "HasInterrupt", nil, nil, 1, 2)
@@ -50,11 +49,13 @@ if (wowToc >= 100200) then
 
 	local timerShockBlastCD								= mod:NewCDTimer(49, 428054, nil, nil, nil, 3)
 	local timerGeyserCD									= mod:NewCDTimer(49, 427771, nil, nil, nil, 3)
-	local timerFocusedTempestCD							= mod:NewCDTimer(14.5, 428374, nil, nil, nil, 5, nil, DBM_COMMON_L.HEALER_ICON)--14.5-16.9
+	local timerFocusedTempestCD							= mod:NewCDTimer(14.5, 428374, nil, nil, nil, 2, nil, DBM_COMMON_L.HEALER_ICON)--14.5-16.9
 	--local timerTridentFlurryCD							= mod:NewAITimer(49, 428293, nil, nil, nil, 3)
 
 	--mod:AddRangeFrameOption("5/6/10")
 	--mod:AddSetIconOption("SetIconOnSinSeeker", 335114, true, false, {1, 2, 3})
+
+	mod.vb.tempestCount = 0
 
 	function mod:ShockBlastTarget(targetname, uId)
 		if not targetname then return end
@@ -67,19 +68,9 @@ if (wowToc >= 100200) then
 		end
 	end
 
-	function mod:TempestTarget(targetname, uId)
-		if not targetname then return end
-		if targetname == UnitName("player") then
-			specWarnFocusedTempest:Show()
-			specWarnFocusedTempest:Play("targetyou")
-			yellFocusedTempest:Yell()
-		else
-			warnFocusedTempest:Show(targetname)
-		end
-	end
-
 	function mod:OnCombatStart(delay)
 		self:SetStage(1)
+		self.vb.tempestCount = 0
 		timerFocusedTempestCD:Start(7.2-delay)
 		timerGeyserCD:Start(16.1-delay)
 		timerShockBlastCD:Start(19.7-delay)
@@ -100,7 +91,9 @@ if (wowToc >= 100200) then
 			warnGeyser:Show()
 --			timerGeyserCD:Start()
 		elseif spellId == 428374 then
-			self:ScheduleMethod(0.1, "BossTargetScanner", args.sourceGUID, "TempestTarget", 0.1, 5, true)
+			self.vb.tempestCount = self.vb.tempestCount + 1
+			specWarnFocusedTempest:Show(self.vb.tempestCount)
+			specWarnFocusedTempest:Play("aesoon")
 			timerFocusedTempestCD:Start()
 		elseif spellId == 428263 then
 			if self:CheckInterruptFilter(args.sourceGUID, false, true) then
