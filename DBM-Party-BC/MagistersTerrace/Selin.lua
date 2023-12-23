@@ -25,7 +25,7 @@ local specWarnChannel		= mod:NewSpecialWarning("warningFelCrystal", "-Healer", n
 local timerChannelCD		= mod:NewTimer(47, "timerFelCrystal", 44320, nil, nil, 1)--(-5081)
 
 function mod:OnCombatStart(delay)
-	timerChannelCD:Start(15-delay)
+	timerChannelCD:Start(12.8-delay)
 end
 
 function mod:SPELL_AURA_APPLIED(args)
