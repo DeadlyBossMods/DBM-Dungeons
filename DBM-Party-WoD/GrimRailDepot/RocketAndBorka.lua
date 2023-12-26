@@ -17,6 +17,7 @@ mod:RegisterEventsInCombat(
 	"UNIT_DIED"
 )
 
+--This mod needs an overhaul, but dungeon not likely to re-enter rotation any time soon so problem for another day
 local warnVX18B					= mod:NewCountAnnounce(162500, 2)--Cast twice, 3rd cast is X2101, then repeats
 
 local specWarnX2101AMissile		= mod:NewSpecialWarningSpell(162407, nil, nil, nil, 2, 2)--Large AOE damage
@@ -24,9 +25,9 @@ local specWarnMadDash			= mod:NewSpecialWarningSpell(161090, nil, nil, nil, 2, 2
 local specWarnMadDashInterrupt	= mod:NewSpecialWarningMoveTo(161090, nil, nil, nil, 3, 1)--It's actually an interrupt warning for OTHER boss, not caster of this spell
 local specWarnSlam				= mod:NewSpecialWarningCast(162617, "SpellCaster", nil, nil, 1, 2)
 
-local timerVX18BCD				= mod:NewCDTimer(33, 162500, nil, nil, nil, 3)
-local timerX2101AMissileCD		= mod:NewCDTimer(40, 162407, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON..DBM_COMMON_L.TANK_ICON)
-local timerMadDashCD			= mod:NewCDTimer(40, 161090, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+--local timerVX18BCD				= mod:NewCDTimer(33, 162500, nil, nil, nil, 3)
+--local timerX2101AMissileCD		= mod:NewCDTimer(40, 162407, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON..DBM_COMMON_L.TANK_ICON)
+--local timerMadDashCD			= mod:NewCDTimer(40, 161090, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerSlamCD				= mod:NewCDTimer(15, 162617, nil, "SpellCaster", nil, 5)
 local timerSlam					= mod:NewCastTimer(1.5, 162617, nil, "SpellCaster", nil, 5)
 local timerRecovering			= mod:NewBuffActiveTimer(6, 163947, nil, nil, nil, 5)
@@ -51,7 +52,8 @@ function mod:OnCombatStart(delay)
 	self.vb.VXCast = 0
 	self.vb.SlamCast = 0
 	timerSlamCD:Start(9-delay)
-	timerX2101AMissileCD:Start(18.5-delay)
+--	timerX2101AMissileCD:Start(18.5-delay)
+	self:Schedule(1, getBorkaID, self)
 end
 
 function mod:SPELL_CAST_START(args)
@@ -61,14 +63,14 @@ function mod:SPELL_CAST_START(args)
 		warnVX18B:Show(self.vb.VXCast)
 		--Probably won't actually fix bug but I caused be arsed to figure out how shit actually works
 		--when this dungeon stops being relevent in 1 week anyways
-		if self:AntiSpam(20, 1) then
-			timerVX18BCD:Start()
-		end
+--		if self:AntiSpam(20, 1) then
+--			timerVX18BCD:Start()
+--		end
 	elseif spellId == 162407 then
 		self.vb.VXCast = 0
 		specWarnX2101AMissile:Show()
 		specWarnX2101AMissile:Play("aesoon")
-		timerX2101AMissileCD:Start()
+--		timerX2101AMissileCD:Start()
 	elseif spellId == 161090 then
 		self.vb.SlamCast = 0
 		if not borkaID then
@@ -81,17 +83,17 @@ function mod:SPELL_CAST_START(args)
 			specWarnMadDash:Show()
 			specWarnMadDash:Play("farfromline")
 		end
-		timerMadDashCD:Start()
+--		timerMadDashCD:Start()
 	elseif spellId == 162617 then
 		self.vb.SlamCast = self.vb.SlamCast + 1
 		specWarnSlam:Show()
 		timerSlam:Start()
 		specWarnSlam:Play("stopcast")
-		if self.vb.SlamCast == 2 then
-			timerSlamCD:Start(30)
-		else
+--		if self.vb.SlamCast == 2 then
+--			timerSlamCD:Start(30)
+--		else
 			timerSlamCD:Start()
-		end
+--		end
 	end
 end
 
@@ -117,8 +119,9 @@ function mod:UNIT_DIED(args)
 	local cid = self:GetCIDFromGUID(args.destGUID)
 	--Maybe both cancel if either one dies?
 	if cid == 77816 then
-		timerMadDashCD:Cancel()
+--		timerMadDashCD:Stop()
+		timerSlamCD:Stop()
 	elseif cid == 77803 then
-		timerX2101AMissileCD:Cancel()
+--		timerX2101AMissileCD:Stop()
 	end
 end
