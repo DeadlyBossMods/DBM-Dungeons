@@ -13,7 +13,7 @@ mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 195254 194966 194956 196078 196587",
-	"SPELL_CAST_SUCCESS 196587",
+	"SPELL_CAST_SUCCESS 196587 194956",
 	"SPELL_AURA_APPLIED 194966 196930",
 	"SPELL_AURA_APPLIED_DOSE 196930"
 )
@@ -37,7 +37,7 @@ local specWarnSoulBurst				= mod:NewSpecialWarningCount(196587, nil, nil, nil, 2
 
 local timerSwirlingScytheCD			= mod:NewCDTimer(20.5, 195254, nil, nil, nil, 3)--20-27
 local timerSoulEchoesCD				= mod:NewNextTimer(27.5, 194966, nil, nil, nil, 3)
-local timerReapSoulCD				= mod:NewNextTimer(13, 194956, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON..DBM_COMMON_L.DEADLY_ICON)
+local timerReapSoulCD				= mod:NewNextTimer(10, 194956, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON..DBM_COMMON_L.DEADLY_ICON)--13-3 because started in success
 
 mod.vb.scytheCount = 0
 mod.vb.echoesCount = 0
@@ -104,10 +104,8 @@ function mod:SPELL_CAST_START(args)
 		timerSoulEchoesCD:Start(nil, self.vb.echoesCount+1)
 		self:BossTargetScanner(args.sourceGUID, "SoulTarget", 0.1, 20, true, nil, nil, nil, true)--Always filter tank, because if scan fails debuff will be used.
 	elseif spellId == 194956 then
-		self.vb.reapCount = self.vb.reapCount + 1
-		specWarnReapSoul:Show(self.vb.reapCount)
+		specWarnReapSoul:Show(self.vb.reapCount+1)
 		specWarnReapSoul:Play("shockwave")
-		timerReapSoulCD:Start(nil, self.vb.reapCount+1)
 	elseif spellId == 196078 then
 		self:SetStage(2)
 		warnCallSouls:Show()
@@ -123,15 +121,18 @@ end
 
 function mod:SPELL_CAST_SUCCESS(args)
 	local spellId = args.spellId
-	if spellId == 196587 then
+	if spellId == 196587 then--SoulBurst Ending
 		self:SetStage(1)
 		--Reset Count?
 		--self.vb.scytheCount = 0
 		--self.vb.echoesCount = 0
 		--self.vb.reapCount = 0
-		timerSwirlingScytheCD:Start(9.2, self.vb.scytheCount+1)
-		timerSoulEchoesCD:Start(16.5, self.vb.echoesCount+1)
-		timerReapSoulCD:Start(21.3, self.vb.reapCount+1)
+		timerSwirlingScytheCD:Restart(9.2, self.vb.scytheCount+1)
+		timerSoulEchoesCD:Restart(16.5, self.vb.echoesCount+1)
+		timerReapSoulCD:Restart(21.3, self.vb.reapCount+1)
+	elseif spellId == 194956 then
+		self.vb.reapCount = self.vb.reapCount + 1
+		timerReapSoulCD:Start(nil, self.vb.reapCount+1)
 	end
 end
 

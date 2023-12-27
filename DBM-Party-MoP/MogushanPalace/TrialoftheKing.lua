@@ -80,7 +80,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		timerConflagCD:Cancel()
 		timerMeteorCD:Cancel()
 		timerTraumaticBlowCD:Cancel()
-		timerShockwaveCD:Start(19)--Not confirmed through multiple pulls, just one
+		timerShockwaveCD:Start(17.2)
 		timerRavageCD:Start(26)
 	elseif msg == L.Ming or msg:find(L.Ming) then
 		timerShockwaveCD:Cancel()
