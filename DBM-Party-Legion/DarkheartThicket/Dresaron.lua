@@ -48,6 +48,20 @@ function mod:OnCombatStart(delay)
 	timerEarthShakerCD:Start(32.9-delay, 1)--32.9-34.8
 end
 
+--/run DBM:GetModByName(1656):BreakCallback(1)
+function mod:BreakCallback(count)
+	count = tonumber(count)
+	if count then
+		timerBreathCD:Start(14.6, count)--14.6-15.4
+		timerDownDraftCD:Start(20.6, count)--20.6-22.7
+		timerEarthShakerCD:Start(32.9, count)--32.9-34.8
+	else
+		timerBreathCD:Start(14.6)--14.6-15.4
+		timerDownDraftCD:Start(20.6)--20.6-22.7
+		timerEarthShakerCD:Start(32.9)--32.9-34.8
+	end
+end
+
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
 	if spellId == 199389 then
