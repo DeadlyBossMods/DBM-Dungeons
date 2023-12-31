@@ -31,9 +31,9 @@ local specWarnBreath				= mod:NewSpecialWarningDodgeCount(191325, "Tank", nil, n
 --local yellBreath					= mod:NewYell(199332)
 local specWarnFallingRocks			= mod:NewSpecialWarningGTFO(199460, nil, nil, nil, 1, 8)
 
-local timerBreathCD					= mod:NewCDTimer(22, 191325, nil, "Tank", nil, 5)--22/30 alternating? need more logs to confirm
-local timerEarthShakerCD			= mod:NewCDTimer(30.3, 199389, nil, nil, nil, 3)--OLD: 21
-local timerDownDraftCD				= mod:NewCDTimer(30.3, 199345, nil, nil, nil, 2)--OLD: 30-42 (health based or varaible?)
+local timerBreathCD					= mod:NewCDCountTimer(22, 191325, nil, "Tank", nil, 5)--22/30 alternating? need more logs to confirm
+local timerEarthShakerCD			= mod:NewCDCountTimer(30.3, 199389, nil, nil, nil, 3)--OLD: 21
+local timerDownDraftCD				= mod:NewCDCountTimer(30.3, 199345, nil, nil, nil, 2)--OLD: 30-42 (health based or varaible?)
 
 mod.vb.breathCount = 0
 mod.vb.earthCount = 0
@@ -46,20 +46,6 @@ function mod:OnCombatStart(delay)
 	timerBreathCD:Start(14.6-delay, 1)--14.6-15.4
 	timerDownDraftCD:Start(20.6-delay, 1)--20.6-22.7
 	timerEarthShakerCD:Start(32.9-delay, 1)--32.9-34.8
-end
-
---/run DBM:GetModByName(1656):BreakCallback(1)
-function mod:BreakCallback(count)
-	count = tonumber(count)
-	if count then
-		timerBreathCD:Start(14.6, count)--14.6-15.4
-		timerDownDraftCD:Start(20.6, count)--20.6-22.7
-		timerEarthShakerCD:Start(32.9, count)--32.9-34.8
-	else
-		timerBreathCD:Start(14.6)--14.6-15.4
-		timerDownDraftCD:Start(20.6)--20.6-22.7
-		timerEarthShakerCD:Start(32.9)--32.9-34.8
-	end
 end
 
 function mod:SPELL_CAST_START(args)
