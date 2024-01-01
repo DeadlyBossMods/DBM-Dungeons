@@ -58,7 +58,7 @@ local function scanBosses(self, delay)
 				timerWastingStrikeCD:Start(5-delay, 1, bossGUID)
 				timerVirulentPathogenCD:Start(9.5-delay, 1, bossGUID)
 			else
-				timerDiscordantCadenzaCD:Start(14.5-delay, 1, bossGUID)
+				timerDiscordantCadenzaCD:Start(13-delay, 1, bossGUID)
 			end
 		end
 	end

@@ -31,9 +31,9 @@ local specWarnBreath				= mod:NewSpecialWarningDodgeCount(191325, "Tank", nil, n
 --local yellBreath					= mod:NewYell(199332)
 local specWarnFallingRocks			= mod:NewSpecialWarningGTFO(199460, nil, nil, nil, 1, 8)
 
-local timerBreathCD					= mod:NewCDTimer(22, 191325, nil, "Tank", nil, 5)--22/30 alternating? need more logs to confirm
-local timerEarthShakerCD			= mod:NewCDTimer(30.3, 199389, nil, nil, nil, 3)--OLD: 21
-local timerDownDraftCD				= mod:NewCDTimer(30.3, 199345, nil, nil, nil, 2)--OLD: 30-42 (health based or varaible?)
+local timerBreathCD					= mod:NewCDCountTimer(22, 191325, nil, "Tank", nil, 5)--22/30 alternating? need more logs to confirm
+local timerEarthShakerCD			= mod:NewCDCountTimer(30.3, 199389, nil, nil, nil, 3)--OLD: 21
+local timerDownDraftCD				= mod:NewCDCountTimer(30.3, 199345, nil, nil, nil, 2)--OLD: 30-42 (health based or varaible?)
 
 mod.vb.breathCount = 0
 mod.vb.earthCount = 0
