@@ -171,7 +171,7 @@ function mod:SPELL_CAST_START(args)
 		warnPhasedExplosion:Show()
 	elseif spellId == 200291 then
 		timerKnifeDanceCD:Start(nil, args.sourceGUID)
-		if self:AntiSpam(3, 6) then
+		if self:AntiSpam(3.5, 6) then
 			warnKnifeDance:Show()
 			warnKnifeDance:Play("crowdcontrol")
 		end
@@ -180,7 +180,7 @@ function mod:SPELL_CAST_START(args)
 		--ie it'll recast after 4.8 seconds if this cast is stopped
 		--But if it finishes casting, goes on ?? second CD
 		timerDrinkPotionCD:Start(4.8, args.sourceGUID)
-		if self:AntiSpam(3, 6) then
+		if self:AntiSpam(3.5, 6) then
 			warnDrinkPotion:Show()
 			warnDrinkPotion:Play("crowdcontrol")
 		end
@@ -198,7 +198,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 	local spellId = args.spellId
 	if spellId == 200343 then
 		timerArrowBarrageCD:Start(nil, args.sourceGUID)
-		if self:AntiSpam(3, 6) then
+		if self:AntiSpam(3.5, 6) then
 			warnArrowBarrage:Show()
 			warnArrowBarrage:Play("crowdcontrol")
 		end

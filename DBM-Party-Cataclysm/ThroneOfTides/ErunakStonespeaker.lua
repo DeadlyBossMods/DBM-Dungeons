@@ -37,12 +37,12 @@ if (wowToc >= 100200) then
 	local warnFlameShock								= mod:NewTargetNoFilterAnnounce(429048, 3)
 
 	local specWarnEarthfury								= mod:NewSpecialWarningDodge(429051, nil, nil, nil, 2, 2)
-	local specWarnStormflurryTotem						= mod:NewSpecialWarningSwitch(429037, "-Healer", nil, nil, 1, 2)
+	local specWarnStormflurryTotem						= mod:NewSpecialWarningSwitchCount(429037, "-Healer", nil, nil, 1, 2)
 
 	--local specWarnGTFO								= mod:NewSpecialWarningGTFO(409058, nil, nil, nil, 1, 8)
 
 	local timerEarthfuryCD								= mod:NewCDTimer(32.7, 429051, nil, nil, nil, 3)
-	local timerStormflurryTotemCD						= mod:NewCDTimer(26.6, 429037, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+	local timerStormflurryTotemCD						= mod:NewCDCountTimer(26.6, 429037, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 	local timerFlameShockCD								= mod:NewCDTimer(6, 429048, nil, nil, nil, 5, nil, DBM_COMMON_L.MAGIC_ICON)
 
 	--Mindbender Ghur'sha
@@ -53,10 +53,13 @@ if (wowToc >= 100200) then
 
 	local timerTerrifyingVisionCD						= mod:NewCDTimer(100, 429172, nil, nil, nil, 2)
 
+	mod.vb.totemCount = 0
+
 	function mod:OnCombatStart(delay)
 		self:SetStage(1)
+		self.vb.totemCount = 0
 		timerFlameShockCD:Start(6-delay)
-		timerStormflurryTotemCD:Start(12.1-delay)
+		timerStormflurryTotemCD:Start(12.1-delay, 1)
 		timerEarthfuryCD:Start(20.3-delay)
 	end
 
@@ -73,9 +76,10 @@ if (wowToc >= 100200) then
 			specWarnEarthfury:ScheduleVoice(2, "keepmove")
 			timerEarthfuryCD:Start()
 		elseif spellId == 429037 then
-			specWarnStormflurryTotem:Show()
+			self.vb.totemCount = self.vb.totemCount + 1
+			specWarnStormflurryTotem:Show(self.vb.totemCount)
 			specWarnStormflurryTotem:Play("attacktotem")
-			timerStormflurryTotemCD:Start()
+			timerStormflurryTotemCD:Start(nil, self.vb.totemCount+1)
 		elseif spellId == 429172 then
 			specWarnTerrifyingVision:Show(DBM_COMMON_L.BREAK_LOS)
 			specWarnTerrifyingVision:Play("breaklos")
