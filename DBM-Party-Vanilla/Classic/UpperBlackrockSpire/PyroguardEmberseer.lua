@@ -10,7 +10,7 @@ mod:RegisterEvents(
 	"CHAT_MSG_MONSTER_EMOTE"
 )
 
-local timerCombatStart	= mod:NewRPTimer(64)
+local timerCombatStart	= mod:NewCombatTimer(64)
 
 function mod:CHAT_MSG_MONSTER_EMOTE(msg)
 	if msg == L.Pull or msg:find(L.Pull) then

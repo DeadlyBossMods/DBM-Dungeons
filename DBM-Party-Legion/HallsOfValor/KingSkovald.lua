@@ -37,7 +37,7 @@ local specWarnSavageBlade			= mod:NewSpecialWarningDefensive(193668, "Tank", nil
 local specWarnRagnarok				= mod:NewSpecialWarningMoveTo(193826, nil, nil, nil, 3, 2)
 local specWarnFlames				= mod:NewSpecialWarningMove(193702, nil, nil, nil, 1, 2)
 
-local timerRP						= mod:NewRPTimer(34.4)
+local timerRP						= mod:NewCombatTimer(34.4)
 local timerRushCD					= mod:NewCDTimer(11, 193659, nil, nil, nil, 3)--11-13 unless delayed by claim aegis or ragnarok
 local timerSavageBladeCD			= mod:NewCDTimer(19, 193668, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON)--23 unless delayed by claim aegis or ragnarok
 local timerRagnarokCD				= mod:NewCDTimer(63.1, 193826, nil, nil, nil, 2, nil, DBM_COMMON_L.DEADLY_ICON)

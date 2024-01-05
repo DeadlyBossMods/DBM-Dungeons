@@ -37,7 +37,7 @@ local specWarnRunicBrand			= mod:NewSpecialWarningMoveTo(197961, nil, nil, nil, 
 local specWarnAdd					= mod:NewSpecialWarningSwitch(201221, "-Healer", nil, nil, 1, 2)
 local specWarnSurge					= mod:NewSpecialWarningInterrupt(198750, "HasInterrupt", nil, nil, 1, 2)
 
-local timerRP						= mod:NewRPTimer(28.5)
+local timerRP						= mod:NewCombatTimer(28.5)
 --local timerSpearCD					= mod:NewCDTimer(8, 198077, nil, nil, nil, 3)--More data needed
 local timerTempestCD				= mod:NewCDCountTimer(56, 198263, nil, nil, nil, 2, nil, DBM_COMMON_L.DEADLY_ICON)--More data needed
 local timerShatterSpearsCD			= mod:NewCDTimer(56, 198077, nil, nil, nil, 2)
