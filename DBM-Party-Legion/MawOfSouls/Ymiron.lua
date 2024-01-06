@@ -13,7 +13,7 @@ mod:RegisterEventsInCombat(
 
 local warnBane						= mod:NewSpellAnnounce(193460, 3)
 
-local specWarnDarkSlash				= mod:NewSpecialWarningDefensive(193211, "Tank", nil, nil, 3, 2)
+local specWarnDarkSlash				= mod:NewSpecialWarningDefensive(193211, nil, nil, nil, 3, 2)
 local specWarnScreams				= mod:NewSpecialWarningRun(193364, "Melee", nil, nil, 4, 2)
 local specWarnWinds					= mod:NewSpecialWarningSpell(193977, nil, nil, nil, 2, 2)
 local specAriseFallen				= mod:NewSpecialWarningSwitch(193566, "-Healer", nil, nil, 1, 2)
@@ -34,8 +34,10 @@ end
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
 	if spellId == 193211 then
-		specWarnDarkSlash:Show()
-		specWarnDarkSlash:Play("defensive")
+		if self:IsTanking("player", "boss1", nil, true) then
+			specWarnDarkSlash:Show()
+			specWarnDarkSlash:Play("defensive")
+		end
 		timerDarkSlashCD:Start()
 	elseif spellId == 193364 then
 		specWarnScreams:Show()

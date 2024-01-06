@@ -18,7 +18,7 @@ mod:RegisterEventsInCombat(
 --NOTE: Even more data, i'm confident everything he does is based on health, no timers.
 local warnShadowCrash				= mod:NewSpellAnnounce(201920, 3)
 
-local specWarnDoom					= mod:NewSpecialWarningDefensive(201148, "Tank", nil, nil, 1, 2)
+local specWarnDoom					= mod:NewSpecialWarningDefensive(201148, nil, nil, nil, 1, 2)
 --local specWarnHysteria				= mod:NewSpecialWarningDispel(201146, "Healer", nil, nil, 1, 2)
 local specWarnEternalDarkness		= mod:NewSpecialWarningSwitch(201153, "-Healer", nil, nil, 3, 2)
 
@@ -49,7 +49,9 @@ function mod:SPELL_CAST_START(args)
 		specWarnEternalDarkness:Play("mobkill")
 --		timerEternalDarknessCD:Start()
 	elseif spellId == 201148 then
-		specWarnDoom:Show()
-		specWarnDoom:Play("defensive")
+		if self:IsTanking("player", "boss1", nil, true) then
+			specWarnDoom:Show()
+			specWarnDoom:Play("defensive")
+		end
 	end
 end

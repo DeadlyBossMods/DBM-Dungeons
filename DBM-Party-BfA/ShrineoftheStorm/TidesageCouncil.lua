@@ -31,7 +31,7 @@ local specWarnReinforcingWardT		= mod:NewSpecialWarningMove(267905, nil, nil, ni
 local specWarnReinforcingWard		= mod:NewSpecialWarningMoveTo(267905, nil, nil, nil, 1, 2)
 
 local specWarnBlessingofIronsides	= mod:NewSpecialWarningRun(267901, "Tank", nil, 2, 4, 2)
-local specWarnHinderingCleave		= mod:NewSpecialWarningDefensive(267899, "Tank", nil, nil, 1, 2)
+local specWarnHinderingCleave		= mod:NewSpecialWarningDefensive(267899, nil, nil, nil, 1, 2)
 
 local timerReinforcingWardCD		= mod:NewCDTimer(30.2, 267905, nil, nil, nil, 5, nil, DBM_COMMON_L.IMPORTANT_ICON)
 local timerBlessingofIronsidesCD	= mod:NewCDTimer(32.4, 267901, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
@@ -88,8 +88,10 @@ function mod:SPELL_CAST_START(args)
 		specWarnSlicingBlast:Show(args.sourceName)
 		specWarnSlicingBlast:Play("kickcast")
 	elseif spellId == 267899 then
-		specWarnHinderingCleave:Show()
-		specWarnHinderingCleave:Play("defensive")
+		if self:IsTanking("player", "boss1", nil, true) then
+			specWarnHinderingCleave:Show()
+			specWarnHinderingCleave:Play("defensive")
+		end
 		timerHinderingCleaveCD:Start()
 	end
 end

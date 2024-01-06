@@ -34,7 +34,7 @@ local specWarnStomp					= mod:NewSpecialWarningSpell(198073, nil, nil, nil, 2, 2
 local specWarnHatefulGaze			= mod:NewSpecialWarningDefensive(198079, nil, nil, nil, 1, 2)
 local yellHatefulGaze				= mod:NewYell(198079)
 local specWarnBrutalHaymakerSoon	= mod:NewSpecialWarningSoon(198245, "Tank|Healer", nil, nil, 1, 2)--Face fuck soon
-local specWarnBrutalHaymaker		= mod:NewSpecialWarningDefensive(198245, "Tank", nil, nil, 3, 2)--Incoming face fuck
+local specWarnBrutalHaymaker		= mod:NewSpecialWarningDefensive(198245, nil, nil, nil, 3, 2)--Incoming face fuck
 local specWarnFelVomit				= mod:NewSpecialWarningMoveAway(198446, nil, nil, nil, 1, 2)
 local yellFelVomit					= mod:NewYell(198446)
 
@@ -76,8 +76,10 @@ function mod:SPELL_CAST_START(args)
 		timerStompCD:Start(nil, self.vb.stompCount+1)
 	elseif spellId == 198245 and not superWarned then--fallback, only 0.7 seconds warning vs 1.2 if power 100 works, but better than naught.
 		superWarned = true
-		specWarnBrutalHaymaker:Show()
-		specWarnBrutalHaymaker:Play("defensive")
+		if self:IsTanking("player", "boss1", nil, true) then
+			specWarnBrutalHaymaker:Show()
+			specWarnBrutalHaymaker:Play("defensive")
+		end
 	end
 end
 
@@ -132,8 +134,10 @@ do
 			superWarned = false
 		elseif power == 100 and not superWarned then--Doing here is about 0.5 seconds faster than SPELL_CAST_START, when it works.
 			superWarned = true
-			specWarnBrutalHaymaker:Show()
-			specWarnBrutalHaymaker:Play("defensive")
+			if self:IsTanking("player", "boss1", nil, true) then
+				specWarnBrutalHaymaker:Show()
+				specWarnBrutalHaymaker:Play("defensive")
+			end
 		end
 	end
 end

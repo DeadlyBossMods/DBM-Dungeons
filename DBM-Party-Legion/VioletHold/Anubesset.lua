@@ -22,7 +22,7 @@ local warnImpale					= mod:NewTargetAnnounce(202341, 4)
 local warnSwarm						= mod:NewSpellAnnounce(201863, 2)
 local warnFixate					= mod:NewTargetAnnounce(202480, 3)
 
-local specWarnMandibleStrike		= mod:NewSpecialWarningDefensive(202217, "Tank", nil, nil, 1, 2)
+local specWarnMandibleStrike		= mod:NewSpecialWarningDefensive(202217, nil, nil, nil, 1, 2)
 local specWarnImpale				= mod:NewSpecialWarningMoveAway(202341, nil, nil, nil, 1, 2)
 local yellImpale					= mod:NewYell(202341)
 local specWarnOozeGTFO				= mod:NewSpecialWarningMove(202485, nil, nil, nil, 1, 2)
@@ -58,8 +58,10 @@ end
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
 	if spellId == 202217 then
-		specWarnMandibleStrike:Show()
-		specWarnMandibleStrike:Play("defensive")
+		if self:IsTanking("player", "boss1", nil, true) then
+			specWarnMandibleStrike:Show()
+			specWarnMandibleStrike:Play("defensive")
+		end
 		timerMandibleStrikeCD:Start()
 	elseif spellId == 202341 then
 		self:BossUnitTargetScanner("boss1", "ImpaleTarget", 3.4)

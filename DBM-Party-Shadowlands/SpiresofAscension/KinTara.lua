@@ -35,7 +35,7 @@ local KinTara = DBM:EJ_GetSectionInfo(21637)
 mod:AddTimerLine(KinTara)
 local warnChargedSpear				= mod:NewTargetNoFilterAnnounce(321009, 4)
 
-local specWarnOverheadSlash			= mod:NewSpecialWarningDefensive(320966, "Tank", nil, nil, 1, 2)
+local specWarnOverheadSlash			= mod:NewSpecialWarningDefensive(320966, nil, nil, nil, 1, 2)
 local specWarnDarkLance				= mod:NewSpecialWarningInterrupt(327481, "HasInterrupt", nil, nil, 1, 2)
 local specWarnChargedSpear			= mod:NewSpecialWarningMoveAway(321009, nil, nil, nil, 1, 2)
 local yellChargedSpear				= mod:NewYell(321009)
@@ -75,8 +75,10 @@ function mod:SPELL_CAST_START(args)
 			self.vb.flightActive = false
 			self:UnregisterShortTermEvents()
 		end
-		specWarnOverheadSlash:Show()--Will be moved to fire earlier with timers
-		specWarnOverheadSlash:Play("defensive")
+		if self:IsTanking("player", "boss1", nil, true) then
+			specWarnOverheadSlash:Show()--Will be moved to fire earlier with timers
+			specWarnOverheadSlash:Play("defensive")
+		end
 		timerOverheadSlashCD:Start()
 	elseif spellId == 327481 then
 		if self.vb.flightActive then

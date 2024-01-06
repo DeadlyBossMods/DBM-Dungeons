@@ -27,7 +27,7 @@ local warnStrikeofMountain			= mod:NewTargetAnnounce(216290, 2)
 local warnBellowofDeeps				= mod:NewSpellAnnounce(193375, 2)--Change to special warning if they become important enough to switch to
 local warnStanceofMountain			= mod:NewCountAnnounce(216249, 2)
 
-local specWarnSunder				= mod:NewSpecialWarningDefensive(198496, "Tank", nil, 2, 1, 2)
+local specWarnSunder				= mod:NewSpecialWarningDefensive(198496, nil, nil, 2, 1, 2)
 local specWarnStrikeofMountain		= mod:NewSpecialWarningDodge(216290, nil, nil, nil, 1, 2)
 --local yellStrikeofMountain			= mod:NewYell(216290)
 
@@ -69,8 +69,10 @@ end
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
 	if spellId == 198496 then
-		specWarnSunder:Show()
-		specWarnSunder:Play("defensive")
+		if self:IsTanking("player", "boss1", nil, true) then
+			specWarnSunder:Show()
+			specWarnSunder:Play("defensive")
+		end
 		timerSunderCD:Start()
 		updateAllTimers(self, 4.8)
 	elseif spellId == 198428 then

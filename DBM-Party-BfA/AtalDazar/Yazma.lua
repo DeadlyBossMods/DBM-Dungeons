@@ -30,7 +30,7 @@ local warnSoulRend					= mod:NewTargetAnnounce(259187, 4)
 local specWarnSoulRend				= mod:NewSpecialWarningRun(259187, nil, nil, nil, 4, 2)
 local yellSoulRend					= mod:NewYell(259187)
 local specWarnWrackingPain			= mod:NewSpecialWarningInterruptCount(250096, "HasInterrupt", nil, nil, 1, 2)
-local specWarnSkewer				= mod:NewSpecialWarningDefensive(249919, "Tank", nil, nil, 1, 2)
+local specWarnSkewer				= mod:NewSpecialWarningDefensive(249919, nil, nil, nil, 1, 2)
 local specWarnEchoes				= mod:NewSpecialWarningDodgeCount(250050, nil, nil, nil, 2, 2)
 local specWarnGTFO					= mod:NewSpecialWarningGTFO(250036, nil, nil, nil, 1, 8)
 
@@ -106,8 +106,10 @@ function mod:SPELL_CAST_START(args)
 		end
 	elseif spellId == 249919 then
 		self.vb.skewerCount = self.vb.skewerCount + 1
-		specWarnSkewer:Show()
-		specWarnSkewer:Play("defensive")
+		if self:IsTanking("player", "boss1", nil, true) then
+			specWarnSkewer:Show()
+			specWarnSkewer:Play("defensive")
+		end
 		timerSkewerCD:Start(nil, self.vb.skewerCount+1)
 		updateAllTimers(self, 3.5)
 	elseif spellId == 250050 then

@@ -23,7 +23,7 @@ local warnInfernoBolt				= mod:NewTargetAnnounce(227615, 3)
 local warnFlameWreath				= mod:NewCastAnnounce(228269, 4)
 local warnFlameWreathTargets		= mod:NewTargetAnnounce(228269, 4)
 
-local specWarnArcaneMissiles		= mod:NewSpecialWarningDefensive(227628, "Tank", nil, nil, 1, 2)
+local specWarnArcaneMissiles		= mod:NewSpecialWarningDefensive(227628, nil, nil, nil, 1, 2)
 local specWarnFrostbite				= mod:NewSpecialWarningInterrupt(227592, "HasInterrupt", nil, nil, 1, 2)
 local specWarnInfernoBoltMoveTo		= mod:NewSpecialWarningMoveTo(227615, nil, nil, nil, 1, 2)
 local specWarnInfernoBoltMoveAway	= mod:NewSpecialWarningMoveAway(227615, nil, nil, nil, 1, 2)
@@ -50,8 +50,10 @@ end
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
 	if spellId == 227628 then
-		specWarnArcaneMissiles:Show()
-		specWarnArcaneMissiles:Play("defensive")
+		if self:IsTanking("player", "boss1", nil, true) then
+			specWarnArcaneMissiles:Show()
+			specWarnArcaneMissiles:Play("defensive")
+		end
 	elseif spellId == 227592 then
 		specWarnFrostbite:Show(args.sourceName)
 		specWarnFrostbite:Play("kickcast")

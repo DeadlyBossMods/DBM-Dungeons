@@ -25,7 +25,7 @@ mod:RegisterEventsInCombat(
 --]]
 local warnDeathGrasp				= mod:NewTargetNoFilterAnnounce(323831, 4)
 
-local specWarnReapingScythe			= mod:NewSpecialWarningDefensive(324079, "Tank", nil, nil, 1, 2)
+local specWarnReapingScythe			= mod:NewSpecialWarningDefensive(324079, nil, nil, nil, 1, 2)
 local specWarnDarkDevastation		= mod:NewSpecialWarningDodge(323608, nil, nil, nil, 2, 2)
 local specWarnManifestDeath			= mod:NewSpecialWarningMoveAway(324449, nil, nil, nil, 1, 2)
 local yellManifestDeath				= mod:NewShortYell(324449)--Everyone gets, so short yell (no player names)
@@ -55,8 +55,10 @@ end
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
 	if spellId == 324079 then
-		specWarnReapingScythe:Show()
-		specWarnReapingScythe:Play("defensive")
+		if self:IsTanking("player", "boss1", nil, true) then
+			specWarnReapingScythe:Show()
+			specWarnReapingScythe:Play("defensive")
+		end
 		timerReapingScytheCD:Start()
 	elseif spellId == 323608 then
 		specWarnDarkDevastation:Show()

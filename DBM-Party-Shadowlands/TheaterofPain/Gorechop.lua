@@ -23,7 +23,7 @@ mod:RegisterEventsInCombat(
 local warnMeatHooks					= mod:NewSpellAnnounce(322795, 2)
 
 local specWarnTenderizingSmash		= mod:NewSpecialWarningRun(318406, nil, nil, nil, 4, 2)
-local specWarnHatefulStrike			= mod:NewSpecialWarningDefensive(323515, "Tank", nil, nil, 1, 2)
+local specWarnHatefulStrike			= mod:NewSpecialWarningDefensive(323515, nil, nil, nil, 1, 2)
 local specWarnGTFO					= mod:NewSpecialWarningGTFO(323130, nil, nil, nil, 1, 8)
 
 local timerMeatHooksCD				= mod:NewNextTimer(20.6, 322795, nil, nil, nil, 1)
@@ -39,8 +39,10 @@ end
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
 	if spellId == 323515 then
-		specWarnHatefulStrike:Show()
-		specWarnHatefulStrike:Play("defensive")
+		if self:IsTanking("player", "boss1", nil, true) then
+			specWarnHatefulStrike:Show()
+			specWarnHatefulStrike:Play("defensive")
+		end
 		timerHatefulStrikeCD:Start()
 	elseif spellId == 318406 then
 		specWarnTenderizingSmash:Show()

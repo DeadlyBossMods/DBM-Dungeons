@@ -26,7 +26,7 @@ local warnMassiveCleave				= mod:NewCountAnnounce(320729, 4)
 local warnDeafeningCrash			= mod:NewCountAnnounce(339415, 4)
 local warnBloodandGlory				= mod:NewTargetNoFilterAnnounce(320102, 2)
 
-local specWarnBrutalCombo			= mod:NewSpecialWarningDefensive(320644, "Tank", nil, nil, 2, 2)
+local specWarnBrutalCombo			= mod:NewSpecialWarningDefensive(320644, nil, nil, nil, 2, 2)
 local specWarnMightofMaldraxxus		= mod:NewSpecialWarningDodge(320050, nil, nil, nil, 3, 2)
 local specWarnDeafeningCrash		= mod:NewSpecialWarningCast(339415, false, nil, nil, 1, 2, 4)
 local specWarnBloodandGlory			= mod:NewSpecialWarningYou(320102, nil, nil, nil, 1, 2)
@@ -71,8 +71,10 @@ function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
 	if spellId == 320644 then
 		self.vb.brutalComboCount = self.vb.brutalComboCount + 1
-		specWarnBrutalCombo:Show()
-		specWarnBrutalCombo:Play("defensive")
+		if self:IsTanking("player", "boss1", nil, true) then
+			specWarnBrutalCombo:Show()
+			specWarnBrutalCombo:Play("defensive")
+		end
 		timerBrutalComboCD:Start(allTimers[spellId][self.vb.brutalComboCount+1] or (self.vb.brutalComboCount % 2 == 1 and 30.4 or 35.2), self.vb.brutalComboCount+1)
 	elseif spellId == 317231 then
 		self.vb.MightCount = self.vb.MightCount + 1

@@ -24,7 +24,7 @@ mod:RegisterEventsInCombat(
 --TODO, more timer data verification
 local warnRiteofSupremacy			= mod:NewCastAnnounce(325360, 4)
 
-local specWarnIronSpikes			= mod:NewSpecialWarningDefensive(325254, "Tank|Healer", nil, 2, 1, 2)
+local specWarnIronSpikes			= mod:NewSpecialWarningDefensive(325254, nil, nil, 2, 1, 2)
 local specWarnEndlessTorment		= mod:NewSpecialWarningMoveAway(326039, nil, nil, nil, 2, 2)
 --local specWarnGTFO					= mod:NewSpecialWarningGTFO(257274, nil, nil, nil, 1, 8)
 
@@ -64,8 +64,10 @@ function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
 	if spellId == 325254 then
 		self.vb.spikesCast = self.vb.spikesCast + 1
-		specWarnIronSpikes:Show()
-		specWarnIronSpikes:Play("defensive")
+		if self:IsTanking("player", "boss1", nil, true) then
+			specWarnIronSpikes:Show()
+			specWarnIronSpikes:Play("defensive")
+		end
 		local timer = spikesTimers[self.vb.spikesCast+1] or 32.7
 		timerIronSpikesCD:Start(timer)
 	elseif spellId == 325360 then

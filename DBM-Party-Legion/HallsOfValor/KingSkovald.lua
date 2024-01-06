@@ -33,7 +33,7 @@ local warnClaimAegis				= mod:NewSpellAnnounce(194112, 2)
 
 local specWarnFelRush				= mod:NewSpecialWarningYou(193659, nil, nil, nil, 1, 2)
 local yellFelblazeRush				= mod:NewYell(193659)
-local specWarnSavageBlade			= mod:NewSpecialWarningDefensive(193668, "Tank", nil, nil, 1, 2)
+local specWarnSavageBlade			= mod:NewSpecialWarningDefensive(193668, nil, nil, nil, 1, 2)
 local specWarnRagnarok				= mod:NewSpecialWarningMoveTo(193826, nil, nil, nil, 3, 2)
 local specWarnFlames				= mod:NewSpecialWarningMove(193702, nil, nil, nil, 1, 2)
 
@@ -74,8 +74,10 @@ function mod:SPELL_CAST_START(args)
 			timerRushCD:Start()
 		--end
 	elseif spellId == 193668 then
-		specWarnSavageBlade:Show()
-		specWarnSavageBlade:Play("defensive")
+		if self:IsTanking("player", "boss1", nil, true) then
+			specWarnSavageBlade:Show()
+			specWarnSavageBlade:Play("defensive")
+		end
 --		local elapsed, total = timerRagnarokCD:GetTime()
 --		local remaining = total - elapsed
 --		if remaining >= 20 then

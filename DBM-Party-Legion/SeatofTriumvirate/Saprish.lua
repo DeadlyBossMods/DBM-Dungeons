@@ -21,7 +21,7 @@ local warnUmbralFlanking				= mod:NewTargetAnnounce(247245, 3)
 local warnVoidTrap						= mod:NewSpellAnnounce(246026, 3, nil, nil, nil, nil, nil, 2)
 --local warnDreadScreech					= mod:NewCastAnnounce(248831, 2)
 
---local specWarnHuntersRush				= mod:NewSpecialWarningDefensive(247145, "Tank", nil, nil, 1, 2)
+--local specWarnHuntersRush				= mod:NewSpecialWarningDefensive(247145, nil, nil, nil, 1, 2)
 local specWarnOverloadTrap				= mod:NewSpecialWarningDodge(247206, nil, nil, nil, 2, 2)
 local specWarnUmbralFlanking			= mod:NewSpecialWarningMoveAway(247245, nil, nil, nil, 1, 2)
 local yellUmbralFlanking				= mod:NewYell(247245)
@@ -75,8 +75,10 @@ function mod:SPELL_AURA_APPLIED(args)
 			yellUmbralFlanking:Yell()
 		end
 --	elseif spellId == 247145 then
---		specWarnHuntersRush:Show()
---		specWarnHuntersRush:Play("defensive")
+--		if self:IsTanking("player", "boss1", nil, true) then
+--			specWarnHuntersRush:Show()
+--			specWarnHuntersRush:Play("defensive")
+--		end
 	end
 end
 

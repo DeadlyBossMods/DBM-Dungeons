@@ -38,7 +38,7 @@ local specWarnMasterofDeath			= mod:NewSpecialWarningDodge(325258, nil, nil, nil
 local specWarnCosmicArtifice		= mod:NewSpecialWarningMoveAway(325725, nil, nil, nil, 1, 2)
 local yellCosmicArtifice			= mod:NewYell(325725)
 local yellCosmicArtificeFades		= mod:NewShortFadesYell(325725)
-local specWarnSoulcrusher			= mod:NewSpecialWarningDefensive(327646, "Tank", nil, nil, 2, 2)
+local specWarnSoulcrusher			= mod:NewSpecialWarningDefensive(327646, nil, nil, nil, 2, 2)
 local specWarnDeathgate				= mod:NewSpecialWarningMoveTo(324698, nil, nil, nil, 3, 2)
 --local specWarnGTFO					= mod:NewSpecialWarningGTFO(257274, nil, nil, nil, 1, 8)
 --Stage 2: Shattered Reality
@@ -73,8 +73,10 @@ function mod:SPELL_CAST_START(args)
 		timerMasterofDeathCD:Start()
 	elseif spellId == 327646 then
 		self.vb.soulCount = self.vb.soulCount + 1
-		specWarnSoulcrusher:Show()
-		specWarnSoulcrusher:Play("defensive")
+		if self:IsTanking("player", "boss1", nil, true) then
+			specWarnSoulcrusher:Show()
+			specWarnSoulcrusher:Play("defensive")
+		end
 		if self.vb.soulCount % 2 == 0 then
 			timerSoulcrusherCD:Start(10, self.vb.soulCount+1)
 		else

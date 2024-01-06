@@ -25,7 +25,7 @@ mod:RegisterEventsInCombat(
  --]]
 --local warnBlackPowder				= mod:NewTargetAnnounce(257314, 4)
 
-local specWarnViciousHeadbutt		= mod:NewSpecialWarningDefensive(319650, "Tank", nil, nil, 1, 2)
+local specWarnViciousHeadbutt		= mod:NewSpecialWarningDefensive(319650, nil, nil, nil, 1, 2)
 local specWarnHungeringDrain		= mod:NewSpecialWarningInterruptCount(319654, "HasInterrupt", nil, nil, 1, 2)
 local specWarnSeveringSmash			= mod:NewSpecialWarningSpell(319685, nil, nil, nil, 2, 2)
 local specWarnJuggernautRush		= mod:NewSpecialWarningYou(319713, nil, nil, nil, 1, 2)
@@ -57,8 +57,10 @@ function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
 	if spellId == 319650 then
 		self.vb.headbuttCount = self.vb.headbuttCount + 1
-		specWarnViciousHeadbutt:Show()
-		specWarnViciousHeadbutt:Play("defensive")
+		if self:IsTanking("player", "boss1", nil, true) then
+			specWarnViciousHeadbutt:Show()
+			specWarnViciousHeadbutt:Play("defensive")
+		end
 		if timerSeveringSmashCD:GetRemaining() >= 18.2 then
 			timerViciousHeadbuttCD:Start()
 		end

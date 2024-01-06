@@ -38,7 +38,7 @@ local warnZealous					= mod:NewTargetAnnounce(328987, 2)
 local specWarnBloodBarrage			= mod:NewSpecialWarningInterrupt(323064, "HasInterrupt", nil, nil, 1, 2)
 local specWarnCorruptedBlood		= mod:NewSpecialWarningMoveAway(322746, nil, nil, nil, 3, 2)
 local yellCorruptedBlood			= mod:NewYell(322746)
-local specWarnPiercingBarb			= mod:NewSpecialWarningDefensive(322736, "Tank", nil, nil, 1, 2)
+local specWarnPiercingBarb			= mod:NewSpecialWarningDefensive(322736, nil, nil, nil, 1, 2)
 --Son of Hakkar:
 local specWarnGTFO					= mod:NewSpecialWarningGTFO(323569, nil, nil, nil, 1, 8)
 local specWarnZealous				= mod:NewSpecialWarningRun(328987, nil, nil, nil, 4, 2)
@@ -93,8 +93,10 @@ end
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
 	if spellId == 322736 then
-		specWarnPiercingBarb:Show()
-		specWarnPiercingBarb:Play("defensive")
+		if self:IsTanking("player", "boss1", nil, true) then
+			specWarnPiercingBarb:Show()
+			specWarnPiercingBarb:Play("defensive")
+		end
 		timerPiercingBarbCD:Start()
 	elseif spellId == 323064 then
 		--timerBloodBarrageCD:Start()
