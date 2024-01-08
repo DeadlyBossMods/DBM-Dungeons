@@ -1,8 +1,8 @@
 ## Interface: 20504
 ## X-Min-Interface: 20500
 
-## Title:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Dungeons (Classic)|r
-## Title-deDE:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Gruppe-Classic|r
+## Title:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Dungeons (Vanilla)|r
+## Title-deDE:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Gruppe-Vanilla|r
 ## Title-esES:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Mazmorras (Clásico)|r
 ## Title-esMX:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Calabozos (Clásico)|r
 ## Title-ptBR:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Masmorras (Clássico)|r
@@ -33,8 +33,8 @@
 ## X-DBM-Mod-SubCategoriesID-zhTW: 48,230,229|下層,229|上層,36,429,90,349,389,129,47,189,289,33,34,329,109,70,43,209
 ## X-DBM-Mod-SubCategoriesID-zhCN: 48,230,229|下层,229|上层,36,429,90,349,389,129,47,189,289,33,34,329,109,70,43,209
 
-## X-DBM-Mod-Name: Dungeons (Classic)
-## X-DBM-Mod-Name-deDE: Gruppe (Classic)
+## X-DBM-Mod-Name: Dungeons (Vanilla)
+## X-DBM-Mod-Name-deDE: Gruppe (Vanilla)
 ## X-DBM-Mod-Name-esES: Mazmorras (Clásico)
 ## X-DBM-Mod-Name-esMX: Calabozos (Clásico)
 ## X-DBM-Mod-Name-ptBR: Masmorras (Clássico)

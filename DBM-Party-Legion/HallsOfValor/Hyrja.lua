@@ -32,7 +32,7 @@ mod:RegisterEventsInCombat(
 local warnExpelLight				= mod:NewTargetAnnounce(192048, 3)
 local warnPhase2					= mod:NewPhaseAnnounce(2, 2, nil, nil, nil, nil, nil, 2)
 
-local specWarnShieldOfLight			= mod:NewSpecialWarningDefensive(192018, "Tank", nil, nil, 3, 2)--Journal lies, this is NOT dodgable
+local specWarnShieldOfLight			= mod:NewSpecialWarningDefensive(192018, nil, nil, nil, 3, 2)--Journal lies, this is NOT dodgable
 local specWarnSanctify				= mod:NewSpecialWarningDodge(192307, nil, nil, nil, 2, 5)
 local specWarnEyeofStorm			= mod:NewSpecialWarningMoveTo(200901, nil, nil, nil, 2, 2)
 local specWarnExpelLight			= mod:NewSpecialWarningMoveAway(192048, nil, nil, nil, 2, 2)
@@ -90,8 +90,10 @@ function mod:SPELL_CAST_START(args)
 		timerSpecialCD:Start()
 		updateAllTimers(self, 15.5)
 	elseif spellId == 192018 then
-		specWarnShieldOfLight:Show()
-		specWarnShieldOfLight:Play("defensive")
+		if self:IsTanking("player", nil, nil, true, arg.sourceGUID) then
+			specWarnShieldOfLight:Show()
+			specWarnShieldOfLight:Play("defensive")
+		end
 		timerShieldOfLightCD:Start()
 		updateAllTimers(self, 6)
 	elseif spellId == 200901 and args:GetSrcCreatureID() == 95833 then

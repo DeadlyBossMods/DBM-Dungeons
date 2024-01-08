@@ -36,7 +36,7 @@ local warnNightFall				= mod:NewSpellAnnounce(212464, 2)
 local specWarnNightfall			= mod:NewSpecialWarningMove(212464, nil, nil, nil, 1, 2)
 --local specWarnLeap			= mod:NewSpecialWarningDodge(196354, nil, nil, nil, 1)
 local yellLeap					= mod:NewYell(196354)
-local specWarnRampage			= mod:NewSpecialWarningDefensive(198379, "Tank", nil, nil, 1, 2)
+local specWarnRampage			= mod:NewSpecialWarningDefensive(198379, nil, nil, nil, 1, 2)
 local specWarnFixate			= mod:NewSpecialWarningYou(198477, nil, nil, nil, 1, 2)
 
 local timerLeapCD				= mod:NewCDCountTimer(11.9, 196354, nil, nil, nil, 3)--11.9-17 depending on travel time and spell queuing (timer could be even shorter, small sample)
@@ -110,8 +110,10 @@ function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
 	if spellId == 198379 then
 		self.vb.rampageCount = self.vb.rampageCount + 1
-		specWarnRampage:Show(self.vb.rampageCount)
-		specWarnRampage:Play("defensive")
+		if self:IsTanking("player", "boss1", nil, true) then
+			specWarnRampage:Show(self.vb.rampageCount)
+			specWarnRampage:Play("defensive")
+		end
 		timerRampageCD:Start(nil, self.vb.rampageCount+1)
 		updateAllTimers(self, 5.7)
 	end

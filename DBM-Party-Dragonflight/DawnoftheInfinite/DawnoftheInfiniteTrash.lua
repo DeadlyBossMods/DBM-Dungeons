@@ -25,7 +25,6 @@ mod:RegisterEvents(
 --TODO, electro Juiced Gigablast timer still needs data
 --TODO, Healing wave and Infinite Burn timers
 local warnTemposlice						= mod:NewSpellAnnounce(412012, 3, nil, nil, nil, nil, nil, 3)--High Prio Stun
-local warnCorrodingVolley					= mod:NewCastAnnounce(413607, 3, nil, nil, nil, nil, nil, 3)--High Prio Stun
 local warnElectroJuicedGigablast			= mod:NewCastAnnounce(412200, 3, nil, nil, nil, nil, nil, 3)--High Prio Stun
 local warnInfiniteSchism					= mod:NewCastAnnounce(419327, 3)--, nil, nil, nil, nil, nil, 3
 local warnDeployGoblinSappers				= mod:NewCastAnnounce(407535, 3, nil, nil, nil, nil, nil, 3)
@@ -34,6 +33,7 @@ local warnRendingCleave						= mod:NewCastAnnounce(412505, 3, nil, nil, "Tank")-
 local warnTitanicBulwark					= mod:NewCastAnnounce(413024, 3, nil, nil, "Tank")
 local warnStatickyPunch						= mod:NewCastAnnounce(412262, 3, nil, nil, "Tank")
 local warnBloom								= mod:NewCastAnnounce(413544, 3)
+local warnCorrodingVolley					= mod:NewCastAnnounce(413607, 4)--High Prio Off Interrupt
 local warnEnervateKick						= mod:NewCastAnnounce(415437, 4)--High Prio Off Interrupt
 local warnInfiniteBoltVolley				= mod:NewCastAnnounce(415770, 4)--High Prio Off Interrupt
 local warnDisplacedChronosequence			= mod:NewCastAnnounce(417481, 4)--High Prio Off Interrupt
@@ -70,7 +70,8 @@ local specWarnChronomelt					= mod:NewSpecialWarningInterrupt(411994, "HasInterr
 local specWarnInfiniteBolt					= mod:NewSpecialWarningInterrupt(415435, "HasInterrupt", nil, nil, 1, 2)
 local specWarnEnervate						= mod:NewSpecialWarningInterrupt(415437, "HasInterrupt", nil, nil, 1, 2)--High Prio
 local specWarnStonebolt						= mod:NewSpecialWarningInterrupt(411958, "HasInterrupt", nil, nil, 1, 2)
-local specWarnEpochBolt						= mod:NewSpecialWarningInterrupt(400165, "HasInterrupt", nil, nil, 1, 2)
+local specWarnCorrodingVolley				= mod:NewSpecialWarningInterrupt(413607, "HasInterrupt", nil, nil, 1, 2)
+local specWarnEpochBolt						= mod:NewSpecialWarningInterrupt(400165, false, nil, 2, 1, 2)--Lower prio over Corroding Volley
 local specWarnBindingGrasp					= mod:NewSpecialWarningInterrupt(412922, "HasInterrupt", nil, nil, 1, 2)
 local specWarnDisplacedChronosequence		= mod:NewSpecialWarningInterrupt(417481, "HasInterrupt", nil, nil, 1, 2)--High Prio
 local specWarnDizzyingSands					= mod:NewSpecialWarningInterrupt(412378, "HasInterrupt", nil, nil, 1, 2)--High Prio
@@ -267,9 +268,11 @@ function mod:SPELL_CAST_START(args)
 		end
 	elseif spellId == 413607 then
 		timerCorrodingVolleyCD:Start(nil, args.sourceGUID)
-		if self:AntiSpam(3, 6) then
+		if self.Options.SpecWarn413607interrupt and self:CheckInterruptFilter(args.sourceGUID, false, true) then
+			specWarnCorrodingVolley:Show(args.sourceName)
+			specWarnCorrodingVolley:Play("kickcast")
+		elseif self:AntiSpam(3, 7) then
 			warnCorrodingVolley:Show()
-			warnCorrodingVolley:Play("crowdcontrol")
 		end
 	elseif spellId == 412136 then
 		timerTemporalStrikeCD:Start(nil, args.sourceGUID)

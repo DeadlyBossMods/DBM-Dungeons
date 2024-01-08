@@ -28,7 +28,7 @@ local warnUproot					= mod:NewSpellAnnounce(212786, 2)
 
 local specWarnRoots					= mod:NewSpecialWarningDodge(204574, nil, nil, nil, 2, 2)
 local yellThrow						= mod:NewYell(204658, 2764)--yell so others can avoid splash damage. I don't think target can avoid
-local specWarnBreath				= mod:NewSpecialWarningDefensive(204667, "Tank", nil, nil, 1, 2)--Can tank side step? based on logs I seen some tanks completely avoiding damage so maybe change to dodge
+local specWarnBreath				= mod:NewSpecialWarningDefensive(204667, nil, nil, nil, 1, 2)
 
 local timerShatteredEarthCD			= mod:NewCDCountTimer(31.6, 204666, nil, nil, nil, 2)--34-60 (basically same as OG)
 local timerCrushingGripCD			= mod:NewCDCountTimer(27.9, 204611, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON, nil, mod:IsTank() and 2, 4)--27.9-36 (basically same as OG)
@@ -128,8 +128,10 @@ function mod:SPELL_CAST_START(args)
 		updateAllTimers(self, 2.4)
 	elseif spellId == 204667 then
 		self.vb.breathCount = self.vb.breathCount + 1
-		specWarnBreath:Show(self.vb.breathCount)
-		specWarnBreath:Play("defensive")
+		if self:IsTanking("player", "boss1", nil, true) then
+			specWarnBreath:Show(self.vb.breathCount)
+			specWarnBreath:Play("defensive")
+		end
 		--32.7, 27.9 / 29.1, 32.7, 36.4 / 29.1, 32.8, 27.9
 		timerBreathCD:Start(nil, self.vb.breathCount+1)
 		updateAllTimers(self, 7.2)

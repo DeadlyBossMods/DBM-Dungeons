@@ -35,7 +35,7 @@ local warnUnstableHex				= mod:NewCastAnnounce(252781, 4)
 local warnRendingMaul				= mod:NewStackAnnounce(255814, 2, nil, "Tank|Healer")
 --local warnFrenziedCharge			= mod:NewTargetNoFilterAnnounce(255567, 4)
 
-local specWarnWildThrash			= mod:NewSpecialWarningDodge(256882, nil, nil, nil, 2, 2)
+local specWarnWildThrash			= mod:NewSpecialWarningSpell(256882, nil, nil, nil, 2, 2)
 local specWarnVenomfangStrike		= mod:NewSpecialWarningDefensive(252687, nil, nil, nil, 1, 2)
 local specWarnUnstableHexSelf		= mod:NewSpecialWarningMoveAway(252781, nil, nil, nil, 1, 2)
 local yellUnstableHex				= mod:NewYell(252781)
@@ -158,9 +158,9 @@ function mod:SPELL_CAST_START(args)
 		end
 	elseif spellId == 256882 then
 		timerWildThrashCD:Start(nil, args.sourceGUID)
-		if self:AntiSpam(3, 2) then
+		if self:AntiSpam(3, 4) then
 			specWarnWildThrash:Show()
-			specWarnWildThrash:Play("watchstep")
+			specWarnWildThrash:Play("aesoon")
 		end
 	elseif spellId == 255567 then
 		timerFrenziedChargeCD:Start(nil, args.sourceGUID)

@@ -91,7 +91,7 @@ end
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
 	if spellId == 320063 and self:AntiSpam(4, 1) then--Boss can stutter cast this (self interrupt and start cast over)
-		if self.Options.SpecWarn320063defensive2 then
+		if self.Options.SpecWarn320063defensive2 and self:IsTanking("player", nil, nil, true, args.sourceGUID) then
 			specWarnSlam:Show()
 			specWarnSlam:Play("defensive")
 		else

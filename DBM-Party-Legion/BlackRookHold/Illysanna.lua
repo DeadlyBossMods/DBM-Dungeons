@@ -43,7 +43,7 @@ local warnDarkRush					= mod:NewTargetAnnounce(197478, 3)
 
 local specWarnBrutalGlaive			= mod:NewSpecialWarningMoveAway(197546, nil, nil, nil, 1, 2)
 local yellBrutalGlaive				= mod:NewYell(197546)
-local specWarnVengefulShear			= mod:NewSpecialWarningDefensive(197418, "Tank", nil, nil, 3, 2)
+local specWarnVengefulShear			= mod:NewSpecialWarningDefensive(197418, nil, nil, nil, 3, 2)
 local specWarnDarkRush				= mod:NewSpecialWarningYou(197478, nil, nil, nil, 1, 2)
 
 local timerBrutalGlaiveCD			= mod:NewCDCountTimer(15.7, 197546, nil, nil, nil, 3)--15 before
@@ -107,8 +107,10 @@ function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
 	if spellId == 197418 then
 		self.vb.shearCount = self.vb.shearCount + 1
-		specWarnVengefulShear:Show(self.vb.shearCount)
-		specWarnVengefulShear:Play("defensive")
+		if self:IsTanking("player", "boss1", nil, true) then
+			specWarnVengefulShear:Show(self.vb.shearCount)
+			specWarnVengefulShear:Play("defensive")
+		end
 		timerVengefulShearCD:Start(nil, self.vb.shearCount+1)
 	elseif spellId == 197546 then
 		self:BossTargetScanner(args.sourceGUID, "BrutalGlaiveTarget", 0.1, 10, true)

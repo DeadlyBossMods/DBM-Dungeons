@@ -23,7 +23,7 @@ local warnFetidGas					= mod:NewSpellAnnounce(320637, 2)
 local specWarnHeavingRetchYou		= mod:NewSpecialWarningMoveAway(320596, nil, nil, nil, 1, 2)
 local specWarnHeavingRetch			= mod:NewSpecialWarningDodgeLoc(320596, nil, nil, nil, 2, 2)
 local yellHeavingRetch				= mod:NewYell(320596)
-local specWarnCrunch				= mod:NewSpecialWarningDefensive(320655, "Tank", nil, nil, 1, 2)
+local specWarnCrunch				= mod:NewSpecialWarningDefensive(320655, nil, nil, nil, 1, 2)
 local specWarnGTFO					= mod:NewSpecialWarningGTFO(320646, nil, nil, nil, 1, 8)
 
 local timerHeavingRetchCD			= mod:NewCDTimer(32.7, 320596, nil, nil, nil, 3)--32.7-42
@@ -57,8 +57,10 @@ function mod:SPELL_CAST_START(args)
 		warnFetidGas:Show()
 		timerFetidGasCD:Start()
 	elseif spellId == 320655 then
-		specWarnCrunch:Show()
-		specWarnCrunch:Play("defensive")
+		if self:IsTanking("player", "boss1", nil, true) then
+			specWarnCrunch:Show()
+			specWarnCrunch:Play("defensive")
+		end
 		timerCrunchCD:Start()
 	end
 end

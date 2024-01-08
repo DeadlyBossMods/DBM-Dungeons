@@ -59,11 +59,12 @@ local timerAddAoECD									= mod:NewCDNPTimer(12.1, addAOESpellId, nil, nil, ni
 --mod:AddInfoFrameOption(391977, true)
 --Boss (Anduin Lothar / Grommash Hellscream
 mod:AddTimerLine(DBM_COMMON_L.BOSS)
-local warnBladestorm								= mod:NewCountAnnounce(410235, 3)
+local warnBladestorm								= mod:NewCountAnnounce(410235, 3, nil, nil, nil, nil, nil, 2)
 local warnRally										= mod:NewCountAnnounce(rallySpellId, 2)
 local warnCry										= mod:NewCountAnnounce(crySpellId, 2)
 local warnShockwave									= mod:NewCountAnnounce(shockwaveSpellId, 3)--2nd and 3rd cast
 
+local specWarnBladestorm							= mod:NewSpecialWarningDodgeCount(410235, "Melee", nil, nil, 2, 2)
 local specWarnTankBuster							= mod:NewSpecialWarningDefensive(tankSpellId, nil, nil, nil, 1, 2)
 local specWarnShockwave								= mod:NewSpecialWarningDodge(shockwaveSpellId, nil, nil, nil, 2, 2)--First cast in set
 
@@ -174,7 +175,13 @@ function mod:SPELL_CAST_START(args)
 		timerAddAoECD:Start(nil, args.sourceGUID)
 	elseif spellId == 410234 then--Same spell in both
 		self.vb.bladestormCount = self.vb.bladestormCount + 1
-		warnBladestorm:Show(self.vb.bladestormCount)
+		if self.Options.SpecWarn410234dodgecount then
+			specWarnBladestorm:Show(self.vb.bladestormCount)
+			specWarnBladestorm:Play("whirlwind")
+		else
+			warnBladestorm:Show(self.vb.bladestormCount)
+			warnBladestorm:Play("whirlwind")
+		end
 		timerBladestormCD:Start(nil, self.vb.bladestormCount+1)
 		updateAllTimers(self, 8.5, true)
 	elseif spellId == 418059 or spellId == 410254 then--Mortal Strikes / Decapitate

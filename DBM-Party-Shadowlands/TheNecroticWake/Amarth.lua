@@ -30,7 +30,7 @@ local specWarnNecroticBreath		= mod:NewSpecialWarningDodge(333493, nil, nil, nil
 --local yellNecroticBreath			= mod:NewYell(333493)
 local specWarnNecroticBolt			= mod:NewSpecialWarningInterrupt(320170, false, nil, 2, 1, 2)--Every 5 seconds, so off by default
 local specWarnUnholyFrenzy			= mod:NewSpecialWarningDispel(320012, "RemoveEnrage", nil, nil, 1, 2)
-local specWarnUnholyFrenzyTank		= mod:NewSpecialWarningDefensive(320012, "Tank", nil, nil, 1, 2)
+local specWarnUnholyFrenzyTank		= mod:NewSpecialWarningDefensive(320012, nil, nil, nil, 1, 2)
 --Reanimated Mage
 local specWarnFrostboltVolley		= mod:NewSpecialWarningInterrupt(322493, "HasInterrupt", nil, nil, 1, 2)--Mythic and above, normal/heroic uses regular frostbolts
 --local specWarnGTFO				= mod:NewSpecialWarningGTFO(257274, nil, nil, nil, 1, 8)
@@ -106,8 +106,10 @@ function mod:SPELL_AURA_APPLIED(args)
 			specWarnUnholyFrenzy:Show(args.destName)
 			specWarnUnholyFrenzy:Play("enrage")
 		else
-			specWarnUnholyFrenzyTank:Show()
-			specWarnUnholyFrenzyTank:Play("defensive")
+			if self:IsTanking("player", nil, nil, true, args.destGUID) then
+				specWarnUnholyFrenzyTank:Show()
+				specWarnUnholyFrenzyTank:Play("defensive")
+			end
 		end
 	end
 end

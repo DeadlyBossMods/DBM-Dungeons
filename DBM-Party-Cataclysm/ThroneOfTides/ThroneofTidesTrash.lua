@@ -31,12 +31,11 @@ local warnHealingWave				= mod:NewCastAnnounce(76813, 3)
 local warnHex						= mod:NewCastAnnounce(76820, 2)
 local warnClenchingTentacles		= mod:NewCastAnnounce(428926, 4, nil, nil, nil, nil, nil, 13)
 local warnPsionicPulse				= mod:NewCastAnnounce(426905, 4, nil, nil, nil, nil, nil, 3)
+local warnAcidBarrage				= mod:NewSpellAnnounce(426645, 4)--, nil, nil, nil, nil, nil, 3
 local warnRazorJaws					= mod:NewStackAnnounce(426659, 2, nil, "Tank|Healer")
 
 local specWarnShadowSmash			= mod:NewSpecialWarningRun(76590, nil, nil, nil, 4, 2)
 local specWarnVolatileBolt			= mod:NewSpecialWarningDodge(426684, nil, nil, nil, 2, 2)
-local specWarnAcidBarrageOther		= mod:NewSpecialWarningDodge(426645, false, nil, nil, 2, 2)--Non Tank Version (off by default, tank SHOULD aim it away from group, but an option for those who want to be mindful of it)
-local specWarnAcidBarrageTank		= mod:NewSpecialWarningDefensive(426645, nil, nil, nil, 1, 2)--Tank Version
 local specWarnShellbreaker			= mod:NewSpecialWarningDefensive(426741, nil, nil, nil, 1, 2)
 local specWarnCrush					= mod:NewSpecialWarningDefensive(429021, nil, nil, nil, 1, 2)
 --local yellnViciousAmbush			= mod:NewYell(388984)
@@ -110,16 +109,9 @@ function mod:SPELL_CAST_START(args)
 		end
 	elseif spellId == 426645 then
 		timerAcidBarrageCD:Start(nil, args.sourceGUID)
-		if self:IsTanking("player", nil, nil, true, args.sourceGUID) then
-			if self:AntiSpam(3, 5) then
-				specWarnAcidBarrageTank:Show()
-				specWarnAcidBarrageTank:Play("defensive")
-			end
-		else
-			if self:AntiSpam(3, 2) then
-				specWarnAcidBarrageOther:Show()
-				specWarnAcidBarrageOther:Play("shockwave")
-			end
+		if self:AntiSpam(3, 6) then
+			warnAcidBarrage:Show()
+--			warnAcidBarrage:Play("shockwave")
 		end
 	elseif spellId == 428926 then--Clenching tentacles is the new 10.2 mechanic that now triggers before the old Shadow Smash
 		timerClenchingTentaclesCD:Start(nil, args.sourceGUID)
