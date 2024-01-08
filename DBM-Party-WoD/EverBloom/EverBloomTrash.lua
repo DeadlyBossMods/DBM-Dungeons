@@ -187,9 +187,11 @@ function mod:SPELL_AURA_APPLIED(args)
 		specWarnVenomBurstDispel:Play("helpdispel")
 	elseif spellId == 165123 then
 		if args:IsPlayer() then
-			specWarnVenomBurst:Show()
-			specWarnVenomBurst:Play("range5")
-			yellnVenomBurst:Yell()
+			if self:AntiSpam(4, 5) then
+				specWarnVenomBurst:Show()
+				specWarnVenomBurst:Play("range5")
+				yellnVenomBurst:Yell()
+			end
 		else
 			warnVenomBurst:Show(args.destName)
 		end
