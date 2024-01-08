@@ -44,8 +44,7 @@ local timerShatterSpearsCD			= mod:NewCDTimer(56, 198077, nil, nil, nil, 2)
 local timerRunicBrandCD				= mod:NewCDCountTimer(56, 197961, nil, nil, nil, 3)
 local timerAddCD					= mod:NewCDTimer(54, 201221, nil, nil, nil, 1, 201215)--54-58
 
-mod:AddMiscLine(DBM_CORE_L.OPTION_CATEGORY_DROPDOWNS)
-mod:AddDropdownOption("RuneBehavior", {"Icon", "Entrance", "Minimap", "Generic"}, "Generic", "misc")
+mod:AddDropdownOption("RuneBehavior", {"Icon", "Entrance", "Minimap", "Generic"}, "Generic", "misc", nil, 197961)
 
 --Boss has (at least) three timer modes, cannot determine which one on pull so on fly figuring out is used
 local oldTempestTimers = {
