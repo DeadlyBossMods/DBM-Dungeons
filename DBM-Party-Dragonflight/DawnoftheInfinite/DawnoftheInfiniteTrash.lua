@@ -91,15 +91,15 @@ local timerTaintedSandsCD					= mod:NewCDNPTimer(13.3, 415436, nil, nil, nil, 3)
 local timerEnervateCD						= mod:NewCDNPTimer(13.3, 415437, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerBloomCD							= mod:NewCDNPTimer(18.2, 413544, nil, nil, nil, 5, nil, DBM_COMMON_L.MAGIC_ICON)
 local timerUntwistCD						= mod:NewCDNPTimer(13.3, 413529, nil, nil, nil, 3)
-local timerTimelessCurseCD					= mod:NewCDNPTimer(20.6, 413621, nil, nil, nil, 3)
-local timerInfiniteFuryCD					= mod:NewCDNPTimer(20.6, 413622, nil, nil, nil, 2)
+local timerTimelessCurseCD					= mod:NewCDNPTimer(19.8, 413621, nil, nil, nil, 3)
+local timerInfiniteFuryCD					= mod:NewCDNPTimer(19.8, 413622, nil, nil, nil, 2)
 local timerBlightSpewCD						= mod:NewCDNPTimer(13.3, 412806, nil, nil, nil, 3)
 local timerStoneboltCD						= mod:NewCDNPTimer(10.9, 411958, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 --Second half
-local timerRendingCleaveCD					= mod:NewCDNPTimer(10.5, 412505, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)--10.5-13.3
+local timerRendingCleaveCD					= mod:NewCDNPTimer(8.4, 412505, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)--10.5-13.3
 local timerCorrodingVolleyCD				= mod:NewCDNPTimer(18.2, 413607, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
-local timerTemporalStrikeCD					= mod:NewCDNPTimer(12.1, 412136, nil, nil, nil, 2)--12-18
-local timerTitanticBulwarkCD				= mod:NewCDNPTimer(26.7, 413024, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+local timerTemporalStrikeCD					= mod:NewCDNPTimer(11.2, 412136, nil, nil, nil, 2)--11.2-18
+local timerTitanticBulwarkCD				= mod:NewCDNPTimer(25.4, 413024, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 --local timerAncientRadianceCD				= mod:NewCDNPTimer(12.1, 413023, nil, nil, nil, 2)
 local timerOrbofContemplationCD				= mod:NewCDNPTimer(13.3, 412129, nil, nil, nil, 3)
 local timerShroudingSandstormCD				= mod:NewCDNPTimer(19.4, 412215, nil, nil, nil, 2)
@@ -112,9 +112,9 @@ local timerRocketBoltVolleyCD				= mod:NewCDNPTimer(19.5, 412233, nil, nil, nil,
 --local timerElectroJuicedGigablastCD		= mod:NewCDNPTimer(26.7, 412200, nil, nil, nil, 5)--Insuffiicent Data, NYI
 local timerBombingRunCD						= mod:NewCDNPTimer(17, 412156, nil, nil, nil, 3)
 local timerTimeBeamCD						= mod:NewCDNPTimer(7.2, 413427, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
-local timerVolatileMortarCD					= mod:NewCDNPTimer(20.6, 407205, nil, nil, nil, 3)
+local timerVolatileMortarCD					= mod:NewCDNPTimer(19.5, 407205, nil, nil, nil, 3)
 local timerDeployGoblinSappersCD			= mod:NewCDNPTimer(30.3, 407535, nil, nil, nil, 5)--Poor data
-local timerBronzeExhalationCD				= mod:NewCDNPTimer(20.6, 419351, nil, nil, nil, 3)
+local timerBronzeExhalationCD				= mod:NewCDNPTimer(19.8, 419351, nil, nil, nil, 3)
 local timerFishBoltVolleyCD					= mod:NewCDNPTimer(10.4, 411300, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc, 7 off interrupt, 8 GTFO

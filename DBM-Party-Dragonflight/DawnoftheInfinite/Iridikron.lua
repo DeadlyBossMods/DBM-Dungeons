@@ -20,6 +20,10 @@ mod:RegisterEventsInCombat(
 --	"SPELL_PERIODIC_MISSED",
 )
 
+mod:RegisterEvents(
+	"CHAT_MSG_MONSTER_YELL"
+)
+
 --[[
 (ability.id = 409261 or ability.id = 414535 or ability.id = 409456 or ability.id = 409635 or ability.id = 414184 or ability.id = 414652) and type = "begincast"
  or (ability.id = 409456 or ability.id = 414177) and type = "removebuff"
@@ -38,6 +42,7 @@ local specWarnStonecrackerBarrage				= mod:NewSpecialWarningSoakCount(414535, ni
 local specWarnPulvBreath						= mod:NewSpecialWarningDodgeCount(409635, nil, nil, nil, 2, 2)
 local specWarnGTFO								= mod:NewSpecialWarningGTFO(414376, nil, nil, nil, 1, 8)
 
+local timerRP									= mod:NewRPTimer(19.8)
 local timerExtinctionBlastCD					= mod:NewCDCountTimer(19.4, 409261, nil, nil, nil, 3, nil, DBM_COMMON_L.DEADLY_ICON)
 local timerStonecrackerBarrageCD				= mod:NewCDCountTimer(19.4, 414535, nil, nil, nil, 5, nil, DBM_COMMON_L.IMPORTANT_ICON)
 local timerEarthSurgeCD							= mod:NewCDCountTimer(19.4, 409456, nil, nil, nil, 5, nil, DBM_COMMON_L.DAMAGE_ICON..DBM_COMMON_L.HEALER_ICON)
@@ -110,10 +115,27 @@ end
 
 --[[
 function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId, spellName)
-	if spellId == 386201 and destGUID == UnitGUID("player") and self:AntiSpam(2, 4) then
+	if spellId == 386201 and destGUID == UnitGUID("player") and self:AntiSpam(2, 3) then
 		specWarnGTFO:Show(spellName)
 		specWarnGTFO:Play("watchfeet")
 	end
 end
 mod.SPELL_PERIODIC_MISSED = mod.SPELL_PERIODIC_DAMAGE
 --]]
+
+--"<403.05 22:15:46> [CHAT_MSG_MONSTER_YELL] So the titans' puppets have come to face me.#Iridikron###Alphal##0#0##0#14598#nil#0#false#false#false#false", -- [2637]
+--"<410.46 22:15:53> [CHAT_MSG_MONSTER_SAY] He's siphoning Galakrond's essence into a... vessel?#Chromie###Alphal##0#0##0#14599#nil#0#false#false#false#false", -- [2644]
+--"<416.01 22:15:59> [CHAT_MSG_MONSTER_SAY] It looks kind of like the Dragon Soul, but even more ancient.#Chromie###Alphal##0#0##0#14600#nil#0#false#false#false#false", -- [2645]
+--"<423.68 22:16:07> [CHAT_MSG_MONSTER_YELL] A hunger lost to the ages. One which I shall reclaim!#Iridikron###Alphal##0#0##0#14601#nil#0#false#false#false#false", -- [2646]
+--"<437.69 22:16:21> [DBM_Debug] ENCOUNTER_START event fired: 2669 Iridikron 8 5#nil", -- [2655]
+function mod:CHAT_MSG_MONSTER_YELL(msg)
+	if (msg == L.PrePullRP or msg:find(L.PrePullRP)) then
+		self:SendSync("IridikronRP")--Syncing to help unlocalized clients
+	end
+end
+
+function mod:OnSync(msg)
+	if msg == "IridikronRP" and self:AntiSpam(10, 2) then
+		timerRP:Start(34.6)
+	end
+end
