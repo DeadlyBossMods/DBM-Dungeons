@@ -312,7 +312,11 @@ L:SetOptionLocalization({
 -----------------------
 -- Iridikron the Stonescaled --
 -----------------------
---L= DBM:GetModLocalization(2537)
+L= DBM:GetModLocalization(2537)
+
+L:SetMiscLocalization({
+	PrePullRP		= "티탄의 꼭두각시가 왔군."
+})
 
 -----------------------
 -- Tyr, the infinite Keeper --
