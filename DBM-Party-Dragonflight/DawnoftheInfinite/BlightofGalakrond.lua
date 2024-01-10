@@ -1,6 +1,8 @@
 local mod	= DBM:NewMod(2535, "DBM-Party-Dragonflight", 9, 1209)
 local L		= mod:GetLocalizedStrings()
 
+mod.statTypes = "normal,heroic,mythic,challenge"--No Follower dungeon
+
 mod:SetRevision("@file-date-integer@")
 mod.multiIDSingleBoss = true
 mod:SetCreatureID(198997, 201792, 201788, 201790)--It's technically just one creature animated 3 others, but checkbossHp will query all and return highest health for boss health percent
