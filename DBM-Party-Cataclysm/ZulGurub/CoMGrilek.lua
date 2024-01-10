@@ -32,17 +32,11 @@ function mod:SPELL_CAST_SUCCESS(args)
 		if args:IsPlayer() then
 			specWarnRupture:Show()
 			specWarnRupture:Play("targetyou")
+		elseif self:IsClassic() and self:CheckNearby(10, args.destName) then
+			specWarnRuptureNear:Show(args.destName)
+			specWarnRuptureNear:Play("runaway")
 		else
-			local uId = DBM:GetRaidUnitId(args.destName)
-			if uId then
-				local inRange = CheckInteractDistance(uId, 2)
-				if inRange then
-					specWarnRuptureNear:Show(args.destName)
-					specWarnRuptureNear:Play("runaway")
-				else
-					warnRupture:Show(args.destName)
-				end
-			end
+			warnRupture:Show(args.destName)
 		end
 	end
 end

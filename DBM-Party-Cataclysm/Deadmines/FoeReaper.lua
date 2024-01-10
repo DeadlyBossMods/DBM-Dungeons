@@ -36,17 +36,11 @@ function mod:HarvestTarget()
 	if targetname == UnitName("player") then
 		specWarnHarvest:Show()
 		specWarnHarvest:Play("justrun")
+	elseif self:IsClassic() and self:CheckNearby(10, targetname) then
+		specWarnHarvestNear:Show(targetname)
+		specWarnHarvestNear:Play("runaway")
 	else
-		local uId = DBM:GetRaidUnitId(targetname)
-		if uId then
-			local inRange = CheckInteractDistance(uId, 2)
-			if inRange then
-				specWarnHarvestNear:Show(targetname)
-				specWarnHarvestNear:Play("runaway")
-			else
-				warnHarvest:Show(targetname)
-			end
-		end
+		warnHarvest:Show(targetname)
 	end
 end
 
