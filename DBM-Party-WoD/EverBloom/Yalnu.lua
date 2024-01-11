@@ -66,8 +66,10 @@ if (wowToc >= 100200) then
 	function mod:SPELL_CAST_START(args)
 		local spellId = args.spellId
 		if spellId == 169179 then
-			specWarnColossalBlow:Show()
-			specWarnColossalBlow:Play("shockwave")
+			if self:AntiSpam(3, 2) then
+				specWarnColossalBlow:Show()
+				specWarnColossalBlow:Play("shockwave")
+			end
 			timerColossalBlowCD:Start()
 		elseif spellId == 169613 then
 			self.vb.GenesisCount = self.vb.GenesisCount + 1
@@ -86,8 +88,10 @@ if (wowToc >= 100200) then
 				specWarnLasherVenom:Play("kickcast")
 			end
 		elseif spellId == 169929 then
-			specWarnLumberingSwipe:Show()
-			specWarnLumberingSwipe:Play("shockwave")
+			if self:AntiSpam(3, 2) then
+				specWarnLumberingSwipe:Show()
+				specWarnLumberingSwipe:Play("shockwave")
+			end
 			--timerLumberingSwipeCD:Start(nil, args.sourceGUID)
 		end
 	end
