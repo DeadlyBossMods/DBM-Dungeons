@@ -66,7 +66,7 @@ if (wowToc >= 100200) then
 	function mod:SPELL_CAST_START(args)
 		local spellId = args.spellId
 		if spellId == 169179 then
-			if self:AntiSpam(3, 2) then
+			if self:AntiSpam(3, 2) or not self.Options.SpecWarn169929dodge then--Many might have add warning already disabled, so if disabled ignore aggregation from it
 				specWarnColossalBlow:Show()
 				specWarnColossalBlow:Play("shockwave")
 			end
