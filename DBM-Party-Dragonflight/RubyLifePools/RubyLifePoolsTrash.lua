@@ -46,7 +46,7 @@ local specWarnThunderJaw					= mod:NewSpecialWarningDefensive(392395, nil, nil, 
 local specWarnCinderbolt					= mod:NewSpecialWarningInterrupt(384194, "HasInterrupt", nil, nil, 1, 2)
 local specWarnFlashfire						= mod:NewSpecialWarningInterrupt(392451, "HasInterrupt", nil, nil, 1, 2)
 
-local timerExcavatingBlastCD				= mod:NewCDNPTimer(17, 372696, nil, nil, nil, 3)
+local timerExcavatingBlastCD				= mod:NewCDNPTimer(16.5, 372696, nil, nil, nil, 3)
 local timerSteelBarrageCD					= mod:NewCDNPTimer(17, 372047, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerBlazingRushCD					= mod:NewCDNPTimer(17, 372087, nil, nil, nil, 3)
 local timerStormBreathCD					= mod:NewCDNPTimer(15.7, 391726, nil, nil, nil, 3)
