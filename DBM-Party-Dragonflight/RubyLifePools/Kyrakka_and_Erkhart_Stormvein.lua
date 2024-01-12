@@ -46,7 +46,7 @@ local specWarnInterruptingCloudburst			= mod:NewSpecialWarningCast(381516, "Spel
 
 local timerWindsofChangeCD						= mod:NewCDCountTimer(19.3, 381517, 227878, nil, nil, 3)--Not actually a count timer, but has best localized text
 local timerStormslamCD							= mod:NewCDTimer(17, 381512, nil, "Tank|RemoveMagic", nil, 5, nil, DBM_COMMON_L.TANK_ICON..DBM_COMMON_L.MAGIC_ICON)
-local timerCloudburstCD							= mod:NewCDTimer(19.3, 385558, nil, nil, nil, 2)--Used for both mythic and non mythic versions of spell
+local timerCloudburstCD							= mod:NewCDTimer(19.1, 385558, nil, nil, nil, 2)--Used for both mythic and non mythic versions of spell
 
 mod:AddInfoFrameOption(381862, false)--Infernocore
 
@@ -155,8 +155,12 @@ function mod:SPELL_AURA_APPLIED(args)
 				local cid = self:GetUnitCreatureId(unitID)
 				if cid == 193435 then--Kyrakka
 					local bossGUID = UnitGUID(unitID)
-					timerFlamespitCD:Restart(2.2, UnitGUID)--3.6 now?
-					timerRoaringFirebreathCD:Restart(7.3, UnitGUID)--9.7 now?
+					--restart apparently broken here (because of GUID?)
+					--Manually stop/start
+					timerFlamespitCD:Stop()
+					timerFlamespitCD:Start(2.2, UnitGUID)--3.6 now?
+					timerRoaringFirebreathCD:Stop()
+					timerRoaringFirebreathCD:Start(7.3, UnitGUID)--9.7 now?
 					break
 				end
 			end
