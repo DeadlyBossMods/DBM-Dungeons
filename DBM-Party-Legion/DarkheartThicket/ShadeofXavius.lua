@@ -40,7 +40,7 @@ local specWarnParanoia				= mod:NewSpecialWarningMoveAway(200289, nil, nil, nil,
 local yellParanoia					= mod:NewYell(200289)--Say is standard for avoid
 
 local timerFesteringRipCD			= mod:NewCDCountTimer(17, 200182, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.MAGIC_ICON)--17-21
-local timerNightmareBoltCD			= mod:NewCDCountTimer(23.1, 200185, nil, nil, nil, 3)--24.3-36.5
+local timerNightmareBoltCD			= mod:NewCDCountTimer(22.7, 200185, nil, nil, nil, 3)--24.3-36.5
 local timerParanoiaCD				= mod:NewCDCountTimer(22, 200289, nil, nil, nil, 3)--22-34 (200359 matches journal, but better to sync up with debuff for WA keys)
 local timerFeedOnTheWeakCD			= mod:NewCDCountTimer(18.2, 200238, nil, nil, nil, 5, nil, DBM_COMMON_L.HEALER_ICON)
 
@@ -56,7 +56,7 @@ mod.vb.paranoiaCount = 0
 --Festering Rip triggers 2.4 ICD
 --Nightmare Bolt triggers 4.8 ICD
 --Growing Paranoia triggers 6 ICD
---Festering Apoc triggers 6 ICD (technically cast + 1)
+--Festering Apoc triggers 5.2 ICD (technically cast + 1)
 local function updateAllTimers(self, ICD, isWeak, isPara)
 	DBM:Debug("updateAllTimers running", 3)
 	if timerFesteringRipCD:GetRemaining(self.vb.festerCount+1) < ((isWeak or isPara) and 2.4 or ICD) then
@@ -109,7 +109,7 @@ function mod:SPELL_CAST_START(args)
 		updateAllTimers(self, 4.8)
 	elseif spellId == 200050 then
 		warnApocNightmare:Show()
-		updateAllTimers(self, 6)
+		updateAllTimers(self, 5.2)
 	elseif spellId == 200289 then--Slightly faster in CLEU than 200359
 		self.vb.paranoiaCount = self.vb.paranoiaCount + 1
 		--27.8, 34, 24.4, 32.8

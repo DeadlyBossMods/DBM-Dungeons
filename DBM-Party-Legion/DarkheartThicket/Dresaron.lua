@@ -44,8 +44,8 @@ function mod:OnCombatStart(delay)
 	self.vb.earthCount = 0
 	self.vb.draftCount = 0
 	timerBreathCD:Start(14.6-delay, 1)--14.6-15.4
-	timerDownDraftCD:Start(20.6-delay, 1)--20.6-22.7
-	timerEarthShakerCD:Start(32.9-delay, 1)--32.9-34.8
+	timerDownDraftCD:Start(19.4-delay, 1)--19.4-22.7
+	timerEarthShakerCD:Start(31.6-delay, 1)--31.6-34.8
 end
 
 function mod:SPELL_CAST_START(args)
