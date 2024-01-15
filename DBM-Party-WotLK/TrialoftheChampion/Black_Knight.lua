@@ -5,7 +5,7 @@ mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(35451)
 mod:SetEncounterID(2021)
 mod:SetUsedIcons(8)
-mod.noBossDeathKill = true--work around to handle a Boss to die, rebirth, die again, rebirth again and die to loot...
+mod:DisableBossDeathKill()--work around to handle a Boss to die, rebirth, die again, rebirth again and die to loot...
 
 mod:RegisterCombat("combat")
 mod:RegisterKill("yell", L.YellCombatEnd)
