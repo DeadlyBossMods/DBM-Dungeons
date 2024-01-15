@@ -311,7 +311,11 @@ L:SetOptionLocalization({
 -----------------------
 -- Iridikron the Stonescaled --
 -----------------------
---L= DBM:GetModLocalization(2537)
+L= DBM:GetModLocalization(2537)
+
+L:SetMiscLocalization({
+	PrePullRP		= "Слуги титанов пришли сразиться со мной."
+})
 
 -----------------------
 -- Tyr, the infinite Keeper --
