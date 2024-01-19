@@ -46,7 +46,7 @@ mod.vb.uprootCount = 0
 --Crushing Grip triggers 6 ICD (well technically it triggers 1, and second Id triggers 5 more)
 --Uproot triggers 3.6 ICD
 --Strangling Roots triggers 2.4 ICD
---Shattering Earth triggers 7.2 ICD
+--Shattering Earth triggers 3-7.2 ICD
 --Shattering Roots itself is unaffected by ICDs of other spells
 local function updateAllTimers(self, ICD)
 	DBM:Debug("updateAllTimers running", 3)
@@ -118,7 +118,7 @@ function mod:SPELL_CAST_START(args)
 		warnShatteredEarth:Show(self.vb.shatteredCount)
 		--35.2, 44.9 / 51.8, 36.3 / 52.2, 60.7
 		timerShatteredEarthCD:Start(nil, self.vb.shatteredCount+1)
-		updateAllTimers(self, 7.2)
+		updateAllTimers(self, 3)
 	elseif spellId == 204574 then
 		self.vb.rootsCount = self.vb.rootsCount + 1
 		specWarnRoots:Show(self.vb.rootsCount)
