@@ -73,12 +73,12 @@ local function scanBosses(self, delay)
 		if UnitExists(unitID) then
 			local cid = self:GetUnitCreatureId(unitID)
 			local bossGUID = UnitGUID(unitID)
-			if cid == 193435 then--Terra
+			if cid == 186339 then--Terra
 				timerSpiritLeapCD:Start(6-delay, 1, bossGUID)
 				timerGaleArrowCD:Start(21.5-delay, 1, bossGUID)
 				timerRepelCD:Start(50-delay, 1, bossGUID)
 			else--Maruuk
-				timerFrightfulRoarCD:Start(5.5-delay, 1, bossGUID)
+				timerFrightfulRoarCD:Start(4.5-delay, 1, bossGUID)
 				timerBrutalizeCD:Start(13.5-delay, 1, bossGUID)
 				timerEarthSplitterCD:Start(51-delay, 1, bossGUID)
 			end

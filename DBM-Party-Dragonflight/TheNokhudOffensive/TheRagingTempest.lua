@@ -44,7 +44,7 @@ mod.vb.stormCount = 0
 function mod:OnCombatStart(delay)
 	self.vb.stormCount = 0
 	timerEnergySurgeCD:Start(7-delay)
-	timerLightingStrikeCD:Start(10.6-delay)
+	timerLightingStrikeCD:Start(10-delay)
 	timerElectricStormCD:Start(30.1-delay)
 	if self.Options.InfoFrame then
 		DBM.InfoFrame:SetHeader(DBM:GetSpellInfo(382628))
