@@ -63,7 +63,7 @@ function mod:OnCombatStart(delay)
 	self.vb.fissureCount = 0
 	timerArcaneOrbsCD:Start(2.1-delay, 1)
 	timerArcaneExpulsionCD:Start(12.1-delay)
-	timerManaBombsCD:Start(23.9-delay)
+	timerManaBombsCD:Start(23.9-delay, 1)
 	timerArcaneFissureCD:Start(40.7-delay, 1)
 	if self.Options.InfoFrame then
 		DBM.InfoFrame:SetHeader(DBM:GetSpellInfo(391977))
