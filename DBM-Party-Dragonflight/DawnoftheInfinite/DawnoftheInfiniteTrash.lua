@@ -91,7 +91,7 @@ local timerTaintedSandsCD					= mod:NewCDNPTimer(13.3, 415436, nil, nil, nil, 3)
 local timerEnervateCD						= mod:NewCDNPTimer(13.3, 415437, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerBloomCD							= mod:NewCDNPTimer(18.2, 413544, nil, nil, nil, 5, nil, DBM_COMMON_L.MAGIC_ICON)
 local timerUntwistCD						= mod:NewCDNPTimer(13.3, 413529, nil, nil, nil, 3)
-local timerTimelessCurseCD					= mod:NewCDNPTimer(19.8, 413621, nil, nil, nil, 3)
+local timerTimelessCurseCD					= mod:NewCDNPTimer(14.6, 413621, nil, nil, nil, 3)
 local timerInfiniteFuryCD					= mod:NewCDNPTimer(19.8, 413622, nil, nil, nil, 2)
 local timerBlightSpewCD						= mod:NewCDNPTimer(13.3, 412806, nil, nil, nil, 3)
 local timerStoneboltCD						= mod:NewCDNPTimer(10.9, 411958, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
@@ -222,12 +222,7 @@ function mod:SPELL_CAST_START(args)
 			specWarnShroudingSandstorm:Play("chargemove")
 		end
 	elseif spellId == 413621 then
-		local cid = self:GetCIDFromGUID(args.sourceGUID)
-		if cid == 206230 then--Shorter CD
-			timerTimelessCurseCD:Start(14.6, args.sourceGUID)
-		else
-			timerTimelessCurseCD:Start(nil, args.sourceGUID)--20.6
-		end
+		timerTimelessCurseCD:Start(nil, args.sourceGUID)
 		if self:AntiSpam(3, 2) then
 			specWarnTimelessCurse:Show()
 			specWarnTimelessCurse:Play("watchstep")
