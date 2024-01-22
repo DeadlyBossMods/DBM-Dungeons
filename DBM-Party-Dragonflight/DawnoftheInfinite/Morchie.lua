@@ -65,11 +65,11 @@ local allTimers = {--Timers up to 3:43 for 10.2+ (with late october timer change
 	--Sand Blast
 	[404916] = {3, 27, 19.9, 28.9, 12, 12, 11.9, 24, 11.9, 12.0, 12.0, 24.0, 12.0, 12.0},
 	--More Problems
-	[403891] = {10, 50, 60, 60},
+	[403891] = {10, 50, 60, 60, 60},
 	--Time Traps
 	[406481] = {36, 48, 24, 47.9, 48.0},
 	--Familiar Faces
-	[405279] = {43, 52.9, 48, 23.9, 48.0},
+	[405279] = {43, 52.9, 48, 23.9, 48.0, 48.0, 24.0},
 }
 
 --[[
@@ -124,20 +124,14 @@ function mod:SPELL_CAST_START(args)
 		self.vb.blastCount = self.vb.blastCount + 1
 		specWarnSandBlast:Show(self.vb.blastCount)
 		specWarnSandBlast:Play("shockwave")
---		local timer
-		--Not enough data to do it this way yet for 10.2
---		if self.vb.blastCount == 1 then--One off
---			timer = 38.8
---		elseif self.vb.blastCount == 3 then--just kidding, two off
---			timer = 20.6
---		elseif self.vb.blastCount % 2 == 0 then
---			timer = 29.1
---		else
---			timer = 21.8
---		end
 		local timer = self:GetFromTimersTable(allTimers, false, false, spellId, self.vb.blastCount+1)
 		if timer then
 			timerSandBlastCD:Start(timer, self.vb.blastCount+1)
+		else
+			if not askShown then
+				askShown = true
+				DBM:AddMsg("Timers not known beyond this point, please share your WCL with DBM authors if you can")
+			end
 		end
 --		updateAllTimers(self, 4.9)
 	elseif spellId == 403891 then
@@ -159,17 +153,27 @@ function mod:SPELL_CAST_START(args)
 	elseif spellId == 405279 or spellId == 407504 then
 		self.vb.facesCount = self.vb.facesCount + 1
 		warnFamiliarFaces:Show(self.vb.facesCount)
-		local timer = self:GetFromTimersTable(allTimers, false, false, 405279, self.vb.facesCount+1) or 51
+		local timer = self:GetFromTimersTable(allTimers, false, false, 405279, self.vb.facesCount+1)
 		if timer then
 			timerFamiliarFacesCD:Start(timer, self.vb.facesCount+1)
+		else
+			if not askShown then
+				askShown = true
+				DBM:AddMsg("Timers not known beyond this point, please share your WCL with DBM authors if you can")
+			end
 		end
 	elseif spellId == 406481 then
 		self.vb.trapsCount = self.vb.trapsCount + 1
 		specWarnTimeTraps:Show(self.vb.trapsCount)
 		specWarnTimeTraps:Play("watchstep")
-		local timer = self:GetFromTimersTable(allTimers, false, false, spellId, self.vb.trapsCount+1) or 51
+		local timer = self:GetFromTimersTable(allTimers, false, false, spellId, self.vb.trapsCount+1)
 		if timer then
 			timerTimeTrapsCD:Start(timer, self.vb.trapsCount+1)
+		else
+			if not askShown then
+				askShown = true
+				DBM:AddMsg("Timers not known beyond this point, please share your WCL with DBM authors if you can")
+			end
 		end
 	end
 end
