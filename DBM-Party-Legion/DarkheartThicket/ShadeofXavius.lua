@@ -65,9 +65,9 @@ local function updateAllTimers(self, ICD, isWeak, isPara)
 		DBM:Debug("timerFesteringRipCD extended by: "..extend, 2)
 		timerFesteringRipCD:Update(elapsed, total+extend, self.vb.festerCount+1)
 	end
-	if timerNightmareBoltCD:GetRemaining(self.vb.nightmareCount+1) < ICD then
+	if timerNightmareBoltCD:GetRemaining(self.vb.nightmareCount+1) < (isWeak and 2.4 or ICD) then
 		local elapsed, total = timerNightmareBoltCD:GetTime(self.vb.nightmareCount+1)
-		local extend = ICD - (total-elapsed)
+		local extend = (isWeak and 2.4 or ICD) - (total-elapsed)
 		DBM:Debug("timerNightmareBoltCD extended by: "..extend, 2)
 		timerNightmareBoltCD:Update(elapsed, total+extend, self.vb.nightmareCount+1)
 	end
