@@ -83,7 +83,7 @@ local blitzStacks = {}
 --"<29.29 23:11:07> [CHAT_MSG_MONSTER_SAY] I... understand now. You... you must find Kur'talos. You must put a stop to this.#Lord Etheldrin Ravencrest###Darksøl##0#0##0#2110#nil#0#false#false#false#false", -- [39]
 --"<39.20 23:11:17> [ZONE_CHANGED_INDOORS] Black Rook Hold#Black Rook Hold#Hidden Passageway", -- [41]
 function mod:StartFirstRP()
-	timerRP:Start(36)--Approx, no definitive timestamp but zone ZONE_CHANGED_INDOORS fired running into door til it opened and we subtrack 1 second on top of that
+	timerRP:Start(35)--Adjusted based on twitch streams
 end
 
 function mod:SPELL_CAST_START(args)
