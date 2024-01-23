@@ -31,7 +31,7 @@ mod:RegisterEventsInCombat(
 local warnPursuit				= mod:NewTargetAnnounce(257407, 2)
 
 local specWarnTeeth				= mod:NewSpecialWarningDefensive(255434, nil, nil, nil, 1, 2)
-local specWarnFear				= mod:NewSpecialWarningMoveTo(255371, nil, nil, nil, 3, 2)--Dodge warning on purpose, you dodge it by LOS behind pillar
+local specWarnFear				= mod:NewSpecialWarningMoveTo(255371, nil, nil, nil, 3, 13)
 local yellPursuit				= mod:NewYell(257407)
 local specWarnPursuit			= mod:NewSpecialWarningRun(257407, nil, nil, nil, 4, 2)
 local specWarnBoneQuake			= mod:NewSpecialWarningSpell(260683, nil, nil, nil, 2, 2)
@@ -106,7 +106,7 @@ function mod:SPELL_CAST_START(args)
 	if spellId == 255371 then
 		self.vb.fearCount = self.vb.fearCount + 1
 		specWarnFear:Show(DBM_COMMON_L.BREAK_LOS)
-		specWarnFear:Play("findshelter")
+		specWarnFear:Play("breaklos")
 		timerFearCD:Start(nil, self.vb.fearCount+1)
 		updateAllTimers(self, 9.5)
 	elseif spellId == 257407 then
