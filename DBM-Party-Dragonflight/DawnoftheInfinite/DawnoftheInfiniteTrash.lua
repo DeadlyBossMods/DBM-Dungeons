@@ -23,7 +23,7 @@ mod:RegisterEvents(
 --TODO, mod should add line separators and actually separate abilities by which half of instance it is for cleaner order
 --TODO, add https://www.wowhead.com/ptr-2/spell=411952/millennium-aid ?
 --TODO, electro Juiced Gigablast timer still needs data
---TODO, Healing wave and Infinite Burn timers
+--TODO, Healing wave and Infinite Burn timers (infinite burn timer updated Jan 23)
 local warnTemposlice						= mod:NewSpellAnnounce(412012, 3, nil, nil, nil, nil, nil, 3)--High Prio Stun
 local warnElectroJuicedGigablast			= mod:NewCastAnnounce(412200, 3, nil, nil, nil, nil, nil, 3)--High Prio Stun
 local warnInfiniteSchism					= mod:NewCastAnnounce(419327, 3)--, nil, nil, nil, nil, nil, 3
@@ -100,15 +100,16 @@ local timerRendingCleaveCD					= mod:NewCDNPTimer(8.4, 412505, nil, nil, nil, 5,
 local timerCorrodingVolleyCD				= mod:NewCDNPTimer(18.2, 413607, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerTemporalStrikeCD					= mod:NewCDNPTimer(11.2, 412136, nil, nil, nil, 2)--11.2-18
 local timerTitanticBulwarkCD				= mod:NewCDNPTimer(25.4, 413024, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
---local timerAncientRadianceCD				= mod:NewCDNPTimer(12.1, 413023, nil, nil, nil, 2)
+local timerAncientRadianceCD				= mod:NewCDNPTimer(10.5, 413023, nil, nil, nil, 2)--10.5-15
 local timerOrbofContemplationCD				= mod:NewCDNPTimer(13.3, 412129, nil, nil, nil, 3)
-local timerShroudingSandstormCD				= mod:NewCDNPTimer(19.4, 412215, nil, nil, nil, 2)
+local timerShroudingSandstormCD				= mod:NewCDNPTimer(23.1, 412215, nil, nil, nil, 2)--Updated Jan 23rd per hotfixes
 local timerBindingGraspCD					= mod:NewCDNPTimer(19.4, 412922, nil, nil, nil, 3)
 local timerDisplacedChronosequenceCD		= mod:NewCDNPTimer(16.1, 417481, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerInfiniteSchismCD					= mod:NewCDNPTimer(26.7, 419327, nil, nil, nil, 5)
 local timerDizzyingSandsCD					= mod:NewCDNPTimer(16.1, 412378, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerStatickyPunchCD					= mod:NewCDNPTimer(12.1, 412262, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerRocketBoltVolleyCD				= mod:NewCDNPTimer(19.5, 412233, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--Subpar data
+local timerInfiniteBurnCD					= mod:NewCDNPTimer(13.3, 418200, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 --local timerElectroJuicedGigablastCD		= mod:NewCDNPTimer(26.7, 412200, nil, nil, nil, 5)--Insuffiicent Data, NYI
 local timerBombingRunCD						= mod:NewCDNPTimer(17, 412156, nil, nil, nil, 3)
 local timerTimeBeamCD						= mod:NewCDNPTimer(7.2, 413427, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
@@ -116,7 +117,6 @@ local timerVolatileMortarCD					= mod:NewCDNPTimer(19.5, 407205, nil, nil, nil, 
 local timerDeployGoblinSappersCD			= mod:NewCDNPTimer(30.3, 407535, nil, nil, nil, 5)--Poor data
 local timerBronzeExhalationCD				= mod:NewCDNPTimer(19.8, 419351, nil, nil, nil, 3)
 local timerFishBoltVolleyCD					= mod:NewCDNPTimer(10.4, 411300, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
-
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc, 7 off interrupt, 8 GTFO
 
 local function additionalIds(self, args)
@@ -168,7 +168,7 @@ function mod:SPELL_CAST_START(args)
 			warnInfiniteBoltVolley:Show()
 		end
 	elseif spellId == 418200 then
-
+		timerInfiniteBurnCD:Start(nil, args.sourceGUID)
 		if self.Options.SpecWarn418200interrupt and self:CheckInterruptFilter(args.sourceGUID, false, true) then
 			specWarnInfiniteBurn:Show(args.sourceName)
 			specWarnInfiniteBurn:Play("kickcast")
@@ -281,7 +281,7 @@ function mod:SPELL_CAST_START(args)
 			warnTitanicBulwark:Show()
 		end
 	elseif spellId == 413023 then
---		timerAncientRadianceCD:Start(nil, args.sourceGUID)
+		timerAncientRadianceCD:Start(nil, args.sourceGUID)
 		if self:AntiSpam(3, 5) then
 			specWarnAncientRadiance:Show()
 			specWarnAncientRadiance:Play("aesoon")
@@ -439,7 +439,7 @@ function mod:UNIT_DIED(args)
 		timerTemporalStrikeCD:Stop(args.destGUID)
 		timerTitanticBulwarkCD:Stop(args.destGUID)
 	elseif cid == 413023 then--Lerai, Timesworn Maiden
---		timerAncientRadianceCD:Stop(args.destGUID)
+		timerAncientRadianceCD:Stop(args.destGUID)
 		timerOrbofContemplationCD:Stop(args.destGUID)
 	elseif cid == 412922 then--Binding Grasp
 		timerBindingGraspCD:Stop(args.destGUID)
@@ -473,6 +473,8 @@ function mod:UNIT_DIED(args)
 		timerBronzeExhalationCD:Stop(args.destGUID)
 	elseif cid == 205363 then--Time Lost Waveshaper
 		timerFishBoltVolleyCD:Stop(args.destGUID)
+	elseif cid == 208698 then--Infinite Riftmage
+		timerInfiniteBurnCD:Stop(args.destGUID)
 	end
 end
 
