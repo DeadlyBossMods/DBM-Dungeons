@@ -121,7 +121,18 @@ local timerFishBoltVolleyCD					= mod:NewCDNPTimer(10.4, 411300, nil, nil, nil, 
 
 local function additionalIds(self, args)
 	local spellId = args.spellId
-	if spellId == 407205 then
+	if spellId == 412200 then
+		if self:AntiSpam(3, 6) then
+			warnElectroJuicedGigablast:Show()
+			warnElectroJuicedGigablast:Play("crowdcontrol")
+		end
+	elseif spellId == 413427 then
+		timerTimeBeamCD:Start(nil, args.sourceGUID)
+		if self:CheckInterruptFilter(args.sourceGUID, false, true) then
+			specWarnTimebeam:Show(args.sourceName)
+			specWarnTimebeam:Play("kickcast")
+		end
+	elseif spellId == 407205 then
 		timerVolatileMortarCD:Start(nil, args.sourceGUID)
 		if self:AntiSpam(3, 2) then
 			specWarnVolatileMortar:Show()
@@ -326,17 +337,6 @@ function mod:SPELL_CAST_START(args)
 			specWarnRocketBoltVolley:Play("kickcast")
 		elseif self:AntiSpam(3, 7) then
 			warnRocketBoltVolley:Show()
-		end
-	elseif spellId == 412200 then
-		if self:AntiSpam(3, 6) then
-			warnElectroJuicedGigablast:Show()
-			warnElectroJuicedGigablast:Play("crowdcontrol")
-		end
-	elseif spellId == 413427 then
-		timerTimeBeamCD:Start(nil, args.sourceGUID)
-		if self:CheckInterruptFilter(args.sourceGUID, false, true) then
-			specWarnTimebeam:Show(args.sourceName)
-			specWarnTimebeam:Play("kickcast")
 		end
 	else--Out of upvalues, goes over 60 below here
 		additionalIds(self, args)
