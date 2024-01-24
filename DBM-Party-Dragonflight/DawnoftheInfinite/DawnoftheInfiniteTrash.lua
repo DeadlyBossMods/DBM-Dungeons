@@ -23,7 +23,7 @@ mod:RegisterEvents(
 --TODO, mod should add line separators and actually separate abilities by which half of instance it is for cleaner order
 --TODO, add https://www.wowhead.com/ptr-2/spell=411952/millennium-aid ?
 --TODO, electro Juiced Gigablast timer still needs data
---TODO, Healing wave and Infinite Burn timers (infinite burn timer updated Jan 23)
+--TODO, Healing wave timer
 local warnTemposlice						= mod:NewSpellAnnounce(412012, 3, nil, nil, nil, nil, nil, 3)--High Prio Stun
 local warnElectroJuicedGigablast			= mod:NewCastAnnounce(412200, 3, nil, nil, nil, nil, nil, 3)--High Prio Stun
 local warnInfiniteSchism					= mod:NewCastAnnounce(419327, 3)--, nil, nil, nil, nil, nil, 3
