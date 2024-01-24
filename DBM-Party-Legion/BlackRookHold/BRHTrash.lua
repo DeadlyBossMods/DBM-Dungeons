@@ -27,9 +27,9 @@ mod:RegisterEvents(
 local warnSoulEchoes				= mod:NewTargetAnnounce(194966, 2)
 local warnSacrificeSoul				= mod:NewTargetNoFilterAnnounce(200105, 2)
 local warnSicBats					= mod:NewTargetNoFilterAnnounce(203163, 2)
-local warnArrowBarrage				= mod:NewSpellAnnounce(200343, 4, nil, nil, nil, nil, nil, 3)
-local warnKnifeDance				= mod:NewSpellAnnounce(200291, 4, nil, nil, nil, nil, nil, 3)
-local warnDrinkPotion				= mod:NewSpellAnnounce(200784, 4, nil, nil, nil, nil, nil, 3)
+local warnArrowBarrage				= mod:NewSpellAnnounce(200343, 4, nil, "-Healer", 2, nil, nil, 3)
+local warnKnifeDance				= mod:NewSpellAnnounce(200291, 4, nil, "-Healer", 2, nil, nil, 3)
+local warnDrinkPotion				= mod:NewSpellAnnounce(200784, 4, nil, "-Healer", 2, nil, nil, 3)
 local warnBloodthirstyLeap			= mod:NewSpellAnnounce(225962, 2, nil, false)--Instant cast, announcing it already happened doesn't affect much agency to player
 local warnGlaiveToss				= mod:NewCastAnnounce(196916, 3)
 local warnPhasedExplosion			= mod:NewCastAnnounce(200256, 3, nil, nil, false)--They basically spam cast it, so off by default
@@ -83,7 +83,7 @@ local blitzStacks = {}
 --"<29.29 23:11:07> [CHAT_MSG_MONSTER_SAY] I... understand now. You... you must find Kur'talos. You must put a stop to this.#Lord Etheldrin Ravencrest###Darksøl##0#0##0#2110#nil#0#false#false#false#false", -- [39]
 --"<39.20 23:11:17> [ZONE_CHANGED_INDOORS] Black Rook Hold#Black Rook Hold#Hidden Passageway", -- [41]
 function mod:StartFirstRP()
-	timerRP:Start(36)--Approx, no definitive timestamp but zone ZONE_CHANGED_INDOORS fired running into door til it opened and we subtrack 1 second on top of that
+	timerRP:Start(35)--Adjusted based on twitch streams
 end
 
 function mod:SPELL_CAST_START(args)
@@ -171,7 +171,7 @@ function mod:SPELL_CAST_START(args)
 		warnPhasedExplosion:Show()
 	elseif spellId == 200291 then
 		timerKnifeDanceCD:Start(nil, args.sourceGUID)
-		if self:AntiSpam(3.5, 6) then
+		if self:AntiSpam(5, 6) then
 			warnKnifeDance:Show()
 			warnKnifeDance:Play("crowdcontrol")
 		end
@@ -198,7 +198,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 	local spellId = args.spellId
 	if spellId == 200343 then
 		timerArrowBarrageCD:Start(nil, args.sourceGUID)
-		if self:AntiSpam(3.5, 6) then
+		if self:AntiSpam(5, 6) then
 			warnArrowBarrage:Show()
 			warnArrowBarrage:Play("crowdcontrol")
 		end

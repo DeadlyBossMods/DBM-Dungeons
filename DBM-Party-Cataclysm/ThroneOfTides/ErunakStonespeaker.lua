@@ -49,7 +49,7 @@ if (wowToc >= 100200) then
 	mod:AddTimerLine(DBM:EJ_GetSectionInfo(2199))
 	local warnPhase2									= mod:NewPhaseAnnounce(2, 2, nil, nil, nil, nil, nil, 2)
 
-	local specWarnTerrifyingVision						= mod:NewSpecialWarningMoveTo(429172, nil, nil, nil, 2, 2)
+	local specWarnTerrifyingVision						= mod:NewSpecialWarningMoveTo(429172, nil, nil, nil, 2, 13)
 
 	local timerTerrifyingVisionCD						= mod:NewCDTimer(100, 429172, nil, nil, nil, 2)
 
