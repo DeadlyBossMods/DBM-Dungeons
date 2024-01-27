@@ -61,7 +61,7 @@ local timerRP						= mod:NewRPTimer(68)
 local timerSacrificeSoulCD			= mod:NewCDNPTimer(21.8, 200105, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerGlaiveTossCD				= mod:NewCDNPTimer(14.5, 196916, nil, nil, nil, 3)
 local timerStrikeDownCD				= mod:NewCDNPTimer(9.7, 225732, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
-local timerBonebreakingStrikeCD		= mod:NewCDNPTimer(21.8, 200261, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+local timerBonebreakingStrikeCD		= mod:NewCDNPTimer(21, 200261, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerKnifeDanceCD				= mod:NewCDNPTimer(18.1, 200291, nil, nil, nil, 2)
 local timerArrowBarrageCD			= mod:NewCDNPTimer(20.6, 200343, nil, nil, nil, 3)--20.7-23
 local timerBloodthirstyLeapCD		= mod:NewCDNPTimer(14.5, 225962, nil, nil, nil, 3)
@@ -70,7 +70,7 @@ local timerBrutalAssaultCD			= mod:NewCDNPTimer(20.6, 201139, nil, "Tank|Healer"
 local timerDrinkPotionCD			= mod:NewCDNPTimer(21.8, 200784, nil, nil, nil, 5)
 local timerSicBatsCD				= mod:NewCDNPTimer(21.8, 203163, nil, nil, nil, 5)
 local timerCoupdeGraceCD			= mod:NewCDNPTimer(8.4, 214003, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
-local timerRavensDiveCD				= mod:NewCDNPTimer(16.9, 214001, nil, nil, nil, 3)
+local timerRavensDiveCD				= mod:NewCDNPTimer(16, 214001, nil, nil, nil, 3)
 
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc, 7 off interrupt, 8 GTFO
 

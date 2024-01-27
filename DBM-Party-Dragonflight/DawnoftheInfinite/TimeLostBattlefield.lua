@@ -164,7 +164,7 @@ function mod:OnCombatStart(delay)
 	self.vb.cryCount = 0
 	timerTankBusterCD:Start(6-delay, 1)--Mortal Strikes/Decapitate
 	timerShockwaveCD:Start(9.4-delay, 1)--Shockwave
-	timerCryCD:Start(10.3-delay)--Battle Cry/War Cry
+	timerCryCD:Start(10.3-delay, 1)--Battle Cry/War Cry
 	timerRallyCD:Start(19.9-delay, 1)--For the alliance/horde
 	timerBladestormCD:Start(21.5-delay, 1)
 	self:Schedule(1.5, checkWhichBoss, self)

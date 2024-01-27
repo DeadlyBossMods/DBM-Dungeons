@@ -93,7 +93,7 @@ function mod:OnCombatStart(delay)
 	self.vb.eyeCount = 0
 	timerBrutalGlaiveCD:Start(5.5-delay, 1)
 	timerVengefulShearCD:Start(8-delay, 1)
-	timerDarkRushCD:Start(11.1-delay, 1)
+	timerDarkRushCD:Start(10.8-delay, 1)
 	timerLeapCD:Start(33.9)--33.9-35.2 (they changed his starting energy from Legion)
 end
 
