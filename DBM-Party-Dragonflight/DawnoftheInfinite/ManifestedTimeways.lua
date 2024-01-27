@@ -27,6 +27,7 @@ mod:RegisterEventsInCombat(
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
 --]]
 --TODO, more data, but I need to figure out what causes the fluke non 30.3 timers (one higher by 7 seconds, and one lower by 7 seconds)
+--TODO, Add RP timer, still missing for this boss
 --NOTE: 10.2 seems to have utterly deleted "Unwind" from encounter. For now its commented but kept in case this is an error or still around but not noted
 local warnChronoFaded								= mod:NewTargetCountAnnounce(405696, 3)
 
@@ -37,6 +38,7 @@ local specWarnFragmentsofTime						= mod:NewSpecialWarningDodgeCount(405431, nil
 --local specWarnUnwind								= mod:NewSpecialWarningDefensive(414303, nil, nil, nil, 1, 2)
 --local specWarnGTFO								= mod:NewSpecialWarningGTFO(386201, nil, nil, nil, 1, 8)
 
+--local timerRP										= mod:NewRPTimer(8)
 local timerChronofadedCD							= mod:NewCDCountTimer(30.3, 405696, nil, nil, nil, 3, nil, DBM_COMMON_L.MAGIC_ICON)
 local timerFragmentsofTimeCD						= mod:NewCDCountTimer(30.3, 405431, nil, nil, nil, 3)
 --local timerUnwindCD									= mod:NewCDCountTimer(30.3, 414303, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)

@@ -153,7 +153,6 @@ function mod:SPELL_CAST_SUCCESS(args)
 	end
 end
 
-
 function mod:SPELL_AURA_APPLIED(args)
 	if not self.Options.Enabled then return end
 	local spellId = args.spellId

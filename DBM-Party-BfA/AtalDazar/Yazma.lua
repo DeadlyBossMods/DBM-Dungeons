@@ -83,7 +83,7 @@ function mod:OnCombatStart(delay)
 	self.vb.echoCount = 0
 	timerWrackingPainCD:Start(3.5-delay, 1)
 	timerSkewerCD:Start(5-delay, 1)
-	timerSoulrendCD:Start(8.5-delay, 1)
+	timerSoulrendCD:Start(7-delay, 1)
 	timerEchoesCD:Start(15.6-delay, 1)
 end
 

@@ -191,7 +191,7 @@ function mod:UNIT_DIED(args)
 			self.vb.breathCount = 0
 			self.vb.orbCount = 0
 			self.vb.keeperCount = 0--Reused for Infinite Corruption
-			timerInfiniteCorruptionCD:Start(5.2, 1)
+			timerInfiniteCorruptionCD:Start(4.3, 1)
 			timerTemporalBreathCD:Restart(17, 1)
 			timerInfinityOrbCD:Restart(24.2, 1)
 		end
