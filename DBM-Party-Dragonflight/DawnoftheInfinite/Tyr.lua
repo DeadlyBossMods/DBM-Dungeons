@@ -14,11 +14,14 @@ mod.sendMainBossGUID = true
 
 mod:RegisterCombat("combat")
 
+mod:RegisterEvents(
+	"SPELL_AURA_REMOVED 400681 400642 413595"
+)
+
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 401248 401482 400641 400649",
 	"SPELL_CAST_SUCCESS 400642",
-	"SPELL_AURA_APPLIED 403724 400681",
-	"SPELL_AURA_REMOVED 400681 400642"
+	"SPELL_AURA_APPLIED 403724 400681"
 --	"SPELL_PERIODIC_DAMAGE",
 --	"SPELL_PERIODIC_MISSED"
 )
@@ -48,6 +51,7 @@ local timerInfiniteAnnihilationCD					= mod:NewCDCountTimer(8, 401482, nil, nil,
 local timerDividingStrikeCD							= mod:NewCDCountTimer(8, 400641, nil, nil, nil, 5)
 
 --Bosses other abilities
+local timerRP										= mod:NewRPTimer(8)
 local timerSparkofTyrCD								= mod:NewCDCountTimer(60.7, 400681, nil, nil, nil, 3, nil, DBM_COMMON_L.MAGIC_ICON)
 local timerSiphonOathCD								= mod:NewCDCountTimer(60.7, 400642, nil, nil, nil, 6, nil, DBM_COMMON_L.DAMAGE_ICON)
 
@@ -208,6 +212,10 @@ function mod:SPELL_AURA_APPLIED(args)
 end
 --mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED
 
+--"<43.45 19:05:50> [CLEU] SPELL_AURA_REMOVED#Creature-0-4225-2579-2224-198998-000034485F#Tyr, the Infinite Keeper#Creature-0-4225-2579-2224-198998-000034485F#Tyr, the Infinite Keeper#413595#Pondering the Oathstone#BUFF#nil", -- [290]
+--"<43.48 19:05:50> [CLEU] UNIT_DIED##nil#Creature-0-4225-2579-2224-205158-000034485F#Spurlok, Timesworn Sentinel#-1#false#nil#nil", -- [291]
+--"<76.79 19:06:23> [NAME_PLATE_UNIT_ADDED] Tyr, the Infinite Keeper#Creature-0-4225-2579-2224-198998-000034485F", -- [559]
+--"<78.46 19:06:25> [ENCOUNTER_START] 2670#Tyr, the Infinite Keeper#8#5", -- [570]
 function mod:SPELL_AURA_REMOVED(args)
 	local spellId = args.spellId
 	if spellId == 400681 then
@@ -227,6 +235,8 @@ function mod:SPELL_AURA_REMOVED(args)
 		timerInfiniteAnnihilationCD:Start(12.5, 1)
 		timerDividingStrikeCD:Start(12.5, 1)
 		timerSiphonOathCD:Start(45.7, self.vb.barrierCount+1)
+	elseif spellId == 413595 then
+		timerRP:Start(33.3)
 	end
 end
 

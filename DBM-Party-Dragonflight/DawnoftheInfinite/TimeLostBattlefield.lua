@@ -23,9 +23,12 @@ mod.sendMainBossGUID = true
 
 mod:RegisterCombat("combat")
 
+mod:RegisterEvents(
+	"SPELL_CAST_SUCCESS 418054 408227 419602 419609"--418062 410496
+)
+
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 417018 407122 410234 418059 410254 418056 408228 418047 418046",
-	"SPELL_CAST_SUCCESS 418054 408227",--418062 410496
 	"SPELL_AURA_APPLIED 417030 407121",
 --	"SPELL_AURA_APPLIED_DOSE",
 --	"SPELL_AURA_REMOVED",
@@ -70,6 +73,7 @@ local specWarnBladestorm							= mod:NewSpecialWarningDodgeCount(410235, "Melee"
 local specWarnTankBuster							= mod:NewSpecialWarningDefensive(tankSpellId, nil, nil, nil, 1, 2)
 local specWarnShockwave								= mod:NewSpecialWarningDodge(shockwaveSpellId, nil, nil, nil, 2, 2)--First cast in set
 
+local timerRP										= mod:NewRPTimer(8)
 local timerBladestormCD								= mod:NewCDCountTimer(35.1, 410235, nil, nil, nil, 3)
 local timerTankBusterCD								= mod:NewCDCountTimer(19.6, tankSpellId, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerShockwaveCD								= mod:NewCDCountTimer(35.1, shockwaveSpellId, nil, nil, nil, 3)
@@ -214,9 +218,14 @@ function mod:SPELL_CAST_START(args)
 	end
 end
 
+--"<271.38 19:13:43> [CLEU] SPELL_AURA_APPLIED#Creature-0-4225-2579-2224-203679-0000344AB7#Anduin Lothar#Creature-0-4225-2579-2224-203679-0000344AB7#Anduin Lothar#419609#Battle Senses#BUFF#nil", -- [1659]
+--"<271.38 19:13:43> [CLEU] SPELL_CAST_SUCCESS#Creature-0-4225-2579-2224-203679-0000344AB7#Anduin Lothar##nil#419609#Battle Senses#nil#nil", -- [1660]
+--"<277.32 19:13:49> [ENCOUNTER_START] 2672#Time-Lost Battlefield#8#5", -- [1690]
 function mod:SPELL_CAST_SUCCESS(args)
 	local spellId = args.spellId
-	if spellId == 418054 or spellId == 408227 then
+	if spellId == 419602 or spellId == 419609 then
+		timerRP:Start(6)
+	elseif spellId == 418054 or spellId == 408227 then
 		--Timer now started here now that it's being used as an update timer method earlier
 		timerShockwaveCD:Start(nil, self.vb.shockwaveSet+1)
 		updateAllTimers(self, 10.2, false)

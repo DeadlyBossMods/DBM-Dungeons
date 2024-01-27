@@ -353,3 +353,7 @@ L = DBM:GetModLocalization("DawnoftheInfiniteTrash")
 L:SetGeneralLocalization({
 	name =	"DotI Trash"
 })
+
+L:SetOptionLocalization({
+	AutoRift	= "Auto select gossip to activate rift after gauntlet"
+})

@@ -13,8 +13,8 @@ mod:RegisterEvents(
 	"SPELL_AURA_APPLIED 412063 415554 415437 413547",
 --	"SPELL_AURA_APPLIED_DOSE",
 --	"SPELL_AURA_REMOVED",
-	"UNIT_DIED"
---	"GOSSIP_SHOW"
+	"UNIT_DIED",
+	"GOSSIP_SHOW"
 )
 
 --[[
@@ -117,6 +117,9 @@ local timerVolatileMortarCD					= mod:NewCDNPTimer(19.5, 407205, nil, nil, nil, 
 local timerDeployGoblinSappersCD			= mod:NewCDNPTimer(30.3, 407535, nil, nil, nil, 5)--Poor data
 local timerBronzeExhalationCD				= mod:NewCDNPTimer(19.8, 419351, nil, nil, nil, 3)
 local timerFishBoltVolleyCD					= mod:NewCDNPTimer(10.4, 411300, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+
+mod:AddBoolOption("AutoRift", true)
+
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc, 7 off interrupt, 8 GTFO
 
 local function additionalIds(self, args)
@@ -478,14 +481,11 @@ function mod:UNIT_DIED(args)
 	end
 end
 
---[[
 function mod:GOSSIP_SHOW()
 	local gossipOptionID = self:GetGossipID()
 	if gossipOptionID then
-		--Black, Bronze, Blue, Red, Green
-		if self.Options.AGBuffs and (gossipOptionID == 107065 or gossipOptionID == 107081 or gossipOptionID == 107082 or gossipOptionID == 107088 or gossipOptionID == 107083) then -- Buffs
+		if self.Options.AutoRift and gossipOptionID == 110513 then
 			self:SelectGossip(gossipOptionID)
 		end
 	end
 end
---]]
