@@ -354,3 +354,7 @@ L = DBM:GetModLocalization("DawnoftheInfiniteTrash")
 L:SetGeneralLocalization({
 	name =	"무한의 여명 일반몹"
 })
+
+L:SetOptionLocalization({
+	AutoRift	= "구슬 피하기 통과 후 균열 활성화 대화 자동 선택"
+})
