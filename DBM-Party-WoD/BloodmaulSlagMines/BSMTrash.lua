@@ -22,7 +22,7 @@ local specWarnSubjugate					= mod:NewSpecialWarningDispel(151697, "RemoveMagic",
 local specWarnSlaversRage				= mod:NewSpecialWarningDispel(151965, "RemoveEnrage", nil, nil, 1, 2)
 
 function mod:SPELL_AURA_APPLIED(args)
-	if not self.Options.Enabled or self:IsDifficulty("normal5") or self:IsTrivial() then return end
+	if not self.Options.Enabled then return end
 	local spellId = args.spellId
 	if spellId == 164597 and not args:IsDestTypePlayer() then
 		specWarnStoneBulwark:Show(args.destName)
@@ -40,7 +40,7 @@ function mod:SPELL_AURA_APPLIED(args)
 end
 
 function mod:SPELL_CAST_START(args)
-	if not self.Options.Enabled or self:IsDifficulty("normal5") or self:IsTrivial() then return end
+	if not self.Options.Enabled then return end
 	local spellId = args.spellId
 	if spellId == 152298 and self:AntiSpam(5, 1) then
 		warnCinderSplash:Show()
