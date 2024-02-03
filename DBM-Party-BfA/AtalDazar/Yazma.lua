@@ -26,10 +26,12 @@ mod:RegisterEventsInCombat(
 --]]
 --TODO: Verify CHAT_MSG_RAID_BOSS_EMOTE for soulrend. I know i saw it but not sure I got spellId right since chatlog only grabs parsed name
 local warnSoulRend					= mod:NewTargetAnnounce(259187, 4)
+local warnWrackingPain				= mod:NewTargetNoFilterAnnounce(250096, 4, nil, "Healer")
 
 local specWarnSoulRend				= mod:NewSpecialWarningRun(259187, nil, nil, nil, 4, 2)
 local yellSoulRend					= mod:NewYell(259187)
 local specWarnWrackingPain			= mod:NewSpecialWarningInterruptCount(250096, "HasInterrupt", nil, nil, 1, 2)
+local specWarnWrackingPainYou		= mod:NewSpecialWarningYou(250096, nil, nil, nil, 1, 2)
 local specWarnSkewer				= mod:NewSpecialWarningDefensive(249919, nil, nil, nil, 1, 2)
 local specWarnEchoes				= mod:NewSpecialWarningDodgeCount(250050, nil, nil, nil, 2, 2)
 local specWarnGTFO					= mod:NewSpecialWarningGTFO(250036, nil, nil, nil, 1, 8)
@@ -76,6 +78,16 @@ local function updateAllTimers(self, ICD)
 	end
 end
 
+function mod:WrackingPainTarget(targetname)
+	if not targetname then return end
+	if targetname == UnitName("player") then
+		specWarnWrackingPainYou:Show(targetname)
+		specWarnWrackingPainYou:Play("targetyou")
+	else
+		warnWrackingPain:Show(targetname)
+	end
+end
+
 function mod:OnCombatStart(delay)
 	self.vb.soulCount = 0
 	self.vb.wrackCount = 0
@@ -103,6 +115,8 @@ function mod:SPELL_CAST_START(args)
 		if not self:IsMythic() and self:CheckInterruptFilter(args.sourceGUID, false, true) then
 			specWarnWrackingPain:Show(args.sourceName, self.vb.wrackCount+1)
 			specWarnWrackingPain:Play("kickcast")
+		else
+			self:ScheduleMethod(0.1, "BossTargetScanner", args.sourceGUID, "WrackingPainTarget", 0.1, 7, true)
 		end
 	elseif spellId == 249919 then
 		self.vb.skewerCount = self.vb.skewerCount + 1
