@@ -7,8 +7,8 @@ mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(198999)
 mod:SetEncounterID(2671)
 mod:SetUsedIcons(1, 2, 3, 4, 5, 6)
-mod:SetHotfixNoticeRev(20231102000000)
-mod:SetMinSyncRevision(20231102000000)
+mod:SetHotfixNoticeRev(20240205000000)
+mod:SetMinSyncRevision(20240205000000)
 --mod.respawnTime = 29
 mod.sendMainBossGUID = true
 
@@ -138,7 +138,7 @@ function mod:SPELL_CAST_START(args)
 		self.vb.problemsCount = self.vb.problemsCount + 1
 		self.vb.problemIcons = 1
 		warnMoreProblems:Show(self.vb.problemIcons)
-		local timer = self:GetFromTimersTable(allTimers, false, false, spellId, self.vb.blastCount+1)
+		local timer = self:GetFromTimersTable(allTimers, false, false, spellId, self.vb.problemsCount+1)
 		if timer then
 			timerMoreProblemsCD:Start(timer, self.vb.problemsCount+1)
 		else
