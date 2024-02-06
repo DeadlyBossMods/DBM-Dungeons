@@ -27,6 +27,10 @@ if (wowToc >= 100200) then
 	--	"SPELL_PERIODIC_MISSED",
 		"UNIT_DIED"
 	)
+
+	mod:RegisterEvents(
+		"CHAT_MSG_MONSTER_YELL"
+	)
 	--[[
 	(ability.id = 169179 or ability.id = 169613 or ability.id = 428823 or ability.id = 173563 or ability.id = 169929) and type = "begincast"
 	 or ability.id = 428948 and type = "applybuff"
@@ -42,6 +46,7 @@ if (wowToc >= 100200) then
 	local specWarnLasherVenom							= mod:NewSpecialWarningInterrupt(173563, "HasInterrupt", nil, nil, 1, 2)
 	--local specWarnGTFO								= mod:NewSpecialWarningGTFO(409058, nil, nil, nil, 1, 8)
 
+	local timerCombatStart								= mod:NewCombatTimer(7.9)
 	local timerBrushfireCD								= mod:NewNextTimer(15.4, 428746, nil, nil, nil, 5, nil, DBM_COMMON_L.DAMAGE_ICON)--For buff going back up on boss, DPS can time burst CDs
 	local timerColossalBlowCD							= mod:NewCDTimer(15.3, 169179, nil, nil, nil, 3, nil, DBM_COMMON_L.TANK_ICON)
 	local timerVerdantEruptionCD						= mod:NewCDCountTimer(53.1, 428823, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)
@@ -125,7 +130,21 @@ if (wowToc >= 100200) then
 			timerLumberingSwipeCD:Stop(args.destGUID)
 		end
 	end
-else
+
+	--"<51.64 00:21:17> [CHAT_MSG_MONSTER_YELL] The portal is lost! We must stop this beast before it can escape!#Lady Baihu###Omegal##0#0##0#90#nil#0#false#false#false#false", -- [112]
+	--"<59.59 00:21:25> [ENCOUNTER_START] 1756#Yalnu#23#5", -- [123]
+	function mod:CHAT_MSG_MONSTER_YELL(msg)
+		if (msg == L.YalnuRP or msg:find(L.YalnuRP)) then
+			self:SendSync("YalnuRP")--Syncing to help unlocalized clients
+		end
+	end
+
+	function mod:OnSync(msg, targetname)
+		if msg == "YalnuRP" and self:AntiSpam(5, 3) then
+			timerCombatStart:Start()
+		end
+	end
+	else
 	--10.1.7 on retail, and classic if it happens (if it doesn't happen old version of mod will be retired)
 	mod:RegisterEventsInCombat(
 		"SPELL_CAST_START 169179 169613",
