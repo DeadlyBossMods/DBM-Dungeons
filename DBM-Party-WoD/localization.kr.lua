@@ -156,6 +156,10 @@ L:SetMiscLocalization({
 -----------------------
 L= DBM:GetModLocalization(1210)
 
+L:SetMiscLocalization({
+	YalnuRP	= "차원문이! 괴물이 탈출하기 전에 막아야 합니다!"
+})
+
 -----------------------
 -- Trash --
 -----------------------
