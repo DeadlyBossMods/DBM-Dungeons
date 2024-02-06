@@ -155,6 +155,10 @@ L:SetMiscLocalization({
 -----------------------
 L= DBM:GetModLocalization(1210)
 
+L:SetMiscLocalization({
+	YalnuRP	= "The portal is lost! We must stop this beast before it can escape!"
+})
+
 -----------------------
 -- Trash --
 -----------------------
