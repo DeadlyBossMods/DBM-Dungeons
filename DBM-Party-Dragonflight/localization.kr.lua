@@ -302,7 +302,11 @@ L:SetOptionLocalization({
 -----------------------
 -- Manifested Timeways --
 -----------------------
---L= DBM:GetModLocalization(2528)
+L= DBM:GetModLocalization(2528)
+
+L:SetMiscLocalization({
+	PrePullRP		= "아무리 시간의 위상이라도 시간의 길을 어지럽히게 둘 순 없다!"
+})
 
 -----------------------
 -- Blight of Galakrond --
