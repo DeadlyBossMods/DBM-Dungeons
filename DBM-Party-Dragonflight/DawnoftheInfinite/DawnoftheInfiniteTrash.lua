@@ -84,7 +84,7 @@ local specWarnTimebeam						= mod:NewSpecialWarningInterrupt(413427, "HasInterru
 --First half
 local timerChronomeltCD						= mod:NewCDNPTimer(18.2, 411994, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 --local timerTemposliceCD					= mod:NewCDNPTimer(21.8, 378003, nil, nil, nil, 5)--21-37, disabled for now
-local timerChronoBurstCD					= mod:NewCDNPTimer(21.8, 415769, nil, nil, nil, 5, nil, DBM_COMMON_L.MAGIC_ICON)
+local timerChronoBurstCD					= mod:NewCDNPTimer(20.6, 415769, nil, nil, nil, 5, nil, DBM_COMMON_L.MAGIC_ICON)
 local timerInfiniteBoltVolleyCD				= mod:NewCDNPTimer(13.3, 415770, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerTripleStrikeCD					= mod:NewCDNPTimer(12.1, 413487, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerTaintedSandsCD					= mod:NewCDNPTimer(13.3, 415436, nil, nil, nil, 3)
