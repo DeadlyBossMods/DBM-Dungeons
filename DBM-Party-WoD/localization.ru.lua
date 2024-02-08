@@ -156,6 +156,10 @@ L:SetMiscLocalization({
 -----------------------
 L= DBM:GetModLocalization(1210)
 
+L:SetMiscLocalization({
+	YalnuRP	= "Портала больше нет! Надо остановить зверя, пока он не сбежал!"
+})
+
 -----------------------
 -- Trash --
 -----------------------
