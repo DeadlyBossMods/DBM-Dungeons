@@ -22,6 +22,10 @@ mod:RegisterEventsInCombat(
 --	"SPELL_PERIODIC_MISSED"
 )
 
+mod:RegisterEvents(
+	"CHAT_MSG_MONSTER_YELL"
+)
+
 --[[
 (ability.id = 405696 or ability.id = 405431 or ability.id = 414303 or ability.id = 414307) and type = "begincast"
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
@@ -35,13 +39,11 @@ local specWarnChronofaded							= mod:NewSpecialWarningMoveTo(405696, nil, nil, 
 local yellChronofaded								= mod:NewShortPosYell(405696)
 local yellChronofadedFades							= mod:NewIconFadesYell(405696)
 local specWarnFragmentsofTime						= mod:NewSpecialWarningDodgeCount(405431, nil, nil, nil, 2, 2)
---local specWarnUnwind								= mod:NewSpecialWarningDefensive(414303, nil, nil, nil, 1, 2)
 --local specWarnGTFO								= mod:NewSpecialWarningGTFO(386201, nil, nil, nil, 1, 8)
 
---local timerRP										= mod:NewRPTimer(8)
+local timerRP										= mod:NewRPTimer(13.3)
 local timerChronofadedCD							= mod:NewCDCountTimer(30.3, 405696, nil, nil, nil, 3, nil, DBM_COMMON_L.MAGIC_ICON)
 local timerFragmentsofTimeCD						= mod:NewCDCountTimer(30.3, 405431, nil, nil, nil, 3)
---local timerUnwindCD									= mod:NewCDCountTimer(30.3, 414303, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 
 mod:AddSetIconOption("SetIconOnChronoFaded", 405696, true, false, {1, 2})
 
@@ -120,3 +122,15 @@ function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId, spell
 end
 mod.SPELL_PERIODIC_MISSED = mod.SPELL_PERIODIC_DAMAGE
 --]]
+
+function mod:CHAT_MSG_MONSTER_YELL(msg)
+	if (msg == L.PrePullRP or msg:find(L.PrePullRP)) then
+		self:SendSync("MTRP")--Syncing to help unlocalized clients
+	end
+end
+
+function mod:OnSync(msg)
+	if msg == "MTRP" and self:AntiSpam(10, 2) then
+		timerRP:Start()
+	end
+end

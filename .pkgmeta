@@ -2,6 +2,7 @@ package-as: DBM-Party-Dragonflight
 enable-nolib-creation: no
 
 move-folders:
+    DBM-Party-Dragonflight/DBM-WorldEvents: DBM-WorldEvents
     DBM-Party-Dragonflight/DBM-Party-Cataclysm: DBM-Party-Cataclysm
     DBM-Party-Dragonflight/DBM-Party-Vanilla: DBM-Party-Vanilla
     DBM-Party-Dragonflight/DBM-Party-Legion: DBM-Party-Legion

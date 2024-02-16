@@ -3,17 +3,17 @@
 
 [![Patreon](https://media.forgecdn.net/attachments/76/25/patreon-medium-button.png)](https://www.patreon.com/deadlybossmods)
 
-Deadly Boss Mods: Dungeons
+Deadly Boss Mods: Dungeons & Events
 ==========================
 
 Description
 -----------
-This mod will add support for 5 man Dungeons, spanning Classic all the way to Dragonflight, to Deadly Boss Mods (DBM).
+This mod will add support for 5 man Dungeons and World Events, spanning Classic all the way to Dragonflight, to Deadly Boss Mods (DBM).
 
 Features:
-* Helpful combat warnings, timers, and infoframes for 5 man dungeons
-* This includes all dungeons ever made into a Timewalker dungeon in a single package
-* All warnings are configurable through DBM GUI
+* Helpful alerts, timers, and frames for 5 man dungeons (This includes all dungeons ever made into a Timewalker dungeon in a single package)
+* Helpful alerts, timers, and frames for most special event content (World events, holiday events, Darkmoon Faire, and even some misc quests)
+* All alerts are configurable through DBM GUI
 
 Looking for Raid mods?
 ----------------------

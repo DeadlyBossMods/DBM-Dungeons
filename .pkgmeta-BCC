@@ -12,5 +12,6 @@ ignore:
   - DBM-Party-WotLK
 
 move-folders:
+    DBM-Party-BC/DBM-WorldEvents: DBM-WorldEvents
     DBM-Party-BC/DBM-Party-Vanilla: DBM-Party-Vanilla
     DBM-Party-BC/DBM-Party-BC: DBM-Party-BC
