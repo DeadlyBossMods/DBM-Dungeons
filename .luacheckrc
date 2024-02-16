@@ -69,6 +69,7 @@ globals = {
 	"IsEncounterInProgress",
 	"IsInGroup",
 	"SendChatMessage",
+	"SetCVar",
 	"SetRaidTarget",
 	"UnitCanAttack",
 	"UnitCastingInfo",
