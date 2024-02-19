@@ -67,7 +67,7 @@ if (wowToc >= 100200) then
 			timerCinderboltStormCD:Start(18.4)
 			--timerComboCD:Start(DBM_COMMON_L.AOEDAMAGE, DBM_COMMON_L.ORBS)
 		--Frost + Previous (fire)
-		elseif self.vb.comboCount % 2 == 1 then
+		elseif self.vb.comboCount % 3 == 2 then
 			--So next is Arcane + Frost
 			timerSpetialCompressionCD:Start(18.4)
 			timerGlacialFusionCD:Start(18.4)
