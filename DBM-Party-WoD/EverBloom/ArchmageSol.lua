@@ -46,12 +46,44 @@ if (wowToc >= 100200) then
 	local timerCinderboltStormCD						= mod:NewCDTimer(60, 427899, nil, nil, nil, 2)
 	local timerGlacialFusionCD							= mod:NewCDTimer(60, 428082, nil, nil, nil, 3)
 	local timerSpetialCompressionCD						= mod:NewCDTimer(60, 428139, nil, nil, nil, 5)
-	--local timerSpecialCD								= mod:NewCDSpecialTimer(20)--Used on mythic for now
+--	local timerComboCD									= mod:NewCDComboTimer(20)--Use on mythic instead?
 
 	mod.vb.pullCount = 0
+	mod.vb.comboCount = 0
+
+	--local grip = DBM:GetSpellInfo(56689)
+
+	--Fire alone (no previos yet, arcane in future combos)
+	--Frost + Previous (fire)
+	--Arcane + Previous (frost)
+	--Repeats
+	--This hardcoded function is required because sometimes boss and add invert who casts what (ie it's right combo, but the previous and current are inverted)
+	local function comboHandler(self)
+		self.vb.comboCount = self.vb.comboCount + 1
+		--Fire alone first time (fire + arcane for 4)
+		if self.vb.comboCount % 3 == 1 then
+			--So next is Frost + Fire
+			timerGlacialFusionCD:Start(18.4)
+			timerCinderboltStormCD:Start(18.4)
+			--timerComboCD:Start(DBM_COMMON_L.AOEDAMAGE, DBM_COMMON_L.ORBS)
+		--Frost + Previous (fire)
+		elseif self.vb.comboCount % 2 == 1 then
+			--So next is Arcane + Frost
+			timerSpetialCompressionCD:Start(18.4)
+			timerGlacialFusionCD:Start(18.4)
+			--timerComboCD:Start(grip, DBM_COMMON_L.ORBS)
+		--Arcane + Previous (frost)
+		else
+			--So next is fire + arcane
+			timerCinderboltStormCD:Start(19.4)
+			timerSpetialCompressionCD:Start(19.4)
+			--timerComboCD:Start(DBM_COMMON_L.AOEDAMAGE, grip)
+		end
+	end
 
 	function mod:OnCombatStart(delay)
 		self.vb.pullCount = 0
+		self.vb.comboCount = 0
 		timerCinderboltStormCD:Start(3)
 		if not self:IsMythic() then--Mythic schedulers timers differently
 			timerGlacialFusionCD:Start(24.1)
@@ -91,12 +123,8 @@ if (wowToc >= 100200) then
 			specWarnSpetialCompression:Play("pullin")
 			if self:IsMythic() then
 				if args:GetSrcCreatureID() == 82682 then--Source is Boss
-					timerGlacialFusionCD:Start(19.4)--Fire, Ice, Arcane, repeat (can come from either the boss or the add, but one of them will do it)
-					timerSpetialCompressionCD:Start(19.4)--Add will recast this next
+					comboHandler(self)
 				end
-				--if self:AntiSpam(5, 1) then
-				--	timerSpecialCD:Start(20)
-				--end
 			else
 				timerSpetialCompressionCD:Start(60)
 			end
@@ -114,12 +142,8 @@ if (wowToc >= 100200) then
 			warnCinderboltStorm:Show()
 			if self:IsMythic() then
 				if args:GetSrcCreatureID() == 82682 then--Source is Boss
-					timerGlacialFusionCD:Start(18.4)--Fire, Ice, Arcane, repeat
-					timerCinderboltStormCD:Start(18.4)--Add will recast this next
+					comboHandler(self)
 				end
-				--if self:AntiSpam(5, 1) then
-				--	timerSpecialCD:Start(20)
-				--end
 			else
 				timerCinderboltStormCD:Start(60)
 			end
@@ -128,12 +152,8 @@ if (wowToc >= 100200) then
 			specWarnGlacialFusion:Play("watchorb")
 			if self:IsMythic() then
 				if args:GetSrcCreatureID() == 82682 then--Source is Boss
-					timerSpetialCompressionCD:Start(18.4)--Fire, Ice, Arcane, repeat
-					timerGlacialFusionCD:Start(18.4)--Add will recast this next
+					comboHandler(self)
 				end
-				--if self:AntiSpam(5, 1) then
-				--	timerSpecialCD:Start(20)
-				--end
 			else
 				timerGlacialFusionCD:Start(60)
 			end
