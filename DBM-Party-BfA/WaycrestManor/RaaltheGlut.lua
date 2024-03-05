@@ -43,9 +43,9 @@ function mod:OnCombatStart(delay)
 	self.vb.tenderizeCount = 0
 	self.vb.rottenCount = 0
 	self.vb.servantCount = 0
-	timerRottenExpulsionCD:Start(5-delay)
-	timerTenderizeCD:Start(20.8-delay)
-	timerServantCD:Start(32.9-delay)
+	timerRottenExpulsionCD:Start(5-delay, 1)
+	timerTenderizeCD:Start(20.8-delay, 1)
+	timerServantCD:Start(32.9-delay, 1)
 end
 
 function mod:SPELL_CAST_START(args)
