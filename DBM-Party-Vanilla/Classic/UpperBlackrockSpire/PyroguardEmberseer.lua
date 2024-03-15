@@ -1,4 +1,4 @@
-local mod	= DBM:NewMod("PyroguardEmberseer", "DBM-Party-Vanilla", 4)
+local mod	= DBM:NewMod("PyroguardEmberseer", "DBM-Party-Vanilla", DBM:IsCata() and 18 or 4)
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")

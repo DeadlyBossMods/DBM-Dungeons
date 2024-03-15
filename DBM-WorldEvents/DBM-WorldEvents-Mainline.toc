@@ -20,17 +20,17 @@
 ## X-DBM-Mod-Category: OTHER
 ## X-DBM-StatTypes: normal
 ## X-DBM-Mod-World-Boss: 1
-## X-DBM-Mod-SubCategories: Holidays,Quests,Events,DMF
-## X-DBM-Mod-SubCategories-deDE: Feiertage,Quests,Events,DMF
-## X-DBM-Mod-SubCategories-ruRU: Праздники,Задания,События,DMF
-## X-DBM-Mod-SubCategories-koKR: 축제,퀘스트,이벤트,DMF
-## X-DBM-Mod-SubCategories-zhTW: 節慶,任務,Events,DMF
-## X-DBM-Mod-SubCategories-zhCN: 节日,任务,Events,DMF
-## X-DBM-Mod-SubCategories-esES: Fiestas,Misiones,Events,DMF
-## X-DBM-Mod-SubCategories-esMX: Holidays,Quests,Events,DMF
-## X-DBM-Mod-SubCategories-ptBR: Holidays,Quests,Events,DMF
-## X-DBM-Mod-SubCategories-frFR: Vacances,Quêtes,Events,DMF
-## X-DBM-Mod-SubCategories-itIT: Festività,Missioni,Events,DMF
+## X-DBM-Mod-SubCategories: Holidays,Quests,DMF,Events
+## X-DBM-Mod-SubCategories-deDE: Feiertage,Quests,DMF,Events
+## X-DBM-Mod-SubCategories-ruRU: Праздники,Задания,DMF,События
+## X-DBM-Mod-SubCategories-koKR: 축제,퀘스트,DMF,이벤트
+## X-DBM-Mod-SubCategories-zhTW: 節慶,任務,DMF,Events
+## X-DBM-Mod-SubCategories-zhCN: 节日,任务,DMF,Events
+## X-DBM-Mod-SubCategories-esES: Fiestas,Misiones,DMF,Events
+## X-DBM-Mod-SubCategories-esMX: Holidays,Quests,DMF,Events
+## X-DBM-Mod-SubCategories-ptBR: Holidays,Quests,DMF,Events
+## X-DBM-Mod-SubCategories-frFR: Vacances,Quêtes,DMF,Events
+## X-DBM-Mod-SubCategories-itIT: Festività,Missioni,DMF,Events
 ## X-DBM-Mod-Name: World Events
 ## X-DBM-Mod-Name-esES: Eventos del mundo
 ## X-DBM-Mod-Name-ruRU: Игровые события
