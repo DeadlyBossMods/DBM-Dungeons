@@ -4,7 +4,7 @@ local isBCC = WOW_PROJECT_ID == (WOW_PROJECT_BURNING_CRUSADE_CLASSIC or 5)
 --local isCata = WOW_PROJECT_ID == (WOW_PROJECT_CATA_CLASSIC or 99)--NYI in Cata beta
 local tempTOC = DBM:GetTOC()
 local isCata = (tempTOC >= 40400) and (tempTOC < 50000)
-local mod	= DBM:NewMod(422, "DBM-Party-Vanilla", isRetail and 4 or 7, 231)
+local mod	= DBM:NewMod(422, "DBM-Party-Vanilla", (isCata or isRetail) and 4 or 7, 231)
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
