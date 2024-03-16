@@ -1,0 +1,122 @@
+## Interface: 40400
+## X-Min-Interface-Cata: 40400
+## Title:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Dungeons (Cata)|r
+## Title-frFR:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Groupe-Cata|r
+## Title-deDE:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Gruppe-Cata|r
+## Title-zhTW:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0隊伍首領-浩劫與重生|r
+## Title-ruRU:|cffffe00a<|r|cffff7d0aDBM Мод|r|cffffe00a>|r |cffc030c0Подземелья (Катаклизм)|r
+## Title-koKR:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0던전 (대격변)|r
+## Title-esES:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Mazmorras (Cata)|r
+## Title-zhCN:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0队伍首领 (大地的裂变)|r
+## Title-ptBR:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c05Masmorras-Cata|r
+## Author: MysticalOS
+## LoadOnDemand: 1
+## RequiredDeps: DBM-Core
+## SavedVariables: DBMPartyCataclysm_AllSavedVars
+## SavedVariablesPerCharacter: DBMPartyCataclysm_SavedStats
+## IconTexture: Interface\AddOns\DBM-Core\textures\dbm_airhorn
+## X-DBM-Mod: 1
+## X-DBM-Mod-Type: PARTY
+## X-DBM-Mod-Category: CATA
+## X-DBM-StatTypes: normal,heroic
+## X-DBM-Mod-SubCategoriesID: 645, 36, 670, 644, 755, 33, 725, 657, 643, 568, 859, 938, 939, 940
+## X-DBM-Mod-Name: Dungeons (Cataclysm)
+## X-DBM-Mod-Name-frFR: Groupe (Cataclysm)
+## X-DBM-Mod-Name-deDE: Gruppe (Cataclysm)
+## X-DBM-Mod-Name-ruRU: Подземелья (Катаклизм)
+## X-DBM-Mod-Name-zhTW: 隊伍首領 (浩劫與重生)
+## X-DBM-Mod-Name-zhCN: 队伍首领 (大地的裂变)
+## X-DBM-Mod-Name-esES: Mazmorras (Cataclysm)
+## X-DBM-Mod-Name-koKR: 던전 (대격변)
+## X-DBM-Mod-Name-esMX: Mazmorras (Cataclysm)
+## X-DBM-Mod-Name-ptBR: Masmorras (Cataclysm)
+## X-DBM-Mod-Sort: 802
+## X-DBM-Mod-MapID: 755,645,36,670,644,33,643,725,657,309,859,568,938,940,939,646
+## X-DBM-Mod-MinCoreRevision: 20210721040757
+## X-DBM-Mod-MinExpansion: 3
+## X-Curse-Project-ID: 314994
+## X-WoWI-ID: 24904
+## Version: @project-version@
+
+localization.en.lua
+localization.de.lua
+localization.es.lua
+localization.fr.lua
+localization.kr.lua
+localization.ru.lua
+localization.tw.lua
+localization.cn.lua
+localization.br.lua
+BlackrockCaverns\RomoggBonecrusher.lua
+BlackrockCaverns\Corla.lua
+BlackrockCaverns\KarshSteelBender.lua
+BlackrockCaverns\Beauty.lua
+BlackrockCaverns\AscendantLordObsidius.lua
+BlackrockCaverns\BlackrockCavernsTrash.lua
+Deadmines\Glubtok.lua
+Deadmines\Helix.lua
+Deadmines\FoeReaper.lua
+Deadmines\Ripsnarl.lua
+Deadmines\Cookie.lua
+Deadmines\Vanessa.lua
+GrimBatol\GeneralUmbriss.lua
+GrimBatol\ForgemasterThrongus.lua
+GrimBatol\DrahgaShadowburner.lua
+GrimBatol\Erudax.lua
+HallsOfOrigination\TempleGuardianAnhuur.lua
+HallsOfOrigination\EarthragerPtah.lua
+HallsOfOrigination\Anraphet.lua
+HallsOfOrigination\Isiset.lua
+HallsOfOrigination\Ammunae.lua
+HallsOfOrigination\Setesh.lua
+HallsOfOrigination\Rajh.lua
+LostCityOfTheTolvir\GeneralHusam.lua
+LostCityOfTheTolvir\Lockmaw.lua
+LostCityOfTheTolvir\Augh.lua
+LostCityOfTheTolvir\HighProphetBarim.lua
+LostCityOfTheTolvir\Siamat.lua
+ShadowFangKeep\Ashbury.lua
+ShadowFangKeep\Silverlaine.lua
+ShadowFangKeep\Springvale.lua
+ShadowFangKeep\Walden.lua
+ShadowFangKeep\Godfrey.lua
+TheVortexPinnacle\GrandVizierErtan.lua
+TheVortexPinnacle\Altairus.lua
+TheVortexPinnacle\Asaad.lua
+TheVortexPinnacle\VortexPinnacleTrash.lua
+TheStonecore\Corborus.lua
+TheStonecore\Slabhide.lua
+TheStonecore\Ozruk.lua
+TheStonecore\HighPriestessAzil.lua
+TheStonecore\StonecoreTrash.lua
+ThroneOfTides\LadyNazjar.lua
+ThroneOfTides\CommanderUlthok.lua
+ThroneOfTides\ErunakStonespeaker.lua
+ThroneOfTides\Ozumat.lua
+ThroneOfTides\ThroneofTidesTrash.lua
+ZulAman\Akilzon5.lua
+ZulAman\Nalorakk5.lua
+ZulAman\Janalai5.lua
+ZulAman\Halazzi5.lua
+ZulAman\Malacrass5.lua
+ZulAman\Daakara.lua
+ZulGurub\Venoxis.lua
+ZulGurub\Mandokir.lua
+ZulGurub\CoMGrilek.lua
+ZulGurub\CoMHazzarah.lua
+ZulGurub\CoMRenataki.lua
+ZulGurub\CoMWushoolay.lua
+ZulGurub\Kilnara.lua
+ZulGurub\Zanzil.lua
+ZulGurub\Jindo.lua
+EndTime\Baine.lua
+EndTime\Jaina.lua
+EndTime\Sylvanas.lua
+EndTime\Tyrande.lua
+EndTime\Murozond.lua
+WellOfEternity\Perotharn.lua
+WellOfEternity\Azshara.lua
+WellOfEternity\Mannoroth.lua
+HourOfTwilight\Arcurion.lua
+HourOfTwilight\AsiraDawnslayer.lua
+HourOfTwilight\Benedictus.lua

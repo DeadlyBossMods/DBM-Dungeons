@@ -1,7 +1,10 @@
 local isRetail = WOW_PROJECT_ID == (WOW_PROJECT_MAINLINE or 1)
 local isClassic = WOW_PROJECT_ID == (WOW_PROJECT_CLASSIC or 2)
 local isBCC = WOW_PROJECT_ID == (WOW_PROJECT_BURNING_CRUSADE_CLASSIC or 5)
-local mod	= DBM:NewMod(422, "DBM-Party-Vanilla", isRetail and 4 or 7, 231)
+--local isCata = WOW_PROJECT_ID == (WOW_PROJECT_CATA_CLASSIC or 99)--NYI in Cata beta
+local tempTOC = DBM:GetTOC()
+local isCata = (tempTOC >= 40400) and (tempTOC < 50000)
+local mod	= DBM:NewMod(422, "DBM-Party-Vanilla", (isCata or isRetail) and 4 or 7, 231)
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
@@ -29,7 +32,7 @@ end
 --Only retail, he was reworked in cataclysm, so it'll likely also apply to cataclysm classic
 local warningPound, specWarnSteamBlast, timerSteamBlastCD, timerPoundCD
 local warningKnockAway, timerKnockAwayCD
-if isRetail then
+if isRetail or isCata then
 	warningPound				= mod:NewTargetNoFilterAnnounce(32346, 2)
 
 	specWarnSteamBlast			= mod:NewSpecialWarningInterrupt(93655, "HasInterrupt", nil, nil, 1, 2)
@@ -49,7 +52,7 @@ if isClassic or isBCC then
 end
 
 function mod:OnCombatStart(delay)
-	if isRetail then
+	if isRetail or isCata then
 		timerSteamBlastCD:Start(1-delay)
 		timerPoundCD:Start(1-delay)
 	else

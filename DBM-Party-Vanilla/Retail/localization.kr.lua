@@ -1271,3 +1271,65 @@ L = DBM:GetModLocalization("Fairbanks")
 L:SetGeneralLocalization{
 	name 		= "종교재판관 페어뱅크스"
 }
+
+-------------------------
+--  Upper Blackrock Spire-229J/229M (4C)  --
+-----------------------------
+--  Pyroguard Emberseer  --
+-----------------------------
+L = DBM:GetModLocalization("PyroguardEmberseer")
+
+L:SetGeneralLocalization{
+	name 		= "불의수호자 엠버시어"
+}
+L:SetMiscLocalization{
+	Pull		= "%s|1이;가; 힘을 되찾기 시작합니다!"
+}
+-----------------------------
+--  Solakar Flamewreath  --
+-----------------------------
+L = DBM:GetModLocalization("SolakarFlamewreath")
+
+L:SetGeneralLocalization{
+	name 		= "화염고리 솔라카르"
+}
+-----------------------------
+--  Goraluk Anvilcrack  --
+-----------------------------
+L = DBM:GetModLocalization("GoralukAnvilcrack")
+
+L:SetGeneralLocalization{
+	name 		= "고랄루크 앤빌크랙"
+}
+-----------------------------
+--  Jed Runewatcher  --
+-----------------------------
+L = DBM:GetModLocalization("JedRunewatcher")
+
+L:SetGeneralLocalization{
+	name 		= "제드 룬와처"
+}
+-----------------------------
+--  Warchief Rend Blackhand  --
+-----------------------------
+L = DBM:GetModLocalization("WarchiefRendBlackhand")
+
+L:SetGeneralLocalization{
+	name 		= "대족장 렌드 블랙핸드"
+}
+-----------------------------
+--  The Beast  --
+-----------------------------
+L = DBM:GetModLocalization("TheBeast")
+
+L:SetGeneralLocalization{
+	name 		= "괴수"
+}
+-----------------------------
+--  General Drakkisath  --
+-----------------------------
+L = DBM:GetModLocalization("GeneralDrakkisath")
+
+L:SetGeneralLocalization{
+	name 		= "사령관 드라키사스"
+}

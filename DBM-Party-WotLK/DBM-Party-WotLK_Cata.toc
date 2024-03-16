@@ -1,0 +1,111 @@
+## Interface: 40400
+## X-Min-Interface-Cata: 40400
+## Title:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Dungeons (WotLK)|r
+## Title-frFR:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Groupe-WotLK|r
+## Title-deDE:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Gruppe-WotLK|r
+## Title-esES:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Mazmorras (WotLK)|r
+## Title-zhTW:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0隊伍首領-巫妖王之怒|r
+## Title-zhCN:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0队伍首领 (巫妖王之怒)|r
+## Title-ruRU:|cffffe00a<|r|cffff7d0aDBM Мод|r|cffffe00a>|r |cffc030c0Подземелья (Король-лич)|r
+## Title-koKR:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0던전 (리분)|r
+## Author: Arta
+## LoadOnDemand: 1
+## RequiredDeps: DBM-Core
+## SavedVariables: DBMPartyWotLK_AllSavedVars
+## SavedVariablesPerCharacter: DBMPartyWotLK_SavedStats
+## IconTexture: Interface\AddOns\DBM-Core\textures\dbm_airhorn
+## X-DBM-Mod: 1
+## X-DBM-Mod-Type: PARTY
+## X-DBM-Mod-Category: WOTLK
+## X-DBM-StatTypes: normal,heroic
+## X-DBM-Mod-SubCategoriesID: 619, 601, 595, 600, 604, 602, 599, 576, 578, 574, 575, 608, 650, 632, 658, 668
+## X-DBM-Mod-Name: Dungeons (WotLK)
+## X-DBM-Mod-Name-frFR: Groupe-WotLK
+## X-DBM-Mod-Name-deDE: Gruppe (WotLK)
+## X-DBM-Mod-Name-ruRU: Подземелья (Король-лич)
+## X-DBM-Mod-Name-zhTW: 隊伍首領 (巫妖王之怒)
+## X-DBM-Mod-Name-zhCN: 队伍首领 (巫妖王之怒)
+## X-DBM-Mod-Name-esES: Mazmorras (WotLK)
+## X-DBM-Mod-Name-koKR: 던전 (리분)
+## X-DBM-Mod-Name-esMX: Mazmorras-WotLK
+## X-DBM-Mod-Sort: 915
+## X-DBM-Mod-MapID: 619,601,595,600,604,602,599,576,578,574,575,608,658,632,668,650
+## X-DBM-Mod-MinCoreRevision: 20200524142133
+## X-DBM-Mod-MinExpansion: 2
+## Version: @project-version@
+
+localization.en.lua
+localization.cn.lua
+localization.ru.lua
+localization.fr.lua
+localization.tw.lua
+localization.kr.lua
+localization.de.lua
+localization.es.lua
+AhnKahet\Taldaram.lua
+AhnKahet\Nadox.lua
+AhnKahet\JedogaShadowseeker.lua
+AhnKahet\Volazj.lua
+AhnKahet\Amanitar.lua
+AzjolNerub\Krikthir.lua
+AzjolNerub\Hadronox.lua
+AzjolNerub\Anubarak.lua
+OldStratholme\Meathook.lua
+OldStratholme\SalrammTheFleshcrafter.lua
+OldStratholme\ChronoLordEpoch.lua
+OldStratholme\MalGanis.lua
+OldStratholme\OldStratholmeWaves.lua
+DrakTharon\Trollgore.lua
+DrakTharon\NovosTheSummoner.lua
+DrakTharon\Dred.lua
+DrakTharon\ProphetTharonja.lua
+Gundrak\Sladran.lua
+Gundrak\Moorabi.lua
+Gundrak\BloodstoneAnnihilator.lua
+Gundrak\Galdarah.lua
+Gundrak\Eck.lua
+HallsOfLightning\Bjarngrin.lua
+HallsOfLightning\Volkhan.lua
+HallsOfLightning\Ionar.lua
+HallsOfLightning\Loken.lua
+HallsOfReflection\WaveTimers.lua
+HallsOfReflection\Falric.lua
+HallsOfReflection\Marwyn.lua
+HallsOfReflection\LichKingEvent.lua
+HallsOfStone\MaidenOfGrief.lua
+HallsOfStone\Krystallus.lua
+HallsOfStone\BrannBronzebeard.lua
+HallsOfStone\SjonnirTheIronshaper.lua
+TheNexus\Commander.lua
+TheNexus\GrandMagusTelestra.lua
+TheNexus\Anomalus.lua
+TheNexus\OrmorokTheTreeShaper.lua
+TheNexus\Keristrasza.lua
+TheOculus\DrakosTheInterrogator.lua
+TheOculus\MageLordUrom.lua
+TheOculus\VarosCloudstrider.lua
+TheOculus\LeyGuardianEregos.lua
+UtgardeKeep\Keleseth.lua
+UtgardeKeep\ConstructorAndController.lua
+UtgardeKeep\IngvarThePlunderer.lua
+UtgardePinnacle\SvalaSorrowgrave.lua
+UtgardePinnacle\GortokPalehoof.lua
+UtgardePinnacle\SkadiTheRuthless.lua
+UtgardePinnacle\Ymiron.lua
+VioletHold\Erekem.lua
+VioletHold\Ichoron.lua
+VioletHold\Lavanthor.lua
+VioletHold\Moragg.lua
+VioletHold\Xevoss.lua
+VioletHold\Zuramat.lua
+VioletHold\Cyanigosa.lua
+VioletHold\PortalTimers.lua
+TrialoftheChampion\Champions.lua
+TrialoftheChampion\Eadric_the_Pure.lua
+TrialoftheChampion\Confessor.lua
+TrialoftheChampion\Black_Knight.lua
+ForgeofSouls\Bronjahm.lua
+ForgeofSouls\DevourerofSouls.lua
+PitofSaron\Ick.lua
+PitofSaron\ForgemasterGarfrost.lua
+PitofSaron\ScourgelordTyrannus.lua

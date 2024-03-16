@@ -1,0 +1,101 @@
+## Interface: 20504
+## X-Min-Interface-BCC: 20500
+## Title:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Dungeons (BC)|r
+## Title-deDE:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Gruppe-BC|r
+## Title-ruRU:|cffffe00a<|r|cffff7d0aDBM Мод|r|cffffe00a>|r |cffc030c0Подземелья (BC)|r
+## Title-esES:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Mazmorras (TBC)|r
+## Title-koKR:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0던전 (불성)|r
+## Title-zhTW:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0隊伍首領-燃燒的遠征|r
+## Title-zhCN:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0队伍首领 (燃烧的远征)|r
+## Author: Arta/MysticalOS
+## LoadOnDemand: 1
+## RequiredDeps: DBM-Core
+## SavedVariables: DBMPartyBC_AllSavedVars
+## SavedVariablesPerCharacter: DBMPartyBC_SavedStats
+## IconTexture: Interface\AddOns\DBM-Core\textures\dbm_airhorn
+## X-DBM-Mod: 1
+## X-DBM-Mod-Type: PARTY
+## X-DBM-Mod-Category: BC
+## X-DBM-StatTypes: normal,heroic
+## X-DBM-Mod-SubCategoriesID: 543, 542, 540, 547, 546, 545, 558, 557, 556, 555, 560, 269, 554, 553, 552, 585
+## X-DBM-Mod-Name: Dungeons (BC)
+## X-DBM-Mod-Name-deDE: Gruppe (BC)
+## X-DBM-Mod-Name-ruRU: Подземелья (BC)
+## X-DBM-Mod-Name-esES: Mazmorras (TBC)
+## X-DBM-Mod-Name-koKR: 던전 (불성)
+## X-DBM-Mod-Name-zhTW: 隊伍首領 (燃燒的遠征)
+## X-DBM-Mod-Name-zhCN: 队伍首领 (燃烧的远征)
+## X-DBM-Mod-Sort: 1002
+## X-DBM-Mod-MapID: 540,558,556,555,542,546,545,547,553,554,552,557,269,560,543,585
+## X-DBM-Mod-MinCoreRevision: 20200524142133
+## X-DBM-Mod-MinExpansion: 1
+## X-Curse-Project-ID: 314994
+## X-WoWI-ID: 24904
+## X-Wago-ID: xZKxZENk
+## Version: @project-version@
+
+localization.en.lua
+localization.de.lua
+localization.kr.lua
+localization.ru.lua
+localization.es.lua
+localization.tw.lua
+Hellfire_Ramp\Gargolmar.lua
+Hellfire_Ramp\Omor.lua
+Hellfire_Ramp\Vazruden.lua
+Hellfire_BloodFurnace\Maker.lua
+Hellfire_BloodFurnace\Broggok.lua
+Hellfire_BloodFurnace\Keli'dan.lua
+Hellfire_ShatteredHalls\Nethekurse.lua
+Hellfire_ShatteredHalls\Porung.lua
+Hellfire_ShatteredHalls\O'mrogg.lua
+Hellfire_ShatteredHalls\Kargath.lua
+Coil_Slavepens\Mennu.lua
+Coil_Slavepens\Rokmar.lua
+Coil_Slavepens\Quagmirran.lua
+Coil_Underbog\Hungarfen.lua
+Coil_Underbog\Ghazan.lua
+Coil_Underbog\Muselek.lua
+Coil_Underbog\Stalker.lua
+Coil_Steamvault\Thespia.lua
+Coil_Steamvault\Steamrigger.lua
+Coil_Steamvault\Kalithresh.lua
+Auct_Crypts\Shirrak.lua
+Auct_Crypts\Maladaar.lua
+Auct_Tombs\Pandemonius.lua
+Auct_Tombs\Tavarok.lua
+Auct_Tombs\Shaffar.lua
+Auct_Tombs\Yor.lua
+Auct_Tombs\AuctTombsTrash.lua
+Auct_SethekkHalls\Syth.lua
+Auct_SethekkHalls\Anzu.lua
+Auct_SethekkHalls\Ikiss.lua
+Auct_ShadowLabyrinth\Hellmaw.lua
+Auct_ShadowLabyrinth\Inciter.lua
+Auct_ShadowLabyrinth\Vorpil.lua
+Auct_ShadowLabyrinth\Murmur.lua
+CoT_OldHillsbrad\Drake.lua
+CoT_OldHillsbrad\Skarloc.lua
+CoT_OldHillsbrad\EpochHunter.lua
+CoT_BlackMorass\Deja.lua
+CoT_BlackMorass\Temporus.lua
+CoT_BlackMorass\Aeonus.lua
+CoT_BlackMorass\PortalTimers.lua
+TK_Mechanar\Gyrokill.lua
+TK_Mechanar\Ironhand.lua
+TK_Mechanar\Capacitus.lua
+TK_Mechanar\Sepethrea.lua
+TK_Mechanar\Pathaleon.lua
+TK_Botanica\Sarannis.lua
+TK_Botanica\Freywinn.lua
+TK_Botanica\Thorngrin.lua
+TK_Botanica\Laj.lua
+TK_Botanica\WarpSplinter.lua
+TK_Arcatraz\Zereketh.lua
+TK_Arcatraz\Dalliah.lua
+TK_Arcatraz\Soccothrates.lua
+TK_Arcatraz\Skyriss.lua
+MagistersTerrace\Selin.lua
+MagistersTerrace\Vexallus.lua
+MagistersTerrace\Delrissa.lua
+MagistersTerrace\Kael'thas.lua

@@ -1,0 +1,17 @@
+package-as: DBM-Party-Cataclysm
+enable-nolib-creation: no
+
+ignore:
+  - DBM-Party-Dragonflight
+  - DBM-Party-Legion
+  - DBM-Party-MoP
+  - DBM-Party-WoD
+  - DBM-Party-BfA
+  - DBM-Party-Shadowlands
+
+move-folders:
+    DBM-Party-Cataclysm/DBM-WorldEvents: DBM-WorldEvents
+    DBM-Party-Cataclysm/DBM-Party-Cataclysm: DBM-Party-Cataclysm
+    DBM-Party-Cataclysm/DBM-Party-Vanilla: DBM-Party-Vanilla
+    DBM-Party-Cataclysm/DBM-Party-WotLK: DBM-Party-WotLK
+    DBM-Party-Cataclysm/DBM-Party-BC: DBM-Party-BC

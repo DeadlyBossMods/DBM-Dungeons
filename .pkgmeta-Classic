@@ -11,6 +11,7 @@ ignore:
   - DBM-Party-Shadowlands
   - DBM-Party-BC
   - DBM-Party-WotLK
+  - DBM-WorldEvents
 
 move-folders:
     DBM-Party-Vanilla/DBM-Party-Vanilla: DBM-Party-Vanilla
