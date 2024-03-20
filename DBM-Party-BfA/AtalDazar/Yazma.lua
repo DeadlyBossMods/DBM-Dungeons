@@ -46,7 +46,7 @@ mod.vb.wrackCount = 0
 mod.vb.skewerCount = 0
 mod.vb.echoCount = 0
 
---Skewer trigger 3.5 ICD
+--Skewer trigger 2.4 ICD
 --Echos also triggers 3.5 ICD
 --Soulrend triggers 6 ICD
 --Wracking pain triggers 1.5 ICD+cast time before interrupt (not worth coding for)
@@ -95,7 +95,7 @@ function mod:OnCombatStart(delay)
 	self.vb.echoCount = 0
 	timerWrackingPainCD:Start(3.5-delay, 1)
 	timerSkewerCD:Start(5-delay, 1)
-	timerSoulrendCD:Start(5.9-delay, 1)
+	timerSoulrendCD:Start(7-delay, 1)
 	timerEchoesCD:Start(15.6-delay, 1)
 end
 
@@ -125,7 +125,7 @@ function mod:SPELL_CAST_START(args)
 			specWarnSkewer:Play("defensive")
 		end
 		timerSkewerCD:Start(nil, self.vb.skewerCount+1)
-		updateAllTimers(self, 3.5)
+		updateAllTimers(self, 2.4)
 	elseif spellId == 250050 then
 		self.vb.echoCount = self.vb.echoCount + 1
 		specWarnEchoes:Show(self.vb.echoCount)
