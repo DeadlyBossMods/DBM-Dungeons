@@ -100,6 +100,6 @@ function mod:SPELL_AURA_REMOVED(args)
 		timerTempestsFuryCD:Start(7, 1)
 		timerInfusedGlobuleCD:Start(11, 1)
 		timerSquallBuffetCD:Start(19.3)
-		timerSubmergedCD:Start(55)--NEED MORE DATA, drycoded
+--		timerSubmergedCD:Start(55)--NEED MORE DATA, drycoded
 	end
 end
