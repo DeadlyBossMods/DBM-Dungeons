@@ -17,8 +17,10 @@ mod:RegisterEvents(
 --TODO, https://www.wowhead.com/beta/spell=381683/swift-stab ?
 --TODO, target scan https://www.wowhead.com/beta/spell=387127/chain-lightning ?
 --Lady's Trash, minus bottled anima, which will need a unit event to detect it looks like
+--TODO, uncomment/update rain of arrows timer for season 4
 --[[
 (ability.id = 373395 or ability.id = 387411 or ability.id = 373395 or ability.id = 383823 or ability.id = 384365 or ability.id = 387440 or ability.id = 384336 or ability.id = 386024) and type = "begincast"
+ or ability.id = 384476 and type = "cast"
 --]]
 local warnTotemicOverload					= mod:NewCastAnnounce(387145, 3)
 local warnChantoftheDead					= mod:NewCastAnnounce(387614, 3)
@@ -49,6 +51,7 @@ local specWarnDisruptiveShout				= mod:NewSpecialWarningInterrupt(384365, "HasIn
 
 local timerRallytheClanCD					= mod:NewCDNPTimer(20.6, 383823, nil, nil, nil, 5)--20-23
 local timerWarStompCD						= mod:NewCDNPTimer(15.7, 384336, nil, nil, nil, 3)
+--local timerRainofArrowsCD					= mod:NewCDNPTimer(15.7, 384476, nil, nil, nil, 3)
 local timerDisruptingShoutCD				= mod:NewCDNPTimer(21.8, 384365, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--20-30ish
 local timerTempestCD						= mod:NewCDNPTimer(20.6, 386024, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--20-25
 local timerDesecratingRoarCD				= mod:NewCDNPTimer(15.8, 387440, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
@@ -147,9 +150,12 @@ end
 function mod:SPELL_CAST_SUCCESS(args)
 	local spellId = args.spellId
 	if not self:IsValidWarning(args.sourceGUID) then return end
-	if spellId == 384476 and self:AntiSpam(3, 2) then
-		specWarnRainofArrows:Show()
-		specWarnRainofArrows:Play("watchstep")
+	if spellId == 384476 then
+--		timerRainofArrowsCD:Start(nil, args.sourceGUID)
+		if self:AntiSpam(3, 2) then
+			specWarnRainofArrows:Show()
+			specWarnRainofArrows:Play("watchstep")
+		end
 	end
 end
 
@@ -186,5 +192,7 @@ function mod:UNIT_DIED(args)
 		timerDeathBoltVolleyCD:Stop(args.destGUID)
 	elseif cid == 193462 then--Batak
 		timerBloodcurdlingShoutCD:Stop(args.destGUID)
+	elseif cid == 192789 then--Nokhud Longbow
+		--timerRainofArrowsCD:Stop(args.destGUID)
 	end
 end

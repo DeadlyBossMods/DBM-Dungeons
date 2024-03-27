@@ -6,7 +6,7 @@ mod:SetRevision("@file-date-integer@")
 mod.isTrashMod = true
 
 mod:RegisterEvents(
-	"SPELL_CAST_START 382555 367500 388060 388046 382474 382787 374544 385029 383062 367503 373897 382712 373943 374569 385832",
+	"SPELL_CAST_START 382555 367500 388060 388046 382474 382787 374544 385029 383062 367503 373897 382712 373943 374569 385832 384961",
 	"SPELL_CAST_SUCCESS 382555 368287 383385 382435 384930 372711",
 	"SPELL_SUMMON 374057",
 	"SPELL_AURA_APPLIED 383087 383399 385058 385827 384974 367484 368081",
@@ -26,8 +26,9 @@ mod:RegisterEvents(
 --TODO, auto detect and correct CD timers if mob affected by https://www.wowhead.com/spell=367510/pack-tactics ?
 --TODO, add https://www.wowhead.com/spell=384899/bone-bolt-volley
 --TODO, add https://www.wowhead.com/spell=382883/siphon-decay ?
+--TODO, add Rotten Meat timer?
 --[[
-(ability.id = 384899 or ability.id = 367481 or ability.id = 382555 or ability.id = 367500 or ability.id = 388060 or ability.id = 388046 or ability.id = 382474 or ability.id = 382787 or ability.id = 374544 or ability.id = 385029 or ability.id = 383062 or ability.id = 367503 or ability.id = 373897 or ability.id = 382712 or ability.id = 373943 or ability.id = 374569 or ability.id = 385832) and type = "begincast"
+(ability.id = 384899 or ability.id = 367481 or ability.id = 382555 or ability.id = 367500 or ability.id = 388060 or ability.id = 388046 or ability.id = 382474 or ability.id = 382787 or ability.id = 374544 or ability.id = 385029 or ability.id = 383062 or ability.id = 367503 or ability.id = 373897 or ability.id = 382712 or ability.id = 373943 or ability.id = 374569 or ability.id = 385832 or ability.id = 384961) and type = "begincast"
  or (ability.id = 368287 or ability.id = 383385 or ability.id = 382435 or ability.id = 384930 or ability.id = 372711) and type = "cast"
  or ability.id = 374057
 --]]
@@ -45,12 +46,13 @@ local warnStealth							= mod:NewSpellAnnounce(384930, 3)
 --local warnSummontotem						= mod:NewSpellAnnounce(374057, 4)--Despite tooltip showing cast time, only event in log is SPELL_SUMMON
 
 local specWarnViolentWhirlwind				= mod:NewSpecialWarningRun(388046, "Melee", nil, nil, 4, 2)
-local specWarnScentedMeat					= mod:NewSpecialWarningRun(384974, nil, nil, nil, 4, 2)
+local specWarnRottenMeatYou					= mod:NewSpecialWarningRun(384974, nil, nil, nil, 4, 2)
 local specWarnViciousClawmangle				= mod:NewSpecialWarningRun(367484, nil, nil, nil, 4, 2)
 local specWarnRagestorm						= mod:NewSpecialWarningRun(382555, "Melee", nil, nil, 4, 2)
 local specWarnRagestormDispel				= mod:NewSpecialWarningDispel(382555, "RemoveEnrage", nil, nil, 1, 2)
 local specWarnBloodyRage					= mod:NewSpecialWarningDispel(385827, "RemoveEnrage", nil, nil, 1, 2)
 local specWarnWitheringPoison				= mod:NewSpecialWarningDispel(385058, "RemovePoison", nil, nil, 1, 2)
+local specWarnRottenMeat					= mod:NewSpecialWarningDispel(384974, "RemovePoison", nil, nil, 1, 2)
 local specWarnWithering						= mod:NewSpecialWarningDispel(368081, false, nil, nil, 1, 2)
 local specWarnWitheringContagion			= mod:NewSpecialWarningMoveAway(383087, nil, nil, nil, 1, 2)
 local specWarnStinkBreath					= mod:NewSpecialWarningDodge(388060, nil, nil, nil, 2, 2)
@@ -77,6 +79,7 @@ local timerStinkBreathCD					= mod:NewCDNPTimer(17, 388060, nil, nil, nil, 3)
 local timerViolentWhirlwindCD				= mod:NewCDNPTimer(17, 388046, nil, nil, nil, 2)
 local timerStompCD							= mod:NewCDNPTimer(17, 373943, nil, nil, nil, 2)
 local timerRottingSurgeCD					= mod:NewCDNPTimer(23, 383385, nil, nil, nil, 3)--TODO, limited data
+--local timerRottenMeatCD						= mod:NewCDNPTimer(23, 384974, nil, nil, nil, 3, nil, DBM_COMMON_L.POISON_ICON)
 
 --local playerName = UnitName("player")
 
@@ -121,7 +124,7 @@ function mod:SPELL_CAST_START(args)
 	elseif spellId == 388060 then
 		if self:AntiSpam(3, 2) then
 			specWarnStinkBreath:Show()
-			specWarnStinkBreath:Play("shockwave")
+			specWarnStinkBreath:Play("breathsoon")
 		end
 		timerStinkBreathCD:Start(nil, args.sourceGUID)
 	elseif spellId == 373943 then
@@ -174,6 +177,8 @@ function mod:SPELL_CAST_START(args)
 		warnDecayingRoots:Show()
 	elseif spellId == 374569 and self:AntiSpam(3, 6) then
 		warnBurst:Show()
+	elseif spellId == 384961 then
+--		timerRottenMeatCD:Start(nil, args.sourceGUID)
 	end
 end
 
@@ -233,9 +238,14 @@ function mod:SPELL_AURA_APPLIED(args)
 	elseif spellId == 368081 and args:IsDestTypePlayer() and self:CheckDispelFilter("disease") and self:AntiSpam(3, 3) then
 		specWarnWithering:Show(args.destName)
 		specWarnWithering:Play("helpdispel")
-	elseif spellId == 384974 and args:IsPlayer() and self:AntiSpam(4, 1) then
-		specWarnScentedMeat:Show()
-		specWarnScentedMeat:Play("justrun")
+	elseif spellId == 384974 and args:IsDestTypePlayer() then
+		if self.Options.SpecWarn384974dispel and self:CheckDispelFilter("poison") and self:AntiSpam(3, 3) then
+			specWarnRottenMeat:Show(args.destName)
+			specWarnRottenMeat:Play("helpdispel")
+		elseif args:IsPlayer() and self:AntiSpam(4, 1) then
+			specWarnRottenMeatYou:Show()
+			specWarnRottenMeatYou:Play("justrun")
+		end
 	elseif spellId == 367484 and args:IsPlayer() and self:AntiSpam(4, 1) then
 		specWarnViciousClawmangle:Show()
 		specWarnViciousClawmangle:Play("justrun")
@@ -276,5 +286,7 @@ function mod:UNIT_DIED(args)
 		timerSummonLashersCD:Stop(args.destGUID)
 	elseif cid == 185656 then--Filth Caller
 		timerRottingSurgeCD:Stop(args.destGUID)
+	elseif cid == 186208 then--rotbow ranger
+		--timerRottenMeatCD:Stop(args.destGUID)
 	end
 end

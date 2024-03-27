@@ -8,7 +8,7 @@ mod:SetZone(2515)
 mod.isTrashMod = true
 
 mod:RegisterEvents(
-	"SPELL_CAST_START 391136 370764 386526 387564 377105 370766 386546 387067 377488 396991",
+	"SPELL_CAST_START 391136 370764 386526 387564 377105 370766 386546 387067 377488 396991 389804",
 	"SPELL_CAST_SUCCESS 374885 371358 375652 375596 391136",
 	"SPELL_AURA_APPLIED 371007 395492 375596 374778",
 --	"SPELL_AURA_APPLIED_DOSE 339528",
@@ -19,6 +19,13 @@ mod:RegisterEvents(
 
 --TODO, I don't think shoulder slam target scan worked, maybe try again though.
 --TODO, add erratic growth interrupt?
+--TODO, discover and enable timers for heavy tomb and mystic Vapors for season 4
+--TODO, review erratic growth timer, since cast time is higher it may need a ~1 sec offset
+--TODO, update shoulder slam timer for season 4
+--[[
+(ability.id = 391136 or ability.id = 370764 or ability.id = 386526 or ability.id = 387564 or ability.id = 377105 or ability.id = 370766 or ability.id = 386546 or ability.id = 387067 or ability.id = 377488 or ability.id = 396991 or ability.id = 389804) and type = "begincast"
+ or (ability.id = 374885 or ability.id = 371358 or ability.id = 375652 or ability.id = 375596 or ability.id = 391136) and type = "cast"
+--]]
 local warnNullStomp							= mod:NewCastAnnounce(386526, 2)
 local warnShoulderSlam						= mod:NewCastAnnounce(391136, 2)
 local warnPiercingShards					= mod:NewCastAnnounce(370764, 4)
@@ -43,12 +50,15 @@ local yellErraticGrowth						= mod:NewYell(375596)
 local specWarnIcyBindings					= mod:NewSpecialWarningInterrupt(377488, "HasInterrupt", nil, nil, 1, 2)
 local specWarnMysticVapors					= mod:NewSpecialWarningInterrupt(387564, "HasInterrupt", nil, nil, 1, 2)
 local specWarnWakingBane					= mod:NewSpecialWarningInterrupt(386546, "HasInterrupt", nil, nil, 1, 2)
+local specWarnHeavyTome						= mod:NewSpecialWarningInterrupt(389804, "HasInterrupt", nil, nil, 1, 2)
 local specWarnBrilliantScales				= mod:NewSpecialWarningDispel(374778, "MagicDispeller", nil, nil, 1, 2)
 
 local timerIcyBindingsCD					= mod:NewCDNPTimer(14, 377488, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerWakingBaneCD						= mod:NewCDNPTimer(20.5, 386546, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+--local timerMysticVaporsCD					= mod:NewCDNPTimer(10.9, 387564, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+--local timerHeavyTomeCD					= mod:NewCDNPTimer(10.9, 389804, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerErraticGrowthCD					= mod:NewCDNPTimer(21.5, 375596, nil, nil, nil, 3, nil, DBM_COMMON_L.MAGIC_ICON)
-local timerShoulderSlamCD					= mod:NewCDNPTimer(10.9, 391136, nil, nil, nil, 3)
+--local timerShoulderSlamCD					= mod:NewCDNPTimer(10.9, 391136, nil, nil, nil, 3)
 local timerArcaneBashCD						= mod:NewCDNPTimer(18.2, 387067, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 
 mod:AddBoolOption("AGBook", true)
@@ -85,9 +95,18 @@ function mod:SPELL_CAST_START(args)
 	elseif spellId == 370766 and self:AntiSpam(3, 2) then
 		specWarnCrystallineRupture:Show()
 		specWarnCrystallineRupture:Play("watchstep")
-	elseif spellId == 387564 and self:CheckInterruptFilter(args.sourceGUID, false, true) then
-		specWarnMysticVapors:Show(args.sourceName)
-		specWarnMysticVapors:Play("kickcast")
+	elseif spellId == 387564 then
+--		timerMysticVaporsCD:Start(nil, args.sourceGUID)
+		if self:CheckInterruptFilter(args.sourceGUID, false, true) then
+			specWarnMysticVapors:Show(args.sourceName)
+			specWarnMysticVapors:Play("kickcast")
+		end
+	elseif spellId == 389804 then
+--		timerHeavyTomeCD:Start(nil, args.sourceGUID)
+		if self:CheckInterruptFilter(args.sourceGUID, false, true) then
+			specWarnHeavyTome:Show(args.sourceName)
+			specWarnHeavyTome:Play("kickcast")
+		end
 	elseif spellId == 386546 then
 		timerWakingBaneCD:Start(20, args.sourceGUID)
 		if self.Options.SpecWarn386546interrupt and self:CheckInterruptFilter(args.sourceGUID, false, true) then
@@ -127,7 +146,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 	elseif spellId == 375596 then
 		timerErraticGrowthCD:Start(21.5, args.sourceGUID)
 	elseif spellId == 391136 then
-		timerShoulderSlamCD:Start(8.9, args.sourceGUID)
+--		timerShoulderSlamCD:Start(8.9, args.sourceGUID)
 	end
 end
 
@@ -169,13 +188,17 @@ function mod:UNIT_DIED(args)
 	if cid == 186740 then--Arcane Construct
 		timerArcaneBashCD:Stop(args.destGUID)
 	elseif cid == 187240 then--Drakonid Breaker
-		timerShoulderSlamCD:Stop(args.destGUID)
+--		timerShoulderSlamCD:Stop(args.destGUID)
 	elseif cid == 186741 then--Drakonid Breaker
 		timerWakingBaneCD:Stop(args.destGUID)
 	elseif cid == 196115 or cid == 191164 then--Arcane Tender (one by entrance is diff id than ones before boss)
 		timerErraticGrowthCD:Stop(args.destGUID)
 	elseif cid == 187155 then--Rune Seal Keeper
 		timerIcyBindingsCD:Stop(args.destGUID)
+	elseif cid == 196102 then--Conjured Lasher
+		--timerMysticVaporsCD:Stop(args.destGUID)
+	elseif cid == 187154 then--Unstable Curator
+		--timerHeavyTomeCD:Stop(args.destGUID)
 	end
 end
 

@@ -6,10 +6,10 @@ mod:SetRevision("@file-date-integer@")
 mod.isTrashMod = true
 
 mod:RegisterEvents(
-	"SPELL_CAST_START 390290 374080 375351 375348 375327 375384 374563 374045 374339 374066 374020 395694 374699 374706 375079 374823 385141 377341 377402 376171",
-	"SPELL_AURA_APPLIED 374724 374615 391610 391613 377384 377402",
+	"SPELL_CAST_START 390290 374080 375351 375348 375327 375384 374563 374045 374339 374066 374020 395694 374699 374706 375079 374823 385141 377341 377402 376171",--437719
+	"SPELL_AURA_APPLIED 374724 374615 391610 391613 377384 377402 437717",
 	"SPELL_AURA_APPLIED_DOSE 374389",
---	"SPELL_AURA_REMOVED",
+	"SPELL_AURA_REMOVED 437717",
 	"UNIT_DIED",
 	"GOSSIP_SHOW"
 )
@@ -18,8 +18,9 @@ mod:RegisterEvents(
 --TODO, who does dazzle target? just the tank, everyone?
 --TODO, should rumbling earth be a dodge or interrupt?
 --TODO, tweak thunderstorm alert sound/text?
+--TODO, verify Thunderstrike debuff ID is visible, else use target scanning?
 --[[
-(ability.id = 390290 or ability.id = 374080 or ability.id = 375351 or ability.id = 375348 or ability.id = 375327 or ability.id = 375384 or ability.id = 374563 or ability.id = 374045 or ability.id = 374339 or ability.id = 374066 or ability.id = 374020 or ability.id = 395694 or ability.id = 374699 or ability.id = 374706 or ability.id = 375079 or ability.id = 374823 or ability.id = 385141 or ability.id = 377341 or ability.id = 377402) and type = "begincast"
+(ability.id = 390290 or ability.id = 374080 or ability.id = 375351 or ability.id = 375348 or ability.id = 375327 or ability.id = 375384 or ability.id = 374563 or ability.id = 374045 or ability.id = 374339 or ability.id = 374066 or ability.id = 374020 or ability.id = 395694 or ability.id = 374699 or ability.id = 374706 or ability.id = 375079 or ability.id = 374823 or ability.id = 385141 or ability.id = 377341 or ability.id = 377402 or ability.id = 437719) and type = "begincast"
  or ability.id = 374724 and type = "applydebuff"
 --]]
 local warnBlastingGust						= mod:NewCastAnnounce(374080, 4)
@@ -35,6 +36,7 @@ local warnAqueousBarrier					= mod:NewCastAnnounce(377402, 4)
 local warnRefreshingTides					= mod:NewCastAnnounce(376171, 3)
 local warnCheapShot							= mod:NewTargetNoFilterAnnounce(374615, 4)
 local warnMoltenSubduction					= mod:NewTargetNoFilterAnnounce(374724, 3)
+local warnThunderstrike						= mod:NewTargetAnnounce(437719, 2)
 
 local specWarnGulpSwogToxin					= mod:NewSpecialWarningStack(374389, nil, 8, nil, nil, 1, 6)
 local specWarnOceanicBreath					= mod:NewSpecialWarningDodge(375351, nil, nil, nil, 2, 2)
@@ -45,6 +47,8 @@ local specWarnDazzle						= mod:NewSpecialWarningDodge(374563, nil, nil, nil, 2,
 local specWarnFlashFlood					= mod:NewSpecialWarningDodge(390290, nil, nil, nil, 3, 2)
 local specWarnThunderstorm					= mod:NewSpecialWarningYou(385141, nil, nil, nil, 1, 2)
 local specWarnCreepingMold					= mod:NewSpecialWarningYou(391613, nil, nil, nil, 2, 2)
+local specWarnThunderstrike					= mod:NewSpecialWarningMoveAway(437719, nil, nil, nil, 1, 2)
+local yellThunderstrike						= mod:NewYell(437719)
 local specWarnCreepingMoldDispel			= mod:NewSpecialWarningDispel(391613, "RemoveDisease", nil, nil, 1, 2)
 local specWarnBindingWinds					= mod:NewSpecialWarningDispel(391610, "RemoveMagic", nil, nil, 1, 2)
 local specWarnBoilingRage					= mod:NewSpecialWarningDispel(377384, "RemoveEnrage", nil, nil, 1, 2)
@@ -74,6 +78,7 @@ local timerThunderstormCD					= mod:NewCDNPTimer(19.4, 385141, nil, nil, nil, 3)
 local timerAqueousBarrierCD					= mod:NewCDNPTimer(17.3, 377402, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerFlashFloodCD						= mod:NewCDNPTimer(23, 390290, nil, nil, nil, 2)
 local timerRefreshingTidesCD				= mod:NewCDNPTimer(30, 376171, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+--local timerThunderstrikeCD					= mod:NewCDNPTimer(19.4, 437719, nil, nil, nil, 3)
 
 mod:AddBoolOption("AGBuffs", true)
 
@@ -215,6 +220,8 @@ function mod:SPELL_CAST_START(args)
 	elseif spellId == 385141 then
 		timerThunderstormCD:Start(nil, args.sourceGUID)
 		self:ScheduleMethod(0.1, "BossTargetScanner", args.sourceGUID, "ThunderstormTarget", 0.1, 8)
+--	elseif spellId == 437719 then
+--		timerThunderstrikeCD:Start(nil, args.sourceGUID)
 	end
 end
 
@@ -249,6 +256,14 @@ function mod:SPELL_AURA_APPLIED(args)
 	elseif spellId == 377402 and not args:IsDestTypePlayer() and self:AntiSpam(3, 3) then
 		specWarnAqueousBarrierDispel:Show(args.destName)
 		specWarnAqueousBarrierDispel:Play("helpdispel")
+	elseif spellId == 437717 then
+		if args:IsPlayer() then
+			specWarnThunderstrike:Show()
+			specWarnThunderstrike:Play("runout")
+			yellThunderstrike:Yell()
+		else
+			warnThunderstrike:Show(args.destName)
+		end
 	end
 end
 mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED
@@ -280,8 +295,9 @@ function mod:UNIT_DIED(args)
 		timerMoltenSubductionCD:Stop(args.destGUID)
 	elseif cid == 190401 then--Gusting Proto-Dragon
 		timerGustingBreathCD:Stop(args.destGUID)
-	elseif cid == 190373 then--Primalist Galeslinger
+	elseif cid == 190373 then--Primalist Galesinger
 		timerThunderstormCD:Stop(args.destGUID)
+		--timerThunderstrikeCD:Stop(args.destGUID)
 	elseif cid == 190404 then
 		timerTectonicBreathCD:Stop(args.destGUID)
 	elseif cid == 190377 then--Primalist Icecaller
