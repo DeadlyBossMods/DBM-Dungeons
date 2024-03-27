@@ -26,7 +26,7 @@ mod:RegisterEventsInCombat(
 --Notes, Power Vaccume triggers 4 second ICD, Energy Bomb Triggers 8.5 ICD on Vaccuum but only 7 second ICD on Breath, Astraol breath triggers 7.5 ICD
 --Notes, All of ICD adjustments can be done but for a 5 man boss with 3 abilities it seems overkill. Only perform correction on one case for now
 --[[
-(ability.id = 374361 or ability.id = 388822) and type = "begincast"
+(ability.id = 374361 or ability.id = 388822 or ability.id = 439488) and type = "begincast"
  or ability.id = 374343 and type = "cast"
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
 --]]

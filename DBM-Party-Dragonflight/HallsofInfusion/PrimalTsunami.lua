@@ -40,7 +40,7 @@ mod:AddTimerLine(DBM:EJ_GetSectionInfo(25531))
 local warnSubmerged								= mod:NewSpellAnnounce(387585, 2)
 local warnSubmergedEnded						= mod:NewEndAnnounce(387585, 2)
 
-local timerSubmergedCD							= mod:NewCDTimer(29.9, 387585, nil, nil, nil, 6)
+--local timerSubmergedCD						= mod:NewCDTimer(29.9, 387585, nil, nil, nil, 6)--Phasing timer (Now Health based 50%)
 
 mod.vb.GlobCount = 0
 mod.vb.tempestCount = 0
@@ -52,7 +52,7 @@ function mod:OnCombatStart(delay)
 	timerTempestsFuryCD:Start(4-delay, 1)
 	timerInfusedGlobuleCD:Start(8-delay, 1)
 	timerSquallBuffetCD:Start(16-delay)
-	timerSubmergedCD:Start(52.1-delay)--Phasing timer
+--	timerSubmergedCD:Start(52.1-delay)--Phasing timer (Now Health based 50%)
 end
 
 function mod:SPELL_CAST_START(args)
