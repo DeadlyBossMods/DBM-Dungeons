@@ -101,9 +101,9 @@ function mod:OnCombatStart(delay)
 	self.vb.rootsCount = 0
 	self.vb.breathCount = 0
 	self.vb.uprootCount = 0
-	timerShatteredEarthCD:Start(7.2-delay, 1)--7.3, 8.1, 8.5
-	timerRootsCD:Start(10.2-delay, 1)--12.2, 15.8, 12.2, 12.9
-	timerBreathCD:Start(18.2-delay, 1)--21.4, 21.5, 18.2
+	timerShatteredEarthCD:Start(7.1-delay, 1)--7.1, 8.1, 8.5
+	timerRootsCD:Start(10.1-delay, 1)--12.2, 15.8, 12.2, 12.9
+	timerBreathCD:Start(22.7-delay, 1)--18.2--23 but it's SUPER SUPER rarely under 22.7 that it's better to be rare super wrong than rarely right with 18
 	--Uproot and Crushing can swap places pull to pull then stay that way rest of fight
 	timerCrushingGripCD:Start(27.9-delay, 1)--27.9, 34, 34.8 (34 if it's after uproot)
 	timerUprootCD:Start(30.4-delay, 1)--31.1, 30.4, 34 (30-31 if it's first)
