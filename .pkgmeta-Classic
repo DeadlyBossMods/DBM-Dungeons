@@ -1,4 +1,5 @@
 package-as: DBM-Party-Vanilla
+changelog-title: DBM - Dungeons
 enable-nolib-creation: no
 
 ignore:
