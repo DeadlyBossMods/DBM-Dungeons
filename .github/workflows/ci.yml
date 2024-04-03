@@ -31,7 +31,7 @@ jobs:
         uses: BigWigsMods/packager@master
         if: ${{ github.event_name != 'pull_request' }}
         with:
-          args: -g retail
+          args: -g retail -n "DBM-Dungeons-{project-version}{classic}"
         env:
           CF_API_KEY: ${{ secrets.CF_API_KEY }}
           GITHUB_OAUTH: ${{ secrets.GITHUB_TOKEN }}
@@ -42,7 +42,7 @@ jobs:
         uses: BigWigsMods/packager@master
         if: ${{ github.event_name != 'pull_request' }}
         with:
-          args: -g cata -m .pkgmeta-Cata
+          args: -g cata -m .pkgmeta-Cata -n "DBM-Dungeons-{project-version}{classic}"
         env:
           CF_API_KEY: ${{ secrets.CF_API_KEY }}
           GITHUB_OAUTH: ${{ secrets.GITHUB_TOKEN }}
@@ -53,7 +53,7 @@ jobs:
         uses: BigWigsMods/packager@master
         if: ${{ github.event_name != 'pull_request' }}
         with:
-          args: -g wrath -m .pkgmeta-Wrath
+          args: -g wrath -m .pkgmeta-Wrath -n "DBM-Dungeons-{project-version}{classic}"
         env:
           CF_API_KEY: ${{ secrets.CF_API_KEY }}
           GITHUB_OAUTH: ${{ secrets.GITHUB_TOKEN }}
@@ -64,7 +64,7 @@ jobs:
         uses: BigWigsMods/packager@master
         if: ${{ github.event_name != 'pull_request' }}
         with:
-          args: -g classic -m .pkgmeta-Classic
+          args: -g classic -m .pkgmeta-Classic -n "DBM-Dungeons-{project-version}{classic}"
         env:
           CF_API_KEY: ${{ secrets.CF_API_KEY }}
           GITHUB_OAUTH: ${{ secrets.GITHUB_TOKEN }}
