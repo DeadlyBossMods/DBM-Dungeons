@@ -683,14 +683,6 @@ L:SetMiscLocalization{
 --------------
 L= DBM:GetModLocalization(322)
 
-L:SetTimerLocalization{
-	TimerCombatStart	= "Comienza el encuentro"
-}
-
-L:SetOptionLocalization{
-	TimerCombatStart	= "Mostrar temporizador para el inicio del encuentro"
-}
-
 L:SetMiscLocalization{
 	Event		= "¡Muéstrate!",
 	Pull		= "Las fuerzas Crepusculares comienzan a aparecer en los bordes de los cañones."
@@ -709,14 +701,6 @@ L:SetMiscLocalization{
 -- Arzobispo Benedictus --
 --------------------------
 L= DBM:GetModLocalization(341)
-
-L:SetTimerLocalization{
-	TimerCombatStart	= "Comienza el encuentro"
-}
-
-L:SetOptionLocalization{
-	TimerCombatStart	= "Mostrar temporizador para el inicio del encuentro"
-}
 
 L:SetMiscLocalization{
 	Event		= "Y ahora, chamán, me entregarás el Alma de dragón."

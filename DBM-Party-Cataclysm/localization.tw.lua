@@ -682,10 +682,6 @@ L:SetTimerLocalization{
 	TimerCombatStart	= "戰鬥開始"
 }
 
-L:SetOptionLocalization{
-	TimerCombatStart	= "為戰鬥開始顯示計時器"
-}
-
 L:SetMiscLocalization{
 	Event		= "現身吧!",
 	Pull		= "暮光的軍隊開始出現在峽谷邊緣。"
@@ -704,14 +700,6 @@ L:SetMiscLocalization{
 -- Archbishop Benedictus --
 ---------------------------
 L= DBM:GetModLocalization(341)
-
-L:SetTimerLocalization{
-	TimerCombatStart	= "戰鬥開始"
-}
-
-L:SetOptionLocalization{
-	TimerCombatStart	= "為戰鬥開始顯示計時器"
-}
 
 L:SetMiscLocalization{
 	Event		= "現在呢，薩滿，把巨龍之魂交給我吧。"

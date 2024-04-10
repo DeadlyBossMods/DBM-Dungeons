@@ -668,14 +668,6 @@ L:SetMiscLocalization{
 --------------
 L= DBM:GetModLocalization(322)
 
-L:SetTimerLocalization{
-	TimerCombatStart	= "战斗即将开始"
-}
-
-L:SetOptionLocalization{
-	TimerCombatStart	= "计时条：战斗即将开始"
-}
-
 L:SetMiscLocalization{
 	Event		= "现身吧！",
 	Pull		= "你不过是个凡人。现在，像个凡人那样卑微地死去吧。"
@@ -695,11 +687,3 @@ L:SetMiscLocalization{
 -- Archbishop Benedictus --
 ---------------------------
 L= DBM:GetModLocalization(341)
-
-L:SetTimerLocalization{
-	TimerCombatStart	= "战斗即将开始"
-}
-
-L:SetOptionLocalization{
-	TimerCombatStart	= "计时条：战斗即将开始"
-}

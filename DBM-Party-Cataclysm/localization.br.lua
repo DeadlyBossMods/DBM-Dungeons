@@ -664,14 +664,6 @@ L:SetMiscLocalization{
 --------------
 L= DBM:GetModLocalization(322)
 
-L:SetTimerLocalization{
-	TimerCombatStart	= "Combate inicia"
-}
-
-L:SetOptionLocalization{
-	TimerCombatStart	= "Exibir cronógrafo para início do combate"
-}
-
 L:SetMiscLocalization{
 	Event		= "Apareça!",
 	Pull		= "Forças do Crepúsculo começam a aparecer nas beiradas do cânion."
@@ -690,14 +682,6 @@ L:SetMiscLocalization{
 -- Archbishop Benedictus --
 ---------------------------
 L= DBM:GetModLocalization(341)
-
-L:SetTimerLocalization{
-	TimerCombatStart	= "Combate inicia"
-}
-
-L:SetOptionLocalization{
-	TimerCombatStart	= "Exibir cronógrafo para início do combate"
-}
 
 L:SetMiscLocalization{
 	Event		= "E agora, Xamã, entregue a Alma Dragônica para MIM."
