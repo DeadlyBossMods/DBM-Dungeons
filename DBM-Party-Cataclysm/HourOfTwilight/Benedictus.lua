@@ -85,7 +85,7 @@ function mod:UNIT_HEALTH(uId)
 		local h = UnitHealth(uId) / UnitHealthMax(uId) * 100
 		if h > 80 and self.vb.warnedP2 then
 			self.vb.warnedP2 = false
-		elseif not warnedP2 and h > 63 and h < 67 then
+		elseif not self.vb.warnedP2 and h > 63 and h < 67 then
 			self.vb.warnedP2 = true
 			prewarnPhase2:Show()
 		end
