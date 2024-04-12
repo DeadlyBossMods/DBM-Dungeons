@@ -90,7 +90,7 @@ function mod:SPELL_CAST_START(args)
 		timerSpecialCD:Start()
 		updateAllTimers(self, 15.5)
 	elseif spellId == 192018 then
-		if self:IsTanking("player", nil, nil, true, arg.sourceGUID) then
+		if self:IsTanking("player", nil, nil, true, args.sourceGUID) then
 			specWarnShieldOfLight:Show()
 			specWarnShieldOfLight:Play("defensive")
 		end
