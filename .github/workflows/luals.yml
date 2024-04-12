@@ -1,0 +1,32 @@
+name: luals-checker
+
+on:
+  push:
+    branches:
+      - master
+    tags:
+      - "*"
+  pull_request:
+    branches:
+      - master
+
+run-name: LuaLS Check
+jobs:
+  LuaLS-checker:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          path: ./workspace
+      - name: LuaLS check
+        uses: DeadlyBossMods/LuaLS-config@main
+        with:
+          luals-ref: 5623a84ea9a2b27dd7121f88dd995389c702eac1
+          luals-check-dir: ${{ github.workspace }}/workspace
+      - name: Send Status to Discord
+        uses: nebularg/actions-discord-webhook@v1
+        with:
+          webhook_url: ${{ secrets.DISCORD_WEBHOOK }}
+          status: ${{ job.status }}
+        if: ${{ github.event_name != 'pull_request' && failure() }}
