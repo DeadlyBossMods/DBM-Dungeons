@@ -48,7 +48,7 @@ function mod:UPDATE_UI_WIDGET(table)
 		if not currentPortal then
 			currentPortal = 0
 		end
-		currentPortal = tonumber(currentPortal)
+		currentPortal = tonumber(currentPortal) or 0
 		if currentPortal > lastPortal then
 			warnWavePortalSoon:Cancel()
 			timerNextPortal:Cancel()

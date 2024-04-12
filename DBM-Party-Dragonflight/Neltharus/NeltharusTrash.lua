@@ -225,6 +225,7 @@ end
 function mod:SPELL_CAST_SUCCESS(args)
 	local spellId = args.spellId
 	if spellId == 376169 and self:AntiSpam(5, 8) then--Throw Experimental Concoction
+		---@diagnostic disable-next-line: dbm-sync-checker
 		magmaMod:SendSync("TuskRP")
 	elseif spellId == 372296 then
 		timerConflagrantBatteryCD:Start(nil, args.sourceGUID)

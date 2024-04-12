@@ -12,6 +12,7 @@ mod.isTrashMod = true
 --LW solution, unregister/reregister other addons/WA frames from GOSSIP_SHOW
 --This is to prevent things like https://wago.io/M+Timer/114 from breaking clue helper do to advancing
 --dialog before we get a chance to read gossipID
+---@type Frame[]
 local frames = {GetFramesRegisteredForEvent("GOSSIP_SHOW")}
 for i = 1, #frames do
 	frames[i]:UnregisterEvent("GOSSIP_SHOW")
