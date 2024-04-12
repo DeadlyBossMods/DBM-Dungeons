@@ -50,7 +50,7 @@ function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
 	for i = 1, 5 do
 		local unitID = "boss"..i
 		local unitGUID = UnitGUID(unitID)
-		if unitID then
+		if unitGUID then
 			local cid = self:GetCIDFromGUID(unitGUID) or 0
 			if UnitExists(unitID) and not activeAddGUIDS[unitGUID] then
 				activeAddGUIDS[unitGUID] = true
