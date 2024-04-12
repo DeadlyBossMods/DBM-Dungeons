@@ -697,7 +697,7 @@ do
 			--DBM and BW will both just parse the bigiwgs comms for profession data
 			for icon, skill in extra:gmatch("(%d+):(%d+)#") do
 				icon = tonumber(icon)
-				if icon
+				if icon then
 					skill = tonumber(skill)
 					if not professionCache[icon] then
 						professionCache[icon] = {}
