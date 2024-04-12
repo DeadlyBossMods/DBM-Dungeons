@@ -56,8 +56,8 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, spellId)
 	end
 end
 
-function mod:UNIT_POWER_UPDATE(_, type)
-	if type == "ALTERNATE" then
+function mod:UNIT_POWER_UPDATE(_, powerType)
+	if powerType == "ALTERNATE" then
 		local playerPower = UnitPower("player", 10)
 		if playerPower > gameEarnedPoints then
 			gameEarnedPoints = playerPower

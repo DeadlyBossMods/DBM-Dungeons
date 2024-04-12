@@ -38,7 +38,7 @@ local specWarnEyeofStorm			= mod:NewSpecialWarningMoveTo(200901, nil, nil, nil, 
 local specWarnExpelLight			= mod:NewSpecialWarningMoveAway(192048, nil, nil, nil, 2, 2)
 local yellExpelLight				= mod:NewYell(192048)
 
-local timerShieldOfLightCD			= mod:NewCDTimer(26.6, 192018, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON, nil, mod:IsTank() and 2, 4)--26.6-34
+local timerShieldOfLightCD			= mod:NewCDTimer(26.6, 192018, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON, nil, mod:IsTank() and 2 or nil, 4)--26.6-34
 local timerSpecialCD				= mod:NewCDSpecialTimer(30, nil, nil, nil, nil, 2, nil, DBM_COMMON_L.DEADLY_ICON, nil, 1, 4)--Shared timer by eye of storm and Sanctify
 local timerExpelLightCD				= mod:NewCDTimer(23, 192048, nil, nil, nil, 3)--May be lower but almost always delayed by spell queue ICDs
 

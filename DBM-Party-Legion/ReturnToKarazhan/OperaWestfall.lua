@@ -16,8 +16,7 @@ mod:RegisterCombat("combat")
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 227568 227420 227783",
 	"SPELL_CAST_SUCCESS 227777",
-	"SPELL_AURA_APPLIED 227777",
-	"SPELL_AURA_REMOVED 227777"
+	"SPELL_AURA_APPLIED 227777"
 )
 
 --TODO: phase detection
@@ -39,16 +38,9 @@ local timerWashAwayCD				= mod:NewAITimer(40, 227783, nil, nil, nil, 3)
 --local berserkTimer				= mod:NewBerserkTimer(300)
 
 --mod:AddInfoFrameOption(198108, false)
-mod:AddRangeFrameOption(5, 227777)
 
 function mod:OnCombatStart(delay)
 	self:SetStage(1)
-end
-
-function mod:OnCombatEnd()
-	if self.Options.RangeFrame then
-		DBM.RangeCheck:Hide()
-	end
 end
 
 function mod:SPELL_CAST_START(args)
@@ -80,9 +72,6 @@ function mod:SPELL_AURA_APPLIED(args)
 			specWarnThunderRitual:Show()
 			specWarnThunderRitual:Play("range5")
 			yellThunderRitual:Yell()
-			if self.Options.RangeFrame then
-				DBM.RangeCheck:Show(5)
-			end
 		end
 	end
 end

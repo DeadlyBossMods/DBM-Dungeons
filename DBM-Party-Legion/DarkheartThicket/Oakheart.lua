@@ -31,7 +31,7 @@ local yellThrow						= mod:NewYell(204658, 2764)--yell so others can avoid splas
 local specWarnBreath				= mod:NewSpecialWarningDodge(204667, nil, nil, nil, 2, 2)
 
 local timerShatteredEarthCD			= mod:NewCDCountTimer(31.6, 204666, nil, nil, nil, 2)--34-60 (basically same as OG)
-local timerCrushingGripCD			= mod:NewCDCountTimer(27.9, 204611, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON, nil, mod:IsTank() and 2, 4)--27.9-36 (basically same as OG)
+local timerCrushingGripCD			= mod:NewCDCountTimer(27.9, 204611, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON, nil, mod:IsTank() and 2 or nil, 4)--27.9-36 (basically same as OG)
 local timerRootsCD					= mod:NewCDCountTimer(18.2, 204574, nil, nil, nil, 3)--18.2-35.1 (basically same as OG)
 local timerBreathCD					= mod:NewCDCountTimer(26.5, 204667, nil, nil, nil, 5)--26-35 (basically same as OG)
 local timerUprootCD					= mod:NewCDCountTimer(32.4, 212786, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)--32.7-37.6 (Probably also OG timer, but didn't have it in OG mod)

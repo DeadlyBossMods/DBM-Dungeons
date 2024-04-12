@@ -103,7 +103,7 @@ function mod:SPELL_AURA_APPLIED(args)
 			timerTitanicFistCD:Stop()
 		end
 	elseif spellId == 389443 then
-		warnPurifyingBlast:CombinedShow(1, args.destname)
+		warnPurifyingBlast:CombinedShow(1, args.destName)
 	end
 end
 

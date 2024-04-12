@@ -42,28 +42,29 @@ function mod:UPDATE_UI_WIDGET(table)
 		return
 	end
 	local widgetInfo = C_UIWidgetManager.GetIconAndTextWidgetVisualizationInfo(id)
-	local text = widgetInfo.text
-	if not text then return end
-	local currentPortal = text:match("(%d+).+18")
-	if not currentPortal then
-		currentPortal = 0
-	end
-	currentPortal = tonumber(currentPortal)
-	if currentPortal > lastPortal then
-		warnWavePortalSoon:Cancel()
-		timerNextPortal:Cancel()
-		if currentPortal == 6 or currentPortal == 12 or currentPortal == 18 then
-			warnBossPortal:Show()
-		else
-			warnWavePortal:Show(currentPortal)
-			if self.Options.ShowAllPortalTimers and not self:IsRetail() then
-				timerNextPortal:Start(122, currentPortal + 1)--requires complete overhaul I haven't patience to do on retail
-				warnWavePortalSoon:Schedule(112)--because portals spawn faster and faster each time with newer tech added in later years/TW versions
-			end
+	if widgetInfo and widgetInfo.text then
+		local text = widgetInfo.text
+		local currentPortal = text:match("(%d+).+18")
+		if not currentPortal then
+			currentPortal = 0
 		end
-		lastPortal = currentPortal
-	elseif currentPortal < lastPortal then
-		lastPortal = 0
+		currentPortal = tonumber(currentPortal)
+		if currentPortal > lastPortal then
+			warnWavePortalSoon:Cancel()
+			timerNextPortal:Cancel()
+			if currentPortal == 6 or currentPortal == 12 or currentPortal == 18 then
+				warnBossPortal:Show()
+			else
+				warnWavePortal:Show(currentPortal)
+				if self.Options.ShowAllPortalTimers and not self:IsRetail() then
+					timerNextPortal:Start(122, currentPortal + 1)--requires complete overhaul I haven't patience to do on retail
+					warnWavePortalSoon:Schedule(112)--because portals spawn faster and faster each time with newer tech added in later years/TW versions
+				end
+			end
+			lastPortal = currentPortal
+		elseif currentPortal < lastPortal then
+			lastPortal = 0
+		end
 	end
 end
 

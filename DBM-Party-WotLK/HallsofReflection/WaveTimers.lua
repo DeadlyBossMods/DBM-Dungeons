@@ -25,38 +25,39 @@ function mod:UPDATE_UI_WIDGET(table)
 	local id = table.widgetID
 	if id ~= 592 and id ~= 3921 then return end
 	local widgetInfo = C_UIWidgetManager.GetIconAndTextWidgetVisualizationInfo(id)
-	local text = widgetInfo.text
-	if not text then return end
-	local wave = text:match("(%d+).+10")
-	if not wave then
-		wave = 0
-	end
-	wave = tonumber(wave)
-	if wave < lastWave then
-		lastWave = 0
-	end
-	if wave > lastWave then
-		warnNewWaveSoon:Cancel()
-		timerNextWave:Cancel()
-		if (wave == 5 and not FalricDead) or wave == 10 then
-			warnNewWave:Show("Boss")
-		elseif wave > 0 then
-			if wave < 5 then
-				FalricDead = false
-			end
-			if self.Options.ShowAllWaveWarnings then
-				warnNewWave:Show("Wave")
-			end
-			if self.Options.ShowAllWaveTimers then
-				timerNextWave:Start()
-				warnNewWaveSoon:Schedule(140)
-			end
+	if widgetInfo and widgetInfo.text then
+		local text = widgetInfo.text
+		local wave = text:match("(%d+).+10")
+		if not wave then
+			wave = 0
 		end
-	elseif wave == 0 then
-		warnNewWaveSoon:Cancel()
-		timerNextWave:Cancel()
+		wave = tonumber(wave)
+		if wave < lastWave then
+			lastWave = 0
+		end
+		if wave > lastWave then
+			warnNewWaveSoon:Cancel()
+			timerNextWave:Cancel()
+			if (wave == 5 and not FalricDead) or wave == 10 then
+				warnNewWave:Show("Boss")
+			elseif wave > 0 then
+				if wave < 5 then
+					FalricDead = false
+				end
+				if self.Options.ShowAllWaveWarnings then
+					warnNewWave:Show("Wave")
+				end
+				if self.Options.ShowAllWaveTimers then
+					timerNextWave:Start()
+					warnNewWaveSoon:Schedule(140)
+				end
+			end
+		elseif wave == 0 then
+			warnNewWaveSoon:Cancel()
+			timerNextWave:Cancel()
+		end
+		lastWave = wave
 	end
-	lastWave = wave
 end
 
 function mod:UNIT_DIED(args)

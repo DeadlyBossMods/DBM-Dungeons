@@ -11,9 +11,9 @@ mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 247795 245164 249009",
 	"SPELL_CAST_SUCCESS 247930",
 	"SPELL_AURA_APPLIED 247816 248535",
-	"SPELL_AURA_REMOVED 247816",
+	"SPELL_AURA_REMOVED 247816"
 --	"CHAT_MSG_RAID_BOSS_EMOTE",
-	"UNIT_SPELLCAST_SUCCEEDED boss1"
+--	"UNIT_SPELLCAST_SUCCEEDED boss1"
 )
 
 --TODO, more timer work, with good english mythic or mythic+ transcriptor logs with start/stop properly used

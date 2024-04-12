@@ -9,8 +9,8 @@ mod.isTrashMod = true
 mod:RegisterEvents(
 	"SPELL_CAST_START 334051 342869 333787 332671 332666 332706 332612 331927 332156 332084 340026",
 	"SPELL_CAST_SUCCESS 328740",
-	"SPELL_AURA_APPLIED 333227 332666 334493 333250",
-	"SPELL_AURA_REMOVED 333227"
+	"SPELL_AURA_APPLIED 333227 332666 334493 333250"
+--	"SPELL_AURA_REMOVED 333227"
 )
 
 --All warnings/recommendations drycoded from https://www.wowhead.com/guides/de-other-side-shadowlands-dungeon-strategy-guide

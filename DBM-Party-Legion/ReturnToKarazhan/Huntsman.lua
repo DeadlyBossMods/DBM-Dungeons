@@ -14,7 +14,7 @@ mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 227363 227365 227339 227493 228852",
-	"VEHICLE_ANGLE_UPDATE",
+--	"VEHICLE_ANGLE_UPDATE",
 	"UNIT_SPELLCAST_SUCCEEDED boss1 boss2"
 )
 

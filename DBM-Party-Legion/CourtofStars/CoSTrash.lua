@@ -697,11 +697,13 @@ do
 			--DBM and BW will both just parse the bigiwgs comms for profession data
 			for icon, skill in extra:gmatch("(%d+):(%d+)#") do
 				icon = tonumber(icon)
-				skill = tonumber(skill)
-				if not professionCache[icon] then
-					professionCache[icon] = {}
+				if icon
+					skill = tonumber(skill)
+					if not professionCache[icon] then
+						professionCache[icon] = {}
+					end
+					professionCache[icon][#professionCache[icon]+1] = {name=sender, skill=skill}
 				end
-				professionCache[icon][#professionCache[icon]+1] = {name=sender, skill=skill}
 			end
 			self:AntiSpam(300, "CoSProf")
 		end

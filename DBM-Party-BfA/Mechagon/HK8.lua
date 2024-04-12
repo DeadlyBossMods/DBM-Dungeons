@@ -97,32 +97,34 @@ function mod:OnCombatStart(delay)
 			for i = 1, 40 do
 				local UnitID = "nameplate"..i
 				local GUID = UnitGUID(UnitID)
-				local cid = self:GetCIDFromGUID(GUID)
-				if cid == 155645 or cid == 152703 then--Walkie Shockie X1 and X2
-					local unitPower = UnitPower(UnitID)
-					if not unitTracked[GUID] then unitTracked[GUID] = "None" end
-					if (unitPower > 90) then
-						if unitTracked[GUID] ~= "Green" then
-							unitTracked[GUID] = "Green"
-							DBM.Nameplate:Show(true, GUID, 276299, 463281)
-						end
-					elseif (unitPower > 60) then
-						if unitTracked[GUID] ~= "Yellow" then
-							unitTracked[GUID] = "Yellow"
-							DBM.Nameplate:Hide(true, GUID, 276299, 463281)
-							DBM.Nameplate:Show(true, GUID, 276299, 460954)
-						end
-					elseif (unitPower > 30) then
-						if unitTracked[GUID] ~= "Red" then
-							unitTracked[GUID] = "Red"
-							DBM.Nameplate:Hide(true, GUID, 276299, 460954)
-							DBM.Nameplate:Show(true, GUID, 276299, 463282)
-						end
-					elseif (unitPower > 10) then
-						if unitTracked[GUID] ~= "Critical" then
-							unitTracked[GUID] = "Critical"
-							DBM.Nameplate:Hide(true, GUID, 276299, 463282)
-							DBM.Nameplate:Show(true, GUID, 276299, 237521)
+				if GUID then
+					local cid = self:GetCIDFromGUID(GUID) or 0
+					if cid == 155645 or cid == 152703 then--Walkie Shockie X1 and X2
+						local unitPower = UnitPower(UnitID) or 0
+						if not unitTracked[GUID] then unitTracked[GUID] = "None" end
+						if (unitPower > 90) then
+							if unitTracked[GUID] ~= "Green" then
+								unitTracked[GUID] = "Green"
+								DBM.Nameplate:Show(true, GUID, 276299, 463281)
+							end
+						elseif (unitPower > 60) then
+							if unitTracked[GUID] ~= "Yellow" then
+								unitTracked[GUID] = "Yellow"
+								DBM.Nameplate:Hide(true, GUID, 276299, 463281)
+								DBM.Nameplate:Show(true, GUID, 276299, 460954)
+							end
+						elseif (unitPower > 30) then
+							if unitTracked[GUID] ~= "Red" then
+								unitTracked[GUID] = "Red"
+								DBM.Nameplate:Hide(true, GUID, 276299, 460954)
+								DBM.Nameplate:Show(true, GUID, 276299, 463282)
+							end
+						elseif (unitPower > 10) then
+							if unitTracked[GUID] ~= "Critical" then
+								unitTracked[GUID] = "Critical"
+								DBM.Nameplate:Hide(true, GUID, 276299, 463282)
+								DBM.Nameplate:Show(true, GUID, 276299, 237521)
+							end
 						end
 					end
 				end

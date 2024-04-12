@@ -134,7 +134,7 @@ end
 function mod:SPELL_AURA_APPLIED(args)
 	local spellId = args.spellId
 	if spellId == 358131 then
-		warnLightningNova:Show(args.destname)
+		warnLightningNova:Show(args.destName)
 	elseif spellId == 346427 then
 		warnTitanicInsight:Show(args.destName)
 		timerTitanicInsight:Start(args.destName)
