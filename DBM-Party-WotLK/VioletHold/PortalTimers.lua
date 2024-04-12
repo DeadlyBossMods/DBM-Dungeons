@@ -31,7 +31,7 @@ function mod:UPDATE_UI_WIDGET(table)
 		if not wave then
 			wave = 0
 		end
-		wave = tonumber(wave)
+		wave = tonumber(wave) or 0
 		if wave < lastWave then
 			lastWave = 0
 		end

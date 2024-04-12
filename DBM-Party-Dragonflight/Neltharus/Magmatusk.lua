@@ -107,6 +107,7 @@ end
 mod.SPELL_PERIODIC_MISSED = mod.SPELL_PERIODIC_DAMAGE
 
 function mod:OnSync(msg)
+	---@diagnostic disable-next-line: dbm-sync-checker
 	if msg == "TuskRP" and self:AntiSpam(10, 9) then--Sync sent from trash mod since trash mod is already monitoring out of combat CLEU events
 		timerRP:Start(9.9)
 	end

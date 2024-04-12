@@ -172,6 +172,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		specWarnStormshield:Show(args.destName)
 		specWarnStormshield:Play("helpdispel")
 	elseif spellId == 345561 and self:AntiSpam(5, 8) then--Life Link
+		---@diagnostic disable-next-line: dbm-sync-checker
 		teeramod:SendSync("TeeraRP")
 	end
 end
