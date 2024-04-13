@@ -85,7 +85,7 @@ mod.SPELL_PERIODIC_MISSED = mod.SPELL_PERIODIC_DAMAGE
 
 function mod:UNIT_AURA_UNFILTERED(uId)
 	local isPursuitDebuff = DBM:UnitDebuff(uId, pursuit)
-	local name = DBM:GetUnitFullName(uId)
+	local name = DBM:GetUnitFullName(uId) or "UNKNOWN"
 	if not isPursuitDebuff and pursuitTable[name] then
 		pursuitTable[name] = nil
 		if self.Options.SetIconOnPursuitTarget then

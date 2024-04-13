@@ -41,7 +41,7 @@ local timerCorruptedVortexCD		= mod:NewCDTimer(13, 397797, nil, nil, nil, 3, nil
 local timerCorruptedGeyserCD		= mod:NewCDCountTimer("d5", 397793, nil, nil, nil, 3)
 local timerLivingWater				= mod:NewCastTimer(5.5, 106526, nil, nil, nil, 1)
 
-mod:AddSetIconOption("SetIconOnAdds", "ej5616", false, true, {8})
+--mod:AddSetIconOption("SetIconOnAdds", "ej5616", false, true, {8})--FIXME, where the fuck did scanner go?
 
 mod.vb.addsRemaining = 4--Also 4 on heroic?
 mod.vb.firstAdd = false
@@ -65,8 +65,7 @@ function mod:OnCombatStart(delay)
 			"SPELL_CAST_START 106526 106612",
 			"SPELL_DAMAGE 115167",
 			"SPELL_MISSED 115167",
-			"UNIT_DIED",
-			"UNIT_TARGET_UNFILTERED"
+			"UNIT_DIED"
 		)
 	end
 end

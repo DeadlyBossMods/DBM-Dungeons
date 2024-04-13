@@ -14,8 +14,8 @@ mod:RegisterEventsInCombat(
 	"SPELL_PERIODIC_DAMAGE 161833",
 	"SPELL_ABSORBED 161833",
 	"UNIT_SPELLCAST_SUCCEEDED boss1",
-	"UNIT_TARGETABLE_CHANGED",
-	"UNIT_DIED"
+	"UNIT_TARGETABLE_CHANGED"
+--	"UNIT_DIED"
 )
 
 --Chi blast warns very spammy. and not useful.

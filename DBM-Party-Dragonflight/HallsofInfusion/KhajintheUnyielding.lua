@@ -65,7 +65,7 @@ function mod:OnCombatStart(delay)
 		timerHailstormCD:Start(20-delay, 1)
 		timerGlacialSurgeCD:Start(self:IsMythicPlus() and 32 or 27-delay, 1)
 	else--TODO, verify heroic still does this
-		timerHailstormCD:Start(10-delay)
+		timerHailstormCD:Start(10-delay, 1)
 		timerGlacialSurgeCD:Start(22-delay, 1)
 	end
 end

@@ -25,29 +25,30 @@ function mod:UPDATE_UI_WIDGET(table)
 	local id = table.widgetID
 	if id ~= 566 and id ~= 3895 then return end
 	local widgetInfo = C_UIWidgetManager.GetIconAndTextWidgetVisualizationInfo(id)
-	local text = widgetInfo.text
-	if not text then return end
-	local wave = text:match("(%d+).+18")
-	if not wave then
-		wave = 0
-	end
-	wave = tonumber(wave)
-	if wave < lastWave then
-		lastWave = 0
-	end
-	if wave > lastWave then
-		warningPortalSoon:Cancel()
-		timerPortalIn:Cancel()
-		if wave == 6 or wave == 12 or wave == 18 then
-			warningBossNow:Show()
-		else
-			warningPortalNow:Show(wave)
-			if self.Options.ShowAllPortalTimers then
-				timerPortalIn:Start(122, wave + 1)
-				warningPortalSoon:Schedule(112)
-			end
+	if widgetInfo and widgetInfo.text then
+		local text = widgetInfo.text
+		local wave = text:match("(%d+).+18")
+		if not wave then
+			wave = 0
 		end
-		lastWave = wave
+		wave = tonumber(wave) or 0
+		if wave < lastWave then
+			lastWave = 0
+		end
+		if wave > lastWave then
+			warningPortalSoon:Cancel()
+			timerPortalIn:Cancel()
+			if wave == 6 or wave == 12 or wave == 18 then
+				warningBossNow:Show()
+			else
+				warningPortalNow:Show(wave)
+				if self.Options.ShowAllPortalTimers then
+					timerPortalIn:Start(122, wave + 1)
+					warningPortalSoon:Schedule(112)
+				end
+			end
+			lastWave = wave
+		end
 	end
 end
 

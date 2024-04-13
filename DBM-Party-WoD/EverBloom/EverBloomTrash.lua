@@ -13,8 +13,6 @@ mod:RegisterEvents(
 	"SPELL_CAST_SUCCESS 165213 172578 165123 426500 427223",
 	"SPELL_INTERRUPT",
 	"SPELL_AURA_APPLIED 164965 169658 165123 169495 426500",
---	"SPELL_AURA_APPLIED_DOSE 164886",
---	"SPELL_AURA_REMOVED",
 	"UNIT_DIED"
 )
 
@@ -202,16 +200,6 @@ function mod:SPELL_AURA_APPLIED(args)
 		warnGnarledroots:CombinedShow(0.5, args.destName)
 	end
 end
-mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED
-
---[[
-function mod:SPELL_AURA_REMOVED(args)
-	local spellId = args.spellId
-	if spellId == 87726 then
-
-	end
-end
---]]
 
 function mod:UNIT_DIED(args)
 	local cid = self:GetCIDFromGUID(args.destGUID)

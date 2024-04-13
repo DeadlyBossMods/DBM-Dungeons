@@ -698,14 +698,6 @@ L:SetMiscLocalization{
 --------------
 L= DBM:GetModLocalization(322)
 
-L:SetTimerLocalization{
-	TimerCombatStart	= "Начало боя"
-}
-
-L:SetOptionLocalization{
-	TimerCombatStart	= "Показывать таймер до начала боя"
-}
-
 L:SetMiscLocalization{
 	Event		= "Покажи себя!",
 	Pull		= "На обрывах каньона появляются войска Сумрака."
@@ -724,14 +716,6 @@ L:SetMiscLocalization{
 -- Archbishop Benedictus --
 ---------------------------
 L= DBM:GetModLocalization(341)
-
-L:SetTimerLocalization{
-	TimerCombatStart	= "Начало боя"
-}
-
-L:SetOptionLocalization{
-	TimerCombatStart	= "Показать таймер до начала боя"
-}
 
 L:SetMiscLocalization{
 	Event		= "А теперь, шаман, ты отдашь Душу Дракона МНЕ."

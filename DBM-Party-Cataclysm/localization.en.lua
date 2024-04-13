@@ -701,14 +701,6 @@ L:SetMiscLocalization{
 --------------
 L= DBM:GetModLocalization(322)
 
-L:SetTimerLocalization{
-	TimerCombatStart	= "Combat starts"
-}
-
-L:SetOptionLocalization{
-	TimerCombatStart	= "Show timer for start of combat"
-}
-
 L:SetMiscLocalization{
 	Event		= "Show yourself!",
 	Pull		= "Twilight forces begin to appear around the canyons edges."
@@ -727,14 +719,6 @@ L:SetMiscLocalization{
 -- Archbishop Benedictus --
 ---------------------------
 L= DBM:GetModLocalization(341)
-
-L:SetTimerLocalization{
-	TimerCombatStart	= "Combat starts"
-}
-
-L:SetOptionLocalization{
-	TimerCombatStart	= "Show timer for start of combat"
-}
 
 L:SetMiscLocalization{
 	Event		= "And now, Shaman, you will give the Dragon Soul to ME."

@@ -687,14 +687,6 @@ L:SetMiscLocalization{
 --------------
 L= DBM:GetModLocalization(322)
 
-L:SetTimerLocalization{
-	TimerCombatStart	= "전투 시작"
-}
-
-L:SetOptionLocalization{
-	TimerCombatStart	= "전투 시작 타이머 바 보기"
-}
-
 L:SetMiscLocalization{
 	Event		= "모습을 드러내라!",
 	Pull		= "골짜기 위쪽에서 황혼의 군대가 나타납니다."
@@ -713,14 +705,6 @@ L:SetMiscLocalization{
 -- Archbishop Benedictus --
 ---------------------------
 L= DBM:GetModLocalization(341)
-
-L:SetTimerLocalization{
-	TimerCombatStart	= "전투 시작"
-}
-
-L:SetOptionLocalization{
-	TimerCombatStart	= "전투 시작 타이머 바 보기"
-}
 
 L:SetMiscLocalization{
 	Event		= "그럼... 주술사, 용의 영혼을 내놓으시지. 당장."

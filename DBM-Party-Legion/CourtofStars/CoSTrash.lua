@@ -12,6 +12,7 @@ mod.isTrashMod = true
 --LW solution, unregister/reregister other addons/WA frames from GOSSIP_SHOW
 --This is to prevent things like https://wago.io/M+Timer/114 from breaking clue helper do to advancing
 --dialog before we get a chance to read gossipID
+---@type Frame[]
 local frames = {GetFramesRegisteredForEvent("GOSSIP_SHOW")}
 for i = 1, #frames do
 	frames[i]:UnregisterEvent("GOSSIP_SHOW")
@@ -697,11 +698,13 @@ do
 			--DBM and BW will both just parse the bigiwgs comms for profession data
 			for icon, skill in extra:gmatch("(%d+):(%d+)#") do
 				icon = tonumber(icon)
-				skill = tonumber(skill)
-				if not professionCache[icon] then
-					professionCache[icon] = {}
+				if icon then
+					skill = tonumber(skill)
+					if not professionCache[icon] then
+						professionCache[icon] = {}
+					end
+					professionCache[icon][#professionCache[icon]+1] = {name=sender, skill=skill}
 				end
-				professionCache[icon][#professionCache[icon]+1] = {name=sender, skill=skill}
 			end
 			self:AntiSpam(300, "CoSProf")
 		end

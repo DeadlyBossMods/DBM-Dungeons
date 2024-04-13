@@ -68,19 +68,20 @@ function mod:UPDATE_UI_WIDGET(table)
 	local id = table.widgetID
 	if id ~= 541 and id ~= 3870 then return end
 	local widgetInfo = C_UIWidgetManager.GetIconAndTextWidgetVisualizationInfo(id)
-	local text = widgetInfo.text
-	if not text then return end
-	local wave = text:match("(%d+).+10")
-	if not wave then
-		wave = 0
-	end
-	wave = tonumber(wave)
-	if wave < lastWave then
-		lastWave = 0
-	end
-	if wave > lastWave then
-		warningWaveNow:Show(wave, getWaveString(self, wave))
-		lastWave = wave
+	if widgetInfo and widgetInfo.text then
+		local text = widgetInfo.text
+		local wave = text:match("(%d+).+10")
+		if not wave then
+			wave = 0
+		end
+		wave = tonumber(wave) or 0
+		if wave < lastWave then
+			lastWave = 0
+		end
+		if wave > lastWave then
+			warningWaveNow:Show(wave, getWaveString(self, wave))
+			lastWave = wave
+		end
 	end
 end
 

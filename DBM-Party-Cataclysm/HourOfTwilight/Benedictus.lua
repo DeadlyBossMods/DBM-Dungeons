@@ -10,11 +10,11 @@ mod:SetEncounterID(1339)
 mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
-	"SPELL_CAST_SUCCESS",
-	"SPELL_AURA_APPLIED",
-	"SPELL_DAMAGE",
-	"SPELL_MISSED",
-	"UNIT_HEALTH"
+	"SPELL_CAST_SUCCESS 103151 103565 103677 103680 103681 103363 103767 103782 103783 103784",
+	"SPELL_AURA_APPLIED 103754",
+	"SPELL_DAMAGE 103653 103775",
+	"SPELL_MISSED 103653 103775",
+	"UNIT_HEALTH boss1"
 )
 
 mod:RegisterEvents(
@@ -30,17 +30,17 @@ local warnCorruptingTwilight	= mod:NewSpellAnnounce(103767, 3)
 local specwarnPurified			= mod:NewSpecialWarningMove(103653, nil, nil, nil, 1, 8)
 local specwarnWaveVirtue		= mod:NewSpecialWarningMoveTo(103678, nil, nil, nil, 2)
 local specwarnTwilight			= mod:NewSpecialWarningMove(103775, nil, nil, nil, 1, 8)
-local specwarnWaveTwilight		= mod:NewSpecialWarningMoveTo(103780, nil, nil, nil, 2)
+local specwarnWaveTwilight		= mod:NewSpecialWarningMoveTo(103780, nil, nil, nil, 2, 2)
 
-local timerCombatStart			= mod:NewTimer(51.5, "TimerCombatStart", "132349")
+local timerCombatStart			= mod:NewCombatTimer(51.5)
 local timerWaveVirtueCD			= mod:NewNextTimer(30, 103678, nil, nil, nil, 2)--Will he do it more then once? if you are terrible and take > 30 sec to push him?
 local timerWaveTwilightCD		= mod:NewNextTimer(30, 103780, nil, nil, nil, 2)--^
 
-local warnedP2 = false
+mod.vb.warnedP2 = false
 local waterShellName = DBM:GetSpellInfo(103744)
 
 function mod:OnCombatStart(delay)
-	warnedP2 = false
+	self.vb.warnedP2 = false
 	timerWaveVirtueCD:Start(-delay)
 end
 
@@ -83,10 +83,10 @@ mod.SPELL_MISSED = mod.SPELL_DAMAGE
 function mod:UNIT_HEALTH(uId)
 	if self:GetUnitCreatureId(uId) == 54938 then
 		local h = UnitHealth(uId) / UnitHealthMax(uId) * 100
-		if h > 80 and warnedP2 then
-			warnedP2 = false
-		elseif not warnedP2 and h > 63 and h < 67 then
-			warnedP2 = true
+		if h > 80 and self.vb.warnedP2 then
+			self.vb.warnedP2 = false
+		elseif not self.vb.warnedP2 and h > 63 and h < 67 then
+			self.vb.warnedP2 = true
 			prewarnPhase2:Show()
 		end
 	end
