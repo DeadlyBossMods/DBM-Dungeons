@@ -30,6 +30,8 @@ jobs:
       - name: Create Retail Package
         uses: BigWigsMods/packager@master
         if: ${{ github.event_name != 'pull_request' }}
+        with:
+          args: -n "DBM-Dungeons-{project-version}"
         env:
           CF_API_KEY: ${{ secrets.CF_API_KEY }}
           GITHUB_OAUTH: ${{ secrets.GITHUB_TOKEN }}
