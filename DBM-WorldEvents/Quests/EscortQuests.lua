@@ -1,5 +1,3 @@
----@diagnostic disable: undefined-global
---Above has to be done since wrath still needs legacy quest apis and ketho's wow api doesn't consider old classic clients
 local mod	= DBM:NewMod("EscortQuests", "DBM-WorldEvents", 2)
 
 mod:SetRevision("@file-date-integer@")
@@ -30,8 +28,6 @@ function mod:QUEST_ACCEPTED(questID)
 		local title =
 			C_QuestLog and -- Retail
 				C_QuestLog.GetInfo(C_QuestLog.GetLogIndexForQuestID(questID) or 0).title
-			or -- Classic
-				GetQuestLogTitle(questID)
 		bars[questID] = DBT:CreateBar(questTimers[questID], tostring(title) or tostring(questID), 136106)
 		self:RegisterShortTermEvents("QUEST_LOG_UPDATE")
 	end
@@ -44,11 +40,6 @@ function mod:QUEST_LOG_UPDATE()
 		if C_QuestLog then -- Retail
 			-- Is in quest log, and not complete
 			isInProgress = C_QuestLog.GetLogIndexForQuestID(questID) and not C_QuestLog.IsComplete(questID)
-		else -- Classic
-			local questIndex = GetQuestLogIndexByID(questID)
-			if questIndex then -- Is in quest log
-				isInProgress = not select(6, GetQuestLogTitle(questIndex)) -- And not complete
-			end
 		end
 		if bar and not isInProgress then
 			bar:Cancel()
