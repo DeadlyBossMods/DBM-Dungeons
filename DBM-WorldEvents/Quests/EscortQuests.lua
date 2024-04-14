@@ -1,3 +1,5 @@
+---@diagnostic disable: undefined-global
+--Above has to be done since wrath still needs legacy quest apis and ketho's wow api doesn't consider old classic clients
 local mod	= DBM:NewMod("EscortQuests", "DBM-WorldEvents", 2)
 
 mod:SetRevision("@file-date-integer@")
