@@ -84,7 +84,7 @@ L:SetGeneralLocalization{
 L = DBM:GetModLocalization(372)
 
 L:SetGeneralLocalization{
-	name 		= "Cercle de la loi"
+	name 		= "Cercle de Loi"
 }
 ---------------------------------
 -- Pyromancer Loregrain --
