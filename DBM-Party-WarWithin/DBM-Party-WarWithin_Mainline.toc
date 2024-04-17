@@ -1,5 +1,6 @@
 ## Interface: 100206
 ## Title:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Dungeons (WW)|r
+## Title-ruRU:|cffffe00a<|r|cffff7d0aDBM Мод|r|cffffe00a>|r |cffc030c0Подземелья (Война Внутри)|r
 ## LoadOnDemand: 1
 ## RequiredDeps: DBM-Core
 ## SavedVariables: DBMPartyWarWithin_AllSavedVars
@@ -11,6 +12,7 @@
 ## X-DBM-StatTypes: follower,normal,heroic,mythic,challenge
 ## X-DBM-Mod-SubCategoriesID: 2651, 2649, 2648, 2652, 2662, 2660, 2661, 2669
 ## X-DBM-Mod-Name: Dungeons (War Within)
+## X-DBM-Mod-Name-ruRU: Подземелья (Война Внутри)
 ## X-DBM-Mod-Sort: 115
 ## X-DBM-Mod-MapID: 2651, 2649, 2648, 2652, 2662, 2660, 2661, 2669
 ## X-DBM-Mod-MinCoreRevision: 20230716000000
@@ -21,6 +23,7 @@
 ## Version: @project-version@
 
 localization.en.lua
+localization.ru.lua
 
 DarkflameCleft\OlWaxbeard.lua
 DarkflameCleft\Blazikon.lua
