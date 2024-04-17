@@ -1,4 +1,4 @@
-local mod	= DBM:NewMod(2140, "DBM-Party-BfA", 5, 1001)
+local mod	= DBM:NewMod(2140, "DBM-Party-BfA", 5, 1023)
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
@@ -25,20 +25,24 @@ local yellPutridWaters				= mod:NewYell(275014)
 local specWarnSlam					= mod:NewSpecialWarningDodge(269266, "Tank", nil, 2, 2, 2)
 
 --local timerCalloftheDeepCD			= mod:NewCDTimer(13, 270185, nil, nil, nil, 3)--6.4, 15.1, 19.0, 11.9, 12.1, 12.3, 15.6, 12.1, 12.9, 7.0, 8.6, 7.5, 7.2, 7.4, 7.0, 7.0, 7.3, 7.2
-local timerPutridWatersCD			= mod:NewCDTimer(19.9, 275014, nil, nil, nil, 5, nil, DBM_COMMON_L.MAGIC_ICON)
+local timerPutridWatersCD			= mod:NewCDCountTimer(19.9, 275014, nil, nil, nil, 5, nil, DBM_COMMON_L.MAGIC_ICON)
 local timerSlamCD					= mod:NewCDTimer(7.3, 269266, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
-local timerDemolisherTerrorCD		= mod:NewCDTimer(20, 270605, nil, nil, nil, 1, nil, DBM_COMMON_L.TANK_ICON..DBM_COMMON_L.DAMAGE_ICON)
+local timerDemolisherTerrorCD		= mod:NewCDCountTimer(20, 270605, nil, nil, nil, 1, nil, DBM_COMMON_L.TANK_ICON..DBM_COMMON_L.DAMAGE_ICON)
 
 mod:AddRangeFrameOption(5, 275014)
 
 local seenAdds = {}
+mod.vb.watersCount = 0
+mod.vb.terrorCount = 0
 
 function mod:OnCombatStart(delay)
 	table.wipe(seenAdds)
 	self:SetStage(1)
-	timerPutridWatersCD:Start(3.4-delay)
+	self.vb.watersCount = 0
+	self.vb.terrorCount = 0
+	timerPutridWatersCD:Start(3.4-delay, 1)
 	--timerCalloftheDeepCD:Start(6.4-delay)
-	--timerDemolisherTerrorCD:Start(19.9-delay)--Should be started by IEEU event
+	--timerDemolisherTerrorCD:Start(19.9-delay, 1)--Should be started by IEEU event
 	if self.Options.RangeFrame then
 		DBM.RangeCheck:Show(5)
 	end
@@ -83,7 +87,8 @@ end
 function mod:SPELL_CAST_SUCCESS(args)
 	local spellId = args.spellId
 	if spellId == 274991 then
-		timerPutridWatersCD:Start()
+		self.vb.watersCount = self.vb.watersCount + 1
+		timerPutridWatersCD:Start(nil, self.vb.watersCount+1)
 	end
 end
 
@@ -104,7 +109,7 @@ function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
 			seenAdds[GUID] = true
 			local cid = self:GetCIDFromGUID(GUID)
 			if cid == 137405 then--Gripping Terror
-				timerDemolisherTerrorCD:Start(19.9)
+				timerDemolisherTerrorCD:Start(19.9, self.vb.terrorCount+1)
 			end
 		end
 	end
@@ -112,7 +117,8 @@ end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, spellId)
 	if spellId == 270605 then--Summon Demolisher
-		timerDemolisherTerrorCD:Start(20)
+		self.vb.terrorCount = self.vb.terrorCount + 1
+		timerDemolisherTerrorCD:Start(20, self.vb.terrorCount+1)
 	elseif spellId == 269984 then--Damage Boss 35% (can use SPELL_CAST_START of 269456 alternatively)
 		--Might actually be at Repair event instead (269366)
 		if self:GetStage(3, 1) then

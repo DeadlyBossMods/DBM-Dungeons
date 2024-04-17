@@ -15,24 +15,31 @@ mod:RegisterEventsInCombat(
 	"UNIT_SPELLCAST_SUCCEEDED boss1"
 )
 
-local warnBinding		= mod:NewTargetAnnounce(75861, 3)
-local warnFeeble		= mod:NewTargetAnnounce(75792, 3, nil, "Tank|Healer", 2)
+local warnBinding		= mod:NewTargetNoFilterAnnounce(75861, 3)
+local warnFeeble		= mod:NewTargetNoFilterAnnounce(75792, 3, nil, "Tank|Healer", 2)
 local warnUmbralMending	= mod:NewSpellAnnounce(75763, 4)
 
 local specWarnMending	= mod:NewSpecialWarningInterrupt(75763, nil, nil, nil, 1, 2)
-local specWarnGale		= mod:NewSpecialWarningSpell(75664, nil, nil, nil, 2, 2)
-local specWarnAdds		= mod:NewSpecialWarningSwitch(-3378, "Dps", nil, nil, 3, 2)
+local specWarnGale		= mod:NewSpecialWarningCount(75664, nil, nil, nil, 2, 2)
+local specWarnAdds		= mod:NewSpecialWarningSwitchCount(-3378, "Dps", nil, nil, 3, 2)
 
-local timerFeebleCD		= mod:NewCDTimer(26, 75792, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+local timerFeebleCD		= mod:NewCDCountTimer(26, 75792, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerFeeble		= mod:NewTargetTimer(3, 75792, nil, "Tank|Healer", 2, 5)
 local timerGale			= mod:NewCastTimer(5, 75664, nil, nil, nil, 2)
-local timerGaleCD		= mod:NewCDTimer(55, 75664, nil, nil, nil, 2)
-local timerAddsCD		= mod:NewCDTimer(54.5, 75704, nil, nil, nil, 1)
+local timerGaleCD		= mod:NewCDCountTimer(55, 75664, nil, nil, nil, 2)
+local timerAddsCD		= mod:NewCDCountTimer(54.5, 75704, nil, nil, nil, 1)
+
+mod.vb.feebleCount = 0
+mod.vb.galeCount = 0
+mod.vb.addsCount = 0
 
 function mod:OnCombatStart(delay)
-	timerFeebleCD:Start(16-delay)
-	timerGaleCD:Start(23-delay)
---	timerAddsCD:Start(95-delay)--First ones don't start until boss reaches % health of some sort?
+	self.vb.feebleCount = 0
+	self.vb.galeCount = 0
+	self.vb.addsCount = 0
+	timerFeebleCD:Start(16-delay, 1)
+	timerGaleCD:Start(23-delay, 1)
+--	timerAddsCD:Start(95-delay, 1)--First ones don't start until boss reaches % health of some sort?
 end
 
 function mod:SPELL_AURA_APPLIED(args)
@@ -40,8 +47,9 @@ function mod:SPELL_AURA_APPLIED(args)
 	if spellId == 75861 then
 		warnBinding:CombinedShow(0.3, args.destName)
 	elseif spellId == 75792 then
+		self.vb.feebleCount = self.vb.feebleCount + 1
 		warnFeeble:Show(args.destName)
-		timerFeebleCD:Start()
+		timerFeebleCD:Start(nil, self.vb.feebleCount+1)
 		if self:IsDifficulty("normal") then
 			timerFeeble:Start(args.destName)
 		else
@@ -60,13 +68,15 @@ end
 --Sometimes boss fails to cast gale so no SPELL_CAST_START event. This ensures we still detect cast and start timers
 function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
 	if spellId == 75656 then
-		specWarnGale:Show()
+		self.vb.galeCount = self.vb.galeCount + 1
+		specWarnGale:Show(self.vb.galeCount)
 		specWarnGale:Play("findshelter")
 		timerGale:Start()
-		timerGaleCD:Start()
+		timerGaleCD:Start(nil, self.vb.galeCount+1)
 	elseif spellId == 75704 then
-		specWarnAdds:Show()
+		self.vb.addsCount = self.vb.addsCount + 1
+		specWarnAdds:Show(self.vb.addsCount)
 		specWarnAdds:Play("killmob")
-		timerAddsCD:Start()
+		timerAddsCD:Start(nil, self.vb.addsCount+1)
 	end
 end

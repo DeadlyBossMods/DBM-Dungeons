@@ -24,62 +24,79 @@ mod:RegisterEventsInCombat(
  or (ability.id = 321226 or ability.id = 320012) and type = "cast"
  or (ability.id = 322493 or ability.id = 320170) and type = "begincast"
 --]]
-local specWarnLandoftheDead			= mod:NewSpecialWarningSwitch(321226, "-Healer", nil, nil, 1, 2)
-local specWarnFinalHarvest			= mod:NewSpecialWarningDodge(321247, nil, nil, nil, 2, 2)
-local specWarnNecroticBreath		= mod:NewSpecialWarningDodge(333493, nil, nil, nil, 2, 2)
+local specWarnLandoftheDead			= mod:NewSpecialWarningSwitchCount(321226, "-Healer", nil, nil, 1, 2)
+local specWarnFinalHarvest			= mod:NewSpecialWarningDodgeCount(321247, nil, nil, nil, 2, 2)
+local specWarnNecroticBreath		= mod:NewSpecialWarningDodgeCount(333493, nil, nil, nil, 2, 2)
 --local yellNecroticBreath			= mod:NewYell(333493)
 local specWarnNecroticBolt			= mod:NewSpecialWarningInterrupt(320170, false, nil, 2, 1, 2)--Every 5 seconds, so off by default
 local specWarnUnholyFrenzy			= mod:NewSpecialWarningDispel(320012, "RemoveEnrage", nil, nil, 1, 2)
 local specWarnUnholyFrenzyTank		= mod:NewSpecialWarningDefensive(320012, nil, nil, nil, 1, 2)
 --Reanimated Mage
-local specWarnFrostboltVolley		= mod:NewSpecialWarningInterrupt(322493, "HasInterrupt", nil, nil, 1, 2)--Mythic and above, normal/heroic uses regular frostbolts
+local specWarnFrostboltVolley		= mod:NewSpecialWarningInterruptCount(322493, "HasInterrupt", nil, nil, 1, 2)--Mythic and above, normal/heroic uses regular frostbolts
 --local specWarnGTFO				= mod:NewSpecialWarningGTFO(257274, nil, nil, nil, 1, 8)
 
-local timerLandoftheDeadCD			= mod:NewCDTimer(41.2, 321226, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)--41.2-48.4
-local timerFinalHarvestCD			= mod:NewCDTimer(41.2, 321247, nil, nil, nil, 2)--41.2-48.4
-local timerNecroticBreathCD			= mod:NewCDTimer(41.2, 333493, nil, nil, nil, 3)--41.2-48.4
-local timerUnholyFrenzyCD			= mod:NewCDTimer(41.2, 320012, nil, nil, nil, 5, nil, DBM_COMMON_L.ENRAGE_ICON..DBM_COMMON_L.TANK_ICON)--41.2-48.4
+local timerLandoftheDeadCD			= mod:NewCDCountTimer(41.2, 321226, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)--41.2-48.4
+local timerFinalHarvestCD			= mod:NewCDCountTimer(41.2, 321247, nil, nil, nil, 2)--41.2-48.4
+local timerNecroticBreathCD			= mod:NewCDCountTimer(41.2, 333493, nil, nil, nil, 3)--41.2-48.4
+local timerUnholyFrenzyCD			= mod:NewCDCountTimer(41.2, 320012, nil, nil, nil, 5, nil, DBM_COMMON_L.ENRAGE_ICON..DBM_COMMON_L.TANK_ICON)--41.2-48.4
 
 mod:AddSetIconOption("SetIconOnAdds", 321226, true, 5, {1, 2, 3, 4, 5, 6, 7, 8})
 
 mod.vb.iconCount = 8
+mod.vb.deadCount = 0
+mod.vb.harvestCount = 0
+mod.vb.breathCount = 0
+mod.vb.frenzyCount = 0
+mod.vb.volleyCount = 0
 
 function mod:OnCombatStart(delay)
 	--TODO, fine tune start times, started from first melee swing not ENCOUNTER_START
 	self.vb.iconCount = 8
-	timerUnholyFrenzyCD:Start(6-delay)--SUCCESS
-	timerLandoftheDeadCD:Start(8.6-delay)--SUCCESS
-	timerNecroticBreathCD:Start(29.4-delay)
-	timerFinalHarvestCD:Start(38.6-delay)
+	self.vb.deadCount = 0
+	self.vb.harvestCount = 0
+	self.vb.breathCount = 0
+	self.vb.frenzyCount = 0
+	self.vb.volleyCount = 0
+	timerUnholyFrenzyCD:Start(6-delay, 1)--SUCCESS
+	timerLandoftheDeadCD:Start(8.6-delay, 1)--SUCCESS
+	timerNecroticBreathCD:Start(29.4-delay, 1)
+	timerFinalHarvestCD:Start(38.6-delay, 1)
 end
 
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
-	if spellId == 322493 and self:CheckInterruptFilter(args.sourceGUID, false, true) then
-		specWarnFrostboltVolley:Show(args.sourceName)
-		specWarnFrostboltVolley:Play("kickcast")
+	if spellId == 322493 then
+		self.vb.volleyCount = self.vb.volleyCount + 1
+		if self:CheckInterruptFilter(args.sourceGUID, false, true) then
+			specWarnFrostboltVolley:Show(args.sourceName, self.vb.volleyCount)
+			specWarnFrostboltVolley:Play("kickcast")
+		end
 	elseif spellId == 320170 and self:CheckInterruptFilter(args.sourceGUID, false, true) then
 		specWarnNecroticBolt:Show(args.sourceName)
 		specWarnNecroticBolt:Play("kickcast")
 	elseif spellId == 321247 then
-		specWarnFinalHarvest:Show()
+		self.vb.harvestCount = self.vb.harvestCount + 1
+		specWarnFinalHarvest:Show(self.vb.harvestCount)
 		specWarnFinalHarvest:Play("watchstep")
-		timerFinalHarvestCD:Start()
+		timerFinalHarvestCD:Start(nil, self.vb.harvestCount+1)
 	elseif spellId == 333488 then
-		specWarnNecroticBreath:Show()
+		self.vb.breathCount = self.vb.breathCount + 1
+		specWarnNecroticBreath:Show(self.vb.breathCount)
 		specWarnNecroticBreath:Play("breathsoon")
-		timerNecroticBreathCD:Start()
+		timerNecroticBreathCD:Start(nil, self.vb.breathCount+1)
 	end
 end
 
 function mod:SPELL_CAST_SUCCESS(args)
 	local spellId = args.spellId
 	if spellId == 321226 then
-		specWarnLandoftheDead:Show()
+		self.vb.deadCount = self.vb.deadCount + 1
+		specWarnLandoftheDead:Show(self.vb.deadCount)
 		specWarnLandoftheDead:Play("killmob")
-		timerLandoftheDeadCD:Start()
+		timerLandoftheDeadCD:Start(nil, self.vb.deadCount+1)
 	elseif spellId == 320012 then
-		timerUnholyFrenzyCD:Start()
+		self.vb.frenzyCount = self.vb.frenzyCount + 1
+		timerUnholyFrenzyCD:Start(nil, self.vb.frenzyCount+1)
 	end
 end
 

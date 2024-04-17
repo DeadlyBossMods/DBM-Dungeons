@@ -63,6 +63,7 @@ GrimBatol\GeneralUmbriss.lua
 GrimBatol\ForgemasterThrongus.lua
 GrimBatol\DrahgaShadowburner.lua
 GrimBatol\Erudax.lua
+GrimBatol\GrimBatolTrash.lua
 HallsOfOrigination\TempleGuardianAnhuur.lua
 HallsOfOrigination\EarthragerPtah.lua
 HallsOfOrigination\Anraphet.lua

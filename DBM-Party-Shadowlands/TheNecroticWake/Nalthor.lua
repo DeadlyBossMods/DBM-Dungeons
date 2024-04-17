@@ -34,19 +34,28 @@ local yellFrozenBindsFades			= mod:NewShortYell(323730)
 local specWarnDarkExile				= mod:NewSpecialWarningYou(321894, nil, nil, nil, 1, 5)
 --local specWarnGTFO				= mod:NewSpecialWarningGTFO(257274, nil, nil, nil, 1, 8)
 
-local timerCometStormCD				= mod:NewCDTimer(24.2, 320772, nil, nil, nil, 3)
-local timerIceboundAegisCD			= mod:NewCDTimer(24.2, 321754, nil, nil, nil, 5, nil, DBM_COMMON_L.DAMAGE_ICON)
-local timerFrozenBindsCD			= mod:NewCDTimer(24.2, 323730, nil, nil, nil, 3, nil, DBM_COMMON_L.MAGIC_ICON)
-local timerDarkExileCD				= mod:NewCDTimer(35.2, 321894, nil, nil, nil, 3)--35.2-40+
+local timerCometStormCD				= mod:NewCDCountTimer(24.2, 320772, nil, nil, nil, 3)
+local timerIceboundAegisCD			= mod:NewCDCountTimer(24.2, 321754, nil, nil, nil, 5, nil, DBM_COMMON_L.DAMAGE_ICON)
+local timerFrozenBindsCD			= mod:NewCDCountTimer(24.2, 323730, nil, nil, nil, 3, nil, DBM_COMMON_L.MAGIC_ICON)
+local timerDarkExileCD				= mod:NewCDCountTimer(35.2, 321894, nil, nil, nil, 3)--35.2-40+
 local timerDarkExile				= mod:NewTargetTimer(50, 321894, nil, nil, nil, 5)
 
 mod:AddInfoFrameOption(321754, true)
 
+mod.vb.cometCount = 0
+mod.vb.aegisCount = 0
+mod.vb.bindsCount = 0
+mod.vb.exileCount = 0
+
 function mod:OnCombatStart(delay)
-	timerFrozenBindsCD:Start(8.9-delay)--SUCCESS
-	timerIceboundAegisCD:Start(11.7-delay)--11.7-14
-	timerCometStormCD:Start(16.5-delay)--16.5-17.2
-	timerDarkExileCD:Start(26.5-delay)--SUCCESS--26-30
+	self.vb.cometCount = 0
+	self.vb.aegisCount = 0
+	self.vb.bindsCount = 0
+	self.vb.exileCount = 0
+	timerFrozenBindsCD:Start(8.9-delay, 1)--SUCCESS
+	timerIceboundAegisCD:Start(11.7-delay, 1)--11.7-14
+	timerCometStormCD:Start(16.5-delay, 1)--16.5-17.2
+	timerDarkExileCD:Start(26.5-delay, 1)--SUCCESS--26-30
 end
 
 function mod:OnCombatEnd()
@@ -58,26 +67,30 @@ end
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
 	if spellId == 320772 then
-		specWarnCometStorm:Show()
+		self.vb.cometCount = self.vb.cometCount + 1
+		specWarnCometStorm:Show(self.vb.cometCount)
 		specWarnCometStorm:Play("watchstep")
-		timerCometStormCD:Start()
+		timerCometStormCD:Start(nil, self.vb.cometCount+1)
 	end
 end
 
 function mod:SPELL_CAST_SUCCESS(args)
 	local spellId = args.spellId
 	if spellId == 320788 or spellId == 323730 then
-		timerFrozenBindsCD:Start()
+		self.vb.bindsCount = self.vb.bindsCount + 1
+		timerFrozenBindsCD:Start(nil, self.vb.bindsCount+1)
 	elseif spellId == 321894 then
-		timerDarkExileCD:Start()
+		self.vb.exileCount = self.vb.exileCount + 1
+		timerDarkExileCD:Start(nil, self.vb.exileCount+1)
 	end
 end
 
 function mod:SPELL_AURA_APPLIED(args)
 	local spellId = args.spellId
 	if spellId == 321368 or spellId == 321754 then
+		self.vb.aegisCount = self.vb.aegisCount + 1
 		warnIceboundAegis:Show(args.destName)
-		timerIceboundAegisCD:Start()
+		timerIceboundAegisCD:Start(nil, self.vb.aegisCount+1)
 		if self.Options.InfoFrame then
 			DBM.InfoFrame:SetHeader(args.spellName)
 			DBM.InfoFrame:Show(2, "enemyabsorb", nil, args.amount, "boss1")

@@ -1,0 +1,67 @@
+## Interface: 100206
+## Title:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Dungeons (WW)|r
+## LoadOnDemand: 1
+## RequiredDeps: DBM-Core
+## SavedVariables: DBMPartyWarWithin_AllSavedVars
+## SavedVariablesPerCharacter: DBMPartyWarWithin_SavedStats
+## IconTexture: Interface\AddOns\DBM-Core\textures\dbm_airhorn
+## X-DBM-Mod: 1
+## X-DBM-Mod-Type: PARTY
+## X-DBM-Mod-Category: WARWITHIN
+## X-DBM-StatTypes: follower,normal,heroic,mythic,challenge
+## X-DBM-Mod-SubCategoriesID: 2651, 2649, 2648, 2652, 2662, 2660, 2661, 2669
+## X-DBM-Mod-Name: Dungeons (War Within)
+## X-DBM-Mod-Sort: 115
+## X-DBM-Mod-MapID: 2651, 2649, 2648, 2652, 2662, 2660, 2661, 2669
+## X-DBM-Mod-MinCoreRevision: 20230716000000
+## X-DBM-Mod-MinExpansion: 10
+## X-Curse-Project-ID: 314994
+## X-WoWI-ID: 24904
+## X-Wago-ID: xZKxZENk
+## Version: @project-version@
+
+localization.en.lua
+
+DarkflameCleft\OlWaxbeard.lua
+DarkflameCleft\Blazikon.lua
+DarkflameCleft\TheCandleKing.lua
+DarkflameCleft\TheDarkness.lua
+DarkflameCleft\DarkflameCleftTrash.lua
+
+PrioryoftheSacredFlame\CaptainDailcry.lua
+PrioryoftheSacredFlame\BaronBraunpyke.lua
+PrioryoftheSacredFlame\PrioressMurrpray.lua
+PrioryoftheSacredFlame\SacredFlameTrash.lua
+
+TheRookery\Kyrioss.lua
+TheRookery\StormguardGorren.lua
+TheRookery\VoidstoneMonstrosity.lua
+TheRookery\TheRookeryTrash.lua
+
+TheStonevault\EDNA.lua
+TheStonevault\Skarmorak.lua
+TheStonevault\ForgeSpeakers.lua
+TheStonevault\HighSpeakerEirich.lua
+TheStonevault\TheStonevaultTrash.lua
+
+TheDawnbreaker\SpeakerShadowcrown.lua
+TheDawnbreaker\Anubikkaj.lua
+TheDawnbreaker\Rashanan.lua
+TheDawnbreaker\TheDawnbreakerTrash.lua
+
+ArakaraCityofEchoes\Avanoxx.lua
+ArakaraCityofEchoes\Anubzekt.lua
+ArakaraCityofEchoes\KikataltheHarvester.lua
+ArakaraCityofEchoes\AraKaraTrash.lua
+
+CinderbrewMeadery\BrewMasterAldryr.lua
+CinderbrewMeadery\Ipa.lua
+CinderbrewMeadery\BenkBuzzbee.lua
+CinderbrewMeadery\GoldieBaronbottom.lua
+CinderbrewMeadery\CinderbrewMeaderyTrash.lua
+
+CityofThreads\OratorKrixvizk.lua
+CityofThreads\FangsoftheQueen.lua
+CityofThreads\TheCoaglamation.lua
+CityofThreads\IzotheGrandSplicer.lua
+CityofThreads\CityofThreadsTrash.lua

@@ -34,7 +34,7 @@ local specWarnSpiritBolt				= mod:NewSpecialWarningInterrupt(323057, "HasInterru
 local specWarnEmbraceDarkness			= mod:NewSpecialWarningSpell(323149, nil, nil, nil, 2, 2)
 local specWarnRepulsiveVisage			= mod:NewSpecialWarningSpell(328756, nil, nil, nil, 2, 2)
 --Droman Oulfarran
-local specWarnBewilderingPollen			= mod:NewSpecialWarningDodge(323137, "Tank", nil, nil, 1, 2)
+local specWarnBewilderingPollen			= mod:NewSpecialWarningDodgeCount(323137, "Tank", nil, nil, 1, 2)
 local specWarnBewilderingPollenDispel	= mod:NewSpecialWarningDispel(323137, false, nil, 2, 1, 2)--Off by default
 local specWarnTearsoftheForrest			= mod:NewSpecialWarningDodge(323177, nil, nil, nil, 2, 2)
 local specWarnGTFO						= mod:NewSpecialWarningGTFO(323250, nil, nil, nil, 1, 8)
@@ -43,11 +43,16 @@ local specWarnGTFO						= mod:NewSpecialWarningGTFO(323250, nil, nil, nil, 1, 8)
 --local timerEmbraceDarknessCD			= mod:NewCDTimer(66.7, 323149, nil, nil, nil, 2, nil, DBM_COMMON_L.HEALER_ICON)
 --local timerRepulsiveVisageCD			= mod:NewCDTimer(15.8, 328756, nil, nil, nil, 2, nil, DBM_COMMON_L.MAGIC_ICON)
 --Droman Oulfarran
-local timerBewilderingPollenCD			= mod:NewCDTimer(15.8, 323137, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)--15.8-20.6, unsure if spellqueue causes the variation or just inconsistent energy rates
-local timerTearsoftheForestCD			= mod:NewCDTimer(15.8, 323177, nil, nil, nil, 3)--15.8-20.6, unsure if spellqueue causes the variation or just inconsistent energy rates
+local timerBewilderingPollenCD			= mod:NewCDCountTimer(15.8, 323137, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)--15.8-20.6, unsure if spellqueue causes the variation or just inconsistent energy rates
+local timerTearsoftheForestCD			= mod:NewCDCountTimer(15.8, 323177, nil, nil, nil, 3)--15.8-20.6, unsure if spellqueue causes the variation or just inconsistent energy rates
 local timerDromansWrath					= mod:NewBuffActiveTimer(15, 323059, nil, nil, nil, 6)
 
+mod.vb.pollenCount = 0
+mod.vb.tearsCount = 0
+
 function mod:OnCombatStart(delay)
+	self.vb.pollenCount = 0
+	self.vb.tearsCount = 0
 	--Not 100% sure boss timers start here or Soul Shackle, Droman's timers def start at soul Shackle
 --	timerEmbraceDarknessCD:Start(33.3-delay)--Health triggered?
 --	timerRepulsiveVisageCD:Start(44.7-delay)--44.7-46?
@@ -64,17 +69,19 @@ function mod:SPELL_CAST_START(args)
 		specWarnEmbraceDarkness:Show()
 		specWarnEmbraceDarkness:Play("aesoon")
 	elseif spellId == 323137 then
-		specWarnBewilderingPollen:Show()
+		self.vb.pollenCount = self.vb.pollenCount + 1
+		specWarnBewilderingPollen:Show(self.vb.pollenCount)
 		specWarnBewilderingPollen:Play("shockwave")
-		timerBewilderingPollenCD:Start()
+		timerBewilderingPollenCD:Start(nil, self.vb.pollenCount+1)
 	elseif spellId == 328756 then
 		specWarnRepulsiveVisage:Show()
 		specWarnRepulsiveVisage:Play("fearsoon")
 		--timerRepulsiveVisageCD:Start()
 	elseif spellId == 323138 then--Forced Compliance
-		specWarnTearsoftheForrest:Show()
+		self.vb.tearsCount = self.vb.tearsCount + 1
+		specWarnTearsoftheForrest:Show(self.vb.tearsCount)
 		specWarnTearsoftheForrest:Play("watchstep")
-		timerTearsoftheForestCD:Start()
+		timerTearsoftheForestCD:Start(nil, self.vb.tearsCount+1)
 	end
 end
 
@@ -92,8 +99,8 @@ function mod:SPELL_AURA_APPLIED(args)
 	if spellId == 321006 then
 		warnSoulShackle:Show(args.destName)
 		--Droman
-		timerBewilderingPollenCD:Start(7.3)
-		timerTearsoftheForestCD:Start(13.5)
+		timerBewilderingPollenCD:Start(7.3, self.vb.pollenCount+1)
+		timerTearsoftheForestCD:Start(13.5, self.vb.tearsCount+1)
 	elseif spellId == 323059 then
 		warnDromansWrath:Show(args.destName)
 		timerDromansWrath:Start(15)

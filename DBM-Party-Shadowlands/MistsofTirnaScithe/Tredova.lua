@@ -32,18 +32,18 @@ local warnInfestor					= mod:NewAnnounce("warnInfestor", 4, 337235, nil, nil, ni
 
 local specWarnConsumption			= mod:NewSpecialWarningDodge(322450, nil, nil, nil, 2, 2)
 local specWarnConsumptionKick		= mod:NewSpecialWarningInterrupt(322450, "HasInterrupt", nil, 2, 1, 2)
-local specWarnAcceleratedIncubation	= mod:NewSpecialWarningSwitch(322550, "Dps", nil, nil, 1, 2)
+local specWarnAcceleratedIncubation	= mod:NewSpecialWarningSwitchCount(322550, "Dps", nil, nil, 1, 2)
 local specWarnMindLink				= mod:NewSpecialWarningMoveAway(322648, nil, nil, nil, 1, 11)
 local yellMindLink					= mod:NewYell(322648)
 local specWarnMarkthePrey			= mod:NewSpecialWarningYou(322563, nil, nil, nil, 1, 2)
-local specWarnAcidExpulsion			= mod:NewSpecialWarningDodge(322654, nil, nil, nil, 2, 2)
+local specWarnAcidExpulsion			= mod:NewSpecialWarningDodgeCount(322654, nil, nil, nil, 2, 2)
 local specWarnParasiticInfesterKick	= mod:NewSpecialWarning("specWarnParasiticInfesterKick", nil, nil, nil, 1, 2, 4, 337235, 337235)
 local yellParasiticInfester			= mod:NewYell(337235, L.Infester, true, "yellParasiticInfester")
 local specWarnGTFO					= mod:NewSpecialWarningGTFO(326309, nil, nil, nil, 1, 8)
 
-local timerAcceleratedIncubationCD	= mod:NewCDTimer(34, 322550, nil, nil, nil, 1, nil, nil, true)--34-43?
-local timerMindLinkCD				= mod:NewCDTimer(15.4, 322648, nil, nil, nil, 3, nil, nil, true)--15-19, still not cast if everyone already affected by it.
-local timerAcidExpulsionCD			= mod:NewCDTimer(19.4, 322654, nil, nil, nil, 3, nil, nil, true)--19-26
+local timerAcceleratedIncubationCD	= mod:NewCDCountTimer(34, 322550, nil, nil, nil, 1, nil, nil, true)--34-43?
+local timerMindLinkCD				= mod:NewCDCountTimer(15.4, 322648, nil, nil, nil, 3, nil, nil, true)--15-19, still not cast if everyone already affected by it.
+local timerAcidExpulsionCD			= mod:NewCDCountTimer(19.4, 322654, nil, nil, nil, 3, nil, nil, true)--19-26
 local timerParasiticInfesterCD		= mod:NewTimer(23, "timerParasiticInfesterCD", 337235, nil, nil, 4, DBM_COMMON_L.MYTHIC_ICON..DBM_COMMON_L.INTERRUPT_ICON, true)--23-26.3
 
 mod:AddInfoFrameOption(322527, true)
@@ -51,6 +51,10 @@ mod:AddSetIconOption("SetIconOnMindLink", 322648, true, false, {1, 2, 3, 4, 5})
 
 mod.vb.mindLinkIcon = 1
 mod.vb.firstPray = false
+mod.vb.inubationCount = 0
+mod.vb.mindlinkCount = 0
+mod.vb.expulsionCount = 0
+mod.vb.parasiteCount = 0
 
 function mod:InfesterTarget(targetname, uId)
 	if not targetname then return end
@@ -63,11 +67,15 @@ end
 function mod:OnCombatStart(delay)
 	self.vb.mindLinkIcon = 1
 	self.vb.firstPray = false
-	timerAcidExpulsionCD:Start(7.1-delay)
-	timerMindLinkCD:Start(18.1-delay)
-	timerAcceleratedIncubationCD:Start(45.2-delay)
+	self.vb.inubationCount = 0
+	self.vb.mindlinkCount = 0
+	self.vb.expulsionCount = 0
+	self.vb.parasiteCount = 0
+	timerAcidExpulsionCD:Start(7.1-delay, 1)
+	timerMindLinkCD:Start(18.1-delay, 1)
+	timerAcceleratedIncubationCD:Start(45.2-delay, 1)
 	if self:IsMythic() then
-		timerParasiticInfesterCD:Start(12-delay)
+		timerParasiticInfesterCD:Start(12-delay, 1)
 	end
 end
 
@@ -80,16 +88,18 @@ end
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
 	if spellId == 322550 then
-		specWarnAcceleratedIncubation:Show()
+		self.vb.inubationCount = self.vb.inubationCount + 1
+		specWarnAcceleratedIncubation:Show(self.vb.inubationCount)
 		specWarnAcceleratedIncubation:Play("killmob")
-		timerAcceleratedIncubationCD:Start()
+		timerAcceleratedIncubationCD:Start(nil, self.vb.inubationCount+1)
 	elseif spellId == 322614 then
 		self.vb.mindLinkIcon = 2
 	elseif spellId == 337235 or spellId == 337249 or spellId == 337255 then
+		self.vb.parasiteCount = self.vb.parasiteCount + 1
 		self:ScheduleMethod(0.2, "BossTargetScanner", args.sourceGUID, "InfesterTarget", 0.1, 8)
-		timerParasiticInfesterCD:Start()
+		timerParasiticInfesterCD:Start(nil, self.vb.parasiteCount)
 		if self:CheckInterruptFilter(args.sourceGUID, false, true) then
-			specWarnParasiticInfesterKick:Show(args.sourceName)
+			specWarnParasiticInfesterKick:Show(args.sourceName, self.vb.parasiteCount)
 			specWarnParasiticInfesterKick:Play("kickcast")
 		end
 	end
@@ -99,11 +109,13 @@ function mod:SPELL_CAST_SUCCESS(args)
 	local spellId = args.spellId
 	if spellId == 322614 then
 		self.vb.mindLinkIcon = 2
-		timerMindLinkCD:Start()
+		self.vb.mindlinkCount = self.vb.mindlinkCount + 1
+		timerMindLinkCD:Start(nil, self.vb.mindlinkCount+1)
 	elseif spellId == 322654 and self:AntiSpam(3, 1) then
-		specWarnAcidExpulsion:Show()
+		self.vb.expulsionCount = self.vb.expulsionCount + 1
+		specWarnAcidExpulsion:Show(self.vb.expulsionCount)
 		specWarnAcidExpulsion:Play("watchstep")
-		timerAcidExpulsionCD:Start()
+		timerAcidExpulsionCD:Start(nil, self.vb.expulsionCount+1)
 	end
 end
 

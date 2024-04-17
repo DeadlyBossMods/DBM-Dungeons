@@ -18,7 +18,7 @@ mod:RegisterEventsInCombat(
 --[[
 (ability.id = 320596 or ability.id = 320637 or ability.id = 320655) and type = "begincast"
 --]]
-local warnFetidGas					= mod:NewSpellAnnounce(320637, 2)
+local warnFetidGas					= mod:NewCountAnnounce(320637, 2)
 
 local specWarnHeavingRetchYou		= mod:NewSpecialWarningMoveAway(320596, nil, nil, nil, 1, 2)
 local specWarnHeavingRetch			= mod:NewSpecialWarningDodgeLoc(320596, nil, nil, nil, 2, 2)
@@ -26,9 +26,13 @@ local yellHeavingRetch				= mod:NewYell(320596)
 local specWarnCrunch				= mod:NewSpecialWarningDefensive(320655, nil, nil, nil, 1, 2)
 local specWarnGTFO					= mod:NewSpecialWarningGTFO(320646, nil, nil, nil, 1, 8)
 
-local timerHeavingRetchCD			= mod:NewCDTimer(32.7, 320596, nil, nil, nil, 3)--32.7-42
-local timerFetidGasCD				= mod:NewCDTimer(24.6, 320637, nil, nil, nil, 3)
-local timerCrunchCD					= mod:NewCDTimer(11.7, 320655, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)--11-20, spell queues behind other 2 casts
+local timerHeavingRetchCD			= mod:NewCDCountTimer(32.7, 320596, nil, nil, nil, 3)--32.7-42
+local timerFetidGasCD				= mod:NewCDCountTimer(24.6, 320637, nil, nil, nil, 3)
+local timerCrunchCD					= mod:NewCDCountTimer(11.7, 320655, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)--11-20, spell queues behind other 2 casts
+
+mod.vb.retchCount = 0
+mod.vb.gasCount = 0
+mod.vb.crunchCount = 0
 
 function mod:RetchTarget(targetname, uId)
 	if not targetname then return end
@@ -43,25 +47,31 @@ function mod:RetchTarget(targetname, uId)
 end
 
 function mod:OnCombatStart(delay)
-	timerCrunchCD:Start(5-delay)
-	timerHeavingRetchCD:Start(10.6-delay)
-	timerFetidGasCD:Start(22-delay)
+	self.vb.retchCount = 0
+	self.vb.gasCount = 0
+	self.vb.crunchCount = 0
+	timerCrunchCD:Start(5-delay, 1)
+	timerHeavingRetchCD:Start(10.6-delay, 1)
+	timerFetidGasCD:Start(22-delay, 1)
 end
 
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
 	if spellId == 320596 then
+		self.vb.retchCount = self.vb.retchCount + 1
 --		self:ScheduleMethod(0.1, "BossTargetScanner", args.sourceGUID, "RetchTarget", 0.1, 4)
-		timerHeavingRetchCD:Start()
+		timerHeavingRetchCD:Start(nil, self.vb.retchCount+1)
 	elseif spellId == 320637 then
-		warnFetidGas:Show()
-		timerFetidGasCD:Start()
+		self.vb.gasCount = self.vb.gasCount + 1
+		warnFetidGas:Show(self.vb.gasCount)
+		timerFetidGasCD:Start(nil, self.vb.gasCount+1)
 	elseif spellId == 320655 then
+		self.vb.crunchCount = self.vb.crunchCount + 1
 		if self:IsTanking("player", "boss1", nil, true) then
 			specWarnCrunch:Show()
 			specWarnCrunch:Play("defensive")
 		end
-		timerCrunchCD:Start()
+		timerCrunchCD:Start(nil, self.vb.crunchCount+1)
 	end
 end
 

@@ -1,4 +1,4 @@
-local mod	= DBM:NewMod(2173, "DBM-Party-BfA", 5, 1001)
+local mod	= DBM:NewMod(2173, "DBM-Party-BfA", 5, 1023)
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
@@ -15,33 +15,40 @@ mod:RegisterEventsInCombat(
 )
 
 --TODO, cannons remaining, who's carrying ordinance, etc
-local warnWithdraw					= mod:NewSpellAnnounce(268752, 2)
+local warnWithdraw					= mod:NewCountAnnounce(268752, 2)
 local warnCrimsonSwipe				= mod:NewSpellAnnounce(268230, 2, nil, false, 2)--Can't be avoided by tanks, so opt in, not opt out
 local warnUnstableOrdnance			= mod:NewSpellAnnounce(268995, 1)
 
-local specWarnCleartheDeck			= mod:NewSpecialWarningDodge(269029, "Tank", nil, nil, 3, 2)
+local specWarnCleartheDeck			= mod:NewSpecialWarningDodgeCount(269029, "Tank", nil, nil, 3, 2)
 local specWarnHeavySlash			= mod:NewSpecialWarningDodge(257288, "Tank", nil, nil, 1, 2)
-local specWarnBroadside				= mod:NewSpecialWarningDodge(268260, "Tank", nil, nil, 1, 2)
+local specWarnBroadside				= mod:NewSpecialWarningDodgeCount(268260, "Tank", nil, nil, 1, 2)
 
-local timerWithdrawCD				= mod:NewCDTimer(40, 268752, nil, nil, nil, 6)
-local timerCleartheDeckCD			= mod:NewCDTimer(20, 269029, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON)--Need more data
+local timerWithdrawCD				= mod:NewCDCountTimer(40, 268752, nil, nil, nil, 6)
+local timerCleartheDeckCD			= mod:NewCDCountTimer(20, 269029, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON)--Need more data
 local timerCrimsonSwipeCD			= mod:NewCDTimer(9, 268230, nil, false, 2, 5, nil, DBM_COMMON_L.TANK_ICON)
-local timerBroadsideCD				= mod:NewCDTimer(9, 268260, nil, nil, nil, 3)--Need more data
+local timerBroadsideCD				= mod:NewCDCountTimer(9, 268260, nil, nil, nil, 3)--Need more data
 
 mod.vb.bossGone = false
+mod.vb.withdrawCount = 0
+mod.vb.clearDeckCount = 0
+mod.vb.broadCount = 0
 
 function mod:OnCombatStart(delay)
 	self.vb.bossGone = false
-	timerCleartheDeckCD:Start(4.3-delay)
-	timerWithdrawCD:Start(13.1-delay)
+	self.vb.withdrawCount = 0
+	self.vb.clearDeckCount = 0
+	self.vb.broadCount = 0
+	timerCleartheDeckCD:Start(4.3-delay, 1)
+	timerWithdrawCD:Start(13.1-delay, 1)
 end
 
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
 	if spellId == 269029 then
-		specWarnCleartheDeck:Show()
+		self.vb.clearDeckCount = self.vb.clearDeckCount + 1
+		specWarnCleartheDeck:Show(self.vb.clearDeckCount)
 		specWarnCleartheDeck:Play("shockwave")
-		timerCleartheDeckCD:Start()
+		timerCleartheDeckCD:Start(nil, self.vb.clearDeckCount+1)
 	elseif spellId == 268230 then
 		if self:AntiSpam(3, 1) then
 			warnCrimsonSwipe:Show()
@@ -63,23 +70,25 @@ function mod:UNIT_SPELLCAST_START(_, _, spellId)
 		specWarnHeavySlash:Show()
 		specWarnHeavySlash:Play("shockwave")
 	elseif spellId == 268260 then--Broadside
-		specWarnBroadside:Show()
+		self.vb.broadCount = self.vb.broadCount + 1
+		specWarnBroadside:Show(self.vb.broadCount)
 		specWarnBroadside:Play("watchstep")
-		timerBroadsideCD:Start(10.9)
+		timerBroadsideCD:Start(10.9, self.vb.broadCount+1)
 	end
 end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, spellId)
 	if spellId == 268752 then--Withdraw (boss Leaving)
 		self.vb.bossGone = true
-		warnWithdraw:Show()
+		self.vb.withdrawCount = self.vb.withdrawCount + 1
+		warnWithdraw:Show(self.vb.withdrawCount)
 		timerCleartheDeckCD:Stop()
-		timerBroadsideCD:Start(11.3)
+		timerBroadsideCD:Start(11.3, self.vb.broadCount+1)
 	elseif spellId == 268745 and self.vb.bossGone then--Energy Tracker (boss returning)
 		self.vb.bossGone = false
 		timerBroadsideCD:Stop()
-		timerCleartheDeckCD:Start(4.3)
-		timerWithdrawCD:Start(36)
+		timerCleartheDeckCD:Start(4.3, self.vb.clearDeckCount+1)
+		timerWithdrawCD:Start(36, self.vb.withdrawCount+1)
 	elseif spellId == 268963 then--Unstable Ordnance
 		warnUnstableOrdnance:Show()
 		timerBroadsideCD:Stop()
