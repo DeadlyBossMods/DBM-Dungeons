@@ -164,7 +164,7 @@ L:SetGeneralLocalization({
 L = DBM:GetModLocalization("AraKaraTrash")
 
 L:SetGeneralLocalization({
-	name =	"Трэш мобы Ара-Кара"
+	name =	"Трэш мобы Ара-Кара, Город Эха"
 })
 
 -------------------------
