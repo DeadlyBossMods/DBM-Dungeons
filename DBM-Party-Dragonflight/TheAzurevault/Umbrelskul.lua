@@ -48,16 +48,6 @@ function mod:OnCombatStart(delay)
 	timerCrystallineRoarCD:Start(12.3-delay)
 	timerArcaneEruptionCD:Start(28.9-delay)--28.9-37, Highly variable if it gets spell queued behind more tank casts
 	timerUnleashedDestructionCD:Start(48.2-delay)
-	if self.Options.InfoFrame then
-		DBM.InfoFrame:SetHeader(DBM:GetSpellInfo(388777))
-		DBM.InfoFrame:Show(5, "playerdebuffremaining", 388777)
-	end
-end
-
-function mod:OnCombatEnd()
-	if self.Options.InfoFrame then
-		DBM.InfoFrame:Hide()
-	end
 end
 
 function mod:SPELL_CAST_START(args)
