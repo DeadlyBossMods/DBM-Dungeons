@@ -63,6 +63,7 @@ end
 function mod:SPELL_AURA_APPLIED(args)
 	if args.spellId == 144590 and args:IsPlayer() then
 		specWarnCurse:Show()
+		---@diagnostic disable-next-line: param-type-mismatch
 		specWarnCurse:Play(nil, 15588)--"Sound\\Creature\\Kologarn\\UR_Kologarn_Slay02.ogg"
 	end
 end
