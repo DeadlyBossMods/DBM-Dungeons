@@ -23,8 +23,12 @@ mod:RegisterEventsInCombat(
 
 --TODO, or use 442611 removed (Disregard) if happy hour removed doesn't work
 --TODO, upgrade brawl to higher prio warning?, assuming detection even valid
---TODO, verify nameplate aura for thirsty/Rowdy patrons, cause if they aren't hostile it won't work (in which case switch to auto marking probably)
 --TODO, reset counts on happy hour?
+--[[
+(ability.id = 442525 or ability.id = 432198 or ability.id = 432179 or ability.id = 432229) and type = "begincast"
+ or ability.id = 442525
+ or type = "dungeonencounterstart" or type = "dungeonencounterend"
+--]]
 local warnHappyHour							= mod:NewSpellAnnounce(442525, 3)
 local warnHappyHourOver						= mod:NewEndAnnounce(442525, 2)
 local warnThrowCinderbrew					= mod:NewSpellAnnounce(432179, 2)
@@ -38,7 +42,7 @@ local specWarnGTFO							= mod:NewSpecialWarningGTFO(432182, nil, nil, nil, 1, 8
 local timerHappyHourCD						= mod:NewAITimer(33.9, 442525, nil, nil, nil, 6)
 local timerBlazingBelchCD					= mod:NewAITimer(33.9, 432198, nil, nil, nil, 3)
 local timerThrowCinderbrewCD				= mod:NewAITimer(33.9, 432179, nil, nil, nil, 3)
-local timerKegSmashCD						= mod:NewAITimer(33.9, 432229, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+local timerKegSmashCD						= mod:NewAITimer(33.9, 432229, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)--13.7
 
 mod:AddNamePlateOption("NPAuraOnThirsty", 431896)
 
@@ -52,10 +56,10 @@ function mod:OnCombatStart(delay)
 	self.vb.belchCount = 0
 	self.vb.cinderbrewCount = 0
 	self.vb.kegCount = 0
-	timerBlazingBelchCD:Start(1)
-	timerHappyHourCD:Start(1)
-	timerThrowCinderbrewCD:Start(1)
-	timerKegSmashCD:Start(1)
+	timerKegSmashCD:Start(1)--5.8
+	timerThrowCinderbrewCD:Start(1)--11
+	timerBlazingBelchCD:Start(1)--14.7
+	timerHappyHourCD:Start(1)--26.8
 	if self.Options.NPAuraOnThirsty then
 		DBM:FireEvent("BossMod_EnableHostileNameplates")
 	end
@@ -119,12 +123,12 @@ function mod:SPELL_AURA_REMOVED(args)
 		warnHappyHourOver:Show()
 		if self:IsMythic() then
 			specWarnBrawl:Show()
-			specWarnBrawl:Play("watcstep")
+			specWarnBrawl:Play("watchstep")
 		end
-		timerHappyHourCD:Start(2)
-		timerBlazingBelchCD:Start(2)
+		timerKegSmashCD:Start(2)--8.6
 		timerThrowCinderbrewCD:Start(2)
-		timerKegSmashCD:Start(2)
+		timerBlazingBelchCD:Start(2)
+		timerHappyHourCD:Start(2)
 	elseif spellId == 431896 then
 		if self.Options.NPAuraOnThirsty then
 			DBM.Nameplate:Hide(true, args.destGUID, spellId)

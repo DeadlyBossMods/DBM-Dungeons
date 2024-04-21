@@ -13,8 +13,9 @@ mod.sendMainBossGUID = true
 mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
-	"SPELL_CAST_START 435622 435560 436592",
-	"SPELL_CAST_SUCCESS 436644",
+	"SPELL_CAST_START 435622 435560 436592 436637",
+	"SPELL_CAST_SUCCESS 435797",
+	"SPELL_SUMMON 439517",
 	"SPELL_AURA_APPLIED 435789 436644",
 --	"SPELL_AURA_APPLIED_DOSE 435789",
 	"SPELL_AURA_REMOVED 435789 436644"
@@ -23,14 +24,16 @@ mod:RegisterEventsInCombat(
 --	"UNIT_SPELLCAST_SUCCEEDED boss1"
 )
 
---TODO, track number of remaining bombs and cahnge emphasis of Hail if more than a couple?
---TODO, warn cinderboom going off, but which ID, there are 4 of them, and it might not even be CLEU
---TODO, right event for spread the love timer/announce
---TODO, can bombs be auto marked with https://www.wowhead.com/beta/spell=435567/spread-the-love and https://www.wowhead.com/beta/spell=439517/spread-the-love
 --TODO, do timers reset on Hail?
---TODO, can tank sidestep frontal?
-local warnSpreadtheLove						= mod:NewCountAnnounce(435560, 3)--Maybe change to bomb count not spread count, or show both
+--TODO, longer pulls for let it hail and spread the love timer vetting
+--[[
+(ability.id = 435622 or ability.id = 435560 or ability.id = 436592 or ability.id = 436637) and type = "begincast"
+ or type = "dungeonencounterstart" or type = "dungeonencounterend"
+ or ability.id = 439517 and type = "summon" or ability.id = 435797 and type = "cast"
+--]]
+local warnSpreadtheLove						= mod:NewCountAnnounce(435560, 3)
 local warnBurningRicochet					= mod:NewTargetNoFilterAnnounce(436644, 4)
+local cinderboom							= mod:NewSpellAnnounce(435797, 4)
 
 local specWarnLetItHail						= mod:NewSpecialWarningCount(435622, nil, nil, nil, 2, 2)
 local specWarnBurningRicochet				= mod:NewSpecialWarningYouPos(436644, nil, nil, nil, 1, 2)
@@ -41,12 +44,13 @@ local specWarnCashCannon					= mod:NewSpecialWarningCount(436592, nil, nil, nil,
 
 local timerLetItHailCD						= mod:NewAITimer(33.9, 435622, nil, nil, nil, 2)
 local timerCinderWounds						= mod:NewBuffFadesTimer(33.9, 435789, nil, nil, nil, 5, nil, DBM_COMMON_L.MAGIC_ICON)
-local timerSpreadtheLoveCD					= mod:NewAITimer(33.9, 435560, nil, nil, nil, 5)
-local timerBurningRicochetCD				= mod:NewAITimer(33.9, 436644, nil, nil, nil, 3)
-local timerCashCannonCD						= mod:NewAITimer(33.9, 436592, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+local timerSpreadtheLoveCD					= mod:NewAITimer(49.6, 435560, nil, nil, nil, 5)
+local timerBurningRicochetCD				= mod:NewCDCountTimer(13.3, 436644, nil, nil, nil, 3)
+local timerCashCannonCD						= mod:NewCDCountTimer(13.3, 436592, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 
 mod:AddSetIconOption("SetIconOnRico", 436644, true, false, {1, 2})
 
+mod.vb.bombsRemaining = 0
 mod.vb.hailCount = 0
 mod.vb.debuffsTracked = 0
 mod.vb.spreadCount = 0
@@ -55,16 +59,17 @@ mod.vb.DebuffIcon = 1
 mod.vb.cannonCount = 0
 
 function mod:OnCombatStart(delay)
+	self.vb.bombsRemaining = 0
 	self.vb.hailCount = 0
 	self.vb.debuffsTracked = 0
 	self.vb.spreadCount = 0
 	self.vb.ricochetCount = 0
 	self.vb.DebuffIcon = 1
 	self.vb.cannonCount = 0
-	timerLetItHailCD:Start(1)
-	timerSpreadtheLoveCD:Start(1)
-	timerBurningRicochetCD:Start(1)
-	timerCashCannonCD:Start(1)
+--	timerSpreadtheLoveCD:Start(1)--Instantly on Pull
+	timerCashCannonCD:Start(4.8, 1)
+	timerBurningRicochetCD:Start(13.3, 1)
+	timerLetItHailCD:Start(1)--35
 end
 
 --function mod:OnCombatEnd()
@@ -77,6 +82,9 @@ function mod:SPELL_CAST_START(args)
 		self.vb.hailCount = self.vb.hailCount + 1
 		specWarnLetItHail:Show(self.vb.hailCount)
 		specWarnLetItHail:Play("specialsoon")
+		if self.vb.bombsRemaining > 3 then--At least 4 bombs still up, should also emphasize many waves
+			specWarnLetItHail:ScheduleVoice(2, "watchwave")
+		end
 		timerLetItHailCD:Start()
 	elseif spellId == 435560 then
 		self.vb.spreadCount = self.vb.spreadCount + 1
@@ -88,19 +96,29 @@ function mod:SPELL_CAST_START(args)
 			specWarnCashCannon:Show()
 			specWarnCashCannon:Play("carefly")
 		end
-		timerCashCannonCD:Start()
+		timerCashCannonCD:Start(nil, self.vb.cannonCount+1)
+	elseif spellId == 436637 then
+		self.vb.DebuffIcon = 1
+		self.vb.ricochetCount = self.vb.ricochetCount + 1
+		timerBurningRicochetCD:Start(nil, self.vb.ricochetCount+1)
 	end
 end
 
 function mod:SPELL_CAST_SUCCESS(args)
 	local spellId = args.spellId
-	if spellId == 436644 and self:AntiSpam(3, 1) then
-		self.vb.DebuffIcon = 1
-		self.vb.ricochetCount = self.vb.ricochetCount + 1
-		timerBurningRicochetCD:Start()
+	if spellId == 435797 then
+		self.vb.bombsRemaining = self.vb.bombsRemaining - 1
+		if self:AntiSpam(5, 2) then
+			cinderboom:Show()
+		end
 	end
 end
 
+function mod:SPELL_SUMMON(args)
+	if args.spellId == 439517 then
+		self.vb.bombsRemaining = self.vb.bombsRemaining + 1
+	end
+end
 
 function mod:SPELL_AURA_APPLIED(args)
 	local spellId = args.spellId
@@ -141,7 +159,7 @@ end
 
 --[[
 function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId, spellName)
-	if spellId == 372820 and destGUID == UnitGUID("player") and self:AntiSpam(3, 2) then
+	if spellId == 372820 and destGUID == UnitGUID("player") and self:AntiSpam(3, 3) then
 		specWarnGTFO:Show(spellName)
 		specWarnGTFO:Play("watchfeet")
 	end
