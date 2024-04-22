@@ -21,6 +21,10 @@ mod:RegisterEventsInCombat(
 --	"UNIT_SPELLCAST_SUCCEEDED boss1"
 )
 
+--[[
+(ability.id = 424737 or ability.id = 425048 or ability.id = 424958) and type = "begincast"
+ or type = "dungeonencounterstart" or type = "dungeonencounterend"
+--]]
 local warnSomeChaoticCorruption				= mod:NewTargetNoFilterAnnounce(424737, 3)
 
 local specWarnChaoticCorruption				= mod:NewSpecialWarningYou(424737, nil, nil, nil, 1, 2)
@@ -30,9 +34,9 @@ local specWarnDarkGravity					= mod:NewSpecialWarningRunCount(425048, nil, nil, 
 local specWarnCrushReality					= mod:NewSpecialWarningDodgeCount(424958, nil, nil, nil, 2, 2)
 local specWarnGTFO							= mod:NewSpecialWarningGTFO(424966, nil, nil, nil, 1, 8)
 
-local timerChaoticCorruptionCD				= mod:NewAITimer(33.9, 424737, nil, nil, nil, 3)
-local timerDarkGravityCD					= mod:NewAITimer(33.9, 425048, nil, nil, nil, 2)
-local timerCrushRealityCD					= mod:NewAITimer(33.9, 424958, nil, nil, nil, 3)
+local timerChaoticCorruptionCD				= mod:NewCDCountTimer(32.7, 424737, nil, nil, nil, 3)
+local timerDarkGravityCD					= mod:NewCDCountTimer(23, 425048, nil, nil, nil, 2)
+local timerCrushRealityCD					= mod:NewCDCountTimer(21.8, 424958, nil, nil, nil, 3)
 
 mod:AddInfoFrameOption(424797)
 
@@ -46,9 +50,9 @@ function mod:OnCombatStart(delay)
 	self.vb.chaoticCount = 0
 	self.vb.gravityCount = 0
 	self.vb.crushCount = 0
-	timerChaoticCorruptionCD:Start(1)
-	timerDarkGravityCD:Start(1)
-	timerCrushRealityCD:Start(1)
+	timerChaoticCorruptionCD:Start(8.4, 1)
+	timerDarkGravityCD:Start(23, 1)
+	timerCrushRealityCD:Start(30.2, 1)
 	if self.Options.InfoFrame and self:IsMythic() then
 		DBM.InfoFrame:SetHeader(DBM:GetSpellInfo(424797))
 		DBM.InfoFrame:Show(5, "playerdebuffremaining", 424797)
@@ -65,18 +69,18 @@ function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
 	if spellId == 424737 then
 		self.vb.chaoticCount = self.vb.chaoticCount + 1
-		timerChaoticCorruptionCD:Start()
+		timerChaoticCorruptionCD:Start(nil, self.vb.chaoticCount+1)
 	elseif spellId == 425048 then
 		self.vb.gravityCount = self.vb.gravityCount + 1
 		specWarnDarkGravity:Show(self.vb.gravityCount)
 		specWarnDarkGravity:Play("pullin")
 		specWarnDarkGravity:ScheduleVoice(1.5, "justrun")
-		timerDarkGravityCD:Start()
+		timerDarkGravityCD:Start(nil, self.vb.gravityCount+1)
 	elseif spellId == 424958 then
 		self.vb.crushCount = self.vb.crushCount + 1
 		specWarnCrushReality:Show(self.vb.crushCount)
 		specWarnCrushReality:Play("watchwave")
-		timerCrushRealityCD:Start()
+		timerCrushRealityCD:Start(nil, self.vb.crushCount+1)
 	end
 end
 

@@ -13,7 +13,7 @@ mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 423305 429487 445457 424371",
---	"SPELL_CAST_SUCCESS",
+--	"SPELL_CAST_SUCCESS 181089",
 	"SPELL_AURA_APPLIED 445262 428269 429028 423839",
 	"SPELL_AURA_REMOVED 445262 428269 423839",
 	"SPELL_PERIODIC_DAMAGE 433067",
@@ -25,6 +25,14 @@ mod:RegisterEventsInCombat(
 --TODO, reshape still need announcing with nameplat auras? don't want to introduce spam
 --TODO, can the tank sidestep Oblivion Wave?
 --TODO, update timers for 10 second stun on boss?
+--NOTE, Really long pulls will be needed to fix this boss
+--[[
+(ability.id = 423305 or ability.id = 429487 or ability.id = 445457 or ability.id = 424371) and type = "begincast"
+ or ability.id = 181089 and type = "cast"
+ or ability.id = 445262 and (type = "applybuff" or type = "removebuff")
+ or ability.id = 423839
+ or type = "dungeonencounterstart" or type = "dungeonencounterend"
+--]]
 local warnVoidShell						= mod:NewTargetNoFilterAnnounce(445262, 3)
 local warnVoidShellFaded				= mod:NewFadesAnnounce(445262, 1)
 local warnCorruptionPulse				= mod:NewTargetNoFilterAnnounce(429028, 4)
@@ -38,7 +46,7 @@ local specWarnGTFO						= mod:NewSpecialWarningGTFO(433067, nil, nil, nil, 1, 8)
 
 local timerLatentVoidCD					= mod:NewAITimer(33.9, 423305, nil, nil, nil, 3)
 local timerUnleashedCorruptionCD		= mod:NewAITimer(33.9, 429487, nil, nil, nil, 3)
-local timerOblivionWaveCD				= mod:NewAITimer(33.9, 445457, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+local timerOblivionWaveCD				= mod:NewAITimer(10.7, 445457, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerElectrocuted					= mod:NewBuffActiveTimer(33.9, 423839, nil, nil, nil, 5)
 
 mod:AddInfoFrameOption(445262)
@@ -104,8 +112,9 @@ end
 --[[
 function mod:SPELL_CAST_SUCCESS(args)
 	local spellId = args.spellId
-	if spellId == 372858 then
-
+	if spellId == 181089 then--Encounter Event
+		self.vb.vengeanceCount = self.vb.vengeanceCount + 1
+		warnStormsVengeance:Show(self.vb.vengeanceCount)
 	end
 end
 --]]
