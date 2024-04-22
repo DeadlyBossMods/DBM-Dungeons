@@ -36,7 +36,7 @@ local specWarnSkewer				= mod:NewSpecialWarningDefensive(249919, nil, nil, nil, 
 local specWarnEchoes				= mod:NewSpecialWarningDodgeCount(250050, nil, nil, nil, 2, 2)
 local specWarnGTFO					= mod:NewSpecialWarningGTFO(250036, nil, nil, nil, 1, 8)
 
-local timerSoulrendCD				= mod:NewCDCountTimer(39.5, 259187, nil, nil, nil, 3, nil, DBM_COMMON_L.DAMAGE_ICON)
+local timerSoulrendCD				= mod:NewCDCountTimer(38.4, 259187, nil, nil, nil, 3, nil, DBM_COMMON_L.DAMAGE_ICON)
 local timerWrackingPainCD			= mod:NewCDCountTimer(16.7, 250096, nil, nil, nil, 3)--17-23
 local timerSkewerCD					= mod:NewCDCountTimer(12, 249919, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerEchoesCD					= mod:NewCDCountTimer(31.2, 250050, nil, nil, nil, 3)
