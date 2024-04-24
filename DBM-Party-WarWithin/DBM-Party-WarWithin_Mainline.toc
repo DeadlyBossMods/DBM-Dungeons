@@ -1,5 +1,6 @@
 ## Interface: 100206
 ## Title:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Dungeons (WW)|r
+## Title-koKR:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0던전 (내부 전쟁)|r
 ## Title-ruRU:|cffffe00a<|r|cffff7d0aDBM Мод|r|cffffe00a>|r |cffc030c0Подземелья (Война Внутри)|r
 ## Title-zhCN:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0队伍首领 (地心之战)|r
 ## LoadOnDemand: 1
@@ -13,6 +14,7 @@
 ## X-DBM-StatTypes: follower,normal,heroic,mythic,challenge
 ## X-DBM-Mod-SubCategoriesID: 2651, 2649, 2648, 2652, 2662, 2660, 2661, 2669
 ## X-DBM-Mod-Name: Dungeons (War Within)
+## X-DBM-Mod-Name-koKR: 던전 (내부 전쟁)
 ## X-DBM-Mod-Name-ruRU: Подземелья (Война Внутри)
 ## X-DBM-Mod-Name-zhCN: 队伍首领 (地心之战)
 ## X-DBM-Mod-Sort: 115
@@ -25,6 +27,7 @@
 ## Version: @project-version@
 
 localization.en.lua
+localization.kr.lua
 localization.ru.lua
 localization.cn.lua
 
