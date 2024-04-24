@@ -4,6 +4,7 @@ local L		= mod:GetLocalizedStrings()
 mod:SetRevision("@file-date-integer@")
 mod:SetZone(33)
 mod:SetCreatureID(36272, 36296, 36565)
+--mod:SetEncounterID(2879)--War Within rework?
 mod:SetModelID(16176)
 
 mod:SetReCombatTime(10)

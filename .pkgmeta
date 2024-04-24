@@ -1,5 +1,6 @@
 package-as: DBM-Party-Vanilla
 enable-nolib-creation: no
+changelog-title: DBM - Dungeons
 
 move-folders:
     DBM-Party-Vanilla/DBM-WorldEvents: DBM-WorldEvents
@@ -13,3 +14,4 @@ move-folders:
     DBM-Party-Vanilla/DBM-Party-BfA: DBM-Party-BfA
     DBM-Party-Vanilla/DBM-Party-Shadowlands: DBM-Party-Shadowlands
     DBM-Party-Vanilla/DBM-Party-Dragonflight: DBM-Party-Dragonflight
+    DBM-Party-Vanilla/DBM-Party-WarWithin: DBM-Party-WarWithin

@@ -19,26 +19,29 @@ mod:RegisterEventsInCombat(
 )
 
 --shredding? Disabled since it seemed utterly useless in my limited testing
---local warnShredding				= mod:NewSpellAnnounce(75271, 3)
+--local warnShredding			= mod:NewSpellAnnounce(75271, 3)
 local warnFlamingFixate	 		= mod:NewTargetNoFilterAnnounce(82850, 4)
 
 local specWarnFlamingFixate		= mod:NewSpecialWarningRun(82850, nil, nil, nil, 4, 2)
-local specWarnDevouring 		= mod:NewSpecialWarningDodge(90950, nil, nil, nil, 2, 2)
+local specWarnDevouring 		= mod:NewSpecialWarningDodgeCount(90950, nil, nil, nil, 2, 2)
 local specWarnSeepingTwilight	= mod:NewSpecialWarningMove(75317, nil, nil, nil, 2, 2)
 
-local timerAddCD				= mod:NewCDTimer(20.6, 90949, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)--20.6-27. 24 is the average
-local timerDevouringCD			= mod:NewCDTimer(40, 90950, nil, nil, nil, 3)
+local timerAddCD				= mod:NewCDCountTimer(20.6, 90949, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)--20.6-27. 24 is the average
+local timerDevouringCD			= mod:NewCDCountTimer(40, 90950, nil, nil, nil, 3)
 local timerDevouring			= mod:NewBuffActiveTimer(5, 90950, nil, nil, nil, 3)
 --local timerShredding			= mod:NewBuffActiveTimer(20, 75271)
 
-local flamingFixate = DBM:GetSpellInfo(82850)
 local fixateWarned = {}
 local Valiona = DBM:EJ_GetSectionInfo(3369)
-local valionaLanded = false
+mod.vb.valionaLanded = false
+mod.vb.addCount = 0
+mod.vb.devourCount = 0
 
 function mod:OnCombatStart(delay)
 	table.wipe(fixateWarned)
-	valionaLanded = false
+	self.vb.valionaLanded = false
+	self.vb.addCount = 0
+	self.vb.devourCount = 0
 end
 
 function mod:SPELL_AURA_APPLIED(args)
@@ -53,10 +56,11 @@ end
 
 function mod:SPELL_CAST_START(args)
 	if args.spellId == 90950 then
-		specWarnDevouring:Show()
+		self.vb.devourCount = self.vb.devourCount + 1
+		specWarnDevouring:Show(self.vb.devourCount)
 		specWarnDevouring:Play("breathsoon")
 		timerDevouring:Start()
-		timerDevouringCD:Start()
+		timerDevouringCD:Start(nil, self.vb.devourCount+1)
 	end
 end
 
@@ -69,30 +73,34 @@ function mod:SPELL_SUMMON(args)
 end--]]
 
 function mod:CHAT_MSG_MONSTER_YELL(msg, npc)
-	if npc == Valiona and not valionaLanded then
-		valionaLanded = true
-		timerDevouringCD:Start(29)
+	if npc == Valiona and not self.vb.valionaLanded then
+		self.vb.valionaLanded = true
+		timerDevouringCD:Start(29, 1)
 	end
 end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
 	if msg:find("spell:75218") then--Add spawning
-		timerAddCD:Start()
+		self.vb.addCount = self.vb.addCount + 1
+		timerAddCD:Start(nil, self.vb.addCount+1)
 	end
 end
 
-function mod:UNIT_AURA_UNFILTERED(uId)
-	local isFixate = DBM:UnitDebuff(uId, flamingFixate)
-	local name = DBM:GetUnitFullName(uId) or "UNKNOWN"
-	if not isFixate and fixateWarned[name] then
-		fixateWarned[name] = nil
-	elseif isFixate and not fixateWarned[name] then
-		fixateWarned[name] = true
-		if UnitIsUnit(uId, "player") then
-			specWarnFlamingFixate:Show()
-			specWarnFlamingFixate:Play("justrun")
-		else
-			warnFlamingFixate:Show(name)
+do
+	local flamingFixate = DBM:GetSpellInfo(82850)
+	function mod:UNIT_AURA_UNFILTERED(uId)
+		local isFixate = DBM:UnitDebuff(uId, flamingFixate)
+		local name = DBM:GetUnitFullName(uId) or "UNKNOWN"
+		if not isFixate and fixateWarned[name] then
+			fixateWarned[name] = nil
+		elseif isFixate and not fixateWarned[name] then
+			fixateWarned[name] = true
+			if UnitIsUnit(uId, "player") then
+				specWarnFlamingFixate:Show()
+				specWarnFlamingFixate:Play("justrun")
+			else
+				warnFlamingFixate:Show(name)
+			end
 		end
 	end
 end

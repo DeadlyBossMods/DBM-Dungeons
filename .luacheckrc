@@ -52,6 +52,7 @@ globals = {
 	"C_GossipInfo.SelectOption",
 	"C_Map",
 	"C_QuestLog",
+	"C_Spell",
 	"C_UIWidgetManager.GetIconAndTextWidgetVisualizationInfo",
 	"Ambiguate",
 	"CheckInteractDistance",

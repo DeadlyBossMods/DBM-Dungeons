@@ -18,11 +18,12 @@ mod:RegisterEventsInCombat(
 )
 
 --TODO, ground siege? 21-31 variation, too much to add timer at this time
-local warnBleedingWound		= mod:NewTargetAnnounce(74846, 4, nil, "Tank|Healer")
+--TODO, review start timer placement for wound
+local warnBleedingWound		= mod:NewTargetNoFilterAnnounce(74846, 4, nil, "Tank|Healer")
 local warnMalady			= mod:NewTargetAnnounce(74837, 2)
 local warnFrenzySoon		= mod:NewSoonAnnounce(74853, 2, nil, "Tank|Healer")
 local warnFrenzy			= mod:NewSpellAnnounce(74853, 3, nil, "Tank|Healer")
-local warnBlitz				= mod:NewTargetAnnounce(74670, 3)
+local warnBlitz				= mod:NewTargetNoFilterAnnounce(74670, 3)
 
 local specWarnMalice		= mod:NewSpecialWarningDefensive(90170, nil, nil, nil, 1, 2)
 local specWarnGroundSiege	= mod:NewSpecialWarningDodge(74634, "Melee", nil, nil, 2, 2)
@@ -31,21 +32,26 @@ local yellBlitz				= mod:NewYell(74670)
 
 local specWarnSummonSkardyn	= mod:NewSpecialWarningSwitch(-3358, "Dps", nil, nil, 1, 2)--Seems health based, pull,and 50%?
 
-local timerBleedingWoundCD	= mod:NewCDTimer(20.5, 74846, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
-local timerBlitz			= mod:NewCDTimer(21.8, 74670, nil, nil, nil, 3)
+local timerBleedingWoundCD	= mod:NewCDCountTimer(20.5, 74846, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+local timerBlitz			= mod:NewCDCountTimer(21.8, 74670, nil, nil, nil, 3)
 local timerMalice			= mod:NewBuffActiveTimer(20, 90170, nil, "Tank|Healer", 2, 5)
 
 mod.vb.warnedFrenzy = false
+mod.vb.blitzCount = 0
+mod.vb.woundCount = 0
 
 function mod:OnCombatStart(delay)
 	self.vb.warnedFrenzy = false
+	self.vb.blitzCount = 0
+	self.vb.woundCount = 0
 end
 
 function mod:SPELL_AURA_APPLIED(args)
 	local spellId = args.spellId
 	if spellId == 74846 then
+		self.vb.woundCount = self.vb.woundCount + 1
 		warnBleedingWound:Show(args.destName)
-		timerBleedingWoundCD:Start()
+		timerBleedingWoundCD:Start(nil, self.vb.woundCount+1)--Is this really best place to start this CD? what if a DK can AMS it or something
 	elseif spellId == 74853 then
 		warnFrenzy:Show()
 	elseif spellId == 74837 then
@@ -68,7 +74,8 @@ end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg, _, _, _, target)
 	if msg:find("spell:74670") then
-		timerBlitz:Start()
+		self.vb.blitzCount = self.vb.blitzCount + 1
+		timerBlitz:Start(nil, self.vb.blitzCount+1)
 		if not target then return end
 		target = DBM:GetUnitFullName(target)
 		if target == UnitName("player") then
