@@ -197,6 +197,10 @@ L:SetGeneralLocalization({
 	name =	"Cinderbrew Meadery Trash"
 })
 
+L:SetOptionLocalization({
+	AGBuffs		= "Auto select gossip to activate buffs when interacting with profession objects"
+})
+
 -------------------------
 --  City of Threads (1274/2669)  --
 -----------------------------

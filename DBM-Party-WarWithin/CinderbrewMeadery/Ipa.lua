@@ -4,7 +4,7 @@ local L		= mod:GetLocalizedStrings()
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(210267)
 mod:SetEncounterID(2929)
---mod:SetHotfixNoticeRev(20220322000000)
+mod:SetHotfixNoticeRev(20240425000000)
 --mod:SetMinSyncRevision(20211203000000)
 --mod.respawnTime = 29
 mod.sendMainBossGUID = true
@@ -38,10 +38,10 @@ local specWarnBurningFermentation			= mod:NewSpecialWarningCount(439202, nil, ni
 local specWarnBottomsUppercut				= mod:NewSpecialWarningDefensive(439031, nil, nil, nil, 1, 2)
 local specWarnGTFO							= mod:NewSpecialWarningGTFO(441179, nil, nil, nil, 1, 8)
 
-local timerSpoutingStoutCD					= mod:NewAITimer(33.9, 439365, nil, nil, nil, 1)
+local timerSpoutingStoutCD					= mod:NewCDCountTimer(47.3, 439365, nil, nil, nil, 1)
 local timerRelocationForm					= mod:NewCastTimer(20, 448718, nil, nil, nil, 1)
-local timerBurningFermentationCD			= mod:NewAITimer(33.9, 439202, nil, nil, nil, 2, nil, DBM_COMMON_L.HEALER_ICON..DBM_COMMON_L.MAGIC_ICON)
-local timerBottomsUppercutCD				= mod:NewAITimer(33.9, 439031, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+local timerBurningFermentationCD			= mod:NewCDCountTimer(47.3, 439202, nil, nil, nil, 2, nil, DBM_COMMON_L.HEALER_ICON..DBM_COMMON_L.MAGIC_ICON)
+local timerBottomsUppercutCD				= mod:NewCDCountTimer(47.3, 439031, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 
 mod:AddNamePlateOption("NPOnFrothy", 442122)
 
@@ -53,9 +53,9 @@ function mod:OnCombatStart(delay)
 	self.vb.stoutCount = 0
 	self.vb.fermCount = 0
 	self.vb.uppercutCount = 0
-	timerSpoutingStoutCD:Start(1)--10.6
-	timerBottomsUppercutCD:Start(1)--26.4
-	timerBurningFermentationCD:Start(1)--36.1
+	timerSpoutingStoutCD:Start(10, 1)
+	timerBottomsUppercutCD:Start(26.4, 1)
+	timerBurningFermentationCD:Start(35.1, 1)
 	if self.Options.NPOnFrothy then
 		DBM:FireEvent("BossMod_EnableHostileNameplates")
 	end
@@ -74,15 +74,15 @@ function mod:SPELL_CAST_START(args)
 		specWarnSpoutingStout:Show(self.vb.stoutCount)
 		specWarnSpoutingStout:Play("watchstep")
 		specWarnSpoutingStout:Schedule(2, "killmob")
-		timerSpoutingStoutCD:Start()
+		timerSpoutingStoutCD:Start(nil, self.vb.stoutCount+1)
 	elseif spellId == 439202 then
 		self.vb.fermCount = self.vb.fermCount + 1
 		specWarnBurningFermentation:Show(self.vb.fermCount)
 		specWarnBurningFermentation:Play("aesoon")
-		timerBurningFermentationCD:Start()
+		timerBurningFermentationCD:Start(nil, self.vb.fermCount+1)
 	elseif spellId == 439031 then
 		self.vb.uppercutCount = self.vb.uppercutCount + 1
-		timerBottomsUppercutCD:Start()
+		timerBottomsUppercutCD:Start(nil, self.vb.uppercutCount+1)
 		if self:IsTanking("player", "boss1", nil, true) then
 			specWarnBottomsUppercut:Show()
 			specWarnBottomsUppercut:Play("carefly")
