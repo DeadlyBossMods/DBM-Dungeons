@@ -48,7 +48,7 @@ local specWarnSoulManipulation		= mod:NewSpecialWarningSwitch(260907, nil, nil, 
 
 local timerSoulManipulationCD		= mod:NewCDTimer(12.5, 260907, nil, nil, nil, 3, nil, DBM_COMMON_L.TANK_ICON)--Always tank? if not, remove tank icon
 --Focusing Iris
-mod:AddTimerLine(DBM:GetSpellInfo(260805))
+mod:AddTimerLine(DBM:GetSpellName(260805))
 local warnActiveTriad				= mod:NewTargetNoFilterAnnounce(260805, 2)
 
 local specWarnRitual				= mod:NewSpecialWarningSpell(260773, nil, nil, nil, 3, 2)
@@ -58,7 +58,7 @@ local timerRitualCD					= mod:NewCDTimer(12.5, 260773, nil, nil, nil, 2, nil, DB
 mod:AddSetIconOption("SetIconOnTriad", 260805, true, 5, {8})
 mod:AddInfoFrameOption(260773, false)
 
-local IrisBuff = DBM:GetSpellInfo(260805)
+local IrisBuff = DBM:GetSpellName(260805)
 
 function mod:NettlesTargetQuestionMark(targetname)
 	if not targetname then return end

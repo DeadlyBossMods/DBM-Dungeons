@@ -44,7 +44,7 @@ mod:AddRangeFrameOption(5, 153396)
 
 mod.vb.debuffCount = 0
 mod.vb.flamesCast = 2
-local curtainDebuff = DBM:GetSpellInfo(153396)
+local curtainDebuff = DBM:GetSpellName(153396)
 local debuffFilter
 do
 	debuffFilter = function(uId)

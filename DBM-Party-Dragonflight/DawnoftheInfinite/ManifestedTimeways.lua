@@ -47,7 +47,7 @@ local timerFragmentsofTimeCD						= mod:NewCDCountTimer(30.3, 405431, nil, nil, 
 
 mod:AddSetIconOption("SetIconOnChronoFaded", 405696, true, false, {1, 2})
 
-local fastTime = DBM:GetSpellInfo(403912)
+local fastTime = DBM:GetSpellName(403912)
 mod.vb.DebuffIcon = 1
 mod.vb.fadedCount = 0
 mod.vb.fragmentsCount = 0

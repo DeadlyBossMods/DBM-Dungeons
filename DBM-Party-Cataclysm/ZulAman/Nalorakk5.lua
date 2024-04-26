@@ -29,7 +29,7 @@ local berserkTimer		= mod:NewBerserkTimer(600)
 
 mod:AddBoolOption("InfoFrame")
 
-local surgeDebuff = DBM:GetSpellInfo(42402)
+local surgeDebuff = DBM:GetSpellName(42402)
 
 function mod:OnCombatStart(delay)
 	timerSurgeCD:Start(-delay)

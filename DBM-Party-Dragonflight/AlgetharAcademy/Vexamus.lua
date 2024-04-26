@@ -66,7 +66,7 @@ function mod:OnCombatStart(delay)
 	timerManaBombsCD:Start(23.9-delay, 1)
 	timerArcaneFissureCD:Start(40.7-delay, 1)
 	if self.Options.InfoFrame then
-		DBM.InfoFrame:SetHeader(DBM:GetSpellInfo(391977))
+		DBM.InfoFrame:SetHeader(DBM:GetSpellName(391977))
 		DBM.InfoFrame:Show(5, "playerdebuffstacks", 391977)
 	end
 end

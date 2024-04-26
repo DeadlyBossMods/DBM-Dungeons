@@ -39,7 +39,7 @@ local timerShadowFadeCD				= mod:NewCDTimer(40, 233206, nil, nil, nil, 6)
 mod:AddRangeFrameOption(8, 234817)--5 yards probably too small, next lowest range on crap api is 8
 mod:AddInfoFrameOption(234217, true)
 
-local demonicUpheaval, darkSolitude = DBM:GetSpellInfo(233963), DBM:GetSpellInfo(234217)
+local demonicUpheaval, darkSolitude = DBM:GetSpellName(233963), DBM:GetSpellName(234217)
 local demonicUpheavalTable = {}
 local addsTable = {}
 

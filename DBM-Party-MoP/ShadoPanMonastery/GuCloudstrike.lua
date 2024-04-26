@@ -33,7 +33,7 @@ local timerStaticFieldCD		= mod:NewNextTimer(8, 106923, nil, nil, nil, 3)--^^
 local timerLightningBreathCD	= mod:NewCDTimer(6.8, 102573, nil, nil, nil, 5)--6.8-10 ish Phase 2 ability
 local timerMagneticShroudCD		= mod:NewCDTimer(12.5, 107140)--^^
 
-local staticFieldText = DBM:GetSpellInfo(106923)
+local staticFieldText = DBM:GetSpellName(106923)
 -- very poor code. not clean. (to replace %%s -> %s)
 local targetFormatText
 do
@@ -46,10 +46,10 @@ end
 
 function mod:StaticFieldTarget(targetname, uId)
 	if not targetname then--No one is targeting/focusing the cloud serpent, so just use generic warning
-		staticFieldText = DBM:GetSpellInfo(106923)
+		staticFieldText = DBM:GetSpellName(106923)
 		warnStaticField:Show(staticFieldText)
 	else--We have a valid target, so use target warnings.
-		staticFieldText = targetFormatText:format(DBM:GetSpellInfo(106923), targetname)
+		staticFieldText = targetFormatText:format(DBM:GetSpellName(106923), targetname)
 		warnStaticField:Show(staticFieldText)
 		if targetname == UnitName("player") then
 			specWarnStaticField:Show()

@@ -30,7 +30,7 @@ local timerApproachingDoom			= mod:NewCastTimer(20, 241622, nil, nil, nil, 1)
 
 mod:AddInfoFrameOption(238410, true)
 
-local shield = DBM:GetSpellInfo(238410)
+local shield = DBM:GetSpellName(238410)
 
 function mod:OnCombatStart(delay)
 	timerFelsoulCleaveCD:Start(8.2-delay)

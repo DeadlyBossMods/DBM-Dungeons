@@ -39,7 +39,7 @@ mod:AddSetIconOption("SetIconOnWreath", 228261, true, 6, {1, 2})
 
 mod.vb.playersFrozen = 0
 mod.vb.imagesActive = false
-local frostBiteName, flameWreathName = DBM:GetSpellInfo(227592), DBM:GetSpellInfo(228261)
+local frostBiteName, flameWreathName = DBM:GetSpellName(227592), DBM:GetSpellName(228261)
 
 function mod:OnCombatStart(delay)
 	self.vb.playersFrozen = 0

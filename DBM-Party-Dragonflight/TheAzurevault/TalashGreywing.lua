@@ -43,7 +43,7 @@ local timerAbsoluteZeroCD						= mod:NewNextTimer(60, 388008, nil, nil, nil, 2)
 mod:AddRangeFrameOption(8, 387151)
 
 
-local vaultRuin = DBM:GetSpellInfo(388072)
+local vaultRuin = DBM:GetSpellName(388072)
 
 function mod:DevastatorTarget(targetname)
 	if not targetname then return end

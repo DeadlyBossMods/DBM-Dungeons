@@ -49,7 +49,7 @@ mod.vb.activeWind = "none"
 mod.vb.windCount = 0
 mod.vb.burstCount = 0
 mod.vb.breathCount = 0
-local tornado = DBM:GetSpellInfo(86133)
+local tornado = DBM:GetSpellName(86133)
 
 --[[
 function mod:BreathTarget()

@@ -35,7 +35,7 @@ local timerRusting		= mod:NewBuffActiveTimer(15, 113765, nil, "Tank")
 
 mod:AddBoolOption("InfoFrame")
 
-local boned = DBM:GetSpellInfo(113996)
+local boned = DBM:GetSpellName(113996)
 
 function mod:BoneSpikeTarget()
 	local targetname = self:GetBossTarget(59153)

@@ -40,7 +40,7 @@ local timerGloomSquallCD			= mod:NewCDTimer(37.7, 322903, nil, nil, nil, 2, nil,
 
 mod.vb.rushCast = 0
 mod.vb.blurCast = 1
-local shelter = DBM:GetSpellInfo(324086)
+local shelter = DBM:GetSpellName(324086)
 
 function mod:OnCombatStart(delay)
 	self.vb.rushCast = 0

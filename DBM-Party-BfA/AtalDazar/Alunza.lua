@@ -41,7 +41,7 @@ local timerSpiritofGoldCD			= mod:NewCDCountTimer(34, 259205, nil, nil, nil, 1, 
 
 mod:AddSetIconOption("SetIconOnSpirit", 259205, true, 5, {8})
 
-local taintedBlood = DBM:GetSpellInfo(255558)
+local taintedBlood = DBM:GetSpellName(255558)
 
 mod.vb.transCount = 0
 mod.vb.clawsCount = 0

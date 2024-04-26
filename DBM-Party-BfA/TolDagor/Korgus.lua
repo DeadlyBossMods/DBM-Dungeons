@@ -50,7 +50,7 @@ function mod:OnCombatStart(delay)
 	timerMassiveBlastCD:Start(17-delay)
 	timerDeadeyeCD:Start(23.1-delay)
 	if self.Options.InfoFrame then
-		DBM.InfoFrame:SetHeader(DBM:GetSpellInfo(256044))
+		DBM.InfoFrame:SetHeader(DBM:GetSpellName(256044))
 		DBM.InfoFrame:Show(5, "reverseplayerbaddebuffbyspellid", 256044)--Must match spellID to filter other debuffs out
 	end
 end

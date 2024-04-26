@@ -44,7 +44,7 @@ local timerExpelLightCD				= mod:NewCDTimer(23, 192048, nil, nil, nil, 3)--May b
 
 mod:AddRangeFrameOption(8, 192048)
 
-local eyeShortName = DBM:GetSpellInfo(91320)--Inner Eye
+local eyeShortName = DBM:GetSpellName(91320)--Inner Eye
 
 local function updateAllTimers(self, ICD)
 	DBM:Debug("updateAllTimers running", 3)

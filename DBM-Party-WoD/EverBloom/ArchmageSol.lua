@@ -51,7 +51,7 @@ if (wowToc >= 100200) then
 	mod.vb.pullCount = 0
 	mod.vb.comboCount = 0
 
-	--local grip = DBM:GetSpellInfo(56689)
+	--local grip = DBM:GetSpellName(56689)
 
 	--Fire alone (no previos yet, arcane in future combos)
 	--Frost + Previous (fire)

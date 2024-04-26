@@ -24,7 +24,7 @@ local timerStormCD		= mod:NewCDTimer(20, 50752, nil, nil, nil, 3)
 local timerSorrowCD		= mod:NewCDTimer(30, 50760, nil, nil, nil, 2)
 local timerAchieve		= mod:NewAchievementTimer(60, 1866)
 
-local stormName = DBM:GetSpellInfo(50752)
+local stormName = DBM:GetSpellName(50752)
 
 function mod:OnCombatStart(delay)
 	if not self:IsDifficulty("normal5") then

@@ -45,7 +45,7 @@ local specWarnCarveFlesh			= mod:NewSpecialWarningMoveTo(268214, nil, nil, nil, 
 local specWarnVoidSeed				= mod:NewSpecialWarningMoveAway(276297, nil, nil, nil, 1, 2)
 local yellVoidSeed					= mod:NewShortFadesYell(276297)
 
-local MinorReinforcement = DBM:GetSpellInfo(268211)
+local MinorReinforcement = DBM:GetSpellName(268211)
 
 --1: Dodge Shit on ground, 2: Shockwaves, 4: AoEs, 5: Run Away, 6: Role
 

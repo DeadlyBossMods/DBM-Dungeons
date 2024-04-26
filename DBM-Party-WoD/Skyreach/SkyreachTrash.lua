@@ -16,7 +16,7 @@ local specWarnSolarDetonation		= mod:NewSpecialWarningMoveAway(160288, nil, nil,
 mod:AddRangeFrameOption(3, 160288)--Range guessed. Maybe 5. one tooltip says 1.5 but it def seemed bigger then that. closer to 3-5
 
 mod.vb.debuffCount = 0
-local Debuff = DBM:GetSpellInfo(160288)
+local Debuff = DBM:GetSpellName(160288)
 local debuffFilter
 do
 	debuffFilter = function(uId)

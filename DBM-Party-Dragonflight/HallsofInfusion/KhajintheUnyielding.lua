@@ -36,7 +36,7 @@ local timerGlacialSurgeCD						= mod:NewCDCountTimer(22, 386559, nil, nil, nil, 
 local timerFrostCycloneCD						= mod:NewCDCountTimer(29.9, 390111, nil, nil, nil, 3, nil, DBM_COMMON_L.MYTHIC_ICON)
 local timerFrostShockCD							= mod:NewCDCountTimer(11, 385963, nil, nil, nil, 3, nil, DBM_COMMON_L.MAGIC_ICON)
 
-local boulder = DBM:GetSpellInfo(386222)
+local boulder = DBM:GetSpellName(386222)
 
 mod.vb.hailCount = 0
 mod.vb.surgeCount = 0

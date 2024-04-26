@@ -54,7 +54,7 @@ function mod:OnCombatStart(delay)
 	if not self:IsNormal() then
 		timerHatefulGazeCD:Start(5-delay, 1)
 		if self.Options.InfoFrame then
-			DBM.InfoFrame:SetHeader(DBM:GetSpellInfo(224188))
+			DBM.InfoFrame:SetHeader(DBM:GetSpellName(224188))
 			DBM.InfoFrame:Show(5, "reverseplayerbaddebuffbyspellid", 224188)--Must match spellID to filter other debuffs out
 		end
 	end

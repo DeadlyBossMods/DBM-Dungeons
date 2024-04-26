@@ -37,7 +37,7 @@ local timerWaveVirtueCD			= mod:NewNextTimer(30, 103678, nil, nil, nil, 2)--Will
 local timerWaveTwilightCD		= mod:NewNextTimer(30, 103780, nil, nil, nil, 2)--^
 
 mod.vb.warnedP2 = false
-local waterShellName = DBM:GetSpellInfo(103744)
+local waterShellName = DBM:GetSpellName(103744)
 
 function mod:OnCombatStart(delay)
 	self.vb.warnedP2 = false

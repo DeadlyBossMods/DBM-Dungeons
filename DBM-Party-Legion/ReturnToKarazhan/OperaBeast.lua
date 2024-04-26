@@ -57,7 +57,7 @@ local timerDinnerBellCD				= mod:NewCDTimer(10.9, 227987, nil, nil, nil, 4, nil,
 mod:AddSetIconOption("SetIconOnDusting", 228221, true, false, {1})
 --mod:AddInfoFrameOption(198108, false)
 
-local burningBlaze = DBM:GetSpellInfo(228193)
+local burningBlaze = DBM:GetSpellName(228193)
 
 function mod:OnCombatStart(delay)
 	self:SetStage(1)

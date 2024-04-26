@@ -72,7 +72,7 @@ function mod:OnCombatStart(delay)
 	timerToxicEffluviaaCD:Start(29.9-delay, 1)
 	timerBellySlamCD:Start(38.4-delay)
 	if self.Options.InfoFrame then
-		DBM.InfoFrame:SetHeader(DBM:GetSpellInfo(374389))
+		DBM.InfoFrame:SetHeader(DBM:GetSpellName(374389))
 		DBM.InfoFrame:Show(5, "table", toxinStacks, 1)
 	end
 	if self.Options.RangeFrame then

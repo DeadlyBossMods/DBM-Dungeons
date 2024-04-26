@@ -42,7 +42,7 @@ local timerAnimaFountainCD			= mod:NewCDTimer(24.2, 329340, nil, nil, nil, 3)
 mod:AddNamePlateOption("NPAuraOnFixate", 323650, true)
 --mod:GroupSpells(323597, 323650)--Group spectral with associated fixate debuff
 
---local vesselName = DBM:GetSpellInfo(323848)
+--local vesselName = DBM:GetSpellName(323848)
 
 function mod:OnCombatStart(delay)
 	timerVolleyofPowerCD:Start(12-delay)

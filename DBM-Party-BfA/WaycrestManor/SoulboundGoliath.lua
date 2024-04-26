@@ -43,7 +43,7 @@ mod:AddSetIconOption("SetIconOnThorns", 267907, true, 5, {8})
 mod.vb.crushCount = 0
 mod.vb.thornsCount = 0
 
-local wildfire = DBM:GetSpellInfo(260569)
+local wildfire = DBM:GetSpellName(260569)
 
 function mod:OnCombatStart(delay)
 	self.vb.crushCount = 0

@@ -71,7 +71,7 @@ local timerWildThrashCD				= mod:NewCDNPTimer(13.3, 256882, nil, nil, nil, 3)--1
 local timerDinoMightCD				= mod:NewCDNPTimer(14.5, 256849, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--More data needed
 local timerDeadeyeAimCD				= mod:NewCDNPTimer(10.9, 256846, nil, nil, nil, 3)--10.9-20
 
-local taintedBlood = DBM:GetSpellInfo(255558)
+local taintedBlood = DBM:GetSpellName(255558)
 
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc, 7 off interrupt, 8 gtfo
 
