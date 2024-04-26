@@ -8,7 +8,7 @@ mod:SetZone(2526)
 mod.isTrashMod = true
 
 mod:RegisterEvents(
-	"SPELL_CAST_START 387910 377383 378003 388976 388863 377912 387843 388392 377389 396812",
+	"SPELL_CAST_START 387910 377383 378003 388976 388863 377912 387843 388392 377389 396812 389054",
 	"SPELL_CAST_SUCCESS 390915 388984",
 	"SPELL_AURA_APPLIED 388984 387843",
 	"SPELL_AURA_REMOVED 387843",
@@ -53,6 +53,7 @@ local timerExpelIntrudersCD						= mod:NewCDNPTimer(26.6, 377912, nil, nil, nil,
 local timerViciousAmbushCD						= mod:NewCDNPTimer(14.5, 388984, nil, nil, nil, 3)
 local timerAstralWhirlwindCD					= mod:NewCDNPTimer(18.2, 387910, nil, "Melee", nil, 3)--These mob packs are heavily stunned and CD can be delayed by stuns
 local timerAstralBombCD							= mod:NewCDNPTimer(18.2, 387843, nil, nil, nil, 3)--These mob packs are heavily stunned and CD can be delayed by stuns
+local timerVicousLungeCD						= mod:NewCDNPTimer(11.4, 389054, nil, nil, nil, 3)
 
 mod:AddBoolOption("AGBuffs", true)
 
@@ -127,6 +128,8 @@ function mod:SPELL_CAST_START(args)
 			specWarnExpelIntruders:Show()
 			specWarnExpelIntruders:Play("justrun")
 		end
+	elseif spellId == 389054 then
+		timerVicousLungeCD:Start(nil, args.sourceGUID)
 --	elseif spellId == 310839 and self:CheckInterruptFilter(args.sourceGUID, false, true) then
 --		specWarnDirgefromBelow:Show(args.sourceName)
 --		specWarnDirgefromBelow:Play("kickcast")
@@ -189,6 +192,8 @@ function mod:UNIT_DIED(args)
 		timerCalloftheFlockCD:Stop(args.destGUID)
 	elseif cid == 196576 then--Spellbound Scepter
 		timerMysticBlastCD:Stop(args.destGUID)
+	elseif cid == 196694 then--Arcane Forager
+		timerVicousLungeCD:Stop(args.destGUID)
 	end
 end
 

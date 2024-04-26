@@ -74,9 +74,9 @@ local function scanBosses(self, delay)
 			local cid = self:GetUnitCreatureId(unitID)
 			local bossGUID = UnitGUID(unitID)
 			if cid == 186339 then--Terra
-				timerSpiritLeapCD:Start(6-delay, 1, bossGUID)
-				timerGaleArrowCD:Start(21.5-delay, 1, bossGUID)
-				timerRepelCD:Start(50-delay, 1, bossGUID)
+				timerSpiritLeapCD:Start(5-delay, 1, bossGUID)
+				timerGaleArrowCD:Start(20.5-delay, 1, bossGUID)
+				timerRepelCD:Start(49-delay, 1, bossGUID)
 			else--Maruuk
 				timerFrightfulRoarCD:Start(4.5-delay, 1, bossGUID)
 				timerBrutalizeCD:Start(13.5-delay, 1, bossGUID)
@@ -152,7 +152,7 @@ function mod:SPELL_CAST_START(args)
 		elseif self.vb.leapCount % 3 == 1 then--1, 4, 7, etc
 			timer = 23.9
 		else--2, 5, 8, etc
-			timer = 13.4
+			timer = 13
 		end
 		timerSpiritLeapCD:Start(timer, self.vb.leapCount+1, args.sourceGUID)
 	elseif spellId == 382836 then

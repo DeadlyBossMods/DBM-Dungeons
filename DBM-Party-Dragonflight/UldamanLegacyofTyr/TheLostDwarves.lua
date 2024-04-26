@@ -13,6 +13,7 @@ mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 369573 369563 369791 369677 375924",
+	"SPELL_CAST_SUCCESS 369677",
 	"SPELL_AURA_APPLIED 369602 377825",
 	"SPELL_PERIODIC_DAMAGE 377825",
 	"SPELL_PERIODIC_MISSED 377825"
@@ -51,7 +52,7 @@ local yellRicochetingShield						= mod:NewYell(369677)
 local specWarnDefensiveBulwark					= mod:NewSpecialWarningInterrupt(369602, "HasInterrupt", nil, nil, 1, 2)
 
 local timerRicochetingShieldCD					= mod:NewCDTimer(16.9, 369677, nil, nil, nil, 3)
-local timerDefensiveBulwarkCD					= mod:NewCDTimer(33.8, 369602, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerDefensiveBulwarkCD					= mod:NewCDTimer(32.4, 369602, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 --Longboat Raid!
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(24783))
 local timerLongboatRaidCD						= mod:NewCDTimer(27.4, 375924, nil, nil, nil, 6)
@@ -118,7 +119,6 @@ function mod:SPELL_CAST_START(args)
 		timerSkullcrackerCD:Start(nil, args.sourceGUID)
 	elseif spellId == 369677 then
 		self:ScheduleMethod(0.2, "BossTargetScanner", args.sourceGUID, "ShieldTarget", 0.1, 8, true)
-		timerRicochetingShieldCD:Start(nil, args.sourceGUID)
 	elseif spellId == 375924 then
 		local bossUid = DBM:GetUnitIdFromGUID(args.sourceGUID)
 		local bossPower = UnitPower(bossUid)--If boss power is ever less than 100 when this is cast, they're defeated
@@ -146,6 +146,13 @@ function mod:SPELL_CAST_START(args)
 				timerSkullcrackerCD:Start(24.9, args.sourceGUID)
 			end
 		end
+	end
+end
+
+function mod:SPELL_CAST_SUCCESS(args)
+	if args.spellId == 369677 then
+		--Doesn't go on CD unless cast finishes, if boss is kited around or LOSed he recasts it on someone else
+		timerRicochetingShieldCD:Start(12.9, args.sourceGUID)--16.9 - 4
 	end
 end
 

@@ -101,7 +101,7 @@ function mod:SPELL_CAST_START(args)
 			specWarnRendingStrike:Play("defensive")
 		end
 		--Now alternates again
-		local timer = (self.vb.comboCount % 2 == 0) and 17 or 22
+		local timer = (self.vb.comboCount % 2 == 0) and 15 or 22
 		timerRendingStrikeCD:Start(timer, self.vb.comboCount+1)
 	elseif spellId == 376827 then
 		self.vb.comboCount = self.vb.comboCount + 1
