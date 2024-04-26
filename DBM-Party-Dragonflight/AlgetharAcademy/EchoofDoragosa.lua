@@ -12,7 +12,7 @@ mod.sendMainBossGUID = true
 mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
-	"SPELL_CAST_START 374361 388822 439488",
+	"SPELL_CAST_START 374361 388822",
 	"SPELL_CAST_SUCCESS 374343",
 	"SPELL_AURA_APPLIED 389011 374350 389007",
 	"SPELL_AURA_APPLIED_DOSE 389011",
@@ -32,7 +32,6 @@ mod:RegisterEventsInCombat(
 --]]
 local warnOverwhelmingPoweer					= mod:NewCountAnnounce(389011, 3, nil, nil, DBM_CORE_L.AUTO_ANNOUNCE_OPTIONS.stack:format(389011))--Typical stack warnings have amount and playername, but since used as personal, using count object to just display amount then injecting option text for stack
 local warnEnergyBomb							= mod:NewTargetAnnounce(374352, 3)
-local warnUnleashedEnergy						= mod:NewCountAnnounce(439488, 2)
 
 local specWarnAstralBreath						= mod:NewSpecialWarningDodge(374361, nil, nil, nil, 2, 2)
 local specWarnPowerVacuum						= mod:NewSpecialWarningRun(388822, nil, nil, nil, 4, 2)
@@ -42,21 +41,17 @@ local yellEnergyBombFades						= mod:NewShortFadesYell(374352)
 local specWarnGTFO								= mod:NewSpecialWarningGTFO(389007, nil, nil, nil, 1, 8)
 
 local timerAstralBreathCD						= mod:NewCDTimer(26.3, 374361, nil, nil, nil, 3)--26-32
-local timerPowerVacuumCD						= mod:NewCDTimer(21.8, 388822, nil, nil, nil, 2)--22-29
+local timerPowerVacuumCD						= mod:NewCDTimer(21, 388822, nil, nil, nil, 2)--22-29
 local timerEnergyBombCD							= mod:NewCDTimer(14.1, 374352, nil, nil, nil, 3)--14.1-20
-local timerUnleashedEnergyCD					= mod:NewAITimer(14.1, 439488, nil, nil, nil, 2)
 
 mod:AddInfoFrameOption(389011, true)
 
 local playerDebuffCount = 0
-mod.vb.unleashedCount = 0
 
 function mod:OnCombatStart(delay)
-	self.vb.unleashedCount = 0
 	timerEnergyBombCD:Start(15.9-delay)
 	timerPowerVacuumCD:Start(24.9-delay)
 	timerAstralBreathCD:Start(28.1-delay)
-	timerUnleashedEnergyCD:Start(1-delay)
 	if self.Options.InfoFrame then
 		DBM.InfoFrame:SetHeader(DBM:GetSpellInfo(389011))
 		DBM.InfoFrame:Show(5, "playerdebuffstacks", 389011)
@@ -79,10 +74,6 @@ function mod:SPELL_CAST_START(args)
 		specWarnPowerVacuum:Show()
 		specWarnPowerVacuum:Play("justrun")
 		timerPowerVacuumCD:Start()
-	elseif spellId == 439488 then
-		self.vb.unleashedCount = self.vb.unleashedCount + 1
-		warnUnleashedEnergy:Show(self.vb.unleashedCount)
-		timerUnleashedEnergyCD:Start()
 	end
 end
 

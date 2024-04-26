@@ -37,7 +37,7 @@ local specWarnQuakingTotem						= mod:NewSpecialWarningSwitchCount(369700, "-Hea
 local specWarnChainLightning					= mod:NewSpecialWarningInterrupt(369675, "HasInterrupt", nil, nil, 1, 2)
 local specWarnThunderingSlam					= mod:NewSpecialWarningDodgeCount(369703, nil, nil, nil, 2, 2)
 
-local timerCalloftheDeepCD						= mod:NewCDCountTimer(27.9, 369605, nil, nil, nil, 1)--28-30
+local timerCalloftheDeepCD						= mod:NewCDCountTimer(27.4, 369605, nil, nil, nil, 1)--28-30
 local timerQuakingTotemCD						= mod:NewCDCountTimer(30, 369700, nil, nil, nil, 5)
 local timerBloodlustCD							= mod:NewCDTimer(30, 369754, nil, nil, nil, 5)
 local timerThunderingSlamCD						= mod:NewCDCountTimer(18.2, 369703, nil, nil, nil, 3)--18-23

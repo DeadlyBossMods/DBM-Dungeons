@@ -120,12 +120,10 @@ function mod:SPELL_CAST_START(args)
 		timerSeepingCorruptionCD:Start(nil, args.sourceGUID)
 	elseif spellId == 430805 then
 		timerArcingVoidCD:Start(nil, args.sourceGUID)
-		--if self.Options.SpecWarn430805interrupt and self:CheckInterruptFilter(args.sourceGUID, false, true) then
+		if self:CheckInterruptFilter(args.sourceGUID, false, true) then
 			specWarnArcingVoid:Show(args.sourceName)
 			specWarnArcingVoid:Play("kickcast")
-		--elseif self:AntiSpam(3, 7) then
-		--	warnTempest:Show()
-		--end
+		end
 	elseif spellId == 432959 then
 		timerVoidVolleyCD:Start(nil, args.sourceGUID)
 		--if self.Options.SpecWarn430805interrupt and self:CheckInterruptFilter(args.sourceGUID, false, true) then

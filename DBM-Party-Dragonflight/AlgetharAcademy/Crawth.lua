@@ -53,7 +53,7 @@ end
 function mod:OnCombatStart(delay)
 	self.vb.ScreechCount = 0
 	timerSavagePeckCD:Start(3.6-delay)
-	timerDeafeningScreechCD:Start(10.1-delay, 1)
+	timerDeafeningScreechCD:Start(5.4-delay, 1)
 	timerOverpoweringGustCD:Start(15.7-delay)
 end
 

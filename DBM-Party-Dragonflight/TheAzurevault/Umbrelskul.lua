@@ -13,7 +13,7 @@ mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 384978 385399 385075 388804",
-	"SPELL_CAST_SUCCESS 384696",
+	"SPELL_CAST_SUCCESS 384696 385399 388804",
 	"SPELL_AURA_APPLIED 384978"
 )
 
@@ -26,28 +26,32 @@ mod:RegisterEventsInCombat(
  or ability.id = 384696 and type = "cast"
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
 --]]
-local warnArcaneEruption						= mod:NewSpellAnnounce(385075, 3)
+local warnArcaneEruption						= mod:NewCountAnnounce(385075, 3)
 
 local specWarnDragonStrike						= mod:NewSpecialWarningDefensive(384978, nil, nil, nil, 1, 2)
 local specWarnDragonStrikeDebuff				= mod:NewSpecialWarningDispel(384978, "RemoveMagic", nil, nil, 1, 2)
-local specWarnCrystallineRoar					= mod:NewSpecialWarningDodge(384699, nil, nil, nil, 3, 2)
-local specWarnUnleashedDestruction				= mod:NewSpecialWarningSpell(385399, nil, nil, nil, 2, 2)
+local specWarnCrystallineRoar					= mod:NewSpecialWarningDodgeCount(384699, nil, nil, nil, 3, 2)
+local specWarnUnleashedDestruction				= mod:NewSpecialWarningCount(385399, nil, nil, nil, 2, 2)
 
 local timerDragonStrikeCD						= mod:NewCDTimer(7.3, 384978, nil, "Tank|Healer|RemoveMagic", nil, 5, nil, DBM_COMMON_L.TANK_ICON..DBM_COMMON_L.MAGIC_ICON)--7.3-24, probably delayed by CLEU events I couldn't see
-local timerCrystallineRoarCD					= mod:NewCDTimer(111.6, 384699, nil, nil, nil, 3, nil, DBM_COMMON_L.DEADLY_ICON)
-local timerUnleashedDestructionCD				= mod:NewCDTimer(103.1, 385399, nil, nil, nil, 2)--103-115
-local timerArcaneEruptionCD						= mod:NewCDTimer(54.6, 385075, nil, nil, nil, 3)
+local timerCrystallineRoarCD					= mod:NewCDCountTimer(111.6, 384699, nil, nil, nil, 3, nil, DBM_COMMON_L.DEADLY_ICON)
+local timerUnleashedDestructionCD				= mod:NewCDCountTimer(103.1, 385399, nil, nil, nil, 2)--103-115
+local timerArcaneEruptionCD						= mod:NewCDCountTimer(54.6, 385075, nil, nil, nil, 3)
 
 mod:AddInfoFrameOption(388777, false)
 
+mod.vb.roarCount = 0
 mod.vb.unleashedCast = 0
+mod.vb.eruptionCount = 0
 
 function mod:OnCombatStart(delay)
+	self.vb.roarCount = 0
 	self.vb.unleashedCast = 0
+	self.vb.eruptionCount = 0
 	timerDragonStrikeCD:Start(7.1-delay)
-	timerCrystallineRoarCD:Start(12.3-delay)
-	timerArcaneEruptionCD:Start(28.9-delay)--28.9-37, Highly variable if it gets spell queued behind more tank casts
-	timerUnleashedDestructionCD:Start(48.2-delay)
+	timerCrystallineRoarCD:Start(12.3-delay, 1)
+	timerArcaneEruptionCD:Start(28.9-delay, 1)--28.9-37, Highly variable if it gets spell queued behind more tank casts
+	timerUnleashedDestructionCD:Start(48.2-delay, 1)
 end
 
 function mod:SPELL_CAST_START(args)
@@ -59,22 +63,25 @@ function mod:SPELL_CAST_START(args)
 		end
 		timerDragonStrikeCD:Start()
 	elseif spellId == 385399 or spellId == 388804 then--Easy, Hard
-		self.vb.unleashedCast = self.vb.unleashedCast + 1
-		specWarnUnleashedDestruction:Show(self.vb.unleashedCast)
+		specWarnUnleashedDestruction:Show(self.vb.unleashedCast+1)
 		specWarnUnleashedDestruction:Play("carefly")
-		timerUnleashedDestructionCD:Start()
 	elseif spellId == 385075 then
-		warnArcaneEruption:Show()
-		timerArcaneEruptionCD:Start()
+		self.vb.eruptionCount = self.vb.eruptionCount + 1
+		warnArcaneEruption:Show(self.vb.eruptionCount)
+		timerArcaneEruptionCD:Start(nil, self.vb.eruptionCount+1)
 	end
 end
 
 function mod:SPELL_CAST_SUCCESS(args)
 	local spellId = args.spellId
 	if spellId == 384696 then
-		specWarnCrystallineRoar:Show()
+		self.vb.roarCount = self.vb.roarCount + 1
+		specWarnCrystallineRoar:Show(self.vb.roarCount)
 		specWarnCrystallineRoar:Play("shockwave")
-		timerCrystallineRoarCD:Start()
+		timerCrystallineRoarCD:Start(nil, self.vb.roarCount+1)
+	elseif spellId == 385399 or spellId == 388804 then--Easy, Hard
+		self.vb.unleashedCast = self.vb.unleashedCast + 1--Only increment cast count if it actually finishes
+		timerUnleashedDestructionCD:Start(100.1, self.vb.unleashedCast+1)--Even this cast can be interrupted kited boss around so we have to move timer to success
 	end
 end
 
