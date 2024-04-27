@@ -40,7 +40,7 @@ local timerHomingMissileCD			= mod:NewCDTimer(21, 260811, nil, nil, nil, 3)
 --Stage Two: Drill
 local timerDrillSmashCD				= mod:NewCDTimer(8.4, 271456, nil, nil, nil, 3)--8.4--9.9
 
-local rocket = DBM:GetSpellInfo(166493)
+local rocket = DBM:GetSpellName(166493)
 
 function mod:DrillTarget(targetname)
 	if not targetname then return end

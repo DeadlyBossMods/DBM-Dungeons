@@ -53,7 +53,7 @@ mod:AddBoolOption("AGSkovaldTrash", true)
 mod:AddBoolOption("AGStartOdyn", true)
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 generalized, 7 GTFO
 
-local eyeShortName = DBM:GetSpellInfo(91320)--Inner Eye
+local eyeShortName = DBM:GetSpellName(91320)--Inner Eye
 
 function mod:CrackleTarget(targetname, uId)
 	if not targetname then

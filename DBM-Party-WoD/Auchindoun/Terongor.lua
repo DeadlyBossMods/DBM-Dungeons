@@ -66,7 +66,7 @@ local timerDemonicLeapCD		= mod:NewCDTimer(20, 157039, nil, nil, nil, 3)
 
 mod:AddRangeFrameOption(10, 156921)
 
-local seedDebuff = DBM:GetSpellInfo(156921)
+local seedDebuff = DBM:GetSpellName(156921)
 local DebuffFilter
 do
 	DebuffFilter = function(uId)

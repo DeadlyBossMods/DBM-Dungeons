@@ -54,7 +54,7 @@ function mod:OnCombatStart(delay)
 	timerDarkGravityCD:Start(23, 1)
 	timerCrushRealityCD:Start(30.2, 1)
 	if self.Options.InfoFrame and self:IsMythic() then
-		DBM.InfoFrame:SetHeader(DBM:GetSpellInfo(424797))
+		DBM.InfoFrame:SetHeader(DBM:GetSpellName(424797))
 		DBM.InfoFrame:Show(5, "playerdebuffremaining", 424797)
 	end
 end

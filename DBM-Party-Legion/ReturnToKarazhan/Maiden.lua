@@ -40,7 +40,7 @@ local timerHolyWrath				= mod:NewCastTimer(10, 227823, nil, nil, nil, 4, nil, DB
 mod:AddRangeFrameOption(8, 227809)--TODO, keep looking for a VALID 6 yard item/spell
 mod:AddInfoFrameOption(227817, true)
 
-local sacredGround = DBM:GetSpellInfo(227789)
+local sacredGround = DBM:GetSpellName(227789)
 
 function mod:OnCombatStart(delay)
 	timerSacredGroundCD:Start(10.9)

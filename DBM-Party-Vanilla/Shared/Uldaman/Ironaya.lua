@@ -17,7 +17,7 @@ else
 	)
 end
 
-local knockAway = DBM:GetSpellInfo(110762)
+local knockAway = DBM:GetSpellName(110762)
 local warnKnockAway, timerKnockAwayCD
 local warningArcingSmash			= mod:NewSpellAnnounce(8374, 2)
 local warningWarStomp				= mod:NewSpellAnnounce(11876, 2)

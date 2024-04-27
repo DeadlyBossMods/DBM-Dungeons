@@ -67,7 +67,7 @@ mod:AddRangeFrameOption(6, 98495)
 mod:GroupSpells(99268, 99849)--Living Meteor with Fixate
 
 local meteorWarned = false
-local meteorTarget = DBM:GetSpellInfo(99849)
+local meteorTarget = DBM:GetSpellName(99849)
 local seenAdds = {}
 mod.vb.seedsActive = false
 mod.vb.meteorSpawned = 0

@@ -56,7 +56,7 @@ function mod:OnCombatStart(delay)
 	timerRotburstTotemCD:Start(18.9-delay)
 	timerDecayingStrengthCD:Start(40-delay)
 	if self.Options.InfoFrame then
-		DBM.InfoFrame:SetHeader(DBM:GetSpellInfo(373896))
+		DBM.InfoFrame:SetHeader(DBM:GetSpellName(373896))
 		DBM.InfoFrame:Show(5, "table", WitheringRotStacks, 1)
 	end
 	if self.Options.RangeFrame then

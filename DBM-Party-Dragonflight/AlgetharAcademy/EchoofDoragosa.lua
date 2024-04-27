@@ -53,7 +53,7 @@ function mod:OnCombatStart(delay)
 	timerPowerVacuumCD:Start(24.9-delay)
 	timerAstralBreathCD:Start(28.1-delay)
 	if self.Options.InfoFrame then
-		DBM.InfoFrame:SetHeader(DBM:GetSpellInfo(389011))
+		DBM.InfoFrame:SetHeader(DBM:GetSpellName(389011))
 		DBM.InfoFrame:Show(5, "playerdebuffstacks", 389011)
 	end
 end

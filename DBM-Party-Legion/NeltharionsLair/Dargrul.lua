@@ -33,7 +33,7 @@ local timerCrystalSpikesCD			= mod:NewCDTimer(21.4, 200551, nil, nil, nil, 3)
 local timerMagmaSculptorCD			= mod:NewCDCountTimer(71, 200637, nil, nil, nil, 1)--Everyone?
 local timerMagmaWaveCD				= mod:NewCDCountTimer(60, 200404, nil, nil, nil, 2, nil, DBM_COMMON_L.DEADLY_ICON, nil, 1, 4)
 
-local shelterName = DBM:GetSpellInfo(200551)
+local shelterName = DBM:GetSpellName(200551)
 
 mod.vb.waveCount = 0
 mod.vb.crashCount = 0

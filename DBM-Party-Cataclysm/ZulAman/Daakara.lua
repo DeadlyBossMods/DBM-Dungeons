@@ -41,7 +41,7 @@ mod:AddSetIconOption("ThrowIcon", 43093, false, false, {8})
 mod:AddSetIconOption("ClawRageIcon", 43150, false, false, {8})
 mod:AddBoolOption("InfoFrame")
 
-local surgeDebuff = DBM:GetSpellInfo(42402)
+local surgeDebuff = DBM:GetSpellName(42402)
 
 function mod:OnCombatEnd()
 	if self.Options.InfoFrame then

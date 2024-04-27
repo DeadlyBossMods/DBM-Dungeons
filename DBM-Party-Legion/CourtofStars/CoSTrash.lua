@@ -276,7 +276,7 @@ do
 	local notableBuffNPCs = {
 		--Buffs
 		[105160] = { -- Fel Orb
-			["name"] = DBM:GetSpellInfo(208275),
+			["name"] = DBM:GetSpellName(208275),
 			["buffid"] = 211081,
 			["class"] = {
 				["PALADIN"] = true,
@@ -360,7 +360,7 @@ do
 		},
 		--Debuffs
 		[105117] = { -- Flask of the Solemn Night
-			["name"] = DBM:GetSpellInfo(207815),
+			["name"] = DBM:GetSpellName(207815),
 			["class"] = {
 				["ROGUE"] = true
 			},
@@ -370,7 +370,7 @@ do
 			}
 		},
 		[105157] = {-- Arcane Power Conduit
-			["name"] = DBM:GetSpellInfo(210466),
+			["name"] = DBM:GetSpellName(210466),
 			["raceids"] = {
 				[7] = true,--Gnome
 				[9] = true--Goblin

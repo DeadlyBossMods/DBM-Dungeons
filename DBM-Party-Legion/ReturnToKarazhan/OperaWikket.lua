@@ -30,7 +30,7 @@ local timerSummonAddsCD				= mod:NewCDTimer(32.7, 227477, nil, nil, nil, 1)
 local timerMagicMagnificentCD		= mod:NewCDTimer(46.1, 198006, nil, nil, nil, 2, nil, DBM_COMMON_L.DEADLY_ICON, nil, 1, 4)
 local timerWondrousRadianceCD		= mod:NewCDTimer(8.5, 227416, nil, "Tank", nil, 5, nil, DBM_COMMON_L.DEADLY_ICON)
 
-local defyGravity = DBM:GetSpellInfo(227405)
+local defyGravity = DBM:GetSpellName(227405)
 
 function mod:OnCombatStart(delay)
 	timerWondrousRadianceCD:Start(8.3-delay)

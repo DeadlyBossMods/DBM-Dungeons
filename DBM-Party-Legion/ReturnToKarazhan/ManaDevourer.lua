@@ -29,7 +29,7 @@ local timerCoalescePowerCD			= mod:NewNextTimer(30, 227297, nil, nil, nil, 1, ni
 
 mod:AddInfoFrameOption(227502, true)
 
-local unstableMana, looseMana = DBM:GetSpellInfo(227502), DBM:GetSpellInfo(227296)
+local unstableMana, looseMana = DBM:GetSpellName(227502), DBM:GetSpellName(227296)
 
 function mod:OnCombatStart(delay)
 	timerEnergyVoidCD:Start(14.5-delay)

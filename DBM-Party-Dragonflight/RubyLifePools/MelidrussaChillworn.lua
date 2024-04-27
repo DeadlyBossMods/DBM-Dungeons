@@ -54,7 +54,7 @@ function mod:OnCombatStart(delay)
 	timerHailbombsCD:Start(4.7-delay)
 	timerChillstormCD:Start(11.9-delay)
 	if self.Options.InfoFrame then
-		DBM.InfoFrame:SetHeader(DBM:GetSpellInfo(372682))
+		DBM.InfoFrame:SetHeader(DBM:GetSpellName(372682))
 		DBM.InfoFrame:Show(5, "table", chillStacks, 1)
 	end
 end

@@ -91,7 +91,7 @@ function mod:OnCombatStart(delay)
 	timerWindsofChangeCD:Start(17.1-delay, L.North)
 	self:Schedule(1, scanBosses, self, delay)--1 second delay to give IEEU time to populate boss guids
 	if self.Options.InfoFrame then
-		DBM.InfoFrame:SetHeader(DBM:GetSpellInfo(381862))
+		DBM.InfoFrame:SetHeader(DBM:GetSpellName(381862))
 		DBM.InfoFrame:Show(5, "playerdebuffremaining", 381862)
 	end
 end

@@ -47,7 +47,7 @@ function mod:OnCombatStart(delay)
 	timerLightingStrikeCD:Start(10-delay)
 	timerElectricStormCD:Start(30.1-delay)
 	if self.Options.InfoFrame then
-		DBM.InfoFrame:SetHeader(DBM:GetSpellInfo(382628))
+		DBM.InfoFrame:SetHeader(DBM:GetSpellName(382628))
 		DBM.InfoFrame:Show(5, "playerdebuffremaining", 382628)
 	end
 end

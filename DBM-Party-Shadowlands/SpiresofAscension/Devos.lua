@@ -47,7 +47,7 @@ local timerRunThroughCD				= mod:NewCDTimer(14.3, 323943, nil, nil, nil, 3)--14.
 local timerSlipstreamCD				= mod:NewNextTimer(18.2, 322893, nil, nil, nil, 2)
 local timerBackdraftCD				= mod:NewNextTimer(18.2, 322908, nil, nil, nil, 2)
 
-local shelter = DBM:GetSpellInfo(335806)
+local shelter = DBM:GetSpellName(335806)
 
 function mod:OnCombatStart(delay)
 	timerRunThroughCD:Start(10-delay)

@@ -52,7 +52,7 @@ mod:AddInfoFrameOption(228829, true)
 
 mod.vb.interruptCount = 0
 
-local charredEarth, burningBones, filteredDebuff = DBM:GetSpellInfo(228808), DBM:GetSpellInfo(228829), DBM:GetSpellInfo(228796)
+local charredEarth, burningBones, filteredDebuff = DBM:GetSpellName(228808), DBM:GetSpellName(228829), DBM:GetSpellName(228796)
 
 function mod:OnCombatStart(delay)
 	self:SetStage(1)

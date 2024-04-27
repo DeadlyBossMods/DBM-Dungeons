@@ -42,7 +42,7 @@ local timerThunderousBreathCD	= mod:NewCDTimer(17.4, 171900, nil, nil, nil, 3)
 
 mod:AddRangeFrameOption(8, 163447)
 
-local debuffCheck = DBM:GetSpellInfo(163447)
+local debuffCheck = DBM:GetSpellName(163447)
 local debuffFilter
 do
 	debuffFilter = function(uId)

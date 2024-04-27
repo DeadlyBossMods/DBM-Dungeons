@@ -87,7 +87,7 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
 end
 
 do
-	local flamingFixate = DBM:GetSpellInfo(82850)
+	local flamingFixate = DBM:GetSpellName(82850)
 	function mod:UNIT_AURA_UNFILTERED(uId)
 		local isFixate = DBM:UnitDebuff(uId, flamingFixate)
 		local name = DBM:GetUnitFullName(uId) or "UNKNOWN"

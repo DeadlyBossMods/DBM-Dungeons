@@ -36,7 +36,7 @@ local timerShadowsOfHakkarNext	= mod:NewNextTimer(21, 97172, nil, nil, nil, 2)
 mod:AddSetIconOption("BodySlamIcon", 97597, true, false, {8})
 
 mod.vb.barrier = 3
-local zoneName = DBM:GetSpellInfo(97170)
+local zoneName = DBM:GetSpellName(97170)
 
 function mod:OnCombatStart(delay)
 	self:SetStage(1)

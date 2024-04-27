@@ -42,7 +42,7 @@ local timerBoltBusterCD				= mod:NewCDTimer(18.2, 298940, nil, "Tank", nil, 5, n
 
 mod.vb.MetalCast = 0
 
-local SmokeBombName = DBM:GetSpellInfo(298573)
+local SmokeBombName = DBM:GetSpellName(298573)
 
 function mod:MegaTazeTarget(targetname)
 	if not targetname then return end

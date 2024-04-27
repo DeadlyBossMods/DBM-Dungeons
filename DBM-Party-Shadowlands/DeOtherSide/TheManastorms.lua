@@ -77,7 +77,7 @@ function mod:OnCombatStart(delay)
 	self.vb.activeBoss = 1
 	--First timers triggered on chilled heart event
 	if self.Options.InfoFrame then
-		DBM.InfoFrame:SetHeader(DBM:GetSpellInfo(320786))
+		DBM.InfoFrame:SetHeader(DBM:GetSpellName(320786))
 		DBM.InfoFrame:Show(5, "table", VulnerabilityStacks, 1)
 	end
 end

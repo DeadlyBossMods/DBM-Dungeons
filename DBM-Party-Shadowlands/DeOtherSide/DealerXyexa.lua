@@ -44,7 +44,7 @@ local timerExplosiveContrivanceCD	= mod:NewCDTimer(35.1, 320230, 201291, nil, ni
 local timerLocalizedExplosiveCD		= mod:NewCDTimer(35.1, 321948, 188104, nil, nil, 3, nil, DBM_COMMON_L.DEADLY_ICON)--"Localized Explosion" shortname
 local timerArcaneLightningCD		= mod:NewCDTimer(9, 323687, nil, nil, nil, 3, nil, DBM_COMMON_L.MYTHIC_ICON)--Only cast once, then just bounces every 9 seconds
 
-local trapName = DBM:GetSpellInfo(319619)
+local trapName = DBM:GetSpellName(319619)
 
 function mod:OnCombatStart(delay)
 	timerDisplacementTrapCD:Start(4.5-delay)

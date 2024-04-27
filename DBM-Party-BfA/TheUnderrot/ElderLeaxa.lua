@@ -34,7 +34,7 @@ function mod:OnCombatStart(delay)
 		timerSanguineFeastCD:Start(6.8-delay)
 	end
 	if self.Options.InfoFrame then
-		DBM.InfoFrame:SetHeader(DBM:GetSpellInfo(260685))
+		DBM.InfoFrame:SetHeader(DBM:GetSpellName(260685))
 		DBM.InfoFrame:Show(5, "playerdebuffstacks", 260685, 1)
 	end
 end
