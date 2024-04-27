@@ -198,6 +198,10 @@ L:SetGeneralLocalization({
 	name =	"잿불맥주 양조장 일반몹"
 })
 
+L:SetOptionLocalization({
+	AGBuffs		= "전문기술 버프 클릭시 대화 자동 선택"
+})
+
 -------------------------
 --  City of Threads (1274/2669)  --
 -----------------------------
