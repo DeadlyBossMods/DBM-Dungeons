@@ -323,6 +323,12 @@ L:SetGeneralLocalization({
 	name = "Blastenheimer 5000"
 })
 
+L = DBM:GetModLocalization("CannonClassic")
+
+L:SetGeneralLocalization({
+	name = "Blastenheimer 5000"
+})
+
 -------------
 --  Gnoll  --
 -------------

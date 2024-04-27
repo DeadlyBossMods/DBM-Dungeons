@@ -266,6 +266,13 @@ L:SetGeneralLocalization({
 	name = "Kanonendonner"
 })
 
+L = DBM:GetModLocalization("CannonClassic")
+
+L:SetGeneralLocalization({
+	name = "Kanonendonner"
+})
+
+
 -------------
 --  Gnoll  --
 -------------
