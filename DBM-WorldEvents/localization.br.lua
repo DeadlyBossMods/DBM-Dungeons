@@ -178,6 +178,12 @@ L:SetGeneralLocalization({
 	name = "Blastenheimer 5000 Ultra Cannon"
 })
 
+L = DBM:GetModLocalization("CannonClassic")
+
+L:SetGeneralLocalization({
+	name = "Blastenheimer 5000 Ultra Cannon"
+})
+
 -------------
 --  Gnoll  --
 -------------

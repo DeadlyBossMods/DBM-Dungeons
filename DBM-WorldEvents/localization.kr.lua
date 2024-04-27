@@ -323,6 +323,11 @@ L:SetGeneralLocalization({
 	name = "인간 대포알"
 })
 
+L = DBM:GetModLocalization("CannonClassic")
+
+L:SetGeneralLocalization({
+	name = "인간 대포알"
+})
 -------------
 --  Gnoll  --
 -------------

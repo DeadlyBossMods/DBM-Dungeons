@@ -275,6 +275,13 @@ L:SetGeneralLocalization({
 	name = "Ultracañón Pimpampum 5000"
 })
 
+L = DBM:GetModLocalization("CannonClassic")
+
+L:SetGeneralLocalization({
+	name = "Ultracañón Pimpampum 5000"
+})
+
+
 -----------------------
 --  Golpea al gnoll  --
 -----------------------
