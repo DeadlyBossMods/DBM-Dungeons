@@ -2,9 +2,9 @@ local mod	= DBM:NewMod(2561, "DBM-Party-WarWithin", 1, 1210)
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
---mod:SetCreatureID(189232)
+mod:SetCreatureID(208747)
 mod:SetEncounterID(2788)
---mod:SetHotfixNoticeRev(20220322000000)
+mod:SetHotfixNoticeRev(20240427000000)
 --mod:SetMinSyncRevision(20211203000000)
 --mod.respawnTime = 29
 mod.sendMainBossGUID = true
@@ -12,60 +12,129 @@ mod.sendMainBossGUID = true
 mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
---	"SPELL_CAST_START",
---	"SPELL_CAST_SUCCESS",
---	"SPELL_AURA_APPLIED",
---	"SPELL_AURA_REMOVED"
+	"SPELL_CAST_START 426943 428266 427025 427011",
+	"SPELL_CAST_SUCCESS 427157",
+	"SPELL_AURA_APPLIED 420307 427015",
+	"SPELL_AURA_REMOVED 427015"
 --	"SPELL_PERIODIC_DAMAGE",
 --	"SPELL_PERIODIC_MISSED"
 --	"UNIT_SPELLCAST_SUCCEEDED boss1"
 )
 
---local warnSomeAbility						= mod:NewSpellAnnounce(373087, 3)
+--TODO, more data to confirm Rising Gloom is cast every 10 seconds once candles are gone
+--TODO, candle tracking?
+--TODO, tracking Candlebearers?
+--[[
+(ability.id = 426943 or ability.id = 428266 or ability.id = 427025 or ability.id = 427011) and type = "begincast"
+ or ability.id = 427157 and type = "cast"
+ or type = "dungeonencounterstart" or type = "dungeonencounterend"
+--]]
+local warnRisingGloom						= mod:NewSpellAnnounce(426943, 4)
+local warnCandlelight						= mod:NewTargetNoFilterAnnounce(420307, 1)
+local warnShadowblast						= mod:NewTargetNoFilterAnnounce(427011, 3)
 
---local specWarnSomeAbility					= mod:NewSpecialWarningDefensive(372858, nil, nil, nil, 1, 2)
---local yellSomeAbility						= mod:NewYell(372107)
+local specWarnEternalDarkness				= mod:NewSpecialWarningCount(428266, nil, nil, nil, 2, 2)
+local yellCandlelight						= mod:NewShortYell(420307, nil, nil, nil, "YELL")
+local specWarnCallDarkspawn					= mod:NewSpecialWarningInterruptCount(427157, nil, nil, nil, 1, 2)
+local specWarnUmbralSlash					= mod:NewSpecialWarningDodgeCount(427025, nil, nil, nil, 2, 2)
+local specWarnShadowblast					= mod:NewSpecialWarningMoveAway(427011, nil, nil, nil, 2, 2)
+local yellShadowblast						= mod:NewShortYell(427011)
+local yellShadowblastFades					= mod:NewShortFadesYell(427011)
 --local specWarnGTFO						= mod:NewSpecialWarningGTFO(372820, nil, nil, nil, 1, 8)
 
---local timerSomeAbilityCD					= mod:NewAITimer(33.9, 372863, nil, nil, nil, 3)
+local timerEternalDarknessCD				= mod:NewAITimer(100, 428266, nil, nil, nil, 2, nil, DBM_COMMON_L.MAGIC_ICON)
+local timerCallDarkspawnCD					= mod:NewCDCountTimer(47.3, 427157, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerUmbralSlashCD					= mod:NewCDCountTimer(30.3, 427025, nil, nil, nil, 3)
+local timerShadowblastCD					= mod:NewCDCountTimer(30.3, 427011, nil, nil, nil, 3)
 
---local castsPerGUID = {}
+mod.vb.eternalCount = 0
+mod.vb.callCount = 0
+mod.vb.umbralCount = 0
+mod.vb.blastCount = 0
 
+mod:AddInfoFrameOption(422806, false)
 
---function mod:OnCombatStart(delay)
+function mod:OnCombatStart(delay)
+	self.vb.eternalCount = 0
+	self.vb.callCount = 0
+	self.vb.umbralCount = 0
+	self.vb.blastCount = 0
+	timerShadowblastCD:Start(10.8-delay, 1)
+	timerUmbralSlashCD:Start(20.5-delay, 1)
+	timerCallDarkspawnCD:Start(30.2-delay, 1)
+	if self:IsMythic() then
+		timerEternalDarknessCD:Start(1-delay)
+	end
+	if self.Options.InfoFrame then
+		DBM.InfoFrame:SetHeader(DBM:GetSpellName(422806))
+		DBM.InfoFrame:Show(5, "playerbaddebuff", 422806)
+	end
+end
 
---end
+function mod:OnCombatEnd()
+	if self.Options.InfoFrame then
+		DBM.InfoFrame:Hide()
+	end
+end
 
---function mod:OnCombatEnd()
-
---end
-
---[[
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
-	if spellId == 372107 then
+	if spellId == 426943 then
+		warnRisingGloom:Show()
+	elseif spellId == 428266 then
+		self.vb.eternalCount = self.vb.eternalCount + 1
+		specWarnEternalDarkness:Show(self.vb.eternalCount)
+		specWarnEternalDarkness:Play("aesoon")
+		timerEternalDarknessCD:Start()
+	elseif spellId == 427025 then
+		self.vb.umbralCount = self.vb.umbralCount + 1
+		specWarnUmbralSlash:Show(self.vb.umbralCount)
+		specWarnUmbralSlash:Play("shockwave")
+		timerUmbralSlashCD:Start(nil, self.vb.umbralCount+1)
+	elseif spellId == 427011 then
+		self.vb.blastCount = self.vb.blastCount + 1
+		timerShadowblastCD:Start(nil, self.vb.blastCount+1)
 	end
 end
---]]
 
---[[
 function mod:SPELL_CAST_SUCCESS(args)
 	local spellId = args.spellId
-	if spellId == 372858 then
-
+	if spellId == 427157 then
+		self.vb.callCount = self.vb.callCount + 1
+		specWarnCallDarkspawn:Show(args.sourceGUID, self.vb.callCount)
+		specWarnCallDarkspawn:Play("kickcast")
+		timerCallDarkspawnCD:Start(nil, self.vb.callCount+1)
 	end
 end
---]]
 
---[[
 function mod:SPELL_AURA_APPLIED(args)
 	local spellId = args.spellId
-	if spellId == 372858 then
-
+	if spellId == 420307 then
+		warnCandlelight:Show(args.destName)
+		if args:IsPlayer() then
+			yellCandlelight:Yell()
+		end
+	elseif spellId == 427015 then
+		if args:IsPlayer() then
+			specWarnShadowblast:Show()
+			specWarnShadowblast:Play("runout")
+			yellShadowblast:Yell()
+			yellShadowblastFades:Countdown(spellId)
+		else
+			warnShadowblast:Show(args.destName)
+		end
 	end
 end
 --mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED
---]]
+
+function mod:SPELL_AURA_REMOVED(args)
+	local spellId = args.spellId
+	if spellId == 427015 then
+		if args:IsPlayer() then
+			yellShadowblastFades:Cancel()
+		end
+	end
+end
 
 --[[
 function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId, spellName)

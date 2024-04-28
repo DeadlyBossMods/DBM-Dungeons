@@ -262,6 +262,12 @@ L:SetGeneralLocalization({
 	name = "5000型超級大砲"
 })
 
+L = DBM:GetModLocalization("CannonClassic")
+
+L:SetGeneralLocalization({
+	name = "5000型超級大砲"
+})
+
 -------------
 --  Gnoll  --
 -------------

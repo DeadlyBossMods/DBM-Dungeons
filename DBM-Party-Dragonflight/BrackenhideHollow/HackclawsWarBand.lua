@@ -74,10 +74,10 @@ local function scanBosses(self, delay)
 				timerBladestormCD:Start(19.2-delay, bossGUID)
 				timerSavageChargeCD:Start(48.3-delay, bossGUID)
 			elseif cid == 186124 then--Gashtooth
-				timerGashFrenzyCD:Start(2.7-delay, 1, bossGUID)
+				timerGashFrenzyCD:Start(2.4-delay, 1, bossGUID)
 				timerDecayedSensesCD:Start(45.8-delay, bossGUID)
 				if self:IsMythic() then
-					timerMarkedforButcheryCD:Start(12.4-delay, 1, bossGUID)
+					timerMarkedforButcheryCD:Start(12.1-delay, 1, bossGUID)
 				end
 			else--Tricktotem
 				timerGreaterHealingRapidsCD:Start(10.7-delay, 1, bossGUID)
@@ -125,7 +125,7 @@ function mod:SPELL_CAST_START(args)
 		if self.vb.healingRapidsCount % 3 == 0 then
 			timerGreaterHealingRapidsCD:Start(15.8, self.vb.healingRapidsCount+1, args.sourceGUID)
 		else
-			timerGreaterHealingRapidsCD:Start(21.8, self.vb.healingRapidsCount+1, args.sourceGUID)
+			timerGreaterHealingRapidsCD:Start(19.4, self.vb.healingRapidsCount+1, args.sourceGUID)
 		end
 		if self:CheckInterruptFilter(args.sourceGUID, false, true) then
 			specWarnGreaterHealingRapids:Show(args.sourceName)

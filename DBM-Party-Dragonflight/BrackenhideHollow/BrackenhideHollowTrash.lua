@@ -69,7 +69,7 @@ local specWarnBurstofDecay					= mod:NewSpecialWarningInterrupt(374544, "HasInte
 local specWarnHidiousCackle					= mod:NewSpecialWarningInterrupt(367500, "HasInterrupt", nil, nil, 1, 2)--46?
 local specWarnDecaySurge					= mod:NewSpecialWarningInterrupt(382474, "HasInterrupt", nil, nil, 1, 2)
 local specWarnScreech						= mod:NewSpecialWarningInterrupt(385029, "HasInterrupt", nil, nil, 1, 2)
-local specWarnNecroticBreath				= mod:NewSpecialWarningInterrupt(382712, "HasInterrupt", nil, nil, 1, 2)--26.7-40?
+local specWarnNecroticBreath				= mod:NewSpecialWarningSpell(382712, nil, nil, nil, 2, 2)--26.7-40?
 local specWarnGTFO							= mod:NewSpecialWarningGTFO(383399, nil, nil, nil, 1, 8)
 
 local timerDecayClawsCD						= mod:NewCDNPTimer(10.2, 382787, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
@@ -117,9 +117,9 @@ function mod:SPELL_CAST_START(args)
 			specWarnDecaySurge:Play("kickcast")
 		end
 	elseif spellId == 382712 then
-		if self:CheckInterruptFilter(args.sourceGUID, false, true) then
-			specWarnNecroticBreath:Show(args.sourceName)
-			specWarnNecroticBreath:Play("kickcast")
+		if self:AntiSpam(3, 2) then
+			specWarnNecroticBreath:Show()
+			specWarnNecroticBreath:Play("breathsoon")
 		end
 	elseif spellId == 388060 then
 		if self:AntiSpam(3, 2) then

@@ -196,6 +196,13 @@ L:SetGeneralLocalization({
 	name = "Ultracannone Scoppiamicce 5000"
 })
 
+L = DBM:GetModLocalization("CannonClassic")
+
+L:SetGeneralLocalization({
+	name = "Ultracannone Scoppiamicce 5000"
+})
+
+
 -------------
 --  Gnoll  --
 -------------
