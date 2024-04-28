@@ -33,7 +33,7 @@ local timerDeadzone				= mod:NewNextTimer(21, 97170, nil, nil, nil, 3)
 local timerShadowsOfHakkar		= mod:NewBuffActiveTimer(10, 97172, nil, nil, nil, 2)
 local timerShadowsOfHakkarNext	= mod:NewNextTimer(21, 97172, nil, nil, nil, 2)
 
-mod:AddSetIconOption("BodySlamIcon", 97597, true, false, {8})
+mod:AddSetIconOption("BodySlamIcon", 97597, true, 0, {8})
 
 mod.vb.barrier = 3
 local zoneName = DBM:GetSpellName(97170)

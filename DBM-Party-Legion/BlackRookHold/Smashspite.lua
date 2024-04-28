@@ -42,7 +42,7 @@ local timerStompCD					= mod:NewCDCountTimer(21.8, 198073, nil, nil, nil, 2)--Ne
 local timerHatefulGazeCD			= mod:NewCDCountTimer(25.4, 198079, nil, nil, nil, 3)--Next timers but delayed by other casts
 
 mod:AddInfoFrameOption(224188)
-mod:AddSetIconOption("SetIconOnHatefulGaze", 198079, true, false, {1})
+mod:AddSetIconOption("SetIconOnHatefulGaze", 198079, true, 0, {1})
 
 mod.vb.stompCount = 0
 mod.vb.gazeCount = 0

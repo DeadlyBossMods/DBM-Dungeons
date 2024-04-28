@@ -30,7 +30,7 @@ local timerSupressionCD				= mod:NewNextTimer(46, 196070, nil, nil, nil, 3)
 local timerQuarantineCD				= mod:NewNextTimer(46, 195804, nil, nil, nil, 3)
 local timerCleansingCD				= mod:NewNextTimer(46, 196115, nil, nil, nil, 2)
 
-mod:AddSetIconOption("SetIconOnQuarantine", 195791, true, false, {1})
+mod:AddSetIconOption("SetIconOnQuarantine", 195791, true, 0, {1})
 
 function mod:OnCombatStart(delay)
 	timerSupressionCD:Start(5-delay)

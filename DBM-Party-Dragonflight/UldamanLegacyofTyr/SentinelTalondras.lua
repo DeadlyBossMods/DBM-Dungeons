@@ -43,7 +43,7 @@ local timerResonatingOrbCD						= mod:NewCDTimer(25.6, 382071, nil, nil, nil, 3,
 local timerCrushingStompCD						= mod:NewCDCountTimer(12.1, 372701, nil, nil, nil, 2, nil, nil, true)
 local timerEarthenShardsCD						= mod:NewCDTimer(6, 372718, nil, nil, nil, 3, nil, DBM_COMMON_L.BLEED_ICON, true)
 
-mod:AddSetIconOption("SetIconOnOrb", 382071, true, false, {1, 2, 3})
+mod:AddSetIconOption("SetIconOnOrb", 382071, true, 0, {1, 2, 3})
 
 mod.vb.orbIcon = 1
 mod.vb.stompCount = 0

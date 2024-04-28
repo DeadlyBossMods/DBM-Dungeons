@@ -45,7 +45,7 @@ local timerRP										= mod:NewRPTimer(13.3)
 local timerChronofadedCD							= mod:NewCDCountTimer(30.3, 405696, nil, nil, nil, 3, nil, DBM_COMMON_L.MAGIC_ICON)
 local timerFragmentsofTimeCD						= mod:NewCDCountTimer(30.3, 405431, nil, nil, nil, 3)
 
-mod:AddSetIconOption("SetIconOnChronoFaded", 405696, true, false, {1, 2})
+mod:AddSetIconOption("SetIconOnChronoFaded", 405696, true, 0, {1, 2})
 
 local fastTime = DBM:GetSpellName(403912)
 mod.vb.DebuffIcon = 1

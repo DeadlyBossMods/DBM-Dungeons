@@ -34,7 +34,7 @@ local timerDeadeyeCD				= mod:NewCDTimer(23, 256038, nil, nil, nil, 3)
 local timerExplosiveBurstCD			= mod:NewCDTimer(44.8, 256105, nil, nil, nil, 3)
 local timerMassiveBlastCD			= mod:NewCDTimer(21.8, 263345, nil, nil, nil, 3)
 
-mod:AddSetIconOption("SetIconOnDeadeye", 256038, true, false, {1})
+mod:AddSetIconOption("SetIconOnDeadeye", 256038, true, 0, {1})
 mod:AddInfoFrameOption(256038)
 mod:AddRangeFrameOption(5, 256105)
 

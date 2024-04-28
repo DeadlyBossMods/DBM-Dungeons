@@ -43,7 +43,7 @@ local timerConsumingStompCD						= mod:NewCDCountTimer(48.5, 374720, nil, nil, n
 local timerEruptingFissureCD					= mod:NewCDCountTimer(48.5, 386660, nil, nil, nil, 3)
 local timerInfusedStrikeCD						= mod:NewCDCountTimer(48.5, 374789, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 
-mod:AddSetIconOption("SetIconOnExplosiveEruption", 374567, true, false, {1, 2, 3})
+mod:AddSetIconOption("SetIconOnExplosiveEruption", 374567, true, 0, {1, 2, 3})
 
 mod.vb.DebuffIcon = 1
 mod.vb.leylineCount = 0

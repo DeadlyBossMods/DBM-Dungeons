@@ -34,7 +34,7 @@ local timerPursuitCast			= mod:NewCastTimer(5, 68987, nil, nil, nil, 3)
 local timerPursuitConfusion		= mod:NewBuffActiveTimer(12, 69029, nil, nil, nil, 5)
 local timerPoisonNova			= mod:NewCastTimer(5, 68989, nil, "Melee", 2, 2)
 
-mod:AddSetIconOption("SetIconOnPursuitTarget", 68987, true, false, {8})
+mod:AddSetIconOption("SetIconOnPursuitTarget", 68987, true, 0, {8})
 --mod:GroupSpells(68987, 69029)
 
 local pursuit = DBM:GetSpellName(68987)

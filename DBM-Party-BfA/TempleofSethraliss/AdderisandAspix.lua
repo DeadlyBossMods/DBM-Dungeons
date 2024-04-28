@@ -25,7 +25,7 @@ local warnLightningShield			= mod:NewTargetNoFilterAnnounce(263246, 3)
 
 mod:AddRangeFrameOption("8")
 mod:AddInfoFrameOption(263246, true)
-mod:AddSetIconOption("SetIconOnNoLit", 263246, true, true, {8})
+mod:AddSetIconOption("SetIconOnNoLit", 263246, true, 5, {8})
 --Aspix
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(18484))
 ----Lighting

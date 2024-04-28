@@ -36,7 +36,7 @@ local specWarnSeveringAxe			= mod:NewSpecialWarningDefensive(266231, nil, nil, n
 local timerWhirlingAxesCD			= mod:NewCDTimer(10.8, 266206, nil, nil, nil, 3)--Used inactive
 local timerSeveringAxeCD			= mod:NewCDTimer(21.8, 266231, nil, nil, nil, 3)
 
-mod:AddSetIconOption("SetIconOnAxe", 266231, false, false, {2})
+mod:AddSetIconOption("SetIconOnAxe", 266231, false, 0, {2})
 --Aka'ali the Conqueror
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(18264))
 local specWarnBarrelThrough			= mod:NewSpecialWarningYou(266951, nil, nil, nil, 1, 2)
@@ -48,7 +48,7 @@ local specWarnDebilitatingBackhand	= mod:NewSpecialWarningRun(266237, nil, nil, 
 local timerBarrelThroughCD			= mod:NewCDTimer(23, 266951, nil, nil, nil, 3)--Used inactive
 local timerDebilitatingBackhandCD	= mod:NewCDTimer(22.8, 266237, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON..DBM_COMMON_L.DEADLY_ICON)
 
-mod:AddSetIconOption("SetIconOnBarrel", 266951, true, false, {1})
+mod:AddSetIconOption("SetIconOnBarrel", 266951, true, 0, {1})
 --Zanazal the Wise
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(18267))
 local specWarnPoisonNova			= mod:NewSpecialWarningInterrupt(267273, "HasInterrupt", nil, nil, 1, 2)
