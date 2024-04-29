@@ -30,7 +30,7 @@ local warnRallytheClan						= mod:NewCastAnnounce(383823, 4, nil, nil, nil, nil,
 local warnDisruptiveShout					= mod:NewCastAnnounce(384365, 3)
 local warnStormsurge						= mod:NewCastAnnounce(386694, 3)
 local warnThunderstrike						= mod:NewCastAnnounce(387125, 3, nil, nil, "Tank")
-local warnSwiftStab							= mod:NewCastAnnounce(381683, 3, nil, nil, "Tank")
+local warnSwiftStab							= mod:NewCastAnnounce(381683, 3)
 local warnDesecratingRoar					= mod:NewCastAnnounce(387440, 4, nil, nil, nil, nil, nil, 3)--Has to be stunned/disrupted
 local warnRottingWind						= mod:NewCastAnnounce(436841, 3)
 local warnSwiftWind							= mod:NewCastAnnounce(387596, 3)
@@ -161,7 +161,7 @@ function mod:SPELL_CAST_START(args)
 		end
 	elseif spellId == 381683 then
 		timerSwiftStabCD:Start(nil, args.sourceGUID)
-		if self:AntiSpam(3, 5) then
+		if self:AntiSpam(3, 4) then
 			warnSwiftStab:Show()
 		end
 	end
