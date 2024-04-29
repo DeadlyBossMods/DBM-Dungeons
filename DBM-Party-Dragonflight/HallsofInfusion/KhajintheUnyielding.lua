@@ -4,7 +4,7 @@ local L		= mod:GetLocalizedStrings()
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(189727)
 mod:SetEncounterID(2617)
-mod:SetHotfixNoticeRev(20230507000000)
+mod:SetHotfixNoticeRev(20240429000000)
 mod:SetMinSyncRevision(20230507000000)
 --mod.respawnTime = 29
 mod.sendMainBossGUID = true
@@ -77,6 +77,7 @@ function mod:SPELL_CAST_START(args)
 		specWarnHailstorm:Show(boulder)
 		specWarnHailstorm:Play("findshelter")
 		if self:IsMythicPlus() then
+			--20.0, 30.0, 42.0, 30.0
 			if self.vb.hailCount % 2 == 0 then
 				timerHailstormCD:Start(42, self.vb.hailCount+1)
 			else
@@ -90,6 +91,7 @@ function mod:SPELL_CAST_START(args)
 		specWarnGlacialSurge:Show(self.vb.surgeCount)
 		specWarnGlacialSurge:Play("watchstep")--or watchring maybe?
 		if self:IsMythicPlus() then
+			--32.0, 30.0, 42.0, 30.0
 			if self.vb.surgeCount % 2 == 0 then
 				timerGlacialSurgeCD:Start(42, self.vb.surgeCount+1)
 			else
@@ -102,6 +104,7 @@ function mod:SPELL_CAST_START(args)
 		self.vb.cycloneCount = self.vb.cycloneCount + 1
 		self:ScheduleMethod(0.1, "BossTargetScanner", args.sourceGUID, "FrostCycloneTarget", 0.1, 6, true)
 		if self:IsMythicPlus() then
+			--10.0, 35.0, 37.0, 35.0
 			if self.vb.cycloneCount % 2 == 0 then
 				timerFrostCycloneCD:Start(37, self.vb.cycloneCount+1)
 			else
@@ -118,10 +121,11 @@ function mod:SPELL_CAST_SUCCESS(args)
 	if spellId == 385963 then
 		self.vb.shockCount = self.vb.shockCount + 1
 		if self:IsMythicPlus() then
-			if self.vb.shockCount % 2 == 0 then
-				timerFrostShockCD:Start(60, self.vb.shockCount+1)
+			--pull:6.0, 12.0, 30.0, 30.0, 12.0, 30.0
+			if self.vb.shockCount % 3 == 1 then
+				timerFrostShockCD:Start(12, self.vb.shockCount+1)
 			else
-				timerFrostShockCD:Start(11, self.vb.shockCount+1)
+				timerFrostShockCD:Start(30, self.vb.shockCount+1)
 			end
 		else
 			timerFrostShockCD:Start(11, self.vb.shockCount+1)
