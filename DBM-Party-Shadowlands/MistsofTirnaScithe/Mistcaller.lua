@@ -40,7 +40,7 @@ local timerFreezeTagCD				= mod:NewCDCountTimer(21.9, 321873, nil, nil, nil, 3)
 local timerPattyCakeCD				= mod:NewCDCountTimer(20.6, 321828, nil, nil, nil, 3)--20-26
 
 mod:AddNamePlateOption("NPAuraOnFixate", 321891)
-mod:AddSetIconOption("SetIconOnAdds2", -21691, false, true, {1, 2, 3, 4})
+mod:AddSetIconOption("SetIconOnAdds2", -21691, false, 5, {1, 2, 3, 4})
 --mod:GroupSpells(321873, 321891)--Freeze Tag and associated fixate
 
 local seenAdds = {}

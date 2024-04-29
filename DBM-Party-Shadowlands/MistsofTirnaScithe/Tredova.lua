@@ -47,7 +47,7 @@ local timerAcidExpulsionCD			= mod:NewCDCountTimer(19.4, 322654, nil, nil, nil, 
 local timerParasiticInfesterCD		= mod:NewTimer(23, "timerParasiticInfesterCD", 337235, nil, nil, 4, DBM_COMMON_L.MYTHIC_ICON..DBM_COMMON_L.INTERRUPT_ICON, true)--23-26.3
 
 mod:AddInfoFrameOption(322527, true)
-mod:AddSetIconOption("SetIconOnMindLink", 322648, true, false, {1, 2, 3, 4, 5})
+mod:AddSetIconOption("SetIconOnMindLink", 322648, true, 0, {1, 2, 3, 4, 5})
 
 mod.vb.mindLinkIcon = 1
 mod.vb.firstPray = false

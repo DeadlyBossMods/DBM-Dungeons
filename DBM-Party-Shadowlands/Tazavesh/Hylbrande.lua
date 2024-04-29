@@ -52,7 +52,7 @@ local timerVaultPurifierCD			= mod:NewCDTimer(29.1, -23004, nil, nil, nil, 1, "1
 local timerPurifyingBurstCD			= mod:NewCDTimer(23.1, 353312, nil, nil, nil, 2)
 local timerTitanicInsight			= mod:NewTargetTimer(15, 346427, nil, nil, nil, 5)
 
-mod:AddSetIconOption("SetIconOnAdds", "ej23004", true, true, {1, 2})
+mod:AddSetIconOption("SetIconOnAdds", "ej23004", true, 5, {1, 2})
 
 mod.vb.cycleCount = 0
 mod.vb.burstCount = 0

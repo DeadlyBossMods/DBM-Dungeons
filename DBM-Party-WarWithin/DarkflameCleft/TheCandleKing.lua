@@ -16,42 +16,44 @@ mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 420659 426145",
 	"SPELL_CAST_SUCCESS 422648",
 	"SPELL_SUMMON 420665",
-	"SPELL_AURA_APPLIED 421653 420696",
-	"SPELL_AURA_REMOVED 422648 420696",
+	"SPELL_AURA_APPLIED 421653",
+	"SPELL_AURA_REMOVED 422648",
 	"SPELL_PERIODIC_DAMAGE 421067",
 	"SPELL_PERIODIC_MISSED 421067"
 --	"UNIT_SPELLCAST_SUCCEEDED boss1"
 )
 
 --TODO, verify auto marking
---TODO, unit spellcast event for throw darkflame as a better timer start point?
+--TODO, are both private aura spellids used? what's the primary (for showing in GUI)
+--TODO, unit spellcast event for throw darkflame timer as it's a private aura and completely disabled in CLEU (including cast)
 --TODO, remaining two timers need more data
 --[[
 (ability.id = 420659 or ability.id = 426145) and type = "begincast"
  or ability.id = 422648 and type = "cast"
- or ability.id = 420696 and type = "applydebuff"
+ or (ability.id = 453278 or ability.id = 420696) and type = "applydebuff"
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
 --]]
 local warnEarieMolds						= mod:NewCountAnnounce(420659, 3)
 local warnCursedWax							= mod:NewTargetNoFilterAnnounce(421653, 4)
 local warnDarkflamePickaxe					= mod:NewTargetNoFilterAnnounce(420659, 3)
-local warnThrowDarkflame					= mod:NewTargetNoFilterAnnounce(420696, 3)
+--local warnThrowDarkflame					= mod:NewTargetNoFilterAnnounce(420696, 3)--Private Aura
 
-local specWarnDarkflamePickaxe				= mod:NewSpecialWarningMoveTo(420659, nil, nil, nil, 1, 2)
+local specWarnDarkflamePickaxe				= mod:NewSpecialWarningMoveTo(420659, nil, nil, nil, 1, 17)
 local yellDarkflamePickaxe					= mod:NewShortYell(422648)
 local yellDarkflamePickaxeFades				= mod:NewShortFadesYell(422648)
-local specWarnThrowDarkflame				= mod:NewSpecialWarningMoveTo(420696, nil, nil, nil, 1, 2)
-local yellThrowDarkflame					= mod:NewShortYell(420696)
-local yellThrowDarkflameFades				= mod:NewShortFadesYell(420696)
+--local specWarnThrowDarkflame				= mod:NewSpecialWarningMoveTo(420696, nil, nil, nil, 1, 2)--Private Aura
+--local yellThrowDarkflame					= mod:NewShortYell(420696)--Private Aura
+--local yellThrowDarkflameFades				= mod:NewShortFadesYell(420696)--Private Aura
 local specWarnParanoidMind					= mod:NewSpecialWarningInterruptCount(426145, nil, nil, nil, 1, 2)
 local specWarnGTFO							= mod:NewSpecialWarningGTFO(421067, nil, nil, nil, 1, 8)
 
 local timerEarieMoldsCD						= mod:NewCDCountTimer(31.5, 420659, nil, nil, nil, 1)
 local timerDarkflamePickaxeCD				= mod:NewAITimer(17, 422648, nil, nil, nil, 3)
 local timerParanoidMindCD					= mod:NewCDCountTimer(22, 426145, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
-local timerThrowDarkflameCD					= mod:NewAITimer(24.3, 420696, nil, nil, nil, 3)
+--local timerThrowDarkflameCD					= mod:NewAITimer(24.3, 420696, nil, nil, nil, 3)
 
 mod:AddSetIconOption("SetIconOnAdds", 420659, true, 5, {8, 7, 6, 5, 4})
+mod:AddPrivateAuraSoundOption(420696, true, 420696, 1)--Throw Darkflame
 
 mod.vb.addIcon = 8
 mod.vb.statueCount = 0
@@ -68,7 +70,11 @@ function mod:OnCombatStart(delay)
 	timerEarieMoldsCD:Start(6-delay, 1)
 	timerDarkflamePickaxeCD:Start(1-delay)
 	timerParanoidMindCD:Start(10.9-delay, 1)
-	timerThrowDarkflameCD:Start(1-delay)
+	if self:IsMythic() then
+--		timerThrowDarkflameCD:Start(1-delay)
+		self:EnablePrivateAuraSound(420696, "movetostatue", 17)--Throw Darkflame
+		self:EnablePrivateAuraSound(453278, "movetostatue", 17, 420696)--Register Additional Throw Darkflame ID
+	end
 end
 
 --function mod:OnCombatEnd()
@@ -97,7 +103,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 		timerDarkflamePickaxeCD:Start()
 		if args:IsPlayer() then
 			specWarnDarkflamePickaxe:Show(statueName)
-			specWarnDarkflamePickaxe:Play("behindmob")
+			specWarnDarkflamePickaxe:Play("movetostatue")
 			yellDarkflamePickaxe:Yell()
 			yellDarkflamePickaxeFades:Countdown(spellId)
 		else
@@ -120,18 +126,18 @@ function mod:SPELL_AURA_APPLIED(args)
 	local spellId = args.spellId
 	if spellId == 421653 then
 		warnCursedWax:Show(args.destName)
-	elseif spellId == 420696 then
-		if self:AntiSpam(3, 1) then
-			self.vb.throwCount = self.vb.throwCount + 1
-			timerThrowDarkflameCD:Start()--Not in combat log, so has to be in applied event
-		end
-		warnThrowDarkflame:CombinedShow(0.5, args.destName)
-		if args:IsPlayer() then
-			specWarnThrowDarkflame:Show(statueName)
-			specWarnThrowDarkflame:Play("behindmob")
-			yellThrowDarkflame:Yell()
-			yellThrowDarkflameFades:Countdown(spellId)
-		end
+	--elseif spellId == 420696 then
+	--	if self:AntiSpam(3, 1) then
+	--		self.vb.throwCount = self.vb.throwCount + 1
+	--		timerThrowDarkflameCD:Start()--Not in combat log, so has to be in applied event
+	--	end
+	--	warnThrowDarkflame:CombinedShow(0.5, args.destName)
+	--	if args:IsPlayer() then
+	--		specWarnThrowDarkflame:Show(statueName)
+	--		specWarnThrowDarkflame:Play("behindmob")
+	--		yellThrowDarkflame:Yell()
+	--		yellThrowDarkflameFades:Countdown(spellId)
+	--	end
 	end
 end
 --mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED
@@ -142,10 +148,10 @@ function mod:SPELL_AURA_REMOVED(args)
 		if args:IsPlayer() then
 			yellDarkflamePickaxeFades:Cancel()
 		end
-	elseif spellId == 420696 then
-		if args:IsPlayer() then
-			yellThrowDarkflameFades:Cancel()
-		end
+	--elseif spellId == 420696 then
+	--	if args:IsPlayer() then
+	--		yellThrowDarkflameFades:Cancel()
+	--	end
 	end
 end
 

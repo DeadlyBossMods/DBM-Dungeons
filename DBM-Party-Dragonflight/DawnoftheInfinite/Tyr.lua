@@ -55,7 +55,7 @@ local timerRP										= mod:NewRPTimer(8)
 local timerSparkofTyrCD								= mod:NewCDCountTimer(60.7, 400681, nil, nil, nil, 3, nil, DBM_COMMON_L.MAGIC_ICON)
 local timerSiphonOathCD								= mod:NewCDCountTimer(60.7, 400642, nil, nil, nil, 6, nil, DBM_COMMON_L.DAMAGE_ICON)
 
-mod:AddSetIconOption("SetIconOnSparkofTyr", 400681, true, false, {1, 2})
+mod:AddSetIconOption("SetIconOnSparkofTyr", 400681, true, 0, {1, 2})
 
 mod.vb.sparkCount = 0
 mod.vb.barrierCount = 0

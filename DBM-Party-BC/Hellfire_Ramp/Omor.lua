@@ -25,7 +25,7 @@ local yellBane		= mod:NewYell(37566)
 
 local timerBane     = mod:NewTargetTimer(15, 37566, nil, nil, nil, 3)
 
-mod:AddSetIconOption("SetIconOnBaneTarget", 37566, true, false, {8})
+mod:AddSetIconOption("SetIconOnBaneTarget", 37566, true, 0, {8})
 mod:AddRangeFrameOption(37566, 15)
 
 function mod:OnCombatEnd()

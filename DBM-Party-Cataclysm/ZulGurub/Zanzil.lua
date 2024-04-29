@@ -28,7 +28,7 @@ local timerZanzilGas		= mod:NewBuffActiveTimer(7, 96338, nil, nil, nil, 2)
 local timerGaze				= mod:NewTargetTimer(17, 96342, nil, nil, nil, 3)
 local timerZanzilElixir		= mod:NewCDTimer(30, 96316, nil, nil, nil, 1)
 
-mod:AddSetIconOption("SetIconOnGaze", 96342, false, false, {8})
+mod:AddSetIconOption("SetIconOnGaze", 96342, false, 0, {8})
 mod:AddBoolOption("InfoFrame", "Healer")--on by default for healers, so they know what numpties to heal through gas
 
 local frameDebuff = DBM:GetSpellName(96328)

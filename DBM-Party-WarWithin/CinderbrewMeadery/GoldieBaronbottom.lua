@@ -48,7 +48,7 @@ local timerSpreadtheLoveCD					= mod:NewAITimer(49.6, 435560, nil, nil, nil, 5)
 local timerBurningRicochetCD				= mod:NewCDCountTimer(13.3, 436644, nil, nil, nil, 3)
 local timerCashCannonCD						= mod:NewCDCountTimer(13.3, 436592, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 
-mod:AddSetIconOption("SetIconOnRico", 436644, true, false, {1, 2})
+mod:AddSetIconOption("SetIconOnRico", 436644, true, 0, {1, 2})
 
 mod.vb.bombsRemaining = 0
 mod.vb.hailCount = 0

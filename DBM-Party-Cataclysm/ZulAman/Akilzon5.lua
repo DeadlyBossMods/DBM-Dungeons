@@ -26,8 +26,8 @@ local timerStormCD		= mod:NewCDTimer(55, 43648, nil, nil, nil, 3)
 local berserkTimer		= mod:NewBerserkTimer(600)
 
 mod:AddBoolOption("RangeFrame", true)
-mod:AddSetIconOption("StormIcon", 43648, true, false, {1})
-mod:AddSetIconOption("SetIconOnEagle", 97318, true, true, {8})
+mod:AddSetIconOption("StormIcon", 43648, true, 0, {1})
+mod:AddSetIconOption("SetIconOnEagle", 97318, true, 5, {8})
 
 function mod:OnCombatStart(delay)
 	warnStormSoon:Schedule(43)

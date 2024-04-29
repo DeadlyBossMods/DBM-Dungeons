@@ -47,7 +47,7 @@ local timerFearCD					= mod:NewCDTimer(43, 228837, nil, nil, nil, 2)--43-46
 
 --local berserkTimer				= mod:NewBerserkTimer(300)
 
-mod:AddSetIconOption("SetIconOnIgnite", 228796, true, false, {1})
+mod:AddSetIconOption("SetIconOnIgnite", 228796, true, 0, {1})
 mod:AddInfoFrameOption(228829, true)
 
 mod.vb.interruptCount = 0

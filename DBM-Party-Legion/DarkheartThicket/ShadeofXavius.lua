@@ -44,8 +44,8 @@ local timerNightmareBoltCD			= mod:NewCDCountTimer(22.7, 200185, nil, nil, nil, 
 local timerParanoiaCD				= mod:NewCDCountTimer(22, 200289, nil, nil, nil, 3)--22-34 (200359 matches journal, but better to sync up with debuff for WA keys)
 local timerFeedOnTheWeakCD			= mod:NewCDCountTimer(18.2, 200238, nil, nil, nil, 5, nil, DBM_COMMON_L.HEALER_ICON)
 
-mod:AddSetIconOption("SetIconOnNightmare", 200243, true, false, {1})
-mod:AddSetIconOption("SetIconOnParanoia", 200289, true, false, {2})
+mod:AddSetIconOption("SetIconOnNightmare", 200243, true, 0, {1})
+mod:AddSetIconOption("SetIconOnParanoia", 200289, true, 0, {2})
 
 mod.vb.festerCount = 0
 mod.vb.nightmareCount = 0
