@@ -126,7 +126,7 @@ function mod:SPELL_CAST_START(args)
 			specWarnMoltenHammer:Show()
 			specWarnMoltenHammer:Play("defensive")
 		end
-		timerMoltenHammerCD:Start()
+		timerMoltenHammerCD:Start(nil, self.vb.hammerCount+1)
 	end
 end
 
@@ -180,7 +180,7 @@ mod.SPELL_PERIODIC_MISSED = mod.SPELL_PERIODIC_DAMAGE
 function mod:UNIT_DIED(args)
 	local cid = self:GetCIDFromGUID(args.destGUID)
 	if cid == 213217 then--Brokk
-		timerActivateVentilationCD:Stop(1)
+		timerActivateVentilationCD:Stop()
 		timerMoltenMetalCD:Stop()
 		timerScrapSongCD:Stop()
 	elseif cid == 213216 then--Dorlita

@@ -95,7 +95,7 @@ function mod:SPELL_CAST_START(args)
 		self.vb.gulpCount = self.vb.gulpCount + 1
 		specWarnGulp:Show(self.vb.gulpCount)
 		specWarnGulp:Play("justrun")
-		timerGulpCD:Start(self.vb.gulpCount == 1 and 47.3 or 38.8, self.vb.gulpCount+1)
+		timerGulpCD:Start(self.vb.gulpCount == 1 and 47.3 or 37.6, self.vb.gulpCount+1)
 	elseif spellId == 385181 then
 		self.vb.croakCount = self.vb.croakCount + 1
 		specWarnOverpoweringCroak:Show(self.vb.croakCount)

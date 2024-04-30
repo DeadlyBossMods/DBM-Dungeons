@@ -51,6 +51,7 @@ local timerCloudburstCD							= mod:NewCDTimer(19.1, 385558, nil, nil, nil, 2)--
 mod:AddInfoFrameOption(381862, false)--Infernocore
 
 mod.vb.windDirection = 0
+mod.vb.mainGUID = nil
 
 function mod:SpitTarget(targetname)
 	if not targetname then return end
@@ -78,6 +79,7 @@ local function scanBosses(self, delay)
 				timerRoaringFirebreathCD:Start(1.1-delay, bossGUID)
 				timerFlamespitCD:Start(16.1-delay, bossGUID)--17-24?
 			else--Erkhart Stormvein
+				self.vb.mainGUID = bossGUID
 				timerStormslamCD:Start(4-delay, bossGUID)
 				timerCloudburstCD:Start(8.4-delay, bossGUID)
 			end
@@ -97,6 +99,7 @@ function mod:OnCombatStart(delay)
 end
 
 function mod:OnCombatEnd()
+	self.vb.mainGUID = nil
 	if self.Options.InfoFrame then
 		DBM.InfoFrame:Hide()
 	end
@@ -181,6 +184,10 @@ function mod:UNIT_DIED(args)
 	if cid == 193435 then--Kyrakka
 		timerFlamespitCD:Stop(args.destGUID)
 		timerRoaringFirebreathCD:Stop(args.destGUID)
+		if self.vb.mainGUID then
+			--In season 4, bosses cloudburst Cd resets on dragon death, he basically instant casts it even if it was JUST cast
+			timerCloudburstCD:Stop(self.vb.mainGUID)
+		end
 	elseif cid == 190485 then--Erkhart
 		timerWindsofChangeCD:Stop(args.destGUID)
 		timerStormslamCD:Stop(args.destGUID)
