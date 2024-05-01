@@ -104,8 +104,9 @@ function mod:SPELL_AURA_APPLIED(args)
 	if spellId == 376781 then
 		timerFirestorm:Start()
 		--Regardless of time remaining, crawth will cast these coming out of stun
-		timerOverpoweringGustCD:Restart(12)
-		timerDeafeningScreechCD:Restart(16.7, 1)
+		--Season 4 seems to have swapped these? or spell queue is now happening and either can be cast at 12?
+		timerDeafeningScreechCD:Restart(12, 1)
+		timerOverpoweringGustCD:Restart(17.3)--Previously 12
 		timerSavagePeckCD:Stop()--24.6, This one probably restarts too but also gets wierd spell queue and MIGHT not happen
 	elseif spellId == 181089 then
 		if args:GetDestCreatureID() == 191736 then--Crawth getting buff is play ball starting

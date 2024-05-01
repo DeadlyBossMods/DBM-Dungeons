@@ -135,7 +135,7 @@ function mod:SPELL_AURA_REMOVED(args)
 		timerFetter:Stop(args.destName)
 		--Fetter on other hand does seem to hard reset things, to an extent
 		if not self.vb.focusInProgress then
-			timerMagmaWaveCD:Start(9, self.vb.magmawaveCount+1)
+			timerMagmaWaveCD:Start(8.7, self.vb.magmawaveCount+1)
 			timerDragonStrikeCD:Start(15.1, self.vb.dragonCount+1)
 			timerGroundingSpearCD:Start(27.2)
 			timerFieryFocusCD:Start(30.9, self.vb.focusCount+1)
