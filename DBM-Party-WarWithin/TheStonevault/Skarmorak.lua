@@ -43,7 +43,7 @@ local specWarnUnstableCrash					= mod:NewSpecialWarningDodgeCount(423538, "-Heal
 --local yellSomeAbility						= mod:NewYell(372107)
 --local specWarnGTFO						= mod:NewSpecialWarningGTFO(372820, nil, nil, nil, 1, 8)
 
-local timerCrystallineSmashCD				= mod:NewCDCountTimer(18.2, 422233, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON..DBM_COMMON_L.DAMAGE_ICON)--One timer for smash and shards
+local timerCrystallineSmashCD				= mod:NewCDCountTimer(17, 422233, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON..DBM_COMMON_L.DAMAGE_ICON)--One timer for smash and shards
 local timerUnstableCrashCD					= mod:NewCDCountTimer(19.4, 423538, nil, nil, nil, 3)
 local timerReclaimCD						= mod:NewCDCountTimer(40, 423200, nil, nil, nil, 6)
 
@@ -78,7 +78,7 @@ function mod:SPELL_CAST_START(args)
 		self.vb.addIcon = 8
 		self.vb.eruptionCount = 0
 		self.vb.smashCount = self.vb.smashCount + 1
-		timerCrystallineSmashCD:Start()
+		timerCrystallineSmashCD:Start(nil, self.vb.smashCount+1)
 		if self:IsTanking("player", "boss1", nil, true) then
 			specWarnCrystallineSmash:Show()
 			specWarnCrystallineSmash:Play("defensive")
@@ -139,7 +139,7 @@ function mod:SPELL_AURA_REMOVED(args)
 	elseif spellId == 423246 then--Shattered Shell
 		timerCrystallineSmashCD:Start(5, self.vb.smashCount+1)
 		timerUnstableCrashCD:Start(12.2, self.vb.unstablecrashCount+1)
-		timerReclaimCD:Start(39, self.vb.reclaimCount+1)
+		timerReclaimCD:Start(38.9, self.vb.reclaimCount+1)
 	end
 end
 

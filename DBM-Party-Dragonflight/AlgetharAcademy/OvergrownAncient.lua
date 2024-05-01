@@ -41,8 +41,8 @@ local specWarnBarkbreaker						= mod:NewSpecialWarningDefensive(388544, nil, nil
 
 local timerRP									= mod:NewRPTimer(17)
 local timerGerminateCD							= mod:NewCDCountTimer(29.1, 388796, nil, nil, nil, 3)
-local timerBurstForthCD							= mod:NewCDTimer(59.8, 388923, nil, nil, nil, 2, nil, DBM_COMMON_L.HEALER_ICON)--Assumed it's on same cycle as branch out, CD not confirmed
-local timerBranchOutCD							= mod:NewCDTimer(59.8, 388623, nil, nil, nil, 3)
+local timerBurstForthCD							= mod:NewCDTimer(58.2, 388923, nil, nil, nil, 2, nil, DBM_COMMON_L.HEALER_ICON)--Assumed it's on same cycle as branch out, CD not confirmed
+local timerBranchOutCD							= mod:NewCDTimer(58.2, 388623, nil, nil, nil, 3)
 local timerHealingTouchCD						= mod:NewCDTimer(12, 396640, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--First cast only, after that it's iffy
 local timerBarkbreakerCD						= mod:NewCDCountTimer(27.9, 388544, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.HEALER_ICON)
 
@@ -116,7 +116,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		if self.vb.germinateCount % 2 == 0 then
 			timerGerminateCD:Start(25, self.vb.germinateCount+1)
 		else
-			timerGerminateCD:Start(34, self.vb.germinateCount+1)
+			timerGerminateCD:Start(33.6, self.vb.germinateCount+1)
 		end
 	elseif spellId == 389033 then
 		local amount = args.amount or 1

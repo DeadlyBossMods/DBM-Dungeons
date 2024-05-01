@@ -100,7 +100,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		warnEnergyBomb:CombinedShow(0.3, args.destName)
 		if args:IsPlayer() then
 			specWarnEnergyBomb:Show()
-			if playerDebuffCount == 2 then--Will spawn rift when it expires, runout
+			if playerDebuffCount == 3 then--Will spawn rift when it expires, runout
 				specWarnEnergyBomb:Play("runout")
 			else
 				specWarnEnergyBomb:Play("scatter")

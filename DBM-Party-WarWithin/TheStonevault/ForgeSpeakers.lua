@@ -23,8 +23,7 @@ mod:RegisterEventsInCombat(
 --	"UNIT_SPELLCAST_SUCCEEDED boss1"
 )
 
---TODO, auto mark cube with spell summon event? https://www.wowhead.com/beta/spell=428204/scrap-song
---TODO, need more timer data to know if alternating timers is enough, or if boss needs full sequencing
+--TODO, watch for more tuning. timers already changed once in first weekend dungeon was up. It's also prone to spell queing issues exagerbated by interrupt timing
 --[[
 (ability.id = 445541 or ability.id = 430097 or ability.id = 428202 or ability.id = 428711) and type = "begincast"
 or (ability.id = 428508 or ability.id = 428535 or ability.id = 428120) and type = "cast"
@@ -43,23 +42,23 @@ local specWarnMoltenMetal					= mod:NewSpecialWarningInterruptCount(430097, "Has
 local specWarnScrapSong						= mod:NewSpecialWarningDodgeCount(428202, nil, nil, nil, 2, 2)
 --local yellSomeAbility						= mod:NewYell(372107)
 
-local timerActivateVentilationCD			= mod:NewCDCountTimer(15.7, 445541, nil, nil, nil, 3)--15.7 and 33.9 alternating?
+local timerActivateVentilationCD			= mod:NewCDCountTimer(15.7, 445541, nil, nil, nil, 3)
 local timerActivateVentilation				= mod:NewBuffActiveTimer(9, 445541, nil, nil, nil, 5)
-local timerMoltenMetalCD					= mod:NewCDCountTimer(10.9, 430097, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerMoltenMetalCD					= mod:NewCDCountTimer(6.9, 430097, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--6.9 + spell lockout time?
 local timerScrapSongCD						= mod:NewCDCountTimer(54.5, 428202, nil, nil, nil, 3)
 --Speaker Dorlita
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(28461))
 local warnDeconstruction					= mod:NewCountAnnounce(428508, 3)
 
-local specWarnMetalSplinters				= mod:NewSpecialWarningCount(428535, nil, nil, nil, 2, 2)--Change to run?
+local specWarnMetalSplinters				= mod:NewSpecialWarningRunCount(428535, nil, nil, nil, 4, 2)
 local specWarnMoltenHammer					= mod:NewSpecialWarningDefensive(428711, nil, nil, nil, 1, 2)
 local specWarnLavaExpulsion					= mod:NewSpecialWarningDodgeCount(428120, nil, nil, nil, 2, 2)
 
-local timerDeconstructionCD					= mod:NewCDCountTimer(54.5, 428508, nil, nil, nil, 2)
+local timerDeconstructionCD					= mod:NewCDCountTimer(52.2, 428508, nil, nil, nil, 2)
 local timerMetalSplintersCD					= mod:NewNextCountTimer(7, 428535, nil, nil, nil, 2, nil, DBM_COMMON_L.HEALER_ICON..DBM_COMMON_L.DEADLY_ICON)
-local timerMetalSplinters					= mod:NewBuffActiveTimer(15, 428535, nil, nil, nil, 5, nil, DBM_COMMON_L.HEALER_ICON..DBM_COMMON_L.DEADLY_ICON)
+--local timerMetalSplinters					= mod:NewBuffActiveTimer(15, 428535, nil, nil, nil, 5, nil, DBM_COMMON_L.HEALER_ICON..DBM_COMMON_L.DEADLY_ICON)
 local timerMoltenHammerCD					= mod:NewCDCountTimer(12.1, 428711, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
-local timerLavaExpulsionCD					= mod:NewCDCountTimer(16.9, 428120, nil, nil, nil, 3)--16.9 and 37.6 alternating?
+local timerLavaExpulsionCD					= mod:NewCDCountTimer(16.1, 428120, nil, nil, nil, 3)
 
 --Brokk
 mod.vb.ventilationCount = 0
@@ -79,13 +78,13 @@ function mod:OnCombatStart(delay)
 	self.vb.deconstructCount = 0
 	self.vb.hammerCount = 0
 	self.vb.orbCount = 0
-	timerMoltenMetalCD:Start(4.8-delay, 1)
-	timerActivateVentilationCD:Start(9.6-delay, 1)
-	timerScrapSongCD:Start(19.3-delay, 1)
+	timerMoltenMetalCD:Start(4.6-delay, 1)
+	timerActivateVentilationCD:Start(9.4-delay, 1)
+	timerScrapSongCD:Start(19-delay, 1)
 	--
+	timerMoltenHammerCD:Start(7-delay, 1)
 	timerLavaExpulsionCD:Start(12.1-delay, 1)
-	timerMoltenHammerCD:Start(26.6-delay, 1)
-	timerDeconstructionCD:Start(47.3-delay, 1)
+	timerDeconstructionCD:Start(51-delay, 1)--Used to be 47, seems retuned already
 end
 
 --function mod:OnCombatEnd()
@@ -95,14 +94,10 @@ end
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
 	if spellId == 445541 then
-		self.vb.ventilationCount  = self.vb.ventilationCount  + 1
+		self.vb.ventilationCount = self.vb.ventilationCount  + 1
 		specWarnActivateVentilation:Show(self.vb.ventilationCount)
 		specWarnActivateVentilation:Play("watchstep")
-		if self.vb.ventilationCount % 2 == 0 then
-			timerActivateVentilationCD:Start(15.7, self.vb.ventilationCount+1)
-		else
-			timerActivateVentilationCD:Start(33.9, self.vb.ventilationCount+1)
-		end
+		timerActivateVentilationCD:Start(15.7, self.vb.ventilationCount+1)
 		timerActivateVentilation:Start()--3 + 6
 	elseif spellId == 430097 then
 		if self.vb.moltenMetalCount == 2 then self.vb.moltenMetalCount = 0 end
@@ -118,8 +113,11 @@ function mod:SPELL_CAST_START(args)
 	elseif spellId == 428202 then
 		self.vb.cubeCount = self.vb.cubeCount + 1
 		specWarnScrapSong:Show(self.vb.cubeCount)
-		specWarnScrapSong:Play("watchstep")--Or shockwave?
+		specWarnScrapSong:Play("runtoedge")--Or shockwave?
 		timerScrapSongCD:Start(nil, self.vb.cubeCount+1)
+		--These timers restart
+		timerMoltenMetalCD:Restart(7.3, self.vb.moltenMetalCount+1)
+		timerActivateVentilationCD:Restart(23.2, self.vb.ventilationCount+1)
 	elseif spellId == 428711 then
 		self.vb.hammerCount = self.vb.hammerCount + 1
 		if self:IsTanking("player", nil, nil, true, args.sourceGUID) then
@@ -137,19 +135,19 @@ function mod:SPELL_CAST_SUCCESS(args)
 		warnDeconstruction:Show(self.vb.deconstructCount)
 		--timerDeconstructionCD:Start(nil, self.vb.deconstructCount+1)--Maybe move this somewhere else
 		timerMetalSplintersCD:Start(nil, self.vb.deconstructCount)--1 + 6
+
+		--This resets bosses other two abilities
+		timerMoltenHammerCD:Restart(13, self.vb.hammerCount+1)
+		timerLavaExpulsionCD:Restart(19, self.vb.orbCount+1)
 	elseif spellId == 428535 then
-		specWarnMetalSplinters:Show()
-		specWarnMetalSplinters:Play("aesoon")
-		timerMetalSplinters:Start()
+		specWarnMetalSplinters:Show(self.vb.deconstructCount)
+		specWarnMetalSplinters:Play("justrun")
+--		timerMetalSplinters:Start()
 	elseif spellId == 428120 then
 		self.vb.orbCount = self.vb.orbCount + 1
 		specWarnLavaExpulsion:Show(self.vb.orbCount)
 		specWarnLavaExpulsion:Play("watchorb")
-		if self.vb.orbCount % 2 == 0 then
-			timerLavaExpulsionCD:Start(37.6, self.vb.orbCount+1)
-		else
-			timerLavaExpulsionCD:Start(16.9, self.vb.orbCount+1)
-		end
+		timerLavaExpulsionCD:Start(nil, self.vb.orbCount+1)
 	end
 end
 
@@ -188,7 +186,7 @@ function mod:UNIT_DIED(args)
 		timerMoltenHammerCD:Stop()
 		timerLavaExpulsionCD:Stop()
 		timerMetalSplintersCD:Stop()
-		timerMetalSplinters:Stop()
+--		timerMetalSplinters:Stop()
 	end
 end
 
