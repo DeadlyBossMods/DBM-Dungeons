@@ -119,17 +119,17 @@ end
 function mod:UNIT_SPELLCAST_START(uId, _, spellId)
 	if spellId == 272874 then
 		local guid = UnitGUID(uId)
-		if self:IsValidWarning(guid, uId) then
+		if guid and self:IsValidWarning(guid, uId) then
 			self:SendSync("Trample")
 		end
 	elseif spellId == 272711 then
 		local guid = UnitGUID(uId)
-		if self:IsValidWarning(guid, uId) then
+		if guid and self:IsValidWarning(guid, uId) then
 			self:SendSync("CrushingSlam")
 		end
 	elseif spellId == 268260 then
 		local guid = UnitGUID(uId)
-		if self:IsValidWarning(guid, uId) then
+		if guid and self:IsValidWarning(guid, uId) then
 			self:SendSync("Broadside")
 		end
 	end
