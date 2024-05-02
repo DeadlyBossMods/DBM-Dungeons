@@ -23,12 +23,11 @@ mod:RegisterEventsInCombat(
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
 --]]
 --TODO, review heroic logs in 10.1 to see if timer changes affect that mode
-local warnFrostCyclone							= mod:NewTargetNoFilterAnnounce(390111, 3)
+local warnFrostCyclone							= mod:NewCountAnnounce(390111, 3)
 
 local specWarnHailstorm							= mod:NewSpecialWarningMoveTo(386757, nil, nil, nil, 2, 2)
 local specWarnGlacialSurge						= mod:NewSpecialWarningDodgeCount(386559, nil, nil, nil, 2, 2)
-local specWarnFrostCyclone						= mod:NewSpecialWarningMoveAway(390111, nil, nil, nil, 1, 2, 4)
-local yellFrostCyclone							= mod:NewYell(390111)
+local specWarnFrostCyclone						= mod:NewSpecialWarningCount(390111, false, nil, nil, 2, 2)--Optional emphasis for it
 local specWarnFrostShock						= mod:NewSpecialWarningDispel(385963, "RemoveMagic", nil, nil, 1, 2)
 
 local timerHailstormCD							= mod:NewCDCountTimer(22, 386757, nil, nil, nil, 2, nil, DBM_COMMON_L.DEADLY_ICON)
@@ -42,17 +41,6 @@ mod.vb.hailCount = 0
 mod.vb.surgeCount = 0
 mod.vb.cycloneCount = 0
 mod.vb.shockCount = 0
-
-function mod:FrostCycloneTarget(targetname)
-	if not targetname then return end
-	if targetname == UnitName("player") then
-		specWarnFrostCyclone:Show()
-		specWarnFrostCyclone:Play("runout")
-		yellFrostCyclone:Yell()
-	else
-		warnFrostCyclone:Show(targetname)
-	end
-end
 
 function mod:OnCombatStart(delay)
 	self.vb.hailCount = 0
@@ -102,7 +90,12 @@ function mod:SPELL_CAST_START(args)
 		end
 	elseif spellId == 390111 then
 		self.vb.cycloneCount = self.vb.cycloneCount + 1
-		self:ScheduleMethod(0.1, "BossTargetScanner", args.sourceGUID, "FrostCycloneTarget", 0.1, 6, true)
+		if self.Options.SpecWarn390111count then
+			specWarnFrostCyclone:Show(self.vb.cycloneCount)
+			specWarnFrostCyclone:Play("watchstep")
+		else
+			warnFrostCyclone:Show(self.vb.cycloneCount)
+		end
 		if self:IsMythicPlus() then
 			--10.0, 35.0, 37.0, 35.0
 			if self.vb.cycloneCount % 2 == 0 then
