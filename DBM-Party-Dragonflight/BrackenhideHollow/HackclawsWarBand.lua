@@ -35,6 +35,7 @@ local warnBladestorm							= mod:NewTargetNoFilterAnnounce(377827, 3)
 local specWarnSavageCharge						= mod:NewSpecialWarningYou(381461, nil, nil, nil, 1, 2)
 local yellSavageCharge							= mod:NewYell(381461)
 local specWarnSavageChargeTarget				= mod:NewSpecialWarningTarget(381461, nil, nil, nil, 1, 2)
+local specWarnBladestorm						= mod:NewSpecialWarningYou(377827, nil, nil, nil, 1, 2)
 
 local timerSavageChargeCD						= mod:NewCDTimer(59.4, 381461, nil, nil, nil, 3, nil, DBM_COMMON_L.TANK_ICON)
 local timerBladestormCD							= mod:NewCDTimer(59.4, 377827, nil, nil, nil, 3)
@@ -163,7 +164,12 @@ function mod:SPELL_AURA_APPLIED(args)
 		if spellId == 381835 then
 			timerBladestormCD:Start(nil, args.sourceGUID)
 		end
-		warnBladestorm:Show(args.destName)
+		if args:IsPlayer() and not self:IsTank() and self:AntiSpam(3, 1) then
+			specWarnBladestorm:Show()
+			specWarnBladestorm:Play("whirlwind")
+		else
+			warnBladestorm:Show(args.destName)
+		end
 	elseif args:IsSpellID(381387, 381379) and args:IsDestTypePlayer() and self:CheckDispelFilter("magic") then
 		specWarnDecayedSenses:Show(args.destName)
 		specWarnDecayedSenses:Play("helpdispel")

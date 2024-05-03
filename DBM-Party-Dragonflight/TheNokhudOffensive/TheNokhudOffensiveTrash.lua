@@ -7,7 +7,7 @@ mod.isTrashMod = true
 
 mod:RegisterEvents(
 	"SPELL_CAST_START 387145 386024 387127 384336 387629 387614 387411 382233 373395 383823 384365 386694 387125 387440 436841 387596 384134 381683",
-	"SPELL_CAST_SUCCESS 384476",
+	"SPELL_CAST_SUCCESS 384476 382267",
 	"SPELL_AURA_APPLIED 395035 334610 386223 345561",
 --	"SPELL_AURA_APPLIED_DOSE 339528",
 --	"SPELL_AURA_REMOVED 339525",
@@ -19,7 +19,7 @@ mod:RegisterEvents(
 --TODO, uncomment/update rain of arrows timer for season 4
 --[[
 (ability.id = 373395 or ability.id = 387411 or ability.id = 373395 or ability.id = 383823 or ability.id = 384365 or ability.id = 387440 or ability.id = 384336 or ability.id = 386024) and type = "begincast"
- or ability.id = 384476 and type = "cast"
+ or (ability.id = 382267 or ability.id = 384476) and type = "cast"
 --]]
 local warnTotemicOverload					= mod:NewCastAnnounce(387145, 3)
 local warnChantoftheDead					= mod:NewCastAnnounce(387614, 3)
@@ -38,12 +38,12 @@ local warnSwiftWind							= mod:NewCastAnnounce(387596, 3)
 local specWarnShatterSoul					= mod:NewSpecialWarningMoveTo(395035, nil, nil, nil, 1, 2)
 local specWarnChainLightning				= mod:NewSpecialWarningMoveAway(387127, nil, nil, nil, 1, 2)
 local yellChainLightning					= mod:NewYell(387127)
+local specWarnVehementCharge				= mod:NewSpecialWarningMoveAway(382277, nil, nil, nil, 1, 2)
+local yellVehementCharge					= mod:NewYell(382277)
 local specWarnHuntPrey						= mod:NewSpecialWarningYou(334610, nil, nil, nil, 1, 2)--This might throw duplicate spell alert in debug, that's cause it is in fact used in necrotic wake too
 local specWarnWarStomp						= mod:NewSpecialWarningDodge(384336, nil, nil, nil, 2, 2)
 local specWarnBroadStomp					= mod:NewSpecialWarningDodge(382233, nil, nil, nil, 2, 2)
 local specWarnRainofArrows					= mod:NewSpecialWarningDodge(384476, nil, nil, nil, 2, 2)
---local yellConcentrateAnimaFades				= mod:NewShortFadesYell(339525)
---local specWarnSharedSuffering				= mod:NewSpecialWarningYou(339607, nil, nil, nil, 1, 2)
 local specWarnStormshield					= mod:NewSpecialWarningDispel(386223, "MagicDispeller", nil, nil, 1, 2)
 local specWarnTempest						= mod:NewSpecialWarningInterrupt(386024, "HasInterrupt", nil, nil, 1, 2)
 local specWarnDeathBoltVolley				= mod:NewSpecialWarningInterrupt(387411, "HasInterrupt", nil, nil, 1, 2)
@@ -57,6 +57,7 @@ local timerRottingWindCD					= mod:NewCDNPTimer(23, 436841, nil, nil, nil, 2)
 local timerSwiftWindCD						= mod:NewCDNPTimer(20.6, 387596, nil, nil, nil, 5)
 local timerSwiftStabCD						= mod:NewCDNPTimer(13.4, 381683, nil, nil, nil, 5)--13.4-26.9 (basically casts can be skipped via stuns
 local timerThunderstrikeCD					= mod:NewCDNPTimer(4.9, 387125, nil, nil, nil, 5)
+local timerVehementChargeCD					= mod:NewCDNPTimer(16.3, 382277, nil, nil, nil, 3)--16.3-17.1
 local timerDisruptingShoutCD				= mod:NewCDNPTimer(21.8, 384365, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--20-30ish
 local timerTempestCD						= mod:NewCDNPTimer(20.6, 386024, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--20-25
 local timerDesecratingRoarCD				= mod:NewCDNPTimer(15.8, 387440, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
@@ -176,6 +177,13 @@ function mod:SPELL_CAST_SUCCESS(args)
 			specWarnRainofArrows:Show()
 			specWarnRainofArrows:Play("watchstep")
 		end
+	elseif spellId == 382267 then
+		timerVehementChargeCD:Start(nil, args.sourceGUID)
+		if args:IsPlayer() then
+			specWarnVehementCharge:Show()
+			specWarnVehementCharge:Play("chargemove")
+			yellVehementCharge:Yell()
+		end
 	end
 end
 
@@ -223,5 +231,7 @@ function mod:UNIT_DIED(args)
 		timerSwiftStabCD:Stop(args.destGUID)
 	elseif cid == 195696 then--Primalist Thunderbeast
 		timerThunderstrikeCD:Stop(args.destGUID)
+	elseif cid == 193457 then--Balara
+		timerVehementChargeCD:Stop(args.destGUID)
 	end
 end
