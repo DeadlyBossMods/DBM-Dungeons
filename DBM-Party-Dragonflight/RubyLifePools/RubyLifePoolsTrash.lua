@@ -7,7 +7,7 @@ mod.isTrashMod = true
 
 mod:RegisterEvents(
 	"SPELL_CAST_START 372087 391726 391723 373614 392395 372696 384194 392486 392394 392640 392451 372047 372735",
-	"SPELL_CAST_SUCCESS 385536",
+	"SPELL_CAST_SUCCESS 385536 372743",
 	"SPELL_AURA_APPLIED 373693 392641 373972 391050",
 --	"SPELL_AURA_APPLIED_DOSE",
 	"SPELL_AURA_REMOVED 373693 391050",
@@ -57,7 +57,7 @@ local timerFlashfireCD						= mod:NewCDNPTimer(12.1, 392451, nil, nil, nil, 4, n
 local timerFlameDanceCD						= mod:NewCDNPTimer(26.6, 385536, nil, nil, nil, 5)
 local timerTectonicSlamCD					= mod:NewCDNPTimer(17, 372735, nil, nil, nil, 5)--17-21
 local timerTempestStormshieldCD				= mod:NewCDNPTimer(18.2, 391050, nil, nil, nil, 5, nil, DBM_COMMON_L.DAMAGE_ICON)
-
+local timerIcyShieldCD						= mod:NewCDNPTimer(21.9, 372743, nil, nil, nil, 5)--17-21
 
 --local playerName = UnitName("player")
 
@@ -169,6 +169,8 @@ function mod:SPELL_CAST_SUCCESS(args)
 			warnFlameDance:Show()
 			warnFlameDance:Play("crowdcontrol")
 		end
+	elseif spellId == 372743 then
+		timerIcyShieldCD:Start(nil, args.sourceGUID)
 	end
 end
 
@@ -226,5 +228,7 @@ function mod:UNIT_DIED(args)
 		timerFlameDanceCD:Stop(args.destGUID)
 	elseif cid == 187969 then--Flashfrost Earthshaper
 		timerTectonicSlamCD:Stop(args.destGUID)
+	elseif cid == 188067 then--Flashfrost Chillweaver
+		timerIcyShieldCD:Stop(args.destGUID)
 	end
 end
