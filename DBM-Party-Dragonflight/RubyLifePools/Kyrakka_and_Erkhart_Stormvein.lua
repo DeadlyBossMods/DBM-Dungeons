@@ -154,24 +154,17 @@ function mod:SPELL_AURA_APPLIED(args)
 	elseif spellId == 181089 then
 		self:SetStage(2)
 		--Timers reset by staging
-		for i = 1, 2 do
-			local unitID = "boss"..i
-			if UnitExists(unitID) then
-				local cid = self:GetUnitCreatureId(unitID)
-				if cid == 190485 and self.vb.dragonAlive then--Erkhart
-					--restart apparently broken here (because of GUID?)
-					--Manually stop/start
-					timerFlamespitCD:Stop()
-					timerFlamespitCD:Start(3.5, UnitGUID)
-					timerRoaringFirebreathCD:Stop()
-					timerRoaringFirebreathCD:Start(9.6, UnitGUID)
-					break
-				end
-			end
+		if self.vb.dragonAlive and self:AntiSpam(3, 1) then--Erkhart
+			--restart apparently broken here (because of GUID?)
+			--Manually stop/start
+			timerFlamespitCD:Stop()
+			timerFlamespitCD:Start(3.5, UnitGUID)
+			timerRoaringFirebreathCD:Stop()
+			timerRoaringFirebreathCD:Start(9.6, UnitGUID)
 		end
 		--Rest not reset
 	elseif spellId == 381862 and args:IsPlayer() then
-		if self.Options.SpecWarn381862moveaway and self:AntiSpam(3, 1) then
+		if self.Options.SpecWarn381862moveaway and self:AntiSpam(3, 2) then
 			specWarnInfernoCore:Show()
 			specWarnInfernoCore:Play("runout")
 		else
