@@ -106,7 +106,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		--Regardless of time remaining, crawth will cast these coming out of stun
 		--Season 4 seems to have swapped these? or spell queue is now happening and either can be cast at 12?
 		timerDeafeningScreechCD:Restart(12, 1)
-		timerOverpoweringGustCD:Restart(17.3)--Previously 12
+		timerOverpoweringGustCD:Restart(12)--Screech and gust can swap, whatever one is 12 the other is ~17
 		timerSavagePeckCD:Stop()--24.6, This one probably restarts too but also gets wierd spell queue and MIGHT not happen
 	elseif spellId == 181089 then
 		if args:GetDestCreatureID() == 191736 then--Crawth getting buff is play ball starting
