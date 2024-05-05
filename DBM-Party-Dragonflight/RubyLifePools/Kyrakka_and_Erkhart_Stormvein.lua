@@ -20,7 +20,7 @@ mod:RegisterEventsInCombat(
 
 --[[
 (ability.id = 381605 or ability.id = 381602 or ability.id = 381525 or ability.id = 381517 or ability.id = 381512 or ability.id = 385558 or ability.id = 381516) and type = "begincast"
- or type = "death" and (target.id = 193435 or target.id = 190485)
+ or type = "death" and (target.id = 193435 or target.id = 190484 or target.id = 190485)
  or ability.id = 181089
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
 --]]
@@ -46,12 +46,13 @@ local specWarnInterruptingCloudburst			= mod:NewSpecialWarningCast(381516, "Spel
 
 local timerWindsofChangeCD						= mod:NewCDCountTimer(19.3, 381517, 227878, nil, nil, 3)--Not actually a count timer, but has best localized text
 local timerStormslamCD							= mod:NewCDTimer(17, 381512, nil, "Tank|RemoveMagic", nil, 5, nil, DBM_COMMON_L.TANK_ICON..DBM_COMMON_L.MAGIC_ICON)
-local timerCloudburstCD							= mod:NewCDTimer(19.1, 385558, nil, nil, nil, 2)--Used for both mythic and non mythic versions of spell
+local timerCloudburstCD							= mod:NewCDTimer(18.8, 385558, nil, nil, nil, 2)--Used for both mythic and non mythic versions of spell
 
 mod:AddInfoFrameOption(381862, false)--Infernocore
 
 mod.vb.windDirection = 0
 mod.vb.mainGUID = nil
+mod.vb.dragonAlive = true
 
 function mod:SpitTarget(targetname)
 	if not targetname then return end
@@ -75,7 +76,7 @@ local function scanBosses(self, delay)
 		if UnitExists(unitID) then
 			local cid = self:GetUnitCreatureId(unitID)
 			local bossGUID = UnitGUID(unitID)
-			if cid == 193435 then--Kyrakka
+			if cid == 190484 then--Kyrakka
 				timerRoaringFirebreathCD:Start(1.1-delay, bossGUID)
 				timerFlamespitCD:Start(16.1-delay, bossGUID)--17-24?
 			else--Erkhart Stormvein
@@ -92,6 +93,7 @@ function mod:OnCombatStart(delay)
 	self:SetStage(1)
 	timerWindsofChangeCD:Start(17.1-delay, L.North)
 	self:Schedule(1, scanBosses, self, delay)--1 second delay to give IEEU time to populate boss guids
+	self.vb.dragonAlive = true
 	if self.Options.InfoFrame then
 		DBM.InfoFrame:SetHeader(DBM:GetSpellName(381862))
 		DBM.InfoFrame:Show(5, "playerdebuffremaining", 381862)
@@ -152,25 +154,17 @@ function mod:SPELL_AURA_APPLIED(args)
 	elseif spellId == 181089 then
 		self:SetStage(2)
 		--Timers reset by staging
-		for i = 1, 2 do
-			local unitID = "boss"..i
-			if UnitExists(unitID) then
-				local cid = self:GetUnitCreatureId(unitID)
-				if cid == 193435 then--Kyrakka
-					local bossGUID = UnitGUID(unitID)
-					--restart apparently broken here (because of GUID?)
-					--Manually stop/start
-					timerFlamespitCD:Stop()
-					timerFlamespitCD:Start(2.2, UnitGUID)--3.6 now?
-					timerRoaringFirebreathCD:Stop()
-					timerRoaringFirebreathCD:Start(7.3, UnitGUID)--9.7 now?
-					break
-				end
-			end
+		if self.vb.dragonAlive and self:AntiSpam(3, 1) then--Erkhart
+			--restart apparently broken here (because of GUID?)
+			--Manually stop/start
+			timerFlamespitCD:Stop()
+			timerFlamespitCD:Start(3.5, UnitGUID)
+			timerRoaringFirebreathCD:Stop()
+			timerRoaringFirebreathCD:Start(9.6, UnitGUID)
 		end
 		--Rest not reset
 	elseif spellId == 381862 and args:IsPlayer() then
-		if self.Options.SpecWarn381862moveaway and self:AntiSpam(3, 1) then
+		if self.Options.SpecWarn381862moveaway and self:AntiSpam(3, 2) then
 			specWarnInfernoCore:Show()
 			specWarnInfernoCore:Play("runout")
 		else
@@ -181,7 +175,8 @@ end
 
 function mod:UNIT_DIED(args)
 	local cid = self:GetCIDFromGUID(args.destGUID)
-	if cid == 193435 then--Kyrakka
+	if cid == 190484 then--Kyrakka
+		self.vb.dragonAlive = false
 		timerFlamespitCD:Stop(args.destGUID)
 		timerRoaringFirebreathCD:Stop(args.destGUID)
 		if self.vb.mainGUID then

@@ -35,7 +35,7 @@ local warnShadowblast						= mod:NewTargetNoFilterAnnounce(427011, 3)
 
 local specWarnEternalDarkness				= mod:NewSpecialWarningCount(428266, nil, nil, nil, 2, 2)
 local yellCandlelight						= mod:NewShortYell(420307, nil, nil, nil, "YELL")
-local specWarnCallDarkspawn					= mod:NewSpecialWarningInterruptCount(427157, nil, nil, nil, 1, 2)
+local specWarnCallDarkspawn					= mod:NewSpecialWarningInterruptCount(427157, "HasInterrupt", nil, nil, 1, 2)
 local specWarnUmbralSlash					= mod:NewSpecialWarningDodgeCount(427025, nil, nil, nil, 2, 2)
 local specWarnShadowblast					= mod:NewSpecialWarningMoveAway(427011, nil, nil, nil, 2, 2)
 local yellShadowblast						= mod:NewShortYell(427011)

@@ -44,7 +44,7 @@ local yellDarkflamePickaxeFades				= mod:NewShortFadesYell(422648)
 --local specWarnThrowDarkflame				= mod:NewSpecialWarningMoveTo(420696, nil, nil, nil, 1, 2)--Private Aura
 --local yellThrowDarkflame					= mod:NewShortYell(420696)--Private Aura
 --local yellThrowDarkflameFades				= mod:NewShortFadesYell(420696)--Private Aura
-local specWarnParanoidMind					= mod:NewSpecialWarningInterruptCount(426145, nil, nil, nil, 1, 2)
+local specWarnParanoidMind					= mod:NewSpecialWarningInterruptCount(426145, "HasInterrupt", nil, nil, 1, 2)
 local specWarnGTFO							= mod:NewSpecialWarningGTFO(421067, nil, nil, nil, 1, 8)
 
 local timerEarieMoldsCD						= mod:NewCDCountTimer(31.5, 420659, nil, nil, nil, 1)

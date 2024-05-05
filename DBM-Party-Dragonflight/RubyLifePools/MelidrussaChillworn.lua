@@ -132,7 +132,7 @@ function mod:SPELL_AURA_REMOVED(args)
 		specWarnFrostOverload:Play("kickcast")
 	elseif spellId == 373680 then--Frost Overload
 		--True, at least in M+
-		timerHailbombsCD:Start(4.8)
+		timerHailbombsCD:Start(4.1)
 		timerChillstormCD:Start(13.3)
 	end
 end
