@@ -24,6 +24,11 @@ mod:RegisterEventsInCombat(
 
 --NOTE, the abilities of sub bosses are all in trash mod due to fact that you can (and should) pull them separately from boss
 --TODO, track Strength in Numbers by purposely pulling boss wrong?
+--[[
+(ability.id = 424419 or ability.id = 447270 or ability.id = 424414) and type = "begincast"
+ or ability.id = 447443 and type = "applybuff"
+ or type = "dungeonencounterstart" or type = "dungeonencounterend"
+--]]
 --Captain Dailcry
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(27821))
 local warnSavageMauling						= mod:NewTargetNoFilterAnnounce(447439, 3)
