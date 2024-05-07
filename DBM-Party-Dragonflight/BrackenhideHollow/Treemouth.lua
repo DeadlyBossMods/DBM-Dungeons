@@ -14,6 +14,7 @@ mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 376811 381770 377559 376934",
+	"SPELL_CAST_SUCCESS 376811",
 	"SPELL_SUMMON 376797",
 	"SPELL_AURA_APPLIED 377222 378022",--377864
 	"SPELL_AURA_REMOVED 377222 378022",
@@ -43,7 +44,7 @@ local specWarnVineWhip							= mod:NewSpecialWarningDefensive(377559, nil, nil, 
 
 local timerGraspingVinesCD						= mod:NewCDTimer(47.3, 376933, nil, nil, nil, 6)
 local timerConsume								= mod:NewTargetTimer(10, 377222, nil, false, 2, 3, nil, DBM_COMMON_L.DAMAGE_ICON)
-local timerDecaySprayCD							= mod:NewCDTimer(42.4, 376811, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)
+local timerDecaySprayCD							= mod:NewCDTimer(40, 376811, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)
 --local timerInfectiousSpitCD					= mod:NewCDTimer(20.1, 377864, nil, nil, nil, 3, nil, DBM_COMMON_L.DISEASE_ICON)
 local timerVineWhipCD							= mod:NewCDTimer(16.9, 377559, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 
@@ -71,7 +72,6 @@ function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
 	if spellId == 376811 then
 		self.vb.addIcon = 8
-		timerDecaySprayCD:Start()--42-46
 	elseif spellId == 381770 and self:CheckInterruptFilter(args.sourceGUID, false, true) then
 		specWarnGushingOoze:Show(args.sourceName)
 		specWarnGushingOoze:Play("kickcast")
@@ -93,6 +93,13 @@ function mod:SPELL_CAST_START(args)
 --		timerInfectiousSpitCD:Restart(10.2)--No longer exists at all?
 		timerVineWhipCD:Restart(9)--9 second timer is started here, but will queue up if consume happens and be used near immediately when consume fades
 --		timerDecaySprayCD:Restart(33.2)--No longer restarts here
+	end
+end
+
+function mod:SPELL_CAST_SUCCESS(args)
+	local spellId = args.spellId
+	if spellId == 376811 then
+		timerDecaySprayCD:Start()--40-44
 	end
 end
 
