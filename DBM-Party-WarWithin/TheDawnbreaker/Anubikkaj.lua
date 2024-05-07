@@ -57,7 +57,9 @@ function mod:OnCombatStart(delay)
 	timerDarkOrbCD:Start(6-delay, 1)
 	timerTerrifyingSlamCD:Start(13-delay, 1)
 	timerRadiantDecayCD:Start(20-delay, 1)
-	timerAnimateShadowsCD:Start(1-delay)
+	if self:IsMythic() then
+		timerAnimateShadowsCD:Start(1-delay)
+	end
 	self:EnablePrivateAuraSound(426865, "targetyou", 2)--Dark Orb
 	self:EnablePrivateAuraSound(450855, "targetyou", 2, 426865)--Register Additional ID
 end
