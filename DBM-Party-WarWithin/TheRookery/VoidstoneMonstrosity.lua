@@ -52,8 +52,6 @@ local timerElectrocuted					= mod:NewBuffActiveTimer(33.9, 423839, nil, nil, nil
 mod:AddInfoFrameOption(445262)
 mod:AddNamePlateOption("NameplateOnReshape", 428269)
 
---local castsPerGUID = {}
-
 mod.vb.latentVoidCount = 0
 mod.vb.unleashedCount = 0
 mod.vb.oblivionCount = 0
