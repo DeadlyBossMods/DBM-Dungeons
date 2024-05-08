@@ -17,7 +17,8 @@ mod:RegisterEventsInCombat(
 	"SPELL_AURA_APPLIED 372858",
 --	"SPELL_AURA_REMOVED"
 	"SPELL_PERIODIC_DAMAGE 372820",
-	"SPELL_PERIODIC_MISSED 372820"
+	"SPELL_PERIODIC_MISSED 372820",
+	"UNIT_DIED"
 --	"UNIT_SPELLCAST_SUCCEEDED boss1"
 )
 
@@ -50,6 +51,7 @@ local castsPerGUID = {}
 
 mod.vb.ritualCount = 0
 mod.vb.boulderCount = 0
+mod.vb.addsAlive = 0
 
 function mod:BoulderTarget(targetname)
 	if not targetname then return end
@@ -61,6 +63,7 @@ end
 function mod:OnCombatStart(delay)
 	self.vb.ritualCount = 0
 	self.vb.boulderCount = 0
+	self.vb.addsAlive = 0
 	table.wipe(castsPerGUID)
 	timerRitualofBlazebindingCD:Start(6.9-delay, 1)
 	timerMoltenBoulderCD:Start(14.2-delay, 1)
@@ -89,22 +92,26 @@ function mod:SPELL_CAST_START(args)
 	elseif spellId == 373017 then
 		if not castsPerGUID[args.sourceGUID] then
 			castsPerGUID[args.sourceGUID] = 0
+			self.vb.addsAlive = self.vb.addsAlive + 1
 		end
 		castsPerGUID[args.sourceGUID] = castsPerGUID[args.sourceGUID] + 1
 		local count = castsPerGUID[args.sourceGUID]
-		specWarnRoaringBlaze:Show(args.sourceName, count)
-		if count == 1 then
-			specWarnRoaringBlaze:Play("kick1r")
-		elseif count == 2 then
-			specWarnRoaringBlaze:Play("kick2r")
-		elseif count == 3 then
-			specWarnRoaringBlaze:Play("kick3r")
-		elseif count == 4 then
-			specWarnRoaringBlaze:Play("kick4r")
-		elseif count == 5 then
-			specWarnRoaringBlaze:Play("kick5r")
-		else
-			specWarnRoaringBlaze:Play("kickcast")
+		--Scope it to only target/focus if more than 1 add is up else no scoping
+		if self.vb.addsAlive <= 1 or self:CheckInterruptFilter(args.sourceGUID, false, false) then
+			specWarnRoaringBlaze:Show(args.sourceName, count)
+			if count == 1 then
+				specWarnRoaringBlaze:Play("kick1r")
+			elseif count == 2 then
+				specWarnRoaringBlaze:Play("kick2r")
+			elseif count == 3 then
+				specWarnRoaringBlaze:Play("kick3r")
+			elseif count == 4 then
+				specWarnRoaringBlaze:Play("kick4r")
+			elseif count == 5 then
+				specWarnRoaringBlaze:Play("kick5r")
+			else
+				specWarnRoaringBlaze:Play("kickcast")
+			end
 		end
 	elseif spellId == 373087 then
 		if self.Options.SpecWarn373087run then
@@ -142,3 +149,12 @@ function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId, spell
 	end
 end
 mod.SPELL_PERIODIC_MISSED = mod.SPELL_PERIODIC_DAMAGE
+
+function mod:UNIT_DIED(args)
+	local cid = self:GetCIDFromGUID(args.destGUID)
+	if cid == 189886 then--Blazebound Firestorm
+		if self.vb.addsAlive > 0 then
+			self.vb.addsAlive = self.vb.addsAlive - 1
+		end
+	end
+end
