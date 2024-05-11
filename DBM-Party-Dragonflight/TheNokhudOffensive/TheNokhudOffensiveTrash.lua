@@ -6,7 +6,7 @@ mod:SetRevision("@file-date-integer@")
 mod.isTrashMod = true
 
 mod:RegisterEvents(
-	"SPELL_CAST_START 387145 386024 387127 384336 387629 387614 387411 382233 373395 383823 384365 386694 387125 387440 436841 387596 384134 381683",
+	"SPELL_CAST_START 387145 386024 387127 384336 387629 387614 387411 382233 373395 383823 384365 386694 387125 387440 436841 387596 384134 381683 388801",
 	"SPELL_CAST_SUCCESS 384476 382267",
 	"SPELL_AURA_APPLIED 395035 334610 386223 345561",
 --	"SPELL_AURA_APPLIED_DOSE 339528",
@@ -18,7 +18,7 @@ mod:RegisterEvents(
 --Lady's Trash, minus bottled anima, which will need a unit event to detect it looks like
 --TODO, uncomment/update rain of arrows timer for season 4
 --[[
-(ability.id = 373395 or ability.id = 387411 or ability.id = 373395 or ability.id = 383823 or ability.id = 384365 or ability.id = 387440 or ability.id = 384336 or ability.id = 386024) and type = "begincast"
+(ability.id = 373395 or ability.id = 387411 or ability.id = 388801 or ability.id = 373395 or ability.id = 383823 or ability.id = 384365 or ability.id = 387440 or ability.id = 384336 or ability.id = 386024) and type = "begincast"
  or (ability.id = 382267 or ability.id = 384476) and type = "cast"
 --]]
 local warnTotemicOverload					= mod:NewCastAnnounce(387145, 3)
@@ -58,6 +58,7 @@ local timerSwiftWindCD						= mod:NewCDNPTimer(20.6, 387596, nil, nil, nil, 5)
 local timerSwiftStabCD						= mod:NewCDNPTimer(13.4, 381683, nil, nil, nil, 5)--13.4-26.9 (basically casts can be skipped via stuns
 local timerThunderstrikeCD					= mod:NewCDNPTimer(4.9, 387125, nil, nil, nil, 5)
 local timerVehementChargeCD					= mod:NewCDNPTimer(16.3, 382277, nil, nil, nil, 3)--16.3-17.1
+local timerMortalStrikeCD					= mod:NewCDNPTimer(15.7, 388801, nil, nil, nil, 5)
 local timerDisruptingShoutCD				= mod:NewCDNPTimer(21.8, 384365, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--20-30ish
 local timerTempestCD						= mod:NewCDNPTimer(20.6, 386024, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--20-25
 local timerDesecratingRoarCD				= mod:NewCDNPTimer(15.8, 387440, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
@@ -165,6 +166,8 @@ function mod:SPELL_CAST_START(args)
 		if self:AntiSpam(3, 4) then
 			warnSwiftStab:Show()
 		end
+	elseif spellId == 388801 then
+		timerMortalStrikeCD:Start(nil, args.sourceGUID)
 	end
 end
 
@@ -233,5 +236,7 @@ function mod:UNIT_DIED(args)
 		timerThunderstrikeCD:Stop(args.destGUID)
 	elseif cid == 193457 then--Balara
 		timerVehementChargeCD:Stop(args.destGUID)
+	elseif cid == 195855 then--Risen Warrior
+		timerMortalStrikeCD:Stop(args.destGUID)
 	end
 end
