@@ -22,8 +22,8 @@ jobs:
       - name: LuaLS check
         uses: DeadlyBossMods/LuaLS-config@main
         with:
-          luals-ref: 5623a84ea9a2b27dd7121f88dd995389c702eac1
           luals-check-dir: ${{ github.workspace }}/workspace
+          extra-args: "--num_threads 4"
       - name: Send Status to Discord
         uses: nebularg/actions-discord-webhook@v1
         with:
