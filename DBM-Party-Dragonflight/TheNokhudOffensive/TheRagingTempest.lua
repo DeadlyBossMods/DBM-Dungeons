@@ -4,7 +4,7 @@ local L		= mod:GetLocalizedStrings()
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(186615)
 mod:SetEncounterID(2636)
-mod:SetHotfixNoticeRev(20221029000000)
+mod:SetHotfixNoticeRev(20240510000000)
 --mod:SetMinSyncRevision(20211203000000)
 --mod.respawnTime = 29
 mod.sendMainBossGUID = true
@@ -34,7 +34,7 @@ local specWarnEnergySurge						= mod:NewSpecialWarningDispel(384686, "MagicDispe
 local specWarnGTFO								= mod:NewSpecialWarningGTFO(386916, nil, nil, nil, 1, 8)
 
 local timerLightingStrikeCD						= mod:NewCDTimer(20.2, 384316, nil, nil, nil, 3)
-local timerElectricStormCD						= mod:NewCDTimer(63.1, 384620, nil, nil, nil, 2, nil, DBM_COMMON_L.HEALER_ICON)--60-61+3sec cast
+local timerElectricStormCD						= mod:NewCDCountTimer(78.8, 384620, nil, nil, nil, 2, nil, DBM_COMMON_L.HEALER_ICON)--75+3 second cast
 local timerEnergySurgeCD						= mod:NewCDTimer(16.5, 384686, nil, "Tank|MagicDispeller", nil, 5, nil, DBM_COMMON_L.TANK_ICON..DBM_COMMON_L.MAGIC_ICON)
 
 mod:AddInfoFrameOption(382628, false)
@@ -45,7 +45,7 @@ function mod:OnCombatStart(delay)
 	self.vb.stormCount = 0
 	timerEnergySurgeCD:Start(7-delay)
 	timerLightingStrikeCD:Start(10-delay)
-	timerElectricStormCD:Start(30.1-delay)
+	timerElectricStormCD:Start(30.1-delay, 1)
 	if self.Options.InfoFrame then
 		DBM.InfoFrame:SetHeader(DBM:GetSpellName(382628))
 		DBM.InfoFrame:Show(5, "playerdebuffremaining", 382628)
@@ -68,7 +68,7 @@ function mod:SPELL_CAST_START(args)
 		self.vb.stormCount = self.vb.stormCount + 1
 		specWarnElectricalStorm:Show(self.vb.stormCount)
 		specWarnElectricalStorm:Play("aesoon")
-		timerElectricStormCD:Start()
+		timerElectricStormCD:Start(nil, self.vb.stormCount+1)
 		timerLightingStrikeCD:Restart(18.2)
 		timerEnergySurgeCD:Restart(20.6)
 	elseif spellId == 384686 then
