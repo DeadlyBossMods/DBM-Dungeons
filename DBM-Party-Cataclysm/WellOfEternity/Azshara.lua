@@ -22,7 +22,7 @@ local specWarnObedience	= mod:NewSpecialWarningInterrupt(103241, nil, nil, nil, 
 
 local timerServantCD	= mod:NewCDTimer(26, 102334, nil, nil, nil, 3)--Still don't have good logs, and encounter bugs a lot so i can't get any reliable timers except for first casts on engage.
 local timerObedienceCD	= mod:NewCDTimer(37, 103241, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
-local timerAdds			= mod:NewTimer(36, "TimerAdds", nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)
+local timerAdds			= mod:NewTimer(36, "TimerAdds", nil, nil, nil, 1, DBM_COMMON_L.DAMAGE_ICON)
 
 mod.vb.addsCount = 0
 

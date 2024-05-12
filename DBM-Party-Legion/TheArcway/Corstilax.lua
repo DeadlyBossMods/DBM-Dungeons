@@ -45,7 +45,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		if args:IsPlayer() then
 			specWarnSupression:Show()
 			specWarnSupression:Play("runout")
-			specWarnSupression:ScheduleVoice(1, "keeprun")
+			specWarnSupression:ScheduleVoice(1, "keepmove")
 			yellSupression:Yell()
 		end
 	elseif spellId == 195804 then
