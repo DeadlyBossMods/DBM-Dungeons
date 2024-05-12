@@ -3,7 +3,7 @@
 ## Title:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Dungeons (Vanilla)|r
 ## Title-deDE:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Gruppe-Vanilla|r
 ## Title-esES:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Mazmorras (Clásico)|r
-## Title-koKR:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0던전 (클래식)|r
+## Title-koKR:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0던전 (오리지널)|r
 ## Title-zhTW:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0隊伍首領-傳統|r
 ## Title-zhCN:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0队伍首领 (经典旧世)|r
 ## Title-ruRU:|cffffe00a<|r|cffff7d0aDBM Мод|r|cffffe00a>|r |cffc030c0Классические подземелья|r
@@ -18,10 +18,11 @@
 ## X-DBM-Mod-Category: Classic
 ## X-DBM-StatTypes: normal
 ## X-DBM-Mod-SubCategoriesID: 48,230,429,90,229|Lower,349,389,129,47,329,34,109,70,43,209,289|Legacy,189|Legacy,229|Upper
+## X-DBM-Mod-SubCategoriesID-koKR: 48,230,429,90,229|하층,349,389,129,47,329,34,109,70,43,209,289|구버전,189|구버전,229|상층
 ## X-DBM-Mod-Name: Dungeons (Vanilla)
 ## X-DBM-Mod-Name-deDE: Gruppe (Vanilla)
 ## X-DBM-Mod-Name-esES: Mazmorras (Clásico)
-## X-DBM-Mod-Name-koKR: 던전 (클래식)
+## X-DBM-Mod-Name-koKR: 던전 (오리지널)
 ## X-DBM-Mod-Name-zhTW: 隊伍首領 (傳統)
 ## X-DBM-Mod-Name-zhCN: 队伍首领 (经典旧世)
 ## X-DBM-Mod-Name-ruRU: Классические подземелья
