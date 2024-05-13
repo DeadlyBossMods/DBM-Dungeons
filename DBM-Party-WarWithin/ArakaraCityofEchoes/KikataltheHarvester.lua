@@ -22,7 +22,6 @@ mod:RegisterEventsInCombat(
 )
 
 --TODO, grasping spammy
---TODO, at least two really really really really long pulls to see what's going on with timers
 --[[
 (ability.id = 432117 or ability.id = 432227 or ability.id = 432130) and type = "begincast"
  or ability.id = 431985 and type = "cast"
@@ -36,9 +35,9 @@ local specWarnEruptingWebs					= mod:NewSpecialWarningDodgeCount(432130, nil, ni
 --local specWarnGTFO						= mod:NewSpecialWarningGTFO(372820, nil, nil, nil, 1, 8)
 
 local timerAddsCD							= mod:NewCDTimer(3, -28411, nil, nil, nil, 1, 431985)
-local timerCosmicSingularityCD				= mod:NewAITimer(3, 432117, nil, nil, nil, 2, nil, DBM_COMMON_L.TANK_ICON)
-local timerVenomVolleyCD					= mod:NewAITimer(22.6, 432227, nil, nil, nil, 2, nil, DBM_COMMON_L.POISON_ICON)
-local timerEruptingWebsCD					= mod:NewAITimer(19.4, 432130, nil, nil, nil, 3)
+local timerCosmicSingularityCD				= mod:NewCDCountTimer(54.6, 432117, nil, nil, nil, 2, nil, DBM_COMMON_L.DEADLY_ICON)
+local timerVenomVolleyCD					= mod:NewCDCountTimer(22.6, 432227, nil, nil, nil, 2, nil, DBM_COMMON_L.POISON_ICON)--22.6-23
+local timerEruptingWebsCD					= mod:NewCDCountTimer(18.2, 432130, nil, nil, nil, 3)--18.2-19.3
 
 --local castsPerGUID = {}
 
@@ -51,9 +50,9 @@ function mod:OnCombatStart(delay)
 	self.vb.venomCount = 0
 	self.vb.eruptingCount = 0
 	timerAddsCD:Start()--3
-	timerEruptingWebsCD:Start(1-delay)--7
-	timerVenomVolleyCD:Start(1-delay)--16.8
-	timerCosmicSingularityCD:Start(1-delay)--26.5
+	timerEruptingWebsCD:Start(7-delay, 1)
+	timerVenomVolleyCD:Start(16.8-delay, 1)
+	timerCosmicSingularityCD:Start(26.5-delay, 1)
 end
 
 --function mod:OnCombatEnd()
@@ -66,8 +65,12 @@ function mod:SPELL_CAST_START(args)
 		self.vb.cosmicCount = self.vb.cosmicCount + 1
 		specWarnCosmicSingularity:Show(DBM_COMMON_L.POOL)
 		specWarnCosmicSingularity:Play("movetopool")
-		timerCosmicSingularityCD:Start()
+		timerCosmicSingularityCD:Start(nil, self.vb.cosmicCount+1)
 		timerAddsCD:Restart(3.5)
+		timerVenomVolleyCD:Stop()
+		timerEruptingWebsCD:Stop()
+		timerEruptingWebsCD:Start(13.3, self.vb.eruptingCount+1)
+		timerVenomVolleyCD:Start(23, self.vb.venomCount+1)
 	elseif spellId == 432227 then
 		self.vb.venomCount = self.vb.venomCount + 1
 		if self.Options.SpecWarn432227dispel and self:CheckDispelFilter("poison") then
@@ -76,12 +79,18 @@ function mod:SPELL_CAST_START(args)
 		else
 			warnVenomVolley:Show(self.vb.venomCount)
 		end
-		timerVenomVolleyCD:Start()
+		--Start next timer if cosmic is far enough away, else wait for cosmic to restart timer
+		if timerCosmicSingularityCD:GetRemaining(self.vb.cosmicCount+1) >= 22.6 then
+			timerVenomVolleyCD:Start(nil, self.vb.venomCount+1)
+		end
 	elseif spellId == 432130 then
 		self.vb.eruptingCount = self.vb.eruptingCount + 1
 		specWarnEruptingWebs:Show(self.vb.eruptingCount)
 		specWarnEruptingWebs:Play("watchstep")
-		timerEruptingWebsCD:Start()
+		--Start next timer if cosmic is far enough away, else wait for cosmic to restart timer
+		if timerCosmicSingularityCD:GetRemaining(self.vb.cosmicCount+1) >= 18.2 then
+			timerEruptingWebsCD:Start(nil, self.vb.eruptingCount+1)
+		end
 		timerAddsCD:Restart(2.1)--2.1-5
 	end
 end
