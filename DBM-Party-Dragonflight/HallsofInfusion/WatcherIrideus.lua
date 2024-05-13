@@ -56,7 +56,7 @@ function mod:OnCombatStart(delay)
 	timerTitanicFistCD:Start(6-delay)
 	timerStaticSurgeCD:Start(10-delay, 1)
 	timerPowerOverloadCD:Start(23.4-delay)--20.6 (old?)
-	timerSparkVolleyCD:Start(29.1-delay)--37.4 (old?)
+	timerSparkVolleyCD:Start(28.1-delay)--37.4 (old?)
 end
 
 function mod:SPELL_CAST_START(args)

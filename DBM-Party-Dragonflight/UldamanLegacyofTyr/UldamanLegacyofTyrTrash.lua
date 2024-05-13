@@ -120,7 +120,7 @@ function mod:SPELL_CAST_START(args)
 			specWarnSpikedCarapace:Show(args.sourceName)
 			specWarnSpikedCarapace:Play("kickcast")
 		end
-	elseif spellId == 369675 and args:GetSrcCreatureID() == 184022 then--184022 is trash version of mob (186658 is boss version)
+	elseif spellId == 369675 and args:GetSrcCreatureID() == 184022 then--184022 is trash version of mob (186658 is boss version)FUCK
 --		self:ScheduleMethod(0.2, "BossTargetScanner", args.sourceGUID, "LitTarget", 0.1, 8, true)
 		timerChainLightningCD:Start(nil, args.sourceGUID)
 		if self.Options.SpecWarn369675interrupt and self:CheckInterruptFilter(args.sourceGUID, false, true) then

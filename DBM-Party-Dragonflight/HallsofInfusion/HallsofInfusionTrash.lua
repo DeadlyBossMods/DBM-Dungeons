@@ -6,7 +6,8 @@ mod:SetRevision("@file-date-integer@")
 mod.isTrashMod = true
 
 mod:RegisterEvents(
-	"SPELL_CAST_START 390290 374080 375351 375348 375327 375384 374563 374045 374339 374066 374020 395694 374699 374706 375079 374823 385141 377341 377402 376171",--437719
+	"SPELL_CAST_START 390290 374080 375351 375348 375327 375384 374563 374045 374339 374066 374020 395694 374699 374706 375079 374823 385141 377341 377402 376171 437719",
+	"SPELL_CAST_SUCCESS 374073",
 	"SPELL_AURA_APPLIED 374724 374615 391610 391613 377384 377402 437717",
 	"SPELL_AURA_APPLIED_DOSE 374389",
 --	"SPELL_AURA_REMOVED 437717",
@@ -78,7 +79,8 @@ local timerThunderstormCD					= mod:NewCDNPTimer(19.4, 385141, nil, nil, nil, 3)
 local timerAqueousBarrierCD					= mod:NewCDNPTimer(17.3, 377402, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerFlashFloodCD						= mod:NewCDNPTimer(23, 390290, nil, nil, nil, 2)
 local timerRefreshingTidesCD				= mod:NewCDNPTimer(30, 376171, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
---local timerThunderstrikeCD					= mod:NewCDNPTimer(19.4, 437719, nil, nil, nil, 3)
+local timerThunderstrikeCD					= mod:NewCDNPTimer(23.1, 437719, nil, nil, nil, 3)
+local timerSeismicSlamCD					= mod:NewCDNPTimer(17, 374073, nil, nil, nil, 3)
 
 mod:AddBoolOption("AGBuffs", true)
 
@@ -220,8 +222,16 @@ function mod:SPELL_CAST_START(args)
 	elseif spellId == 385141 then
 		timerThunderstormCD:Start(nil, args.sourceGUID)
 		self:ScheduleMethod(0.1, "BossTargetScanner", args.sourceGUID, "ThunderstormTarget", 0.1, 8)
---	elseif spellId == 437719 then
---		timerThunderstrikeCD:Start(nil, args.sourceGUID)
+	elseif spellId == 437719 then
+		timerThunderstrikeCD:Start(nil, args.sourceGUID)
+	end
+end
+
+function mod:SPELL_CAST_SUCCESS(args)
+	local spellId = args.spellId
+	if not self:IsValidWarning(args.sourceGUID) then return end
+	if spellId == 374073 then--If ability doesn't finish casting, it doesn't go on cooldown
+		timerSeismicSlamCD:Start(16, args.sourceGUID)--17 - 1s cast time
 	end
 end
 
@@ -297,11 +307,13 @@ function mod:UNIT_DIED(args)
 		timerGustingBreathCD:Stop(args.destGUID)
 	elseif cid == 190373 then--Primalist Galesinger
 		timerThunderstormCD:Stop(args.destGUID)
-		--timerThunderstrikeCD:Stop(args.destGUID)
+		timerThunderstrikeCD:Stop(args.destGUID)
 	elseif cid == 190404 then
 		timerTectonicBreathCD:Stop(args.destGUID)
 	elseif cid == 190377 then--Primalist Icecaller
 		timerRefreshingTidesCD:Stop(args.destGUID)
+	elseif cid == 190345 then--Primalist Geomancer
+		timerSeismicSlamCD:Stop(args.destGUID)
 	end
 end
 
