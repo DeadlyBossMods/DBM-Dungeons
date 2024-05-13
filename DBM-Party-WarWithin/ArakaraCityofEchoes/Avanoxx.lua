@@ -25,6 +25,7 @@ mod:RegisterEventsInCombat(
 )
 
 --TODO, if higher difficulties kill adds instead of CC/control them, swap to 8-5 icons instead of 1-4
+--TODO, longer pulls to complete timer set?
 --[[
 (ability.id = 438471 or ability.id = 438476 or ability.id = 438473) and type = "begincast"
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
@@ -82,7 +83,7 @@ function mod:SPELL_CAST_START(args)
 	elseif spellId == 438473 then
 		self.vb.onslaughtCount = self.vb.onslaughtCount + 1
 		warnGossamerOnsalught:Show(self.vb.onslaughtCount)
---		timerGossamerOnslaughtCD:Start(nil, self.vb.onslaughtCount+1)
+		timerGossamerOnslaughtCD:Start(nil, self.vb.onslaughtCount+1)
 	end
 end
 
