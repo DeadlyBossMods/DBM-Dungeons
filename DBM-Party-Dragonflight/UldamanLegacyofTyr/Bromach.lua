@@ -15,7 +15,8 @@ mod:RegisterCombat("combat")
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 369675 369754 369703 382303",
 	"SPELL_CAST_SUCCESS 369605 369703",
-	"SPELL_AURA_APPLIED 369725"
+	"SPELL_AURA_APPLIED 369725",
+	"UNIT_DIED"
 )
 
 --TODO, warn trogg Ambush casts?
@@ -41,6 +42,7 @@ local timerCalloftheDeepCD						= mod:NewCDCountTimer(27.4, 369605, nil, nil, ni
 local timerQuakingTotemCD						= mod:NewCDCountTimer(30, 369700, nil, nil, nil, 5)
 local timerBloodlustCD							= mod:NewCDTimer(30, 369754, nil, nil, nil, 5)
 local timerThunderingSlamCD						= mod:NewCDCountTimer(18.2, 369703, nil, nil, nil, 3)--18-23
+local timerChainLightningCD						= mod:NewCDNPTimer(23, 369675, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--23-25
 
 mod.vb.callCount = 0
 mod.vb.thunderingCount = 0
@@ -58,9 +60,12 @@ end
 
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
-	if spellId == 369675 and args:GetSrcCreatureID() == 186658 and self:CheckInterruptFilter(args.sourceGUID, false, true) then--186658 boss version of mob
-		specWarnChainLightning:Show(args.sourceName)
-		specWarnChainLightning:Play("kickcast")
+	if spellId == 369675 and args:GetSrcCreatureID() == 186658 then--186658 boss version of mob
+		timerChainLightningCD:Start(nil, args.sourceGUID)
+		if self:CheckInterruptFilter(args.sourceGUID, false, true) then
+			specWarnChainLightning:Show(args.sourceName)
+			specWarnChainLightning:Play("kickcast")
+		end
 	elseif spellId == 369754 then
 		warnBloodlust:Show()
 		timerBloodlustCD:Start()
@@ -95,5 +100,13 @@ function mod:SPELL_AURA_APPLIED(args)
 		timerThunderingSlamCD:AddTime(10, self.vb.thunderingCount+1)
 		timerQuakingTotemCD:AddTime(10, self.vb.totemCount+1)
 		timerBloodlustCD:AddTime(10)
+	end
+end
+
+function mod:UNIT_DIED(args)
+	local cid = self:GetCIDFromGUID(args.destGUID)
+	if cid == 186658 then--Stonevault Geomancer (Boss Version)
+		timerChainLightningCD:Stop(args.destGUID)
+--		timerStoneSpikeCD:Stop(args.destGUID)
 	end
 end

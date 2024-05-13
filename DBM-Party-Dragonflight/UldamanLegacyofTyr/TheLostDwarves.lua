@@ -143,7 +143,7 @@ function mod:SPELL_CAST_START(args)
 		elseif cid == 184582 then--Eric "The Swift"
 			timerSkullcrackerCD:Stop(args.sourceGUID)
 			if bossPower == 100 then--Alive, restart timers
-				timerSkullcrackerCD:Start(24.9, args.sourceGUID)
+				timerSkullcrackerCD:Start(23.7, args.sourceGUID)
 			end
 		end
 	end

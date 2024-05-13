@@ -74,7 +74,7 @@ function mod:SPELL_CAST_START(args)
 	if spellId == 386781 then
 		timerFrostBombCD:Start()
 	elseif spellId == 387151 then
-		timerIcyDevastatorCD:Start(self:IsMythicPlus() and 22.6 or 32.8)
+		timerIcyDevastatorCD:Start(22.6)--No longer 32.8 in non M+
 		self:ScheduleMethod(0.2, "BossTargetScanner", args.sourceGUID, "DevastatorTarget", 0.1, 6, true)
 		--If time remaining on frost bomb less than 6, time remaining increased to 6
 		if timerFrostBombCD:GetRemaining() < 6 then
