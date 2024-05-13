@@ -8,7 +8,7 @@
 ## Title-ptBR:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Masmorras (Clássico)|r
 ## Title-frFR:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Donjons (Classique)|r
 ## Title-ruRU:|cffffe00a<|r|cffff7d0aDBM Мод|r|cffffe00a>|r |cffc030c0Классические подземелья|r
-## Title-koKR:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0던전 (클래식)|r
+## Title-koKR:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0던전 (오리지널)|r
 ## Title-zhTW:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0隊伍首領-傳統|r
 ## Title-zhCN:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0队伍首领(经典旧世)|r
 
@@ -40,7 +40,7 @@
 ## X-DBM-Mod-Name-ptBR: Masmorras (Clássico)
 ## X-DBM-Mod-Name-frFR: Donjons (Classique)
 ## X-DBM-Mod-Name-ruRU: Подземелье (классический)
-## X-DBM-Mod-Name-koKR: 던전 (클래식)
+## X-DBM-Mod-Name-koKR: 던전 (오리지널)
 ## X-DBM-Mod-Name-zhTW: 隊伍首領 (傳統)
 ## X-DBM-Mod-Name-zhCN: 队伍首领(经典旧世)
 ## X-DBM-Mod-Sort: 1102
