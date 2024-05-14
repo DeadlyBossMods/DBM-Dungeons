@@ -25,7 +25,8 @@ mod:RegisterEventsInCombat(
 --TODO: some way of tracking https://www.wowhead.com/beta/spell=441298/freezing-blood for stack management. maybe yell system like larodar?
 --TODO: auto mark paranoia if it's not too many targets at once.
 --[[
-(ability.id = 441384 or ability.id = 441381) and type = "begincast"
+(ability.id = 441384 or ability.id = 441381 or ability.id = 439621 or ability.id = 440468 or ability.id = 440420) and type = "begincast"
+ or ability.id = 440419 and type = "cast"
  or ability.id = 439989 and type = "removedebuff"
 --]]
 --General

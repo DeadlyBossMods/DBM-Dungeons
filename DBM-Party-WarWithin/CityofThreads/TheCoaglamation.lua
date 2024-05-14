@@ -23,6 +23,10 @@ mod:RegisterEventsInCombat(
 
 --TODO, infoframe for corrupted coating? only if someone asks for it. Realistically i doubt anyone would use DBM for this anyways
 --TODO, long enough pull to see Dark Pulse. Cannot even guess which ID it uses and it's not used in first 56 seconds of fight (longest public long)
+--[[
+(ability.id = 441289 or ability.id = 448185 or ability.id = 438658) and type = "begincast"
+ or type = "dungeonencounterstart" or type = "dungeonencounterend"
+--]]
 local warnSlimePropagation					= mod:NewTargetNoFilterAnnounce(447402, 3)
 
 local specWarnViscousDarkness				= mod:NewSpecialWarningCount(441216, nil, nil, nil, 2, 2)

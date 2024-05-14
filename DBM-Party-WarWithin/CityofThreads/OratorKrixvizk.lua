@@ -24,6 +24,10 @@ mod:RegisterEventsInCombat(
 --NOTE: Chains of Oppression doesn't really need much, it's just an always active mechanic if you aren't in melee range of boss
 --NOTE: there is a duplicate mechanic of doubt mechanic that does not mention boss name with same 3 spells (cast, debuff, failure debuff). maybe used on trash too?
 --TODO: Longer pulls to verify alternating doesn't break longer fight goes on and to see if Fake news alternates (or is reason for alternations)
+--[[
+(ability.id = 434722 or ability.id = 434779 or ability.id = 448560 or ability.id = 434829) and type = "begincast"
+ or type = "dungeonencounterstart" or type = "dungeonencounterend"
+--]]
 local warnShadowsofDoubt				= mod:NewTargetNoFilterAnnounce(448560, 3)
 
 local specWarnSubjugate					= mod:NewSpecialWarningDefensive(434722, nil, nil, nil, 1, 2)
