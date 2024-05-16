@@ -34,7 +34,6 @@ local timerSurgeCD					= mod:NewCDTimer(12.1, 209602, nil, nil, nil, 3)
 local timerMaelstromCD				= mod:NewCDCountTimer(24.2, 209676, nil, nil, nil, 3)
 local timerGaleCD					= mod:NewCDTimer(23.8, 209628, nil, nil, nil, 2)
 
-local trashmod = DBM:GetModByName("CoSTrash")
 mod.vb.slicingMaelstromCount = 0
 
 function mod:SurgeTarget(targetname, uId)
@@ -57,9 +56,7 @@ function mod:OnCombatStart(delay)
 	timerGaleCD:Start(10-delay)--10
 	timerMaelstromCD:Start(22-delay, 1)
 	--Not ideal to do every pull, but cleanest way to ensure it's done
-	if not trashmod then
-		trashmod = DBM:GetModByName("CoSTrash")
-	end
+	local trashmod = DBM:GetModByName("CoSTrash")
 	if trashmod and trashmod.Options.SpyHelper then
 		trashmod:ResetGossipState()
 	end
