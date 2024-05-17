@@ -58,7 +58,7 @@ end
 		else
 			warnDragonStrike:Show()
 		end
-		timerDragonStrikeCD:Start()
+		timerDragonStrikeCD:Start(self:IsMythicPlus() and 15.7 or 12.2)
 	elseif spellId == 106841 then--phase 2 dragonstrike
 		if self:IsTanking("player", "boss1", nil, true) then
 			specWarnJadeDragonStrike:Show()

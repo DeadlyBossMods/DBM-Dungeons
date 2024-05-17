@@ -6,12 +6,15 @@ mod.statTypes = "normal,heroic,challenge,timewalker"
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(56541)
 mod:SetEncounterID(1304)
+mod:SetHotfixNoticeRev(20240517000000)
+mod:SetMinSyncRevision(20240517000000)
 mod:SetReCombatTime(60)
 
 -- pre-bosswave. Novice -> Black Sash (Fragrant Lotus, Flying Snow). this runs automaticially.
 -- maybe we need Black Sash wave warns.
 -- but boss (Master Snowdrift) not combat starts automaticilly.
 mod:RegisterCombat("combat")
+mod:DisableFriendlyDetection()--Goes friendly on defeat, and make still be ticking damage, recombat time alone didn't fix issue
 
 mod:RegisterEventsInCombat(
 	"SPELL_AURA_APPLIED 118961",
@@ -20,6 +23,7 @@ mod:RegisterEventsInCombat(
 	"UNIT_SPELLCAST_SUCCEEDED boss1"
 )
 
+--TODO, updated phase 3 detection, old detection invalid now
 --Chi blast warns very spammy. and not useful.
 local warnTornadoKick		= mod:NewSpellAnnounce(106434, 3)
 local warnPhase2			= mod:NewPhaseAnnounce(2)
@@ -71,11 +75,9 @@ end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
 	if spellId == 110324 then
-		self:SetStage(0)
-		if self:GetStage(2) then
+		if self:GetStage(1) then
+			self:GetStage(2)
 			warnPhase2:Show()
-		elseif self:GetStage(3) then
-			warnPhase3:Show()
 		end
 		timerFistsOfFuryCD:Cancel()
 		timerTornadoKickCD:Cancel()
