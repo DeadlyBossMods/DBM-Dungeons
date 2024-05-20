@@ -47,7 +47,7 @@ function mod:OnCombatStart(delay)
 	timerBoneSpikeCD:Start(6.5-delay)
 	if not DBM:UnitDebuff("player", boned) then
 		specWarnGetBoned:Show()
-		specWarnGetBoned:Play("findshield")
+		specWarnGetBoned:Play("getboned")
 	end
 	if self.Options.InfoFrame then
 		DBM.InfoFrame:SetHeader(L.PlayerDebuffs)
@@ -75,6 +75,7 @@ mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED
 function mod:SPELL_AURA_REMOVED(args)
 	if args.spellId == 113996 and args:IsPlayer() then
 		specWarnGetBoned:Show()
+		specWarnGetBoned:Play("getboned")
 	elseif args.spellId == 113765 then
 		timerRusting:Cancel()
 	end
