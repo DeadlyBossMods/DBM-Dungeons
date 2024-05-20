@@ -22,7 +22,6 @@ mod:RegisterEventsInCombat(
 --TODO, rework phase changes with UNIT events?
 --TODO, rework combat detection to use ES/EE?
 local warnRavage			= mod:NewTargetNoFilterAnnounce(119946, 3)--Mu'Shiba's Fixate attack
-local warnShockwave			= mod:NewSpellAnnounce(119922, 4)--Kuai's Attack
 local warnWhirlingDervish	= mod:NewSpellAnnounce(119981, 3)--Ming's Attack
 local warnTraumaticBlow		= mod:NewTargetNoFilterAnnounce(123655, 3, nil, "Healer")--Haiyan's Attack
 local warnConflag			= mod:NewTargetNoFilterAnnounce(120201, 3, nil, "Healer")--Haiyan's Attack
@@ -38,9 +37,9 @@ local timerConflagCD		= mod:NewCDTimer(22, 120201, nil, nil, nil, 3)--Limited da
 local timerMeteorCD			= mod:NewNextTimer(55, 120195, nil, nil, nil, 3)--Assumed based on limited data
 
 local shockwaveCD = 15
-local kuai = DBM:EJ_GetSectionInfo(6015)
-local ming = DBM:EJ_GetSectionInfo(6019)
-local haiyan = DBM:EJ_GetSectionInfo(6023)
+--local kuai = DBM:EJ_GetSectionInfo(6015)
+--local ming = DBM:EJ_GetSectionInfo(6019)
+--local haiyan = DBM:EJ_GetSectionInfo(6023)
 
 --function mod:OnCombatStart(delay)
 

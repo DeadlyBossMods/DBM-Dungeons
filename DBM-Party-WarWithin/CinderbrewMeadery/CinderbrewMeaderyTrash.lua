@@ -3,6 +3,7 @@ local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
 --mod:SetModelID(47785)
+mod:SetZone(2661)
 mod.isTrashMod = true
 
 mod:RegisterEvents(
