@@ -3,6 +3,9 @@ DBM.Test:DefineTest{
 	gameVersion = "Retail",
 	addon = "DBM-Party-Dragonflight",
 	mod = 2475,
+	ignoreWarnings = {
+		phaseChangeSpells = "Longboat Raid!",
+	},
 	instanceInfo = {name = "Uldaman: Legacy of Tyr", instanceType = "party", difficultyID = 8, difficultyName = "5Challenge", maxPlayers = 5, dynamicDifficulty = 0, isDynamic = false, instanceID = 2451, instanceGroupSize = 5, lfgDungeonID = nil},
 	playerName = "Legendomega",
 	-- Warning: log was created by player Junghee, but player Legendomega was given on the CLI for reconstructions, this can potentially cause problems (but is usually fine)
