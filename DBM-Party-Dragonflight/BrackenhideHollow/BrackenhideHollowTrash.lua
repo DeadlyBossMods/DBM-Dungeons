@@ -80,6 +80,8 @@ local timerViolentWhirlwindCD				= mod:NewCDNPTimer(17, 388046, nil, nil, nil, 2
 local timerStompCD							= mod:NewCDNPTimer(17, 373943, nil, nil, nil, 2)
 local timerRottingSurgeCD					= mod:NewCDNPTimer(23, 383385, nil, nil, nil, 3)--TODO, limited data
 --local timerRottenMeatCD						= mod:NewCDNPTimer(23, 384974, nil, nil, nil, 3, nil, DBM_COMMON_L.POISON_ICON)
+local timerHidousCackleCD					= mod:NewCDNPTimer(36.4, 367500, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerNecroticBreathCD					= mod:NewCDNPTimer(31.58, 382712, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 
 --local playerName = UnitName("player")
 
@@ -105,6 +107,8 @@ function mod:SPELL_CAST_START(args)
 		specWarnRagestorm:Show()
 		specWarnRagestorm:Play("justrun")
 	elseif spellId == 367500 then
+		--38.815, 36.455, 42.439, 41.232, 41.273
+		timerHidousCackleCD:Start(nil, args.sourceGUID)
 		if self.Options.SpecWarn367500interrupt and self:CheckInterruptFilter(args.sourceGUID, false, true) then
 			specWarnHidiousCackle:Show(args.sourceName)
 			specWarnHidiousCackle:Play("kickcast")
@@ -117,6 +121,7 @@ function mod:SPELL_CAST_START(args)
 			specWarnDecaySurge:Play("kickcast")
 		end
 	elseif spellId == 382712 then
+		timerNecroticBreathCD:Start(nil, args.sourceGUID)
 		if self:AntiSpam(3, 2) then
 			specWarnNecroticBreath:Show()
 			specWarnNecroticBreath:Play("breathsoon")
@@ -284,9 +289,12 @@ function mod:UNIT_DIED(args)
 	elseif cid == 186229 then--Wilted Oak
 		timerStompCD:Stop(args.destGUID)
 		timerSummonLashersCD:Stop(args.destGUID)
+		timerNecroticBreathCD:Stop(args.destGUID)
 	elseif cid == 185656 then--Filth Caller
 		timerRottingSurgeCD:Stop(args.destGUID)
 	elseif cid == 186208 then--rotbow ranger
 		--timerRottenMeatCD:Stop(args.destGUID)
+	elseif cid == 185529 then--Bracken Warscourge
+		timerHidousCackleCD:Stop(args.destGUID)
 	end
 end

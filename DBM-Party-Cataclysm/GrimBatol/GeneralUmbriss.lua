@@ -30,7 +30,7 @@ local specWarnGroundSiege	= mod:NewSpecialWarningDodge(74634, "Melee", nil, nil,
 local specWarnBlitz			= mod:NewSpecialWarningYou(74670, nil, nil, nil, 1, 2)
 local yellBlitz				= mod:NewYell(74670)
 
-local specWarnSummonSkardyn	= mod:NewSpecialWarningSwitch(-3358, "Dps", nil, nil, 1, 2)--Seems health based, pull,and 50%?
+local specWarnSummonSkardyn	= mod:NewSpecialWarningAdds(74859, "Dps", nil, nil, 1, 2)--Seems health based, pull,and 50%?
 
 local timerBleedingWoundCD	= mod:NewCDCountTimer(20.5, 74846, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerBlitz			= mod:NewCDCountTimer(21.8, 74670, nil, nil, nil, 3)

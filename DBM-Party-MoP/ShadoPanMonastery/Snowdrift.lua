@@ -36,7 +36,7 @@ local specWarnChaseDown		= mod:NewSpecialWarningYou(118961, nil, nil, nil, 4, 2)
 
 local timerFistsOfFuryCD	= mod:NewCDTimer(23, 106853, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)--Not enough data to really verify this
 local timerTornadoKickCD	= mod:NewCDTimer(32, 106434, nil, nil, nil, 2)--Or this
---local timerChaseDownCD		= mod:NewCDTimer(22, 118961)--Unknown
+--local timerChaseDownCD	= mod:NewCDTimer(22, 118961)--Unknown
 local timerChaseDown		= mod:NewTargetTimer(11, 118961, nil, nil, nil, 5)
 
 function mod:OnCombatStart(delay)
