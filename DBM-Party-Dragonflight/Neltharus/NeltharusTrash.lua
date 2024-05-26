@@ -7,7 +7,7 @@ mod:SetRevision("@file-date-integer@")
 mod.isTrashMod = true
 
 mod:RegisterEvents(
-	"SPELL_CAST_START 382708 376186 372566 372311 372201 381663 378282 397011 378847 372615 372561 395427 379406 384161 372262 372971 372223 373084 378827 384623",
+	"SPELL_CAST_START 382708 376186 372566 372311 372201 381663 378282 384597 378847 372615 372561 395427 379406 384161 372262 372971 372223 373084 378827 384623",
 	"SPELL_CAST_SUCCESS 376169 372296 374451",
 	"SPELL_AURA_APPLIED 384161 373089 371875 373540 372461 382791 383651",
 --	"SPELL_AURA_APPLIED_DOSE 339528",
@@ -22,11 +22,11 @@ mod:RegisterEvents(
 --TODO, off interrupt, CC alert for https://www.wowhead.com/spell=372225/dragonbone-axe ?
 --TODO, auto gossip the cooking buff? (https://www.wowhead.com/spell=383376/qalashi-goulash)
 --[[
-(ability.id = 384623 or ability.id = 378827 or ability.id = 382708 or ability.id = 376186 or ability.id = 372566 or ability.id = 372311 or ability.id = 372201 or ability.id = 381663 or ability.id = 378282 or ability.id = 397011 or ability.id = 378847 or ability.id = 372615 or ability.id = 372561 or ability.id = 395427 or ability.id = 379406 or ability.id = 384161 or ability.id = 372262 or ability.id = 372971 or ability.id = 372223 or ability.id = 373084) and type = "begincast"
+(ability.id = 384623 or ability.id = 378827 or ability.id = 382708 or ability.id = 376186 or ability.id = 372566 or ability.id = 372311 or ability.id = 372201 or ability.id = 381663 or ability.id = 378282 or ability.id = 384597 or ability.id = 378847 or ability.id = 372615 or ability.id = 372561 or ability.id = 395427 or ability.id = 379406 or ability.id = 384161 or ability.id = 372262 or ability.id = 372971 or ability.id = 372223 or ability.id = 373084) and type = "begincast"
  or (ability.id = 376169 or ability.id = 372296) and type = "cast"
  or ability.id = 383654
 --]]
-local warnBlazingSlash						= mod:NewCastAnnounce(397011, 3, nil, nil, "Tank|Healer")
+local warnBlazingSlash						= mod:NewCastAnnounce(384597, 3, nil, nil, "Tank|Healer")
 local warnBrutalStrike						= mod:NewCastAnnounce(378847, 3, nil, nil, "Tank|Healer")
 local warnReverberatingSlam					= mod:NewCastAnnounce(372971, 3, nil, nil, "Tank|Healer")
 local warnMoltencore						= mod:NewCastAnnounce(378282, 4)
@@ -66,7 +66,8 @@ local specWarnMendingClay					= mod:NewSpecialWarningInterrupt(372223, "HasInter
 local specWarnMoltenArmy					= mod:NewSpecialWarningInterrupt(383651, "HasInterrupt", nil, nil, 1, 2)
 
 local timerMagmaFistCD						= mod:NewCDNPTimer(25.4, 372311, nil, nil, nil, 3)
-local timerBrutalStrikeCD					= mod:NewCDNPTimer(15.7, 378847, nil, "Tank|Healer", nil, 3)
+local timerBrutalStrikeCD					= mod:NewCDNPTimer(15.7, 378847, nil, "Tank|Healer", nil, 5)
+local timerBlazingSlashCD					= mod:NewCDNPTimer(13.4, 384597, nil, "Tank|Healer", nil, 5)
 local timerVolcanicGuardCD					= mod:NewCDNPTimer(25.4, 382708, nil, nil, nil, 3)
 local timerExplosiveConcoctionCD			= mod:NewCDNPTimer(18.2, 378827, nil, nil, nil, 3)
 local timerBindingSpearCD					= mod:NewCDNPTimer(25.4, 372561, nil, nil, nil, 3)
@@ -195,8 +196,11 @@ function mod:SPELL_CAST_START(args)
 		elseif self:AntiSpam(3, 7) then
 			warnMoteofCombustion:Show()
 		end
-	elseif spellId == 397011 and self:AntiSpam(3, 5) then
-		warnBlazingSlash:Show()
+	elseif spellId == 384597 then
+		timerBlazingSlashCD:Start(nil, args.sourceGUID)
+		if self:AntiSpam(3, 5) then
+			warnBlazingSlash:Show()
+		end
 	elseif spellId == 378847 then
 		timerBrutalStrikeCD:Start(nil, args.sourceGUID)
 		if self:AntiSpam(3, 5) then
@@ -293,6 +297,7 @@ function mod:UNIT_DIED(args)
 		timerBrutalStrikeCD:Stop(args.destGUID)
 	elseif cid == 193293 then--Qalashi Warden
 		timerVolcanicGuardCD:Stop(args.destGUID)
+		timerBlazingSlashCD:Stop(args.destGUID)
 	elseif cid == 192786 then--Qalashi Plunderer
 		timerExplosiveConcoctionCD:Stop(args.destGUID)
 	elseif cid == 189227 then--Qalashi Hunter
