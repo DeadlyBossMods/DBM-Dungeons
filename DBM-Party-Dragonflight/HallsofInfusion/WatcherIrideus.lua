@@ -119,7 +119,7 @@ function mod:SPELL_AURA_REMOVED(args)
 		timerTitanicFistCD:Start(6.1)
 		timerStaticSurgeCD:Start(10.7, self.vb.surgeCount+1)
 		timerPowerOverloadCD:Start(24.3)
-		timerSparkVolleyCD:Start(31.6)
+		timerSparkVolleyCD:Start(28.0)
 	end
 end
 
