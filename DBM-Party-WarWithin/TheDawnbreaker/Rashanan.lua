@@ -12,7 +12,7 @@ mod.sendMainBossGUID = true
 mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
-	"SPELL_CAST_START 434407 448213 448888 439784 434089",
+	"SPELL_CAST_START 434407 448213 448888 434089",
 --	"SPELL_CAST_SUCCESS 438875",
 	"SPELL_AURA_APPLIED 449042",
 	"SPELL_AURA_REMOVED 449734",
@@ -22,6 +22,7 @@ mod:RegisterEventsInCombat(
 --	"UNIT_SPELLCAST_SUCCEEDED boss1"
 )
 
+--NOTE, some spellIds might be mixed up with 5 man version (and viceversa).
 --Note, throw bomb is inaccurate for tracking actual bombs hitting boss. Have at least one log where one bomb missed
 --TODO, stage 2. Boss was so undertuned in normal it just dies instantly on stage 2 start, so no mechanics seen
 --[[
@@ -33,7 +34,7 @@ mod:RegisterEventsInCombat(
 local warnBlazing							= mod:NewCountAnnounce(434726, 1)
 local warnRollingAcid						= mod:NewIncomingCountAnnounce(438875, 2)--General announce, private aura sound will be personal emphasis
 local warnRadiantLight						= mod:NewYouAnnounce(449042, 1)
-local warnSpinneretsStrands					= mod:NewIncomingCountAnnounce(439784, 3)--General announce, private aura sound will be personal emphasis
+local warnSpinneretsStrands					= mod:NewIncomingCountAnnounce(434089, 3)--General announce, private aura sound will be personal emphasis
 
 local specWarnExpelWebs						= mod:NewSpecialWarningDodgeCount(448213, nil, nil, nil, 1, 2, 4)
 local specWarnErosiveSpray					= mod:NewSpecialWarningCount(448888, nil, nil, nil, 2, 2)
@@ -43,10 +44,10 @@ local timerRollingAcidCD					= mod:NewCDCountTimer(21.3, 434407, nil, nil, nil, 
 local timerExpelWebsCD						= mod:NewAITimer(33.9, 448213, nil, nil, nil, 3, nil, DBM_COMMON_L.MYTHIC_ICON)
 local timerErosiveSprayCD					= mod:NewCDCountTimer(19.9, 448888, nil, nil, nil, 2, nil, DBM_COMMON_L.HEALER_ICON)
 local timerAcidicEruptionCD					= mod:NewCDTimer(5, 449734, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
-local timerSpinneretsStrandsCD				= mod:NewAITimer(33.9, 439784, nil, nil, nil, 3)
+local timerSpinneretsStrandsCD				= mod:NewAITimer(33.9, 434089, nil, nil, nil, 3)
 
 mod:AddPrivateAuraSoundOption(434406, true, 434407, 1)--Rolling Acid target
-mod:AddPrivateAuraSoundOption(439783, true, 439784, 1)--Spineret's Strands target
+mod:AddPrivateAuraSoundOption(439783, true, 434089, 1)--Spineret's Strands target
 
 mod.vb.bombCount = 0
 mod.vb.rollingCount = 0
@@ -66,10 +67,10 @@ function mod:OnCombatStart(delay)
 	if self:IsMythic() then
 		timerExpelWebsCD:Start(1-delay)
 	end
-	self:EnablePrivateAuraSound(434406, "targetyou", 2)--Rolling Acid Stage 1
-	self:EnablePrivateAuraSound(439790, "targetyou", 2, 434406)--Rolling Acid Stage 2
-	self:EnablePrivateAuraSound(439783, "pullin", 12)--Mythic?
-	self:EnablePrivateAuraSound(434090, "pullin", 12, 439783)--Non Mythic?
+	self:EnablePrivateAuraSound(434406, "targetyou", 2)--Likely dungeon version of Rolling Acid
+	self:EnablePrivateAuraSound(439790, "targetyou", 2, 434406)--Likely the raid version of Rolling Acid
+	self:EnablePrivateAuraSound(439783, "pullin", 12)--Likely the dungeon version of Spinneret's Strands
+	self:EnablePrivateAuraSound(434090, "pullin", 12, 439783)--Likely the raid version of Spinneret's Strands
 end
 
 --function mod:OnCombatEnd()
@@ -92,7 +93,7 @@ function mod:SPELL_CAST_START(args)
 		specWarnErosiveSpray:Show(self.vb.sprayCount)
 		specWarnErosiveSpray:Play("aesoon")
 		timerErosiveSprayCD:Start(nil, self.vb.sprayCount+1)
-	elseif spellId == 439784 or spellId == 434089 then
+	elseif spellId == 434089 then
 		self.vb.strandsCount = self.vb.strandsCount + 1
 		warnSpinneretsStrands:Show(self.vb.strandsCount)
 		timerSpinneretsStrandsCD:Start()
