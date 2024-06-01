@@ -128,9 +128,12 @@ function mod:SPELL_CAST_SUCCESS(args)
 		--self.vb.scytheCount = 0
 		--self.vb.echoesCount = 0
 		--self.vb.reapCount = 0
-		timerSwirlingScytheCD:Restart(9.2, self.vb.scytheCount+1)
-		timerSoulEchoesCD:Restart(16.5, self.vb.echoesCount+1)
-		timerReapSoulCD:Restart(21.3, self.vb.reapCount+1)
+		timerSwirlingScytheCD:Stop()
+		timerSwirlingScytheCD:Start(9.2, self.vb.scytheCount+1)
+		timerSoulEchoesCD:Stop()
+		timerSoulEchoesCD:Start(16.5, self.vb.echoesCount+1)
+		timerReapSoulCD:Stop()
+		timerReapSoulCD:Start(21.3, self.vb.reapCount+1)
 	elseif spellId == 194956 then
 		self.vb.reapCount = self.vb.reapCount + 1
 		timerReapSoulCD:Start(nil, self.vb.reapCount+1)

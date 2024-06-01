@@ -90,9 +90,12 @@ function mod:SPELL_CAST_START(args)
 		end
 		timerGraspingVinesCD:Start(54.6)
 		--Timer restarts
---		timerInfectiousSpitCD:Restart(10.2)--No longer exists at all?
-		timerVineWhipCD:Restart(9)--9 second timer is started here, but will queue up if consume happens and be used near immediately when consume fades
---		timerDecaySprayCD:Restart(33.2)--No longer restarts here
+--		timerInfectiousSpitCD:Stop()
+--		timerInfectiousSpitCD:Start(10.2)--No longer exists at all?
+		timerVineWhipCD:Stop()
+		timerVineWhipCD:Start(9)--9 second timer is started here, but will queue up if consume happens and be used near immediately when consume fades
+--		timerDecaySprayCD:Stop()
+--		timerDecaySprayCD:Start(33.2)--No longer restarts here
 	end
 end
 

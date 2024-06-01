@@ -78,9 +78,12 @@ function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
 	if spellId == 373960 then
 		warnDecayigStrength:Show()
-		timerChokingRotcloutCD:Restart(10)
-		timerDecayStrikeCD:Restart(14.5)
-		timerRotburstTotemCD:Restart(22.9)
+		timerChokingRotcloutCD:Stop()
+		timerChokingRotcloutCD:Start(10)
+		timerDecayStrikeCD:Stop()
+		timerDecayStrikeCD:Start(14.5)
+		timerRotburstTotemCD:Stop()
+		timerRotburstTotemCD:Start(22.9)
 		timerDecayingStrengthCD:Start(44.9)
 	elseif spellId == 376170 then
 		specWarnChokingRotcloud:Show()

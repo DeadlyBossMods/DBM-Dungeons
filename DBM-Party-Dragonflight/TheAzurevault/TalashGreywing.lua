@@ -87,8 +87,10 @@ function mod:SPELL_CAST_START(args)
 		specWarAbsoluteZero:Show(vaultRuin)
 		specWarAbsoluteZero:Play("findshelter")
 		timerAbsoluteZeroCD:Start()
-		timerFrostBombCD:Restart(12.2)
-		timerIcyDevastatorCD:Restart(self:IsMythicPlus() and 19.6 or 23.2)
+		timerFrostBombCD:Stop()
+		timerFrostBombCD:Start(12.2)
+		timerIcyDevastatorCD:Stop()
+		timerIcyDevastatorCD:Start(self:IsMythicPlus() and 19.6 or 23.2)
 	end
 end
 

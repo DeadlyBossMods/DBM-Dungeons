@@ -115,8 +115,10 @@ function mod:SPELL_CAST_START(args)
 		specWarnScrapSong:Play("runtoedge")--Or shockwave?
 		timerScrapSongCD:Start(nil, self.vb.cubeCount+1)
 		--These timers restart
-		timerMoltenMetalCD:Restart(7.3, self.vb.moltenMetalCount+1)
-		timerActivateVentilationCD:Restart(23.2, self.vb.ventilationCount+1)
+		timerMoltenMetalCD:Stop()
+		timerMoltenMetalCD:Start(7.3, self.vb.moltenMetalCount+1)
+		timerActivateVentilationCD:Stop()
+		timerActivateVentilationCD:Start(23.2, self.vb.ventilationCount+1)
 	elseif spellId == 428711 then
 		self.vb.hammerCount = self.vb.hammerCount + 1
 		if self:IsTanking("player", nil, nil, true, args.sourceGUID) then
@@ -136,8 +138,10 @@ function mod:SPELL_CAST_SUCCESS(args)
 		timerMetalSplintersCD:Start(nil, self.vb.deconstructCount)--1 + 6
 
 		--This resets bosses other two abilities
-		timerMoltenHammerCD:Restart(13, self.vb.hammerCount+1)
-		timerLavaExpulsionCD:Restart(19, self.vb.orbCount+1)
+		timerMoltenHammerCD:Stop()
+		timerMoltenHammerCD:Start(13, self.vb.hammerCount+1)
+		timerLavaExpulsionCD:Stop()
+		timerLavaExpulsionCD:Start(19, self.vb.orbCount+1)
 	elseif spellId == 428535 then
 		specWarnMetalSplinters:Show(self.vb.deconstructCount)
 		specWarnMetalSplinters:Play("justrun")

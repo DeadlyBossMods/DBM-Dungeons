@@ -66,7 +66,8 @@ function mod:SPELL_CAST_START(args)
 	elseif spellId == 372600 then
 		warnInexorable:Show()
 		if not self:IsNormal() then
-			timerTitanicEmpowermentCD:Restart(25)
+			timerTitanicEmpowermentCD:Stop()
+			timerTitanicEmpowermentCD:Start(25)
 		end
 	elseif spellId == 372623 then
 		self.vb.orbIcon = 1

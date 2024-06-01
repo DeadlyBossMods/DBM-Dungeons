@@ -66,7 +66,8 @@ function mod:SPELL_CAST_START(args)
 		specWarnCosmicSingularity:Show(DBM_COMMON_L.POOL)
 		specWarnCosmicSingularity:Play("movetopool")
 		timerCosmicSingularityCD:Start(nil, self.vb.cosmicCount+1)
-		timerAddsCD:Restart(3.4)
+		timerAddsCD:Stop()
+		timerAddsCD:Start(3.4)
 		timerVenomVolleyCD:Stop()
 		timerEruptingWebsCD:Stop()
 		timerEruptingWebsCD:Start(13.3, self.vb.eruptingCount+1)
@@ -91,7 +92,8 @@ function mod:SPELL_CAST_START(args)
 		if timerCosmicSingularityCD:GetRemaining(self.vb.cosmicCount+1) >= 18.2 then
 			timerEruptingWebsCD:Start(nil, self.vb.eruptingCount+1)
 		end
-		timerAddsCD:Restart(2.1)--2.1-5
+		timerAddsCD:Stop()
+		timerAddsCD:Start(2.1)--2.1-5
 	end
 end
 

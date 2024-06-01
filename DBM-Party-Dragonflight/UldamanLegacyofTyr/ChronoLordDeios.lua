@@ -89,11 +89,15 @@ function mod:SPELL_CAST_START(args)
 --		self.vb.sinkCount = 0
 		warnRewindTimeflow:Show(self.vb.rewindCount)
 		--Reboot Timers
-		timerSandBreathCD:Restart(14.5, 1)
-		timerWingBuffetCD:Restart(18.1, 1)
-		timerEternalOrbCD:Restart(21.8, 1)
+		timerSandBreathCD:Stop()
+		timerSandBreathCD:Start(14.5, 1)
+		timerWingBuffetCD:Stop()
+		timerWingBuffetCD:Start(18.1, 1)
+		timerEternalOrbCD:Stop()
+		timerEternalOrbCD:Start(21.8, 1)
 		if self:IsHard() then
-			timerTimeSinkCD:Restart(22.8)
+			timerTimeSinkCD:Stop()
+			timerTimeSinkCD:Start(22.8)
 		end
 		timerRewindTimeflowCD:Start(56.7, self.vb.rewindCount+1)
 	elseif spellId == 376049 then
