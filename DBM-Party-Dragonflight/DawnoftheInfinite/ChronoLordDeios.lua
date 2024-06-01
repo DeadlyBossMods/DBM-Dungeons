@@ -156,8 +156,10 @@ function mod:SPELL_CAST_START(args)
 			self.vb.orbCount = 0
 			self.vb.keeperCount = 1--Reused for Infinite Corruption, (set to 1 since we triggered P2 off first cast)
 			timerSummonInfiniteKeeperCD:Stop()
-			timerTemporalBreathCD:Restart(11.8, 1)
-			timerInfinityOrbCD:Restart(19, 1)
+			timerTemporalBreathCD:Stop()
+			timerTemporalBreathCD:Start(11.8, 1)
+			timerInfinityOrbCD:Stop()
+			timerInfinityOrbCD:Start(19, 1)
 		end
 	elseif spellId == 412027 then
 		timerChronalBurnCD:Start(nil, args.sourceGUID)
@@ -192,8 +194,10 @@ function mod:UNIT_DIED(args)
 			self.vb.orbCount = 0
 			self.vb.keeperCount = 0--Reused for Infinite Corruption
 			timerInfiniteCorruptionCD:Start(4.3, 1)
-			timerTemporalBreathCD:Restart(17, 1)
-			timerInfinityOrbCD:Restart(24.2, 1)
+			timerTemporalBreathCD:Stop()
+			timerTemporalBreathCD:Start(17, 1)
+			timerInfinityOrbCD:Stop()
+			timerInfinityOrbCD:Start(24.2, 1)
 		end
 	end
 end

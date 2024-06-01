@@ -81,7 +81,8 @@ function mod:SPELL_CAST_START(args)
 		specWarnWashAway:Show()
 		specWarnWashAway:Play("watchstep")
 		timerWashAwayCD:Start()
-		timerCorruptedVortexCD:Restart(16)
+		timerCorruptedVortexCD:Stop()
+		timerCorruptedVortexCD:Start(16)
 		--"<432.19 20:50:33> [CLEU] SPELL_CAST_START#Creature-0-3772-960-3510-56448-000045A960#Der weise Mari(56.1%-100.0%)##nil#397783#Wegspülen#nil#nil", -- [3320]
 		--"<435.47 20:50:36> [CLEU] SPELL_DAMAGE[CONDENSED]#Creature-0-3772-960-3510-56448-000045A960#Der weise Mari#2 Targets#397793#Verderbter Geysir", -- [3338]
 		--"<440.60 20:50:41> [CLEU] SPELL_DAMAGE#Creature-0-3772-960-3510-56448-000045A960#Der weise Mari#Player-1401-04216D3A#Valî-Shattrath#397793#Verderbter Geysir", -- [3373]

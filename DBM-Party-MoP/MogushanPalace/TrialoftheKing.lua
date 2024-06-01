@@ -33,7 +33,7 @@ local timerRavageCD			= mod:NewCDTimer(20, 119946, nil, nil, nil, 3)
 local timerShockwaveCD		= mod:NewCDTimer(10.9, 119922, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerWhirlingDervishCD= mod:NewCDTimer(22, 119981, nil, nil, nil, 3)
 local timerTraumaticBlowCD	= mod:NewCDTimer(17, 123655, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)--17-21sec variation
-local timerConflagCD		= mod:NewCDTimer(22, 120201, nil, nil, nil, 3)--Limited data, may not be completely accurate
+local timerConflagCD		= mod:NewCDTimer(10, 120201, nil, nil, nil, 3)--10-22?
 local timerMeteorCD			= mod:NewNextTimer(55, 120195, nil, nil, nil, 3)--Assumed based on limited data
 
 local shockwaveCD = 15
@@ -80,7 +80,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		timerMeteorCD:Cancel()
 		timerTraumaticBlowCD:Cancel()
 		timerShockwaveCD:Start(17.2)
-		timerRavageCD:Start(26)
+		timerRavageCD:Start(21.6)
 	elseif msg == L.Ming or msg:find(L.Ming) then
 		timerShockwaveCD:Cancel()
 		timerRavageCD:Cancel()
