@@ -32,7 +32,7 @@ local timerDragonsBreath		= mod:NewBuffActiveTimer(10, 113641, nil, nil, nil, 6)
 local timerDragonsBreathCD		= mod:NewNextTimer(50, 113641, nil, nil, nil, 2)
 
 function mod:OnCombatStart(delay)
-	timerPyroblastCD:Start(5-delay)
+	timerPyroblastCD:Start(2.1-delay)
 --	timerQuickenedMindCD:Start(9-delay)
 --	timerFireballVolleyCD:Start(15.5-delay)
 	timerBookBurnerCD:Start(20.5-delay)

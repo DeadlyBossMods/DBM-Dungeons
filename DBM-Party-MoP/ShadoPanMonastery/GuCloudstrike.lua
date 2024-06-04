@@ -77,8 +77,8 @@ function mod:SPELL_AURA_APPLIED(args)
 		warnChargingSoul:Show()
 		warnInvokeLightning:Cancel()
 		timerStaticFieldCD:Cancel()
-		timerLightningBreathCD:Start()
-		timerMagneticShroudCD:Start(20)
+		timerLightningBreathCD:Start(1.6)--1.6 now, cause remix likes to fuck with boss timers, used to be 6.8
+		timerMagneticShroudCD:Start(17)--Used to be 20
 	elseif args.spellId == 110852 then
 		warnOverchargedSoul:Show()
 	end

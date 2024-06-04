@@ -24,7 +24,7 @@ local specWarnShaSpike			= mod:NewSpecialWarningMoveAway(106877, nil, nil, nil, 
 local specWarnShaSpikeNear		= mod:NewSpecialWarningClose(106877, nil, nil, nil, 1, 2)
 
 local timerDisorientingSmashCD	= mod:NewCDTimer(13, 106872, nil, nil, nil, 5, nil, DBM_COMMON_L.MAGIC_ICON..DBM_COMMON_L.HEALER_ICON)
-local timerShaSpikeCD			= mod:NewNextTimer(9, 106877, nil, nil, nil, 3)
+local timerShaSpikeCD			= mod:NewNextTimer(8.5, 106877, nil, nil, nil, 3)
 
 function mod:ShaSpikeTarget(targetname, uId)
 	if not targetname then return end
