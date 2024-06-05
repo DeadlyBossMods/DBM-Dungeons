@@ -59,7 +59,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 		self:SetStage(3)
 		warnDeepSleep:Show()
 		timerDeepSleep:Start()
-		timerMassResCD:Start(18)--Limited Sample size
+		timerMassResCD:Start(9.7)
 		if self:IsDifficulty("challenge5") then
 			timerMCCD:Start(19)--Pretty much immediately after first mas res, unless mass res isn't interrupted then it'll delay MC
 		end
