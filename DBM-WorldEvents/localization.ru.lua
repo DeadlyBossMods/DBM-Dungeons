@@ -154,11 +154,11 @@ L:SetMiscLocalization({
 L = DBM:GetModLocalization("EscortQuests")
 
 L:SetGeneralLocalization{
-	name = "Квест",
+	name = "Сопровождения NPC",
 }
 
 L:SetOptionLocalization{
-	Timers = "Показывать таймеры для некоторых квестов сопровождений"
+	Timers = "Показывать таймеры для некоторых заданий, требующих сопровождения NPC"
 }
 
 
@@ -177,7 +177,7 @@ L:SetGeneralLocalization({
 L = DBM:GetModLocalization("BCEvent")
 
 L:SetGeneralLocalization({
-	name = "MoA: Burning Crusade"
+	name = "Воспоминание об Азерот: BC"
 })
 
 --------------------------
@@ -186,7 +186,7 @@ L:SetGeneralLocalization({
 L = DBM:GetModLocalization("WrathEvent")
 
 L:SetGeneralLocalization({
-	name = "MoA: WotLK"
+	name = "Воспоминание об Азерот: Король-лич"
 })
 
 L:SetWarningLocalization{
@@ -210,15 +210,15 @@ L:SetMiscLocalization{
 }
 
 L:SetOptionLocalization{
-	WarnEmerge				= "Показать предупреждение о появлении",
-	WarnEmergeSoon			= "Показать предварительное предупреждение о появлении",
-	WarnSubmerge			= "Показать предупреждение о закапывании",
-	WarnSubmergeSoon		= "Показать предварительное предупреждение о закапывании",
-	TimerEmerge				= "Показать таймер для появления",
-	TimerSubmerge			= "Показать таймер для закапывания",
-	WarningTeleportNow		= "Показать предупреждение для телепортации",
-	WarningTeleportSoon		= "Показать предварительное предупреждение для телепортации",
-	TimerTeleport			= "Показать таймер для телепортации"
+	WarnEmerge				= "Показывать предупреждение о появлении",
+	WarnEmergeSoon			= "Показывать предварительное предупреждение о появлении",
+	WarnSubmerge			= "Показывать предупреждение о закапывании",
+	WarnSubmergeSoon		= "Показывать предварительное предупреждение о закапывании",
+	TimerEmerge				= "Показывать таймер для появления",
+	TimerSubmerge			= "Показывать таймер для закапывания",
+	WarningTeleportNow		= "Показывать предупреждение для телепортации",
+	WarningTeleportSoon		= "Показывать предварительное предупреждение для телепортации",
+	TimerTeleport			= "Показывать таймер для телепортации"
 }
 
 --------------------------
@@ -227,7 +227,7 @@ L:SetOptionLocalization{
 L = DBM:GetModLocalization("CataEvent")
 
 L:SetGeneralLocalization({
-	name = "MoA: Cataclysm"
+	name = "Воспоминание об Азерот: Катаклизм"
 })
 
 L:SetWarningLocalization({
@@ -236,8 +236,8 @@ L:SetWarningLocalization({
 })
 
 L:SetOptionLocalization({
-	warnSplittingBlow			= "Показать предупреждения о местоположении для $spell:98951",
-	warnEngulfingFlame			= "Показать предупреждения о местоположении для $spell:99171"
+	warnSplittingBlow			= "Показывать предупреждения о местоположении для $spell:98951",
+	warnEngulfingFlame			= "Показывать предупреждения о местоположении для $spell:99171"
 })
 
 ----------------------------------
