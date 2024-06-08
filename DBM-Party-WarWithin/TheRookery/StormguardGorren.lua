@@ -50,9 +50,9 @@ function mod:OnCombatStart(delay)
 	self.vb.chaoticCount = 0
 	self.vb.gravityCount = 0
 	self.vb.crushCount = 0
-	timerChaoticCorruptionCD:Start(8.4, 1)
-	timerDarkGravityCD:Start(23, 1)
-	timerCrushRealityCD:Start(30.2, 1)
+--	timerChaoticCorruptionCD:Start(8.4, 1)--No longer known, needs new timer
+	timerDarkGravityCD:Start(23, 1)--Still the same
+	timerCrushRealityCD:Start(8.5, 1)
 	if self.Options.InfoFrame and self:IsMythic() then
 		DBM.InfoFrame:SetHeader(DBM:GetSpellName(424797))
 		DBM.InfoFrame:Show(5, "playerdebuffremaining", 424797)
