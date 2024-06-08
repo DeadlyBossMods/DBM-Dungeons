@@ -43,7 +43,7 @@ local yellSLightningDash					= mod:NewYell(419870)
 --local specWarnGTFO						= mod:NewSpecialWarningGTFO(372820, nil, nil, nil, 1, 8)
 
 local timerChainLightningCD					= mod:NewCDCountTimer(15.7, 424148, nil, nil, nil, 3)--Lowest priority, 15-18, or longer if delayed by torrent
-local timerUnstableChargeCD					= mod:NewCDCountTimer(31.6, 424148, nil, nil, nil, 3)--Timer confirmed by bugging out torrent to disable delays
+local timerUnstableChargeCD					= mod:NewCDCountTimer(31.6, 420739, nil, nil, nil, 3)--Timer confirmed by bugging out torrent to disable delays
 local timerLightningTorrentCD				= mod:NewCDCountTimer(30.3, 444123, nil, nil, nil, 2, nil, DBM_COMMON_L.DEADLY_ICON)--always 30, unless boss is out of range of middle, then it'll be delayed til boss is back in range (i'm sure this will be fixed, cause you can keep boss out of range and disable ability entirely)
 local timerLightningDashCD					= mod:NewCDCountTimer(31.6, 419870, nil, nil, nil, 3)--Timer confirmed by bugging out torrent to disable delays
 local timerStormheartCD						= mod:NewAITimer(33.9, 444324, nil, nil, nil, 3, nil, DBM_COMMON_L.MYTHIC_ICON)
