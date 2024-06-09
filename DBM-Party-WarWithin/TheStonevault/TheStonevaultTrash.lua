@@ -7,7 +7,7 @@ mod.isTrashMod = true
 
 mod:RegisterEvents(
 	"SPELL_CAST_START 425027 426283 447141 449455 426308 429109 449130 449154 429545 426345 448852 426771 445207",
---	"SPELL_CAST_SUCCESS",
+	"SPELL_CAST_SUCCESS 429427",
 	"SPELL_AURA_APPLIED 426308",
 	"SPELL_AURA_APPLIED_DOSE 427361",
 --	"SPELL_AURA_REMOVED",
@@ -27,6 +27,7 @@ local specWarnCrystalSalvo					= mod:NewSpecialWarningDodge(426345, nil, nil, ni
 local specWarnVoidStorm						= mod:NewSpecialWarningSpell(426771, nil, nil, nil, 2, 2)
 local specWarnTerminationProtocol			= mod:NewSpecialWarningMoveAway(449154, nil, nil, nil, 1, 2)
 local yellTerminationProtocol				= mod:NewShortYell(449154)
+local specWarnEarthBurstTotem				= mod:NewSpecialWarningSwitch(429427, nil, nil, nil, 1, 2)
 local specWarnVoidInfection					= mod:NewSpecialWarningDispel(426308, "RemoveCurse", nil, nil, 1, 2)
 local specWarnFracture						= mod:NewSpecialWarningDispel(427361, "RemoveMagic", nil, nil, 1, 2)
 local specWarnArcingVoid					= mod:NewSpecialWarningInterrupt(426283, "HasInterrupt", nil, nil, 1, 2)
@@ -149,15 +150,16 @@ function mod:SPELL_CAST_START(args)
 	end
 end
 
---[[
 function mod:SPELL_CAST_SUCCESS(args)
 	local spellId = args.spellId
 	if not self:IsValidWarning(args.sourceGUID) then return end
-	if spellId == 384476 then
-
+	if spellId == 429427 then
+		if self:AntiSpam(3, 5) then
+			specWarnEarthBurstTotem:Show()
+			specWarnEarthBurstTotem:Play("attacktotem")
+		end
 	end
 end
---]]
 
 function mod:SPELL_AURA_APPLIED(args)
 	if not self.Options.Enabled then return end
@@ -187,14 +189,13 @@ function mod:UNIT_DIED(args)
 	local cid = self:GetCIDFromGUID(args.destGUID)
 	if cid == 210109 then--Earth Infused Golem
 		timerSeismicWaveCD:Stop(args.destGUID)
-	elseif cid == 212389 then--Cursedheart Invader
+	elseif cid == 212389 or cid == 212403 then--Cursedheart Invader
 		timerArcingVoidCD:Stop(args.destGUID)
+		timerVoidInfectionCD:Stop(args.destGUID)
 	elseif cid == 222923 then--Repurposed Loaderbox
 		timerPulverizingPounceCD:Stop(args.destGUID)
 	elseif cid == 212453 then--Ghastlyy Voidsoul
 		timerHowlingFearCD:Stop(args.destGUID)
-	elseif cid == 212389 then--Cursedheart Invader
-		timerVoidInfectionCD:Stop(args.destGUID)
 	elseif cid == 213338 then--Forgebound Mender
 		timerRestoringMetalsCD:Stop(args.destGUID)
 	elseif cid == 213343 then--Forge Loader
