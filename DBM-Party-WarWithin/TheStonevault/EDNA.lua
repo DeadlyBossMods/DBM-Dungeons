@@ -101,13 +101,14 @@ function mod:SPELL_AURA_APPLIED(args)
 	local spellId = args.spellId
 	if spellId == 424795 then
 		self.vb.laserCount = self.vb.laserCount + 1
-		timerRefractingBeamCD:Start(nil, self.vb.laserCount+1)--No cast event
+		if self:AntiSpam(3, 1) then
+			timerRefractingBeamCD:Start(nil, self.vb.laserCount+1)--No cast event
+		end
+		warnRefractingBeam:PreciseShow(2, args.destName)
 		if args:IsPlayer() then
 			specWarnRefractingBeam:Show()
 			specWarnRefractingBeam:Play("laserrun")
 			yellRefractingBeam:Yell()
-		else
-			warnRefractingBeam:Show(args.destName)
 		end
 	elseif spellId == 424889 then
 		warnSeismicReverberation:Show(args.destName)

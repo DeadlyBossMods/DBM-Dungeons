@@ -77,13 +77,13 @@ function mod:OnCombatStart(delay)
 	self.vb.deconstructCount = 0
 	self.vb.hammerCount = 0
 	self.vb.orbCount = 0
-	timerMoltenMetalCD:Start(4.6-delay, 1)
-	timerActivateVentilationCD:Start(9.4-delay, 1)
+	timerMoltenMetalCD:Start(4.4-delay, 1)
+	timerActivateVentilationCD:Start(9.3-delay, 1)
 	timerScrapSongCD:Start(19-delay, 1)
 	--
-	timerMoltenHammerCD:Start(7-delay, 1)
+	timerMoltenHammerCD:Start(6.9-delay, 1)
 	timerLavaExpulsionCD:Start(12.1-delay, 1)
-	timerDeconstructionCD:Start(51-delay, 1)--Used to be 47, seems retuned already
+	timerDeconstructionCD:Start(51-delay, 1)
 end
 
 --function mod:OnCombatEnd()
@@ -138,10 +138,11 @@ function mod:SPELL_CAST_SUCCESS(args)
 		timerMetalSplintersCD:Start(nil, self.vb.deconstructCount)--1 + 6
 
 		--This resets bosses other two abilities
-		timerMoltenHammerCD:Stop()
-		timerMoltenHammerCD:Start(13, self.vb.hammerCount+1)
-		timerLavaExpulsionCD:Stop()
-		timerLavaExpulsionCD:Start(19, self.vb.orbCount+1)
+		--Above is no longer true in newer beta builds
+--		timerMoltenHammerCD:Stop()--No Longer resets here
+--		timerMoltenHammerCD:Start(13, self.vb.hammerCount+1)
+--		timerLavaExpulsionCD:Stop()
+--		timerLavaExpulsionCD:Start(19, self.vb.orbCount+1)
 	elseif spellId == 428535 then
 		specWarnMetalSplinters:Show(self.vb.deconstructCount)
 		specWarnMetalSplinters:Play("justrun")

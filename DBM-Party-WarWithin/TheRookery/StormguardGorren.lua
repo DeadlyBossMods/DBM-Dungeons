@@ -50,9 +50,14 @@ function mod:OnCombatStart(delay)
 	self.vb.chaoticCount = 0
 	self.vb.gravityCount = 0
 	self.vb.crushCount = 0
---	timerChaoticCorruptionCD:Start(8.4, 1)--No longer known, needs new timer
-	timerDarkGravityCD:Start(23, 1)--Still the same
-	timerCrushRealityCD:Start(8.5, 1)
+	if self:IsFollower() then--Confirmed on "story", need to test regular "follower", if it differs, have to split the API
+		timerCrushRealityCD:Start(8.4, 1)
+		timerDarkGravityCD:Start(23, 1)--Still the same
+	else
+		timerChaoticCorruptionCD:Start(8.4, 1)
+		timerDarkGravityCD:Start(23, 1)--Still the same
+		timerCrushRealityCD:Start(30.3, 1)
+	end
 	if self.Options.InfoFrame and self:IsMythic() then
 		DBM.InfoFrame:SetHeader(DBM:GetSpellName(424797))
 		DBM.InfoFrame:Show(5, "playerdebuffremaining", 424797)
