@@ -4,7 +4,7 @@ local L		= mod:GetLocalizedStrings()
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(207946)
 mod:SetEncounterID(2847)
---mod:SetHotfixNoticeRev(20220322000000)
+mod:SetHotfixNoticeRev(20240608000000)
 --mod:SetMinSyncRevision(20211203000000)
 --mod.respawnTime = 29
 mod.sendMainBossGUID = true
@@ -13,7 +13,7 @@ mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 424419 447270 424414",
---	"SPELL_CAST_SUCCESS",
+	"SPELL_CAST_SUCCESS 424414",
 	"SPELL_AURA_APPLIED 447443 447439 424419",
 	"SPELL_AURA_REMOVED 447443"
 --	"SPELL_PERIODIC_DAMAGE",
@@ -26,7 +26,7 @@ mod:RegisterEventsInCombat(
 --TODO, track Strength in Numbers by purposely pulling boss wrong?
 --[[
 (ability.id = 424419 or ability.id = 447270 or ability.id = 424414) and type = "begincast"
- or ability.id = 447443 and type = "applybuff"
+ or ability.id = 447443 and (type = "applydebuff" or type = "removedebuff")
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
 --]]
 --Captain Dailcry
@@ -39,10 +39,10 @@ local specWarnHurlSpear						= mod:NewSpecialWarningDodgeCount(447272, nil, nil,
 local specWarnPierceArmor					= mod:NewSpecialWarningDefensive(424414, nil, nil, nil, 1, 2)
 --local specWarnGTFO						= mod:NewSpecialWarningGTFO(372820, nil, nil, nil, 1, 8)
 
-local timerSavageMaulingCD					= mod:NewAITimer(33.9, 447439, nil, nil, nil, 3)
-local timerBattleCryCD						= mod:NewCDCountTimer(18.2, 424419, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
-local timerHurlSpearCD						= mod:NewAITimer(33.9, 447272, nil, nil, nil, 3)
-local timerPierceArmorCD					= mod:NewAITimer(18.2, 424414, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+local timerSavageMaulingCD					= mod:NewCDCountTimer(25.7, 447439, nil, nil, nil, 3)--It's either 25.7 from last ones REMOVAL, or ~30.3 from last ones application
+local timerBattleCryCD						= mod:NewCDCountTimer(15.8, 424419, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--15.8-18.2
+local timerHurlSpearCD						= mod:NewCDCountTimer(15.8, 447272, nil, nil, nil, 3)--15.8-19.4
+local timerPierceArmorCD					= mod:NewCDCountTimer(7.3, 424414, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 
 mod:AddInfoFrameOption(447443)
 
@@ -56,10 +56,10 @@ function mod:OnCombatStart(delay)
 	self.vb.battleCryCount = 0
 	self.vb.spearCount = 0
 	self.vb.pierceCount = 0
-	timerSavageMaulingCD:Start(1-delay)
+	timerPierceArmorCD:Start(6-delay, 1)
+	timerHurlSpearCD:Start(8.4-delay, 1)
 	timerBattleCryCD:Start(12.9-delay, 1)
-	timerHurlSpearCD:Start(1-delay)
-	timerPierceArmorCD:Start(1-delay)
+	timerSavageMaulingCD:Start(14.4-delay, 1)
 	--Allow trash mod to enable in combat in case you DO pull boss with any of the 3 sub bosses still active
 	local trashMod = DBM:GetModByName("SacredFlameTrash")
 	if trashMod then
@@ -88,31 +88,28 @@ function mod:SPELL_CAST_START(args)
 		self.vb.spearCount = self.vb.spearCount + 1
 		specWarnHurlSpear:Show(self.vb.spearCount)
 		specWarnHurlSpear:Play("watchstep")
-		timerHurlSpearCD:Start()
+		timerHurlSpearCD:Start(nil, self.vb.spearCount+1)
 	elseif spellId == 424414 then
-		self.vb.pierceCount = self.vb.pierceCount + 1
 		if self:IsTanking("player", "boss1", nil, true) then
 			specWarnPierceArmor:Show()
 			specWarnPierceArmor:Play("defensive")
 		end
-		timerPierceArmorCD:Start()
 	end
 end
 
---[[
 function mod:SPELL_CAST_SUCCESS(args)
 	local spellId = args.spellId
-	if spellId == 372858 then
-
+	if spellId == 424414 then
+		self.vb.pierceCount = self.vb.pierceCount + 1
+		timerPierceArmorCD:Start(5.8, self.vb.pierceCount+1)--Doesn't go on CD unless it finishes, can stutter cast (7.3 - 1.5)
 	end
 end
---]]
 
 function mod:SPELL_AURA_APPLIED(args)
 	local spellId = args.spellId
 	if spellId == 447443 then
 		self.vb.savageCount = self.vb.savageCount + 1
-		timerSavageMaulingCD:Start()
+		--timerSavageMaulingCD:Start(nil, self.vb.savageCount+1)
 		if self.Options.InfoFrame then
 			DBM.InfoFrame:SetHeader(args.spellName)
 			DBM.InfoFrame:Show(2, "enemyabsorb", nil, args.amount, "boss1")
@@ -129,6 +126,7 @@ end
 function mod:SPELL_AURA_REMOVED(args)
 	local spellId = args.spellId
 	if spellId == 447443 then
+		timerSavageMaulingCD:Start(nil, self.vb.savageCount+1)
 		if self.Options.InfoFrame then
 			DBM.InfoFrame:Hide()
 		end
