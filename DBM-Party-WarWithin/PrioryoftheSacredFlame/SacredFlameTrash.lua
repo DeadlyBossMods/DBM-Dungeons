@@ -6,24 +6,30 @@ mod:SetRevision("@file-date-integer@")
 mod.isTrashMod = true
 
 mod:RegisterEvents(
-	"SPELL_CAST_START 424621 424423 424431 448515 427583 424462 424420",
---	"SPELL_CAST_SUCCESS",
---	"SPELL_AURA_APPLIED",
---	"SPELL_AURA_APPLIED_DOSE",
+	"SPELL_CAST_START 424621 424423 424431 448515 427583 424462 424420 427484 427356 427601",
+	"SPELL_CAST_SUCCESS 453458",
+	"SPELL_AURA_APPLIED 426964 424430",
+	"SPELL_AURA_APPLIED_DOSE 426964",
 --	"SPELL_AURA_REMOVED",
 	"UNIT_DIED"
 )
-
 --TODO, target scan lunging strike?
 --TODO, longer pulls for Trusted Guard timers
 --TODO, nameplate timer for https://www.wowhead.com/beta/spell=424421/fireball on Taener Duelmal?
---local warnTotemicOverload					= mod:NewCastAnnounce(387145, 3)
+local warnMortalStrike						= mod:NewStackAnnounce(426964, 2, nil, "Tank|Healer")
+local warnBurstofLight						= mod:NewCastAnnounce(427601, 4)--SUPER obvious so doesn't need a special warning for now i think
+local warnGreaterHeal						= mod:NewCastAnnounce(427356, 3)--High Prio Interrupt
 
---local specWarnChainLightning				= mod:NewSpecialWarningMoveAway(424621, nil, nil, nil, 1, 2)
+local specWarnCaltrops						= mod:NewSpecialWarningDodge(453458, nil, nil, nil, 2, 2)
+local specWarnFlamestrike					= mod:NewSpecialWarningDodge(427484, nil, nil, nil, 2, 2)
 --local yellChainLightning					= mod:NewYell(387127)
+local specWarnGreaterHeal					= mod:NewSpecialWarningInterrupt(427356, nil, nil, nil, 1, 2)
 --local specWarnStormshield					= mod:NewSpecialWarningDispel(386223, "MagicDispeller", nil, nil, 1, 2)
+local specWarnGTFO							= mod:NewSpecialWarningGTFO(424430, nil, nil, nil, 1, 8)
 
---local timerRainofArrowsCD					= mod:NewCDNPTimer(15.7, 384476, nil, nil, nil, 3)
+local timerCaltropsCD						= mod:NewCDNPTimer(16.9, 453458, nil, nil, nil, 3)
+local timerFlamestrikeCD					= mod:NewCDNPTimer(20.4, 427484, nil, nil, nil, 3)
+--local timerGreaterHealCD					= mod:NewCDNPTimer(20.4, 427356, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--Currently too much of a PITA to add due to stuns not putting it on CD
 ----Everything below here are the adds from Captain Dailcry. treated as trash since they are pulled as trash, just like Court of Stars
 --The Trusted Guard
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(27840))
@@ -54,7 +60,7 @@ local timerCinderblastCD					= mod:NewCDNPTimer(15.7, 424420, nil, "HasInterrupt
 
 --local playerName = UnitName("player")
 
---Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc, 7 off interrupt
+--Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc, 7 off interrupt, 8 GTFO
 
 --[[
 function mod:CLTarget(targetname)
@@ -77,6 +83,13 @@ function mod:SPELL_CAST_START(args)
 		if self:AntiSpam(3, 2) then
 			specWarnBrutalSmash:Show()
 			specWarnBrutalSmash:Play("shockwave")
+		end
+	elseif spellId == 427356 then
+		if self.Options.SpecWarn427356interrupt and self:CheckInterruptFilter(args.sourceGUID, false, true) then
+			specWarnGreaterHeal:Show(args.sourceName)
+			specWarnGreaterHeal:Play("kickcast")
+		elseif self:AntiSpam(3, 7) then
+			warnGreaterHeal:Show()
 		end
 	elseif spellId == 424462 then
 		--timerEmberStormCD:Start(nil, args.sourceGUID)
@@ -114,29 +127,45 @@ function mod:SPELL_CAST_START(args)
 			specWarnCinderblast:Show(args.sourceName)
 			specWarnCinderblast:Play("kickcast")
 		end
+	elseif spellId == 427484 then
+		timerFlamestrikeCD:Start(nil, args.sourceGUID)
+		if self:AntiSpam(3, 2) then
+			specWarnFlamestrike:Show()
+			specWarnFlamestrike:Play("watchstep")
+		end
+	elseif spellId == 427601 then
+		if self:AntiSpam(3, 6) then
+			warnBurstofLight:Show()
+		end
 	end
 end
 
---[[
 function mod:SPELL_CAST_SUCCESS(args)
 	local spellId = args.spellId
 	if not self:IsValidWarning(args.sourceGUID) then return end
-	if spellId == 384476 then
-
+	if spellId == 453458 then
+		timerCaltropsCD:Start(nil, args.sourceGUID)
+		if self:AntiSpam(3, 2) then
+			specWarnCaltrops:Show()
+			specWarnCaltrops:Play("watchstep")
+		end
 	end
 end
---]]
 
---[[
 function mod:SPELL_AURA_APPLIED(args)
 	if not self.Options.Enabled then return end
 	local spellId = args.spellId
-	if spellId == 395035 then
-
+	if spellId == 426964 then
+		local amount = args.amount or 1
+		if self:AntiSpam(3, 5) then
+			warnMortalStrike:Show(args.destName, amount)
+		end
+	elseif spellId == 424430 and args:IsPlayer() and self:AntiSpam(3, 8) then
+		specWarnGTFO:Show(args.spellName)
+		specWarnGTFO:Play("watchfeet")
 	end
 end
---mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED
---]]
+mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED
 
 function mod:UNIT_DIED(args)
 	local cid = self:GetCIDFromGUID(args.destGUID)
@@ -150,5 +179,9 @@ function mod:UNIT_DIED(args)
 		--timerHolyRadianceCD:Stop(args.destGUID)
 		timerDivineJudgementCD:Stop(args.destGUID)
 		timerRepentanceCD:Stop(args.destGUID)
+	elseif cid == 206694 then--Fervent Sharpshooter
+		timerCaltropsCD:Stop(args.destGUID)
+	elseif cid == 206698 then--Fanatical Mage
+		timerFlamestrikeCD:Stop(args.destGUID)
 	end
 end
