@@ -58,7 +58,7 @@ function mod:OnCombatStart(delay)
 	self.vb.pierceCount = 0
 	timerPierceArmorCD:Start(6-delay, 1)
 	timerHurlSpearCD:Start(8.4-delay, 1)
-	timerBattleCryCD:Start(12.9-delay, 1)
+	timerBattleCryCD:Start(12-delay, 1)
 	timerSavageMaulingCD:Start(14.4-delay, 1)
 	--Allow trash mod to enable in combat in case you DO pull boss with any of the 3 sub bosses still active
 	local trashMod = DBM:GetModByName("SacredFlameTrash")
