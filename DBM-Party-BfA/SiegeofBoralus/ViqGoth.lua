@@ -24,9 +24,9 @@ local specWarnPutridWaters			= mod:NewSpecialWarningMoveAway(275014, nil, nil, n
 local yellPutridWaters				= mod:NewYell(275014)
 local specWarnSlam					= mod:NewSpecialWarningDodge(269266, "Tank", nil, 2, 2, 2)
 
---local timerCalloftheDeepCD			= mod:NewCDTimer(13, 270185, nil, nil, nil, 3)--6.4, 15.1, 19.0, 11.9, 12.1, 12.3, 15.6, 12.1, 12.9, 7.0, 8.6, 7.5, 7.2, 7.4, 7.0, 7.0, 7.3, 7.2
+local timerCalloftheDeepCD			= mod:NewCDTimer(13, 270185, nil, nil, nil, 3)--6.4, 15.1, 19.0, 11.9, 12.1, 12.3, 15.6, 12.1, 12.9, 7.0, 8.6, 7.5, 7.2, 7.4, 7.0, 7.0, 7.3, 7.2
 local timerPutridWatersCD			= mod:NewCDCountTimer(19.9, 275014, nil, nil, nil, 5, nil, DBM_COMMON_L.MAGIC_ICON)
-local timerSlamCD					= mod:NewCDTimer(7.3, 269266, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+local timerSlamCD					= mod:NewCDTimer(6, 269266, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON)--6
 local timerDemolisherTerrorCD		= mod:NewCDCountTimer(20, 270605, nil, nil, nil, 1, nil, DBM_COMMON_L.TANK_ICON..DBM_COMMON_L.DAMAGE_ICON)
 
 mod:AddRangeFrameOption(5, 275014)
@@ -41,7 +41,7 @@ function mod:OnCombatStart(delay)
 	self.vb.watersCount = 0
 	self.vb.terrorCount = 0
 	timerPutridWatersCD:Start(3.4-delay, 1)
-	--timerCalloftheDeepCD:Start(6.4-delay)
+	timerCalloftheDeepCD:Start(6.3-delay)
 	--timerDemolisherTerrorCD:Start(19.9-delay, 1)--Should be started by IEEU event
 	if self.Options.RangeFrame then
 		DBM.RangeCheck:Show(5)
@@ -77,10 +77,13 @@ function mod:SPELL_CAST_START(args)
 		specWarnCalloftheDeep:Show()
 		specWarnCalloftheDeep:Play("watchstep")
 		--timerCalloftheDeepCD:Start()
-	elseif spellId == 269266 and self:AntiSpam(2.5, 1) then
-		specWarnSlam:Show()
-		specWarnSlam:Play("shockwave")
-		timerSlamCD:Start(nil, args.sourceGUID)
+	elseif spellId == 269266 then
+		if self:AntiSpam(2.5, 1) then
+			specWarnSlam:Show()
+			specWarnSlam:Play("carefly")
+		end
+		local timer = self:GetStage(1) and 18.2 or self:GetStage(2) and 10.9 or 6
+		timerSlamCD:Start(timer, args.sourceGUID)
 	end
 end
 
@@ -109,7 +112,8 @@ function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
 			seenAdds[GUID] = true
 			local cid = self:GetCIDFromGUID(GUID)
 			if cid == 137405 then--Gripping Terror
-				timerDemolisherTerrorCD:Start(19.9, self.vb.terrorCount+1)
+				self.vb.terrorCount = 1--Set to 1 because first spawn comes with the terror spawn
+				timerDemolisherTerrorCD:Start(19.2, 2)
 			end
 		end
 	end
@@ -124,5 +128,10 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, spellId)
 		if self:GetStage(3, 1) then
 			self:SetStage(0)
 		end
+	elseif spellId == 270183 then
+		--6.3, 15.1, 16.2, 17.0, 13.9, 12.0, 12.0, 12.1, 12.0, 15.0, 7.3, 7.0, 7.1, 7.2, 7.3, 7.2, 7.0, 7.0, 7.1, 7.0, 7.1, 7.4
+		--(ie stage one 15, stage 2 12, stage 3 7)
+		local timer = self:GetStage(1) and 15 or self:GetStage(2) and 12 or 7
+		timerCalloftheDeepCD:Start(timer)
 	end
 end
