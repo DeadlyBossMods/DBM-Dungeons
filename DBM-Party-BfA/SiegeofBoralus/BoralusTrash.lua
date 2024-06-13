@@ -8,14 +8,15 @@ mod.isTrashMod = true
 
 mod:RegisterEvents(
 	"SPELL_CAST_START 275826 256627 256957 256709 257170 272546 257169 272713 274569 272571 272888",
-	"SPELL_AURA_APPLIED 256957 257168 272421 272571 272888",
---	"SPELL_CAST_SUCCESS",
+	"SPELL_AURA_APPLIED 256957 257168 272421 272571 272888 454437",
+--	"SPELL_CAST_SUCCESS",--454437
 --	"UNIT_DIED",
 	"UNIT_SPELLCAST_START"
 )
 
 --TODO, heavy slash, non boss version? it's not in combat log since blizz sucks
 --TODO, target scan Ricochet (272542)?
+--TODO, nameplate timers
 local warnBananaRampage				= mod:NewSpellAnnounce(272546, 2)
 local warnBolsteringShout			= mod:NewSpellAnnounce(275826, 2)
 local warnFerocity					= mod:NewCastAnnounce(272888, 3)
@@ -28,6 +29,8 @@ local specWarnBroadside				= mod:NewSpecialWarningDodge(268260, nil, nil, nil, 2
 local specWarnSavageTempest			= mod:NewSpecialWarningRun(257170, nil, nil, nil, 4, 2)--can tank run out too? or does it follow tank
 local specWarnSightedArt			= mod:NewSpecialWarningYou(272421, nil, nil, nil, 1, 2)
 local yellSightedArt				= mod:NewYell(272421)
+local specWarnAzeriteCharge			= mod:NewSpecialWarningMoveAway(454437, nil, nil, nil, 1, 2)
+local yellAzeriteCharge				= mod:NewYell(454437)
 local specWarnWatertightShell		= mod:NewSpecialWarningInterrupt(256957, "HasInterrupt", nil, nil, 1, 2)
 local specWarnRevitalizingMist		= mod:NewSpecialWarningInterrupt(274569, "HasInterrupt", nil, nil, 1, 2)
 local specWarnChokingWaters			= mod:NewSpecialWarningInterrupt(272571, false, nil, nil, 1, 2)--Because it's on same mob as mist, off by default
@@ -93,7 +96,10 @@ function mod:SPELL_AURA_APPLIED(args)
 	elseif spellId == 272888 and self:IsValidWarning(args.sourceGUID) then
 		specWarnFerocity:Show(args.destName)
 		specWarnFerocity:Play("helpdispel")
-
+	elseif spellId == 454437 and args:IsPlayer() then
+		specWarnAzeriteCharge:Show()
+		specWarnAzeriteCharge:Play("runout")
+		yellAzeriteCharge:Yell()
 	end
 end
 

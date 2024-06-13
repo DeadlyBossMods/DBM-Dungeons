@@ -24,8 +24,8 @@ local specWarnHeavySlash			= mod:NewSpecialWarningDodge(257288, "Tank", nil, nil
 local specWarnBroadside				= mod:NewSpecialWarningDodgeCount(268260, "Tank", nil, nil, 1, 2)
 
 local timerWithdrawCD				= mod:NewCDCountTimer(40, 268752, nil, nil, nil, 6)
-local timerCleartheDeckCD			= mod:NewCDCountTimer(20, 269029, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON)--Need more data
-local timerCrimsonSwipeCD			= mod:NewCDTimer(9, 268230, nil, false, 2, 5, nil, DBM_COMMON_L.TANK_ICON)
+local timerCleartheDeckCD			= mod:NewCDCountTimer(18.2, 269029, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+local timerCrimsonSwipeCD			= mod:NewCDNPTimer(9, 268230, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)--12.2 now?
 local timerBroadsideCD				= mod:NewCDCountTimer(9, 268260, nil, nil, nil, 3)--Need more data
 
 mod.vb.bossGone = false
@@ -38,7 +38,7 @@ function mod:OnCombatStart(delay)
 	self.vb.withdrawCount = 0
 	self.vb.clearDeckCount = 0
 	self.vb.broadCount = 0
-	timerCleartheDeckCD:Start(4.3-delay, 1)
+	timerCleartheDeckCD:Start(3.6-delay, 1)
 	timerWithdrawCD:Start(13.1-delay, 1)
 end
 
@@ -73,7 +73,7 @@ function mod:UNIT_SPELLCAST_START(_, _, spellId)
 		self.vb.broadCount = self.vb.broadCount + 1
 		specWarnBroadside:Show(self.vb.broadCount)
 		specWarnBroadside:Play("watchstep")
-		timerBroadsideCD:Start(10.9, self.vb.broadCount+1)
+		timerBroadsideCD:Start(10.9, self.vb.broadCount+1)--14.6 in TWW, from a single pull, but maybe variable based on boss time to ship, needs more data
 	end
 end
 
@@ -87,8 +87,8 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, spellId)
 	elseif spellId == 268745 and self.vb.bossGone then--Energy Tracker (boss returning)
 		self.vb.bossGone = false
 		timerBroadsideCD:Stop()
-		timerCleartheDeckCD:Start(4.3, self.vb.clearDeckCount+1)
-		timerWithdrawCD:Start(36, self.vb.withdrawCount+1)
+		timerCleartheDeckCD:Start(4.3, self.vb.clearDeckCount+1)--Confirmed in TWW
+		timerWithdrawCD:Start(36, self.vb.withdrawCount+1)--NOT yet confirmed in TWW
 	elseif spellId == 268963 then--Unstable Ordnance
 		warnUnstableOrdnance:Show()
 		timerBroadsideCD:Stop()

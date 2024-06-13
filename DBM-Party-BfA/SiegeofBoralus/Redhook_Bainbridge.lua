@@ -1,28 +1,30 @@
-local dungeonID, creatureID, encounterID
+local dungeonID, creatureID
 if UnitFactionGroup("player") == "Alliance" then
-	dungeonID, creatureID, encounterID = 2132, 128650, 2098--Redhook
+	dungeonID, creatureID = 2132, 128650--Redhook
 else
-	dungeonID, creatureID, encounterID = 2133, 130834, 2097--Bainbridge
+	dungeonID, creatureID = 2133, 130834--Bainbridge
 end
 local mod	= DBM:NewMod(dungeonID, "DBM-Party-BfA", 5, 1023)
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(creatureID)
-mod:SetEncounterID(encounterID)
+mod:SetEncounterID(2098, 2097)--Redhook, Bainbridge
+mod:SetHotfixNoticeRev(20240613000000)
+mod:SetMinSyncRevision(20240613000000)
+mod:DisableESCombatDetection()--Fires during trash in current TWW build, causing false engage.
 
 mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
 	"SPELL_AURA_APPLIED 257459 260954 261428 256709",
 	"SPELL_CAST_START 257459 275107 257326 261428 260924",
---	"UNIT_DIED",
+	"UNIT_DIED",
 	"UNIT_SPELLCAST_SUCCEEDED boss1"
 )
 
---TODO, cannon barrage detection
 --TODO, verify some other spellIds
---TODO, why are all timers disabled, and can they be made active/better
+--TODO, Keep eye on timers. For now only cannon barrage is consistent. Everything else is a bit chaotic since boss can be kited around and prevented from casting long periods of time
 --Chopper Redhook
 local warnOntheHook					= mod:NewTargetNoFilterAnnounce(257459, 2)
 local warnMeatHook					= mod:NewCastAnnounce(275107, 2)
@@ -41,32 +43,65 @@ local specWarnHangmansNoose			= mod:NewSpecialWarningRun(261428, nil, nil, nil, 
 local specWarnSteelTempest			= mod:NewSpecialWarningDodge(260924, nil, nil, nil, 2, 2)
 --local specWarnGTFO				= mod:NewSpecialWarningGTFO(238028, nil, nil, nil, 1, 8)
 --BOTH
-local specWarnCannonBarrage			= mod:NewSpecialWarningDodge(257540, nil, nil, nil, 2, 2)
+local specWarnCannonBarrage			= mod:NewSpecialWarningDodgeCount(257540, nil, nil, nil, 2, 2)
 --local specWarnAdds					= mod:NewSpecialWarningAdds(257649, "-Healer", nil, nil, 1, 2)
 
 --Chopper Redhook
 --local timerOntheHookCD				= mod:NewCDTimer(13, 257459, nil, nil, nil, 3)
 --local timerGoreCrashCD				= mod:NewCDTimer(13, 257326, nil, nil, nil, 3)--24.9, 43.3
---local timerHeavySlashCD				= mod:NewCDTimer(13, 279761, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON)--Shared
 --Sergeant Bainbridge
 --local timerIronGazeCD				= mod:NewCDTimer(13, 260954, nil, nil, nil, 3)
 --local timerSteelTempestCD			= mod:NewCDTimer(13, 260924, nil, nil, nil, 3)
 --local timerHangmansNooseCD			= mod:NewCDTimer(13, 261428, nil, nil, nil, 3, nil, DBM_COMMON_L.DEADLY_ICON)
+--BOTH
+local timerCannonBarrageCD			= mod:NewCDCountTimer(60, 257540, nil, nil, nil, 6)
+local timerHeavySlashCD				= mod:NewCDNPTimer(20.6, 279761, nil, nil, nil, 3)
 
-function mod:OnCombatStart()
-	if dungeonID == 2132 then--Redhook
+mod.vb.cannonCount = 0
+
+local function checkWhichBoss(self)
+	local cid = self:GetUnitCreatureId("boss1")
+	if cid then
+		--Only do swaps if they differ from last check or load
+		if cid ~= creatureID then--cid mismatch, correct it on engage
+			creatureID = cid
+			self:SetCreatureID(cid)
+			--Our callbacks fire the first ID in table, so we purposely set first ID to the currently engaged boss
+			if cid == 128650 then--Redhook
+				self:SetEncounterID(2098, 2097)--Redhook, Bainbridge
+			else
+				self:SetEncounterID(2097, 2098)--Bainbridge, Redhook
+			end
+		end
+	end
+end
+
+function mod:OnCombatStart(delay)
+	self.vb.cannonCount = 0
+	--if dungeonID == 2132 then--Redhook
 		--timerOntheHookCD:Start(1-delay)
 		--timerGoreCrashCD:Start(1-delay)
-	else--Bainbridge
+	--else--Bainbridge
 		--timerIronGazeCD:Start(1-delay)
 		--timerSteelTempestCD:Start(1-delay)
+	--end
+	timerCannonBarrageCD:Start(18-delay, 1)
+	--Trash is often pulled with this boss, so we want to enable trash mod functionality during fight
+	local trashMod = DBM:GetModByName("BoralusTrash")
+	if trashMod then
+		trashMod.isTrashModBossFightAllowed = true
 	end
+	self:Schedule(1.5, checkWhichBoss, self)
 end
 
 function mod:OnCombatEnd()
 --	if self.Options.RangeFrame then
 --		DBM.RangeCheck:Hide()
 --	end
+	local trashMod = DBM:GetModByName("BoralusTrash")
+	if trashMod then
+		trashMod.isTrashModBossFightAllowed = false
+	end
 end
 
 function mod:SPELL_AURA_APPLIED(args)
@@ -128,29 +163,33 @@ function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId)
 	end
 end
 mod.SPELL_PERIODIC_MISSED = mod.SPELL_PERIODIC_DAMAGE
+--]]
 
 function mod:UNIT_DIED(args)
 	local cid = self:GetCIDFromGUID(args.destGUID)
 	if cid == 129996 or cid == 138019 or cid == 129879 then--Irontide Cleaver/Kul Tiran Vanguard
-		--timerHeavySlashCD:Stop(args.destGUID)
+		timerHeavySlashCD:Stop(args.destGUID)
 	end
 end
---]]
 
-function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, spellId)
+
+function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
 	if spellId == 257540 then--Cannon Barrage
-		specWarnCannonBarrage:Show()
+		--18.1, 60.2, 61.0
+		self.vb.cannonCount = self.vb.cannonCount + 1
+		specWarnCannonBarrage:Show(self.vb.cannonCount)
 		specWarnCannonBarrage:Play("watchstep")
+		timerCannonBarrageCD:Start(nil, self.vb.cannonCount+1)
 	--19.7, 18.2, 14.6
-	elseif spellId == 274002 then--Call Adds (works fine alliance side, horde side it spams non stop)
+--	elseif spellId == 274002 then--Call Adds (works fine alliance side, horde side it spams non stop)
 		--specWarnAdds:Show()
 		--specWarnAdds:Play("mobsoon")
 	elseif spellId == 257287 then
-		--local guid = UnitGUID(uId)
+		local guid = UnitGUID(uId)
+		timerHeavySlashCD:Start(nil, guid)
 		if self:AntiSpam(3, 1) then
 			specWarnHeavySlash:Show()
 			specWarnHeavySlash:Play("shockwave")
 		end
-		--timerHeavySlashCD:Start(nil, guid)
 	end
 end
