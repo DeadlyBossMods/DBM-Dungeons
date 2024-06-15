@@ -8,8 +8,8 @@ if (wowToc >= 100200) then
 	mod.upgradedMPlus = true
 	mod:SetCreatureID(213770, 42172)--P1 Ink, P2 Ozumat
 	mod:SetBossHPInfoToHighest()
-else--TODO, refine for cata classic since no timewalker there
-	mod.statTypes = "normal,heroic,timewalker"
+else
+	mod.statTypes = "normal,heroic"
 	mod:SetCreatureID(40792)
 	mod:SetMainBossID(42172)--42172 is Ozumat, but we need Neptulon for engage trigger.
 end

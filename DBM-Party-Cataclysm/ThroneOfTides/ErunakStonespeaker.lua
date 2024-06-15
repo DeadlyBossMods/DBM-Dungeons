@@ -5,8 +5,8 @@ local wowToc = DBM:GetTOC()
 if (wowToc >= 100200) then
 	mod.statTypes = "normal,heroic,challenge,timewalker"
 	mod.upgradedMPlus = true
-else--TODO, refine for cata classic since no timewalker there
-	mod.statTypes = "normal,heroic,timewalker"
+else
+	mod.statTypes = "normal,heroic"
 end
 
 mod:SetRevision("@file-date-integer@")

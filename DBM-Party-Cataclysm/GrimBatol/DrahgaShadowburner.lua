@@ -1,7 +1,12 @@
 local mod	= DBM:NewMod(133, "DBM-Party-Cataclysm", 3, 71)
 local L		= mod:GetLocalizedStrings()
 
-mod.statTypes = "normal,heroic,timewalker"
+if not mod:IsCata() then
+	mod.statTypes = "normal,heroic,challenge,timewalker"
+	mod.upgradedMPlus = true
+else--TODO, refine for cata classic since no timewalker there
+	mod.statTypes = "normal,heroic,timewalker"
+end
 
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(40319)
@@ -58,7 +63,7 @@ function mod:OnCombatStart(delay)
 	self.vb.curseCount = 0
 	if not self:IsCata() then
 		timerCurseofEntropyCD:Stop()
-		timerAddCD:Start(8, 1)
+		timerAddCD:Start(8, 1)--Maybe also true in cata?
 		timerCurseofEntropyCD:Start(17, 1)
 	end
 end
@@ -118,7 +123,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg, npc)
 		if not self:IsCata() then
 			timerAddCD:Stop()
 			timerCurseofEntropyCD:Stop()
-			timerAddCD:Start(14.9, self.vb.addCount+1)
+			timerAddCD:Start(14.9, self.vb.addCount+1)--Maybe also restarts in cata?
 			timerTwilightBuffetCD:Start(22.9, 1)
 			timerCurseofEntropyCD:Start(24.9, self.vb.curseCount+1)
 		end
