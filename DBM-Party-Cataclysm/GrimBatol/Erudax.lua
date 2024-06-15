@@ -4,19 +4,21 @@ local L		= mod:GetLocalizedStrings()
 if not mod:IsCata() then
 	mod.statTypes = "normal,heroic,challenge,timewalker"
 	mod.upgradedMPlus = true
-else--TODO, refine for cata classic since no timewalker there
-	mod.statTypes = "normal,heroic,timewalker"
+else
+	mod.statTypes = "normal,heroic"
 end
 
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(40484)
 mod:SetEncounterID(1049)
+mod:SetHotfixNoticeRev(20240614000000)
+--mod:SetMinSyncRevision(20230929000000)
 
 mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
 	"SPELL_AURA_APPLIED 75861 75792",
-	"SPELL_CAST_START 75763 79467",
+	"SPELL_CAST_START 75763 79467 449939 450077 450100",
 	"UNIT_SPELLCAST_SUCCEEDED boss1"
 )
 
@@ -33,17 +35,33 @@ local timerFeeble		= mod:NewTargetTimer(3, 75792, nil, "Tank|Healer", 2, 5)
 local timerGale			= mod:NewCastTimer(5, 75664, nil, nil, nil, 2)
 local timerGaleCD		= mod:NewCDCountTimer(55, 75664, nil, nil, nil, 2)
 local timerAddsCD		= mod:NewCDCountTimer(54.5, 75704, nil, nil, nil, 1)
+--Add new stuff to non cata only
+local specWarnVoidSurge, specWarnCrush, timerVoidSurgeCD, timerCrushCD
+if not mod:IsCata() then
+	specWarnVoidSurge	= mod:NewSpecialWarningDodgeCount(450077, nil, nil, nil, 2, 2)
+	specWarnCrush		= mod:NewSpecialWarningDefensive(450100, nil, nil, nil, 2, 2)
+	timerVoidSurgeCD	= mod:NewCDCountTimer(55, 450077, nil, nil, nil, 3)
+	timerCrushCD		= mod:NewCDCountTimer(55, 450100, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+end
 
-mod.vb.feebleCount = 0
+mod.vb.feebleCount = 0--Used for void surge in TWW
 mod.vb.galeCount = 0
 mod.vb.addsCount = 0
+mod.vb.crushCount = 0
 
 function mod:OnCombatStart(delay)
 	self.vb.feebleCount = 0
 	self.vb.galeCount = 0
 	self.vb.addsCount = 0
-	timerFeebleCD:Start(16-delay, 1)
-	timerGaleCD:Start(23-delay, 1)
+	self.vb.crushCount = 0
+	if self:IsCata() then
+		timerFeebleCD:Start(16-delay, 1)
+		timerGaleCD:Start(23-delay, 1)
+	else
+		timerVoidSurgeCD:Start(5-delay, 1)
+		timerGaleCD:Start(12-delay, 1)
+		timerCrushCD:Start(46.5-delay, 1)
+	end
 --	timerAddsCD:Start(95-delay, 1)--First ones don't start until boss reaches % health of some sort?
 end
 
@@ -64,9 +82,29 @@ function mod:SPELL_AURA_APPLIED(args)
 end
 
 function mod:SPELL_CAST_START(args)
-	if args:IsSpellID(75763, 79467) and self:CheckInterruptFilter(args.sourceGUID, false, true) then
-		specWarnMending:Show()
-		specWarnMending:Play("kickcast")
+	if args:IsSpellID(75763, 79467) then
+		if self.Options.SpecWarn75763interrupt and self:CheckInterruptFilter(args.sourceGUID, false, true) then
+			specWarnMending:Show()
+			specWarnMending:Play("kickcast")
+		elseif self:AntiSpam(2, 1) then
+			warnUmbralMending:Show()
+		end
+	elseif args.spellId == 449939 then--TWW version
+		self.vb.galeCount = self.vb.galeCount + 1
+		specWarnGale:Show(self.vb.galeCount)
+		specWarnGale:Play("findshelter")
+		timerGale:Start()
+		timerGaleCD:Start(50, self.vb.galeCount+1)
+	elseif args.spellId == 450077 then
+		self.vb.feebleCount = self.vb.feebleCount + 1
+		specWarnVoidSurge:Show(self.vb.feebleCount)
+		specWarnVoidSurge:Play("watchstep")
+		timerVoidSurgeCD:Start(50, self.vb.feebleCount+1)
+	elseif args.spellId == 450100 then
+		self.vb.crushCount = self.vb.crushCount + 1
+		specWarnCrush:Show(self.vb.crushCount)
+		specWarnCrush:Play("defensive")
+		timerCrushCD:Start(50, self.vb.crushCount+1)
 	end
 end
 
@@ -77,7 +115,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
 		specWarnGale:Show(self.vb.galeCount)
 		specWarnGale:Play("findshelter")
 		timerGale:Start()
-		timerGaleCD:Start(nil, self.vb.galeCount+1)
+		timerGaleCD:Start(55, self.vb.galeCount+1)
 	elseif spellId == 75704 then
 		self.vb.addsCount = self.vb.addsCount + 1
 		specWarnAdds:Show(self.vb.addsCount)
