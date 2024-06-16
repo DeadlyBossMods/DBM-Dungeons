@@ -164,7 +164,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		specWarnGTFO:Play("watchfeet")
 	elseif spellId == 451379 and self:AntiSpam(3, 3) then
 		specWarnRecklessTacticDispel:Show(args.destName)
-		specWarnRecklessTacticDispel:Play("helpdispel")
+		specWarnRecklessTacticDispel:Play("enrage")
 	elseif spellId == 451224 and args:IsDestTypePlayer() then
 		if self:CheckDispelFilter("curse") then
 			specWarnEnvelopingShadowflame:Show(args.destName)
