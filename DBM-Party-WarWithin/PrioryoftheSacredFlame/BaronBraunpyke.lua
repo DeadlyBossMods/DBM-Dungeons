@@ -73,7 +73,7 @@ function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
 	if spellId == 422969 then
 		self.vb.wrathCount = self.vb.wrathCount + 1
-		warnVindictiveWrath:Show()
+		warnVindictiveWrath:Show(self.vb.wrathCount)
 		timerVindictiveWrathCD:Start(nil, self.vb.wrathCount+1)
 	elseif spellId == 423051 or spellId == 446657 then--regular, empowered
 		--16.7, 35.2, 36.4, 35.2, 34.0

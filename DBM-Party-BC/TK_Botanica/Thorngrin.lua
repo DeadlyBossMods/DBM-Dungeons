@@ -21,7 +21,7 @@ mod:RegisterEventsInCombat(
 )
 
 local warnSacrifice		= mod:NewTargetNoFilterAnnounce(34661, 2)
-local warnEnrage		= mod:NewSpellAnnounce(34670, 2, nil, "Healer|Tank")
+local warnEnrage		= mod:NewTargetNoFilterAnnounce(34670, 2, nil, "Healer|Tank")
 
 local specWarnGTFO		= mod:NewSpecialWarningGTFO(34660, nil, nil, nil, 1, 8)
 

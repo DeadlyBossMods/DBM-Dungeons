@@ -31,7 +31,7 @@ ability.id = 198379 and type = "begincast"
 --NOTE: Leap will be broken until 10.2 but that's fine. in TW or while leveling dungeon is easy
 --TODO, min timers could still possibly need tweaking/lowering. Same with min ICD of each ability
 local warnLeap					= mod:NewCountAnnounce(196354, 2)
-local warnNightFall				= mod:NewSpellAnnounce(212464, 2)
+local warnNightFall				= mod:NewCountAnnounce(212464, 2)
 
 local specWarnNightfall			= mod:NewSpecialWarningMove(212464, nil, nil, nil, 1, 2)
 --local specWarnLeap			= mod:NewSpecialWarningDodge(196354, nil, nil, nil, 1)

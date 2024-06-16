@@ -32,7 +32,7 @@ local warnWicklighterBarrage				= mod:NewTargetNoFilterAnnounce(421817, 2)
 local warnExtinguishingGust					= mod:NewTargetNoFilterAnnounce(429113, 2)
 local warnEnkindlingInferno					= mod:NewCountAnnounce(423109, 3)
 local warnDousingBreath						= mod:NewCountAnnounce(425394, 3)
-local warnBlazingStorms						= mod:NewCountAnnounce(443835, 3)
+local warnBlazingStorms						= mod:NewSpellAnnounce(443835, 3)
 
 local specWarnWicklighterBarrage			= mod:NewSpecialWarningYou(421817, nil, nil, nil, 1, 2)
 local yellWicklighterBarrage				= mod:NewShortPosYell(421817)

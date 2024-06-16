@@ -193,7 +193,7 @@ else
 			end
 		elseif args.spellId == 76616 then
 			if args.destName == L.name then
-				warnPhase2:Show(2)
+				warnPhase2:Show()
 			end
 		end
 	end

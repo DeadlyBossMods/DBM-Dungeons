@@ -35,7 +35,7 @@ end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg, _, _, _, target)--Just until there is a better way
 	if msg:find("spell:113395") then
-		warnLesson:Show(DBM:GetUnitFullName(target))
+		warnLesson:Show(DBM:GetUnitFullName(target) or target)
 		timerLessonCD:Start()
 	end
 end

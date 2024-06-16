@@ -132,7 +132,7 @@ else
 			self.vb.blitzCount = self.vb.blitzCount + 1
 			timerBlitz:Start(nil, self.vb.blitzCount+1)
 			if not target then return end
-			target = DBM:GetUnitFullName(target)
+			target = DBM:GetUnitFullName(target) or target
 			if target == UnitName("player") then
 				specWarnBlitz:Show()
 				specWarnBlitz:Play("targetyou")

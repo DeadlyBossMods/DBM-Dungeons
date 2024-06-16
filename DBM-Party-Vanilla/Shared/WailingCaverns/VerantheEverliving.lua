@@ -11,7 +11,7 @@ mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 8142"
 )
 
-local warnVines			= mod:NewSpellAnnounce(8142, 2)
+local warnVines			= mod:NewSpellSourceAnnounce(8142, 2)
 
 local timerVinesCD		= mod:NewAITimer(180, 8142, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 
