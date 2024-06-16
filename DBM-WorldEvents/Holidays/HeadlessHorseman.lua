@@ -22,7 +22,7 @@ if mod:IsRetail() then--10.1.7 fight rework
 	)
 
 	--TODO, better detection of curse activation on player and additional warnings for effects
-	local warnVineMarch									= mod:NewSpellAnnounce(415047, 3)
+	local warnVineMarch									= mod:NewCountAnnounce(415047, 3)
 
 	local specWarnHotHead								= mod:NewSpecialWarningYou(423626, nil, nil, nil, 1, 2)
 	local specWarnInsidiousCackle						= mod:NewSpecialWarningMoveAway(415262, nil, nil, nil, 1, 2)

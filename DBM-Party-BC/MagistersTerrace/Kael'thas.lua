@@ -24,7 +24,7 @@ mod:RegisterEventsInCombat(
 	"CHAT_MSG_MONSTER_YELL"
 )
 
-local WarnShockBarrior		= mod:NewSpellAnnounce(46165, 3)
+local WarnShockBarrior		= mod:NewTargetNoFilterAnnounce(46165, 3)
 local WarnGravityLapse		= mod:NewSpellAnnounce(44224, 2)
 
 local specwarnPyroblast		= mod:NewSpecialWarningInterrupt(36819, "HasInterrupt", nil, 2, 1, 2)

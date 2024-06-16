@@ -22,9 +22,9 @@ mod:RegisterEventsInCombat(
 --]]
 --NOTE: this boss has some serious spell queuing issues that causes wild variation in timers and ability orders
 --As such, it will use aggressive on the fly timer correction that may feel jarring to users that don't recognize it's happening til they realize it is and why
-local warnShatteredEarth			= mod:NewSpellAnnounce(204666, 2)
+local warnShatteredEarth			= mod:NewCountAnnounce(204666, 2)
 local warnThrowTarget				= mod:NewTargetNoFilterAnnounce(204658, 2)--This is target the tank is THROWN at.
-local warnUproot					= mod:NewSpellAnnounce(212786, 2)
+local warnUproot					= mod:NewCountAnnounce(212786, 2)
 
 local specWarnRoots					= mod:NewSpecialWarningDodge(204574, nil, nil, nil, 2, 2)
 local yellThrow						= mod:NewYell(204658, 2764)--yell so others can avoid splash damage. I don't think target can avoid

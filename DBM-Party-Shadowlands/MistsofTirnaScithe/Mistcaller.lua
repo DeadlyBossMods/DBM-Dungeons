@@ -26,7 +26,7 @@ mod:RegisterEventsInCombat(
 --]]
 local warnGuessingGame				= mod:NewCastAnnounce(336499, 4)
 local warnGuessingGameOver			= mod:NewEndAnnounce(321873, 1)
-local warnFreezeTag					= mod:NewCastAnnounce(321873, 3)
+local warnFreezeTag					= mod:NewCountAnnounce(321873, 3)
 local warnFixate					= mod:NewTargetNoFilterAnnounce(321891, 2)
 local warnPattyCake					= mod:NewTargetNoFilterAnnounce(321828, 3)
 

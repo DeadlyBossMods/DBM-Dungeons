@@ -28,7 +28,7 @@ mod:RegisterEventsInCombat(
 local timerRP									= mod:NewRPTimer(34.4)
 --Teera
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(25552))
-local warnRepel									= mod:NewCastAnnounce(386547, 3, nil, nil, nil, nil, nil, 2)
+local warnRepel									= mod:NewCountAnnounce(386547, 3, nil, nil, nil, nil, nil, 2)
 local warnSpiritLeap							= mod:NewSpellAnnounce(385434, 3)
 
 local specWarnGaleArrow							= mod:NewSpecialWarningDodgeCount(382670, nil, nil, nil, 2, 2)

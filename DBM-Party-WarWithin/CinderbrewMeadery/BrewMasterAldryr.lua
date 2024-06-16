@@ -30,7 +30,7 @@ mod:RegisterEventsInCombat(
 --]]
 local warnHappyHour							= mod:NewSpellAnnounce(442525, 3)
 local warnHappyHourOver						= mod:NewEndAnnounce(442525, 2)
-local warnThrowCinderbrew					= mod:NewSpellAnnounce(432179, 2)
+local warnThrowCinderbrew					= mod:NewCountAnnounce(432179, 2)
 
 local specWarnBlazingBelch					= mod:NewSpecialWarningDodgeCount(432198, nil, nil, nil, 2, 2)
 local specWarnKegSmash						= mod:NewSpecialWarningCount(432229, nil, nil, nil, 1, 2)
