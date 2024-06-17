@@ -1,0 +1,24 @@
+## Interface: 100207
+## Interface-Classic: 11502
+## Interface-Wrath: 30403
+## Interface-Cata: 40400
+## Title:|cffffe00a<|r|cffff7d0aDBM Tests|r|cffffe00a>|r |cff69ccf0Tests for Dungeon mods|r
+## IconTexture: Interface/AddOns/DBM-Core/textures/dbm_airhorn
+## Dependencies: DBM-Test
+## DefaultState: enabled
+## LoadOnDemand: 1
+## X-DBM-Test: true
+
+Dragonflight/UldamanLegacyOfTyr/TheLostDwarves.lua
+MoP/Scholomance/Chillheart.lua
+MoP/Scholomance/JandiceBarov.lua
+MoP/Scholomance/Rattlegore.lua
+MoP/Scholomance/LillianVoss.lua
+MoP/Scholomance/DarkmasterGandling.lua
+
+Dragonflight/UldamanLegacyOfTyr/Reports/TheLostDwarves.lua
+MoP/Scholomance/Reports/Chillheart.lua
+MoP/Scholomance/Reports/JandiceBarov.lua
+MoP/Scholomance/Reports/Rattlegore.lua
+MoP/Scholomance/Reports/LillianVoss.lua
+MoP/Scholomance/Reports/DarkmasterGandling.lua

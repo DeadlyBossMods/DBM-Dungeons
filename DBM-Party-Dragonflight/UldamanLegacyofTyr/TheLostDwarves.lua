@@ -103,13 +103,6 @@ function mod:OnCombatEnd()
 	end
 end
 
-local UnitPower = UnitPower
-DBM.Test:RegisterLocalHook("UnitPower", function(val)
-	local old = UnitPower
-	UnitPower = val
-	return old
-end)
-
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
 	if spellId == 369573 then

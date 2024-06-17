@@ -52,7 +52,7 @@ local specWarnDisruptiveShout				= mod:NewSpecialWarningInterrupt(384365, "HasIn
 
 local timerRallytheClanCD					= mod:NewCDNPTimer(20.6, 383823, nil, nil, nil, 5)--20-23
 local timerWarStompCD						= mod:NewCDNPTimer(15.7, 384336, nil, nil, nil, 3)
---local timerRainofArrowsCD					= mod:NewCDNPTimer(15.7, 384476, nil, nil, nil, 3)
+local timerRainofArrowsCD					= mod:NewCDNPTimer(18.2, 384476, nil, nil, nil, 3)
 local timerRottingWindCD					= mod:NewCDNPTimer(23, 436841, nil, nil, nil, 2)
 local timerSwiftWindCD						= mod:NewCDNPTimer(20.6, 387596, nil, nil, nil, 5)
 local timerSwiftStabCD						= mod:NewCDNPTimer(13.4, 381683, nil, nil, nil, 5)--13.4-26.9 (basically casts can be skipped via stuns
@@ -175,7 +175,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 	local spellId = args.spellId
 	if not self:IsValidWarning(args.sourceGUID) then return end
 	if spellId == 384476 then
---		timerRainofArrowsCD:Start(nil, args.sourceGUID)
+		timerRainofArrowsCD:Start(nil, args.sourceGUID)
 		if self:AntiSpam(3, 2) then
 			specWarnRainofArrows:Show()
 			specWarnRainofArrows:Play("watchstep")
@@ -225,7 +225,7 @@ function mod:UNIT_DIED(args)
 	elseif cid == 193462 then--Batak
 		timerBloodcurdlingShoutCD:Stop(args.destGUID)
 	elseif cid == 192789 then--Nokhud Longbow
-		--timerRainofArrowsCD:Stop(args.destGUID)
+		timerRainofArrowsCD:Stop(args.destGUID)
 	elseif cid == 195876 then--Desecrated Ohuna
 		timerRottingWindCD:Stop(args.destGUID)
 	elseif cid == 195877 then--Risen Mystic
