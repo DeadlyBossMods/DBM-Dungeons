@@ -72,7 +72,7 @@ function mod:SPELL_AURA_APPLIED(args)
 	if args.spellId == 75328 then--Twilight Shift (Valiona running away)
 		timerDevouringCD:Cancel()
 		timerDevouring:Cancel()
-		if self:IsCata() then
+		if not self:IsCata() then
 			timerTwilightBuffetCD:Stop()
 		end
 	elseif args.spellId == 75317 and args:IsPlayer() then
