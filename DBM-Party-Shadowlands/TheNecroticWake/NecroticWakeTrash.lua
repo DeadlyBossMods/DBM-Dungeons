@@ -140,7 +140,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 	if not self.Options.Enabled then return end
 	local spellId = args.spellId
 	if spellId == 334748 then
-		local cooldown = args:GetSrcCreatureID() == 173016 and 15 or 17--Corpse Harvester and Corpse Collector
+		local cooldown = args:GetSrcCreatureID() == 173016 and 17 or 15
 		timerDrainFluidsCD:Start(cooldown, args.sourceGUID)
 	end
 end
@@ -148,7 +148,7 @@ end
 function mod:SPELL_INTERRUPT(args)
 	if type(args.extraSpellId) ~= "number" then return end
 	if args.extraSpellId == 334748 then
-		local cooldown = args:GetDestCreatureID() == 173016 and 15 or 17--Corpse Harvester and Corpse Collector
+		local cooldown = args:GetDestCreatureID() == 173016 and 17 or 15
 		timerDrainFluidsCD:Start(cooldown, args.destGUID)
 	end
 end
@@ -216,7 +216,7 @@ end
 
 function mod:UNIT_DIED(args)
 	local cid = self:GetCIDFromGUID(args.destGUID)
-	if cid == 173016 or cid == 166302 then--Corpse Harvester and Corpse Collector
+	if cid == 173016 or cid == 166302 then--Corpse Collector and Corpse Harvester
 		timerDrainFluidsCD:Stop(args.destGUID)
 	end
 end
