@@ -141,7 +141,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 	local spellId = args.spellId
 	if spellId == 334748 then
 		local cooldown = args:GetSrcCreatureID() == 173016 and 15 or 17--Corpse Harvester and Corpse Collector
-		timerDrainFluidsCD:Start(cooldown, args.destGUID)
+		timerDrainFluidsCD:Start(cooldown, args.sourceGUID)
 	end
 end
 
