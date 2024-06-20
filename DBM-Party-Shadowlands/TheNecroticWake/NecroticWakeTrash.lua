@@ -7,12 +7,18 @@ mod:SetRevision("@file-date-integer@")
 mod.isTrashMod = true
 
 mod:RegisterEvents(
-	"SPELL_CAST_START 324293 327240 327399 334748 320462 338353 323496 333477 333479 338606",
+	"SPELL_CAST_START 324293 327240 327399 334748 320462 338353 323496 333477 333479 338606 345623",
+	"SPELL_CAST_SUCCESS 334748",
+	"SPELL_INTERRUPT",
 	"SPELL_AURA_APPLIED 327401 323347 335141 324372 338353 338357 338606 327396",
 	"SPELL_AURA_APPLIED_DOSE 338357",
-	"SPELL_AURA_REMOVED 338606 327396"
+	"SPELL_AURA_REMOVED 338606 327396",
+	"UNIT_DIED"
 )
 
+--[[
+(ability.id = 324293 or ability.id = 327240 or ability.id = 327399 or ability.id = 334748 or ability.id = 320462 or ability.id = 338353 or ability.id = 323496 or ability.id = 333477 or ability.id = 333479 or ability.id = 338606 or ability.id = 345623) and type = "begincast"
+--]]
 --TODO targetscan shared agony during cast and get at least one of targets early? for fade/invis and feign death?
 --TODO, actually, does shared agony even still exist? it's not in any recent logs
 --https://www.wowhead.com/guides/necrotic-wake-shadowlands-dungeon-strategy-guide
@@ -32,7 +38,7 @@ local warnGrimFate							= mod:NewTargetAnnounce(327396, 2)
 --local specWarnGTFO						= mod:NewSpecialWarningGTFO(257274, nil, nil, nil, 1, 8)
 --Notable Blightbone Trash
 local specWarnClingingDarkness				= mod:NewSpecialWarningDispel(323347, false, nil, nil, 1, 2)--Opt it for now, since dispel timing is less black and white
-local specWarnDrainFluids					= mod:NewSpecialWarningInterrupt(334748, false, nil, 2, 1, 2)--Based on feedback. it's too spammy to be on by default
+local specWarnDrainFluids					= mod:NewSpecialWarningInterrupt(334748, nil, nil, nil, 1, 2)--Feedback be damned, it's too important not to kick, if it's spammy, maybe you shouldn't sit on your interrupt CD.
 --Notable Amarth Trash
 local specWarnNecroticBolt					= mod:NewSpecialWarningInterrupt(320462, "HasInterrupt", nil, nil, 1, 2)
 local specWarnRaspingScream					= mod:NewSpecialWarningInterrupt(324293, "HasInterrupt", nil, nil, 1, 2)
@@ -54,12 +60,14 @@ local timerMorbidFixation					= mod:NewTargetTimer(8, 338606, nil, nil, nil, 2)
 local specWarnGrimFate						= mod:NewSpecialWarningMoveAway(327396, nil, nil, nil, 1, 2)
 local yellGrimFate							= mod:NewYell(327396)
 local yellGrimFateFades						= mod:NewShortFadesYell(327396)
+local specWarnDeathBurst					= mod:NewSpecialWarningDodge(345623, nil, nil, nil, 2, 2)
 
---Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc
+local timerDrainFluidsCD					= mod:NewCDNPTimer(15, 334748, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--15.2-19
+
+--Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc, 7 off interrupt
 
 function mod:ThrowCleaver(targetname, uId)
 	if not targetname then return end
---	warnRicochetingThrow:Show(targetname)
 	if targetname == UnitName("player") then
 		yellThrowCleaver:Yell()
 	end
@@ -120,6 +128,28 @@ function mod:SPELL_CAST_START(args)
 		self:ScheduleMethod(0.1, "BossTargetScanner", args.sourceGUID, "SpewTarget", 0.1, 6)
 	elseif spellId == 338606 then
 		self:ScheduleMethod(0.1, "BossTargetScanner", args.sourceGUID, "FixateTarget", 0.1, 6)
+	elseif spellId == 345623 then
+		if self:AntiSpam(3, 2) then
+			specWarnDeathBurst:Show()
+			specWarnDeathBurst:Play("watchstep")
+		end
+	end
+end
+
+function mod:SPELL_CAST_SUCCESS(args)
+	if not self.Options.Enabled then return end
+	local spellId = args.spellId
+	if spellId == 334748 then
+		local cooldown = args:GetSrcCreatureID() == 173016 and 15 or 17--Corpse Harvester and Corpse Collector
+		timerDrainFluidsCD:Start(cooldown, args.destGUID)
+	end
+end
+
+function mod:SPELL_INTERRUPT(args)
+	if type(args.extraSpellId) ~= "number" then return end
+	if args.extraSpellId == 334748 then
+		local cooldown = args:GetDestCreatureID() == 173016 and 15 or 17--Corpse Harvester and Corpse Collector
+		timerDrainFluidsCD:Start(cooldown, args.destGUID)
 	end
 end
 
@@ -181,5 +211,12 @@ function mod:SPELL_AURA_REMOVED(args)
 		if args:IsPlayer() then
 			yellGrimFateFades:Cancel()
 		end
+	end
+end
+
+function mod:UNIT_DIED(args)
+	local cid = self:GetCIDFromGUID(args.destGUID)
+	if cid == 173016 or cid == 166302 then--Corpse Harvester and Corpse Collector
+		timerDrainFluidsCD:Stop(args.destGUID)
 	end
 end
