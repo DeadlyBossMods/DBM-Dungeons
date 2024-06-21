@@ -8,7 +8,7 @@ mod.isTrashMod = true
 
 mod:RegisterEvents(
 	"SPELL_CAST_START 382708 376186 372566 372311 372201 381663 378282 384597 378847 372615 372561 395427 379406 384161 372262 372971 372223 373084 378827 384623",
-	"SPELL_CAST_SUCCESS 376169 372296 374451",
+	"SPELL_CAST_SUCCESS 376169 372296 374451 384597",
 	"SPELL_AURA_APPLIED 384161 373089 371875 373540 372461 382791 383651",
 --	"SPELL_AURA_APPLIED_DOSE 339528",
 	"SPELL_AURA_REMOVED 382791 383651",
@@ -66,9 +66,9 @@ local specWarnMendingClay					= mod:NewSpecialWarningInterrupt(372223, "HasInter
 local specWarnMoltenArmy					= mod:NewSpecialWarningInterrupt(383651, "HasInterrupt", nil, nil, 1, 2)
 
 local timerMagmaFistCD						= mod:NewCDNPTimer(25.4, 372311, nil, nil, nil, 3)
-local timerBrutalStrikeCD					= mod:NewCDNPTimer(15.7, 378847, nil, "Tank|Healer", nil, 5)
-local timerBlazingSlashCD					= mod:NewCDNPTimer(13.4, 384597, nil, "Tank|Healer", nil, 5)
-local timerVolcanicGuardCD					= mod:NewCDNPTimer(25.4, 382708, nil, nil, nil, 3)
+local timerBrutalStrikeCD					= mod:NewCDNPTimer(15.1, 378847, nil, "Tank|Healer", nil, 5)
+local timerBlazingSlashCD					= mod:NewCDNPTimer(12.4, 384597, nil, "Tank|Healer", nil, 5)--Doesn't go on cooldown if stunned
+local timerVolcanicGuardCD					= mod:NewCDNPTimer(25.1, 382708, nil, nil, nil, 3)
 local timerExplosiveConcoctionCD			= mod:NewCDNPTimer(18.2, 378827, nil, nil, nil, 3)
 local timerBindingSpearCD					= mod:NewCDNPTimer(25.4, 372561, nil, nil, nil, 3)
 local timerMendingClayCD					= mod:NewCDNPTimer(25.4, 372223, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
@@ -82,7 +82,7 @@ local timerPierceMarrowCD					= mod:NewCDNPTimer(10.9, 372262, nil, nil, nil, 3)
 local timerScorchingFusilladeCD				= mod:NewCDNPTimer(23, 372543, nil, nil, nil, 3)
 local timerConflagrantBatteryCD				= mod:NewCDNPTimer(22.6, 372296, nil, nil, nil, 3)
 --local timerReverbSlamCD					= mod:NewCDNPTimer(17, 372971, nil, nil, nil, 3)--8-17? needs further review
-local timerCandescentTempestCD				= mod:NewCDNPTimer(27.8, 381663, nil, nil, nil, 2)
+local timerCandescentTempestCD				= mod:NewCDNPTimer(27.5, 381663, nil, nil, nil, 2)
 local timerForgestompCD						= mod:NewCDNPTimer(17.3, 384623, nil, nil, nil, 2)
 
 mod:AddBoolOption("AGBuffs", true)
@@ -197,7 +197,6 @@ function mod:SPELL_CAST_START(args)
 			warnMoteofCombustion:Show()
 		end
 	elseif spellId == 384597 then
-		timerBlazingSlashCD:Start(nil, args.sourceGUID)
 		if self:AntiSpam(3, 5) then
 			warnBlazingSlash:Show()
 		end
@@ -240,6 +239,8 @@ function mod:SPELL_CAST_SUCCESS(args)
 		end
 	elseif spellId == 374451 then
 		warnBurningChain:Show(args.destName)
+	elseif spellId == 384597 then
+		timerBlazingSlashCD:Start(nil, args.sourceGUID)
 	end
 end
 

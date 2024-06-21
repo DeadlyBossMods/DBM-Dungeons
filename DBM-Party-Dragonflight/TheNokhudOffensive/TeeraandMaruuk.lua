@@ -79,7 +79,7 @@ local function scanBosses(self, delay)
 				timerRepelCD:Start(49-delay, 1, bossGUID)
 			else--Maruuk
 				timerFrightfulRoarCD:Start(4.5-delay, 1, bossGUID)
-				timerBrutalizeCD:Start(13.5-delay, 1, bossGUID)
+				timerBrutalizeCD:Start(12.5-delay, 1, bossGUID)
 				timerEarthSplitterCD:Start(51-delay, 1, bossGUID)
 			end
 		end
