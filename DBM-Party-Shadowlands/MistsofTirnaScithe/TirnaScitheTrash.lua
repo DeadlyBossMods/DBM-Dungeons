@@ -21,6 +21,7 @@ mod:RegisterEvents(
 --TODO, target scan crushing leap? If it can be done, and if the two aoe abilities come from leap target destination, fine tune those warnings too
 --TODO, see if Pool of Radiance is too early to warn, might need to warn at 340191/rejuvenating-radiance instead
 --TODO, Acid Nova cooldown from Spinemaw Staghorn (167111)?
+--TODO, add https://www.wowhead.com/beta/spell=324987/mistveil-bite ?
 local warnOvergrowth					= mod:NewTargetAnnounce(322486, 4)
 local warnFuriousThrashing				= mod:NewSpellAnnounce(324909, 3)
 local warnTripleBite					= mod:NewStackAnnounce(340288, 2, nil, "Tank|Healer|RemovePoison")
@@ -86,6 +87,7 @@ function mod:CrushingLeap(targetname, _, unituid)
 --	end
 end
 
+--[[
 --About 1 second faster than debuff
 function mod:VolatileAcid(targetname, _, unituid)
 	--Now has death check cause it's possible for mob to die before cast finishes and we don't want scan to return target if it won't finish
@@ -100,6 +102,7 @@ function mod:VolatileAcid(targetname, _, unituid)
 		end
 	end
 end
+--]]
 
 function mod:SPELL_CAST_START(args)
 	if not self.Options.Enabled then return end
@@ -145,8 +148,8 @@ function mod:SPELL_CAST_START(args)
 			specWarnPoolOfRadiance:Show()
 			specWarnPoolOfRadiance:Play("mobout")
 		end
-	elseif spellId == 325418 then
-		self:ScheduleMethod(0.1, "BossTargetScanner", args.sourceGUID, "VolatileAcid", 0.1, 4)
+--	elseif spellId == 325418 then
+--		self:ScheduleMethod(0.1, "BossTargetScanner", args.sourceGUID, "VolatileAcid", 0.1, 4)
 	elseif spellId == 331718 and self:AntiSpam(3, 2) then
 		specWarnSpearFlurry:Show()
 		specWarnSpearFlurry:Play("shockwave")
@@ -165,7 +168,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 	local spellId = args.spellId
 	if spellId == 325418 then
 		timerVolatileAcidCD:Start(nil, args.sourceGUID)
-		if self:AntiSpam(3, args.destName) then--Backup, in case no one in party was targetting mob casting Volatile Acid (ie target scanning would fail)
+--		if self:AntiSpam(3, args.destName) then--Backup, in case no one in party was targetting mob casting Volatile Acid (ie target scanning would fail)
 			if args:IsPlayer() then
 				specWarnVolatileAcid:Show()
 				specWarnVolatileAcid:Play("range5")
@@ -173,7 +176,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 			else
 				warnVolatileAcid:Show(args.destName)
 			end
-		end
+--		end
 	elseif spellId == 340544 then
 		--timerStimulateRegenerationCD:Start(nil, args.sourceGUID)
 		if self:CheckInterruptFilter(args.sourceGUID, false, true) then

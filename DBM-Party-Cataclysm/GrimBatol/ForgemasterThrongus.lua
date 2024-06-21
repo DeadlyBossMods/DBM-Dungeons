@@ -21,7 +21,6 @@ if not mod:IsCata() then
 	mod:RegisterEventsInCombat(
 		"SPELL_CAST_START 451996 456902 456900 447395 449444 449687",
 		"SPELL_AURA_APPLIED 449474",
-		"SPELL_AURA_REMOVED 449474",
 		"SPELL_DAMAGE",
 		"UNIT_SPELLCAST_SUCCEEDED boss1"
 	)
@@ -34,7 +33,6 @@ if not mod:IsCata() then
 	local specWarnMoltenFlurry	= mod:NewSpecialWarningDefensive(449444, nil, nil, nil, 2, 2)
 	local specWarnMoltenSpark	= mod:NewSpecialWarningMoveAway(449474, nil, nil, nil, 1, 2)
 	local yellMoltenSpark		= mod:NewShortYell(449474)
-	local yellMoltenSparkFades	= mod:NewShortFadesYell(449474)
 	local specWarnMoltenMace	= mod:NewSpecialWarningRun(449687, nil, nil, nil, 4, 2)
 	--local specWarnGTFO			= mod:NewSpecialWarningGTFO(74987, nil, nil, nil, 1, 8)
 
@@ -91,16 +89,6 @@ if not mod:IsCata() then
 				specWarnMoltenSpark:Show()
 				specWarnMoltenSpark:Play("runout")
 				yellMoltenSpark:Yell()
-				yellMoltenSparkFades:Countdown(spellId)
-			end
-		end
-	end
-
-	function mod:SPELL_AURA_REMOVED(args)
-		local spellId = args.spellId
-		if spellId == 449474 then
-			if args:IsPlayer() then
-				yellMoltenSparkFades:Cancel()
 			end
 		end
 	end

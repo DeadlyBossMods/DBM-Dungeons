@@ -8,7 +8,7 @@ mod.isTrashMod = true
 
 mod:RegisterEvents(
 	"SPELL_CAST_START 324293 327240 327399 334748 320462 338353 323496 333477 333479 338606 345623",
-	"SPELL_CAST_SUCCESS 334748",
+	"SPELL_CAST_SUCCESS 334748 320571",
 	"SPELL_INTERRUPT",
 	"SPELL_AURA_APPLIED 327401 323347 335141 324372 338353 338357 338606 327396",
 	"SPELL_AURA_APPLIED_DOSE 338357",
@@ -22,46 +22,40 @@ mod:RegisterEvents(
 --TODO targetscan shared agony during cast and get at least one of targets early? for fade/invis and feign death?
 --TODO, actually, does shared agony even still exist? it's not in any recent logs
 --https://www.wowhead.com/guides/necrotic-wake-shadowlands-dungeon-strategy-guide
---Notable Blightbone Trash
 local warnClingingDarkness					= mod:NewTargetNoFilterAnnounce(323347, 3, nil, "Healer|RemoveMagic")
---Notable Amarth Trash
 local warnSharedAgony						= mod:NewCastAnnounce(327401, 3)
 local warnSharedAgonyTargets				= mod:NewTargetAnnounce(327401, 4)
 local warnTenderize							= mod:NewStackAnnounce(338357, 2, nil, "Tank|Healer")
 local warnThrowCleaver						= mod:NewCastAnnounce(323496, 2)
---Unknown
 local warnSpewDisease						= mod:NewTargetNoFilterAnnounce(333479, 2)
 local warnMorbidFixation					= mod:NewTargetNoFilterAnnounce(338606, 2)
 local warnGrimFate							= mod:NewTargetAnnounce(327396, 2)
 
 --General
 --local specWarnGTFO						= mod:NewSpecialWarningGTFO(257274, nil, nil, nil, 1, 8)
---Notable Blightbone Trash
-local specWarnClingingDarkness				= mod:NewSpecialWarningDispel(323347, false, nil, nil, 1, 2)--Opt it for now, since dispel timing is less black and white
-local specWarnDrainFluids					= mod:NewSpecialWarningInterrupt(334748, nil, nil, nil, 1, 2)--Feedback be damned, it's too important not to kick, if it's spammy, maybe you shouldn't sit on your interrupt CD.
---Notable Amarth Trash
-local specWarnNecroticBolt					= mod:NewSpecialWarningInterrupt(320462, "HasInterrupt", nil, nil, 1, 2)
-local specWarnRaspingScream					= mod:NewSpecialWarningInterrupt(324293, "HasInterrupt", nil, nil, 1, 2)
-local specWarnSharedAgony					= mod:NewSpecialWarningMoveAway(327401, nil, nil, nil, 1, 11)
-local yellSharedAgony						= mod:NewYell(327401)
-local specWarnDarkShroud					= mod:NewSpecialWarningDispel(335141, "MagicDispeller", nil, nil, 1, 2)
-local specWarnReapingWinds					= mod:NewSpecialWarningRun(324372, nil, nil, nil, 4, 2)
-local yellThrowCleaver						= mod:NewYell(323496)
---Notable Surgeon Stitchflesh Trash
-local specWarnGoresplatter					= mod:NewSpecialWarningInterrupt(338353, false, nil, nil, 1, 2)--Off by default since enemy has two casts and this is lower priority one
-local specWarnGoresplatterDispel			= mod:NewSpecialWarningDispel(338353, "RemoveDisease", nil, nil, 1, 2)
---Unknown
 local specWarnSpineCrush					= mod:NewSpecialWarningDodge(327240, nil, nil, nil, 2, 2)--Not sure where these spawn, not in guide, but I still feel warning worth having
 local specWarnGutSlice						= mod:NewSpecialWarningDodge(333477, nil, nil, nil, 2, 2)
+local specWarnDeathBurst					= mod:NewSpecialWarningDodge(345623, nil, nil, nil, 2, 2)
+local specWarnShadowWell					= mod:NewSpecialWarningDodge(320571, nil, nil, nil, 2, 2)
+local specWarnSharedAgony					= mod:NewSpecialWarningMoveAway(327401, nil, nil, nil, 1, 11)
+local yellSharedAgony						= mod:NewYell(327401)
+local specWarnReapingWinds					= mod:NewSpecialWarningRun(324372, nil, nil, nil, 4, 2)
+local yellThrowCleaver						= mod:NewYell(323496)
 local specWarnSpewDisease					= mod:NewSpecialWarningYou(333479, nil, nil, nil, 1, 2)
 local yellSpewDisease						= mod:NewYell(333479)
 local specWarnMorbidFixation				= mod:NewSpecialWarningRun(338606, nil, nil, nil, 4, 2)
-local timerMorbidFixation					= mod:NewTargetTimer(8, 338606, nil, nil, nil, 2)
 local specWarnGrimFate						= mod:NewSpecialWarningMoveAway(327396, nil, nil, nil, 1, 2)
 local yellGrimFate							= mod:NewYell(327396)
 local yellGrimFateFades						= mod:NewShortFadesYell(327396)
-local specWarnDeathBurst					= mod:NewSpecialWarningDodge(345623, nil, nil, nil, 2, 2)
+local specWarnGoresplatterDispel			= mod:NewSpecialWarningDispel(338353, "RemoveDisease", nil, nil, 1, 2)
+local specWarnClingingDarkness				= mod:NewSpecialWarningDispel(323347, false, nil, nil, 1, 2)--Opt it for now, since dispel timing is less black and white
+local specWarnDarkShroud					= mod:NewSpecialWarningDispel(335141, "MagicDispeller", nil, nil, 1, 2)
+local specWarnDrainFluids					= mod:NewSpecialWarningInterrupt(334748, nil, nil, nil, 1, 2)--Feedback be damned, it's too important not to kick, if it's spammy, maybe you shouldn't sit on your interrupt CD.
+local specWarnNecroticBolt					= mod:NewSpecialWarningInterrupt(320462, "HasInterrupt", nil, nil, 1, 2)
+local specWarnRaspingScream					= mod:NewSpecialWarningInterrupt(324293, "HasInterrupt", nil, nil, 1, 2)
+local specWarnGoresplatter					= mod:NewSpecialWarningInterrupt(338353, false, nil, nil, 1, 2)--Off by default since enemy has two casts and this is lower priority one
 
+local timerMorbidFixation					= mod:NewTargetTimer(8, 338606, nil, nil, nil, 5)
 local timerDrainFluidsCD					= mod:NewCDNPTimer(15, 334748, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--15.2-19
 
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc, 7 off interrupt
@@ -142,6 +136,11 @@ function mod:SPELL_CAST_SUCCESS(args)
 	if spellId == 334748 then
 		local cooldown = args:GetSrcCreatureID() == 173016 and 17 or 15
 		timerDrainFluidsCD:Start(cooldown, args.sourceGUID)
+	elseif spellId == 320571 then
+		if self:AntiSpam(3, 2) then
+			specWarnShadowWell:Show()
+			specWarnShadowWell:Play("watchstep")
+		end
 	end
 end
 
