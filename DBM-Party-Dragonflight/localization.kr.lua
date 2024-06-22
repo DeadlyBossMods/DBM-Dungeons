@@ -139,10 +139,6 @@ L:SetGeneralLocalization({
 	name =	"넬타루스 일반몹"
 })
 
-L:SetOptionLocalization({
-	AGBuffs		= "대장기술 버프 받기 대화 자동 선택"
-})
-
 -----------------------
 -- <<<Algeth'ar Academy >>> --
 -----------------------
@@ -184,10 +180,6 @@ L:SetGeneralLocalization({
 	name =	"알게타르 대학 일반몹"
 })
 
-L:SetOptionLocalization({
-	AGBuffs		= "용군단 NPC에게 말을 걸면 버프 받기 대화 자동 선택"
-})
-
 -----------------------
 -- <<<The Azure Vault>>> --
 -----------------------
@@ -218,10 +210,6 @@ L = DBM:GetModLocalization("TheAzurevaultTrash")
 
 L:SetGeneralLocalization({
 	name =	"하늘빛 보관소 일반몹"
-})
-
-L:SetOptionLocalization({
-	AGBook			= "책을 클릭하면 순간이동 대화 자동 선택"
 })
 
 -----------------------
@@ -288,10 +276,6 @@ L = DBM:GetModLocalization("HallsofInfusionTrash")
 
 L:SetGeneralLocalization({
 	name =	"주입의 전당 일반몹"
-})
-
-L:SetOptionLocalization({
-	AGBuffs		= "기계공학 약초채집용 버프 받기 대화 자동 선택"
 })
 
 -----------------------

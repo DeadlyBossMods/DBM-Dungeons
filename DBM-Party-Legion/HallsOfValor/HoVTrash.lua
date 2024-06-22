@@ -49,8 +49,7 @@ local timerBlastofLightCD			= mod:NewCDNPTimer(18, 191508, nil, nil, nil, 3, nil
 local timerEyeofStormCD				= mod:NewCDNPTimer(25, 200901, nil, nil, nil, 2, nil, DBM_COMMON_L.DEADLY_ICON)
 local timerSanctifyCD				= mod:NewCDNPTimer(25, 192158, nil, nil, nil, 3)--25-30 based on searing light casts since searing light has 6sec ICD lockout
 
-mod:AddBoolOption("AGSkovaldTrash", true)
-mod:AddBoolOption("AGStartOdyn", true)
+mod:AddGossipOption(true, "Encounter")
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 generalized, 7 GTFO
 
 local eyeShortName = DBM:GetSpellName(91320)--Inner Eye
@@ -207,9 +206,9 @@ end
 function mod:GOSSIP_SHOW()
 	local gossipOptionID = self:GetGossipID()
 	if gossipOptionID then
-		if self.Options.AGSkovaldTrash and (gossipOptionID == 44755 or gossipOptionID == 44801 or gossipOptionID == 44802 or gossipOptionID == 44754) then -- Skovald Trash
+		if self.Options.AutoGossipEncounter and (gossipOptionID == 44755 or gossipOptionID == 44801 or gossipOptionID == 44802 or gossipOptionID == 44754) then -- Skovald Trash
 			self:SelectGossip(gossipOptionID)
-		elseif self.Options.AGStartOdyn and gossipOptionID == 44910 then -- Odyn
+		elseif self.Options.AutoGossipEncounter and gossipOptionID == 44910 then -- Odyn
 			self:SelectGossip(gossipOptionID, true)
 		end
 	end

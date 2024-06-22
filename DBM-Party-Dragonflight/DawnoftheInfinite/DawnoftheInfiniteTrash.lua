@@ -118,7 +118,7 @@ local timerDeployGoblinSappersCD			= mod:NewCDNPTimer(30.3, 407535, nil, nil, ni
 local timerBronzeExhalationCD				= mod:NewCDNPTimer(19.8, 419351, nil, nil, nil, 3)
 local timerFishBoltVolleyCD					= mod:NewCDNPTimer(10.4, 411300, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 
-mod:AddBoolOption("AutoRift", true)
+mod:AddGossipOption(true, "Action")
 
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc, 7 off interrupt, 8 GTFO
 
@@ -484,7 +484,7 @@ end
 function mod:GOSSIP_SHOW()
 	local gossipOptionID = self:GetGossipID()
 	if gossipOptionID then
-		if self.Options.AutoRift and gossipOptionID == 110513 then
+		if self.Options.AutoGossipAction and gossipOptionID == 110513 then
 			self:SelectGossip(gossipOptionID)
 		end
 	end

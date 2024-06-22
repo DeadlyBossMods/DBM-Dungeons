@@ -21,8 +21,7 @@ L:SetTimerLocalization{
 }
 
 L:SetOptionLocalization({
-	TrioActiveTimer		= "Show timers for when Apothecary Trio becomes active",
-	AGBoss				= "Auto select gossip to summon Apothecary Trio"
+	TrioActiveTimer		= "Show timers for when Apothecary Trio becomes active"
 })
 
 L:SetMiscLocalization({
@@ -101,9 +100,7 @@ L:SetWarningLocalization({
 L:SetOptionLocalization({
 	WarnPhase				= "Show a warning for each phase change",
 	warnHorsemanSoldiers	= "Show warning for Pulsing Pumpkin spawn",
-	warnHorsemanHead		= "Show warning for Head of the Horseman spawning",
-	AGCurses				= "Auto select gossip to activate curses for Headless Horseman",
-	AGBoss					= "Auto select gossip to summon Headless Horseman"
+	warnHorsemanHead		= "Show warning for Head of the Horseman spawning"
 })
 
 L:SetMiscLocalization({

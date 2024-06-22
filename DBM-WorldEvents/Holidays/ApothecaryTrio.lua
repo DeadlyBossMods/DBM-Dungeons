@@ -29,10 +29,10 @@ local timerHummel				= mod:NewTimer(10.5, "HummelActive", "132349", nil, false, 
 local timerBaxter				= mod:NewTimer(16, "BaxterActive", "132349", nil, false, "TrioActiveTimer")
 local timerFrye					= mod:NewTimer(25, "FryeActive", "132349", nil, false, "TrioActiveTimer")
 mod:AddBoolOption("TrioActiveTimer", true, "timer", nil, 1)
-mod:AddBoolOption("AGBoss", true)
+mod:AddGossipOption(true, "Encounter")
 
 function mod:GOSSIP_SHOW()
-	if self.Options.AGBoss then
+	if self.Options.AutoGossipEncounter then
 		self:SelectMatchingGossip(true, 37537)
 	end
 end
