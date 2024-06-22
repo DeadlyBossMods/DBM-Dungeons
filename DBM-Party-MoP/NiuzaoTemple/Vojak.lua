@@ -6,6 +6,7 @@ mod.statTypes = "normal,heroic,challenge,timewalker"
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(61634)
 mod:SetEncounterID(1502)
+mod:SetZone(1011)
 
 mod:RegisterCombat("combat")
 
@@ -18,6 +19,10 @@ mod:RegisterEvents(
 mod:RegisterEventsInCombat(
 	"SPELL_AURA_APPLIED 120759",
 	"SPELL_CAST_START 120789"
+)
+
+mod:RegisterEvents(
+	"GOSSIP_SHOW"
 )
 
 local warnCausticTar			= mod:NewSpellAnnounce(-6278, 2)--Announce a tar is ready to be used. (may be spammy and turned off by default if it is)
@@ -33,6 +38,8 @@ local timerBombardCD			= mod:NewCDTimer(42, 120200, nil, nil, nil, 3)
 local timerDashingStrikeCD		= mod:NewCDTimer(13.5, 120789, nil, nil, nil, 3)--14-16 second variation
 --local timerThousandBladesCD		= mod:NewCDTimer(15, 120759, nil, nil, nil, 2)
 local timerThousandBlades		= mod:NewBuffActiveTimer(4, 120759, nil, nil, nil, 2)
+
+mod:AddGossipOption(true, "Encounter")
 
 --local Swarmers 		= DBM:EJ_GetSectionInfo(6280)
 --local Demolishers 	= DBM:EJ_GetSectionInfo(6282)
@@ -81,5 +88,14 @@ function mod:RAID_BOSS_EMOTE(msg)
 		warnBombard:Show()
 		timerBombard:Start()
 		timerBombardCD:Start()
+	end
+end
+
+function mod:GOSSIP_SHOW()
+	local gossipOptionID = self:GetGossipID()
+	if gossipOptionID then
+		if self.Options.AutoGossipEncounter and gossipOptionID == 61620 then
+			self:SelectGossip(gossipOptionID, true)
+		end
 	end
 end
