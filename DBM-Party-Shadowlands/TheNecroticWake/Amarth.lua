@@ -12,7 +12,8 @@ mod:RegisterEventsInCombat(
 	"SPELL_AURA_APPLIED 320012",
 	"SPELL_CAST_START 322493 321247 320170 333488",
 	"SPELL_CAST_SUCCESS 321226 320012",
-	"SPELL_SUMMON 333627"
+	"SPELL_SUMMON 333627",
+	"UNIT_DIED"
 --	"SPELL_PERIODIC_DAMAGE",
 --	"SPELL_PERIODIC_MISSED",
 --	"UNIT_SPELLCAST_SUCCEEDED boss1"
@@ -24,6 +25,7 @@ mod:RegisterEventsInCombat(
  or (ability.id = 321226 or ability.id = 320012) and type = "cast"
  or (ability.id = 322493 or ability.id = 320170) and type = "begincast"
 --]]
+--TODO, analyze more data and use corrective timers that account for shadow school lockout from interupts
 local specWarnLandoftheDead			= mod:NewSpecialWarningSwitchCount(321226, "-Healer", nil, nil, 1, 2)
 local specWarnFinalHarvest			= mod:NewSpecialWarningDodgeCount(321247, nil, nil, nil, 2, 2)
 local specWarnNecroticBreath		= mod:NewSpecialWarningDodgeCount(333493, nil, nil, nil, 2, 2)
@@ -35,6 +37,8 @@ local specWarnUnholyFrenzyTank		= mod:NewSpecialWarningDefensive(320012, nil, ni
 local specWarnFrostboltVolley		= mod:NewSpecialWarningInterruptCount(322493, "HasInterrupt", nil, nil, 1, 2)--Mythic and above, normal/heroic uses regular frostbolts
 --local specWarnGTFO				= mod:NewSpecialWarningGTFO(257274, nil, nil, nil, 1, 8)
 
+--All bosses timers are 41.2-48.4 but often spell queued behind other spells. You'll often see them be in median of that range (so 45)
+--Even updating timers for spell queuing is iffy cause the problem is Mostly necrotic bolt (which may even incur spell lockouts and push timers back even more)
 local timerLandoftheDeadCD			= mod:NewCDCountTimer(41.2, 321226, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)--41.2-48.4
 local timerFinalHarvestCD			= mod:NewCDCountTimer(41.2, 321247, nil, nil, nil, 2)--41.2-48.4
 local timerNecroticBreathCD			= mod:NewCDCountTimer(41.2, 333493, nil, nil, nil, 3)--41.2-48.4
@@ -42,21 +46,21 @@ local timerUnholyFrenzyCD			= mod:NewCDCountTimer(41.2, 320012, nil, nil, nil, 5
 
 mod:AddSetIconOption("SetIconOnAdds", 321226, true, 5, {1, 2, 3, 4, 5, 6, 7, 8})
 
-mod.vb.iconCount = 8
 mod.vb.deadCount = 0
 mod.vb.harvestCount = 0
 mod.vb.breathCount = 0
 mod.vb.frenzyCount = 0
 mod.vb.volleyCount = 0
+local addUsedMarks = {}
 
 function mod:OnCombatStart(delay)
 	--TODO, fine tune start times, started from first melee swing not ENCOUNTER_START
-	self.vb.iconCount = 8
 	self.vb.deadCount = 0
 	self.vb.harvestCount = 0
 	self.vb.breathCount = 0
 	self.vb.frenzyCount = 0
 	self.vb.volleyCount = 0
+	table.wipe(addUsedMarks)
 	timerUnholyFrenzyCD:Start(6-delay, 1)--SUCCESS
 	timerLandoftheDeadCD:Start(8.6-delay, 1)--SUCCESS
 	timerNecroticBreathCD:Start(29.4-delay, 1)
@@ -105,12 +109,14 @@ function mod:SPELL_SUMMON(args)
 	if spellId == 333627 then
 		local cid = self:GetCIDFromGUID(args.destGUID)
 		if cid == 164414 then--Auto mark mages
-			if self.Options.SetIconOnAdds then--Only use up to 5 icons
-				self:ScanForMobs(args.destGUID, 2, self.vb.iconCount, 1, nil, 12, "SetIconOnAdds")
-			end
-			self.vb.iconCount = self.vb.iconCount - 1
-			if self.vb.iconCount == 0 then
-				self.vb.iconCount = 8
+			if self.Options.SetIconOnAdds then
+				for i = 8, 1, -1 do--8-7 confirmed, rest are just in case
+					if not addUsedMarks[i] then
+						addUsedMarks[i] = args.destGUID
+						self:ScanForMobs(args.destGUID, 2, i, 1, nil, 12, "SetIconOnAdds")
+						break
+					end
+				end
 			end
 		end
 	end
@@ -126,6 +132,18 @@ function mod:SPELL_AURA_APPLIED(args)
 			if self:IsTanking("player", nil, nil, true, args.destGUID) then
 				specWarnUnholyFrenzyTank:Show()
 				specWarnUnholyFrenzyTank:Play("defensive")
+			end
+		end
+	end
+end
+
+function mod:UNIT_DIED(args)
+	local cid = self:GetCIDFromGUID(args.destGUID)
+	if cid == 164414 then
+		for i = 8, 1, -1 do
+			if addUsedMarks[i] == args.destGUID then
+				addUsedMarks[i] = nil
+				return
 			end
 		end
 	end

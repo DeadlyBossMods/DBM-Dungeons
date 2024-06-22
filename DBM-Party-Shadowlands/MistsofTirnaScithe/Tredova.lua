@@ -26,7 +26,6 @@ ability.id = 322550 and type = "begincast"
  or (ability.id = 322527 or ability.id = 322450) and (type = "applybuff" or type = "removebuff" or type = "applydebuff" or type = "removedebuff")
  or (ability.id = 337235 or ability.id = 337249 or ability.id = 337255) and type = "begincast"
 --]]
---TODO, find way to group all the parasitic stuff which was generalized on purpose to clean up the mod
 local warnMarkthePrey				= mod:NewTargetNoFilterAnnounce(322563, 3)
 local warnInfestor					= mod:NewAnnounce("warnInfestor", 4, 337235, nil, nil, nil, 337235)
 
@@ -41,10 +40,10 @@ local specWarnParasiticInfesterKick	= mod:NewSpecialWarning("specWarnParasiticIn
 local yellParasiticInfester			= mod:NewYell(337235, L.Infester, true, "yellParasiticInfester")
 local specWarnGTFO					= mod:NewSpecialWarningGTFO(326309, nil, nil, nil, 1, 8)
 
-local timerAcceleratedIncubationCD	= mod:NewCDCountTimer(34, 322550, nil, nil, nil, 1, nil, nil, true)--34-43?
+local timerAcceleratedIncubationCD	= mod:NewCDCountTimer(30.3, 322550, nil, nil, nil, 1, nil, nil, true)--30-52? Is this health based?
 local timerMindLinkCD				= mod:NewCDCountTimer(15.4, 322648, nil, nil, nil, 3, nil, nil, true)--15-19, still not cast if everyone already affected by it.
 local timerAcidExpulsionCD			= mod:NewCDCountTimer(19.4, 322654, nil, nil, nil, 3, nil, nil, true)--19-26
-local timerParasiticInfesterCD		= mod:NewTimer(23, "timerParasiticInfesterCD", 337235, nil, nil, 4, DBM_COMMON_L.MYTHIC_ICON..DBM_COMMON_L.INTERRUPT_ICON, true)--23-26.3
+local timerParasiticInfesterCD		= mod:NewTimer(23, "timerParasiticInfesterCD", 337235, nil, nil, 4, DBM_COMMON_L.MYTHIC_ICON..DBM_COMMON_L.INTERRUPT_ICON, true)--23-26.3 (mostly 25-26)
 
 mod:AddInfoFrameOption(322527, true)
 mod:AddSetIconOption("SetIconOnMindLink", 322648, true, 0, {1, 2, 3, 4, 5})
@@ -72,10 +71,10 @@ function mod:OnCombatStart(delay)
 	self.vb.expulsionCount = 0
 	self.vb.parasiteCount = 0
 	timerAcidExpulsionCD:Start(7.1-delay, 1)
-	timerMindLinkCD:Start(18.1-delay, 1)
-	timerAcceleratedIncubationCD:Start(45.2-delay, 1)
+	timerMindLinkCD:Start(18.1-delay, 1)--21 in TWW?
+	timerAcceleratedIncubationCD:Start(21.4-delay, 1)--Was 45.2
 	if self:IsMythic() then
-		timerParasiticInfesterCD:Start(12-delay, 1)
+		timerParasiticInfesterCD:Start(11.7-delay, 1)
 	end
 end
 

@@ -9,7 +9,7 @@ mod:SetUsedIcons(1, 2, 3, 4)
 mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
-	"SPELL_CAST_START 336499 321471 321834 321873 321828 321669",
+	"SPELL_CAST_START 336499 321471 321834 321873 321828 321669 341709",
 	"SPELL_AURA_APPLIED 321891 321828",
 	"SPELL_AURA_REMOVED 321891 336499 321471"
 --	"SPELL_CAST_SUCCESS",
@@ -18,9 +18,9 @@ mod:RegisterEventsInCombat(
 --	"UNIT_SPELLCAST_SUCCEEDED boss1"
 )
 
---TODO, timers still a mess, it'll be difficult too fix them until live, because WCL lacks ability to search for non M+ dungeons
+--NOTE: Timers get delayed by guessing game (which is health based phasing) by 3 seconds.
 --[[
-(ability.id = 321834 or ability.id = 321873 or ability.id = 321828) and type = "begincast"
+(ability.id = 321834 or ability.id = 321873 or ability.id = 321828 or ability.id = 341709) and type = "begincast"
  or ability.id = 336499
  or ability.id = 321669 and type = "begincast"
 --]]
@@ -35,12 +35,12 @@ local specWarnFixate				= mod:NewSpecialWarningRun(321891, nil, nil, nil, 4, 2)
 local specWarnPattyCake				= mod:NewSpecialWarningInterrupt(321828, nil, nil, nil, 1, 2)
 --local specWarnGTFO					= mod:NewSpecialWarningGTFO(257274, nil, nil, nil, 1, 8)
 
-local timerDodgeBallCD				= mod:NewCDCountTimer(14.6, 321834, nil, nil, nil, 3)--14.6-18
+local timerDodgeBallCD				= mod:NewCDCountTimer(14.5, 321834, nil, nil, nil, 3)--14.6-18
 local timerFreezeTagCD				= mod:NewCDCountTimer(21.9, 321873, nil, nil, nil, 3)
 local timerPattyCakeCD				= mod:NewCDCountTimer(20.6, 321828, nil, nil, nil, 3)--20-26
 
 mod:AddNamePlateOption("NPAuraOnFixate", 321891)
-mod:AddSetIconOption("SetIconOnAdds2", -21691, false, 5, {1, 2, 3, 4})
+mod:AddSetIconOption("SetIconOnAdds2", -21691, true, 5, {1, 2, 3, 4})
 --mod:GroupSpells(321873, 321891)--Freeze Tag and associated fixate
 
 local seenAdds = {}
@@ -55,9 +55,9 @@ function mod:OnCombatStart(delay)
 	self.vb.dodgeballCount = 0
 	self.vb.tagCount = 0
 	self.vb.pattyCount = 0
-	timerDodgeBallCD:Start(8.1-delay, 1)
+	timerDodgeBallCD:Start(7.3-delay, 1)
 	timerPattyCakeCD:Start(13.4-delay, 1)
-	timerFreezeTagCD:Start(18.4-delay, 1)--Sometimes cast is skipped?
+	timerFreezeTagCD:Start(18.3-delay, 1)--Sometimes cast is skipped?
 	if self.Options.NPAuraOnFixate then
 		DBM:FireEvent("BossMod_EnableHostileNameplates")
 	end
@@ -80,7 +80,7 @@ function mod:SPELL_CAST_START(args)
 		specWarnDodgeBall:Show(self.vb.dodgeballCount)
 		specWarnDodgeBall:Play("farfromline")
 		--timerDodgeBallCD:Start()--Outside of first case, rest are too chaotic
-	elseif spellId == 321873 then
+	elseif spellId == 321873 or spellId == 341709 then
 		self.vb.tagCount = self.vb.tagCount + 1
 		warnFreezeTag:Show(self.vb.tagCount)
 		timerFreezeTagCD:Start(nil, self.vb.tagCount+1)

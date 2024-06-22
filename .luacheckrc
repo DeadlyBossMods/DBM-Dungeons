@@ -86,6 +86,7 @@ globals = {
 	"UnitGUID",
 	"UnitHealth",
 	"UnitHealthMax",
+	"UnitIsDead",
 	"UnitIsDeadOrGhost",
 	"UnitIsEnemy",
 	"UnitIsFriend",
