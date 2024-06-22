@@ -12,7 +12,8 @@ Description
 This mod will add support for 5 man Dungeons and World Events, spanning Classic all the way to Dragonflight, to Deadly Boss Mods (DBM).
 
 Features:
-* Helpful alerts, timers, and frames for 5 man dungeons (This includes all dungeons ever made into a Timewalker dungeon in a single package)
+* Helpful alerts, timers, and frames for 5 player dungeons (This includes all dungeons ever made into a Timewalker dungeon in a single package)
+* Helpful alerts, timers, and frames for 1-5 player delves
 * Helpful alerts, timers, and frames for most special event content (World events, holiday events, Darkmoon Faire, and even some misc quests)
 * All alerts are configurable through DBM GUI
 
