@@ -1,6 +1,6 @@
 package-as: DBM-Party-Vanilla
 enable-nolib-creation: no
-changelog-title: DBM - Dungeons, Events, & Delves
+changelog-title: DBM - Dungeons, Delves, & Events
 
 move-folders:
     DBM-Party-Vanilla/DBM-WorldEvents: DBM-WorldEvents
