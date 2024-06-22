@@ -4,7 +4,7 @@
 <p><img src="http://mysticalos.com/images/DBM/support_on_patreon.png" width="408" height="80" /></p>
 <p><a href="https://www.patreon.com/deadlybossmods">https://www.patreon.com/deadlybossmods</a></p>
 
-Deadly Boss Mods: Dungeons & Events
+Deadly Boss Mods: Dungeons, Delves, & Events
 ==========================
 
 Description
