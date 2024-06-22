@@ -9,7 +9,7 @@ Deadly Boss Mods: Dungeons, Delves, & Events
 
 Description
 -----------
-This mod will add support for 5 man Dungeons and World Events, spanning Classic all the way to Dragonflight, to Deadly Boss Mods (DBM).
+This mod will add support for 5 man Dungeons, Delves, and World Events, spanning Classic all the way to The War Within, to Deadly Boss Mods (DBM).
 
 Features:
 * Helpful alerts, timers, and frames for 5 player dungeons (This includes all dungeons ever made into a Timewalker dungeon in a single package)
