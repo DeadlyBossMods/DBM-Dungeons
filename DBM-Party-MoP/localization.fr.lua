@@ -144,9 +144,6 @@ L= DBM:GetModLocalization(708)
 
 L:SetMiscLocalization({
 	Pull		= "Incapables, tous autant que vous êtes ! Même les gardes que vous m'offrez en tribut ne peuvent pas tenir ces êtres inférieurs de mon palais !",
-	Kuai		= "Le clan Gurthan va montrer à notre roi et à tous les imposteurs avides que vous êtes, pourquoi nous sommes les seuls à avoir notre place à ses côtés !",
-	Ming		= "Le clan Harthak va vous montrer pourquoi ils sont les plus parfait des mogu !",
-	Haiyan		= "Le clan Kargesh va vous montrer pourquoi seuls les plus forts méritent de rester au côté de notre roi !",
 	Defeat		= "Nous n'abandonnerons jamais notre droit à régner sur le destin de notre peuple !"
 })
 

@@ -179,10 +179,6 @@ L:SetGeneralLocalization({
 	name =	"Pulls de Academia Algeth'ar"
 })
 
-L:SetOptionLocalization({
-	AGBuffs		= "Selección automática de diálogos para activar potenciadores al interactuar con los PNJ dragones."
-})
-
 -----------------------
 -- <<<The Azure Vault>>> --
 -----------------------
@@ -213,10 +209,6 @@ L = DBM:GetModLocalization("TheAzurevaultTrash")
 
 L:SetGeneralLocalization({
 	name =	"Pulls de Cámara Azur"
-})
-
-L:SetOptionLocalization({
-	AGBook			= "Selección automática del diálogo para el teletransporte al interactuar con libros."
 })
 
 -----------------------

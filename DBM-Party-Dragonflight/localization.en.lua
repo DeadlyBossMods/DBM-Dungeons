@@ -138,10 +138,6 @@ L:SetGeneralLocalization({
 	name =	"Neltharus Trash"
 })
 
-L:SetOptionLocalization({
-	AGBuffs		= "Auto select gossip to activate buffs when interacting with blacksmithing"
-})
-
 -----------------------
 -- <<<Algeth'ar Academy >>> --
 -----------------------
@@ -183,10 +179,6 @@ L:SetGeneralLocalization({
 	name =	"Algeth'ar Academy Trash"
 })
 
-L:SetOptionLocalization({
-	AGBuffs		= "Auto select gossip to activate buffs when interacting with dragonflight npcs"
-})
-
 -----------------------
 -- <<<The Azure Vault>>> --
 -----------------------
@@ -217,10 +209,6 @@ L = DBM:GetModLocalization("TheAzurevaultTrash")
 
 L:SetGeneralLocalization({
 	name =	"Azure Vault Trash"
-})
-
-L:SetOptionLocalization({
-	AGBook			= "Auto select gossip to teleport interacting with books"
 })
 
 -----------------------
@@ -287,10 +275,6 @@ L = DBM:GetModLocalization("HallsofInfusionTrash")
 
 L:SetGeneralLocalization({
 	name =	"Halls of Infusion Trash"
-})
-
-L:SetOptionLocalization({
-	AGBuffs		= "Auto select gossip to activate usable buffs for engineering and herbalism"
 })
 
 -----------------------

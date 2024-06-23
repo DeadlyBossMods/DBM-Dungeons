@@ -166,11 +166,6 @@ L:SetGeneralLocalization({
 	name =	"용맹의 전당 일반몹"
 })
 
-L:SetOptionLocalization({
-	AGSkovaldTrash	= "스코발드 앞 정예 4마리에 말을 걸면 전투 시작 대화 자동 선택",
-	AGStartOdyn		= "오딘에 말을 걸면 전투 시작 대화 자동 선택"
-})
-
 -----------------------
 -- <<<Neltharion's Lair>>> --
 -----------------------
@@ -277,9 +272,6 @@ L:SetGeneralLocalization({
 
 L:SetOptionLocalization({
 	warnAvailableItems	= "파티에 주변의 버프 오브젝트 알림",
-	AGBoat				= "등불 클릭하면 배 소환 대화 자동 선택",
-	AGDisguise			= "라일레스 루나스트르에게 말을 걸면 변장하기 대화 자동 선택",
-	AGBuffs				= "사용 가능한 버프 활성화때 대화 자동 선택",
 	SpyHelper			= "첩자 색출을 위해 수다쟁이 호사가 NPC에게 말을 걸면 대화 내용을 자동으로 감지하여 정보 창에 표시 (다른 DBM/BW 사용자와 동기화)",
 	SpyHelperClose2			= "0.3초 후 대화창 자동 닫기 (다른 모드나 WA가 대화 내역을 감지할 시간을 주기 위한 지연)",
 	SendToChat2			= "대화창에도 힌트 알려주기 (위의 설정을 켜야 작동)"

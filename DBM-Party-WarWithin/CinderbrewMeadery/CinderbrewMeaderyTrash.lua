@@ -49,7 +49,7 @@ local timerSpillDrinkCD						= mod:NewCDNPTimer(23, 441214, nil, nil, nil, 5)
 local timerBoilingFlamesCD					= mod:NewCDNPTimer(20.6, 437721, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerRejuvenatingHoneyCD				= mod:NewCDNPTimer(15.7, 441627, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 
-mod:AddBoolOption("AGBuffs", true)
+mod:AddGossipOption(true, "Buff")
 
 --local playerName = UnitName("player")
 
@@ -198,7 +198,7 @@ end
 function mod:GOSSIP_SHOW()
 	local gossipOptionID = self:GetGossipID()
 	if gossipOptionID then
-		if self.Options.AGBuffs and (gossipOptionID == 121211 or gossipOptionID == 121320) then
+		if self.Options.AutoGossipBuff and (gossipOptionID == 121211 or gossipOptionID == 121320) then
 			self:SelectGossip(gossipOptionID)
 		end
 	end

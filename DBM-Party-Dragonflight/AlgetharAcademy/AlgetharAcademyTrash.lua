@@ -56,7 +56,7 @@ local timerAstralBombCD							= mod:NewCDNPTimer(17, 387843, nil, nil, nil, 3)--
 local timerVicousLungeCD						= mod:NewCDNPTimer(11.4, 389054, nil, nil, nil, 3)
 local timerSeveringSlashCD						= mod:NewCDNPTimer(14.3, 388911, nil, nil, nil, 5)
 
-mod:AddBoolOption("AGBuffs", true)
+mod:AddGossipOption(true, "Buff")
 
 --local playerName = UnitName("player")
 
@@ -206,7 +206,7 @@ function mod:GOSSIP_SHOW()
 	local gossipOptionID = self:GetGossipID()
 	if gossipOptionID then
 		--Black, Bronze, Blue, Red, Green
-		if self.Options.AGBuffs and (gossipOptionID == 107065 or gossipOptionID == 107081 or gossipOptionID == 107082 or gossipOptionID == 107088 or gossipOptionID == 107083) then -- Buffs
+		if self.Options.AutoGossipBuff and (gossipOptionID == 107065 or gossipOptionID == 107081 or gossipOptionID == 107082 or gossipOptionID == 107088 or gossipOptionID == 107083) then -- Buffs
 			self:SelectGossip(gossipOptionID)
 		end
 	end

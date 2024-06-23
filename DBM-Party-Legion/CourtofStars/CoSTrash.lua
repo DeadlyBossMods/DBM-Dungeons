@@ -86,9 +86,8 @@ local timerDisintegrationBeamCD		= mod:NewCDNPTimer(6.1, 207980, nil, "HasInterr
 local timerShockwaveCD				= mod:NewCDNPTimer(8.4, 207979, nil, nil, nil, 3)
 local timerCrushingLeapCD			= mod:NewCDNPTimer(16.9, 397897, nil, nil, nil, 3)
 
-mod:AddBoolOption("AGBoat", true)
-mod:AddBoolOption("AGDisguise", true)
-mod:AddBoolOption("AGBuffs", true)
+mod:AddGossipOption(true, "Buff")
+mod:AddGossipOption(true, "Action")
 mod:AddBoolOption("SpyHelper", true)
 mod:AddBoolOption("SendToChat2", true)
 mod:AddBoolOption("SpyHelperClose2", false)
@@ -616,15 +615,15 @@ do
 
 	function mod:GOSSIP_SHOW()
 		local cid = DBM:GetUnitCreatureId("npc")
-		if self.Options.AGBuffs and notableBuffNPCs[cid] then
+		if self.Options.AutoGossipBuff and notableBuffNPCs[cid] then
 			self:SelectGossip(1)
 			return
 		end
 		local gossipOptionID = self:GetGossipID()
 		if gossipOptionID then
-			if self.Options.AGBoat and gossipOptionID == 45624 then -- Boat
+			if self.Options.AutoGossipAction and gossipOptionID == 45624 then -- Boat
 				self:SelectGossip(gossipOptionID)
-			elseif self.Options.AGDisguise and gossipOptionID == 45656 then -- Disguise
+			elseif self.Options.AutoGossipAction and gossipOptionID == 45656 then -- Disguise
 				self:SelectGossip(gossipOptionID)
 			elseif clueIds[gossipOptionID] then -- SpyHelper
 				if not self.Options.SpyHelper then return end

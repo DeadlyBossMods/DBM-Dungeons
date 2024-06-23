@@ -163,11 +163,6 @@ L:SetGeneralLocalization({
 	name =	"英靈殿小怪"
 })
 
-L:SetOptionLocalization({
-	AGSkovaldTrash	= "當與斯寇瓦德之前的四王互動時，自動選擇對話開始戰鬥。",
-	AGStartOdyn		= "當與歐丁互動時自動選擇對話開始戰鬥"
-})
-
 -----------------------
 -- <<<Neltharion's Lair>>> --
 -----------------------
@@ -274,9 +269,6 @@ L:SetGeneralLocalization({
 
 L:SetOptionLocalization({
 	warnAvailableItems	= "通告基於小隊的區域中的可用互動",
-	AGBoat				= "當與燈籠互動時，自動選擇對話以召喚小舟。",
-	AGDisguise			= "當與 黎利斯．路納斯特 互動時，自動選擇對話以啟用偽裝。",
-	AGBuffs				= "自動選擇對話以啟動可用增益",
 	SpyHelper			= "當與 長舌造謠者 NPC互動時，通過自動掃描對話來幫助識別間諜，並顯示在資訊框架上 (也與其他 DBM/BW 的使用者同步)",
 	SpyHelperClose2		= "在 0.3 秒後自動關閉對話視窗 (延遲允許其他mod或WA有時間掃描對話)",
 	SendToChat2			= "同時也發送提示到聊天 (需要上述選項啟用)"

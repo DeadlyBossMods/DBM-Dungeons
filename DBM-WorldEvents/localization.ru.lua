@@ -23,8 +23,7 @@ L:SetTimerLocalization{
 }
 
 L:SetOptionLocalization({
-	TrioActiveTimer		= "Отсчет времени до вступления Троих аптекарей в бой",
-	AGBoss				= "Автоматический выбор диалога для вызова Троих аптекарей"
+	TrioActiveTimer		= "Отсчет времени до вступления Троих аптекарей в бой"
 })
 
 L:SetMiscLocalization({
@@ -103,9 +102,7 @@ L:SetWarningLocalization({
 L:SetOptionLocalization({
 	WarnPhase				= "Предупреждение о смене фаз",
 	warnHorsemanSoldiers	= "Предупреждение о призыве Пульсирующих тыкв",
-	warnHorsemanHead		= "Предупреждение о появлении Всадника без головы",
-	AGCurses				= "Автоматический выбор диалога для активации проклятий для Всадника без головы",
-	AGBoss					= "Автоматический выбор диалога для вызова Всадника без головы"
+	warnHorsemanHead		= "Предупреждение о появлении Всадника без головы"
 })
 
 L:SetMiscLocalization({

@@ -142,10 +142,6 @@ L:SetGeneralLocalization({
 	name =	"奈萨鲁斯小怪"
 })
 
-L:SetOptionLocalization({
-	AGBuffs		= "与铁匠对话时自动选择激活增益"
-})
-
 -----------------------
 -- <<<Algeth'ar Academy >>> --
 -----------------------
@@ -187,10 +183,6 @@ L:SetGeneralLocalization({
 	name =	"艾杰斯亚学院小怪"
 })
 
-L:SetOptionLocalization({
-	AGBuffs		= "与龙族NPC对话时自动选择激活增益"
-})
-
 -----------------------
 -- <<<The Azure Vault>>> --
 -----------------------
@@ -221,10 +213,6 @@ L = DBM:GetModLocalization("TheAzurevaultTrash")
 
 L:SetGeneralLocalization({
 	name =	"碧蓝魔馆小怪"
-})
-
-L:SetOptionLocalization({
-	AGBook			= "与魔法书对话时自动选择传送"
 })
 
 -----------------------
@@ -291,10 +279,6 @@ L = DBM:GetModLocalization("HallsofInfusionTrash")
 
 L:SetGeneralLocalization({
 	name =	"注能大厅小怪"
-})
-
-L:SetOptionLocalization({
-	AGBuffs		= "自动对话，以便激活工程学和草药学的buff"
 })
 
 -----------------------

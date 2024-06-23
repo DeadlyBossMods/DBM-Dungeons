@@ -146,9 +146,6 @@ L= DBM:GetModLocalization(708)
 
 L:SetMiscLocalization({
 	Pull		= "Ihr seid alle nutzlos! Die Wachen, die Ihr mir als Tribut überlasst, können nicht einmal diese minderwertigen Wesen von meinem Palast fernhalten.",
-	Kuai		= "Klan Gurthan wird unserem König und dem Rest von Euch machthungrigen Schwindlern zeigen, warum wir zu Recht an seiner Seite stehen!",
-	Ming		= "Klan Harthak wird allen zeigen, warum sie die wahren Mogu sind!",
-	Haiyan		= "Klan Kargesh wird Euch zeigen, warum nur die Starken es verdient haben, an der Seite des Königs zu stehen!",
 	Defeat		= "Wer hat diese Eindringlinge in unsere Hallen gelassen? Nur Klan Harthak oder Klan Kargesh würden einen derartigen Verrat begehen!"
 })
 

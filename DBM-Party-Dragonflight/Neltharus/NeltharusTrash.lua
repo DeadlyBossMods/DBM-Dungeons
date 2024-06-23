@@ -85,7 +85,7 @@ local timerConflagrantBatteryCD				= mod:NewCDNPTimer(22.6, 372296, nil, nil, ni
 local timerCandescentTempestCD				= mod:NewCDNPTimer(27.5, 381663, nil, nil, nil, 2)
 local timerForgestompCD						= mod:NewCDNPTimer(17.3, 384623, nil, nil, nil, 2)
 
-mod:AddBoolOption("AGBuffs", true)
+mod:AddGossipOption(true, "Buff")
 
 --local playerName = UnitName("player")
 
@@ -331,7 +331,7 @@ end
 function mod:GOSSIP_SHOW()
 	local gossipOptionID = self:GetGossipID()
 	if gossipOptionID then
-		if self.Options.AGBuffs and (gossipOptionID == 107310) then -- Blacksmith Buff
+		if self.Options.AutoGossipBuff and (gossipOptionID == 107310) then -- Blacksmith Buff
 			self:SelectGossip(gossipOptionID)
 		end
 	end

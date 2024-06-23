@@ -179,10 +179,6 @@ L:SetGeneralLocalization({
 	name =	"阿爾蓋薩學院小怪"
 })
 
-L:SetOptionLocalization({
-	AGBuffs		= "當與巨龍NPC互動時自動選擇對話啟動增益"
-})
-
 -----------------------
 -- <<<The Azure Vault>>> --
 -----------------------
@@ -213,10 +209,6 @@ L = DBM:GetModLocalization("TheAzurevaultTrash")
 
 L:SetGeneralLocalization({
 	name =	"蒼藍密庫小怪"
-})
-
-L:SetOptionLocalization({
-	AGBook			= "與位移之書互動時自動選擇對話"
 })
 
 -----------------------
@@ -283,10 +275,6 @@ L = DBM:GetModLocalization("HallsofInfusionTrash")
 
 L:SetGeneralLocalization({
 	name =	"灌注迴廊小怪"
-})
-
-L:SetOptionLocalization({
-	AGBuffs		= "為工程學以及草藥學自動選擇對話，以啟動可用的增益。"
 })
 
 -----------------------

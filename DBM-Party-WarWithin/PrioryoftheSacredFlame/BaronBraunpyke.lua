@@ -126,8 +126,8 @@ function mod:UNIT_DIED(args)
 end
 --]]
 
---NOTE, hammer of purity isn't in CLEU at all except for SPELL_DAMAGE, so it has to use this for cast/timer
---NOTE, Castigator shield also isn't in CLEU except for when players get hit by it.
+--NOTE, hammer of purity has a CLEU event now but i need to do more data verification first to see if it's usable
+--NOTE, Castigator shield has a CLEU event now, but it isn't always cast, so it has to use this for cast/timer since even if it's not cast, it incurs a CD
 function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
 	if spellId == 446587 then
 		--"Hammer of Purity-446587-npc:207939-000065268F = pull:8.2, 18.2, 24.3, 19.4, 20.6, 23.1, 21.8, 19.4, 23.1"

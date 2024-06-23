@@ -34,8 +34,8 @@ if mod:IsRetail() then--10.1.7 fight rework
 	local timerPumpkinBreathCD							= mod:NewCDCountTimer(41.4, 414844, nil, nil, nil, 3)
 	local timerVineMarchCD								= mod:NewCDCountTimer(41.4, 415047, nil, nil, nil, 1)
 
-	mod:AddBoolOption("AGCurses", false)
-	mod:AddBoolOption("AGBoss", false)
+	mod:AddGossipOption(false, "Buff")
+	mod:AddGossipOption(false, "Encounter")
 
 	mod.vb.cackleCount = 0
 	mod.vb.breathCount = 0
@@ -119,11 +119,11 @@ if mod:IsRetail() then--10.1.7 fight rework
 	mod.SPELL_MISSED = mod.SPELL_DAMAGE
 
 	function mod:GOSSIP_SHOW()
-		if self.Options.AGCurses then
+		if self.Options.AutoGossipBuff then
 			--Embers, Delusions, Shadows, Thorns, All at once (center one)
 			self:SelectMatchingGossip(true, 110383, 110379, 110372, 110377, 111387)
 		end
-		if self.Options.AGBoss then
+		if self.Options.AutoGossipEncounter then
 			self:SelectMatchingGossip(true, 36316)
 		end
 	end

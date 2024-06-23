@@ -139,10 +139,6 @@ L:SetGeneralLocalization({
 	name =	"Трэш мобы Нелтарий"
 })
 
-L:SetOptionLocalization({
-	AGBuffs		= "Автоматический выбор диалога для активации баффов при взаимодействии с кузнечным делом"
-})
-
 -----------------------
 -- <<<Algeth'ar Academy >>> --
 -----------------------
@@ -183,10 +179,6 @@ L:SetGeneralLocalization({
 	name =	"Трэш мобы Академия Алгет'ар"
 })
 
-L:SetOptionLocalization({
-	AGBuffs		= "Автоматический выбор диалога для активации баффов при взаимодействии с драконьими NPC"
-})
-
 -----------------------
 -- <<<The Azure Vault>>> --
 -----------------------
@@ -217,10 +209,6 @@ L = DBM:GetModLocalization("TheAzurevaultTrash")
 
 L:SetGeneralLocalization({
 	name =	"Трэш мобы Лазурное хранилище"
-})
-
-L:SetOptionLocalization({
-	AGBook			= "Автоматический выбор диалога для телепортации при взаимодействии с книгами"
 })
 
 -----------------------
@@ -287,10 +275,6 @@ L = DBM:GetModLocalization("HallsofInfusionTrash")
 
 L:SetGeneralLocalization({
 	name =	"Трэш мобы Чертоги Насыщения"
-})
-
-L:SetOptionLocalization({
-	AGBuffs		= "Автоматически выбирать диалог, чтобы активировать полезные баффы для инженерии и травничества"
 })
 
 -----------------------

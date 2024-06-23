@@ -63,7 +63,7 @@ local timerBestialRoarCD					= mod:NewCDNPTimer(17, 396991, nil, nil, nil, 2)
 local timerUnstablePowerCD					= mod:NewCDNPTimer(7.3, 374885, nil, nil, nil, 3)
 local timerWildEruptionCD					= mod:NewCDNPTimer(12.1, 375652, nil, nil, nil, 3)
 
-mod:AddBoolOption("AGBook", true)
+mod:AddGossipOption(true, "Action")
 
 --local playerName = UnitName("player")
 
@@ -240,7 +240,7 @@ end
 function mod:GOSSIP_SHOW()
 	local gossipOptionID = self:GetGossipID()
 	if gossipOptionID then
-		if self.Options.AGBook and (gossipOptionID == 56056 or gossipOptionID == 56057 or gossipOptionID == 56247 or gossipOptionID == 56379 or gossipOptionID == 56248 or gossipOptionID == 56378 or gossipOptionID == 56250 or gossipOptionID == 107756 or gossipOptionID == 56251) then -- Books
+		if self.Options.AutoGossipAction and (gossipOptionID == 56056 or gossipOptionID == 56057 or gossipOptionID == 56247 or gossipOptionID == 56379 or gossipOptionID == 56248 or gossipOptionID == 56378 or gossipOptionID == 56250 or gossipOptionID == 107756 or gossipOptionID == 56251) then -- Books
 			self:SelectGossip(gossipOptionID)
 		end
 	end

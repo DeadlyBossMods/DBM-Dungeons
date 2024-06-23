@@ -167,11 +167,6 @@ L:SetGeneralLocalization({
 	name =	"英灵殿小怪"
 })
 
-L:SetOptionLocalization({
-	AGSkovaldTrash	= "与4个神王斯科瓦尔德的精英对话时自动开怪",
-	AGStartOdyn		= "与奥丁对话时自动开怪"
-})
-
 -----------------------
 -- <<<Neltharion's Lair>>> --
 -----------------------
@@ -282,9 +277,6 @@ L:SetWarningLocalization({
 
 L:SetOptionLocalization({
 	warnAvailableItems	= "根据小组在区域内通告可用交互",
-	AGBoat				= "当与灯笼对话时自动召唤小船",
-	AGDisguise			= "当与莉莉丝·月郡对话时自动开启伪装",
-	AGBuffs				= "当点击可用buff时自动生效",
 	SpyHelper			= "在对话时帮忙识别密探，并在信息窗显示（同步DBM/BW用户）",
 	SpyHelperClose2		= "0.3秒后自动关闭对话窗（给与其他插件扫描延迟）",
 	SendToChat2			= "自动在聊天中显示提示（需要上面那个功能开启）"
