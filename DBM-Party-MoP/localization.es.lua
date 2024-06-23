@@ -153,9 +153,6 @@ L= DBM:GetModLocalization(708)
 
 L:SetMiscLocalization({
 	Pull		= "¡Inútiles! ¡Todos! Ni los guardias que me ofrecéis como tributo pueden impedir que entren gusanos en mi palacio.",
-	Kuai		= "¡El clan Gurthan demostrará al Rey y a los impostores sedientos de poder como vosotros por qué merecemos su confianza!",
-	Ming		= "¡El clan Harthak os demostrará por qué somos los más puros de los mogu!",
-	Haiyan		= "¡El clan Kargesh os demostrará por qué solo los más fuertes merecen servir al Rey!",
 	Defeat		= "¿Quién ha dejado entrar a los forasteros? ¡Solo los clanes Harthak o Kargesh se rebajarían a cometer tal traición!"
 })
 
