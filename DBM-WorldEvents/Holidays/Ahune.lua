@@ -43,7 +43,7 @@ function mod:SPELL_AURA_APPLIED(args)
 end
 
 function mod:SPELL_AURA_REMOVED(args)
-	if args.spellId == 45954 then -- Ahunes Shield
+	if args.spellId == 45954 and self:IsInCombat() then -- Ahunes Shield
 		warnSubmerged:Show()
 		timerEmerge:Start()
 		specWarnAttack:Show()

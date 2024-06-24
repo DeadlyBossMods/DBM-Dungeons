@@ -6,9 +6,9 @@ mod:SetRevision("@file-date-integer@")
 mod:RegisterCombat("scenario", 2681)
 
 mod:RegisterEventsInCombat(
---	"SPELL_CAST_START ",
+	"SPELL_CAST_START 449242 449295 449339",
 --	"SPELL_CAST_SUCCESS",
---	"SPELL_AURA_APPLIED",
+	"SPELL_AURA_APPLIED 449339",
 --	"SPELL_AURA_REMOVED",
 --	"SPELL_PERIODIC_DAMAGE",
 --	"UNIT_DIED",
@@ -16,22 +16,32 @@ mod:RegisterEventsInCombat(
 	"ENCOUNTER_END"
 )
 
---local warnDrones							= mod:NewSpellAnnounce(449072, 2)
+local warnGroundSlam						= mod:NewCastAnnounce(449295, 3)
 
---local specWarnFearfulShriek				= mod:NewSpecialWarningDodge(433410, nil, nil, nil, 2, 2)
+local specWarnFlamestorm					= mod:NewSpecialWarningDodge(449242, nil, nil, nil, 2, 2)
+local specWarnRagingTantrum					= mod:NewSpecialWarningSpell(449339, nil, nil, nil, 2, 2)
+local specWarnRagingTantrumDispel			= mod:NewSpecialWarningDispel(449339, "RemoveEnrage", nil, nil, 1, 2)
 
---local timerShadowsofStrifeCD				= mod:NewCDNPTimer(12.4, 449318, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
---local timerBurrowingTremorsCD				= mod:NewCDTimer(31.5, 448644, nil, nil, nil, 5)
+local timerFlamestormCD						= mod:NewCDTimer(18.2, 449242, nil, nil, nil, 3)
+local timerGroundSlamCD						= mod:NewCDTimer(27.9, 449295, nil, nil, nil, 3)
+local timerRagingTantrumCD					= mod:NewCDTimer(35.1, 449295, nil, nil, nil, 5, nil, DBM_COMMON_L.ENRAGE_ICON)
 
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc, 7 off interrupt
 
---[[
 function mod:SPELL_CAST_START(args)
-	if args.spellId == 449318 then
-
+	if args.spellId == 449242 then
+		specWarnFlamestorm:Show()
+		specWarnFlamestorm:Play("watchstep")
+		timerFlamestormCD:Start()
+	elseif args.spellId == 449295 then
+		warnGroundSlam:Show()
+		timerGroundSlamCD:Start()
+	elseif args.spellId == 449339 then
+		specWarnRagingTantrum:Show()
+		specWarnRagingTantrum:Play("carefly")
+		timerRagingTantrumCD:Start()
 	end
 end
---]]
 
 --[[
 function mod:SPELL_CAST_SUCCESS(args)
@@ -41,13 +51,12 @@ function mod:SPELL_CAST_SUCCESS(args)
 end
 --]]
 
---[[
 function mod:SPELL_AURA_APPLIED(args)
-	if args.spellId == 1098 then
-
+	if args.spellId == 449339 then
+		specWarnRagingTantrumDispel:Show(args.destName)
+		specWarnRagingTantrumDispel:Play("enrage")
 	end
 end
---]]
 
 --[[
 function mod:SPELL_AURA_REMOVED(args)
@@ -78,7 +87,12 @@ end
 
 function mod:ENCOUNTER_START(eID)
 	if eID == 2878 then--Tomb-Raider Drywhisker
-		--Start some timers
+		--6.1, 19.1, 18.5, 18.2, 19.9
+		timerFlamestormCD:Start(6.1)
+		--18.2, 29.1, 27.9
+		timerGroundSlamCD:Start(18.2)
+		--30.4, 35.1
+		timerRagingTantrumCD:Start(30.4)
 	end
 end
 
@@ -87,7 +101,9 @@ function mod:ENCOUNTER_END(eID, _, _, _, success)
 		if success then
 			DBM:EndCombat(self)
 		else
-			--Stop Timers manually
+			timerFlamestormCD:Stop()
+			timerGroundSlamCD:Stop()
+			timerRagingTantrumCD:Stop()
 		end
 	end
 end
