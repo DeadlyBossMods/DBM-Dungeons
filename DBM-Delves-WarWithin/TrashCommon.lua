@@ -23,8 +23,9 @@ local warnWebbedAegis						= mod:NewCastAnnounce(450546, 3)
 local warnBloatedEruption					= mod:NewCastAnnounce(424798, 4)
 local warnBattleRoar						= mod:NewCastAnnounce(414944, 3)
 local warnVineSpear							= mod:NewCastAnnounce(424891, 3, nil, nil, nil, nil, nil, 12)
+local warnSkitterCharge						= mod:NewCastAnnounce(450197, 3, nil, nil, nil, nil, nil, 2)
 
-local specWarnFearfulShriek					= mod:NewSpecialWarningDodge(433410, nil, nil, nil, 2, 2)
+local specWarnFearfulShriek					= mod:NewSpecialWarningDodge(433410, nil, nil, nil, 2, 2)--13.4-18
 local specWarnJaggedBarbs					= mod:NewSpecialWarningDodge(450714, nil, nil, nil, 2, 2)
 local specWarnLavablast	    				= mod:NewSpecialWarningDodge(445781, nil, nil, nil, 2, 2)
 local specWarnFungalBreath    				= mod:NewSpecialWarningDodge(415253, nil, nil, nil, 2, 2)
@@ -35,9 +36,9 @@ local specWarnShadowsofStrife				= mod:NewSpecialWarningInterrupt(449318, "HasIn
 local specWarnWebbedAegis					= mod:NewSpecialWarningInterrupt(450546, "HasInterrupt", nil, nil, 1, 2)
 local specWarnRotWaveVolley					= mod:NewSpecialWarningInterrupt(425040, "HasInterrupt", nil, nil, 1, 2)
 
---local timerShadowsofStrifeCD				= mod:NewCDNPTimer(12.4, 449318, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--12.4-15.1
+local timerShadowsofStrifeCD				= mod:NewCDNPTimer(21.8, 449318, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--Needs more Data
 local timerRotWaveVolleyCD					= mod:NewCDNPTimer(12.4, 425040, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--14.6-17
---local timerWebbedAegisCD					= mod:NewCDNPTimer(23.1, 450546, nil, nil, nil, 5)
+local timerWebbedAegisCD					= mod:NewCDNPTimer(16.7, 450546, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--Needs more Data
 local timerLavablastCD					    = mod:NewCDNPTimer(15.8, 445781, nil, nil, nil, 3)
 local timerBlazingWickCD					= mod:NewCDNPTimer(15.4, 449071, nil, nil, nil, 3)
 local timerBattleRoarCD						= mod:NewCDNPTimer(15.4, 414944, nil, nil, nil, 5, nil, DBM_COMMON_L.MAGIC_ICON)
@@ -45,6 +46,8 @@ local timerDebilitatingVenomCD				= mod:NewCDNPTimer(13.4, 424614, nil, nil, nil
 local timerBladeRushCD						= mod:NewCDNPTimer(15.4, 418791, nil, nil, nil, 3)
 local timerVineSpearCD						= mod:NewCDNPTimer(14.9, 424891, nil, nil, nil, 3)
 local timerRelocateCD						= mod:NewCDNPTimer(70, 427812, nil, nil, nil, 3)
+local timerSkitterChargeCD					= mod:NewCDNPTimer(15.4, 450197, nil, nil, nil, 3)
+local timerFungalBreathCD					= mod:NewCDNPTimer(15.4, 415253, nil, nil, nil, 3)
 
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc, 7 off interrupt
 
@@ -56,8 +59,8 @@ do
 		if not force and validZones[currentZone] and not eventsRegistered then
 			eventsRegistered = true
 			self:RegisterShortTermEvents(
-                "SPELL_CAST_START 449318 450546 433410 450714 445781 415253 425040 424704 424798 414944 418791 424891",
-                "SPELL_CAST_SUCCESS 414944 424614 418791 424891 427812",
+                "SPELL_CAST_START 449318 450546 433410 450714 445781 415253 425040 424704 424798 414944 418791 424891 450197",
+                "SPELL_CAST_SUCCESS 414944 424614 418791 424891 427812 450546 450197 415253 449318",
 				"SPELL_INTERRUPT",
                 "SPELL_AURA_APPLIED 424614 449071",
                 --"SPELL_AURA_REMOVED",
@@ -151,6 +154,11 @@ function mod:SPELL_CAST_START(args)
 			warnVineSpear:Show()
 			warnVineSpear:Play("pullin")
 		end
+	elseif args.spellId == 450197 then
+		if self:AntiSpam(3, 2) then
+			warnSkitterCharge:Show()
+			warnSkitterCharge:Play("chargemove")
+		end
 	end
 end
 
@@ -172,6 +180,14 @@ function mod:SPELL_CAST_SUCCESS(args)
 		if self:AntiSpam(3, 6) then
 			warnRelocate:Show()
 		end
+	elseif args.spellId == 450546 then
+		timerWebbedAegisCD:Start(16.7, args.sourceGUID)--Needs more Data
+	elseif args.spellId == 450197 then
+		timerSkitterChargeCD:Start(12.5, args.sourceGUID)-- 14.6 - 2.1
+	elseif args.spellId == 415253 then
+		timerFungalBreathCD:Start(15.2, args.sourceGUID)-- 18.2 - 3
+	elseif args.spellId == 449318 then
+		timerShadowsofStrifeCD:Start(18.8, args.sourceGUID)--21.8 - 3
 	end
 end
 
@@ -183,6 +199,10 @@ function mod:SPELL_INTERRUPT(args)
 		else--207456 Fungal Speartender
 			timerBattleRoarCD:Start(9.9, args.destGUID)--9.9-12
 		end
+	elseif args.extraSpellId == 450546 then
+		timerWebbedAegisCD:Start(16.7, args.destGUID)--Needs more Data
+	elseif args.extraSpellId == 449318 then
+		timerShadowsofStrifeCD:Start(18.8, args.sourceGUID)--21.8 - 3
 	end
 end
 
@@ -218,10 +238,10 @@ end
 
 function mod:UNIT_DIED(args)
 	local cid = self:GetCIDFromGUID(args.destGUID)
-	if cid == 208242 then--Nerubian Darkcaster
-	--	timerShadowsofStrifeCD:Stop(args.destGUID)
-	elseif cid == 216584 then--Nerubian Captain
-	--	timerWebbedAegisCD:Stop(args.destGUID)
+	if cid == 216584 then--Nerubian Captain
+		timerWebbedAegisCD:Stop(args.destGUID)
+	elseif cid == 208242 then--Nerubian Darkcaster
+		timerShadowsofStrifeCD:Stop(args.destGUID)
     elseif cid == 223541 then--Stolen Loader
         timerLavablastCD:Stop(args.destGUID)
 	elseif cid == 207460 then--Fungarian Flinger
@@ -239,7 +259,10 @@ function mod:UNIT_DIED(args)
 	elseif cid == 207455 then--Fungal Speartender
 		timerVineSpearCD:Stop(args.destGUID)
 	elseif cid == 213434 then--Sporbit (annoying ass undying exploding spores)
-		--As noted above, they are undying, but JUST IN CASE
-		timerRelocateCD:Stop(args.destGUID)
+		timerRelocateCD:Stop(args.destGUID)--As noted above, they are undying, but JUST IN CASE
+	elseif cid == 208245 or cid == 220508 then--Skittering Swarmer & The Puppetmaster?
+		timerSkitterChargeCD:Stop(args.destGUID)
+	elseif cid == 207482 then--Invasive Sporecap
+		timerFungalBreathCD:Stop(args.destGUID)
 	end
 end
