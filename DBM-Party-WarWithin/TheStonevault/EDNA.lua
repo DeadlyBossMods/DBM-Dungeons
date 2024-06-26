@@ -26,6 +26,7 @@ mod:RegisterEventsInCombat(
 or ability.id = 424795 and type = "applydebuff"
 or type = "dungeonencounterstart" or type = "dungeonencounterend"
 --]]
+--NOTE, timers are obsolete, needs new timers as of June 25th beta patch notes
 local warnRefractingBeam					= mod:NewTargetNoFilterAnnounce(424795, 3)
 local warnSeismicReverberation				= mod:NewTargetNoFilterAnnounce(424889, 3, nil, "RemoveMagic|Tank")
 local warnEarthShield						= mod:NewTargetNoFilterAnnounce(424893, 3, nil, false)

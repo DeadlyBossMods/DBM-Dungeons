@@ -12,10 +12,11 @@ mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 270185 269266",
 	"SPELL_CAST_SUCCESS 274991",
 	"UNIT_DIED",
-	"INSTANCE_ENCOUNTER_ENGAGE_UNIT",
+--	"INSTANCE_ENCOUNTER_ENGAGE_UNIT",
 	"UNIT_SPELLCAST_SUCCEEDED boss1 boss2 boss3 boss4 boss5"
 )
 
+--TODO, just show initial terror timer and nothing more
 local warnPutridWaters				= mod:NewTargetAnnounce(275014, 2)
 
 local specWarnCalloftheDeep			= mod:NewSpecialWarningDodge(270185, nil, nil, nil, 2, 2)
@@ -27,7 +28,7 @@ local specWarnSlam					= mod:NewSpecialWarningDodge(269266, "Tank", nil, 2, 2, 2
 local timerCalloftheDeepCD			= mod:NewCDTimer(13, 270185, nil, nil, nil, 3)--6.4, 15.1, 19.0, 11.9, 12.1, 12.3, 15.6, 12.1, 12.9, 7.0, 8.6, 7.5, 7.2, 7.4, 7.0, 7.0, 7.3, 7.2
 local timerPutridWatersCD			= mod:NewCDCountTimer(19.9, 275014, nil, nil, nil, 5, nil, DBM_COMMON_L.MAGIC_ICON)
 local timerSlamCD					= mod:NewCDTimer(6, 269266, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON)--6
-local timerDemolisherTerrorCD		= mod:NewCDCountTimer(20, 270605, nil, nil, nil, 1, nil, DBM_COMMON_L.TANK_ICON..DBM_COMMON_L.DAMAGE_ICON)
+--local timerDemolisherTerrorCD		= mod:NewCDCountTimer(20, 270605, nil, nil, nil, 1, nil, DBM_COMMON_L.TANK_ICON..DBM_COMMON_L.DAMAGE_ICON)
 
 mod:AddRangeFrameOption(5, 275014)
 
@@ -99,11 +100,12 @@ function mod:UNIT_DIED(args)
 	local cid = self:GetCIDFromGUID(args.destGUID)
 	if cid == 137614 or cid == 137625 or cid == 137626 or cid == 140447 then--Demolishing Terror
 		timerSlamCD:Stop(args.destGUID)
-	elseif cid == 137405 then--Gripping Terror
-		timerDemolisherTerrorCD:Stop()
+--	elseif cid == 137405 then--Gripping Terror
+--		timerDemolisherTerrorCD:Stop()
 	end
 end
 
+--[[
 function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
 	for i = 1, 5 do
 		local unitID = "boss"..i
@@ -118,11 +120,12 @@ function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
 		end
 	end
 end
+--]]
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, spellId)
 	if spellId == 270605 then--Summon Demolisher
 		self.vb.terrorCount = self.vb.terrorCount + 1
-		timerDemolisherTerrorCD:Start(20, self.vb.terrorCount+1)
+--		timerDemolisherTerrorCD:Start(20, self.vb.terrorCount+1)
 	elseif spellId == 269984 then--Damage Boss 35% (can use SPELL_CAST_START of 269456 alternatively)
 		--Might actually be at Repair event instead (269366)
 		if self:GetStage(3, 1) then

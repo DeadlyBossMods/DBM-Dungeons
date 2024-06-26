@@ -22,7 +22,7 @@ local warnRunicShackles						= mod:NewSpellAnnounce(448444, 2)
 
 local specWarnBurningCart					= mod:NewSpecialWarningDodge(448412, nil, nil, nil, 2, 2)
 
-local timerCurseOfAgonyCD					= mod:NewCDTimer(23.8, 448443, nil, nil, nil, 3, nil, DBM_COMMON_L.CURSE_ICON)
+local timerCurseOfAgonyCD					= mod:NewCDTimer(26.7, 448443, nil, nil, nil, 3, nil, DBM_COMMON_L.CURSE_ICON)
 local timerRunicShacklesCD					= mod:NewCDTimer(35.2, 448444, nil, nil, nil, 3, nil, DBM_COMMON_L.CURSE_ICON)--Poor Sample size
 local timerWebBoltCD						= mod:NewCDTimer(6, 448443, nil, false, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerBurningCartCD					= mod:NewCDTimer(35.2, 448412, nil, nil, nil, 3, nil, DBM_COMMON_L.DEADLY_ICON)
@@ -89,7 +89,7 @@ function mod:ENCOUNTER_START(eID)
 	if eID == 2877 then--Web General Ab'enar
 		--Start some timers
 		timerWebBoltCD:Start(2.2)
-		timerCurseOfAgonyCD:Start(7.5)
+		timerCurseOfAgonyCD:Start(6.2)
 		timerBurningCartCD:Start(12.3)
 		timerRunicShacklesCD:Start(20.8)
 	elseif eID == 3005 then--Maklin Drillstab
