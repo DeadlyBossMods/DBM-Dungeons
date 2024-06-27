@@ -6,7 +6,7 @@ mod:SetRevision("@file-date-integer@")
 mod:RegisterCombat("scenario", 2683)
 
 mod:RegisterEventsInCombat(
---	"SPELL_CAST_START ",
+	"SPELL_CAST_START 450142 450128 450330",
 --	"SPELL_CAST_SUCCESS",
 --	"SPELL_AURA_APPLIED",
 --	"SPELL_AURA_REMOVED",
@@ -16,22 +16,34 @@ mod:RegisterEventsInCombat(
 	"ENCOUNTER_END"
 )
 
---local warnDrones							= mod:NewSpellAnnounce(449072, 2)
+local warnThrowWax							= mod:NewSpellAnnounce(450330, 2)
 
---local specWarnFearfulShriek				= mod:NewSpecialWarningDodge(433410, nil, nil, nil, 2, 2)
+local specWarnBurnAway						= mod:NewSpecialWarningSpell(450142, nil, nil, nil, 2, 2)
+local specWarnNoxiousGas					= mod:NewSpecialWarningDodge(450128, nil, nil, nil, 2, 2)
 
---local timerShadowsofStrifeCD				= mod:NewCDNPTimer(12.4, 449318, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
---local timerBurrowingTremorsCD				= mod:NewCDTimer(31.5, 448644, nil, nil, nil, 5)
+local timerBurnAwayCD						= mod:NewCDTimer(21.9, 450142, nil, nil, nil, 2)
+local timerNoxiousGasCD						= mod:NewCDTimer(20.7, 450128, nil, nil, nil, 3)
+local timerThrowWaxCD						= mod:NewCDTimer(20.7, 450330, nil, nil, nil, 1)
 
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc, 7 off interrupt
 
---[[
 function mod:SPELL_CAST_START(args)
-	if args.spellId == 449318 then
-
+	if args.spellId == 450142 then
+		specWarnBurnAway:Show()
+		specWarnBurnAway:Play("aesoon")
+		--18.2, 21.9, 21.9, 21.9
+		timerBurnAwayCD:Start()
+	elseif args.spellId == 450128 then
+		specWarnNoxiousGas:Show()
+		specWarnNoxiousGas:Play("watchstep")
+		--3.6, 20.7, 21.9, 21.9, 21.9
+		timerNoxiousGasCD:Start()
+	elseif args.spellId == 450330 then
+		warnThrowWax:Show()
+		--7.2, 20.7, 21.9, 21.9, 21.9
+		timerThrowWaxCD:Start()
 	end
 end
---]]
 
 --[[
 function mod:SPELL_CAST_SUCCESS(args)
@@ -78,7 +90,9 @@ end
 
 function mod:ENCOUNTER_START(eID)
 	if eID == 2894 then--Waxface
-		DBM:AddMsg("Boss alerts/timers not yet implemented for Waxface")
+		timerNoxiousGasCD:Start(3.6)
+		timerThrowWaxCD:Start(7.2)
+		timerBurnAwayCD:Start(18.2)
 	end
 end
 
@@ -87,7 +101,9 @@ function mod:ENCOUNTER_END(eID, _, _, _, success)
 		if success then
 			DBM:EndCombat(self)
 		else
-			--Stop Timers manually
+			timerNoxiousGasCD:Stop()
+			timerThrowWaxCD:Stop()
+			timerBurnAwayCD:Stop()
 		end
 	end
 end

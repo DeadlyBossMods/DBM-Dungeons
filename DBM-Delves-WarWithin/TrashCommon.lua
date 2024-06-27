@@ -17,6 +17,8 @@ mod:RegisterEvents(
 --But others are for mobs that only spawn in specific delves. Over time these should be split up appropriately
 --for now ALL are being put in common til we have enough data to scope trash abilities to appropriate modules
 local warnDebilitatingVenom					= mod:NewTargetNoFilterAnnounce(424614, 3)--Brann will dispel this if healer role
+local warnCastigate							= mod:NewTargetNoFilterAnnounce(418297, 4)
+local warnSpearFish							= mod:NewTargetNoFilterAnnounce(430036, 2)
 local warnRelocate							= mod:NewSpellAnnounce(427812, 2)
 local warnShadowsofStrife					= mod:NewCastAnnounce(449318, 3)--High Prio Interrupt
 local warnWebbedAegis						= mod:NewCastAnnounce(450546, 3)
@@ -24,6 +26,7 @@ local warnBloatedEruption					= mod:NewCastAnnounce(424798, 4)
 local warnBattleRoar						= mod:NewCastAnnounce(414944, 3)
 local warnVineSpear							= mod:NewCastAnnounce(424891, 3, nil, nil, nil, nil, nil, 12)
 local warnSkitterCharge						= mod:NewCastAnnounce(450197, 3, nil, nil, nil, nil, nil, 2)
+local warnWicklighterVolley					= mod:NewCastAnnounce(445191, 3)
 
 local specWarnFearfulShriek					= mod:NewSpecialWarningDodge(433410, nil, nil, nil, 2, 2)--13.4-18
 local specWarnJaggedBarbs					= mod:NewSpecialWarningDodge(450714, nil, nil, nil, 2, 2)
@@ -32,15 +35,20 @@ local specWarnFungalBreath    				= mod:NewSpecialWarningDodge(415253, nil, nil,
 local specWarnViciousStabs    				= mod:NewSpecialWarningDodge(424704, nil, nil, nil, 2, 2)
 local specWarnBlazingWick    				= mod:NewSpecialWarningDodge(449071, nil, nil, nil, 2, 2)
 local specWarnBladeRush						= mod:NewSpecialWarningDodge(418791, nil, nil, nil, 2, 2)
+local specWarnDefilingBreath				= mod:NewSpecialWarningDodge(455932, nil, nil, nil, 2, 2)
+local specWarnNecroticEnd					= mod:NewSpecialWarningRun(445252, nil, nil, nil, 4, 2)
+local specWarnCurseoftheDepths				= mod:NewSpecialWarningDispel(440622, "RemoveCurse", nil, nil, 1, 2)
 local specWarnShadowsofStrife				= mod:NewSpecialWarningInterrupt(449318, "HasInterrupt", nil, nil, 1, 2)--High Prio Interrupt
 local specWarnWebbedAegis					= mod:NewSpecialWarningInterrupt(450546, "HasInterrupt", nil, nil, 1, 2)
 local specWarnRotWaveVolley					= mod:NewSpecialWarningInterrupt(425040, "HasInterrupt", nil, nil, 1, 2)
+local specWarnCastigate						= mod:NewSpecialWarningInterrupt(418297, "HasInterrupt", nil, nil, 1, 2)
+local specWarnBattleCry						= mod:NewSpecialWarningInterrupt(448399, "HasInterrupt", nil, nil, 1, 2)
 
 local timerShadowsofStrifeCD				= mod:NewCDNPTimer(21.8, 449318, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--Needs more Data
 local timerRotWaveVolleyCD					= mod:NewCDNPTimer(12.4, 425040, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--14.6-17
 local timerWebbedAegisCD					= mod:NewCDNPTimer(16.7, 450546, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--Needs more Data
 local timerLavablastCD					    = mod:NewCDNPTimer(15.8, 445781, nil, nil, nil, 3)
-local timerBlazingWickCD					= mod:NewCDNPTimer(15.4, 449071, nil, nil, nil, 3)
+local timerBlazingWickCD					= mod:NewCDNPTimer(14.6, 449071, nil, nil, nil, 3)
 local timerBattleRoarCD						= mod:NewCDNPTimer(15.4, 414944, nil, nil, nil, 5, nil, DBM_COMMON_L.MAGIC_ICON)
 local timerDebilitatingVenomCD				= mod:NewCDNPTimer(13.4, 424614, nil, nil, nil, 5, nil, DBM_COMMON_L.POISON_ICON)
 local timerBladeRushCD						= mod:NewCDNPTimer(15.4, 418791, nil, nil, nil, 3)
@@ -48,6 +56,10 @@ local timerVineSpearCD						= mod:NewCDNPTimer(14.9, 424891, nil, nil, nil, 3)
 local timerRelocateCD						= mod:NewCDNPTimer(70, 427812, nil, nil, nil, 3)
 local timerSkitterChargeCD					= mod:NewCDNPTimer(15.4, 450197, nil, nil, nil, 3)
 local timerFungalBreathCD					= mod:NewCDNPTimer(15.4, 415253, nil, nil, nil, 3)
+local timerCastigateCD						= mod:NewCDNPTimer(17.8, 418297, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerBattleCryCD						= mod:NewCDNPTimer(30.3, 448399, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerWicklighterVolleyCD				= mod:NewCDNPTimer(21.8, 445191, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--Needs more Data
+local timerSpearFishCD						= mod:NewCDNPTimer(12.1, 430036, nil, nil, nil, 3)
 
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc, 7 off interrupt
 
@@ -59,13 +71,14 @@ do
 		if not force and validZones[currentZone] and not eventsRegistered then
 			eventsRegistered = true
 			self:RegisterShortTermEvents(
-                "SPELL_CAST_START 449318 450546 433410 450714 445781 415253 425040 424704 424798 414944 418791 424891 450197",
-                "SPELL_CAST_SUCCESS 414944 424614 418791 424891 427812 450546 450197 415253 449318",
+                "SPELL_CAST_START 449318 450546 433410 450714 445781 415253 425040 424704 424798 414944 418791 424891 450197 448399 445191 430037 455932",
+                "SPELL_CAST_SUCCESS 414944 424614 418791 424891 427812 450546 450197 415253 449318 445191 430036",
 				"SPELL_INTERRUPT",
-                "SPELL_AURA_APPLIED 424614 449071",
+                "SPELL_AURA_APPLIED 424614 449071 418297 430036 440622",
                 --"SPELL_AURA_REMOVED",
                 --"SPELL_PERIODIC_DAMAGE",
-                "UNIT_DIED"
+                "UNIT_DIED",
+				"UNIT_SPELLCAST_START_UNFILTERED"
 			)
 			DBM:Debug("Registering Delve events")
 		elseif force or (not validZones[currentZone] and eventsRegistered) then
@@ -159,6 +172,26 @@ function mod:SPELL_CAST_START(args)
 			warnSkitterCharge:Show()
 			warnSkitterCharge:Play("chargemove")
 		end
+	elseif args.spellId == 448399 then
+		timerBattleCryCD:Start(nil, args.sourceGUID)
+		if self:CheckInterruptFilter(args.sourceGUID, false, true) then
+			specWarnBattleCry:Show(args.sourceName)
+			specWarnBattleCry:Play("kickcast")
+		end
+	elseif args.spellId == 445191 then
+		if self:AntiSpam(3, 7) then
+			warnWicklighterVolley:Show()
+		end
+	elseif args.spellId == 430037 then
+		if self:AntiSpam(3, 2) then
+			specWarnDefilingBreath:Show()
+			specWarnDefilingBreath:Play("shockwave")
+		end
+	elseif args.spellId == 455932 then
+		if self:AntiSpam(3, 2) then
+			specWarnNecroticEnd:Show()
+			specWarnNecroticEnd:Play("justrun")
+		end
 	end
 end
 
@@ -188,6 +221,10 @@ function mod:SPELL_CAST_SUCCESS(args)
 		timerFungalBreathCD:Start(15.2, args.sourceGUID)-- 18.2 - 3
 	elseif args.spellId == 449318 then
 		timerShadowsofStrifeCD:Start(18.8, args.sourceGUID)--21.8 - 3
+	elseif args.spellId == 445191 then
+		timerWicklighterVolleyCD:Start(18.3, args.sourceGUID)--21.8 - 3.5
+	elseif args.spellId == 430036 then
+		timerSpearFishCD:Start(12.1, args.sourceGUID)
 	end
 end
 
@@ -203,6 +240,8 @@ function mod:SPELL_INTERRUPT(args)
 		timerWebbedAegisCD:Start(16.7, args.destGUID)--Needs more Data
 	elseif args.extraSpellId == 449318 then
 		timerShadowsofStrifeCD:Start(18.8, args.sourceGUID)--21.8 - 3
+	elseif args.extraSpellId == 445191 then
+		timerWicklighterVolleyCD:Start(18.3, args.destGUID)--21.8 - 3.5
 	end
 end
 
@@ -213,9 +252,19 @@ function mod:SPELL_AURA_APPLIED(args)
 		end
 	elseif args.spellId == 449071 then
 		timerBlazingWickCD:Start(nil, args.destGUID)
-		if self:AntiSpam(3, 2) then
-			specWarnBlazingWick:Show()
-			specWarnBlazingWick:Play("shockwave")
+	elseif args.spellId == 418297 then
+		warnCastigate:Show(args.destName)
+		timerCastigateCD:Start(nil, args.sourceGUID)
+		if self:CheckInterruptFilter(args.sourceGUID, false, true) then
+			specWarnCastigate:Show(args.sourceName)
+			specWarnCastigate:Play("kickcast")
+		end
+	elseif args.spellId == 430036 then
+		warnSpearFish:Show(args.destName)
+	elseif args.spellId == 440622 and args:IsDestTypePlayer() then
+		if self:CheckDispelFilter("curse") then
+			specWarnCurseoftheDepths:Show(args.destName)
+			specWarnCurseoftheDepths:Play("helpdispel")
 		end
 	end
 end
@@ -264,5 +313,27 @@ function mod:UNIT_DIED(args)
 		timerSkitterChargeCD:Stop(args.destGUID)
 	elseif cid == 207482 then--Invasive Sporecap
 		timerFungalBreathCD:Stop(args.destGUID)
+	elseif cid == 208728 then--Treasure Wraith
+		timerCastigateCD:Stop(args.destGUID)
+	elseif cid == 204127 then--Kobolt Taskfinder
+		timerBattleCryCD:Stop(args.destGUID)
+	elseif cid == 214338 then--Kobyss Spearfisher
+		timerSpearFishCD:Stop(args.destGUID)
+	end
+end
+
+--Initial cast not in combat log, must monitor USS unfiltered so it'll scan any number of nameplates as well
+function mod:UNIT_SPELLCAST_START_UNFILTERED(uID, _, spellId)
+	if spellId == 449071 then
+		if self:AntiSpam(3, 2) then
+			self:SendSync("blazingwick", UnitGUID(uID))
+		end
+	end
+end
+
+function mod:OnSync(msg)
+	if msg == "blazingwick" then
+		specWarnBlazingWick:Show()
+		specWarnBlazingWick:Play("shockwave")
 	end
 end

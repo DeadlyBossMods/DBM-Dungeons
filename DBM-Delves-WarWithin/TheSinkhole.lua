@@ -6,7 +6,7 @@ mod:SetRevision("@file-date-integer@")
 mod:RegisterCombat("scenario", 2687, 2767)--2767 likely not used player facing
 
 mod:RegisterEventsInCombat(
---	"SPELL_CAST_START ",
+	"SPELL_CAST_START 446079",
 --	"SPELL_CAST_SUCCESS",
 --	"SPELL_AURA_APPLIED",
 --	"SPELL_AURA_REMOVED",
@@ -17,22 +17,22 @@ mod:RegisterEventsInCombat(
 )
 
 --NOTE: This one lacks encounter ID for easy win detection and boss timers
---local warnDrones							= mod:NewSpellAnnounce(449072, 2)
+--NOTE, all of Leviathan Caller timers are fucked due to low dps. needs repulls. 446080 can be used to auto mark adds maybe?
+local warnCalloftheAbyss					= mod:NewSpellAnnounce(446080, 2)
 
 --local specWarnFearfulShriek				= mod:NewSpecialWarningDodge(433410, nil, nil, nil, 2, 2)
 
 --local timerShadowsofStrifeCD				= mod:NewCDNPTimer(12.4, 449318, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
---local timerBurrowingTremorsCD				= mod:NewCDTimer(31.5, 448644, nil, nil, nil, 5)
+local timerCalloftheAbyssCD					= mod:NewCDTimer(31.5, 446080, nil, nil, nil, 1)
 
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc, 7 off interrupt
 
---[[
 function mod:SPELL_CAST_START(args)
-	if args.spellId == 449318 then
-
+	if args.spellId == 446079 then
+		warnCalloftheAbyss:Show()
+		--timerCalloftheAbyssCD:Start()
 	end
 end
---]]
 
 --[[
 function mod:SPELL_CAST_SUCCESS(args)
@@ -85,7 +85,7 @@ function mod:ENCOUNTER_START(eID)
 	elseif eID == 3001 then--Cragpie
 		DBM:AddMsg("Boss alerts/timers not yet implemented for Cragpie")
 	elseif eID == 3002 then--Leviathan Caller
-		DBM:AddMsg("Boss alerts/timers not yet implemented for Leviathan Caller")
+		timerCalloftheAbyssCD:Start(6.1)
 	end
 end
 
@@ -112,7 +112,7 @@ function mod:ENCOUNTER_END(eID, _, _, _, success)
 		if success then
 			DBM:EndCombat(self)
 		else
-			--Stop Timers manually
+			timerCalloftheAbyssCD:Stop()
 		end
 	end
 end
