@@ -30,7 +30,7 @@ local timerThunderCrash		= mod:NewCastTimer(3, 84522, nil, nil, nil, 3)
 local timerWailingWinds		= mod:NewBuffActiveTimer(6, 83066, nil, nil, nil, 3)
 local timerAbsorbStorms		= mod:NewCDTimer(33, 83151, nil, false, 2)
 local timerGatheredStorms	= mod:NewBuffActiveTimer(25, 84982, nil, false, 2)
-local timerPhase2Start		= mod:NewPhaseTimer(5)
+local timerPhase2Start		= mod:NewStageTimer(5)
 
 mod.vb.servantSpawn = 0
 mod.vb.thirdServant = 0

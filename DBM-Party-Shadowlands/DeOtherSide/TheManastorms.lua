@@ -33,7 +33,7 @@ mod:RegisterEventsInCombat(
 --General
 --local specWarnGTFO					= mod:NewSpecialWarningGTFO(257274, nil, nil, nil, 1, 8)
 
-local timerPhaseCD						= mod:NewPhaseTimer(30)
+local timerPhaseCD						= mod:NewStageTimer(30)
 --Stage One: Millhouse's Magics
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(22026))
 local warnSummonPowerCrystal			= mod:NewSpellAnnounce(320787, 3)
