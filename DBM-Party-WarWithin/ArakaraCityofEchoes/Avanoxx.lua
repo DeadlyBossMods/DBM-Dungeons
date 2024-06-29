@@ -100,9 +100,9 @@ function mod:SPELL_SUMMON(args)
 	local spellId = args.spellId
 	if spellId == 439040 then
 		if self.Options.SetIconOnAdds then
-			self:ScanForMobs(args.destGUID, 2, self.vb.addIcon, 1, nil, 12, "SetIconOnAdds")
+			self:ScanForMobs(args.destGUID, 2, self.vb.mobIcon, 1, nil, 12, "SetIconOnAdds")
 		end
-		self.vb.addIcon = self.vb.addIcon + 1
+		self.vb.mobIcon = self.vb.mobIcon + 1
 	end
 end
 
