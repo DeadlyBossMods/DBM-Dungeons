@@ -112,7 +112,7 @@ L:SetGeneralLocalization({
 L = DBM:GetModLocalization("TheStonevaultTrash")
 
 L:SetGeneralLocalization({
-	name =	"Трэш мобы Каменные Хранилища"
+	name =	"Трэш мобы Каменный Свод"
 })
 
 -------------------------
@@ -164,7 +164,7 @@ L:SetGeneralLocalization({
 L = DBM:GetModLocalization("AraKaraTrash")
 
 L:SetGeneralLocalization({
-	name =	"Трэш мобы Ара-Кара, Город Эха"
+	name =	"Трэш мобы Ара-Кара, Город Отголосков"
 })
 
 -------------------------
@@ -195,7 +195,7 @@ L:SetGeneralLocalization({
 L = DBM:GetModLocalization("CinderbrewMeaderyTrash")
 
 L:SetGeneralLocalization({
-	name =	"Трэш мобы Медоварня Угольного Вара"
+	name =	"Трэш мобы Искроварня"
 })
 
 L:SetOptionLocalization({
