@@ -4,7 +4,7 @@ local L		= mod:GetLocalizedStrings()
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(215405)
 mod:SetEncounterID(2906)
---mod:SetHotfixNoticeRev(20220322000000)
+mod:SetHotfixNoticeRev(20240630000000)
 --mod:SetMinSyncRevision(20211203000000)
 --mod.respawnTime = 29
 mod.sendMainBossGUID = true
@@ -41,6 +41,7 @@ local specWarnInfestation					= mod:NewSpecialWarningMoveAway(433740, nil, nil, 
 local timerImpaleCD							= mod:NewCDCountTimer(33.9, 433425, nil, nil, nil, 3)--5.8-18.2
 local timerBurrowChargeCD					= mod:NewCDCountTimer(33.9, 439506, nil, nil, nil, 3)
 local timerInfestationCD					= mod:NewCDCountTimer(33.9, 433740, nil, nil, nil, 3)
+local timerEyeOfTheStormCD					= mod:NewCDCountTimer(33.9, 433766, nil, nil, nil, 6)
 
 mod.vb.impaleCount = 0
 mod.vb.burrowCount = 0
@@ -50,9 +51,9 @@ mod.vb.stormActive = false
 
 local allTimers = {
 	--Impale
-	[435012] = {5.7, 13.5, 5.8},--Includes the Burrow Charge Impale
+	[435012] = {5.7, 14.7, 4.6},--Includes the Burrow Charge Impale
 	--Infestation
-	[433740] = {0, 10.7, 13.5},
+	[433740] = {0, 10.7, 12.1},
 }
 
 function mod:OnCombatStart(delay)
@@ -62,8 +63,9 @@ function mod:OnCombatStart(delay)
 	self.vb.eyeCount = 0
 	self.vb.stormActive = false
 --	timerInfestationCD:Start(1-delay, 1)--Instantly on pull
-	timerImpaleCD:Start(5.7-delay, 1)
+	timerImpaleCD:Start(4.8-delay, 1)
 	timerBurrowChargeCD:Start(14.2-delay, 1)
+	timerEyeOfTheStormCD:Start(31.5-delay, 1)--31.5
 end
 
 --function mod:OnCombatEnd()
@@ -108,7 +110,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 		if self.vb.stormActive then
 			--Cast 3x per storm at static interval
 			if self.vb.infestationCount < 3 then
-				timerInfestationCD:Start(8.6, self.vb.infestationCount+1)
+				timerInfestationCD:Start(8.5, self.vb.infestationCount+1)
 			end
 		else
 			local timer = self:GetFromTimersTable(allTimers, false, false, spellId, self.vb.infestationCount+1)
@@ -136,8 +138,9 @@ function mod:SPELL_AURA_REMOVED(args)
 		self.vb.infestationCount = 0
 		--Assumed loop, need actual data, pull timers used
 		--timerInfestationCD:Start(1, 1)--Instantly again
-		timerImpaleCD:Start(5.7, 1)
-		timerBurrowChargeCD:Start(14.2, self.vb.burrowCount+1)
+		timerImpaleCD:Start(4.1, 1)
+		timerBurrowChargeCD:Start(14.2, self.vb.burrowCount+1)--15
+		timerEyeOfTheStormCD:Start(57.5, self.vb.eyeCount+1)
 	end
 end
 

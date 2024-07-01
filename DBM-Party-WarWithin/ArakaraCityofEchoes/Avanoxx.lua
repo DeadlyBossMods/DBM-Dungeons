@@ -5,7 +5,7 @@ mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(213179)
 mod:SetEncounterID(2926)
 mod:SetUsedIcons(1, 2, 3, 4)
---mod:SetHotfixNoticeRev(20220322000000)
+mod:SetHotfixNoticeRev(20240630000000)
 --mod:SetMinSyncRevision(20211203000000)
 --mod.respawnTime = 29
 mod.sendMainBossGUID = true
@@ -42,8 +42,8 @@ local specWarnHunger						= mod:NewSpecialWarningRun(439070, nil, nil, nil, 1, 2
 --local specWarnGTFO						= mod:NewSpecialWarningGTFO(372820, nil, nil, nil, 1, 8)
 
 local timerVoraciousBiteCD					= mod:NewCDCountTimer(14.5, 438471, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
-local timerAlertingShrillCD					= mod:NewCDCountTimer(38.7, 438476, nil, nil, nil, 1)
-local timerGossamerOnslaughtCD				= mod:NewCDCountTimer(38.7, 438473, nil, nil, nil, 3)
+local timerAlertingShrillCD					= mod:NewCDCountTimer(38.7, 438476, nil, nil, nil, 1)--38.7-40.1
+local timerGossamerOnslaughtCD				= mod:NewCDCountTimer(38.7, 438473, nil, nil, nil, 3)--38.7-40.1
 
 mod:AddSetIconOption("SetIconOnAdds", 438476, true, 5, {1, 2, 3, 4})
 
@@ -57,9 +57,9 @@ function mod:OnCombatStart(delay)
 	self.vb.shrillCount = 0
 	self.vb.onslaughtCount = 0
 	self.vb.mobIcon = 1
-	timerVoraciousBiteCD:Start(3.5-delay, 1)
-	timerAlertingShrillCD:Start(10.8-delay, 1)
-	timerGossamerOnslaughtCD:Start(30.2-delay, 1)
+	timerVoraciousBiteCD:Start(3.3-delay, 1)
+	timerAlertingShrillCD:Start(10.6-delay, 1)
+	timerGossamerOnslaughtCD:Start(30.0-delay, 1)
 end
 
 --function mod:OnCombatEnd()
