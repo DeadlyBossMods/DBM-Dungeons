@@ -86,7 +86,7 @@ function mod:SPELL_CAST_START(args)
 	if (spellId == 441384 or spellId == 441381) and self:AntiSpam(5, 1) then--Synergic Step (Swapping)
 		self.vb.swapCount = self.vb.swapCount + 1
 		warnSynergicStep:Show(self.vb.swapCount)
-		--Stop timers all timers and reset counts
+		--Stop timers all timers
 		timerShadeSlashCD:Stop()
 		timerDuskbringerCD:Stop()
 		timerRimeDaggerCD:Stop()

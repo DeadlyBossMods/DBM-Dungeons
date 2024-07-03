@@ -4,7 +4,7 @@ local L		= mod:GetLocalizedStrings()
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(216658)
 mod:SetEncounterID(2909)
---mod:SetHotfixNoticeRev(20220322000000)
+mod:SetHotfixNoticeRev(20240702000000)
 --mod:SetMinSyncRevision(20211203000000)
 --mod.respawnTime = 29
 mod.sendMainBossGUID = true
@@ -13,12 +13,9 @@ mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 439401 439341 437700 438860 439646"
---	"SPELL_CAST_SUCCESS",
 --	"SPELL_AURA_APPLIED",
---	"SPELL_AURA_REMOVED"
 --	"SPELL_PERIODIC_DAMAGE",
 --	"SPELL_PERIODIC_MISSED"
---	"UNIT_SPELLCAST_SUCCEEDED boss1"
 )
 
 --TODO, timer for the 9 second shift loop (maybe a clean event in transcriptor, maybe scheduling, will wait for transcriptor first
@@ -37,17 +34,18 @@ local specWarnProcessofElimination			= mod:NewSpecialWarningDefensive(439646, ni
 local yellProcessofElimination				= mod:NewYell(439646)
 --local specWarnGTFO						= mod:NewSpecialWarningGTFO(372820, nil, nil, nil, 1, 8)
 
-local timerShiftingAnomaliesCD				= mod:NewCDCountTimer(9, 439401, nil, nil, nil, 3)--Spawns AND movements (NYI)
-local timerSpliceCD							= mod:NewCDCountTimer(20, 439341, nil, nil, nil, 2, nil, DBM_COMMON_L.HEALER_ICON)
-local timerTremorSlamCD						= mod:NewCDCountTimer(9, 437700, nil, nil, nil, 3)
-local timerUmbralWeaveCD					= mod:NewCDCountTimer(35, 438860, nil, nil, nil, 5)
-local timerProcessofEliminationCD			= mod:NewCDCountTimer(35, 439646, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+local timerShiftingAnomaliesCD				= mod:NewNextCountTimer(60, 439401, nil, nil, nil, 3)--Spawns AND movements (NYI)
+local timerSpliceCD							= mod:NewNextCountTimer(20, 439341, nil, nil, nil, 2, nil, DBM_COMMON_L.HEALER_ICON)
+local timerTremorSlamCD						= mod:NewCDCountTimer(60, 437700, nil, nil, nil, 3)--NewCDCountTimer used due to randomness of first cast
+local timerUmbralWeaveCD					= mod:NewCDCountTimer(60, 438860, nil, nil, nil, 5)--NewCDCountTimer used due to randomness of first cast
+local timerProcessofEliminationCD			= mod:NewNextCountTimer(60, 439646, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 
 mod.vb.shiftCount = 0
 mod.vb.spliceCount = 0
 mod.vb.tremorCount = 0
 mod.vb.weaveCount = 0
 mod.vb.processCount = 0
+mod.vb.firstSpell = 0--1 = Tremor, 2 = Umbral
 
 function mod:OnCombatStart(delay)
 	self.vb.shiftCount = 0
@@ -55,12 +53,12 @@ function mod:OnCombatStart(delay)
 	self.vb.tremorCount = 0
 	self.vb.weaveCount = 0
 	self.vb.processCount = 0
+	self.vb.firstSpell = 0--1 = Tremor, 2 = Umbral
 	timerShiftingAnomaliesCD:Start(4-delay, 1)
 	timerSpliceCD:Start(10-delay, 1)
-	timerTremorSlamCD:Start(16-delay, 1)
-	timerUmbralWeaveCD:Start(36-delay, 1)
+	timerUmbralWeaveCD:Start(15.9-delay, 1)--Umbral and Tremor have same CD, so either can be cast first
+	timerTremorSlamCD:Start(15.9-delay, 1)--Umbral and Tremor have same CD, so either can be cast first
 	timerProcessofEliminationCD:Start(50-delay, 1)
-	DBM:AddMsg("Shifting timer will support shifts too, not just spawns, in a later update")
 end
 
 --function mod:OnCombatEnd()
@@ -75,24 +73,33 @@ function mod:SPELL_CAST_START(args)
 		specWarnShiftingAnomalies:Play("watchorb")
 		timerShiftingAnomaliesCD:Start(55, self.vb.shiftCount+1)
 	elseif spellId == 439341 then
-		--10, 20, 35, ???
 		self.vb.spliceCount = self.vb.spliceCount + 1
 		specWarnSplice:Show(self.vb.spliceCount)
 		specWarnSplice:Play("aesoon")
-		timerSpliceCD:Start(self.vb.spliceCount == 2 and 35 or 20, self.vb.spliceCount+1)
+		timerSpliceCD:Start(self.vb.spliceCount == 2 and 38 or 22, self.vb.spliceCount+1)
 	elseif spellId == 437700 then
+		if self.vb.firstSpell == 0 then
+			self.vb.firstSpell = 1
+			timerUmbralWeaveCD:Stop()
+			timerUmbralWeaveCD:Start(22, self.vb.weaveCount+1)
+		end
 		self.vb.tremorCount = self.vb.tremorCount + 1
 		specWarnTremorSlam:Show(self.vb.tremorCount)
 		specWarnTremorSlam:Play("runout")
-		--timerTremorSlamCD:Start(nil, self.vb.tremorCount+1)
+		timerTremorSlamCD:Start(nil, self.vb.tremorCount+1)
 	elseif spellId == 438860 then
+		if self.vb.firstSpell == 0 then
+			self.vb.firstSpell = 2
+			timerTremorSlamCD:Stop()
+			timerTremorSlamCD:Start(22, self.vb.tremorCount+1)
+		end
 		self.vb.weaveCount = self.vb.weaveCount + 1
 		specWarnUmbralWeave:Show(self.vb.weaveCount)
 		specWarnUmbralWeave:Play("gather")--Change sound if it's wrong to stackup for this, but stacking seems smart for aoe
 		timerUmbralWeaveCD:Start(nil, self.vb.weaveCount+1)
 	elseif spellId == 439646 then
 		self.vb.processCount = self.vb.processCount + 1
-		--timerProcessofEliminationCD:Start(nil, self.vb.processCount+1)
+		timerProcessofEliminationCD:Start(nil, self.vb.processCount+1)
 		if self:IsTanking("player", "boss1", nil, true) then
 			specWarnProcessofElimination:Show()
 			specWarnProcessofElimination:Play("defensive")
@@ -100,15 +107,6 @@ function mod:SPELL_CAST_START(args)
 		end
 	end
 end
-
---[[
-function mod:SPELL_CAST_SUCCESS(args)
-	local spellId = args.spellId
-	if spellId == 372858 then
-
-	end
-end
---]]
 
 --[[
 function mod:SPELL_AURA_APPLIED(args)
@@ -128,21 +126,4 @@ function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId, spell
 	end
 end
 mod.SPELL_PERIODIC_MISSED = mod.SPELL_PERIODIC_DAMAGE
---]]
-
---[[
-function mod:UNIT_DIED(args)
-	local cid = self:GetCIDFromGUID(args.destGUID)
-	if cid == 193435 then
-
-	end
-end
---]]
-
---[[
-function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
-	if spellId == 74859 then
-
-	end
-end
 --]]
