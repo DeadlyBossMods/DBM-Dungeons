@@ -4,7 +4,7 @@ local L		= mod:GetLocalizedStrings()
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(211089)
 mod:SetEncounterID(2838)
---mod:SetHotfixNoticeRev(20220322000000)
+mod:SetHotfixNoticeRev(20240706000000)
 --mod:SetMinSyncRevision(20211203000000)
 --mod.respawnTime = 29
 mod.sendMainBossGUID = true
@@ -13,6 +13,7 @@ mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 427001 426860 426787 452127 452099"
+--	"SPELL_SUMMON 452145"
 --	"SPELL_CAST_SUCCESS",
 --	"SPELL_AURA_APPLIED",
 --	"SPELL_AURA_REMOVED"
@@ -25,40 +26,79 @@ mod:RegisterEventsInCombat(
 (target.name = "Anub'ikkaj" or target.name = "Ascendant Vis'coxria" or target.name = "Deathscreamer Iken'tak" or target.name = "Ixkreten the Unbreakable") and (type = "applybuff" or type = "removebuff" or type = "death" or type = "removebuffstack" or type = "applybuffstack")
  or (source.name = "Anub'ikkaj" or source.name = "Ascendant Vis'coxria" or source.name = "Deathscreamer Iken'tak" or source.name = "Ixkreten the Unbreakable") and (type = "cast" or type = "begincast" or type = "applybuff" or type = "removebuff" or type = "removebuffstack" or type = "applybuffstack") and not ability.id = 1
 --]]
---TODO, auto marking Animate Shadows? need to see if has spell summon event or if they instantly cast congealed for GUID target scanner, else use CID based single scan
+--[[
+(ability.id = 427001 or ability.id = 426860 or ability.id = 426787 or ability.id = 452127) and type = "begincast"
+ or type = "dungeonencounterstart" or type = "dungeonencounterend"
+ or ability.id = 452145 and type = "summon"
+ or ability.id = 452099 and type = "begincast"
+--]]
+--TODO, auto marking Animate Shadows? 7 of them always spawn so it may be overkill
 local warnAnimatedShadows					= mod:NewCountAnnounce(452127, 3)--Change to switch alert if they have to die asap
 
 local specWarnTerrifyingSlam				= mod:NewSpecialWarningRunCount(427001, nil, nil, nil, 4, 2)
 local specWarnDarkOrb						= mod:NewSpecialWarningDodgeCount(426860, nil, nil, nil, 2, 2)
-local specWarnRadiantDecay					= mod:NewSpecialWarningDodgeCount(426787, nil, nil, nil, 2, 2)
---local yellSomeAbility						= mod:NewYell(372107)
+local specWarnShadowDecay					= mod:NewSpecialWarningDodgeCount(426787, nil, nil, nil, 2, 2)
 --local specWarnGTFO						= mod:NewSpecialWarningGTFO(372820, nil, nil, nil, 1, 8)
 local specWarnCongealedDarkness				= mod:NewSpecialWarningInterruptCount(452099, nil, nil, nil, 1, 2, 4)
 
-local timerTerrifyingSlamCD					= mod:NewCDCountTimer(24, 427001, nil, nil, nil, 2)
-local timerDarkOrbCD						= mod:NewCDCountTimer(24, 426860, nil, nil, nil, 3)
-local timerRadiantDecayCD					= mod:NewCDCountTimer(24, 426787, nil, nil, nil, 2, nil, DBM_COMMON_L.HEALER_ICON)
-local timerAnimateShadowsCD					= mod:NewAITimer(24, 452127, nil, nil, nil, 1, nil, DBM_COMMON_L.MYTHIC_ICON)
+--All timers are 23.5 (or even lower) but are often extended to 26 on non mythic and 33.5 on mythic.
+--This is because of the bosses internal CD that can delay casts up to 10 seconds
+local timerTerrifyingSlamCD					= mod:NewCDCountTimer(23.5, 427001, nil, nil, nil, 2)
+local timerDarkOrbCD						= mod:NewCDCountTimer(23.5, 426860, nil, nil, nil, 3)
+local timerShadowDecayCD					= mod:NewCDCountTimer(23.5, 426787, nil, nil, nil, 2, nil, DBM_COMMON_L.HEALER_ICON)
+local timerAnimateShadowsCD					= mod:NewCDCountTimer(40, 452127, nil, nil, nil, 1, nil, DBM_COMMON_L.MYTHIC_ICON)
 
 mod:AddPrivateAuraSoundOption(426865, true, 426860, 1)--Dark Orb target
 
 mod.vb.slamCount = 0
 mod.vb.orbCount = 0
-mod.vb.radiantCount = 0
+mod.vb.shadowCount = 0
 mod.vb.addsCount = 0
 local castsPerGUID = {}
+
+--Shadowy Decay triggers 10 second ICD
+--Terrifying Slam triggers 7 second ICD
+--Dark Orb triggers 9 second ICD
+--Animate Shadows triggers 7.5 second ICD
+local function updateAllTimers(self, ICD)
+	DBM:Debug("updateAllTimers running", 3)
+	if timerTerrifyingSlamCD:GetRemaining(self.vb.slamCount+1) < ICD then
+		local elapsed, total = timerTerrifyingSlamCD:GetTime(self.vb.slamCount+1)
+		local extend = ICD - (total-elapsed)
+		DBM:Debug("timerTerrifyingSlamCD extended by: "..extend, 2)
+		timerTerrifyingSlamCD:Update(elapsed, total+extend, self.vb.slamCount+1)
+	end
+	if timerDarkOrbCD:GetRemaining(self.vb.orbCount+1) < ICD then
+		local elapsed, total = timerDarkOrbCD:GetTime(self.vb.orbCount+1)
+		local extend = ICD - (total-elapsed)
+		DBM:Debug("timerDarkOrbCD extended by: "..extend, 2)
+		timerDarkOrbCD:Update(elapsed, total+extend, self.vb.orbCount+1)
+	end
+	if timerShadowDecayCD:GetRemaining(self.vb.shadowCount+1) < ICD then
+		local elapsed, total = timerShadowDecayCD:GetTime(self.vb.shadowCount+1)
+		local extend = ICD - (total-elapsed)
+		DBM:Debug("timerShadowDecayCD extended by: "..extend, 2)
+		timerShadowDecayCD:Update(elapsed, total+extend, self.vb.shadowCount+1)
+	end
+	if timerAnimateShadowsCD:GetRemaining(self.vb.addsCount+1) < ICD then
+		local elapsed, total = timerAnimateShadowsCD:GetTime(self.vb.addsCount+1)
+		local extend = ICD - (total-elapsed)
+		DBM:Debug("timerAnimateShadowsCD extended by: "..extend, 2)
+		timerAnimateShadowsCD:Update(elapsed, total+extend, self.vb.addsCount+1)
+	end
+end
 
 function mod:OnCombatStart(delay)
 	self.vb.slamCount = 0
 	self.vb.orbCount = 0
-	self.vb.radiantCount = 0
+	self.vb.shadowCount = 0
 	self.vb.addsCount = 0
 	table.wipe(castsPerGUID)
 	timerDarkOrbCD:Start(6-delay, 1)
 	timerTerrifyingSlamCD:Start(13-delay, 1)
-	timerRadiantDecayCD:Start(20-delay, 1)
+	timerShadowDecayCD:Start(20-delay, 1)
 	if self:IsMythic() then
-		timerAnimateShadowsCD:Start(1-delay)
+		timerAnimateShadowsCD:Start(32-delay, 1)
 	end
 	self:EnablePrivateAuraSound(426865, "targetyou", 2)--Dark Orb
 	self:EnablePrivateAuraSound(450855, "targetyou", 2, 426865)--Register Additional ID
@@ -88,20 +128,24 @@ function mod:SPELL_CAST_START(args)
 			specWarnTerrifyingSlam:Play("justrun")
 		end
 		timerTerrifyingSlamCD:Start(nil, self.vb.slamCount+1)
+		updateAllTimers(self, 7)
 	elseif spellId == 426860 then
 		self.vb.orbCount = self.vb.orbCount + 1
 		specWarnDarkOrb:Show()
 		specWarnDarkOrb:Play("watchorb")
 		timerDarkOrbCD:Start(nil, self.vb.orbCount+1)
+		updateAllTimers(self, 9)
 	elseif spellId == 426787 then
-		self.vb.radiantCount = self.vb.radiantCount + 1
-		specWarnRadiantDecay:Show(self.vb.radiantCount)
-		specWarnRadiantDecay:Play("aesoon")
-		timerRadiantDecayCD:Start(nil, self.vb.radiantCount+1)
+		self.vb.shadowCount = self.vb.shadowCount + 1
+		specWarnShadowDecay:Show(self.vb.shadowCount)
+		specWarnShadowDecay:Play("aesoon")
+		timerShadowDecayCD:Start(nil, self.vb.shadowCount+1)
+		updateAllTimers(self, 10)
 	elseif spellId == 452127 then
 		self.vb.addsCount = self.vb.addsCount + 1
 		warnAnimatedShadows:Show(self.vb.addsCount)
-		timerAnimateShadowsCD:Start()--nil, self.vb.addsCount+1
+		timerAnimateShadowsCD:Start(nil, self.vb.addsCount+1)
+		updateAllTimers(self, 7.5)
 	elseif spellId == 452099 then
 		if not castsPerGUID[args.sourceGUID] then
 			castsPerGUID[args.sourceGUID] = 0
@@ -118,6 +162,15 @@ function mod:SPELL_CAST_START(args)
 		end
 	end
 end
+
+--[[
+function mod:SPELL_SUMMON(args)
+	local spellId = args.spellId
+	if spellId == 452145 then
+
+	end
+end
+--]]
 
 --[[
 function mod:SPELL_CAST_SUCCESS(args)
