@@ -21,6 +21,7 @@ mod:RegisterEventsInCombat(
 --	"SPELL_PERIODIC_MISSED"
 )
 
+--https://www.warcraftlogs.com/reports/a1Dz7jN4xKWLbHvC#fight=last&pins=2%24Off%24%23244F4B%24expression%24(ability.id%20%3D%20434407%20or%20ability.id%20%3D%20448213%20or%20ability.id%20%3D%20448888%20or%20ability.id%20%3D%20439784%20or%20ability.id%20%3D%20434089)%20and%20type%20%3D%20%22begincast%22%0A%20or%20ability.id%20%3D%20438875%20and%20type%20%3D%20%22cast%22%0A%20or%20ability.id%20%3D%20449734%20and%20(type%20%3D%20%22begincast%22%20or%20type%20%3D%20%22removebuff%22)%20or%20stoppedAbility.id%20%3D%20449734%0A%20or%20ability.id%20%3D%20434726%20and%20type%20%3D%20%22damage%22%0A%20or%20type%20%3D%20%22dungeonencounterstart%22%20or%20type%20%3D%20%22dungeonencounterend%22&view=events
 --NOTE, some spellIds might be mixed up with 5 man version (and viceversa).
 --NOTE, throw bomb is inaccurate for tracking actual bombs hitting boss. Have at least one log where one bomb missed, so spell damage event is more accurate
 --TODO, stage 2. Boss was so undertuned in normal it just dies instantly on stage 2 start, so no mechanics seen
