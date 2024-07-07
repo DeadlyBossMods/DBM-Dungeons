@@ -60,11 +60,20 @@ function mod:OnCombatStart(delay)
 	timerDecaySprayCD:Start(12.5-delay)
 	timerGraspingVinesCD:Start(23.2-delay)
 --	timerInfectiousSpitCD:Start(25.9-delay)--Restarted by vines anyways
+	--Trash is often pulled with this boss, so we want to enable trash mod functionality during fight
+	local trashMod = DBM:GetModByName("BrackenhideHollowTrash")
+	if trashMod then
+		trashMod.isTrashModBossFightAllowed = true
+	end
 end
 
 function mod:OnCombatEnd()
 	if self.Options.InfoFrame then
 		DBM.InfoFrame:Hide()
+	end
+	local trashMod = DBM:GetModByName("BrackenhideHollowTrash")
+	if trashMod then
+		trashMod.isTrashModBossFightAllowed = false
 	end
 end
 
