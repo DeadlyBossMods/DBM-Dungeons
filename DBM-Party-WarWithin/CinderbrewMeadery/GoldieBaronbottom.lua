@@ -153,7 +153,12 @@ function mod:SPELL_AURA_REMOVED(args)
 			timerCinderWounds:Stop()
 		end
 	elseif spellId == 436644 then
-
+		if self.Options.SetIconOnExplosiveEruption then
+			self:SetIcon(args.destName, 0)
+		end
+		if args:IsPlayer() then
+			yellBurningRicochetFades:Cancel()
+		end
 	end
 end
 
