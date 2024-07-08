@@ -13,7 +13,6 @@ mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 434407 448213 448888 434089",
---	"SPELL_CAST_SUCCESS 438875",
 	"SPELL_AURA_APPLIED 449042",
 	"SPELL_INTERRUPT",
 	"SPELL_DAMAGE 434726"
@@ -22,9 +21,8 @@ mod:RegisterEventsInCombat(
 )
 
 --https://www.warcraftlogs.com/reports/a1Dz7jN4xKWLbHvC#fight=last&pins=2%24Off%24%23244F4B%24expression%24(ability.id%20%3D%20434407%20or%20ability.id%20%3D%20448213%20or%20ability.id%20%3D%20448888%20or%20ability.id%20%3D%20439784%20or%20ability.id%20%3D%20434089)%20and%20type%20%3D%20%22begincast%22%0A%20or%20ability.id%20%3D%20438875%20and%20type%20%3D%20%22cast%22%0A%20or%20ability.id%20%3D%20449734%20and%20(type%20%3D%20%22begincast%22%20or%20type%20%3D%20%22removebuff%22)%20or%20stoppedAbility.id%20%3D%20449734%0A%20or%20ability.id%20%3D%20434726%20and%20type%20%3D%20%22damage%22%0A%20or%20type%20%3D%20%22dungeonencounterstart%22%20or%20type%20%3D%20%22dungeonencounterend%22&view=events
---NOTE, some spellIds might be mixed up with 5 man version (and viceversa).
+--NOTE, some spellIds might be mixed up with raid version (and viceversa). Both are included for safety.
 --NOTE, throw bomb is inaccurate for tracking actual bombs hitting boss. Have at least one log where one bomb missed, so spell damage event is more accurate
---TODO, stage 2. Boss was so undertuned in normal it just dies instantly on stage 2 start, so no mechanics seen
 --[[
 (ability.id = 434407 or ability.id = 448213 or ability.id = 448888 or ability.id = 439784 or ability.id = 434089) and type = "begincast"
  or ability.id = 438875 and type = "cast"
@@ -108,10 +106,6 @@ function mod:OnCombatStart(delay)
 	self:EnablePrivateAuraSound(434090, "pullin", 12, 439783)--Likely the raid version of Spinneret's Strands
 end
 
---function mod:OnCombatEnd()
-
---end
-
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
 	if spellId == 434407 then
@@ -138,15 +132,6 @@ function mod:SPELL_CAST_START(args)
 		updateAllTimers(self, 5.3)
 	end
 end
-
---[[
-function mod:SPELL_CAST_SUCCESS(args)
-	local spellId = args.spellId
-	if spellId == 438875 then
-
-	end
-end
---]]
 
 function mod:SPELL_AURA_APPLIED(args)
 	local spellId = args.spellId
