@@ -253,9 +253,9 @@ Shared\ZulFarrak\HydromancerVelrath.lua
 Shared\ZulFarrak\Nekrum_Sezzziz.lua
 Shared\ZulFarrak\ChiefUkorzSandscalp.lua
 
-Classic\Grimroot.lua
-Classic\Diathorus.lua
-Classic\DestructorsWrath.lua
-Classic\Zilbagob.lua
-Classic\Pyranis.lua
-Classic\HellscreamsPhantom.lua
+Classic\SOD_DemonFallCanyon\Grimroot.lua
+Classic\SOD_DemonFallCanyon\Diathorus.lua
+Classic\SOD_DemonFallCanyon\DestructorsWrath.lua
+Classic\SOD_DemonFallCanyon\Zilbagob.lua
+Classic\SOD_DemonFallCanyon\Pyranis.lua
+Classic\SOD_DemonFallCanyon\HellscreamsPhantom.lua
