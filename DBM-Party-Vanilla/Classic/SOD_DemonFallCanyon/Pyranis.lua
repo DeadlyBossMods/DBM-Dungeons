@@ -17,6 +17,7 @@ mod:RegisterEventsInCombat(
 
 --end
 
+-- Summons adds that need to be killed, but didn't fully understand when they are summoned; also, it's really really obvious that this happens.
 
 --[[
 function mod:SPELL_CAST_START(args)
