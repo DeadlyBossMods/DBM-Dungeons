@@ -48,4 +48,6 @@ Event trace:
 	[ 37.63] SPELL_CAST_START: [Diathorus the Seeker: Veil of Shadow] Creature-0-5252-2784-26746-227019-000012D5C6, Diathorus the Seeker, 0xa48, "", nil, 0x0, 460755, Veil of Shadow, 0, 0
 		PlaySound: VoicePack/kickcast
 		ShowSpecialWarning: Veil of Shadow - interrupt Diathorus the Seeker!
+	[108.21] UNIT_DIED: [->Diathorus the Seeker] "", nil, 0x0, Creature-0-5252-2784-26746-227019-000012D5C6, Diathorus the Seeker, 0xa48, -1, false, 0, 0
+		EndCombat: Main CID Down
 ]]
