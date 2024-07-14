@@ -112,7 +112,7 @@ function mod:SPELL_CAST_START(args)
 	if spellId == 198379 then
 		self.vb.rampageCount = self.vb.rampageCount + 1
 		if self:IsTanking("player", "boss1", nil, true) then
-			specWarnRampage:Show(self.vb.rampageCount)
+			specWarnRampage:Show()
 			specWarnRampage:Play("defensive")
 		end
 		timerRampageCD:Start(nil, self.vb.rampageCount+1)

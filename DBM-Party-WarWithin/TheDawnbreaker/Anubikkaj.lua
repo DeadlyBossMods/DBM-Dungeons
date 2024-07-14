@@ -131,7 +131,7 @@ function mod:SPELL_CAST_START(args)
 		updateAllTimers(self, 7)
 	elseif spellId == 426860 then
 		self.vb.orbCount = self.vb.orbCount + 1
-		specWarnDarkOrb:Show()
+		specWarnDarkOrb:Show(self.vb.orbCount)
 		specWarnDarkOrb:Play("watchorb")
 		timerDarkOrbCD:Start(nil, self.vb.orbCount+1)
 		updateAllTimers(self, 9)

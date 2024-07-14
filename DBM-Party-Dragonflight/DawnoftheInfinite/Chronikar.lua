@@ -70,6 +70,7 @@ function mod:SPELL_CAST_START(args)
 			timerEonResidue:Start(nil, self.vb.shatterCount)
 		end
 		if self.vb.shatterCount == 1 then
+			---@diagnostic disable-next-line: param-type-mismatch
 			specWarnEonShatter:Show(self.vb.shatterSet.." - "..self.vb.shatterCount)
 			specWarnEonShatter:Play("watchstep")
 		else--Cast 2

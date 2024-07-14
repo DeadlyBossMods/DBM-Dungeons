@@ -61,7 +61,7 @@ function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
 	if spellId == 441289 or spellId == 447146 then
 		self.vb.viscousCount = self.vb.viscousCount + 1
-		specWarnViscousDarkness:Show()
+		specWarnViscousDarkness:Show(self.vb.viscousCount)
 		specWarnViscousDarkness:Play("helpsoak")
 		if spellId == 441289  then--First Cast
 			timerViscousDarknessCD:Start(21.8, self.vb.viscousCount+1)--Subject to same 2-3 second swing due to energy code

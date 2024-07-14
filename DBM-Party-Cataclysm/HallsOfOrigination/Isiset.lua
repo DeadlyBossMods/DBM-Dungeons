@@ -39,7 +39,7 @@ end
 
 function mod:SPELL_CAST_START(args)
 	if args.spellId == 74136 then
-		specWarnSupernova:Show()
+		specWarnSupernova:Show(args.sourceName)
 		specWarnSupernova:Play("turnaway")
 		timerSupernova:Start()
 	end

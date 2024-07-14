@@ -109,7 +109,7 @@ function mod:SPELL_AURA_REMOVED(args)
 	if not self.Options.Enabled then return end
 	local spellId = args.spellId
 	if spellId == 229489 then
-		specWarnRoyalty:Show(args.destName)
+		specWarnRoyalty:Show()
 		specWarnRoyalty:Play("targetchange")
 	end
 end

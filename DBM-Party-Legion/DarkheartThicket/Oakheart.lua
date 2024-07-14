@@ -26,9 +26,9 @@ local warnShatteredEarth			= mod:NewCountAnnounce(204666, 2)
 local warnThrowTarget				= mod:NewTargetNoFilterAnnounce(204658, 2)--This is target the tank is THROWN at.
 local warnUproot					= mod:NewCountAnnounce(212786, 2)
 
-local specWarnRoots					= mod:NewSpecialWarningDodge(204574, nil, nil, nil, 2, 2)
+local specWarnRoots					= mod:NewSpecialWarningDodgeCount(204574, nil, nil, nil, 2, 2)
 local yellThrow						= mod:NewYell(204658, 2764)--yell so others can avoid splash damage. I don't think target can avoid
-local specWarnBreath				= mod:NewSpecialWarningDodge(204667, nil, nil, nil, 2, 2)
+local specWarnBreath				= mod:NewSpecialWarningDodgeCount(204667, nil, nil, nil, 2, 2)
 
 local timerShatteredEarthCD			= mod:NewCDCountTimer(31.6, 204666, nil, nil, nil, 2)--34-60 (basically same as OG)
 local timerCrushingGripCD			= mod:NewCDCountTimer(27.9, 204611, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON, nil, mod:IsTank() and 2 or nil, 4)--27.9-36 (basically same as OG)

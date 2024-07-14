@@ -27,7 +27,7 @@ local warnIceboundAegis				= mod:NewTargetNoFilterAnnounce(321754, 4)
 local warnFrozenBinds				= mod:NewTargetNoFilterAnnounce(323730, 3)
 local warnDarkExile					= mod:NewTargetNoFilterAnnounce(321894, 3)
 
-local specWarnCometStorm			= mod:NewSpecialWarningDodge(320772, nil, nil, nil, 2, 2)
+local specWarnCometStorm			= mod:NewSpecialWarningDodgeCount(320772, nil, nil, nil, 2, 2)
 local specWarnFrozenBinds			= mod:NewSpecialWarningYou(323730, nil, nil, nil, 1, 2)
 local yellFrozenBinds				= mod:NewYell(323730)
 local yellFrozenBindsFades			= mod:NewShortYell(323730)
