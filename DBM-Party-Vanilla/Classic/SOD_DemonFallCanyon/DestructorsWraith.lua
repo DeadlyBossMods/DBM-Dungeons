@@ -13,12 +13,12 @@ mod:RegisterEventsInCombat(
 --	"SPELL_AURA_APPLIED"
 )
 
-local timerShockwave	= mod:NewCastCountTimer(2, 462222)
-local timerShockwaveCD	= mod:NewCDTimer(28, 462222)
-local timerNova			= mod:NewCastTimer(11.3, 460401)
+local specWarnNova		= mod:NewSpecialWarningDodge(460401, nil, nil, nil, 2, 2)
+local specWarnShockwave	= mod:NewSpecialWarningDodge(462222, nil, nil, nil, 2, 2)
 
-local specWarnNova		= mod:NewSpecialWarningDodge(460401, nil, nil, 1, 2)
-local specWarnShockwave	= mod:NewSpecialWarningDodge(462222, nil, nil, nil, 1, 2)
+local timerShockwave	= mod:NewCastCountTimer(2, 462222, nil, nil, nil, 5)
+local timerShockwaveCD	= mod:NewCDTimer(28, 462222, nil, nil, nil, 3)
+local timerNova			= mod:NewCastTimer(11.3, 460401, nil, nil, nil, 2)
 
 function mod:OnCombatStart(delay)
 	timerShockwaveCD:Start(16 - delay)
@@ -40,5 +40,6 @@ function mod:SPELL_CAST_START(args)
 		timerNova:Start()
 		timerShockwaveCD:Start()
 		specWarnNova:Schedule(8.5) -- Half a second after the shock wave so no one mistakes it for a shock wave warning
+		specWarnNova:ScheduleVoice(8.5, "justrun")
 	end
 end

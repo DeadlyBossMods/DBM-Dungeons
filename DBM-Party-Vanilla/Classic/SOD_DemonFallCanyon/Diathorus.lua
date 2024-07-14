@@ -22,7 +22,7 @@ local specWarnVeilOfShadow	= mod:NewSpecialWarningInterrupt(460755, "HasInterrup
 
 
 function mod:SPELL_CAST_START(args)
-	if args:IsSpell(460755) then
+	if args:IsSpell(460755) and self:CheckInterruptFilter(args.sourceGUID, nil, true) then
 		specWarnVeilOfShadow:Play("kickcast")
 		specWarnVeilOfShadow:Show(args.sourceName)
 	end

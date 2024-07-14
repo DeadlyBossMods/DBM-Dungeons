@@ -53,8 +53,8 @@ local specWarnFrenzy	= mod:NewSpecialWarningDispel(460703, "RemoveEnrage", nil, 
 
 local yellTears			= mod:NewIconRepeatYell(460512)
 
-local timerGloom		= mod:NewCastTimer(30.7, 460727)
-local timerFrenzy		= mod:NewBuffActiveTimer(8, 460703)
+local timerGloom		= mod:NewCDTimer(30.7, 460727, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerFrenzy		= mod:NewBuffActiveTimer(8, 460703, nil, nil, nil, 5)
 
 local playerGuid = UnitGUID("player")
 local playerName = UnitName("player")
