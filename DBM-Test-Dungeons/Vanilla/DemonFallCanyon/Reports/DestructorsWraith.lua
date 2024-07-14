@@ -71,9 +71,6 @@ Event trace:
 		StartTimer: 8.0, Destructor's Devastation (3)
 		StartTimer: 11.3, Nether Nova
 		StartTimer: 28.0, Destructor's Devastation
-		ScheduleTask: specWarn460401dodge:Schedule() at 91.33 (+8.50)
-			Unscheduled by ENCOUNTER_END at 84.52
-	[84.52] ENCOUNTER_END: 3028, Destructor's Wraith, 1, 5, 1, 0
-		EndCombat: ENCOUNTER_END
-		UnscheduleTask: specWarn460401dodge:Schedule() scheduled by ScheduleTask at 82.83
+	[84.52] UNIT_DIED: [->The Destructor's Wraith] "", nil, 0x0, Creature-0-5252-2784-26746-228022-000012DAD5, The Destructor's Wraith, 0xa48, -1, false, 0, 0
+		EndCombat: Main CID Down
 ]]

@@ -30,6 +30,6 @@ Event trace:
 	[ 0.00] ENCOUNTER_START: 3029, Zilbagob, 1, 5, 0
 		StartCombat: ENCOUNTER_START
 		RegisterEvents: Regular, SPELL_AURA_APPLIED 462272
-	[99.80] ENCOUNTER_END: 3029, Zilbagob, 1, 5, 1, 0
-		EndCombat: ENCOUNTER_END
+	[99.39] UNIT_DIED: [->Zilbagob] "", nil, 0x0, Creature-0-5252-2784-26746-226922-000012DCFD, Zilbagob, 0xa48, -1, false, 0, 0
+		EndCombat: Main CID Down
 ]]
