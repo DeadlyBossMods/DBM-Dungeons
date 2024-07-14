@@ -8,20 +8,14 @@ mod:SetEncounterID(3029)
 mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
---	"SPELL_CAST_START",
---	"SPELL_CAST_SUCCESS,
---	"SPELL_AURA_APPLIED"
+	"SPELL_AURA_APPLIED 462272"
 )
 
---function mod:OnCombatStart(delay)
+local specWarnGTFO = mod:NewSpecialWarningGTFO(462272, nil, nil, nil, 1, 8)
 
---end
-
-
---[[
-function mod:SPELL_CAST_START(args)
-	if args:IsSpell(5174) then
-
+function mod:SPELL_AURA_APPLIED(args)
+	if args:IsSpell(462272) and args:IsPlayer() and self:AntiSpam(2.5, 1) then
+		specWarnGTFO:Play("watchfeet")
+		specWarnGTFO:Show(args.spellName)
 	end
 end
---]]
