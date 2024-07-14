@@ -56,7 +56,7 @@ mod:AddSetIconOption("SetIconOnDarkRush", 197478, true, 6, {1, 2, 3})
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(12281))
 local warnEyeBeam					= mod:NewTargetNoFilterAnnounce(197696, 2)
 
-local specWarnEyeBeam				= mod:NewSpecialWarningRun(197696, nil, nil, nil, 4, 2)
+local specWarnEyeBeam				= mod:NewSpecialWarningRunCount(197696, nil, nil, nil, 4, 2)
 local yellEyeBeam					= mod:NewYell(197696)
 local specWarnBonebreakingStrike	= mod:NewSpecialWarningDodge(197974, "Tank", nil, nil, 1, 2)
 local specWarnArcaneBlitz			= mod:NewSpecialWarningInterrupt(197797, "HasInterrupt", nil, nil, 1, 2)
@@ -108,7 +108,7 @@ function mod:SPELL_CAST_START(args)
 	if spellId == 197418 then
 		self.vb.shearCount = self.vb.shearCount + 1
 		if self:IsTanking("player", "boss1", nil, true) then
-			specWarnVengefulShear:Show(self.vb.shearCount)
+			specWarnVengefulShear:Show()
 			specWarnVengefulShear:Play("defensive")
 		end
 		timerVengefulShearCD:Start(nil, self.vb.shearCount+1)

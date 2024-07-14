@@ -1,4 +1,4 @@
-## Interface: 11502, 11503
+## Interface: 11503
 ## X-Min-Interface: 11402
 
 ## Title:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Dungeons (Vanilla)|r
@@ -253,9 +253,9 @@ Shared\ZulFarrak\HydromancerVelrath.lua
 Shared\ZulFarrak\Nekrum_Sezzziz.lua
 Shared\ZulFarrak\ChiefUkorzSandscalp.lua
 
-Classic\Grimroot.lua
-Classic\Diathorus.lua
-Classic\DestructorsWrath.lua
-Classic\Zilbagob.lua
-Classic\Pyranis.lua
-Classic\HellscreamsPhantom.lua
+Classic\SOD_DemonFallCanyon\Grimroot.lua
+Classic\SOD_DemonFallCanyon\DestructorsWraith.lua
+Classic\SOD_DemonFallCanyon\Zilbagob.lua
+Classic\SOD_DemonFallCanyon\Pyranis.lua
+Classic\SOD_DemonFallCanyon\Diathorus.lua
+Classic\SOD_DemonFallCanyon\HellscreamsPhantom.lua

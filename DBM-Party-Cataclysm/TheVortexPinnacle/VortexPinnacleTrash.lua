@@ -102,7 +102,7 @@ function mod:SPELL_CAST_START(args)
 	elseif spellId == 88010 or spellId == 410870 then--Pre 10.1, post 10.1
 		timerCycloneCD:Start(nil, args.sourceGUID)
 		if self:CheckInterruptFilter(args.sourceGUID, false, true) then
-			specWarnCyclone:Show()
+			specWarnCyclone:Show(args.sourceName)
 			specWarnCyclone:Play("kickcast")
 		end
 	elseif spellId == 87762 then
@@ -111,7 +111,7 @@ function mod:SPELL_CAST_START(args)
 	elseif spellId == 87779 then
 		timerGreaterHealCD:Start(nil, args.sourceGUID)
 		if self:CheckInterruptFilter(args.sourceGUID, false, true) then
-			specWarnGreaterHeal:Show()
+			specWarnGreaterHeal:Show(args.sourceName)
 			specWarnGreaterHeal:Play("kickcast")
 		end
 	elseif spellId == 88201 then--No throttle on purpose. this particular spell always needs awareness

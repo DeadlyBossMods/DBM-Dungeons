@@ -93,7 +93,7 @@ function mod:SPELL_CAST_START(args)
 	elseif spellId == 436592 then
 		self.vb.cannonCount = self.vb.cannonCount + 1
 		if self:IsTanking("player", "boss1", nil, true) then
-			specWarnCashCannon:Show()
+			specWarnCashCannon:Show(self.vb.cannonCount)
 			specWarnCashCannon:Play("carefly")
 		end
 		timerCashCannonCD:Start(nil, self.vb.cannonCount+1)

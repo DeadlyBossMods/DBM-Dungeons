@@ -6,7 +6,7 @@ mod:SetRevision("@file-date-integer@")
 mod:RegisterCombat("scenario", 2688)
 
 mod:RegisterEventsInCombat(
-	"SPELL_CAST_START 449072 448644 449038 450714",
+	"SPELL_CAST_START 449072 448644 449038",
 	--"SPELL_CAST_SUCCESS",
 	--"SPELL_AURA_APPLIED",
 	--"SPELL_AURA_REMOVED",
@@ -17,7 +17,6 @@ mod:RegisterEventsInCombat(
 
 local warnDrones							= mod:NewSpellAnnounce(449072, 2)
 
-local specWarnJaggedBarbs					= mod:NewSpecialWarningDodge(450714, nil, nil, nil, 2, 2)
 local specWarnBurrowingTremors				= mod:NewSpecialWarningRun(448644, nil, nil, nil, 4, 2)--Boss
 local specWarnImpalingStrikes				= mod:NewSpecialWarningDodge(449038, nil, nil, nil, 2, 2)--Boss
 
@@ -46,11 +45,6 @@ function mod:SPELL_CAST_START(args)
 			timerImpalingStrikesCD:Start(25.1)
 		else
 			timerImpalingStrikesCD:Start(31.5)
-		end
-	elseif args.spellId == 450714 then
-		if self:AntiSpam(3, 2) then
-			specWarnJaggedBarbs:Show()
-			specWarnJaggedBarbs:Play("shockwave")
 		end
 	end
 end

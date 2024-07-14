@@ -1,0 +1,21 @@
+## Interface: 11503
+## Title:|cffffe00a<|r|cffff7d0aDBM Tests|r|cffffe00a>|r |cff69ccf0Tests for Dungeon mods|r
+## IconTexture: Interface/AddOns/DBM-Core/textures/dbm_airhorn
+## Dependencies: DBM-Test
+## DefaultState: enabled
+## LoadOnDemand: 1
+## X-DBM-Test: true
+
+Vanilla/DemonFallCanyon/Grimroot.lua
+Vanilla/DemonFallCanyon/DestructorsWraith.lua
+Vanilla/DemonFallCanyon/Zilbagob.lua
+Vanilla/DemonFallCanyon/Pyranis.lua
+Vanilla/DemonFallCanyon/Diathorus.lua
+Vanilla/DemonFallCanyon/HellscreamsPhantom.lua
+
+Vanilla/DemonFallCanyon/Reports/Grimroot.lua
+Vanilla/DemonFallCanyon/Reports/DestructorsWraith.lua
+Vanilla/DemonFallCanyon/Reports/Zilbagob.lua
+Vanilla/DemonFallCanyon/Reports/Pyranis.lua
+Vanilla/DemonFallCanyon/Reports/Diathorus.lua
+Vanilla/DemonFallCanyon/Reports/HellscreamsPhantom.lua

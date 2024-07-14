@@ -81,7 +81,7 @@ end
 function mod:WrackingPainTarget(targetname)
 	if not targetname then return end
 	if targetname == UnitName("player") then
-		specWarnWrackingPainYou:Show(targetname)
+		specWarnWrackingPainYou:Show()
 		specWarnWrackingPainYou:Play("targetyou")
 	else
 		warnWrackingPain:Show(targetname)

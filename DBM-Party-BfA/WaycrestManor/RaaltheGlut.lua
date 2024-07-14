@@ -28,7 +28,7 @@ local warnConsumeAll				= mod:NewCastAnnounce(264734, 4)
 
 local specWarnServant				= mod:NewSpecialWarningSwitchCount(264931, nil, nil, nil, 1, 2)
 local specWarnTenderize				= mod:NewSpecialWarningDodge(264923, nil, nil, nil, 1, 2)
-local specWarnRottenExpulsion		= mod:NewSpecialWarningDodge(264694, nil, nil, nil, 1, 2)
+local specWarnRottenExpulsion		= mod:NewSpecialWarningDodgeCount(264694, nil, nil, nil, 1, 2)
 local specWarnGTFO					= mod:NewSpecialWarningGTFO(264712, nil, nil, nil, 1, 8)
 
 local timerServantCD				= mod:NewCDCountTimer(42.5, 264931, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)

@@ -30,7 +30,7 @@ mod:RegisterEventsInCombat(
 --]]
 local warnHatefulGaze				= mod:NewTargetNoFilterAnnounce(198079, 4)
 
-local specWarnStomp					= mod:NewSpecialWarningSpell(198073, nil, nil, nil, 2, 2)
+local specWarnStomp					= mod:NewSpecialWarningCount(198073, nil, nil, nil, 2, 2)
 local specWarnHatefulGaze			= mod:NewSpecialWarningDefensive(198079, nil, nil, nil, 1, 2)
 local yellHatefulGaze				= mod:NewYell(198079)
 local specWarnBrutalHaymakerSoon	= mod:NewSpecialWarningSoon(198245, "Tank|Healer", nil, nil, 1, 2)--Face fuck soon

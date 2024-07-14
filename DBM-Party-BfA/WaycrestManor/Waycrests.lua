@@ -30,7 +30,7 @@ mod:RegisterEventsInCombat(
 local warnVirulentPathogen			= mod:NewTargetAnnounce(261440, 2)
 local warnVitalityTransfer			= mod:NewCountAnnounce(261446, 2)
 
-local specWarnDiscordantCadenza		= mod:NewSpecialWarningDodge(268306, nil, nil, nil, 2, 2)
+local specWarnDiscordantCadenza		= mod:NewSpecialWarningDodgeCount(268306, nil, nil, nil, 2, 2)
 local specWarnVirulentPathogen		= mod:NewSpecialWarningMoveAway(261440, nil, nil, nil, 1, 2)
 local yellVirulentPathogen			= mod:NewShortYell(261440)
 local yellVirulentPathogenFades		= mod:NewShortFadesYell(261440)

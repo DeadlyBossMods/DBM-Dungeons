@@ -55,7 +55,7 @@ function mod:SPELL_CAST_START(args)
 	if spellId == 200732 then
 		self.vb.crashCount = self.vb.crashCount + 1
 		if self:IsTanking("player", "boss1", nil, true) then
-			specWarnMoltenCrash:Show(self.vb.crashCount)
+			specWarnMoltenCrash:Show()
 			specWarnMoltenCrash:Play("defensive")
 		end
 		timerMoltenCrashCD:Start(nil, self.vb.crashCount+1)

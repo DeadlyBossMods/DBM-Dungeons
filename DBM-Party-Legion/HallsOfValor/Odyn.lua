@@ -31,7 +31,7 @@ mod:RegisterEvents(
 --TODO, does boss still have old random tempest timers system from legion or are 10.0.2 changes universal?
 local warnSpear						= mod:NewSpellAnnounce(198072, 2)--Target not available so no target warning.
 
-local specWarnTempest				= mod:NewSpecialWarningRun(198263, nil, nil, nil, 4, 2)
+local specWarnTempest				= mod:NewSpecialWarningRunCount(198263, nil, nil, nil, 4, 2)
 local specWarnShatterSpears			= mod:NewSpecialWarningDodge(198077, nil, nil, nil, 2, 2)
 local specWarnRunicBrand			= mod:NewSpecialWarningMoveTo(197961, nil, nil, nil, 2, 6)
 local specWarnAdd					= mod:NewSpecialWarningSwitch(201221, "-Healer", nil, nil, 1, 2)

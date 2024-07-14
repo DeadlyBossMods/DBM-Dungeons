@@ -15,7 +15,7 @@ mod:RegisterCombat("combat")
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 421817 424212 429113 423109 425394 443835",
 --	"SPELL_CAST_SUCCESS",
-	"SPELL_AURA_APPLIED 421817 423080",
+	"SPELL_AURA_APPLIED 421817",--423080
 	"SPELL_AURA_REMOVED 421817"
 --	"SPELL_PERIODIC_DAMAGE",
 --	"SPELL_PERIODIC_MISSED"
@@ -29,7 +29,7 @@ mod:RegisterEventsInCombat(
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
 --]]
 local warnWicklighterBarrage				= mod:NewTargetNoFilterAnnounce(421817, 2)
-local warnExtinguishingGust					= mod:NewTargetNoFilterAnnounce(429113, 2)
+local warnExtinguishingGust					= mod:NewIncomingCountAnnounce(429113, 2)
 local warnEnkindlingInferno					= mod:NewCountAnnounce(423109, 3)
 local warnDousingBreath						= mod:NewCountAnnounce(425394, 3)
 local warnBlazingStorms						= mod:NewSpellAnnounce(443835, 3)
@@ -37,8 +37,8 @@ local warnBlazingStorms						= mod:NewSpellAnnounce(443835, 3)
 local specWarnWicklighterBarrage			= mod:NewSpecialWarningYou(421817, nil, nil, nil, 1, 2)
 local yellWicklighterBarrage				= mod:NewShortPosYell(421817)
 local specWarnInciteFlames					= mod:NewSpecialWarningCount(424212, nil, nil, nil, 2, 2)
-local specWarnExtinguishingGust				= mod:NewSpecialWarningYou(429113, nil, nil, nil, 1, 2)
-local yellExtinguishingGust					= mod:NewShortYell(429113)
+--local specWarnExtinguishingGust				= mod:NewSpecialWarningYou(429113, nil, nil, nil, 1, 2)
+--local yellExtinguishingGust					= mod:NewShortYell(429113)
 --local specWarnGTFO						= mod:NewSpecialWarningGTFO(372820, nil, nil, nil, 1, 8)
 
 local timerWicklighterBarrageCD				= mod:NewAITimer(33.9, 421817, nil, nil, nil, 3)
@@ -48,6 +48,7 @@ local timerEnkindlingInfernoCD				= mod:NewAITimer(33.9, 423109, nil, nil, nil, 
 local timerDousingBreathCD					= mod:NewAITimer(33.9, 425394, nil, nil, nil, 2)
 
 mod:AddSetIconOption("IconOnWick", 421817, true, 0, {1, 2, 3})
+mod:AddPrivateAuraSoundOption(423080, true, 429113, 1)
 
 mod.vb.debuffIcon = 1
 mod.vb.wickCount = 0
@@ -68,6 +69,7 @@ function mod:OnCombatStart(delay)
 	timerExtinguishingGustCD:Start(1-delay)
 	timerEnkindlingInfernoCD:Start(1-delay)
 	timerDousingBreathCD:Start(1-delay)
+	self:EnablePrivateAuraSound(423080, "targetyou", 2)
 end
 
 --function mod:OnCombatEnd()
@@ -87,6 +89,7 @@ function mod:SPELL_CAST_START(args)
 		timerInciteFlamesCD:Start()
 	elseif spellId == 429113 then
 		self.vb.gustCount = self.vb.gustCount + 1
+		warnExtinguishingGust:Show(self.vb.gustCount)
 		timerExtinguishingGustCD:Start()
 	elseif spellId == 423109 then
 		self.vb.infernoCount = self.vb.infernoCount + 1
@@ -123,13 +126,13 @@ function mod:SPELL_AURA_APPLIED(args)
 			self:SetIcon(args.destName, self.vb.debuffIcon)
 		end
 		self.vb.debuffIcon = self.vb.debuffIcon + 1
-	elseif spellId == 423080 then
-		warnExtinguishingGust:CombinedShow(0.5, args.destName)--Change to PreciseShow once we confirm if it's 2 or 4 targets
-		if args:IsPlayer() then
-			specWarnExtinguishingGust:Show()
-			specWarnExtinguishingGust:Play("targetyou")
-			yellExtinguishingGust:Yell()
-		end
+	--elseif spellId == 423080 then
+	--	warnExtinguishingGust:CombinedShow(0.5, args.destName)--Change to PreciseShow once we confirm if it's 2 or 4 targets
+	--	if args:IsPlayer() then
+	--		specWarnExtinguishingGust:Show()
+	--		specWarnExtinguishingGust:Play("targetyou")
+	--		yellExtinguishingGust:Yell()
+	--	end
 	end
 end
 --mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED

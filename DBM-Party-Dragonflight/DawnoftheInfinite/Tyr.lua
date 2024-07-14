@@ -87,7 +87,7 @@ function mod:SPELL_CAST_START(args)
 	if spellId == 401248 then
 		self.vb.sharedCount = self.vb.sharedCount + 1
 		if self:IsTanking("player", "boss1", nil, true) then
-			specWarnTitanicBlow:Show(self.vb.sharedCount)
+			specWarnTitanicBlow:Show()
 			specWarnTitanicBlow:Play("carefly")
 		end
 		--Shared Cd between 3 abilities, have to do fancy logic stuffs

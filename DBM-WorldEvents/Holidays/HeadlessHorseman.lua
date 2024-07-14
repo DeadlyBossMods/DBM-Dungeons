@@ -25,7 +25,7 @@ if mod:IsRetail() then--10.1.7 fight rework
 	local warnVineMarch									= mod:NewCountAnnounce(415047, 3)
 
 	local specWarnHotHead								= mod:NewSpecialWarningYou(423626, nil, nil, nil, 1, 2)
-	local specWarnInsidiousCackle						= mod:NewSpecialWarningMoveAway(415262, nil, nil, nil, 1, 2)
+	local specWarnInsidiousCackle						= mod:NewSpecialWarningMoveAwayCount(415262, nil, nil, nil, 1, 2)
 	local specWarnPumpkinBreath							= mod:NewSpecialWarningDodgeCount(414844, nil, nil, nil, 2, 2)
 	local specWarnGTFO									= mod:NewSpecialWarningGTFO(415329, nil, nil, nil, 1, 8)
 
