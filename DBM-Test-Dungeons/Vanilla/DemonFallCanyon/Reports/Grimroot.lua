@@ -17,7 +17,7 @@ Timers:
 			 Triggered 2x, delta times: 19.45, 44.81
 		[27.44] SPELL_AURA_REMOVED: [Grimroot->Grimroot: Tender's Rage] Creature-0-5252-2784-26746-226923-000012D5C6, Grimroot, 0xa48, Creature-0-5252-2784-26746-226923-000012D5C6, Grimroot, 0xa48, 460703, Tender's Rage, 0, BUFF, 0
 			 Triggered 2x, delta times: 27.44, 44.82
-	Gloom, time=30.70, type=cast, spellId=460727, triggerDeltas = 0.00, 30.78, 30.79
+	Gloom, time=30.70, type=next, spellId=460727, triggerDeltas = 0.00, 30.78, 30.79
 		[ 0.00] ENCOUNTER_START: 3023, Grimroot, 1, 5, 0
 		[30.78] SPELL_CAST_START: [Grimroot: Gloom] Creature-0-5252-2784-26746-226923-000012D5C6, Grimroot, 0xa48, "", nil, 0x0, 460727, Gloom, 0, 0
 			 Triggered 2x, delta times: 30.78, 30.79

@@ -3,7 +3,7 @@ local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
 mod:SetEncounterID(3023)
-mod:SetCreatureID(4275)
+mod:SetCreatureID(226923)
 
 mod:RegisterCombat("combat")
 
@@ -53,7 +53,7 @@ local specWarnFrenzy	= mod:NewSpecialWarningDispel(460703, "RemoveEnrage", nil, 
 
 local yellTears			= mod:NewIconRepeatYell(460512)
 
-local timerGloom		= mod:NewCDTimer(30.7, 460727, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerGloom		= mod:NewNextTimer(30.7, 460727, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerFrenzy		= mod:NewBuffActiveTimer(8, 460703, nil, nil, nil, 5)
 
 local playerGuid = UnitGUID("player")
@@ -73,8 +73,6 @@ mod.SPELL_MISSED = mod.SPELL_DAMAGE
 mod.SPELL_PERIODIC_DAMAGE = mod.SPELL_DAMAGE
 mod.SPELL_PERIODIC_MISSED = mod.SPELL_DAMAGE
 
--- TODO: i'm not sure if this is correct, the log above has the SPELL_AURA_APPLIED on a different player than the target
--- But the target was me, and I probably dodged, so worth trying.
 function mod:CorruptedTearsTarget(target)
 	if target == playerName then
 		yellTears:Yell(8)

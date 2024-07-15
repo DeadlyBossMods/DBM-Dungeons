@@ -56,6 +56,6 @@ Event trace:
 			Filtered: 2x SPELL_DAMAGE at 126.07, 126.57
 		ShowSpecialWarning: Spiritstorm damage - move away
 		PlaySound: VoicePack/watchfeet
-	[146.16] ENCOUNTER_END: 3031, Hellscream's Phantom, 1, 5, 1, 0
-		EndCombat: ENCOUNTER_END
+	[146.16] UNIT_DIED: [->Hellscream's Phantom] "", nil, 0x0, Vehicle-0-5252-2784-26746-227028-000012E50E, Hellscream's Phantom, 0xa48, -1, false, 0, 0
+		EndCombat: Main CID Down
 ]]
