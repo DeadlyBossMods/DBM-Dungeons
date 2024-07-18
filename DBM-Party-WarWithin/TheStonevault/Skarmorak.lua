@@ -5,7 +5,7 @@ mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(210156)
 mod:SetEncounterID(2880)
 mod:SetUsedIcons(8, 7, 6, 5)
---mod:SetHotfixNoticeRev(20220322000000)
+mod:SetHotfixNoticeRev(20240428000000)
 --mod:SetMinSyncRevision(20211203000000)
 --mod.respawnTime = 29
 mod.sendMainBossGUID = true
@@ -78,7 +78,10 @@ function mod:SPELL_CAST_START(args)
 		self.vb.addIcon = 8
 		self.vb.eruptionCount = 0
 		self.vb.smashCount = self.vb.smashCount + 1
-		timerCrystallineSmashCD:Start(nil, self.vb.smashCount+1)
+		--Timers for next odd are startd in phasing
+		if self.vb.smashCount % 2 == 1 then
+			timerCrystallineSmashCD:Start(nil, self.vb.smashCount+1)
+		end
 		if self:IsTanking("player", "boss1", nil, true) then
 			specWarnCrystallineSmash:Show()
 			specWarnCrystallineSmash:Play("defensive")
@@ -92,6 +95,9 @@ function mod:SPELL_CAST_START(args)
 		self.vb.unstablecrashCount = self.vb.unstablecrashCount + 1
 		specWarnUnstableCrash:Show(self.vb.unstablecrashCount)
 		specWarnUnstableCrash:Play("watchstep")
+		if self.vb.unstablecrashCount % 2 == 1 then
+			timerUnstableCrashCD:Start(nil, self.vb.unstablecrashCount+1)
+		end
 	end
 end
 
