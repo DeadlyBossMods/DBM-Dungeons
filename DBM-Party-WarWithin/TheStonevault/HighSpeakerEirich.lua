@@ -38,7 +38,7 @@ local specWarnUnbridledVoid					= mod:NewSpecialWarningDodgeCount(427869, nil, n
 
 local timerVoidCorruptionCD					= mod:NewCDCountTimer(27.9, 427329, nil, nil, nil, 3)--Medium priority, some delays
 local timerEntropicReckoningCD				= mod:NewCDCountTimer(16.9, 427854, nil, nil, nil, 3)--Lowest priority, biggest delays
-local timerUnbfridledVoidCD					= mod:NewCDCountTimer(20.6, 427869, nil, nil, nil, 3)--HIghest priority, no seen delays
+local timerUnbfridledVoidCD					= mod:NewCDCountTimer(20.6, 427869, nil, nil, nil, 3)--Medium priority, some delays
 
 mod.vb.corruptionCount = 0
 mod.vb.reckoningCount = 0
@@ -47,6 +47,7 @@ local voidName = DBM:GetSpellName(427315)
 
 --Unbridled Void does 4.8 lockout
 --Void Corruption does 2.4 lockout
+--Entropic Reckoning does 4.8 lockout
 local function updateAllTimers(self, ICD)
 	DBM:Debug("updateAllTimers running", 3)
 	if timerVoidCorruptionCD:GetRemaining(self.vb.corruptionCount+1) < ICD then
@@ -73,7 +74,7 @@ function mod:OnCombatStart(delay)
 	self.vb.corruptionCount = 0
 	self.vb.reckoningCount = 0
 	self.vb.unbridledCount = 0
-	timerUnbfridledVoidCD:Start(8.2-delay, 1)
+	timerUnbfridledVoidCD:Start(7.6-delay, 1)
 	timerVoidCorruptionCD:Start(15.5-delay, 1)
 	timerEntropicReckoningCD:Start(21.6-delay, 1)
 end
@@ -99,6 +100,7 @@ function mod:SPELL_CAST_START(args)
 			timerEntropicReckoningCD:Start(16.9, self.vb.reckoningCount+1)
 		end
 		timerEntropicReckoningCD:Start(nil, self.vb.reckoningCount+1)
+		updateAllTimers(self, 4.8)
 	elseif spellId == 427869 then
 		self.vb.unbridledCount = self.vb.unbridledCount + 1
 		specWarnUnbridledVoid:Show(self.vb.unbridledCount)

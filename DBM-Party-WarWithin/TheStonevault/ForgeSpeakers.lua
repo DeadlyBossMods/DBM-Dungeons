@@ -5,8 +5,8 @@ mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(213217, 213216)--Brokk, Dorlita
 mod:SetEncounterID(2888)
 mod:SetBossHPInfoToHighest()
---mod:SetHotfixNoticeRev(20220322000000)
---mod:SetMinSyncRevision(20211203000000)
+mod:SetHotfixNoticeRev(20240717000000)
+mod:SetMinSyncRevision(20240717000000)
 --mod.respawnTime = 29
 
 mod:RegisterCombat("combat")
@@ -41,23 +41,23 @@ local specWarnMoltenMetal					= mod:NewSpecialWarningInterruptCount(430097, "Has
 local specWarnScrapSong						= mod:NewSpecialWarningDodgeCount(428202, nil, nil, nil, 2, 2)
 --local yellSomeAbility						= mod:NewYell(372107)
 
+--Pretty much all of his timers can be delayed by up to 6 seconds by spell lockouts from interrupts
 local timerActivateVentilationCD			= mod:NewCDCountTimer(15.7, 445541, nil, nil, nil, 3)
 local timerActivateVentilation				= mod:NewBuffActiveTimer(9, 445541, nil, nil, nil, 5)
-local timerMoltenMetalCD					= mod:NewCDCountTimer(6.9, 430097, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--6.9 + spell lockout time?
-local timerScrapSongCD						= mod:NewCDCountTimer(54.5, 428202, nil, nil, nil, 3)
+local timerMoltenMetalCD					= mod:NewCDCountTimer(8.5, 430097, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerScrapSongCD						= mod:NewCDCountTimer(52.2, 428202, nil, nil, nil, 3)
 --Speaker Dorlita
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(28461))
-local warnDeconstruction					= mod:NewCountAnnounce(428508, 3)
+local warnDeconstruction					= mod:NewPreWarnAnnounce(428508, 7, 4)
 
-local specWarnMetalSplinters				= mod:NewSpecialWarningRunCount(428535, nil, nil, nil, 4, 2)
+local specWarnDeconstruction				= mod:NewSpecialWarningRunCount(428508, nil, nil, nil, 4, 2)
 local specWarnMoltenHammer					= mod:NewSpecialWarningDefensive(428711, nil, nil, nil, 1, 2)
 local specWarnLavaExpulsion					= mod:NewSpecialWarningDodgeCount(428120, nil, nil, nil, 2, 2)
 
 local timerDeconstructionCD					= mod:NewCDCountTimer(52.2, 428508, nil, nil, nil, 2)
-local timerMetalSplintersCD					= mod:NewNextCountTimer(7, 428535, nil, nil, nil, 2, nil, DBM_COMMON_L.HEALER_ICON..DBM_COMMON_L.DEADLY_ICON)
---local timerMetalSplinters					= mod:NewBuffActiveTimer(15, 428535, nil, nil, nil, 5, nil, DBM_COMMON_L.HEALER_ICON..DBM_COMMON_L.DEADLY_ICON)
+local timerDeconstruction					= mod:NewCastTimer(7, 428508, nil, nil, nil, 2, nil, DBM_COMMON_L.HEALER_ICON..DBM_COMMON_L.DEADLY_ICON)
 local timerMoltenHammerCD					= mod:NewCDCountTimer(12.1, 428711, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
-local timerLavaExpulsionCD					= mod:NewCDCountTimer(16.1, 428120, nil, nil, nil, 3)
+local timerLavaExpulsionCD					= mod:NewCDCountTimer(16.9, 428120, nil, nil, nil, 3)
 
 --Brokk
 mod.vb.ventilationCount = 0
@@ -68,7 +68,29 @@ mod.vb.deconstructCount = 0
 mod.vb.hammerCount = 0
 mod.vb.orbCount = 0
 
---local castsPerGUID = {}
+--Lava Expulsion triggers 3.5 second ICD on all of Dorlita's other abilities
+--Molten Metal Hammer 2 second ICD on all of Dorlita's other abilities
+--Deconstruction may trigger 13 second ICD on all of Dorlita's other abilities
+local function updateDorlitaTimers(self, ICD)
+	if timerMoltenHammerCD:GetRemaining(self.vb.hammerCount+1) < ICD then
+		local elapsed, total = timerMoltenHammerCD:GetTime(self.vb.hammerCount+1)
+		local extend = ICD - (total-elapsed)
+		DBM:Debug("timerMoltenHammerCD extended by: "..extend, 2)
+		timerMoltenHammerCD:Update(elapsed, total+extend, self.vb.hammerCount+1)
+	end
+	if timerLavaExpulsionCD:GetRemaining(self.vb.orbCount+1) < ICD then
+		local elapsed, total = timerLavaExpulsionCD:GetTime(self.vb.orbCount+1)
+		local extend = ICD - (total-elapsed)
+		DBM:Debug("timerLavaExpulsionCD extended by: "..extend, 2)
+		timerLavaExpulsionCD:Update(elapsed, total+extend, self.vb.orbCount+1)
+	end
+	if timerDeconstructionCD:GetRemaining(self.vb.deconstructCount+1) < ICD then
+		local elapsed, total = timerDeconstructionCD:GetTime(self.vb.deconstructCount+1)
+		local extend = ICD - (total-elapsed)
+		DBM:Debug("timerDeconstructionCD extended by: "..extend, 2)
+		timerDeconstructionCD:Update(elapsed, total+extend, self.vb.deconstructCount+1)
+	end
+end
 
 function mod:OnCombatStart(delay)
 	self.vb.ventilationCount = 0
@@ -77,13 +99,13 @@ function mod:OnCombatStart(delay)
 	self.vb.deconstructCount = 0
 	self.vb.hammerCount = 0
 	self.vb.orbCount = 0
-	timerMoltenMetalCD:Start(4.4-delay, 1)
-	timerActivateVentilationCD:Start(9.3-delay, 1)
-	timerScrapSongCD:Start(19-delay, 1)
+	timerMoltenMetalCD:Start(4-delay, 1)--4-5.2
+	timerScrapSongCD:Start(18.2-delay, 1)
+	timerActivateVentilationCD:Start(35-delay, 1)--35-41 based on spell lockouts from interrupts
 	--
-	timerMoltenHammerCD:Start(6.9-delay, 1)
+	timerMoltenHammerCD:Start(6-delay, 1)
 	timerLavaExpulsionCD:Start(12.1-delay, 1)
-	timerDeconstructionCD:Start(51-delay, 1)
+	timerDeconstructionCD:Start(47, 1)--47-53 based on spell lockouts from interrupts
 end
 
 --function mod:OnCombatEnd()
@@ -96,7 +118,7 @@ function mod:SPELL_CAST_START(args)
 		self.vb.ventilationCount = self.vb.ventilationCount  + 1
 		specWarnActivateVentilation:Show(self.vb.ventilationCount)
 		specWarnActivateVentilation:Play("watchstep")
-		timerActivateVentilationCD:Start(15.7, self.vb.ventilationCount+1)
+		timerActivateVentilationCD:Start(14.5, self.vb.ventilationCount+1)
 		timerActivateVentilation:Start()--3 + 6
 	elseif spellId == 430097 then
 		if self.vb.moltenMetalCount == 2 then self.vb.moltenMetalCount = 0 end
@@ -116,7 +138,7 @@ function mod:SPELL_CAST_START(args)
 		timerScrapSongCD:Start(nil, self.vb.cubeCount+1)
 		--These timers restart
 		timerMoltenMetalCD:Stop()
-		timerMoltenMetalCD:Start(7.3, self.vb.moltenMetalCount+1)
+		timerMoltenMetalCD:Start(7.2, self.vb.moltenMetalCount+1)
 		timerActivateVentilationCD:Stop()
 		timerActivateVentilationCD:Start(23.2, self.vb.ventilationCount+1)
 	elseif spellId == 428711 then
@@ -126,6 +148,7 @@ function mod:SPELL_CAST_START(args)
 			specWarnMoltenHammer:Play("defensive")
 		end
 		timerMoltenHammerCD:Start(nil, self.vb.hammerCount+1)
+		updateDorlitaTimers(self, 2)
 	end
 end
 
@@ -133,25 +156,34 @@ function mod:SPELL_CAST_SUCCESS(args)
 	local spellId = args.spellId
 	if spellId == 428508 then
 		self.vb.deconstructCount = self.vb.deconstructCount + 1
-		warnDeconstruction:Show(self.vb.deconstructCount)
+		warnDeconstruction:Show()
 		--timerDeconstructionCD:Start(nil, self.vb.deconstructCount+1)--Maybe move this somewhere else
-		timerMetalSplintersCD:Start(nil, self.vb.deconstructCount)--1 + 6
+		timerDeconstruction:Start(nil, self.vb.deconstructCount)--1 + 6
 
 		--This resets bosses other two abilities
 		--Above is no longer true in newer beta builds
---		timerMoltenHammerCD:Stop()--No Longer resets here
---		timerMoltenHammerCD:Start(13, self.vb.hammerCount+1)
---		timerLavaExpulsionCD:Stop()
---		timerLavaExpulsionCD:Start(19, self.vb.orbCount+1)
+		--This may still be wrong, it just needs monitoring
+		timerMoltenHammerCD:Stop()--Resets here again?
+		timerMoltenHammerCD:Start(13, self.vb.hammerCount+1)
+		timerLavaExpulsionCD:Stop()
+		timerLavaExpulsionCD:Start(19, self.vb.orbCount+1)
+		--Deconstruction seems to delay ventilation by 5 seconds, so extend it by 5 seconds
+		if timerActivateVentilationCD:GetRemaining(self.vb.ventilationCount+1) < 5 then
+			local elapsed, total = timerActivateVentilationCD:GetTime(self.vb.ventilationCount+1)
+			local extend = 5 - (total-elapsed)
+			DBM:Debug("timerActivateVentilationCD extended by: "..extend, 2)
+			timerActivateVentilationCD:Update(elapsed, total+extend, self.vb.ventilationCount+1)
+		end
+	--	updateDorlitaTimers(self, 13)
 	elseif spellId == 428535 then
-		specWarnMetalSplinters:Show(self.vb.deconstructCount)
-		specWarnMetalSplinters:Play("justrun")
---		timerMetalSplinters:Start()
+		specWarnDeconstruction:Show(self.vb.deconstructCount)
+		specWarnDeconstruction:Play("justrun")
 	elseif spellId == 428120 then
 		self.vb.orbCount = self.vb.orbCount + 1
 		specWarnLavaExpulsion:Show(self.vb.orbCount)
 		specWarnLavaExpulsion:Play("watchorb")
 		timerLavaExpulsionCD:Start(nil, self.vb.orbCount+1)
+		updateDorlitaTimers(self, 3.5)
 	end
 end
 
@@ -189,8 +221,7 @@ function mod:UNIT_DIED(args)
 		timerDeconstructionCD:Stop()
 		timerMoltenHammerCD:Stop()
 		timerLavaExpulsionCD:Stop()
-		timerMetalSplintersCD:Stop()
---		timerMetalSplinters:Stop()
+		timerDeconstruction:Stop()
 	end
 end
 
