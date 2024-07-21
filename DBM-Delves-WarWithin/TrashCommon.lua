@@ -157,7 +157,7 @@ function mod:SPELL_CAST_START(args)
 		if self:AntiSpam(3, 5) then
 			warnBattleRoar:Show()
 		end
-	elseif args.spellId == 418791 then
+	elseif args.spellId == 418791 and self:IsValidWarning(args.sourceGUID) then
 		if self:AntiSpam(3, 2) then
 			specWarnBladeRush:Show()
 			specWarnBladeRush:Play("chargemove")
