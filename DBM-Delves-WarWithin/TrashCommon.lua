@@ -36,6 +36,7 @@ local specWarnViciousStabs    				= mod:NewSpecialWarningDodge(424704, nil, nil,
 local specWarnBlazingWick    				= mod:NewSpecialWarningDodge(449071, nil, nil, nil, 2, 2)
 local specWarnBladeRush						= mod:NewSpecialWarningDodge(418791, nil, nil, nil, 2, 2)
 local specWarnDefilingBreath				= mod:NewSpecialWarningDodge(455932, nil, nil, nil, 2, 2)
+local specWarnSerratedCleave				= mod:NewSpecialWarningDodge(445492, nil, nil, nil, 2, 2)--Possible 40 sec CD
 local specWarnNecroticEnd					= mod:NewSpecialWarningRun(445252, nil, nil, nil, 4, 2)
 local specWarnCurseoftheDepths				= mod:NewSpecialWarningDispel(440622, "RemoveCurse", nil, nil, 1, 2)
 local specWarnShadowsofStrife				= mod:NewSpecialWarningInterrupt(449318, "HasInterrupt", nil, nil, 1, 2)--High Prio Interrupt
@@ -71,8 +72,8 @@ do
 		if not force and validZones[currentZone] and not eventsRegistered then
 			eventsRegistered = true
 			self:RegisterShortTermEvents(
-                "SPELL_CAST_START 449318 450546 433410 450714 445781 415253 425040 424704 424798 414944 418791 424891 450197 448399 445191 430037 455932",
-                "SPELL_CAST_SUCCESS 414944 424614 418791 424891 427812 450546 450197 415253 449318 445191 430036",
+                "SPELL_CAST_START 449318 450546 433410 450714 445781 415253 425040 424704 424798 414944 418791 424891 450197 448399 445191 455932 445492",
+                "SPELL_CAST_SUCCESS 414944 424614 418791 424891 427812 450546 450197 415253 449318 445191 430036 445252",
 				"SPELL_INTERRUPT",
                 "SPELL_AURA_APPLIED 424614 449071 418297 430036 440622",
                 --"SPELL_AURA_REMOVED",
@@ -182,15 +183,15 @@ function mod:SPELL_CAST_START(args)
 		if self:AntiSpam(3, 7) then
 			warnWicklighterVolley:Show()
 		end
-	elseif args.spellId == 430037 then
+	elseif args.spellId == 455932 then
 		if self:AntiSpam(3, 2) then
 			specWarnDefilingBreath:Show()
 			specWarnDefilingBreath:Play("shockwave")
 		end
-	elseif args.spellId == 455932 then
+	elseif args.spellId == 445492 then
 		if self:AntiSpam(3, 2) then
-			specWarnNecroticEnd:Show()
-			specWarnNecroticEnd:Play("justrun")
+			specWarnSerratedCleave:Show()
+			specWarnSerratedCleave:Play("shockwave")
 		end
 	end
 end
@@ -225,6 +226,11 @@ function mod:SPELL_CAST_SUCCESS(args)
 		timerWicklighterVolleyCD:Start(18.3, args.sourceGUID)--21.8 - 3.5
 	elseif args.spellId == 430036 then
 		timerSpearFishCD:Start(12.1, args.sourceGUID)
+	elseif args.spellId == 445252 then
+		if self:AntiSpam(3, 2) then
+			specWarnNecroticEnd:Show()
+			specWarnNecroticEnd:Play("justrun")
+		end
 	end
 end
 
