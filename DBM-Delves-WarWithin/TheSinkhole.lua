@@ -2,6 +2,8 @@ local mod	= DBM:NewMod("z2687", "DBM-Delves-WarWithin")
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
+mod:SetHotfixNoticeRev(20240422000000)
+mod:SetMinSyncRevision(20240422000000)
 
 mod:RegisterCombat("scenario", 2687, 2767)--2767 likely not used player facing
 
@@ -91,25 +93,25 @@ end
 
 function mod:ENCOUNTER_END(eID, _, _, _, success)
 	if eID == 2999 then--Mirror Master Murkna
-		if success then
+		if success == 1 then
 			DBM:EndCombat(self)
 		else
 			--Stop Timers manually
 		end
 	elseif eID == 3000 then--Bloated Drowner
-		if success then
+		if success == 1 then
 			DBM:EndCombat(self)
 		else
 			--Stop Timers manually
 		end
 	elseif eID == 3001 then--Cragpie
-		if success then
+		if success == 1 then
 			DBM:EndCombat(self)
 		else
 			--Stop Timers manually
 		end
 	elseif eID == 3002 then--Leviathan Caller
-		if success then
+		if success == 1 then
 			DBM:EndCombat(self)
 		else
 			timerCalloftheAbyssCD:Stop()

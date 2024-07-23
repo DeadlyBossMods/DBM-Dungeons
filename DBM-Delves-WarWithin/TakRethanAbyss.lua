@@ -2,6 +2,8 @@ local mod	= DBM:NewMod("z2689", "DBM-Delves-WarWithin")
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
+mod:SetHotfixNoticeRev(20240422000000)
+mod:SetMinSyncRevision(20240422000000)
 
 mod:RegisterCombat("scenario", 2689, 2768)
 
@@ -98,7 +100,7 @@ end
 
 function mod:ENCOUNTER_END(eID, _, _, _, success)
 	if eID == 2895 then--Undersea Abomination
-		if success then
+		if success == 1 then
 			DBM:EndCombat(self)
 		else
 			--Stop Timers manually
@@ -107,7 +109,7 @@ function mod:ENCOUNTER_END(eID, _, _, _, success)
 			timerFungalInfectionCD:Stop()
 		end
 	elseif eID == 3004 then--Evolved Nerubian Leaders
-		if success then
+		if success == 1 then
 			DBM:EndCombat(self)
 		else
 			--Stop Timers manually

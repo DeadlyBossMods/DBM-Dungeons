@@ -2,6 +2,8 @@ local mod	= DBM:NewMod("z2680", "DBM-Delves-WarWithin")
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
+mod:SetHotfixNoticeRev(20240422000000)
+mod:SetMinSyncRevision(20240422000000)
 
 mod:RegisterCombat("scenario", 2680)
 
@@ -99,7 +101,7 @@ end
 
 function mod:ENCOUNTER_END(eID, _, _, _, success)
 	if eID == 2877 then--Web General Ab'enar
-		if success then
+		if success == 1 then
 			DBM:EndCombat(self)
 		else
 			timerWebBoltCD:Stop()
@@ -108,7 +110,7 @@ function mod:ENCOUNTER_END(eID, _, _, _, success)
 			timerRunicShacklesCD:Stop()
 		end
 	elseif eID == 3005 then--Maklin Drillstab
-		if success then
+		if success == 1 then
 			DBM:EndCombat(self)
 		else
 			--Timers
