@@ -2,6 +2,8 @@ local mod	= DBM:NewMod("z2684", "DBM-Delves-WarWithin")
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
+mod:SetHotfixNoticeRev(20240422000000)
+mod:SetMinSyncRevision(20240422000000)
 
 mod:RegisterCombat("scenario", 2684)
 
@@ -95,7 +97,7 @@ end
 
 function mod:ENCOUNTER_END(eID, _, _, _, success)
 	if eID == 2989 then--Under-Lord Vik'tis
-		if success then
+		if success == 1 then
 			DBM:EndCombat(self)
 		else
 			timerBurrowingTremorsCD:Stop()

@@ -2,12 +2,14 @@ local mod	= DBM:NewMod("z2689", "DBM-Delves-WarWithin")
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
+mod:SetHotfixNoticeRev(20240422000000)
+mod:SetMinSyncRevision(20240422000000)
 
 mod:RegisterCombat("scenario", 2689, 2768)
 
 mod:RegisterEventsInCombat(
---	"SPELL_CAST_START ",
---	"SPELL_CAST_SUCCESS",
+	"SPELL_CAST_START 446300 446230",
+	"SPELL_CAST_SUCCESS 446405",
 --	"SPELL_AURA_APPLIED",
 --	"SPELL_AURA_REMOVED",
 --	"SPELL_PERIODIC_DAMAGE",
@@ -18,28 +20,35 @@ mod:RegisterEventsInCombat(
 
 --local warnDrones							= mod:NewSpellAnnounce(449072, 2)
 
---local specWarnFearfulShriek				= mod:NewSpecialWarningDodge(433410, nil, nil, nil, 2, 2)
+local specWarnDeepseaPolyps					= mod:NewSpecialWarningDodge(446300, nil, nil, nil, 2, 2)
+local specWarnRepellingBlast				= mod:NewSpecialWarningRun(446230, nil, nil, nil, 4, 2)
+local specWarnFungalInfection				= mod:NewSpecialWarningDodge(446405, nil, nil, nil, 2, 2)
 
---local timerShadowsofStrifeCD				= mod:NewCDNPTimer(12.4, 449318, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
---local timerBurrowingTremorsCD				= mod:NewCDTimer(31.5, 448644, nil, nil, nil, 5)
+local timerDeepseaPolypsCD					= mod:NewCDTimer(20.7, 446300, nil, nil, nil, 3)
+local timerRepellingBlastCD					= mod:NewCDTimer(20.7, 446230, nil, nil, nil, 3)
+local timerFungalInfectionCD				= mod:NewCDTimer(20.7, 446405, nil, nil, nil, 3)
 
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc, 7 off interrupt
 
---[[
 function mod:SPELL_CAST_START(args)
-	if args.spellId == 449318 then
-
+	if args.spellId == 446300 then
+		specWarnDeepseaPolyps:Show()
+		specWarnDeepseaPolyps:Play("watchstep")
+		timerDeepseaPolypsCD:Start()
+	elseif args.spellId == 446230 then
+		specWarnRepellingBlast:Show()
+		specWarnRepellingBlast:Play("justrun")
+		timerRepellingBlastCD:Start()
 	end
 end
---]]
 
---[[
 function mod:SPELL_CAST_SUCCESS(args)
-	if args.spellId == 138680 then
-
+	if args.spellId == 446405 then
+		specWarnFungalInfection:Show()
+		specWarnFungalInfection:Play("shockwave")
+		timerFungalInfectionCD:Start()
 	end
 end
---]]
 
 --[[
 function mod:SPELL_AURA_APPLIED(args)
@@ -78,7 +87,12 @@ end
 
 function mod:ENCOUNTER_START(eID)
 	if eID == 2895 then--Undersea Abomination
-		DBM:AddMsg("Boss alerts/timers not yet implemented for Undersea Abomination")
+		--"Deepsea Polyps-446300-npc:214348-00001E9222 = pull:11.6, 23.1, 20.7, 21.9, 23.1, 21.9, 21.9",
+		--"Repelling Blast-446230-npc:214348-00001E9222 = pull:22.5, 42.5, 23.1, 21.9, 21.9",
+		--"Fungal Infection-446405-npc:214348-00001E9222 = pull:4.3, 23.1, 20.7, 21.9, 23.1, 21.9, 21.9", (success)
+		timerDeepseaPolypsCD:Start(11.6)
+		timerRepellingBlastCD:Start(22.5)
+		timerFungalInfectionCD:Start(4.3)
 	elseif eID == 3004 then--Evolved Nerubian Leaders
 		DBM:AddMsg("Boss alerts/timers not yet implemented for Evolved Nerubian Leaders")
 	end
@@ -86,13 +100,16 @@ end
 
 function mod:ENCOUNTER_END(eID, _, _, _, success)
 	if eID == 2895 then--Undersea Abomination
-		if success then
+		if success == 1 then
 			DBM:EndCombat(self)
 		else
 			--Stop Timers manually
+			timerDeepseaPolypsCD:Stop()
+			timerRepellingBlastCD:Stop()
+			timerFungalInfectionCD:Stop()
 		end
 	elseif eID == 3004 then--Evolved Nerubian Leaders
-		if success then
+		if success == 1 then
 			DBM:EndCombat(self)
 		else
 			--Stop Timers manually
