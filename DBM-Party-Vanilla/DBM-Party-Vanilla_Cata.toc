@@ -106,6 +106,7 @@ Classic\UpperBlackrockSpire\GoralukAnvilcrack.lua
 Classic\UpperBlackrockSpire\JedRunewatcher.lua
 Classic\UpperBlackrockSpire\WarchiefRendBlackhand.lua
 Classic\UpperBlackrockSpire\TheBeast.lua
+Classic\UpperBlackrockSpire\LordValthalak.lua
 Classic\UpperBlackrockSpire\GeneralDrakkisath.lua
 
 Shared\Maraudon\Noxxion.lua
