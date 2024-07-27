@@ -37,21 +37,12 @@ local warnGaleStrike							= mod:NewCastAnnounce(88061, 3, nil, nil, "Tank|Heale
 local warnIcyBuffet								= mod:NewCastAnnounce(88194, 3, nil, nil, "Tank|Healer")
 local warnRally									= mod:NewCastAnnounce(87761, 3, nil, nil, "Tank|Healer")
 local warnHealingWell							= mod:NewCastAnnounce(88201, 2)
-local warnCloudGuard							= mod:NewCastAnnounce(411000, 2)
 local warnWindblast								= mod:NewSpellAnnounce(87923, 2, nil, "RemoveMagic|Tank")
-local warnPressurizedBlast						= mod:NewCastAnnounce(410999, 4)
-local warnBombCyclone							= mod:NewSpellAnnounce(411005, 3)
-local warnWindFlurry							= mod:NewSpellAnnounce(410998, 3, nil, "Tank|Healer")
-local warnLethalCurrent							= mod:NewCastAnnounce(411001, 4)
-local warnOverloadGroundingField				= mod:NewCastAnnounce(413385, 4)
 local warnLightningLash							= mod:NewTargetAnnounce(87762, 3)
 
-local specWarnTurbulence						= mod:NewSpecialWarningSpell(411002, nil, nil, nil, 2, 2)
-local specWarnChillingBreath					= mod:NewSpecialWarningDodge(411012, nil, nil, nil, 2, 2)
 local specWarnStormSurge						= mod:NewSpecialWarningRun(88055, nil, nil, nil, 4, 2)--Mob is immune to displacements and interrupts, this is an 8 yard range run out
-local specWarnOverloadGroundingField			= mod:NewSpecialWarningRun(413385, nil, nil, nil, 4, 2)
+
 local specWarnLightningLash						= mod:NewSpecialWarningMoveTo(87762, nil, nil, nil, 1, 2)
---local yellnViciousAmbush						= mod:NewYell(388984)
 local specWarnCyclone							= mod:NewSpecialWarningInterrupt(88010, "HasInterrupt", nil, nil, 1, 2)
 local specWarnGreaterHeal						= mod:NewSpecialWarningInterrupt(87779, "HasInterrupt", nil, nil, 1, 2)
 local specWarnVaporForm							= mod:NewSpecialWarningDispel(88186, "MagicDispeller", nil, nil, 1, 2)
@@ -64,15 +55,33 @@ local timerRallyCD								= mod:NewCDNPTimer(26.7, 87761, nil, nil, nil, 5)
 local timerShockwaveCD							= mod:NewCDNPTimer(20.2, 87759, nil, "Tank|Healer", nil, 3)
 local timerIcyBuffetCD							= mod:NewCDNPTimer(22.6, 88194, nil, "Tank|Healer", nil, 3)
 local timerWindBlastCD							= mod:NewCDNPTimer(10.1, 87923, nil, "Tank|MagicDispeller", nil, 5, nil, DBM_COMMON_L.MAGIC_ICON)--Retail 10.0 value
-local timerCloudGuardCD							= mod:NewCDNPTimer(19.1, 411000, nil, nil, nil, 5)
-local timerPressurizedBlastCD					= mod:NewCDNPTimer(21.8, 410999, nil, nil, nil, 2)
-local timerBombCycloneCD						= mod:NewCDNPTimer(15.7, 411005, nil, nil, nil, 3)--15.9-17.1
-local timerTurbulenceCD							= mod:NewCDNPTimer(32.8, 411002, nil, nil, nil, 2)
-local timerWindFlurryCD							= mod:NewCDNPTimer(10.1, 410998, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+
 local timerLightningLashCD						= mod:NewCDNPTimer(19, 87762, nil, nil, nil, 3)
-local timerOverloadGroundingFieldCD				= mod:NewCDNPTimer(20.5, 413385, nil, nil, nil, 3)
+
 local timerGreaterHealCD						= mod:NewCDNPTimer(14.1, 87779, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--Post retial May 30th 2023 hotfix, in cataclysm this will still be like 3 second CD
 
+local warnCloudGuard, warnPressurizedBlast, warnBombCyclone, warnWindFlurry, warnLethalCurrent, warnOverloadGroundingField
+local specWarnTurbulence, specWarnChillingBreath, specWarnOverloadGroundingField
+local timerCloudGuardCD, timerPressurizedBlastCD, timerBombCycloneCD, timerTurbulenceCD, timerWindFlurryCD, timerOverloadGroundingFieldCD
+if mod:IsRetail() then
+	warnCloudGuard								= mod:NewCastAnnounce(411000, 2)
+	warnPressurizedBlast						= mod:NewCastAnnounce(410999, 4)
+	warnBombCyclone								= mod:NewSpellAnnounce(411005, 3)
+	warnWindFlurry								= mod:NewSpellAnnounce(410998, 3, nil, "Tank|Healer")
+	warnLethalCurrent							= mod:NewCastAnnounce(411001, 4)
+	warnOverloadGroundingField					= mod:NewCastAnnounce(413385, 4)
+
+	specWarnTurbulence							= mod:NewSpecialWarningSpell(411002, nil, nil, nil, 2, 2)
+	specWarnChillingBreath						= mod:NewSpecialWarningDodge(411012, nil, nil, nil, 2, 2)
+	specWarnOverloadGroundingField				= mod:NewSpecialWarningRun(413385, nil, nil, nil, 4, 2)
+
+	timerCloudGuardCD							= mod:NewCDNPTimer(19.1, 411000, nil, nil, nil, 5)
+	timerPressurizedBlastCD						= mod:NewCDNPTimer(21.8, 410999, nil, nil, nil, 2)
+	timerBombCycloneCD							= mod:NewCDNPTimer(15.7, 411005, nil, nil, nil, 3)--15.9-17.1
+	timerTurbulenceCD							= mod:NewCDNPTimer(32.8, 411002, nil, nil, nil, 2)
+	timerWindFlurryCD							= mod:NewCDNPTimer(10.1, 410998, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+	timerOverloadGroundingFieldCD				= mod:NewCDNPTimer(20.5, 413385, nil, nil, nil, 3)
+end
 
 --local playerName = UnitName("player")
 
