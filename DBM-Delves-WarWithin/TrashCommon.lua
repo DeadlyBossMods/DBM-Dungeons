@@ -82,14 +82,13 @@ do
 		if not force and validZones[currentZone] and not eventsRegistered then
 			eventsRegistered = true
 			self:RegisterShortTermEvents(
-                "SPELL_CAST_START 449318 450546 433410 450714 445781 415253 425040 424704 424798 414944 418791 424891 450197 448399 445191 455932 445492 434281 450637 445210 448528",
+                "SPELL_CAST_START 449318 450546 433410 450714 445781 415253 425040 424704 424798 414944 418791 424891 450197 448399 445191 455932 445492 434281 450637 445210 448528 449071",
                 "SPELL_CAST_SUCCESS 414944 424614 418791 424891 427812 450546 450197 415253 449318 445191 430036 445252 425040 424704 448399 448528",
 				"SPELL_INTERRUPT",
                 "SPELL_AURA_APPLIED 424614 449071 418297 430036 440622 441129",
                 --"SPELL_AURA_REMOVED",
                 --"SPELL_PERIODIC_DAMAGE",
-                "UNIT_DIED",
-				"UNIT_SPELLCAST_START_UNFILTERED"
+                "UNIT_DIED"
 			)
 			DBM:Debug("Registering Delve events")
 		elseif force or (not validZones[currentZone] and eventsRegistered) then
@@ -218,6 +217,11 @@ function mod:SPELL_CAST_START(args)
 	elseif args.spellId == 448528 then
 		if self:AntiSpam(3, 6) then
 			warnThrowDyno:Show()
+		end
+	elseif args.spellId == 449071 then
+		if self:AntiSpam(3, 2) then
+			specWarnBlazingWick:Show()
+			specWarnBlazingWick:Play("shockwave")
 		end
 	end
 end
@@ -374,21 +378,5 @@ function mod:UNIT_DIED(args)
 		timerSpearFishCD:Stop(args.destGUID)
 	elseif cid == 211777 then--Spitfire Fusetender
 		timerThrowDynoCD:Stop(args.destGUID)
-	end
-end
-
---Initial cast not in combat log, must monitor USS unfiltered so it'll scan any number of nameplates as well
-function mod:UNIT_SPELLCAST_START_UNFILTERED(uID, _, spellId)
-	if spellId == 449071 then
-		if self:AntiSpam(3, 2) then
-			self:SendSync("blazingwick", UnitGUID(uID))
-		end
-	end
-end
-
-function mod:OnSync(msg)
-	if msg == "blazingwick" then
-		specWarnBlazingWick:Show()
-		specWarnBlazingWick:Play("shockwave")
 	end
 end
