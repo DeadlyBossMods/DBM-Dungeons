@@ -64,6 +64,19 @@ function mod:SPELL_AURA_APPLIED(args)
 	end
 end
 
+--[[
+At least on SoD this guy is messed up, example log 1:
+"<77.23 13:39:16> [CLEU] UNIT_DIED##nil#Creature-0-5209-329-5980-10812-000026262A#Grand Crusader Dathrohan#-1#false#nil#nil#nil#nil#nil#nil",
+Now that looks normal, but actually is Balnazzar dying, no UNIT_DIED event for the first phase
+
+Example log 2:
+"<71.43 14:09:38> [CLEU] UNIT_DIED##nil#Creature-0-5210-329-9181-10812-0000262F38#Balnazzar#-1#false#nil#nil#nil#nil#nil#nil",
+Same creature id, different name, what?
+10813 never shows up in the logs at all.
+
+But it looks like we get ENCOUNTER_START/END events now, I did a run early in phase 4 where the event was missing and hence kill detection didn't work.
+But as of 28/7/2024 this seems to be working, so no change needed.
+]]
 function mod:UNIT_DIED(args)
 	if self:GetCIDFromGUID(args.destGUID) == 10813 then
 		DBM:EndCombat(self)
