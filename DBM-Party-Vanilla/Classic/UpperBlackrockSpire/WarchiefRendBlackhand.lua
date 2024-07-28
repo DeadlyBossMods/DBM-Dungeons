@@ -12,7 +12,7 @@ mod:RegisterEvents("CHAT_MSG_MONSTER_YELL")
 local timerCombatStart = DBM:IsClassic() and mod:NewCombatTimer(94.6) or nil -- TODO: migrate to NilWarning after core release
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
-	if msg == L.Pull1 or msg:find(L.Pull2) then
+	if msg == L.Pull1 or msg:find(L.Pull1) then
 		self:SendSync("Pull1")
 	elseif msg == L.Pull2 or msg:find(L.Pull2) then
 		self:SendSync("Pull2")
@@ -54,6 +54,12 @@ No one ran at him
 95.33 "<779.73 12:24:17> [CLEU] SWING_DAMAGE#Creature-0-5252-229-15748-10339-000024CAC6#Gyth#Player-5826-01FDC54A#Natarka#307#-1#nil#nil#false#false#nil#nil",
 97.32 "<781.72 12:24:19> [PLAYER_REGEN_DISABLED] +Entering combat!",
 
+Targeting as soon as possible, but no one was up front just waiting to attack
+      "<922.44 01:13:04> [CHAT_MSG_MONSTER_YELL] THIS CANNOT BE!!! Rend, deal with these insects.#Lord Victor Nefarius#####0#0##0#9039#nil#0#false#false#false#false",
+95.07 "<1017.51 01:14:39> [PLAYER_TARGET_CHANGED] 62 Hostile (elite Dragonkin) - Gyth # Creature-0-5250-229-385-10339-0000257F54",
+95.72 "<1018.16 01:14:39> [CLEU] SPELL_CAST_SUCCESS#Player-5826-02011C01#Lisbeath#Creature-0-5250-229-385-10339-0000257F54#Gyth#10894#Shadow Word: Pain#nil#nil#nil#nil#nil#nil",
+96.05 "<1018.49 01:14:40> [PLAYER_REGEN_DISABLED] +Entering combat!",
+
 So looks like ~94.6 is the earliest you can attack him
 
 Overall the RP does not seem to be just a simple timer :(
@@ -94,5 +100,17 @@ But at least in SoD people are clearing it *fast*, so it's mostly deterministic.
 "<1040.21 19:31:21> [CHAT_MSG_MONSTER_YELL] With pleasure...#Warchief Rend Blackhand###Lord Victor Nefarius##0#0##0#18183#nil#0#false#false#false#false",
 "<1041.83 19:31:23> [CHAT_MSG_MONSTER_YELL] The Warchief shall make quick work of you, mortals. Prepare yourselves!#Lord Victor Nefarius#####0#0##0#18185#nil#0#false#false#false#false",
 474.56 total
+
+"<475.10 01:05:36> [CHAT_MSG_MONSTER_YELL] Excellent... it would appear as if the meddlesome insects have arrived just in time to feed my legion. Welcome, mortals!#Lord Victor Nefarius###Aliani##0#0##0#8707#nil#0#false#false#false#false",
+"<483.21 01:05:45> [CHAT_MSG_MONSTER_YELL] Let not even a drop of their blood remain upon the arena floor, my children. Feast on their souls!#Lord Victor Nefarius###Aliani##0#0##0#8711#nil#0#false#false#false#false",
+"<505.90 01:06:07> [CHAT_MSG_MONSTER_YELL] Curse you, mortal.#Lord Victor Nefarius###Aliani##0#0##0#8721#nil#0#false#false#false#false",
+"<570.62 01:07:12> [CHAT_MSG_MONSTER_YELL] I promise you an eternity of dung clean up duty for that failure!#Lord Victor Nefarius###Orcalas##0#0##0#8772#nil#0#false#false#false#false",
+"<898.14 01:12:39> [CHAT_MSG_MONSTER_YELL] Do not consume the entire corpse just yet, children! Save room for dessert!#Lord Victor Nefarius#####0#0##0#9017#nil#0#false#false#false#false",
+"<898.14 01:12:39> [CHAT_MSG_MONSTER_YELL] I want those boots! Nobody touch that corpse!#Warchief Rend Blackhand#####0#0##0#9018#nil#0#false#false#false#false",
+"<904.63 01:12:46> [CHAT_MSG_MONSTER_YELL] Concentrate your attacks upon the healer!#Lord Victor Nefarius###Lisbeath##0#0##0#9026#nil#0#false#false#false#false",
+"<922.44 01:13:04> [CHAT_MSG_MONSTER_YELL] THIS CANNOT BE!!! Rend, deal with these insects.#Lord Victor Nefarius#####0#0##0#9039#nil#0#false#false#false#false",
+"<923.96 01:13:05> [CHAT_MSG_MONSTER_YELL] With pleasure...#Warchief Rend Blackhand###Lord Victor Nefarius##0#0##0#9040#nil#0#false#false#false#false",
+"<925.69 01:13:07> [CHAT_MSG_MONSTER_YELL] The Warchief shall make quick work of you, mortals. Prepare yourselves!#Lord Victor Nefarius#####0#0##0#9043#nil#0#false#false#false#false",
+450.59 total -- this was a "clean" run, doing everything as intended, i.e., no weird extra pulls through the walls, at least the long ones definitely had the extra pulls
 
 ]]
