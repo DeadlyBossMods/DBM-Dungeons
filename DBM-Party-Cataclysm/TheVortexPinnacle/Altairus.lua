@@ -39,13 +39,17 @@ local warnUpwind			= mod:NewSpellAnnounce(88282, 1)
 
 --local specWarnBreath		= mod:NewSpecialWarningYou(88308, "-Tank", nil, 2, 1, 2)
 local specWarnBreath		= mod:NewSpecialWarningDodgeCount(88308, nil, nil, nil, 2, 2)
-local specWarnDownburst		= mod:NewSpecialWarningMoveTo(413295, nil, nil, nil, 2, 14, 4)
 local specWarnDownwind		= mod:NewSpecialWarningSpell(88286, nil, nil, nil, 1, 14)
 local specWarnGTFO			= mod:NewSpecialWarningGTFO(413275, nil, nil, nil, 1, 8)
 
 local timerCalltheWindCD	= mod:NewCDCountTimer(20.6, 88276, nil, nil, nil, 6)
 local timerBreathCD			= mod:NewCDCountTimer(13.4, 88308, nil, nil, nil, 3)--May be 10.5 pre nerf for cata classic
-local timerDownburstCD		= mod:NewCDCountTimer(35.1, 413295, nil, nil, nil, 3, nil, DBM_COMMON_L.MYTHIC_ICON)--35.1-44
+
+local specWarnDownburst, timerDownburstCD
+if mod:IsRetail() then
+	specWarnDownburst		= mod:NewSpecialWarningMoveTo(413295, nil, nil, nil, 2, 14, 4)
+	timerDownburstCD		= mod:NewCDCountTimer(35.1, 413295, nil, nil, nil, 3, nil, DBM_COMMON_L.MYTHIC_ICON)--35.1-44
+end
 
 --mod:AddSetIconOption("BreathIcon", 88308, true, false, {8})
 
