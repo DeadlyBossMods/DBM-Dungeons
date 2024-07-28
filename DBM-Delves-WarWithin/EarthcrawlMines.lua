@@ -24,8 +24,8 @@ local warnRunicShackles						= mod:NewSpellAnnounce(448444, 2)
 
 local specWarnBurningCart					= mod:NewSpecialWarningDodge(448412, nil, nil, nil, 2, 2)
 
-local timerCurseOfAgonyCD					= mod:NewCDTimer(26.7, 448443, nil, nil, nil, 3, nil, DBM_COMMON_L.CURSE_ICON)
-local timerRunicShacklesCD					= mod:NewCDTimer(35.2, 448444, nil, nil, nil, 3, nil, DBM_COMMON_L.CURSE_ICON)--Poor Sample size
+local timerCurseOfAgonyCD					= mod:NewCDTimer(24.2, 448443, nil, nil, nil, 3, nil, DBM_COMMON_L.CURSE_ICON)
+local timerRunicShacklesCD					= mod:NewCDTimer(32.9, 448444, nil, nil, nil, 3, nil, DBM_COMMON_L.CURSE_ICON)
 local timerWebBoltCD						= mod:NewCDTimer(6, 449568, nil, false, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerBurningCartCD					= mod:NewCDTimer(35.2, 448412, nil, nil, nil, 3, nil, DBM_COMMON_L.DEADLY_ICON)
 
@@ -33,10 +33,12 @@ local timerBurningCartCD					= mod:NewCDTimer(35.2, 448412, nil, nil, nil, 3, ni
 
 function mod:SPELL_CAST_START(args)
 	if args.spellId == 448443 then
+		--8.1, 24.2, 25.5, 24.3"
 		warnCurseOfAgony:Show()
 		timerCurseOfAgonyCD:Start()
 	elseif args.spellId == 448444 then
 		--22.1, 37.2
+		--20.6, 37.6, 32.9
 		warnRunicShackles:Show()
 		timerRunicShacklesCD:Start()
 	elseif args.spellId == 449568 then
@@ -91,9 +93,9 @@ function mod:ENCOUNTER_START(eID)
 	if eID == 2877 then--Web General Ab'enar
 		--Start some timers
 		timerWebBoltCD:Start(2.2)
-		timerCurseOfAgonyCD:Start(6.2)
-		timerBurningCartCD:Start(12.3)
-		timerRunicShacklesCD:Start(20.8)
+		timerCurseOfAgonyCD:Start(6.2)--8.1
+		timerBurningCartCD:Start(12.1)
+		timerRunicShacklesCD:Start(20.2)
 	elseif eID == 3005 then--Maklin Drillstab
 		DBM:AddMsg("Boss alerts/timers not yet implemented for Maklin Drillstab")
 	end
@@ -126,6 +128,7 @@ end
 
 function mod:OnSync(msg)
 	if msg == "Cart" then
+		--12.1, 35.2, 35.3
 		specWarnBurningCart:Show()
 		specWarnBurningCart:Play("watchstep")
 		timerBurningCartCD:Start()
