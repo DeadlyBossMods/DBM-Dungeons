@@ -318,6 +318,12 @@ L = DBM:GetModLocalization("WarchiefRendBlackhand")
 L:SetGeneralLocalization{
 	name 		= "Warchief Rend Blackhand"
 }
+
+L:SetMiscLocalization{
+	Pull1 = "Excellent... it would appear as if the meddlesome insects have arrived just in time to feed my legion. Welcome, mortals!", -- Yell when you jump into the arena
+	Pull2 = "THIS CANNOT BE!!! Rend, deal with these insects.", -- Yell when you defeat the last wave
+}
+
 -----------------------------
 --  The Beast  --
 -----------------------------
