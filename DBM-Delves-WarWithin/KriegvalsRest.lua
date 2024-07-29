@@ -24,9 +24,9 @@ local specWarnFlamestorm					= mod:NewSpecialWarningDodge(449242, nil, nil, nil,
 local specWarnRagingTantrum					= mod:NewSpecialWarningSpell(449339, nil, nil, nil, 2, 2)
 local specWarnRagingTantrumDispel			= mod:NewSpecialWarningDispel(449339, "RemoveEnrage", nil, nil, 1, 2)
 
-local timerFlamestormCD						= mod:NewCDTimer(18.2, 449242, nil, nil, nil, 3)
+local timerFlamestormCD						= mod:NewCDTimer(17, 449242, nil, nil, nil, 3)
 local timerGroundSlamCD						= mod:NewCDTimer(27.9, 449295, nil, nil, nil, 3)
-local timerRagingTantrumCD					= mod:NewCDTimer(35.1, 449339, nil, nil, nil, 5, nil, DBM_COMMON_L.ENRAGE_ICON)
+local timerRagingTantrumCD					= mod:NewCDTimer(34, 449339, nil, nil, nil, 5, nil, DBM_COMMON_L.ENRAGE_ICON)
 
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc, 7 off interrupt
 
@@ -94,7 +94,7 @@ function mod:ENCOUNTER_START(eID)
 		--18.2, 29.1, 27.9
 		timerGroundSlamCD:Start(18.2)
 		--30.4, 35.1
-		timerRagingTantrumCD:Start(30.4)
+		timerRagingTantrumCD:Start(30.3)
 	end
 end
 

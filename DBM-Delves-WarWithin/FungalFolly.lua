@@ -92,9 +92,11 @@ end
 function mod:ENCOUNTER_START(eID)
 	if eID == 2831 then--Spinshroom
 		--Start some timers
-		timerFungalStormCD:Start(5.8)
-		timerFungalChargeCD:Start(20.3)
-		timerFungsplosionCD:Start(26.4)
+		timerFungalStormCD:Start(5.7)
+		--To confirm, both have same timer, but can be cast in any order
+		--Then other is cast 10 seconds after first cast
+		timerFungalChargeCD:Start(20.3)--31.3
+		timerFungsplosionCD:Start(21.8)--21.8
 	end
 end
 
