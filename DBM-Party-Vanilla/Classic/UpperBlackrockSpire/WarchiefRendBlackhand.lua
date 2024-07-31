@@ -4,10 +4,15 @@ local L		= mod:GetLocalizedStrings()
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(10339, 10429) -- Gyth, Rend
 mod:SetMainBossID(10429)
+mod:SetMinSyncRevision(20240729000000)
+mod:SetZone(229)
 
 mod:RegisterCombat("combat")
 
-mod:RegisterEvents("CHAT_MSG_MONSTER_YELL")
+if not DBM:IsPostCata() then
+	--vanilla, TBC, and wrath should have same old instance, it's revamped in cata
+	mod:RegisterEvents("CHAT_MSG_MONSTER_YELL")
+end
 
 local timerCombatStart = DBM:IsClassic() and mod:NewCombatTimer(94.6) or nil -- TODO: migrate to NilWarning after core release
 
