@@ -319,6 +319,12 @@ L = DBM:GetModLocalization("WarchiefRendBlackhand")
 L:SetGeneralLocalization{
 	name 		= "대족장 렌드 블랙핸드"
 }
+
+L:SetMiscLocalization{
+	Pull1 = "잘 됐군. 내 군단에게 먹일 보잘것없는 벌레들이 제시간에 도착한 것 같구나. 어서 오너라, 나약한 생명체들아!", -- Yell when you jump into the arena
+	Pull2 = "이건 말도 안 돼!! 렌드, 이 벌레들을 해치우도록 하라.", -- Yell when you defeat the last wave
+}
+
 -----------------------------
 --  The Beast  --
 -----------------------------
