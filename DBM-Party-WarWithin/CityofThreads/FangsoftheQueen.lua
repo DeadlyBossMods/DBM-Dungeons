@@ -12,7 +12,7 @@ mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 441384 441381 439621 440468 440420 439692 440218 440238",
-	"SPELL_CAST_SUCCESS 440419",
+--	"SPELL_CAST_SUCCESS 440419",
 	"SPELL_AURA_APPLIED 440437 441286 441298 458741 440238"
 --	"SPELL_AURA_REMOVED 439989"
 --	"SPELL_PERIODIC_DAMAGE",
@@ -46,23 +46,23 @@ local timerDuskbringerCD					= mod:NewCDCountTimer(33.9, 439692, nil, nil, nil, 
 local timerIceSicklesCD						= mod:NewCDCountTimer(33.9, 440218, nil, nil, nil, 3, nil, DBM_COMMON_L.MAGIC_ICON)
 --Vx Active (Nx support)
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(28875))
-local warnShadowShunpo						= mod:NewTargetNoFilterAnnounce(440419, 3, nil, false)
+--local warnShadowShunpo						= mod:NewTargetNoFilterAnnounce(440419, 3, nil, false)
 local warnFrozenSolid						= mod:NewTargetNoFilterAnnounce(458741, 4)--Failing freezing blood
-local warnDarkparanoia						= mod:NewTargetNoFilterAnnounce(440420, 4)
+--local warnDarkparanoia						= mod:NewTargetNoFilterAnnounce(440420, 4)
 
 local specWarnRimeDagger					= mod:NewSpecialWarningDefensive(440468, nil, nil, nil, 1, 2)
 local yellFreezingBlood						= mod:NewYell(441298, nil, nil, nil, "YELL")
-local specWarnDarkParanoia					= mod:NewSpecialWarningMoveAway(440420, nil, nil, nil, 2, 2, 4)
-local yellDarkParanoia						= mod:NewYell(440420)
+--local specWarnDarkParanoia					= mod:NewSpecialWarningMoveAway(440420, nil, nil, nil, 2, 2, 4)
+--local yellDarkParanoia						= mod:NewYell(440420)
 
 local timerRimeDaggerCD						= mod:NewCDCountTimer(13.3, 440468, nil, nil, nil, 5)
 local timerDarkparanoiaCD					= mod:NewAITimer(3, 440420, nil, nil, nil, 3, nil, DBM_COMMON_L.MYTHIC_ICON)
-local timerShadowShunpoCD					= mod:NewCDCountTimer(4.9, 440419, nil, nil, nil, 3)
+--local timerShadowShunpoCD					= mod:NewCDCountTimer(4.9, 440419, nil, nil, nil, 3)
 
 mod.vb.swapCount = 0
 mod.vb.tankCount = 0
 mod.vb.duskCount = 0
-mod.vb.shunpoCount = 0
+--mod.vb.shunpoCount = 0
 mod.vb.paranoiaCount = 0
 mod.vb.iceCount = 0
 
@@ -90,13 +90,13 @@ function mod:SPELL_CAST_START(args)
 		timerShadeSlashCD:Stop()
 		timerDuskbringerCD:Stop()
 		timerRimeDaggerCD:Stop()
-		timerShadowShunpoCD:Stop()
+--		timerShadowShunpoCD:Stop()
 		timerDarkparanoiaCD:Stop()
 		timerIceSicklesCD:Stop()
 		if self:GetStage(1) then
 			self:SetStage(2)
 			--Start Vx Active timers, Nx Inactive timers
-			timerShadowShunpoCD:Start(19.4, self.vb.shunpoCount+1)
+--			timerShadowShunpoCD:Start(19.4, self.vb.shunpoCount+1)
 			timerRimeDaggerCD:Start(21.4, self.vb.tankCount+1)
 			if self:IsMythic() then--Still not seen yet
 				timerDarkparanoiaCD:Start(2)
@@ -144,6 +144,7 @@ function mod:SPELL_CAST_START(args)
 	end
 end
 
+--[[
 function mod:SPELL_CAST_SUCCESS(args)
 	local spellId = args.spellId
 	if spellId == 440419 then
@@ -152,24 +153,24 @@ function mod:SPELL_CAST_SUCCESS(args)
 		timerShadowShunpoCD:Start(nil, self.vb.shunpoCount+1)
 	end
 end
-
+--]]
 
 function mod:SPELL_AURA_APPLIED(args)
 	local spellId = args.spellId
-	if spellId == 440437 then
-		warnShadowShunpo:Show(args.destName)
-	elseif spellId == 441286 then
-		if args:IsPlayer() then
-			specWarnDarkParanoia:Show()
-			specWarnDarkParanoia:Play("runout")
-			yellDarkParanoia:Yell()
-		else
-			warnDarkparanoia:Show(args.destName)
-		end
-	elseif spellId == 441298 then
+	if spellId == 441298 then
 		if args:IsPlayer() then
 			yellFreezingBlood:Yell()
 		end
+	--elseif spellId == 440437 then
+	--	warnShadowShunpo:Show(args.destName)
+	--elseif spellId == 441286 then
+	--	if args:IsPlayer() then
+	--		specWarnDarkParanoia:Show()
+	--		specWarnDarkParanoia:Play("runout")
+	--		yellDarkParanoia:Yell()
+	--	else
+	--		warnDarkparanoia:Show(args.destName)
+	--	end
 	elseif spellId == 458741 then
 		warnFrozenSolid:Show(args.destName)
 	elseif spellId == 440238 then
