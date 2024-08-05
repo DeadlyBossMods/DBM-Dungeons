@@ -33,15 +33,15 @@ local warnSkitterCharge						= mod:NewCastAnnounce(450197, 3, nil, nil, nil, nil
 local warnWicklighterVolley					= mod:NewCastAnnounce(445191, 3)
 local warnThrowDyno							= mod:NewSpellAnnounce(448600, 3)
 
-local specWarnFearfulShriek					= mod:NewSpecialWarningDodge(433410, nil, nil, nil, 2, 2)--13.4-18
-local specWarnJaggedBarbs					= mod:NewSpecialWarningDodge(450714, nil, nil, nil, 2, 2)
+local specWarnFearfulShriek					= mod:NewSpecialWarningDodge(433410, nil, nil, nil, 2, 2)
+local specWarnJaggedBarbs					= mod:NewSpecialWarningDodge(450714, nil, nil, nil, 2, 2)--11-26
 local specWarnLavablast	    				= mod:NewSpecialWarningDodge(445781, nil, nil, nil, 2, 2)
 local specWarnFungalBreath    				= mod:NewSpecialWarningDodge(415253, nil, nil, nil, 2, 2)
 local specWarnViciousStabs    				= mod:NewSpecialWarningDodge(424704, nil, nil, nil, 2, 2)
 local specWarnBlazingWick    				= mod:NewSpecialWarningDodge(449071, nil, nil, nil, 2, 2)
 local specWarnBladeRush						= mod:NewSpecialWarningDodge(418791, nil, nil, nil, 2, 2)
 local specWarnDefilingBreath				= mod:NewSpecialWarningDodge(455932, nil, nil, nil, 2, 2)
-local specWarnSerratedCleave				= mod:NewSpecialWarningDodge(445492, nil, nil, nil, 2, 2)--Possible 40 sec CD
+local specWarnSerratedCleave				= mod:NewSpecialWarningDodge(445492, nil, nil, nil, 2, 2)--32.7
 local specWarnSpotted						= mod:NewSpecialWarningDodge(441129, nil, nil, nil, 2, 2)
 local specWarnFireCharge					= mod:NewSpecialWarningDodge(445210, nil, nil, nil, 2, 2)
 local specWarnEchoofRenilash				= mod:NewSpecialWarningRun(434281, nil, nil, nil, 4, 2)
@@ -53,9 +53,10 @@ local specWarnRotWaveVolley					= mod:NewSpecialWarningInterrupt(425040, "HasInt
 local specWarnCastigate						= mod:NewSpecialWarningInterrupt(418297, "HasInterrupt", nil, nil, 1, 2)
 local specWarnBattleCry						= mod:NewSpecialWarningInterrupt(448399, "HasInterrupt", nil, nil, 1, 2)
 
+local timerFearfulShriekCD					= mod:NewCDNPTimer(13.4, 433410, nil, nil, nil, 3)
 local timerShadowsofStrifeCD				= mod:NewCDNPTimer(20, 449318, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--Needs more Data
 local timerRotWaveVolleyCD					= mod:NewCDNPTimer(15.2, 425040, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--15.2-17
-local timerWebbedAegisCD					= mod:NewCDNPTimer(16.2, 450546, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--Needs more Data
+local timerWebbedAegisCD					= mod:NewCDNPTimer(14.6, 450546, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--14.6 BUT enemies can skip casts sometimes and make it 29.1
 local timerLavablastCD					    = mod:NewCDNPTimer(15.8, 445781, nil, nil, nil, 3)
 local timerBlazingWickCD					= mod:NewCDNPTimer(14.6, 449071, nil, nil, nil, 3)
 local timerBattleRoarCD						= mod:NewCDNPTimer(15.4, 414944, nil, nil, nil, 5, nil, DBM_COMMON_L.MAGIC_ICON)
@@ -71,6 +72,7 @@ local timerWicklighterVolleyCD				= mod:NewCDNPTimer(21.8, 445191, nil, nil, nil
 local timerSpearFishCD						= mod:NewCDNPTimer(12.1, 430036, nil, nil, nil, 3)
 local timerViciousStabsCD					= mod:NewCDNPTimer(20.6, 424704, nil, nil, nil, 3)
 local timerThrowDynoCD						= mod:NewCDNPTimer(7.2, 448600, nil, nil, nil, 3)
+local timerSerratedCleaveCD					= mod:NewCDNPTimer(32.7, 445492, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)--Not technically tanks only, just whoever has aggro in it
 
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc, 7 off interrupt
 
@@ -83,7 +85,7 @@ do
 			eventsRegistered = true
 			self:RegisterShortTermEvents(
                 "SPELL_CAST_START 449318 450546 433410 450714 445781 415253 425040 424704 424798 414944 418791 424891 450197 448399 445191 455932 445492 434281 450637 445210 448528 449071",
-                "SPELL_CAST_SUCCESS 414944 424614 418791 424891 427812 450546 450197 415253 449318 445191 430036 445252 425040 424704 448399 448528",
+                "SPELL_CAST_SUCCESS 414944 424614 418791 424891 427812 450546 450197 415253 449318 445191 430036 445252 425040 424704 448399 448528 433410 445492",
 				"SPELL_INTERRUPT",
                 "SPELL_AURA_APPLIED 424614 449071 418297 430036 440622 441129",
                 --"SPELL_AURA_REMOVED",
@@ -245,7 +247,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 			warnRelocate:Show()
 		end
 	elseif args.spellId == 450546 then
-		timerWebbedAegisCD:Start(16.2, args.sourceGUID)--Needs more Data
+		timerWebbedAegisCD:Start(14.6, args.sourceGUID)
 	elseif args.spellId == 450197 then
 		timerSkitterChargeCD:Start(12.5, args.sourceGUID)-- 14.6 - 2.1
 	elseif args.spellId == 415253 then
@@ -269,9 +271,14 @@ function mod:SPELL_CAST_SUCCESS(args)
 		timerBattleCryCD:Start(28.3, args.sourceGUID)--30.3 - 2
 	elseif args.spellId == 448528 then
 		timerThrowDynoCD:Start(5.7, args.sourceGUID)-- 7.2 - 1.5
+	elseif args.spellId == 433410 then
+		timerFearfulShriekCD:Start(10.4, args.sourceGUID)--13.4 - 3
+	elseif args.spellId == 445492 then
+		timerSerratedCleaveCD:Start(29.7, args.sourceGUID)--32.7 - 3
 	end
 end
 
+--Likely some of these aren't even interruptable, but i can't remember sometimes so they get added anyways
 function mod:SPELL_INTERRUPT(args)
 	if type(args.extraSpellId) ~= "number" then return end
 	if args.extraSpellId == 414944 then
@@ -281,7 +288,7 @@ function mod:SPELL_INTERRUPT(args)
 			timerBattleRoarCD:Start(9.9, args.destGUID)--9.9-12
 		end
 	elseif args.extraSpellId == 450546 then
-		timerWebbedAegisCD:Start(16.2, args.destGUID)--Needs more Data
+		timerWebbedAegisCD:Start(14.6, args.destGUID)
 	elseif args.extraSpellId == 449318 then
 		timerShadowsofStrifeCD:Start(17, args.destGUID)--20 - 3
 	elseif args.extraSpellId == 445191 then
@@ -294,6 +301,8 @@ function mod:SPELL_INTERRUPT(args)
 		timerBattleCryCD:Start(28.3, args.destGUID)--30.3 - 2
 	elseif args.extraSpellId == 448528 then
 		timerThrowDynoCD:Start(5.7, args.destGUID)-- 7.2 - 1.5
+	elseif args.extraSpellId == 433410 then
+		timerFearfulShriekCD:Start(10.4, args.destGUID)--13.4 - 3
 	end
 end
 
@@ -378,5 +387,9 @@ function mod:UNIT_DIED(args)
 		timerSpearFishCD:Stop(args.destGUID)
 	elseif cid == 211777 then--Spitfire Fusetender
 		timerThrowDynoCD:Stop(args.destGUID)
+	elseif cid == 214551 then--Wandering Gutter
+		timerSerratedCleaveCD:Stop(args.destGUID)
+	elseif cid == 216583 then--Chittering Fearmonger
+		timerFearfulShriekCD:Stop(args.destGUID)
 	end
 end

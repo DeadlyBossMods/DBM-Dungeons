@@ -50,7 +50,7 @@ function mod:OnCombatStart(delay)
 	self.vb.chaoticCount = 0
 	self.vb.gravityCount = 0
 	self.vb.crushCount = 0
-	if self:IsFollower() then--Confirmed on "story", need to test regular "follower", if it differs, have to split the API
+	if self:IsStory() then--Confirmed only different on "story"
 		timerCrushRealityCD:Start(8.4, 1)
 		timerDarkGravityCD:Start(23, 1)--Still the same
 	else
