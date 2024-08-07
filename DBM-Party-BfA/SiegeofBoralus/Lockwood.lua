@@ -8,9 +8,10 @@ mod:SetEncounterID(2109)
 mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
-	"SPELL_CAST_START 269029 268230",
+	"SPELL_CAST_START 269029 268230 268260 257288",
+	"SPELL_CAST_SUCCESS 257288",
 	"UNIT_DIED",
-	"UNIT_SPELLCAST_START boss1 boss2 boss3 boss4 boss5",--boss and Adds
+--	"UNIT_SPELLCAST_START boss1 boss2 boss3 boss4 boss5",--boss and Adds
 	"UNIT_SPELLCAST_SUCCEEDED boss1 boss2 boss3 boss4 boss5"--boss and Adds
 )
 
@@ -26,6 +27,7 @@ local specWarnBroadside				= mod:NewSpecialWarningDodgeCount(268260, "Tank", nil
 local timerWithdrawCD				= mod:NewCDCountTimer(40, 268752, nil, nil, nil, 6)
 local timerCleartheDeckCD			= mod:NewCDCountTimer(18.2, 269029, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerCrimsonSwipeCD			= mod:NewCDNPTimer(9, 268230, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)--12.2 now?
+local timerHeavySlashCD				= mod:NewCDNPTimer(17.7, 257288, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerBroadsideCD				= mod:NewCDCountTimer(9, 268260, nil, nil, nil, 3)--Need more data
 
 mod.vb.bossGone = false
@@ -54,6 +56,23 @@ function mod:SPELL_CAST_START(args)
 			warnCrimsonSwipe:Show()
 		end
 		timerCrimsonSwipeCD:Start(nil, args.sourceGUID)
+	elseif spellId == 268260 and args:GetSrcCreatureID() == 136549 then--Broadside
+		self.vb.broadCount = self.vb.broadCount + 1
+		specWarnBroadside:Show(self.vb.broadCount)
+		specWarnBroadside:Play("watchstep")
+		timerBroadsideCD:Start(12.1, self.vb.broadCount+1)--12.1-14.6 in TWW (formerly 10.9)
+	elseif spellId == 257288 and args:GetSrcCreatureID() == 129996 then
+		if self:AntiSpam(3, 1) then
+			specWarnHeavySlash:Show()
+			specWarnHeavySlash:Play("shockwave")
+		end
+	end
+end
+
+function mod:SPELL_CAST_SUCCESS(args)
+	local spellId = args.spellId
+	if spellId == 257288 then
+		timerHeavySlashCD:Start(nil, args.sourceGUID)
 	end
 end
 
@@ -61,19 +80,8 @@ function mod:UNIT_DIED(args)
 	local cid = self:GetCIDFromGUID(args.destGUID)
 	if cid == 141532 then--Ashvane Deckhand
 		timerCrimsonSwipeCD:Stop(args.destGUID)
-	end
-end
-
---Not in combat log what so ever
-function mod:UNIT_SPELLCAST_START(_, _, spellId)
-	if spellId == 257288 and self:AntiSpam(3, 1) then
-		specWarnHeavySlash:Show()
-		specWarnHeavySlash:Play("shockwave")
-	elseif spellId == 268260 then--Broadside
-		self.vb.broadCount = self.vb.broadCount + 1
-		specWarnBroadside:Show(self.vb.broadCount)
-		specWarnBroadside:Play("watchstep")
-		timerBroadsideCD:Start(10.9, self.vb.broadCount+1)--14.6 in TWW, from a single pull, but maybe variable based on boss time to ship, needs more data
+	elseif cid == 129996 then--Irontide Cleaver (Boss version)
+		timerHeavySlashCD:Stop(args.destGUID)
 	end
 end
 
