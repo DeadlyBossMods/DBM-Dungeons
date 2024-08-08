@@ -56,20 +56,7 @@ function mod:OnCombatStart(delay)
 	timerThunderingSlamCD:Start(12.1-delay, 1)
 	timerQuakingTotemCD:Start(20.4-delay, 1)
 	timerBloodlustCD:Start(27-delay)
-	--Trash is often pulled with this boss, so we want to enable trash mod functionality during fight
-	local trashMod = DBM:GetModByName("UldamanLegacyofTyrTrash")
-	if trashMod then
-		trashMod.isTrashModBossFightAllowed = true
-	end
 end
-
-function mod:OnCombatEnd()
-	local trashMod = DBM:GetModByName("UldamanLegacyofTyrTrash")
-	if trashMod then
-		trashMod.isTrashModBossFightAllowed = false
-	end
-end
-
 
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId

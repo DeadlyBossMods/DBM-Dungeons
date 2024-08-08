@@ -73,9 +73,9 @@ function mod:OnCombatStart(delay)
 	timerAcidExpulsionCD:Start(7.1-delay, 1)
 	timerMindLinkCD:Start(18.1-delay, 1)--21 in TWW?
 	timerAcceleratedIncubationCD:Start(21.4-delay, 1)--Was 45.2
-	if self:IsMythic() then
-		timerParasiticInfesterCD:Start(11.7-delay, 1)
-	end
+	--if self:IsMythic() then
+	--	timerParasiticInfesterCD:Start(11.7-delay, 1)
+	--end
 end
 
 function mod:OnCombatEnd()

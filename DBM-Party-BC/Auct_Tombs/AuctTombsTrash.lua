@@ -3,6 +3,7 @@ local mod	= DBM:NewMod("AuctTombsTrash", "DBM-Party-BC", 8, 250)
 mod:SetRevision("@file-date-integer@")
 
 mod.isTrashMod = true
+mod.isTrashModBossFightAllowed = true
 
 mod:RegisterEvents(
 	"SPELL_AURA_APPLIED 34925",

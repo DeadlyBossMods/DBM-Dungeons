@@ -5,7 +5,7 @@ mod:SetRevision("@file-date-integer@")
 --mod:SetModelID(47785)
 
 mod.isTrashMod = true
-mod.isTrashModBossFightAllowed = false--in this zone, some of the hard modes are just making you do the boss with trash
+mod.isTrashModBossFightAllowed = true
 
 mod:RegisterEvents(
 	"SPELL_CAST_START 356548 352390 354297 356537 355888 355900 355930 355934 356001 357197 347775 355057 355225 355234 355132 355584 357226 357260 356407 356404 347903 357229",

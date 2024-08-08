@@ -34,18 +34,6 @@ function mod:OnCombatStart(delay)
 	timerBurningIntensityCD:Start(6-delay)
 	timerWitheringSoulCD:Start(12-delay)
 	timerInfernalEruptionCD:Start(self:IsMythicPlus() and 19.5 or 14.9-delay)
-	--Allow trash mod to enable in combat in case you DO pull boss with any of the 3 sub bosses still active
-	local trashMod = DBM:GetModByName("CoSTrash")
-	if trashMod then
-		trashMod.isTrashModBossFightAllowed = true
-	end
-end
-
-function mod:OnCombatEnd()
-	local trashMod = DBM:GetModByName("CoSTrash")
-	if trashMod then
-		trashMod.isTrashModBossFightAllowed = false
-	end
 end
 
 function mod:SPELL_CAST_START(args)

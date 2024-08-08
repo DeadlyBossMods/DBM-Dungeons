@@ -8,6 +8,7 @@ mod:SetMinSyncRevision(20221228000000)
 mod:SetZone(1571)
 
 mod.isTrashMod = true
+mod.isTrashModBossFightAllowed = true
 
 --LW solution, unregister/reregister other addons/WA frames from GOSSIP_SHOW
 --This is to prevent things like https://wago.io/M+Timer/114 from breaking clue helper do to advancing
