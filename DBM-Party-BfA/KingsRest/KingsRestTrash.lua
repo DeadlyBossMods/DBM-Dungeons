@@ -5,6 +5,7 @@ mod:SetRevision("@file-date-integer@")
 --mod:SetModelID(47785)
 
 mod.isTrashMod = true
+mod.isTrashModBossFightAllowed = true
 
 mod:RegisterEvents(
 	"SPELL_CAST_START 270003 269973 270923 270889 270901 270084 270872 270293 270284 270492 270482 270514 270507",

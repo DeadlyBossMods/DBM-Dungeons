@@ -5,9 +5,10 @@ mod:SetRevision("@file-date-integer@")
 --mod:SetModelID(47785)
 
 mod.isTrashMod = true
+mod.isTrashModBossFightAllowed = true
 
 mod:RegisterEvents(
-	"SPELL_CAST_START 275826 256627 256957 256709 257170 272546 257169 272713 274569 272571 272888 272711 268260 257288 454440",
+	"SPELL_CAST_START 275826 256627 256957 256709 257170 272546 257169 272713 274569 272571 272888 272711 268260 257288 454440 272662",
 	"SPELL_CAST_SUCCESS 256627 256640 257170 256709 257288 272422 454437 275826 275835 272888 272546 454440 272711 257169 272571",
 	"SPELL_INTERRUPT",
 	"SPELL_AURA_APPLIED 256957 257168 272421 272571 272888 454437",
@@ -33,6 +34,7 @@ local warnStinkyVomit				= mod:NewCastAnnounce(454440, 4)--High Prio Interrupt
 local warnFerocity					= mod:NewCastAnnounce(272888, 3)
 local warnAzeriteCharge				= mod:NewTargetAnnounce(454437, 2)
 local warnBurningTar				= mod:NewSpellAnnounce(256640, 2)
+local warnIronHook					= mod:NewSpellAnnounce(272662, 4, nil, nil, nil, nil, nil, 12)
 
 local specWarnSlobberKnocker		= mod:NewSpecialWarningDodge(256627, "Tank", nil, nil, 1, 2)
 local specWarnSingingSteel			= mod:NewSpecialWarningDodge(256709, "Tank", nil, nil, 1, 2)
@@ -73,6 +75,7 @@ local timerStinkyVomitCD			= mod:NewCDNPTimer(16.1, 454440, nil, nil, nil, 4, ni
 local timerCrushingSlamCD			= mod:NewCDNPTimer(20.6, 272711, nil, nil, nil, 3)
 local timerTerrifyingRoarCD			= mod:NewCDNPTimer(31.6, 257169, nil, nil, nil, 2)
 local timerChoakingWatersCD			= mod:NewCDNPTimer(29.1, 272571, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--29.1-31.6
+local timerIronHookCD				= mod:NewCDNPTimer(19.4, 272662, nil, nil, nil, 3)
 
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc, 7 off interrupt
 
@@ -138,6 +141,10 @@ function mod:SPELL_CAST_START(args)
 		elseif self:AntiSpam(4, 7) then
 			warnStinkyVomit:Show()
 		end
+	elseif spellId == 272662 then
+		warnIronHook:Show()
+		warnIronHook:Play("pullin")
+		timerIronHookCD:Start(19.4, args.sourceGUID)
 	end
 end
 
@@ -155,7 +162,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 		timerSingSteelCD:Start(15, args.sourceGUID)--17 - 2
 	elseif spellId == 257288 and args:GetSrcCreatureID() == 129879 then
 		timerHeavySlashCD:Start(17.8, args.sourceGUID)--20.6 - 2.8
-	elseif spellId == 272422 then
+	elseif spellId == 272422 then--No filter needed, boss version doesn't fire this spellID
 		timerSightedArtCD:Start(12.1, args.sourceGUID)
 	elseif spellId == 454437 then
 		timerAzeriteChargeCD:Start(15.7, args.sourceGUID)
@@ -198,7 +205,7 @@ function mod:SPELL_AURA_APPLIED(args)
 	elseif spellId == 257168 and self:IsValidWarning(args.sourceGUID) and self:CheckDispelFilter("curse") then
 		specWarnCursedSlash:Show(args.destName)
 		specWarnCursedSlash:Play("helpdispel")
-	elseif spellId == 272421 and args:IsPlayer() then
+	elseif spellId == 272421 and args:IsPlayer() and args:GetSrcCreatureID() ~= 129208 then--Want to filter it from firing on boss fight
 		specWarnSightedArt:Show()
 		specWarnSightedArt:Play("targetyou")
 		yellSightedArt:Yell()
@@ -249,6 +256,8 @@ function mod:UNIT_DIED(args)
 		timerTerrifyingRoarCD:Stop(args.destGUID)
 	elseif cid == 129367 then--Bilge Rat Tempest
 		timerChoakingWatersCD:Stop(args.destGUID)
+	elseif cid == 129369 then--Iron Raider
+		timerIronHookCD:Stop(args.destGUID)
 	end
 end
 

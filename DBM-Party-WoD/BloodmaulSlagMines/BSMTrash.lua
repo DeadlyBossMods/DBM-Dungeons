@@ -5,6 +5,7 @@ mod:SetRevision("@file-date-integer@")
 --mod:SetModelID(47785)
 
 mod.isTrashMod = true
+mod.isTrashModBossFightAllowed = true
 
 mod:RegisterEvents(
 	"SPELL_AURA_APPLIED 164597 151548 151697 151965",

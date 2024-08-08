@@ -5,6 +5,7 @@ mod:SetRevision("@file-date-integer@")
 --mod:SetModelID(47785)
 --mod:SetZone(1234)--FIXME RIGHT ID
 mod.isTrashMod = true
+mod.isTrashModBossFightAllowed = true
 
 mod:RegisterEvents(
 	"SPELL_CAST_START 390290 374080 375351 375348 375327 375384 374563 374045 374339 374066 374020 395694 374699 374706 375079 374823 385141 377341 377402 376171 437719",

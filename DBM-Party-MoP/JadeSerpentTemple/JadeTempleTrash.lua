@@ -4,6 +4,7 @@ local L		= mod:GetLocalizedStrings()
 mod:SetRevision("@file-date-integer@")
 --mod:SetModelID(47785)
 mod.isTrashMod = true
+mod.isTrashModBossFightAllowed = true
 
 mod:RegisterEvents(
 	"SPELL_CAST_START 398300 395859 397899 397881 397889 396001 395872 396073 396018 397931 114646 397914 397878",

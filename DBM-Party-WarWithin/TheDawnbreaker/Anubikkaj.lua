@@ -102,18 +102,6 @@ function mod:OnCombatStart(delay)
 	end
 	self:EnablePrivateAuraSound(426865, "targetyou", 2)--Dark Orb
 	self:EnablePrivateAuraSound(450855, "targetyou", 2, 426865)--Register Additional ID
-	--Boss patrols around right through all the trash. While it's not wise to pull boss with trash, it often happens.
-	local trashMod = DBM:GetModByName("TheDawnbreakerTrash")
-	if trashMod then
-		trashMod.isTrashModBossFightAllowed = true
-	end
-end
-
-function mod:OnCombatEnd()
-	local trashMod = DBM:GetModByName("TheDawnbreakerTrash")
-	if trashMod then
-		trashMod.isTrashModBossFightAllowed = false
-	end
 end
 
 function mod:SPELL_CAST_START(args)

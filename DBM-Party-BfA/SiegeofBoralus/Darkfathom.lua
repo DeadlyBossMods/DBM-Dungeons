@@ -4,6 +4,8 @@ local L		= mod:GetLocalizedStrings()
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(128651)
 mod:SetEncounterID(2099)
+--mod:SetHotfixNoticeRev(20230516000000)
+--mod:SetMinSyncRevision(20211203000000)
 
 mod:RegisterCombat("combat")
 
@@ -12,13 +14,17 @@ mod:RegisterEventsInCombat(
 	"UNIT_SPELLCAST_SUCCEEDED boss1"
 )
 
+--[[
+(ability.id = 257882 or ability.id = 276068 or ability.id = 257862) and type = "begincast"
+ or type = "dungeonencounterstart" or type = "dungeonencounterend"
+--]]
 local specWarnCrashingTide			= mod:NewSpecialWarningDodgeCount(261563, nil, nil, 2, 1, 2)
 local specWarnBreakWater			= mod:NewSpecialWarningDodgeCount(257882, nil, nil, nil, 2, 2)
 local specWarnTidalSurge			= mod:NewSpecialWarningMoveTo(276068, nil, nil, nil, 3, 2)
 
-local timerCrashingTideCD			= mod:NewCDCountTimer(21.8, 261563, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)--15.8 before
+local timerCrashingTideCD			= mod:NewCDCountTimer(21.3, 261563, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)--15.8 before
 local timerBreakWaterCD				= mod:NewCDCountTimer(25.9, 257882, nil, nil, nil, 3)--30 before
-local timerTidalSurgeCD				= mod:NewCDCountTimer(49.8, 276068, nil, nil, nil, 2, nil, DBM_COMMON_L.DEADLY_ICON)--Still the same
+local timerTidalSurgeCD				= mod:NewCDCountTimer(49.7, 276068, nil, nil, nil, 2, nil, DBM_COMMON_L.DEADLY_ICON)--Still the same
 
 mod.vb.crashingTideCount = 0
 mod.vb.breakwaterCount = 0
@@ -30,7 +36,7 @@ function mod:OnCombatStart(delay)
 	self.vb.tidalSurgeCount = 0
 	timerBreakWaterCD:Start(7.1-delay, 1)
 	timerCrashingTideCD:Start(12.1-delay, 1)
-	timerTidalSurgeCD:Start(24.1-delay, 1)
+	timerTidalSurgeCD:Start(23.1-delay, 1)
 end
 
 function mod:SPELL_CAST_START(args)

@@ -48,19 +48,11 @@ function mod:OnCombatStart(delay)
 	timerArmedSecurityCD:Start(7.2-delay)
 	timerImpoundContrabandCD:Start(18.1-delay)
 	timerInterrogationCD:Start(31.6-delay)
-	local trashMod = DBM:GetModByName("TazaveshTrash")
-	if trashMod then
-		trashMod.isTrashModBossFightAllowed = true
-	end
 end
 
 function mod:OnCombatEnd()
 	if self.Options.InfoFrame then
 		DBM.InfoFrame:Hide()
-	end
-	local trashMod = DBM:GetModByName("TazaveshTrash")
-	if trashMod then
-		trashMod.isTrashModBossFightAllowed = false
 	end
 end
 

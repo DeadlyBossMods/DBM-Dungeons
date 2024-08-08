@@ -37,18 +37,6 @@ function mod:OnCombatStart(delay)
 	timerResonantSlashCD:Start(6.2-delay)
 	timerStreetsweeperCD:Start(11.1)
 	timerArcaneLockdownCD:Start(15-delay)
-	--Allow trash mod to enable in combat since it's not uncommon to pull boss with some trash (usually by accident)
-	local trashMod = DBM:GetModByName("CoSTrash")
-	if trashMod then
-		trashMod.isTrashModBossFightAllowed = true
-	end
-end
-
-function mod:OnCombatEnd()
-	local trashMod = DBM:GetModByName("CoSTrash")
-	if trashMod then
-		trashMod.isTrashModBossFightAllowed = false
-	end
 end
 
 function mod:SPELL_CAST_START(args)
