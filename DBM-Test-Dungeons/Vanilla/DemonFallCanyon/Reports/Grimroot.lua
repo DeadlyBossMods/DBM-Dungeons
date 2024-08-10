@@ -89,6 +89,9 @@ Event trace:
 		PlaySound: VoicePack/kickcast
 	[40.52] SPELL_CAST_SUCCESS: [Grimroot: Corrupted Tears] Creature-0-5252-2784-26746-226923-000012D5C6, Grimroot, 0xa48, "", nil, 0x0, 460509, Corrupted Tears, 0, 0
 		ScheduleTask: mod:BossTargetScanner("Creature-0-5252-2784-26746-226923-000012D5C6", "CorruptedTearsTarget", 0.1, 4.0) at 40.62 (+0.10)
+			ScheduleTask: mod:BossTargetScanner("Creature-0-5252-2784-26746-226923-000012D5C6", "CorruptedTearsTarget", 0.1, 4.0) at 40.72 (+0.10)
+				ScheduleTask: mod:BossTargetScanner("Creature-0-5252-2784-26746-226923-000012D5C6", "CorruptedTearsTarget", 0.1, 4.0) at 40.82 (+0.10)
+					ScheduleTask: mod:BossTargetScanner("Creature-0-5252-2784-26746-226923-000012D5C6", "CorruptedTearsTarget", 0.1, 4.0) at 40.92 (+0.10)
 	[43.51] SPELL_DAMAGE: [->Tandanu: Corrupted Tears] "", nil, 0x0, Player-5826-020CBDBB, Tandanu, 0x511, 460512, Corrupted Tears, 0, 0
 		AntiSpam: 1
 		ShowSpecialWarning: Corrupted Tears damage - move away
@@ -106,12 +109,19 @@ Event trace:
 		StartTimer: 8.0, Tender's Rage ends
 	[64.81] SPELL_CAST_SUCCESS: [Grimroot: Corrupted Tears] Creature-0-5252-2784-26746-226923-000012D5C6, Grimroot, 0xa48, "", nil, 0x0, 460509, Corrupted Tears, 0, 0
 		ScheduleTask: mod:BossTargetScanner("Creature-0-5252-2784-26746-226923-000012D5C6", "CorruptedTearsTarget", 0.1, 4.0) at 64.91 (+0.10)
-	[72.26] SPELL_AURA_REMOVED: [Grimroot->Grimroot: Tender's Rage] Creature-0-5252-2784-26746-226923-000012D5C6, Grimroot, 0xa48, Creature-0-5252-2784-26746-226923-000012D5C6, Grimroot, 0xa48, 460703, Tender's Rage, 0, BUFF, 0
-		StopTimer: Timer460703active
+			ScheduleTask: mod:BossTargetScanner("Creature-0-5252-2784-26746-226923-000012D5C6", "CorruptedTearsTarget", 0.1, 4.0) at 65.01 (+0.10)
+				ScheduleTask: mod:BossTargetScanner("Creature-0-5252-2784-26746-226923-000012D5C6", "CorruptedTearsTarget", 0.1, 4.0) at 65.11 (+0.10)
+					ScheduleTask: mod:BossTargetScanner("Creature-0-5252-2784-26746-226923-000012D5C6", "CorruptedTearsTarget", 0.1, 4.0) at 65.21 (+0.10)
 	[76.12] SPELL_CAST_SUCCESS: [Grimroot: Corrupted Tears] Creature-0-5252-2784-26746-226923-000012D5C6, Grimroot, 0xa48, "", nil, 0x0, 460509, Corrupted Tears, 0, 0
 		ScheduleTask: mod:BossTargetScanner("Creature-0-5252-2784-26746-226923-000012D5C6", "CorruptedTearsTarget", 0.1, 4.0) at 76.22 (+0.10)
+			ScheduleTask: mod:BossTargetScanner("Creature-0-5252-2784-26746-226923-000012D5C6", "CorruptedTearsTarget", 0.1, 4.0) at 76.32 (+0.10)
+				ScheduleTask: mod:BossTargetScanner("Creature-0-5252-2784-26746-226923-000012D5C6", "CorruptedTearsTarget", 0.1, 4.0) at 76.42 (+0.10)
+					ScheduleTask: mod:BossTargetScanner("Creature-0-5252-2784-26746-226923-000012D5C6", "CorruptedTearsTarget", 0.1, 4.0) at 76.52 (+0.10)
 	[87.44] SPELL_CAST_SUCCESS: [Grimroot: Corrupted Tears] Creature-0-5252-2784-26746-226923-000012D5C6, Grimroot, 0xa48, "", nil, 0x0, 460509, Corrupted Tears, 0, 0
 		ScheduleTask: mod:BossTargetScanner("Creature-0-5252-2784-26746-226923-000012D5C6", "CorruptedTearsTarget", 0.1, 4.0) at 87.54 (+0.10)
+			ScheduleTask: mod:BossTargetScanner("Creature-0-5252-2784-26746-226923-000012D5C6", "CorruptedTearsTarget", 0.1, 4.0) at 87.64 (+0.10)
+				ScheduleTask: mod:BossTargetScanner("Creature-0-5252-2784-26746-226923-000012D5C6", "CorruptedTearsTarget", 0.1, 4.0) at 87.74 (+0.10)
+					ScheduleTask: mod:BossTargetScanner("Creature-0-5252-2784-26746-226923-000012D5C6", "CorruptedTearsTarget", 0.1, 4.0) at 87.84 (+0.10)
 	Unknown trigger
 		EndCombat: checkWipe
 ]]
