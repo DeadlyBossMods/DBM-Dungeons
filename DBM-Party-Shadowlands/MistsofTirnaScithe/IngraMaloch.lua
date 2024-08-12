@@ -4,6 +4,8 @@ local L		= mod:GetLocalizedStrings()
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(164567)
 mod:SetEncounterID(2397)
+mod:SetHotfixNoticeRev(20240808000000)
+--mod:SetMinSyncRevision(20230922000000)
 
 mod:RegisterCombat("combat")
 
@@ -24,6 +26,7 @@ mod:RegisterEventsInCombat(
 (ability.id = 323149 or ability.id = 323137 or ability.id = 328756 or ability.id = 323138) and type = "begincast"
  or ability.id = 323177 and type = "cast"
  or ability.id = 321006 or ability.id = 323059
+ or type = "dungeonencounterstart" or type = "dungeonencounterend"
  --]]
 --Phases
 local warnSoulShackle					= mod:NewTargetNoFilterAnnounce(321005, 3)
@@ -43,8 +46,8 @@ local specWarnGTFO						= mod:NewSpecialWarningGTFO(323250, nil, nil, nil, 1, 8)
 --local timerEmbraceDarknessCD			= mod:NewCDTimer(66.7, 323149, nil, nil, nil, 2, nil, DBM_COMMON_L.HEALER_ICON)
 --local timerRepulsiveVisageCD			= mod:NewCDTimer(15.8, 328756, nil, nil, nil, 2, nil, DBM_COMMON_L.MAGIC_ICON)
 --Droman Oulfarran
-local timerBewilderingPollenCD			= mod:NewCDCountTimer(15.7, 323137, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)--15.8-20.6, unsure if spellqueue causes the variation or just inconsistent energy rates
-local timerTearsoftheForestCD			= mod:NewCDCountTimer(15.7, 323177, nil, nil, nil, 3)--15.8-20.6, unsure if spellqueue causes the variation or just inconsistent energy rates
+local timerBewilderingPollenCD			= mod:NewCDCountTimer(20.6, 323137, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)--20.6-25, unsure if spellqueue causes the variation or just inconsistent energy rates
+local timerTearsoftheForestCD			= mod:NewCDCountTimer(20.6, 323177, nil, nil, nil, 3)--20.6-25, unsure if spellqueue causes the variation or just inconsistent energy rates
 local timerDromansWrath					= mod:NewBuffActiveTimer(15, 323059, nil, nil, nil, 6)
 
 mod.vb.pollenCount = 0
@@ -56,9 +59,10 @@ function mod:OnCombatStart(delay)
 	--First soul shackle doesn't always appears in combat log on engage after ENCOUNTER_START
 	if self:AntiSpam(3, 1) then
 		timerBewilderingPollenCD:Start(7.3, 1)
-		timerTearsoftheForestCD:Start(12.5, 1)--Time til force compliance
+		--Recheck force compliance/tears on live
+		timerTearsoftheForestCD:Start(16.9, 1)--17-20
 	end
---	timerEmbraceDarknessCD:Start(33.3-delay)--Health triggered?
+--	timerEmbraceDarknessCD:Start(35-delay)--35-41
 --	timerRepulsiveVisageCD:Start(44.7-delay)--44.7-46?
 end
 
@@ -105,8 +109,8 @@ function mod:SPELL_AURA_APPLIED(args)
 		--Droman
 		if self:AntiSpam(3, 1) then
 			timerBewilderingPollenCD:Start(7.3, self.vb.pollenCount+1)
-			timerTearsoftheForestCD:Start(12.5, self.vb.tearsCount+1)
-			--timerEmbraceDarknessCD(39.6)
+			timerTearsoftheForestCD:Start(17, self.vb.tearsCount+1)--17-20
+			--timerEmbraceDarknessCD(35.1)--35.1-39.9
 			if self:IsMythic() then
 				--timerRepulsiveVisageCD:Start(55.8)
 			end

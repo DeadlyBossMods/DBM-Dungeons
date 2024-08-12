@@ -11,7 +11,7 @@ end
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(39625)
 mod:SetEncounterID(1051)
-mod:SetHotfixNoticeRev(20240614000000)
+mod:SetHotfixNoticeRev(20240812000000)
 --mod:SetMinSyncRevision(20230929000000)
 
 mod:RegisterCombat("combat")
@@ -22,6 +22,10 @@ if not mod:IsCata() then
 		"SPELL_CAST_START 448847 448877 447261"
 	)
 
+	--[[
+	(ability.id = 448847 or ability.id = 448877 or ability.id = 447261) and type = "begincast"
+	or type = "dungeonencounterstart" or type = "dungeonencounterend"
+	--]]
 	local specWarnCommandingRoar	= mod:NewSpecialWarningDodgeCount(448847, nil, nil, nil, 2, 2)
 	local specWarnRockSpike			= mod:NewSpecialWarningDodgeCount(448877, nil, nil, nil, 2, 2)
 	local specWarnSkullsplitter		= mod:NewSpecialWarningDefensive(447261, nil, nil, nil, 1, 2)
@@ -39,7 +43,7 @@ if not mod:IsCata() then
 		self.vb.spikeCount = 0
 		self.vb.skullCount = 0
 		timerCommandingRoarCD:Start(6, 1)
-		timerRockSpikeCD:Start(10, 1)
+		timerRockSpikeCD:Start(16, 1)
 		timerSkullsplitterCD:Start(24, 1)
 	end
 

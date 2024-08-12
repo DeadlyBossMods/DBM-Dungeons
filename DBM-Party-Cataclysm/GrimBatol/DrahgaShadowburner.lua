@@ -11,15 +11,15 @@ end
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(40319)
 mod:SetEncounterID(1048)
-mod:SetHotfixNoticeRev(20240614000000)
+mod:SetHotfixNoticeRev(20240812000000)
 --mod:SetMinSyncRevision(20230929000000)
 
 mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
-	"SPELL_AURA_APPLIED 75328 75317",
-	"SPELL_CAST_START 90950 448013 456751 450095",
+	"SPELL_CAST_START 90950 448013 456751 450095 448105",
 --	"SPELL_SUMMON",
+	"SPELL_AURA_APPLIED 75328 75317",
 	"CHAT_MSG_MONSTER_YELL",
 	"CHAT_MSG_RAID_BOSS_EMOTE",
 	"UNIT_AURA_UNFILTERED"
@@ -27,24 +27,31 @@ mod:RegisterEventsInCombat(
 
 --shredding? Disabled since it seemed utterly useless in my limited testing
 --local warnShredding			= mod:NewSpellAnnounce(75271, 3)
+--TODO, recheck phasing timers and add timers with transcriptor
+--[[
+(ability.id = 90950 or ability.id = 448013 or ability.id = 456751 or ability.id = 450095 or ability.id = 448105) and type = "begincast"
+ or ability.id = 75328 and type = "applybuff"
+ or type = "dungeonencounterstart" or type = "dungeonencounterend"
+ or (source.type = "NPC" and source.firstSeen = timestamp) or (target.type = "NPC" and target.firstSeen = timestamp)
+--]]
 local warnFlamingFixate	 		= mod:NewTargetNoFilterAnnounce(82850, 4)
 
 local specWarnAdds				= mod:NewSpecialWarningSwitchCount(90949, "Dps", nil, nil, 1, 2)
 local specWarnFlamingFixate		= mod:NewSpecialWarningRun(82850, nil, nil, nil, 4, 2)
-local specWarnDevouring 		= mod:NewSpecialWarningDodgeCount(90950, nil, nil, nil, 2, 2)
+local specWarnDevouring 		= mod:NewSpecialWarningDodgeCount(DBM:IsPostCata() and 448105 or 90950, nil, nil, nil, 2, 2)
 local specWarnSeepingTwilight	= mod:NewSpecialWarningGTFO(75317, nil, nil, nil, 2, 8)
 
 local timerAddCD				= mod:NewCDCountTimer(20.6, 90949, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)--20.6-27. 24 is the average
-local timerDevouringCD			= mod:NewCDCountTimer(40, 90950, nil, nil, nil, 3)
-local timerDevouring			= mod:NewBuffActiveTimer(5, 90950, nil, nil, nil, 3)
+local timerDevouringCD			= mod:NewCDCountTimer(40, DBM:IsPostCata() and 448105 or 90950, nil, nil, nil, 3)
+local timerDevouring			= mod:NewBuffActiveTimer(5, DBM:IsPostCata() and 448105 or 90950, nil, nil, nil, 3)
 --local timerShredding			= mod:NewBuffActiveTimer(20, 75271)
 --Add TWW unique stuff
 local warnTwilightBuffet, timerTwilightBuffetCD, warnCurseofEntropy, timerCurseofEntropyCD
 if not mod:IsCata() then
 	warnTwilightBuffet			= mod:NewCountAnnounce(456751, 3)
 	warnCurseofEntropy			= mod:NewCountAnnounce(450095, 3)
-	timerTwilightBuffetCD		= mod:NewCDCountTimer(30, 456751, nil, nil, nil, 2)
-	timerCurseofEntropyCD		= mod:NewCDCountTimer(30, 450095, nil, nil, nil, 3, nil, DBM_COMMON_L.CURSE_ICON)
+	timerTwilightBuffetCD		= mod:NewCDCountTimer(35, 456751, nil, nil, nil, 2)
+	timerCurseofEntropyCD		= mod:NewCDCountTimer(26, 450095, nil, nil, nil, 3, nil, DBM_COMMON_L.CURSE_ICON)
 end
 
 local fixateWarned = {}
@@ -62,9 +69,30 @@ function mod:OnCombatStart(delay)
 	self.vb.buffetCount = 0
 	self.vb.curseCount = 0
 	if not self:IsCata() then
-		timerCurseofEntropyCD:Stop()
 		timerAddCD:Start(8, 1)--Maybe also true in cata?
 		timerCurseofEntropyCD:Start(17, 1)
+	end
+end
+
+function mod:SPELL_CAST_START(args)
+	if args.spellId == 90950 or args.spellId == 448105 then--Cata version, TWW version
+		self.vb.devourCount = self.vb.devourCount + 1
+		specWarnDevouring:Show(self.vb.devourCount)
+		specWarnDevouring:Play("breathsoon")
+		timerDevouring:Start()
+		timerDevouringCD:Start(self:IsCata() and 40 or 35, self.vb.devourCount+1)
+	elseif args.spellId == 448013 then--Invocation of Shadowflame (New add summon spell trigger in TWW)
+		self.vb.addCount = self.vb.addCount + 1
+		specWarnAdds:Show(self.vb.addCount)
+		timerAddCD:Start(self:GetStage(2) and 35 or 26, self.vb.addCount+1)
+	elseif args.spellId == 456751 then
+		self.vb.buffetCount = self.vb.buffetCount + 1
+		warnTwilightBuffet:Show(self.vb.buffetCount)
+		timerTwilightBuffetCD:Start(nil, self.vb.buffetCount+1)
+	elseif args.spellId == 450095 then
+		self.vb.curseCount = self.vb.curseCount + 1
+		warnCurseofEntropy:Show(self.vb.curseCount)
+		timerCurseofEntropyCD:Start(self:GetStage(2) and 35 or 26, self.vb.curseCount+1)
 	end
 end
 
@@ -78,28 +106,6 @@ function mod:SPELL_AURA_APPLIED(args)
 	elseif args.spellId == 75317 and args:IsPlayer() then
 		specWarnSeepingTwilight:Show(args.spellName)
 		specWarnSeepingTwilight:Play("watchfeet")
-	end
-end
-
-function mod:SPELL_CAST_START(args)
-	if args.spellId == 90950 then
-		self.vb.devourCount = self.vb.devourCount + 1
-		specWarnDevouring:Show(self.vb.devourCount)
-		specWarnDevouring:Play("breathsoon")
-		timerDevouring:Start()
-		timerDevouringCD:Start(self:IsCata() and 40 or 37.5, self.vb.devourCount+1)
-	elseif args.spellId == 448013 then--Invocation of Shadowflame (New add summon spell trigger in TWW)
-		self.vb.addCount = self.vb.addCount + 1
-		specWarnAdds:Show(self.vb.addCount)
-		timerAddCD:Start(self:GetStage(2) and 30 or 26, self.vb.addCount+1)
-	elseif args.spellId == 456751 then
-		self.vb.buffetCount = self.vb.buffetCount + 1
-		warnTwilightBuffet:Show(self.vb.buffetCount)
-		timerTwilightBuffetCD:Start(nil, self.vb.buffetCount+1)
-	elseif args.spellId == 450095 then
-		self.vb.curseCount = self.vb.curseCount + 1
-		warnCurseofEntropy:Show(self.vb.curseCount)
-		timerCurseofEntropyCD:Start(self:GetStage(2) and 30 or 26, self.vb.curseCount+1)
 	end
 end
 
@@ -130,6 +136,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg, npc)
 	end
 end
 
+--Cata version of add spawn
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
 	if msg:find("spell:75218") then--Add spawning
 		self.vb.addCount = self.vb.addCount + 1

@@ -4,6 +4,7 @@ local L		= mod:GetLocalizedStrings()
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(164501)
 mod:SetEncounterID(2392)
+mod:SetHotfixNoticeRev(20240808000000)
 mod:SetUsedIcons(1, 2, 3, 4)
 
 mod:RegisterCombat("combat")
@@ -22,6 +23,7 @@ mod:RegisterEventsInCombat(
 --[[
 (ability.id = 321834 or ability.id = 321873 or ability.id = 321828 or ability.id = 341709) and type = "begincast"
  or ability.id = 336499
+ or type = "dungeonencounterstart" or type = "dungeonencounterend"
  or ability.id = 321669 and type = "begincast"
 --]]
 local warnGuessingGame				= mod:NewCastAnnounce(336499, 4)
@@ -35,8 +37,8 @@ local specWarnFixate				= mod:NewSpecialWarningRun(321891, nil, nil, nil, 4, 2)
 local specWarnPattyCake				= mod:NewSpecialWarningInterrupt(321828, nil, nil, nil, 1, 2)
 --local specWarnGTFO					= mod:NewSpecialWarningGTFO(257274, nil, nil, nil, 1, 8)
 
-local timerDodgeBallCD				= mod:NewCDCountTimer(14.5, 321834, nil, nil, nil, 3)--14.6-18
-local timerFreezeTagCD				= mod:NewCDCountTimer(21.9, 321873, nil, nil, nil, 3)
+local timerDodgeBallCD				= mod:NewCDCountTimer(12.1, 321834, nil, nil, nil, 3)--12.1-18
+local timerFreezeTagCD				= mod:NewCDCountTimer(21.8, 321873, nil, nil, nil, 3)--21.8-25
 local timerPattyCakeCD				= mod:NewCDCountTimer(20.6, 321828, nil, nil, nil, 3)--20-26
 
 mod:AddNamePlateOption("NPAuraOnFixate", 321891)
@@ -55,9 +57,9 @@ function mod:OnCombatStart(delay)
 	self.vb.dodgeballCount = 0
 	self.vb.tagCount = 0
 	self.vb.pattyCount = 0
-	timerDodgeBallCD:Start(7.3-delay, 1)
-	timerPattyCakeCD:Start(13.4-delay, 1)
-	timerFreezeTagCD:Start(18.3-delay, 1)--Sometimes cast is skipped?
+	timerDodgeBallCD:Start(6-delay, 1)
+	timerPattyCakeCD:Start(13.4-delay, 1)--13.4-14.3
+	timerFreezeTagCD:Start(16.7-delay, 1)--16.7-18.5, Sometimes cast is skipped?
 	if self.Options.NPAuraOnFixate then
 		DBM:FireEvent("BossMod_EnableHostileNameplates")
 	end
