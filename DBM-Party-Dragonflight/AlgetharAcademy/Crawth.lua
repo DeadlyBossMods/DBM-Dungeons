@@ -73,7 +73,12 @@ function mod:SPELL_CAST_START(args)
 	elseif spellId == 377004 then
 		self.vb.ScreechCount = self.vb.ScreechCount + 1
 		specWarnDeafeningScreech:Show(self.vb.ScreechCount)
-		specWarnDeafeningScreech:Play("scatter")
+		if self:IsSpellCaster() then
+			specWarnDeafeningScreech:Play("stopcast")
+			specWarnDeafeningScreech:ScheduleVoice(1, "scatter")
+		else
+			specWarnDeafeningScreech:Play("scatter")
+		end
 		timerDeafeningScreechCD:Start(nil, self.vb.ScreechCount+1)
 		if self.Options.RangeFrame then
 			DBM.RangeCheck:Show(4)
