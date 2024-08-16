@@ -1,5 +1,5 @@
-## Interface: 110000, 110002
-## X-Min-Interface: 110000
+## Interface: 110002
+## X-Min-Interface: 110002
 ## Title:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cff4565ffDelves (TWW)|r
 ## Title-koKR:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cff4565ff구렁 (내부 전쟁)|r
 ## Title-ruRU:|cffffe00a<|r|cffff7d0aDBM Мод|r|cffffe00a>|r |cff4565ffПогружение в норы (Война Внутри)|r
