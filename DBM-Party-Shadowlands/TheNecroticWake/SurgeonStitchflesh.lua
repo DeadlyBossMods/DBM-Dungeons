@@ -4,13 +4,15 @@ local L		= mod:GetLocalizedStrings()
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(162689)
 mod:SetEncounterID(2389)
+mod:SetHotfixNoticeRev(20240817000000)
+--mod:SetMinSyncRevision(20211203000000)
 
 mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 320358 320376 327664 334488",
 	"SPELL_CAST_SUCCESS 320359 322681 320376",
-	"SPELL_AURA_APPLIED 320200 322681 322548",
+	"SPELL_AURA_APPLIED 320200 322681 322548 334321",
 	"SPELL_AURA_REMOVED 322681",
 	"SPELL_PERIODIC_DAMAGE 320366",
 	"SPELL_PERIODIC_MISSED 320366",
@@ -19,14 +21,15 @@ mod:RegisterEventsInCombat(
 )
 
 --TODO, need longer pulls where boss is NOT hooked for a while to see if he goes through cast sequences of spawning more adds or more Ichor
---TODO, review how to do counts later (resetting on each hook or continously)
 --[[
 (ability.id = 320358 or ability.id = 327664 or ability.id = 334488) and type = "begincast"
  or (ability.id = 320359 or ability.id = 326574 or ability.id = 322681) and type = "cast"
  or ability.id = 327041 or ability.id = 322548
  or ability.id = 320376 and type = "begincast"
+ or ability.id = 334321 and type = "applybuff"
+ or type = "dungeonencounterstart" or type = "dungeonencounterend"
 --]]
-local warnSummonCreation			= mod:NewSpellAnnounce(320358, 2)
+local warnSummonCreation			= mod:NewCountAnnounce(320358, 2)
 local warnMutilate					= mod:NewCastAnnounce(320376, 4, nil, nil, "Tank|Healer")--Spammy if lots of adds up, which is why not special warning
 local warnSeverFlesh				= mod:NewCountAnnounce(334488, 3, nil, "Tank|Healer")
 local warnEscape					= mod:NewCastAnnounce(320359, 3)
@@ -42,16 +45,17 @@ local yellMeatHookFades				= mod:NewShortFadesYell(322681)
 --local specWarnHealingBalm			= mod:NewSpecialWarningInterrupt(257397, "HasInterrupt", nil, nil, 1, 2)
 local specWarnGTFO					= mod:NewSpecialWarningGTFO(320366, nil, nil, nil, 1, 8)
 
---local timerSummonCreationCD			= mod:NewCDTimer(13, 320358, nil, nil, nil, 1)
-local timerEmbalmingIchorCD			= mod:NewCDCountTimer(15.8, 327664, nil, nil, nil, 3)--Might be 18 now
+local timerSummonCreationCD			= mod:NewCDCountTimer(35.1, 320358, nil, nil, nil, 1)
+local timerEmbalmingIchorCD			= mod:NewCDCountTimer(18, 327664, nil, nil, nil, 3)
 local timerSeverFleshCD				= mod:NewCDCountTimer(9.7, 334488, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerEscape					= mod:NewCastTimer(30, 320359, nil, nil, nil, 6)
 --Add
-local timerMutilateCD				= mod:NewCDTimer(11, 320376, nil, nil, nil, 3)
-local timerMeatHookCD				= mod:NewCDTimer(18, 322681, nil, nil, nil, 3)
+local timerMutilateCD				= mod:NewCDNPTimer(11, 320376, nil, "Tank|Healer", nil, 5)
+local timerMeatHookCD				= mod:NewCDTimer(18.2, 322681, nil, nil, nil, 3)
 --local timerStichNeedleCD			= mod:NewCDTimer(15.8, 320200, nil, nil, nil, 5, nil, DBM_COMMON_L.HEALER_ICON)--Basically spammed
 
 mod.vb.bossDown = false
+mod.vb.creationCount = 0
 mod.vb.ichorCount = 0
 mod.vb.severCount = 0
 
@@ -66,21 +70,38 @@ function mod:IchorTarget(targetname, uId)
 	end
 end
 
+---@param self DBMMod
+local function findCreation(self, delay)
+	for i = 1, 2 do
+		local id = self:GetUnitCreatureId("boss"..i)
+		if id == 164578 then--Creation
+			local guid = UnitGUID("boss"..i)
+			timerMutilateCD:Start(6-delay, guid)
+			timerMeatHookCD:Start(19.6-delay, guid)
+			break
+		end
+	end
+end
+
 function mod:OnCombatStart(delay)
+	self:SetStage(1)
 	self.vb.bossDown = false
+	self.vb.creationCount = 1--One already exists on pull
 	self.vb.ichorCount = 0
 	self.vb.severCount = 0
---	timerSummonCreationCD:Start(1-delay)--START
-	timerEmbalmingIchorCD:Start(9.7-delay)
-	timerMeatHookCD:Start(10.6-delay)--The add that's already alive on pull
+--	timerSummonCreationCD:Start(1-delay, 2)--START (unknown, nobody in public logs is this bad)
+	timerEmbalmingIchorCD:Start(9.4-delay)
 --	timerStichNeedleCD:Start(1-delay)--SUCCESS
+	--Makes ure IEEU has fired before scanning for creations GUID
+	self:Schedule(1, findCreation, self, delay)
 end
 
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
 	if spellId == 320358 then
-		warnSummonCreation:Show()
-		--timerSummonCreationCD:Start()
+		self.vb.creationCount = self.vb.creationCount + 1
+		warnSummonCreation:Show(self.vb.creationCount)
+		timerSummonCreationCD:Start(nil, self.vb.creationCount+1)
 	elseif spellId == 320376 then
 		warnMutilate:Show()
 	elseif spellId == 327664 then
@@ -97,15 +118,14 @@ end
 function mod:SPELL_CAST_SUCCESS(args)
 	local spellId = args.spellId
 	if spellId == 320359 then
-		self.vb.bossDown = false
+		self:SetStage(1)
 		warnEscape:Show()
 		timerEscape:Stop()--Escaped early?
 		timerSeverFleshCD:Stop()
---		timerSummonCreationCD:Start(2.5)--1-3 seconds after escaping
 		timerEmbalmingIchorCD:Start(10.9, self.vb.ichorCount+1)--8-11
 	elseif spellId == 322681 then
 		timerMeatHookCD:Start(15, args.sourceGUID)
-	elseif spellId == 320376 then
+	elseif spellId == 320376 then--Doesn't go on CD unless cast finishes
 		timerMutilateCD:Start(10, args.sourceGUID)
 	end
 end
@@ -123,13 +143,17 @@ function mod:SPELL_AURA_APPLIED(args)
 		else
 			warnMeatHook:Show(args.destName)
 		end
-	elseif spellId == 322548 and not self.vb.bossDown then--Boss getting meat hooked
-		self.vb.bossDown = true
---		timerSummonCreationCD:Stop()
+	elseif spellId == 322548 and not self:GetStage(2) then--Boss getting meat hooked
+		self:SetStage(2)
+		timerSummonCreationCD:Stop()
 		timerEmbalmingIchorCD:Stop()
 		warnMeatHook:Show(args.destName)
 		timerEscape:Start(30)
+		timerSummonCreationCD:Start(31, self.vb.creationCount+1)--Give or take 1-2~
 		timerSeverFleshCD:Start(6, self.vb.severCount+1)
+	elseif spellId == 334321 then--Festering Rot
+		timerMutilateCD:Start(7.4, args.destGUID)
+		timerMeatHookCD:Start(12.2, args.destGUID)
 	end
 end
 
