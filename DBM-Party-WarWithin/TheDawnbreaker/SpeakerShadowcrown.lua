@@ -4,7 +4,7 @@ local L		= mod:GetLocalizedStrings()
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(211087)
 mod:SetEncounterID(2837)
-mod:SetHotfixNoticeRev(20240706000000)
+mod:SetHotfixNoticeRev(20240818000000)
 mod:SetMinSyncRevision(20240706000000)
 --mod.respawnTime = 29
 mod.sendMainBossGUID = true
@@ -55,20 +55,20 @@ local warnedTimerMissing = false--Single warn for single spell to avoid spam. As
 local allTimers = {
 	[1] = {
 		[425264] = {6},--Obsidian Blast (Non Mythic)
-		[453212] = {7.1, 33, 27.1},--Obsidian Beam (Mythic)
+		[453212] = {7.1, 32.4, 26.2},--Obsidian Beam (Mythic)
 		[445996] = {13.1},--Collapsing Darkness (Non Mythic)
-		[453140] = {23.3, 28.9},--Collapsing Night (Mythic)
+		[453140] = {23.3, 28.6, 26.3},--Collapsing Night (Mythic)
 		[4267341] = {9.3},--Burning Shadows (Non Mythic)
-		[4267342] = {19.2, 16.9, 25.3},--Burning Shadows (Mythic)
+		[4267342] = {19.2, 16.2, 24.8},--Burning Shadows (Mythic)
 	},
 	[2] = {
 		[425264] = {6.8, 17},--Obsidian Blast (Non Mythic)
-		[453212] = {15.9, 24.3, 25.9},--Obsidian Beam (Mythic)
+		[453212] = {18.2, 23.5, 25.1, 24.4, 26.9},--Obsidian Beam (Mythic)
 		[445996] = {13.8, 18},--Collapsing Darkness (Non Mythic)
-		[453140] = {8.7, 28, 25.9},--Collapsing Night (Mythic)
+		[453140] = {8.7, 28, 25.1, 25.1, 26.7},--Collapsing Night (Mythic)
 		[4267341] = {10.1, 25.2},--Burning Shadows (Non Mythic)
-		[4267342] = {12.2, 20.8, 22.7, 21.1},--Burning Shadows (Mythic)
-	},
+		[4267342] = {14.5, 19.2, 21.9, 21.1, 25.1},--Burning Shadows (Mythic)
+	},								---23.5
 }
 
 --The ability queue priority is so predictable, it may be possible to fully sequence this bosses timers in a table, but I want to see a LOT more tables first
@@ -257,9 +257,9 @@ function mod:SPELL_AURA_REMOVED(args)
 			self:SetStage(2)
 			--Restart timers
 			if self:IsMythic() then
-				timerCollapsingNightCD:Start(8.8, 1)
-				timerBurningShadowsCD:Start(12.2, 1)
-				timerObsidianBeamCD:Start(15.9, 1)
+				timerCollapsingNightCD:Start(8.7, 1)
+				timerBurningShadowsCD:Start(14.6, 1)
+				timerObsidianBeamCD:Start(18.2, 1)
 			else
 				timerObsidianBlastCD:Start(6.8, 1)
 				timerBurningShadowsCD:Start(10.1, 1)
