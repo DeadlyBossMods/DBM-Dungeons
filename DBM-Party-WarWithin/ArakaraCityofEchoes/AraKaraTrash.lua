@@ -6,24 +6,50 @@ mod:SetRevision("@file-date-integer@")
 mod.isTrashMod = true
 mod.isTrashModBossFightAllowed = true
 
---mod:RegisterEvents(
---	"SPELL_CAST_START",
---	"SPELL_CAST_SUCCESS",
+mod:RegisterEvents(
+	"SPELL_CAST_START 434824 434802 438877 436322 438826 448248 453161 432967 433841 433845",
+	"SPELL_CAST_SUCCESS 434802 434793 438622 448248 433841",
+	"SPELL_INTERRUPT",
 --	"SPELL_AURA_APPLIED",
 --	"SPELL_AURA_APPLIED_DOSE",
 --	"SPELL_AURA_REMOVED",
---	"UNIT_DIED"
---)
+	"UNIT_DIED"
+)
 
---local warnTotemicOverload					= mod:NewCastAnnounce(387145, 3)
+--[[
+(ability.id = 438826 or ability.id = 434252 or ability.id = 433845 or ability.id = 433841 or ability.id = 453161 or ability.id = 434824 or ability.id = 438877 or ability.id = 448248 or ability.id = 434802 or ability.id = 436322 or ability.id = 432967) and (type = "begincast" or type = "cast")
+ or (ability.id = 438622 or ability.id = 434793) and type = "cast"
+ or (stoppedAbility.id = 438622 or stoppedAbility.id = 434793 or stoppedAbility.id = 438826 or stoppedAbility.id = 434252 or stoppedAbility.id = 433845 or stoppedAbility.id = 433841 or stoppedAbility.id = 453161 or stoppedAbility.id = 434824 or stoppedAbility.id = 438877 or stoppedAbility.id = 448248 or stoppedAbility.id = 434802 or stoppedAbility.id = 436322 or stoppedAbility.id = 432967)
+ or type = "dungeonencounterstart" or type = "dungeonencounterend"
+--]]
+local warnHorrifyingshrill					= mod:NewCastAnnounce(434802, 4)--High Prio Off interrupt
+local warnRadiantBarrage					= mod:NewCastAnnounce(434793, 4)--High Prio Off interrupt
+local warnVenomVolley						= mod:NewCastAnnounce(433841, 4)--High Prio Off interrupt
+local warnAlarmShill						= mod:NewCastAnnounce(432967, 4, nil, nil, nil, nil, nil, 2)
+local warnToxicRupture						= mod:NewSpellAnnounce(438622, 4, nil, "Melee")
+local warnCalloftheBrood					= mod:NewSpellAnnounce(438877, 3)
+local warnPoisonousCloud					= mod:NewSpellAnnounce(438826, 3)
 
---local specWarnChainLightning				= mod:NewSpecialWarningMoveAway(387127, nil, nil, nil, 1, 2)
+local specWarnWebSpray						= mod:NewSpecialWarningDodge(434824, nil, nil, nil, 2, 2)
+local specWarnImpale						= mod:NewSpecialWarningDodge(453161, nil, nil, nil, 2, 2)
+local specWarnEruptingWebs					= mod:NewSpecialWarningDodge(433845, nil, nil, nil, 2, 2)
 --local yellChainLightning					= mod:NewYell(387127)
 --local specWarnStormshield					= mod:NewSpecialWarningDispel(386223, "MagicDispeller", nil, nil, 1, 2)
---local specWarnTempest						= mod:NewSpecialWarningInterrupt(386024, "HasInterrupt", nil, nil, 1, 2)
+local specWarnHorrifyingShrill				= mod:NewSpecialWarningInterrupt(434802, "HasInterrupt", nil, nil, 1, 2)--High Prio
+local specWarnRadiantBarrage				= mod:NewSpecialWarningInterrupt(434793, "HasInterrupt", nil, nil, 1, 2)--High Prio
+local specWarnPoisonBolt					= mod:NewSpecialWarningInterrupt(436322, "HasInterrupt", nil, nil, 1, 2)--High Prio (no CD timer, it's recast out of spell lockout regardless
+local specWarnRevoltingVolley				= mod:NewSpecialWarningInterrupt(448248, "HasInterrupt", nil, nil, 1, 2)
+local specWarnVenomVolley					= mod:NewSpecialWarningInterrupt(433841, "HasInterrupt", nil, nil, 1, 2)--High Prio
 
---local timerRainofArrowsCD					= mod:NewCDNPTimer(15.7, 384476, nil, nil, nil, 3)
---local timerBloodcurdlingShoutCD				= mod:NewCDNPTimer(19.1, 373395, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerWebSprayCD						= mod:NewCDNPTimer(7, 434824, nil, nil, nil, 3)--7-8.2 from last cast finish/kick
+local timerHorrifyingShrillCD				= mod:NewCDNPTimer(13.3, 434802, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--13.3-15.5 from last cast finish/kick
+local timerRadiantBarrageCD					= mod:NewCDNPTimer(16.8, 434793, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerCalloftheBroodCD					= mod:NewCDNPTimer(26.6, 438877, nil, nil, nil, 1)
+local timerPoisonousCloudCD					= mod:NewCDNPTimer(15.3, 438826, nil, nil, nil, 3)--15.3-24.7
+local timerRevoltingVolleyCD				= mod:NewCDNPTimer(18.3, 448248, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerImpaleCD							= mod:NewCDNPTimer(14.5, 453161, nil, nil, nil, 3)
+local timerVenomVolleyCD					= mod:NewCDNPTimer(18.2, 433841, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerEruptingWebsCD					= mod:NewCDNPTimer(18.1, 433845, nil, nil, nil, 3)
 
 --local playerName = UnitName("player")
 
@@ -42,33 +68,96 @@ function mod:CLTarget(targetname)
 end
 --]]
 
---[[
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
 	if not self:IsValidWarning(args.sourceGUID) then return end
-	if spellId == 387145 and self:AntiSpam(5, 4) then
-
-	--elseif spellId == 386024 then
-	--	timerTempestCD:Start(nil, args.sourceGUID)
-	--	if self.Options.SpecWarn386024interrupt and self:CheckInterruptFilter(args.sourceGUID, false, true) then
-	--		specWarnTempest:Show(args.sourceName)
-	--		specWarnTempest:Play("kickcast")
-	--	elseif self:AntiSpam(3, 7) then
-	--		warnTempest:Show()
-	--	end
+	if spellId == 434824 then
+		timerWebSprayCD:Start(nil, args.sourceGUID)
+		if self:AntiSpam(3, 2) then
+			specWarnWebSpray:Show()
+			specWarnWebSpray:Play("shockwave")
+		end
+	elseif spellId == 434802 then
+		if self.Options.SpecWarn434802interrupt and self:CheckInterruptFilter(args.sourceGUID, false, true) then
+			specWarnHorrifyingShrill:Show(args.sourceName)
+			specWarnHorrifyingShrill:Play("kickcast")
+		elseif self:AntiSpam(3, 7) then
+			warnHorrifyingshrill:Show()
+		end
+	elseif spellId == 438877 then
+		warnCalloftheBrood:Show()
+		timerCalloftheBroodCD:Start(26.6, args.sourceGUID)--Ok to start here, Nakt can't be interrupted or CCed
+	elseif spellId == 436322 then
+		--Even though high priorty, no off interrupt announce due to fact it'll be recast every 3-6 (based on spell lockout)
+		--We do not want to spam users in this way. By Quazii's SS, it's high prio but only if you can spare an interrupt CD for it.
+		if self:CheckInterruptFilter(args.sourceGUID, false, true) then
+			specWarnPoisonBolt:Show(args.sourceName)
+			specWarnPoisonBolt:Play("kickcast")
+		end
+	elseif spellId == 438826 then
+		warnPoisonousCloud:Show()
+		timerPoisonousCloudCD:Start(15.3, args.sourceGUID)
+	elseif spellId == 448248 then
+		if self:CheckInterruptFilter(args.sourceGUID, false, true) then
+			specWarnRevoltingVolley:Show(args.sourceName)
+			specWarnRevoltingVolley:Play("kickcast")
+		end
+	elseif spellId == 453161 then
+		timerImpaleCD:Start(14.5, args.sourceGUID)
+		if self:AntiSpam(3, 2) then
+			specWarnImpale:Show()
+			specWarnImpale:Play("shockwave")
+		end
+	elseif spellId == 432967 and self:AntiSpam(5, 6) then
+		warnAlarmShill:Show()
+		warnAlarmShill:Play("crowdcontrol")
+	elseif spellId == 433841 then
+		if self:CheckInterruptFilter(args.sourceGUID, false, true) then
+			specWarnVenomVolley:Show(args.sourceName)
+			specWarnVenomVolley:Play("kickcast")
+		elseif self:AntiSpam(3, 7) then
+			warnVenomVolley:Show()
+		end
+	elseif spellId == 433845 then
+		timerEruptingWebsCD:Start(18.1, args.sourceGUID)
+		if self:AntiSpam(3, 2) then
+			specWarnEruptingWebs:Show()
+			specWarnEruptingWebs:Play("watchstep")
+		end
 	end
 end
---]]
 
---[[
 function mod:SPELL_CAST_SUCCESS(args)
 	local spellId = args.spellId
 	if not self:IsValidWarning(args.sourceGUID) then return end
-	if spellId == 384476 then
-
+	if spellId == 434802 then
+		timerHorrifyingShrillCD:Start(13.3, args.sourceGUID)
+	elseif spellId == 434793 then
+		if self.Options.SpecWarn434793interrupt and self:CheckInterruptFilter(args.sourceGUID, false, true) then
+			specWarnRadiantBarrage:Show(args.sourceName)
+			specWarnRadiantBarrage:Play("kickcast")
+		elseif self:AntiSpam(3, 7) then
+			warnRadiantBarrage:Show()
+		end
+		timerRadiantBarrageCD:Start(16.8, args.sourceGUID)
+	elseif spellId == 438622 and self:AntiSpam(3, 6) then
+		warnToxicRupture:Show()
+	elseif spellId == 448248 then
+		timerRevoltingVolleyCD:Start(18.3, args.sourceGUID)
+	elseif spellId == 433841 then
+		timerVenomVolleyCD:Start(18.2, args.sourceGUID)
 	end
 end
---]]
+
+function mod:SPELL_INTERRUPT(args)
+	if args.extraSpellId == 434802 then
+		timerHorrifyingShrillCD:Start(13.3, args.sourceGUID)
+	elseif args.extraSpellId == 448248 then
+		timerRevoltingVolleyCD:Start(18.3, args.sourceGUID)
+	elseif args.extraSpellId == 433841 then
+		timerVenomVolleyCD:Start(18.2, args.sourceGUID)
+	end
+end
 
 --[[
 function mod:SPELL_AURA_APPLIED(args)
@@ -81,10 +170,25 @@ end
 --mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED
 --]]
 
---[[
 function mod:UNIT_DIED(args)
 	local cid = self:GetCIDFromGUID(args.destGUID)
-	if cid == 192796 then
+	if cid == 217531 then--Ixin
+		timerWebSprayCD:Stop(args.destGUID)
+		timerHorrifyingShrillCD:Stop(args.destGUID)
+	elseif cid == 218324 then--Nakt
+		timerWebSprayCD:Stop(args.destGUID)
+		timerCalloftheBroodCD:Stop(args.destGUID)
+	elseif cid == 217533 then--Atik
+		timerWebSprayCD:Stop(args.destGUID)
+		timerPoisonousCloudCD:Stop(args.destGUID)
+	elseif cid == 216293 then--Trilling Attendant
+		timerRadiantBarrageCD:Stop(args.destGUID)
+	elseif cid == 223253 then--Bloodstained Webmage
+		timerRevoltingVolleyCD:Stop(args.destGUID)
+	elseif cid == 216338 then--Hulking Bodyguard
+		timerImpaleCD:Stop(args.destGUID)
+	elseif cid == 216364 then--Blood Overseer
+		timerVenomVolleyCD:Stop(args.destGUID)
+		timerEruptingWebsCD:Stop(args.destGUID)
 	end
 end
---]]
