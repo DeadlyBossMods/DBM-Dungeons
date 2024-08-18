@@ -60,7 +60,7 @@ local castsPerGUID = {}
 --Terrifying Slam triggers 7 second ICD
 --Shadowy Decay triggers 10 second ICD
 --No spells have spell priority. It truly is wild west despite how consistent it looks in some logs, look hard enough you find others
---Nerzhul code NOT usable here, upon further log review, there is no consistency because all spells
+--Nerzhul code NOT usable here, upon further log review, there is no consistency because all spells (meaning no spell priority is in place)
 local function updateAllTimers(self, ICD)
 	DBM:Debug("updateAllTimers running", 3)
 --	local nextCast = 0
