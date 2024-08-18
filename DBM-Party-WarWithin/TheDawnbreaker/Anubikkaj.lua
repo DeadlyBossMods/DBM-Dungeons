@@ -41,11 +41,10 @@ local specWarnShadowDecay					= mod:NewSpecialWarningDodgeCount(426787, nil, nil
 --local specWarnGTFO						= mod:NewSpecialWarningGTFO(372820, nil, nil, nil, 1, 8)
 local specWarnCongealedDarkness				= mod:NewSpecialWarningInterruptCount(452099, nil, nil, nil, 1, 2, 4)
 
---All timers are 23.5 (or even lower) but are often extended to 26 on non mythic and 33.5 on mythic.
---This is because of the bosses internal CD that can delay casts up to 10 seconds
-local timerTerrifyingSlamCD					= mod:NewCDCountTimer(23.5, 427001, nil, nil, nil, 2)
-local timerDarkOrbCD						= mod:NewCDCountTimer(23.5, 426860, nil, nil, nil, 3)
-local timerShadowDecayCD					= mod:NewCDCountTimer(23.5, 426787, nil, nil, nil, 2, nil, DBM_COMMON_L.HEALER_ICON)
+--All timers are 16 (or even lower) but are often extended to 23, 26, 33, or even in extreme cases for animate shadows, 42.5 since it has lowest spell priority
+local timerTerrifyingSlamCD					= mod:NewCDCountTimer(16, 427001, nil, nil, nil, 2)
+local timerDarkOrbCD						= mod:NewCDCountTimer(16, 426860, nil, nil, nil, 3)
+local timerShadowDecayCD					= mod:NewCDCountTimer(16, 426787, nil, nil, nil, 2, nil, DBM_COMMON_L.HEALER_ICON)
 local timerAnimateShadowsCD					= mod:NewCDCountTimer(40, 452127, nil, nil, nil, 1, nil, DBM_COMMON_L.MYTHIC_ICON)
 
 mod:AddPrivateAuraSoundOption(426865, true, 426860, 1)--Dark Orb target
@@ -56,35 +55,80 @@ mod.vb.shadowCount = 0
 mod.vb.addsCount = 0
 local castsPerGUID = {}
 
---Shadowy Decay triggers 10 second ICD
---Terrifying Slam triggers 7 second ICD
---Dark Orb triggers 9 second ICD
 --Animate Shadows triggers 7.5 second ICD
+--Dark Orb triggers 9 second ICD
+--Terrifying Slam triggers 7 second ICD
+--Shadowy Decay triggers 10 second ICD
+--Animate Shadows > Orb > Slam > Shadowy Decay
+--Debug mode activates advanced checks for spell queue priority
+--After enough testing it will be deployed fully
 local function updateAllTimers(self, ICD)
 	DBM:Debug("updateAllTimers running", 3)
-	if timerTerrifyingSlamCD:GetRemaining(self.vb.slamCount+1) < ICD then
-		local elapsed, total = timerTerrifyingSlamCD:GetTime(self.vb.slamCount+1)
-		local extend = ICD - (total-elapsed)
-		DBM:Debug("timerTerrifyingSlamCD extended by: "..extend, 2)
-		timerTerrifyingSlamCD:Update(elapsed, total+extend, self.vb.slamCount+1)
-	end
-	if timerDarkOrbCD:GetRemaining(self.vb.orbCount+1) < ICD then
-		local elapsed, total = timerDarkOrbCD:GetTime(self.vb.orbCount+1)
-		local extend = ICD - (total-elapsed)
-		DBM:Debug("timerDarkOrbCD extended by: "..extend, 2)
-		timerDarkOrbCD:Update(elapsed, total+extend, self.vb.orbCount+1)
-	end
-	if timerShadowDecayCD:GetRemaining(self.vb.shadowCount+1) < ICD then
-		local elapsed, total = timerShadowDecayCD:GetTime(self.vb.shadowCount+1)
-		local extend = ICD - (total-elapsed)
-		DBM:Debug("timerShadowDecayCD extended by: "..extend, 2)
-		timerShadowDecayCD:Update(elapsed, total+extend, self.vb.shadowCount+1)
-	end
+	local nextCast = 0
 	if timerAnimateShadowsCD:GetRemaining(self.vb.addsCount+1) < ICD then
 		local elapsed, total = timerAnimateShadowsCD:GetTime(self.vb.addsCount+1)
 		local extend = ICD - (total-elapsed)
 		DBM:Debug("timerAnimateShadowsCD extended by: "..extend, 2)
 		timerAnimateShadowsCD:Update(elapsed, total+extend, self.vb.addsCount+1)
+		if DBM.Options.DebugMode then
+			nextCast = 1
+		end
+	end
+	if timerDarkOrbCD:GetRemaining(self.vb.orbCount+1) < ICD then
+		local elapsed, total = timerDarkOrbCD:GetTime(self.vb.orbCount+1)
+		local extend = ICD - (total-elapsed)
+		if DBM.Options.DebugMode then
+			if nextCast == 1 then--Previous spells in queue priority are head of it in line, auto adjust
+				extend = extend + 7.5
+				DBM:Debug("timerDarkOrbCD extended by: "..extend.." plus 7.5 for Animate Shadows", 2)
+			else
+				DBM:Debug("timerDarkOrbCD extended by: "..extend, 2)
+				nextCast = 2
+			end
+		else
+			DBM:Debug("timerDarkOrbCD extended by: "..extend, 2)
+		end
+		timerDarkOrbCD:Update(elapsed, total+extend, self.vb.orbCount+1)
+	end
+	if timerTerrifyingSlamCD:GetRemaining(self.vb.slamCount+1) < ICD then
+		local elapsed, total = timerTerrifyingSlamCD:GetTime(self.vb.slamCount+1)
+		local extend = ICD - (total-elapsed)
+		if DBM.Options.DebugMode then
+			if nextCast == 1 then--Previous spells in queue priority are head of it in line, auto adjust
+				extend = extend + 7.5
+				DBM:Debug("timerTerrifyingSlamCD extended by: "..extend.." plus 7.5 for Animate Shadows", 2)
+			elseif nextCast == 2 then
+				extend = extend + 9
+				DBM:Debug("timerTerrifyingSlamCD extended by: "..extend.." plus 9 for Dark Orb", 2)
+			else
+				DBM:Debug("timerTerrifyingSlamCD extended by: "..extend, 2)
+				nextCast = 3
+			end
+		else
+			DBM:Debug("timerTerrifyingSlamCD extended by: "..extend, 2)
+		end
+		timerTerrifyingSlamCD:Update(elapsed, total+extend, self.vb.slamCount+1)
+	end
+	if timerShadowDecayCD:GetRemaining(self.vb.shadowCount+1) < ICD then
+		local elapsed, total = timerShadowDecayCD:GetTime(self.vb.shadowCount+1)
+		local extend = ICD - (total-elapsed)
+		if DBM.Options.DebugMode then
+			if nextCast == 1 then--Previous spells in queue priority are head of it in line, auto adjust
+				extend = extend + 7.5
+				DBM:Debug("timerShadowDecayCD extended by: "..extend.." plus 7.5 for Animate Shadows", 2)
+			elseif nextCast == 2 then
+				extend = extend + 9
+				DBM:Debug("timerShadowDecayCD extended by: "..extend.." plus plus 9 for Dark Orb", 2)
+			elseif nextCast == 3 then
+				extend = extend + 7
+				DBM:Debug("timerShadowDecayCD extended by: "..extend.." plus 7 for Terrifying Slam", 2)
+			else
+				DBM:Debug("timerShadowDecayCD extended by: "..extend, 2)
+			end
+		else
+			DBM:Debug("timerShadowDecayCD extended by: "..extend, 2)
+		end
+		timerShadowDecayCD:Update(elapsed, total+extend, self.vb.shadowCount+1)
 	end
 end
 
