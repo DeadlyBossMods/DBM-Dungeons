@@ -5,7 +5,7 @@ mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(213179)
 mod:SetEncounterID(2926)
 mod:SetUsedIcons(1, 2, 3, 4)
-mod:SetHotfixNoticeRev(20240630000000)
+mod:SetHotfixNoticeRev(20240818000000)
 --mod:SetMinSyncRevision(20211203000000)
 --mod.respawnTime = 29
 mod.sendMainBossGUID = true
@@ -25,7 +25,6 @@ mod:RegisterEventsInCombat(
 )
 
 --TODO, if higher difficulties kill adds instead of CC/control them, swap to 8-5 icons instead of 1-4
---TODO, longer pulls to complete timer set?
 --[[
 (ability.id = 438471 or ability.id = 438476 or ability.id = 438473) and type = "begincast"
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
@@ -41,7 +40,7 @@ local specWarnHunger						= mod:NewSpecialWarningRun(439070, nil, nil, nil, 1, 2
 --local yellSomeAbility						= mod:NewYell(372107)
 --local specWarnGTFO						= mod:NewSpecialWarningGTFO(372820, nil, nil, nil, 1, 8)
 
-local timerVoraciousBiteCD					= mod:NewCDCountTimer(14.5, 438471, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+local timerVoraciousBiteCD					= mod:NewCDCountTimer(14.1, 438471, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerAlertingShrillCD					= mod:NewCDCountTimer(38.7, 438476, nil, nil, nil, 1)--38.7-40.1
 local timerGossamerOnslaughtCD				= mod:NewCDCountTimer(38.7, 438473, nil, nil, nil, 3)--38.7-40.1
 
@@ -58,7 +57,7 @@ function mod:OnCombatStart(delay)
 	self.vb.onslaughtCount = 0
 	self.vb.mobIcon = 1
 	timerVoraciousBiteCD:Start(3.3-delay, 1)
-	timerAlertingShrillCD:Start(10.6-delay, 1)
+	timerAlertingShrillCD:Start(10-delay, 1)
 	timerGossamerOnslaughtCD:Start(30.0-delay, 1)
 end
 
@@ -79,11 +78,25 @@ function mod:SPELL_CAST_START(args)
 		self.vb.mobIcon = 1
 		self.vb.shrillCount = self.vb.shrillCount + 1
 		warnAlertingShrill:Show(self.vb.shrillCount)
-		timerAlertingShrillCD:Start(nil, self.vb.shrillCount+1)
+		timerAlertingShrillCD:Start(self.vb.shrillCount == 1 and 38.7 or 39.3, self.vb.shrillCount+1)
+		--if time remaining on Voracious Bite is < 7.2, it's extended by this every time
+		if timerVoraciousBiteCD:GetRemaining(self.vb.biteCount+1) < 7.2 then
+			local elapsed, total = timerVoraciousBiteCD:GetTime(self.vb.biteCount+1)
+			local extend = 7.2 - (total-elapsed)
+			DBM:Debug("timerVoraciousBiteCD extended by: "..extend, 2)
+			timerVoraciousBiteCD:Update(elapsed, total+extend, self.vb.biteCount+1)
+		end
 	elseif spellId == 438473 then
 		self.vb.onslaughtCount = self.vb.onslaughtCount + 1
 		warnGossamerOnsalught:Show(self.vb.onslaughtCount)
-		timerGossamerOnslaughtCD:Start(nil, self.vb.onslaughtCount+1)
+		timerGossamerOnslaughtCD:Start(self.vb.onslaughtCount == 1 and 38.7 or 39.3, self.vb.onslaughtCount+1)
+		--if time remaining on Voracious Bite is < 12.1, it's extended by this every time
+		if timerVoraciousBiteCD:GetRemaining(self.vb.biteCount+1) < 12.1 then
+			local elapsed, total = timerVoraciousBiteCD:GetTime(self.vb.biteCount+1)
+			local extend = 12.1 - (total-elapsed)
+			DBM:Debug("timerVoraciousBiteCD extended by: "..extend, 2)
+			timerVoraciousBiteCD:Update(elapsed, total+extend, self.vb.biteCount+1)
+		end
 	end
 end
 
