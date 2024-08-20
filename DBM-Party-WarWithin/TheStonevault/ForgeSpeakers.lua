@@ -26,6 +26,8 @@ mod:RegisterEventsInCombat(
 --[[
 (ability.id = 445541 or ability.id = 430097 or ability.id = 428202 or ability.id = 428711) and type = "begincast"
 or (ability.id = 428508 or ability.id = 428535 or ability.id = 428120) and type = "cast"
+or ability.id = 439577 or (target.id = 213217 or target.id = 213216) and type = "death"
+or stoppedAbility.id = 430097
 or type = "dungeonencounterstart" or type = "dungeonencounterend"
 --]]
 --General
@@ -36,28 +38,28 @@ local specWarnGTFO							= mod:NewSpecialWarningGTFO(429999, nil, nil, nil, 1, 8
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(28459))
 local warnVentilationOver					= mod:NewEndAnnounce(445541, 1)
 
-local specWarnActivateVentilation			= mod:NewSpecialWarningDodgeCount(445541, nil, nil, nil, 2, 2)
+local specWarnExhaustVents					= mod:NewSpecialWarningDodgeCount(445541, nil, nil, nil, 2, 2)
 local specWarnMoltenMetal					= mod:NewSpecialWarningInterruptCount(430097, "HasInterrupt", nil, nil, 1, 2)
 local specWarnScrapSong						= mod:NewSpecialWarningDodgeCount(428202, nil, nil, nil, 2, 2)
 --local yellSomeAbility						= mod:NewYell(372107)
 
 --Pretty much all of his timers can be delayed by up to 6 seconds by spell lockouts from interrupts
-local timerActivateVentilationCD			= mod:NewCDCountTimer(15.7, 445541, nil, nil, nil, 3)
-local timerActivateVentilation				= mod:NewBuffActiveTimer(9, 445541, nil, nil, nil, 5)
+local timerExhaustVentsCD					= mod:NewCDCountTimer(15.7, 445541, nil, nil, nil, 3)
+local timerExhaustVents						= mod:NewBuffActiveTimer(9, 445541, nil, nil, nil, 5)
 local timerMoltenMetalCD					= mod:NewCDCountTimer(8.5, 430097, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
-local timerScrapSongCD						= mod:NewCDCountTimer(52.2, 428202, nil, nil, nil, 3)
+local timerScrapSongCD						= mod:NewCDCountTimer(49.7, 428202, nil, nil, nil, 3)
 --Speaker Dorlita
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(28461))
-local warnDeconstruction					= mod:NewPreWarnAnnounce(428508, 7, 4)
+local warnBlazingCrescendo					= mod:NewPreWarnAnnounce(428508, 7, 4)
 
-local specWarnDeconstruction				= mod:NewSpecialWarningRunCount(428508, nil, nil, nil, 4, 2)
-local specWarnMoltenHammer					= mod:NewSpecialWarningDefensive(428711, nil, nil, nil, 1, 2)
-local specWarnLavaExpulsion					= mod:NewSpecialWarningDodgeCount(428120, nil, nil, nil, 2, 2)
+local specWarnBlazingCrescendo				= mod:NewSpecialWarningRunCount(428508, nil, nil, nil, 4, 2)
+local specWarnIgneousHammer					= mod:NewSpecialWarningDefensive(428711, nil, nil, nil, 1, 2)
+local specWarnLavaCannon					= mod:NewSpecialWarningDodgeCount(428120, nil, nil, nil, 2, 2)
 
-local timerDeconstructionCD					= mod:NewCDCountTimer(52.2, 428508, nil, nil, nil, 2)
-local timerDeconstruction					= mod:NewCastTimer(7, 428508, nil, nil, nil, 2, nil, DBM_COMMON_L.HEALER_ICON..DBM_COMMON_L.DEADLY_ICON)
-local timerMoltenHammerCD					= mod:NewCDCountTimer(12.1, 428711, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
-local timerLavaExpulsionCD					= mod:NewCDCountTimer(16.9, 428120, nil, nil, nil, 3)
+local timerBlazingCrescendoCD				= mod:NewCDCountTimer(52.2, 428508, nil, nil, nil, 2)
+local timerBlazingCrescendo					= mod:NewCastTimer(7, 428508, nil, nil, nil, 2, nil, DBM_COMMON_L.HEALER_ICON..DBM_COMMON_L.DEADLY_ICON)
+local timerIgneousHammerCD					= mod:NewCDCountTimer(12.1, 428711, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+local timerLavaCannonCD						= mod:NewCDCountTimer(16.9, 428120, nil, nil, nil, 3)
 
 --Brokk
 mod.vb.ventilationCount = 0
@@ -68,27 +70,44 @@ mod.vb.deconstructCount = 0
 mod.vb.hammerCount = 0
 mod.vb.orbCount = 0
 
---Lava Expulsion triggers 3.5 second ICD on all of Dorlita's other abilities
---Molten Metal Hammer 2 second ICD on all of Dorlita's other abilities
---Deconstruction may trigger 13 second ICD on all of Dorlita's other abilities
+--Lava Cannon triggers 3.5 second ICD on all of Dorlita's other abilities
+--Igneous Hammer 2 second ICD on all of Dorlita's other abilities
+--Blazing Crescendo may trigger 13 second ICD on all of Dorlita's other abilities
 local function updateDorlitaTimers(self, ICD)
-	if timerMoltenHammerCD:GetRemaining(self.vb.hammerCount+1) < ICD then
-		local elapsed, total = timerMoltenHammerCD:GetTime(self.vb.hammerCount+1)
+	if timerIgneousHammerCD:GetRemaining(self.vb.hammerCount+1) < ICD then
+		local elapsed, total = timerIgneousHammerCD:GetTime(self.vb.hammerCount+1)
 		local extend = ICD - (total-elapsed)
-		DBM:Debug("timerMoltenHammerCD extended by: "..extend, 2)
-		timerMoltenHammerCD:Update(elapsed, total+extend, self.vb.hammerCount+1)
+		DBM:Debug("timerIgneousHammerCD extended by: "..extend, 2)
+		timerIgneousHammerCD:Update(elapsed, total+extend, self.vb.hammerCount+1)
 	end
-	if timerLavaExpulsionCD:GetRemaining(self.vb.orbCount+1) < ICD then
-		local elapsed, total = timerLavaExpulsionCD:GetTime(self.vb.orbCount+1)
+	if timerLavaCannonCD:GetRemaining(self.vb.orbCount+1) < ICD then
+		local elapsed, total = timerLavaCannonCD:GetTime(self.vb.orbCount+1)
 		local extend = ICD - (total-elapsed)
-		DBM:Debug("timerLavaExpulsionCD extended by: "..extend, 2)
-		timerLavaExpulsionCD:Update(elapsed, total+extend, self.vb.orbCount+1)
+		DBM:Debug("timerLavaCannonCD extended by: "..extend, 2)
+		timerLavaCannonCD:Update(elapsed, total+extend, self.vb.orbCount+1)
 	end
-	if timerDeconstructionCD:GetRemaining(self.vb.deconstructCount+1) < ICD then
-		local elapsed, total = timerDeconstructionCD:GetTime(self.vb.deconstructCount+1)
+	if timerBlazingCrescendoCD:GetRemaining(self.vb.deconstructCount+1) < ICD then
+		local elapsed, total = timerBlazingCrescendoCD:GetTime(self.vb.deconstructCount+1)
 		local extend = ICD - (total-elapsed)
-		DBM:Debug("timerDeconstructionCD extended by: "..extend, 2)
-		timerDeconstructionCD:Update(elapsed, total+extend, self.vb.deconstructCount+1)
+		DBM:Debug("timerBlazingCrescendoCD extended by: "..extend, 2)
+		timerBlazingCrescendoCD:Update(elapsed, total+extend, self.vb.deconstructCount+1)
+	end
+end
+
+--Scrap Song Triggers 7.3 ICD on all of Brokk's other abilities
+--Exhaust Vents Triggers 9 second ICD on all of Brokk's other abilities
+local function updateBrokkTimers(self, ICD)
+	if timerScrapSongCD:GetRemaining(self.vb.cubeCount+1) < ICD then
+		local elapsed, total = timerScrapSongCD:GetTime(self.vb.cubeCount+1)
+		local extend = ICD - (total-elapsed)
+		DBM:Debug("timerScrapSongCD extended by: "..extend, 2)
+		timerScrapSongCD:Update(elapsed, total+extend, self.vb.cubeCount+1)
+	end
+	if timerMoltenMetalCD:GetRemaining(self.vb.moltenMetalCount+1) < ICD then
+		local elapsed, total = timerMoltenMetalCD:GetTime(self.vb.moltenMetalCount+1)
+		local extend = ICD - (total-elapsed)
+		DBM:Debug("timerMoltenMetalCD extended by: "..extend, 2)
+		timerMoltenMetalCD:Update(elapsed, total+extend, self.vb.moltenMetalCount+1)
 	end
 end
 
@@ -101,11 +120,12 @@ function mod:OnCombatStart(delay)
 	self.vb.orbCount = 0
 	timerMoltenMetalCD:Start(4-delay, 1)--4-5.2
 	timerScrapSongCD:Start(18.2-delay, 1)
-	timerActivateVentilationCD:Start(35-delay, 1)--35-41 based on spell lockouts from interrupts
+	timerExhaustVentsCD:Start(35-delay, 1)--35-41 based on spell lockouts from interrupts
 	--
-	timerMoltenHammerCD:Start(6-delay, 1)
-	timerLavaExpulsionCD:Start(12.1-delay, 1)
-	timerDeconstructionCD:Start(47, 1)--47-53 based on spell lockouts from interrupts
+	timerIgneousHammerCD:Start(6-delay, 1)
+	timerLavaCannonCD:Start(12.1-delay, 1)
+	timerBlazingCrescendoCD:Start(47, 1)--47-53 based on spell lockouts from interrupts
+	DBM:AddMsg("This boss has signficant spell queuing issues, especially when interrupting Brokk. This mod may take time to perfect, if that's even possible.")
 end
 
 --function mod:OnCombatEnd()
@@ -116,10 +136,11 @@ function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
 	if spellId == 445541 then
 		self.vb.ventilationCount = self.vb.ventilationCount  + 1
-		specWarnActivateVentilation:Show(self.vb.ventilationCount)
-		specWarnActivateVentilation:Play("watchstep")
-		timerActivateVentilationCD:Start(14.5, self.vb.ventilationCount+1)
-		timerActivateVentilation:Start()--3 + 6
+		specWarnExhaustVents:Show(self.vb.ventilationCount)
+		specWarnExhaustVents:Play("watchstep")
+		timerExhaustVentsCD:Start(14.5, self.vb.ventilationCount+1)
+		timerExhaustVents:Start()--3 + 6
+		updateBrokkTimers(self, 9)--Can't cast anything else while channeling this
 	elseif spellId == 430097 then
 		if self.vb.moltenMetalCount == 2 then self.vb.moltenMetalCount = 0 end
 		self.vb.moltenMetalCount = self.vb.moltenMetalCount + 1
@@ -136,18 +157,27 @@ function mod:SPELL_CAST_START(args)
 		specWarnScrapSong:Show(self.vb.cubeCount)
 		specWarnScrapSong:Play("runtoedge")--Or shockwave?
 		timerScrapSongCD:Start(nil, self.vb.cubeCount+1)
-		--These timers restart
-		timerMoltenMetalCD:Stop()
-		timerMoltenMetalCD:Start(7.2, self.vb.moltenMetalCount+1)
-		timerActivateVentilationCD:Stop()
-		timerActivateVentilationCD:Start(23.2, self.vb.ventilationCount+1)
+		--These timers extend if remaining Cd under these values otherwise roll over
+		if timerMoltenMetalCD:GetRemaining(self.vb.moltenMetalCount+1) < 7.2 then
+			local elapsed, total = timerMoltenMetalCD:GetTime(self.vb.moltenMetalCount+1)
+			local extend = 7.2 - (total-elapsed)
+			DBM:Debug("timerMoltenMetalCD extended by: "..extend, 2)
+			timerMoltenMetalCD:Update(elapsed, total+extend, self.vb.moltenMetalCount+1)
+		end
+		if timerExhaustVentsCD:GetRemaining(self.vb.ventilationCount+1) < 17 then
+			local elapsed, total = timerExhaustVentsCD:GetTime(self.vb.ventilationCount+1)
+			local extend = 17 - (total-elapsed)
+			DBM:Debug("timerExhaustVentsCD extended by: "..extend, 2)
+			timerExhaustVentsCD:Update(elapsed, total+extend, self.vb.ventilationCount+1)
+		end
+		--updateBrokkTimers(self, 7.2)
 	elseif spellId == 428711 then
 		self.vb.hammerCount = self.vb.hammerCount + 1
 		if self:IsTanking("player", nil, nil, true, args.sourceGUID) then
-			specWarnMoltenHammer:Show()
-			specWarnMoltenHammer:Play("defensive")
+			specWarnIgneousHammer:Show()
+			specWarnIgneousHammer:Play("defensive")
 		end
-		timerMoltenHammerCD:Start(nil, self.vb.hammerCount+1)
+		timerIgneousHammerCD:Start(nil, self.vb.hammerCount+1)
 		updateDorlitaTimers(self, 2)
 	end
 end
@@ -156,33 +186,41 @@ function mod:SPELL_CAST_SUCCESS(args)
 	local spellId = args.spellId
 	if spellId == 428508 then
 		self.vb.deconstructCount = self.vb.deconstructCount + 1
-		warnDeconstruction:Show()
-		--timerDeconstructionCD:Start(nil, self.vb.deconstructCount+1)--Maybe move this somewhere else
-		timerDeconstruction:Start(nil, self.vb.deconstructCount)--1 + 6
+		warnBlazingCrescendo:Show()
+		--timerBlazingCrescendoCD:Start(nil, self.vb.deconstructCount+1)--Maybe move this somewhere else
+		timerBlazingCrescendo:Start(nil, self.vb.deconstructCount)--1 + 6
 
-		--This resets bosses other two abilities
-		--Above is no longer true in newer beta builds
+		--These timers extend if remaining Cd under these values otherwise roll over
 		--This may still be wrong, it just needs monitoring
-		timerMoltenHammerCD:Stop()--Resets here again?
-		timerMoltenHammerCD:Start(13, self.vb.hammerCount+1)
-		timerLavaExpulsionCD:Stop()
-		timerLavaExpulsionCD:Start(19, self.vb.orbCount+1)
-		--Deconstruction seems to delay ventilation by 5 seconds, so extend it by 5 seconds
-		if timerActivateVentilationCD:GetRemaining(self.vb.ventilationCount+1) < 5 then
-			local elapsed, total = timerActivateVentilationCD:GetTime(self.vb.ventilationCount+1)
-			local extend = 5 - (total-elapsed)
-			DBM:Debug("timerActivateVentilationCD extended by: "..extend, 2)
-			timerActivateVentilationCD:Update(elapsed, total+extend, self.vb.ventilationCount+1)
+		if timerIgneousHammerCD:GetRemaining(self.vb.hammerCount+1) < 13 then
+			local elapsed, total = timerIgneousHammerCD:GetTime(self.vb.hammerCount+1)
+			local extend = 13 - (total-elapsed)
+			DBM:Debug("timerIgneousHammerCD extended by: "..extend, 2)
+			timerIgneousHammerCD:Update(elapsed, total+extend, self.vb.hammerCount+1)
+		end
+		if timerLavaCannonCD:GetRemaining(self.vb.orbCount+1) < 19 then
+			local elapsed, total = timerLavaCannonCD:GetTime(self.vb.orbCount+1)
+			local extend = 19 - (total-elapsed)
+			DBM:Debug("timerLavaCannonCD extended by: "..extend, 2)
+			timerLavaCannonCD:Update(elapsed, total+extend, self.vb.orbCount+1)
+		end
+		--BlazingCrescendo seems to delay vents by x seconds, so extend it by x seconds
+		--No Longer valid at 5, might be 13 or 14 now
+		if timerExhaustVentsCD:GetRemaining(self.vb.ventilationCount+1) < 13 then
+			local elapsed, total = timerExhaustVentsCD:GetTime(self.vb.ventilationCount+1)
+			local extend = 13 - (total-elapsed)
+			DBM:Debug("timerExhaustVentsCD extended by: "..extend, 2)
+			timerExhaustVentsCD:Update(elapsed, total+extend, self.vb.ventilationCount+1)
 		end
 	--	updateDorlitaTimers(self, 13)
 	elseif spellId == 428535 then
-		specWarnDeconstruction:Show(self.vb.deconstructCount)
-		specWarnDeconstruction:Play("justrun")
+		specWarnBlazingCrescendo:Show(self.vb.deconstructCount)
+		specWarnBlazingCrescendo:Play("justrun")
 	elseif spellId == 428120 then
 		self.vb.orbCount = self.vb.orbCount + 1
-		specWarnLavaExpulsion:Show(self.vb.orbCount)
-		specWarnLavaExpulsion:Play("watchorb")
-		timerLavaExpulsionCD:Start(nil, self.vb.orbCount+1)
+		specWarnLavaCannon:Show(self.vb.orbCount)
+		specWarnLavaCannon:Play("watchorb")
+		timerLavaCannonCD:Start(nil, self.vb.orbCount+1)
 		updateDorlitaTimers(self, 3.5)
 	end
 end
@@ -199,7 +237,7 @@ function mod:SPELL_AURA_REMOVED(args)
 	local spellId = args.spellId
 	if spellId == 445541 then
 		warnVentilationOver:Show()
-		timerActivateVentilation:Stop()
+		timerExhaustVents:Stop()
 	end
 end
 
@@ -214,14 +252,16 @@ mod.SPELL_PERIODIC_MISSED = mod.SPELL_PERIODIC_DAMAGE
 function mod:UNIT_DIED(args)
 	local cid = self:GetCIDFromGUID(args.destGUID)
 	if cid == 213217 then--Brokk
-		timerActivateVentilationCD:Stop()
+		timerExhaustVentsCD:Stop()
 		timerMoltenMetalCD:Stop()
 		timerScrapSongCD:Stop()
+		timerBlazingCrescendoCD:Stop()
 	elseif cid == 213216 then--Dorlita
-		timerDeconstructionCD:Stop()
-		timerMoltenHammerCD:Stop()
-		timerLavaExpulsionCD:Stop()
-		timerDeconstruction:Stop()
+		timerScrapSongCD:Stop()
+		timerBlazingCrescendoCD:Stop()
+		timerIgneousHammerCD:Stop()
+		timerLavaCannonCD:Stop()
+		timerBlazingCrescendo:Stop()
 	end
 end
 

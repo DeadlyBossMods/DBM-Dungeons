@@ -23,6 +23,12 @@ mod:RegisterEvents(
 --TODO, quazii's guide mentions Sureki Unnaturaler casts https://www.wowhead.com/spell=453840/awakening-calling but I can't find any casts of it in any log for a timer
 --TODO, add Venom Strike (443401) dispel alert?
 --TODO, add interrupt warning for Web Bolt (443427)? It hits hard but is spammed.
+--[[
+(ability.id = 443430 or ability.id = 452162 or ability.id = 443433 or ability.id = 446086 or ability.id = 442536 or ability.id = 443500 or ability.id = 451543 or ability.id = 451423 or ability.id = 450784 or ability.id = 434137 or ability.id = 445813 or ability.id = 453840 or ability.id = 446717 or ability.id = 447271) and type = "begincast"
+ or (ability.id = 443436 or ability.id = 443430 or ability.id = 443500 or ability.id = 451543 or ability.id = 452162 or ability.id = 446086) and type = "cast"
+ or (stoppedAbility.id = 443430 or stoppedAbility.id = 452162 or stoppedAbility.id = 446086)
+ or type = "dungeonencounterstart" or type = "dungeonencounterend"
+--]]
 local warnSilkBinding						= mod:NewCastAnnounce(443430, 3)--High Prio Interrupt
 local warnPerfumeToss						= mod:NewCastAnnounce(450784, 2)
 local warnMendingWeb						= mod:NewCastAnnounce(452162, 3)--High Prio Interrupt

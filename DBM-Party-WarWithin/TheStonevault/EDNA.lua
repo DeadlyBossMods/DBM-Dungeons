@@ -55,9 +55,9 @@ function mod:OnCombatStart(delay)
 	self.vb.shatterCount = 0
 	self.vb.smashCount = 0
 	self.vb.spikeCount = 0
-	timerVolatileSpikeCD:Start(6-delay, 1)
-	timerRefractingBeamCD:Start(14-delay, 1)
-	timerSeismicSmashCD:Start(18-delay, 1)
+	timerVolatileSpikeCD:Start(5.9-delay, 1)
+	timerRefractingBeamCD:Start(13.9-delay, 1)
+	timerSeismicSmashCD:Start(17.9-delay, 1)
 	if self:IsMythic() then
 		timerEarthShattererCD:Start(42.9-delay, 1)
 	end
@@ -110,15 +110,20 @@ function mod:SPELL_AURA_APPLIED(args)
 	local spellId = args.spellId
 	if spellId == 424795 then
 		self.vb.laserCount = self.vb.laserCount + 1
-		if self:AntiSpam(3, 1) then
-			if self.vb.laserCount % 2 == 0 then
-				timerRefractingBeamCD:Start(28, self.vb.laserCount+1)
+		if self:AntiSpam(4, 1) then
+			if self:IsMythic() then
+				if self.vb.laserCount % 2 == 0 then
+					timerRefractingBeamCD:Start(28, self.vb.laserCount+1)
+				else
+					timerRefractingBeamCD:Start(20, self.vb.laserCount+1)
+				end
 			else
-				timerRefractingBeamCD:Start(20, self.vb.laserCount+1)
+				timerRefractingBeamCD:Start(10.9, self.vb.laserCount+1)
 			end
 		end
 		if not self:IsMythic() then
-			warnRefractingBeam:CombinedShow(0.5, args.destName)
+			--Mythic goes on everyone, so no need for target warning
+			warnRefractingBeam:CombinedShow(0.7, args.destName)
 		end
 		if args:IsPlayer() then
 			specWarnRefractingBeam:Show()
