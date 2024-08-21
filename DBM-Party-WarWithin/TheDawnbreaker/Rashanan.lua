@@ -25,10 +25,10 @@ mod:RegisterEventsInCombat(
 --NOTE, throw bomb is inaccurate for tracking actual bombs hitting boss. Have at least one log where one bomb missed, so spell damage event is more accurate
 --[[
 (ability.id = 434407 or ability.id = 448213 or ability.id = 448888 or ability.id = 439784 or ability.id = 434089) and type = "begincast"
- or ability.id = 438875 and type = "cast"
  or ability.id = 449734 and (type = "begincast" or type = "removebuff") or stoppedAbility.id = 449734
- or ability.id = 434726 and type = "damage"
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
+ or ability.id = 438875 and type = "cast"
+ or ability.id = 434726 and type = "damage"
 --]]
 local warnBlazing							= mod:NewCountAnnounce(434726, 1)
 local warnRollingAcid						= mod:NewIncomingCountAnnounce(438875, 2)--General announce, private aura sound will be personal emphasis
@@ -55,10 +55,10 @@ mod.vb.expelCount = 0
 mod.vb.sprayCount = 0
 mod.vb.strandsCount = 0
 
---Explosive spray triggers 6.66 second ICD
---Rolling Acid triggers 6 second ICD
---Expel Webs triggers 4 second ICD
---Spinneret's Strands triggers 5.3 second ICD
+--Explosive spray triggers 6.66 ICD in stage 1 and 7.4 ICD in stage 2
+--Rolling Acid triggers 6 second ICD in stage 1 and 6.66 ICD stage 2
+--Expel Webs triggers 4 second ICD??
+--Spinneret's Strands triggers 5.9 second ICD now (formerly 5.3)
 --Results in most timers followinga  18-20 second cadaence in stage 1 and 22-24 second cadence in stage 2
 local function updateAllTimers(self, ICD)
 	DBM:Debug("updateAllTimers running", 3)
@@ -111,25 +111,25 @@ function mod:SPELL_CAST_START(args)
 	if spellId == 434407 then
 		self.vb.rollingCount = self.vb.rollingCount + 1
 		warnRollingAcid:Show(self.vb.rollingCount)
-		timerRollingAcidCD:Start(self:IsMythic() and 15.2 or 20, self.vb.rollingCount+1)
-		updateAllTimers(self, 6)
+		timerRollingAcidCD:Start(self:IsMythic() and 15.2 or (self:GetStage(2) and 25 or 20), self.vb.rollingCount+1)
+		updateAllTimers(self, self:GetStage(1) and 6 or 6.6)
 	elseif spellId == 448213 then
 		self.vb.expelCount = self.vb.expelCount + 1
 		specWarnExpelWebs:Show(self.vb.expelCount)
 		specWarnExpelWebs:Play("watchstep")
-		timerExpelWebsCD:Start(self:IsMythic() and 15.2 or 20, self.vb.expelCount+1)
+		timerExpelWebsCD:Start(self:IsMythic() and 15.2 or (self:GetStage(2) and 25 or 20), self.vb.expelCount+1)
 		updateAllTimers(self, 4)
 	elseif spellId == 448888 then
 		self.vb.sprayCount = self.vb.sprayCount + 1
 		specWarnErosiveSpray:Show(self.vb.sprayCount)
 		specWarnErosiveSpray:Play("aesoon")
-		timerErosiveSprayCD:Start(self:IsMythic() and 15.2 or 20, self.vb.sprayCount+1)--Could be even shorter, hard to say since it's always ICD impacted
-		updateAllTimers(self, 6.6)
+		timerErosiveSprayCD:Start(self:IsMythic() and 15.2 or (self:GetStage(2) and 25 or 20), self.vb.sprayCount+1)--Could be even shorter, hard to say since it's always ICD impacted
+		updateAllTimers(self, self:GetStage(1) and 6.6 or 7.4)
 	elseif spellId == 434089 then
 		self.vb.strandsCount = self.vb.strandsCount + 1
 		warnSpinneretsStrands:Show(self.vb.strandsCount)
-		timerSpinneretsStrandsCD:Start(self:IsMythic() and 15.2 or 20, self.vb.strandsCount+1)
-		updateAllTimers(self, 5.3)
+		timerSpinneretsStrandsCD:Start(self:IsMythic() and 15.2 or (self:GetStage(2) and 25 or 20), self.vb.strandsCount+1)
+		updateAllTimers(self, 5.9)
 	end
 end
 

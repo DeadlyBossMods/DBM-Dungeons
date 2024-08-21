@@ -58,7 +58,7 @@ local castsPerGUID = {}
 --Animate Shadows triggers 7.5 second ICD
 --Dark Orb triggers 9 second ICD
 --Terrifying Slam triggers 7 second ICD
---Shadowy Decay triggers 10 second ICD
+--Shadowy Decay triggers 11 second ICD
 --No spells have spell priority. It truly is wild west despite how consistent it looks in some logs, look hard enough you find others
 --Nerzhul code NOT usable here, upon further log review, there is no consistency because all spells (meaning no spell priority is in place)
 local function updateAllTimers(self, ICD)
@@ -157,7 +157,7 @@ function mod:SPELL_CAST_START(args)
 		specWarnShadowDecay:Show(self.vb.shadowCount)
 		specWarnShadowDecay:Play("aesoon")
 		timerShadowDecayCD:Start(nil, self.vb.shadowCount+1)
-		updateAllTimers(self, 10)
+		updateAllTimers(self, 11)
 	elseif spellId == 452127 then
 		self.vb.addsCount = self.vb.addsCount + 1
 		warnAnimatedShadows:Show(self.vb.addsCount)
