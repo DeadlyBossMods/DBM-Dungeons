@@ -23,7 +23,7 @@ mod:RegisterEventsInCombat(
 --	"UNIT_SPELLCAST_SUCCEEDED boss1"
 )
 
---NOTE: No need to annouce void discharge, it's just a passive mechanic of Reclaim
+--NOTE: No need to annouce void discharge, it's just a passive mechanic of FortifiedShell
 --TODO, personal warnings for https://www.wowhead.com/beta/spell=435813/void-empowerment ?
 --TODO, custom infoframe that shows all player void empowerment stacks AND shield remaining?
 --[[
@@ -34,7 +34,7 @@ mod:RegisterEventsInCombat(
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
 --]]
 local warnCrystallineEruption				= mod:NewCountAnnounce(443494, 3)
-local warnReclaim							= mod:NewCountAnnounce(423200, 2)
+local warnFortifiedShell					= mod:NewCountAnnounce(423200, 2)
 local warnShatteredShell					= mod:NewTargetNoFilterAnnounce(423246, 1)
 
 local specWarnCrystallineSmash				= mod:NewSpecialWarningDefensive(422233, nil, nil, nil, 1, 2)
@@ -43,9 +43,9 @@ local specWarnUnstableCrash					= mod:NewSpecialWarningDodgeCount(423538, "-Heal
 --local yellSomeAbility						= mod:NewYell(372107)
 --local specWarnGTFO						= mod:NewSpecialWarningGTFO(372820, nil, nil, nil, 1, 8)
 
-local timerCrystallineSmashCD				= mod:NewCDCountTimer(17, 422233, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON..DBM_COMMON_L.DAMAGE_ICON)--One timer for smash and shards
+local timerCrystallineSmashCD				= mod:NewCDCountTimer(16.6, 422233, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON..DBM_COMMON_L.DAMAGE_ICON)--One timer for smash and shards
 local timerUnstableCrashCD					= mod:NewCDCountTimer(19.4, 423538, nil, nil, nil, 3)
-local timerReclaimCD						= mod:NewCDCountTimer(40, 423200, nil, nil, nil, 6)
+local timerFortifiedShellCD					= mod:NewCDCountTimer(40, 423200, nil, nil, nil, 6)
 
 mod:AddSetIconOption("SetIconOnShards", 422261, true, 5, {8, 7, 6, 5})
 mod:AddInfoFrameOption(423228)
@@ -54,16 +54,16 @@ mod.vb.addIcon = 8
 mod.vb.smashCount = 0
 mod.vb.eruptionCount = 0
 mod.vb.unstablecrashCount = 0
-mod.vb.reclaimCount = 0
+mod.vb.FortifiedShellCount = 0
 
 function mod:OnCombatStart(delay)
 	self.vb.smashCount = 0
 	self.vb.eruptionCount = 0
 	self.vb.unstablecrashCount = 0
-	self.vb.reclaimCount = 0
+	self.vb.FortifiedShellCount = 0
 	timerCrystallineSmashCD:Start(3.2-delay, 1)
 	timerUnstableCrashCD:Start(10.5-delay, 1)
-	timerReclaimCD:Start(37.2-delay, 1)
+	timerFortifiedShellCD:Start(37.2-delay, 1)
 end
 
 function mod:OnCombatEnd()
@@ -87,8 +87,8 @@ function mod:SPELL_CAST_START(args)
 			specWarnCrystallineSmash:Play("defensive")
 		end
 	elseif spellId == 423200 then
-		self.vb.reclaimCount = self.vb.reclaimCount + 1
-		warnReclaim:Show(self.vb.reclaimCount)
+		self.vb.FortifiedShellCount = self.vb.FortifiedShellCount + 1
+		warnFortifiedShell:Show(self.vb.FortifiedShellCount)
 		timerCrystallineSmashCD:Stop()
 		timerUnstableCrashCD:Stop()
 	elseif spellId == 423538 then
@@ -145,7 +145,7 @@ function mod:SPELL_AURA_REMOVED(args)
 	elseif spellId == 423246 then--Shattered Shell
 		timerCrystallineSmashCD:Start(5, self.vb.smashCount+1)
 		timerUnstableCrashCD:Start(12.2, self.vb.unstablecrashCount+1)
-		timerReclaimCD:Start(38.9, self.vb.reclaimCount+1)
+		timerFortifiedShellCD:Start(38.9, self.vb.FortifiedShellCount+1)
 	end
 end
 

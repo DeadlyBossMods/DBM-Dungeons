@@ -7,8 +7,9 @@ mod.isTrashMod = true
 mod.isTrashModBossFightAllowed = true
 
 mod:RegisterEvents(
-	"SPELL_CAST_START 426893 450628 427323 427404 430013 427616 430754 423979 430179 430805 430812 432959",
-	"SPELL_CAST_SUCCESS 427260",
+	"SPELL_CAST_START 426893 450628 427323 427404 430013 427616 430754 423979 430805 430812 432959",
+	"SPELL_CAST_SUCCESS 427260 430805 432959 426893 450628 427323 427404 430013 427616 430754 430179 423979 430812",
+	"SPELL_INTERRUPT",
 	"SPELL_AURA_APPLIED 430179 427260",
 --	"SPELL_AURA_APPLIED_DOSE",
 --	"SPELL_AURA_REMOVED",
@@ -17,8 +18,9 @@ mod:RegisterEvents(
 
 --TODO, more spells probably
 --[[
-(ability.id = 426893 or ability.id = 450628 or ability.id = 427323 or ability.id = 427404 or ability.id = 430013 or ability.id = 427616 or ability.id = 430754 or ability.id = 423979 or ability.id = 430179 or ability.id = 430805 or ability.id = 430812 or ability.id = 432959) and type = "begincast"
+(ability.id = 426893 or ability.id = 450628 or ability.id = 427323 or ability.id = 427404 or ability.id = 430013 or ability.id = 427616 or ability.id = 430754 or ability.id = 423979 or ability.id = 430179 or ability.id = 430805 or ability.id = 430812 or ability.id = 432959) and (type = "begincast" or type = "cast")
  or ability.id = 427260 and type = "cast"
+ or stoppedAbility.id = 430805 or stoppedAbility.id = 432959
 --]]
 local warnEntropyShield						= mod:NewCastAnnounce(450628, 3)
 local warnEnergizedBarrage 					= mod:NewCastAnnounce(427616, 3, nil, nil, "Tank")--Only warn tank by default since tank should aim it away from anyone else
@@ -38,19 +40,21 @@ local specWarnEnrageRook					= mod:NewSpecialWarningDispel(427260, "RemoveEnrage
 local specWarnArcingVoid					= mod:NewSpecialWarningInterrupt(430805, "HasInterrupt", nil, nil, 1, 2)
 local specWarnVoidVolley					= mod:NewSpecialWarningInterrupt(432959, "HasInterrupt", nil, nil, 1, 2)
 
-local timerBoundingVoidCD					= mod:NewCDNPTimer(12.1, 426893, nil, nil, nil, 3)
-local timerEntropyShieldCD					= mod:NewCDNPTimer(26.7, 450628, nil, nil, nil, 5)--Single cast instance, poor sample
-local timerChargedBombardmentCD				= mod:NewCDNPTimer(20.6, 427323, nil, nil, nil, 3)
-local timerLocalizedStormCD					= mod:NewCDNPTimer(27.9, 427404, nil, nil, nil, 2)
-local timerThunderstrikeCD					= mod:NewCDNPTimer(18.1, 430013, nil, nil, nil, 3)
-local timerEnergizedBarrageCD				= mod:NewCDNPTimer(23, 427616, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+--Almost all timers probably wrong now, but can't use public WCL to fix this since all logs short
+--Also, all of them were moved to success preemtively but if stops actually DO put any of these on CD, then the preemtive move actually broke timer
+local timerBoundingVoidCD					= mod:NewCDNPTimer(10.1, 426893, nil, nil, nil, 3)
+local timerEntropyShieldCD					= mod:NewCDNPTimer(25.2, 450628, nil, nil, nil, 5)--Single cast instance, poor sample
+local timerChargedBombardmentCD				= mod:NewCDNPTimer(17.6, 427323, nil, nil, nil, 3)
+local timerLocalizedStormCD					= mod:NewCDNPTimer(25.9, 427404, nil, nil, nil, 2)
+local timerThunderstrikeCD					= mod:NewCDNPTimer(15.1, 430013, nil, nil, nil, 3)
+local timerEnergizedBarrageCD				= mod:NewCDNPTimer(20, 427616, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerEnrageRookCD						= mod:NewCDNPTimer(15, 427260, nil, nil, nil, 5, nil, DBM_COMMON_L.ENRAGE_ICON)--17-2 due to waiting for success
-local timerVoidShellCD						= mod:NewCDNPTimer(20.7, 430754, nil, nil, nil, 5)
-local timerSeepingCorruptionCD				= mod:NewCDNPTimer(26.7, 430179, nil, nil, nil, 3, nil, DBM_COMMON_L.CURSE_ICON)
-local timerImplosionCD						= mod:NewCDNPTimer(17, 423979, nil, nil, nil, 3)
-local timerArcingVoidCD						= mod:NewCDNPTimer(16.5, 430805, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
-local timerVoidVolleyCD						= mod:NewCDNPTimer(17.6, 432959, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
-local timerAttractingShadowsCD				= mod:NewCDNPTimer(21.7, 430812, nil, nil, nil, 2)
+local timerVoidShellCD						= mod:NewCDNPTimer(18.7, 430754, nil, nil, nil, 5)
+local timerSeepingCorruptionCD				= mod:NewCDNPTimer(25.2, 430179, nil, nil, nil, 3, nil, DBM_COMMON_L.CURSE_ICON)
+local timerImplosionCD						= mod:NewCDNPTimer(15.5, 423979, nil, nil, nil, 3)
+local timerArcingVoidCD						= mod:NewCDNPTimer(13.5, 430805, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerVoidVolleyCD						= mod:NewCDNPTimer(15.6, 432959, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerAttractingShadowsCD				= mod:NewCDNPTimer(20.2, 430812, nil, nil, nil, 2)
 
 --local playerName = UnitName("player")
 
@@ -73,60 +77,48 @@ function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
 	if not self:IsValidWarning(args.sourceGUID) then return end
 	if spellId == 426893 then
-		timerBoundingVoidCD:Start(nil, args.sourceGUID)
 		if self:AntiSpam(3, 2) then
 			specWarnBoundingVoid:Show()
 			specWarnBoundingVoid:Play("watchorb")
 		end
 	elseif spellId == 427323 then
-		timerChargedBombardmentCD:Start(nil, args.sourceGUID)
 		if self:AntiSpam(3, 2) then
 			specWarnChargedBombardment:Show()
 			specWarnChargedBombardment:Play("chargemove")
 		end
 	elseif spellId == 450628 then
-		timerEntropyShieldCD:Start(nil, args.sourceGUID)
 		warnEntropyShield:Show()
 	elseif spellId == 427404 then
-		timerLocalizedStormCD:Start(nil, args.sourceGUID)
 		if self:AntiSpam(3, 4) then
 			specWarnLocalizedStorm:Show()
 			specWarnLocalizedStorm:Play("aesoon")
 		end
 	elseif spellId == 430013 then
-		timerThunderstrikeCD:Start(nil, args.sourceGUID)
 		if self:AntiSpam(3, 2) then
 			specWarnThunderstrike:Show()
 			specWarnThunderstrike:Play("chargemove")
 		end
 	elseif spellId == 427616 then
-		timerEnergizedBarrageCD:Start(nil, args.sourceGUID)
 		if self:AntiSpam(3, 5) then
 			warnEnergizedBarrage:Show()
 		end
 	elseif spellId == 430754 then
-		timerVoidShellCD:Start(nil, args.sourceGUID)
 		if self:AntiSpam(4, 6) then
 			warnVoidShell:Show()
 			warnVoidShell:Play("crowdcontrol")
 		end
 	elseif spellId == 423979 then
-		timerImplosionCD:Start(nil, args.sourceGUID)
 		if self:IsTanking("player", nil, nil, true, args.sourceGUID) then
 			specWarnImplosion:Show()
 			specWarnImplosion:Play("range5")
 			yellImplosion:Yell()
 		end
-	elseif spellId == 430179 then
-		timerSeepingCorruptionCD:Start(nil, args.sourceGUID)
 	elseif spellId == 430805 then
-		timerArcingVoidCD:Start(nil, args.sourceGUID)
 		if self:CheckInterruptFilter(args.sourceGUID, false, true) then
 			specWarnArcingVoid:Show(args.sourceName)
 			specWarnArcingVoid:Play("kickcast")
 		end
 	elseif spellId == 432959 then
-		timerVoidVolleyCD:Start(nil, args.sourceGUID)
 		--if self.Options.SpecWarn430805interrupt and self:CheckInterruptFilter(args.sourceGUID, false, true) then
 			specWarnVoidVolley:Show(args.sourceName)
 			specWarnVoidVolley:Play("kickcast")
@@ -136,7 +128,6 @@ function mod:SPELL_CAST_START(args)
 	elseif spellId == 430812 then
 		warnAttractingShadows:Show()
 		warnAttractingShadows:Play("pullin")
-		timerAttractingShadowsCD:Start(nil, args.sourceGUID)
 	end
 end
 
@@ -145,6 +136,40 @@ function mod:SPELL_CAST_SUCCESS(args)
 	if not self:IsValidWarning(args.sourceGUID) then return end
 	if spellId == 427260 then--Doesn't go on CD until cast, so using stuns to stop it causes recast
 		timerEnrageRookCD:Start(nil, args.sourceGUID)
+	elseif spellId == 430805 then
+		timerArcingVoidCD:Start(13.5, args.sourceGUID)
+	elseif spellId == 432959 then
+		timerVoidVolleyCD:Start(15.6, args.sourceGUID)
+	elseif spellId == 426893 then
+		timerBoundingVoidCD:Start(10.1, args.sourceGUID)
+	elseif spellId == 450628 then
+		timerEntropyShieldCD:Start(25.2, args.sourceGUID)
+	elseif spellId == 427323 then
+		timerChargedBombardmentCD:Start(17.6, args.sourceGUID)
+	elseif spellId == 427404 then
+		timerLocalizedStormCD:Start(25.9, args.sourceGUID)
+	elseif spellId == 430013 then
+		timerThunderstrikeCD:Start(15.1, args.sourceGUID)
+	elseif spellId == 427616 then
+		timerEnergizedBarrageCD:Start(20, args.sourceGUID)
+	elseif spellId == 430754 then
+		timerVoidShellCD:Start(18.7, args.sourceGUID)
+	elseif spellId == 430179 then
+		timerSeepingCorruptionCD:Start(25.2, args.sourceGUID)
+	elseif spellId == 423979 then
+		timerImplosionCD:Start(nil, args.sourceGUID)
+	elseif spellId == 430812 then
+		timerAttractingShadowsCD:Start(20.2, args.sourceGUID)
+	end
+end
+
+function mod:SPELL_INTERRUPT(args)
+	if not self.Options.Enabled then return end
+	local spellId = args.extraSpellId
+	if spellId == 430805 then
+		timerArcingVoidCD:Start(13.5, args.sourceGUID)
+	elseif spellId == 432959 then
+		timerVoidVolleyCD:Start(15.6, args.sourceGUID)
 	end
 end
 

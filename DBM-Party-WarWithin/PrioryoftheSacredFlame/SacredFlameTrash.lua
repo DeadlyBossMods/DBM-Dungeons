@@ -8,7 +8,7 @@ mod.isTrashModBossFightAllowed = true
 
 mod:RegisterEvents(
 	"SPELL_CAST_START 424621 424423 424431 448515 427583 424462 424420 427484 427356 427601",
-	"SPELL_CAST_SUCCESS 453458",
+	"SPELL_CAST_SUCCESS 453458 427484",
 	"SPELL_AURA_APPLIED 426964 424430",
 	"SPELL_AURA_APPLIED_DOSE 426964",
 --	"SPELL_AURA_REMOVED",
@@ -17,6 +17,7 @@ mod:RegisterEvents(
 --TODO, target scan lunging strike?
 --TODO, longer pulls for Trusted Guard timers
 --TODO, nameplate timer for https://www.wowhead.com/beta/spell=424421/fireball on Taener Duelmal?
+--All normal Trash
 local warnMortalStrike						= mod:NewStackAnnounce(426964, 2, nil, "Tank|Healer")
 local warnBurstofLight						= mod:NewCastAnnounce(427601, 4)--SUPER obvious so doesn't need a special warning for now i think
 local warnGreaterHeal						= mod:NewCastAnnounce(427356, 3)--High Prio Interrupt
@@ -29,7 +30,7 @@ local specWarnGreaterHeal					= mod:NewSpecialWarningInterrupt(427356, nil, nil,
 local specWarnGTFO							= mod:NewSpecialWarningGTFO(424430, nil, nil, nil, 1, 8)
 
 local timerCaltropsCD						= mod:NewCDNPTimer(16.9, 453458, nil, nil, nil, 3)
-local timerFlamestrikeCD					= mod:NewCDNPTimer(20.4, 427484, nil, nil, nil, 3)
+local timerFlamestrikeCD					= mod:NewCDNPTimer(17.4, 427484, nil, nil, nil, 3)
 --local timerGreaterHealCD					= mod:NewCDNPTimer(20.4, 427356, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--Currently too much of a PITA to add due to stuns not putting it on CD
 ----Everything below here are the adds from Captain Dailcry. treated as trash since they are pulled as trash, just like Court of Stars
 --The Trusted Guard
@@ -129,7 +130,6 @@ function mod:SPELL_CAST_START(args)
 			specWarnCinderblast:Play("kickcast")
 		end
 	elseif spellId == 427484 then
-		timerFlamestrikeCD:Start(nil, args.sourceGUID)
 		if self:AntiSpam(3, 2) then
 			specWarnFlamestrike:Show()
 			specWarnFlamestrike:Play("watchstep")
@@ -150,6 +150,8 @@ function mod:SPELL_CAST_SUCCESS(args)
 			specWarnCaltrops:Show()
 			specWarnCaltrops:Play("watchstep")
 		end
+	elseif spellId == 427484 then
+		timerFlamestrikeCD:Start(17.4, args.sourceGUID)
 	end
 end
 
