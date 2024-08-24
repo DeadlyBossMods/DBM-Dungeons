@@ -25,7 +25,7 @@ local specWarnNoxiousGas					= mod:NewSpecialWarningDodge(450128, nil, nil, nil,
 
 local timerBurnAwayCD						= mod:NewCDTimer(21.9, 450142, nil, nil, nil, 2)
 local timerNoxiousGasCD						= mod:NewCDTimer(20.7, 450128, nil, nil, nil, 3)
-local timerThrowWaxCD						= mod:NewCDTimer(20.7, 450330, nil, nil, nil, 1)
+local timerThrowWaxCD						= mod:NewCDTimer(14.5, 450330, nil, nil, nil, 1)
 
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc, 7 off interrupt
 
@@ -92,8 +92,8 @@ end
 
 function mod:ENCOUNTER_START(eID)
 	if eID == 2894 then--Waxface
-		timerNoxiousGasCD:Start(3.6)
-		timerThrowWaxCD:Start(7.2)
+		timerNoxiousGasCD:Start(3.3)
+		timerThrowWaxCD:Start(7.0)
 		timerBurnAwayCD:Start(18.2)
 	end
 end
