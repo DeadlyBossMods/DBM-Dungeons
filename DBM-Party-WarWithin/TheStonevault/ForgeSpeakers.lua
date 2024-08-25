@@ -118,13 +118,23 @@ function mod:OnCombatStart(delay)
 	self.vb.deconstructCount = 0
 	self.vb.hammerCount = 0
 	self.vb.orbCount = 0
-	timerMoltenMetalCD:Start(4-delay, 1)--4-5.2
-	timerScrapSongCD:Start(18.2-delay, 1)
-	timerExhaustVentsCD:Start(35-delay, 1)--35-41 based on spell lockouts from interrupts
-	--
-	timerIgneousHammerCD:Start(6-delay, 1)
-	timerLavaCannonCD:Start(12.1-delay, 1)
-	timerBlazingCrescendoCD:Start(47, 1)--47-53 based on spell lockouts from interrupts
+	if self:IsMythic() then
+		timerMoltenMetalCD:Start(3.5-delay, 1)--3.5-5.2
+		timerScrapSongCD:Start(18.2-delay, 1)
+		timerExhaustVentsCD:Start(35-delay, 1)--35-41 based on spell lockouts from interrupts
+		--
+		timerIgneousHammerCD:Start(6-delay, 1)
+		timerLavaCannonCD:Start(12.1-delay, 1)
+		timerBlazingCrescendoCD:Start(47, 1)--47-53 based on spell lockouts from interrupts
+	else
+		timerMoltenMetalCD:Start(3.5-delay, 1)--3.5-5.2
+		timerExhaustVentsCD:Start(8.3-delay, 1)--At least on follower, don't know about heroic or normal yet
+		timerScrapSongCD:Start(18.2-delay, 1)
+		--
+		timerIgneousHammerCD:Start(9.1-delay, 1)
+		timerLavaCannonCD:Start(13.2-delay, 1)
+		timerBlazingCrescendoCD:Start(45.2, 1)
+	end
 	DBM:AddMsg("This boss has signficant spell queuing issues, especially when interrupting Brokk. This mod may take time to perfect, if that's even possible.")
 end
 

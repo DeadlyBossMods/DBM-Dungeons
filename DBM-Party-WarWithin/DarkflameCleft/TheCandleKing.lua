@@ -90,7 +90,7 @@ function mod:SPELL_CAST_START(args)
 		timerEarieMoldsCD:Start(nil, self.vb.statueCount+1)
 	elseif spellId == 426145 then
 		self.vb.mindCount = self.vb.mindCount + 1
-		specWarnParanoidMind:Show(args.sourceGUID, self.vb.mindCount)
+		specWarnParanoidMind:Show(args.sourceName, self.vb.mindCount)
 		specWarnParanoidMind:Play("kickcast")
 		timerParanoidMindCD:Start(nil, self.vb.mindCount+1)
 	end

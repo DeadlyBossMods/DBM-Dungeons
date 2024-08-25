@@ -52,7 +52,7 @@ function mod:OnCombatStart(delay)
 	self.vb.crushCount = 0
 	if self:IsStory() then--Confirmed only different on "story"
 		timerCrushRealityCD:Start(8.4, 1)
-		timerDarkGravityCD:Start(23, 1)--Still the same
+		timerDarkGravityCD:Start(15.5, 1)
 	else
 		timerChaoticCorruptionCD:Start(8.4, 1)
 		timerDarkGravityCD:Start(23, 1)--Still the same
@@ -85,7 +85,7 @@ function mod:SPELL_CAST_START(args)
 		self.vb.crushCount = self.vb.crushCount + 1
 		specWarnCrushReality:Show(self.vb.crushCount)
 		specWarnCrushReality:Play("watchwave")
-		timerCrushRealityCD:Start(nil, self.vb.crushCount+1)
+		timerCrushRealityCD:Start(self:IsStory() and 15.7 or 21.8, self.vb.crushCount+1)
 	end
 end
 

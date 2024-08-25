@@ -116,7 +116,7 @@ function mod:OnCombatStart(delay)
 	self.vb.dashCount = 0
 	self.vb.stormheartCount = 0
 	timerLightningDashCD:Start(2.1, 1)
-	timerChainLightningCD:Start(8.2, 1)
+	timerChainLightningCD:Start(7, 1)
 	timerUnstableChargeCD:Start(15.5, 1)
 	timerLightningTorrentCD:Start(31.3, 1)
 	if self:IsMythic() then
