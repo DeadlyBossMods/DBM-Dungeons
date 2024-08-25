@@ -19,6 +19,7 @@ mod:RegisterEvents(
 --for now ALL are being put in common til we have enough data to scope trash abilities to appropriate modules
 --NOTE: Jagged Slash (450176) has precisely 9.7 CD, but is it worth tracking?
 --NOTE: Stab (443510) is a 14.6 CD, but is it worth tracking?
+--TODO: add "Gatling Wand-461757-npc:228044-00004977F7 = pull:1392.7, 17.0, 17.0", (used by Reno Jackson)
 local warnDebilitatingVenom					= mod:NewTargetNoFilterAnnounce(424614, 3)--Brann will dispel this if healer role
 local warnCastigate							= mod:NewTargetNoFilterAnnounce(418297, 4)
 local warnSpearFish							= mod:NewTargetNoFilterAnnounce(430036, 2)
@@ -28,9 +29,10 @@ local warnShadowsofStrife					= mod:NewCastAnnounce(449318, 3)--High Prio Interr
 local warnWebbedAegis						= mod:NewCastAnnounce(450546, 3)
 local warnBloatedEruption					= mod:NewCastAnnounce(424798, 4)
 local warnBattleRoar						= mod:NewCastAnnounce(414944, 3)
-local warnVineSpear							= mod:NewCastAnnounce(424891, 3, nil, nil, nil, nil, nil, 12)
+local warnVineSpear							= mod:NewCastAnnounce(424891, 3, nil, nil, nil, nil, nil, 12)--Move to NewSpecialWarningDodge?
 local warnSkitterCharge						= mod:NewCastAnnounce(450197, 3, nil, nil, nil, nil, nil, 2)
 local warnWicklighterVolley					= mod:NewCastAnnounce(445191, 3)
+local warnSkullCracker						= mod:NewCastAnnounce(462686, 3)
 local warnThrowDyno							= mod:NewSpellAnnounce(448600, 3)
 
 local specWarnFearfulShriek					= mod:NewSpecialWarningDodge(433410, nil, nil, nil, 2, 2)
@@ -52,11 +54,12 @@ local specWarnWebbedAegis					= mod:NewSpecialWarningInterrupt(450546, "HasInter
 local specWarnRotWaveVolley					= mod:NewSpecialWarningInterrupt(425040, "HasInterrupt", nil, nil, 1, 2)
 local specWarnCastigate						= mod:NewSpecialWarningInterrupt(418297, "HasInterrupt", nil, nil, 1, 2)
 local specWarnBattleCry						= mod:NewSpecialWarningInterrupt(448399, "HasInterrupt", nil, nil, 1, 2)
+local specWarnHolyLight						= mod:NewSpecialWarningInterrupt(459421, "HasInterrupt", nil, nil, 1, 2)
 
 local timerFearfulShriekCD					= mod:NewCDNPTimer(13.4, 433410, nil, nil, nil, 3)
-local timerShadowsofStrifeCD				= mod:NewCDNPTimer(20, 449318, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--Needs more Data
+local timerShadowsofStrifeCD				= mod:NewCDNPTimer(15.6, 449318, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerRotWaveVolleyCD					= mod:NewCDNPTimer(15.2, 425040, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--15.2-17
-local timerWebbedAegisCD					= mod:NewCDNPTimer(14.6, 450546, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--14.6 BUT enemies can skip casts sometimes and make it 29.1
+local timerWebbedAegisCD					= mod:NewCDNPTimer(15.8, 450546, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--14.6 BUT enemies can skip casts sometimes and make it 29.1
 local timerLavablastCD					    = mod:NewCDNPTimer(15.8, 445781, nil, nil, nil, 3)
 local timerBlazingWickCD					= mod:NewCDNPTimer(14.6, 449071, nil, nil, nil, 3)
 local timerBattleRoarCD						= mod:NewCDNPTimer(15.4, 414944, nil, nil, nil, 5, nil, DBM_COMMON_L.MAGIC_ICON)
@@ -73,6 +76,8 @@ local timerSpearFishCD						= mod:NewCDNPTimer(12.1, 430036, nil, nil, nil, 3)
 local timerViciousStabsCD					= mod:NewCDNPTimer(20.6, 424704, nil, nil, nil, 3)
 local timerThrowDynoCD						= mod:NewCDNPTimer(7.2, 448600, nil, nil, nil, 3)
 local timerSerratedCleaveCD					= mod:NewCDNPTimer(32.7, 445492, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)--Not technically tanks only, just whoever has aggro in it
+local timerSkullCrackerCD					= mod:NewCDNPTimer(15.8, 462686, nil, nil, nil, 3)
+local timerHolyLightCD						= mod:NewCDNPTimer(17, 459421, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--17-18.2
 
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc, 7 off interrupt
 
@@ -84,8 +89,8 @@ do
 		if not force and validZones[currentZone] and not eventsRegistered then
 			eventsRegistered = true
 			self:RegisterShortTermEvents(
-                "SPELL_CAST_START 449318 450546 433410 450714 445781 415253 425040 424704 424798 414944 418791 424891 450197 448399 445191 455932 445492 434281 450637 445210 448528 449071",
-                "SPELL_CAST_SUCCESS 414944 424614 418791 424891 427812 450546 450197 415253 449318 445191 430036 445252 425040 424704 448399 448528 433410 445492",
+                "SPELL_CAST_START 449318 450546 433410 450714 445781 415253 425040 424704 424798 414944 418791 424891 450197 448399 445191 455932 445492 434281 450637 445210 448528 449071 462686 459421",
+                "SPELL_CAST_SUCCESS 414944 424614 418791 424891 427812 450546 450197 415253 449318 445191 430036 445252 425040 424704 448399 448528 433410 445492 462686 447392 459421",
 				"SPELL_INTERRUPT",
                 "SPELL_AURA_APPLIED 424614 449071 418297 430036 440622 441129",
                 --"SPELL_AURA_REMOVED",
@@ -176,7 +181,7 @@ function mod:SPELL_CAST_START(args)
 	elseif args.spellId == 424891 then
 		if self:AntiSpam(3, 6) then
 			warnVineSpear:Show()
-			warnVineSpear:Play("pullin")
+			warnVineSpear:Play("shockwave")
 		end
 	elseif args.spellId == 450197 then
 		if self:AntiSpam(3, 2) then
@@ -225,6 +230,15 @@ function mod:SPELL_CAST_START(args)
 			specWarnBlazingWick:Show()
 			specWarnBlazingWick:Play("shockwave")
 		end
+	elseif args.spellId == 462686 then
+		if self:AntiSpam(3, 6) then
+			warnSkullCracker:Show()
+		end
+	elseif args.spellId == 459421 then
+		if self:CheckInterruptFilter(args.sourceGUID, false, true) then
+			specWarnHolyLight:Show(args.sourceName)
+			specWarnHolyLight:Play("kickcast")
+		end
 	end
 end
 
@@ -247,13 +261,13 @@ function mod:SPELL_CAST_SUCCESS(args)
 			warnRelocate:Show()
 		end
 	elseif args.spellId == 450546 then
-		timerWebbedAegisCD:Start(14.6, args.sourceGUID)
+		timerWebbedAegisCD:Start(12.8, args.sourceGUID)--15.8 - 3
 	elseif args.spellId == 450197 then
 		timerSkitterChargeCD:Start(12.5, args.sourceGUID)-- 14.6 - 2.1
 	elseif args.spellId == 415253 then
 		timerFungalBreathCD:Start(15.2, args.sourceGUID)-- 18.2 - 3
 	elseif args.spellId == 449318 then
-		timerShadowsofStrifeCD:Start(17, args.sourceGUID)--20 - 3
+		timerShadowsofStrifeCD:Start(12.6, args.sourceGUID)--15.6 - 3
 	elseif args.spellId == 445191 then
 		timerWicklighterVolleyCD:Start(18.3, args.sourceGUID)--21.8 - 3.5
 	elseif args.spellId == 430036 then
@@ -275,6 +289,12 @@ function mod:SPELL_CAST_SUCCESS(args)
 		timerFearfulShriekCD:Start(10.4, args.sourceGUID)--13.4 - 3
 	elseif args.spellId == 445492 then
 		timerSerratedCleaveCD:Start(29.7, args.sourceGUID)--32.7 - 3
+	elseif args.spellId == 462686 then
+		timerSkullCrackerCD:Start(13.3, args.sourceGUID)--15.8 - 2.5
+	elseif args.spellId == 447392 then--Supply Bag (Cast when Reno Jackson Defeated)
+		timerSkullCrackerCD:Stop(args.sourceGUID)
+	elseif args.spellId == 459421 then
+		timerHolyLightCD:Start(14.5, args.sourceGUID)--17-2.5
 	end
 end
 
@@ -288,9 +308,9 @@ function mod:SPELL_INTERRUPT(args)
 			timerBattleRoarCD:Start(9.9, args.destGUID)--9.9-12
 		end
 	elseif args.extraSpellId == 450546 then
-		timerWebbedAegisCD:Start(14.6, args.destGUID)
+		timerWebbedAegisCD:Start(12.8, args.destGUID)
 	elseif args.extraSpellId == 449318 then
-		timerShadowsofStrifeCD:Start(17, args.destGUID)--20 - 3
+		timerShadowsofStrifeCD:Start(12.6, args.destGUID)--15.6 - 3
 	elseif args.extraSpellId == 445191 then
 		timerWicklighterVolleyCD:Start(18.3, args.destGUID)--21.8 - 3.5
 	elseif args.extraSpellId == 425040 then
@@ -303,6 +323,8 @@ function mod:SPELL_INTERRUPT(args)
 		timerThrowDynoCD:Start(5.7, args.destGUID)-- 7.2 - 1.5
 	elseif args.extraSpellId == 433410 then
 		timerFearfulShriekCD:Start(10.4, args.destGUID)--13.4 - 3
+	elseif args.extraSpellId == 459421 then
+		timerHolyLightCD:Start(14.5, args.sourceGUID)--17-2.5
 	end
 end
 
