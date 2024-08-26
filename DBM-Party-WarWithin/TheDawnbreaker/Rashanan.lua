@@ -31,7 +31,7 @@ mod:RegisterEventsInCombat(
  or ability.id = 434726 and type = "damage"
 --]]
 local warnBlazing							= mod:NewCountAnnounce(434726, 1)
-local warnRollingAcid						= mod:NewIncomingCountAnnounce(438875, 2)--General announce, private aura sound will be personal emphasis
+local warnRollingAcid						= mod:NewIncomingCountAnnounce(434407, 2)--General announce, private aura sound will be personal emphasis
 local warnRadiantLight						= mod:NewYouAnnounce(449042, 1)
 local warnSpinneretsStrands					= mod:NewIncomingCountAnnounce(434089, 3)--General announce, private aura sound will be personal emphasis
 
@@ -111,7 +111,7 @@ function mod:SPELL_CAST_START(args)
 	if spellId == 434407 then
 		self.vb.rollingCount = self.vb.rollingCount + 1
 		warnRollingAcid:Show(self.vb.rollingCount)
-		timerRollingAcidCD:Start(self:IsMythic() and 15.2 or (self:GetStage(2) and 25 or 20), self.vb.rollingCount+1)
+		timerRollingAcidCD:Start(self:IsMythic() and 15.2 or (self:GetStage(2) and 25 or 18.6), self.vb.rollingCount+1)
 		updateAllTimers(self, self:GetStage(1) and 6 or 6.6)
 	elseif spellId == 448213 then
 		self.vb.expelCount = self.vb.expelCount + 1

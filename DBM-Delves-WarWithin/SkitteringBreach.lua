@@ -82,8 +82,8 @@ end
 
 function mod:ENCOUNTER_START(eID)
 	if eID == 2946 then--Nerl'athekk the Skulking
-		timerDarkriftSmashCD:Start(8.7)
-		timerDarkAbatementCD:Start(12.4)
+		timerDarkAbatementCD:Start(2.2)
+		timerDarkriftSmashCD:Start(8.5)
 		self:RegisterShortTermEvents(
 			"UNIT_SPELLCAST_SUCCEEDED boss1"
 		)
@@ -130,6 +130,7 @@ end
 function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
 	if spellId == 458183 then
 		--"Dark Abatement-458183-npc:219676-00001EA30B = pull:2.2, 20.6, 20.0, 20.0, 20.0, 21.2, 20.1, 20.0, 21.3, 26.8",
+		--2.4, 20.6, 21.3, 21.2, 21.2, 20.0
 		warnDarkAbatement:Show()
 		timerDarkAbatementCD:Start()
 	end

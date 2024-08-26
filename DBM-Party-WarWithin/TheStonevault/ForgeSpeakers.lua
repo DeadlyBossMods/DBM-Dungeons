@@ -119,13 +119,13 @@ function mod:OnCombatStart(delay)
 	self.vb.hammerCount = 0
 	self.vb.orbCount = 0
 	if self:IsMythic() then
-		timerMoltenMetalCD:Start(3.5-delay, 1)--3.5-5.2
+		timerMoltenMetalCD:Start(4-delay, 1)--4-5.2
 		timerScrapSongCD:Start(18.2-delay, 1)
 		timerExhaustVentsCD:Start(35-delay, 1)--35-41 based on spell lockouts from interrupts
 		--
 		timerIgneousHammerCD:Start(6-delay, 1)
 		timerLavaCannonCD:Start(12.1-delay, 1)
-		timerBlazingCrescendoCD:Start(47, 1)--47-53 based on spell lockouts from interrupts
+		timerBlazingCrescendoCD:Start(45, 1)--45-53 based on spell lockouts from interrupts
 	else
 		timerMoltenMetalCD:Start(3.5-delay, 1)--3.5-5.2
 		timerExhaustVentsCD:Start(8.3-delay, 1)--At least on follower, don't know about heroic or normal yet
@@ -148,7 +148,8 @@ function mod:SPELL_CAST_START(args)
 		self.vb.ventilationCount = self.vb.ventilationCount  + 1
 		specWarnExhaustVents:Show(self.vb.ventilationCount)
 		specWarnExhaustVents:Play("watchstep")
-		timerExhaustVentsCD:Start(14.5, self.vb.ventilationCount+1)
+		--This seems to actually have a higher Cd when it's not interfered with, it just gets interferred with a lot
+		timerExhaustVentsCD:Start(34, self.vb.ventilationCount+1)
 		timerExhaustVents:Start()--3 + 6
 		updateBrokkTimers(self, 9)--Can't cast anything else while channeling this
 	elseif spellId == 430097 then
@@ -174,12 +175,12 @@ function mod:SPELL_CAST_START(args)
 			DBM:Debug("timerMoltenMetalCD extended by: "..extend, 2)
 			timerMoltenMetalCD:Update(elapsed, total+extend, self.vb.moltenMetalCount+1)
 		end
-		if timerExhaustVentsCD:GetRemaining(self.vb.ventilationCount+1) < 17 then
-			local elapsed, total = timerExhaustVentsCD:GetTime(self.vb.ventilationCount+1)
-			local extend = 17 - (total-elapsed)
-			DBM:Debug("timerExhaustVentsCD extended by: "..extend, 2)
-			timerExhaustVentsCD:Update(elapsed, total+extend, self.vb.ventilationCount+1)
-		end
+		--if timerExhaustVentsCD:GetRemaining(self.vb.ventilationCount+1) < 17 then
+		--	local elapsed, total = timerExhaustVentsCD:GetTime(self.vb.ventilationCount+1)
+		--	local extend = 17 - (total-elapsed)
+		--	DBM:Debug("timerExhaustVentsCD extended by: "..extend, 2)
+		--	timerExhaustVentsCD:Update(elapsed, total+extend, self.vb.ventilationCount+1)
+		--end
 		--updateBrokkTimers(self, 7.2)
 	elseif spellId == 428711 then
 		self.vb.hammerCount = self.vb.hammerCount + 1
@@ -214,14 +215,16 @@ function mod:SPELL_CAST_SUCCESS(args)
 			DBM:Debug("timerLavaCannonCD extended by: "..extend, 2)
 			timerLavaCannonCD:Update(elapsed, total+extend, self.vb.orbCount+1)
 		end
-		--BlazingCrescendo seems to delay vents by x seconds, so extend it by x seconds
-		--No Longer valid at 5, might be 13 or 14 now
-		if timerExhaustVentsCD:GetRemaining(self.vb.ventilationCount+1) < 13 then
-			local elapsed, total = timerExhaustVentsCD:GetTime(self.vb.ventilationCount+1)
-			local extend = 13 - (total-elapsed)
-			DBM:Debug("timerExhaustVentsCD extended by: "..extend, 2)
-			timerExhaustVentsCD:Update(elapsed, total+extend, self.vb.ventilationCount+1)
-		end
+		--BlazingCrescendo seems to delay vents by x seconds, so extend it by 12.1 seconds (give or take)
+		--if timerExhaustVentsCD:GetRemaining(self.vb.ventilationCount+1) < 12.1 then
+		--	local elapsed, total = timerExhaustVentsCD:GetTime(self.vb.ventilationCount+1)
+		--	local extend = 12.1 - (total-elapsed)
+		--	DBM:Debug("timerExhaustVentsCD extended by: "..extend, 2)
+		--	timerExhaustVentsCD:Update(elapsed, total+extend, self.vb.ventilationCount+1)
+		--end
+		--Think this one just restarts now regardless if time > or <
+		timerExhaustVentsCD:Stop()
+		timerExhaustVentsCD:Start(12.1, self.vb.ventilationCount+1)
 	--	updateDorlitaTimers(self, 13)
 	elseif spellId == 428535 then
 		specWarnBlazingCrescendo:Show(self.vb.deconstructCount)

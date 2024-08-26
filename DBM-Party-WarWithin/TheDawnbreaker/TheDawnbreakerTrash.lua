@@ -41,7 +41,7 @@ local specWarnBlackEdge						= mod:NewSpecialWarningDodge(431494, nil, nil, nil,
 local specWarnBlackHail						= mod:NewSpecialWarningDodge(432565, nil, nil, nil, 2, 2)
 local specWarnTerrifyingSlam				= mod:NewSpecialWarningRun(451117, nil, nil, nil, 4, 2)
 local specWarnTackyNova						= mod:NewSpecialWarningRun(451098, nil, nil, nil, 4, 2)
-local specWarnTormentingEruption			= mod:NewSpecialWarningRun(431349, "Melee", nil, nil, 4, 2)
+local specWarnTormentingEruption			= mod:NewSpecialWarningMoveAway(431349, "Melee", nil, nil, 4, 2)
 local specWarnSygianSeed					= mod:NewSpecialWarningMoveAway(432448, nil, nil, nil, 1, 2)
 local yellStygianSeed						= mod:NewShortYell(432448)
 local yellStygianSeedFades					= mod:NewShortFadesYell(432448)
@@ -164,7 +164,7 @@ function mod:SPELL_CAST_START(args)
 	elseif spellId == 431349 then
 		if self:AntiSpam(3, 1) then
 			specWarnTormentingEruption:Show()
-			specWarnTormentingEruption:Play("justrun")
+			specWarnTormentingEruption:Play("scatter")
 		end
 	elseif spellId == 446615 and self:AntiSpam(3, 6) then
 		warnReinforcements:Show()
