@@ -8,7 +8,7 @@ mod:SetRevision("@file-date-integer@")
 mod:RegisterCombat("scenario", 2710)
 
 mod:RegisterEventsInCombat(
-	"SPELL_CAST_START 463052 463081 462892 462802 462826 462936 462983 462856",
+	"SPELL_CAST_START 463052 463081 462892 462802 462936 462983 462856",
 	"SPELL_AURA_APPLIED 462983",
 	"UNIT_DIED",
 	"UPDATE_UI_WIDGET",
@@ -42,7 +42,7 @@ function mod:SPELL_CAST_START(args)
 		warnBeam:Show()
 	elseif args.spellId == 462802 and self:AntiSpam(4, 1) then
 		warnPurifyingFlames:Show()
-	elseif args.spellId == 462826 then
+	elseif args.spellId == 462936 then
 		timerMaintenanceCD:Start(nil, args.sourceGUID)
 	elseif args.spellId == 462983 then
 		timerVolatileMagmaCD:Start(nil, args.sourceGUID)
@@ -95,8 +95,10 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
 	if spellId == 433923 and self:AntiSpam(4, 2) then-- -[DNT] Kuldas Machine Speaker Ritual - Cosmetic Channel-
 		--Timer for initial wave after resuming/starting
 		--All other adds spawn on defeat of last set
-		timerAdds:Start()
+--		timerAdds:Start()
 	elseif spellId == 462819 and self:AntiSpam(4, 3) then--Player Detection
 		warnSelfDestruct:Show()
+	elseif spellId == 433320 and self:AntiSpam(4, 4) then
+		timerAdds:Start()
 	end
 end
