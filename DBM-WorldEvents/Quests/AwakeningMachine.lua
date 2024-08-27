@@ -12,14 +12,16 @@ mod:RegisterEventsInCombat(
 	"SPELL_AURA_APPLIED 462983",
 	"UNIT_DIED",
 	"UPDATE_UI_WIDGET",
-	"UNIT_SPELLCAST_SUCCEEDED"
+	"UNIT_SPELLCAST_SUCCEEDED_UNFILTERED"
 )
 
+--TODO, actually detect wave number and change specWarnAdds to count warning
+--TODO, on wave 20 disable the looping adds timer
 local warnBeam						= mod:NewSpellAnnounce(462892, 3)
 local warnPurifyingFlames			= mod:NewSpellAnnounce(462802, 3)
 local warnSelfDestruct				= mod:NewSpellAnnounce(462826, 4)--Bomb spawns
 
-local specWarnAdds					= mod:NewSpecialWarningAddsCount(433320, nil, nil, nil, 1, 2)
+local specWarnAdds					= mod:NewSpecialWarningAdds(433320, nil, nil, nil, 1, 2)
 local specWarnBellowingSlam			= mod:NewSpecialWarningDodge(463052, nil, nil, nil, 2, 2)
 local specWarnEarthshakingCharge	= mod:NewSpecialWarningDodge(463081, nil, nil, nil, 2, 2)
 local specWarnVolatileMagma			= mod:NewSpecialWarningMove(462983, nil, nil, nil, 1, 2)
@@ -68,6 +70,8 @@ function mod:UNIT_DIED(args)
 		timerVolatileMagmaCD:Stop(args.destGUID)
 	elseif cid == 229729 then
 		timerNullBarrierCD:Stop(args.destGUID)
+	elseif cid == 229782 then--Golem at end
+		DBM:EndCombat(self)--Win
 	end
 end
 
@@ -78,24 +82,17 @@ function mod:UPDATE_UI_WIDGET(table)
 	if id == 6187 then
 		timerAdds:Stop()
 	elseif id == 5573 then
-		local widgetInfo = C_UIWidgetManager.GetIconAndTextWidgetVisualizationInfo(id)
-		local text = widgetInfo and widgetInfo.text
-		if not text then return end
-		specWarnAdds:Show(tonumber(text:match("(%d)")) or 0)
+		specWarnAdds:Show()
 		specWarnAdds:Play("killmob")
 	end
-	--local widgetInfo = C_UIWidgetManager.GetIconAndTextWidgetVisualizationInfo(id)
-	--local text = widgetInfo and widgetInfo.text
-	--if not text then return end
-	--self:WaveFunction(text:match("(%d)") or 0)
 end
 
 --NOTE: This scenario has no boss unit Ids. These alerts will only work with focus, target, and friendly nameplates
-function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
+function mod:UNIT_SPELLCAST_SUCCEEDED_UNFILTERED(uId, _, spellId)
 	if spellId == 433923 and self:AntiSpam(4, 2) then-- -[DNT] Kuldas Machine Speaker Ritual - Cosmetic Channel-
 		--Timer for initial wave after resuming/starting
 		--All other adds spawn on defeat of last set
---		timerAdds:Start()
+		timerAdds:Start()
 	elseif spellId == 462819 and self:AntiSpam(4, 3) then--Player Detection
 		warnSelfDestruct:Show()
 	elseif spellId == 433320 and self:AntiSpam(4, 4) then
