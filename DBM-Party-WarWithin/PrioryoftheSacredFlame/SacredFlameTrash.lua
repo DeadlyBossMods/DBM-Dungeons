@@ -84,7 +84,7 @@ function mod:SPELL_CAST_START(args)
 		--timerBrutalSmashCD:Start(nil, args.sourceGUID)
 		if self:AntiSpam(3, 2) then
 			specWarnBrutalSmash:Show()
-			specWarnBrutalSmash:Play("shockwave")
+			specWarnBrutalSmash:Play("watchstep")
 		end
 	elseif spellId == 427356 then
 		if self.Options.SpecWarn427356interrupt and self:CheckInterruptFilter(args.sourceGUID, false, true) then
