@@ -19,7 +19,7 @@ mod:RegisterEventsInCombat(
 --TODO, on wave 20 disable the looping adds timer
 local warnBeam						= mod:NewSpellAnnounce(462892, 3)
 local warnPurifyingFlames			= mod:NewSpellAnnounce(462802, 3)
-local warnSelfDestruct				= mod:NewSpellAnnounce(462826, 4)--Bomb spawns
+local warnSelfDestruct				= mod:NewSpellAnnounce(63801, 4)--Bomb spawns
 
 local specWarnAdds					= mod:NewSpecialWarningAdds(433320, nil, nil, nil, 1, 2)
 local specWarnBellowingSlam			= mod:NewSpecialWarningDodge(463052, nil, nil, nil, 2, 2)
