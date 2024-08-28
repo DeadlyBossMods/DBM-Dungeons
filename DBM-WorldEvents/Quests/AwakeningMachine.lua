@@ -27,7 +27,7 @@ local specWarnEarthshakingCharge	= mod:NewSpecialWarningDodge(463081, nil, nil, 
 local specWarnVolatileMagma			= mod:NewSpecialWarningMove(462983, nil, nil, nil, 1, 2)
 
 local timerAdds						= mod:NewAddsTimer(10, 433320)--Initial wave only
-local timerBellowingSlamCD			= mod:NewCDNPTimer(20.6, 134974, nil, nil, nil, 3)
+local timerBellowingSlamCD			= mod:NewCDNPTimer(20.6, 463052, nil, nil, nil, 3)
 local timerMaintenanceCD			= mod:NewCDNPTimer(19.8, 462936, nil, nil, nil, 5)
 local timerVolatileMagmaCD			= mod:NewCDNPTimer(19.4, 462983, nil, nil, nil, 3)
 local timerNullBarrierCD			= mod:NewCDNPTimer(21.4, 462856, nil, nil, nil, 3)
