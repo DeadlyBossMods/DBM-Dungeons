@@ -101,7 +101,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 	local spellId = args.spellId
 	if spellId == 427157 then
 		self.vb.callCount = self.vb.callCount + 1
-		specWarnCallDarkspawn:Show(args.sourceGUID, self.vb.callCount)
+		specWarnCallDarkspawn:Show(args.sourceName, self.vb.callCount)
 		specWarnCallDarkspawn:Play("kickcast")
 		timerCallDarkspawnCD:Start(nil, self.vb.callCount+1)
 	end

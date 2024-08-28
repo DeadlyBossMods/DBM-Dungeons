@@ -20,6 +20,7 @@ mod:RegisterEvents(
 --NOTE: Jagged Slash (450176) has precisely 9.7 CD, but is it worth tracking?
 --NOTE: Stab (443510) is a 14.6 CD, but is it worth tracking?
 --TODO: add "Gatling Wand-461757-npc:228044-00004977F7 = pull:1392.7, 17.0, 17.0", (used by Reno Jackson)
+--TODO: timer for Armored Core from WCL
 local warnDebilitatingVenom					= mod:NewTargetNoFilterAnnounce(424614, 3)--Brann will dispel this if healer role
 local warnCastigate							= mod:NewTargetNoFilterAnnounce(418297, 4)
 local warnSpearFish							= mod:NewTargetNoFilterAnnounce(430036, 2)
@@ -33,8 +34,10 @@ local warnVineSpear							= mod:NewCastAnnounce(424891, 3, nil, nil, nil, nil, n
 local warnSkitterCharge						= mod:NewCastAnnounce(450197, 3, nil, nil, nil, nil, nil, 2)
 local warnWicklighterVolley					= mod:NewCastAnnounce(445191, 3)
 local warnSkullCracker						= mod:NewCastAnnounce(462686, 3)
+local warnThrashingFrenzy					= mod:NewCastAnnounce(445774, 3)
 local warnThrowDyno							= mod:NewSpellAnnounce(448600, 3)
 
+local specWarnSpearFish						= mod:NewSpecialWarningYou(430036, nil, nil, nil, 2, 12)
 local specWarnFearfulShriek					= mod:NewSpecialWarningDodge(433410, nil, nil, nil, 2, 2)
 local specWarnJaggedBarbs					= mod:NewSpecialWarningDodge(450714, nil, nil, nil, 2, 2)--11-26
 local specWarnLavablast	    				= mod:NewSpecialWarningDodge(445781, nil, nil, nil, 2, 2)
@@ -55,6 +58,7 @@ local specWarnRotWaveVolley					= mod:NewSpecialWarningInterrupt(425040, "HasInt
 local specWarnCastigate						= mod:NewSpecialWarningInterrupt(418297, "HasInterrupt", nil, nil, 1, 2)
 local specWarnBattleCry						= mod:NewSpecialWarningInterrupt(448399, "HasInterrupt", nil, nil, 1, 2)
 local specWarnHolyLight						= mod:NewSpecialWarningInterrupt(459421, "HasInterrupt", nil, nil, 1, 2)
+local specWarnArmoredShell					= mod:NewSpecialWarningInterrupt(448179, "HasInterrupt", nil, nil, 1, 2)
 
 local timerFearfulShriekCD					= mod:NewCDNPTimer(13.4, 433410, nil, nil, nil, 3)
 local timerShadowsofStrifeCD				= mod:NewCDNPTimer(15.6, 449318, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
@@ -89,7 +93,7 @@ do
 		if not force and validZones[currentZone] and not eventsRegistered then
 			eventsRegistered = true
 			self:RegisterShortTermEvents(
-                "SPELL_CAST_START 449318 450546 433410 450714 445781 415253 425040 424704 424798 414944 418791 424891 450197 448399 445191 455932 445492 434281 450637 445210 448528 449071 462686 459421",
+                "SPELL_CAST_START 449318 450546 433410 450714 445781 415253 425040 424704 424798 414944 418791 424891 450197 448399 445191 455932 445492 434281 450637 445210 448528 449071 462686 459421 448179 445774",
                 "SPELL_CAST_SUCCESS 414944 424614 418791 424891 427812 450546 450197 415253 449318 445191 430036 445252 425040 424704 448399 448528 433410 445492 462686 447392 459421",
 				"SPELL_INTERRUPT",
                 "SPELL_AURA_APPLIED 424614 449071 418297 430036 440622 441129",
@@ -239,6 +243,15 @@ function mod:SPELL_CAST_START(args)
 			specWarnHolyLight:Show(args.sourceName)
 			specWarnHolyLight:Play("kickcast")
 		end
+	elseif args.spellId == 448179 then
+		if self:CheckInterruptFilter(args.sourceGUID, false, true) then
+			specWarnArmoredShell:Show(args.sourceName)
+			specWarnArmoredShell:Play("kickcast")
+		end
+	elseif args.spellId == 445774 then
+		if self:AntiSpam(3, 6) then
+			warnThrashingFrenzy:Show()
+		end
 	end
 end
 
@@ -343,7 +356,12 @@ function mod:SPELL_AURA_APPLIED(args)
 			specWarnCastigate:Play("kickcast")
 		end
 	elseif args.spellId == 430036 then
-		warnSpearFish:Show(args.destName)
+		if args:IsPlayer() then
+			specWarnSpearFish:Show()
+			specWarnSpearFish:Play("pullin")
+		else
+			warnSpearFish:Show(args.destName)
+		end
 	elseif args.spellId == 440622 and args:IsDestTypePlayer() then
 		if self:CheckDispelFilter("curse") then
 			specWarnCurseoftheDepths:Show(args.destName)
