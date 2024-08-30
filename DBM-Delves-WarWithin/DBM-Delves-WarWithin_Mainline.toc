@@ -4,6 +4,7 @@
 ## Title-koKR:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cff4565ff구렁 (내부 전쟁)|r
 ## Title-ruRU:|cffffe00a<|r|cffff7d0aDBM Мод|r|cffffe00a>|r |cff4565ffВылазки (Война Внутри)|r
 ## Title-zhTW:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cff4565ff探究 (地心之戰)|r
+## Title-zhCN:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cff4565ff地下堡 (地心之战)|r
 ## Author: MysticalOS
 ## LoadOnDemand: 1
 ## RequiredDeps: DBM-Core
@@ -18,6 +19,7 @@
 ## X-DBM-Mod-Name-koKR: 구렁 (내부 전쟁)
 ## X-DBM-Mod-Name-ruRU: Вылазки (Война Внутри)
 ## X-DBM-Mod-Name-zhTW: 探究 (地心之戰)
+## X-DBM-Mod-Name-zhCN: 地下堡 (地心之战)
 ## X-DBM-Mod-Sort: 120
 ## X-DBM-Mod-MapID: 2664, 2679, 2680, 2681, 2682, 2683, 2684, 2685, 2686, 2687, 2688, 2689, 2690, 2767, 2768
 ## X-DBM-Mod-MinCoreRevision: 20200524142133
@@ -26,6 +28,8 @@
 
 localization.en.lua
 localization.kr.lua
+localization.ru.lua
+localization.cn.lua
 TrashCommon.lua
 FungalFolly.lua
 MycomancerCavern.lua
