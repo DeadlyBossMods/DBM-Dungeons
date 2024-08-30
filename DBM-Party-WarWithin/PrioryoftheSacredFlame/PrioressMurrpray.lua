@@ -58,9 +58,9 @@ function mod:OnCombatStart(delay)
 	self.vb.innerCount = 0
 	self.vb.holyFlameCount = 0
 	self.vb.holySmiteCount = 0
-	timerHolyFlameCD:Start(8.1-delay, 1)--8.1 (but can also sometimes not get cast at all for 45 seconds
+	timerHolyFlameCD:Start(7-delay, 1)--7-8.1 (but can also sometimes not get cast at all for 45 seconds
 	timerPurifyingLightCD:Start(10.5-delay, 1)--10.5
-	timerInnerLightCD:Start(16.9-delay, 1)--16.9-19
+	timerInnerLightCD:Start(15.5-delay, 1)--15.5-19
 --	timerBarrierofLightCD:Start(1-delay)--69 (need more sample size, i've seen too much variation, plus it's only cast once so it might be just health based?
 end
 
@@ -103,8 +103,8 @@ function mod:SPELL_CAST_START(args)
 --		self.vb.holyFlameCount = 0
 		self:SetStage(2)
 		timerPurifyingLightCD:Start(4.5, self.vb.purifyingCount+1)
-		timerHolyFlameCD:Start(9.5, self.vb.holyFlameCount+1)
-		timerInnerLightCD:Start(20.6, self.vb.innerCount+1)
+		timerHolyFlameCD:Start(8.4, self.vb.holyFlameCount+1)
+		timerInnerLightCD:Start(10.9, self.vb.innerCount+1)
 	end
 end
 

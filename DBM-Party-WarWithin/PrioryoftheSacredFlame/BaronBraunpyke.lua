@@ -57,7 +57,7 @@ function mod:OnCombatStart(delay)
 	self.vb.hammerCount = 0
 	self.vb.pyreCount = 0
 	timerVindictiveWrathCD:Start(45.9-delay, 1)
-	timerCastigatorsShieldCD:Start(25.2-delay, 1)
+	timerCastigatorsShieldCD:Start(23.0-delay, 1)
 	timerBurningLightCD:Start(16.7-delay, 1)
 	timerHammerofPurityCD:Start(8.2-delay, 1)
 	if self:IsMythic() then
