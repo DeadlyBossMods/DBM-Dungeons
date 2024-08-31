@@ -62,8 +62,8 @@ function mod:OnCombatStart(delay)
 		timerEarthShattererCD:Start(42.9-delay, 1)
 	else
 		timerVolatileSpikeCD:Start(5.9-delay, 1)
-		timerRefractingBeamCD:Start(12-delay, 1)
-		timerSeismicSmashCD:Start(15.6-delay, 1)
+		timerRefractingBeamCD:Start(11.7-delay, 1)
+		timerSeismicSmashCD:Start(15.4-delay, 1)
 	end
 end
 

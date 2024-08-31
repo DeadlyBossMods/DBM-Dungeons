@@ -28,8 +28,8 @@ local specWarnVolatileMagma			= mod:NewSpecialWarningMove(462983, nil, nil, nil,
 
 local timerAdds						= mod:NewAddsTimer(10, 433320)--Initial wave only
 local timerBellowingSlamCD			= mod:NewCDNPTimer(20.6, 463052, nil, nil, nil, 3)
-local timerMaintenanceCD			= mod:NewCDNPTimer(19.8, 462936, nil, nil, nil, 5)
-local timerVolatileMagmaCD			= mod:NewCDNPTimer(19.4, 462983, nil, nil, nil, 3)
+local timerMaintenanceCD			= mod:NewCDNPTimer(19.3, 462936, nil, nil, nil, 5)
+local timerVolatileMagmaCD			= mod:NewCDNPTimer(19.3, 462983, nil, nil, nil, 3)
 local timerNullBarrierCD			= mod:NewCDNPTimer(21.4, 462856, nil, nil, nil, 3)
 
 function mod:SPELL_CAST_START(args)
@@ -62,16 +62,15 @@ end
 
 function mod:UNIT_DIED(args)
 	local cid = self:GetCIDFromGUID(args.destGUID)
-	if cid == 229782 then
+	if cid == 229782 then--Golem at end
 		timerBellowingSlamCD:Stop(args.destGUID)
+		DBM:EndCombat(self)--Win
 	elseif cid == 229769 then
 		timerMaintenanceCD:Stop(args.destGUID)
 	elseif cid == 229778 then
 		timerVolatileMagmaCD:Stop(args.destGUID)
 	elseif cid == 229729 then
 		timerNullBarrierCD:Stop(args.destGUID)
-	elseif cid == 229782 then--Golem at end
-		DBM:EndCombat(self)--Win
 	end
 end
 
@@ -94,8 +93,11 @@ function mod:UNIT_SPELLCAST_SUCCEEDED_UNFILTERED(uId, _, spellId)
 		--All other adds spawn on defeat of last set
 		timerAdds:Start()
 	elseif spellId == 462819 and self:AntiSpam(4, 3) then--Player Detection
+		--Bombs fire this spell on activation cause it's script that enables their detection of being near player (or npc) to explode
 		warnSelfDestruct:Show()
 	elseif spellId == 433320 and self:AntiSpam(4, 4) then
+		--This actually is a looping 10 second timer that will skip adds if some are still alive
+		--But if none are alive they will spawn exactly on the repeating tick
 		timerAdds:Start()
 	end
 end

@@ -81,7 +81,7 @@ function mod:OnCombatStart(delay)
 	self.vb.eyeCount = 0
 	self.vb.stormActive = false
 --	timerInfestationCD:Start(1-delay, 1)--Instantly on pull
-	timerImpaleCD:Start(4.8-delay, 1)
+	timerImpaleCD:Start(4.4-delay, 1)
 	timerBurrowChargeCD:Start(14.2-delay, 1)
 	timerEyeOfTheStormCD:Start(30.7-delay, 1)
 end
@@ -102,7 +102,7 @@ function mod:SPELL_CAST_START(args)
 		if self.vb.stormActive then
 			--Cast 3x per storm at static interval
 			if self.vb.impaleCount < 3 then
-				timerImpaleCD:Start(8.5, self.vb.impaleCount+1)--8.5-8.8
+				timerImpaleCD:Start(4, self.vb.impaleCount+1)--(old 8.5-8.8)
 			end
 		else
 			local timer = self:GetFromTimersTable(allTimers, false, self.vb.timerSet, spellId, self.vb.impaleCount+1)
