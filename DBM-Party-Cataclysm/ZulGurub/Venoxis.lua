@@ -69,7 +69,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		end
 		if args:IsPlayer() then
 			specWarnToxicLink:Show()
-			specWarnToxicLink:Play("gather")
+			specWarnToxicLink:Play("targetyou")
 		end
 		if self.Options.SetIconOnToxicLink then
 			self:SetIcon(args.destName, self.vb.toxicLinkIcon, 10)
