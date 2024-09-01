@@ -176,9 +176,9 @@ function mod:SPELL_INTERRUPT(args)
 	if not self.Options.Enabled then return end
 	local spellId = args.extraSpellId
 	if spellId == 437721 then
-		timerBoilingFlamesCD:Start(20.1, args.sourceGUID)
+		timerBoilingFlamesCD:Start(20.1, args.destGUID)
 	elseif spellId == 441627 then
-		timerRejuvenatingHoneyCD:Start(12.7, args.sourceGUID)
+		timerRejuvenatingHoneyCD:Start(12.7, args.destGUID)
 	end
 end
 

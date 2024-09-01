@@ -167,9 +167,9 @@ function mod:SPELL_INTERRUPT(args)
 	if not self.Options.Enabled then return end
 	local spellId = args.extraSpellId
 	if spellId == 430805 then
-		timerArcingVoidCD:Start(13.5, args.sourceGUID)
+		timerArcingVoidCD:Start(13.5, args.destGUID)
 	elseif spellId == 432959 then
-		timerVoidVolleyCD:Start(15.6, args.sourceGUID)
+		timerVoidVolleyCD:Start(15.6, args.destGUID)
 	end
 end
 

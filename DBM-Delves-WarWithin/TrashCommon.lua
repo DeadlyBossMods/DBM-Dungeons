@@ -337,7 +337,7 @@ function mod:SPELL_INTERRUPT(args)
 	elseif args.extraSpellId == 433410 then
 		timerFearfulShriekCD:Start(10.4, args.destGUID)--13.4 - 3
 	elseif args.extraSpellId == 459421 then
-		timerHolyLightCD:Start(14.5, args.sourceGUID)--17-2.5
+		timerHolyLightCD:Start(14.5, args.destGUID)--17-2.5
 	end
 end
 

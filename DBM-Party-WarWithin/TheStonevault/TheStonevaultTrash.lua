@@ -198,15 +198,15 @@ function mod:SPELL_INTERRUPT(args)
 	if not self.Options.Enabled then return end
 	local spellId = args.extraSpellId
 	if spellId == 449455 then
-		timerHowlingFearCD:Start(22.7, args.sourceGUID)
+		timerHowlingFearCD:Start(22.7, args.destGUID)
 	elseif spellId == 445207 then
-		timerPiercingWailCD:Start(20.1, args.sourceGUID)
+		timerPiercingWailCD:Start(20.1, args.destGUID)
 	elseif spellId == 429545 then
-		timerCensoringGearCD:Start(15.2, args.sourceGUID)
+		timerCensoringGearCD:Start(15.2, args.destGUID)
 	elseif spellId == 429109 then
-		timerRestoringMetalsCD:Start(16.3, args.sourceGUID)
+		timerRestoringMetalsCD:Start(16.3, args.destGUID)
 	elseif spellId == 448852 then
-		timerDefilingOutburstCD:Start(14.2, args.sourceGUID)
+		timerDefilingOutburstCD:Start(14.2, args.destGUID)
 	end
 end
 

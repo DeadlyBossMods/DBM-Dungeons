@@ -151,11 +151,11 @@ end
 
 function mod:SPELL_INTERRUPT(args)
 	if args.extraSpellId == 434802 then
-		timerHorrifyingShrillCD:Start(13.3, args.sourceGUID)
+		timerHorrifyingShrillCD:Start(13.3, args.destGUID)
 	elseif args.extraSpellId == 448248 then
-		timerRevoltingVolleyCD:Start(18.3, args.sourceGUID)
+		timerRevoltingVolleyCD:Start(18.3, args.destGUID)
 	elseif args.extraSpellId == 433841 then
-		timerVenomVolleyCD:Start(18.2, args.sourceGUID)
+		timerVenomVolleyCD:Start(18.2, args.destGUID)
 	end
 end
 
