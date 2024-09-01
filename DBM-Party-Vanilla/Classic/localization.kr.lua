@@ -333,6 +333,16 @@ L = DBM:GetModLocalization("TheBeast")
 L:SetGeneralLocalization{
 	name 		= "괴수"
 }
+
+----------------------
+--  Lord Valthalak  --
+----------------------
+L = DBM:GetModLocalization("LordValthalak")
+
+L:SetGeneralLocalization{
+	name 		= "군주 발타라크"
+}
+
 -----------------------------
 --  General Drakkisath  --
 -----------------------------
