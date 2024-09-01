@@ -211,11 +211,11 @@ function mod:SPELL_INTERRUPT(args)
 	if not self.Options.Enabled then return end
 	local spellId = args.extraSpellId
 	if spellId == 443430 then
-		timerSilkBindingCD:Start(24.5, args.sourceGUID)
+		timerSilkBindingCD:Start(24.5, args.destGUID)
 	elseif spellId == 452162 then
-		timerMendingWebCD:Start(16.6, args.sourceGUID)
+		timerMendingWebCD:Start(16.6, args.destGUID)
 	elseif spellId == 446086 then
-		timerVoidWaveCD:Start(15.4, args.sourceGUID)
+		timerVoidWaveCD:Start(15.4, args.destGUID)
 	end
 end
 

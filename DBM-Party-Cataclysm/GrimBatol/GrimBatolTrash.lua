@@ -192,7 +192,7 @@ function mod:SPELL_INTERRUPT(args)
 	if args.extraSpellId == 451871 then
 		timerMassTremorCD:Start(20, args.destGUID)
 	elseif args.extraSpellId == 76711 then
-		timerSearMindCD:Start(18.9, args.sourceGUID)
+		timerSearMindCD:Start(18.9, args.destGUID)
 	end
 end
 

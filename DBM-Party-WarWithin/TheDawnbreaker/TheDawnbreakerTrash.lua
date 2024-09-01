@@ -217,11 +217,11 @@ function mod:SPELL_INTERRUPT(args)
 	if not self.Options.Enabled then return end
 	local spellId = args.extraSpellId
 	if spellId == 450756 then
-		timerAbyssalHowlCD:Start(25.6, args.sourceGUID)
+		timerAbyssalHowlCD:Start(25.6, args.destGUID)
 	elseif spellId == 432520 then
-		timerUmbrelBarrierCD:Start(24.2, args.sourceGUID)
+		timerUmbrelBarrierCD:Start(24.2, args.destGUID)
 	elseif spellId == 431309 then
-		timerEnsharingShadowsCD:Start(18.1, args.sourceGUID)
+		timerEnsharingShadowsCD:Start(18.1, args.destGUID)
 	end
 end
 
