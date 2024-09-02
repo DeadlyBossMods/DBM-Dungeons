@@ -53,12 +53,12 @@ local specWarnMendingWeb					= mod:NewSpecialWarningInterrupt(452162, "HasInterr
 local specWarnVoidWave						= mod:NewSpecialWarningInterrupt(446086, "HasInterrupt", nil, nil, 1, 2)
 
 local timerShadowsofDoubtCD					= mod:NewCDNPTimer(11.1, 443436, nil, nil, nil, 3)--11.1-14.6
-local timerSilkBindingCD					= mod:NewCDNPTimer(24.5, 443430, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
-local timerEarthShatterCD					= mod:NewCDNPTimer(11, 443500, nil, nil, nil, 3)
-local timerNullSlamCD						= mod:NewCDNPTimer(24.9, 451543, nil, nil, nil, 3)
+local timerSilkBindingCD					= mod:NewCDPNPTimer(24.5, 443430, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerEarthShatterCD					= mod:NewCDPNPTimer(11, 443500, nil, nil, nil, 3)
+local timerNullSlamCD						= mod:NewCDPNPTimer(24.9, 451543, nil, nil, nil, 3)
 local timerGossamerBarrageCD				= mod:NewCDNPTimer(23, 451423, nil, nil, nil, 3)--Start to Start, non CCable caster
 local timerPerfumeTossCD					= mod:NewCDNPTimer(17, 450784, nil, nil, nil, 3)--Poor sample, need more data
-local timerMendingWebCD						= mod:NewCDNPTimer(16.6, 452162, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerMendingWebCD						= mod:NewCDPNPTimer(16.6, 452162, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerVenomousSprayCD					= mod:NewCDNPTimer(24.2, 434137, nil, nil, nil, 3)
 local timerDarkBarrageCD					= mod:NewCDNPTimer(27.9, 445813, nil, nil, nil, 3)
 local timerVoidWaveCD						= mod:NewCDNPTimer(15.4, 446086, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)

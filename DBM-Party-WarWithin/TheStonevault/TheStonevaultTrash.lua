@@ -45,22 +45,22 @@ local specWarnCensoringGear					= mod:NewSpecialWarningInterrupt(429545, "HasInt
 local specWarnDefilingOutburst				= mod:NewSpecialWarningInterrupt(448852, "HasInterrupt", nil, nil, 1, 2)
 local specWarnPiercingWail					= mod:NewSpecialWarningInterrupt(445207, "HasInterrupt", nil, nil, 1, 2)--High Prio interrupt
 
-local timerSeismicWaveCD					= mod:NewCDNPTimer(15.1, 425027, nil, nil, nil, 3)--was 17 but now 18.1?
+local timerSeismicWaveCD					= mod:NewCDPNPTimer(15.1, 425027, nil, nil, nil, 3)--was 17 but now 18.1?
 local timerPulverizingPounceCD				= mod:NewCDNPTimer(15.1, 447141, nil, nil, nil, 3)--was 15.2 but now 18.1?
 local timerVoidInfectionCD					= mod:NewCDNPTimer(18.2, 426308, nil, nil, nil, 3, nil, DBM_COMMON_L.CURSE_ICON)
-local timerLavaCannonCD						= mod:NewCDNPTimer(9.1, 449130, nil, nil, nil, 3)
+local timerLavaCannonCD						= mod:NewCDPNPTimer(9.1, 449130, nil, nil, nil, 3)
 local timerMoltenMortarCD					= mod:NewCDNPTimer(20.6, 449154, nil, nil, nil, 3)--15.3-19
 local timerCrystalSalvoCD					= mod:NewCDNPTimer(16.3, 426345, nil, nil, nil, 3)
 local timerVoidStormCD						= mod:NewCDNPTimer(27.9, 426771, nil, nil, nil, 2)--Cast to cast for now, but if it gets stutter cast reports it'll be moved to success
-local timerShieldStampedeCD					= mod:NewCDNPTimer(18.1, 448640, nil, nil, nil, 3)
+local timerShieldStampedeCD					= mod:NewCDPNPTimer(18.1, 448640, nil, nil, nil, 3)
 local timerSmashRockCD						= mod:NewCDNPTimer(23, 428879, nil, nil, nil, 3)
 local timerGraniteEruptionCD				= mod:NewCDNPTimer(24.2, 428703, nil, nil, nil, 3)
-local timerEarthBurstTotemCD				= mod:NewCDNPTimer(30, 429427, nil, nil, nil, 1)
-local timerHowlingFearCD					= mod:NewCDNPTimer(22.7, 449455, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--Poor sample size, these mobs rarely live long enough
-local timerRestoringMetalsCD				= mod:NewCDNPTimer(16.3, 429109, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
-local timerCensoringGearCD					= mod:NewCDNPTimer(15.2, 429545, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerEarthBurstTotemCD				= mod:NewCDPNPTimer(30, 429427, nil, nil, nil, 1)
+local timerHowlingFearCD					= mod:NewCDPNPTimer(22.7, 449455, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--Poor sample size, these mobs rarely live long enough
+local timerRestoringMetalsCD				= mod:NewCDPNPTimer(16.3, 429109, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerCensoringGearCD					= mod:NewCDPNPTimer(15.2, 429545, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerDefilingOutburstCD				= mod:NewCDNPTimer(14.2, 448852, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--Insufficient data to be sure of this one yet
-local timerPiercingWailCD					= mod:NewCDNPTimer(20.1, 445207, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerPiercingWailCD					= mod:NewCDPNPTimer(20.1, 445207, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 
 --local playerName = UnitName("player")
 

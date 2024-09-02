@@ -8,8 +8,8 @@ mod.isTrashMod = true
 mod.isTrashModBossFightAllowed = true
 
 mod:RegisterEvents(
-	"SPELL_CAST_START 324293 327240 327399 334748 320462 338353 323496 333477 333479 338606 345623 322756 328667 335143 320822 324394 324387 338456",
-	"SPELL_CAST_SUCCESS 334748 320571 321780 343470 324372 327130 323496 338606 322756 327393 335143 338353 338456 338357 333477 333479 327240 345623",--324293
+	"SPELL_CAST_START 324293 327240 327399 334748 320462 338353 323496 333477 333479 338606 345623 322756 328667 335143 320822 324394 324387 338456 324323",
+	"SPELL_CAST_SUCCESS 334748 320571 321780 343470 324372 327130 323496 338606 322756 327393 335143 338353 338456 338357 333477 333479 327240 345623 324323",--324293
 	"SPELL_INTERRUPT",
 	"SPELL_AURA_APPLIED 327401 323347 335141 338353 338357 338606 327396 323471",
 	"SPELL_AURA_APPLIED_DOSE 338357",
@@ -18,8 +18,8 @@ mod:RegisterEvents(
 )
 
 --[[
- (ability.id = 324293 or ability.id = 327240 or ability.id = 327399 or ability.id = 334748 or ability.id = 338353 or ability.id = 323496 or ability.id = 333477 or ability.id = 333479 or ability.id = 338606 or ability.id = 345623 or ability.id = 322756 or ability.id = 328667 or ability.id = 335143 or ability.id = 320822 or ability.id = 324394 or ability.id = 324387 or ability.id = 338456) and type = "begincast"
- or (ability.id = 338357 or ability.id = 327393 or ability.id = 334748 or ability.id = 320571 or ability.id = 321780 or ability.id = 343470 or ability.id = 324372 or ability.id = 327130 or ability.id = 324293 or ability.id = 327240 or ability.id = 327399 or ability.id = 334748 or ability.id = 338353 or ability.id = 323496 or ability.id = 333477 or ability.id = 333479 or ability.id = 338606 or ability.id = 345623 or ability.id = 322756 or ability.id = 328667 or ability.id = 335143 or ability.id = 320822 or ability.id = 324394 or ability.id = 324387 or ability.id = 338456) and type = "cast"
+ (ability.id = 324293 or ability.id = 327240 or ability.id = 327399 or ability.id = 334748 or ability.id = 338353 or ability.id = 323496 or ability.id = 333477 or ability.id = 333479 or ability.id = 338606 or ability.id = 345623 or ability.id = 322756 or ability.id = 328667 or ability.id = 335143 or ability.id = 320822 or ability.id = 324394 or ability.id = 324387 or ability.id = 338456 or ability.id = 324323) and type = "begincast"
+ or (ability.id = 338357 or ability.id = 327393 or ability.id = 334748 or ability.id = 320571 or ability.id = 321780 or ability.id = 343470 or ability.id = 324372 or ability.id = 327130 or ability.id = 324293 or ability.id = 327240 or ability.id = 327399 or ability.id = 334748 or ability.id = 338353 or ability.id = 323496 or ability.id = 333477 or ability.id = 333479 or ability.id = 338606 or ability.id = 345623 or ability.id = 322756 or ability.id = 328667 or ability.id = 335143 or ability.id = 320822 or ability.id = 324394 or ability.id = 324387 or ability.id = 338456 or ability.id = 324323) and type = "cast"
  or stoppedAbility.id = 334748 or stoppedAbility.id = 324293 or stoppedAbility.id = 338353 or stoppedAbility.id = 328667 or stoppedAbility.id = 335143 or stoppedAbility.id = 327130
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
  --]]
@@ -52,6 +52,7 @@ local specWarnGutSlice						= mod:NewSpecialWarningDodge(333477, nil, nil, nil, 
 local specWarnDeathBurst					= mod:NewSpecialWarningDodge(345623, nil, nil, nil, 2, 2)
 local specWarnShadowWell					= mod:NewSpecialWarningDodge(320571, nil, nil, nil, 2, 2)
 local specWarnFrigidSpikes					= mod:NewSpecialWarningDodge(324387, nil, nil, nil, 2, 2)
+local specWarnGruesomeCleave				= mod:NewSpecialWarningDodge(324323, nil, nil, nil, 2, 2)
 local specWarnSharedAgony					= mod:NewSpecialWarningMoveAway(327401, nil, nil, nil, 1, 11)
 local yellSharedAgony						= mod:NewYell(327401)
 local specWarnReapingWinds					= mod:NewSpecialWarningRun(324372, nil, nil, nil, 4, 2)
@@ -75,7 +76,7 @@ local specWarnRepairFlesh					= mod:NewSpecialWarningInterrupt(327130, "HasInter
 local specWarnBoneshatterShield				= mod:NewSpecialWarningSwitchCustom(343470, "Dps", nil, nil, 1, 2)
 
 local timerMorbidFixation					= mod:NewTargetTimer(8, 338606, nil, nil, nil, 5)
-local timerDrainFluidsCD					= mod:NewCDNPTimer(15, 334748, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--Harvester 15-17.5, Collector 14.1-18.3, Stitching Assistant 16.6-17.9
+local timerDrainFluidsCD					= mod:NewCDPNPTimer(15, 334748, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--Harvester 15-17.5, Collector 14.1-18.3, Stitching Assistant 16.6-17.9
 local timerThrowCleaverCD					= mod:NewCDNPTimer(13, 323496, nil, nil, nil, 3)--13-14.2 for Flesh Carver, 15.4 for Stitching Assistant, 14.1 for Separation Assistant
 local timerMorbidFixationCD					= mod:NewCDNPTimer(26.7, 338606, nil, nil, nil, 3)
 local timerWrathOfZolramusCD				= mod:NewCDNPTimer(16.9, 322756, nil, nil, nil, 2)--16.9-17.8 (at least from gatekeeper mob)
@@ -83,16 +84,18 @@ local timerShadowWellCD						= mod:NewCDNPTimer(13.5, 320571, nil, nil, nil, 3)-
 local timerGrimFateCD						= mod:NewCDNPTimer(18.2, 327396, nil, nil, nil, 3)
 local timerDeathBurstCD						= mod:NewCDNPTimer(16.2, 345623, nil, nil, nil, 3)
 local timerAnimatedDeadCD					= mod:NewCDNPTimer(29.1, 321780, nil, nil, nil, 1)--29.1-33, not greatest sample size
-local timerBoneMendCD						= mod:NewCDNPTimer(7, 335143, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--7 second recast, but can be delayed a lot by Final bargain
---local timerRaspingScreamCD				= mod:NewCDNPTimer(15, 324293, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--Not known, couldn't find a single log mob lived more than one cast
+local timerBoneMendCD						= mod:NewCDPNPTimer(7, 335143, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--7 second recast, but can be delayed a lot by Final bargain
+--local timerRaspingScreamCD				= mod:NewCDPNPTimer(15, 324293, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--Not known, couldn't find a single log mob lived more than one cast
+local timerGruesomeCleaveCD					= mod:NewCDPNPTimer(11.1, 324323, nil, nil, nil, 3)
 --local timerBoneshatterShieldCD			= mod:NewCDNPTimer(15, 343470, nil, nil, nil, 1, nil, DBM_CORE_L.DAMAGE_ICON)--Not known, couldn't find a single log mob lived more than one cast
 --local timerFrostBoltVolleyCD				= mod:NewCDNPTimer(15.4, 328667, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--CD unknown
-local timerGoresplatterCD					= mod:NewCDNPTimer(20, 338353, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--20-22
+local timerGoresplatterCD					= mod:NewCDPNPTimer(20, 338353, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--20-22
 local timerMutlilateCD						= mod:NewCDNPTimer(13, 338456, nil, nil, nil, 5)--13 sec trash, 10.6 both minibosses
 local timerTenderizeCD						= mod:NewCDNPTimer(14.5, 338357, nil, nil, nil, 5)--14.5 sec trash, 12.1 Goregrind
-local timerGutSliceCD						= mod:NewCDNPTimer(12.5, 333477, nil, nil, nil, 3)
+local timerGutSliceCD						= mod:NewCDPNPTimer(12.5, 333477, nil, nil, nil, 3)
 local timerSpewDiseaseCD					= mod:NewCDNPTimer(10.6, 333479, nil, nil, nil, 3)
 local timerSpineCrushCD						= mod:NewCDNPTimer(14.0, 327240, nil, nil, nil, 3)
+local timerRepairFleshCD					= mod:NewCDPNPTimer(14.3, 327130, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--14-17
 
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc, 7 off interrupt
 
@@ -197,6 +200,11 @@ function mod:SPELL_CAST_START(args)
 			specWarnFrigidSpikes:Show()
 			specWarnFrigidSpikes:Play("watchstep")
 		end
+	elseif spellId == 324323 then
+		if self:AntiSpam(3, 2) then
+			specWarnGruesomeCleave:Show()
+			specWarnGruesomeCleave:Play("shockwave")
+		end
 	end
 end
 
@@ -213,6 +221,8 @@ function mod:SPELL_CAST_SUCCESS(args)
 			specWarnShadowWell:Show()
 			specWarnShadowWell:Play("watchstep")
 		end
+	elseif spellId == 324323 then
+		timerGruesomeCleaveCD:Start(11.1, args.sourceGUID)
 	elseif spellId == 321780 then
 		warnAnimateDead:Show()
 		timerAnimatedDeadCD:Start(29.1, args.sourceGUID)
@@ -224,6 +234,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 		specWarnReapingWinds:Show()
 		specWarnReapingWinds:Play("justrun")
 	elseif spellId == 327130 then
+		timerRepairFleshCD:Start(14.3, args.sourceGUID)
 		if self.Options.SpecWarn327130interrupt and self:CheckInterruptFilter(args.sourceGUID, false, true) then
 			specWarnRepairFlesh:Show(args.sourceName)
 			specWarnRepairFlesh:Play("kickcast")
@@ -354,8 +365,9 @@ function mod:UNIT_DIED(args)
 		timerGoresplatterCD:Stop(args.destGUID)
 	elseif cid == 166302 then--Corpse Harvester
 		timerDrainFluidsCD:Stop(args.destGUID)
-	elseif cid == 165872 then--Flesh Carver
+	elseif cid == 165872 then--Flesh Crafter
 		timerThrowCleaverCD:Stop(args.destGUID)
+		timerRepairFleshCD:Stop(args.destGUID)
 	elseif cid == 173044 then--Stitching Assistant
 		timerThrowCleaverCD:Stop(args.destGUID)
 		timerDrainFluidsCD:Stop(args.destGUID)
@@ -374,9 +386,10 @@ function mod:UNIT_DIED(args)
 	elseif cid == 165824 then--Nar'zudah
 		timerGrimFateCD:Stop(args.destGUID)
 		timerDeathBurstCD:Stop(args.destGUID)
---	elseif cid == 165919 then--Skeletal Marauder
+	elseif cid == 165919 then--Skeletal Marauder
 		--timerRaspingScreamCD:Stop(args.destGUID)
 		--timerBoneshatterShieldCD:Stop(args.destGUID)
+		timerGruesomeCleaveCD:Stop(args.destGUID)
 	elseif cid == 172981 then--Kyrian Stickwork
 		timerMutlilateCD:Stop(args.destGUID)
 		timerTenderizeCD:Stop(args.destGUID)

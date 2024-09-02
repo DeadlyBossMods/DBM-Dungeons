@@ -22,6 +22,7 @@ mod:RegisterEvents(
  or ability.id = 427260 and type = "cast"
  or stoppedAbility.id = 430805 or stoppedAbility.id = 432959
 --]]
+--TODO, add Oblivion Wave frontal on tank
 local warnEntropyShield						= mod:NewCastAnnounce(450628, 3)
 local warnEnergizedBarrage 					= mod:NewCastAnnounce(427616, 3, nil, nil, "Tank")--Only warn tank by default since tank should aim it away from anyone else
 local warnVoidShell							= mod:NewCastAnnounce(430754, 3, nil, nil, nil, nil, nil, 3)
@@ -42,18 +43,18 @@ local specWarnVoidVolley					= mod:NewSpecialWarningInterrupt(432959, "HasInterr
 
 --Almost all timers probably wrong now, but can't use public WCL to fix this since all logs short
 --Also, all of them were moved to success preemtively but if stops actually DO put any of these on CD, then the preemtive move actually broke timer
-local timerBoundingVoidCD					= mod:NewCDNPTimer(10.1, 426893, nil, nil, nil, 3)
+local timerBoundingVoidCD					= mod:NewCDPNPTimer(10.1, 426893, nil, nil, nil, 3)
 local timerEntropyShieldCD					= mod:NewCDNPTimer(25.2, 450628, nil, nil, nil, 5)--Single cast instance, poor sample
-local timerChargedBombardmentCD				= mod:NewCDNPTimer(17.6, 427323, nil, nil, nil, 3)
+local timerChargedBombardmentCD				= mod:NewCDPNPTimer(17.6, 427323, nil, nil, nil, 3)
 local timerLocalizedStormCD					= mod:NewCDNPTimer(25.9, 427404, nil, nil, nil, 2)
 local timerThunderstrikeCD					= mod:NewCDNPTimer(15.1, 430013, nil, nil, nil, 3)
-local timerEnergizedBarrageCD				= mod:NewCDNPTimer(20, 427616, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+local timerEnergizedBarrageCD				= mod:NewCDPNPTimer(20, 427616, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerEnrageRookCD						= mod:NewCDNPTimer(15, 427260, nil, nil, nil, 5, nil, DBM_COMMON_L.ENRAGE_ICON)--17-2 due to waiting for success
 local timerVoidShellCD						= mod:NewCDNPTimer(18.7, 430754, nil, nil, nil, 5)
 local timerSeepingCorruptionCD				= mod:NewCDNPTimer(25.2, 430179, nil, nil, nil, 3, nil, DBM_COMMON_L.CURSE_ICON)
 local timerImplosionCD						= mod:NewCDNPTimer(15.5, 423979, nil, nil, nil, 3)
-local timerArcingVoidCD						= mod:NewCDNPTimer(13.5, 430805, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
-local timerVoidVolleyCD						= mod:NewCDNPTimer(15.6, 432959, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerArcingVoidCD						= mod:NewCDPNPTimer(13.5, 430805, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerVoidVolleyCD						= mod:NewCDPNPTimer(15.6, 432959, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerAttractingShadowsCD				= mod:NewCDNPTimer(20.2, 430812, nil, nil, nil, 2)
 
 --local playerName = UnitName("player")
