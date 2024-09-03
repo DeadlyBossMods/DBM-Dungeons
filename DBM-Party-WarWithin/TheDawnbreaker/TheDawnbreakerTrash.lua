@@ -58,18 +58,18 @@ local specWarnTacticiansRageDispel			= mod:NewSpecialWarningDispel(451112, "Remo
 
 local timerAbyssalBlastCD					= mod:NewCDNPTimer(9.4, 451119, nil, "Tank|Healer", nil, 5)--9.4-23.98 (wildly varient due to lower priority over other abilities)
 local timerShadowyDecayCD					= mod:NewCDNPTimer(23.4, 451102, nil, nil, nil, 2)
-local timerDarkOrbCD						= mod:NewCDNPTimer(14.2, 450854, nil, nil, nil, 3)--14.2-36.8 (wildly varient due to lower priority over other abilities)
+local timerDarkOrbCD						= mod:NewCDPNPTimer(14.2, 450854, nil, nil, nil, 3)--14.2-36.8 (wildly varient due to lower priority over other abilities)
 local timerTerrifyingSlamCD					= mod:NewCDNPTimer(21.2, 451117, nil, nil, nil, 2)
-local timerBlackEdgeCD						= mod:NewCDNPTimer(10.3, 431494, nil, nil, nil, 3)
+local timerBlackEdgeCD						= mod:NewCDPNPTimer(10.3, 431494, nil, nil, nil, 3)
 local timerBlackHailCD						= mod:NewCDNPTimer(12.5, 432565, nil, nil, nil, 3)
 local timerUmbrelRushCD						= mod:NewCDNPTimer(9.1, 431637, nil, nil, nil, 3)
-local timerUmbrelBarrierCD					= mod:NewCDNPTimer(24.2, 432520, nil, nil, nil, 5, nil, DBM_COMMON_L.MAGIC_ICON)--Single log with single cast, not great sample
+local timerUmbrelBarrierCD					= mod:NewCDPNPTimer(24.2, 432520, nil, nil, nil, 5, nil, DBM_COMMON_L.MAGIC_ICON)--Single log with single cast, not great sample
 local timerTacticiansRageCD					= mod:NewCDNPTimer(18.2, 451112, nil, nil, nil, 5, nil, DBM_COMMON_L.MAGIC_ICON)
-local timerSilkenShellCD					= mod:NewCDNPTimer(18.4, 451097, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
-local timerTormentingRayCD					= mod:NewCDNPTimer(8, 431364, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
-local timerAbyssalHowlCD					= mod:NewCDNPTimer(25.6, 450756, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerSilkenShellCD					= mod:NewCDPNPTimer(18.4, 451097, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerTormentingRayCD					= mod:NewCDPNPTimer(8, 431364, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerAbyssalHowlCD					= mod:NewCDPNPTimer(25.6, 450756, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerTorentingEruptionCD				= mod:NewCDNPTimer(11.2, 431349, nil, nil, nil, 3)
-local timerEnsharingShadowsCD				= mod:NewCDNPTimer(18.1, 431309, nil, nil, nil, 5, nil, DBM_COMMON_L.CURSE_ICON)
+local timerEnsharingShadowsCD				= mod:NewCDPNPTimer(18.1, 431309, nil, nil, nil, 5, nil, DBM_COMMON_L.CURSE_ICON)
 local timerStygianSeedCD					= mod:NewCDNPTimer(21.8, 432448, nil, nil, nil, 3)
 local timerBurstingCacoonCD					= mod:NewCDNPTimer(15.7, 451107, nil, nil, nil, 3)
 

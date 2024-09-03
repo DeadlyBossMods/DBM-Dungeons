@@ -20,6 +20,7 @@ mod:RegisterEvents(
 
 --TODO, do more with throw chair? can you actually dodge it? is it actually threatening on higher keys?
 --TODO, see if you can target scan downward trend
+--TODO, add Blazing Blelch Frontal, Honey Volley Interrupt, Bee-Zooka Frontal
 --[[
 (ability.id = 437956 or ability.id = 434761 or ability.id = 434706 or ability.id = 437721 or ability.id = 434756 or ability.id = 434998 or ability.id = 448619 or ability.id = 441627 or ability.id = 441214) and type = "begincast"
  or ability.id = 441434 and type1 = "cast"
@@ -52,13 +53,13 @@ local timerMightyStompCD					= mod:NewCDNPTimer(22.2, 434761, nil, nil, nil, 2)
 local timerCinderbrewTossCD					= mod:NewCDNPTimer(10.6, 434706, nil, nil, nil, 3)
 local timerThrowChairCD						= mod:NewCDNPTimer(11.8, 434756, nil, nil, nil, 3)
 local timerHighSteaksCD						= mod:NewCDNPTimer(20.3, 434998, nil, nil, nil, 3)
-local timerRecklessDeliveryCD				= mod:NewCDNPTimer(16.6, 448619, nil, nil, nil, 3)
+local timerRecklessDeliveryCD				= mod:NewCDPNPTimer(16.6, 448619, nil, nil, nil, 3)
 local timerFailedBatchCD					= mod:NewCDNPTimer(22.2, 441434, nil, nil, nil, 5)--22.6-25.6
 local timerSpillDrinkCD						= mod:NewCDNPTimer(20, 441214, nil, nil, nil, 5)
 local timerBeesWaxCD						= mod:NewCDNPTimer(18, 442589, nil, nil, nil, 3)
 local timerDownwardTrendCD					= mod:NewCDNPTimer(12.7, 439467, nil, nil, nil, 3)
-local timerBoilingFlamesCD					= mod:NewCDNPTimer(20.1, 437721, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
-local timerRejuvenatingHoneyCD				= mod:NewCDNPTimer(12.7, 441627, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerBoilingFlamesCD					= mod:NewCDPNPTimer(20.1, 437721, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerRejuvenatingHoneyCD				= mod:NewCDPNPTimer(12.7, 441627, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 
 mod:AddGossipOption(true, "Buff")
 

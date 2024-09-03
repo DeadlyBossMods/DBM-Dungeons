@@ -21,7 +21,7 @@ mod:RegisterEvents(
 local warnQuenchingBlast					= mod:NewSpellAnnounce(430171, 2)
 local warnMoleFrenzy						= mod:NewCastAnnounce(425536, 3)--High Prio Interrupt
 local warnFlamingTether						= mod:NewCastAnnounce(426295, 3)--High Prio Interrupt
-local warnBlazingFlame						= mod:NewCastAnnounce(424322, 3)--High Prio Interrupt
+local warnExplosiveFlame						= mod:NewCastAnnounce(424322, 3)--High Prio Interrupt
 local warnBonk								= mod:NewCastAnnounce(426883, 4, nil, nil, "Tank|Healer")
 local warnDrainLight						= mod:NewSpellAnnounce(422541, 3, nil, nil, nil, nil, nil, 3)
 local warnOHHeadlock						= mod:NewTargetNoFilterAnnounce(426619, 4)
@@ -35,19 +35,19 @@ local specWarnOHHeadlock					= mod:NewSpecialWarningYou(426619, nil, nil, nil, 1
 --local specWarnStormshield					= mod:NewSpecialWarningDispel(386223, "MagicDispeller", nil, nil, 1, 2)
 local specWarnMoleFrenzy					= mod:NewSpecialWarningInterrupt(425536, "HasInterrupt", nil, nil, 1, 2)--High Prio Interrupt
 local specWarnFlamingTether					= mod:NewSpecialWarningInterrupt(426295, "HasInterrupt", nil, nil, 1, 2)--High Prio Interrupt
-local specWarnBlazingFlame					= mod:NewSpecialWarningInterrupt(424322, "HasInterrupt", nil, nil, 1, 2)--High Prio Interrupt
+local specWarnExplosiveFlame				= mod:NewSpecialWarningInterrupt(424322, "HasInterrupt", nil, nil, 1, 2)--High Prio Interrupt
 
 local timerWildWallopCD						= mod:NewCDNPTimer(11.5, 423501, nil, nil, nil, 3)--Poor Sample
 --local timerQuenchingBlastCD				= mod:NewCDNPTimer(20.1, 430171, nil, nil, nil, 2)
 --local timerSurgingWaxCD					= mod:NewCDNPTimer(20.1, 440652, nil, nil, nil, 3)
---local timerMoleFrenzyCD					= mod:NewCDNPTimer(19.1, 425536, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+--local timerMoleFrenzyCD					= mod:NewCDPNPTimer(19.1, 425536, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 --local timerBonkCD							= mod:NewCDNPTimer(20.1, 426883, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
-local timerCeaselessFlameCD					= mod:NewCDNPTimer(33.3, 426261, nil, nil, nil, 3)--Poor Sample
---local timerFlamingTetherCD				= mod:NewCDNPTimer(20.1, 426295, nil, nil, nil, 4, nil, DBM_CORE_L.INTERRUPT_ICON)
+local timerCeaselessFlameCD					= mod:NewCDPNPTimer(33.3, 426261, nil, nil, nil, 3)--Poor Sample
+--local timerFlamingTetherCD				= mod:NewCDPNPTimer(20.1, 426295, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerOHHeadlockCD						= mod:NewCDNPTimer(32.4, 426619, nil, nil, nil, 3)
---local timerDrainLightCD					= mod:NewCDNPTimer(20.1, 422541, nil, nil, nil, 3)
-local timerShadowSmashCD					= mod:NewCDNPTimer(12, 422414, nil, nil, nil, 3)
-local timerBlazingFlameCD					= mod:NewCDNPTimer(20.4, 424322, nil, nil, nil, 4, nil, DBM_CORE_L.INTERRUPT_ICON)
+--local timerDrainLightCD					= mod:NewCDPNPTimer(20.1, 422541, nil, nil, nil, 3)
+local timerShadowSmashCD					= mod:NewCDPNPTimer(12, 422414, nil, nil, nil, 3)
+local timerExplosiveFlameCD					= mod:NewCDPNPTimer(20.4, 424322, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 
 --local playerName = UnitName("player")
 
@@ -89,10 +89,10 @@ function mod:SPELL_CAST_START(args)
 		end
 	elseif spellId == 424322 then
 		if self.Options.SpecWarn424322interrupt and self:CheckInterruptFilter(args.sourceGUID, false, true) then
-			specWarnBlazingFlame:Show(args.sourceName)
-			specWarnBlazingFlame:Play("kickcast")
+			specWarnExplosiveFlame:Show(args.sourceName)
+			specWarnExplosiveFlame:Play("kickcast")
 		elseif self:AntiSpam(3, 7) then
-			warnBlazingFlame:Show()
+			warnExplosiveFlame:Show()
 		end
 	elseif spellId == 430171 then
 		if self:AntiSpam(3, 4) then
@@ -151,7 +151,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 	elseif spellId == 422414 then
 		timerShadowSmashCD:Start(12, args.sourceGUID)
 	elseif spellId == 424322 then
-		timerBlazingFlameCD:Start(20.4, args.sourceGUID)
+		timerExplosiveFlameCD:Start(20.4, args.sourceGUID)
 	end
 end
 
@@ -161,7 +161,7 @@ function mod:SPELL_INTERRUPT(args)
 	if spellId == 426295 then
 --		timerFlamingTetherCD:Start(20.1, args.destGUID)
 	elseif spellId == 424322 then
-		timerBlazingFlameCD:Start(20.4, args.destGUID)
+		timerExplosiveFlameCD:Start(20.4, args.destGUID)
 	end
 end
 
@@ -195,6 +195,6 @@ function mod:UNIT_DIED(args)
 	elseif cid == 208456 then--Shuffling Horror
 		timerShadowSmashCD:Stop(args.destGUID)
 	elseif cid == 211228 or cid == 220815 or cid == 223770 or cid == 223772 or cid == 223773 or cid == 223774 or cid == 223775 or cid == 223776 or cid == 223777 then--Blazing Fiend
-		timerBlazingFlameCD:Stop(args.destGUID)
+		timerExplosiveFlameCD:Stop(args.destGUID)
 	end
 end
