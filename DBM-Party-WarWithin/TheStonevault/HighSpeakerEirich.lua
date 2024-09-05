@@ -28,9 +28,9 @@ mod:RegisterEventsInCombat(
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
  or (source.type = "NPC" and source.firstSeen = timestamp) or (target.type = "NPC" and target.firstSeen = timestamp)
 --]]
-local warnVoidCorruption					= mod:NewFadesAnnounce(427329, 1)
+local warnVoidCorruption					= mod:NewFadesAnnounce(427329, 1, nil, nil, nil, nil, nil, 2)
 
-local specWarnVoidCorruption				= mod:NewSpecialWarningMoveTo(427329, nil, nil, nil, 1, 15)
+local specWarnVoidCorruption				= mod:NewSpecialWarning("specWarnVoidCorruption", nil, nil, nil, 1, 15, nil, nil, 427329)
 local specWarnEntropicReckoning				= mod:NewSpecialWarningMoveAwayCount(427852, nil, nil, nil, 1, 15)
 local specWarnUnbridledVoid					= mod:NewSpecialWarningDodgeCount(427869, nil, nil, nil, 1, 15)
 --local yellSomeAbility						= mod:NewYell(372107)
@@ -43,7 +43,6 @@ local timerUnbfridledVoidCD					= mod:NewCDCountTimer(20.2, 427869, nil, nil, ni
 mod.vb.corruptionCount = 0
 mod.vb.reckoningCount = 0
 mod.vb.unbridledCount = 0
-local voidName = DBM:GetSpellName(427315)
 
 --Unbridled Void does 4.8 lockout
 --Void Corruption does 2.4 lockout
@@ -122,8 +121,8 @@ function mod:SPELL_AURA_APPLIED(args)
 	local spellId = args.spellId
 	if spellId == 427329 then
 		if args:IsPlayer() then
-			specWarnVoidCorruption:Show(voidName)
-			specWarnVoidCorruption:Play("movetopool")--Maybe change sound later, depends on if void looks like a "pool"
+			specWarnVoidCorruption:Show()
+			specWarnVoidCorruption:Play("riftdispel")
 		end
 	end
 end
@@ -133,6 +132,7 @@ function mod:SPELL_AURA_REMOVED(args)
 	local spellId = args.spellId
 	if spellId == 427329 and args:IsPlayer() then
 		warnVoidCorruption:Show()
+		warnVoidCorruption:Play("safenow")
 	end
 end
 

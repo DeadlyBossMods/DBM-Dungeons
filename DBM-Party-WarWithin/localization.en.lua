@@ -103,7 +103,15 @@ L:SetGeneralLocalization({
 -----------------------------
 --  High Speaker Eirich  --
 -----------------------------
---L = DBM:GetModLocalization(2582)
+L = DBM:GetModLocalization(2582)
+
+L:SetWarningLocalization({
+	specWarnVoidCorruption	= "Void Corruption - Move NEAR (not into) Rift"
+})
+
+L:SetOptionLocalization({
+	specWarnVoidCorruption	= DBM_CORE_L.AUTO_SPEC_WARN_OPTIONS.moveto:format(427329)
+})
 
 ---------
 --Trash--
