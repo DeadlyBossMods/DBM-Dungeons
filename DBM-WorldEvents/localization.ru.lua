@@ -314,6 +314,21 @@ L:SetGeneralLocalization{
 	name = "Предвестник Рока (событие)"
 }
 
+
+-- Archavon (???)
+L = DBM:GetModLocalization("ArchavonEvent")
+
+L:SetGeneralLocalization{
+	name = "Аркавон (событие)"
+}
+
+-- Sha of Anger (???)
+L = DBM:GetModLocalization("ShaofAngerEvent")
+
+L:SetGeneralLocalization{
+	name = "Ша Злости (событие)"
+}
+
 --------------------------
 --  Blastenheimer 5000  --
 --------------------------
