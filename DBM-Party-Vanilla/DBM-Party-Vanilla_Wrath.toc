@@ -104,14 +104,14 @@ Classic\UpperBlackrockSpire\TheBeast.lua
 Classic\UpperBlackrockSpire\LordValthalak.lua
 Classic\UpperBlackrockSpire\GeneralDrakkisath.lua
 
-Classic\Deadmines\RhahkZor.lua
-Classic\Deadmines\MinerJohnson.lua
-Classic\Deadmines\SneedsShredder.lua
-Classic\Deadmines\Gilnid.lua
-Classic\Deadmines\MrSmite.lua
-Classic\Deadmines\CaptainGreenskin.lua
-Classic\Deadmines\EdwinVanCleef.lua
-Classic\Deadmines\Cookie.lua
+Shared\Deadmines\RhahkZor.lua
+Shared\Deadmines\MinerJohnson.lua
+Shared\Deadmines\SneedsShredder.lua
+Shared\Deadmines\Gilnid.lua
+Shared\Deadmines\MrSmite.lua
+Shared\Deadmines\CaptainGreenskin.lua
+Shared\Deadmines\EdwinVanCleef.lua
+Shared\Deadmines\Cookie.lua
 
 Shared\DireMaul\ZevrimThornhoof.lua
 Shared\DireMaul\Hydrospawn.lua

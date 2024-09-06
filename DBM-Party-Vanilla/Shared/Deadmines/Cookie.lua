@@ -1,9 +1,16 @@
-local mod	= DBM:NewMod("Cookie", "DBM-Party-Vanilla", 5)
+local mod	= DBM:NewMod("Cookie", "DBM-Party-Vanilla", DBM:IsRetail() and 18 or 5)
 local L		= mod:GetLocalizedStrings()
+
+if mod:IsRetail() then
+	mod.statTypes = "timewalker"
+else
+	mod.statTypes = "normal"
+end
 
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(645)
---mod:SetEncounterID(1144)
+mod:SetEncounterID(2986)--Retail Encounter ID
+mod:RequiresTimeWalking()
 
 mod:RegisterCombat("combat")
 

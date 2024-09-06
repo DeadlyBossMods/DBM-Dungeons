@@ -1,9 +1,15 @@
-local mod	= DBM:NewMod("MrSmite", "DBM-Party-Vanilla", 5)
+local mod	= DBM:NewMod("MrSmite", "DBM-Party-Vanilla", DBM:IsRetail() and 18 or 5)
 local L		= mod:GetLocalizedStrings()
+
+if mod:IsRetail() then
+	mod.statTypes = "timewalker"
+else
+	mod.statTypes = "normal"
+end
 
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(646)
---mod:SetEncounterID(1144)
+mod:SetEncounterID(2970)--Retail Encounter ID
 
 mod:RegisterCombat("combat")
 
