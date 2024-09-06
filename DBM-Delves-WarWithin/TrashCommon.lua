@@ -164,7 +164,7 @@ function mod:SPELL_CAST_START(args)
 			specWarnFungalBreath:Show()
 			specWarnFungalBreath:Play("shockwave")
 		end
-	elseif args.spellId == 424704 then
+	elseif args.spellId == 424704 and self:IsValidWarning(args.sourceGUID) then
 		if self:AntiSpam(3, 2) then
 			specWarnViciousStabs:Show()
 			specWarnViciousStabs:Play("shockwave")
@@ -173,7 +173,7 @@ function mod:SPELL_CAST_START(args)
 		if self:AntiSpam(3, 6) then
 			warnBloatedEruption:Show()
 		end
-	elseif args.spellId == 414944 then
+	elseif args.spellId == 414944 and self:IsValidWarning(args.sourceGUID) then
 		if self:AntiSpam(3, 5) then
 			warnBattleRoar:Show()
 		end
