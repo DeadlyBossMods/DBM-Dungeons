@@ -15,7 +15,7 @@ local warnGrowingAnger			= mod:NewTargetNoFilterAnnounce(456112, 4)--Mind contro
 local warnAggressiveBehavior	= mod:NewTargetAnnounce(456291, 4)--Actual mind control targets
 local warnUnleashedWrath		= mod:NewSpellAnnounce(456281, 3)
 
-local specWarnGrowingAnger		= mod:NewSpecialWarningYou(119622, nil, nil, nil, 1, 2)
+local specWarnGrowingAnger		= mod:NewSpecialWarningYou(456112, nil, nil, nil, 1, 2)
 --local specWarnGTFO			= mod:NewSpecialWarningGTFO(119610, nil, nil, nil, 1, 8)
 
 local timerGrowingAngerCD		= mod:NewAITimer(32, 456112, nil, nil, nil, 3)
