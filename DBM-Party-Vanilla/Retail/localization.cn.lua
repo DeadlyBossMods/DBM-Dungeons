@@ -1413,3 +1413,70 @@ L = DBM:GetModLocalization("GeneralDrakkisath")
 L:SetGeneralLocalization{
 	name 		= "达基萨斯将军"
 }
+
+-------------------------
+--  Deadmines (3L/5C)  --
+-----------------------------
+--  Rhahk'Zor  --
+-----------------------------
+L = DBM:GetModLocalization("RhahkZor")
+
+L:SetGeneralLocalization{
+	name 		= "拉克佐"
+}
+-----------------------------
+--  Miner Johnson  --
+-----------------------------
+L = DBM:GetModLocalization("MinerJohnson")
+
+L:SetGeneralLocalization{
+	name 		= "矿工约翰森"
+}
+-----------------------------
+--  Sneed's Shredder  --
+-----------------------------
+L = DBM:GetModLocalization("SneedsShredder")
+
+L:SetGeneralLocalization{
+	name 		= "斯尼德的伐木机"
+}
+-----------------------------
+--  Gilnid  --
+-----------------------------
+L = DBM:GetModLocalization("Gilnid")
+
+L:SetGeneralLocalization{
+	name 		= "基尔尼格"
+}
+-----------------------------
+--  Mr. Smite  --
+-----------------------------
+L = DBM:GetModLocalization("MrSmite")
+
+L:SetGeneralLocalization{
+	name 		= "重拳先生"
+}
+-----------------------------
+--  Captain Greenskin  --
+-----------------------------
+L = DBM:GetModLocalization("CaptainGreenskin")
+
+L:SetGeneralLocalization{
+	name 		= "绿皮队长"
+}
+-----------------------------
+--  Edwin Van Cleef  --
+-----------------------------
+L = DBM:GetModLocalization("EdwinVanCleef")
+
+L:SetGeneralLocalization{
+	name 		= "艾德温·范克里夫"
+}
+-----------------------------
+--  Cookie  --
+-----------------------------
+L = DBM:GetModLocalization("Cookie")
+
+L:SetGeneralLocalization{
+	name 		= "曲奇"
+}

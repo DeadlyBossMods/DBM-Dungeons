@@ -311,6 +311,20 @@ L:SetGeneralLocalization{
 	name = "Doomwalker (Event)"
 }
 
+-- Archavon (???)
+L = DBM:GetModLocalization("ArchavonEvent")
+
+L:SetGeneralLocalization{
+	name = "Archavon (Event)"
+}
+
+-- Sha of Anger (???)
+L = DBM:GetModLocalization("ShaofAngerEvent")
+
+L:SetGeneralLocalization{
+	name = "Sha of Anger (Event)"
+}
+
 --------------------------
 --  Blastenheimer 5000  --
 --------------------------

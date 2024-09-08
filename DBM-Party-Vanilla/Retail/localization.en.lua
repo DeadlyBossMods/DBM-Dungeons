@@ -1332,3 +1332,70 @@ L = DBM:GetModLocalization("GeneralDrakkisath")
 L:SetGeneralLocalization{
 	name 		= "General Drakkisath"
 }
+
+-------------------------
+--  Deadmines (3L/5C)  --
+-----------------------------
+--  Rhahk'Zor  --
+-----------------------------
+L = DBM:GetModLocalization("RhahkZor")
+
+L:SetGeneralLocalization{
+	name 		= "Rhahk'Zor"
+}
+-----------------------------
+--  Miner Johnson  --
+-----------------------------
+L = DBM:GetModLocalization("MinerJohnson")
+
+L:SetGeneralLocalization{
+	name 		= "Miner Johnson"
+}
+-----------------------------
+--  Sneed's Shredder  --
+-----------------------------
+L = DBM:GetModLocalization("SneedsShredder")
+
+L:SetGeneralLocalization{
+	name 		= "Sneed's Shredder"
+}
+-----------------------------
+--  Gilnid  --
+-----------------------------
+L = DBM:GetModLocalization("Gilnid")
+
+L:SetGeneralLocalization{
+	name 		= "Gilnid"
+}
+-----------------------------
+--  Mr. Smite  --
+-----------------------------
+L = DBM:GetModLocalization("MrSmite")
+
+L:SetGeneralLocalization{
+	name 		= "Mr. Smite"
+}
+-----------------------------
+--  Captain Greenskin  --
+-----------------------------
+L = DBM:GetModLocalization("CaptainGreenskin")
+
+L:SetGeneralLocalization{
+	name 		= "Captain Greenskin"
+}
+-----------------------------
+--  Edwin Van Cleef  --
+-----------------------------
+L = DBM:GetModLocalization("EdwinVanCleef")
+
+L:SetGeneralLocalization{
+	name 		= "Edwin Van Cleef"
+}
+-----------------------------
+--  Cookie  --
+-----------------------------
+L = DBM:GetModLocalization("Cookie")
+
+L:SetGeneralLocalization{
+	name 		= "Cookie"
+}
