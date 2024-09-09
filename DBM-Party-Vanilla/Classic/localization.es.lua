@@ -326,7 +326,6 @@ L = DBM:GetModLocalization("TheBeast")
 L:SetGeneralLocalization{
 	name 		= "La Bestia"
 }
-
 ----------------------
 --  Lord Valthalak  --
 ----------------------
