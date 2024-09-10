@@ -104,7 +104,11 @@ L:SetGeneralLocalization({
 -----------------------------
 --  High Speaker Eirich  --
 -----------------------------
---L = DBM:GetModLocalization(2582)
+L = DBM:GetModLocalization(2582)
+
+L:SetWarningLocalization({
+	specWarnVoidCorruption	= "공허의 타락 - 근처 균열로 이동 (닿으면 안됨)"
+})
 
 ---------
 --Trash--

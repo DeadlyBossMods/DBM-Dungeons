@@ -309,6 +309,20 @@ L:SetGeneralLocalization{
 	name = "파멸의 절단기 (이벤트)"
 }
 
+-- Archavon (???)
+L = DBM:GetModLocalization("ArchavonEvent")
+
+L:SetGeneralLocalization{
+	name = "아카본 (이벤트)"
+}
+
+-- Sha of Anger (???)
+L = DBM:GetModLocalization("ShaofAngerEvent")
+
+L:SetGeneralLocalization{
+	name = "분노의 샤 (이벤트)"
+}
+
 --------------------------
 --  Blastenheimer 5000  --
 --------------------------
