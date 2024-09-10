@@ -8,7 +8,8 @@ mod:SetRevision("@file-date-integer@")
 mod:RegisterCombat("scenario", 2710)
 
 mod:RegisterEventsInCombat(
-	"SPELL_CAST_START 463052 463081 462892 462802 462936 462983 462856",
+	"SPELL_CAST_START 463052 463081 462892 462802 462936 462856",
+	"SPELL_CAST_SUCCESS 462983",
 	"SPELL_AURA_APPLIED 462983",
 	"UNIT_DIED",
 	"UPDATE_UI_WIDGET",
@@ -29,8 +30,7 @@ local specWarnVolatileMagma			= mod:NewSpecialWarningMove(462983, nil, nil, nil,
 local timerAdds						= mod:NewAddsTimer(10, 433320)--Initial wave only
 local timerBellowingSlamCD			= mod:NewCDNPTimer(20.6, 463052, nil, nil, nil, 3)
 local timerMaintenanceCD			= mod:NewCDNPTimer(19.3, 462936, nil, nil, nil, 5)
-local timerVolatileMagmaCD			= mod:NewCDNPTimer(19.3, 462983, nil, nil, nil, 3)
-local timerNullBarrierCD			= mod:NewCDNPTimer(21.4, 462856, nil, nil, nil, 3)
+local timerVolatileMagmaCD			= mod:NewCDNPTimer(17.3, 462983, nil, nil, nil, 3)
 
 function mod:SPELL_CAST_START(args)
 	if args.spellId == 463052 then
@@ -46,10 +46,12 @@ function mod:SPELL_CAST_START(args)
 		warnPurifyingFlames:Show()
 	elseif args.spellId == 462936 then
 		timerMaintenanceCD:Start(nil, args.sourceGUID)
-	elseif args.spellId == 462983 then
+	end
+end
+
+function mod:SPELL_CAST_SUCCESS(args)
+	if args.spellId == 462983 then
 		timerVolatileMagmaCD:Start(nil, args.sourceGUID)
-	elseif args.spellId == 462856 then
-		timerNullBarrierCD:Start(nil, args.sourceGUID)
 	end
 end
 
@@ -69,8 +71,6 @@ function mod:UNIT_DIED(args)
 		timerMaintenanceCD:Stop(args.destGUID)
 	elseif cid == 229778 then
 		timerVolatileMagmaCD:Stop(args.destGUID)
-	elseif cid == 229729 then
-		timerNullBarrierCD:Stop(args.destGUID)
 	end
 end
 

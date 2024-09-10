@@ -24,6 +24,7 @@ mod:RegisterEventsInCombat(
 --TODO, this boss needs fixing on normal/heroic since that stuff is hard to pull up on WCL
 --[[
 (ability.id = 441289 or ability.id = 438658 or ability.id = 447146 or ability.id = 461880 or ability.id = 461842) and type = "begincast"
+ or ability.id = 441395 and type = "cast"
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
 --]]
 local warnDarkPulsePreCast					= mod:NewCastAnnounce(441395, 3)
@@ -40,7 +41,7 @@ local specWarnDarkPulse						= mod:NewSpecialWarningCount(441395, nil, nil, nil,
 local timerOozingSmashCD					= mod:NewCDCountTimer(76.6, 461842, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)--77.3-77.9
 local timerViscousDarknessCD				= mod:NewCDCountTimer(21.8, 441216, nil, nil, nil, 5)--21.8-22.3
 local timerBloodSurgeCD						= mod:NewCDCountTimer(76.6, 445435, nil, nil, nil, 3)--76.6-77.9
-local timerDarkPulseCD						= mod:NewCDCountTimer(76.6, 445435, nil, nil, nil, 2, nil, DBM_COMMON_L.HEALER_ICON)--~1-2 variation due to blizzards still bad energy code
+local timerDarkPulseCD						= mod:NewCDCountTimer(76.6, 441395, nil, nil, nil, 2, nil, DBM_COMMON_L.HEALER_ICON)--~1-2 variation due to blizzards still bad energy code
 
 mod.vb.viscousCount = 0
 mod.vb.oozingCount = 0
@@ -52,10 +53,17 @@ function mod:OnCombatStart(delay)
 	self.vb.oozingCount = 0
 	self.vb.surgeCount = 0
 	self.vb.pulseCount = 0
-	timerOozingSmashCD:Start(3-delay, 1)--3-3.7
-	timerViscousDarknessCD:Start(10.6-delay, 1)
-	timerBloodSurgeCD:Start(47.0-delay, 1)
-	timerDarkPulseCD:Start(71.6-delay, 1)--til success not cast start, aoe damage doesn't come til the channel begins
+	if self:IsMythic() then
+		timerOozingSmashCD:Start(3-delay, 1)--3-3.7 31.6
+		timerViscousDarknessCD:Start(10.6-delay, 1)
+		timerBloodSurgeCD:Start(47-delay, 1)
+		timerDarkPulseCD:Start(71.6-delay, 1)--til success not cast start, aoe damage doesn't come til the channel begins
+	else
+		timerViscousDarknessCD:Start(8.5-delay, 1)
+		timerBloodSurgeCD:Start(20.7-delay, 1)
+		timerOozingSmashCD:Start(31.6-delay, 1)
+		timerDarkPulseCD:Start(71.6-delay, 1)--UNKNOWN timer for follower, died too fast
+	end
 end
 
 function mod:SPELL_CAST_START(args)
