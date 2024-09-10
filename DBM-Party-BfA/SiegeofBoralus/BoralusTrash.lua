@@ -63,6 +63,7 @@ local specWarnFear					= mod:NewSpecialWarningSpell(257169, nil, nil, nil, 2, 2)
 local timerSlobberknockerCD			= mod:NewCDPNPTimer(18.8, 256627, nil, nil, nil, 5)--18.8-20
 local timerBurningTarCD				= mod:NewCDNPTimer(22.6, 256640, nil, nil, nil, 3)
 local timerSavageTempestCD			= mod:NewCDNPTimer(19.1, 257170, nil, nil, nil, 3)
+local timerSavageTempest			= mod:NewCastNPTimer(3, 257170, nil, nil, nil, 5)
 local timerSingSteelCD				= mod:NewCDNPTimer(17, 256709, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerHeavySlashCD				= mod:NewCDPNPTimer(20.6, 257288, nil, nil, nil, 5)
 local timerSightedArtCD				= mod:NewCDNPTimer(12.1, 272421, nil, nil, nil, 3)
@@ -72,6 +73,7 @@ local timerBolsteringShoutCD		= mod:NewCDPNPTimer(18.1, 275826, nil, nil, nil, 4
 local timerStingingVenomCoatingCD	= mod:NewCDNPTimer(16.9, 275835, nil, nil, nil, 5)--Lasts 10 seconds, recast time is 17 so has a high uptime
 local timerFerocityCD				= mod:NewCDNPTimer(38.9, 272888, nil, nil, nil, 5)--Small sample, but it seems like a very long cooldown
 local timerBananaRampageCD			= mod:NewCDNPTimer(16.9, 272546, nil, nil, nil, 3)
+local timerBananaRampage			= mod:NewCastNPTimer(1.5, 272546, nil, false, nil, 5)
 local timerStinkyVomitCD			= mod:NewCDPNPTimer(16.1, 454440, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--16.1-19.4
 local timerCrushingSlamCD			= mod:NewCDNPTimer(20.6, 272711, nil, nil, nil, 3)
 local timerTerrifyingRoarCD			= mod:NewCDNPTimer(31.6, 257169, nil, nil, nil, 2)
@@ -98,11 +100,17 @@ function mod:SPELL_CAST_START(args)
 	elseif spellId == 256709 and self:AntiSpam(3, 2) then
 		specWarnSingingSteel:Show()
 		specWarnSingingSteel:Play("shockwave")
-	elseif spellId == 257170 and self:AntiSpam(4, 1) then
-		specWarnSavageTempest:Show()
-		specWarnSavageTempest:Play("whirlwind")
-	elseif spellId == 272546 and self:AntiSpam(4, 6) then
-		warnBananaRampage:Show()
+	elseif spellId == 257170 then
+		timerSavageTempest:Start(nil, args.sourceGUID)
+		if self:AntiSpam(4, 1) then
+			specWarnSavageTempest:Show()
+			specWarnSavageTempest:Play("whirlwind")
+		end
+	elseif spellId == 272546 then
+		timerBananaRampage:Start(nil, args.sourceGUID)
+		if self:AntiSpam(4, 6) then
+			warnBananaRampage:Show()
+		end
 	elseif spellId == 257169 and self:AntiSpam(4, 5) then
 		specWarnFear:Show()
 		specWarnFear:Play("fearsoon")
@@ -240,6 +248,7 @@ function mod:UNIT_DIED(args)
 		timerBurningTarCD:Stop(args.destGUID)
 	elseif cid == 129369 then--Irontide Raider
 		timerSavageTempestCD:Stop(args.destGUID)
+		timerSavageTempest:Stop(args.destGUID)
 	elseif cid == 129371 then--Riptide Shredder
 		timerSingSteelCD:Stop(args.destGUID)
 	elseif cid == 129879 then--Irontide Cleaver (Trash version)
@@ -255,6 +264,7 @@ function mod:UNIT_DIED(args)
 		timerFerocityCD:Stop(args.destGUID)
 	elseif cid == 129366 then--Bilge Rat Buccaneer
 		timerBananaRampageCD:Stop(args.destGUID)
+		timerBananaRampage:Stop(args.destGUID)
 	elseif cid == 135241 then--Bilge Rat Pillager
 		timerStinkyVomitCD:Stop(args.destGUID)
 	elseif cid == 135245 then--Billage Rat Demolisher

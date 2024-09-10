@@ -60,20 +60,22 @@ local specWarnBattleCry						= mod:NewSpecialWarningInterrupt(448399, "HasInterr
 local specWarnHolyLight						= mod:NewSpecialWarningInterrupt(459421, "HasInterrupt", nil, nil, 1, 2)
 local specWarnArmoredShell					= mod:NewSpecialWarningInterrupt(448179, "HasInterrupt", nil, nil, 1, 2)
 
-local timerFearfulShriekCD					= mod:NewCDNPTimer(13.4, 433410, nil, nil, nil, 3)
+local timerFearfulShriekCD					= mod:NewCDPNPTimer(13.4, 433410, nil, nil, nil, 3)
 local timerShadowsofStrifeCD				= mod:NewCDNPTimer(15.6, 449318, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerRotWaveVolleyCD					= mod:NewCDNPTimer(15.2, 425040, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--15.2-17
 local timerWebbedAegisCD					= mod:NewCDNPTimer(15.8, 450546, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--14.6 BUT enemies can skip casts sometimes and make it 29.1
 local timerLavablastCD					    = mod:NewCDNPTimer(15.8, 445781, nil, nil, nil, 3)
-local timerBlazingWickCD					= mod:NewCDNPTimer(14.6, 449071, nil, nil, nil, 3)
-local timerBattleRoarCD						= mod:NewCDNPTimer(15.4, 414944, nil, nil, nil, 5, nil, DBM_COMMON_L.MAGIC_ICON)
+local timerLavablast						= mod:NewCastNPTimer(3, 445781, DBM_COMMON_L.FRONTAL, nil, nil, 5)
+local timerBlazingWickCD					= mod:NewCDPNPTimer(14.6, 449071, nil, nil, nil, 3)
+local timerBlazingWick						= mod:NewCastNPTimer(2.25, 449071, DBM_COMMON_L.FRONTAL, nil, nil, 5)
+local timerBattleRoarCD						= mod:NewCDPNPTimer(15.4, 414944, nil, nil, nil, 5, nil, DBM_COMMON_L.MAGIC_ICON)
 local timerDebilitatingVenomCD				= mod:NewCDNPTimer(13.4, 424614, nil, nil, nil, 5, nil, DBM_COMMON_L.POISON_ICON)
 local timerBladeRushCD						= mod:NewCDNPTimer(15.4, 418791, nil, nil, nil, 3)
 local timerVineSpearCD						= mod:NewCDNPTimer(14.9, 424891, nil, nil, nil, 3)
 local timerRelocateCD						= mod:NewCDNPTimer(70, 427812, nil, nil, nil, 3)
 local timerSkitterChargeCD					= mod:NewCDNPTimer(12.2, 450197, nil, nil, nil, 3)
 local timerFungalBreathCD					= mod:NewCDNPTimer(15.4, 415253, nil, nil, nil, 3)
-local timerCastigateCD						= mod:NewCDNPTimer(17.8, 418297, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerCastigateCD						= mod:NewCDPNPTimer(17.8, 418297, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerBattleCryCD						= mod:NewCDNPTimer(30.3, 448399, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerWicklighterVolleyCD				= mod:NewCDNPTimer(20.8, 445191, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--Needs more Data
 local timerSpearFishCD						= mod:NewCDNPTimer(12.1, 430036, nil, nil, nil, 3)
@@ -81,7 +83,8 @@ local timerViciousStabsCD					= mod:NewCDNPTimer(20.6, 424704, nil, nil, nil, 3)
 local timerThrowDynoCD						= mod:NewCDNPTimer(7.2, 448600, nil, nil, nil, 3)
 local timerSerratedCleaveCD					= mod:NewCDNPTimer(32.7, 445492, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)--Not technically tanks only, just whoever has aggro in it
 local timerSkullCrackerCD					= mod:NewCDNPTimer(15.8, 462686, nil, nil, nil, 3)
-local timerHolyLightCD						= mod:NewCDNPTimer(17, 459421, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--17-18.2
+local timerHolyLightCD						= mod:NewCDPNPTimer(17, 459421, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--17-18.2
+local timerJaggedBarbs						= mod:NewCastNPTimer(3, 450714, DBM_COMMON_L.FRONTAL, nil, nil, 3)
 
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc, 7 off interrupt
 
@@ -149,11 +152,13 @@ function mod:SPELL_CAST_START(args)
 			specWarnFearfulShriek:Play("watchstep")
 		end
 	elseif args.spellId == 450714 then
+		timerJaggedBarbs:Start(nil, args.sourceGUID)
 		if self:AntiSpam(3, 2) then
 			specWarnJaggedBarbs:Show()
 			specWarnJaggedBarbs:Play("shockwave")
 		end
 	elseif args.spellId == 445781 then
+		timerLavablast:Start(nil, args.sourceGUID)
         timerLavablastCD:Start(nil, args.sourceGUID)
 		if self:AntiSpam(3, 2) then
 			specWarnLavablast:Show()
@@ -230,6 +235,7 @@ function mod:SPELL_CAST_START(args)
 			warnThrowDyno:Show()
 		end
 	elseif args.spellId == 449071 then
+		timerBlazingWick:Start(nil, args.sourceGUID)
 		if self:AntiSpam(3, 2) then
 			specWarnBlazingWick:Show()
 			specWarnBlazingWick:Play("shockwave")
@@ -398,10 +404,12 @@ function mod:UNIT_DIED(args)
 		timerShadowsofStrifeCD:Stop(args.destGUID)
     elseif cid == 223541 then--Stolen Loader
         timerLavablastCD:Stop(args.destGUID)
+		timerLavablast:Stop(args.destGUID)
 	elseif cid == 207460 then--Fungarian Flinger
 		timerRotWaveVolleyCD:Stop(args.destGUID)
 	elseif cid == 204127 then--Kobold Taskfinder
 		timerBlazingWickCD:Stop(args.destGUID)
+		timerBlazingWick:Stop(args.destGUID)
 	elseif cid == 207454 then--Fungal Gutter
 		timerBattleRoarCD:Stop(args.destGUID)
 		timerViciousStabsCD:Stop(args.destGUID)
@@ -431,5 +439,11 @@ function mod:UNIT_DIED(args)
 		timerSerratedCleaveCD:Stop(args.destGUID)
 	elseif cid == 216583 then--Chittering Fearmonger
 		timerFearfulShriekCD:Stop(args.destGUID)
+	elseif cid == 219035 then--Deepwalker Guardian
+		timerJaggedBarbs:Stop(args.destGUID)
+	elseif cid == 218103 then--Nerubian Lord
+		timerJaggedBarbs:Stop(args.destGUID)
+	elseif cid == 220510 then--The Puppetmaster?
+		timerJaggedBarbs:Stop(args.destGUID)
 	end
 end
