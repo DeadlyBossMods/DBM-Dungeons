@@ -95,6 +95,7 @@ local timerTenderizeCD						= mod:NewCDNPTimer(14.5, 338357, nil, nil, nil, 5)--
 local timerGutSliceCD						= mod:NewCDPNPTimer(12.5, 333477, nil, nil, nil, 3)
 local timerSpewDiseaseCD					= mod:NewCDNPTimer(10.6, 333479, nil, nil, nil, 3)
 local timerSpineCrushCD						= mod:NewCDNPTimer(14.0, 327240, nil, nil, nil, 3)
+local timerSpineCrush						= mod:NewCastNPTimer(3, 327240, nil, nil, nil, 5)
 local timerRepairFleshCD					= mod:NewCDPNPTimer(14.3, 327130, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--14-17
 
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc, 7 off interrupt
@@ -155,9 +156,12 @@ function mod:SPELL_CAST_START(args)
 			specWarnFrostBoltVolley:Show(args.sourceName)
 			specWarnFrostBoltVolley:Play("kickcast")
 		end
-	elseif spellId == 327240 and self:AntiSpam(3, 4) then
-		specWarnSpineCrush:Show()
-		specWarnSpineCrush:Play("justrun")
+	elseif spellId == 327240 then
+		timerSpineCrush:Start(nil, args.sourceGUID)
+		if self:AntiSpam(3, 4) then
+			specWarnSpineCrush:Show()
+			specWarnSpineCrush:Play("justrun")
+		end
 	elseif spellId == 333477 and self:AntiSpam(3, 2) then
 		specWarnGutSlice:Show()
 		specWarnGutSlice:Play("shockwave")
@@ -402,5 +406,6 @@ function mod:UNIT_DIED(args)
 		timerSpewDiseaseCD:Stop(args.destGUID)
 	elseif cid == 165911 then--Loyal Creation
 		timerSpineCrushCD:Stop(args.destGUID)
+		timerSpineCrush:Stop(args.destGUID)
 	end
 end

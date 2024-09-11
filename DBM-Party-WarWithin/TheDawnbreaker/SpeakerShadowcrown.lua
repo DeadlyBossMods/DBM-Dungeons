@@ -42,6 +42,7 @@ local timerObsidianBlastCD					= mod:NewCDCountTimer(17, 425264, nil, nil, nil, 
 local timerObsidianBeamCD					= mod:NewCDCountTimer(24.3, 453212, nil, nil, nil, 5)--Mythic and Higher
 local timerCollapsingDarknessCD				= mod:NewCDCountTimer(18, 445996, nil, nil, nil, 3)--Heroic and Lower
 local timerCollapsingNightCD				= mod:NewCDCountTimer(25.9, 453140, nil, nil, nil, 3)--Mythic and Higher
+local timerDarknessComes					= mod:NewCastNPTimer(10, 453859, nil, nil, nil, 2)
 local timerBurningShadowsCD					= mod:NewCDCountTimer(17, 426734, nil, nil, nil, 3)
 
 mod.vb.darknessCount = 0
@@ -233,6 +234,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		self.vb.darknessCount = self.vb.darknessCount + 1
 		specWarnDarknessComes:Show(self.vb.darknessCount)
 		specWarnDarknessComes:Play("justrun")
+		timerDarknessComes:Start(nil, args.destName)
 		--Stop Timers
 		timerObsidianBlastCD:Stop()
 		timerCollapsingDarknessCD:Stop()
@@ -253,6 +255,7 @@ end
 function mod:SPELL_AURA_REMOVED(args)
 	local spellId = args.spellId
 	if spellId == 453859 then
+		timerDarknessComes:Stop(args.destName)
 		if self.vb.darknessCount == 1 then--First one at 50%
 			self:SetStage(2)
 			--Restart timers
