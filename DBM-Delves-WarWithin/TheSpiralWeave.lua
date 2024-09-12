@@ -93,7 +93,7 @@ function mod:ENCOUNTER_START(eID)
 		timerBurrowingTremorsCD:Start(12.3)
 		timerCallDronesCD:Start(22.8)
 	elseif eID == 3006 then--The Puppetmaster
-		DBM:AddMsg("Boss alerts/timers not yet implemented for The Puppetmaster")
+		--This boss is a series of trash mobs, so the trash mod will handle it
 	end
 end
 
