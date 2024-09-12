@@ -196,7 +196,7 @@ function mod:SPELL_CAST_START(args)
 		if timer then
 			timerCollapsingNightCD:Start(timer, self.vb.collapsingCount+1)
 		else
-			timerCollapsingNightCD():Start(25.1, self.vb.collapsingCount+1)--Still start a timer with lowest known value
+			timerCollapsingNightCD:Start(25.1, self.vb.collapsingCount+1)--Still start a timer with lowest known value
 			if not warnedTimerMissing then
 				warnedTimerMissing = true
 				DBM:AddMsg("Collapsing Night timer missing for count: "..self.vb.collapsingCount+1 .. ". Please share your log on GitHub or DBM Discord", 1)
