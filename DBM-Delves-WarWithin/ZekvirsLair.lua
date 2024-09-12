@@ -22,17 +22,17 @@ local warnEnfeeblingSpittle					= mod:NewCountAnnounce(450505, 2)
 local warnHatchingEgg						= mod:NewCastAnnounce(453937, 3)
 local warnWebBlast							= mod:NewCastAnnounce(450597, 4)
 
-local specWarnAnglersWeb					= mod:NewSpecialWarningCount(450519, nil, nil, nil, 2, 12)--Change to dodge if it can be dodged
+local specWarnAnglersWeb					= mod:NewSpecialWarningDodgeCount(450519, nil, nil, nil, 2, 12)
 local specWarnCallWebTerror					= mod:NewSpecialWarningSwitchCount(450568, nil, nil, nil, 1, 2)
 local specWarnClawSmash						= mod:NewSpecialWarningDodgeCount(450451, nil, nil, nil, 2, 2)
+local specWarnEnfeeblingSpittleInterrupt	= mod:NewSpecialWarningInterruptCount(450505, false, nil, nil, 1, 2)
 local specWarnEnfeeblingSpittleDispel		= mod:NewSpecialWarningDispel(450505, "RemoveMagic", nil, nil, 1, 2)
 local specWarnHorrendousRoar				= mod:NewSpecialWarningRunCount(450492, nil, nil, nil, 4, 2)
 
---local timerShadowsofStrifeCD				= mod:NewCDNPTimer(12.4, 449318, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerAnglersWebCD						= mod:NewCDCountTimer(52.6, 450519, nil, nil, nil, 5)--Not a good sample, boss died too fast
 local timerCallWebTerrorCD					= mod:NewCDCountTimer(40, 450568, nil, nil, nil, 1)
 local timerClawSmashCD						= mod:NewCDCountTimer(19.4, 450451, nil, nil, nil, 3)--19.4-23
-local timerEnfeeblingSpittleCD				= mod:NewCDCountTimer(17, 450505, nil, nil, nil, 3, nil, DBM_COMMON_L.MAGIC_ICON)
+local timerEnfeeblingSpittleCD				= mod:NewCDCountTimer(17, 450505, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON .. DBM_COMMON_L.MAGIC_ICON)
 local timerHorrendousRoarCD					= mod:NewCDCountTimer(20.6, 450492, nil, nil, nil, 3)--20.6-25
 local timerHatchingEggCD					= mod:NewCastNPTimer(15, 453937, nil, nil, nil, 1)
 local timerWebBlastCD						= mod:NewCDNPTimer(12.1, 450597, nil, nil, nil, 2)
@@ -50,7 +50,7 @@ function mod:SPELL_CAST_START(args)
 	if args.spellId == 450519 then
 		self.vb.AnglersCount = self.vb.AnglersCount + 1
 		specWarnAnglersWeb:Show(self.vb.AnglersCount)
-		specWarnAnglersWeb:Play("pullin")
+		specWarnAnglersWeb:Play("shockwave")
 		timerAnglersWebCD:Start(nil, self.vb.AnglersCount+1)
 	elseif args.spellId == 450568 then
 		self.vb.AddCount = self.vb.AddCount + 1
@@ -64,7 +64,12 @@ function mod:SPELL_CAST_START(args)
 		timerClawSmashCD:Start(nil, self.vb.smashCount+1)
 	elseif args.spellId == 450505 then
 		self.vb.enfeeblingSpittleCount = self.vb.enfeeblingSpittleCount + 1
-		warnEnfeeblingSpittle:Show(self.vb.enfeeblingSpittleCount)
+		if self.Options.SpecWarn450505interrupt and self:CheckInterruptFilter(args.sourceGUID, nil, true) then
+			specWarnEnfeeblingSpittleInterrupt:Show(args.sourceName, self.vb.enfeeblingSpittleCount)
+			specWarnEnfeeblingSpittleInterrupt:Play("kickcast")
+		else
+			warnEnfeeblingSpittle:Show(self.vb.enfeeblingSpittleCount)
+		end
 		timerEnfeeblingSpittleCD:Start(nil, self.vb.enfeeblingSpittleCount+1)
 	elseif args.spellId == 450492 then
 		self.vb.roarCount = self.vb.roarCount + 1
