@@ -23,7 +23,8 @@ mod:RegisterEvents(
 --TODO: timer for Armored Core from WCL
 --TODO, is https://www.wowhead.com/spell=453149/gossamer-webbing worth adding, Brann seems to think so
 --TODO, Umbral Slam timer?
---TODO, maybe add https://www.wowhead.com/spell=450509/wide-swipe ?
+--TODO, detect and alert https://www.wowhead.com/npc=217208/zekvir spawning in your delve with a large warning
+--TODO, add/confirm timers for random spawn version of zekvir for nameplate timers
 local warnDebilitatingVenom					= mod:NewTargetNoFilterAnnounce(424614, 3)--Brann will dispel this if healer role
 local warnCastigate							= mod:NewTargetNoFilterAnnounce(418297, 4)
 local warnSpearFish							= mod:NewTargetNoFilterAnnounce(430036, 2)
@@ -38,6 +39,9 @@ local warnSkitterCharge						= mod:NewCastAnnounce(450197, 3, nil, nil, nil, nil
 local warnWicklighterVolley					= mod:NewCastAnnounce(445191, 3)
 local warnSkullCracker						= mod:NewCastAnnounce(462686, 3)
 local warnThrashingFrenzy					= mod:NewCastAnnounce(445774, 3)
+local warnEnfeeblingSpittle					= mod:NewCastAnnounce(450505, 2)
+local warnWideSwipe							= mod:NewCastAnnounce(450509, 3)
+local warnEnrage							= mod:NewSpellAnnounce(448161, 3)
 local warnThrowDyno							= mod:NewSpellAnnounce(448600, 3)
 
 local specWarnSpearFish						= mod:NewSpecialWarningYou(430036, nil, nil, nil, 2, 12)
@@ -53,9 +57,13 @@ local specWarnSerratedCleave				= mod:NewSpecialWarningDodge(445492, nil, nil, n
 local specWarnSpotted						= mod:NewSpecialWarningDodge(441129, nil, nil, nil, 2, 2)
 local specWarnFireCharge					= mod:NewSpecialWarningDodge(445210, nil, nil, nil, 2, 2)
 local specWarnUmbralSlam					= mod:NewSpecialWarningDodge(443292, nil, nil, nil, 2, 2)
+local specWarnAnglersWeb					= mod:NewSpecialWarningDodge(450519, nil, nil, nil, 2, 2)
+local specWarnShockwaveTremors				= mod:NewSpecialWarningDodge(448155, nil, nil, nil, 2, 2)--9.7-15.8
 local specWarnEchoofRenilash				= mod:NewSpecialWarningRun(434281, nil, nil, nil, 4, 2)
 local specWarnNecroticEnd					= mod:NewSpecialWarningRun(445252, nil, nil, nil, 4, 2)
+local specWarnHorrendousRoar				= mod:NewSpecialWarningRun(450492, nil, nil, nil, 4, 2)
 local specWarnCurseoftheDepths				= mod:NewSpecialWarningDispel(440622, "RemoveCurse", nil, nil, 1, 2)
+local specWarnEnrageDispel					= mod:NewSpecialWarningDispel(448161, "RemoveEnrage", nil, nil, 1, 2)
 local specWarnShadowsofStrife				= mod:NewSpecialWarningInterrupt(449318, "HasInterrupt", nil, nil, 1, 2)--High Prio Interrupt
 local specWarnWebbedAegis					= mod:NewSpecialWarningInterrupt(450546, "HasInterrupt", nil, nil, 1, 2)
 local specWarnRotWaveVolley					= mod:NewSpecialWarningInterrupt(425040, "HasInterrupt", nil, nil, 1, 2)
@@ -63,6 +71,7 @@ local specWarnCastigate						= mod:NewSpecialWarningInterrupt(418297, "HasInterr
 local specWarnBattleCry						= mod:NewSpecialWarningInterrupt(448399, "HasInterrupt", nil, nil, 1, 2)
 local specWarnHolyLight						= mod:NewSpecialWarningInterrupt(459421, "HasInterrupt", nil, nil, 1, 2)
 local specWarnArmoredShell					= mod:NewSpecialWarningInterrupt(448179, "HasInterrupt", nil, nil, 1, 2)
+local specWarnEnfeeblingSpittleInterrupt	= mod:NewSpecialWarningInterrupt(450505, nil, nil, nil, 1, 2)
 
 local timerFearfulShriekCD					= mod:NewCDPNPTimer(13.4, 433410, nil, nil, nil, 3)
 local timerShadowsofStrifeCD				= mod:NewCDNPTimer(15.6, 449318, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
@@ -89,6 +98,8 @@ local timerSerratedCleaveCD					= mod:NewCDNPTimer(32.7, 445492, nil, nil, nil, 
 local timerSkullCrackerCD					= mod:NewCDNPTimer(15.8, 462686, nil, nil, nil, 3)
 local timerHolyLightCD						= mod:NewCDPNPTimer(17, 459421, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--17-18.2
 local timerJaggedBarbs						= mod:NewCastNPTimer(3, 450714, DBM_COMMON_L.FRONTAL, nil, nil, 3)
+local timerEnrageCD							= mod:NewCDNPTimer(23, 448161, nil, nil, nil, 5)
+local timerArmorShellCD						= mod:NewCDNPTimer(24, 448179, nil, nil, nil, 4)
 
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc, 7 off interrupt
 
@@ -100,10 +111,10 @@ do
 		if not force and validZones[currentZone] and not eventsRegistered then
 			eventsRegistered = true
 			self:RegisterShortTermEvents(
-                "SPELL_CAST_START 449318 450546 433410 450714 445781 415253 425040 424704 424798 414944 418791 424891 450197 448399 445191 455932 445492 434281 450637 445210 448528 449071 462686 459421 448179 445774 443292",
-                "SPELL_CAST_SUCCESS 414944 424614 418791 424891 427812 450546 450197 415253 449318 445191 430036 445252 425040 424704 448399 448528 433410 445492 462686 447392 459421",
+                "SPELL_CAST_START 449318 450546 433410 450714 445781 415253 425040 424704 424798 414944 418791 424891 450197 448399 445191 455932 445492 434281 450637 445210 448528 449071 462686 459421 448179 445774 443292 450492 450519 450505 450509 448155 448161",
+                "SPELL_CAST_SUCCESS 414944 424614 418791 424891 427812 450546 450197 415253 449318 445191 430036 445252 425040 424704 448399 448528 433410 445492 462686 447392 459421 448179",
 				"SPELL_INTERRUPT",
-                "SPELL_AURA_APPLIED 424614 449071 418297 430036 440622 441129",
+                "SPELL_AURA_APPLIED 424614 449071 418297 430036 440622 441129 448161",
                 --"SPELL_AURA_REMOVED",
                 --"SPELL_PERIODIC_DAMAGE",
                 "UNIT_DIED"
@@ -267,6 +278,34 @@ function mod:SPELL_CAST_START(args)
 		if self:AntiSpam(3, 6) then
 			warnThrashingFrenzy:Show()
 		end
+	elseif args.spellId == 450492 then
+		if self:AntiSpam(3, 1) then
+			specWarnHorrendousRoar:Show()
+			specWarnHorrendousRoar:Play("fearsoon")
+		end
+	elseif args.spellId == 450519 then
+		if self:AntiSpam(3, 2) then
+			specWarnAnglersWeb:Show()
+			specWarnAnglersWeb:Play("shockwave")
+		end
+	elseif args.spellId == 450505 then
+		if self.Options.SpecWarn450505interrupt and self:CheckInterruptFilter(args.sourceGUID, nil, true) then
+			specWarnEnfeeblingSpittleInterrupt:Show(args.sourceName)
+			specWarnEnfeeblingSpittleInterrupt:Play("kickcast")
+		else
+			warnEnfeeblingSpittle:Show()
+		end
+	elseif args.spellId == 450509 then
+		if self:AntiSpam(3, 6) then
+			warnWideSwipe:Show()
+		end
+	elseif args.spellId == 448155 then
+		if self:AntiSpam(3, 2) then
+			specWarnShockwaveTremors:Show()
+			specWarnShockwaveTremors:Play("shockwave")
+		end
+	elseif args.spellId == 448161 then
+		timerEnrageCD:Start(nil, args.sourceGUID)
 	end
 end
 
@@ -323,6 +362,8 @@ function mod:SPELL_CAST_SUCCESS(args)
 		timerSkullCrackerCD:Stop(args.sourceGUID)
 	elseif args.spellId == 459421 then
 		timerHolyLightCD:Start(14.5, args.sourceGUID)--17-2.5
+	elseif args.spellId == 448179 then
+		timerArmorShellCD:Start(24, args.sourceGUID)
 	end
 end
 
@@ -353,6 +394,8 @@ function mod:SPELL_INTERRUPT(args)
 		timerFearfulShriekCD:Start(10.4, args.destGUID)--13.4 - 3
 	elseif args.extraSpellId == 459421 then
 		timerHolyLightCD:Start(14.5, args.destGUID)--17-2.5
+	elseif args.extraSpellId == 448179 then
+		timerArmorShellCD:Start(24, args.destGUID)
 	end
 end
 
@@ -386,6 +429,13 @@ function mod:SPELL_AURA_APPLIED(args)
 		specWarnSpotted:Show()
 		specWarnSpotted:Play("watchstep")
 		specWarnSpotted:ScheduleVoice(1, "keepmove")
+	elseif args.spellId == 448161 then
+		if self.Options.SpecWarn448161dispel then
+			specWarnEnrageDispel:Show(args.destName)
+			specWarnEnrageDispel:Play("enrage")
+		else
+			warnEnrage:Show()
+		end
 	end
 end
 
@@ -454,5 +504,8 @@ function mod:UNIT_DIED(args)
 		timerJaggedBarbs:Stop(args.destGUID)
 	elseif cid == 220510 then--The Puppetmaster?
 		timerJaggedBarbs:Stop(args.destGUID)
+	elseif cid == 219454 then--Crazed Abomination
+		timerEnrageCD:Stop(args.destGUID)
+		timerArmorShellCD:Stop(args.destGUID)
 	end
 end
