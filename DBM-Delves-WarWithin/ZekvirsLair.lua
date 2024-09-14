@@ -1,12 +1,17 @@
 local mod	= DBM:NewMod("z2682", "DBM-Delves-WarWithin")
 local L		= mod:GetLocalizedStrings()
 
+mod.statTypes = "normal,mythic"--Best way to really call it
+
 mod:SetRevision("@file-date-integer@")
-mod:SetHotfixNoticeRev(20240422000000)
-mod:SetMinSyncRevision(20240422000000)
+mod:SetCreatureID(225204)--Non hard one placeholder on load. Real one set in OnCombatStart
+mod:SetEncounterID(2987, 2985)
+mod:SetHotfixNoticeRev(20240914000000)
+mod:SetMinSyncRevision(20240914000000)
 mod:SetZone(2682)
 
-mod:RegisterCombat("scenario", 2682)
+--mod:RegisterCombat("scenario", 2682)
+mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 450519 450568 450451 450505 450492 450597 453937",
@@ -14,9 +19,7 @@ mod:RegisterEventsInCombat(
 	"SPELL_AURA_APPLIED 450505",
 --	"SPELL_AURA_REMOVED",
 --	"SPELL_PERIODIC_DAMAGE",
-	"UNIT_DIED",
-	"ENCOUNTER_START",
-	"ENCOUNTER_END"
+	"UNIT_DIED"
 )
 
 local warnEnfeeblingSpittle					= mod:NewCountAnnounce(450505, 2)
@@ -40,12 +43,36 @@ local timerWebBlastCD						= mod:NewCDNPTimer(12.1, 450597, nil, nil, nil, 2)
 
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc, 7 off interrupt
 
-mod.vb.bossStarted = false--Work around blizzard bug where ENCOUNTER_START fires more than once
+--mod.vb.bossStarted = false--Work around blizzard bug where ENCOUNTER_START fires more than once
 mod.vb.AnglersCount = 0
 mod.vb.AddCount = 0
 mod.vb.smashCount = 0
 mod.vb.enfeeblingSpittleCount = 0
 mod.vb.roarCount = 0
+
+function mod:OnCombatStart(delay)
+	self.vb.AnglersCount = 0
+	self.vb.AddCount = 0
+	self.vb.smashCount = 0
+	self.vb.enfeeblingSpittleCount = 0
+	self.vb.roarCount = 0
+	if self:IsMythic() then
+		self:SetCreatureID(221427)
+		DBM:AddMsg("This version isn't supported yet")
+		--timerClawSmashCD:Start(4.6, 1)
+		--timerEnfeeblingSpittleCD:Start(8.2, 1)
+		--timerCallWebTerrorCD:Start(18.1, 1)
+		--timerHorrendousRoarCD:Start(11.9, 1)
+		--timerAnglersWebCD:Start(20, 1)
+	else
+		self:SetCreatureID(225204)
+		timerClawSmashCD:Start(4.6, 1)
+		timerEnfeeblingSpittleCD:Start(8.2, 1)
+		timerCallWebTerrorCD:Start(18.1, 1)
+		timerHorrendousRoarCD:Start(11.9, 1)
+		timerAnglersWebCD:Start(20, 1)
+	end
+end
 
 function mod:SPELL_CAST_START(args)
 	if args.spellId == 450519 then
@@ -130,6 +157,7 @@ function mod:UNIT_DIED(args)
 	end
 end
 
+--[[
 function mod:ENCOUNTER_START(eID)
 	if (eID == 2985 or eID == 2987) and not self.vb.bossStarted then--Zekvir (only 2987 seen)
 		self.vb.bossStarted = true
@@ -161,3 +189,5 @@ function mod:ENCOUNTER_END(eID, _, _, _, success)
 		end
 	end
 end
+
+--]]
