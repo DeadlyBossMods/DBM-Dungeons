@@ -100,6 +100,7 @@ local timerHolyLightCD						= mod:NewCDPNPTimer(17, 459421, nil, nil, nil, 4, ni
 local timerJaggedBarbs						= mod:NewCastNPTimer(3, 450714, DBM_COMMON_L.FRONTAL, nil, nil, 3)
 local timerEnrageCD							= mod:NewCDNPTimer(23, 448161, nil, nil, nil, 5)
 local timerArmorShellCD						= mod:NewCDNPTimer(24, 448179, nil, nil, nil, 4)
+local timerWideSwipeCD						= mod:NewCDNPTimer(8, 450509, nil, nil, nil, 3)
 
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc, 7 off interrupt
 
@@ -112,7 +113,7 @@ do
 			eventsRegistered = true
 			self:RegisterShortTermEvents(
                 "SPELL_CAST_START 449318 450546 433410 450714 445781 415253 425040 424704 424798 414944 418791 424891 450197 448399 445191 455932 445492 434281 450637 445210 448528 449071 462686 459421 448179 445774 443292 450492 450519 450505 450509 448155 448161",
-                "SPELL_CAST_SUCCESS 414944 424614 418791 424891 427812 450546 450197 415253 449318 445191 430036 445252 425040 424704 448399 448528 433410 445492 462686 447392 459421 448179",
+                "SPELL_CAST_SUCCESS 414944 424614 418791 424891 427812 450546 450197 415253 449318 445191 430036 445252 425040 424704 448399 448528 433410 445492 462686 447392 459421 448179 450509",
 				"SPELL_INTERRUPT",
                 "SPELL_AURA_APPLIED 424614 449071 418297 430036 440622 441129 448161",
                 --"SPELL_AURA_REMOVED",
@@ -364,6 +365,8 @@ function mod:SPELL_CAST_SUCCESS(args)
 		timerHolyLightCD:Start(14.5, args.sourceGUID)--17-2.5
 	elseif args.spellId == 448179 then
 		timerArmorShellCD:Start(24, args.sourceGUID)
+	elseif args.spellId == 450509 then
+		timerWideSwipeCD:Start(7.9, args.sourceGUID)--7.9-8.5
 	end
 end
 
@@ -459,6 +462,7 @@ function mod:UNIT_DIED(args)
 	local cid = self:GetCIDFromGUID(args.destGUID)
 	if cid == 216584 then--Nerubian Captain
 		timerWebbedAegisCD:Stop(args.destGUID)
+		timerWideSwipeCD:Stop(args.destGUID)
 	elseif cid == 208242 then--Nerubian Darkcaster
 		timerShadowsofStrifeCD:Stop(args.destGUID)
     elseif cid == 223541 then--Stolen Loader
