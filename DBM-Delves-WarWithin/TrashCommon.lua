@@ -51,7 +51,7 @@ local specWarnLavablast	    				= mod:NewSpecialWarningDodge(445781, nil, nil, n
 local specWarnFungalBreath    				= mod:NewSpecialWarningDodge(415253, nil, nil, nil, 2, 2)
 local specWarnViciousStabs    				= mod:NewSpecialWarningDodge(424704, nil, nil, nil, 2, 2)
 local specWarnBlazingWick    				= mod:NewSpecialWarningDodge(449071, nil, nil, nil, 2, 2)
-local specWarnBladeRush						= mod:NewSpecialWarningDodge(418791, nil, nil, nil, 2, 2)
+local specWarnBladeToss						= mod:NewSpecialWarningDodge(418791, nil, nil, nil, 2, 2)
 local specWarnDefilingBreath				= mod:NewSpecialWarningDodge(455932, nil, nil, nil, 2, 2)
 local specWarnSerratedCleave				= mod:NewSpecialWarningDodge(445492, nil, nil, nil, 2, 2)--32.7
 local specWarnSpotted						= mod:NewSpecialWarningDodge(441129, nil, nil, nil, 2, 2)
@@ -83,7 +83,7 @@ local timerBlazingWickCD					= mod:NewCDPNPTimer(14.6, 449071, nil, nil, nil, 3)
 local timerBlazingWick						= mod:NewCastNPTimer(2.25, 449071, DBM_COMMON_L.FRONTAL, nil, nil, 5)
 local timerBattleRoarCD						= mod:NewCDPNPTimer(15.4, 414944, nil, nil, nil, 5, nil, DBM_COMMON_L.MAGIC_ICON)
 local timerDebilitatingVenomCD				= mod:NewCDNPTimer(13.4, 424614, nil, nil, nil, 5, nil, DBM_COMMON_L.POISON_ICON)
-local timerBladeRushCD						= mod:NewCDNPTimer(15.4, 418791, nil, nil, nil, 3)
+local timerBladeTossCD						= mod:NewCDNPTimer(15.4, 418791, nil, nil, nil, 3)
 local timerVineSpearCD						= mod:NewCDNPTimer(14.9, 424891, nil, nil, nil, 3)
 local timerRelocateCD						= mod:NewCDNPTimer(70, 427812, nil, nil, nil, 3)
 local timerSkitterChargeCD					= mod:NewCDNPTimer(12.2, 450197, nil, nil, nil, 3)
@@ -205,8 +205,8 @@ function mod:SPELL_CAST_START(args)
 		end
 	elseif args.spellId == 418791 and self:IsValidWarning(args.sourceGUID) then
 		if self:AntiSpam(3, 2) then
-			specWarnBladeRush:Show()
-			specWarnBladeRush:Play("chargemove")
+			specWarnBladeToss:Show()
+			specWarnBladeToss:Play("chargemove")
 		end
 	elseif args.spellId == 424891 then
 		if self:AntiSpam(3, 6) then
@@ -311,16 +311,16 @@ function mod:SPELL_CAST_START(args)
 end
 
 function mod:SPELL_CAST_SUCCESS(args)
-	if args.spellId == 414944 then
+	if args.spellId == 414944 and self:IsValidWarning(args.sourceGUID) then
 		if args:GetSrcCreatureID() == 207454 then--Fungal Gutter
 			timerBattleRoarCD:Start(19.9, args.sourceGUID)--19.9-24.7
 		else--207456 Fungal Speartender
 			timerBattleRoarCD:Start(9.9, args.sourceGUID)--9.9-12
 		end
-	elseif args.spellId == 424614 then
+	elseif args.spellId == 424614 and self:IsValidWarning(args.sourceGUID) then
 		timerDebilitatingVenomCD:Start(12.3, args.sourceGUID)--13.3 - 1
-	elseif args.spellId == 418791 then
-		timerBladeRushCD:Start(11.1, args.sourceGUID)--12.1 - 1
+	elseif args.spellId == 418791 and self:IsValidWarning(args.sourceGUID) then
+		timerBladeTossCD:Start(11.1, args.sourceGUID)--12.1 - 1
 	elseif args.spellId == 424891 then
 		timerVineSpearCD:Start(10.9, args.sourceGUID)--14.9 - 4
 	elseif args.spellId == 427812 then
@@ -347,8 +347,8 @@ function mod:SPELL_CAST_SUCCESS(args)
 		end
 	elseif args.spellId == 425040 then
 		timerRotWaveVolleyCD:Start(9.4, args.sourceGUID)--12.4 - 3
-	elseif args.spellId == 424704 then
-		timerViciousStabsCD:Start(18.6, args.sourceGUID)--20.6 - 2
+	elseif args.spellId == 424704 and self:IsValidWarning(args.sourceGUID) then
+		timerViciousStabsCD:Start(14, args.sourceGUID)
 	elseif args.spellId == 448399 then
 		timerBattleCryCD:Start(28.3, args.sourceGUID)--30.3 - 2
 	elseif args.spellId == 448528 then
@@ -373,7 +373,7 @@ end
 --Likely some of these aren't even interruptable, but i can't remember sometimes so they get added anyways
 function mod:SPELL_INTERRUPT(args)
 	if type(args.extraSpellId) ~= "number" then return end
-	if args.extraSpellId == 414944 then
+	if args.extraSpellId == 414944 and self:IsValidWarning(args.destGUID) then
 		if args:GetSrcCreatureID() == 207454 then--Fungal Gutter
 			timerBattleRoarCD:Start(19.9, args.destGUID)--19.9-24.7
 		else--207456 Fungal Speartender
@@ -387,8 +387,8 @@ function mod:SPELL_INTERRUPT(args)
 		timerWicklighterVolleyCD:Start(18.3, args.destGUID)--21.8 - 3.5
 	elseif args.extraSpellId == 425040 then
 		timerRotWaveVolleyCD:Start(9.4, args.destGUID)--12.4 - 3
-	elseif args.extraSpellId == 424704 then
-		timerViciousStabsCD:Start(18.6, args.destGUID)--20.6 - 2
+	elseif args.extraSpellId == 424704 and self:IsValidWarning(args.destGUID) then
+		timerViciousStabsCD:Start(14, args.destGUID)--20.6 - 2
 	elseif args.extraSpellId == 448399 then
 		timerBattleCryCD:Start(28.3, args.destGUID)--30.3 - 2
 	elseif args.extraSpellId == 448528 then
@@ -481,7 +481,7 @@ function mod:UNIT_DIED(args)
 	elseif cid == 207450 then--Fungal Stabber
 		timerDebilitatingVenomCD:Stop(args.destGUID)
 	elseif cid == 211062 then--Bill
-		timerBladeRushCD:Stop(args.destGUID)
+		timerBladeTossCD:Stop(args.destGUID)
 	elseif cid == 207455 then--Fungal Speartender
 		timerVineSpearCD:Stop(args.destGUID)
 	elseif cid == 213434 then--Sporbit (annoying ass undying exploding spores)
