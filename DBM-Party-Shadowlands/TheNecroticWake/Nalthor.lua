@@ -27,7 +27,7 @@ mod:RegisterEventsInCombat(
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
  or (ability.id = 321368 or ability.id = 321754) and type = "removebuff"
 --]]
-local warnIceboundAegis				= mod:NewTargetNoFilterAnnounce(321754, 4)
+local warnIceboundAegis				= mod:NewTargetNoFilterAnnounce(321754, 2)
 local warnFrozenBinds				= mod:NewTargetNoFilterAnnounce(323730, 3)
 local warnDarkExile					= mod:NewTargetNoFilterAnnounce(321894, 3)
 

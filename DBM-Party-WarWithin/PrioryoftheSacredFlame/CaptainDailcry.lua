@@ -108,8 +108,8 @@ function mod:SPELL_AURA_APPLIED(args)
 	elseif spellId == 447439 then
 		warnSavageMauling:Show(args.destName)
 	elseif spellId == 424419 then
-		specWarnBattleCryDispel:Show(args.destName)
-		specWarnBattleCryDispel:Play("enrage")
+		specWarnBattleCryDispel:CombinedShow(0.3, args.destName)
+		specWarnBattleCryDispel:ScheduleVoice(0.3, "enrage")
 	end
 end
 --mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED

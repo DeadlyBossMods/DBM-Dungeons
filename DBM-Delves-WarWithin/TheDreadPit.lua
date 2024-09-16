@@ -18,8 +18,7 @@ mod:RegisterEventsInCombat(
 	"ENCOUNTER_END"
 )
 
-local warnStingingSwarm						= mod:NewSpellAnnounce(448663, 2)
-
+local specWarnStingingSwarm					= mod:NewSpecialWarningSpell(448663, nil, nil, nil, 2, 2)
 local specWarnBurrowingTremors				= mod:NewSpecialWarningDodge(448644, nil, nil, nil, 2, 2)
 local specWarnImpale						= mod:NewSpecialWarningDodge(448634, nil, nil, nil, 2, 2)
 
@@ -42,8 +41,9 @@ function mod:SPELL_CAST_START(args)
 		timerImpaleCD:Start()
 	elseif args.spellId == 448663 then
 		--23.2, 34.8, 32.8, 33.2, 33.6
-		warnStingingSwarm:Show()
---		timerStingingSwarmCD:Start()
+		specWarnStingingSwarm:Show()
+		specWarnStingingSwarm:Play("aesoon")
+		timerStingingSwarmCD:Start()
 	end
 end
 

@@ -8,9 +8,9 @@ mod:SetMinSyncRevision(20240422000000)
 mod:RegisterCombat("scenario", 2686)
 
 mod:RegisterEventsInCombat(
-	"SPELL_CAST_START 443840 443908 443837",
+	"SPELL_CAST_START 443840 443908 443837 470592 444408",
 --	"SPELL_CAST_SUCCESS",
---	"SPELL_AURA_APPLIED",
+	"SPELL_AURA_APPLIED 470592",
 --	"SPELL_AURA_REMOVED",
 --	"SPELL_PERIODIC_DAMAGE",
 --	"UNIT_DIED",
@@ -19,15 +19,19 @@ mod:RegisterEventsInCombat(
 )
 
 --NOTE: This one lacks encounter ID for easy win detection and boss timers
-local warnFire								= mod:NewSpellAnnounce(443908, 2)
+local warnFire								= mod:NewSpellAnnounce(443908, 2)--Speaker Halven
 
-local specWarnDesolateSurge					= mod:NewSpecialWarningDodge(443840, nil, nil, nil, 2, 2)
-local specWarnShadowSweep					= mod:NewSpecialWarningDodge(443837, nil, nil, nil, 2, 2)
+local specWarnDesolateSurge					= mod:NewSpecialWarningDodge(443840, nil, nil, nil, 2, 2)--Speaker Halven
+local specWarnShadowSweep					= mod:NewSpecialWarningDodge(443837, nil, nil, nil, 2, 2)--Speaker Halven
+local specWarnSpeakersWrath					= mod:NewSpecialWarningDodge(444408, nil, nil, nil, 2, 2)--Speaker Davenruth
+local specWarnBlessingofDuskDispel			= mod:NewSpecialWarningDispel(470592, "MagicDispeller", nil, nil, 1, 2)--Speaker Davenruth
 
 --local timerShadowsofStrifeCD				= mod:NewCDNPTimer(12.4, 449318, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
-local timerDesolateSurgeCD					= mod:NewCDTimer(27.9, 443840, nil, nil, nil, 3)
-local timerFireCD							= mod:NewCDTimer(12.1, 443908, nil, nil, nil, 3)
-local timerShadowSweepCD					= mod:NewCDTimer(13.4, 443837, nil, nil, nil, 3)
+local timerDesolateSurgeCD					= mod:NewCDTimer(27.9, 443840, nil, nil, nil, 3)--Speaker Halven
+local timerFireCD							= mod:NewCDTimer(12.1, 443908, nil, nil, nil, 3)--Speaker Halven
+local timerShadowSweepCD					= mod:NewCDTimer(13.4, 443837, nil, nil, nil, 3)--Speaker Halven and Speaker Davenruth (need more data on Davenruth's timer)
+local timerBlessingofDuskCD					= mod:NewAITimer(12.1, 470592, nil, nil, nil, 5)--Speaker Davenruth
+local timerSpeakersWrathCD					= mod:NewAITimer(12.1, 444408, nil, nil, nil, 3)--Speaker Davenruth
 
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc, 7 off interrupt
 
@@ -45,6 +49,13 @@ function mod:SPELL_CAST_START(args)
 		--"Shadow Sweep-443837-npc:217570-00001EAF20 = pull:5.7, 24.3, 14.6, 14.6, 14.6, 14.6, 13.4, 14.5, 14.6, 14.6, 13.4, 13.4, 14.6, 13.4",
 		specWarnShadowSweep:Show()
 		specWarnShadowSweep:Play("shockwave")
+		timerShadowSweepCD:Start()
+	elseif args.spellId == 470592 then
+		timerBlessingofDuskCD:Start()
+	elseif args.spellId == 444408 then
+		specWarnSpeakersWrath:Show()
+		specWarnSpeakersWrath:Play("watchstep")
+		timerSpeakersWrathCD:Start()
 	end
 end
 
@@ -56,13 +67,12 @@ function mod:SPELL_CAST_SUCCESS(args)
 end
 --]]
 
---[[
 function mod:SPELL_AURA_APPLIED(args)
-	if args.spellId == 1098 then
-
+	if args.spellId == 470592 then
+		specWarnBlessingofDuskDispel:Show(args.destName)
+		specWarnBlessingofDuskDispel:Play("dispelboss")
 	end
 end
---]]
 
 --[[
 function mod:SPELL_AURA_REMOVED(args)
@@ -92,8 +102,10 @@ end
 --]]
 
 function mod:ENCOUNTER_START(eID)
-	if eID == 2998 then--Reformed Fury
-		DBM:AddMsg("Boss alerts/timers not yet implemented for Reformed Fury")
+	if eID == 2998 then--Reformed Fury (Speaker Davenruth)
+		timerShadowSweepCD:Start(3.6)
+		timerBlessingofDuskCD:Start(1)--7.7
+		timerSpeakersWrathCD:Start(1)--12.1
 	elseif eID == 3007 then--Speaker Halven
 		timerShadowSweepCD:Start(5.7)
 		timerFireCD:Start(9.3)
@@ -105,11 +117,14 @@ end
 
 
 function mod:ENCOUNTER_END(eID, _, _, _, success)
-	if eID == 2998 then--Reformed Fury
+	if eID == 2998 then--Reformed Fury (Speaker Davenruth)
 		if success == 1 then
 			DBM:EndCombat(self)
 		else
 			--Stop Timers manually
+			timerShadowSweepCD:Stop()
+			timerBlessingofDuskCD:Stop()
+			timerSpeakersWrathCD:Stop()
 		end
 	elseif eID == 3007 then--Speaker Halven
 		if success == 1 then
