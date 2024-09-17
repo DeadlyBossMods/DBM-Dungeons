@@ -57,6 +57,7 @@ local specWarnSerratedCleave				= mod:NewSpecialWarningDodge(445492, nil, nil, n
 local specWarnSpotted						= mod:NewSpecialWarningDodge(441129, nil, nil, nil, 2, 2)
 local specWarnFireCharge					= mod:NewSpecialWarningDodge(445210, nil, nil, nil, 2, 2)
 local specWarnUmbralSlam					= mod:NewSpecialWarningDodge(443292, nil, nil, nil, 2, 2)
+local specWarnUmbralSlash					= mod:NewSpecialWarningDodge(418295, nil, nil, nil, 2, 2)
 local specWarnAnglersWeb					= mod:NewSpecialWarningDodge(450519, nil, nil, nil, 2, 2)
 local specWarnShockwaveTremors				= mod:NewSpecialWarningDodge(448155, nil, nil, nil, 2, 2)--9.7-15.8
 local specWarnEchoofRenilash				= mod:NewSpecialWarningRun(434281, nil, nil, nil, 4, 2)
@@ -88,6 +89,7 @@ local timerVineSpearCD						= mod:NewCDNPTimer(14.9, 424891, nil, nil, nil, 3)
 local timerRelocateCD						= mod:NewCDNPTimer(70, 427812, nil, nil, nil, 3)
 local timerSkitterChargeCD					= mod:NewCDNPTimer(12.2, 450197, nil, nil, nil, 3)
 local timerFungalBreathCD					= mod:NewCDNPTimer(15.4, 415253, nil, nil, nil, 3)
+local timerUmbrelSlashCD					= mod:NewCDNPTimer(17.8, 418295, nil, nil, nil, 3)
 local timerCastigateCD						= mod:NewCDPNPTimer(17.8, 418297, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerBattleCryCD						= mod:NewCDNPTimer(30.3, 448399, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerWicklighterVolleyCD				= mod:NewCDNPTimer(20.8, 445191, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--Needs more Data
@@ -112,7 +114,7 @@ do
 		if not force and validZones[currentZone] and not eventsRegistered then
 			eventsRegistered = true
 			self:RegisterShortTermEvents(
-                "SPELL_CAST_START 449318 450546 433410 450714 445781 415253 425040 424704 424798 414944 418791 424891 450197 448399 445191 455932 445492 434281 450637 445210 448528 449071 462686 459421 448179 445774 443292 450492 450519 450505 450509 448155 448161",
+                "SPELL_CAST_START 449318 450546 433410 450714 445781 415253 425040 424704 424798 414944 418791 424891 450197 448399 445191 455932 445492 434281 450637 445210 448528 449071 462686 459421 448179 445774 443292 450492 450519 450505 450509 448155 448161 418295",
                 "SPELL_CAST_SUCCESS 414944 424614 418791 424891 427812 450546 450197 415253 449318 445191 430036 445252 425040 424704 448399 448528 433410 445492 462686 447392 459421 448179 450509",
 				"SPELL_INTERRUPT",
                 "SPELL_AURA_APPLIED 424614 449071 418297 430036 440622 441129 448161",
@@ -171,6 +173,12 @@ function mod:SPELL_CAST_START(args)
 		if self:AntiSpam(3, 2) then
 			specWarnUmbralSlam:Show()
 			specWarnUmbralSlam:Play("shockwave")
+		end
+	elseif args.spellId == 418295 then
+		timerUmbrelSlashCD:Start(nil, args.sourceGUID)
+		if self:AntiSpam(3, 2) then
+			specWarnUmbralSlash:Show()
+			specWarnUmbralSlash:Play("shockwave")
 		end
 	elseif args.spellId == 450714 then
 		timerJaggedBarbs:Start(nil, args.sourceGUID)
@@ -492,6 +500,7 @@ function mod:UNIT_DIED(args)
 		timerFungalBreathCD:Stop(args.destGUID)
 	elseif cid == 208728 then--Treasure Wraith
 		timerCastigateCD:Stop(args.destGUID)
+		timerUmbrelSlashCD:Stop(args.destGUID)
 	elseif cid == 204127 then--Kobolt Taskfinder
 		timerBattleCryCD:Stop(args.destGUID)
 	elseif cid == 214338 then--Kobyss Spearfisher

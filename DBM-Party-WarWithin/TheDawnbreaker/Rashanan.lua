@@ -102,8 +102,8 @@ function mod:OnCombatStart(delay)
 	timerErosiveSprayCD:Start(20-delay, 1)
 	self:EnablePrivateAuraSound(434406, "targetyou", 2)--Likely dungeon version of Rolling Acid
 	self:EnablePrivateAuraSound(439790, "targetyou", 2, 434406)--Likely the raid version of Rolling Acid
-	self:EnablePrivateAuraSound(439783, "pullin", 12)--Likely the dungeon version of Spinneret's Strands
-	self:EnablePrivateAuraSound(434090, "pullin", 12, 439783)--Likely the raid version of Spinneret's Strands
+	self:EnablePrivateAuraSound(439783, "runout", 12)--Likely the dungeon version of Spinneret's Strands
+	self:EnablePrivateAuraSound(434090, "runout", 12, 439783)--Likely the raid version of Spinneret's Strands
 end
 
 function mod:SPELL_CAST_START(args)
