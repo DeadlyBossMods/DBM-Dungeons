@@ -481,6 +481,7 @@ function mod:UNIT_DIED(args)
 	elseif cid == 204127 then--Kobold Taskfinder
 		timerBlazingWickCD:Stop(args.destGUID)
 		timerBlazingWick:Stop(args.destGUID)
+		timerBattleCryCD:Stop(args.destGUID)
 	elseif cid == 207454 then--Fungal Gutter
 		timerBattleRoarCD:Stop(args.destGUID)
 		timerViciousStabsCD:Stop(args.destGUID)
@@ -501,8 +502,6 @@ function mod:UNIT_DIED(args)
 	elseif cid == 208728 then--Treasure Wraith
 		timerCastigateCD:Stop(args.destGUID)
 		timerUmbrelSlashCD:Stop(args.destGUID)
-	elseif cid == 204127 then--Kobolt Taskfinder
-		timerBattleCryCD:Stop(args.destGUID)
 	elseif cid == 214338 then--Kobyss Spearfisher
 		timerSpearFishCD:Stop(args.destGUID)
 	elseif cid == 211777 then--Spitfire Fusetender
