@@ -91,7 +91,7 @@ function mod:ENCOUNTER_START(eID)
 		--"Repelling Blast-446230-npc:214348-00001E9222 = pull:22.5, 42.5, 23.1, 21.9, 21.9",
 		--"Fungal Infection-446405-npc:214348-00001E9222 = pull:4.3, 23.1, 20.7, 21.9, 23.1, 21.9, 21.9", (success)
 		timerDeepseaPolypsCD:Start(11.6)
-		timerRepellingBlastCD:Start(22.5)
+		timerRepellingBlastCD:Start(21.5)
 		timerFungalInfectionCD:Start(4.3)
 	elseif eID == 3004 then--Evolved Nerubian Leaders
 		DBM:AddMsg("Boss alerts/timers not yet implemented for Evolved Nerubian Leaders")
