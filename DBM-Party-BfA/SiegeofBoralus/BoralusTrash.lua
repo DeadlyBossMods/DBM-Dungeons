@@ -39,7 +39,7 @@ local warnIronHook					= mod:NewSpellAnnounce(272662, 4, nil, nil, nil, nil, nil
 local specWarnSlobberKnocker		= mod:NewSpecialWarningDodge(256627, "Tank", nil, nil, 1, 2)
 local specWarnSingingSteel			= mod:NewSpecialWarningDodge(256709, "Tank", nil, nil, 1, 2)
 local specWarnHeavySlash			= mod:NewSpecialWarningDodge(257288, "Tank", nil, nil, 1, 2)
-local specWarnCrushingSlam			= mod:NewSpecialWarningDodge(272711, "Tank", nil, nil, 1, 2)
+local specWarnCrushingSlam			= mod:NewSpecialWarningDodge(272711, nil, nil, nil, 2, 2)
 --local specWarnTrample				= mod:NewSpecialWarningDodge(272874, nil, nil, nil, 2, 2)
 local specWarnBroadside				= mod:NewSpecialWarningDodge(268260, nil, nil, nil, 2, 2)
 local specWarnSavageTempest			= mod:NewSpecialWarningRun(257170, nil, nil, nil, 4, 2)--can tank run out too? or does it follow tank
@@ -75,7 +75,7 @@ local timerFerocityCD				= mod:NewCDNPTimer(38.9, 272888, nil, nil, nil, 5)--Sma
 local timerBananaRampageCD			= mod:NewCDNPTimer(16.9, 272546, nil, nil, nil, 3)
 local timerBananaRampage			= mod:NewCastNPTimer(1.5, 272546, nil, false, nil, 5)
 local timerStinkyVomitCD			= mod:NewCDPNPTimer(16.1, 454440, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--16.1-19.4
-local timerCrushingSlamCD			= mod:NewCDNPTimer(20.6, 272711, nil, nil, nil, 3)
+local timerCrushingSlamCD			= mod:NewCDNPTimer(20.6, 272711, nil, nil, nil, 2)
 local timerTerrifyingRoarCD			= mod:NewCDNPTimer(31.6, 257169, nil, nil, nil, 2)
 local timerChoakingWatersCD			= mod:NewCDPNPTimer(29.1, 272571, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--29.1-31.6
 local timerIronHookCD				= mod:NewCDNPTimer(19.4, 272662, nil, nil, nil, 3)
@@ -133,9 +133,9 @@ function mod:SPELL_CAST_START(args)
 		end
 	elseif spellId == 272888 and self:AntiSpam(4, 6) then
 		warnFerocity:Show()
-	elseif spellId == 272711 and self:AntiSpam(3, 2) then
+	elseif spellId == 272711 and self:AntiSpam(3, 4) then
 		specWarnCrushingSlam:Show()
-		specWarnCrushingSlam:Play("shockwave")
+		specWarnCrushingSlam:Play("aesoon")
 	elseif spellId == 268260 and args:GetSrcCreatureID() == 138465 then--Trash version
 		if self:AntiSpam(3, 2) then
 			specWarnBroadside:Show()
