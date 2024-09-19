@@ -156,7 +156,7 @@ function mod:SPELL_CAST_START(args)
 		warnIronHook:Show()
 		warnIronHook:Play("pullin")
 		timerIronHookCD:Start(19.4, args.sourceGUID)
-	elseif spellId == 257732 and self.Options.SpecWarn257732cast then
+	elseif spellId == 257732 then
 		specWarnShatteringBellow:Show()
 		specWarnShatteringBellow:Play("stopcast")
 	end
