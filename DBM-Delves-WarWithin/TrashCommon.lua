@@ -92,7 +92,7 @@ local timerFungalBreathCD					= mod:NewCDNPTimer(15.4, 415253, nil, nil, nil, 3)
 local timerUmbrelSlashCD					= mod:NewCDNPTimer(17.8, 418295, nil, nil, nil, 3)
 local timerCastigateCD						= mod:NewCDPNPTimer(17.8, 418297, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerBattleCryCD						= mod:NewCDNPTimer(30.3, 448399, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
-local timerWicklighterVolleyCD				= mod:NewCDNPTimer(20.8, 445191, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--Needs more Data
+local timerWicklighterVolleyCD				= mod:NewCDNPTimer(20.1, 445191, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--Needs more Data
 local timerSpearFishCD						= mod:NewCDNPTimer(12.1, 430036, nil, nil, nil, 3)
 local timerViciousStabsCD					= mod:NewCDNPTimer(20.6, 424704, nil, nil, nil, 3)
 local timerThrowDynoCD						= mod:NewCDNPTimer(7.2, 448600, nil, nil, nil, 3)
@@ -481,6 +481,7 @@ function mod:UNIT_DIED(args)
 	elseif cid == 204127 then--Kobold Taskfinder
 		timerBlazingWickCD:Stop(args.destGUID)
 		timerBlazingWick:Stop(args.destGUID)
+		timerBattleCryCD:Stop(args.destGUID)
 	elseif cid == 207454 then--Fungal Gutter
 		timerBattleRoarCD:Stop(args.destGUID)
 		timerViciousStabsCD:Stop(args.destGUID)
@@ -501,8 +502,6 @@ function mod:UNIT_DIED(args)
 	elseif cid == 208728 then--Treasure Wraith
 		timerCastigateCD:Stop(args.destGUID)
 		timerUmbrelSlashCD:Stop(args.destGUID)
-	elseif cid == 204127 then--Kobolt Taskfinder
-		timerBattleCryCD:Stop(args.destGUID)
 	elseif cid == 214338 then--Kobyss Spearfisher
 		timerSpearFishCD:Stop(args.destGUID)
 	elseif cid == 211777 then--Spitfire Fusetender

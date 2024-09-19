@@ -26,7 +26,7 @@ local specWarnRagingTantrumDispel			= mod:NewSpecialWarningDispel(449339, "Remov
 
 local timerFlamestormCD						= mod:NewCDTimer(17, 449242, nil, nil, nil, 3)
 local timerGroundSlamCD						= mod:NewCDTimer(27.9, 449295, nil, nil, nil, 3)
-local timerRagingTantrumCD					= mod:NewCDTimer(34, 449339, nil, nil, nil, 5, nil, DBM_COMMON_L.ENRAGE_ICON)
+local timerRagingTantrumCD					= mod:NewCDTimer(31.6, 449339, nil, nil, nil, 5, nil, DBM_COMMON_L.ENRAGE_ICON)
 
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc, 7 off interrupt
 

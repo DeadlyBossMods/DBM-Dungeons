@@ -24,7 +24,7 @@ local specWarnBurnAway						= mod:NewSpecialWarningSpell(450142, nil, nil, nil, 
 local specWarnNoxiousGas					= mod:NewSpecialWarningDodge(450128, nil, nil, nil, 2, 2)
 
 local timerBurnAwayCD						= mod:NewCDTimer(21.9, 450142, nil, nil, nil, 2)
-local timerNoxiousGasCD						= mod:NewCDTimer(20.7, 450128, nil, nil, nil, 3)
+local timerNoxiousGasCD						= mod:NewCDTimer(17, 450128, nil, nil, nil, 3)
 local timerThrowWaxCD						= mod:NewCDTimer(14.5, 450330, nil, nil, nil, 1)
 
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc, 7 off interrupt
