@@ -57,7 +57,7 @@ local specWarnCursedSlash			= mod:NewSpecialWarningDispel(257168, "RemoveCurse",
 local specWarnFerocity				= mod:NewSpecialWarningDispel(272888, "RemoveEnrage", nil, 2, 1, 2)
 local specWarnChokingWatersDispel	= mod:NewSpecialWarningDispel(272571, "RemoveMagic", nil, 2, 1, 2)
 local specWarnFear					= mod:NewSpecialWarningSpell(257169, nil, nil, nil, 2, 2)
-local specWarnShatteringBellow		= mod:NewSpecialWarningCast(257732, "SpellCaster", nil, nil, 1, 1, 4)
+local specWarnShatteringBellow		= mod:NewSpecialWarningCast(257732, "SpellCaster", nil, nil, 1, 1)
 
 --copilot, there are no NewCDTimer objects in this mod, only NewCDNPTimer objects
 --copilot, there is no DBM_CORE_L in this mod, only DBM_COMMON_L
