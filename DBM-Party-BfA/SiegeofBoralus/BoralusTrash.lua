@@ -8,7 +8,7 @@ mod.isTrashMod = true
 mod.isTrashModBossFightAllowed = true
 
 mod:RegisterEvents(
-	"SPELL_CAST_START 275826 256627 256957 256709 257170 272546 257169 272713 274569 272571 272888 272711 268260 257288 454440 272662",
+	"SPELL_CAST_START 275826 256627 256957 256709 257170 272546 257169 272713 274569 272571 272888 272711 268260 257288 454440 272662 257732",
 	"SPELL_CAST_SUCCESS 256627 256640 257170 256709 257288 272422 454437 275826 275835 272888 272546 454440 272711 257169 272571 256957 268260",
 	"SPELL_INTERRUPT",
 	"SPELL_AURA_APPLIED 256957 257168 272421 272571 272888 454437",
@@ -57,6 +57,7 @@ local specWarnCursedSlash			= mod:NewSpecialWarningDispel(257168, "RemoveCurse",
 local specWarnFerocity				= mod:NewSpecialWarningDispel(272888, "RemoveEnrage", nil, 2, 1, 2)
 local specWarnChokingWatersDispel	= mod:NewSpecialWarningDispel(272571, "RemoveMagic", nil, 2, 1, 2)
 local specWarnFear					= mod:NewSpecialWarningSpell(257169, nil, nil, nil, 2, 2)
+local specWarnShatteringBellow		= mod:NewSpecialWarningCast(257732, "SpellCaster", nil, nil, 1, 1, 4)
 
 --copilot, there are no NewCDTimer objects in this mod, only NewCDNPTimer objects
 --copilot, there is no DBM_CORE_L in this mod, only DBM_COMMON_L
@@ -155,6 +156,9 @@ function mod:SPELL_CAST_START(args)
 		warnIronHook:Show()
 		warnIronHook:Play("pullin")
 		timerIronHookCD:Start(19.4, args.sourceGUID)
+	elseif spellId == 257732 and self.Options.SpecWarn257732cast then
+		specWarnShatteringBellow:Show()
+		specWarnShatteringBellow:Play("stopcast")
 	end
 end
 
