@@ -69,6 +69,7 @@ end
 --]]
 
 function mod:SPELL_CAST_START(args)
+	if not self.Options.Enabled then return end
 	local spellId = args.spellId
 	if not self:IsValidWarning(args.sourceGUID) then return end
 	if spellId == 434824 then
@@ -128,6 +129,7 @@ function mod:SPELL_CAST_START(args)
 end
 
 function mod:SPELL_CAST_SUCCESS(args)
+	if not self.Options.Enabled then return end
 	local spellId = args.spellId
 	if not self:IsValidWarning(args.sourceGUID) then return end
 	if spellId == 434802 then
@@ -150,6 +152,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 end
 
 function mod:SPELL_INTERRUPT(args)
+	if not self.Options.Enabled then return end
 	if args.extraSpellId == 434802 then
 		timerHorrifyingShrillCD:Start(13.3, args.destGUID)
 	elseif args.extraSpellId == 448248 then
@@ -171,6 +174,7 @@ end
 --]]
 
 function mod:UNIT_DIED(args)
+	if not self.Options.Enabled then return end
 	local cid = self:GetCIDFromGUID(args.destGUID)
 	if cid == 217531 then--Ixin
 		timerWebSprayCD:Stop(args.destGUID)
