@@ -66,7 +66,7 @@ local allTimers = {
 		[425264] = {6.8, 17},--Obsidian Blast (Non Mythic)
 		[453212] = {18.2, 23.5, 25.1, 24.4, 26.9},--Obsidian Beam (Mythic)
 		[445996] = {13.8, 18},--Collapsing Darkness (Non Mythic)
-		[453140] = {8.7, 28, 25.1, 25.1, 26.7},--Collapsing Night (Mythic)
+		[453140] = {8.7, 27.8, 25.1, 25.1, 26.7},--Collapsing Night (Mythic)
 		[4267341] = {10.1, 25.2},--Burning Shadows (Non Mythic)
 		[4267342] = {14.5, 19.2, 21.9, 21.1, 25.1},--Burning Shadows (Mythic)
 	},								---23.5
@@ -145,7 +145,7 @@ function mod:SPELL_CAST_START(args)
 			specWarnObsidianBlast:Show()
 			specWarnObsidianBlast:Play("defensive")
 		end
-		local timer = self:GetFromTimersTable(allTimers, false, self.vb.phase, 425264, self.vb.obsidianCount+1)
+		local timer = self:GetFromTimersTable(allTimers, false, self.vb.phase, spellId, self.vb.obsidianCount+1)
 		if timer then
 			timerObsidianBlastCD:Start(timer, self.vb.obsidianCount+1)
 		else
@@ -162,7 +162,7 @@ function mod:SPELL_CAST_START(args)
 			specWarnObsidianBeam:Show()
 			specWarnObsidianBeam:Play("defensive")
 		end
-		local timer = self:GetFromTimersTable(allTimers, true, self.vb.phase, 453212, self.vb.obsidianCount+1)
+		local timer = self:GetFromTimersTable(allTimers, false, self.vb.phase, spellId, self.vb.obsidianCount+1)
 		if timer then
 			timerObsidianBeamCD:Start(timer, self.vb.obsidianCount+1)
 		else
@@ -177,7 +177,7 @@ function mod:SPELL_CAST_START(args)
 		self.vb.collapsingCount = self.vb.collapsingCount + 1
 		specWarnCollapsingDarkness:Show(self.vb.collapsingCount)
 		specWarnCollapsingDarkness:Play("watchstep")
-		local timer = self:GetFromTimersTable(allTimers, false, self.vb.phase, 445996, self.vb.collapsingCount+1)
+		local timer = self:GetFromTimersTable(allTimers, false, self.vb.phase, spellId, self.vb.collapsingCount+1)
 		if timer then
 			timerCollapsingDarknessCD:Start(timer, self.vb.collapsingCount+1)
 		else
@@ -192,7 +192,7 @@ function mod:SPELL_CAST_START(args)
 		self.vb.collapsingCount = self.vb.collapsingCount + 1
 		specWarnCollapsingNight:Show(self.vb.collapsingCount)
 		specWarnCollapsingNight:Play("watchstep")
-		local timer = self:GetFromTimersTable(allTimers, true, self.vb.phase, 453140, self.vb.collapsingCount+1)
+		local timer = self:GetFromTimersTable(allTimers, false, self.vb.phase, spellId, self.vb.collapsingCount+1)
 		if timer then
 			timerCollapsingNightCD:Start(timer, self.vb.collapsingCount+1)
 		else
