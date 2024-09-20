@@ -143,6 +143,7 @@ do
 end
 
 function mod:SPELL_CAST_START(args)
+	if not self.Options.Enabled then return end
 	if args.spellId == 449318 then
 --		timerShadowsofStrifeCD:Start(nil, args.sourceGUID)
 		if self.Options.SpecWarn449318interrupt and self:CheckInterruptFilter(args.sourceGUID, false, true) then
@@ -319,6 +320,7 @@ function mod:SPELL_CAST_START(args)
 end
 
 function mod:SPELL_CAST_SUCCESS(args)
+	if not self.Options.Enabled then return end
 	if args.spellId == 414944 and self:IsValidWarning(args.sourceGUID) then
 		if args:GetSrcCreatureID() == 207454 then--Fungal Gutter
 			timerBattleRoarCD:Start(19.9, args.sourceGUID)--19.9-24.7
@@ -380,6 +382,7 @@ end
 
 --Likely some of these aren't even interruptable, but i can't remember sometimes so they get added anyways
 function mod:SPELL_INTERRUPT(args)
+	if not self.Options.Enabled then return end
 	if type(args.extraSpellId) ~= "number" then return end
 	if args.extraSpellId == 414944 and self:IsValidWarning(args.destGUID) then
 		if args:GetSrcCreatureID() == 207454 then--Fungal Gutter
@@ -411,6 +414,7 @@ function mod:SPELL_INTERRUPT(args)
 end
 
 function mod:SPELL_AURA_APPLIED(args)
+	if not self.Options.Enabled then return end
 	if args.spellId == 424614 and args:IsDestTypePlayer() then
 		if args:IsPlayer() or self:CheckDispelFilter("poison") then
 			warnDebilitatingVenom:Show(args.destName)
@@ -452,6 +456,7 @@ end
 
 --[[
 function mod:SPELL_AURA_REMOVED(args)
+	if not self.Options.Enabled then return end
 	if args.spellId == 1098 then
 
 	end
@@ -467,6 +472,7 @@ end
 --]]
 
 function mod:UNIT_DIED(args)
+	if not self.Options.Enabled then return end
 	local cid = self:GetCIDFromGUID(args.destGUID)
 	if cid == 216584 then--Nerubian Captain
 		timerWebbedAegisCD:Stop(args.destGUID)

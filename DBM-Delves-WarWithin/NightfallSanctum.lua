@@ -27,7 +27,7 @@ local specWarnSpeakersWrath					= mod:NewSpecialWarningDodge(444408, nil, nil, n
 local specWarnBlessingofDuskDispel			= mod:NewSpecialWarningDispel(470592, "MagicDispeller", nil, nil, 1, 2)--Speaker Davenruth
 
 --local timerShadowsofStrifeCD				= mod:NewCDNPTimer(12.4, 449318, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
-local timerDesolateSurgeCD					= mod:NewCDTimer(27.9, 443840, nil, nil, nil, 3)--Speaker Halven
+local timerDesolateSurgeCD					= mod:NewCDTimer(26.7, 443840, nil, nil, nil, 3)--Speaker Halven
 local timerFireCD							= mod:NewCDTimer(12.1, 443908, nil, nil, nil, 3)--Speaker Halven
 local timerShadowSweepCD					= mod:NewCDTimer(13.4, 443837, nil, nil, nil, 3)--Speaker Halven and Speaker Davenruth (need more data on Davenruth's timer)
 local timerBlessingofDuskCD					= mod:NewAITimer(12.1, 470592, nil, nil, nil, 5)--Speaker Davenruth
