@@ -8,8 +8,8 @@ mod:SetMinSyncRevision(20240422000000)
 mod:RegisterCombat("scenario", 2679)
 
 mod:RegisterEventsInCombat(
-	"SPELL_CAST_START 454213 449965",
-	"SPELL_CAST_SUCCESS 453897",
+	"SPELL_CAST_START 454213 449965 453897",
+--	"SPELL_CAST_SUCCESS",
 --	"SPELL_AURA_APPLIED",
 --	"SPELL_AURA_REMOVED",
 --	"SPELL_PERIODIC_DAMAGE",
@@ -40,9 +40,14 @@ function mod:SPELL_CAST_START(args)
 		--"Swamp Bolt-449965-npc:220314-0000497D69 = pull:10.6, 27.9, 27.9, 27.9, 27.9, 27.9",
 		warnSwampBolt:Show()
 		timerSwampBoltCD:Start()
+	elseif args.spellId == 453897 then
+		--"Sporesong-453897-npc:220314-0000497D69 = pull:15.5, 29.1, 29.1, 29.1, 29.1, 29.1",
+		warnSporesong:Show()
+		timerSporesongCD:Start()
 	end
 end
 
+--[[
 function mod:SPELL_CAST_SUCCESS(args)
 	if args.spellId == 453897 then
 		--"Sporesong-453897-npc:220314-0000497D69 = pull:15.5, 29.1, 29.1, 29.1, 29.1, 29.1",
@@ -50,6 +55,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 		timerSporesongCD:Start()
 	end
 end
+--]]
 
 --[[
 function mod:SPELL_AURA_APPLIED(args)
