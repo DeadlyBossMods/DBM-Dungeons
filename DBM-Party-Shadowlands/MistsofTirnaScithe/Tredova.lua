@@ -76,6 +76,7 @@ end
 --So we have to detect this and restart timer for 2nd cast
 local function FixBlizzardBug(self)
 	self.vb.inubationCount = self.vb.inubationCount + 1
+	--"Accelerated Incubation-322550-npc:164517-00006F8E89 = pull:11.0, 40.3, 52.6, 35.0",
 	timerAcceleratedIncubationCD:Start(30, self.vb.inubationCount+1)
 end
 
@@ -106,6 +107,7 @@ end
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
 	if spellId == 322550 then
+		self:Unschedule(FixBlizzardBug)
 		self.vb.inubationCount = self.vb.inubationCount + 1
 		specWarnAcceleratedIncubation:Show(self.vb.inubationCount)
 		specWarnAcceleratedIncubation:Play("killmob")

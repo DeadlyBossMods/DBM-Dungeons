@@ -46,7 +46,7 @@ local specWarnGTFO						= mod:NewSpecialWarningGTFO(323250, nil, nil, nil, 1, 8)
 --local timerEmbraceDarknessCD			= mod:NewCDTimer(66.7, 323149, nil, nil, nil, 2, nil, DBM_COMMON_L.HEALER_ICON)
 --local timerRepulsiveVisageCD			= mod:NewCDTimer(15.8, 328756, nil, nil, nil, 2, nil, DBM_COMMON_L.MAGIC_ICON)
 --Droman Oulfarran
-local timerBewilderingPollenCD			= mod:NewCDCountTimer(20.6, 323137, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)--20.6-25, unsure if spellqueue causes the variation or just inconsistent energy rates
+local timerBewilderingPollenCD			= mod:NewCDCountTimer(19.4, 323137, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)--19.4-25, unsure if spellqueue causes the variation or just inconsistent energy rates
 local timerTearsoftheForestCD			= mod:NewCDCountTimer(20.6, 323177, nil, nil, nil, 3)--20.6-25, unsure if spellqueue causes the variation or just inconsistent energy rates
 local timerDromansWrath					= mod:NewBuffActiveTimer(15, 323059, nil, nil, nil, 6)
 
@@ -60,7 +60,7 @@ function mod:OnCombatStart(delay)
 	if self:AntiSpam(3, 1) then
 		timerBewilderingPollenCD:Start(7.3, 1)
 		--Recheck force compliance/tears on live
-		timerTearsoftheForestCD:Start(16.9, 1)--17-20
+		timerTearsoftheForestCD:Start(14.2, 1)--14.2-20
 	end
 --	timerEmbraceDarknessCD:Start(35-delay)--35-41
 --	timerRepulsiveVisageCD:Start(44.7-delay)--44.7-46?
@@ -109,7 +109,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		--Droman
 		if self:AntiSpam(3, 1) then
 			timerBewilderingPollenCD:Start(7.3, self.vb.pollenCount+1)
-			timerTearsoftheForestCD:Start(17, self.vb.tearsCount+1)--17-20
+			timerTearsoftheForestCD:Start(12.6, self.vb.tearsCount+1)--17-20
 			--timerEmbraceDarknessCD(35.1)--35.1-39.9
 			if self:IsMythic() then
 				--timerRepulsiveVisageCD:Start(55.8)
