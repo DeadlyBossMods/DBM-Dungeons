@@ -59,7 +59,7 @@ local allTimers = {
 		[453212] = {7.1, 32.4, 26.2},--Obsidian Beam (Mythic)
 		[445996] = {13.1},--Collapsing Darkness (Non Mythic)
 		[453140] = {23.3, 28.6, 26.3},--Collapsing Night (Mythic)
-		[4267341] = {9.3},--Burning Shadows (Non Mythic)
+		[4267341] = {9.3, 35.5},--Burning Shadows (Non Mythic)
 		[4267342] = {19.2, 16.2, 24.8},--Burning Shadows (Mythic)
 	},
 	[2] = {
@@ -127,9 +127,11 @@ function mod:OnCombatStart(delay)
 		timerBurningShadowsCD:Start(19.2-delay, 1)
 		timerCollapsingNightCD:Start(23.3-delay, 1)
 	else
-		timerObsidianBlastCD:Start(6-delay, 1)
+		if not self:IsFollower() then--Doesn't seem used in follower difficulty
+			timerObsidianBlastCD:Start(6-delay, 1)
+			timerCollapsingDarknessCD:Start(13.1-delay, 1)--13.1-15.1
+		end
 		timerBurningShadowsCD:Start(9.3-delay, 1)--9.3-11.3
-		timerCollapsingDarknessCD:Start(13.1-delay, 1)--13.1-15.1
 	end
 end
 
@@ -264,9 +266,11 @@ function mod:SPELL_AURA_REMOVED(args)
 				timerBurningShadowsCD:Start(14.6, 1)
 				timerObsidianBeamCD:Start(18.2, 1)
 			else
-				timerObsidianBlastCD:Start(6.8, 1)
 				timerBurningShadowsCD:Start(10.1, 1)
-				timerCollapsingDarknessCD:Start(13.8, 1)
+				if not self:IsFollower() then--Doesn't seem used in follower difficulty
+					timerObsidianBlastCD:Start(6.8, 1)
+					timerCollapsingDarknessCD:Start(13.8, 1)
+				end
 			end
 		end
 	end
