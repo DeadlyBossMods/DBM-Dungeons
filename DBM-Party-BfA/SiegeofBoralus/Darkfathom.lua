@@ -18,7 +18,7 @@ mod:RegisterEventsInCombat(
 (ability.id = 257882 or ability.id = 276068 or ability.id = 257862) and type = "begincast"
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
 --]]
-local specWarnCrashingTide			= mod:NewSpecialWarningDodgeCount(261563, nil, nil, 2, 1, 2)
+local specWarnCrashingTide			= mod:NewSpecialWarningDodgeCount(261563, nil, nil, 2, 1, 15)
 local specWarnBreakWater			= mod:NewSpecialWarningDodgeCount(257882, nil, nil, nil, 2, 2)
 local specWarnTidalSurge			= mod:NewSpecialWarningMoveTo(276068, nil, nil, nil, 3, 2)
 
@@ -55,7 +55,7 @@ function mod:SPELL_CAST_START(args)
 		self.vb.crashingTideCount = self.vb.crashingTideCount + 1
 		if self:IsTanking("player", "boss1", nil, true) then
 			specWarnCrashingTide:Show(self.vb.crashingTideCount)
-			specWarnCrashingTide:Play("shockwave")
+			specWarnCrashingTide:Play("frontal")
 		end
 		timerCrashingTideCD:Start(nil, self.vb.crashingTideCount+1)
 	end
@@ -66,7 +66,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, spellId)
 		self.vb.crashingTideCount = self.vb.crashingTideCount + 1
 		if self:IsTanking("player", "boss1", nil, true) then
 			specWarnCrashingTide:Show(self.vb.crashingTideCount)
-			specWarnCrashingTide:Play("shockwave")
+			specWarnCrashingTide:Play("frontal")
 		end
 		timerCrashingTideCD:Start(nil, self.vb.crashingTideCount+1)
 	end

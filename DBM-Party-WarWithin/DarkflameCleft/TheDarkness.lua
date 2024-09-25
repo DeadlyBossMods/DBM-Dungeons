@@ -36,7 +36,7 @@ local warnShadowblast						= mod:NewTargetNoFilterAnnounce(427011, 3)
 local specWarnEternalDarkness				= mod:NewSpecialWarningCount(428266, nil, nil, nil, 2, 2)
 local yellCandlelight						= mod:NewShortYell(420307, nil, nil, nil, "YELL")
 local specWarnCallDarkspawn					= mod:NewSpecialWarningInterruptCount(427157, "HasInterrupt", nil, nil, 1, 2)
-local specWarnUmbralSlash					= mod:NewSpecialWarningDodgeCount(427025, nil, nil, nil, 2, 2)
+local specWarnUmbralSlash					= mod:NewSpecialWarningDodgeCount(427025, nil, nil, nil, 2, 15)
 local specWarnShadowblast					= mod:NewSpecialWarningMoveAway(427011, nil, nil, nil, 2, 2)
 local yellShadowblast						= mod:NewShortYell(427011)
 local yellShadowblastFades					= mod:NewShortFadesYell(427011)
@@ -89,7 +89,7 @@ function mod:SPELL_CAST_START(args)
 	elseif spellId == 427025 then
 		self.vb.umbralCount = self.vb.umbralCount + 1
 		specWarnUmbralSlash:Show(self.vb.umbralCount)
-		specWarnUmbralSlash:Play("shockwave")
+		specWarnUmbralSlash:Play("frontal")
 		timerUmbralSlashCD:Start(nil, self.vb.umbralCount+1)
 	elseif spellId == 427011 then
 		self.vb.blastCount = self.vb.blastCount + 1

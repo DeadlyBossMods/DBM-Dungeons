@@ -22,7 +22,7 @@ mod:RegisterEventsInCombat(
 local warnFire								= mod:NewSpellAnnounce(443908, 2)--Speaker Halven
 
 local specWarnDesolateSurge					= mod:NewSpecialWarningDodge(443840, nil, nil, nil, 2, 2)--Speaker Halven
-local specWarnShadowSweep					= mod:NewSpecialWarningDodge(443837, nil, nil, nil, 2, 2)--Speaker Halven
+local specWarnShadowSweep					= mod:NewSpecialWarningDodge(443837, nil, nil, nil, 2, 15)--Speaker Halven
 local specWarnSpeakersWrath					= mod:NewSpecialWarningDodge(444408, nil, nil, nil, 2, 2)--Speaker Davenruth
 local specWarnBlessingofDuskDispel			= mod:NewSpecialWarningDispel(470592, "MagicDispeller", nil, nil, 1, 2)--Speaker Davenruth
 
@@ -48,7 +48,7 @@ function mod:SPELL_CAST_START(args)
 	elseif args.spellId == 443837 then
 		--"Shadow Sweep-443837-npc:217570-00001EAF20 = pull:5.7, 24.3, 14.6, 14.6, 14.6, 14.6, 13.4, 14.5, 14.6, 14.6, 13.4, 13.4, 14.6, 13.4",
 		specWarnShadowSweep:Show()
-		specWarnShadowSweep:Play("shockwave")
+		specWarnShadowSweep:Play("frontal")
 		timerShadowSweepCD:Start()
 	elseif args.spellId == 470592 then
 		timerBlessingofDuskCD:Start()

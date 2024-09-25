@@ -37,7 +37,7 @@ local specWarnSpiritBolt				= mod:NewSpecialWarningInterrupt(323057, "HasInterru
 local specWarnEmbraceDarkness			= mod:NewSpecialWarningSpell(323149, nil, nil, nil, 2, 2)
 local specWarnRepulsiveVisage			= mod:NewSpecialWarningSpell(328756, nil, nil, nil, 2, 2)
 --Droman Oulfarran
-local specWarnBewilderingPollen			= mod:NewSpecialWarningDodgeCount(323137, "Tank", nil, nil, 1, 2)
+local specWarnBewilderingPollen			= mod:NewSpecialWarningDodgeCount(323137, "Tank", nil, nil, 1, 15)
 local specWarnBewilderingPollenDispel	= mod:NewSpecialWarningDispel(323137, false, nil, 2, 1, 2)--Off by default
 local specWarnTearsoftheForrest			= mod:NewSpecialWarningDodge(323177, nil, nil, nil, 2, 2)
 local specWarnGTFO						= mod:NewSpecialWarningGTFO(323250, nil, nil, nil, 1, 8)
@@ -79,7 +79,7 @@ function mod:SPELL_CAST_START(args)
 	elseif spellId == 323137 then
 		self.vb.pollenCount = self.vb.pollenCount + 1
 		specWarnBewilderingPollen:Show(self.vb.pollenCount)
-		specWarnBewilderingPollen:Play("shockwave")
+		specWarnBewilderingPollen:Play("frontal")
 		timerBewilderingPollenCD:Start(nil, self.vb.pollenCount+1)
 	elseif spellId == 328756 then
 		specWarnRepulsiveVisage:Show()

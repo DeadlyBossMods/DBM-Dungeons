@@ -24,7 +24,7 @@ mod:RegisterEventsInCombat(
 local warnFetidGas					= mod:NewCountAnnounce(320637, 2)
 
 local specWarnHeavingRetchYou		= mod:NewSpecialWarningMoveAway(320596, nil, nil, nil, 1, 2)
-local specWarnHeavingRetch			= mod:NewSpecialWarningDodgeLoc(320596, nil, nil, nil, 2, 2)
+local specWarnHeavingRetch			= mod:NewSpecialWarningDodgeLoc(320596, nil, nil, nil, 2, 15)
 local yellHeavingRetch				= mod:NewYell(320596)
 local specWarnCrunch				= mod:NewSpecialWarningDefensive(320655, nil, nil, nil, 1, 2)
 local specWarnGTFO					= mod:NewSpecialWarningGTFO(320646, nil, nil, nil, 1, 8)
@@ -70,7 +70,7 @@ function mod:RetchTarget(targetname, uId)
 		yellHeavingRetch:Yell()
 	else
 		specWarnHeavingRetch:Show(targetname)
-		specWarnHeavingRetch:Play("shockwave")
+		specWarnHeavingRetch:Play("frontal")
 	end
 end
 

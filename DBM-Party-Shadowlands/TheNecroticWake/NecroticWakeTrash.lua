@@ -48,11 +48,11 @@ local warnWrathOfZolramus					= mod:NewSpellAnnounce(322756, 2)
 --General
 --local specWarnGTFO						= mod:NewSpecialWarningGTFO(257274, nil, nil, nil, 1, 8)
 local specWarnSpineCrush					= mod:NewSpecialWarningRun(327240, nil, nil, nil, 4, 2)
-local specWarnGutSlice						= mod:NewSpecialWarningDodge(333477, nil, nil, nil, 2, 2)
+local specWarnGutSlice						= mod:NewSpecialWarningDodge(333477, nil, nil, nil, 2, 15)
 local specWarnDeathBurst					= mod:NewSpecialWarningDodge(345623, nil, nil, nil, 2, 2)
 local specWarnShadowWell					= mod:NewSpecialWarningDodge(320571, nil, nil, nil, 2, 2)
 local specWarnFrigidSpikes					= mod:NewSpecialWarningDodge(324387, nil, nil, nil, 2, 2)
-local specWarnGruesomeCleave				= mod:NewSpecialWarningDodge(324323, nil, nil, nil, 2, 2)
+local specWarnGruesomeCleave				= mod:NewSpecialWarningDodge(324323, nil, nil, nil, 2, 15)
 local specWarnSharedAgony					= mod:NewSpecialWarningMoveAway(327401, nil, nil, nil, 1, 11)
 local yellSharedAgony						= mod:NewYell(327401)
 local specWarnReapingWinds					= mod:NewSpecialWarningRun(324372, nil, nil, nil, 4, 2)
@@ -164,7 +164,7 @@ function mod:SPELL_CAST_START(args)
 		end
 	elseif spellId == 333477 and self:AntiSpam(3, 2) then
 		specWarnGutSlice:Show()
-		specWarnGutSlice:Play("shockwave")
+		specWarnGutSlice:Play("frontal")
 	elseif spellId == 327399 and self:AntiSpam(3, 6) then
 		warnSharedAgony:Show()
 	elseif spellId == 323496 and self:AntiSpam(3, 6) then
@@ -207,7 +207,7 @@ function mod:SPELL_CAST_START(args)
 	elseif spellId == 324323 then
 		if self:AntiSpam(3, 2) then
 			specWarnGruesomeCleave:Show()
-			specWarnGruesomeCleave:Play("shockwave")
+			specWarnGruesomeCleave:Play("frontal")
 		end
 	end
 end

@@ -40,8 +40,8 @@ local warnUmbralWeave						= mod:NewCastAnnounce(446717, 3)--Reason to special w
 local specWarnShadowsofDoubt				= mod:NewSpecialWarningMoveAway(443436, nil, nil, nil, 1, 2)
 local yellShadowsofDoubt					= mod:NewShortYell(443436)
 local yellShadowsofDoubtFades				= mod:NewShortFadesYell(443436)
-local specWarnEarthShatter					= mod:NewSpecialWarningDodge(443500, nil, nil, nil, 2, 2)
-local specWarnNullSlam						= mod:NewSpecialWarningDodge(451543, nil, nil, nil, 2, 2)
+local specWarnEarthShatter					= mod:NewSpecialWarningDodge(443500, nil, nil, nil, 2, 15)
+local specWarnNullSlam						= mod:NewSpecialWarningDodge(451543, nil, nil, nil, 2, 15)
 local specWarnGossamerBarrage				= mod:NewSpecialWarningDodge(451423, nil, nil, nil, 2, 2)
 local specWarnDarkBarrage					= mod:NewSpecialWarningDodge(445813, nil, nil, nil, 2, 2)
 local specWarnTremorSlam					= mod:NewSpecialWarningRun(447271, nil, nil, nil, 4, 2)--Don't confuse with 437700 which is boss version
@@ -133,12 +133,12 @@ function mod:SPELL_CAST_START(args)
 	elseif spellId == 443500 then
 		if self:AntiSpam(3, 2) then
 			specWarnEarthShatter:Show()
-			specWarnEarthShatter:Play("shockwave")
+			specWarnEarthShatter:Play("frontal")
 		end
 	elseif spellId == 451543 then
 		if self:AntiSpam(3, 2) then
 			specWarnNullSlam:Show()
-			specWarnNullSlam:Play("shockwave")
+			specWarnNullSlam:Play("frontal")
 		end
 	elseif spellId == 451423 then
 		if not xephEngaged then

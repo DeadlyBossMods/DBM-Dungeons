@@ -45,7 +45,7 @@ local warnIronGaze					= mod:NewTargetNoFilterAnnounce(260954, 2)
 local specWarnOntheHook				= mod:NewSpecialWarningRun(257459, nil, nil, nil, 4, 2)
 local yellOntheHook					= mod:NewYell(257459)
 local specWarnGoreCrash				= mod:NewSpecialWarningDodge(257326, nil, nil, nil, 2, 2)
-local specWarnHeavySlash			= mod:NewSpecialWarningDodge(257288, "Tank", nil, nil, 1, 2)
+local specWarnHeavySlash			= mod:NewSpecialWarningDodge(257288, "Tank", nil, nil, 1, 15)
 --Sergeant Bainbridge
 local specWarnIronGaze				= mod:NewSpecialWarningRun(260954, nil, nil, nil, 4, 2)
 local yellIronGaze					= mod:NewYell(260954)
@@ -124,7 +124,7 @@ function mod:SPELL_CAST_START(args)
 	elseif spellId == 257288 and args:GetSrcCreatureID() == 129996 then
 		if self:AntiSpam(3, 1) then
 			specWarnHeavySlash:Show()
-			specWarnHeavySlash:Play("shockwave")
+			specWarnHeavySlash:Play("frontal")
 		end
 --	elseif spellId == 260954 then
 		--timerIronGazeCD:Start()
@@ -202,7 +202,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
 	--	timerHeavySlashCD:Start(nil, guid)
 	--	if self:AntiSpam(3, 1) then
 	--		specWarnHeavySlash:Show()
-	--		specWarnHeavySlash:Play("shockwave")
+	--		specWarnHeavySlash:Play("frontal")
 	--	end
 	end
 end

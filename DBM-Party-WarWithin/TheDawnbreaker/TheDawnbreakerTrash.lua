@@ -37,7 +37,7 @@ local warnEnsaringShadows					= mod:NewTargetNoFilterAnnounce(431309, 2, nil, "R
 
 local specWarnShadowyDecay					= mod:NewSpecialWarningSpell(451102, nil, nil, nil, 2, 2)
 local specWarnDarkOrb						= mod:NewSpecialWarningSpell(450854, nil, nil, nil, 2, 2)
-local specWarnBlackEdge						= mod:NewSpecialWarningDodge(431494, nil, nil, nil, 2, 2)
+local specWarnBlackEdge						= mod:NewSpecialWarningDodge(431494, nil, nil, nil, 2, 15)
 local specWarnBlackHail						= mod:NewSpecialWarningDodge(432565, nil, nil, nil, 2, 2)
 local specWarnTerrifyingSlam				= mod:NewSpecialWarningRun(451117, nil, nil, nil, 4, 2)
 local specWarnTackyNova						= mod:NewSpecialWarningRun(451098, nil, nil, nil, 4, 2)
@@ -131,7 +131,7 @@ function mod:SPELL_CAST_START(args)
 	elseif spellId == 431494 then
 		if self:AntiSpam(3, 2) then
 			specWarnBlackEdge:Show()
-			specWarnBlackEdge:Play("shockwave")
+			specWarnBlackEdge:Play("frontal")
 		end
 	elseif spellId == 432565 then
 		if self:AntiSpam(3, 2) then
