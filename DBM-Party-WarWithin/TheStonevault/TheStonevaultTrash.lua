@@ -106,6 +106,7 @@ function mod:SPELL_CAST_START(args)
 		elseif self:AntiSpam(3, 7) then
 			warnPiercingWail:Show()
 		end
+	elseif spellId == 449130 then
 		if self:AntiSpam(3, 2) then
 			specWarnLavaCannon:Show()
 			specWarnLavaCannon:Play("watchorb")
