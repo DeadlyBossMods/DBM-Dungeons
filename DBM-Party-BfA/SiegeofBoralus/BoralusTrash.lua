@@ -61,7 +61,7 @@ local specWarnShatteringBellow		= mod:NewSpecialWarningCast(257732, "SpellCaster
 
 --copilot, there are no NewCDTimer objects in this mod, only NewCDNPTimer objects
 --copilot, there is no DBM_CORE_L in this mod, only DBM_COMMON_L
-local timerSlobberknockerCD			= mod:NewCDPNPTimer(18.8, 256627, nil, nil, nil, 5)--18.8-20
+local timerSlobberknockerCD			= mod:NewCDPNPTimer(18.8, 256627, nil, nil, nil, 5)--18.8-20.6
 local timerBurningTarCD				= mod:NewCDNPTimer(22.6, 256640, nil, nil, nil, 3)
 local timerSavageTempestCD			= mod:NewCDNPTimer(19.1, 257170, nil, nil, nil, 3)
 local timerSavageTempest			= mod:NewCastNPTimer(3, 257170, nil, nil, nil, 5)
@@ -79,7 +79,7 @@ local timerStinkyVomitCD			= mod:NewCDPNPTimer(16.1, 454440, nil, nil, nil, 4, n
 local timerCrushingSlamCD			= mod:NewCDNPTimer(20.6, 272711, nil, nil, nil, 2)
 local timerTerrifyingRoarCD			= mod:NewCDNPTimer(31.6, 257169, nil, nil, nil, 2)
 local timerChoakingWatersCD			= mod:NewCDPNPTimer(29.1, 272571, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--29.1-31.6
-local timerIronHookCD				= mod:NewCDNPTimer(19.4, 272662, nil, nil, nil, 3)
+local timerIronHookCD				= mod:NewCDNPTimer(23, 272662, nil, nil, nil, 3)
 local timerBroadsideCD				= mod:NewCDPNPTimer(11.5, 268260, nil, nil, nil, 3)--Boss version is 9.1 from previous cast finish, but this one is 11.5
 
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc, 7 off interrupt
@@ -152,10 +152,10 @@ function mod:SPELL_CAST_START(args)
 		elseif self:AntiSpam(4, 7) then
 			warnStinkyVomit:Show()
 		end
-	elseif spellId == 272662 then
+	elseif spellId == 272662 and args:GetSrcCreatureID() == 129369 then
 		warnIronHook:Show()
 		warnIronHook:Play("pullin")
-		timerIronHookCD:Start(19.4, args.sourceGUID)
+		timerIronHookCD:Start(23, args.sourceGUID)
 	elseif spellId == 257732 then
 		specWarnShatteringBellow:Show()
 		specWarnShatteringBellow:Play("stopcast")
