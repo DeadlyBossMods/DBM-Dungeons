@@ -28,7 +28,7 @@ mod:RegisterEventsInCombat(
 local warnShadowsofDoubt				= mod:NewTargetNoFilterAnnounce(448560, 3)
 
 local specWarnSubjugate					= mod:NewSpecialWarningDefensive(434722, nil, nil, nil, 1, 2)
-local specWarnTerrorize					= mod:NewSpecialWarningDodgeCount(434779, nil, nil, nil, 2, 2)
+local specWarnTerrorize					= mod:NewSpecialWarningDodgeCount(434779, nil, nil, nil, 2, 15)
 local specWarnShadowsofDoubt			= mod:NewSpecialWarningMoveAway(448560, nil, nil, nil, 1, 2)
 local yellShadowsofDoubt				= mod:NewYell(448560)
 local yellShadowsofDoubtFades			= mod:NewShortFadesYell(448560)
@@ -74,7 +74,7 @@ function mod:SPELL_CAST_START(args)
 	elseif spellId == 434779 then
 		self.vb.terrorizeCount = self.vb.terrorizeCount + 1
 		specWarnTerrorize:Show(self.vb.terrorizeCount)
-		specWarnTerrorize:Play("shockwave")
+		specWarnTerrorize:Play("frontal")
 		if self.vb.terrorizeCount % 2 == 0 then
 			timerTerrorizeCD:Start(21.8, self.vb.terrorizeCount+1)--21.8-23.1
 		else

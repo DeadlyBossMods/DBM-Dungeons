@@ -31,7 +31,7 @@ local warnUnstableOrdnance			= mod:NewSpellAnnounce(268995, 1)
 local warnFieryRicochet				= mod:NewCountAnnounce(463182, 3)
 
 local specWarnMassBombardment		= mod:NewSpecialWarningDodgeCount(463185, nil, nil, nil, 2, 2)
-local specWarnCleartheDeck			= mod:NewSpecialWarningDodgeCount(269029, "Tank", nil, nil, 3, 2)
+local specWarnCleartheDeck			= mod:NewSpecialWarningDodgeCount(269029, "Tank", nil, nil, 3, 15)
 local specWarnBroadside				= mod:NewSpecialWarningDodgeCount(268260, "Tank", nil, nil, 1, 2)
 
 local timerMassBombardmentCD		= mod:NewCDCountTimer(25, 463185, nil, nil, nil, 3)
@@ -68,7 +68,7 @@ function mod:SPELL_CAST_START(args)
 	if spellId == 269029 then
 		self.vb.clearDeckCount = self.vb.clearDeckCount + 1
 		specWarnCleartheDeck:Show(self.vb.clearDeckCount)
-		specWarnCleartheDeck:Play("shockwave")
+		specWarnCleartheDeck:Play("frontal")
 		timerCleartheDeckCD:Start(nil, self.vb.clearDeckCount+1)
 	elseif spellId == 268230 then
 		if self:AntiSpam(3, 1) then

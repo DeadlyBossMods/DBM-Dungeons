@@ -32,7 +32,7 @@ local warnHealingWave				= mod:NewCastAnnounce(76813, 3)
 local warnHex						= mod:NewCastAnnounce(76820, 2)
 local warnClenchingTentacles		= mod:NewCastAnnounce(428926, 4, nil, nil, nil, nil, nil, 13)
 local warnPsionicPulse				= mod:NewCastAnnounce(426905, 4, nil, nil, nil, nil, nil, 3)
-local warnAcidBarrage				= mod:NewSpellAnnounce(426645, 4)--, nil, nil, nil, nil, nil, 3
+local warnAcidBarrage				= mod:NewSpellAnnounce(426645, 4)--, nil, nil, nil, nil, nil, 15
 local warnRazorJaws					= mod:NewStackAnnounce(426659, 2, nil, "Tank|Healer")
 
 local specWarnShadowSmash			= mod:NewSpecialWarningRun(76590, nil, nil, nil, 4, 2)
@@ -112,7 +112,7 @@ function mod:SPELL_CAST_START(args)
 		timerAcidBarrageCD:Start(nil, args.sourceGUID)
 		if self:AntiSpam(3, 6) then
 			warnAcidBarrage:Show()
---			warnAcidBarrage:Play("shockwave")
+--			warnAcidBarrage:Play("frontal")
 		end
 	elseif spellId == 428926 then--Clenching tentacles is the new 10.2 mechanic that now triggers before the old Shadow Smash
 		timerClenchingTentaclesCD:Start(nil, args.sourceGUID)

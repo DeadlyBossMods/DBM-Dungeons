@@ -44,12 +44,12 @@ local warnMistveilTear					= mod:NewTargetNoFilterAnnounce(325021, 3, nil, "Tank
 --local specWarnGTFO					= mod:NewSpecialWarningGTFO(257274, nil, nil, nil, 1, 8)
 local specWarnAcidNova					= mod:NewSpecialWarningSpell(460092, nil, nil, nil, 2, 2)
 local specWarnBrambleBurst				= mod:NewSpecialWarningDodge(324923, nil, nil, nil, 2, 2)
-local specWarnSpearFlurry				= mod:NewSpecialWarningDodge(331718, nil, nil, nil, 2, 2)
+local specWarnSpearFlurry				= mod:NewSpecialWarningDodge(331718, nil, nil, nil, 2, 15)
 local specWarnPoisonousSecretions		= mod:NewSpecialWarningDodge(340304, nil, nil, nil, 2, 2)
 local specWarnTongueLashing				= mod:NewSpecialWarningDodge(340300, nil, nil, nil, 2, 2)
 local specWarnRadiantBreath				= mod:NewSpecialWarningDodge(340160, nil, nil, nil, 2, 2)
 local specWarnPoisonousDischarge		= mod:NewSpecialWarningDodge(340279, nil, nil, nil, 2, 2)
-local specWarnBewilderingPollen			= mod:NewSpecialWarningDodge(321968, nil, nil, nil, 1, 2)
+local specWarnBewilderingPollen			= mod:NewSpecialWarningDodge(321968, nil, nil, nil, 1, 15)
 local specWarnExpel						= mod:NewSpecialWarningDodge(463248, nil, nil, nil, 2, 2)
 local specWarnAcidGlobule				= mod:NewSpecialWarningDodge(326021, nil, nil, nil, 2, 2)
 local specWarnOvergrowth				= mod:NewSpecialWarningMoveTo(322486, nil, nil, nil, 1, 11)
@@ -133,7 +133,7 @@ function mod:SPELL_CAST_START(args)
 	if spellId == 321968 and self:AntiSpam(3, 2) then
 		if self:IsTanking("player", nil, nil, true, args.sourceGUID) then
 			specWarnBewilderingPollen:Show()
-			specWarnBewilderingPollen:Play("shockwave")
+			specWarnBewilderingPollen:Play("frontal")
 		end
 	elseif spellId == 324909 and self:AntiSpam(3, 4) then
 		warnFuriousThrashing:Show()
@@ -179,7 +179,7 @@ function mod:SPELL_CAST_START(args)
 --		self:ScheduleMethod(0.1, "BossTargetScanner", args.sourceGUID, "VolatileAcid", 0.1, 4)
 	elseif spellId == 331718 and self:AntiSpam(3, 2) then
 		specWarnSpearFlurry:Show()
-		specWarnSpearFlurry:Play("shockwave")
+		specWarnSpearFlurry:Play("frontal")
 	elseif spellId == 331743 then
 		warnBuckingRampage:Show()
 	elseif spellId == 460092 then

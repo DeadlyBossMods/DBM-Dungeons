@@ -27,8 +27,8 @@ local warnDrainLight						= mod:NewSpellAnnounce(422541, 3, nil, nil, nil, nil, 
 local warnOHHeadlock						= mod:NewTargetNoFilterAnnounce(426619, 4)
 
 local specWarnWildWallop					= mod:NewSpecialWarningDodge(423501, nil, nil, nil, 2, 2)
-local specWarnCeaselessFlame				= mod:NewSpecialWarningDodge(426261, nil, nil, nil, 2, 2)
-local specWarnShadowSmash					= mod:NewSpecialWarningDodge(422414, nil, nil, nil, 2, 2)
+local specWarnCeaselessFlame				= mod:NewSpecialWarningDodge(426261, nil, nil, nil, 2, 15)
+local specWarnShadowSmash					= mod:NewSpecialWarningDodge(422414, nil, nil, nil, 2, 15)
 local specWarnSurgingWax					= mod:NewSpecialWarningDodge(440652, nil, nil, nil, 2, 2)
 local yellCeaselessFlame					= mod:NewYell(426261)
 local specWarnOHHeadlock					= mod:NewSpecialWarningYou(426619, nil, nil, nil, 1, 2)
@@ -116,14 +116,14 @@ function mod:SPELL_CAST_START(args)
 		self:ScheduleMethod(0.1, "BossTargetScanner", args.sourceGUID, "CeaseTarget", 0.1, 6)
 		if self:AntiSpam(3, 2) then
 			specWarnCeaselessFlame:Show()
-			specWarnCeaselessFlame:Play("shockwave")
+			specWarnCeaselessFlame:Play("frontal")
 		end
 	elseif spellId == 426619 then
 		self:ScheduleMethod(0.1, "BossTargetScanner", args.sourceGUID, "OHHeadlockTarget", 0.1, 6)
 	elseif spellId == 422414 then
 		if self:AntiSpam(3, 2) then
 			specWarnShadowSmash:Show()
-			specWarnShadowSmash:Play("shockwave")
+			specWarnShadowSmash:Play("frontal")
 		end
 	elseif spellId == 440652 then
 		if self:AntiSpam(3, 2) then

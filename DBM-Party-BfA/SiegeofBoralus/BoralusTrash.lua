@@ -36,9 +36,9 @@ local warnAzeriteCharge				= mod:NewTargetAnnounce(454437, 2)
 local warnBurningTar				= mod:NewSpellAnnounce(256640, 2)
 local warnIronHook					= mod:NewSpellAnnounce(272662, 4, nil, nil, nil, nil, nil, 12)
 
-local specWarnSlobberKnocker		= mod:NewSpecialWarningDodge(256627, "Tank", nil, nil, 1, 2)
-local specWarnSingingSteel			= mod:NewSpecialWarningDodge(256709, "Tank", nil, nil, 1, 2)
-local specWarnHeavySlash			= mod:NewSpecialWarningDodge(257288, "Tank", nil, nil, 1, 2)
+local specWarnSlobberKnocker		= mod:NewSpecialWarningDodge(256627, "Tank", nil, nil, 1, 15)
+local specWarnSingingSteel			= mod:NewSpecialWarningDodge(256709, "Tank", nil, nil, 1, 15)
+local specWarnHeavySlash			= mod:NewSpecialWarningDodge(257288, "Tank", nil, nil, 1, 15)
 local specWarnCrushingSlam			= mod:NewSpecialWarningDodge(272711, nil, nil, nil, 2, 2)
 --local specWarnTrample				= mod:NewSpecialWarningDodge(272874, nil, nil, nil, 2, 2)
 local specWarnBroadside				= mod:NewSpecialWarningDodge(268260, nil, nil, nil, 2, 2)
@@ -97,10 +97,10 @@ function mod:SPELL_CAST_START(args)
 		end
 	elseif spellId == 256627 and self:AntiSpam(3, 2) then
 		specWarnSlobberKnocker:Show()
-		specWarnSlobberKnocker:Play("shockwave")
+		specWarnSlobberKnocker:Play("frontal")
 	elseif spellId == 256709 and self:AntiSpam(3, 2) then
 		specWarnSingingSteel:Show()
-		specWarnSingingSteel:Play("shockwave")
+		specWarnSingingSteel:Play("frontal")
 	elseif spellId == 257170 then
 		timerSavageTempest:Start(nil, args.sourceGUID)
 		if self:AntiSpam(4, 1) then
@@ -144,7 +144,7 @@ function mod:SPELL_CAST_START(args)
 		end
 	elseif spellId == 257288 and args:GetSrcCreatureID() == 129879 and self:AntiSpam(3, 2) then--Trash version
 		specWarnHeavySlash:Show()
-		specWarnHeavySlash:Play("shockwave")
+		specWarnHeavySlash:Play("frontal")
 	elseif spellId == 454440 then
 		if self.Options.SpecWarn454440interrupt and self:CheckInterruptFilter(args.sourceGUID, false, true) then
 			specWarnStinkyVomit:Show(args.sourceName)
@@ -313,7 +313,7 @@ function mod:OnSync(msg)
 		specWarnTrample:Play("chargemove")
 	elseif msg == "CrushingSlam" and self:AntiSpam(2.5, 2) then
 		specWarnCrushingSlam:Show()
-		specWarnCrushingSlam:Play("shockwave")
+		specWarnCrushingSlam:Play("frontal")
 	elseif msg == "Broadside" then
 		specWarnBroadside:Show()
 		specWarnBroadside:Play("watchstep")

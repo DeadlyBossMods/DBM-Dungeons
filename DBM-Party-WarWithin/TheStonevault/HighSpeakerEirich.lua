@@ -102,7 +102,7 @@ function mod:SPELL_CAST_START(args)
 	elseif spellId == 427869 then
 		self.vb.unbridledCount = self.vb.unbridledCount + 1
 		specWarnUnbridledVoid:Show(self.vb.unbridledCount)
-		specWarnUnbridledVoid:Play("shockwave")
+		specWarnUnbridledVoid:Play("frontal")
 		timerUnbfridledVoidCD:Start(nil, self.vb.unbridledCount+1)
 		updateAllTimers(self, 4.8)
 	end

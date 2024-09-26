@@ -29,8 +29,8 @@ local warnBlackBlood						= mod:NewSpellAnnounce(451003, 2)
 local warnBlackBloodEnd						= mod:NewEndAnnounce(451003, 2)
 
 local specWarnCallWebTerror					= mod:NewSpecialWarningSwitchCount(450568, nil, nil, nil, 1, 2)
-local specWarnAnglersWeb					= mod:NewSpecialWarningDodgeCount(450519, nil, nil, nil, 2, 2)
-local specWarnClawSmash						= mod:NewSpecialWarningDodgeCount(450451, nil, nil, nil, 2, 2)
+local specWarnAnglersWeb					= mod:NewSpecialWarningDodgeCount(450519, nil, nil, nil, 2, 15)
+local specWarnClawSmash						= mod:NewSpecialWarningDodgeCount(450451, nil, nil, nil, 2, 15)
 local specWarnUnendingSpines				= mod:NewSpecialWarningDodgeCount(450872, nil, nil, nil, 2, 2)
 local specWarnEnfeeblingSpittleInterrupt	= mod:NewSpecialWarningInterruptCount(450505, false, nil, nil, 1, 2)
 local specWarnRegeneratingCarapace			= mod:NewSpecialWarningInterruptCount(450449, nil, nil, nil, 1, 2, 4)--Stage 1
@@ -95,7 +95,7 @@ function mod:SPELL_CAST_START(args)
 	if args.spellId == 450519 then
 		self.vb.AnglersCount = self.vb.AnglersCount + 1
 		specWarnAnglersWeb:Show(self.vb.AnglersCount)
-		specWarnAnglersWeb:Play("shockwave")
+		specWarnAnglersWeb:Play("frontal")
 		timerAnglersWebCD:Start(nil, self.vb.AnglersCount+1)
 	elseif args.spellId == 450568 then
 		self.vb.AddCount = self.vb.AddCount + 1
@@ -105,7 +105,7 @@ function mod:SPELL_CAST_START(args)
 	elseif args.spellId == 450451 then
 		self.vb.smashCount = self.vb.smashCount + 1
 		specWarnClawSmash:Show(self.vb.smashCount)
-		specWarnClawSmash:Play("shockwave")
+		specWarnClawSmash:Play("frontal")
 		timerClawSmashCD:Start(nil, self.vb.smashCount+1)
 	elseif args.spellId == 450505 then
 		self.vb.enfeeblingSpittleCount = self.vb.enfeeblingSpittleCount + 1

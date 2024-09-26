@@ -34,7 +34,7 @@ local warnShadowsofStrife					= mod:NewCastAnnounce(449318, 3)--High Prio Interr
 local warnWebbedAegis						= mod:NewCastAnnounce(450546, 3)
 local warnBloatedEruption					= mod:NewCastAnnounce(424798, 4)
 local warnBattleRoar						= mod:NewCastAnnounce(414944, 3)
-local warnVineSpear							= mod:NewCastAnnounce(424891, 3, nil, nil, nil, nil, nil, 12)--Move to NewSpecialWarningDodge?
+local warnVineSpear							= mod:NewCastAnnounce(424891, 3, nil, nil, nil, nil, nil, 15)--Move to NewSpecialWarningDodge?
 local warnSkitterCharge						= mod:NewCastAnnounce(450197, 3, nil, nil, nil, nil, nil, 2)
 local warnWicklighterVolley					= mod:NewCastAnnounce(445191, 3)
 local warnSkullCracker						= mod:NewCastAnnounce(462686, 3)
@@ -46,20 +46,20 @@ local warnThrowDyno							= mod:NewSpellAnnounce(448600, 3)
 
 local specWarnSpearFish						= mod:NewSpecialWarningYou(430036, nil, nil, nil, 2, 12)
 local specWarnFearfulShriek					= mod:NewSpecialWarningDodge(433410, nil, nil, nil, 2, 2)
-local specWarnJaggedBarbs					= mod:NewSpecialWarningDodge(450714, nil, nil, nil, 2, 2)--11-26
-local specWarnLavablast	    				= mod:NewSpecialWarningDodge(445781, nil, nil, nil, 2, 2)
-local specWarnFungalBreath    				= mod:NewSpecialWarningDodge(415253, nil, nil, nil, 2, 2)
-local specWarnViciousStabs    				= mod:NewSpecialWarningDodge(424704, nil, nil, nil, 2, 2)
-local specWarnBlazingWick    				= mod:NewSpecialWarningDodge(449071, nil, nil, nil, 2, 2)
+local specWarnJaggedBarbs					= mod:NewSpecialWarningDodge(450714, nil, nil, nil, 2, 15)--11-26
+local specWarnLavablast	    				= mod:NewSpecialWarningDodge(445781, nil, nil, nil, 2, 15)
+local specWarnFungalBreath    				= mod:NewSpecialWarningDodge(415253, nil, nil, nil, 2, 15)
+local specWarnViciousStabs    				= mod:NewSpecialWarningDodge(424704, nil, nil, nil, 2, 15)
+local specWarnBlazingWick    				= mod:NewSpecialWarningDodge(449071, nil, nil, nil, 2, 15)
 local specWarnBladeToss						= mod:NewSpecialWarningDodge(418791, nil, nil, nil, 2, 2)
-local specWarnDefilingBreath				= mod:NewSpecialWarningDodge(455932, nil, nil, nil, 2, 2)
-local specWarnSerratedCleave				= mod:NewSpecialWarningDodge(445492, nil, nil, nil, 2, 2)--32.7
+local specWarnDefilingBreath				= mod:NewSpecialWarningDodge(455932, nil, nil, nil, 2, 15)
+local specWarnSerratedCleave				= mod:NewSpecialWarningDodge(445492, nil, nil, nil, 2, 15)--32.7
 local specWarnSpotted						= mod:NewSpecialWarningDodge(441129, nil, nil, nil, 2, 2)
 local specWarnFireCharge					= mod:NewSpecialWarningDodge(445210, nil, nil, nil, 2, 2)
-local specWarnUmbralSlam					= mod:NewSpecialWarningDodge(443292, nil, nil, nil, 2, 2)
-local specWarnUmbralSlash					= mod:NewSpecialWarningDodge(418295, nil, nil, nil, 2, 2)
-local specWarnAnglersWeb					= mod:NewSpecialWarningDodge(450519, nil, nil, nil, 2, 2)
-local specWarnShockwaveTremors				= mod:NewSpecialWarningDodge(448155, nil, nil, nil, 2, 2)--9.7-15.8
+local specWarnUmbralSlam					= mod:NewSpecialWarningDodge(443292, nil, nil, nil, 2, 15)
+local specWarnUmbralSlash					= mod:NewSpecialWarningDodge(418295, nil, nil, nil, 2, 15)
+local specWarnAnglersWeb					= mod:NewSpecialWarningDodge(450519, nil, nil, nil, 2, 15)
+local specWarnShockwaveTremors				= mod:NewSpecialWarningDodge(448155, nil, nil, nil, 2, 15)--9.7-15.8
 local specWarnEchoofRenilash				= mod:NewSpecialWarningRun(434281, nil, nil, nil, 4, 2)
 local specWarnNecroticEnd					= mod:NewSpecialWarningRun(445252, nil, nil, nil, 4, 2)
 local specWarnHorrendousRoar				= mod:NewSpecialWarningRun(450492, nil, nil, nil, 4, 2)
@@ -173,36 +173,36 @@ function mod:SPELL_CAST_START(args)
 	elseif args.spellId == 443292 then
 		if self:AntiSpam(3, 2) then
 			specWarnUmbralSlam:Show()
-			specWarnUmbralSlam:Play("shockwave")
+			specWarnUmbralSlam:Play("frontal")
 		end
 	elseif args.spellId == 418295 then
 		timerUmbrelSlashCD:Start(nil, args.sourceGUID)
 		if self:AntiSpam(3, 2) then
 			specWarnUmbralSlash:Show()
-			specWarnUmbralSlash:Play("shockwave")
+			specWarnUmbralSlash:Play("frontal")
 		end
 	elseif args.spellId == 450714 then
 		timerJaggedBarbs:Start(nil, args.sourceGUID)
 		if self:AntiSpam(3, 2) then
 			specWarnJaggedBarbs:Show()
-			specWarnJaggedBarbs:Play("shockwave")
+			specWarnJaggedBarbs:Play("frontal")
 		end
 	elseif args.spellId == 445781 then
 		timerLavablast:Start(nil, args.sourceGUID)
         timerLavablastCD:Start(nil, args.sourceGUID)
 		if self:AntiSpam(3, 2) then
 			specWarnLavablast:Show()
-			specWarnLavablast:Play("shockwave")
+			specWarnLavablast:Play("frontal")
 		end
 	elseif args.spellId == 415253 then
 		if self:AntiSpam(3, 2) then
 			specWarnFungalBreath:Show()
-			specWarnFungalBreath:Play("shockwave")
+			specWarnFungalBreath:Play("frontal")
 		end
 	elseif args.spellId == 424704 and self:IsValidWarning(args.sourceGUID) then
 		if self:AntiSpam(3, 2) then
 			specWarnViciousStabs:Show()
-			specWarnViciousStabs:Play("shockwave")
+			specWarnViciousStabs:Play("frontal")
 		end
 	elseif args.spellId == 424798 then
 		if self:AntiSpam(3, 6) then
@@ -220,7 +220,7 @@ function mod:SPELL_CAST_START(args)
 	elseif args.spellId == 424891 then
 		if self:AntiSpam(3, 6) then
 			warnVineSpear:Show()
-			warnVineSpear:Play("shockwave")
+			warnVineSpear:Play("frontal")
 		end
 	elseif args.spellId == 450197 then
 		if self:AntiSpam(3, 2) then
@@ -244,12 +244,12 @@ function mod:SPELL_CAST_START(args)
 	elseif args.spellId == 455932 then
 		if self:AntiSpam(3, 2) then
 			specWarnDefilingBreath:Show()
-			specWarnDefilingBreath:Play("shockwave")
+			specWarnDefilingBreath:Play("frontal")
 		end
 	elseif args.spellId == 445492 then
 		if self:AntiSpam(3, 2) then
 			specWarnSerratedCleave:Show()
-			specWarnSerratedCleave:Play("shockwave")
+			specWarnSerratedCleave:Play("frontal")
 		end
 	elseif args.spellId == 434281 then
 		if self:AntiSpam(3, 1) then
@@ -268,7 +268,7 @@ function mod:SPELL_CAST_START(args)
 		timerBlazingWick:Start(nil, args.sourceGUID)
 		if self:AntiSpam(3, 2) then
 			specWarnBlazingWick:Show()
-			specWarnBlazingWick:Play("shockwave")
+			specWarnBlazingWick:Play("frontal")
 		end
 	elseif args.spellId == 462686 then
 		if self:AntiSpam(3, 6) then
@@ -296,7 +296,7 @@ function mod:SPELL_CAST_START(args)
 	elseif args.spellId == 450519 then
 		if self:AntiSpam(3, 2) then
 			specWarnAnglersWeb:Show()
-			specWarnAnglersWeb:Play("shockwave")
+			specWarnAnglersWeb:Play("frontal")
 		end
 	elseif args.spellId == 450505 then
 		if self.Options.SpecWarn450505interrupt and self:CheckInterruptFilter(args.sourceGUID, nil, true) then
@@ -312,7 +312,7 @@ function mod:SPELL_CAST_START(args)
 	elseif args.spellId == 448155 then
 		if self:AntiSpam(3, 2) then
 			specWarnShockwaveTremors:Show()
-			specWarnShockwaveTremors:Play("shockwave")
+			specWarnShockwaveTremors:Play("frontal")
 		end
 	elseif args.spellId == 448161 then
 		timerEnrageCD:Start(nil, args.sourceGUID)

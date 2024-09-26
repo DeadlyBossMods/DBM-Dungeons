@@ -30,8 +30,8 @@ local warnToxicRupture						= mod:NewSpellAnnounce(438622, 4, nil, "Melee")
 local warnCalloftheBrood					= mod:NewSpellAnnounce(438877, 3)
 local warnPoisonousCloud					= mod:NewSpellAnnounce(438826, 3)
 
-local specWarnWebSpray						= mod:NewSpecialWarningDodge(434824, nil, nil, nil, 2, 2)
-local specWarnImpale						= mod:NewSpecialWarningDodge(453161, nil, nil, nil, 2, 2)
+local specWarnWebSpray						= mod:NewSpecialWarningDodge(434824, nil, nil, nil, 2, 15)
+local specWarnImpale						= mod:NewSpecialWarningDodge(453161, nil, nil, nil, 2, 15)
 local specWarnEruptingWebs					= mod:NewSpecialWarningDodge(433845, nil, nil, nil, 2, 2)
 --local yellChainLightning					= mod:NewYell(387127)
 --local specWarnStormshield					= mod:NewSpecialWarningDispel(386223, "MagicDispeller", nil, nil, 1, 2)
@@ -76,7 +76,7 @@ function mod:SPELL_CAST_START(args)
 		timerWebSprayCD:Start(nil, args.sourceGUID)
 		if self:AntiSpam(3, 2) then
 			specWarnWebSpray:Show()
-			specWarnWebSpray:Play("shockwave")
+			specWarnWebSpray:Play("frontal")
 		end
 	elseif spellId == 434802 then
 		if self.Options.SpecWarn434802interrupt and self:CheckInterruptFilter(args.sourceGUID, false, true) then
@@ -107,7 +107,7 @@ function mod:SPELL_CAST_START(args)
 		timerImpaleCD:Start(14.5, args.sourceGUID)
 		if self:AntiSpam(3, 2) then
 			specWarnImpale:Show()
-			specWarnImpale:Play("shockwave")
+			specWarnImpale:Play("frontal")
 		end
 	elseif spellId == 432967 and self:AntiSpam(5, 6) then
 		warnAlarmShill:Show()
