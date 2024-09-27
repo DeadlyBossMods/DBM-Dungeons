@@ -76,6 +76,7 @@ end
 --]]
 
 local function updateAllTimers(self, ICD)
+	if not self:IsRetail() then return end
 	DBM:Debug("updateAllTimers running", 3)
 	if timerBreathCD:GetRemaining(self.vb.breathCount+1) < ICD then
 		local elapsed, total = timerBreathCD:GetTime(self.vb.breathCount+1)
