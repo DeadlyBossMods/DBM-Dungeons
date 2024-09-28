@@ -257,6 +257,7 @@ Shared\ZulFarrak\ChiefUkorzSandscalp.lua
 Classic\SOD_DemonFallCanyon\Grimroot.lua
 Classic\SOD_DemonFallCanyon\DestructorsWraith.lua
 Classic\SOD_DemonFallCanyon\Zilbagob.lua
+Classic\SOD_DemonFallCanyon\Azgaloth.lua
 Classic\SOD_DemonFallCanyon\Pyranis.lua
 Classic\SOD_DemonFallCanyon\Diathorus.lua
 Classic\SOD_DemonFallCanyon\HellscreamsPhantom.lua
