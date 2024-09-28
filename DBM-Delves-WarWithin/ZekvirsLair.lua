@@ -14,9 +14,9 @@ mod:SetZone(2682)
 mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
-	"SPELL_CAST_START 450519 450568 450451 450505 450492 450597 453937 451003 450449 450914 451782 450872",
+	"SPELL_CAST_START 450519 450568 450451 450505 450492 450597 453937 451003 450449 450914 451782 450872 472159 472128",
 --	"SPELL_CAST_SUCCESS",
-	"SPELL_AURA_APPLIED 450505",
+	"SPELL_AURA_APPLIED 450505 472128",
 	"SPELL_AURA_REMOVED 451003",
 --	"SPELL_PERIODIC_DAMAGE",
 	"UNIT_DIED"
@@ -39,16 +39,16 @@ local specWarnEnfeeblingSpittleDispel		= mod:NewSpecialWarningDispel(450505, "Re
 local specWarnHorrendousRoar				= mod:NewSpecialWarningRunCount(450492, nil, nil, nil, 4, 2)
 local specWarnInfiniteHorror				= mod:NewSpecialWarningRunCount(451782, nil, nil, nil, 4, 2, 4)--Stage 2 version of Roar on mythic
 
-local timerAnglersWebCD						= mod:NewCDCountTimer(52.6, 450519, nil, nil, nil, 5)--Not a good sample, boss died too fast
-local timerCallWebTerrorCD					= mod:NewCDCountTimer(40, 450568, nil, nil, nil, 1)
+local timerAnglersWebCD						= mod:NewCDCountTimer(21.8, 450519, nil, nil, nil, 5)
+local timerCallWebTerrorCD					= mod:NewCDCountTimer(38.9, 450568, nil, nil, nil, 1)
 local timerClawSmashCD						= mod:NewCDCountTimer(19.4, 450451, nil, nil, nil, 3)--19.4-23
-local timerEnfeeblingSpittleCD				= mod:NewCDCountTimer(17, 450505, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON .. DBM_COMMON_L.MAGIC_ICON)
+local timerEnfeeblingSpittleCD				= mod:NewAITimer(17, 450505, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON .. DBM_COMMON_L.MAGIC_ICON)--Now using AI timer since CD differs by class
 local timerHorrendousRoarCD					= mod:NewCDCountTimer(20.6, 450492, nil, nil, nil, 3)--20.6-25
-local timerInfiniteHorrorCD					= mod:NewAITimer(20.6, 451782, nil, nil, nil, 3)
-local timerUnendingSpinesCD					= mod:NewAITimer(20.6, 450872, nil, nil, nil, 3)
-local timerRegeneratingCarapaceCD			= mod:NewAITimer(20, 450449, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
-local timerBloodInfusedCarapaceCD			= mod:NewAITimer(20, 450914, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
-local timerHatchingEggCD					= mod:NewCastNPTimer(15, 453937, nil, nil, nil, 1)
+local timerInfiniteHorrorCD					= mod:NewCDCountTimer(21.8, 451782, nil, nil, nil, 3)
+local timerUnendingSpinesCD					= mod:NewCDCountTimer(21.8, 450872, nil, nil, nil, 3)
+local timerRegeneratingCarapaceCD			= mod:NewAITimer(20, 450449, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--Now using AI timer since CD differs by class
+local timerBloodInfusedCarapaceCD			= mod:NewAITimer(20, 450914, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--Now using AI timer since CD differs by class
+local timerHatchingEgg						= mod:NewCastNPTimer(20, 453937, nil, nil, nil, 1)
 local timerWebBlastCD						= mod:NewCDNPTimer(12.1, 450597, nil, nil, nil, 2)
 
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc, 7 off interrupt
@@ -73,21 +73,19 @@ function mod:OnCombatStart(delay)
 	if self:IsMythic() then
 		self:SetStage(1)
 		self:SetCreatureID(221427)
-		DBM:AddMsg("This version isn't fully supported yet")
-		--timerClawSmashCD:Start(4.6, 1)
-		--timerEnfeeblingSpittleCD:Start(8.2, 1)
-		--timerCallWebTerrorCD:Start(18.1, 1)
-		--timerHorrendousRoarCD:Start(11.9, 1)
-		--timerAnglersWebCD:Start(20, 1)
+		timerClawSmashCD:Start(4.6, 1)
+		timerHorrendousRoarCD:Start(9.5, 1)
+		timerCallWebTerrorCD:Start(18.1, 1)
+		timerAnglersWebCD:Start(24.1, 1)
+		timerEnfeeblingSpittleCD:Start(1)--AI timer only now
 		timerRegeneratingCarapaceCD:Start(1)
-		timerUnendingSpinesCD:Start(1)
 	else
 		self:SetCreatureID(225204)
 		timerClawSmashCD:Start(4.6, 1)
-		timerEnfeeblingSpittleCD:Start(8.2, 1)
 		timerCallWebTerrorCD:Start(18.1, 1)
-		timerHorrendousRoarCD:Start(11.9, 1)
+		timerHorrendousRoarCD:Start(9.5, 1)
 		timerAnglersWebCD:Start(20, 1)
+		timerEnfeeblingSpittleCD:Start(1)--AI timer only now
 	end
 end
 
@@ -97,7 +95,7 @@ function mod:SPELL_CAST_START(args)
 		specWarnAnglersWeb:Show(self.vb.AnglersCount)
 		specWarnAnglersWeb:Play("frontal")
 		timerAnglersWebCD:Start(nil, self.vb.AnglersCount+1)
-	elseif args.spellId == 450568 then
+	elseif args.spellId == 450568 or args.spellId == 472159 then
 		self.vb.AddCount = self.vb.AddCount + 1
 		specWarnCallWebTerror:Show(self.vb.AddCount)
 		specWarnCallWebTerror:Play("killmob")
@@ -107,7 +105,7 @@ function mod:SPELL_CAST_START(args)
 		specWarnClawSmash:Show(self.vb.smashCount)
 		specWarnClawSmash:Play("frontal")
 		timerClawSmashCD:Start(nil, self.vb.smashCount+1)
-	elseif args.spellId == 450505 then
+	elseif args.spellId == 450505 or args.spellId == 472128 then
 		self.vb.enfeeblingSpittleCount = self.vb.enfeeblingSpittleCount + 1
 		if self.Options.SpecWarn450505interrupt and self:CheckInterruptFilter(args.sourceGUID, nil, true) then
 			specWarnEnfeeblingSpittleInterrupt:Show(args.sourceName, self.vb.enfeeblingSpittleCount)
@@ -131,7 +129,7 @@ function mod:SPELL_CAST_START(args)
 		timerWebBlastCD:Start(nil, args.sourceGUID)
 	elseif args.spellId == 453937 then
 		warnHatchingEgg:Show()
-		timerHatchingEggCD:Start(nil, args.sourceGUID)
+		timerHatchingEgg:Start(nil, args.sourceGUID)
 	elseif args.spellId == 450449 then
 		self.vb.regenCount = self.vb.regenCount + 1
 		specWarnRegeneratingCarapace:Show(args.sourceName, self.vb.regenCount)
@@ -173,7 +171,7 @@ end
 --]]
 
 function mod:SPELL_AURA_APPLIED(args)
-	if args.spellId == 450505 then
+	if args.spellId == 450505 or args.spellId == 472128 then
 		if self:CheckDispelFilter("magic") then
 			specWarnEnfeeblingSpittleDispel:Show(args.destName)
 			specWarnEnfeeblingSpittleDispel:Play("helpdispel")
@@ -202,7 +200,7 @@ function mod:UNIT_DIED(args)
 	local cid = self:GetCIDFromGUID(args.destGUID)
 	if cid == 224077 then--Egg Cocoon
 		timerWebBlastCD:Stop(args.destGUID)
-		timerHatchingEggCD:Stop(args.destGUID)
+		timerHatchingEgg:Stop(args.destGUID)
 	end
 end
 
