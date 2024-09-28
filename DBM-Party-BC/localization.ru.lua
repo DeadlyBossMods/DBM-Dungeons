@@ -99,15 +99,15 @@ L:SetGeneralLocalization{
 }
 
 L:SetWarningLocalization({
-	warnHeathen			= "Страж-язычник",
-	warnReaver			= "Стражник-разоритель",
-	warnSharpShooter	= "Меткий стрелок-страж",
+	warnHeathen			= "Страж-язычник: %s",
+	warnReaver			= "Стражник-разоритель: %s",
+	warnSharpShooter	= "Меткий стрелок-страж: %s",
 })
 
 L:SetTimerLocalization({
-	timerHeathen		= "Страж-язычник: %s",
-	timerReaver			= "Стражник-разоритель: %s",
-	timerSharpShooter	= "Меткий стрелок-страж: %s"
+	timerHeathen		= "Страж-язычник",
+	timerReaver			= "Стражник-разоритель",
+	timerSharpShooter	= "Меткий стрелок-страж"
 })
 
 L:SetOptionLocalization({
