@@ -156,9 +156,13 @@ function mod:SPELL_CAST_START(args)
 		timerRegeneratingCarapaceCD:Stop()
 		timerUnendingSpinesCD:Stop()
 		--Reset Timers (When known)
-		timerBloodInfusedCarapaceCD:Start(2)--, self.vb.regenCount+1
-		timerInfiniteHorrorCD:Start(2)--, self.vb.roarCount+1
-		timerUnendingSpinesCD:Start(2)--, self.vb.spinesCount+1
+		timerClawSmashCD:Start(14.5, self.vb.smashCount+1)
+		timerUnendingSpinesCD:Start(18.1, 1)
+		timerCallWebTerrorCD:Start(27.95, self.vb.AddCount+1)
+		timerAnglersWebCD:Start(30.3, self.vb.AnglersCount+1)
+		timerInfiniteHorrorCD:Start(35.1, self.vb.roarCount+1)
+		timerEnfeeblingSpittleCD:Start(2)--AI used since it's variable cd based on spec.
+		timerBloodInfusedCarapaceCD:Start(2)--AI used since it's variable cd based on spec.
 	end
 end
 
