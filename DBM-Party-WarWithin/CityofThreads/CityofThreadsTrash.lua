@@ -99,8 +99,8 @@ end
 
 function mod:SPELL_CAST_START(args)
 	if not self.Options.Enabled then return end
-	local spellId = args.spellId
 	if not self:IsValidWarning(args.sourceGUID) then return end
+	local spellId = args.spellId
 	if spellId == 443430 then
 		if self.Options.SpecWarn443430interrupt and self:CheckInterruptFilter(args.sourceGUID, false, true) then
 			specWarnSilkBinding:Show(args.sourceName)
