@@ -32,7 +32,7 @@ local specWarnPulverizingPounce				= mod:NewSpecialWarningDodge(447141, nil, nil
 local specWarnLavaCannon					= mod:NewSpecialWarningDodge(449130, nil, nil, nil, 2, 2)
 local specWarnCrystalSalvo					= mod:NewSpecialWarningDodge(426345, nil, nil, nil, 2, 2)
 local specWarnShieldStampede				= mod:NewSpecialWarningDodge(448640, nil, nil, nil, 2, 15)
-local specWarnSmashRock						= mod:NewSpecialWarningDodge(428879, nil, nil, nil, 2, 15)
+local specWarnSmashRock						= mod:NewSpecialWarningSpell(428879, nil, nil, nil, 2, 15)
 local specWarnGraniteEruption				= mod:NewSpecialWarningDodge(428703, nil, nil, nil, 2, 2)
 local specWarnVoidStorm						= mod:NewSpecialWarningSpell(426771, nil, nil, nil, 2, 2)
 local specWarnEarthBurstTotem				= mod:NewSpecialWarningSwitch(429427, nil, nil, nil, 1, 2)
@@ -153,9 +153,9 @@ function mod:SPELL_CAST_START(args)
 		end
 	elseif spellId == 428879 then
 		timerSmashRockCD:Start(nil, args.sourceGUID)
-		if self:AntiSpam(3, 2) then
+		if self:AntiSpam(3, 4) then
 			specWarnSmashRock:Show()
-			specWarnSmashRock:Play("frontal")
+			specWarnSmashRock:Play("carefly")
 		end
 	elseif spellId == 428703 then
 		timerGraniteEruptionCD:Start(nil, args.sourceGUID)

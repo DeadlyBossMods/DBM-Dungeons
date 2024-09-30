@@ -126,7 +126,7 @@ function mod:OnCombatStart(delay)
 	self.vb.orbCount = 0
 	if self:IsMythic() then
 		timerMoltenMetalCD:Start(4-delay, 1)--4-5.2
-		timerScrapSongCD:Start(18.2-delay, 1)
+		timerScrapSongCD:Start(15.8-delay, 1)
 		timerExhaustVentsCD:Start(34.1-delay, 1)--34.1-41 based on spell lockouts from interrupts
 		--
 		timerIgneousHammerCD:Start(6-delay, 1)
