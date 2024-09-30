@@ -111,6 +111,15 @@ L= DBM:GetModLocalization(133)
 ------------
 L= DBM:GetModLocalization(134)
 
+---------
+--Trash--
+---------
+L = DBM:GetModLocalization("BoralusTrash")
+
+L:SetGeneralLocalization({
+	name =	"그럼 바톨 일반몹"
+})
+
 ----------------------------
 --  Halls of Origination  --
 ----------------------------
