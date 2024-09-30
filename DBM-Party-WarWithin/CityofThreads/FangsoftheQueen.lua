@@ -99,7 +99,7 @@ function mod:SPELL_CAST_START(args)
 		else
 			self:SetStage(1)
 			--Start Nx Active timers, Vx Inactive timers
-			timerShadeSlashCD:Start(25.4, self.vb.tankCount+1)
+			timerShadeSlashCD:Start(24.0, self.vb.tankCount+1)
 			timerDuskbringerCD:Start(39.5, self.vb.duskCount+1)
 			timerIceSicklesCD:Start(42.3, self.vb.iceCount+1)
 			self:Schedule(47.3, buggedIceSicklesCast, self)

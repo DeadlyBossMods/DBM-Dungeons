@@ -98,15 +98,15 @@ L:SetGeneralLocalization{
 }
 
 L:SetWarningLocalization({
-	warnHeathen			= "이교도 경비병",
-	warnReaver			= "학살자 경비병",
-	warnSharpShooter	= "명사수 경비병"
+	warnHeathen			= "이교도 경비병: %s",
+	warnReaver			= "학살자 경비병: %s",
+	warnSharpShooter	= "명사수 경비병: %s"
 })
 
 L:SetTimerLocalization({
-	timerHeathen		= "이교도 경비병: %s",
-	timerReaver			= "학살자 경비병: %s",
-	timerSharpShooter	= "명사수 경비병: %s"
+	timerHeathen		= "이교도 경비병",
+	timerReaver			= "학살자 경비병",
+	timerSharpShooter	= "명사수 경비병"
 })
 
 L:SetOptionLocalization({

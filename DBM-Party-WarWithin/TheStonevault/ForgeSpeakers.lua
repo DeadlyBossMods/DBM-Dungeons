@@ -46,7 +46,7 @@ local specWarnScrapSong						= mod:NewSpecialWarningDodgeCount(428202, nil, nil,
 --Pretty much all of his timers can be delayed by up to 6 seconds by spell lockouts from interrupts
 local timerExhaustVentsCD					= mod:NewCDCountTimer(27, 445541, nil, nil, nil, 3)
 local timerExhaustVents						= mod:NewBuffActiveTimer(6, 445541, nil, nil, nil, 5)
-local timerMoltenMetalCD					= mod:NewCDCountTimer(14.5, 430097, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerMoltenMetalCD					= mod:NewCDCountTimer(13.4, 430097, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerScrapSongCD						= mod:NewCDCountTimer(49.7, 428202, nil, nil, nil, 3)
 --Speaker Dorlita
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(28461))
@@ -126,7 +126,7 @@ function mod:OnCombatStart(delay)
 	self.vb.orbCount = 0
 	if self:IsMythic() then
 		timerMoltenMetalCD:Start(4-delay, 1)--4-5.2
-		timerScrapSongCD:Start(18.2-delay, 1)
+		timerScrapSongCD:Start(15.4-delay, 1)
 		timerExhaustVentsCD:Start(34.1-delay, 1)--34.1-41 based on spell lockouts from interrupts
 		--
 		timerIgneousHammerCD:Start(6-delay, 1)
@@ -185,6 +185,7 @@ function mod:SPELL_CAST_START(args)
 			specWarnIgneousHammer:Show()
 			specWarnIgneousHammer:Play("defensive")
 		end
+		timerIgneousHammerCD:Stop()--Ignore stutter casts due to kiting trigger debug
 		timerIgneousHammerCD:Start(nil, self.vb.hammerCount+1)
 		updateDorlitaTimers(self, 2)
 	end
@@ -248,7 +249,7 @@ end
 
 function mod:SPELL_AURA_REMOVED(args)
 	local spellId = args.spellId
-	if spellId == 445541 then
+	if spellId == 445541 and self:AntiSpam(3, 1) then
 		warnVentilationOver:Show()
 		timerExhaustVents:Stop()
 	end

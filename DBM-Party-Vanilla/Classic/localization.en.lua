@@ -1584,6 +1584,14 @@ L:SetGeneralLocalization{
 	name 		= "Zilbagob"
 }
 -----------------------------
+--  Azgaloth  --
+-----------------------------
+L = DBM:GetModLocalization("Azgaloth")
+
+L:SetGeneralLocalization{
+	name 		= "Azgaloth"
+}
+-----------------------------
 --  Pyranis  --
 -----------------------------
 L = DBM:GetModLocalization("Pyranis")

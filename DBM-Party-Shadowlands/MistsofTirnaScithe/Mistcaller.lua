@@ -39,7 +39,7 @@ local specWarnPattyCake				= mod:NewSpecialWarningInterrupt(321828, nil, nil, ni
 
 local timerDodgeBallCD				= mod:NewCDCountTimer(12.1, 321834, nil, nil, nil, 3)--12.1-18
 local timerFreezeTagCD				= mod:NewCDCountTimer(21.8, 321873, nil, nil, nil, 3)--21.8-25
-local timerPattyCakeCD				= mod:NewCDCountTimer(20.6, 321828, nil, nil, nil, 3)--20-26
+local timerPattyCakeCD				= mod:NewCDCountTimer(19.4, 321828, nil, nil, nil, 3)--20-26
 
 mod:AddNamePlateOption("NPAuraOnFixate", 321891)
 mod:AddSetIconOption("SetIconOnAdds2", -21691, true, 5, {1, 2, 3, 4})

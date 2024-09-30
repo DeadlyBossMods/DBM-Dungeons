@@ -37,7 +37,7 @@ local warnAnimatedShadows					= mod:NewCountAnnounce(452127, 3)--Change to switc
 
 local specWarnTerrifyingSlam				= mod:NewSpecialWarningRunCount(427001, nil, nil, nil, 4, 2)
 local specWarnDarkOrb						= mod:NewSpecialWarningDodgeCount(426860, nil, nil, nil, 2, 2)
-local specWarnShadowDecay					= mod:NewSpecialWarningDodgeCount(426787, nil, nil, nil, 2, 2)
+local specWarnShadowDecay					= mod:NewSpecialWarningCount(426787, nil, nil, nil, 2, 2)
 --local specWarnGTFO						= mod:NewSpecialWarningGTFO(372820, nil, nil, nil, 1, 8)
 local specWarnCongealedDarkness				= mod:NewSpecialWarningInterruptCount(452099, nil, nil, nil, 1, 2, 4)
 
