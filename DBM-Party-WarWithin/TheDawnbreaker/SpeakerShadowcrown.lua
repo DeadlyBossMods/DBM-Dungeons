@@ -60,15 +60,15 @@ local allTimers = {
 		[445996] = {13.1},--Collapsing Darkness (Non Mythic)
 		[453140] = {23.3, 28.6, 26.3},--Collapsing Night (Mythic)
 		[4267341] = {9.3, 35.5},--Burning Shadows (Non Mythic)
-		[4267342] = {19.2, 16.2, 24.8},--Burning Shadows (Mythic)
+		[4267342] = {19.2, 15.7, 24.8},--Burning Shadows (Mythic)
 	},
 	[2] = {
 		[425264] = {6.8, 17},--Obsidian Blast (Non Mythic)
-		[453212] = {18.2, 23.5, 25.1, 24.4, 26.9},--Obsidian Beam (Mythic)
+		[453212] = {18.2, 23.5, 23.5, 24.4, 26.9},--Obsidian Beam (Mythic)
 		[445996] = {13.8, 18},--Collapsing Darkness (Non Mythic)
 		[453140] = {8.7, 27.8, 25.1, 25.1, 26.7},--Collapsing Night (Mythic)
 		[4267341] = {10.1, 25.2},--Burning Shadows (Non Mythic)
-		[4267342] = {14.5, 19.2, 21.9, 21.1, 25.1},--Burning Shadows (Mythic)
+		[4267342] = {14.5, 19.2, 21.9, 18.0, 25.1},--Burning Shadows (Mythic)
 	},								---23.5
 }
 

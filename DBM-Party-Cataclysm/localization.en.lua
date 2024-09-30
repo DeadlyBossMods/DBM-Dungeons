@@ -114,6 +114,15 @@ L= DBM:GetModLocalization(133)
 ------------
 L= DBM:GetModLocalization(134)
 
+---------
+--Trash--
+---------
+L = DBM:GetModLocalization("BoralusTrash")
+
+L:SetGeneralLocalization({
+	name =	"Grim Batol Trash"
+})
+
 ----------------------------
 --  Halls of Origination  --
 ----------------------------
