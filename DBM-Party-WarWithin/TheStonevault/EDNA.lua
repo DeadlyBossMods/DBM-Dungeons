@@ -117,9 +117,10 @@ end
 function mod:SPELL_AURA_APPLIED(args)
 	local spellId = args.spellId
 	if spellId == 424795 then
-		self.vb.laserCount = self.vb.laserCount + 1
 		if self:AntiSpam(4, 1) then
+			self.vb.laserCount = self.vb.laserCount + 1
 			if self:IsMythic() then
+				--14.0, 20.0, 28.0, 20.0, 28.0, 20.0
 				if self.vb.laserCount % 2 == 0 then
 					timerRefractingBeamCD:Start(28, self.vb.laserCount+1)
 				else

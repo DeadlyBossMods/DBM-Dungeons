@@ -77,7 +77,7 @@ local function findCreation(self, delay)
 		if id == 164578 then--Creation
 			local guid = UnitGUID("boss"..i)
 			timerMutilateCD:Start(6-delay, guid)
-			timerMeatHookCD:Start(19.6-delay, guid)
+			timerMeatHookCD:Start(10-delay, guid)
 			break
 		end
 	end
@@ -153,7 +153,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		timerSeverFleshCD:Start(6, self.vb.severCount+1)
 	elseif spellId == 334321 then--Festering Rot
 		timerMutilateCD:Start(7.4, args.destGUID)
-		timerMeatHookCD:Start(12.2, args.destGUID)
+		timerMeatHookCD:Start(11.4, args.destGUID)
 	end
 end
 
