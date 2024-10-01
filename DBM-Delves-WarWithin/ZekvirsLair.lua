@@ -107,7 +107,7 @@ function mod:SPELL_CAST_START(args)
 		timerClawSmashCD:Start(nil, self.vb.smashCount+1)
 	elseif args.spellId == 450505 or args.spellId == 472128 then
 		self.vb.enfeeblingSpittleCount = self.vb.enfeeblingSpittleCount + 1
-		if self.Options.SpecWarn450505interrupt and self:CheckInterruptFilter(args.sourceGUID, nil, true) then
+		if self.Options.SpecWarn450505interruptcount and self:CheckInterruptFilter(args.sourceGUID, nil, true) then
 			specWarnEnfeeblingSpittleInterrupt:Show(args.sourceName, self.vb.enfeeblingSpittleCount)
 			specWarnEnfeeblingSpittleInterrupt:Play("kickcast")
 		else
