@@ -17,7 +17,7 @@ mod:DisableESCombatDetection()--Fires during trash in current TWW build, causing
 mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
-	"SPELL_CAST_START 257459 275107 257326 261428 260924 257288",
+	"SPELL_CAST_START 257459 275107 257326 261428 260924 257288 272662",
 	"SPELL_CAST_SUCCESS 257288",
 	"SPELL_AURA_APPLIED 257459 260954 261428 256709",
 	"UNIT_DIED",
@@ -38,6 +38,7 @@ mod:RegisterEventsInCombat(
 --Chopper Redhook
 local warnOntheHook					= mod:NewTargetNoFilterAnnounce(257459, 2)
 local warnMeatHook					= mod:NewCastAnnounce(275107, 2)
+local warnIronHook					= mod:NewSpellAnnounce(272662, 4, nil, nil, nil, nil, nil, 12)
 --Sergeant Bainbridge
 local warnIronGaze					= mod:NewTargetNoFilterAnnounce(260954, 2)
 
@@ -57,8 +58,9 @@ local specWarnCannonBarrage			= mod:NewSpecialWarningDodgeCount(257540, nil, nil
 --local specWarnAdds					= mod:NewSpecialWarningAdds(257649, "-Healer", nil, nil, 1, 2)
 
 --Chopper Redhook
---local timerOntheHookCD				= mod:NewCDTimer(13, 257459, nil, nil, nil, 3)
---local timerGoreCrashCD				= mod:NewCDTimer(13, 257326, nil, nil, nil, 3)--24.9, 43.3
+--local timerOntheHookCD			= mod:NewCDTimer(13, 257459, nil, nil, nil, 3)
+--local timerGoreCrashCD			= mod:NewCDTimer(13, 257326, nil, nil, nil, 3)--24.9, 43.3
+local timerIronHookCD				= mod:NewCDTimer(20.8, 272662, nil, nil, nil, 3)
 --Sergeant Bainbridge
 --local timerIronGazeCD				= mod:NewCDTimer(13, 260954, nil, nil, nil, 3)
 --local timerSteelTempestCD			= mod:NewCDTimer(13, 260924, nil, nil, nil, 3)
@@ -128,6 +130,10 @@ function mod:SPELL_CAST_START(args)
 		end
 --	elseif spellId == 260954 then
 		--timerIronGazeCD:Start()
+	elseif spellId == 272662 and args:GetSrcCreatureID() == 128650 then
+		warnIronHook:Show()
+		warnIronHook:Play("pullin")
+		timerIronHookCD:Start()
 	end
 end
 
