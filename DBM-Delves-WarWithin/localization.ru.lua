@@ -7,7 +7,7 @@ local L
 L = DBM:GetModLocalization("DelveTrashCommon")
 
 L:SetGeneralLocalization({
-	name =	"Трэш мобы Погружение в норы"
+	name =	"Трэш мобы Вылазки"
 })
 
 ---------------------
