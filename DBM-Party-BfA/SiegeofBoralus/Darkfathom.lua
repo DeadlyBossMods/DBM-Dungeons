@@ -22,9 +22,9 @@ local specWarnCrashingTide			= mod:NewSpecialWarningDodgeCount(261563, nil, nil,
 local specWarnBreakWater			= mod:NewSpecialWarningDodgeCount(257882, nil, nil, nil, 2, 2)
 local specWarnTidalSurge			= mod:NewSpecialWarningMoveTo(276068, nil, nil, nil, 3, 2)
 
-local timerCrashingTideCD			= mod:NewCDCountTimer(21.3, 261563, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)--15.8 before
-local timerBreakWaterCD				= mod:NewCDCountTimer(25.9, 257882, nil, nil, nil, 3)--30 before
-local timerTidalSurgeCD				= mod:NewCDCountTimer(49.7, 276068, nil, nil, nil, 2, nil, DBM_COMMON_L.DEADLY_ICON)--Still the same
+local timerCrashingTideCD			= mod:NewCDCountTimer(23, 261563, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)--15.8 before
+local timerBreakWaterCD				= mod:NewCDCountTimer(20.6, 257882, nil, nil, nil, 3)--30 before
+local timerTidalSurgeCD				= mod:NewCDCountTimer(48.5, 276068, nil, nil, nil, 2, nil, DBM_COMMON_L.DEADLY_ICON)--Still the same
 
 mod.vb.crashingTideCount = 0
 mod.vb.breakwaterCount = 0
@@ -50,7 +50,9 @@ function mod:SPELL_CAST_START(args)
 		self.vb.tidalSurgeCount = self.vb.tidalSurgeCount + 1
 		specWarnTidalSurge:Show(DBM_COMMON_L.BREAK_LOS)
 		specWarnTidalSurge:Play("findshelter")
-		timerTidalSurgeCD:Start(nil, self.vb.tidalSurgeCount+1)
+		--"Break Water-257882-npc:128651-00007B64C4 = pull:7.2, 29.1, 20.6, 29.2",
+		--https://www.warcraftlogs.com/reports/14taVJYZ3KHRm9n6#fight=56&pins=2%24Off%24%23244F4B%24expression%24ability.id%20%3D%20257882%20and%20type%20%3D%20%22begincast%22&view=events
+		timerTidalSurgeCD:Start(self.vb.tidalSurgeCount % 2 == 0 and 20.6 or 29.1, self.vb.tidalSurgeCount+1)
 	elseif spellId == 257862 and self:AntiSpam(5, 1) then--TWW has it in combat log now
 		self.vb.crashingTideCount = self.vb.crashingTideCount + 1
 		if self:IsTanking("player", "boss1", nil, true) then

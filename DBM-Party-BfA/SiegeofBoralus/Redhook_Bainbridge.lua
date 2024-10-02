@@ -97,7 +97,7 @@ function mod:OnCombatStart(delay)
 		--timerIronGazeCD:Start(1-delay)
 		--timerSteelTempestCD:Start(1-delay)
 	--end
-	timerCannonBarrageCD:Start(18-delay, 1)
+	timerCannonBarrageCD:Start(10.9-delay, 1)
 	self:Schedule(1.5, checkWhichBoss, self)
 end
 
