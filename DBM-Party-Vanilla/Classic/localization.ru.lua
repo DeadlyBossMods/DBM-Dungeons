@@ -1535,3 +1535,63 @@ L = DBM:GetModLocalization(489)
 L:SetGeneralLocalization{
 	name 		= "Вождь Укорз Песчаная Плешь"
 }
+
+-----------------------------
+--Demon Fall Canyon
+-----------------------------
+--  Grimroot  --
+-----------------------------
+L = DBM:GetModLocalization("Grimroot")
+
+L:SetGeneralLocalization{
+	name 		= "Мрачнокорень"
+}
+
+-----------------------------
+--  Diathorus the Seeker  --
+-----------------------------
+L = DBM:GetModLocalization("Diathorus")
+
+L:SetGeneralLocalization{
+	name 		= "Диатор Ищейка"
+}
+-----------------------------
+--  Destructor's Wraith  --
+-----------------------------
+L = DBM:GetModLocalization("DestructorsWraith")
+
+L:SetGeneralLocalization{
+	name 		= "Призрак Разрушителя"
+}
+-----------------------------
+--  Zilbagob  --
+-----------------------------
+L = DBM:GetModLocalization("Zilbagob")
+
+L:SetGeneralLocalization{
+	name 		= "Зилбагоб"
+}
+-----------------------------
+--  Azgaloth  --
+-----------------------------
+L = DBM:GetModLocalization("Azgaloth")
+
+L:SetGeneralLocalization{
+	name 		= "Азгалота"
+}
+-----------------------------
+--  Pyranis  --
+-----------------------------
+L = DBM:GetModLocalization("Pyranis")
+
+L:SetGeneralLocalization{
+	name 		= "Пиранис"
+}
+-----------------------------
+--  Hellscream's Phantom  --
+-----------------------------
+L = DBM:GetModLocalization("HellscreamsPhantom")
+
+L:SetGeneralLocalization{
+	name 		= "Фантом Адского Крика"
+}

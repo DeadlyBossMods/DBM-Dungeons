@@ -77,7 +77,7 @@ function mod:OnCombatStart(delay)
 	timerDuskbringerCD:Start(18.5-delay, 1)
 	timerIceSicklesCD:Start(20.4-delay, 1)
 	self:Schedule(25.4, buggedIceSicklesCast, self)
-	timerNextSwapCD:Start(28.5-delay, 1)
+	timerNextSwapCD:Start(28.1-delay, 1)
 end
 
 function mod:SPELL_CAST_START(args)
