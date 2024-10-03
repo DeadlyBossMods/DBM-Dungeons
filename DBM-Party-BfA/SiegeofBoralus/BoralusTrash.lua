@@ -62,10 +62,10 @@ local specWarnShatteringBellow		= mod:NewSpecialWarningCast(257732, "SpellCaster
 --copilot, there are no NewCDTimer objects in this mod, only NewCDNPTimer objects
 --copilot, there is no DBM_CORE_L in this mod, only DBM_COMMON_L
 local timerSlobberknockerCD			= mod:NewCDPNPTimer(18.8, 256627, nil, nil, nil, 5)--18.8-20.6
-local timerBurningTarCD				= mod:NewCDNPTimer(22.6, 256640, nil, nil, nil, 3)
+local timerBurningTarCD				= mod:NewCDNPTimer(20.6, 256640, nil, nil, nil, 3)
 local timerSavageTempestCD			= mod:NewCDNPTimer(19.1, 257170, nil, nil, nil, 3)
 local timerSavageTempest			= mod:NewCastNPTimer(3, 257170, nil, nil, nil, 5)
-local timerSingSteelCD				= mod:NewCDNPTimer(17, 256709, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+local timerSingSteelCD				= mod:NewCDNPTimer(16.5, 256709, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerHeavySlashCD				= mod:NewCDPNPTimer(20.6, 257288, nil, nil, nil, 5)
 local timerSightedArtCD				= mod:NewCDNPTimer(12.1, 272421, nil, nil, nil, 3)
 local timerAzeriteChargeCD			= mod:NewCDNPTimer(15.7, 454437, nil, nil, nil, 3)

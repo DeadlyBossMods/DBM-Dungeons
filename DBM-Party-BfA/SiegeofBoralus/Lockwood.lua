@@ -11,7 +11,7 @@ mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 269029 268230 268260 463182",
-	"SPELL_CAST_SUCCESS 268963 268752 181089",
+	"SPELL_CAST_SUCCESS 268963 268752 181089 268230",
 	"SPELL_AURA_APPLIED 272421",
 	"UNIT_DIED"
 --	"UNIT_SPELLCAST_START boss1 boss2 boss3 boss4 boss5",--boss and Adds
@@ -37,8 +37,8 @@ local specWarnBroadside				= mod:NewSpecialWarningDodgeCount(268260, "Tank", nil
 local timerMassBombardmentCD		= mod:NewCDCountTimer(25, 463185, nil, nil, nil, 3)
 local timerRicochetCD				= mod:NewCDCountTimer(18.2, 463182, nil, nil, nil, 3)
 --local timerWithdrawCD				= mod:NewCDCountTimer(40, 268752, nil, nil, nil, 6)--Health based now
-local timerCleartheDeckCD			= mod:NewCDCountTimer(18.2, 269029, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
-local timerCrimsonSwipeCD			= mod:NewCDNPTimer(11.8, 268230, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)--11.8-12.2 now
+local timerCleartheDeckCD			= mod:NewCDCountTimer(17.7, 269029, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+local timerCrimsonSwipeCD			= mod:NewCDNPTimer(10.6, 268230, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)--11.8-12.2 now
 local timerBroadsideCD				= mod:NewCDCountTimer(12.1, 268260, nil, nil, nil, 3)--12.1-14.2
 
 mod.vb.massBombCount = 0
@@ -74,7 +74,6 @@ function mod:SPELL_CAST_START(args)
 		if self:AntiSpam(3, 1) then
 			warnCrimsonSwipe:Show()
 		end
-		timerCrimsonSwipeCD:Start(nil, args.sourceGUID)
 	elseif spellId == 268260 and args:GetSrcCreatureID() == 136549 then--Broadside
 		self.vb.broadCount = self.vb.broadCount + 1
 		specWarnBroadside:Show(self.vb.broadCount)
@@ -92,6 +91,8 @@ function mod:SPELL_CAST_SUCCESS(args)
 	if spellId == 268963 then--Unstable Ordnance
 		warnUnstableOrdnance:Show()
 		timerBroadsideCD:Stop()
+	elseif spellId == 268230 then
+		timerCrimsonSwipeCD:Start(nil, args.sourceGUID)
 	elseif spellId == 268752 then--Withdraw (boss Leaving)
 		self:SetStage(2)
 		self.vb.withdrawCount = self.vb.withdrawCount + 1
