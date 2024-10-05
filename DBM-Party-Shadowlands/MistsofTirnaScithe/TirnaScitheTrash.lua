@@ -362,7 +362,7 @@ function mod:UNIT_DIED(args)
 		timerSpearFlurryCD:Stop(args.destGUID)--Removed ability?
 		timerExpelCD:Stop(args.destGUID)
 		timerMistWardCD:Stop(args.destGUID)
-	elseif cid == 164920 then--Drust Soulcleaver
+	elseif cid == 164920 or cid == 172991 then--Drust Soulcleaver
 		timerSoulSpiritCD:Stop(args.destGUID)
 	elseif cid == 166299 then--Mistveil Tender
 		timerNourishtheForestCD:Stop(args.destGUID)
