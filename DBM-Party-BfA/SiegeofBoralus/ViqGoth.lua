@@ -48,7 +48,7 @@ function mod:OnCombatStart(delay)
 	table.wipe(seenAdds)
 	self:SetStage(1)
 	self.vb.watersCount = 0
-	timerPutridWatersCD:Start(3.2-delay, 1)
+	timerPutridWatersCD:Start(3-delay, 1)
 	timerCalloftheDeepCD:Start(6.3-delay)
 	--timerDemolisherTerrorCD:Start(19.9-delay, 1)--Should be started by IEEU event
 	if self.Options.RangeFrame then

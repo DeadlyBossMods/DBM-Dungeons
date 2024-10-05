@@ -62,10 +62,10 @@ local specWarnShatteringBellow		= mod:NewSpecialWarningCast(257732, "SpellCaster
 --copilot, there are no NewCDTimer objects in this mod, only NewCDNPTimer objects
 --copilot, there is no DBM_CORE_L in this mod, only DBM_COMMON_L
 local timerSlobberknockerCD			= mod:NewCDPNPTimer(18.8, 256627, nil, nil, nil, 5)--18.8-20.6
-local timerBurningTarCD				= mod:NewCDNPTimer(22.6, 256640, nil, nil, nil, 3)
+local timerBurningTarCD				= mod:NewCDNPTimer(20.6, 256640, nil, nil, nil, 3)
 local timerSavageTempestCD			= mod:NewCDNPTimer(19.1, 257170, nil, nil, nil, 3)
 local timerSavageTempest			= mod:NewCastNPTimer(3, 257170, nil, nil, nil, 5)
-local timerSingSteelCD				= mod:NewCDNPTimer(17, 256709, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+local timerSingSteelCD				= mod:NewCDNPTimer(16.5, 256709, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerHeavySlashCD				= mod:NewCDPNPTimer(20.6, 257288, nil, nil, nil, 5)
 local timerSightedArtCD				= mod:NewCDNPTimer(12.1, 272421, nil, nil, nil, 3)
 local timerAzeriteChargeCD			= mod:NewCDNPTimer(15.7, 454437, nil, nil, nil, 3)
@@ -173,7 +173,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 	elseif spellId == 257170 then
 		timerSavageTempestCD:Start(16.1, args.sourceGUID)--19.1 - 3
 	elseif spellId == 256709 then
-		timerSingSteelCD:Start(15, args.sourceGUID)--17 - 2
+		timerSingSteelCD:Start(14.5, args.sourceGUID)--16.6 - 2
 	elseif spellId == 257288 and args:GetSrcCreatureID() == 129879 then
 		timerHeavySlashCD:Start(17.8, args.sourceGUID)--20.6 - 2.8
 	elseif spellId == 272422 then--No filter needed, boss version doesn't fire this spellID
@@ -189,7 +189,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 	elseif spellId == 272546 then
 		timerBananaRampageCD:Start(15.4, args.sourceGUID)
 	elseif spellId == 454440 then
-		timerStinkyVomitCD:Start(18.1, args.sourceGUID)--16.1 - 2
+		timerStinkyVomitCD:Start(16.1, args.sourceGUID)
 	elseif spellId == 272711 then
 		timerCrushingSlamCD:Start(17.1, args.sourceGUID)--20.6 - 3.5
 	elseif spellId == 257169 then
@@ -209,7 +209,7 @@ function mod:SPELL_INTERRUPT(args)
 	if args.extraSpellId == 275826 then
 		timerBolsteringShoutCD:Start(15.6, args.destGUID)--18.1 - 2.5
 	elseif args.extraSpellId == 454440 then
-		timerStinkyVomitCD:Start(18.1, args.destGUID)--16.1 - 2
+		timerStinkyVomitCD:Start(16.1, args.destGUID)
 	elseif args.extraSpellId == 272571 then
 		timerChoakingWatersCD:Start(26.6, args.destGUID)--29.1 - 2.5
 	end

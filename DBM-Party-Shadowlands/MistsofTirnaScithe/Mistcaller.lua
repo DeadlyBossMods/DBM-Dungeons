@@ -11,8 +11,11 @@ mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 336499 321471 321834 321873 321828 321669 341709",
+	"SPELL_SUMMON 321873",
 	"SPELL_AURA_APPLIED 321891 321828",
-	"SPELL_AURA_REMOVED 321891 336499 321471"
+	"SPELL_AURA_REMOVED 321891 336499 321471",
+	"SPELL_INTERRUPT",
+	"UNIT_DIED"
 --	"SPELL_CAST_SUCCESS",
 --	"SPELL_PERIODIC_DAMAGE",
 --	"SPELL_PERIODIC_MISSED",
@@ -34,14 +37,16 @@ local warnPattyCake					= mod:NewTargetNoFilterAnnounce(321828, 3)
 
 local specWarnDodgeBall				= mod:NewSpecialWarningDodgeCount(321834, nil, nil, nil, 2, 2)
 local specWarnFixate				= mod:NewSpecialWarningRun(321891, nil, nil, nil, 4, 2)
-local specWarnPattyCake				= mod:NewSpecialWarningInterrupt(321828, nil, nil, nil, 1, 2)
+local specWarnPattyCake				= mod:NewSpecialWarningInterrupt(321828, nil, nil, nil, 3, 2)
 --local specWarnGTFO					= mod:NewSpecialWarningGTFO(257274, nil, nil, nil, 1, 8)
 
 local timerDodgeBallCD				= mod:NewCDCountTimer(12.1, 321834, nil, nil, nil, 3)--12.1-18
 local timerFreezeTagCD				= mod:NewCDCountTimer(21.8, 321873, nil, nil, nil, 3)--21.8-25
-local timerPattyCakeCD				= mod:NewCDCountTimer(19.4, 321828, nil, nil, nil, 3)--20-26
+local timerPattyCakeCD				= mod:NewCDCountTimer(19.4, 321828, nil, nil, nil, 4, nil, DBM_COMMON_L.TANK_ICON..DBM_COMMON_L.INTERRUPT_ICON)--20-26
+local timerPattyCake				= mod:NewCastTimer(2.5, 321828, nil, nil, nil, 5, nil, DBM_COMMON_L.DEADLY_ICON..DBM_COMMON_L.INTERRUPT_ICON)
 
-mod:AddNamePlateOption("NPAuraOnFixate", 321891)
+mod:AddNamePlateOption("NPAuraOnFixate", 321891)--Sets NP icon if you're target of fixate
+mod:AddNamePlateOption("NPAuraOnFreezeTag", 321873, false)--Sets NP on it at all times
 mod:AddSetIconOption("SetIconOnAdds2", -21691, true, 5, {1, 2, 3, 4})
 --mod:GroupSpells(321873, 321891)--Freeze Tag and associated fixate
 
@@ -60,14 +65,14 @@ function mod:OnCombatStart(delay)
 	timerDodgeBallCD:Start(6-delay, 1)
 	timerPattyCakeCD:Start(12.2-delay, 1)--12.2-14.3
 	timerFreezeTagCD:Start(15.9-delay, 1)--15.9-18.5, Sometimes cast is skipped?
-	if self.Options.NPAuraOnFixate then
+	if self.Options.NPAuraOnFixate or self.Options.NPAuraOnFreezeTag then
 		DBM:FireEvent("BossMod_EnableHostileNameplates")
 	end
 end
 
 function mod:OnCombatEnd()
 	table.wipe(seenAdds)
-	if self.Options.NPAuraOnFixate then
+	if self.Options.NPAuraOnFreezeTag or self.Options.NPAuraOnFreezeTag then
 		DBM.Nameplate:Hide(true, nil, nil, nil, true, true)
 	end
 end
@@ -93,6 +98,7 @@ function mod:SPELL_CAST_START(args)
 			specWarnPattyCake:Show(args.sourceName)
 			specWarnPattyCake:Play("kickcast")
 		end
+		timerPattyCake:Start(2.5)
 		timerPattyCakeCD:Start(nil, self.vb.pattyCount+1)
 	elseif spellId == 321669 then
 		if not seenAdds[args.sourceGUID] then
@@ -105,14 +111,22 @@ function mod:SPELL_CAST_START(args)
 	end
 end
 
---[[
-function mod:SPELL_CAST_SUCCESS(args)
+function mod:SPELL_SUMMON(args)
 	local spellId = args.spellId
-	if spellId == 257316 then
-
+	if spellId == 321873 then
+		if self.Options.NPAuraOnFreezeTag then
+			DBM.Nameplate:Show(true, args.destGUID, spellId, 5333906)
+		end
 	end
 end
---]]
+
+function mod:SPELL_INTERRUPT(args)
+	if not self.Options.Enabled then return end
+	if type(args.extraSpellId) ~= "number" then return end
+	if args.extraSpellId == 321828 then
+		timerPattyCake:Stop()
+	end
+end
 
 function mod:SPELL_AURA_APPLIED(args)
 	local spellId = args.spellId
@@ -141,6 +155,15 @@ function mod:SPELL_AURA_REMOVED(args)
 		end
 	elseif spellId == 336499 or spellId == 321471 then
 		warnGuessingGameOver:Show()
+	end
+end
+
+function mod:UNIT_DIED(args)
+	local cid = self:GetCIDFromGUID(args.destGUID)
+	if cid == 165251 then--Illusionary Vulpin
+		if self.Options.NPAuraOnFreezeTag then
+			DBM.Nameplate:Hide(true, args.destGUID, 321873, 5333906)
+		end
 	end
 end
 

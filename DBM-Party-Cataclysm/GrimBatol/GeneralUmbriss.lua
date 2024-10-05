@@ -54,6 +54,7 @@ if not mod:IsCata() then
 			specWarnCommandingRoar:Play("breathsoon")
 			timerCommandingRoarCD:Start(nil, self.vb.roarCount+1)
 		elseif args.spellId == 448877 then
+			self.vb.spikeCount = self.vb.spikeCount + 1
 			specWarnRockSpike:Show(self.vb.spikeCount)
 			specWarnRockSpike:Play("watchstep")
 			timerRockSpikeCD:Start(nil, self.vb.spikeCount+1)

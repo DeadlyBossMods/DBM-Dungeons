@@ -52,7 +52,7 @@ local timerLavaCannonCD						= mod:NewCDPNPTimer(9.1, 449130, nil, nil, nil, 3)
 local timerMoltenMortarCD					= mod:NewCDNPTimer(20.6, 449154, nil, nil, nil, 3)--15.3-19
 local timerCrystalSalvoCD					= mod:NewCDNPTimer(16.3, 426345, nil, nil, nil, 3)
 local timerVoidStormCD						= mod:NewCDNPTimer(27.9, 426771, nil, nil, nil, 2)--Cast to cast for now, but if it gets stutter cast reports it'll be moved to success
-local timerShieldStampedeCD					= mod:NewCDPNPTimer(18.1, 448640, nil, nil, nil, 3)
+local timerShieldStampedeCD					= mod:NewCDPNPTimer(17, 448640, nil, nil, nil, 3)
 local timerSmashRockCD						= mod:NewCDNPTimer(28.3, 428879, nil, nil, nil, 3)
 local timerGraniteEruptionCD				= mod:NewCDNPTimer(24.2, 428703, nil, nil, nil, 3)
 local timerEarthBurstTotemCD				= mod:NewCDPNPTimer(30, 429427, nil, nil, nil, 1)
@@ -144,7 +144,7 @@ function mod:SPELL_CAST_START(args)
 		timerShieldStampedeCD:Start(nil, args.sourceGUID)
 		if self:AntiSpam(3, 2) then
 			specWarnShieldStampede:Show()
-			specWarnShieldStampede:Play("frontal")
+			specWarnShieldStampede:Play("chargemove")
 		end
 	elseif spellId == 429427 then
 		if self:AntiSpam(3, 6) then
