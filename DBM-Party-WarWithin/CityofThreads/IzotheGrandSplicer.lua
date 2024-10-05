@@ -149,6 +149,8 @@ mod.SPELL_PERIODIC_MISSED = mod.SPELL_PERIODIC_DAMAGE
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, spellId)
 	if spellId == 439501 then--Shifting Anomalies
+		--More data needed to implement this
+		--"Shifting Anomalies-439501-npc:216658-00007BE864 = pull:13.0, 13.0, 10.0",
 		self.vb.shiftMoveCount = self.vb.shiftMoveCount + 1
 		---@diagnostic disable-next-line: param-type-mismatch
 		specWarnShiftingAnomalies:Show(self.vb.shiftCount.. "-" .. self.vb.shiftMoveCount)
