@@ -38,12 +38,12 @@ local warnFlamingFixate	 		= mod:NewTargetNoFilterAnnounce(82850, 4)
 
 local specWarnAdds				= mod:NewSpecialWarningSwitchCount(90949, "Dps", nil, nil, 1, 2)
 local specWarnFlamingFixate		= mod:NewSpecialWarningRun(82850, nil, nil, nil, 4, 2)
-local specWarnDevouring 		= mod:NewSpecialWarningDodgeCount(DBM:IsPostCata() and 448105 or 90950, nil, nil, nil, 2, 2)
+local specWarnDevouring 		= mod:NewSpecialWarningDodgeCount(DBM:IsRetail() and 448105 or 90950, nil, nil, nil, 2, 2)
 local specWarnSeepingTwilight	= mod:NewSpecialWarningGTFO(75317, nil, nil, nil, 2, 8)
 
 local timerAddCD				= mod:NewCDCountTimer(20.6, 90949, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)--20.6-27. 24 is the average
-local timerDevouringCD			= mod:NewCDCountTimer(40, DBM:IsPostCata() and 448105 or 90950, nil, nil, nil, 3)
-local timerDevouring			= mod:NewBuffActiveTimer(5, DBM:IsPostCata() and 448105 or 90950, nil, nil, nil, 3)
+local timerDevouringCD			= mod:NewCDCountTimer(40, DBM:IsRetail() and 448105 or 90950, nil, nil, nil, 3)
+local timerDevouring			= mod:NewBuffActiveTimer(5, DBM:IsRetail() and 448105 or 90950, nil, nil, nil, 3)
 --local timerShredding			= mod:NewBuffActiveTimer(20, 75271)
 --Add TWW unique stuff
 local warnTwilightBuffet, timerTwilightBuffetCD, warnCurseofEntropy, timerCurseofEntropyCD
@@ -69,8 +69,8 @@ function mod:OnCombatStart(delay)
 	self.vb.buffetCount = 0
 	self.vb.curseCount = 0
 	if not self:IsCata() then
-		timerAddCD:Start(8, 1)--Maybe also true in cata?
-		timerCurseofEntropyCD:Start(17, 1)
+		timerAddCD:Start(2.5, 1)--Maybe also true in cata?
+		timerCurseofEntropyCD:Start(30, 1)
 	end
 end
 
@@ -84,7 +84,7 @@ function mod:SPELL_CAST_START(args)
 	elseif args.spellId == 448013 then--Invocation of Shadowflame (New add summon spell trigger in TWW)
 		self.vb.addCount = self.vb.addCount + 1
 		specWarnAdds:Show(self.vb.addCount)
-		timerAddCD:Start(self:GetStage(2) and 35 or 26, self.vb.addCount+1)
+		timerAddCD:Start(self:GetStage(2) and 35 or 29.9, self.vb.addCount+1)
 	elseif args.spellId == 456751 then
 		self.vb.buffetCount = self.vb.buffetCount + 1
 		warnTwilightBuffet:Show(self.vb.buffetCount)
@@ -92,7 +92,7 @@ function mod:SPELL_CAST_START(args)
 	elseif args.spellId == 450095 then
 		self.vb.curseCount = self.vb.curseCount + 1
 		warnCurseofEntropy:Show(self.vb.curseCount)
-		timerCurseofEntropyCD:Start(self:GetStage(2) and 35 or 26, self.vb.curseCount+1)
+		timerCurseofEntropyCD:Start(self:GetStage(2) and 35 or 29.9, self.vb.curseCount+1)
 	end
 end
 
@@ -129,9 +129,9 @@ function mod:CHAT_MSG_MONSTER_YELL(msg, npc)
 		if not self:IsCata() then
 			timerAddCD:Stop()
 			timerCurseofEntropyCD:Stop()
-			timerAddCD:Start(14.9, self.vb.addCount+1)--Maybe also restarts in cata?
-			timerTwilightBuffetCD:Start(22.9, 1)
-			timerCurseofEntropyCD:Start(24.9, self.vb.curseCount+1)
+			timerCurseofEntropyCD:Start(14.8, self.vb.curseCount+1)
+			timerAddCD:Start(16.9, self.vb.addCount+1)--Maybe also restarts in cata?
+			timerTwilightBuffetCD:Start(27.8, 1)
 		end
 	end
 end

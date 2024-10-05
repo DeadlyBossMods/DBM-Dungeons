@@ -52,7 +52,7 @@ local timerScrapSongCD						= mod:NewCDCountTimer(49.7, 428202, nil, nil, nil, 3
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(28461))
 local warnBlazingCrescendo					= mod:NewPreWarnAnnounce(428508, 7, 4)
 
-local specWarnBlazingCrescendo				= mod:NewSpecialWarningRunCount(428508, nil, nil, nil, 4, 2)
+local specWarnBlazingCrescendo				= mod:NewSpecialWarningDodgeCount(428508, nil, nil, nil, 4, 2)
 local specWarnIgneousHammer					= mod:NewSpecialWarningDefensive(428711, nil, nil, nil, 1, 2)
 local specWarnLavaCannon					= mod:NewSpecialWarningDodgeCount(428120, nil, nil, nil, 2, 2)
 
@@ -221,7 +221,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 		--updateDorlitaTimers(self, 13)--Technically right, but
 	elseif spellId == 428535 then
 		specWarnBlazingCrescendo:Show(self.vb.deconstructCount)
-		specWarnBlazingCrescendo:Play("justrun")
+		specWarnBlazingCrescendo:Play("watchwave")
 	elseif spellId == 428120 then
 		self.vb.orbCount = self.vb.orbCount + 1
 		specWarnLavaCannon:Show(self.vb.orbCount)
