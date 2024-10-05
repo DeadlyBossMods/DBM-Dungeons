@@ -45,7 +45,7 @@ local specWarnCongealedDarkness				= mod:NewSpecialWarningInterruptCount(452099,
 local timerTerrifyingSlamCD					= mod:NewCDCountTimer(16, 427001, nil, nil, nil, 2)
 local timerDarkOrbCD						= mod:NewCDCountTimer(16, 426860, nil, nil, nil, 3)
 local timerShadowDecayCD					= mod:NewCDCountTimer(16, 426787, nil, nil, nil, 2, nil, DBM_COMMON_L.HEALER_ICON)
-local timerAnimateShadowsCD					= mod:NewCDCountTimer(40, 452127, nil, nil, nil, 1, nil, DBM_COMMON_L.MYTHIC_ICON)
+local timerAnimateShadowsCD					= mod:NewCDCountTimer(34.6, 452127, nil, nil, nil, 1, nil, DBM_COMMON_L.MYTHIC_ICON)
 
 mod:AddPrivateAuraSoundOption(426865, true, 426860, 1)--Dark Orb target
 

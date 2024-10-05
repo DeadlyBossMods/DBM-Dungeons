@@ -104,7 +104,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 	elseif spellId == 181089 then--Encounter Event (boss returning)
 		self:SetStage(1)
 		timerBroadsideCD:Stop()
-		timerCleartheDeckCD:Start(3.7, self.vb.clearDeckCount+1)
+		timerCleartheDeckCD:Start(3.3, self.vb.clearDeckCount+1)
 		timerRicochetCD:Start(8.4, self.vb.ricochetCount+1)
 		if self:IsMythic() then
 			timerMassBombardmentCD:Start(25, self.vb.massBombCount+1)
