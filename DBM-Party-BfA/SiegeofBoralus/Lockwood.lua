@@ -78,7 +78,7 @@ function mod:SPELL_CAST_START(args)
 		self.vb.broadCount = self.vb.broadCount + 1
 		specWarnBroadside:Show(self.vb.broadCount)
 		specWarnBroadside:Play("watchstep")
-		timerBroadsideCD:Start(12.1, self.vb.broadCount+1)--12.1-14.6 in TWW (formerly 10.9)
+		timerBroadsideCD:Start(11.1, self.vb.broadCount+1)--11.1-14.6 in TWW (formerly 10.9)
 	elseif spellId == 463182 then
 		self.vb.ricochetCount = self.vb.ricochetCount + 1
 		warnFieryRicochet:Show(self.vb.ricochetCount)

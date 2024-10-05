@@ -59,7 +59,7 @@ local timerDarkEruptionCD				= mod:NewCDNPTimer(20.6, 456713, nil, nil, nil, 3)-
 --local timerDecapitateCD				= mod:NewCDNPTimer(18.1, 451067, nil, nil, nil, 3)--Not able to find a single cast on August 11
 local timerEnvelopingShadowflameCD		= mod:NewCDNPTimer(20.6, 451224, nil, nil, nil, 3, nil, DBM_COMMON_L.CURSE_ICON)--Valid August 11. Small Sample, could be shorter
 local timerMindPiercerCD				= mod:NewCDNPTimer(18.1, 451391, nil, nil, nil, 3)--Valid August 11
-local timerSearMindCD					= mod:NewCDPNPTimer(20.4, 76711, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--Valid August 11
+--local timerSearMindCD					= mod:NewCDPNPTimer(20.4, 76711, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--Valid August 11
 local timerMoltenWakeCD					= mod:NewCDNPTimer(18.1, 451965, nil, nil, nil, 2)--Valid August 11
 local timerLavaFistCD					= mod:NewCDNPTimer(15.7, 451971, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)--Valid August 11
 local timerBlazingShadowflameCD			= mod:NewCDPNPTimer(16.0, 462216, nil, nil, nil, 3)--Valid August 21
@@ -176,8 +176,8 @@ function mod:SPELL_CAST_SUCCESS(args)
 		timerRecklessTacticCD:Start(15.2, args.sourceGUID)
 	elseif spellId == 451965 then
 		timerMoltenWakeCD:Start(16.1)--18.1-2
-	elseif spellId == 76711 then
-		timerSearMindCD:Start(18.9, args.sourceGUID)
+	--elseif spellId == 76711 then
+	--	timerSearMindCD:Start(18.9, args.sourceGUID)
 	elseif spellId == 451971 then
 		timerLavaFistCD:Start(12.7, args.sourceGUID)--15.7-3
 	elseif spellId == 456711 then
@@ -196,8 +196,8 @@ function mod:SPELL_INTERRUPT(args)
 	if type(args.extraSpellId) ~= "number" then return end
 	if args.extraSpellId == 451871 then
 		timerMassTremorCD:Start(20, args.destGUID)
-	elseif args.extraSpellId == 76711 then
-		timerSearMindCD:Start(18.9, args.destGUID)
+	--elseif args.extraSpellId == 76711 then
+	--	timerSearMindCD:Start(18.9, args.destGUID)
 	end
 end
 
@@ -265,7 +265,7 @@ function mod:UNIT_DIED(args)
 	elseif cid == 40166 then--Molten Giant
 		timerMoltenWakeCD:Stop(args.destGUID)
 		timerLavaFistCD:Stop(args.destGUID)
-	elseif cid == 40167 then--Twilight Beguiler
-		timerSearMindCD:Stop(args.destGUID)
+	--elseif cid == 40167 then--Twilight Beguiler
+	--	timerSearMindCD:Stop(args.destGUID)
 	end
 end
