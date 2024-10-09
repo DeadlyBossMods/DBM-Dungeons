@@ -55,6 +55,9 @@ mod.vb.expelCount = 0
 mod.vb.sprayCount = 0
 mod.vb.strandsCount = 0
 
+--RULES need reworking when I have time. ICDs are true, but the way boss prioritizes abilities is that any ability that's late, it tries to get back on track by making next one early
+--So with that knowledge, you can order the corrections in a way that is more predictive
+
 --Explosive spray triggers 6.66 ICD in stage 1 and 7.4 ICD in stage 2
 --Rolling Acid triggers 6 second ICD in stage 1 and 6.66 ICD stage 2
 --Expel Webs triggers 4 second ICD??
@@ -117,7 +120,7 @@ function mod:SPELL_CAST_START(args)
 		self.vb.expelCount = self.vb.expelCount + 1
 		specWarnExpelWebs:Show(self.vb.expelCount)
 		specWarnExpelWebs:Play("watchstep")
-		timerExpelWebsCD:Start(self:IsMythic() and 12 or (self:GetStage(2) and 23 or 20), self.vb.expelCount+1)
+		timerExpelWebsCD:Start(self:IsMythic() and 9.9 or (self:GetStage(2) and 23 or 20), self.vb.expelCount+1)
 		updateAllTimers(self, 4)
 	elseif spellId == 448888 then
 		self.vb.sprayCount = self.vb.sprayCount + 1
