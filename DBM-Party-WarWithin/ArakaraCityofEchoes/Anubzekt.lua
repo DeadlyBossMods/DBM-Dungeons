@@ -165,7 +165,7 @@ function mod:SPELL_AURA_REMOVED(args)
 		self.vb.infestationCount = 0
 		--timerInfestationCD:Start(1, 1)--Instantly again
 		timerImpaleCD:Stop()
-		timerImpaleCD:Start(5.3, 1)
+		timerImpaleCD:Start(4.1, 1)
 		timerBurrowChargeCD:Start(15, self.vb.burrowCount+1)
 		timerEyeOfTheStormCD:Start(46.6, self.vb.eyeCount+1)
 	elseif spellId == 433740 then

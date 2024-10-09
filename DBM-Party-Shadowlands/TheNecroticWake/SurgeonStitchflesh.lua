@@ -11,7 +11,7 @@ mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 320358 320376 327664 334488",
-	"SPELL_CAST_SUCCESS 320359 322681 320376",
+	"SPELL_CAST_SUCCESS 320359 322681 320376 334488",
 	"SPELL_AURA_APPLIED 320200 322681 322548 334321",
 	"SPELL_AURA_REMOVED 322681",
 	"SPELL_PERIODIC_DAMAGE 320366",
@@ -47,7 +47,7 @@ local specWarnGTFO					= mod:NewSpecialWarningGTFO(320366, nil, nil, nil, 1, 8)
 
 local timerSummonCreationCD			= mod:NewCDCountTimer(35.1, 320358, nil, nil, nil, 1)
 local timerEmbalmingIchorCD			= mod:NewCDCountTimer(18, 327664, nil, nil, nil, 3)
-local timerSeverFleshCD				= mod:NewCDCountTimer(9.7, 334488, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+local timerSeverFleshCD				= mod:NewCDCountTimer(8.7, 334488, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerEscape					= mod:NewCastTimer(30, 320359, nil, nil, nil, 6)
 --Add
 local timerMutilateCD				= mod:NewCDNPTimer(11, 320376, nil, "Tank|Healer", nil, 5)
@@ -77,7 +77,7 @@ local function findCreation(self, delay)
 		if id == 164578 then--Creation
 			local guid = UnitGUID("boss"..i)
 			timerMutilateCD:Start(6-delay, guid)
-			timerMeatHookCD:Start(10-delay, guid)
+			timerMeatHookCD:Start(9.6-delay, guid)
 			break
 		end
 	end
@@ -109,9 +109,7 @@ function mod:SPELL_CAST_START(args)
 		self:ScheduleMethod(0.1, "BossTargetScanner", args.sourceGUID, "IchorTarget", 0.1, 6)
 		timerEmbalmingIchorCD:Start(nil, self.vb.ichorCount+1)
 	elseif spellId == 334488 then
-		self.vb.severCount = self.vb.severCount + 1
-		warnSeverFlesh:Show(self.vb.severCount)
-		timerSeverFleshCD:Start(nil, self.vb.severCount+1)
+		warnSeverFlesh:Show(self.vb.severCount+1)
 	end
 end
 
@@ -127,6 +125,9 @@ function mod:SPELL_CAST_SUCCESS(args)
 		timerMeatHookCD:Start(15, args.sourceGUID)
 	elseif spellId == 320376 then--Doesn't go on CD unless cast finishes
 		timerMutilateCD:Start(10, args.sourceGUID)
+	elseif spellId == 334488 then
+		self.vb.severCount = self.vb.severCount + 1
+		timerSeverFleshCD:Start(nil, self.vb.severCount+1)
 	end
 end
 
