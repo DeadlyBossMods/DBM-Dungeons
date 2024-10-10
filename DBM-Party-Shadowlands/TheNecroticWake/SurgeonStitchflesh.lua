@@ -10,9 +10,9 @@ mod:SetHotfixNoticeRev(20240817000000)
 mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
-	"SPELL_CAST_START 320358 320376 327664 334488",
+	"SPELL_CAST_START 320358 320376 327664 334488 343556",
 	"SPELL_CAST_SUCCESS 320359 322681 320376 334488",
-	"SPELL_AURA_APPLIED 320200 322681 322548 334321",
+	"SPELL_AURA_APPLIED 320200 322681 322548 334321 343556",
 	"SPELL_AURA_REMOVED 322681",
 	"SPELL_PERIODIC_DAMAGE 320366",
 	"SPELL_PERIODIC_MISSED 320366",
@@ -22,7 +22,7 @@ mod:RegisterEventsInCombat(
 
 --TODO, need longer pulls where boss is NOT hooked for a while to see if he goes through cast sequences of spawning more adds or more Ichor
 --[[
-(ability.id = 320358 or ability.id = 327664 or ability.id = 334488) and type = "begincast"
+(ability.id = 320358 or ability.id = 327664 or ability.id = 334488 or ability.id = 343556) and type = "begincast"
  or (ability.id = 320359 or ability.id = 326574 or ability.id = 322681) and type = "cast"
  or ability.id = 327041 or ability.id = 322548
  or ability.id = 320376 and type = "begincast"
@@ -36,17 +36,21 @@ local warnEscape					= mod:NewCastAnnounce(320359, 3)
 local warnEmbalmingIchor			= mod:NewTargetNoFilterAnnounce(327664, 3)
 local warnMeatHook					= mod:NewTargetNoFilterAnnounce(322681, 3)
 local warnStichNeedle				= mod:NewTargetNoFilterAnnounce(320200, 3, nil, false, 2)--Kind of spammy
+local warnMorbidFixation			= mod:NewTargetAnnounce(343556, 3)
 
 local specWarnEmbalmingIchor		= mod:NewSpecialWarningMoveAway(327664, nil, nil, nil, 1, 2)
-local yellEmbalmingIchor			= mod:NewYell(327664)
+local yellEmbalmingIchor			= mod:NewShortYell(327664)
 local specWarnMeatHook				= mod:NewSpecialWarningMoveTo(322681, nil, nil, nil, 3, 2)
-local yellMeatHook					= mod:NewYell(322681)
+local yellMeatHook					= mod:NewShortYell(322681)
 local yellMeatHookFades				= mod:NewShortFadesYell(322681)
+local specWarnMorbidFixation		= mod:NewSpecialWarningDodge(343556, nil, nil, nil, 2, 2)
+local yellMorbidFixation			= mod:NewShortYell(343556)
 --local specWarnHealingBalm			= mod:NewSpecialWarningInterrupt(257397, "HasInterrupt", nil, nil, 1, 2)
 local specWarnGTFO					= mod:NewSpecialWarningGTFO(320366, nil, nil, nil, 1, 8)
 
 local timerSummonCreationCD			= mod:NewCDCountTimer(35.1, 320358, nil, nil, nil, 1)
 local timerEmbalmingIchorCD			= mod:NewCDCountTimer(18, 327664, nil, nil, nil, 3)
+local timerMorbidFixationCD			= mod:NewCDCountTimer(15.9, 343556, nil, nil, nil, 3)
 local timerSeverFleshCD				= mod:NewCDCountTimer(8.7, 334488, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerEscape					= mod:NewCastTimer(30, 320359, nil, nil, nil, 6)
 --Add
@@ -67,6 +71,19 @@ function mod:IchorTarget(targetname, uId)
 		yellEmbalmingIchor:Yell()
 	else
 		warnEmbalmingIchor:Show(targetname)
+	end
+end
+
+function mod:MorbidFixation(targetname, uId)
+	if not targetname then return end
+	if targetname == UnitName("player") then
+		if self:AntiSpam(5, 1) then
+			specWarnMorbidFixation:Show()
+			specWarnMorbidFixation:Play("targetyou")
+			yellMorbidFixation:Yell()
+		end
+	else
+		warnMorbidFixation:Show(targetname)
 	end
 end
 
@@ -110,6 +127,9 @@ function mod:SPELL_CAST_START(args)
 		timerEmbalmingIchorCD:Start(nil, self.vb.ichorCount+1)
 	elseif spellId == 334488 then
 		warnSeverFlesh:Show(self.vb.severCount+1)
+	elseif spellId == 343556 then
+		self:ScheduleMethod(0.1, "BossTargetScanner", args.sourceGUID, "MorbidFixation", 0.1, 6)
+		--timerMorbidFixationCD:Start()
 	end
 end
 
@@ -144,14 +164,22 @@ function mod:SPELL_AURA_APPLIED(args)
 		else
 			warnMeatHook:Show(args.destName)
 		end
+	elseif spellId == 343556 then
+		if args:IsPlayer() and self:AntiSpam(5, 1) then--Backup if target scan fails
+			specWarnMorbidFixation:Show()
+			specWarnMorbidFixation:Play("targetyou")
+			yellMorbidFixation:Yell()
+		end
 	elseif spellId == 322548 and not self:GetStage(2) then--Boss getting meat hooked
 		self:SetStage(2)
 		timerSummonCreationCD:Stop()
 		timerEmbalmingIchorCD:Stop()
+		timerMorbidFixationCD:Stop()
 		warnMeatHook:Show(args.destName)
+		timerSeverFleshCD:Start(6, self.vb.severCount+1)
+		timerMorbidFixationCD:Start(14.9)
 		timerEscape:Start(30)
 		timerSummonCreationCD:Start(31, self.vb.creationCount+1)--Give or take 1-2~
-		timerSeverFleshCD:Start(6, self.vb.severCount+1)
 	elseif spellId == 334321 then--Festering Rot
 		timerMutilateCD:Start(7.4, args.destGUID)
 		timerMeatHookCD:Start(11.4, args.destGUID)
