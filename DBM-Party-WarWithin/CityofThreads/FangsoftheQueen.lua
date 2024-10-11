@@ -13,10 +13,11 @@ mod:RegisterCombat("combat")
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 441384 441381 439621 440468 439692 440218 440238",
 --	"SPELL_CAST_SUCCESS 440419",
-	"SPELL_AURA_APPLIED 441298 458741 440238"
+	"SPELL_AURA_APPLIED 441298 458741 440238",
 --	"SPELL_AURA_REMOVED 439989"
 --	"SPELL_PERIODIC_DAMAGE",
---	"SPELL_PERIODIC_MISSED"
+--	"SPELL_PERIODIC_MISSED",
+	"CHAT_MSG_MONSTER_SAY"
 --	"UNIT_SPELLCAST_SUCCEEDED boss1"
 )
 
@@ -32,6 +33,7 @@ mod:RegisterEventsInCombat(
 --General
 local warnSynergicStep						= mod:NewCountAnnounce(439989, 3)
 
+local timerRP								= mod:NewRPTimer(8)
 local timerNextSwapCD						= mod:NewCDCountTimer(44.9, 439989, nil, nil, nil, 6)
 --Nx Active (Vx support)
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(28876))
@@ -161,6 +163,21 @@ function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId, spell
 end
 mod.SPELL_PERIODIC_MISSED = mod.SPELL_PERIODIC_DAMAGE
 --]]
+
+--"<777.33 09:52:11> [CHAT_MSG_MONSTER_SAY] The Transformatory was once the home of our sacred evolution.#Executor Nizrek###Junghee##0#0##0#517#nil#0#false#false#false#false",
+--"<803.71 09:52:37> [NAME_PLATE_UNIT_ADDED] Nx#Creature-0-3776-2669-3094-216648-00007B52C3",
+--"<803.74 09:52:37> [NAME_PLATE_UNIT_ADDED] Vx#Creature-0-3776-2669-3094-216649-00007B52C3",
+function mod:CHAT_MSG_MONSTER_SAY(msg)
+	if (msg == L.RolePlay or msg:find(L.RolePlay)) and self:LatencyCheck() then
+		self:SendSync("openingRP")
+	end
+end
+
+function mod:OnSync(msg)
+	if msg == "openingRP" and self:AntiSpam(10, 3) then
+		timerRP:Start(26.3)
+	end
+end
 
 --[[
 function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)

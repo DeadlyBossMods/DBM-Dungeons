@@ -56,19 +56,19 @@ local warnedTimerMissing = false--Single warn for single spell to avoid spam. As
 local allTimers = {
 	[1] = {
 		[425264] = {6},--Obsidian Blast (Non Mythic)
-		[453212] = {7.1, 32.4, 26.2},--Obsidian Beam (Mythic)
+		[453212] = {7.1, 32.2, 26.2},--Obsidian Beam (Mythic)
 		[445996] = {13.1},--Collapsing Darkness (Non Mythic)
-		[453140] = {23.3, 28.6, 26.3},--Collapsing Night (Mythic)
+		[453140] = {23.3, 28.1, 26.3},--Collapsing Night (Mythic)
 		[4267341] = {9.3, 35.5},--Burning Shadows (Non Mythic)
-		[4267342] = {19.2, 15.7, 24.8},--Burning Shadows (Mythic)
+		[4267342] = {19.2, 15.7, 24.5},--Burning Shadows (Mythic)
 	},
 	[2] = {
 		[425264] = {6.8, 17},--Obsidian Blast (Non Mythic)
-		[453212] = {18.2, 23.5, 23.5, 24.4, 26.9},--Obsidian Beam (Mythic)
+		[453212] = {18.2, 23.5, 23.5, 24.4, 25.6},--Obsidian Beam (Mythic)
 		[445996] = {13.8, 18},--Collapsing Darkness (Non Mythic)
-		[453140] = {8.7, 27.8, 25.1, 25.1, 26.7},--Collapsing Night (Mythic)
+		[453140] = {8.7, 27.5, 25.1, 25.1, 25.6},--Collapsing Night (Mythic)
 		[4267341] = {10.1, 25.2},--Burning Shadows (Non Mythic)
-		[4267342] = {14.5, 19.2, 21.9, 18.0, 25.1},--Burning Shadows (Mythic)
+		[4267342] = {14.5, 18, 21.9, 18.0, 25.1},--Burning Shadows (Mythic)
 	},								---23.5
 }
 
@@ -152,6 +152,7 @@ function mod:SPELL_CAST_START(args)
 			timerObsidianBlastCD:Start(timer, self.vb.obsidianCount+1)
 		else
 			timerObsidianBlastCD:Start(17, self.vb.obsidianCount+1)--Still start a timer with lowest known value
+			DBM:Debug("Obsidian Blast timer missing for count: "..self.vb.obsidianCount+1 .. ". Please share your log on GitHub or DBM Discord", 1)
 			if not warnedTimerMissing then
 				warnedTimerMissing = true
 				DBM:AddMsg("Obsidian Blast timer missing for count: "..self.vb.obsidianCount+1 .. ". Please share your log on GitHub or DBM Discord", 1)
@@ -169,6 +170,7 @@ function mod:SPELL_CAST_START(args)
 			timerObsidianBeamCD:Start(timer, self.vb.obsidianCount+1)
 		else
 			timerObsidianBeamCD:Start(23.5, self.vb.obsidianCount+1)--Still start a timer with lowest known value
+			DBM:Debug("Obsidian Beam timer missing for count: "..self.vb.obsidianCount+1 .. ". Please share your log on GitHub or DBM Discord", 1)
 			if not warnedTimerMissing then
 				warnedTimerMissing = true
 				DBM:AddMsg("Obsidian Beam timer missing for count: "..self.vb.obsidianCount+1 .. ". Please share your log on GitHub or DBM Discord", 1)
@@ -184,6 +186,7 @@ function mod:SPELL_CAST_START(args)
 			timerCollapsingDarknessCD:Start(timer, self.vb.collapsingCount+1)
 		else
 			timerCollapsingDarknessCD:Start(18, self.vb.collapsingCount+1)--Still start a timer with lowest known value
+			DBM:Debug("Collapsing Darkness timer missing for count: "..self.vb.collapsingCount+1 .. ". Please share your log on GitHub or DBM Discord", 1)
 			if not warnedTimerMissing then
 				warnedTimerMissing = true
 				DBM:AddMsg("Collapsing Darkness timer missing for count: "..self.vb.collapsingCount+1 .. ". Please share your log on GitHub or DBM Discord", 1)
@@ -199,6 +202,7 @@ function mod:SPELL_CAST_START(args)
 			timerCollapsingNightCD:Start(timer, self.vb.collapsingCount+1)
 		else
 			timerCollapsingNightCD:Start(25.1, self.vb.collapsingCount+1)--Still start a timer with lowest known value
+			DBM:Debug("Collapsing Night timer missing for count: "..self.vb.collapsingCount+1 .. ". Please share your log on GitHub or DBM Discord", 1)
 			if not warnedTimerMissing then
 				warnedTimerMissing = true
 				DBM:AddMsg("Collapsing Night timer missing for count: "..self.vb.collapsingCount+1 .. ". Please share your log on GitHub or DBM Discord", 1)
@@ -212,6 +216,7 @@ function mod:SPELL_CAST_START(args)
 			timerBurningShadowsCD:Start(timer, self.vb.shadowsCount+1)
 		else
 			timerBurningShadowsCD:Start(17, self.vb.shadowsCount+1)--Still start a timer with lowest known value
+			DBM:Debug("Burning Shadows timer missing for count: "..self.vb.shadowsCount+1 .. ". Please share your log on GitHub or DBM Discord", 1)
 			if not warnedTimerMissing then
 				warnedTimerMissing = true
 				DBM:AddMsg("Burning Shadows timer missing for count: "..self.vb.shadowsCount+1 .. ". Please share your log on GitHub or DBM Discord", 1)

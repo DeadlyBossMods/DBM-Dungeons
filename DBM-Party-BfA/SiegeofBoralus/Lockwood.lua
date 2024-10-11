@@ -35,7 +35,7 @@ local specWarnCleartheDeck			= mod:NewSpecialWarningDodgeCount(269029, "Tank", n
 local specWarnBroadside				= mod:NewSpecialWarningDodgeCount(268260, "Tank", nil, nil, 1, 2)
 
 local timerMassBombardmentCD		= mod:NewCDCountTimer(25, 463185, nil, nil, nil, 3)
-local timerRicochetCD				= mod:NewCDCountTimer(18.2, 463182, nil, nil, nil, 3)
+local timerRicochetCD				= mod:NewCDCountTimer(17.9, 463182, nil, nil, nil, 3)
 --local timerWithdrawCD				= mod:NewCDCountTimer(40, 268752, nil, nil, nil, 6)--Health based now
 local timerCleartheDeckCD			= mod:NewCDCountTimer(17.7, 269029, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerCrimsonSwipeCD			= mod:NewCDNPTimer(10.6, 268230, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)--11.8-12.2 now
@@ -56,7 +56,7 @@ function mod:OnCombatStart(delay)
 	self.vb.clearDeckCount = 0
 	self.vb.broadCount = 0
 	timerCleartheDeckCD:Start(3.5-delay, 1)
-	timerRicochetCD:Start(9.3-delay, 1)--Could be shorter, but most people trigger gutshot on pull
+	timerRicochetCD:Start(9.0-delay, 1)--Could be shorter, but most people trigger gutshot on pull
 	if self:IsMythic() then
 		timerMassBombardmentCD:Start(10.1-delay, 1)
 	end
