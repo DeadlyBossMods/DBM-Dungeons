@@ -114,13 +114,19 @@ L= DBM:GetModLocalization(133)
 ------------
 L= DBM:GetModLocalization(134)
 
+L = DBM:GetModLocalization("GrimBatolTrash")
+
+L:SetGeneralLocalization({
+	name =	"Grim Batol Trash"
+})
+
 ---------
 --Trash--
 ---------
 L = DBM:GetModLocalization("BoralusTrash")
 
 L:SetGeneralLocalization({
-	name =	"Grim Batol Trash"
+	name =	"Boralus Trash"
 })
 
 ----------------------------
