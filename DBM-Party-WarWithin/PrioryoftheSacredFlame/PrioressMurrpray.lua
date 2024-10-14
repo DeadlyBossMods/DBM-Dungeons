@@ -102,8 +102,8 @@ function mod:SPELL_CAST_START(args)
 	elseif spellId == 444609 then--Stoke the flame (cast after interrupting Inner Light
 --		self.vb.holyFlameCount = 0
 		self:SetStage(2)
+		timerHolyFlameCD:Start(4.3, self.vb.holyFlameCount+1)--If it's not cast before purifying Light, it gets delayed til after
 		timerPurifyingLightCD:Start(4.5, self.vb.purifyingCount+1)
-		timerHolyFlameCD:Start(8.4, self.vb.holyFlameCount+1)
 		timerInnerLightCD:Start(10.9, self.vb.innerCount+1)
 	end
 end
