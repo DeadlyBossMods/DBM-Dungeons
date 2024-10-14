@@ -175,7 +175,7 @@ function mod:SPELL_CAST_START(args)
 		specWarnPoisonousSecretions:Play("watchstep")
 	elseif spellId == 340300 and self:AntiSpam(3, 2) then
 		specWarnTongueLashing:Show()
-		specWarnTongueLashing:Play("watchstep")
+		specWarnTongueLashing:Play("frontal")
 	elseif spellId == 340160 and self:AntiSpam(3, 2) then
 		specWarnRadiantBreath:Show()
 		specWarnRadiantBreath:Play("watchstep")
