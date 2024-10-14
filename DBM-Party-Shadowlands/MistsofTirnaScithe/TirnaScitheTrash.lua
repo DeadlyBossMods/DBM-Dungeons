@@ -39,6 +39,7 @@ local warnHarvestEssence				= mod:NewCastAnnounce(322938, 4, 6)--High Prio off i
 local warnNourishtheForest				= mod:NewCastAnnounce(324914, 4)--High Prio off internet
 local warnBuckingRampage				= mod:NewSpellAnnounce(331743, 3, nil, "Melee")--Annoying spell that can do a lot of burst damage to melee that's not interruptable
 local warnMistveilTear					= mod:NewTargetNoFilterAnnounce(325021, 3, nil, "Tank|Healer|RemoveBleed")
+local warnExpel							= mod:NewTargetAnnounce(463248, 3)
 
 --General
 --local specWarnGTFO					= mod:NewSpecialWarningGTFO(257274, nil, nil, nil, 1, 8)
@@ -50,7 +51,7 @@ local specWarnTongueLashing				= mod:NewSpecialWarningDodge(340300, nil, nil, ni
 local specWarnRadiantBreath				= mod:NewSpecialWarningDodge(340160, nil, nil, nil, 2, 2)
 local specWarnPoisonousDischarge		= mod:NewSpecialWarningDodge(340279, nil, nil, nil, 2, 2)
 local specWarnBewilderingPollen			= mod:NewSpecialWarningDodge(321968, nil, nil, nil, 1, 15)
-local specWarnExpel						= mod:NewSpecialWarningDodge(463248, nil, nil, nil, 2, 2)
+local specWarnExpel						= mod:NewSpecialWarningYou(463248, nil, nil, nil, 2, 2)
 local specWarnAcidGlobule				= mod:NewSpecialWarningDodge(326021, nil, nil, nil, 2, 2)
 local specWarnOvergrowth				= mod:NewSpecialWarningMoveTo(322486, nil, nil, nil, 1, 11)
 local specWarnShredArmor				= mod:NewSpecialWarningDefensive(340208, nil, nil, nil, 1, 2)
@@ -109,6 +110,19 @@ function mod:CrushingLeap(targetname, _, unituid)
 --	end
 end
 
+function mod:ExpelTarget(targetname, _, unituid)
+	--Now has death check cause it's possible for mob to die before cast finishes and we don't want scan to return target if it won't finish
+	if not targetname or (unituid and UnitIsDead(unituid)) then return end
+	DBM:Debug("Crushing Leap on "..targetname)
+	if targetname == UnitName("player") then
+		specWarnExpel:Show()
+		specWarnExpel:Play("targetyou")
+		specWarnExpel:ScheduleVoice(1.5, "carefly")
+	else
+		warnExpel:Show(targetname)
+	end
+end
+
 --[[
 --About 1 second faster than debuff
 function mod:VolatileAcid(targetname, _, unituid)
@@ -161,10 +175,11 @@ function mod:SPELL_CAST_START(args)
 		specWarnPoisonousSecretions:Play("watchstep")
 	elseif spellId == 340300 and self:AntiSpam(3, 2) then
 		specWarnTongueLashing:Show()
-		specWarnTongueLashing:Play("watchstep")
+		specWarnTongueLashing:Play("frontal")
 	elseif spellId == 340160 and self:AntiSpam(3, 2) then
 		specWarnRadiantBreath:Show()
-		specWarnRadiantBreath:Play("watchstep")
+		specWarnRadiantBreath:Play("breathsoon")
+
 	elseif spellId == 340189 then--No Antispam, not to be throttled against other types
 		if self:IsTanking("player", nil, nil, true, args.sourceGUID) then
 			specWarnPoolOfRadiance:Show()
@@ -188,10 +203,7 @@ function mod:SPELL_CAST_START(args)
 			specWarnAcidNova:Play("aesoon")
 		end
 	elseif spellId == 463248 then
-		if self:AntiSpam(3, 2) then
-			specWarnExpel:Show()
-			specWarnExpel:Play("chargemove")
-		end
+		self:ScheduleMethod(0.1, "BossTargetScanner", args.sourceGUID, "ExpelTarget", 0.1, 6)
 	elseif spellId == 340208 then
 		if self:IsTanking("player", nil, nil, true, args.sourceGUID) and self:AntiSpam(3, 5) then
 			specWarnShredArmor:Show()

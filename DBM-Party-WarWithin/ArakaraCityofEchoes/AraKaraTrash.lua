@@ -7,7 +7,7 @@ mod.isTrashMod = true
 mod.isTrashModBossFightAllowed = true
 
 mod:RegisterEvents(
-	"SPELL_CAST_START 434824 434802 438877 436322 438826 448248 453161 432967 433841 433845",
+	"SPELL_CAST_START 434824 434802 438877 436322 438826 448248 453161 432967 433841 433845 434252",
 	"SPELL_CAST_SUCCESS 434802 434793 438622 448248 433841",
 	"SPELL_INTERRUPT",
 --	"SPELL_AURA_APPLIED",
@@ -30,6 +30,7 @@ local warnToxicRupture						= mod:NewSpellAnnounce(438622, 4, nil, "Melee")
 local warnCalloftheBrood					= mod:NewSpellAnnounce(438877, 3)
 local warnPoisonousCloud					= mod:NewSpellAnnounce(438826, 3)
 
+local specWarnMassiveSlam					= mod:NewSpecialWarningSpell(434252, nil, nil, nil, 2, 2)
 local specWarnWebSpray						= mod:NewSpecialWarningDodge(434824, nil, nil, nil, 2, 15)
 local specWarnImpale						= mod:NewSpecialWarningDodge(453161, nil, nil, nil, 2, 15)
 local specWarnEruptingWebs					= mod:NewSpecialWarningDodge(433845, nil, nil, nil, 2, 2)
@@ -41,6 +42,7 @@ local specWarnPoisonBolt					= mod:NewSpecialWarningInterrupt(436322, "HasInterr
 local specWarnRevoltingVolley				= mod:NewSpecialWarningInterrupt(448248, "HasInterrupt", nil, nil, 1, 2)
 local specWarnVenomVolley					= mod:NewSpecialWarningInterrupt(433841, "HasInterrupt", nil, nil, 1, 2)--High Prio
 
+local timerMassiveSlamCD					= mod:NewCDNPTimer(15.8, 434252, nil, nil, nil, 2)
 local timerWebSprayCD						= mod:NewCDPNPTimer(7, 434824, nil, nil, nil, 3)--7-8.2 from last cast finish/kick
 local timerHorrifyingShrillCD				= mod:NewCDPNPTimer(13.3, 434802, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--13.3-15.5 from last cast finish/kick
 local timerRadiantBarrageCD					= mod:NewCDNPTimer(16.8, 434793, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
@@ -125,6 +127,10 @@ function mod:SPELL_CAST_START(args)
 			specWarnEruptingWebs:Show()
 			specWarnEruptingWebs:Play("watchstep")
 		end
+	elseif spellId == 434252 then
+		timerMassiveSlamCD:Start(15.8, args.sourceGUID)
+		specWarnMassiveSlam:Show()
+		specWarnMassiveSlam:Play("stunsoon")
 	end
 end
 
@@ -194,5 +200,7 @@ function mod:UNIT_DIED(args)
 	elseif cid == 216364 then--Blood Overseer
 		timerVenomVolleyCD:Stop(args.destGUID)
 		timerEruptingWebsCD:Stop(args.destGUID)
+	elseif cid == 217039 then--Nerubian Hauler
+		timerMassiveSlamCD:Stop(args.destGUID)
 	end
 end

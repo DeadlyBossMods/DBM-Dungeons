@@ -26,8 +26,8 @@ if not mod:IsCata() then
 	(ability.id = 448847 or ability.id = 448877 or ability.id = 447261) and type = "begincast"
 	or type = "dungeonencounterstart" or type = "dungeonencounterend"
 	--]]
-	local specWarnCommandingRoar	= mod:NewSpecialWarningDodgeCount(448847, nil, nil, nil, 2, 2)
-	local specWarnRockSpike			= mod:NewSpecialWarningDodgeCount(448877, nil, nil, nil, 2, 2)
+	local specWarnCommandingRoar	= mod:NewSpecialWarningCount(448847, nil, nil, nil, 2, 2)
+	local specWarnRockSpike			= mod:NewSpecialWarningCount(448877, nil, nil, nil, 2, 2)
 	local specWarnSkullsplitter		= mod:NewSpecialWarningDefensive(447261, nil, nil, nil, 1, 2)
 
 	local timerCommandingRoarCD		= mod:NewNextCountTimer(25, 448847, nil, nil, nil, 3)
@@ -51,12 +51,13 @@ if not mod:IsCata() then
 		if args.spellId == 448847 then
 			self.vb.roarCount = self.vb.roarCount + 1
 			specWarnCommandingRoar:Show(self.vb.roarCount)
-			specWarnCommandingRoar:Play("breathsoon")
+			specWarnCommandingRoar:Play("aesoon")
+			specWarnCommandingRoar:ScheduleVoice(3, "breathsoon")
 			timerCommandingRoarCD:Start(nil, self.vb.roarCount+1)
 		elseif args.spellId == 448877 then
 			self.vb.spikeCount = self.vb.spikeCount + 1
 			specWarnRockSpike:Show(self.vb.spikeCount)
-			specWarnRockSpike:Play("watchstep")
+			specWarnRockSpike:Play("bait")
 			timerRockSpikeCD:Start(nil, self.vb.spikeCount+1)
 		elseif args.spellId == 447261 then
 			self.vb.skullCount = self.vb.skullCount + 1

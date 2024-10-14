@@ -29,6 +29,7 @@ mod:RegisterEventsInCombat(
 --]]
 local warnVenomVolley						= mod:NewCountAnnounce(432227, 3)
 local warnCultivatedPoisons					= mod:NewCountAnnounce(461487, 3)
+local warnSingularity						= mod:NewCastAnnounce(432117, 4)
 
 local specWarnCosmicSingularity				= mod:NewSpecialWarningMoveTo(432117, nil, nil, nil, 3, 15)
 local specWarnVenomVolley					= mod:NewSpecialWarningDispel(432227, "RemovePoison", nil, nil, 1, 2)
@@ -68,8 +69,9 @@ function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
 	if spellId == 432117 then
 		self.vb.cosmicCount = self.vb.cosmicCount + 1
-		specWarnCosmicSingularity:Show(DBM_COMMON_L.POOL)
-		specWarnCosmicSingularity:Play("movetopool")
+		warnSingularity:Show()
+		specWarnCosmicSingularity:Schedule(3.5, DBM_COMMON_L.POOL)
+		specWarnCosmicSingularity:ScheduleVoice(3.5, "movetopool")
 		--Timer has predictable spell queuing after first cast, but first cast is 46.1-48
 		timerCosmicSingularityCD:Start(self.vb.cosmicCount == 1 and 46.1 or 47.2, self.vb.cosmicCount+1)
 
