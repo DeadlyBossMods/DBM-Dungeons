@@ -70,7 +70,7 @@ function mod:OnCombatStart(delay)
 	self.vb.curseCount = 0
 	if not self:IsCata() then
 		timerAddCD:Start(2.5, 1)--Maybe also true in cata?
-		timerCurseofEntropyCD:Start(30, 1)
+		timerCurseofEntropyCD:Start(15, 1)
 	end
 end
 
