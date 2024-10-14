@@ -175,10 +175,11 @@ function mod:SPELL_CAST_START(args)
 		specWarnPoisonousSecretions:Play("watchstep")
 	elseif spellId == 340300 and self:AntiSpam(3, 2) then
 		specWarnTongueLashing:Show()
-		specWarnTongueLashing:Play("watchstep")
+		specWarnTongueLashing:Play("frontal")
 	elseif spellId == 340160 and self:AntiSpam(3, 2) then
 		specWarnRadiantBreath:Show()
-		specWarnRadiantBreath:Play("watchstep")
+		specWarnRadiantBreath:Play("frontal")
+
 	elseif spellId == 340189 then--No Antispam, not to be throttled against other types
 		if self:IsTanking("player", nil, nil, true, args.sourceGUID) then
 			specWarnPoolOfRadiance:Show()
