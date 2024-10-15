@@ -30,10 +30,10 @@ mod:RegisterEventsInCombat(
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
 --]]
 local warnInsatiable						= mod:NewStackAnnounce(446794, 4)
-local warnAlertingShrill					= mod:NewCountAnnounce(438476, 2)
 local warnVileWebbing						= mod:NewCountAnnounce(434830, 3, nil, nil, DBM_CORE_L.AUTO_ANNOUNCE_OPTIONS.stack:format(434830))--Player
 local warnWebWrap							= mod:NewTargetNoFilterAnnounce(436614, 2, nil, "RemoveMagic")
 
+local specWarnAlertingShrill				= mod:NewSpecialWarningCount(438476, nil, nil, nil, 2, 2)
 local specWarnGossamerOnslaught				= mod:NewSpecialWarningDodgeCount(438473, nil, nil, nil, 2, 2)
 local specWarnVoraciousBite					= mod:NewSpecialWarningDefensive(438471, nil, nil, nil, 1, 2)
 local specWarnHunger						= mod:NewSpecialWarningRun(439070, nil, nil, nil, 1, 2)
@@ -77,7 +77,11 @@ function mod:SPELL_CAST_START(args)
 	elseif spellId == 438476 then
 		self.vb.mobIcon = 1
 		self.vb.shrillCount = self.vb.shrillCount + 1
-		warnAlertingShrill:Show(self.vb.shrillCount)
+		specWarnAlertingShrill:Show(self.vb.shrillCount)
+		specWarnAlertingShrill:Play("aesoon")
+		if not self:IsTank() then
+			specWarnAlertingShrill:ScheduleVoice(2, "killmob")
+		end
 		timerAlertingShrillCD:Start(self.vb.shrillCount == 1 and 38.7 or 39.3, self.vb.shrillCount+1)
 		--if time remaining on Voracious Bite is < 7.2, it's extended by this every time
 		if timerVoraciousBiteCD:GetRemaining(self.vb.biteCount+1) < 7.2 then
