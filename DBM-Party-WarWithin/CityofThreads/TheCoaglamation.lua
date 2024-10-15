@@ -12,7 +12,7 @@ mod.sendMainBossGUID = true
 mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
-	"SPELL_CAST_START 441289 438658 447146 461880 461842 441395",
+	"SPELL_CAST_START 441289 438658 447146 461880 461842 441395 461989",
 	"SPELL_CAST_SUCCESS 441395"
 --	"SPELL_AURA_APPLIED",
 --	"SPELL_AURA_REMOVED",
@@ -23,7 +23,7 @@ mod:RegisterEventsInCombat(
 --TODO, infoframe for corrupted coating? only if someone asks for it. Realistically i doubt anyone would use DBM for this anyways
 --TODO, this boss needs fixing on normal/heroic since that stuff is hard to pull up on WCL
 --[[
-(ability.id = 441289 or ability.id = 438658 or ability.id = 447146 or ability.id = 461880 or ability.id = 461842) and type = "begincast"
+(ability.id = 441289 or ability.id = 438658 or ability.id = 447146 or ability.id = 461880 or ability.id = 461842 or ability.id = 461989) and type = "begincast"
  or ability.id = 441395 and type = "cast"
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
 --]]
@@ -78,7 +78,7 @@ function mod:SPELL_CAST_START(args)
 		else--Second Cast
 			timerViscousDarknessCD:Start(32.8, self.vb.viscousCount+1)--Subject variation, which we correct latter at blood surge
 		end
-	elseif spellId == 461842 then
+	elseif spellId == 461842 or spellId == 461989 then
 		self.vb.oozingCount = self.vb.oozingCount + 1
 		if self:IsTanking("player", "boss1", nil, true) then
 			specWarnOozingSmash:Show()
