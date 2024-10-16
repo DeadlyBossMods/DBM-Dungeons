@@ -33,7 +33,7 @@ local specWarnUmbralWind				= mod:NewSpecialWarningSpell(451939, nil, nil, nil, 
 local specWarnAscension					= mod:NewSpecialWarningDodge(451387, nil, nil, nil, 2, 2)
 local specWarnObsidianStomp				= mod:NewSpecialWarningDodge(456696, nil, nil, nil, 2, 2)
 local specWarnShadowlavaBlast			= mod:NewSpecialWarningDodge(456711, nil, nil, nil, 2, 15)
-local specWarnDarkEruption				= mod:NewSpecialWarningDodge(456713, nil, nil, nil, 2, 2)
+local specWarnDarkEruption				= mod:NewSpecialWarningMoveAway(456713, nil, nil, nil, 2, 2)
 local specWarnDecapitate				= mod:NewSpecialWarningDodge(451067, nil, nil, nil, 2, 2)
 local specWarnMindPiercer				= mod:NewSpecialWarningDodge(451391, nil, nil, nil, 2, 2)
 local specWarnBlazingShadowflame		= mod:NewSpecialWarningDodge(462216, nil, nil, nil, 2, 15)
@@ -121,7 +121,7 @@ function mod:SPELL_CAST_START(args)
 	elseif spellId == 456713 then
 		if self:AntiSpam(3, 2) then
 			specWarnDarkEruption:Show()
-			specWarnDarkEruption:Play("watchstep")
+			specWarnDarkEruption:Play("range5")
 		end
 	elseif spellId == 451387 then
 		--timerAscensionCD:Start()
