@@ -98,7 +98,11 @@ L:SetGeneralLocalization({
 -----------------------------
 --  Forge Speakers  --
 -----------------------------
---L = DBM:GetModLocalization(2590)
+L = DBM:GetModLocalization(2590)
+
+L:SetMiscLocalization{
+	SafeVent		= "Safe Vent"
+}
 
 -----------------------------
 --  High Speaker Eirich  --
