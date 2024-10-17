@@ -56,7 +56,7 @@ local warnedTimerMissing = false--Single warn for single spell to avoid spam. As
 local allTimers = {
 	[1] = {
 		[425264] = {6},--Obsidian Blast (Non Mythic)
-		[453212] = {7.1, 32.2, 26.2},--Obsidian Beam (Mythic)
+		[453212] = {7.1, 31.9, 26.2},--Obsidian Beam (Mythic)
 		[445996] = {13.1},--Collapsing Darkness (Non Mythic)
 		[453140] = {23.3, 28.1, 26.3},--Collapsing Night (Mythic)
 		[4267341] = {9.3, 35.5},--Burning Shadows (Non Mythic)
@@ -64,11 +64,11 @@ local allTimers = {
 	},
 	[2] = {
 		[425264] = {6.8, 17},--Obsidian Blast (Non Mythic)
-		[453212] = {18.2, 23.5, 23.5, 24.4, 25.6},--Obsidian Beam (Mythic)
+		[453212] = {18.0, 23.5, 23.5, 24.4, 25.6},--Obsidian Beam (Mythic)
 		[445996] = {13.8, 18},--Collapsing Darkness (Non Mythic)
 		[453140] = {8.7, 27.5, 25.1, 25.1, 25.6},--Collapsing Night (Mythic)
 		[4267341] = {10.1, 25.2},--Burning Shadows (Non Mythic)
-		[4267342] = {14.5, 18, 21.9, 18.0, 25.1},--Burning Shadows (Mythic)
+		[4267342] = {14.2, 18, 21.9, 18.0, 25.1, 25.4},--Burning Shadows (Mythic)
 	},								---23.5
 }
 
@@ -271,8 +271,8 @@ function mod:SPELL_AURA_REMOVED(args)
 			--Restart timers
 			if self:IsMythic() then
 				timerCollapsingNightCD:Start(8.7, 1)
-				timerBurningShadowsCD:Start(14.6, 1)
-				timerObsidianBeamCD:Start(18.2, 1)
+				timerBurningShadowsCD:Start(14.3, 1)
+				timerObsidianBeamCD:Start(18.0, 1)
 			else
 				timerBurningShadowsCD:Start(10.1, 1)
 				if not self:IsFollower() then--Doesn't seem used in follower difficulty
