@@ -260,7 +260,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 		timerBewilderingPollenCD:Start(nil, args.sourceGUID)
 	elseif spellId == 324923 then
 		timerBrambleBurstCD:Start(nil, args.sourceGUID)
-	elseif spellId == 331718 and self:IsValidWarning(args.sourceGUID) then
+	elseif spellId == 331718 then
 		timerSpearFlurryCD:Start(nil, args.sourceGUID)
 	elseif spellId == 322486 then
 		timerOvergrowthCD:Start(nil, args.sourceGUID)
