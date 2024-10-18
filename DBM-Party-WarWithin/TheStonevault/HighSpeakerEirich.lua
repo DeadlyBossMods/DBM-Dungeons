@@ -4,7 +4,7 @@ local L		= mod:GetLocalizedStrings()
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(213119)
 mod:SetEncounterID(2883)
-mod:SetHotfixNoticeRev(20240428000000)
+mod:SetHotfixNoticeRev(20241016000000)
 --mod:SetMinSyncRevision(20211203000000)
 --mod.respawnTime = 29
 mod.sendMainBossGUID = true
@@ -37,16 +37,16 @@ local specWarnUnbridledVoid					= mod:NewSpecialWarningDodgeCount(427869, nil, n
 --local specWarnGTFO						= mod:NewSpecialWarningGTFO(372820, nil, nil, nil, 1, 8)
 
 local timerVoidCorruptionCD					= mod:NewCDCountTimer(29.1, 427329, nil, nil, nil, 3)--Medium priority, some delays
-local timerEntropicReckoningCD				= mod:NewCDCountTimer(16.6, 427852, nil, nil, nil, 3)--Lowest priority, biggest delays
+local timerEntropicReckoningCD				= mod:NewCDCountTimer(24.2, 427852, nil, nil, nil, 3)--Lowest priority, biggest delays
 local timerUnbfridledVoidCD					= mod:NewCDCountTimer(20.2, 427869, nil, nil, nil, 3)--Medium priority, some delays
 
 mod.vb.corruptionCount = 0
 mod.vb.reckoningCount = 0
 mod.vb.unbridledCount = 0
 
---Unbridled Void does 4.8 lockout
---Void Corruption does 2.4 lockout
---Entropic Reckoning does 4.8 lockout
+--Unbridled Void does 4.8 lockout (old, not sure if still current with new timers)
+--Void Corruption does 3.6 lockout
+--Entropic Reckoning does 6 lockout
 local function updateAllTimers(self, ICD)
 	DBM:Debug("updateAllTimers running", 3)
 	if timerVoidCorruptionCD:GetRemaining(self.vb.corruptionCount+1) < ICD then
@@ -75,7 +75,7 @@ function mod:OnCombatStart(delay)
 	self.vb.unbridledCount = 0
 	timerUnbfridledVoidCD:Start(7.3-delay, 1)
 	timerVoidCorruptionCD:Start(15.5-delay, 1)
-	timerEntropicReckoningCD:Start(21.5-delay, 1)
+	timerEntropicReckoningCD:Start(21-delay, 1)
 end
 
 --function mod:OnCombatEnd()
@@ -87,18 +87,13 @@ function mod:SPELL_CAST_START(args)
 	if spellId == 427461 then
 		self.vb.corruptionCount = self.vb.corruptionCount + 1
 		timerVoidCorruptionCD:Start(nil, self.vb.corruptionCount+1)
-		updateAllTimers(self, 2.4)
+		updateAllTimers(self, 3.6)
 	elseif spellId == 427852 then
 		self.vb.reckoningCount = self.vb.reckoningCount + 1
 		specWarnEntropicReckoning:Show(self.vb.reckoningCount)
 		specWarnEntropicReckoning:Play("scatter")
-		--TODO, maybe remove this hardcoded rule and let updateAllTimers handle it?
-		if self.vb.reckoningCount == 3 then--4th cast always gets spell queued behind umbridled and corruption
-			timerEntropicReckoningCD:Start(20.6, self.vb.reckoningCount+1)
-		else
-			timerEntropicReckoningCD:Start(16.9, self.vb.reckoningCount+1)
-		end
-		updateAllTimers(self, 4.8)
+		timerEntropicReckoningCD:Start(nil, self.vb.reckoningCount+1)--Now 24-28
+		updateAllTimers(self, 6)
 	elseif spellId == 427869 then
 		self.vb.unbridledCount = self.vb.unbridledCount + 1
 		specWarnUnbridledVoid:Show(self.vb.unbridledCount)

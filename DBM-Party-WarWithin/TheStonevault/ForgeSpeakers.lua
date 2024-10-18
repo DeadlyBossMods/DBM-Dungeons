@@ -15,7 +15,6 @@ mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 430097 428202 428711",
 	"SPELL_CAST_SUCCESS 428508 428535 428120 445541",
 	"SPELL_AURA_APPLIED 439577",
-	"SPELL_AURA_REMOVED 445541",
 	"SPELL_PERIODIC_DAMAGE 429999",
 	"SPELL_PERIODIC_MISSED 429999",
 	"UNIT_DIED"
@@ -36,16 +35,13 @@ local warnSilencedSpeaker					= mod:NewTargetNoFilterAnnounce(439577, 4)
 local specWarnGTFO							= mod:NewSpecialWarningGTFO(429999, nil, nil, nil, 1, 8)
 --Speaker Brokk
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(28459))
-local warnVentilationOver					= mod:NewEndAnnounce(445541, 1)
-
-local specWarnExhaustVents					= mod:NewSpecialWarningDodgeCount(445541, nil, nil, nil, 2, 2)
+local specWarnExhaustVents					= mod:NewSpecialWarningMoveTo(445541, nil, nil, nil, 2, 17)
 local specWarnMoltenMetal					= mod:NewSpecialWarningInterruptCount(430097, "HasInterrupt", nil, nil, 1, 2)
 local specWarnScrapSong						= mod:NewSpecialWarningDodgeCount(428202, nil, nil, nil, 2, 2)
 --local yellSomeAbility						= mod:NewYell(372107)
 
 --Pretty much all of his timers can be delayed by up to 6 seconds by spell lockouts from interrupts
 local timerExhaustVentsCD					= mod:NewCDCountTimer(27, 445541, nil, nil, nil, 3)
-local timerExhaustVents						= mod:NewBuffActiveTimer(6, 445541, nil, nil, nil, 5)
 local timerMoltenMetalCD					= mod:NewCDCountTimer(13.4, 430097, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerScrapSongCD						= mod:NewCDCountTimer(49.7, 428202, nil, nil, nil, 3)
 --Speaker Dorlita
@@ -230,11 +226,10 @@ function mod:SPELL_CAST_SUCCESS(args)
 		updateDorlitaTimers(self, 3.5)
 	elseif spellId == 445541 then
 		self.vb.ventilationCount = self.vb.ventilationCount  + 1
-		specWarnExhaustVents:Show(self.vb.ventilationCount)
-		specWarnExhaustVents:Play("watchstep")
+		specWarnExhaustVents:Show(L.SafeVent)
+		specWarnExhaustVents:Play("findclearvent")
 		--This seems to actually have a higher Cd when it's not interfered with, it just gets interferred with a lot
 		timerExhaustVentsCD:Start(26.7, self.vb.ventilationCount+1)
-		timerExhaustVents:Start()--6
 		updateBrokkTimers(self, 3.6)--Can't cast anything else while channeling this
 	end
 end
@@ -246,14 +241,6 @@ function mod:SPELL_AURA_APPLIED(args)
 	end
 end
 --mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED
-
-function mod:SPELL_AURA_REMOVED(args)
-	local spellId = args.spellId
-	if spellId == 445541 and self:AntiSpam(3, 1) then
-		warnVentilationOver:Show()
-		timerExhaustVents:Stop()
-	end
-end
 
 function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId, spellName)
 	if spellId == 429999 and destGUID == UnitGUID("player") and self:AntiSpam(3, 2) then
