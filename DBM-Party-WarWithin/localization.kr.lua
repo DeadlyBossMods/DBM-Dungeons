@@ -99,7 +99,11 @@ L:SetGeneralLocalization({
 -----------------------------
 --  Forge Speakers  --
 -----------------------------
---L = DBM:GetModLocalization(2590)
+L = DBM:GetModLocalization(2590)
+
+L:SetMiscLocalization{
+	SafeVent		= "안전한 배기구"
+}
 
 -----------------------------
 --  High Speaker Eirich  --
