@@ -219,6 +219,7 @@ end
 
 function mod:SPELL_CAST_SUCCESS(args)
 	if not self.Options.Enabled then return end
+	if not self:IsValidWarning(args.sourceGUID) then return end--Filter all casts done by mobs in combat with npcs/other mobs.
 	local spellId = args.spellId
 	if spellId == 325418 then
 		timerVolatileAcidCD:Start(nil, args.sourceGUID)
