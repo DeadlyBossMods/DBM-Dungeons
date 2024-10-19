@@ -12,8 +12,8 @@ mod:RegisterCombat("combat")
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 320596 320637 320655",
 	"SPELL_PERIODIC_DAMAGE 320646",
-	"SPELL_PERIODIC_MISSED 320646",
-	"UNIT_SPELLCAST_START boss1"
+	"SPELL_PERIODIC_MISSED 320646"
+--	"UNIT_SPELLCAST_START boss1"
 )
 
 --TODO, https://shadowlands.wowhead.com/spell=320614/blood-gorge stuff?
@@ -87,7 +87,7 @@ function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
 	if spellId == 320596 then
 		self.vb.retchCount = self.vb.retchCount + 1
---		self:ScheduleMethod(0.1, "BossTargetScanner", args.sourceGUID, "RetchTarget", 0.1, 4)
+		self:ScheduleMethod(0.1, "BossTargetScanner", args.sourceGUID, "RetchTarget", 0.1, 4)
 		timerHeavingRetchCD:Start(nil, self.vb.retchCount+1)
 		updateAllTimers(self, 6)
 	elseif spellId == 320637 then
@@ -118,8 +118,8 @@ mod.SPELL_PERIODIC_MISSED = mod.SPELL_PERIODIC_DAMAGE
 --"<250.42 21:13:50> [CLEU] SPELL_CAST_START#Creature-0-2085-2286-7772-162691-000026E310#Blightbone##nil#320596#Heaving Retch#nil#nil", -- [2794]
 --"<250.42 21:13:50> [UNIT_TARGET] boss1#Blightbone - Hupe#Blightbone", -- [2795]
 --"<250.60 21:13:50> [CHAT_MSG_MONSTER_YELL] Something... coming... up...#Blightbone###Hupe##0#0##0#30#nil#0#false#false#false#false", -- [2796]
-function mod:UNIT_SPELLCAST_START(uId, _, spellId)
-	if spellId == 320596 then
-		self:BossUnitTargetScanner(uId, "RetchTarget", 1)
-	end
-end
+--function mod:UNIT_SPELLCAST_START(uId, _, spellId)
+--	if spellId == 320596 then
+--		self:BossUnitTargetScanner(uId, "RetchTarget", 1)
+--	end
+--end
