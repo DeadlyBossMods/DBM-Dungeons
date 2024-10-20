@@ -232,7 +232,7 @@ function mod:StartNameplateTimers(guid, cid)
 	end
 end
 
-mod:RegisterZoneCombat(2660, mod.modId)
+mod:RegisterZoneCombat(2660, "AraKaraTrash")
 
 --Abort timers when all players out of combat, so NP timers clear on a wipe
 --Caveat, it won't calls top with GUIDs, so while it might terminate bar objects, it may leave lingering nameplate icons
