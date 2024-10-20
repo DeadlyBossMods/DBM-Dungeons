@@ -216,8 +216,8 @@ function mod:StartNameplateTimers(guid, cid)
 		timerCalloftheBroodCD:Start(6.5, guid)
 		timerWebSprayCD:Start(12.6, guid)
 	elseif cid == 217533 then--Atik
-		timerWebSprayCD:Start(4.7, guid)--4.7-6
-		timerPoisonousCloudCD:Start(10.9, guid)--10.9-14.4
+		timerWebSprayCD:Start(4.3, guid)--4.3-6
+		timerPoisonousCloudCD:Start(9.1, guid)--9.1-14.4
 	elseif cid == 216293 then--Trilling Attendant
 		timerRadiantBarrageCD:Start(2.1, guid)--2.1-3.8
 	elseif cid == 223253 then--Bloodstained Webmage
