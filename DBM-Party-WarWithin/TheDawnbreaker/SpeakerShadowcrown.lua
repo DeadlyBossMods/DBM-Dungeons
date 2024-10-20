@@ -42,7 +42,7 @@ local timerObsidianBlastCD					= mod:NewCDCountTimer(17, 425264, nil, nil, nil, 
 local timerObsidianBeamCD					= mod:NewCDCountTimer(24.3, 453212, nil, nil, nil, 5)--Mythic and Higher
 local timerCollapsingDarknessCD				= mod:NewCDCountTimer(18, 445996, nil, nil, nil, 3)--Heroic and Lower
 local timerCollapsingNightCD				= mod:NewCDCountTimer(25.9, 453140, nil, nil, nil, 3)--Mythic and Higher
-local timerDarknessComes					= mod:NewCastNPTimer(10, 453859, nil, nil, nil, 2)
+local timerDarknessComes					= mod:NewCastNPTimer(15, 453859, nil, nil, nil, 2)
 local timerBurningShadowsCD					= mod:NewCDCountTimer(17, 426734, nil, nil, nil, 3)
 
 mod.vb.darknessCount = 0
@@ -55,7 +55,7 @@ mod.vb.shadowsCount = 0
 local warnedTimerMissing = false--Single warn for single spell to avoid spam. As long as user finds ONE missing timer, their log is useful
 local allTimers = {
 	[1] = {
-		[425264] = {6},--Obsidian Blast (Non Mythic)
+		[425264] = {6, 34.3},--Obsidian Blast (Non Mythic)
 		[453212] = {7.1, 31.9, 26.2},--Obsidian Beam (Mythic)
 		[445996] = {13.1},--Collapsing Darkness (Non Mythic)
 		[453140] = {23.3, 28.1, 26.3},--Collapsing Night (Mythic)

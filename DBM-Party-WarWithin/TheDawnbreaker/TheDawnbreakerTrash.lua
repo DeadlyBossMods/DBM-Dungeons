@@ -100,7 +100,7 @@ function mod:SPELL_CAST_START(args)
 			specWarnShadowyDecay:Play("aesoon")
 		end
 	elseif spellId == 450854 then--Trash Version
-		if self:AntiSpam(3, 2) then
+		if self:AntiSpam(2.5, 2) then--Lowered exception since it often overlaps with Black edge, and users then think this warning is broken when it does common warning type aggregation
 			specWarnDarkOrb:Show()
 			specWarnDarkOrb:Play("watchorb")
 		end

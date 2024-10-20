@@ -255,6 +255,7 @@ function mod:UNIT_DIED(args)
 	elseif cid == 129369 then--Irontide Raider
 		timerSavageTempestCD:Stop(args.destGUID)
 		timerSavageTempest:Stop(args.destGUID)
+		timerIronHookCD:Stop(args.destGUID)
 	elseif cid == 129371 then--Riptide Shredder
 		timerSingSteelCD:Stop(args.destGUID)
 	elseif cid == 129879 then--Irontide Cleaver (Trash version)
@@ -278,8 +279,6 @@ function mod:UNIT_DIED(args)
 		timerTerrifyingRoarCD:Stop(args.destGUID)
 	elseif cid == 129367 then--Bilge Rat Tempest
 		timerChoakingWatersCD:Stop(args.destGUID)
-	elseif cid == 129369 then--Iron Raider
-		timerIronHookCD:Stop(args.destGUID)
 	elseif cid == 129370 or cid == 144071 then--Ironhull WaveShaper
 		timerWatertightShellCD:Stop(args.destGUID)
 	end
