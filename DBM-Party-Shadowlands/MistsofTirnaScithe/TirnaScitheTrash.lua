@@ -6,6 +6,7 @@ mod:SetRevision("@file-date-integer@")
 
 mod.isTrashMod = true
 mod.isTrashModBossFightAllowed = true
+mod:SetZone(2290)
 
 mod:RegisterEvents(
 	"SPELL_CAST_START 321968 324909 324923 324914 324776 340305 340304 340300 340160 340189 326046 331718 331743 460092 463256 463248 340208 340289 326021",--325418
