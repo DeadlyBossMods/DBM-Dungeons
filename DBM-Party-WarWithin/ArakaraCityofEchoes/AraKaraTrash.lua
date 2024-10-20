@@ -5,6 +5,7 @@ mod:SetRevision("@file-date-integer@")
 --mod:SetModelID(47785)
 mod.isTrashMod = true
 mod.isTrashModBossFightAllowed = true
+mod:SetZone(2660)
 
 mod:RegisterEvents(
 	"SPELL_CAST_START 434824 434802 438877 436322 438826 448248 453161 432967 433841 433845 434252",
@@ -21,6 +22,7 @@ mod:RegisterEvents(
  or (ability.id = 438622 or ability.id = 434793) and type = "cast"
  or (stoppedAbility.id = 438622 or stoppedAbility.id = 434793 or stoppedAbility.id = 438826 or stoppedAbility.id = 434252 or stoppedAbility.id = 433845 or stoppedAbility.id = 433841 or stoppedAbility.id = 453161 or stoppedAbility.id = 434824 or stoppedAbility.id = 438877 or stoppedAbility.id = 448248 or stoppedAbility.id = 434802 or stoppedAbility.id = 436322 or stoppedAbility.id = 432967)
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
+ or (source.type = "NPC" and source.firstSeen = timestamp and source.id = 217531) or (target.type = "NPC" and target.firstSeen = timestamp and target.id = 217531)
 --]]
 local warnHorrifyingshrill					= mod:NewCastAnnounce(434802, 4)--High Prio Off interrupt
 local warnRadiantBarrage					= mod:NewCastAnnounce(434793, 4)--High Prio Off interrupt
@@ -203,4 +205,37 @@ function mod:UNIT_DIED(args)
 	elseif cid == 217039 then--Nerubian Hauler
 		timerMassiveSlamCD:Stop(args.destGUID)
 	end
+end
+
+--All timers subject to a ~0.5 second clipping due to ScanEngagedUnits
+function mod:StartNameplateTimers(guid, cid)
+	if cid == 217531 then--Ixin
+		timerWebSprayCD:Start(6, guid)
+		timerHorrifyingShrillCD:Start(12.7, guid)
+	elseif cid == 218324 then--Nakt
+		timerCalloftheBroodCD:Start(6.5, guid)
+		timerWebSprayCD:Start(12.6, guid)
+	elseif cid == 217533 then--Atik
+		timerWebSprayCD:Start(4.7, guid)--4.7-6
+		timerPoisonousCloudCD:Start(10.9, guid)--10.9-14.4
+	elseif cid == 216293 then--Trilling Attendant
+		timerRadiantBarrageCD:Start(2.1, guid)--2.1-3.8
+	elseif cid == 223253 then--Bloodstained Webmage
+		timerRevoltingVolleyCD:Start(2.2, guid)--2.2-4.5
+	elseif cid == 216338 then--Hulking Bodyguard
+		timerImpaleCD:Start(5.6, guid)--5.6-7.6
+	elseif cid == 216364 then--Blood Overseer
+		timerVenomVolleyCD:Start(5.2, guid)--5.2-7.4
+		timerEruptingWebsCD:Start(11.3, guid)--11.3-13.9
+	elseif cid == 217039 then--Nerubian Hauler
+		timerMassiveSlamCD:Start(3, guid)--3-4
+	end
+end
+
+mod:RegisterZoneCombat(2660, mod.modId)
+
+--Abort timers when all players out of combat, so NP timers clear on a wipe
+--Caveat, it won't calls top with GUIDs, so while it might terminate bar objects, it may leave lingering nameplate icons
+function mod:LeavingZoneCombat()
+	self:Stop()
 end
