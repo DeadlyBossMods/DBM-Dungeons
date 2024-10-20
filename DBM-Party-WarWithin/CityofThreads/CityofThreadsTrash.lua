@@ -5,6 +5,7 @@ mod:SetRevision("@file-date-integer@")
 --mod:SetModelID(47785)
 mod.isTrashMod = true
 mod.isTrashModBossFightAllowed = true
+mod:SetZone(2669)
 
 mod:RegisterEvents(
 	"SPELL_CAST_START 443430 443433 443500 451543 451423 450784 442536 452162 434137 445813 453840 446086 446717 447271",
@@ -28,6 +29,7 @@ mod:RegisterEvents(
  or (ability.id = 443436 or ability.id = 443430 or ability.id = 443500 or ability.id = 451543 or ability.id = 452162 or ability.id = 446086) and type = "cast"
  or (stoppedAbility.id = 443430 or stoppedAbility.id = 452162 or stoppedAbility.id = 446086)
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
+ or (source.type = "NPC" and source.firstSeen = timestamp and source.id = 220196) or (target.type = "NPC" and target.firstSeen = timestamp and target.id = 220196)
 --]]
 local warnSilkBinding						= mod:NewCastAnnounce(443430, 3)--High Prio Interrupt
 local warnPerfumeToss						= mod:NewCastAnnounce(450784, 2)
@@ -65,6 +67,8 @@ local timerVoidWaveCD						= mod:NewCDNPTimer(15.4, 446086, nil, "HasInterrupt",
 local timerUmbralWeaveCD					= mod:NewCDNPTimer(20, 446717, nil, nil, nil, 2)
 local timerTremorSlamCD						= mod:NewCDNPTimer(20, 447271, nil, nil, nil, 3)
 
+local xephEngaged
+
 --local playerName = UnitName("player")
 
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc, 7 off interrupt
@@ -81,21 +85,6 @@ function mod:CLTarget(targetname)
 	end
 end
 --]]
-
---Xeph'itik is a special case, he doesn't die, so we need to clear his timers some other way
-local xephEngaged = false
----@param self DBMMod
----@param guid string
-local function XephCheck(self, guid)
-	local combatFound = self:GroupInCombat()
-	if not combatFound and xephEngaged then
-		xephEngaged = false
-		timerGossamerBarrageCD:Stop(guid)
-		timerPerfumeTossCD:Stop(guid)
-		return
-	end
-	self:Schedule(1, XephCheck, self, guid)
-end
 
 function mod:SPELL_CAST_START(args)
 	if not self.Options.Enabled then return end
@@ -142,8 +131,7 @@ function mod:SPELL_CAST_START(args)
 		end
 	elseif spellId == 451423 then
 		if not xephEngaged then
-			xephEngaged = true
-			self:Schedule(3, XephCheck, self, args.sourceGUID)
+			xephEngaged = args.sourceGUID
 		end
 		timerGossamerBarrageCD:Start(23, args.sourceGUID)
 		if self:AntiSpam(3, 2) then
@@ -152,8 +140,7 @@ function mod:SPELL_CAST_START(args)
 		end
 	elseif spellId == 450784 then
 		if not xephEngaged then
-			xephEngaged = true
-			self:Schedule(3, XephCheck, self, args.sourceGUID)
+			xephEngaged = args.sourceGUID
 		end
 		timerPerfumeTossCD:Start(17, args.sourceGUID)
 		if self:AntiSpam(3, 6) then
@@ -257,7 +244,7 @@ function mod:UNIT_DIED(args)
 	elseif cid == 220730 then--Royal VenomShell
 		timerVenomousSprayCD:Stop(args.destGUID)
 		timerEarthShatterCD:Stop(args.destGUID)
-	elseif cid == 220003 then--Hallows Resident
+	elseif cid == 220003 or cid == 219983 then--Hallows Resident
 		timerNullSlamCD:Stop(args.destGUID)
 	elseif cid == 223844 or cid == 224732 then--Covert Webmancer
 		timerMendingWebCD:Stop(args.destGUID)
@@ -265,9 +252,53 @@ function mod:UNIT_DIED(args)
 		timerDarkBarrageCD:Stop(args.destGUID)
 	elseif cid == 216339 then--Sureki Unnaturaler
 		timerVoidWaveCD:Stop(args.destGUID)
-	elseif cid == 221102 then--Elder Shadowweaver
+	elseif cid == 221102 then--Elder Shadeweaver
 		timerUmbralWeaveCD:Stop(args.destGUID)
 	elseif cid == 221103 then--Hulking Warshell
 		timerTremorSlamCD:Stop(args.destGUID)
 	end
+end
+
+--All timers subject to a ~0.5 second clipping due to ScanEngagedUnits
+function mod:StartNameplateTimers(guid, cid)
+	if cid == 220196 then--Herald of Ansurekha
+		timerShadowsofDoubtCD:Start(9.2, guid)--9.2-10
+	elseif cid == 220195 then--Sureki Silkbinder
+		timerSilkBindingCD:Start(14.8, guid)--14.8-15.3
+	elseif cid == 220197 then--Royal Swarmsguard
+		timerEarthShatterCD:Start(5.2, guid)--5.2-7.3
+	elseif cid == 220730 then--Royal VenomShell
+		timerVenomousSprayCD:Start(6, guid)--6-6.8
+		timerEarthShatterCD:Start(20.5, guid)--20.5-21.4
+	elseif cid == 220003 or cid == 219983 then--Hallow Resident
+		timerNullSlamCD:Start(20.5, guid)--20.5-21.2
+	elseif cid == 223844 or cid == 224732 then--Covert Webmancer
+		timerMendingWebCD:Start(12.4, guid)--12.4-14.3
+	elseif cid == 216328 then--Unstable test Subject
+		timerDarkBarrageCD:Start(3.6, guid)--3.5-5.1
+	elseif cid == 216339 then--Sureki Unnaturaler
+		timerVoidWaveCD:Start(5.6, guid)
+	elseif cid == 221102 then--Elder Shadeweaver
+		timerUmbralWeaveCD:Start(4.7, guid)--4.7-5.3
+	elseif cid == 221103 then--Hulking Warshell
+		timerTremorSlamCD:Start(8.6, guid)--8.6-10.7
+	elseif cid == 219984 then--Xeph'itik
+		xephEngaged = guid
+		timerPerfumeTossCD:Start(8.2, guid)--8.2-9.4
+		timerGossamerBarrageCD:Start(13, guid)--13-14.3
+	end
+end
+
+mod:RegisterZoneCombat(2669, "CityofThreadsTrash")
+
+--Abort timers when all players out of combat, so NP timers clear on a wipe
+--Caveat, it won't calls top with GUIDs, so while it might terminate bar objects, it may leave lingering nameplate icons
+function mod:LeavingZoneCombat()
+	--Xeph'itik is a special case, he doesn't die, so we need to clear his timers some other way
+	if xephEngaged then
+		timerGossamerBarrageCD:Stop(xephEngaged)
+		timerPerfumeTossCD:Stop(xephEngaged)
+		xephEngaged = nil
+	end
+	self:Stop()
 end
