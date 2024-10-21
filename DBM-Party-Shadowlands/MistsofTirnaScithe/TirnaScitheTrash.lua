@@ -9,8 +9,8 @@ mod.isTrashModBossFightAllowed = true
 mod:SetZone(2290)
 
 mod:RegisterEvents(
-	"SPELL_CAST_START 321968 324909 324923 324914 324776 340305 340304 340300 340160 340189 326046 331718 331743 460092 463256 463248 340208 340289 326021",--325418
-	"SPELL_CAST_SUCCESS 325418 340544 322938 325223 331743 340279 321968 324923 331718 322486 322557 324914 324776 326046 463248 463256 340160 340208 340189 326021 460092 324987 340300",
+	"SPELL_CAST_START 321968 324909 324923 324914 324776 340305 340304 340300 340160 340189 326046 331718 331743 460092 463256 463248 340208 340289 326021 463217",--325418
+	"SPELL_CAST_SUCCESS 325418 340544 322938 325223 331743 340279 321968 324923 331718 322486 322557 324914 324776 326046 463248 463256 340160 340208 340189 326021 460092 324987 340300 463217",
 	"SPELL_INTERRUPT",
 	"SPELL_AURA_APPLIED 322557 324914 324776 325224 340288 326046 322486 325021",
 	"SPELL_AURA_APPLIED_DOSE 340288",
@@ -22,11 +22,10 @@ mod:RegisterEvents(
 --TODO, target scan crushing leap? If it can be done, and if the two aoe abilities come from leap target destination, fine tune those warnings too
 --TODO, see if Pool of Radiance is too early to warn, might need to warn at 340191/rejuvenating-radiance instead
 --TODO, add https://www.wowhead.com/beta/spell=322569/hand-of-thros ? can you really do anything about it though? Guess tank can kite, timer too varaible to add
---TODO, add https://www.wowhead.com/beta/spell=463217/anima-slash stack tracking?
 --TODO, track https://www.wowhead.com/beta/spell=340289/triple-bite cast itself for nameplate timer purposes?
 --TODO, dispel warning for https://www.wowhead.com/beta/spell=340283/poisonous-discharge ?
 --[[
-(ability.id = 321968 or ability.id = 324909 or ability.id = 324923 or ability.id = 324914 or ability.id = 324776 or ability.id = 340305 or ability.id = 340304 or ability.id = 340300 or ability.id = 340160 or ability.id = 340189 or ability.id = 326046 or ability.id = 331718 or ability.id = 331743 or ability.id = 460092 or ability.id = 463256 or ability.id = 463248 or ability.id = 340208 or ability.id = 340289 or ability.id = 326021) and (type = "begincast" or type = "cast")
+(ability.id = 321968 or ability.id = 324909 or ability.id = 324923 or ability.id = 324914 or ability.id = 324776 or ability.id = 340305 or ability.id = 340304 or ability.id = 340300 or ability.id = 340160 or ability.id = 340189 or ability.id = 326046 or ability.id = 331718 or ability.id = 331743 or ability.id = 460092 or ability.id = 463256 or ability.id = 463248 or ability.id = 340208 or ability.id = 340289 or ability.id = 326021 or ability.id = 463217) and (type = "begincast" or type = "cast")
  or (ability.id = 325418 or ability.id = 340544 or ability.id = 322938 or ability.id = 325223 or ability.id = 331743 or ability.id = 340279 or ability.id = 321968 or ability.id = 324923 or ability.id = 331718 or ability.id = 322486 or ability.id = 322557 or ability.id = 324914 or ability.id = 324776 or ability.id = 326046) and type = "cast"
  or stoppedAbility.id = 322938 or stoppedAbility.id = 324914 or stoppedAbility.id = 324776 or stoppedAbility.id = 326046 or stoppedAbility.id = 340544
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
@@ -56,6 +55,7 @@ local specWarnExpel						= mod:NewSpecialWarningYou(463248, nil, nil, nil, 2, 2)
 local specWarnAcidGlobule				= mod:NewSpecialWarningDodge(326021, nil, nil, nil, 2, 2)
 local specWarnOvergrowth				= mod:NewSpecialWarningMoveTo(322486, nil, nil, nil, 1, 11)
 local specWarnShredArmor				= mod:NewSpecialWarningDefensive(340208, nil, nil, nil, 1, 2)
+local specWarnAnimaSlash				= mod:NewSpecialWarningDefensive(463217, nil, nil, nil, 1, 2)
 local specWarnSoulSplit					= mod:NewSpecialWarningDispel(322557, "RemoveMagic", nil, nil, 1, 2)
 local specWarnNourishtheForestDispel	= mod:NewSpecialWarningDispel(324914, "MagicDispeller", nil, nil, 1, 2)
 local specWarnBramblethornCoatDispel	= mod:NewSpecialWarningDispel(324776, "MagicDispeller", nil, nil, 1, 2)
@@ -94,6 +94,7 @@ local timerExpelCD						= mod:NewCDNPTimer(15.1, 463248, nil, nil, nil, 3)--Vali
 local timerMistWardCD					= mod:NewCDNPTimer(22.9, 463256, nil, nil, nil, 5)--Valid Aug 8, One of two creatures has CD, the other does not.
 local timerRadiantBreathCD				= mod:NewCDPNPTimer(10.4, 340160, nil, nil, nil, 3)--Valid Aug 8
 local timerShredArmorCD					= mod:NewCDNPTimer(10.6, 340208, nil, nil, nil, 5)----Valid Aug 8, Possible same as breath
+local timerAnimaSlashCD					= mod:NewCDNPTimer(13, 463217, nil, nil, nil, 5)--Valid Oct 21
 local timerPoolofRadianceCD				= mod:NewCDNPTimer(28, 340189, nil, nil, nil, 5)--Valid Aug 8
 local timerAcidGlobuleCD				= mod:NewCDNPTimer(15.7, 326021, nil, nil, nil, 3)--Valid Oct 3
 local timerMistveilBiteCD				= mod:NewCDNPTimer(10.4, 324987, nil, nil, nil, 5)--Valid Aug 8
@@ -215,6 +216,11 @@ function mod:SPELL_CAST_START(args)
 			specWarnAcidGlobule:Show()
 			specWarnAcidGlobule:Play("watchstep")
 		end
+	elseif spellId == 463217 then
+		if self:IsTanking("player", nil, nil, true, args.sourceGUID) then
+			specWarnAnimaSlash:Show()
+			specWarnAnimaSlash:Play("defensive")
+		end
 	end
 end
 
@@ -291,6 +297,8 @@ function mod:SPELL_CAST_SUCCESS(args)
 		timerMistveilBiteCD:Start(nil, args.sourceGUID)
 	elseif spellId == 340300 then
 		timerTongueLashingCD:Start(nil, args.sourceGUID)
+	elseif spellId == 463217 then
+		timerAnimaSlashCD:Start(nil, args.sourceGUID)
 	end
 end
 
@@ -365,6 +373,7 @@ function mod:UNIT_DIED(args)
 		timerAnimaInjectionCD:Stop(args.destGUID)
 	elseif cid == 166276 then--Mistveil Guardian
 		timerBuckingRampageCD:Stop(args.destGUID)
+		timerAnimaSlashCD:Stop(args.destGUID)
 	elseif cid == 173714 then--Mistveil Nightblossom
 		timerPoisonousDischargeCD:Stop(args.destGUID)
 	elseif cid == 164929 then--Tirnenn Villager
