@@ -5,6 +5,7 @@ mod:SetRevision("@file-date-integer@")
 --mod:SetModelID(47785)
 mod.isTrashMod = true
 mod.isTrashModBossFightAllowed = true
+mod:SetZone(2662)
 
 mod:RegisterEvents(
 	"SPELL_CAST_START 451102 450854 451117 451097 431364 431494 432565 432520 431333 431637 451091 451098 431349 446615 450756 431304",
@@ -25,6 +26,7 @@ mod:RegisterEvents(
  or (ability.id = 451112 or ability.id = 432448 or ability.id = 451107) and type = "cast"
  or stoppedAbility.id = 450756 or stoppedAbility.id = 451097 or stoppedAbility.id = 431364 or stoppedAbility.id = 431333 or stoppedAbility.id = 431309 or stoppedAbility.id = 432520
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
+ or (source.type = "NPC" and source.firstSeen = timestamp and source.id = 211261) or (target.type = "NPC" and target.firstSeen = timestamp and target.id = 211261)
  --]]
 local warnReinforcements					= mod:NewSpellAnnounce(446615, 2)
 local warnDarkFloes							= mod:NewSpellAnnounce(431304, 2)
@@ -297,14 +299,59 @@ function mod:UNIT_DIED(args)
 		timerBlackHailCD:Stop(args.destGUID)
 	elseif cid == 213893 or cid == 228539 then--Nightfall Darkcaster
 		timerUmbrelBarrierCD:Stop(args.destGUID)
+	elseif cid == 213895 or cid == 228537 then--Nightfall Shadowalker
 		timerUmbrelRushCD:Stop(args.destGUID)
 	elseif cid == 214762 then--Nightfall Commander
 		timerAbyssalHowlCD:Stop(args.destGUID)
 	elseif cid == 213885 then--Nightfall Dark Architect
 		timerTorentingEruptionCD:Stop(args.destGUID)
-	elseif cid == 213892 then--Nightfall Shadowmage
+	elseif cid == 213892 or cid == 228540 then--Nightfall Shadowmage (223994 is an RP mage, not engaged)
 		timerEnsharingShadowsCD:Stop(args.destGUID)
 	elseif cid == 210966 then--Sureki Webmage
 		timerBurstingCacoonCD:Stop(args.destGUID)
 	end
+end
+
+--All timers subject to a ~0.5 second clipping due to ScanEngagedUnits
+function mod:StartNameplateTimers(guid, cid)
+	if cid == 211261 then--Ascendant Vis'coxria
+		timerShadowyDecayCD:Start(3.6, guid)--3.6-5.5
+		timerAbyssalBlastCD:Start(13.3, guid)--13.3-15.2
+	elseif cid == 211263 then--Deathscreamer Iken'tak
+		timerAbyssalBlastCD:Start(5.8, guid)--5.8-6.8
+		timerDarkOrbCD:Start(12.8, guid)--12.8-13.1
+	elseif cid == 211262 then--Ixkreten the Unbreakable
+		timerAbyssalBlastCD:Start(2.4, guid)--2.4-5
+		timerTerrifyingSlamCD:Start(7.2, guid)--7.2-9.9
+--	elseif cid == 213932 then--Sureki Militant (players often don't pull this)
+--		timerSilkenShellCD:Start(18.4, guid)
+	elseif cid == 214761 then--Nightfall Ritualist
+--		timerTormentingRayCD:Start(1.4, guid)--0.1-1.8
+		timerStygianSeedCD:Start(9.2, guid)--9.2-11.3
+	elseif cid == 213934 then--Nightfall Tactician
+		timerBlackEdgeCD:Start(3.2, guid)--3.2-6.2
+		timerTacticiansRageCD:Start(10.5, guid)--10.5-11.7
+	elseif cid == 211341 then--Manifested Shadow
+		timerBlackHailCD:Start(5.3, guid)--5.3-8.8
+--	elseif cid == 213893 or cid == 228539 then--Nightfall Darkcaster
+--		timerUmbrelBarrierCD:Start(8.6, guid)--8.6-17 (first cast not likley timer based but health threshold based)
+--	elseif cid == 213895 or cid == 228537 then--Nightfall Shadowalker
+--		timerUmbrelRushCD:Start(9.1, guid)--Used instantly on engage
+	elseif cid == 214762 then--Nightfall Commander
+		timerAbyssalHowlCD:Start(6.5, guid)--6.5-10.0
+	elseif cid == 213885 then--Nightfall Dark Architect
+		timerTorentingEruptionCD:Start(5.4, guid)--5.4-5.9
+	elseif cid == 213892 or cid == 228540 then--Nightfall Shadowmage (223994 is an RP mage, not engaged)
+		timerEnsharingShadowsCD:Start(cid == 228540 and 13.2 or 8.3, guid)--8.3-12.9 (213892) 13.2-14 (228540)
+	elseif cid == 210966 then--Sureki Webmage
+		timerBurstingCacoonCD:Start(5.9, guid)--5.9-11.7
+	end
+end
+
+mod:RegisterZoneCombat(2662, "TheDawnbreakerTrash")
+
+--Abort timers when all players out of combat, so NP timers clear on a wipe
+--Caveat, it won't calls top with GUIDs, so while it might terminate bar objects, it may leave lingering nameplate icons
+function mod:LeavingZoneCombat()
+	self:Stop()
 end
