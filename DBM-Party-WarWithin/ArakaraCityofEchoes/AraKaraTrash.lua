@@ -6,6 +6,7 @@ mod:SetRevision("@file-date-integer@")
 mod.isTrashMod = true
 mod.isTrashModBossFightAllowed = true
 mod:SetZone(2660)
+mod:RegisterZoneCombat(2660)
 
 mod:RegisterEvents(
 	"SPELL_CAST_START 434824 434802 438877 436322 438826 448248 453161 432967 433841 433845 434252",
@@ -210,7 +211,7 @@ end
 --All timers subject to a ~0.5 second clipping due to ScanEngagedUnits
 function mod:StartNameplateTimers(guid, cid)
 	if cid == 217531 then--Ixin
-		timerWebSprayCD:Start(6, guid)
+		timerWebSprayCD:Start(4.4, guid)--4.4-7
 		timerHorrifyingShrillCD:Start(12.7, guid)
 	elseif cid == 218324 then--Nakt
 		timerCalloftheBroodCD:Start(6.5, guid)
@@ -231,8 +232,6 @@ function mod:StartNameplateTimers(guid, cid)
 		timerMassiveSlamCD:Start(3, guid)--3-4
 	end
 end
-
-mod:RegisterZoneCombat(2660, "AraKaraTrash")
 
 --Abort timers when all players out of combat, so NP timers clear on a wipe
 --Caveat, it won't calls top with GUIDs, so while it might terminate bar objects, it may leave lingering nameplate icons

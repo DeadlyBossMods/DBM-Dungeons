@@ -6,6 +6,7 @@ mod:SetRevision("@file-date-integer@")
 mod.isTrashMod = true
 mod.isTrashModBossFightAllowed = true
 mod:SetZone(2669)
+mod:RegisterZoneCombat(2669)
 
 mod:RegisterEvents(
 	"SPELL_CAST_START 443430 443433 443500 451543 451423 450784 442536 452162 434137 445813 453840 446086 446717 447271",
@@ -288,8 +289,6 @@ function mod:StartNameplateTimers(guid, cid)
 		timerGossamerBarrageCD:Start(13, guid)--13-14.3
 	end
 end
-
-mod:RegisterZoneCombat(2669, "CityofThreadsTrash")
 
 --Abort timers when all players out of combat, so NP timers clear on a wipe
 --Caveat, it won't calls top with GUIDs, so while it might terminate bar objects, it may leave lingering nameplate icons
