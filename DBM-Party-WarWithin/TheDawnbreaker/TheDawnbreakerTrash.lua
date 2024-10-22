@@ -6,6 +6,7 @@ mod:SetRevision("@file-date-integer@")
 mod.isTrashMod = true
 mod.isTrashModBossFightAllowed = true
 mod:SetZone(2662)
+mod:RegisterZoneCombat(2662)
 
 mod:RegisterEvents(
 	"SPELL_CAST_START 451102 450854 451117 451097 431364 431494 432565 432520 431333 431637 451091 451098 431349 446615 450756 431304",
@@ -347,8 +348,6 @@ function mod:StartNameplateTimers(guid, cid)
 		timerBurstingCacoonCD:Start(5.9, guid)--5.9-11.7
 	end
 end
-
-mod:RegisterZoneCombat(2662, "TheDawnbreakerTrash")
 
 --Abort timers when all players out of combat, so NP timers clear on a wipe
 --Caveat, it won't calls top with GUIDs, so while it might terminate bar objects, it may leave lingering nameplate icons
