@@ -229,7 +229,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 		specWarnExhaustVents:Show(L.SafeVent)
 		specWarnExhaustVents:Play("findclearvent")
 		--This seems to actually have a higher Cd when it's not interfered with, it just gets interferred with a lot
-		timerExhaustVentsCD:Start(26.7, self.vb.ventilationCount+1)
+		timerExhaustVentsCD:Start(23.1, self.vb.ventilationCount+1)
 		updateBrokkTimers(self, 3.6)--Can't cast anything else while channeling this
 	end
 end

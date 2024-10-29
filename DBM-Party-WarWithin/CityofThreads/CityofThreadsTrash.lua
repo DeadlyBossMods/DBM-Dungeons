@@ -9,7 +9,7 @@ mod:SetZone(2669)
 mod:RegisterZoneCombat(2669)
 
 mod:RegisterEvents(
-	"SPELL_CAST_START 443430 443433 443500 451543 451423 450784 442536 452162 434137 445813 453840 446086 446717 447271",
+	"SPELL_CAST_START 443430 443433 443500 451543 451423 450784 442536 452162 434137 445813 453840 446086 446717 447271 443507",
 	"SPELL_CAST_SUCCESS 443436 443430 443500 451543 452162 446086",
 	"SPELL_INTERRUPT",
 	"SPELL_AURA_APPLIED 443437",
@@ -39,6 +39,7 @@ local warnShadowsofDoubt					= mod:NewTargetAnnounce(443437, 2)
 local warnVenomousSpray						= mod:NewSpellAnnounce(434137, 3)
 local warnAwakeningCalling					= mod:NewSpellAnnounce(453840, 3)
 local warnUmbralWeave						= mod:NewCastAnnounce(446717, 3)--Reason to special warn? can't really do much about it
+local warnRavenousSwarm						= mod:NewSpellAnnounce(443507, 3)
 
 local specWarnShadowsofDoubt				= mod:NewSpecialWarningMoveAway(443436, nil, nil, nil, 1, 2)
 local yellShadowsofDoubt					= mod:NewShortYell(443436)
@@ -67,6 +68,7 @@ local timerDarkBarrageCD					= mod:NewCDNPTimer(27.9, 445813, nil, nil, nil, 3)
 local timerVoidWaveCD						= mod:NewCDNPTimer(15.4, 446086, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerUmbralWeaveCD					= mod:NewCDNPTimer(20, 446717, nil, nil, nil, 2)
 local timerTremorSlamCD						= mod:NewCDNPTimer(20, 447271, nil, nil, nil, 3)
+local timerRavenousSwarmCD					= mod:NewCDNPTimer(18.1, 443507, nil, nil, nil, 2)
 
 local xephEngaged
 
@@ -173,6 +175,13 @@ function mod:SPELL_CAST_START(args)
 			specWarnTremorSlam:Show()
 			specWarnTremorSlam:Play("justrun")
 		end
+	elseif spellId == 443507 then
+		if self:AntiSpam(3, 2) then
+			warnRavenousSwarm:Show()
+		end
+		--Royal Swarmguard (220197) 18.1, Hulking Warshell (221103) 17.8
+		local timer = args:GetSrcCreatureID() == 220197 and 18.1 or 17.8
+		timerRavenousSwarmCD:Start(timer, args.sourceGUID)
 	end
 end
 
@@ -242,6 +251,7 @@ function mod:UNIT_DIED(args)
 		timerSilkBindingCD:Stop(args.destGUID)
 	elseif cid == 220197 then--Royal Swarmsguard
 		timerEarthShatterCD:Stop(args.destGUID)
+		timerRavenousSwarmCD:Stop(args.destGUID)
 	elseif cid == 220730 then--Royal VenomShell
 		timerVenomousSprayCD:Stop(args.destGUID)
 		timerEarthShatterCD:Stop(args.destGUID)
@@ -257,6 +267,7 @@ function mod:UNIT_DIED(args)
 		timerUmbralWeaveCD:Stop(args.destGUID)
 	elseif cid == 221103 then--Hulking Warshell
 		timerTremorSlamCD:Stop(args.destGUID)
+		timerRavenousSwarmCD:Stop(args.destGUID)
 	end
 end
 
