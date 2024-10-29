@@ -49,7 +49,7 @@ function mod:OnCombatStart(delay)
 	self.vb.terrorizeCount = 0
 	self.vb.doubtCount = 0
 	self.vb.fakeNewsCount = 0
-	timerSubjugateCD:Start(4.4-delay, 1)--4.4-4.8
+	timerSubjugateCD:Start(4.1-delay, 1)--4.1-4.8
 	timerTerrorizeCD:Start(9.3-delay, 1)--9.3-9.7
 	timerVociferousIndoctrinationCD:Start(25.1-delay, 1)
 	if self:IsMythic() then
@@ -79,7 +79,7 @@ function mod:SPELL_CAST_START(args)
 			timerTerrorizeCD:Start(21.8, self.vb.terrorizeCount+1)--21.8-23.1
 		else
 			--Will be delayed by Vociferous Indoctrination
-			timerTerrorizeCD:Start(8.5, self.vb.terrorizeCount+1)--8.4-8.9
+			timerTerrorizeCD:Start(8.1, self.vb.terrorizeCount+1)--8.1-8.9
 		end
 	elseif spellId == 448560 then
 		self.vb.doubtCount = self.vb.doubtCount + 1
