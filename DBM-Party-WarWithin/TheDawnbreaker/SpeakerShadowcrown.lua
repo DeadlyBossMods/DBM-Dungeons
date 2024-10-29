@@ -152,11 +152,6 @@ function mod:SPELL_CAST_START(args)
 			timerObsidianBlastCD:Start(timer, self.vb.obsidianCount+1)
 		else
 			timerObsidianBlastCD:Start(17, self.vb.obsidianCount+1)--Still start a timer with lowest known value
-			DBM:Debug("Obsidian Blast timer missing for count: "..self.vb.obsidianCount+1 .. ". Please share your log on GitHub or DBM Discord", 1)
-			if not warnedTimerMissing then
-				warnedTimerMissing = true
-				DBM:AddMsg("Obsidian Blast timer missing for count: "..self.vb.obsidianCount+1 .. ". Please share your log on GitHub or DBM Discord", 1)
-			end
 		end
 --		updateAllTimers(self, 3.4)
 	elseif spellId == 453212 then--Mythic
@@ -170,11 +165,6 @@ function mod:SPELL_CAST_START(args)
 			timerObsidianBeamCD:Start(timer, self.vb.obsidianCount+1)
 		else
 			timerObsidianBeamCD:Start(23.5, self.vb.obsidianCount+1)--Still start a timer with lowest known value
-			DBM:Debug("Obsidian Beam timer missing for count: "..self.vb.obsidianCount+1 .. ". Please share your log on GitHub or DBM Discord", 1)
-			if not warnedTimerMissing then
-				warnedTimerMissing = true
-				DBM:AddMsg("Obsidian Beam timer missing for count: "..self.vb.obsidianCount+1 .. ". Please share your log on GitHub or DBM Discord", 1)
-			end
 		end
 --		updateAllTimers(self, self:GetStage(1) and 12.1 or 10.8)
 	elseif spellId == 445996 then--Non Mythic
@@ -186,11 +176,6 @@ function mod:SPELL_CAST_START(args)
 			timerCollapsingDarknessCD:Start(timer, self.vb.collapsingCount+1)
 		else
 			timerCollapsingDarknessCD:Start(18, self.vb.collapsingCount+1)--Still start a timer with lowest known value
-			DBM:Debug("Collapsing Darkness timer missing for count: "..self.vb.collapsingCount+1 .. ". Please share your log on GitHub or DBM Discord", 1)
-			if not warnedTimerMissing then
-				warnedTimerMissing = true
-				DBM:AddMsg("Collapsing Darkness timer missing for count: "..self.vb.collapsingCount+1 .. ". Please share your log on GitHub or DBM Discord", 1)
-			end
 		end
 --		updateAllTimers(self, 3.4)
 	elseif spellId == 453140 then--Mythic
@@ -202,11 +187,6 @@ function mod:SPELL_CAST_START(args)
 			timerCollapsingNightCD:Start(timer, self.vb.collapsingCount+1)
 		else
 			timerCollapsingNightCD:Start(25.1, self.vb.collapsingCount+1)--Still start a timer with lowest known value
-			DBM:Debug("Collapsing Night timer missing for count: "..self.vb.collapsingCount+1 .. ". Please share your log on GitHub or DBM Discord", 1)
-			if not warnedTimerMissing then
-				warnedTimerMissing = true
-				DBM:AddMsg("Collapsing Night timer missing for count: "..self.vb.collapsingCount+1 .. ". Please share your log on GitHub or DBM Discord", 1)
-			end
 		end
 --		updateAllTimers(self, 3.4)
 	elseif spellId == 426734 then
@@ -216,11 +196,6 @@ function mod:SPELL_CAST_START(args)
 			timerBurningShadowsCD:Start(timer, self.vb.shadowsCount+1)
 		else
 			timerBurningShadowsCD:Start(17, self.vb.shadowsCount+1)--Still start a timer with lowest known value
-			DBM:Debug("Burning Shadows timer missing for count: "..self.vb.shadowsCount+1 .. ". Please share your log on GitHub or DBM Discord", 1)
-			if not warnedTimerMissing then
-				warnedTimerMissing = true
-				DBM:AddMsg("Burning Shadows timer missing for count: "..self.vb.shadowsCount+1 .. ". Please share your log on GitHub or DBM Discord", 1)
-			end
 		end
 --		updateAllTimers(self, 3.7)
 	end
