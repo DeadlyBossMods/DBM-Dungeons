@@ -73,7 +73,7 @@ function mod:SPELL_CAST_START(args)
 		specWarnCosmicSingularity:Schedule(3.5, DBM_COMMON_L.POOL)
 		specWarnCosmicSingularity:ScheduleVoice(3.5, "movetopool")
 		--Timer has predictable spell queuing after first cast, but first cast is 46.1-48
-		timerCosmicSingularityCD:Start(self.vb.cosmicCount == 1 and 46.1 or 47.2, self.vb.cosmicCount+1)
+		timerCosmicSingularityCD:Start((self.vb.cosmicCount == 1 or self.vb.cosmicCount == 7) and 46.1 or 47.2, self.vb.cosmicCount+1)
 
 		--Do some timer adjustments if needed
 		if self:IsMythic() then

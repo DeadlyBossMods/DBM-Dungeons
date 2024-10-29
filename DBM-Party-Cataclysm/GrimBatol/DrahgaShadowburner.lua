@@ -92,7 +92,7 @@ function mod:SPELL_CAST_START(args)
 	elseif args.spellId == 450095 then
 		self.vb.curseCount = self.vb.curseCount + 1
 		warnCurseofEntropy:Show(self.vb.curseCount)
-		timerCurseofEntropyCD:Start(self:GetStage(2) and 35 or 29.9, self.vb.curseCount+1)
+		timerCurseofEntropyCD:Start(self:GetStage(2) and 35 or 18, self.vb.curseCount+1)
 	end
 end
 
