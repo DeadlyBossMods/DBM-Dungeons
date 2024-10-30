@@ -306,7 +306,7 @@ function mod:StartNameplateTimers(guid, cid)
 	elseif cid == 221979 then--Void Bound Howler
 		timerPiercingWailCD:Start(5.1, guid)--Test thoroughly in folloewr dungeon
 	elseif cid == 214264 then--Cursedforge Honor Guard
-		timerShieldStampedeCD:Start(6.4, guid)
+		timerShieldStampedeCD:Start(4.9, guid)
 	elseif cid == 214066 then--Cursedforge StoneShaper
 		timerEarthBurstTotemCD:Start(5.8, guid)--Validate in dungeons
 	elseif cid == 213954 then--Rock Smasher

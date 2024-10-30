@@ -7,6 +7,7 @@ mod:SetRevision("@file-date-integer@")
 mod.isTrashMod = true
 mod.isTrashModBossFightAllowed = true
 mod:SetZone(670)
+mod:RegisterZoneCombat(670)
 
 mod:RegisterEvents(
 	"SPELL_CAST_START 451871 456696 451939 451378 76711 456711 456713 451387 451067 451391 451965 462216 451971",
@@ -23,6 +24,7 @@ mod:RegisterEvents(
  or (ability.id = 451613 or ability.id = 451224) and type = "cast"
  or stoppedAbility.id = 451871 or stoppedAbility.id = 76711
  or ability.id = 456696 and (type = "begincast" or type = "cast")
+ or (source.type = "NPC" and source.firstSeen = timestamp and source.id = 211261) or (target.type = "NPC" and target.firstSeen = timestamp and target.id = 211261)
 --]]
 local warnRive							= mod:NewCastAnnounce(451378, 3, nil, nil, "Tank|Healer")
 local warnMassTremor					= mod:NewCastAnnounce(451871, 2)--High Prio off interrupt backup
@@ -269,4 +271,41 @@ function mod:UNIT_DIED(args)
 	--elseif cid == 40167 then--Twilight Beguiler
 	--	timerSearMindCD:Stop(args.destGUID)
 	end
+end
+
+--All timers subject to a ~0.5 second clipping due to ScanEngagedUnits
+function mod:StartNameplateTimers(guid, cid)
+	if cid == 224219 then--Twilight Earthcaller
+		timerMassTremorCD:Start(8.6, guid)--8.6-13?
+	elseif cid == 224152 then--Twilight Brute
+		timerObsidianStompCD:Start(10, guid)--hard to verify with so much noise from non combat enemies cluttering log
+	elseif cid == 224609 then--Twilight Destroyer
+		timerTwilightFlamesCD:Start(2.7, guid)--2.7--6
+		timerUmbralWindCD:Start(10.4, guid)--10.4+ (may be shorter for first drake only depending on how accurately DBM detects combat with one that flies in
+	elseif cid == 224221 then--Twilight Overseer
+		timerRiveCD:Start(5.9, guid)--Could be shorter
+		timerRecklessTacticCD:Start(9.6, guid)
+	elseif cid == 224249 then--Twilight LavaBender
+		timerShadowlavaBlastCD:Start(4.5, guid)
+		timerDarkEruptionCD:Start(9.3, guid)
+		--timerAscensionCD:Start(20, guid)
+	elseif cid == 224240 then--Twilight Flamerender (Formerly decapitator)
+		timerBlazingShadowflameCD:Start(8.6, guid)
+		--timerDecapitateCD:Start(18.1, guid)--Not able to find a single cast on August 11
+	elseif cid == 224271 then--Twilight Warlock
+		timerEnvelopingShadowflameCD:Start(10, guid)
+	elseif cid == 39392 then--Faceless Corruptor
+		timerMindPiercerCD:Start(4.3, guid)
+	elseif cid == 40166 then--Molten Giant
+		timerMoltenWakeCD:Start(5.5, guid)--Needs much more review
+		timerLavaFistCD:Start(8, guid)--Needs much more review
+	--elseif cid == 40167 then--Twilight Beguiler
+	--	timerSearMindCD:Start(18.9, guid)
+	end
+end
+
+--Abort timers when all players out of combat, so NP timers clear on a wipe
+--Caveat, it won't calls top with GUIDs, so while it might terminate bar objects, it may leave lingering nameplate icons
+function mod:LeavingZoneCombat()
+	self:Stop()
 end
