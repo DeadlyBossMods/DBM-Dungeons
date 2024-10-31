@@ -65,7 +65,7 @@ local specWarnShatteringBellow		= mod:NewSpecialWarningCast(257732, "SpellCaster
 --copilot, there are no NewCDTimer objects in this mod, only NewCDNPTimer objects
 --copilot, there is no DBM_CORE_L in this mod, only DBM_COMMON_L
 local timerSlobberknockerCD			= mod:NewCDPNPTimer(18.8, 256627, nil, nil, nil, 5)--18.8-20.6
-local timerBurningTarCD				= mod:NewCDNPTimer(20.6, 256640, nil, nil, nil, 3)
+local timerBurningTarCD				= mod:NewCDNPTimer(20.1, 256640, nil, nil, nil, 3)
 local timerSavageTempestCD			= mod:NewCDNPTimer(19.1, 257170, nil, nil, nil, 3)
 local timerSavageTempest			= mod:NewCastNPTimer(3, 257170, nil, nil, nil, 5)
 local timerSingSteelCD				= mod:NewCDNPTimer(16.5, 256709, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
@@ -172,12 +172,12 @@ function mod:SPELL_CAST_SUCCESS(args)
 		timerSlobberknockerCD:Start(16.8, args.sourceGUID)--18.8 - 2
 	elseif spellId == 256640 then
 		warnBurningTar:Show()
-		timerBurningTarCD:Start(22.6, args.sourceGUID)
+		timerBurningTarCD:Start(19.3, args.sourceGUID)
 	elseif spellId == 257170 then
 		timerSavageTempestCD:Start(16.1, args.sourceGUID)--19.1 - 3
 	elseif spellId == 256709 then
-		timerSingSteelCD:Start(14.5, args.sourceGUID)--16.6 - 2
-	elseif spellId == 257288 and args:GetSrcCreatureID() == 129879 then
+		timerSingSteelCD:Start(14.1, args.sourceGUID)--16.6 - 2
+	elseif spellId == 257288 then
 		timerHeavySlashCD:Start(17.8, args.sourceGUID)--20.6 - 2.8
 	elseif spellId == 272422 then--No filter needed, boss version doesn't fire this spellID
 		timerSightedArtCD:Start(12.1, args.sourceGUID)
@@ -261,7 +261,7 @@ function mod:UNIT_DIED(args)
 		timerIronHookCD:Stop(args.destGUID)
 	elseif cid == 129371 then--Riptide Shredder
 		timerSingSteelCD:Stop(args.destGUID)
-	elseif cid == 129879 then--Irontide Cleaver (Trash version)
+	elseif cid == 129879 or cid == 129996 then--Irontide Cleaver (Trash version)
 		timerHeavySlashCD:Stop(args.destGUID)
 	elseif cid == 141939 or cid == 138255 or cid == 135263 then--Ashvane Spotter
 		timerSightedArtCD:Stop(args.destGUID)
@@ -328,12 +328,12 @@ function mod:StartNameplateTimers(guid, cid)
 	if cid == 129374 then--Scrimshaw Enforcer
 --		timerSlobberknockerCD:Start(16.8, guid)--Might be 10ish, wait for improved logs
 	elseif cid == 129372 then--Blacktar Bomber
-		timerBurningTarCD:Start(10.2, guid)--They use fire bomb instantly
+		timerBurningTarCD:Start(9.1, guid)--They use fire bomb instantly
 	elseif cid == 129369 then--Irontide Raider
 		timerSavageTempestCD:Start(11, guid)
 	elseif cid == 129371 then--Riptide Shredder
 		timerSingSteelCD:Start(3.5, guid)
-	elseif cid == 129879 then--Irontide Cleaver (Trash version)
+	elseif cid == 129879 or cid == 129996 then--Irontide Cleaver (Trash and Boss version, which both now only spawn on boss)
 		timerHeavySlashCD:Start(5.8, guid)
 --	elseif cid == 141939 or cid == 138255 or cid == 135263 then--Ashvane Spotter
 --		timerSightedArtCD:Start(12.1, guid)
