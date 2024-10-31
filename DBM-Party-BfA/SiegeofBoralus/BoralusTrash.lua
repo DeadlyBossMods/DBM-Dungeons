@@ -7,6 +7,7 @@ mod:SetRevision("@file-date-integer@")
 mod.isTrashMod = true
 mod.isTrashModBossFightAllowed = true
 mod:SetZone(1822)
+mod:RegisterZoneCombat(1822)
 
 mod:RegisterEvents(
 	"SPELL_CAST_START 275826 256627 256957 256709 257170 272546 257169 272713 274569 272571 272888 272711 268260 257288 454440 272662 257732",
@@ -26,6 +27,7 @@ mod:RegisterEvents(
  or (stoppedAbility.id = 256957 or stoppedAbility.id = 274569 or stoppedAbility.id = 272571 or stoppedAbility.id = 454440 or stoppedability.id = 275826)
  or (ability.id = 275826 or ability.id = 256627 or ability.id = 256957 or ability.id = 256709 or ability.id = 257170 or ability.id = 272546 or ability.id = 257169 or ability.id = 272713 or ability.id = 274569 or ability.id = 272571 or ability.id = 272888 or ability.id = 257288 or ability.id = 268260 or ability.id = 272711 or ability.id = 275835 or ability.id = 454440 or ability.id = 272874) and type = "cast"
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
+ or (source.type = "NPC" and source.firstSeen = timestamp and source.id = 211261) or (target.type = "NPC" and target.firstSeen = timestamp and target.id = 211261)
 --]]
 local warnBananaRampage				= mod:NewSpellAnnounce(272546, 2)
 local warnBolsteringShout			= mod:NewCastAnnounce(275826, 4)--High Prio Interrupt
@@ -320,3 +322,44 @@ function mod:OnSync(msg)
 	end
 end
 --]]
+
+--All timers subject to a ~0.5 second clipping due to ScanEngagedUnits
+function mod:StartNameplateTimers(guid, cid)
+	if cid == 129374 then--Scrimshaw Enforcer
+--		timerSlobberknockerCD:Start(16.8, guid)--Might be 10ish, wait for improved logs
+	elseif cid == 129372 then--Blacktar Bomber
+		timerBurningTarCD:Start(10.2, guid)--They use fire bomb instantly
+	elseif cid == 129369 then--Irontide Raider
+		timerSavageTempestCD:Start(11, guid)
+	elseif cid == 129371 then--Riptide Shredder
+		timerSingSteelCD:Start(3.5, guid)
+	elseif cid == 129879 then--Irontide Cleaver (Trash version)
+		timerHeavySlashCD:Start(5.8, guid)
+--	elseif cid == 141939 or cid == 138255 or cid == 135263 then--Ashvane Spotter
+--		timerSightedArtCD:Start(12.1, guid)
+	elseif cid == 128969 then--Ashvane Commander
+		timerAzeriteChargeCD:Start(3.2, guid)
+		timerBolsteringShoutCD:Start(9.3, guid)
+--	elseif cid == 137516 then--Ashvane Invader
+--		timerStingingVenomCoatingCD:Start(15.4, guid)--Used near instantly
+	elseif cid == 137517 then--Ashvane Destroyer
+		timerFerocityCD:Start(4.2, guid)
+	elseif cid == 129366 then--Bilge Rat Buccaneer
+		timerBananaRampageCD:Start(3.5, guid)
+	elseif cid == 135241 then--Bilge Rat Pillager
+		timerStinkyVomitCD:Start(4, guid)
+	elseif cid == 135245 then--Billage Rat Demolisher
+		timerCrushingSlamCD:Start(5.8, guid)
+		timerTerrifyingRoarCD:Start(14, guid)
+	elseif cid == 129367 then--Bilge Rat Tempest
+		timerChoakingWatersCD:Start(8, guid)
+--	elseif cid == 129370 or cid == 144071 then--Ironhull WaveShaper
+--		timerWatertightShellCD:Start(50, guid)--Too mcuh variance, might be health based for initial cast
+	end
+end
+
+--Abort timers when all players out of combat, so NP timers clear on a wipe
+--Caveat, it won't calls top with GUIDs, so while it might terminate bar objects, it may leave lingering nameplate icons
+function mod:LeavingZoneCombat()
+	self:Stop()
+end
