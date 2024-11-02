@@ -6,6 +6,7 @@ mod.statTypes = "heroic,timewalker"
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(54968)
 mod:SetEncounterID(1340)
+mod:SetZone(940)
 
 mod:RegisterCombat("yell", L.Pull)
 mod:SetMinCombatTime(15)	-- need to do another run to confirm it works

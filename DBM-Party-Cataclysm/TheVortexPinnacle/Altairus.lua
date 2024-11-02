@@ -14,6 +14,7 @@ mod:SetEncounterID(1041)
 mod:SetUsedIcons(8)
 mod:SetHotfixNoticeRev(20230527000000)
 --mod:SetMinSyncRevision(20230226000000)
+mod:SetZone(657)
 mod.sendMainBossGUID = true
 
 mod:RegisterCombat("combat")

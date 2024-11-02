@@ -13,6 +13,7 @@ mod:SetCreatureID(39625)
 mod:SetEncounterID(1051)
 mod:SetHotfixNoticeRev(20240812000000)
 --mod:SetMinSyncRevision(20230929000000)
+mod:SetZone(670)
 
 mod:RegisterCombat("combat")
 

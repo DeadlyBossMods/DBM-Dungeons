@@ -6,6 +6,7 @@ mod:SetCreatureID(210156)
 mod:SetEncounterID(2880)
 mod:SetUsedIcons(8, 7, 6, 5)
 mod:SetHotfixNoticeRev(20241016000000)
+mod:SetZone(2652)
 --mod:SetMinSyncRevision(20211203000000)
 --mod.respawnTime = 29
 mod.sendMainBossGUID = true

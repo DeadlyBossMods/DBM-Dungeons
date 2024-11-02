@@ -68,10 +68,6 @@ Quests\Plants.lua
 Quests\EscortQuests.lua
 Quests\AwakeningMachine.lua
 
-Events\TwentyFifthEvent\BurningCrusade.lua
-Events\TwentyFifthEvent\WotLK.lua
-Events\TwentyFifthEvent\Cataclysm.lua
-
 Events\Azeroth\KazzakClassic.lua
 Events\Azeroth\Azuregos.lua
 Events\Azeroth\Taerar.lua

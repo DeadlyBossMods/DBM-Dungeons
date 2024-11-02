@@ -2,6 +2,8 @@ local mod	= DBM:NewMod("EscortQuests", "DBM-WorldEvents", 2)
 
 mod:SetRevision("@file-date-integer@")
 mod:SetModelID(18921)
+mod:SetZone(1, 530)
+
 mod:RegisterEvents(
 	"QUEST_ACCEPTED"
 )
