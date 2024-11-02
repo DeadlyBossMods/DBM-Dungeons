@@ -11,16 +11,16 @@ mod:RegisterZoneCombat(670)
 
 mod:RegisterEvents(
 	"SPELL_CAST_START 451871 456696 451939 451378 76711 456711 456713 451387 451067 451391 451965 462216 451971",
-	"SPELL_CAST_SUCCESS 451613 451224 456696 451871 451612 451939 451378 451379 451965 76711 451971 456711 456713 451391 462216",
+	"SPELL_CAST_SUCCESS 451613 451224 456696 451871 451612 451939 451378 451379 451965 76711 451971 456711 456713 451391 462216 451395",
 	"SPELL_INTERRUPT",
-	"SPELL_AURA_APPLIED 451613 451614 451379 451224 451394",
+	"SPELL_AURA_APPLIED 451613 451614 451379 451224 451394 451395",
 --	"SPELL_AURA_APPLIED_DOSE",
 	"SPELL_AURA_REMOVED 451613",
 	"UNIT_DIED"
 )
 
 --[[
-(ability.id = 451871 or ability.id = 451612 or ability.id = 451939 or ability.id = 451379 or ability.id = 451378 or ability.id = 76711 or ability.id = 456711 or ability.id = 456713 or ability.id = 451387 or ability.id = 451067 or ability.id = 451391 or ability.id = 451965 or ability.id = 462216 or ability.id = 451971) and (type = "begincast" or type = "cast")
+(ability.id = 451871 or ability.id = 451612 or ability.id = 451939 or ability.id = 451379 or ability.id = 451378 or ability.id = 76711 or ability.id = 456711 or ability.id = 456713 or ability.id = 451387 or ability.id = 451067 or ability.id = 451391 or ability.id = 451965 or ability.id = 462216 or ability.id = 451971 or ability.id = 451395) and (type = "begincast" or type = "cast")
  or (ability.id = 451613 or ability.id = 451224) and type = "cast"
  or stoppedAbility.id = 451871 or stoppedAbility.id = 76711
  or ability.id = 456696 and (type = "begincast" or type = "cast")
@@ -42,6 +42,7 @@ local specWarnMindPiercer				= mod:NewSpecialWarningDodge(451391, nil, nil, nil,
 local specWarnBlazingShadowflame		= mod:NewSpecialWarningDodge(462216, nil, nil, nil, 2, 15)
 local specWarnTwilightFlames			= mod:NewSpecialWarningMoveAway(451612, nil, nil, nil, 2, 2)
 local specWarnLavaFist					= mod:NewSpecialWarningDefensive(451971, nil, nil, nil, 2, 2)--12.8
+local specWarnCorrupt					= mod:NewSpecialWarningDefensive(451395, nil, nil, nil, 2, 2)
 local yellTwilightFlames				= mod:NewShortYell(451612)
 local yellTwilightFlamesFades			= mod:NewShortFadesYell(451612)
 local specWarnRecklessTacticDispel		= mod:NewSpecialWarningDispel(451379, "RemoveEnrage", nil, nil, 1, 2)
@@ -62,6 +63,7 @@ local timerDarkEruptionCD				= mod:NewCDNPTimer(20.6, 456713, nil, nil, nil, 3)-
 --local timerDecapitateCD				= mod:NewCDNPTimer(18.1, 451067, nil, nil, nil, 3)--Not able to find a single cast on August 11
 local timerEnvelopingShadowflameCD		= mod:NewCDNPTimer(20.6, 451224, nil, nil, nil, 3, nil, DBM_COMMON_L.CURSE_ICON)--Valid August 11. Small Sample, could be shorter
 local timerMindPiercerCD				= mod:NewCDNPTimer(18.1, 451391, nil, nil, nil, 3)--Valid August 11
+local timerCorruptCD					= mod:NewCDNPTimer(18.1, 451395, nil, nil, nil, 3)
 --local timerSearMindCD					= mod:NewCDPNPTimer(20.4, 76711, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--Valid August 11
 local timerMoltenWakeCD					= mod:NewCDNPTimer(18.1, 451965, nil, nil, nil, 2)--Valid August 11
 local timerLavaFistCD					= mod:NewCDNPTimer(15.7, 451971, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)--Valid August 11
@@ -191,6 +193,8 @@ function mod:SPELL_CAST_SUCCESS(args)
 		timerMindPiercerCD:Start(15.1, args.sourceGUID)--18.1-3
 	elseif spellId == 462216 then
 		timerBlazingShadowflameCD:Start(16.0, args.sourceGUID)
+	elseif spellId == 451395 then
+		timerCorruptCD:Start(16.4, args.sourceGUID)
 	end
 end
 
@@ -227,6 +231,9 @@ function mod:SPELL_AURA_APPLIED(args)
 		end
 	elseif spellId == 451394 then
 		warnMindPiercer:CombinedShow(0.3, args.destName)
+	elseif spellId == 451395 and args:IsPlayer() then
+		specWarnCorrupt:Show()
+		specWarnCorrupt:Play("defensive")
 	end
 end
 --mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED
@@ -265,6 +272,7 @@ function mod:UNIT_DIED(args)
 		timerEnvelopingShadowflameCD:Stop(args.destGUID)
 	elseif cid == 39392 then--Faceless Corruptor
 		timerMindPiercerCD:Stop(args.destGUID)
+		timerCorruptCD:Stop(args.destGUID)
 	elseif cid == 40166 then--Molten Giant
 		timerMoltenWakeCD:Stop(args.destGUID)
 		timerLavaFistCD:Stop(args.destGUID)
@@ -296,6 +304,7 @@ function mod:StartNameplateTimers(guid, cid)
 		timerEnvelopingShadowflameCD:Start(10, guid)
 	elseif cid == 39392 then--Faceless Corruptor
 		timerMindPiercerCD:Start(4.3, guid)
+		timerCorruptCD:Start(8.3, guid)
 	elseif cid == 40166 then--Molten Giant
 		timerMoltenWakeCD:Start(5.5, guid)--Needs much more review
 		timerLavaFistCD:Start(8, guid)--Needs much more review
