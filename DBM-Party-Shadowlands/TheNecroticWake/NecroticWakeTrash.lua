@@ -9,10 +9,10 @@ mod.isTrashModBossFightAllowed = true
 mod:SetZone(2286)
 
 mod:RegisterEvents(
-	"SPELL_CAST_START 324293 327240 327399 334748 320462 338353 323496 333477 333479 338606 345623 322756 328667 335143 320822 324394 324387 338456 324323",
-	"SPELL_CAST_SUCCESS 334748 320571 321780 343470 324372 327130 323496 338606 322756 327393 335143 338353 338456 338357 333477 333479 327240 345623 324323",--324293
+	"SPELL_CAST_START 324293 327240 327399 334748 320462 338353 323496 333477 333479 338606 345623 322756 328667 335143 320822 324394 324387 338456 324323 321807",
+	"SPELL_CAST_SUCCESS 334748 320571 321780 343470 324372 327130 323496 338606 322756 327393 335143 338353 338456 338357 333477 333479 327240 345623 324323 321807",--324293
 	"SPELL_INTERRUPT",
-	"SPELL_AURA_APPLIED 327401 323347 335141 338353 338357 338606 327396 323471",
+	"SPELL_AURA_APPLIED 327401 323347 335141 338353 338357 338606 327396 323471 321807",
 	"SPELL_AURA_APPLIED_DOSE 338357",
 	"SPELL_AURA_REMOVED 338606 327396",
 	"UNIT_DIED"
@@ -48,6 +48,7 @@ local warnWrathOfZolramus					= mod:NewSpellAnnounce(322756, 2)
 
 --General
 --local specWarnGTFO						= mod:NewSpecialWarningGTFO(257274, nil, nil, nil, 1, 8)
+local specWarnBoneflay						= mod:NewSpecialWarningDefensive(321807, nil, nil, nil, 1, 2)
 local specWarnSpineCrush					= mod:NewSpecialWarningRun(327240, nil, nil, nil, 4, 2)
 local specWarnGutSlice						= mod:NewSpecialWarningDodge(333477, nil, nil, nil, 2, 15)
 local specWarnDeathBurst					= mod:NewSpecialWarningDodge(345623, nil, nil, nil, 2, 2)
@@ -67,6 +68,7 @@ local yellGrimFateFades						= mod:NewShortFadesYell(327396)
 local specWarnGoresplatterDispel			= mod:NewSpecialWarningDispel(338353, "RemoveDisease", nil, nil, 1, 2)
 local specWarnClingingDarkness				= mod:NewSpecialWarningDispel(323347, false, nil, nil, 1, 2)--Opt it for now, since dispel timing is less black and white
 local specWarnDarkShroud					= mod:NewSpecialWarningDispel(335141, "MagicDispeller", nil, nil, 1, 2)
+local specWarnBoneFlayDispel				= mod:NewSpecialWarningDispel(321807, "RemoveBleed", nil, nil, 1, 2)
 local specWarnDrainFluids					= mod:NewSpecialWarningInterrupt(334748, nil, nil, nil, 1, 2)--Feedback be damned, it's too important not to kick, if it's spammy, maybe you shouldn't sit on your interrupt CD.
 local specWarnNecroticBolt					= mod:NewSpecialWarningInterrupt(320462, false, nil, nil, 1, 2)--Pretty much spam cast, so lower priority over other spells. Also excluded frome expression, it has no cooldown
 local specWarnRaspingScream					= mod:NewSpecialWarningInterrupt(324293, "HasInterrupt", nil, nil, 1, 2)
@@ -76,6 +78,7 @@ local specWarnBoneMend						= mod:NewSpecialWarningInterrupt(335143, "HasInterru
 local specWarnRepairFlesh					= mod:NewSpecialWarningInterrupt(327130, "HasInterrupt", nil, nil, 1, 2)--High Prio
 local specWarnBoneshatterShield				= mod:NewSpecialWarningSwitchCustom(343470, "Dps", nil, nil, 1, 2)
 
+local timerBoneflayCD						= mod:NewCDNPTimer(15, 321807, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerMorbidFixation					= mod:NewTargetTimer(8, 338606, nil, nil, nil, 5)
 local timerDrainFluidsCD					= mod:NewCDPNPTimer(15, 334748, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--Harvester 15-17.5, Collector 14.1-18.3, Stitching Assistant 16.6-17.9
 local timerThrowCleaverCD					= mod:NewCDNPTimer(13, 323496, nil, nil, nil, 3)--13-14.2 for Flesh Carver, 15.4 for Stitching Assistant, 14.1 for Separation Assistant
@@ -212,6 +215,11 @@ function mod:SPELL_CAST_START(args)
 			specWarnGruesomeCleave:Show()
 			specWarnGruesomeCleave:Play("frontal")
 		end
+	elseif spellId == 321807 then
+		if self:IsTanking("player", nil, nil, true, args.sourceGUID) and self:AntiSpam(3, 5) then
+			specWarnBoneflay:Show()
+			specWarnBoneflay:Play("defensive")
+		end
 	end
 end
 
@@ -285,6 +293,8 @@ function mod:SPELL_CAST_SUCCESS(args)
 		timerSpineCrushCD:Start(14.0, args.sourceGUID)
 	elseif spellId == 345623 then
 		timerDeathBurstCD:Start(16.2, args.sourceGUID)
+	elseif spellId == 321807 then
+		timerBoneflayCD:Start(15, args.sourceGUID)
 	end
 end
 
@@ -355,6 +365,9 @@ function mod:SPELL_AURA_APPLIED(args)
 			warnThrowCleaver:Show(args.destName)
 			warnThrowCleaver:Play("helpsoak")
 		end
+	elseif spellId == 321807 and args:IsDestTypePlayer() and self:CheckDispelFilter("bleed") then
+		specWarnBoneFlayDispel:Show(args.destName)
+		specWarnBoneFlayDispel:Play("helpdispel")
 	end
 end
 mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED
@@ -418,5 +431,7 @@ function mod:UNIT_DIED(args)
 	elseif cid == 165911 then--Loyal Creation
 		timerSpineCrushCD:Stop(args.destGUID)
 		timerSpineCrush:Stop(args.destGUID)
+	elseif cid == 163619 then--Zolramus Bonecarver
+
 	end
 end
