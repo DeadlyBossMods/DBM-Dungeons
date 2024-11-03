@@ -6,6 +6,7 @@ mod:SetCreatureID(133392)
 mod:SetEncounterID(2127)
 mod.onlyHighest = true--Instructs DBM health tracking to literally only store highest value seen during fight, even if it drops below that
 mod:DisableBossDeathKill()
+mod:SetZone(1877)
 
 mod:RegisterCombat("combat")
 

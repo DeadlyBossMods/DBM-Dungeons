@@ -9,6 +9,7 @@ mod:SetUsedIcons(8)
 mod:SetBossHPInfoToHighest()
 --mod:SetHotfixNoticeRev(20231023000000)
 mod:SetMinSyncRevision(20221021000000)
+mod:SetZone(1862)
 
 mod:RegisterCombat("combat")
 
