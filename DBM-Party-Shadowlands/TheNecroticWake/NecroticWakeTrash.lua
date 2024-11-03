@@ -110,6 +110,7 @@ function mod:ThrowCleaver(targetname, uId)
 	end
 end
 --]]
+local memoryWastingTable = {}
 
 function mod:FixateTarget(targetname, uId)
 	if not targetname then return end
@@ -158,6 +159,7 @@ function mod:SPELL_CAST_START(args)
 			specWarnFrostBoltVolley:Play("kickcast")
 		end
 	elseif spellId == 327240 then
+		timerSpineCrush:Stop(args.sourceGUID)
 		timerSpineCrush:Start(nil, args.sourceGUID)
 		if self:AntiSpam(3, 4) then
 			specWarnSpineCrush:Show()
@@ -220,6 +222,9 @@ function mod:SPELL_CAST_SUCCESS(args)
 		--Harvester (166302) 15-17.5, Collector (173016) 14.1-18.3, Stitching Assistant (173044) 16.6-17.9
 		local cooldown = args:GetSrcCreatureID() == 173044 and 16.6 or args:GetSrcCreatureID() == 166302 and 15 or 14.1
 		timerDrainFluidsCD:Start(cooldown, args.sourceGUID)
+		if not memoryWastingTable[args.sourceGUID] then
+			memoryWastingTable[args.sourceGUID] = true
+		end
 	elseif spellId == 320571 then
 		timerShadowWellCD:Start(13.5, args.sourceGUID)
 		if self:AntiSpam(3, 2) then
@@ -289,7 +294,9 @@ function mod:SPELL_INTERRUPT(args)
 	if args.extraSpellId == 334748 then
 		--Harvester (166302) 15-17.5, Collector (173016) 14.1-18.3, Stitching Assistant (173044) 16.6-17.9
 		local cooldown = args:GetSrcCreatureID() == 173044 and 16.6 or args:GetSrcCreatureID() == 166302 and 15 or 14.1
-		timerDrainFluidsCD:Start(cooldown, args.destGUID)
+		if not memoryWastingTable[args.sourceGUID] then
+			timerDrainFluidsCD:Start(cooldown, args.destGUID)
+		end
 	elseif args.extraSpellId == 335143 then
 		timerBoneMendCD:Start(7, args.destGUID)
 --	elseif args.extraSpellId == 324293 then
@@ -368,6 +375,7 @@ function mod:UNIT_DIED(args)
 	if not self.Options.Enabled then return end
 	local cid = self:GetCIDFromGUID(args.destGUID)
 	if cid == 173016 then--Corpse Collector
+		memoryWastingTable[args.destGUID] = nil
 		timerDrainFluidsCD:Stop(args.destGUID)
 		timerGoresplatterCD:Stop(args.destGUID)
 	elseif cid == 166302 then--Corpse Harvester
