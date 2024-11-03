@@ -45,14 +45,14 @@ local specWarnPoisonBolt					= mod:NewSpecialWarningInterrupt(436322, "HasInterr
 local specWarnRevoltingVolley				= mod:NewSpecialWarningInterrupt(448248, "HasInterrupt", nil, nil, 1, 2)
 local specWarnVenomVolley					= mod:NewSpecialWarningInterrupt(433841, "HasInterrupt", nil, nil, 1, 2)--High Prio
 
-local timerMassiveSlamCD					= mod:NewCDNPTimer(15.8, 434252, nil, nil, nil, 2)
+local timerMassiveSlamCD					= mod:NewCDNPTimer(15.4, 434252, nil, nil, nil, 2)
 local timerWebSprayCD						= mod:NewCDPNPTimer(7, 434824, nil, nil, nil, 3)--7-8.2 from last cast finish/kick
 local timerHorrifyingShrillCD				= mod:NewCDPNPTimer(13.3, 434802, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--13.3-15.5 from last cast finish/kick
 local timerRadiantBarrageCD					= mod:NewCDNPTimer(16.8, 434793, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerCalloftheBroodCD					= mod:NewCDNPTimer(26.6, 438877, nil, nil, nil, 1)
 local timerPoisonousCloudCD					= mod:NewCDNPTimer(15.3, 438826, nil, nil, nil, 3)--15.3-24.7
 local timerRevoltingVolleyCD				= mod:NewCDNPTimer(18.3, 448248, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
-local timerImpaleCD							= mod:NewCDPNPTimer(14.5, 453161, nil, nil, nil, 3)
+local timerImpaleCD							= mod:NewCDPNPTimer(14.2, 453161, nil, nil, nil, 3)
 local timerVenomVolleyCD					= mod:NewCDPNPTimer(18.2, 433841, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerEruptingWebsCD					= mod:NewCDNPTimer(18.1, 433845, nil, nil, nil, 3)
 
@@ -109,7 +109,7 @@ function mod:SPELL_CAST_START(args)
 			specWarnRevoltingVolley:Play("kickcast")
 		end
 	elseif spellId == 453161 then
-		timerImpaleCD:Start(14.5, args.sourceGUID)
+		timerImpaleCD:Start(14.2, args.sourceGUID)
 		if self:AntiSpam(3, 2) then
 			specWarnImpale:Show()
 			specWarnImpale:Play("frontal")
@@ -131,7 +131,7 @@ function mod:SPELL_CAST_START(args)
 			specWarnEruptingWebs:Play("watchstep")
 		end
 	elseif spellId == 434252 then
-		timerMassiveSlamCD:Start(15.8, args.sourceGUID)
+		timerMassiveSlamCD:Start(15.4, args.sourceGUID)
 		specWarnMassiveSlam:Show()
 		specWarnMassiveSlam:Play("stunsoon")
 	end
@@ -214,11 +214,11 @@ function mod:StartNameplateTimers(guid, cid)
 		timerWebSprayCD:Start(4.4, guid)--4.4-7
 		timerHorrifyingShrillCD:Start(12.7, guid)
 	elseif cid == 218324 then--Nakt
-		timerCalloftheBroodCD:Start(6.5, guid)
-		timerWebSprayCD:Start(12.6, guid)
+		timerCalloftheBroodCD:Start(5.6, guid)
+		timerWebSprayCD:Start(11.7, guid)
 	elseif cid == 217533 then--Atik
-		timerWebSprayCD:Start(4.3, guid)--4.3-6
-		timerPoisonousCloudCD:Start(9.1, guid)--9.1-14.4
+		timerWebSprayCD:Start(4, guid)--4-6
+		timerPoisonousCloudCD:Start(8.8, guid)--8.8-14.4
 	elseif cid == 216293 then--Trilling Attendant
 		timerRadiantBarrageCD:Start(2.1, guid)--2.1-3.8
 	elseif cid == 223253 then--Bloodstained Webmage

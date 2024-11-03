@@ -180,7 +180,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 	elseif spellId == 451379 then
 		timerRecklessTacticCD:Start(15.2, args.sourceGUID)
 	elseif spellId == 451965 then
-		timerMoltenWakeCD:Start(16.1)--18.1-2
+		timerMoltenWakeCD:Start(16.1, args.sourceGUID)--18.1-2
 	--elseif spellId == 76711 then
 	--	timerSearMindCD:Start(18.9, args.sourceGUID)
 	elseif spellId == 451971 then
@@ -301,7 +301,7 @@ function mod:StartNameplateTimers(guid, cid)
 		timerBlazingShadowflameCD:Start(8.6, guid)
 		--timerDecapitateCD:Start(18.1, guid)--Not able to find a single cast on August 11
 	elseif cid == 224271 then--Twilight Warlock
-		timerEnvelopingShadowflameCD:Start(10, guid)
+		timerEnvelopingShadowflameCD:Start(6.7, guid)
 	elseif cid == 39392 then--Faceless Corruptor
 		timerMindPiercerCD:Start(4.3, guid)
 		timerCorruptCD:Start(8.3, guid)

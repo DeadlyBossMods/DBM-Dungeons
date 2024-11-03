@@ -81,7 +81,7 @@ local timerDrainFluidsCD					= mod:NewCDPNPTimer(15, 334748, nil, nil, nil, 4, n
 local timerThrowCleaverCD					= mod:NewCDNPTimer(13, 323496, nil, nil, nil, 3)--13-14.2 for Flesh Carver, 15.4 for Stitching Assistant, 14.1 for Separation Assistant
 local timerMorbidFixationCD					= mod:NewCDNPTimer(26.7, 338606, nil, nil, nil, 3)
 local timerWrathOfZolramusCD				= mod:NewCDNPTimer(16.9, 322756, nil, nil, nil, 2)--16.9-17.8 (at least from gatekeeper mob)
-local timerShadowWellCD						= mod:NewCDNPTimer(13.5, 320571, nil, nil, nil, 3)--13.5-19.4
+local timerShadowWellCD						= mod:NewCDNPTimer(13, 320571, nil, nil, nil, 3)--13.5-19.4
 local timerGrimFateCD						= mod:NewCDNPTimer(18.2, 327396, nil, nil, nil, 3)
 local timerDeathBurstCD						= mod:NewCDNPTimer(16.2, 345623, nil, nil, nil, 3)
 local timerAnimatedDeadCD					= mod:NewCDNPTimer(29.1, 321780, nil, nil, nil, 1)--29.1-33, not greatest sample size
@@ -226,7 +226,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 			memoryWastingTable[args.sourceGUID] = true
 		end
 	elseif spellId == 320571 then
-		timerShadowWellCD:Start(13.5, args.sourceGUID)
+		timerShadowWellCD:Start(nil, args.sourceGUID)
 		if self:AntiSpam(3, 2) then
 			specWarnShadowWell:Show()
 			specWarnShadowWell:Play("watchstep")

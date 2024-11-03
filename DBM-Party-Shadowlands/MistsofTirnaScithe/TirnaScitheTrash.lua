@@ -87,7 +87,7 @@ local timerVolatileAcidCD				= mod:NewCDNPTimer(12.1, 325418, nil, nil, nil, 3)-
 local timerNourishtheForestCD			= mod:NewCDPNPTimer(15.9, 324914, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--Valid Aug 8
 local timerBramblethornCoatCD			= mod:NewCDPNPTimer(21.6, 324776, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--Valid Aug 8, 21.6-24.something
 local timerStimulateResistanceCD		= mod:NewCDPNPTimer(15.8, 326046, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--Valid Aug 8
-local timerStimulateRegenerationCD		= mod:NewCDPNPTimer(22.6, 340544, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--Valid Aug 8, but could be lower
+local timerStimulateRegenerationCD		= mod:NewCDPNPTimer(21.9, 340544, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--Valid Aug 8, but could be lower
 local timerAcidNovaCD					= mod:NewCDNPTimer(18, 460092, nil, nil, nil, 3)--Valid Aug 8
 local timerHarvestEssenceCD				= mod:NewCDPNPTimer(15, 322938, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)----Valid Aug 8. This one does go on CD if stunned because it's channeled not cast start
 local timerExpelCD						= mod:NewCDNPTimer(15.1, 463248, nil, nil, nil, 3)--Valid Aug 8
@@ -96,7 +96,7 @@ local timerRadiantBreathCD				= mod:NewCDPNPTimer(10.4, 340160, nil, nil, nil, 3
 local timerShredArmorCD					= mod:NewCDNPTimer(10.6, 340208, nil, nil, nil, 5)----Valid Aug 8, Possible same as breath
 local timerAnimaSlashCD					= mod:NewCDNPTimer(13, 463217, nil, nil, nil, 5)--Valid Oct 21
 local timerPoolofRadianceCD				= mod:NewCDNPTimer(28, 340189, nil, nil, nil, 5)--Valid Aug 8
-local timerAcidGlobuleCD				= mod:NewCDNPTimer(15.7, 326021, nil, nil, nil, 3)--Valid Oct 3
+local timerAcidGlobuleCD				= mod:NewCDNPTimer(15.4, 326021, nil, nil, nil, 3)--Valid Nov 3
 local timerMistveilBiteCD				= mod:NewCDNPTimer(10.4, 324987, nil, nil, nil, 5)--Valid Aug 8
 local timerTongueLashingCD				= mod:NewCDPNPTimer(7.7, 340300, nil, nil, nil, 3)--Valid Aug 8
 
