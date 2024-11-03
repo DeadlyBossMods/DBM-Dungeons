@@ -6,6 +6,7 @@ mod:SetCreatureID(164451, 164463, 164461)--Dessia, Paceran, Sathel
 mod:SetEncounterID(2391)
 mod:SetHotfixNoticeRev(20220416000000)
 mod:SetBossHPInfoToHighest()
+mod:SetZone(2293)
 
 mod:RegisterCombat("combat")
 

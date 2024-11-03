@@ -6,6 +6,7 @@ mod:SetCreatureID(175663)
 mod:SetEncounterID(2426)
 mod:SetUsedIcons(1, 2)
 mod:SetHotfixNoticeRev(20220404000000)
+mod:SetZone(2441)
 
 mod:RegisterCombat("combat")
 

@@ -6,6 +6,7 @@ mod:SetCreatureID(162059, 163077)--162059 Kin-Tara, 163077 Azules
 mod:SetEncounterID(2357)
 mod:SetBossHPInfoToHighest()
 mod:SetUsedIcons(1)
+mod:SetZone(2285)
 
 mod:RegisterCombat("combat")
 
