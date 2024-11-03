@@ -10,6 +10,7 @@ end
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(1763)
 mod:SetEncounterID(2969)--Retail Encounter ID
+mod:SetZone(36)
 
 mod:RegisterCombat("combat")
 

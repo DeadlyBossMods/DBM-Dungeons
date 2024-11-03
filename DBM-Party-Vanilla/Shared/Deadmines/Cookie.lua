@@ -11,6 +11,7 @@ mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(645)
 mod:SetEncounterID(2986)--Retail Encounter ID
 mod:RequiresTimeWalking()
+mod:SetZone(36)
 
 mod:RegisterCombat("combat")
 

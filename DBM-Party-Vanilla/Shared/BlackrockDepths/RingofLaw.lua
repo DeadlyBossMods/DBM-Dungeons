@@ -5,6 +5,7 @@ mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(9028, 9031, 9029, 9030, 9032, 9027)--Register combat with any of the 6
 mod:SetEncounterID(230)
 mod:SetBossHPInfoToHighest()
+mod:SetZone(230)
 
 mod:RegisterCombat("combat")
 

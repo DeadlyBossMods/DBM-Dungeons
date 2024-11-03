@@ -5,6 +5,7 @@ mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(11490)
 --mod:SetEncounterID(1443)
 mod:SetMinSyncRevision(20190917000000)--2019, 9, 17
+mod:SetZone(429)
 
 mod:RegisterCombat("combat")
 mod:DisableFriendlyDetection()
