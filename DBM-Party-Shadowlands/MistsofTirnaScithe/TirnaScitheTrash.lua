@@ -3,14 +3,15 @@ local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
 mod:SetZone(2290)
+mod:RegisterZoneCombat(2290)
 --mod:SetModelID(47785)
 
 mod.isTrashMod = true
 mod.isTrashModBossFightAllowed = true
 
 mod:RegisterEvents(
-	"SPELL_CAST_START 321968 324909 324923 324914 324776 340305 340304 340300 340160 340189 326046 331718 331743 460092 463256 463248 340208 340289 326021 463217",--325418
-	"SPELL_CAST_SUCCESS 325418 340544 322938 325223 331743 340279 321968 324923 331718 322486 322557 324914 324776 326046 463248 463256 340160 340208 340189 326021 460092 324987 340300 463217 323043",
+	"SPELL_CAST_START 321968 324909 324923 324914 324776 340305 340304 340300 340160 340189 326046 460092 463256 463248 340208 340289 326021 463217",--325418 331718 331743
+	"SPELL_CAST_SUCCESS 325418 340544 322938 325223 340279 321968 324923 322486 322557 324914 324776 326046 463248 463256 340160 340208 340189 326021 460092 324987 340300 463217 323043",--331718 331743
 	"SPELL_INTERRUPT",
 	"SPELL_AURA_APPLIED 322557 324914 324776 325224 340288 326046 322486 325021 323043",
 	"SPELL_AURA_APPLIED_DOSE 340288",
@@ -29,6 +30,7 @@ mod:RegisterEvents(
  or (ability.id = 325418 or ability.id = 340544 or ability.id = 322938 or ability.id = 325223 or ability.id = 331743 or ability.id = 340279 or ability.id = 321968 or ability.id = 324923 or ability.id = 331718 or ability.id = 322486 or ability.id = 322557 or ability.id = 324914 or ability.id = 324776 or ability.id = 326046) and type = "cast"
  or stoppedAbility.id = 322938 or stoppedAbility.id = 324914 or stoppedAbility.id = 324776 or stoppedAbility.id = 326046 or stoppedAbility.id = 340544
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
+ or (source.type = "NPC" and source.firstSeen = timestamp and source.id = 165111) or (target.type = "NPC" and target.firstSeen = timestamp and target.id = 165111)
 --]]
 local warnOvergrowth					= mod:NewTargetAnnounce(322486, 4)
 local warnFuriousThrashing				= mod:NewSpellAnnounce(324909, 3)--No CD timer because no one has ever seen it cast twice in a row
@@ -37,7 +39,7 @@ local warnCrushingLeap					= mod:NewSpellAnnounce(340305, 3)--Change to target w
 local warnVolatileAcid					= mod:NewTargetAnnounce(325418, 3)
 local warnHarvestEssence				= mod:NewCastAnnounce(322938, 4, 6)--High Prio off internet
 local warnNourishtheForest				= mod:NewCastAnnounce(324914, 4)--High Prio off internet
-local warnBuckingRampage				= mod:NewSpellAnnounce(331743, 3, nil, "Melee")--Annoying spell that can do a lot of burst damage to melee that's not interruptable
+--local warnBuckingRampage				= mod:NewSpellAnnounce(331743, 3, nil, "Melee")--Annoying spell that can do a lot of burst damage to melee that's not interruptable
 local warnMistveilTear					= mod:NewTargetNoFilterAnnounce(325021, 3, nil, "Tank|Healer|RemoveBleed")
 local warnExpel							= mod:NewTargetAnnounce(463248, 3)
 
@@ -45,7 +47,7 @@ local warnExpel							= mod:NewTargetAnnounce(463248, 3)
 --local specWarnGTFO					= mod:NewSpecialWarningGTFO(257274, nil, nil, nil, 1, 8)
 local specWarnAcidNova					= mod:NewSpecialWarningSpell(460092, nil, nil, nil, 2, 2)
 local specWarnBrambleBurst				= mod:NewSpecialWarningDodge(324923, nil, nil, nil, 2, 2)
-local specWarnSpearFlurry				= mod:NewSpecialWarningDodge(331718, nil, nil, nil, 2, 15)
+--local specWarnSpearFlurry				= mod:NewSpecialWarningDodge(331718, nil, nil, nil, 2, 15)--Retired for now.
 local specWarnPoisonousSecretions		= mod:NewSpecialWarningDodge(340304, nil, nil, nil, 2, 2)
 local specWarnTongueLashing				= mod:NewSpecialWarningDodge(340300, nil, nil, nil, 2, 2)
 local specWarnRadiantBreath				= mod:NewSpecialWarningDodge(340160, nil, nil, nil, 2, 2)
@@ -80,9 +82,9 @@ local timerBloodLettingCD				= mod:NewCDNPTimer(13.1, 323043, nil, nil, nil, 5, 
 local timerBewilderingPollenCD			= mod:NewCDPNPTimer(12.2, 321968, nil, nil, nil, 3)--Valid Aug 8
 local timerOvergrowthCD					= mod:NewCDNPTimer(15.3, 322486, nil, nil, nil, 3)--Valid Aug 8
 local timerBrambleBurstCD				= mod:NewCDNPTimer(13.5, 324923, nil, nil, nil, 3)--Valid Aug 8
-local timerSpearFlurryCD				= mod:NewCDNPTimer(9.3, 331718, nil, false, nil, 3)--Likely deleted from game
+--local timerSpearFlurryCD				= mod:NewCDNPTimer(9.3, 331718, nil, false, nil, 3)--Disabled in current season
 local timerAnimaInjectionCD				= mod:NewCDNPTimer(14.1, 325224, nil, nil, nil, 3)--Valid Aug 8
-local timerBuckingRampageCD				= mod:NewCDNPTimer(15.2, 331743, nil, nil, nil, 3)--Likely deleted from game
+--local timerBuckingRampageCD			= mod:NewCDNPTimer(15.2, 331743, nil, nil, nil, 3)--Disabled in current season
 local timerPoisonousDischargeCD			= mod:NewCDNPTimer(21.2, 340279, nil, nil, nil, 3)--??? not seen in logs, mob avoided?
 local timerSoulSpiritCD					= mod:NewCDNPTimer(14.5, 322557, nil, nil, nil, 5)--Valid Aug 8
 local timerVolatileAcidCD				= mod:NewCDNPTimer(12.1, 325418, nil, nil, nil, 3)--Valid Aug 8, HIGHLY variable though (like 12-19)
@@ -96,7 +98,7 @@ local timerExpelCD						= mod:NewCDNPTimer(15.1, 463248, nil, nil, nil, 3)--Vali
 local timerMistWardCD					= mod:NewCDNPTimer(22.9, 463256, nil, nil, nil, 5)--Valid Aug 8, One of two creatures has CD, the other does not.
 local timerRadiantBreathCD				= mod:NewCDPNPTimer(10.4, 340160, nil, nil, nil, 3)--Valid Aug 8
 local timerShredArmorCD					= mod:NewCDNPTimer(10.6, 340208, nil, nil, nil, 5)----Valid Aug 8, Possible same as breath
-local timerAnimaSlashCD					= mod:NewCDNPTimer(13, 463217, nil, nil, nil, 5)--Valid Oct 21
+local timerAnimaSlashCD					= mod:NewCDNPTimer(13, 463217, nil, nil, nil, 5)--Valid Nov 4
 local timerPoolofRadianceCD				= mod:NewCDNPTimer(28, 340189, nil, nil, nil, 5)--Valid Aug 8
 local timerAcidGlobuleCD				= mod:NewCDNPTimer(15.4, 326021, nil, nil, nil, 3)--Valid Nov 3
 local timerMistveilBiteCD				= mod:NewCDNPTimer(15, 324987, nil, nil, nil, 5)--Valid Nov 3
@@ -196,11 +198,11 @@ function mod:SPELL_CAST_START(args)
 		end
 --	elseif spellId == 325418 then
 --		self:ScheduleMethod(0.1, "BossTargetScanner", args.sourceGUID, "VolatileAcid", 0.1, 4)
-	elseif spellId == 331718 and self:AntiSpam(3, 2) then
-		specWarnSpearFlurry:Show()
-		specWarnSpearFlurry:Play("frontal")
-	elseif spellId == 331743 then
-		warnBuckingRampage:Show()
+--	elseif spellId == 331718 and self:AntiSpam(3, 2) then
+--		specWarnSpearFlurry:Show()
+--		specWarnSpearFlurry:Play("frontal")
+--	elseif spellId == 331743 then
+--		warnBuckingRampage:Show()
 	elseif spellId == 460092 then
 		if self:AntiSpam(3, 4) then
 			specWarnAcidNova:Show()
@@ -257,8 +259,8 @@ function mod:SPELL_CAST_SUCCESS(args)
 		end
 	elseif spellId == 325223 then
 		timerAnimaInjectionCD:Start(nil, args.sourceGUID)
-	elseif spellId == 331743 then
-		timerBuckingRampageCD:Start(nil, args.sourceGUID)
+--	elseif spellId == 331743 then
+--		timerBuckingRampageCD:Start(nil, args.sourceGUID)
 	elseif spellId == 340279 then
 		timerPoisonousDischargeCD:Start(nil, args.sourceGUID)
 		if self:AntiSpam(3, 2) then
@@ -269,8 +271,8 @@ function mod:SPELL_CAST_SUCCESS(args)
 		timerBewilderingPollenCD:Start(nil, args.sourceGUID)
 	elseif spellId == 324923 then
 		timerBrambleBurstCD:Start(nil, args.sourceGUID)
-	elseif spellId == 331718 then
-		timerSpearFlurryCD:Start(nil, args.sourceGUID)
+--	elseif spellId == 331718 then
+--		timerSpearFlurryCD:Start(nil, args.sourceGUID)
 	elseif spellId == 322486 then
 		timerOvergrowthCD:Start(nil, args.sourceGUID)
 	elseif spellId == 322557 then
@@ -379,7 +381,7 @@ function mod:UNIT_DIED(args)
 	if cid == 166304 then--Mistveil Stinger
 		timerAnimaInjectionCD:Stop(args.destGUID)
 	elseif cid == 166276 then--Mistveil Guardian
-		timerBuckingRampageCD:Stop(args.destGUID)
+		--timerBuckingRampageCD:Stop(args.destGUID)
 		timerAnimaSlashCD:Stop(args.destGUID)
 	elseif cid == 173714 then--Mistveil Nightblossom
 		timerPoisonousDischargeCD:Stop(args.destGUID)
@@ -388,8 +390,8 @@ function mod:UNIT_DIED(args)
 		timerOvergrowthCD:Stop(args.destGUID)
 	elseif cid == 164926 then--Drust Boughbreaker
 		timerBrambleBurstCD:Stop(args.destGUID)
-	elseif cid == 171772 or cid == 163058 then--Mistveil Defender
-		timerSpearFlurryCD:Stop(args.destGUID)--Removed ability?
+	elseif cid == 163058 or cid == 171772 then--Mistveil Defender
+--		timerSpearFlurryCD:Stop(args.destGUID)--Removed ability?
 		timerExpelCD:Stop(args.destGUID)
 		timerMistWardCD:Stop(args.destGUID)
 	elseif cid == 164920 or cid == 172991 then--Drust Soulcleaver
@@ -419,4 +421,57 @@ function mod:UNIT_DIED(args)
 	elseif cid == 165111 then--Drust Spiteclaw
 		timerBloodLettingCD:Stop(args.destGUID)
 	end
+end
+
+--All timers subject to a ~0.5 second clipping due to ScanEngagedUnits
+function mod:StartNameplateTimers(guid, cid)
+	if cid == 166304 then--Mistveil Stinger
+		timerAnimaInjectionCD:Start(4, guid)
+	elseif cid == 166276 then--Mistveil Guardian
+		--timerBuckingRampageCD:Start(1, guid)
+		timerAnimaSlashCD:Start(6.4, guid)
+	elseif cid == 173714 then--Mistveil Nightblossom
+		timerPoisonousDischargeCD:Start(13.1, guid)--Small Sample, could be lower. 13.1-17 confirmed so far
+	elseif cid == 164929 then--Tirnenn Villager
+		timerBewilderingPollenCD:Start(7.6, guid)
+		timerOvergrowthCD:Start(12.5, guid)
+	elseif cid == 164926 then--Drust Boughbreaker
+		timerBrambleBurstCD:Start(7.8, guid)
+	elseif cid == 163058 or cid == 171772 then--Mistveil Defender (171772 is the variant players don't engage with most likely)
+		--timerSpearFlurryCD:Start(1, guid)--Removed ability?
+		timerExpelCD:Start(4, guid)
+		timerMistWardCD:Start(11.1, guid)--11-12
+	elseif cid == 164920 or cid == 172991 then--Drust Soulcleaver
+		timerSoulSpiritCD:Start(4.7, guid)
+	elseif cid == 166299 then--Mistveil Tender
+		timerNourishtheForestCD:Start(10, guid)--10-20, might not activate if ally doesn't need healing yet
+	elseif cid == 166275 then--Mistveil Shaper
+		timerBramblethornCoatCD:Start(7.6, guid)
+	elseif cid == 167111 then--Spinemaw Staghorn
+		timerStimulateResistanceCD:Start(5.6, guid)
+		timerStimulateRegenerationCD:Start(13.9, guid)--Initial cast might not be timer based but health based. Recasts have a CD though
+		timerAcidNovaCD:Start(10.2, guid)--10.2-14.2
+	elseif cid == 167113 then --Spinemaw Acidgullet
+		timerVolatileAcidCD:Start(8.5, guid)
+	elseif cid == 164921 then--Drust Harvester
+		timerHarvestEssenceCD:Start(10.4, guid)--10-20
+	elseif cid == 173655 then--Mistveil Matriarch
+		timerShredArmorCD:Start(6.9, guid)--6.9-13
+		timerRadiantBreathCD:Start(9, guid)--9-16
+		timerPoolofRadianceCD:Start(20, guid)--20-27
+	elseif cid == 172312 then--Spinemaw Gorger
+		timerAcidGlobuleCD:Start(5.3, guid)--5.3-9
+	elseif cid == 166301 then--Mistveil Stalker
+		timerMistveilBiteCD:Start(6, guid)
+	elseif cid == 173720 then--Mistveil Gorgegullet
+		timerTongueLashingCD:Start(6, guid)
+	elseif cid == 165111 then--Drust Spiteclaw
+		timerBloodLettingCD:Start(5, guid)--Poor sample, enemy has problematic pull detection
+	end
+end
+
+--Abort timers when all players out of combat, so NP timers clear on a wipe
+--Caveat, it won't calls top with GUIDs, so while it might terminate bar objects, it may leave lingering nameplate icons
+function mod:LeavingZoneCombat()
+	self:Stop()
 end
