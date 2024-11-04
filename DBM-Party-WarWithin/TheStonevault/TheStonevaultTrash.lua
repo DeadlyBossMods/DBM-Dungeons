@@ -10,7 +10,7 @@ mod:RegisterZoneCombat(2652)
 
 mod:RegisterEvents(
 	"SPELL_CAST_START 425027 426283 447141 449455 429109 449130 449154 429545 426345 426771 445207 448640 429427 428879 428703 459210",
-	"SPELL_CAST_SUCCESS 429427 425027 447141 449455 426308 445207 429545 429109 449130",
+	"SPELL_CAST_SUCCESS 429427 425027 447141 449455 426308 445207 429545 429109 449130 426345",
 	"SPELL_INTERRUPT",
 	"SPELL_AURA_APPLIED 426308",
 	"SPELL_AURA_APPLIED_DOSE 427361",
@@ -59,7 +59,7 @@ local timerPulverizingPounceCD				= mod:NewCDNPTimer(15.1, 447141, nil, nil, nil
 local timerVoidInfectionCD					= mod:NewCDNPTimer(18.2, 426308, nil, nil, nil, 3, nil, DBM_COMMON_L.CURSE_ICON)
 local timerLavaCannonCD						= mod:NewCDPNPTimer(9.1, 449130, nil, nil, nil, 3)
 local timerMoltenMortarCD					= mod:NewCDNPTimer(20.6, 449154, nil, nil, nil, 3)--15.3-19
-local timerCrystalSalvoCD					= mod:NewCDNPTimer(16.3, 426345, nil, nil, nil, 3)
+local timerCrystalSalvoCD					= mod:NewCDNPTimer(15.3, 426345, nil, nil, nil, 3)
 local timerShadowClawsCD					= mod:NewCDNPTimer(13.3, 459210, nil, nil, nil, 5, nil, DBM_CORE_L.TANK_ICON)
 local timerVoidOutburstCD					= mod:NewCDNPTimer(27.9, 426771, nil, nil, nil, 2)--Cast to cast for now, but if it gets stutter cast reports it'll be moved to success
 local timerShieldStampedeCD					= mod:NewCDPNPTimer(17, 448640, nil, nil, nil, 3)
@@ -133,7 +133,6 @@ function mod:SPELL_CAST_START(args)
 			warnCensoringGear:Show()
 		end
 	elseif spellId == 426345 then
-		timerCrystalSalvoCD:Start(nil, args.sourceGUID)
 		if self:AntiSpam(3, 2) then
 			specWarnCrystalSalvo:Show()
 			specWarnCrystalSalvo:Play("watchstep")
@@ -202,6 +201,8 @@ function mod:SPELL_CAST_SUCCESS(args)
 		timerRestoringMetalsCD:Start(16.3, args.sourceGUID)
 	elseif spellId == 449130 then
 		timerLavaCannonCD:Start(9.1, args.sourceGUID)
+	elseif spellId == 426345 then
+		timerCrystalSalvoCD:Start(nil, args.sourceGUID)
 	end
 end
 
@@ -298,7 +299,7 @@ function mod:StartNameplateTimers(guid, cid)
 	elseif cid == 212400 then--Void Touched Elemental
 		timerCrystalSalvoCD:Start(3.6, guid)--3.6-5.5
 	elseif cid == 212765 then--Void Bound Despoiler
-		timerShadowClawsCD:Start(5.3, guid)--5.3-6.7
+		timerShadowClawsCD:Start(5, guid)--5-6.7
 		timerVoidOutburstCD:Start(7.1, guid)--5.3-8.8?
 	elseif cid == 221979 then--Void Bound Howler
 		timerPiercingWailCD:Start(5.1, guid)--Test thoroughly in folloewr dungeon

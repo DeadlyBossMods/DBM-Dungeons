@@ -59,7 +59,7 @@ local allTimers = {
 		[425264] = {6, 34.3},--Obsidian Blast (Non Mythic)
 		[453212] = {7.1, 31.9, 26.2},--Obsidian Beam (Mythic)
 		[445996] = {13.1},--Collapsing Darkness (Non Mythic)
-		[453140] = {23.3, 28.1, 26.3},--Collapsing Night (Mythic)
+		[453140] = {23.3, 28.1, 25.9},--Collapsing Night (Mythic)
 		[4267341] = {9.3, 35.5},--Burning Shadows (Non Mythic)
 		[4267342] = {19.2, 15.7, 24.5},--Burning Shadows (Mythic)
 	},
