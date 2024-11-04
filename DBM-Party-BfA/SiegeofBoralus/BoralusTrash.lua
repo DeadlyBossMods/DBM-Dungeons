@@ -62,8 +62,6 @@ local specWarnChokingWatersDispel	= mod:NewSpecialWarningDispel(272571, "RemoveM
 local specWarnFear					= mod:NewSpecialWarningSpell(257169, nil, nil, nil, 2, 2)
 local specWarnShatteringBellow		= mod:NewSpecialWarningCast(257732, "SpellCaster", nil, nil, 1, 1)
 
---copilot, there are no NewCDTimer objects in this mod, only NewCDNPTimer objects
---copilot, there is no DBM_CORE_L in this mod, only DBM_COMMON_L
 local timerSlobberknockerCD			= mod:NewCDPNPTimer(18.8, 256627, nil, nil, nil, 5)--18.8-20.6
 local timerBurningTarCD				= mod:NewCDNPTimer(20.1, 256640, nil, nil, nil, 3)
 local timerSavageTempestCD			= mod:NewCDNPTimer(19.1, 257170, nil, nil, nil, 3)

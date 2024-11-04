@@ -10,9 +10,9 @@ mod.isTrashModBossFightAllowed = true
 
 mod:RegisterEvents(
 	"SPELL_CAST_START 321968 324909 324923 324914 324776 340305 340304 340300 340160 340189 326046 331718 331743 460092 463256 463248 340208 340289 326021 463217",--325418
-	"SPELL_CAST_SUCCESS 325418 340544 322938 325223 331743 340279 321968 324923 331718 322486 322557 324914 324776 326046 463248 463256 340160 340208 340189 326021 460092 324987 340300 463217",
+	"SPELL_CAST_SUCCESS 325418 340544 322938 325223 331743 340279 321968 324923 331718 322486 322557 324914 324776 326046 463248 463256 340160 340208 340189 326021 460092 324987 340300 463217 323043",
 	"SPELL_INTERRUPT",
-	"SPELL_AURA_APPLIED 322557 324914 324776 325224 340288 326046 322486 325021",
+	"SPELL_AURA_APPLIED 322557 324914 324776 325224 340288 326046 322486 325021 323043",
 	"SPELL_AURA_APPLIED_DOSE 340288",
 	"SPELL_AURA_REMOVED 325224",
 	"UNIT_DIED"
@@ -60,6 +60,7 @@ local specWarnSoulSplit					= mod:NewSpecialWarningDispel(322557, "RemoveMagic",
 local specWarnNourishtheForestDispel	= mod:NewSpecialWarningDispel(324914, "MagicDispeller", nil, nil, 1, 2)
 local specWarnBramblethornCoatDispel	= mod:NewSpecialWarningDispel(324776, "MagicDispeller", nil, nil, 1, 2)
 local specWarnStimulateResistanceDispel	= mod:NewSpecialWarningDispel(326046, "MagicDispeller", nil, nil, 1, 2)
+local specWarnBloodlettingDispel		= mod:NewSpecialWarningDispel(323043, "RemoveBleed", nil, nil, 1, 2)
 local specWarnPoolOfRadiance			= mod:NewSpecialWarningMove(340189, nil, nil, nil, 1, 10)
 local specWarnMistWard					= mod:NewSpecialWarningMove(463256, nil, nil, nil, 1, 10)
 local specWarnVolatileAcid				= mod:NewSpecialWarningMoveAway(325418, nil, nil, nil, 1, 2)
@@ -75,6 +76,7 @@ local specWarnStimulateRegeneration		= mod:NewSpecialWarningInterrupt(340544, "H
 
 --Cooldowns only show Recast time after successful interrupt or cast finish
 --This means stunned/CCed mobs will not show recast timers since abilities do not go on cooldown
+local timerBloodLettingCD				= mod:NewCDNPTimer(13.1, 323043, nil, nil, nil, 5, nil, DBM_COMMON_L.HEALER_ICON)
 local timerBewilderingPollenCD			= mod:NewCDPNPTimer(12.2, 321968, nil, nil, nil, 3)--Valid Aug 8
 local timerOvergrowthCD					= mod:NewCDNPTimer(15.3, 322486, nil, nil, nil, 3)--Valid Aug 8
 local timerBrambleBurstCD				= mod:NewCDNPTimer(13.5, 324923, nil, nil, nil, 3)--Valid Aug 8
@@ -299,6 +301,8 @@ function mod:SPELL_CAST_SUCCESS(args)
 		timerTongueLashingCD:Start(nil, args.sourceGUID)
 	elseif spellId == 463217 then
 		timerAnimaSlashCD:Start(nil, args.sourceGUID)
+	elseif spellId == 323043 then
+		timerBloodLettingCD:Start(nil, args.sourceGUID)
 	end
 end
 
@@ -352,6 +356,9 @@ function mod:SPELL_AURA_APPLIED(args)
 		end
 	elseif spellId == 325021 then
 		warnMistveilTear:Show(args.destName)
+	elseif spellId == 323043 and args:IsDestTypePlayer() and self:CheckDispelFilter("bleed") then
+		specWarnBloodlettingDispel:Show(args.destName)
+		specWarnBloodlettingDispel:Play("helpdispel")
 	end
 end
 mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED
@@ -409,5 +416,7 @@ function mod:UNIT_DIED(args)
 		timerMistveilBiteCD:Stop(args.destGUID)
 	elseif cid == 173720 then--Mistveil Gorgegullet
 		timerTongueLashingCD:Stop(args.destGUID)
+	elseif cid == 165111 then--Drust Spiteclaw
+		timerBloodLettingCD:Stop(args.destGUID)
 	end
 end
