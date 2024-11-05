@@ -24,6 +24,7 @@ mod:RegisterEvents(
  or (ability.id = 338357 or ability.id = 327393 or ability.id = 334748 or ability.id = 320571 or ability.id = 321780 or ability.id = 343470 or ability.id = 324372 or ability.id = 327130 or ability.id = 324293 or ability.id = 327240 or ability.id = 327399 or ability.id = 334748 or ability.id = 338353 or ability.id = 323496 or ability.id = 333477 or ability.id = 333479 or ability.id = 338606 or ability.id = 345623 or ability.id = 322756 or ability.id = 328667 or ability.id = 335143 or ability.id = 320822 or ability.id = 324394 or ability.id = 324387 or ability.id = 338456 or ability.id = 324323) and type = "cast"
  or stoppedAbility.id = 334748 or stoppedAbility.id = 324293 or stoppedAbility.id = 338353 or stoppedAbility.id = 328667 or stoppedAbility.id = 335143 or stoppedAbility.id = 327130
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
+ or (source.type = "NPC" and source.firstSeen = timestamp and source.id = 163619) or (target.type = "NPC" and target.firstSeen = timestamp and target.id = 163619)
  --]]
 --TODO targetscan shared agony during cast and get at least one of targets early? for fade/invis and feign death?
 --TODO, actually, does shared agony even still exist? it's not in any recent logs
@@ -433,7 +434,52 @@ function mod:UNIT_DIED(args)
 		timerSpineCrushCD:Stop(args.destGUID)
 		timerSpineCrush:Stop(args.destGUID)
 	elseif cid == 163619 then--Zolramus Bonecarver
+		timerBoneflayCD:Stop(args.destGUID)
+	end
+end
 
+--All timers subject to a ~0.5 second clipping due to ScanEngagedUnits
+function mod:StartNameplateTimers(guid, cid)
+	if cid == 173016 then--Corpse Collector
+		timerGoresplatterCD:Start(5.1, guid)
+		timerDrainFluidsCD:Start(9.3, guid)--Can be spell locked or spell queued much longer up to about 18
+	elseif cid == 166302 then--Corpse Harvester
+		timerDrainFluidsCD:Start(7.4, guid)
+	elseif cid == 165872 then--Flesh Crafter
+--		timerThrowCleaverCD:Start(13, guid)--Cast instantly on pull
+		timerRepairFleshCD:Start(9.2, guid)
+	elseif cid == 173044 then--Stitching Assistant
+--		timerThrowCleaverCD:Start(15.4, guid)--Cast instantly on pull
+		timerDrainFluidsCD:Start(7.4, guid)
+	elseif cid == 167731 then--Separation Assistant
+--		timerThrowCleaverCD:Start(14.1, guid)--Cast instantly on pull
+		timerMorbidFixationCD:Start(12.8, guid)
+	elseif cid == 165137 then--Zolramus Gatekeeper
+		timerWrathOfZolramusCD:Start(5.5, guid)--about a 5 second CD, but can be delayed as much as 14 seconds due to spell lockout from kicking necrotic bolt
+	elseif cid == 163128 then--Zolramus Sorcerer
+		timerShadowWellCD:Start(10.6, guid)--about a 10 second CD, but can be delayed as much as 27 seconds due to spell lockout from kicking necrotic bolt
+	elseif cid == 163618 then--Zolramus Necromancer
+		timerGrimFateCD:Start(10.9, guid)--FIX ME LATER
+		timerAnimatedDeadCD:Start(20.7, guid)--FIX ME LATER
+--	elseif cid == 165222 then--Zolramus Bonemender
+--		timerBoneMendCD:Start(7, guid)--no initial CD, cast as soon as an ally needs healing, THEN goes on cooldown
+	elseif cid == 165824 then--Nar'zudah
+		timerDeathBurstCD:Start(4, guid)
+		timerGrimFateCD:Start(9, guid)--9, but sometimes 12 based on likely spellqueuing
+	elseif cid == 172981 then--Kyrian Stickwork
+		timerTenderizeCD:Start(4, guid)
+		timerMutlilateCD:Start(8.1, guid)
+	elseif cid == 163621 then--Goregrind
+		timerMutlilateCD:Start(8.1, guid)
+		timerTenderizeCD:Start(5.1, guid)
+		timerGutSliceCD:Start(11.2, guid)
+	elseif cid == 163620 then--Rotspew
+		timerMutlilateCD:Start(4.3, guid)
+		timerSpewDiseaseCD:Start(8, guid)--8-10
+	elseif cid == 165911 then--Loyal Creation
+		timerSpineCrushCD:Start(10.3, guid)
+	elseif cid == 163619 then--Zolramus Bonecarver
+		timerBoneflayCD:Start(6, guid)--TODO, fix me when Linaori complains it's wrong
 	end
 end
 
