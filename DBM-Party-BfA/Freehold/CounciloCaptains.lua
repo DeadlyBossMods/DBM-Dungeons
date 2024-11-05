@@ -8,6 +8,7 @@ mod:DisableRegenDetection()
 mod:DisableFriendlyDetection()
 mod:SetHotfixNoticeRev(20230922000000)
 mod:SetMinSyncRevision(20230922000000)
+mod:SetZone(1754)
 
 mod:RegisterCombat("combat")
 

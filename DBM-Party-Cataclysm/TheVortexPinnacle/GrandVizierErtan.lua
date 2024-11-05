@@ -13,6 +13,7 @@ mod:SetCreatureID(43878)
 mod:SetEncounterID(1043)
 mod:SetHotfixNoticeRev(20230427000000)
 --mod:SetMinSyncRevision(20230226000000)
+mod:SetZone(657)
 mod.sendMainBossGUID = true
 
 mod:RegisterCombat("combat")

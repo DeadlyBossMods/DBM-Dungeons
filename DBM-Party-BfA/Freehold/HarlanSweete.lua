@@ -5,6 +5,7 @@ mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(126983)
 mod:SetEncounterID(2096)
 mod:SetHotfixNoticeRev(20230505000000)
+mod:SetZone(1754)
 mod.sendMainBossGUID = true
 
 mod:RegisterCombat("combat")

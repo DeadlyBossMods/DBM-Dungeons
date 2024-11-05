@@ -7,6 +7,7 @@ mod:SetEncounterID(2084)
 mod:SetUsedIcons(8)
 mod:SetHotfixNoticeRev(20231023000000)
 --mod:SetMinSyncRevision(20231021000000)
+mod:SetZone(1763)
 mod.respawnTime = 29
 mod.sendMainBossGUID = true
 

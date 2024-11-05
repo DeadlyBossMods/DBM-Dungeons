@@ -41,10 +41,10 @@ local specWarnFrostboltVolley		= mod:NewSpecialWarningInterruptCount(322493, "Ha
 
 --All bosses timers are 40 but often spell queued behind other spells. You'll often see them be in median of 40-48.4 range (so 44)
 --Even updating timers for spell queuing is not 100% cause the problem is Mostly necrotic bolt (which may even incur spell lockouts and push timers back even more)
-local timerLandoftheDeadCD			= mod:NewCDCountTimer(40, 321226, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)--40-48.4
-local timerFinalHarvestCD			= mod:NewCDCountTimer(40, 321247, nil, nil, nil, 2)--40-48.4
-local timerNecroticBreathCD			= mod:NewCDCountTimer(40, 333493, nil, nil, nil, 3)--40-48.4
-local timerUnholyFrenzyCD			= mod:NewCDCountTimer(40, 320012, nil, nil, nil, 5, nil, DBM_COMMON_L.ENRAGE_ICON..DBM_COMMON_L.TANK_ICON)--40-48.4
+local timerLandoftheDeadCD			= mod:NewCDCountTimer(39.7, 321226, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)--40-48.4
+local timerFinalHarvestCD			= mod:NewCDCountTimer(39.7, 321247, nil, nil, nil, 2)--40-48.4
+local timerNecroticBreathCD			= mod:NewCDCountTimer(39.7, 333493, nil, nil, nil, 3)--40-48.4
+local timerUnholyFrenzyCD			= mod:NewCDCountTimer(39.7, 320012, nil, nil, nil, 5, nil, DBM_COMMON_L.ENRAGE_ICON..DBM_COMMON_L.TANK_ICON)--40-48.4
 local timerFrostboltVolleyCD		= mod:NewCDNPTimer(18.1, 322493, nil, nil, nil, 4, nil, DBM_CORE_L.INTERRUPT_ICON)--40-48.4
 
 mod:AddSetIconOption("SetIconOnAdds", 321226, true, 5, {1, 2, 3, 4, 5, 6, 7, 8})
@@ -69,7 +69,7 @@ function mod:OnCombatStart(delay)
 	--Fortunately mods corrective code should mostly handle it within a ~2.5 second margin of error instead of full 8-9 seconds
 	timerUnholyFrenzyCD:Start(6-delay, 1)--SUCCESS
 	timerLandoftheDeadCD:Start(8.6-delay, 1)--SUCCESS
-	timerNecroticBreathCD:Start(28.9-delay, 1)
+	timerNecroticBreathCD:Start(28.6-delay, 1)
 	timerFinalHarvestCD:Start(38.6-delay, 1)
 end
 

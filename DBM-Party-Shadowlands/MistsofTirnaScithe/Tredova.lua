@@ -6,6 +6,7 @@ mod:SetCreatureID(164517)
 mod:SetEncounterID(2393)
 mod:SetHotfixNoticeRev(20240808000000)
 mod:SetUsedIcons(1, 2, 3, 4, 5)--Probably doesn't use all 5, unsure number of mind link targets at max inteligence/energy
+mod:SetZone(2290)
 
 mod:RegisterCombat("combat")
 

@@ -1,4 +1,4 @@
-## Interface: 110002, 110005
+## Interface: 110005, 110007
 ## Title:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cff10ff10World Events|r
 ## Title-esES:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cff10ff10Eventos del mundo|r
 ## Title-koKR:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cff10ff10월드 이벤트|r
@@ -67,10 +67,6 @@ Holidays\Greench.lua
 Quests\Plants.lua
 Quests\EscortQuests.lua
 Quests\AwakeningMachine.lua
-
-Events\TwentyFifthEvent\BurningCrusade.lua
-Events\TwentyFifthEvent\WotLK.lua
-Events\TwentyFifthEvent\Cataclysm.lua
 
 Events\Azeroth\KazzakClassic.lua
 Events\Azeroth\Azuregos.lua

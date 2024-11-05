@@ -29,7 +29,7 @@ local yellHeavingRetch				= mod:NewYell(320596)
 local specWarnCrunch				= mod:NewSpecialWarningDefensive(320655, nil, nil, nil, 1, 2)
 local specWarnGTFO					= mod:NewSpecialWarningGTFO(320646, nil, nil, nil, 1, 8)
 
-local timerHeavingRetchCD			= mod:NewCDCountTimer(32.7, 320596, nil, nil, nil, 3)--32.7-42
+local timerHeavingRetchCD			= mod:NewCDCountTimer(32.5, 320596, nil, nil, nil, 3)--32.7-42
 local timerFetidGasCD				= mod:NewCDCountTimer(25.4, 320637, nil, nil, nil, 3)
 local timerCrunchCD					= mod:NewCDCountTimer(12.1, 320655, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)--11-20, spell queues behind other 2 casts
 

@@ -1,7 +1,7 @@
 local mod	= DBM:NewMod(134, "DBM-Party-Cataclysm", 3, 71)
 local L		= mod:GetLocalizedStrings()
 
-if not mod:IsCata() then
+if mod:IsRetail() then
 	mod.statTypes = "normal,heroic,challenge,timewalker"
 	mod.upgradedMPlus = true
 else
@@ -13,6 +13,7 @@ mod:SetCreatureID(40484)
 mod:SetEncounterID(1049)
 mod:SetHotfixNoticeRev(20240812000000)
 --mod:SetMinSyncRevision(20230929000000)
+mod:SetZone(670)
 
 mod:RegisterCombat("combat")
 
@@ -31,13 +32,13 @@ local warnFeeble		= mod:NewTargetNoFilterAnnounce(75792, 3, nil, "Tank|Healer", 
 local warnUmbralMending	= mod:NewSpellAnnounce(75763, 4)
 
 local specWarnMending	= mod:NewSpecialWarningInterrupt(75763, nil, nil, nil, 1, 2)
-local specWarnGale		= mod:NewSpecialWarningCount(DBM:IsPostCata() and 449939 or 75664, nil, nil, nil, 2, 2)
+local specWarnGale		= mod:NewSpecialWarningCount(DBM:IsRetail() and 449939 or 75664, nil, nil, nil, 2, 2)
 local specWarnAdds		= mod:NewSpecialWarningAddsCount(75704, "Dps", nil, nil, 3, 2)
 
 local timerFeebleCD		= mod:NewCDCountTimer(26, 75792, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerFeeble		= mod:NewTargetTimer(3, 75792, nil, "Tank|Healer", 2, 5)
-local timerGale			= mod:NewCastTimer(5, DBM:IsPostCata() and 449939 or 75664, nil, nil, nil, 2)
-local timerGaleCD		= mod:NewCDCountTimer(55, DBM:IsPostCata() and 449939 or 75664, nil, nil, nil, 2)
+local timerGale			= mod:NewCastTimer(5, DBM:IsRetail() and 449939 or 75664, nil, nil, nil, 2)
+local timerGaleCD		= mod:NewCDCountTimer(55, DBM:IsRetail() and 449939 or 75664, nil, nil, nil, 2)
 local timerAddsCD		= mod:NewCDCountTimer(54.5, 75704, nil, nil, nil, 1)
 --Add new stuff to non cata only
 local specWarnVoidSurge, specWarnCrush, timerVoidSurgeCD, timerCrushCD

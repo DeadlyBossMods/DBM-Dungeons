@@ -14,6 +14,7 @@ else
 	mod:SetMainBossID(42172)--42172 is Ozumat, but we need Neptulon for engage trigger.
 end
 mod:SetEncounterID(1047)
+mod:SetZone(643)
 
 mod:RegisterCombat("combat")
 

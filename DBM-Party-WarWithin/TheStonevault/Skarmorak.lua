@@ -6,6 +6,7 @@ mod:SetCreatureID(210156)
 mod:SetEncounterID(2880)
 mod:SetUsedIcons(8, 7, 6, 5)
 mod:SetHotfixNoticeRev(20241016000000)
+mod:SetZone(2652)
 --mod:SetMinSyncRevision(20211203000000)
 --mod.respawnTime = 29
 mod.sendMainBossGUID = true
@@ -43,7 +44,7 @@ local specWarnUnstableCrash					= mod:NewSpecialWarningDodgeCount(423538, "-Heal
 --local yellSomeAbility						= mod:NewYell(372107)
 --local specWarnGTFO						= mod:NewSpecialWarningGTFO(372820, nil, nil, nil, 1, 8)
 
-local timerCrystallineSmashCD				= mod:NewCDCountTimer(16.9, 422233, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON..DBM_COMMON_L.DAMAGE_ICON)--One timer for smash and shards
+local timerCrystallineSmashCD				= mod:NewCDCountTimer(16.7, 422233, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON..DBM_COMMON_L.DAMAGE_ICON)--One timer for smash and shards
 local timerUnstableCrashCD					= mod:NewCDCountTimer(19.4, 423538, nil, nil, nil, 3)
 local timerFortifiedShellCD					= mod:NewCDCountTimer(40, 423200, nil, nil, nil, 6)
 

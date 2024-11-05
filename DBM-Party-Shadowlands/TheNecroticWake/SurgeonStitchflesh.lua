@@ -4,8 +4,8 @@ local L		= mod:GetLocalizedStrings()
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(162689)
 mod:SetEncounterID(2389)
-mod:SetHotfixNoticeRev(20240817000000)
---mod:SetMinSyncRevision(20211203000000)
+mod:SetHotfixNoticeRev(20241103000000)
+mod:SetMinSyncRevision(20241103000000)
 
 mod:RegisterCombat("combat")
 
@@ -94,7 +94,7 @@ local function findCreation(self, delay)
 		if id == 164578 then--Creation
 			local guid = UnitGUID("boss"..i)
 			timerMutilateCD:Start(6-delay, guid)
-			timerMeatHookCD:Start(9.6-delay, guid)
+			timerMeatHookCD:Start(9-delay, guid)
 			break
 		end
 	end
@@ -107,7 +107,7 @@ function mod:OnCombatStart(delay)
 	self.vb.ichorCount = 0
 	self.vb.severCount = 0
 --	timerSummonCreationCD:Start(1-delay, 2)--START (unknown, nobody in public logs is this bad)
-	timerEmbalmingIchorCD:Start(9.4-delay)
+	timerEmbalmingIchorCD:Start(8.8-delay, 1)
 --	timerStichNeedleCD:Start(1-delay)--SUCCESS
 	--Makes ure IEEU has fired before scanning for creations GUID
 	self:Schedule(1, findCreation, self, delay)
@@ -170,7 +170,7 @@ function mod:SPELL_AURA_APPLIED(args)
 			specWarnMorbidFixation:Play("targetyou")
 			yellMorbidFixation:Yell()
 		end
-	elseif spellId == 322548 and not self:GetStage(2) then--Boss getting meat hooked
+	elseif spellId == 322548 and not self:GetStage(2) and args:GetDestCreatureID() == 162689 then--Boss getting meat hooked
 		self:SetStage(2)
 		timerSummonCreationCD:Stop()
 		timerEmbalmingIchorCD:Stop()

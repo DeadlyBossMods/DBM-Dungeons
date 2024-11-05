@@ -5,6 +5,7 @@ mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(144244, 145185)
 mod:SetEncounterID(2257)
 mod:SetBossHPInfoToHighest()
+mod:SetZone(2097)
 
 mod:RegisterCombat("combat")
 

@@ -6,6 +6,7 @@ mod:SetCreatureID(215405)
 mod:SetEncounterID(2906)
 mod:SetHotfixNoticeRev(20240817000000)
 mod:SetMinSyncRevision(20240817000000)
+mod:SetZone(2660)
 --mod.respawnTime = 29
 mod.sendMainBossGUID = true
 
@@ -61,7 +62,7 @@ local allTimers = {
 	--Initial set
 	[1] = {
 		--Impale
-		[435012] = {4.8, 13.5, 4.6},--Includes the Burrow Charge Impale
+		[435012] = {4.8, 12.2, 4.6},--Includes the Burrow Charge Impale
 		--Infestation
 		[433740] = {0, 10.0, 10.8},--Can queue up to 13, usually 3rd cast is 12.2 but can also be lower
 	},
