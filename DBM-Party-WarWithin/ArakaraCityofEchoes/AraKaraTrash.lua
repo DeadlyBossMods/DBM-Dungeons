@@ -224,7 +224,7 @@ function mod:StartNameplateTimers(guid, cid)
 	elseif cid == 223253 then--Bloodstained Webmage
 		timerRevoltingVolleyCD:Start(2.2, guid)--2.2-4.5
 	elseif cid == 216338 then--Hulking Bodyguard
-		timerImpaleCD:Start(4.8, guid)--4.8-7.6
+		timerImpaleCD:Start(4.4, guid)--4.8-7.6
 	elseif cid == 216364 then--Blood Overseer
 		timerVenomVolleyCD:Start(5.2, guid)--5.2-7.4
 		timerEruptingWebsCD:Start(11.3, guid)--11.3-13.9
