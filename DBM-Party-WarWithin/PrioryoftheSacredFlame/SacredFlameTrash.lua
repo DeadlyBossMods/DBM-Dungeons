@@ -6,6 +6,9 @@ mod:SetRevision("@file-date-integer@")
 mod.isTrashMod = true
 mod.isTrashModBossFightAllowed = true
 mod:SetZone(2649)
+if DBM.Options.DebugMode then--Make it easier to collect initial nameplate timers across delves with transcriptor
+	mod:RegisterZoneCombat(2649)
+end
 
 mod:RegisterEvents(
 	"SPELL_CAST_START 424621 424423 424431 448515 427583 424462 424420 427484 427356 427601",
