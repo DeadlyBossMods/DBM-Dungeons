@@ -45,6 +45,7 @@ local warnEnrage							= mod:NewSpellAnnounce(448161, 3)
 local warnThrowDyno							= mod:NewSpellAnnounce(448600, 3)
 
 local specWarnSpearFish						= mod:NewSpecialWarningYou(430036, nil, nil, nil, 2, 12)
+local specWarnFungalBloom					= mod:NewSpecialWarningSpell(415250, nil, nil, nil, 2, 2)
 local specWarnFearfulShriek					= mod:NewSpecialWarningDodge(433410, nil, nil, nil, 2, 2)
 local specWarnJaggedBarbs					= mod:NewSpecialWarningDodge(450714, nil, nil, nil, 2, 15)--11-26
 local specWarnLavablast	    				= mod:NewSpecialWarningDodge(445781, nil, nil, nil, 2, 15)
@@ -103,6 +104,7 @@ local timerJaggedBarbs						= mod:NewCastNPTimer(3, 450714, DBM_COMMON_L.FRONTAL
 local timerEnrageCD							= mod:NewCDNPTimer(23, 448161, nil, nil, nil, 5)
 local timerArmorShellCD						= mod:NewCDNPTimer(24, 448179, nil, nil, nil, 4)
 local timerWideSwipeCD						= mod:NewCDNPTimer(8, 450509, nil, nil, nil, 3)
+local timerFungalBloomCD					= mod:NewCDNPTimer(26.7, 415250, nil, nil, nil, 2)
 
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc, 7 off interrupt
 
@@ -114,7 +116,7 @@ do
 		if not force and validZones[currentZone] and not eventsRegistered then
 			eventsRegistered = true
 			self:RegisterShortTermEvents(
-                "SPELL_CAST_START 449318 450546 433410 450714 445781 415253 425040 424704 424798 414944 418791 424891 450197 448399 445191 455932 445492 434281 450637 445210 448528 449071 462686 459421 448179 445774 443292 450492 450519 450505 450509 448155 448161 418295",
+                "SPELL_CAST_START 449318 450546 433410 450714 445781 415253 425040 424704 424798 414944 418791 424891 450197 448399 445191 455932 445492 434281 450637 445210 448528 449071 462686 459421 448179 445774 443292 450492 450519 450505 450509 448155 448161 418295 415250",
                 "SPELL_CAST_SUCCESS 414944 424614 418791 424891 427812 450546 450197 415253 449318 445191 430036 445252 425040 424704 448399 448528 433410 445492 462686 447392 459421 448179 450509",
 				"SPELL_INTERRUPT",
                 "SPELL_AURA_APPLIED 424614 449071 418297 430036 440622 441129 448161",
@@ -316,6 +318,12 @@ function mod:SPELL_CAST_START(args)
 		end
 	elseif args.spellId == 448161 then
 		timerEnrageCD:Start(nil, args.sourceGUID)
+	elseif args.spellId == 415250 then
+		timerFungalBloomCD:Start(nil, args.sourceGUID)
+		if self:AntiSpam(3, 4) then
+			specWarnFungalBloom:Show()
+			specWarnFungalBloom:Play("aesoon")
+		end
 	end
 end
 
@@ -505,6 +513,7 @@ function mod:UNIT_DIED(args)
 		timerSkitterChargeCD:Stop(args.destGUID)
 	elseif cid == 207482 then--Invasive Sporecap
 		timerFungalBreathCD:Stop(args.destGUID)
+		timerFungalBloomCD:Stop(args.destGUID)
 	elseif cid == 208728 then--Treasure Wraith
 		timerCastigateCD:Stop(args.destGUID)
 		timerUmbrelSlashCD:Stop(args.destGUID)

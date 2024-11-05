@@ -51,7 +51,7 @@ function mod:SPELL_CAST_START(args)
 		specWarnShadowSweep:Show()
 		specWarnShadowSweep:Play("frontal")
 		timerShadowSweepCD:Start()
-	elseif args.spellId == 470592 then
+	elseif args.spellId == 470592 and args:GetSrcCreatureID() == 218022 then
 		timerBlessingofDuskCD:Start()
 	elseif args.spellId == 444408 then
 		specWarnSpeakersWrath:Show()
