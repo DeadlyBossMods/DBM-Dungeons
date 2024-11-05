@@ -3,6 +3,23 @@ local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
 mod:SetZone(DBM_DISABLE_ZONE_DETECTION)--Stays active in all zones for zone change handlers, but registers events based on dungeon ids
+--2664, 2679, 2680, 2681, 2683, 2684, 2685, 2686, 2687, 2688, 2689, 2690, 2767, 2768
+if DBM.Options.DebugMode then--Make it easier to collect initial nameplate timers across delves with transcriptor
+	mod:RegisterZoneCombat(2664)
+	mod:RegisterZoneCombat(2679)
+	mod:RegisterZoneCombat(2680)
+	mod:RegisterZoneCombat(2681)
+	mod:RegisterZoneCombat(2683)
+	mod:RegisterZoneCombat(2684)
+	mod:RegisterZoneCombat(2685)
+	mod:RegisterZoneCombat(2686)
+	mod:RegisterZoneCombat(2687)
+	mod:RegisterZoneCombat(2688)
+	mod:RegisterZoneCombat(2689)
+	mod:RegisterZoneCombat(2690)
+	mod:RegisterZoneCombat(2767)
+	mod:RegisterZoneCombat(2768)
+end
 
 mod.isTrashMod = true
 mod.isTrashModBossFightAllowed = true
@@ -535,4 +552,10 @@ function mod:UNIT_DIED(args)
 		timerEnrageCD:Stop(args.destGUID)
 		timerArmorShellCD:Stop(args.destGUID)
 	end
+end
+
+--Abort timers when all players out of combat, so NP timers clear on a wipe
+--Caveat, it won't calls top with GUIDs, so while it might terminate bar objects, it may leave lingering nameplate icons
+function mod:LeavingZoneCombat()
+	self:Stop()
 end
