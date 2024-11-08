@@ -45,7 +45,7 @@ local timerLandoftheDeadCD			= mod:NewCDCountTimer(39.7, 321226, nil, nil, nil, 
 local timerFinalHarvestCD			= mod:NewCDCountTimer(39.7, 321247, nil, nil, nil, 2)--40-48.4
 local timerNecroticBreathCD			= mod:NewCDCountTimer(39.7, 333493, nil, nil, nil, 3)--40-48.4
 local timerUnholyFrenzyCD			= mod:NewCDCountTimer(39.7, 320012, nil, nil, nil, 5, nil, DBM_COMMON_L.ENRAGE_ICON..DBM_COMMON_L.TANK_ICON)--40-48.4
-local timerFrostboltVolleyCD		= mod:NewCDNPTimer(18.1, 322493, nil, nil, nil, 4, nil, DBM_CORE_L.INTERRUPT_ICON)--40-48.4
+--local timerFrostboltVolleyCD		= mod:NewCDNPTimer(18.1, 322493, nil, nil, nil, 4, nil, DBM_CORE_L.INTERRUPT_ICON)--40-48.4
 
 mod:AddSetIconOption("SetIconOnAdds", 321226, true, 5, {1, 2, 3, 4, 5, 6, 7, 8})
 
@@ -79,7 +79,7 @@ function mod:SPELL_CAST_START(args)
 		self.vb.volleyCount = self.vb.volleyCount + 1
 		if spellId == 328667 then--Adds casting it
 			castsPerGUID[args.sourceGUID] = (castsPerGUID[args.sourceGUID] or 0) + 1
-			timerFrostboltVolleyCD:Start(18.1, args.sourceGUID)
+			--timerFrostboltVolleyCD:Start(18.1, args.sourceGUID)
 		end
 		if self:CheckInterruptFilter(args.sourceGUID, false, true) then
 			specWarnFrostboltVolley:Show(args.sourceName, castsPerGUID[args.sourceGUID] or self.vb.volleyCount)
@@ -178,7 +178,7 @@ end
 function mod:UNIT_DIED(args)
 	local cid = self:GetCIDFromGUID(args.destGUID)
 	if cid == 164414 then
-		timerFrostboltVolleyCD:Stop(args.destGUID)
+		--timerFrostboltVolleyCD:Stop(args.destGUID)
 		for i = 8, 1, -1 do
 			if addUsedMarks[i] == args.destGUID then
 				addUsedMarks[i] = nil

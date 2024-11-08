@@ -86,7 +86,7 @@ local timerDrainFluidsCD					= mod:NewCDPNPTimer(15, 334748, nil, nil, nil, 4, n
 local timerThrowCleaverCD					= mod:NewCDNPTimer(13, 323496, nil, nil, nil, 3)--13-14.2 for Flesh Carver, 15.4 for Stitching Assistant, 14.1 for Separation Assistant
 local timerMorbidFixationCD					= mod:NewCDNPTimer(26.7, 338606, nil, nil, nil, 3)
 local timerWrathOfZolramusCD				= mod:NewCDNPTimer(16.9, 322756, nil, nil, nil, 2)--16.9-17.8 (at least from gatekeeper mob)
-local timerShadowWellCD						= mod:NewCDNPTimer(13, 320571, nil, nil, nil, 3)--13.5-19.4
+local timerShadowWellCD						= mod:NewCDNPTimer(12.7, 320571, nil, nil, nil, 3)--13.5-19.4
 local timerGrimFateCD						= mod:NewCDNPTimer(18.2, 327396, nil, nil, nil, 3)
 local timerDeathBurstCD						= mod:NewCDNPTimer(16.2, 345623, nil, nil, nil, 3)
 local timerAnimatedDeadCD					= mod:NewCDNPTimer(29.1, 321780, nil, nil, nil, 1)--29.1-33, not greatest sample size
@@ -444,7 +444,7 @@ function mod:StartNameplateTimers(guid, cid)
 		timerGoresplatterCD:Start(5.1, guid)
 		timerDrainFluidsCD:Start(9.3, guid)--Can be spell locked or spell queued much longer up to about 18
 	elseif cid == 166302 then--Corpse Harvester
-		timerDrainFluidsCD:Start(7.4, guid)
+		timerDrainFluidsCD:Start(6.7, guid)
 	elseif cid == 165872 then--Flesh Crafter
 --		timerThrowCleaverCD:Start(13, guid)--Cast instantly on pull
 		timerRepairFleshCD:Start(9.2, guid)
@@ -457,10 +457,10 @@ function mod:StartNameplateTimers(guid, cid)
 	elseif cid == 165137 then--Zolramus Gatekeeper
 		timerWrathOfZolramusCD:Start(5.5, guid)--about a 5 second CD, but can be delayed as much as 14 seconds due to spell lockout from kicking necrotic bolt
 	elseif cid == 163128 then--Zolramus Sorcerer
-		timerShadowWellCD:Start(10.6, guid)--about a 10 second CD, but can be delayed as much as 27 seconds due to spell lockout from kicking necrotic bolt
+		timerShadowWellCD:Start(7.9, guid)--about a 10 second CD, but can be delayed as much as 27 seconds due to spell lockout from kicking necrotic bolt
 	elseif cid == 163618 then--Zolramus Necromancer
 		timerGrimFateCD:Start(10.9, guid)--FIX ME LATER
-		timerAnimatedDeadCD:Start(20.7, guid)--FIX ME LATER
+		timerAnimatedDeadCD:Start(15, guid)--15-20
 --	elseif cid == 165222 then--Zolramus Bonemender
 --		timerBoneMendCD:Start(7, guid)--no initial CD, cast as soon as an ally needs healing, THEN goes on cooldown
 	elseif cid == 165824 then--Nar'zudah
