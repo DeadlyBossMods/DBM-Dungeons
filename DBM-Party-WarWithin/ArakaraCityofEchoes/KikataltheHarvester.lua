@@ -13,9 +13,9 @@ mod.sendMainBossGUID = true
 mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
-	"SPELL_CAST_START 432117 432227 432130 461487"
+	"SPELL_CAST_START 432117 432227 432130 461487",
 --	"SPELL_CAST_SUCCESS 431985"
---	"SPELL_AURA_APPLIED"
+	"SPELL_AURA_APPLIED 432031"
 --	"SPELL_AURA_REMOVED"
 --	"SPELL_PERIODIC_DAMAGE",
 --	"SPELL_PERIODIC_MISSED"
@@ -146,17 +146,16 @@ function mod:SPELL_CAST_SUCCESS(args)
 end
 --]]
 
---[[
 function mod:SPELL_AURA_APPLIED(args)
 	local spellId = args.spellId
 	if spellId == 432031 then
 		if args:IsPlayer() then
-
+			specWarnCosmicSingularity:Cancel()
+			specWarnCosmicSingularity:CancelVoice()
 		end
 	end
 end
 --mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED
---]]
 
 --[[
 function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId, spellName)

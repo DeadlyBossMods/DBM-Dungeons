@@ -24,7 +24,7 @@ mod:RegisterEventsInCombat(
 local specWarnVoidRend				= mod:NewSpecialWarningDodge(447187, nil, nil, nil, 2, 2)
 local specWarnEncasingWebshot		= mod:NewSpecialWarningInterrupt(447143, nil, nil, nil, 1, 2)
 
-local timerVoidRendCD				= mod:NewCDTimer(29.1, 447187, nil, nil, nil, 3)
+local timerVoidRendCD				= mod:NewCDTimer(27.9, 447187, nil, nil, nil, 3)
 local timerEncasingWebshotCD		= mod:NewCDTimer(31.1, 447143, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc, 7 off interrupt
