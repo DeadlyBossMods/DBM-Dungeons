@@ -66,7 +66,7 @@ local timerGossamerBarrageCD				= mod:NewCDNPTimer(23, 451423, nil, nil, nil, 3)
 local timerPerfumeTossCD					= mod:NewCDNPTimer(17, 450784, nil, nil, nil, 3)--Poor sample, need more data
 local timerMendingWebCD						= mod:NewCDPNPTimer(16.6, 452162, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerVenomousSprayCD					= mod:NewCDNPTimer(24.2, 434137, nil, nil, nil, 3)
-local timerDarkBarrageCD					= mod:NewCDNPTimer(27.9, 445813, nil, nil, nil, 3)
+local timerDarkBarrageCD					= mod:NewCDNPTimer(27.6, 445813, nil, nil, nil, 3)
 local timerVoidWaveCD						= mod:NewCDNPTimer(15.4, 446086, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerUmbralWeaveCD					= mod:NewCDNPTimer(20, 446717, nil, nil, nil, 2)
 local timerTremorSlamCD						= mod:NewCDNPTimer(20, 447271, nil, nil, nil, 3)
@@ -161,7 +161,7 @@ function mod:SPELL_CAST_START(args)
 			specWarnDarkBarrage:Show()
 			specWarnDarkBarrage:Play("watchstep")
 		end
-		timerDarkBarrageCD:Start(27.9, args.sourceGUID)
+		timerDarkBarrageCD:Start(27.6, args.sourceGUID)
 	elseif spellId == 453840 then
 		if self:AntiSpam(3, 6) then
 			warnAwakeningCalling:Show()
@@ -199,7 +199,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 	if spellId == 443436 then
 		timerShadowsofDoubtCD:Start(11.1, args.sourceGUID)
 	elseif spellId == 443430 then
-		timerSilkBindingCD:Start(24.5, args.sourceGUID)
+		timerSilkBindingCD:Start(20.8, args.sourceGUID)
 	elseif spellId == 443500 then
 		--Royal Swarmguard (220197) 11, Royal VenomShell (220730) 20.8
 		local timer = args:GetSrcCreatureID() == 220730 and 20.8 or 11
@@ -218,12 +218,12 @@ end
 function mod:SPELL_INTERRUPT(args)
 	if not self.Options.Enabled then return end
 	local spellId = args.extraSpellId
-	if spellId == 443430 then
-		timerSilkBindingCD:Start(24.5, args.destGUID)
-	elseif spellId == 452162 then
+	if spellId == 452162 then
 		timerMendingWebCD:Start(16.6, args.destGUID)
 	elseif spellId == 446086 then
 		timerVoidWaveCD:Start(15.4, args.destGUID)
+--	elseif spellId == 443430 then
+--		timerSilkBindingCD:Start(20.8, args.destGUID)
 	end
 end
 
@@ -296,7 +296,7 @@ function mod:StartNameplateTimers(guid, cid)
 	elseif cid == 220003 or cid == 219983 then--Hallow Resident
 		timerNullSlamCD:Start(20.5, guid)--20.5-21.2
 	elseif cid == 223844 or cid == 224732 then--Covert Webmancer
-		timerMendingWebCD:Start(12.4, guid)--12.4-14.3
+		timerMendingWebCD:Start(7.1, guid)--7.1-14.3
 	elseif cid == 216328 then--Unstable test Subject
 		timerDarkBarrageCD:Start(3.6, guid)--3.5-5.1
 	elseif cid == 216339 then--Sureki Unnaturaler

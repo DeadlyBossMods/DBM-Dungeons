@@ -42,7 +42,7 @@ local specWarnDarkPulse						= mod:NewSpecialWarningCount(441395, nil, nil, nil,
 local timerOozingSmashCD					= mod:NewCDCountTimer(54.3, 461842, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)--77.3-77.9 on normal still?
 local timerViscousDarknessCD				= mod:NewCDCountTimer(21.8, 441216, nil, nil, nil, 5)--21.8-22.3
 local timerBloodSurgeCD						= mod:NewCDCountTimer(67.9, 445435, nil, nil, nil, 3)--76.6-77.9
-local timerDarkPulseCD						= mod:NewCDCountTimer(75.2, 441395, nil, nil, nil, 2, nil, DBM_COMMON_L.HEALER_ICON)--~1-2 variation due to blizzards still bad energy code
+local timerDarkPulseCD						= mod:NewCDCountTimer(74.7, 441395, nil, nil, nil, 2, nil, DBM_COMMON_L.HEALER_ICON)--~1-2 variation due to blizzards still bad energy code
 
 mod.vb.viscousCount = 0
 mod.vb.oozingCount = 0

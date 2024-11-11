@@ -51,7 +51,7 @@ function mod:OnCombatStart(delay)
 	self.vb.doubtCount = 0
 	self.vb.fakeNewsCount = 0
 	timerSubjugateCD:Start(4.1-delay, 1)--4.1-4.8
-	timerTerrorizeCD:Start(9.3-delay, 1)--9.3-9.7
+	timerTerrorizeCD:Start(9.1-delay, 1)--9.1-9.7
 	timerVociferousIndoctrinationCD:Start(25.1-delay, 1)
 	if self:IsMythic() then
 		timerShadowsofDoubtCD:Start(14.1-delay, 1)
