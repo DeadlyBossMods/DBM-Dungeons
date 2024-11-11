@@ -102,7 +102,7 @@ local timerGutSliceCD						= mod:NewCDPNPTimer(12.5, 333477, nil, nil, nil, 3)
 local timerSpewDiseaseCD					= mod:NewCDNPTimer(10.6, 333479, nil, nil, nil, 3)
 local timerSpineCrushCD						= mod:NewCDNPTimer(14.0, 327240, nil, nil, nil, 3)
 local timerSpineCrush						= mod:NewCastNPTimer(3, 327240, nil, nil, nil, 5)
-local timerRepairFleshCD					= mod:NewCDPNPTimer(14.3, 327130, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--14-17
+local timerRepairFleshCD					= mod:NewCDPNPTimer(13.9, 327130, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--14-17
 
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc, 7 off interrupt
 
@@ -459,8 +459,8 @@ function mod:StartNameplateTimers(guid, cid)
 	elseif cid == 163128 then--Zolramus Sorcerer
 		timerShadowWellCD:Start(7.9, guid)--about a 10 second CD, but can be delayed as much as 27 seconds due to spell lockout from kicking necrotic bolt
 	elseif cid == 163618 then--Zolramus Necromancer
-		timerGrimFateCD:Start(10.9, guid)--FIX ME LATER
-		timerAnimatedDeadCD:Start(15, guid)--15-20
+		timerGrimFateCD:Start(10.3, guid)
+		timerAnimatedDeadCD:Start(14.1, guid)--14.1-20
 --	elseif cid == 165222 then--Zolramus Bonemender
 --		timerBoneMendCD:Start(7, guid)--no initial CD, cast as soon as an ally needs healing, THEN goes on cooldown
 	elseif cid == 165824 then--Nar'zudah

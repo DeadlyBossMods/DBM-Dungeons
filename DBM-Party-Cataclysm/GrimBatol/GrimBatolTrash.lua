@@ -301,8 +301,8 @@ function mod:StartNameplateTimers(guid, cid)
 		timerTwilightFlamesCD:Start(2.7, guid)--2.7--6
 		timerUmbralWindCD:Start(10.4, guid)--10.4+ (may be shorter for first drake only depending on how accurately DBM detects combat with one that flies in
 	elseif cid == 224221 then--Twilight Overseer
-		timerRiveCD:Start(5.9, guid)--Could be shorter
-		timerRecklessTacticCD:Start(9.6, guid)
+		timerRiveCD:Start(4.3, guid)
+		timerRecklessTacticCD:Start(5, guid)--Larger CD window
 	elseif cid == 224249 then--Twilight LavaBender
 		timerShadowlavaBlastCD:Start(4.5, guid)
 		timerDarkEruptionCD:Start(9.3, guid)
@@ -317,7 +317,7 @@ function mod:StartNameplateTimers(guid, cid)
 		timerMindPiercerCD:Start(4.3, guid)
 		timerCorruptCD:Start(8.3, guid)
 	elseif cid == 40166 then--Molten Giant
-		timerMoltenWakeCD:Start(5.5, guid)--Needs much more review
+		timerMoltenWakeCD:Start(5.2, guid)--Needs much more review
 		timerLavaFistCD:Start(8, guid)--Needs much more review
 	--elseif cid == 40167 then--Twilight Beguiler
 	--	timerSearMindCD:Start(18.9, guid)

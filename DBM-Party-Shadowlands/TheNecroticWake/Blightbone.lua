@@ -79,7 +79,7 @@ function mod:OnCombatStart(delay)
 	self.vb.gasCount = 0
 	self.vb.crunchCount = 0
 	timerCrunchCD:Start(5-delay, 1)
-	timerHeavingRetchCD:Start(10.6-delay, 1)
+	timerHeavingRetchCD:Start(10.3-delay, 1)
 	timerFetidGasCD:Start(22-delay, 1)
 end
 
