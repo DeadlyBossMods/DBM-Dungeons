@@ -331,7 +331,7 @@ function mod:StartNameplateTimers(guid, cid)
 		timerStygianSeedCD:Start(9.2, guid)--9.2-11.3
 	elseif cid == 213934 then--Nightfall Tactician
 		timerBlackEdgeCD:Start(3.2, guid)--3.2-6.2
-		timerTacticiansRageCD:Start(9.2, guid)--9.2-11.7
+		timerTacticiansRageCD:Start(7.4, guid)--7.4-11.7
 	elseif cid == 211341 then--Manifested Shadow
 		timerBlackHailCD:Start(5.3, guid)--5.3-8.8
 --	elseif cid == 213893 or cid == 228539 then--Nightfall Darkcaster
@@ -343,7 +343,7 @@ function mod:StartNameplateTimers(guid, cid)
 	elseif cid == 213885 then--Nightfall Dark Architect
 		timerTorentingEruptionCD:Start(5.4, guid)--5.4-5.9
 	elseif cid == 213892 or cid == 228540 then--Nightfall Shadowmage (223994 is an RP mage, not engaged)
-		timerEnsharingShadowsCD:Start(cid == 228540 and 10.8 or 8.3, guid)--8.3-12.9 (213892) 10.8-14 (228540)
+		timerEnsharingShadowsCD:Start(cid == 228540 and 10.8 or 8.0, guid)--8.0-12.9 (213892) 10.8-14 (228540)
 	elseif cid == 210966 then--Sureki Webmage
 		timerBurstingCacoonCD:Start(1.8, guid)--1.8-11.7
 	end
