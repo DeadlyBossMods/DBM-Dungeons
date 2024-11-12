@@ -104,7 +104,7 @@ local timerBladeTossCD						= mod:NewCDNPTimer(15.4, 418791, nil, nil, nil, 3)
 local timerVineSpearCD						= mod:NewCDNPTimer(14.9, 424891, nil, nil, nil, 3)
 local timerRelocateCD						= mod:NewCDNPTimer(70, 427812, nil, nil, nil, 3)
 local timerSkitterChargeCD					= mod:NewCDNPTimer(12.2, 450197, nil, nil, nil, 3)
-local timerFungalBreathCD					= mod:NewCDNPTimer(15.4, 415253, nil, nil, nil, 3)
+local timerFungalBreathCD					= mod:NewCDNPTimer(15.4, 415253, nil, nil, nil, 3)--28 now?
 local timerUmbrelSlashCD					= mod:NewCDNPTimer(17.8, 418295, nil, nil, nil, 3)
 local timerCastigateCD						= mod:NewCDPNPTimer(17.8, 418297, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerBattleCryCD						= mod:NewCDNPTimer(30.3, 448399, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
@@ -119,7 +119,7 @@ local timerJaggedBarbs						= mod:NewCastNPTimer(3, 450714, DBM_COMMON_L.FRONTAL
 local timerEnrageCD							= mod:NewCDNPTimer(23, 448161, nil, nil, nil, 5)
 local timerArmorShellCD						= mod:NewCDNPTimer(24, 448179, nil, nil, nil, 4)
 local timerWideSwipeCD						= mod:NewCDNPTimer(8, 450509, nil, nil, nil, 3)
-local timerFungalBloomCD					= mod:NewCDNPTimer(26.7, 415250, nil, nil, nil, 2)
+local timerFungalBloomCD					= mod:NewCDNPTimer(25.1, 415250, nil, nil, nil, 2)
 
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc, 7 off interrupt
 
@@ -132,7 +132,7 @@ do
 			eventsRegistered = true
 			self:RegisterShortTermEvents(
                 "SPELL_CAST_START 449318 450546 433410 450714 445781 415253 425040 424704 424798 414944 418791 424891 450197 448399 445191 455932 445492 434281 450637 445210 448528 449071 462686 459421 448179 445774 443292 450492 450519 450505 450509 448155 448161 418295 415250",
-                "SPELL_CAST_SUCCESS 414944 424614 418791 424891 427812 450546 450197 415253 449318 445191 430036 445252 425040 424704 448399 448528 433410 445492 462686 447392 459421 448179 450509",
+                "SPELL_CAST_SUCCESS 414944 424614 418791 424891 427812 450546 450197 415253 449318 445191 430036 445252 425040 424704 448399 448528 433410 445492 462686 447392 459421 448179 450509 415250",
 				"SPELL_INTERRUPT",
                 "SPELL_AURA_APPLIED 424614 449071 418297 430036 440622 441129 448161",
                 --"SPELL_AURA_REMOVED",
@@ -334,7 +334,6 @@ function mod:SPELL_CAST_START(args)
 	elseif args.spellId == 448161 then
 		timerEnrageCD:Start(nil, args.sourceGUID)
 	elseif args.spellId == 415250 then
-		timerFungalBloomCD:Start(nil, args.sourceGUID)
 		if self:AntiSpam(3, 4) then
 			specWarnFungalBloom:Show()
 			specWarnFungalBloom:Play("aesoon")
@@ -400,6 +399,8 @@ function mod:SPELL_CAST_SUCCESS(args)
 		timerArmorShellCD:Start(24, args.sourceGUID)
 	elseif args.spellId == 450509 then
 		timerWideSwipeCD:Start(7.9, args.sourceGUID)--7.9-8.5
+	elseif args.spellId == 415250 then
+		timerFungalBloomCD:Start(nil, args.sourceGUID)
 	end
 end
 
@@ -549,6 +550,56 @@ function mod:UNIT_DIED(args)
 	elseif cid == 219454 then--Crazed Abomination
 		timerEnrageCD:Stop(args.destGUID)
 		timerArmorShellCD:Stop(args.destGUID)
+	end
+end
+
+--All timers subject to a ~0.5 second clipping due to ScanEngagedUnits
+function mod:StartNameplateTimers(guid, cid)
+	if cid == 216584 then--Nerubian Captain
+		timerWebbedAegisCD:Start(6, guid)--Recheck with even better zone debug
+		timerWideSwipeCD:Start(9.5, guid)--Recheck with even better zone debug
+	elseif cid == 208242 then--Nerubian Darkcaster
+		timerShadowsofStrifeCD:Start(11.2, guid)
+	elseif cid == 223541 then--Stolen Loader
+--		timerLavablastCD:Start(15.8, guid)
+--		timerLavablast:Start(3, guid)
+	elseif cid == 207460 then--Fungarian Flinger
+--		timerRotWaveVolleyCD:Start(9.4, guid)
+	elseif cid == 204127 then--Kobold Taskfinder
+--		timerBlazingWickCD:Start(14.6, guid)
+--		timerBattleCryCD:Start(30.3, guid)
+	elseif cid == 207454 then--Fungal Gutter
+--		timerBattleRoarCD:Start(19.9, guid)
+--		timerViciousStabsCD:Start(14, guid)
+	elseif cid == 207456 then--Fungal Speartender
+--		timerBattleRoarCD:Start(9.9, guid)
+	elseif cid == 207450 then--Fungal Stabber
+--		timerDebilitatingVenomCD:Start(13.3, guid)
+	elseif cid == 211062 then--Bill
+--		timerBladeTossCD:Start(12.1, guid)
+	elseif cid == 207455 then--Fungal Speartender
+--		timerVineSpearCD:Start(14.9, guid)
+	elseif cid == 213434 then--Sporesong
+--		timerRelocateCD:Start(70, guid)
+	elseif cid == 208245 or cid == 220508 then--Skittering Swarmer & The Puppetmaster?
+--		timerSkitterChargeCD:Start(12.5, guid)
+	elseif cid == 207482 then--Invasive Sporecap
+		timerFungalBreathCD:Start(6, guid)
+		timerFungalBloomCD:Start(10.9, guid)
+	elseif cid == 208728 then--Treasure Wraith
+--		timerCastigateCD:Start(17.8, guid)
+--		timerUmbrelSlashCD:Start(17.8, guid)
+	elseif cid == 214338 then--Kobyss Spearfisher
+		timerSpearFishCD:Start(9.2, guid)
+	elseif cid == 211777 then--Spitfire Fusetender
+--		timerThrowDynoCD:Start(7.2, guid)
+	elseif cid == 214551 then--Wandering Gutter
+--		timerSerratedCleaveCD:Start(32.7, guid)
+	elseif cid == 216583 then--Chittering Fearmonger
+		timerFearfulShriekCD:Start(3.6, guid)
+	elseif cid == 219454 then--Crazed Abomination
+--		timerEnrageCD:Start(23, guid)
+--		timerArmorShellCD:Start(24, guid)
 	end
 end
 
