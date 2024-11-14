@@ -72,7 +72,7 @@ local specWarnDefilingBreath				= mod:NewSpecialWarningDodge(455932, nil, nil, n
 local specWarnSerratedCleave				= mod:NewSpecialWarningDodge(445492, nil, nil, nil, 2, 15)--32.7
 local specWarnSpotted						= mod:NewSpecialWarningDodge(441129, nil, nil, nil, 2, 2)
 local specWarnFireCharge					= mod:NewSpecialWarningDodge(445210, nil, nil, nil, 2, 2)
-local specWarnUmbralSlam					= mod:NewSpecialWarningDodge(443292, nil, nil, nil, 2, 15)
+local specWarnUmbralSlam					= mod:NewSpecialWarningDodge(443292, nil, nil, nil, 2, 15)--30.0?
 local specWarnUmbralSlash					= mod:NewSpecialWarningDodge(418295, nil, nil, nil, 2, 15)
 local specWarnAnglersWeb					= mod:NewSpecialWarningDodge(450519, nil, nil, nil, 2, 15)
 local specWarnShockwaveTremors				= mod:NewSpecialWarningDodge(448155, nil, nil, nil, 2, 15)--9.7-15.8
@@ -105,6 +105,7 @@ local timerVineSpearCD						= mod:NewCDNPTimer(14.9, 424891, nil, nil, nil, 3)
 local timerRelocateCD						= mod:NewCDNPTimer(70, 427812, nil, nil, nil, 3)
 local timerSkitterChargeCD					= mod:NewCDNPTimer(12.2, 450197, nil, nil, nil, 3)
 local timerFungalBreathCD					= mod:NewCDNPTimer(15.4, 415253, nil, nil, nil, 3)--28 now?
+local timerUmbralSlamCD						= mod:NewCDNPTimer(30, 443292, nil, nil, nil, 3)
 local timerUmbrelSlashCD					= mod:NewCDNPTimer(17.8, 418295, nil, nil, nil, 3)
 local timerCastigateCD						= mod:NewCDPNPTimer(17.8, 418297, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerBattleCryCD						= mod:NewCDNPTimer(30.3, 448399, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
@@ -120,6 +121,7 @@ local timerEnrageCD							= mod:NewCDNPTimer(23, 448161, nil, nil, nil, 5)
 local timerArmorShellCD						= mod:NewCDNPTimer(24, 448179, nil, nil, nil, 4)
 local timerWideSwipeCD						= mod:NewCDNPTimer(8, 450509, nil, nil, nil, 3)
 local timerFungalBloomCD					= mod:NewCDNPTimer(25.1, 415250, nil, nil, nil, 2)
+local timerShadowStrikeCD					= mod:NewCDNPTimer(15.8, 443162, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc, 7 off interrupt
 
@@ -132,7 +134,7 @@ do
 			eventsRegistered = true
 			self:RegisterShortTermEvents(
                 "SPELL_CAST_START 449318 450546 433410 450714 445781 415253 425040 424704 424798 414944 418791 424891 450197 448399 445191 455932 445492 434281 450637 445210 448528 449071 462686 459421 448179 445774 443292 450492 450519 450505 450509 448155 448161 418295 415250",
-                "SPELL_CAST_SUCCESS 414944 424614 418791 424891 427812 450546 450197 415253 449318 445191 430036 445252 425040 424704 448399 448528 433410 445492 462686 447392 459421 448179 450509 415250",
+                "SPELL_CAST_SUCCESS 414944 424614 418791 424891 427812 450546 450197 415253 449318 445191 430036 445252 425040 424704 448399 448528 433410 445492 462686 447392 459421 448179 450509 415250 443162 443292",
 				"SPELL_INTERRUPT",
                 "SPELL_AURA_APPLIED 424614 449071 418297 430036 440622 441129 448161",
                 --"SPELL_AURA_REMOVED",
@@ -401,6 +403,10 @@ function mod:SPELL_CAST_SUCCESS(args)
 		timerWideSwipeCD:Start(7.9, args.sourceGUID)--7.9-8.5
 	elseif args.spellId == 415250 then
 		timerFungalBloomCD:Start(nil, args.sourceGUID)
+	elseif args.spellId == 443162 then
+		timerShadowStrikeCD:Start(8.2, args.sourceGUID)--8.2-8.7
+	elseif args.spellId == 443292 then
+		timerUmbralSlamCD:Start(27, args.sourceGUID)
 	end
 end
 
@@ -434,6 +440,8 @@ function mod:SPELL_INTERRUPT(args)
 		timerHolyLightCD:Start(14.5, args.destGUID)--17-2.5
 	elseif args.extraSpellId == 448179 then
 		timerArmorShellCD:Start(24, args.destGUID)
+	elseif args.extraSpellId == 443162 then
+		timerShadowStrikeCD:Start(8.2, args.destGUID)--8.2-8.7
 	end
 end
 
@@ -550,6 +558,9 @@ function mod:UNIT_DIED(args)
 	elseif cid == 219454 then--Crazed Abomination
 		timerEnrageCD:Stop(args.destGUID)
 		timerArmorShellCD:Stop(args.destGUID)
+	elseif cid == 217870 then--Devouring Shade
+		timerShadowStrikeCD:Stop(args.destGUID)
+		timerUmbralSlamCD:Stop(args.destGUID)
 	end
 end
 
@@ -600,6 +611,9 @@ function mod:StartNameplateTimers(guid, cid)
 	elseif cid == 219454 then--Crazed Abomination
 --		timerEnrageCD:Start(23, guid)
 --		timerArmorShellCD:Start(24, guid)
+	elseif cid == 217870 then--Devouring Shade
+		timerShadowStrikeCD:Start(5, guid)
+		timerUmbralSlamCD:Start(11.2, guid)
 	end
 end
 
