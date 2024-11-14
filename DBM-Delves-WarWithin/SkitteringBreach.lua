@@ -8,8 +8,12 @@ mod:SetZone(2685)
 
 mod:RegisterCombat("scenario", 2685)
 
+mod:RegisterEvents(
+	"SPELL_CAST_START 470592 458874 458834"
+)
+
 mod:RegisterEventsInCombat(
-	"SPELL_CAST_START 440806",
+	"SPELL_CAST_START 440806 458879",
 --	"SPELL_CAST_SUCCESS",
 --	"SPELL_AURA_APPLIED",
 --	"SPELL_AURA_REMOVED",
@@ -20,12 +24,19 @@ mod:RegisterEventsInCombat(
 )
 
 --This zone has 4 encounterIDs flagged to it, i'm gonna guess the 3 zones missing one, are mis zone flagged.
+--TODO, nameplate timers for trash versions of Xanventh (220130, 217519)
 local warnDarkAbatement					= mod:NewSpellAnnounce(454762, 2)
+local warnShadowSpin					= mod:NewSpellAnnounce(458834, 2)
 
 local specWarnDarkriftSmash				= mod:NewSpecialWarningDodge(440806, nil, nil, nil, 2, 2)
+local specWarnShadowWave				= mod:NewSpecialWarningDodge(458874, nil, nil, nil, 2, 15)
+local specWarnBlessingofDusk			= mod:NewSpecialWarningInterrupt(470592, "HasInterrupt", nil, nil, 1, 2)
 
 local timerDarkAbatementCD				= mod:NewCDTimer(20, 454762, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)
 local timerDarkriftSmashCD				= mod:NewCDTimer(12.1, 440806, nil, nil, nil, 5)
+local timerShadowWaveCD					= mod:NewCDTimer(15.4, 458874, nil, nil, nil, 5)
+local timerBlessingofDuskCD				= mod:NewCDTimer(28.7, 470592, nil, nil, nil, 4, nil, DBM_CORE_L.INTERRUPT_ICON)
+local timerShadowSpinCD					= mod:NewCDTimer(22.9, 458834, nil, nil, nil, 3)
 
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc, 7 off interrupt
 
@@ -35,6 +46,26 @@ function mod:SPELL_CAST_START(args)
 		specWarnDarkriftSmash:Show()
 		specWarnDarkriftSmash:Play("watchstep")
 		timerDarkriftSmashCD:Start()
+	elseif args.spellId == 470592 or args.spellId == 458879 then--Trash version, Boss version
+		specWarnBlessingofDusk:Show(args.sourceName)
+		specWarnBlessingofDusk:Play("kickcast")
+		if 458879 then--Boss Version
+			--"Blessing of Dusk-458879-npc:220119-000035DB0B = pull:3.6, 28.7, 29.1, 37.6",
+			timerBlessingofDuskCD:Start()
+		end
+	elseif args.spellId == 458874 then
+		--"Shadow Wave-458874-npc:220119-000035DB0B = pull:7.5, 15.4, 15.6, 15.7, 21.9, 26.6",
+		specWarnShadowWave:Show()
+		specWarnShadowWave:Play("frontal")
+		if args:GetSrcCreatureID() == 220119 then--Boss Version
+			timerShadowWaveCD:Start()
+		end
+	elseif args.spellId == 458834 then
+		--"Shadowspin-458834-npc:220119-000035DB0B = pull:14.2, 29.3, 24.1, 23.2, 22.9",
+		warnShadowSpin:Show()
+		if args:GetSrcCreatureID() == 220119 then--Boss Version
+			timerShadowSpinCD:Start()
+		end
 	end
 end
 
@@ -85,11 +116,13 @@ function mod:ENCOUNTER_START(eID)
 	if eID == 2946 then--Nerl'athekk the Skulking
 		timerDarkAbatementCD:Start(2.2)
 		timerDarkriftSmashCD:Start(8.5)
+		timerShadowSpinCD:Start(14.2)
 		self:RegisterShortTermEvents(
 			"UNIT_SPELLCAST_SUCCEEDED boss1"
 		)
 	elseif eID == 2947 then--Speaker Xanventh
-		DBM:AddMsg("Boss alerts/timers not yet implemented for Speaker Xanventh")
+		timerBlessingofDuskCD:Start(3.6)
+		timerShadowWaveCD:Start(7.5)
 	elseif eID == 2948 then--Cave Giant Boss
 		DBM:AddMsg("Boss alerts/timers not yet implemented for Cave Giant Boss")
 	elseif eID == 2949 then--Faceless One
@@ -103,7 +136,6 @@ function mod:ENCOUNTER_END(eID, _, _, _, success)
 		if success == 1 then
 			DBM:EndCombat(self)
 		else
-			--Stop Timers manually
 			timerDarkriftSmashCD:Stop()
 			timerDarkAbatementCD:Stop()
 		end
@@ -111,7 +143,9 @@ function mod:ENCOUNTER_END(eID, _, _, _, success)
 		if success == 1 then
 			DBM:EndCombat(self)
 		else
-			--Stop Timers manually
+			timerBlessingofDuskCD:Stop()
+			timerShadowWaveCD:Stop()
+			timerShadowSpinCD:Stop()
 		end
 	elseif eID == 2948 then--Cave Giant Boss
 		if success == 1 then
