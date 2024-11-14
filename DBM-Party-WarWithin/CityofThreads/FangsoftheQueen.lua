@@ -120,7 +120,7 @@ function mod:SPELL_CAST_START(args)
 		end
 		if self:IsTanking("player", nil, nil, true, args.sourceGUID) then
 			specWarnShadeSlash:Show(self.vb.tankCount)
-			specWarnShadeSlash:Play("defensive")
+			specWarnShadeSlash:Play("frontal")
 		end
 	elseif spellId == 440468 then
 		self.vb.tankCount = self.vb.tankCount + 1
@@ -130,7 +130,7 @@ function mod:SPELL_CAST_START(args)
 		end
 		if self:IsTanking("player", nil, nil, true, args.sourceGUID) then
 			specWarnRimeDagger:Show()
-			specWarnRimeDagger:Play("defensive")
+			specWarnRimeDagger:Play("frontal")
 		end
 	elseif spellId == 439692 then
 		self.vb.duskCount = self.vb.duskCount + 1
