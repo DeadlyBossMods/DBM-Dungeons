@@ -9,11 +9,11 @@ mod:SetZone(2685)
 mod:RegisterCombat("scenario", 2685)
 
 mod:RegisterEvents(
-	"SPELL_CAST_START 470592 458874 458834"
+	"SPELL_CAST_START 470592 458834"
 )
 
 mod:RegisterEventsInCombat(
-	"SPELL_CAST_START 440806 458879",
+	"SPELL_CAST_START 440806 458879 458874",
 --	"SPELL_CAST_SUCCESS",
 --	"SPELL_AURA_APPLIED",
 --	"SPELL_AURA_REMOVED",
@@ -24,18 +24,18 @@ mod:RegisterEventsInCombat(
 )
 
 --This zone has 4 encounterIDs flagged to it, i'm gonna guess the 3 zones missing one, are mis zone flagged.
---TODO, nameplate timers for trash versions of Xanventh (220130, 217519)
+--NOTE, Xanventh recycles many common abilities from trash and other boss speaker such as Blessin of Dusk
+--NOTE: Shadow Wave is a shared ability with Speakers cult boss in Nightfall Sanctum, but so far not shared by any trash so duplicated instead of trash mod
 local warnDarkAbatement					= mod:NewSpellAnnounce(454762, 2)
 local warnShadowSpin					= mod:NewSpellAnnounce(458834, 2)
 
 local specWarnDarkriftSmash				= mod:NewSpecialWarningDodge(440806, nil, nil, nil, 2, 2)
 local specWarnShadowWave				= mod:NewSpecialWarningDodge(458874, nil, nil, nil, 2, 15)
-local specWarnBlessingofDusk			= mod:NewSpecialWarningInterrupt(470592, "HasInterrupt", nil, nil, 1, 2)
 
 local timerDarkAbatementCD				= mod:NewCDTimer(20, 454762, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)
 local timerDarkriftSmashCD				= mod:NewCDTimer(12.1, 440806, nil, nil, nil, 5)
-local timerShadowWaveCD					= mod:NewCDTimer(15.4, 458874, nil, nil, nil, 5)
-local timerBlessingofDuskCD				= mod:NewCDTimer(28.7, 470592, nil, nil, nil, 4, nil, DBM_CORE_L.INTERRUPT_ICON)
+local timerShadowWaveCD					= mod:NewCDTimer(15.4, 458874, nil, nil, nil, 3)
+local timerBlessingofDuskCD				= mod:NewCDTimer(28.7, 458879, nil, nil, nil, 4, nil, DBM_CORE_L.INTERRUPT_ICON)
 local timerShadowSpinCD					= mod:NewCDTimer(22.9, 458834, nil, nil, nil, 3)
 
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc, 7 off interrupt
@@ -46,11 +46,9 @@ function mod:SPELL_CAST_START(args)
 		specWarnDarkriftSmash:Show()
 		specWarnDarkriftSmash:Play("watchstep")
 		timerDarkriftSmashCD:Start()
-	elseif args.spellId == 470592 or args.spellId == 458879 then--Trash version, Boss version
-		specWarnBlessingofDusk:Show(args.sourceName)
-		specWarnBlessingofDusk:Play("kickcast")
-		if 458879 then--Boss Version
-			--"Blessing of Dusk-458879-npc:220119-000035DB0B = pull:3.6, 28.7, 29.1, 37.6",
+	elseif args.spellId == 458879 then--Trash version, Boss version
+		--"Blessing of Dusk-458879-npc:220119-000035DB0B = pull:3.6, 28.7, 29.1, 37.6",
+		if args:GetSrcCreatureID() == 220119 then--Boss Version
 			timerBlessingofDuskCD:Start()
 		end
 	elseif args.spellId == 458874 then
