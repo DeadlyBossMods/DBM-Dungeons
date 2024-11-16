@@ -60,11 +60,12 @@ local warnWideSwipe							= mod:NewCastAnnounce(450509, 3)
 local warnMagmaHammer						= mod:NewCastAnnounce(445718, 3)
 local warnEnrage							= mod:NewSpellAnnounce(448161, 3)
 local warnThrowDyno							= mod:NewSpellAnnounce(448600, 3)
+local warnIllusionStep						= mod:NewSpellAnnounce(444915, 3)
 
 local specWarnSpearFish						= mod:NewSpecialWarningYou(430036, nil, nil, nil, 2, 12)
 local specWarnFungalBloom					= mod:NewSpecialWarningSpell(415250, nil, nil, nil, 2, 2)
 local specWarnFearfulShriek					= mod:NewSpecialWarningDodge(433410, nil, nil, nil, 2, 2)
-local specWarnJaggedBarbs					= mod:NewSpecialWarningDodge(450714, nil, nil, nil, 2, 15)--11-26
+local specWarnJaggedBarbs					= mod:NewSpecialWarningDodge(450714, nil, nil, nil, 2, 15)--8.5-26
 local specWarnLavablast	    				= mod:NewSpecialWarningDodge(445781, nil, nil, nil, 2, 15)
 local specWarnFungalBreath    				= mod:NewSpecialWarningDodge(415253, nil, nil, nil, 2, 15)
 local specWarnViciousStabs    				= mod:NewSpecialWarningDodge(424704, nil, nil, nil, 2, 15)
@@ -78,6 +79,7 @@ local specWarnUmbralSlam					= mod:NewSpecialWarningDodge(443292, nil, nil, nil,
 local specWarnUmbralSlash					= mod:NewSpecialWarningDodge(418295, nil, nil, nil, 2, 15)
 local specWarnAnglersWeb					= mod:NewSpecialWarningDodge(450519, nil, nil, nil, 2, 15)
 local specWarnShockwaveTremors				= mod:NewSpecialWarningDodge(448155, nil, nil, nil, 2, 15)--9.7-15.8
+local specWarnGrimweaveOrb					= mod:NewSpecialWarningDodge(451913, nil, nil, nil, 2, 2)
 local specWarnEchoofRenilash				= mod:NewSpecialWarningRun(434281, nil, nil, nil, 4, 2)
 local specWarnNecroticEnd					= mod:NewSpecialWarningRun(445252, nil, nil, nil, 4, 2)
 local specWarnHorrendousRoar				= mod:NewSpecialWarningRun(450492, nil, nil, nil, 4, 2)
@@ -127,6 +129,8 @@ local timerArmorShellCD						= mod:NewCDNPTimer(24, 448179, nil, nil, nil, 4)
 local timerWideSwipeCD						= mod:NewCDNPTimer(8, 450509, nil, nil, nil, 3)
 local timerFungalBloomCD					= mod:NewCDNPTimer(25.1, 415250, nil, nil, nil, 2)
 local timerShadowStrikeCD					= mod:NewCDNPTimer(15.8, 443162, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerGrimweaveOrbCD					= mod:NewCDNPTimer(20.6, 451913, nil, nil, nil, 3)--23.1 but 2.5 second cast
+local timerIllusionStepCD					= mod:NewCDNPTimer(31, 444915, nil, nil, nil, 3)
 
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc, 7 off interrupt
 
@@ -138,8 +142,8 @@ do
 		if not force and validZones[currentZone] and not eventsRegistered then
 			eventsRegistered = true
 			self:RegisterShortTermEvents(
-                "SPELL_CAST_START 449318 450546 433410 450714 445781 415253 425040 424704 424798 414944 418791 424891 450197 448399 445191 455932 445492 434281 450637 445210 448528 449071 462686 459421 448179 445774 443292 450492 450519 450505 450509 448155 448161 418295 415250 434740 470592 443482 458879 445718",
-                "SPELL_CAST_SUCCESS 414944 424614 418791 424891 427812 450546 450197 415253 449318 445191 430036 445252 425040 424704 448399 448528 433410 445492 462686 447392 459421 448179 450509 415250 443162 443292",
+                "SPELL_CAST_START 449318 450546 433410 450714 445781 415253 425040 424704 424798 414944 418791 424891 450197 448399 445191 455932 445492 434281 450637 445210 448528 449071 462686 459421 448179 445774 443292 450492 450519 450505 450509 448155 448161 418295 415250 434740 470592 443482 458879 445718 451913",
+                "SPELL_CAST_SUCCESS 414944 424614 418791 424891 427812 450546 450197 415253 449318 445191 430036 445252 425040 424704 448399 448528 433410 445492 462686 447392 459421 448179 450509 415250 443162 443292 451913 444915",
 				"SPELL_INTERRUPT",
                 "SPELL_AURA_APPLIED 424614 449071 418297 430036 440622 441129 448161 470592 443482 458879",
                 --"SPELL_AURA_REMOVED",
@@ -358,6 +362,11 @@ function mod:SPELL_CAST_START(args)
 		if self:IsTanking("player", nil, nil, nil, args.sourceGUID) and self:AntiSpam(3, 5) then
 			warnMagmaHammer:Show()
 		end
+	elseif args.spellId == 451913 then
+		if self:AntiSpam(3, 2) then
+			specWarnGrimweaveOrb:Show()
+			specWarnGrimweaveOrb:Play("watchstep")
+		end
 	end
 end
 
@@ -365,7 +374,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 	if not self.Options.Enabled then return end
 	if args.spellId == 414944 and self:IsValidWarning(args.sourceGUID) then
 		if args:GetSrcCreatureID() == 207454 then--Fungal Gutter
-			timerBattleRoarCD:Start(19.9, args.sourceGUID)--19.9-24.7
+			timerBattleRoarCD:Start(19.9, args.sourceGUID)--19.9-24.7 (may have a inimum of 22.5 now, or it may have a variable minimum based on group size)
 		else--207456 Fungal Speartender
 			timerBattleRoarCD:Start(9.9, args.sourceGUID)--9.9-12
 		end
@@ -425,6 +434,13 @@ function mod:SPELL_CAST_SUCCESS(args)
 		timerShadowStrikeCD:Start(8.2, args.sourceGUID)--8.2-8.7
 	elseif args.spellId == 443292 then
 		timerUmbralSlamCD:Start(27, args.sourceGUID)
+	elseif args.spellId == 451913 then
+		timerGrimweaveOrbCD:Start(nil, args.sourceGUID)
+	elseif args.spellId == 444915 then
+		timerIllusionStepCD:Start(31, args.sourceGUID)
+		if self:AntiSpam(3, 6) then
+			warnIllusionStep:Show()
+		end
 	end
 end
 
@@ -583,6 +599,10 @@ function mod:UNIT_DIED(args)
 	elseif cid == 217870 then--Devouring Shade
 		timerShadowStrikeCD:Stop(args.destGUID)
 		timerUmbralSlamCD:Stop(args.destGUID)
+	elseif cid == 219022 or cid == 220507 then--Ascended Webfriar / The Puppetmaster?
+		timerGrimweaveOrbCD:Stop(args.destGUID)
+	elseif cid == 214343 then--Kobyss Trickster
+		timerIllusionStepCD:Stop(args.destGUID)
 	end
 end
 
@@ -601,16 +621,16 @@ function mod:StartNameplateTimers(guid, cid)
 	elseif cid == 204127 then--Kobold Taskfinder
 --		timerBlazingWickCD:Start(14.6, guid)
 --		timerBattleCryCD:Start(30.3, guid)
-	elseif cid == 207454 then--Fungal Gutter
---		timerBattleRoarCD:Start(19.9, guid)
---		timerViciousStabsCD:Start(14, guid)
-	elseif cid == 207456 then--Fungal Speartender
---		timerBattleRoarCD:Start(9.9, guid)
+--	elseif cid == 207454 then--Fungal Gutter
+--		timerBattleRoarCD:Start(19.9, guid)--Cast instantly on engage
+--		timerViciousStabsCD:Start(14, guid)--Unknown, difficult to filter due to RP mobs fighting in background cluttering up logs
+--	elseif cid == 207456 then--Fungal Speartender
+--		timerBattleRoarCD:Start(9.9, guid)--Cast instantly on engage
 	elseif cid == 207450 then--Fungal Stabber
 --		timerDebilitatingVenomCD:Start(13.3, guid)
 	elseif cid == 211062 then--Bill
---		timerBladeTossCD:Start(12.1, guid)
-	elseif cid == 207455 then--Fungal Speartender
+		timerBladeTossCD:Start(6.5, guid)
+--	elseif cid == 207455 then--Fungal Speartender
 --		timerVineSpearCD:Start(14.9, guid)
 	elseif cid == 213434 then--Sporesong
 --		timerRelocateCD:Start(70, guid)
@@ -622,8 +642,8 @@ function mod:StartNameplateTimers(guid, cid)
 	elseif cid == 208728 then--Treasure Wraith
 --		timerCastigateCD:Start(17.8, guid)
 --		timerUmbrelSlashCD:Start(17.8, guid)
-	elseif cid == 214338 then--Kobyss Spearfisher
-		timerSpearFishCD:Start(9.2, guid)
+--	elseif cid == 214338 then--Kobyss Spearfisher
+--		timerSpearFishCD:Start(9.2, guid)
 	elseif cid == 211777 then--Spitfire Fusetender
 --		timerThrowDynoCD:Start(7.2, guid)
 	elseif cid == 214551 then--Wandering Gutter
@@ -636,6 +656,10 @@ function mod:StartNameplateTimers(guid, cid)
 	elseif cid == 217870 then--Devouring Shade
 		timerShadowStrikeCD:Start(5, guid)
 		timerUmbralSlamCD:Start(11.2, guid)
+	elseif cid == 219022 or cid == 220507 then--Ascended Webfriar / The Puppetmaster?
+		timerGrimweaveOrbCD:Start(6, guid)--6 minimun time but can be massively delayed by CCs
+	elseif cid == 214343 then--Kobyss Trickster
+		timerIllusionStepCD:Start(5, guid)--5-20
 	end
 end
 

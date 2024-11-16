@@ -9,9 +9,9 @@ mod:SetZone(2687, 2767)
 mod:RegisterCombat("scenario", 2687, 2767)--2767 likely not used player facing
 
 mod:RegisterEventsInCombat(
-	"SPELL_CAST_START 446079 445860",
+	"SPELL_CAST_START 446079 445860 470612 390943 359016",
 --	"SPELL_CAST_SUCCESS",
---	"SPELL_AURA_APPLIED",
+	"SPELL_AURA_APPLIED 359016",
 --	"SPELL_AURA_REMOVED",
 --	"SPELL_PERIODIC_DAMAGE",
 --	"UNIT_DIED",
@@ -24,11 +24,15 @@ mod:RegisterEventsInCombat(
 local warnCalloftheAbyss					= mod:NewSpellAnnounce(446080, 2)
 local warnDrownedIllusions					= mod:NewSpellAnnounce(445860, 2)
 
---local specWarnFearfulShriek				= mod:NewSpecialWarningDodge(433410, nil, nil, nil, 2, 2)
+local specWarnElectricCataclysm				= mod:NewSpecialWarningDodge(390943, nil, nil, nil, 2, 2)
+local specWarnSwiftness						= mod:NewSpecialWarningDispel(359016, "MagicDispeller", nil, nil, 1, 2)
 
 --local timerShadowsofStrifeCD				= mod:NewCDNPTimer(12.4, 449318, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerCalloftheAbyssCD					= mod:NewCDTimer(31.5, 446080, nil, nil, nil, 1)
 local timerDrownedIllusionsCD				= mod:NewCDTimer(13.8, 445860, nil, nil, nil, 1)
+local timerCorrosiveBileCD					= mod:NewCDTimer(23.1, 470612, nil, nil, nil, 5)
+local timerElectricCataclysmCD				= mod:NewCDTimer(30.2, 390943, nil, nil, nil, 3)
+local timerSwiftnessCD						= mod:NewCDTimer(20.6, 359016, nil, nil, nil, 3)
 
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc, 7 off interrupt
 
@@ -40,6 +44,17 @@ function mod:SPELL_CAST_START(args)
 		--"Drowned Illusions-445860-npc:219763-000049B174 = pull:7.8, 15.5, 13.8, 15.4, 14.6, 19.4, 19.5",
 		warnDrownedIllusions:Show()
 		timerDrownedIllusionsCD:Start()
+	elseif args.spellId == 470612 then
+		--"Corrosive Bile-470612-npc:220008-000038692C = pull:7.2, 23.1, 32.8, 27.9, 30.4",
+		timerCorrosiveBileCD:Start()
+	elseif args.spellId == 390943 then
+		--"Electric Cataclysm-390943-npc:220008-000038692C = pull:20.5, 30.4, 31.7, 30.2",
+		specWarnElectricCataclysm:Show()
+		specWarnElectricCataclysm:Play("watchstep")
+		timerElectricCataclysmCD:Start()
+	elseif args.spellId == 359016 then
+		--"Swiftness-359016-npc:220008-000038692C = pull:12.1, 21.7, 25.5, 20.6, 21.8, 23.1",
+		timerSwiftnessCD:Start()
 	end
 end
 
@@ -51,13 +66,12 @@ function mod:SPELL_CAST_SUCCESS(args)
 end
 --]]
 
---[[
 function mod:SPELL_AURA_APPLIED(args)
-	if args.spellId == 1098 then
-
+	if args.spellId == 359016 then
+		specWarnSwiftness:Show(args.destName)
+		specWarnSwiftness:Play("dispelboss")
 	end
 end
---]]
 
 --[[
 function mod:SPELL_AURA_REMOVED(args)
@@ -92,7 +106,9 @@ function mod:ENCOUNTER_START(eID)
 	elseif eID == 3000 then--Bloated Drowner
 		DBM:AddMsg("Boss alerts/timers not yet implemented for Bloated Drowner")
 	elseif eID == 3001 then--Cragpie
-		DBM:AddMsg("Boss alerts/timers not yet implemented for Cragpie")
+		timerCorrosiveBileCD:Start(7.2)
+		timerSwiftnessCD:Start(12.1)
+		timerElectricCataclysmCD:Start(20.5)
 	elseif eID == 3002 then--Leviathan Caller
 		timerCalloftheAbyssCD:Start(6.1)
 	end
@@ -117,6 +133,9 @@ function mod:ENCOUNTER_END(eID, _, _, _, success)
 			DBM:EndCombat(self)
 		else
 			--Stop Timers manually
+			timerCorrosiveBileCD:Stop()
+			timerSwiftnessCD:Stop()
+			timerElectricCataclysmCD:Stop()
 		end
 	elseif eID == 3002 then--Leviathan Caller
 		if success == 1 then
