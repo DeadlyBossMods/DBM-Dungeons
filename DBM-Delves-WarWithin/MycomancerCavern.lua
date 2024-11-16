@@ -105,7 +105,7 @@ end
 function mod:ENCOUNTER_END(eID, _, _, _, success)
 	if eID == 2960 then--Bogpiper
 		if success == 1 then
-			DBM:EndCombat(self)
+			--DBM:EndCombat(self)--Don't end combat this way, he can be entrance in one of stories, SCENARIO_COMPLETED will complete it
 		else
 			--Stop Timers manually
 			timerMuckChargeCD:Stop()
