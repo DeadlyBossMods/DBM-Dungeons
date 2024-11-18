@@ -283,7 +283,7 @@ function mod:UNIT_DIED(args)
 end
 
 --All timers subject to a ~0.5 second clipping due to ScanEngagedUnits
-function mod:StartNameplateTimers(guid, cid)
+function mod:StartEngageTimers(guid, cid)
 	if cid == 220196 then--Herald of Ansurekha
 		timerShadowsofDoubtCD:Start(9.2, guid)--9.2-10
 	elseif cid == 220195 then--Sureki Silkbinder

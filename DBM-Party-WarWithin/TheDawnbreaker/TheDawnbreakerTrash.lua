@@ -314,7 +314,7 @@ function mod:UNIT_DIED(args)
 end
 
 --All timers subject to a ~0.5 second clipping due to ScanEngagedUnits
-function mod:StartNameplateTimers(guid, cid)
+function mod:StartEngageTimers(guid, cid)
 	if cid == 211261 then--Ascendant Vis'coxria
 		timerShadowyDecayCD:Start(3.6, guid)--3.6-5.5
 		timerAbyssalBlastCD:Start(13.3, guid)--13.3-15.2

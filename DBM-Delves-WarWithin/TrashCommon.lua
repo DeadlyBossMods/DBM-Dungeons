@@ -607,7 +607,7 @@ function mod:UNIT_DIED(args)
 end
 
 --All timers subject to a ~0.5 second clipping due to ScanEngagedUnits
-function mod:StartNameplateTimers(guid, cid)
+function mod:StartEngageTimers(guid, cid)
 	if cid == 216584 then--Nerubian Captain
 		timerWebbedAegisCD:Start(6, guid)--Recheck with even better zone debug
 		timerWideSwipeCD:Start(3.8, guid)

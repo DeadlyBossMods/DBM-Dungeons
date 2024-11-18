@@ -114,7 +114,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 end
 
 --All timers subject to a ~0.5 second clipping due to ScanEngagedUnits
-function mod:StartNameplateTimers(guid, cid)
+function mod:StartEngageTimers(guid, cid)
 
 end
 

@@ -324,7 +324,7 @@ end
 --]]
 
 --All timers subject to a ~0.5 second clipping due to ScanEngagedUnits
-function mod:StartNameplateTimers(guid, cid)
+function mod:StartEngageTimers(guid, cid)
 	if cid == 129374 then--Scrimshaw Enforcer
 --		timerSlobberknockerCD:Start(16.8, guid)--Might be 10ish, wait for improved logs
 	elseif cid == 129372 then--Blacktar Bomber
