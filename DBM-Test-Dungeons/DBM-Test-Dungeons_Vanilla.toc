@@ -1,4 +1,4 @@
-## Interface: 11504
+## Interface: 11505
 ## Title:|cffffe00a<|r|cffff7d0aDBM Tests|r|cffffe00a>|r |cff69ccf0Tests for Dungeon mods|r
 ## IconTexture: Interface/AddOns/DBM-Core/textures/dbm_airhorn
 ## Dependencies: DBM-Test
