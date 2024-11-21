@@ -1,6 +1,7 @@
 ## Interface: 110005, 110007
 ## Title:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cff10ff10World Events|r
 ## Title-esES:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cff10ff10Eventos del mundo|r
+## Title-esMX:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cff10ff10Eventos del mundo|r
 ## Title-koKR:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cff10ff10월드 이벤트|r
 ## Title-ruRU:|cffffe00a<|r|cffff7d0aDBM Мод|r|cffffe00a>|r |cff10ff10Игровые события|r
 ## Title-zhCN:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cff10ff10世界事件|r
@@ -33,6 +34,7 @@
 ## X-DBM-Mod-SubCategories-itIT: Festività,Missioni,DMF,Events
 ## X-DBM-Mod-Name: World Events
 ## X-DBM-Mod-Name-esES: Eventos del mundo
+## X-DBM-Mod-Name-esMX: Eventos del mundo
 ## X-DBM-Mod-Name-ruRU: Игровые события
 ## X-DBM-Mod-Name-zhTW: 世界事件
 ## X-DBM-Mod-Name-zhCN: 世界事件
