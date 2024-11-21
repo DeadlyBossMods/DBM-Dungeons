@@ -29,7 +29,7 @@
 ## X-DBM-Mod-SubCategories-zhCN: 节日,任务,DMF,Events
 ## X-DBM-Mod-SubCategories-esES: Fiestas,Misiones,Feria de la Luna Negra,Eventos
 ## X-DBM-Mod-SubCategories-esMX: Fiestas,Misiones,Feria de la Luna Negra,Eventos
-## X-DBM-Mod-SubCategories-ptBR: Feriados, Missões, Feira de Negraluna,Eventos
+## X-DBM-Mod-SubCategories-ptBR: Feriados, Missões,Feira de Negraluna,Eventos
 ## X-DBM-Mod-SubCategories-frFR: Fêtes,Quêtes,Foire de Sombrelune,Évènements
 ## X-DBM-Mod-SubCategories-itIT: Festività,Missioni,DMF,Eventi
 ## X-DBM-Mod-Name: World Events
