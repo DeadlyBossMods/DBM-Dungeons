@@ -85,7 +85,7 @@ function mod:SPELL_CAST_START(args)
 		--Sequence resets, including umbral and tremor being randomly selected as first spell
 		timerUmbralWeaveCD:Start(12, self.vb.weaveCount+1)
 		timerTremorSlamCD:Start(12, self.vb.tremorCount+1)
-		timerShiftingAnomaliesCD:Start(9, self.vb.shiftCount .."-".. 1)
+		timerShiftingAnomaliesCD:Start(9, self.vb.shiftCount .."-".. 2)
 	elseif spellId == 439341 then
 		self.vb.spliceCount = self.vb.spliceCount + 1
 		specWarnSplice:Show(self.vb.spliceCount)
