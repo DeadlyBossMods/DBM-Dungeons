@@ -41,10 +41,10 @@ local specWarnInfiniteHorror				= mod:NewSpecialWarningRunCount(451782, nil, nil
 
 local timerAnglersWebCD						= mod:NewCDCountTimer(21.8, 450519, nil, nil, nil, 5)
 local timerCallWebTerrorCD					= mod:NewCDCountTimer(38.9, 450568, nil, nil, nil, 1)
-local timerClawSmashCD						= mod:NewCDCountTimer(18.9, 450451, nil, nil, nil, 3)--18.9-23
+local timerClawSmashCD						= mod:NewCDCountTimer(15.8, 450451, nil, nil, nil, 3)--18.9-23
 local timerEnfeeblingSpittleCD				= mod:NewAITimer(17, 450505, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON .. DBM_COMMON_L.MAGIC_ICON)--Now using AI timer since CD differs by class
-local timerHorrendousRoarCD					= mod:NewCDCountTimer(20.6, 450492, nil, nil, nil, 3)--20.6-25
-local timerInfiniteHorrorCD					= mod:NewCDCountTimer(21.8, 451782, nil, nil, nil, 3)
+local timerHorrendousRoarCD					= mod:NewCDCountTimer(18.2, 450492, nil, nil, nil, 3)--20.6-25
+local timerInfiniteHorrorCD					= mod:NewCDCountTimer(18.2, 451782, nil, nil, nil, 3)
 local timerUnendingSpinesCD					= mod:NewCDCountTimer(21.8, 450872, nil, nil, nil, 3)
 local timerRegeneratingCarapaceCD			= mod:NewAITimer(20, 450449, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--Now using AI timer since CD differs by class
 local timerBloodInfusedCarapaceCD			= mod:NewAITimer(20, 450914, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--Now using AI timer since CD differs by class
@@ -76,7 +76,7 @@ function mod:OnCombatStart(delay)
 		timerClawSmashCD:Start(4, 1)
 		timerHorrendousRoarCD:Start(9.5, 1)
 		timerCallWebTerrorCD:Start(18.1, 1)
-		timerAnglersWebCD:Start(24.1, 1)
+		timerAnglersWebCD:Start(20, 1)
 		timerEnfeeblingSpittleCD:Start(1)--AI timer only now
 		timerRegeneratingCarapaceCD:Start(1)
 	else
