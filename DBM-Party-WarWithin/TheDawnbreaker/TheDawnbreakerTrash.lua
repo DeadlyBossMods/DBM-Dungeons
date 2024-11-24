@@ -27,7 +27,7 @@ mod:RegisterEvents(
  or (ability.id = 451112 or ability.id = 432448 or ability.id = 451107) and type = "cast"
  or stoppedAbility.id = 450756 or stoppedAbility.id = 451097 or stoppedAbility.id = 431364 or stoppedAbility.id = 431333 or stoppedAbility.id = 431309 or stoppedAbility.id = 432520
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
- or (source.type = "NPC" and source.firstSeen = timestamp and source.id = 211261) or (target.type = "NPC" and target.firstSeen = timestamp and target.id = 211261)
+ or (source.type = "NPC" and source.firstSeen = timestamp and source.id = 211341) or (target.type = "NPC" and target.firstSeen = timestamp and target.id = 211341)
  --]]
 local warnReinforcements					= mod:NewSpellAnnounce(446615, 2)
 local warnDarkFloes							= mod:NewSpellAnnounce(431304, 2)
@@ -59,6 +59,7 @@ local specWarnSilkenShellDispel				= mod:NewSpecialWarningDispel(451097, "MagicD
 local specWarnUmbrelBarrierDispel			= mod:NewSpecialWarningDispel(432520, "MagicDispeller", nil, nil, 1, 2)
 local specWarnTacticiansRageDispel			= mod:NewSpecialWarningDispel(451112, "RemoveEnrage", nil, nil, 1, 2)
 
+local timerDarkFloesCD						= mod:NewCDNPTimer(20.8, 431304, nil, nil, nil, 1)
 local timerAbyssalBlastCD					= mod:NewCDNPTimer(9.4, 451119, nil, "Tank|Healer", nil, 5)--9.4-23.98 (wildly varient due to lower priority over other abilities)
 local timerShadowyDecayCD					= mod:NewCDNPTimer(23.4, 451102, nil, nil, nil, 2)
 local timerDarkOrbCD						= mod:NewCDPNPTimer(14.2, 450854, nil, nil, nil, 3)--14.2-36.8 (wildly varient due to lower priority over other abilities)
@@ -297,6 +298,7 @@ function mod:UNIT_DIED(args)
 		timerBlackEdgeCD:Stop(args.destGUID)
 		timerTacticiansRageCD:Stop(args.destGUID)
 	elseif cid == 211341 then--Manifested Shadow
+		timerDarkFloesCD:Stop(args.destGUID)
 		timerBlackHailCD:Stop(args.destGUID)
 	elseif cid == 213893 or cid == 228539 then--Nightfall Darkcaster
 		timerUmbrelBarrierCD:Stop(args.destGUID)
@@ -314,7 +316,7 @@ function mod:UNIT_DIED(args)
 end
 
 --All timers subject to a ~0.5 second clipping due to ScanEngagedUnits
-function mod:StartNameplateTimers(guid, cid)
+function mod:StartEngageTimers(guid, cid)
 	if cid == 211261 then--Ascendant Vis'coxria
 		timerShadowyDecayCD:Start(3.6, guid)--3.6-5.5
 		timerAbyssalBlastCD:Start(13.3, guid)--13.3-15.2
@@ -334,6 +336,7 @@ function mod:StartNameplateTimers(guid, cid)
 		timerTacticiansRageCD:Start(7.4, guid)--7.4-11.7
 	elseif cid == 211341 then--Manifested Shadow
 		timerBlackHailCD:Start(5.3, guid)--5.3-8.8
+		timerDarkFloesCD:Start(40, guid)--Quite consistent
 --	elseif cid == 213893 or cid == 228539 then--Nightfall Darkcaster
 --		timerUmbrelBarrierCD:Start(8.6, guid)--8.6-17 (first cast not likley timer based but health threshold based)
 --	elseif cid == 213895 or cid == 228537 then--Nightfall Shadowalker

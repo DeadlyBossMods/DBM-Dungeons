@@ -3,6 +3,7 @@ local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
 mod:SetZone(2097)
+mod:RegisterZoneCombat(2097)
 --mod:SetModelID(47785)
 
 mod.isTrashMod = true
@@ -311,4 +312,15 @@ function mod:UNIT_DIED(args)
 	if cid == 154744 or cid == 154758 or cid == 150168 then--Toxic Monstrosity
 		timerConsumeCD:Stop(args.destGUID)
 	end
+end
+
+--All timers subject to a ~0.5 second clipping due to ScanEngagedUnits
+function mod:StartEngageTimers(guid, cid)
+
+end
+
+--Abort timers when all players out of combat, so NP timers clear on a wipe
+--Caveat, it won't calls top with GUIDs, so while it might terminate bar objects, it may leave lingering nameplate icons
+function mod:LeavingZoneCombat()
+	self:Stop()
 end

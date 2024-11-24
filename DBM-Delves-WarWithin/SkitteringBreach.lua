@@ -13,7 +13,7 @@ mod:RegisterEvents(
 )
 
 mod:RegisterEventsInCombat(
-	"SPELL_CAST_START 440806 458879 458874",
+	"SPELL_CAST_START 440806 458879 458874 458849 458853",
 --	"SPELL_CAST_SUCCESS",
 --	"SPELL_AURA_APPLIED",
 --	"SPELL_AURA_REMOVED",
@@ -31,18 +31,21 @@ local warnShadowSpin					= mod:NewSpellAnnounce(458834, 2)
 
 local specWarnDarkriftSmash				= mod:NewSpecialWarningDodge(440806, nil, nil, nil, 2, 2)
 local specWarnShadowWave				= mod:NewSpecialWarningDodge(458874, nil, nil, nil, 2, 15)
+local specWarnShadowDrain				= mod:NewSpecialWarningInterrupt(458853, "HasInterrupt", nil, nil, 1, 2)
 
 local timerDarkAbatementCD				= mod:NewCDTimer(20, 454762, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)
 local timerDarkriftSmashCD				= mod:NewCDTimer(12.1, 440806, nil, nil, nil, 5)
 local timerShadowWaveCD					= mod:NewCDTimer(15.4, 458874, nil, nil, nil, 3)
 local timerBlessingofDuskCD				= mod:NewCDTimer(28.7, 458879, nil, nil, nil, 4, nil, DBM_CORE_L.INTERRUPT_ICON)
 local timerShadowSpinCD					= mod:NewCDTimer(22.9, 458834, nil, nil, nil, 3)
+local timerShadowDrainCD				= mod:NewCDTimer(30, 458853, nil, nil, nil, 4, nil, DBM_CORE_L.INTERRUPT_ICON)
 
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc, 7 off interrupt
 
 function mod:SPELL_CAST_START(args)
-	if args.spellId == 440806 then
+	if args.spellId == 440806 or args.spellId == 458849 then
 		--"Darkrift Smash-440806-npc:219676-00001EA30B = pull:8.7, 15.4, 13.4, 13.3, 13.4, 13.4, 13.3, 14.6, 13.3, 14.6, 12.2, 14.5, 14.6, 12.1",
+		--Other boss might have different timers
 		specWarnDarkriftSmash:Show()
 		specWarnDarkriftSmash:Play("watchstep")
 		timerDarkriftSmashCD:Start()
@@ -63,6 +66,11 @@ function mod:SPELL_CAST_START(args)
 		warnShadowSpin:Show()
 		if args:GetSrcCreatureID() == 220119 then--Boss Version
 			timerShadowSpinCD:Start()
+		end
+	elseif args.spellId == 458853 then
+		if self:CheckInterruptFilter(args.sourceGUID, false, true) then
+			specWarnShadowDrain:Show(args.sourceName)
+			specWarnShadowDrain:Play("kickcast")
 		end
 	end
 end
@@ -123,8 +131,10 @@ function mod:ENCOUNTER_START(eID)
 		timerShadowWaveCD:Start(7.5)
 	elseif eID == 2948 then--Cave Giant Boss
 		DBM:AddMsg("Boss alerts/timers not yet implemented for Cave Giant Boss")
-	elseif eID == 2949 then--Faceless One
-		DBM:AddMsg("Boss alerts/timers not yet implemented for Faceless One")
+	elseif eID == 2949 then--Faceless One (also Nerl'athekk the Skulking but a variant)
+		DBM:AddMsg("Boss timers not fully implemented for Faceless One")
+		timerDarkriftSmashCD:Start(4.9)
+		timerShadowDrainCD:Start(13.3)
 	end
 end
 
@@ -156,6 +166,8 @@ function mod:ENCOUNTER_END(eID, _, _, _, success)
 			DBM:EndCombat(self)
 		else
 			--Stop Timers manually
+			timerDarkriftSmashCD:Stop()
+			timerShadowDrainCD:Stop()
 		end
 	end
 end

@@ -41,7 +41,7 @@ local warnAwakeningCalling					= mod:NewSpellAnnounce(453840, 3)
 local warnUmbralWeave						= mod:NewCastAnnounce(446717, 3)--Reason to special warn? can't really do much about it
 local warnRavenousSwarm						= mod:NewSpellAnnounce(443507, 3)
 
-local specWarnVenomBlade					= mod:NewSpecialWarningDefensive(443397, nil, nil, nil, 1, 2)
+local specWarnVenomStrike					= mod:NewSpecialWarningDefensive(443397, nil, nil, nil, 1, 2)
 local specWarnShadowsofDoubt				= mod:NewSpecialWarningMoveAway(443436, nil, nil, nil, 1, 2)
 local yellShadowsofDoubt					= mod:NewShortYell(443436)
 local yellShadowsofDoubtFades				= mod:NewShortFadesYell(443436)
@@ -57,7 +57,7 @@ local specWarnGrimweaveBlast				= mod:NewSpecialWarningInterrupt(442536, "HasInt
 local specWarnMendingWeb					= mod:NewSpecialWarningInterrupt(452162, "HasInterrupt", nil, nil, 1, 2)--High Prio Interrupt
 local specWarnVoidWave						= mod:NewSpecialWarningInterrupt(446086, "HasInterrupt", nil, nil, 1, 2)
 
-local timerVenomBladeCD						= mod:NewCDNPTimer(11, 443397, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+local timerVenomStrikeCD					= mod:NewCDNPTimer(11, 443397, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerShadowsofDoubtCD					= mod:NewCDNPTimer(11.1, 443436, nil, nil, nil, 3)--11.1-14.6
 local timerSilkBindingCD					= mod:NewCDPNPTimer(24.5, 443430, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerEarthShatterCD					= mod:NewCDPNPTimer(11, 443500, nil, nil, nil, 3)
@@ -186,8 +186,8 @@ function mod:SPELL_CAST_START(args)
 		timerRavenousSwarmCD:Start(timer, args.sourceGUID)
 	elseif spellId == 443397 then
 		if self:IsTanking("player", nil, nil, true, args.sourceGUID) and self:AntiSpam(3, 5) then
-			specWarnVenomBlade:Show()
-			specWarnVenomBlade:Play("defensive")
+			specWarnVenomStrike:Show()
+			specWarnVenomStrike:Play("defensive")
 		end
 	end
 end
@@ -211,7 +211,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 	elseif spellId == 446086 then
 		timerVoidWaveCD:Start(15.4, args.sourceGUID)
 	elseif spellId == 443397 then
-		timerVenomBladeCD:Start(11, args.sourceGUID)
+		timerVenomStrikeCD:Start(11, args.sourceGUID)
 	end
 end
 
@@ -277,13 +277,13 @@ function mod:UNIT_DIED(args)
 	elseif cid == 221103 then--Hulking Warshell
 		timerTremorSlamCD:Stop(args.destGUID)
 		timerRavenousSwarmCD:Stop(args.destGUID)
-	elseif cid == 220193 then--Sureki Venomblade
-		timerVenomBladeCD:Stop(args.destGUID)
+	elseif cid == 220193 then--Sureki VenomStrike
+		timerVenomStrikeCD:Stop(args.destGUID)
 	end
 end
 
 --All timers subject to a ~0.5 second clipping due to ScanEngagedUnits
-function mod:StartNameplateTimers(guid, cid)
+function mod:StartEngageTimers(guid, cid)
 	if cid == 220196 then--Herald of Ansurekha
 		timerShadowsofDoubtCD:Start(9.2, guid)--9.2-10
 	elseif cid == 220195 then--Sureki Silkbinder
@@ -309,8 +309,8 @@ function mod:StartNameplateTimers(guid, cid)
 		xephEngaged = guid
 		timerPerfumeTossCD:Start(8.2, guid)--8.2-9.4
 		timerGossamerBarrageCD:Start(13, guid)--13-14.3
-	elseif cid == 220193 then--Sureki Venomblade
-		timerVenomBladeCD:Start(3.5, guid)
+	elseif cid == 220193 then--Sureki VenomStrike
+		timerVenomStrikeCD:Start(3.5, guid)
 	end
 end
 

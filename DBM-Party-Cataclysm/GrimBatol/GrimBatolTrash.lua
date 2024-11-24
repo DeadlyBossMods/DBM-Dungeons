@@ -292,7 +292,7 @@ function mod:UNIT_DIED(args)
 end
 
 --All timers subject to a ~0.5 second clipping due to ScanEngagedUnits
-function mod:StartNameplateTimers(guid, cid)
+function mod:StartEngageTimers(guid, cid)
 	if cid == 224219 then--Twilight Earthcaller
 		timerMassTremorCD:Start(8.6, guid)--8.6-13?
 	elseif cid == 224152 then--Twilight Brute

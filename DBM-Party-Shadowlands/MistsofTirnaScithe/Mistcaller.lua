@@ -47,7 +47,7 @@ local timerPattyCakeCD				= mod:NewCDCountTimer(19.4, 321828, nil, nil, nil, 4, 
 local timerPattyCake				= mod:NewCastTimer(2.5, 321828, nil, nil, nil, 5, nil, DBM_COMMON_L.DEADLY_ICON..DBM_COMMON_L.INTERRUPT_ICON)
 
 mod:AddNamePlateOption("NPAuraOnFixate", 321891)--Sets NP icon if you're target of fixate
-mod:AddNamePlateOption("NPAuraOnFreezeTag", 321873, false)--Sets NP on it at all times
+mod:AddNamePlateOption("NPAuraOnFreezeTag2", 321873)--Sets NP on it at all times
 mod:AddSetIconOption("SetIconOnAdds2", -21691, true, 5, {1, 2, 3, 4})
 --mod:GroupSpells(321873, 321891)--Freeze Tag and associated fixate
 
@@ -66,14 +66,14 @@ function mod:OnCombatStart(delay)
 	timerDodgeBallCD:Start(6-delay, 1)
 	timerPattyCakeCD:Start(12.2-delay, 1)--12.2-14.3
 	timerFreezeTagCD:Start(15.9-delay, 1)--15.9-18.5, Sometimes cast is skipped?
-	if self.Options.NPAuraOnFixate or self.Options.NPAuraOnFreezeTag then
+	if self.Options.NPAuraOnFixate or self.Options.NPAuraOnFreezeTag2 then
 		DBM:FireEvent("BossMod_EnableHostileNameplates")
 	end
 end
 
 function mod:OnCombatEnd()
 	table.wipe(seenAdds)
-	if self.Options.NPAuraOnFreezeTag or self.Options.NPAuraOnFreezeTag then
+	if self.Options.NPAuraOnFreezeTag2 or self.Options.NPAuraOnFreezeTag2 then
 		DBM.Nameplate:Hide(true, nil, nil, nil, true, true)
 	end
 end
@@ -115,7 +115,7 @@ end
 function mod:SPELL_SUMMON(args)
 	local spellId = args.spellId
 	if spellId == 321873 then
-		if self.Options.NPAuraOnFreezeTag then
+		if self.Options.NPAuraOnFreezeTag2 then
 			DBM.Nameplate:Show(true, args.destGUID, spellId, 5333906)
 		end
 	end
@@ -162,7 +162,7 @@ end
 function mod:UNIT_DIED(args)
 	local cid = self:GetCIDFromGUID(args.destGUID)
 	if cid == 165251 then--Illusionary Vulpin
-		if self.Options.NPAuraOnFreezeTag then
+		if self.Options.NPAuraOnFreezeTag2 then
 			DBM.Nameplate:Hide(true, args.destGUID, 321873, 5333906)
 		end
 	end

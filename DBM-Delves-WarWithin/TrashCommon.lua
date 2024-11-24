@@ -607,12 +607,12 @@ function mod:UNIT_DIED(args)
 end
 
 --All timers subject to a ~0.5 second clipping due to ScanEngagedUnits
-function mod:StartNameplateTimers(guid, cid)
+function mod:StartEngageTimers(guid, cid)
 	if cid == 216584 then--Nerubian Captain
 		timerWebbedAegisCD:Start(6, guid)--Recheck with even better zone debug
-		timerWideSwipeCD:Start(9.5, guid)--Recheck with even better zone debug
+		timerWideSwipeCD:Start(3.8, guid)
 	elseif cid == 208242 then--Nerubian Darkcaster
-		timerShadowsofStrifeCD:Start(11.2, guid)
+		timerShadowsofStrifeCD:Start(7.8, guid)--7.8-11.2
 	elseif cid == 223541 then--Stolen Loader
 		timerMagmaHammerCD:Start(5.9, guid)
 		timerLavablastCD:Start(12, guid)
