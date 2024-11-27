@@ -9,7 +9,7 @@ mod:SetZone(2652)
 mod:RegisterZoneCombat(2652)
 
 mod:RegisterEvents(
-	"SPELL_CAST_START 425027 426283 447141 449455 429109 449130 449154 429545 426345 426771 445207 448640 429427 428879 428703 459210",
+	"SPELL_CAST_START 425027 426283 447141 449455 429109 449130 449154 429545 426345 426771 445207 448640 429427 428879 428703 459210 425974",
 	"SPELL_CAST_SUCCESS 429427 425027 447141 449455 426308 445207 429545 429109 449130 426345",
 	"SPELL_INTERRUPT",
 	"SPELL_AURA_APPLIED 426308",
@@ -22,11 +22,11 @@ mod:RegisterEvents(
 --TODO, maybe auto mark Totems for earthburst totem?
 --TODO, Defiling Outburst deleted from game? no eff
 --[[
- (ability.id = 425027 or ability.id = 447141 or ability.id = 426283 or ability.id = 449455 or ability.id = 429109 or ability.id = 445207 or ability.id = 429545 or ability.id = 448852 or ability.id = 426345 or ability.id = 426771 or ability.id = 448640 or ability.id = 429427 or ability.id = 428879 or ability.id = 428703) and (type = "begincast" or type = "cast")
+ (ability.id = 425027 or ability.id = 447141 or ability.id = 426283 or ability.id = 425974 or ability.id = 449455 or ability.id = 429109 or ability.id = 445207 or ability.id = 429545 or ability.id = 448852 or ability.id = 426345 or ability.id = 426771 or ability.id = 448640 or ability.id = 429427 or ability.id = 428879 or ability.id = 428703) and (type = "begincast" or type = "cast")
  or (ability.id = 426308) and type = "cast"
  or stoppedAbility.id = 449455 or stoppedAbility.id = 445207 or stoppedAbility.id = 429545 or stoppedAbility.id = 429109 or stoppedAbility.id = 448852
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
- or (source.type = "NPC" and source.firstSeen = timestamp and source.id = 212765) or (target.type = "NPC" and target.firstSeen = timestamp and target.id = 212765)
+ or (source.type = "NPC" and source.firstSeen = timestamp and source.id = 210109) or (target.type = "NPC" and target.firstSeen = timestamp and target.id = 210109)
 --]]
 local warnHowlingFear						= mod:NewCastAnnounce(449455, 4)--High Prio interrupt
 local warnRestoringMetals					= mod:NewCastAnnounce(429109, 4)--High Prio interrupt
@@ -35,6 +35,7 @@ local warnCensoringGear						= mod:NewCastAnnounce(429545, 4)--High Prio interru
 local warnEarthBurstTotem					= mod:NewCastAnnounce(429427, 2, nil, nil, false, nil, nil, 3)--Optional CC warning
 local warnFracture							= mod:NewStackAnnounce(427361, 2)
 local warnMoltenMortar						= mod:NewSpellAnnounce(449154, 2)
+local warnGroundPound						= mod:NewSpellAnnounce(425974, 3)
 
 local specWarnShadowClaw					= mod:NewSpecialWarningDefensive(459210, nil, nil, nil, 1, 2)
 local specWarnSeismicWave					= mod:NewSpecialWarningDodge(425027, nil, nil, nil, 2, 15)
@@ -66,6 +67,7 @@ local timerShieldStampedeCD					= mod:NewCDPNPTimer(17, 448640, nil, nil, nil, 3
 local timerSmashRockCD						= mod:NewCDNPTimer(28.3, 428879, nil, nil, nil, 3)
 local timerGraniteEruptionCD				= mod:NewCDNPTimer(24.2, 428703, nil, nil, nil, 3)
 local timerEarthBurstTotemCD				= mod:NewCDPNPTimer(30, 429427, nil, nil, nil, 1)
+local timerGroundPoundCD					= mod:NewCDNPTimer(21.8, 425974, nil, nil, nil, 2)
 local timerHowlingFearCD					= mod:NewCDPNPTimer(22.7, 449455, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--Poor sample size, these mobs rarely live long enough
 local timerRestoringMetalsCD				= mod:NewCDPNPTimer(16.3, 429109, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerCensoringGearCD					= mod:NewCDPNPTimer(18.2, 429545, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
@@ -172,6 +174,11 @@ function mod:SPELL_CAST_START(args)
 			specWarnShadowClaw:Show()
 			specWarnShadowClaw:Play("defensive")
 		end
+	elseif spellId == 425974 then
+		timerGroundPoundCD:Start(nil, args.sourceGUID)
+		if self:AntiSpam(3, 4) then
+			warnGroundPound:Show()
+		end
 	end
 end
 
@@ -249,6 +256,7 @@ function mod:UNIT_DIED(args)
 	local cid = self:GetCIDFromGUID(args.destGUID)
 	if cid == 210109 then--Earth Infused Golem
 		timerSeismicWaveCD:Stop(args.destGUID)
+		timerGroundPoundCD:Stop(args.destGUID)
 	elseif cid == 212389 or cid == 212403 then--Cursedheart Invader
 		timerVoidInfectionCD:Stop(args.destGUID)
 	elseif cid == 222923 then--Repurposed Loaderbox
@@ -283,6 +291,7 @@ end
 function mod:StartEngageTimers(guid, cid)
 	if cid == 210109 then--Earth Infused Golem
 		timerSeismicWaveCD:Start(4.6, guid)--4.6-9.4
+		timerGroundPoundCD:Start(13.2, guid)--13.2-18.2
 	elseif cid == 212389 or cid == 212403 then--Cursedheart Invader
 		timerVoidInfectionCD:Start(8.2, guid)--8.2-10
 	elseif cid == 222923 then--Repurposed Loaderbox
