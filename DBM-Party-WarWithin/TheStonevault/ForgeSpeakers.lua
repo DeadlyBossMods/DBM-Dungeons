@@ -43,7 +43,7 @@ local specWarnScrapSong						= mod:NewSpecialWarningDodgeCount(428202, nil, nil,
 
 --Pretty much all of his timers can be delayed by up to 6 seconds by spell lockouts from interrupts
 local timerExhaustVentsCD					= mod:NewCDCountTimer(27, 445541, nil, nil, nil, 3)
-local timerMoltenMetalCD					= mod:NewCDCountTimer(13.4, 430097, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerMoltenMetalCD					= mod:NewCDCountTimer(6.1, 430097, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--6.1-15
 local timerScrapSongCD						= mod:NewCDCountTimer(49.7, 428202, nil, nil, nil, 3)
 --Speaker Dorlita
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(28461))
@@ -175,7 +175,7 @@ function mod:SPELL_CAST_START(args)
 		--	DBM:Debug("timerExhaustVentsCD extended by: "..extend, 2)
 		--	timerExhaustVentsCD:Update(elapsed, total+extend, self.vb.ventilationCount+1)
 		--end
-		updateBrokkTimers(self, 7.2)
+		updateBrokkTimers(self, 4.9)
 	elseif spellId == 428711 then
 		self.vb.hammerCount = self.vb.hammerCount + 1
 		if self:IsTanking("player", nil, nil, true, args.sourceGUID) then
