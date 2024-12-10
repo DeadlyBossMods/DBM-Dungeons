@@ -99,7 +99,11 @@ L:SetGeneralLocalization({
 -----------------------------
 --  Forge Speakers  --
 -----------------------------
---L = DBM:GetModLocalization(2590)
+L = DBM:GetModLocalization(2590)
+
+L:SetMiscLocalization{
+	SafeVent		= "Безопасные Вытяжные отверстия"
+}
 
 -----------------------------
 --  High Speaker Eirich  --
@@ -220,7 +224,11 @@ L:SetOptionLocalization({
 -----------------------------
 --  Fangs of the Queen  --
 -----------------------------
---L = DBM:GetModLocalization(2595)
+L = DBM:GetModLocalization(2595)
+
+L:SetMiscLocalization{
+	RolePlay		= "Раньше Зал трансформаций был колыбелью нашей священной эволюции."
+}
 
 -----------------------------
 --  The Coaglamation  --
