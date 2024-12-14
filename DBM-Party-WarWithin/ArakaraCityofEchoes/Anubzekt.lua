@@ -64,14 +64,14 @@ local allTimers = {
 		--Impale
 		[435012] = {4.8, 12.2, 4.6},--Includes the Burrow Charge Impale
 		--Infestation
-		[433740] = {0, 10.0, 10.8},--Can queue up to 13, usually 3rd cast is 12.2 but can also be lower
+		[433740] = {0.000001, 10.0, 10.8},--Can queue up to 13, usually 3rd cast is 12.2 but can also be lower
 	},
 	--2nd set and beyond
 	[2] = {
 		--Impale
 		[435012] = {5.3, 14.7, 4.6, 14.5},--Includes the Burrow Charge Impale
 		--Infestation
-		[433740] = {0, 10.9, 10.8, 10.8},--Can queue up to 13, usually 3rd cast is 12.2 but can also be lower
+		[433740] = {0.000001, 10.9, 10.8, 10.8},--Can queue up to 13, usually 3rd cast is 12.2 but can also be lower
 	}
 }
 
