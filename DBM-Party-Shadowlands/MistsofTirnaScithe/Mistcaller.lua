@@ -64,8 +64,8 @@ function mod:OnCombatStart(delay)
 	self.vb.tagCount = 0
 	self.vb.pattyCount = 0
 	timerDodgeBallCD:Start(6-delay, 1)
-	timerPattyCakeCD:Start(12.2-delay, 1)--12.2-14.3
-	timerFreezeTagCD:Start(15.9-delay, 1)--15.9-18.5, Sometimes cast is skipped?
+	timerPattyCakeCD:Start("v12.2-14.3", 1)--12.2-14.3
+	timerFreezeTagCD:Start("v15.9-18.5", 1)--15.9-18.5, Sometimes cast is skipped?
 	if self.Options.NPAuraOnFixate or self.Options.NPAuraOnFreezeTag2 then
 		DBM:FireEvent("BossMod_EnableHostileNameplates")
 	end
