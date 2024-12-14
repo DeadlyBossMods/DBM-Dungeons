@@ -38,10 +38,10 @@ local yellFrozenBindsFades			= mod:NewShortYell(323730)
 local specWarnDarkExile				= mod:NewSpecialWarningYou(321894, nil, nil, nil, 1, 5)
 --local specWarnGTFO				= mod:NewSpecialWarningGTFO(257274, nil, nil, nil, 1, 8)
 
-local timerCometStormCD				= mod:NewCDCountTimer(24.2, 320772, nil, nil, nil, 3)
-local timerIceboundAegisCD			= mod:NewCDCountTimer(24.2, 321754, nil, nil, nil, 5, nil, DBM_COMMON_L.DAMAGE_ICON)
+local timerCometStormCD				= mod:NewVarCountTimer(24.2, 320772, nil, nil, nil, 3)
+local timerIceboundAegisCD			= mod:NewVarCountTimer(24.2, 321754, nil, nil, nil, 5, nil, DBM_COMMON_L.DAMAGE_ICON)
 local timerFrozenBindsCD			= mod:NewCDCountTimer(24.2, 323730, nil, nil, nil, 3, nil, DBM_COMMON_L.MAGIC_ICON)
-local timerDarkExileCD				= mod:NewCDCountTimer(34, 321894, nil, nil, nil, 3)--34-50+
+local timerDarkExileCD				= mod:NewVarCountTimer("v34-50", 321894, nil, nil, nil, 3)--34-50+
 local timerDarkExile				= mod:NewTargetTimer(50, 321894, nil, nil, nil, 5)
 
 mod:AddInfoFrameOption(321754, true)
@@ -57,9 +57,9 @@ function mod:OnCombatStart(delay)
 	self.vb.bindsCount = 0
 	self.vb.exileCount = 0
 	timerFrozenBindsCD:Start(6.9-delay, 1)--START
-	timerIceboundAegisCD:Start(11.7-delay, 1)--11.7-14
-	timerCometStormCD:Start(16.5-delay, 1)--16.5-17.2
-	timerDarkExileCD:Start(26.5-delay, 1)--SUCCESS--26-30
+	timerIceboundAegisCD:Start("v11.7-14", 1)--11.7-14
+	timerCometStormCD:Start("v16.5-17.2", 1)--16.5-17.2
+	timerDarkExileCD:Start("v26.5-30", 1)--SUCCESS--26-30
 end
 
 function mod:OnCombatEnd()

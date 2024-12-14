@@ -24,8 +24,8 @@ local warningDustField				= mod:NewSpellAnnounce(21909, 2)
 
 local specWarnDustField				= mod:NewSpecialWarningRun(21909, "Melee", nil, nil, 4, 2)
 
-local timerRespulsiveGazeCD			= mod:NewCDTimer(26.8, 21869, nil, nil, nil, 3)--26.8-51
-local timerDustFieldCD				= mod:NewCDTimer(21.9, 21909, nil, nil, nil, 2)--21.9-44
+local timerRespulsiveGazeCD			= mod:NewVarTimer("v26.8-51", 21869, nil, nil, nil, 3)--26.8-51
+local timerDustFieldCD				= mod:NewVarTimer("v21.9-44", 21909, nil, nil, nil, 2)--21.9-44
 
 function mod:OnCombatStart(delay)
 	timerRespulsiveGazeCD:Start(7-delay)

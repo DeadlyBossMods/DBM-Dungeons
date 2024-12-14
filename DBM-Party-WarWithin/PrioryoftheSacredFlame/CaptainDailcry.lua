@@ -41,8 +41,8 @@ local specWarnPierceArmor					= mod:NewSpecialWarningDefensive(424414, nil, nil,
 --local specWarnGTFO						= mod:NewSpecialWarningGTFO(372820, nil, nil, nil, 1, 8)
 
 local timerSavageMaulingCD					= mod:NewCDCountTimer(15.7, 447439, nil, nil, nil, 3)--It's either 25.7 from last ones REMOVAL, or ~30.3 from last ones application
-local timerBattleCryCD						= mod:NewCDCountTimer(15.8, 424419, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--15.8-18.2
-local timerHurlSpearCD						= mod:NewCDCountTimer(15.8, 447272, nil, nil, nil, 3)--15.8-19.4
+local timerBattleCryCD						= mod:NewVarCountTimer("v15.8-18.2", 424419, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--15.8-18.2
+local timerHurlSpearCD						= mod:NewVarCountTimer("v15.8-19.4", 447272, nil, nil, nil, 3)--15.8-19.4
 local timerPierceArmorCD					= mod:NewCDCountTimer(7.3, 424414, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 
 mod:AddInfoFrameOption(447443)

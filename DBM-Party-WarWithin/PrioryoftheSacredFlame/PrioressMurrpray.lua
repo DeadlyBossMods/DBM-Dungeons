@@ -41,8 +41,8 @@ local specWarnGTFO							= mod:NewSpecialWarningGTFO(425556, nil, nil, nil, 1, 8
 
 --local timerBarrierofLightCD				= mod:NewAITimer(33.9, 423588, nil, nil, nil, 5, nil, DBM_COMMON_L.DAMAGE_ICON)
 local timerPurifyingLightCD					= mod:NewCDCountTimer(23, 444546, nil, nil, nil, 3)
-local timerInnerLightCD						= mod:NewCDCountTimer(23, 423539, nil, nil, nil, 2)
-local timerHolyFlameCD						= mod:NewCDCountTimer(8.4, 451606, nil, nil, nil, 3, nil, DBM_COMMON_L.MAGIC_ICON)--8.4-15.7
+local timerInnerLightCD						= mod:NewVarCountTimer(23, 423539, nil, nil, nil, 2)
+local timerHolyFlameCD						= mod:NewVarCountTimer("v8.4-15.7", 451606, nil, nil, nil, 3, nil, DBM_COMMON_L.MAGIC_ICON)--8.4-15.7
 
 mod:AddInfoFrameOption(423588)
 
@@ -61,7 +61,7 @@ function mod:OnCombatStart(delay)
 	self.vb.holySmiteCount = 0
 	timerHolyFlameCD:Start(7-delay, 1)--7-8.1 (but can also sometimes not get cast at all for 45 seconds
 	timerPurifyingLightCD:Start(10.5-delay, 1)--10.5
-	timerInnerLightCD:Start(15.5-delay, 1)--15.5-19
+	timerInnerLightCD:Start("v15.5-19", 1)--15.5-19
 --	timerBarrierofLightCD:Start(1-delay)--69 (need more sample size, i've seen too much variation, plus it's only cast once so it might be just health based?
 end
 

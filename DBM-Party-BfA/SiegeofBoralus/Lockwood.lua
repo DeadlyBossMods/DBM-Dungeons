@@ -39,7 +39,7 @@ local timerRicochetCD				= mod:NewCDCountTimer(17.9, 463182, nil, nil, nil, 3)
 --local timerWithdrawCD				= mod:NewCDCountTimer(40, 268752, nil, nil, nil, 6)--Health based now
 local timerCleartheDeckCD			= mod:NewCDCountTimer(17.7, 269029, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerCrimsonSwipeCD			= mod:NewCDNPTimer(10.6, 268230, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)--11.8-12.2 now
-local timerBroadsideCD				= mod:NewCDCountTimer(12.1, 268260, nil, nil, nil, 3)--12.1-14.2
+local timerBroadsideCD				= mod:NewVarCountTimer("v12.1-14.2", 268260, nil, nil, nil, 3)--12.1-14.2
 
 mod.vb.massBombCount = 0
 mod.vb.ricochetCount = 0

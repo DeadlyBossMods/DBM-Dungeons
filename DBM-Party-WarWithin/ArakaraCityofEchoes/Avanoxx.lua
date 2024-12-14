@@ -42,8 +42,8 @@ local specWarnHunger						= mod:NewSpecialWarningRun(439070, nil, nil, nil, 1, 2
 --local specWarnGTFO						= mod:NewSpecialWarningGTFO(372820, nil, nil, nil, 1, 8)
 
 local timerVoraciousBiteCD					= mod:NewCDCountTimer(14.1, 438471, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
-local timerAlertingShrillCD					= mod:NewCDCountTimer(38.7, 438476, nil, nil, nil, 1)--38.7-40.1
-local timerGossamerOnslaughtCD				= mod:NewCDCountTimer(38.7, 438473, nil, nil, nil, 3)--38.7-40.1
+local timerAlertingShrillCD					= mod:NewCDCountTimer("v38.7-40.1", 438476, nil, nil, nil, 1)--38.7-40.1
+local timerGossamerOnslaughtCD				= mod:NewVarCountTimer("v38.7-40.1", 438473, nil, nil, nil, 3)--38.7-40.1
 
 mod:AddSetIconOption("SetIconOnAdds", 438476, true, 5, {1, 2, 3, 4})
 
@@ -83,7 +83,7 @@ function mod:SPELL_CAST_START(args)
 		if not self:IsTank() then
 			specWarnAlertingShrill:ScheduleVoice(2, "killmob")
 		end
-		timerAlertingShrillCD:Start(self.vb.shrillCount == 1 and 38.7 or 39.3, self.vb.shrillCount+1)
+		timerAlertingShrillCD:Start(nil, self.vb.shrillCount+1)
 		--if time remaining on Voracious Bite is < 7.2, it's extended by this every time
 		if timerVoraciousBiteCD:GetRemaining(self.vb.biteCount+1) < 7.2 then
 			local elapsed, total = timerVoraciousBiteCD:GetTime(self.vb.biteCount+1)
@@ -95,7 +95,7 @@ function mod:SPELL_CAST_START(args)
 		self.vb.onslaughtCount = self.vb.onslaughtCount + 1
 		specWarnGossamerOnslaught:Show(self.vb.onslaughtCount)
 		specWarnGossamerOnslaught:Play("watchstep")
-		timerGossamerOnslaughtCD:Start(self.vb.onslaughtCount == 1 and 38.7 or 39.3, self.vb.onslaughtCount+1)
+		timerGossamerOnslaughtCD:Start(nil, self.vb.onslaughtCount+1)
 		--if time remaining on Voracious Bite is < 12.1, it's extended by this every time
 		if timerVoraciousBiteCD:GetRemaining(self.vb.biteCount+1) < 12.1 then
 			local elapsed, total = timerVoraciousBiteCD:GetTime(self.vb.biteCount+1)

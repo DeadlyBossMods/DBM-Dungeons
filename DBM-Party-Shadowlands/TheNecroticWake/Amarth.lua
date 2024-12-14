@@ -123,9 +123,9 @@ function mod:SPELL_CAST_SUCCESS(args)
 		specWarnLandoftheDead:Play("killmob")
 		timerLandoftheDeadCD:Start(nil, self.vb.deadCount+1)
 		--if remaining time on necrotic breath is < 17.5, it's extended by this every time (this one variates more, 17.5 to 20.9 likely to a necrotic bolt spell lockout)
-		if timerNecroticBreathCD:GetRemaining(self.vb.breathCount+1) < 17.5 then
+		if timerNecroticBreathCD:GetRemaining(self.vb.breathCount+1) < 15.4 then
 			local elapsed, total = timerNecroticBreathCD:GetTime(self.vb.breathCount+1)
-			local extend = 17.5 - (total-elapsed)
+			local extend = 15.4 - (total-elapsed)
 			DBM:Debug("timerNecroticBreathCD extended by: "..extend, 2)
 			timerNecroticBreathCD:Update(elapsed, total+extend, self.vb.breathCount+1)
 		end
