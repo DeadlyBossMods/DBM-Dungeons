@@ -41,9 +41,9 @@ local specWarnFixate				= mod:NewSpecialWarningRun(321891, nil, nil, nil, 4, 2)
 local specWarnPattyCake				= mod:NewSpecialWarningInterrupt(321828, nil, nil, nil, 3, 2)
 --local specWarnGTFO					= mod:NewSpecialWarningGTFO(257274, nil, nil, nil, 1, 8)
 
-local timerDodgeBallCD				= mod:NewCDCountTimer(12.1, 321834, nil, nil, nil, 3)--12.1-18
-local timerFreezeTagCD				= mod:NewCDCountTimer(21.8, 321873, nil, nil, nil, 3)--21.8-25
-local timerPattyCakeCD				= mod:NewCDCountTimer(19.4, 321828, nil, nil, nil, 4, nil, DBM_COMMON_L.TANK_ICON..DBM_COMMON_L.INTERRUPT_ICON)--20-26
+local timerDodgeBallCD				= mod:NewVarCountTimer("v12.1-18", 321834, nil, nil, nil, 3)--12.1-18
+local timerFreezeTagCD				= mod:NewVarCountTimer("v21.8-25", 321873, nil, nil, nil, 3)--21.8-25
+local timerPattyCakeCD				= mod:NewVarCountTimer("v19.4-26", 321828, nil, nil, nil, 4, nil, DBM_COMMON_L.TANK_ICON..DBM_COMMON_L.INTERRUPT_ICON)--20-26
 local timerPattyCake				= mod:NewCastTimer(2.5, 321828, nil, nil, nil, 5, nil, DBM_COMMON_L.DEADLY_ICON..DBM_COMMON_L.INTERRUPT_ICON)
 
 mod:AddNamePlateOption("NPAuraOnFixate", 321891)--Sets NP icon if you're target of fixate

@@ -42,7 +42,7 @@ local specWarnGTFO							= mod:NewSpecialWarningGTFO(425556, nil, nil, nil, 1, 8
 --local timerBarrierofLightCD				= mod:NewAITimer(33.9, 423588, nil, nil, nil, 5, nil, DBM_COMMON_L.DAMAGE_ICON)
 local timerPurifyingLightCD					= mod:NewCDCountTimer(23, 444546, nil, nil, nil, 3)
 local timerInnerLightCD						= mod:NewCDCountTimer(23, 423539, nil, nil, nil, 2)
-local timerHolyFlameCD						= mod:NewCDCountTimer(8.4, 451606, nil, nil, nil, 3, nil, DBM_COMMON_L.MAGIC_ICON)--8.4-15.7
+local timerHolyFlameCD						= mod:NewVarCountTimer("v8.4-15.7", 451606, nil, nil, nil, 3, nil, DBM_COMMON_L.MAGIC_ICON)--8.4-15.7
 
 mod:AddInfoFrameOption(423588)
 
