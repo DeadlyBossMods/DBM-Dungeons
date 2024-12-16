@@ -107,6 +107,8 @@ function mod:SPELL_AURA_APPLIED(args)
 			specWarnChaoticCorruption:Play("targetyou")
 			yellChaoticCorruption:Yell()
 			yellChaoticCorruptionFades:Countdown(spellId)
+		else
+			warnSomeChaoticCorruption:Show(args.destName)
 		end
 	end
 end
