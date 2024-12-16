@@ -51,7 +51,7 @@ function mod:OnCombatStart(delay)
 	self.vb.chaoticCount = 0
 	self.vb.gravityCount = 0
 	self.vb.crushCount = 0
-	if self:IsEasy() then
+	if self:IsStory() or self:IsEasy() then
 		timerCrushRealityCD:Start(8.4, 1)
 		timerDarkGravityCD:Start(15.5, 1)
 	else--Heroic and Mythic 0
@@ -86,7 +86,7 @@ function mod:SPELL_CAST_START(args)
 		self.vb.crushCount = self.vb.crushCount + 1
 		specWarnCrushReality:Show(self.vb.crushCount)
 		specWarnCrushReality:Play("watchwave")
-		timerCrushRealityCD:Start(self:IsEasy() and 15.7 or 21.8, self.vb.crushCount+1)
+		timerCrushRealityCD:Start((self:IsStory() or self:IsEasy()) and 15.7 or 21.8, self.vb.crushCount+1)
 	end
 end
 
