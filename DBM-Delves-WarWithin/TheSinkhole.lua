@@ -106,7 +106,7 @@ function mod:ENCOUNTER_START(eID)
 	elseif eID == 3000 then--Bloated Drowner
 		DBM:AddMsg("Boss alerts/timers not yet implemented for Bloated Drowner")
 	elseif eID == 3001 then--Cragpie
-		timerCorrosiveBileCD:Start(7.2)
+		timerCorrosiveBileCD:Start(6.1)
 		timerSwiftnessCD:Start(12.1)
 		timerElectricCataclysmCD:Start(20.5)
 	elseif eID == 3002 then--Leviathan Caller
