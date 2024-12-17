@@ -43,7 +43,7 @@ local specWarnScrapSong						= mod:NewSpecialWarningDodgeCount(428202, nil, nil,
 
 --Pretty much all of his timers can be delayed by up to 6 seconds by spell lockouts from interrupts
 local timerExhaustVentsCD					= mod:NewCDCountTimer(27, 445541, nil, nil, nil, 3)
-local timerMoltenMetalCD					= mod:NewCDCountTimer(6.1, 430097, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--6.1-15
+local timerMoltenMetalCD					= mod:NewVarCountTimer("4.8-15", 430097, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--4.8-15
 local timerScrapSongCD						= mod:NewCDCountTimer(49.7, 428202, nil, nil, nil, 3)
 --Speaker Dorlita
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(28461))
@@ -100,12 +100,15 @@ local function updateBrokkTimers(self, ICD)
 		DBM:Debug("timerScrapSongCD extended by: "..extend, 2)
 		timerScrapSongCD:Update(elapsed, total+extend, self.vb.cubeCount+1)
 	end
-	if timerMoltenMetalCD:GetRemaining(self.vb.moltenMetalCount+1) < ICD then
-		local elapsed, total = timerMoltenMetalCD:GetTime(self.vb.moltenMetalCount+1)
-		local extend = ICD - (total-elapsed)
-		DBM:Debug("timerMoltenMetalCD extended by: "..extend, 2)
-		timerMoltenMetalCD:Update(elapsed, total+extend, self.vb.moltenMetalCount+1)
-	end
+	timerMoltenMetalCD:Stop()
+	--Just cancel and restart a new variance timer with the new variance window
+	timerMoltenMetalCD:Start("v"..ICD.."-15", self.vb.moltenMetalCount+1)
+	--if timerMoltenMetalCD:GetRemaining(self.vb.moltenMetalCount+1) < ICD then
+	--	local elapsed, total = timerMoltenMetalCD:GetTime(self.vb.moltenMetalCount+1)
+	--	local extend = ICD - (total-elapsed)
+	--	DBM:Debug("timerMoltenMetalCD extended by: "..extend, 2)
+	--	timerMoltenMetalCD:Update(elapsed, total+extend, self.vb.moltenMetalCount+1)
+	--end
 	if timerExhaustVentsCD:GetRemaining(self.vb.ventilationCount+1) < ICD then
 		local elapsed, total = timerExhaustVentsCD:GetTime(self.vb.ventilationCount+1)
 		local extend = ICD - (total-elapsed)

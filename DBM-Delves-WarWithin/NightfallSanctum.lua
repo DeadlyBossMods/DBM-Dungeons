@@ -33,7 +33,7 @@ local specWarnShadowWave					= mod:NewSpecialWarningDodge(458874, nil, nil, nil,
 --local timerShadowsofStrifeCD				= mod:NewCDNPTimer(12.4, 449318, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerDesolateSurgeCD					= mod:NewCDTimer(26.7, 443840, nil, nil, nil, 3)--Speaker Halven
 local timerFireCD							= mod:NewCDTimer(12.1, 443908, nil, nil, nil, 3)--Speaker Halven
-local timerShadowSweepCD					= mod:NewCDTimer(13.4, 443837, nil, nil, nil, 3)--Speaker Halven and Speaker Davenruth (need more data on Davenruth's timer)
+local timerShadowSweepCD					= mod:NewCDTimer(12.1, 443837, nil, nil, nil, 3)--Speaker Halven and Speaker Davenruth (need more data on Davenruth's timer)
 local timerSpeakersWrathCD					= mod:NewAITimer(12.1, 444408, nil, nil, nil, 3)--Speaker Davenruth
 local timerShadowWaveCD						= mod:NewCDNPTimer(12, 458874, nil, nil, nil, 5)
 

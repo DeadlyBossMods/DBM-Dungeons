@@ -119,7 +119,7 @@ function mod:OnCombatStart(delay)
 	timerLightningDashCD:Start(2.1, 1)
 	timerChainLightningCD:Start(7, 1)
 	timerUnstableChargeCD:Start(15.5, 1)
-	timerLightningTorrentCD:Start(31.3, 1)
+	timerLightningTorrentCD:Start(30.0, 1)
 	if self:IsMythic() then
 		timerStormheartCD:Start(1)
 	end
@@ -149,7 +149,7 @@ function mod:SPELL_CAST_START(args)
 		self.vb.dashCount = self.vb.dashCount + 1
 		specWarnLightningDash:Show(self.vb.dashCount)
 		specWarnLightningDash:Play("watchstep")
-		timerLightningDashCD:Start(nil, self.vb.dashCount+1)
+		timerLightningDashCD:Start(self:IsFollower() and 18.5 or 31.6, self.vb.dashCount+1)
 --		self:ScheduleMethod(0.1, "BossTargetScanner", args.sourceGUID, "DashTarget", 0.1, 7, true)
 	elseif spellId == 444324 then
 		self.vb.stormheartCount = self.vb.stormheartCount + 1
