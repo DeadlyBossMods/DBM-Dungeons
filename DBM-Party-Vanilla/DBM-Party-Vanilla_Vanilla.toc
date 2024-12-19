@@ -22,16 +22,16 @@
 ## X-DBM-Mod-Category: Classic
 ## X-DBM-StatTypes: normal
 
-## X-DBM-Mod-SubCategoriesID: 48,230,229|Lower,229|Upper,36,429,90,349,389,129,47,189,289,33,34,329,109,70,43,209,2784
-## X-DBM-Mod-SubCategoriesID-deDE: 48,230,229|Untere,229|Obere,36,429,90,349,389,129,47,189,289,33,34,329,109,70,43,209,2784
-## X-DBM-Mod-SubCategoriesID-esES: 48,230,229|Inferior,229|Superior,36,429,90,349,389,129,47,189,289,33,34,329,109,70,43,209,2784
-## X-DBM-Mod-SubCategoriesID-esMX: 48,230,229|Inferior,229|Superior,36,429,90,349,389,129,47,189,289,33,34,329,109,70,43,209,2784
-## X-DBM-Mod-SubCategoriesID-ptBR: 48,230,229|Inferior,229|Superior,36,429,90,349,389,129,47,189,289,33,34,329,109,70,43,209,2784
-## X-DBM-Mod-SubCategoriesID-frFR: 48,230,229|Inférieur,229|Supérieur,36,429,90,349,389,129,47,189,289,33,34,329,109,70,43,209,2784
-## X-DBM-Mod-SubCategoriesID-ruRU: 48,230,229|Нижняя,229|Верхняя,36,429,90,349,389,129,47,189,289,33,34,329,109,70,43,209,2784
-## X-DBM-Mod-SubCategoriesID-koKR: 48,230,229|하층,229|상층,36,429,90,349,389,129,47,189,289,33,34,329,109,70,43,209,2784
-## X-DBM-Mod-SubCategoriesID-zhTW: 48,230,229|下層,229|上層,36,429,90,349,389,129,47,189,289,33,34,329,109,70,43,209,2784
-## X-DBM-Mod-SubCategoriesID-zhCN: 48,230,229|下层,229|上层,36,429,90,349,389,129,47,189,289,33,34,329,109,70,43,209,2784
+## X-DBM-Mod-SubCategoriesID: 48,230,229|Lower,229|Upper,36,429,90,349,389,129,47,189,289,33,34,329,109,70,43,209,2784,2875
+## X-DBM-Mod-SubCategoriesID-deDE: 48,230,229|Untere,229|Obere,36,429,90,349,389,129,47,189,289,33,34,329,109,70,43,209,2784,2875
+## X-DBM-Mod-SubCategoriesID-esES: 48,230,229|Inferior,229|Superior,36,429,90,349,389,129,47,189,289,33,34,329,109,70,43,209,2784,2875
+## X-DBM-Mod-SubCategoriesID-esMX: 48,230,229|Inferior,229|Superior,36,429,90,349,389,129,47,189,289,33,34,329,109,70,43,209,2784,2875
+## X-DBM-Mod-SubCategoriesID-ptBR: 48,230,229|Inferior,229|Superior,36,429,90,349,389,129,47,189,289,33,34,329,109,70,43,209,2784,2875
+## X-DBM-Mod-SubCategoriesID-frFR: 48,230,229|Inférieur,229|Supérieur,36,429,90,349,389,129,47,189,289,33,34,329,109,70,43,209,2784,2875
+## X-DBM-Mod-SubCategoriesID-ruRU: 48,230,229|Нижняя,229|Верхняя,36,429,90,349,389,129,47,189,289,33,34,329,109,70,43,209,2784,2875
+## X-DBM-Mod-SubCategoriesID-koKR: 48,230,229|하층,229|상층,36,429,90,349,389,129,47,189,289,33,34,329,109,70,43,209,2784,2875
+## X-DBM-Mod-SubCategoriesID-zhTW: 48,230,229|下層,229|上層,36,429,90,349,389,129,47,189,289,33,34,329,109,70,43,209,2784,2875
+## X-DBM-Mod-SubCategoriesID-zhCN: 48,230,229|下层,229|上层,36,429,90,349,389,129,47,189,289,33,34,329,109,70,43,209,2784,2875
 
 ## X-DBM-Mod-Name: Dungeons (Vanilla)
 ## X-DBM-Mod-Name-deDE: Gruppe (Vanilla)
@@ -44,7 +44,7 @@
 ## X-DBM-Mod-Name-zhTW: 隊伍首領 (傳統)
 ## X-DBM-Mod-Name-zhCN: 队伍首领(经典旧世)
 ## X-DBM-Mod-Sort: 1102
-## X-DBM-Mod-MapID: 48,230,229,36,429,90,349,389,129,47,189,289,33,34,329,109,70,43,209,2784
+## X-DBM-Mod-MapID: 48,230,229,36,429,90,349,389,129,47,189,289,33,34,329,109,70,43,209,2784,2875
 ## X-DBM-Mod-MinCoreRevision: 12473
 ## X-DBM-Mod-MinExpansion: 0
 
@@ -261,3 +261,10 @@ Classic\SOD_DemonFallCanyon\Azgaloth.lua
 Classic\SOD_DemonFallCanyon\Pyranis.lua
 Classic\SOD_DemonFallCanyon\Diathorus.lua
 Classic\SOD_DemonFallCanyon\HellscreamsPhantom.lua
+
+Classic\SOD_KarazhanCrypts\HarbingerOfSin.lua
+Classic\SOD_KarazhanCrypts\Criminal.lua
+Classic\SOD_KarazhanCrypts\Kharon.lua
+Classic\SOD_KarazhanCrypts\OperaOfMalediction.lua
+Classic\SOD_KarazhanCrypts\DarkRider.lua
+Classic\SOD_KarazhanCrypts\CreepingMalison.lua
