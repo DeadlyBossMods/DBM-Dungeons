@@ -67,7 +67,7 @@ local timerMindPiercerCD				= mod:NewCDNPTimer(18.1, 451391, nil, nil, nil, 3)--
 local timerCorruptCD					= mod:NewCDNPTimer(18.1, 451395, nil, nil, nil, 3)
 --local timerSearMindCD					= mod:NewCDPNPTimer(20.4, 76711, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--Valid August 11
 local timerMoltenWakeCD					= mod:NewCDNPTimer(18.1, 451965, nil, nil, nil, 2)--Valid August 11
-local timerLavaFistCD					= mod:NewCDNPTimer(15.7, 451971, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)--Valid August 11
+local timerLavaFistCD					= mod:NewCDNPTimer(23, 451971, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)--Valid August 11
 local timerShadowflameSlashCD			= mod:NewCDNPTimer(16.7, 451241, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerBlazingShadowflameCD			= mod:NewCDPNPTimer(16.0, 462216, nil, nil, nil, 3)--Valid August 21
 --local playerName = UnitName("player")
@@ -191,7 +191,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 	--elseif spellId == 76711 then
 	--	timerSearMindCD:Start(18.9, args.sourceGUID)
 	elseif spellId == 451971 then
-		timerLavaFistCD:Start(12.7, args.sourceGUID)--15.7-3
+		timerLavaFistCD:Start(20, args.sourceGUID)--23-3
 	elseif spellId == 456711 then
 		timerShadowlavaBlastCD:Start(15.6, args.sourceGUID)--18.1-2.5
 	elseif spellId == 456713 then
