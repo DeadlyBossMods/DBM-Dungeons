@@ -8,7 +8,7 @@ mod:SetRevision("@file-date-integer@")
 mod:SetEncounterID(3126, 3138)
 --mod:SetHotfixNoticeRev(20240914000000)
 --mod:SetMinSyncRevision(20240914000000)
-mod:SetZone(2831)
+mod:SetZone(2831)--Demolition Dome
 
 --mod:RegisterCombat("scenario", 2682)
 mod:RegisterCombat("combat")

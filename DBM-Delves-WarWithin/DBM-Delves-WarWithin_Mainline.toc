@@ -44,4 +44,7 @@ TheSpiralWeave.lua
 TakRethanAbyss.lua
 TheUnderkeep.lua
 ZekvirsLair.lua
+
+ExcavationSite9.lua
+SidestreetSluice.lua
 UnderpinsLair.lua
