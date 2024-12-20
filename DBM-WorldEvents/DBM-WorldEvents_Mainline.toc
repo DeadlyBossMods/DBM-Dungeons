@@ -1,4 +1,4 @@
-## Interface: 110005, 110007
+## Interface: 110007, 110100
 ## Title:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cff10ff10World Events|r
 ## Title-esES:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cff10ff10Eventos del mundo|r
 ## Title-esMX:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cff10ff10Eventos del mundo|r
