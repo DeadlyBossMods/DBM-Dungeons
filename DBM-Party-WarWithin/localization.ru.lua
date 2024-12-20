@@ -253,22 +253,27 @@ L:SetGeneralLocalization({
 --  Big M.O.M.M.A.  --
 -----------------------------
 --L = DBM:GetModLocalization(2648)
+
 -----------------------------
 --  Demolition Duo  --
 -----------------------------
 --L = DBM:GetModLocalization(2649)
+
 -----------------------------
 --  Swampface  --
 -----------------------------
 --L = DBM:GetModLocalization(2650)
+
 -----------------------------
 --  Geezle Gigazap (aka Geez nuts)  --
 -----------------------------
 --L = DBM:GetModLocalization(2651)
+
 ---------
 --Trash--
 ---------
 L = DBM:GetModLocalization("OperationFloodgateTrash")
+
 L:SetGeneralLocalization({
 	name =	"Трэш мобы Операция Затвор"
 })
