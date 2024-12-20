@@ -117,7 +117,7 @@ L:SetGeneralLocalization({
 ---------
 --Trash--
 ---------
-L = DBM:GetModLocalization("UndermineTrash")
+L = DBM:GetModLocalization("MotherloadTrash")
 
 L:SetGeneralLocalization({
 	name =	"왕노다지 광산!! 일반몹"
