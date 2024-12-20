@@ -78,8 +78,8 @@ CityofThreads\TheCoaglamation.lua
 CityofThreads\IzotheGrandSplicer.lua
 CityofThreads\CityofThreadsTrash.lua
 
-11_1Dungeon\BigMomma.lua
-11_1Dungeon\DemolitionDuo.lua
-11_1Dungeon\GeezNuts.lua
-11_1Dungeon\Swampface.lua
-11_1Dungeon\11_1DungeonTrash.lua
+OperationFloodgate\BigMomma.lua
+OperationFloodgate\DemolitionDuo.lua
+OperationFloodgate\Swampface.lua
+OperationFloodgate\GeezNuts.lua
+OperationFloodgate\OperationFloodgateTrash.lua
