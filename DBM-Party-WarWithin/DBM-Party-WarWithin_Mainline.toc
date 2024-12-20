@@ -13,14 +13,14 @@
 ## X-DBM-Mod-Type: PARTY
 ## X-DBM-Mod-Category: WARWITHIN
 ## X-DBM-StatTypes: follower,normal,heroic,mythic,challenge
-## X-DBM-Mod-SubCategoriesID: 2651, 2649, 2648, 2652, 2662, 2660, 2661, 2669
+## X-DBM-Mod-SubCategoriesID: 2651, 2649, 2648, 2652, 2662, 2660, 2661, 2669, 2773
 ## X-DBM-Mod-Name: Dungeons (War Within)
 ## X-DBM-Mod-Name-koKR: 던전 (내부 전쟁)
 ## X-DBM-Mod-Name-ruRU: Подземелья (Война Внутри)
 ## X-DBM-Mod-Name-zhCN: 队伍首领 (地心之战)
 ## X-DBM-Mod-Name-zhTW: 隊伍首領 (地心之戰)
 ## X-DBM-Mod-Sort: 115
-## X-DBM-Mod-MapID: 2651, 2649, 2648, 2652, 2662, 2660, 2661, 2669
+## X-DBM-Mod-MapID: 2651, 2649, 2648, 2652, 2662, 2660, 2661, 2669, 2773
 ## X-DBM-Mod-MinCoreRevision: 20230716000000
 ## X-DBM-Mod-MinExpansion: 10
 ## X-Curse-Project-ID: 314994
@@ -77,3 +77,9 @@ CityofThreads\FangsoftheQueen.lua
 CityofThreads\TheCoaglamation.lua
 CityofThreads\IzotheGrandSplicer.lua
 CityofThreads\CityofThreadsTrash.lua
+
+11_1Dungeon\BigMomma.lua
+11_1Dungeon\DemolitionDuo.lua
+11_1Dungeon\GeezNuts.lua
+11_1Dungeon\Swampface.lua
+11_1Dungeon\11_1DungeonTrash.lua
