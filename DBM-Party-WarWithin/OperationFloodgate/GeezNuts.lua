@@ -1,3 +1,4 @@
+if DBM:GetTOC() < 110100 then return end
 local mod	= DBM:NewMod(2651, "DBM-Party-WarWithin", 9, 1298)
 local L		= mod:GetLocalizedStrings()
 
