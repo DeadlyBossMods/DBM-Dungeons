@@ -1,3 +1,4 @@
+if not DBM:IsSeasonal("SeasonOfDiscovery") then return end
 local mod	= DBM:NewMod("Pyranis", "DBM-Party-Vanilla", 21)
 local L		= mod:GetLocalizedStrings()
 
