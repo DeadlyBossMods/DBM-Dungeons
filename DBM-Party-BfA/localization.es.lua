@@ -117,7 +117,7 @@ L:SetGeneralLocalization({
 ----------------------
 -- Enemigos menores --
 ----------------------
-L = DBM:GetModLocalization("UndermineTrash")
+L = DBM:GetModLocalization("MotherloadTrash")
 
 L:SetGeneralLocalization({
 	name =	"Enemigos menores"

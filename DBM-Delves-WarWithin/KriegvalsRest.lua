@@ -96,6 +96,8 @@ function mod:ENCOUNTER_START(eID)
 		timerGroundSlamCD:Start(18.2)
 		--30.4, 35.1
 		timerRagingTantrumCD:Start(30.3)
+	--elseif eID == 3140 then--Vindle Snapcrank
+
 	end
 end
 
@@ -107,6 +109,12 @@ function mod:ENCOUNTER_END(eID, _, _, _, success)
 			timerFlamestormCD:Stop()
 			timerGroundSlamCD:Stop()
 			timerRagingTantrumCD:Stop()
+		end
+	elseif eID == 3140 then--Vindle Snapcrank
+		if success == 1 then
+			DBM:EndCombat(self)
+		else
+
 		end
 	end
 end

@@ -96,6 +96,8 @@ function mod:ENCOUNTER_START(eID)
 		timerFungalInfectionCD:Start(4.3)
 	elseif eID == 3004 then--Evolved Nerubian Leaders
 		DBM:AddMsg("Boss alerts/timers not yet implemented for Evolved Nerubian Leaders")
+	elseif eID == 3124 then--Vindle Snapcrank
+		DBM:AddMsg("Boss alerts/timers not yet implemented for Vindle Snapcrank")
 	end
 end
 

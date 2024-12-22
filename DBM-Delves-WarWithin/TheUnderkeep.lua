@@ -90,6 +90,8 @@ function mod:ENCOUNTER_START(eID)
 		timerEncasingWebshotCD:Start(12.2)
 	elseif eID == 2993 then--Crazed Abomination
 		DBM:AddMsg("Boss alerts/timers not yet implemented for Crazed Abomination")
+	elseif eID == 3106 then--Torque Clanfire and Sprok
+		DBM:AddMsg("Boss alerts/timers not yet implemented for Torque Clanfire and Sprok")
 	end
 end
 
@@ -109,6 +111,12 @@ function mod:ENCOUNTER_END(eID, _, _, _, success)
 			timerEncasingWebshotCD:Stop()
 		end
 	elseif eID == 2993 then--Crazed Abomination
+		if success == 1 then
+			DBM:EndCombat(self)
+		else
+			--Stop Timers manually
+		end
+	elseif eID == 3106 then--Torque Clanfire and Sprok
 		if success == 1 then
 			DBM:EndCombat(self)
 		else

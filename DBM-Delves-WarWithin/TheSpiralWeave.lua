@@ -102,6 +102,8 @@ function mod:ENCOUNTER_START(eID)
 		timerCallDronesCD:Start(22.8)
 	elseif eID == 3006 then--The Puppetmaster
 		timerStingingSwarmCD:Start(12.2)
+	elseif eID == 3123 then--Geargrave
+		DBM:AddMsg("Boss alerts/timers not yet implemented for Geargrave")
 	end
 end
 
@@ -120,6 +122,12 @@ function mod:ENCOUNTER_END(eID, _, _, _, success)
 		else
 			--Stop Timers manually
 			timerStingingSwarmCD:Stop()
+		end
+	elseif eID == 3123 then--Geargrave
+		if success == 1 then
+			DBM:EndCombat(self)
+		else
+			--Stop Timers manually
 		end
 	end
 end

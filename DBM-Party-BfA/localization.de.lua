@@ -97,7 +97,7 @@ L:SetGeneralLocalization({
 ---------
 --Trash--
 ---------
-L = DBM:GetModLocalization("UndermineTrash")
+L = DBM:GetModLocalization("MotherloadTrash")
 
 L:SetGeneralLocalization({
 	name =	"Trash des Riesenflözes"

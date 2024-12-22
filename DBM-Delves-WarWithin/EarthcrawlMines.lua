@@ -99,6 +99,8 @@ function mod:ENCOUNTER_START(eID)
 		timerRunicShacklesCD:Start(20.2)
 	elseif eID == 3005 then--Maklin Drillstab
 		DBM:AddMsg("Boss alerts/timers not yet implemented for Maklin Drillstab")
+	elseif eID == 3100 then--The Biggest Bug
+		DBM:AddMsg("Boss alerts/timers not yet implemented for The Biggest Bug")
 	end
 end
 
@@ -113,6 +115,12 @@ function mod:ENCOUNTER_END(eID, _, _, _, success)
 			timerRunicShacklesCD:Stop()
 		end
 	elseif eID == 3005 then--Maklin Drillstab
+		if success == 1 then
+			DBM:EndCombat(self)
+		else
+			--Timers
+		end
+	elseif eID == 3100 then--The Biggest Bug
 		if success == 1 then
 			DBM:EndCombat(self)
 		else
