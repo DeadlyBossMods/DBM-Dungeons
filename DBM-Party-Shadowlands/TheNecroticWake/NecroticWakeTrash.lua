@@ -11,7 +11,7 @@ mod:RegisterZoneCombat(2286)
 
 mod:RegisterEvents(
 	"SPELL_CAST_START 324293 327240 327399 334748 320462 338353 323496 333477 333479 338606 345623 322756 328667 335143 320822 324394 324387 338456 324323 321807",
-	"SPELL_CAST_SUCCESS 334748 320571 321780 343470 324372 327130 323496 338606 322756 327393 335143 338353 338456 338357 333477 333479 327240 345623 324323 321807",--324293
+	"SPELL_CAST_SUCCESS 334748 320571 321780 343470 324372 327130 323496 338606 322756 327393 335143 338353 338456 338357 333477 333479 327240 345623 324323 321807 324293",
 	"SPELL_INTERRUPT",
 	"SPELL_AURA_APPLIED 327401 323347 335141 338353 338357 338606 327396 323471 321807",
 	"SPELL_AURA_APPLIED_DOSE 338357",
@@ -91,10 +91,9 @@ local timerGrimFateCD						= mod:NewCDNPTimer(18.2, 327396, nil, nil, nil, 3)
 local timerDeathBurstCD						= mod:NewCDNPTimer(16.2, 345623, nil, nil, nil, 3)
 local timerAnimatedDeadCD					= mod:NewCDNPTimer(29.1, 321780, nil, nil, nil, 1)--29.1-33, not greatest sample size
 local timerBoneMendCD						= mod:NewCDPNPTimer(7, 335143, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--7 second recast, but can be delayed a lot by Final bargain
---local timerRaspingScreamCD				= mod:NewCDPNPTimer(15, 324293, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--Not known, couldn't find a single log mob lived more than one cast
+local timerRaspingScreamCD					= mod:NewCDPNPTimer(17, 324293, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerGruesomeCleaveCD					= mod:NewCDPNPTimer(11.1, 324323, nil, nil, nil, 3)
---local timerBoneshatterShieldCD			= mod:NewCDNPTimer(15, 343470, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)--Not known, couldn't find a single log mob lived more than one cast
---local timerFrostBoltVolleyCD				= mod:NewCDNPTimer(15.4, 328667, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--CD unknown
+local timerBoneshatterShieldCD				= mod:NewCDNPTimer(20.6, 343470, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)
 local timerGoresplatterCD					= mod:NewCDPNPTimer(20, 338353, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--20-22
 local timerMutlilateCD						= mod:NewCDNPTimer(13, 338456, nil, nil, nil, 5)--13 sec trash, 10.6 both minibosses
 local timerTenderizeCD						= mod:NewCDNPTimer(14.5, 338357, nil, nil, nil, 5)--14.5 sec trash, 12.1 Goregrind
@@ -158,7 +157,6 @@ function mod:SPELL_CAST_START(args)
 		specWarnGoresplatter:Show(args.sourceName)
 		specWarnGoresplatter:Play("kickcast")
 	elseif spellId == 328667 and args:GetSrcCreatureID() ~= 164414 then
-		--timerFrostBoltVolleyCD:Start(15.4, args.sourceGUID)
 		if self:CheckInterruptFilter(args.sourceGUID, false, true) then--Filter boss version, to avoid double alerts
 			specWarnFrostBoltVolley:Show(args.sourceName)
 			specWarnFrostBoltVolley:Play("kickcast")
@@ -249,7 +247,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 	elseif spellId == 343470 then
 		specWarnBoneshatterShield:Show(args.sourceName)
 		specWarnBoneshatterShield:Play("attackshield")
---		timerBoneshatterShieldCD:Start(nil, args.sourceGUID)
+		timerBoneshatterShieldCD:Start(nil, args.sourceGUID)
 	elseif spellId == 324372 then
 		specWarnReapingWinds:Show()
 		specWarnReapingWinds:Play("justrun")
@@ -275,8 +273,8 @@ function mod:SPELL_CAST_SUCCESS(args)
 		timerGrimFateCD:Start(timer, args.sourceGUID)
 	elseif spellId == 335143 then
 		timerBoneMendCD:Start(7, args.sourceGUID)
---	elseif spellId == 324293 then
-		--timerRaspingScreamCD:Start(15.4, args.sourceGUID)
+	elseif spellId == 324293 then
+		timerRaspingScreamCD:Start(15, args.sourceGUID)--17-2
 	elseif spellId == 338353 then
 		timerGoresplatterCD:Start(20, args.sourceGUID)
 	elseif spellId == 338456 then
@@ -311,8 +309,8 @@ function mod:SPELL_INTERRUPT(args)
 		end
 	elseif args.extraSpellId == 335143 then
 		timerBoneMendCD:Start(7, args.destGUID)
---	elseif args.extraSpellId == 324293 then
-		--timerRaspingScreamCD:Start(15.4, args.destGUID)
+	elseif args.extraSpellId == 324293 then
+		timerRaspingScreamCD:Start(15, args.destGUID)
 	elseif args.extraSpellId == 338353 then
 		timerGoresplatterCD:Start(20, args.destGUID)
 	end
@@ -417,8 +415,8 @@ function mod:UNIT_DIED(args)
 		timerGrimFateCD:Stop(args.destGUID)
 		timerDeathBurstCD:Stop(args.destGUID)
 	elseif cid == 165919 then--Skeletal Marauder
-		--timerRaspingScreamCD:Stop(args.destGUID)
-		--timerBoneshatterShieldCD:Stop(args.destGUID)
+		timerRaspingScreamCD:Stop(args.destGUID)
+		timerBoneshatterShieldCD:Stop(args.destGUID)
 		timerGruesomeCleaveCD:Stop(args.destGUID)
 	elseif cid == 172981 then--Kyrian Stickwork
 		timerMutlilateCD:Stop(args.destGUID)
@@ -466,6 +464,10 @@ function mod:StartEngageTimers(guid, cid)
 	elseif cid == 165824 then--Nar'zudah
 		timerDeathBurstCD:Start(4, guid)
 		timerGrimFateCD:Start(9, guid)--9, but sometimes 12 based on likely spellqueuing
+	elseif cid == 165919 then--Skeletal Marauder
+		timerGruesomeCleaveCD:Start(3.4, guid)
+		timerRaspingScreamCD:Start(13, guid)
+		--timerBoneshatterShieldCD:Start(11, guid)--Initial probably based on health threshold
 	elseif cid == 172981 then--Kyrian Stickwork
 		timerTenderizeCD:Start(4, guid)
 		timerMutlilateCD:Start(8.1, guid)
