@@ -101,10 +101,18 @@ L:SetGeneralLocalization({
 -----------------------------
 --L = DBM:GetModLocalization(2590)
 
+L:SetMiscLocalization{
+	SafeVent		= "安全通風口"
+}
+
 -----------------------------
 --  High Speaker Eirich  --
 -----------------------------
 --L = DBM:GetModLocalization(2582)
+
+L:SetWarningLocalization({
+	specWarnVoidCorruption	= "虛無裂隙 - 靠近裂隙（而非在裂隙裡）"
+})
 
 ---------
 --Trash--
@@ -198,6 +206,10 @@ L:SetGeneralLocalization({
 	name =	"燼釀酒莊小怪"
 })
 
+L:SetOptionLocalization({
+	AGBuffs		= "與專業物品互動時自動選擇對話啟動增益"
+})
+
 -------------------------
 --  City of Threads (1274/2669)  --蛛絲城
 -----------------------------
@@ -209,6 +221,10 @@ L:SetGeneralLocalization({
 --  Fangs of the Queen  --
 -----------------------------
 --L = DBM:GetModLocalization(2595)
+
+L:SetMiscLocalization{
+	RolePlay		= "轉化場過去曾是我們神聖進化的發源地。"
+}
 
 -----------------------------
 --  The Coaglamation  --
@@ -227,4 +243,35 @@ L = DBM:GetModLocalization("CityofThreadsTrash")
 
 L:SetGeneralLocalization({
 	name =	"蛛絲城小怪"
+})
+
+----------
+-- 水閘行動
+-----------------------------
+--  Big M.O.M.M.A.  --
+-----------------------------
+--L = DBM:GetModLocalization(2648)
+
+-----------------------------
+--  Demolition Duo  --
+-----------------------------
+--L = DBM:GetModLocalization(2649)
+
+-----------------------------
+--  Swampface  --
+-----------------------------
+--L = DBM:GetModLocalization(2650)
+
+-----------------------------
+--  Geezle Gigazap (aka Geez nuts)  --
+-----------------------------
+--L = DBM:GetModLocalization(2651)
+
+---------
+--Trash--
+---------
+L = DBM:GetModLocalization("OperationFloodgateTrash")
+
+L:SetGeneralLocalization({
+	name =	"水閘行動小怪"
 })
