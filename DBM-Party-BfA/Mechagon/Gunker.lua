@@ -20,42 +20,52 @@ mod:RegisterEventsInCombat(
  or (ability.id = 297821 or ability.id = 297985) and type = "cast"
 --]]
 local warnGooped					= mod:NewTargetNoFilterAnnounce(298259, 2)
-local warnSplatter					= mod:NewSpellAnnounce(297985, 2)
+local warnSplatter					= mod:NewCountAnnounce(297985, 2)
 
-local specWarnToxicWave				= mod:NewSpecialWarningSpell(297834, nil, nil, nil, 2, 2)
+local specWarnToxicWave				= mod:NewSpecialWarningCount(297834, nil, nil, nil, 2, 2)
 local specWarnGooped				= mod:NewSpecialWarningYou(298259, nil, nil, nil, 1, 2)
 local specWarnGoopedDispel			= mod:NewSpecialWarningDispel(298259, "RemoveDisease", nil, nil, 1, 2)
 local specWarnToxicGoopDispel		= mod:NewSpecialWarningDispel(297913, false, nil, nil, 1, 2)
-local specWarnCoalesce				= mod:NewSpecialWarningDodge(297835, nil, nil, nil, 2, 2)
+local specWarnCoalesce				= mod:NewSpecialWarningDodgeCount(297835, nil, nil, nil, 2, 2)
 
-local timerToxicWaveCD				= mod:NewCDTimer(49.8, 297834, nil, nil, nil, 2)
-local timerSplatterCD				= mod:NewCDTimer(24.2, 297985, nil, nil, nil, 3)
-local timerCoalesceCD				= mod:NewCDTimer(49.8, 297835, nil, nil, nil, 3)
+local timerToxicWaveCD				= mod:NewCDCountTimer(49.8, 297834, nil, nil, nil, 2)
+local timerSplatterCD				= mod:NewCDCountTimer(24.2, 297985, nil, nil, nil, 3)
+local timerCoalesceCD				= mod:NewCDCountTimer(49.8, 297835, nil, nil, nil, 3)
+
+mod.vb.toxicCount = 0
+mod.vb.splatCount = 0
+mod.vb.coalesceCount = 0
 
 function mod:OnCombatStart(delay)
-	timerSplatterCD:Start(8.7-delay)
-	timerCoalesceCD:Start(20.6-delay)
-	timerToxicWaveCD:Start(44.8-delay)
+	self.vb.toxicCount = 0
+	self.vb.splatCount = 0
+	self.vb.coalesceCount = 0
+	timerSplatterCD:Start(8.7-delay, 1)
+	timerCoalesceCD:Start(20.6-delay, 1)
+	timerToxicWaveCD:Start(44.8-delay, 1)
 end
 
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
 	if spellId == 297834 then
-		specWarnToxicWave:Show()
+		self.vb.toxicCount = self.vb.toxicCount + 1
+		specWarnToxicWave:Show(self.vb.toxicCount)
 		specWarnToxicWave:Play("specialsoon")--watchwave (if dodgable)
-		timerToxicWaveCD:Start()
+		timerToxicWaveCD:Start(nil, self.vb.toxicCount+1)
 	elseif spellId == 297835 then
-		specWarnCoalesce:Show()
+		self.vb.coalesceCount = self.vb.coalesceCount + 1
+		specWarnCoalesce:Show(self.vb.coalesceCount)
 		specWarnCoalesce:Play("watchstep")
-		timerCoalesceCD:Start()
+		timerCoalesceCD:Start(nil, self.vb.coalesceCount+1)
 	end
 end
 
 function mod:SPELL_CAST_SUCCESS(args)
 	local spellId = args.spellId
 	if spellId == 297985 then
-		warnSplatter:Show()
-		timerSplatterCD:Start()
+		self.vb.splatCount = self.vb.splatCount + 1
+		warnSplatter:Show(self.vb.splatCount)
+		timerSplatterCD:Start(nil, self.vb.splatCount+1)
 	end
 end
 

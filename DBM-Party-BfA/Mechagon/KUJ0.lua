@@ -29,45 +29,39 @@ local yellExplosiveLeap				= mod:NewYell(291972)
 local specWarnVentingFlames			= mod:NewSpecialWarningMoveTo(291946, nil, nil, nil, 3, 2)
 --local specWarnGTFO				= mod:NewSpecialWarningGTFO(238028, nil, nil, nil, 1, 8)
 
-local timerAurDropCD				= mod:NewNextTimer(32.7, 291930, nil, nil, nil, 3)
-local timerExplosiveLeapCD			= mod:NewCDTimer(31.9, 291972, nil, nil, nil, 3)
-local timerVentingFlamesCD			= mod:NewCDTimer(13.4, 291946, nil, nil, nil, 2, nil, DBM_COMMON_L.DEADLY_ICON)
-local timerBlazingChompCD			= mod:NewCDTimer(15.8, 294929, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
-
-mod:AddRangeFrameOption(10, 291972)
+local timerAurDropCD				= mod:NewNextCountTimer(32.7, 291930, nil, nil, nil, 3)
+local timerExplosiveLeapCD			= mod:NewCDCountTimer(31.9, 291972, nil, nil, nil, 3)
+local timerVentingFlamesCD			= mod:NewCDCountTimer(13.4, 291946, nil, nil, nil, 2, nil, DBM_COMMON_L.DEADLY_ICON)
+local timerBlazingChompCD			= mod:NewCDCountTimer(15.8, 294929, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 
 mod.vb.airDropCount = 0
+mod.vb.leapCount = 0
+mod.vb.flamesCount = 0
+mod.vb.chompCount = 0
 
 function mod:OnCombatStart(delay)
 	self.vb.airDropCount = 0
-	timerAurDropCD:Start(7.2-delay)--SUCCESS
-	timerBlazingChompCD:Start(10.7-delay)--SUCCESS
-	timerVentingFlamesCD:Start(15.5-delay)--START
-	timerExplosiveLeapCD:Start(38.6-delay)--START
-end
-
-function mod:OnCombatEnd()
-	if self.Options.RangeFrame then
-		DBM.RangeCheck:Hide()
-	end
-	if self.Options.InfoFrame then
-		DBM.InfoFrame:Hide()
-	end
+	self.vb.leapCount = 0
+	self.vb.flamesCount = 0
+	self.vb.chompCount = 0
+	timerAurDropCD:Start(7.2-delay, 1)--SUCCESS
+	timerBlazingChompCD:Start(10.7-delay, 1)--SUCCESS
+	timerVentingFlamesCD:Start(15.5-delay, 1)--START
+	timerExplosiveLeapCD:Start(38.6-delay, 1)--START
 end
 
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
 	if spellId == 291946 then
+		self.vb.flamesCount = self.vb.flamesCount + 1
 		specWarnVentingFlames:Show(DBM_COMMON_L.BREAK_LOS)
 		specWarnVentingFlames:Play("findshelter")
 		--15.5, 33.9, 34.0, 34.0"
-		timerVentingFlamesCD:Start()
+		timerVentingFlamesCD:Start(nil, self.vb.flamesCount+1)
 	elseif spellId == 291973 then
+		self.vb.leapCount = self.vb.leapCount + 1
 		--38.6, 33.9, 34.0, 33.4
-		timerExplosiveLeapCD:Start()
-		if self.Options.RangeFrame then
-			DBM.RangeCheck:Show(10, nil, nil, nil, nil, 15)--Auto hide after about 15 seconds (12 plus cast)
-		end
+		timerExplosiveLeapCD:Start(nil, self.vb.leapCount+1)
 	end
 end
 
@@ -79,8 +73,9 @@ function mod:SPELL_CAST_SUCCESS(args)
 		--7.2, 26.3, 34.0, 34.0, 34.0
 		timerAurDropCD:Start(self.vb.airDropCount == 1 and 26.3 or 34)
 	elseif spellId == 294929 then
+		self.vb.chompCount = self.vb.chompCount + 1
 		--10.7, 18.2, 18.2, 17.0, 17.0, 15.8
-		timerBlazingChompCD:Start()
+		timerBlazingChompCD:Start(nil, self.vb.chompCount+1)
 	end
 end
 
