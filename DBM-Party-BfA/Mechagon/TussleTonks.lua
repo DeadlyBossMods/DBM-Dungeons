@@ -101,6 +101,7 @@ function mod:OnCombatStart(delay)
 	else
 		timerPlatinumPummelCD:Start(1-delay)
 		timerGroundPoundCD:Start(1-delay)
+		timerBattlemineCD:Start(1-delay)
 	end
 	--timerFoeFlipperCD:Start(16.7-delay)
 end
