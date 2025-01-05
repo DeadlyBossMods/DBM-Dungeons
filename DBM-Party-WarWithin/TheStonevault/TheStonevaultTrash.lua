@@ -299,7 +299,7 @@ function mod:StartEngageTimers(guid, cid)
 	elseif cid == 212453 then--Ghastlyy Voidsoul
 		timerHowlingFearCD:Start(4.2, guid)--4.2-9.5
 	elseif cid == 213338 or cid == 224962 then--Forgebound Mender
-		timerRestoringMetalsCD:Start(11.1, guid)--11.1-16.1
+		timerRestoringMetalsCD:Start(10.8, guid)--10.8-16.1
 	elseif cid == 213343 then--Forge Loader
 		timerLavaCannonCD:Start(9.4, guid)--9.4-10.1
 		timerMoltenMortarCD:Start(11.8, guid)--11.8-13.4
@@ -308,17 +308,17 @@ function mod:StartEngageTimers(guid, cid)
 	elseif cid == 212400 then--Void Touched Elemental
 		timerCrystalSalvoCD:Start(3.6, guid)--3.6-5.5
 	elseif cid == 212765 then--Void Bound Despoiler
-		timerShadowClawsCD:Start(5, guid)--5-6.7
+		timerShadowClawsCD:Start(3, guid)--3-6.7
 		timerVoidOutburstCD:Start(7.1, guid)--5.3-8.8?
 	elseif cid == 221979 then--Void Bound Howler
 		timerPiercingWailCD:Start(5.1, guid)--Test thoroughly in folloewr dungeon
 	elseif cid == 214264 then--Cursedforge Honor Guard
-		timerShieldStampedeCD:Start(4.9, guid)
+		timerShieldStampedeCD:Start(4.6, guid)
 	elseif cid == 214066 then--Cursedforge StoneShaper
-		timerEarthBurstTotemCD:Start(5.8, guid)--Validate in dungeons
+		timerEarthBurstTotemCD:Start(1.9, guid)--1.9-4.9
 	elseif cid == 213954 then--Rock Smasher
-		timerSmashRockCD:Start(10.0, guid)
-		timerGraniteEruptionCD:Start(16.2, guid)
+		timerSmashRockCD:Start(8.5, guid)--8.5
+		timerGraniteEruptionCD:Start(14.5, guid)--14.5-16.2
 	end
 end
 

@@ -92,7 +92,7 @@ local function updateDorlitaTimers(self, ICD)
 end
 
 --Scrap Song Triggers 7.2 ICD on all of Brokk's other abilities
---Exhaust Vents Triggers 3.6 second ICD on all of Brokk's other abilities
+--Exhaust Vents Triggers 3.2 second ICD on all of Brokk's other abilities
 local function updateBrokkTimers(self, ICD)
 	if timerScrapSongCD:GetRemaining(self.vb.cubeCount+1) < ICD then
 		local elapsed, total = timerScrapSongCD:GetTime(self.vb.cubeCount+1)
@@ -234,7 +234,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 		specWarnExhaustVents:Play("findclearvent")
 		--This seems to actually have a higher Cd when it's not interfered with, it just gets interferred with a lot
 		timerExhaustVentsCD:Start(23.1, self.vb.ventilationCount+1)
-		updateBrokkTimers(self, 3.6)--Can't cast anything else while channeling this
+		updateBrokkTimers(self, 3.2)--Can't cast anything else while channeling this
 	end
 end
 

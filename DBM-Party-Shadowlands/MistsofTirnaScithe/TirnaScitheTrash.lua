@@ -86,14 +86,14 @@ local timerBrambleBurstCD				= mod:NewCDNPTimer(13.5, 324923, nil, nil, nil, 3)-
 local timerAnimaInjectionCD				= mod:NewCDNPTimer(14.1, 325224, nil, nil, nil, 3)--Valid Aug 8
 --local timerBuckingRampageCD			= mod:NewCDNPTimer(15.2, 331743, nil, nil, nil, 3)--Disabled in current season
 local timerPoisonousDischargeCD			= mod:NewCDNPTimer(21.2, 340279, nil, nil, nil, 3)--??? not seen in logs, mob avoided?
-local timerSoulSpiritCD					= mod:NewCDNPTimer(14.5, 322557, nil, nil, nil, 5)--Valid Aug 8
-local timerVolatileAcidCD				= mod:NewCDNPTimer(12.1, 325418, nil, nil, nil, 3)--Valid Aug 8, HIGHLY variable though (like 12-19)
+local timerSoulSpiritCD					= mod:NewCDNPTimer(13.6, 322557, nil, nil, nil, 5)--Valid Jan 4 25
+local timerVolatileAcidCD				= mod:NewCDNPTimer(11.3, 325418, nil, nil, nil, 3)--Valid Aug 8, HIGHLY variable though (like 12-19)
 local timerNourishtheForestCD			= mod:NewCDPNPTimer(15.9, 324914, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--Valid Aug 8
 local timerBramblethornCoatCD			= mod:NewCDPNPTimer(21.6, 324776, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--Valid Aug 8, 21.6-24.something
 local timerStimulateResistanceCD		= mod:NewCDPNPTimer(15.8, 326046, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--Valid Aug 8
 local timerStimulateRegenerationCD		= mod:NewCDPNPTimer(21.9, 340544, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--Valid Aug 8, but could be lower
 local timerAcidNovaCD					= mod:NewCDNPTimer(18, 460092, nil, nil, nil, 3)--Valid Aug 8
-local timerHarvestEssenceCD				= mod:NewCDPNPTimer(15, 322938, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)----Valid Aug 8. This one does go on CD if stunned because it's channeled not cast start
+local timerHarvestEssenceCD				= mod:NewCDPNPTimer(13.9, 322938, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)----Valid Jan 4 25. This one does go on CD if stunned because it's channeled not cast start
 local timerExpelCD						= mod:NewCDNPTimer(15.1, 463248, nil, nil, nil, 3)--Valid Aug 8
 local timerMistWardCD					= mod:NewCDNPTimer(22.9, 463256, nil, nil, nil, 5)--Valid Aug 8, One of two creatures has CD, the other does not.
 local timerRadiantBreathCD				= mod:NewCDPNPTimer(10.4, 340160, nil, nil, nil, 3)--Valid Aug 8
@@ -101,7 +101,7 @@ local timerShredArmorCD					= mod:NewCDNPTimer(10.6, 340208, nil, nil, nil, 5)--
 local timerAnimaSlashCD					= mod:NewCDNPTimer(13, 463217, nil, nil, nil, 5)--Valid Nov 4
 local timerPoolofRadianceCD				= mod:NewCDNPTimer(28, 340189, nil, nil, nil, 5)--Valid Aug 8
 local timerAcidGlobuleCD				= mod:NewCDNPTimer(15.4, 326021, nil, nil, nil, 3)--Valid Nov 3
-local timerMistveilBiteCD				= mod:NewCDNPTimer(15, 324987, nil, nil, nil, 5)--Valid Nov 3
+local timerMistveilBiteCD				= mod:NewCDNPTimer(14.5, 324987, nil, nil, nil, 5)--Valid Nov 3
 local timerTongueLashingCD				= mod:NewCDPNPTimer(7.7, 340300, nil, nil, nil, 3)--Valid Aug 8
 
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc, 7 off interrupt
@@ -448,13 +448,13 @@ function mod:StartEngageTimers(guid, cid)
 	elseif cid == 166275 then--Mistveil Shaper
 		timerBramblethornCoatCD:Start(7.6, guid)
 	elseif cid == 167111 then--Spinemaw Staghorn
-		timerStimulateResistanceCD:Start(5.6, guid)
+		timerStimulateResistanceCD:Start(4.8, guid)
 		timerStimulateRegenerationCD:Start(13.9, guid)--Initial cast might not be timer based but health based. Recasts have a CD though
-		timerAcidNovaCD:Start(10.2, guid)--10.2-14.2
+		timerAcidNovaCD:Start(9.3, guid)--9.3-14.2
 	elseif cid == 167113 then --Spinemaw Acidgullet
 		timerVolatileAcidCD:Start(8.5, guid)
 	elseif cid == 164921 then--Drust Harvester
-		timerHarvestEssenceCD:Start(10.4, guid)--10-20
+		timerHarvestEssenceCD:Start(6.9, guid)--6.9-20
 	elseif cid == 173655 then--Mistveil Matriarch
 		timerShredArmorCD:Start(6.9, guid)--6.9-13
 		timerRadiantBreathCD:Start(9, guid)--9-16

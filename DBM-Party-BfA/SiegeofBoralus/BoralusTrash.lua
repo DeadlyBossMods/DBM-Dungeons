@@ -79,8 +79,8 @@ local timerBananaRampage			= mod:NewCastNPTimer(1.5, 272546, nil, false, nil, 5)
 local timerStinkyVomitCD			= mod:NewCDPNPTimer(16.1, 454440, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--16.1-19.4
 local timerCrushingSlamCD			= mod:NewCDNPTimer(20.6, 272711, nil, nil, nil, 2)
 local timerTerrifyingRoarCD			= mod:NewCDNPTimer(31.6, 257169, nil, nil, nil, 2)
-local timerChoakingWatersCD			= mod:NewCDPNPTimer(29.1, 272571, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--29.1-31.6
-local timerIronHookCD				= mod:NewCDNPTimer(23, 272662, nil, nil, nil, 3)
+local timerChoakingWatersCD			= mod:NewCDPNPTimer(26.7, 272571, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--26.7-31.6
+local timerIronHookCD				= mod:NewCDNPTimer(22.6, 272662, nil, nil, nil, 3)
 local timerBroadsideCD				= mod:NewCDPNPTimer(11.5, 268260, nil, nil, nil, 3)--Boss version is 9.1 from previous cast finish, but this one is 11.5
 
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc, 7 off interrupt
@@ -158,7 +158,7 @@ function mod:SPELL_CAST_START(args)
 	elseif spellId == 272662 and args:GetSrcCreatureID() == 129369 then
 		warnIronHook:Show()
 		warnIronHook:Play("pullin")
-		timerIronHookCD:Start(23, args.sourceGUID)
+		timerIronHookCD:Start(nil, args.sourceGUID)
 	elseif spellId == 257732 then
 		specWarnShatteringBellow:Show()
 		specWarnShatteringBellow:Play("stopcast")
@@ -198,7 +198,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 	elseif spellId == 257169 then
 		timerTerrifyingRoarCD:Start(28.6, args.sourceGUID)--31.6 - 3
 	elseif spellId == 272571 then
-		timerChoakingWatersCD:Start(26.6, args.sourceGUID)--29.1 - 2.5
+		timerChoakingWatersCD:Start(24.2, args.destGUID)--26.7 - 2.5
 	elseif spellId == 256957 then
 		timerWatertightShellCD:Start(50, args.sourceGUID)
 	elseif spellId == 268260 and args:GetSrcCreatureID() == 138465 then--Trash version
@@ -214,7 +214,7 @@ function mod:SPELL_INTERRUPT(args)
 	elseif args.extraSpellId == 454440 then
 		timerStinkyVomitCD:Start(15.2, args.destGUID)
 	elseif args.extraSpellId == 272571 then
-		timerChoakingWatersCD:Start(26.6, args.destGUID)--29.1 - 2.5
+		timerChoakingWatersCD:Start(24.2, args.destGUID)--26.7 - 2.5
 	end
 end
 
@@ -338,8 +338,8 @@ function mod:StartEngageTimers(guid, cid)
 --	elseif cid == 141939 or cid == 138255 or cid == 135263 then--Ashvane Spotter
 --		timerSightedArtCD:Start(12.1, guid)
 	elseif cid == 128969 then--Ashvane Commander
-		timerAzeriteChargeCD:Start(2.3, guid)
-		timerBolsteringShoutCD:Start(8.1, guid)
+		timerAzeriteChargeCD:Start(1, guid)
+		timerBolsteringShoutCD:Start(7.5, guid)
 --	elseif cid == 137516 then--Ashvane Invader
 --		timerStingingVenomCoatingCD:Start(15.4, guid)--Used near instantly
 	elseif cid == 137517 then--Ashvane Destroyer

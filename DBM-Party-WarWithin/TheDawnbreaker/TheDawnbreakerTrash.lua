@@ -6,7 +6,7 @@ mod:SetRevision("@file-date-integer@")
 mod.isTrashMod = true
 mod.isTrashModBossFightAllowed = true
 mod:SetZone(2662)
-mod:RegisterZoneCombat(2662)
+mod:RegisterZoneCombat(2662, nil, true)
 
 mod:RegisterEvents(
 	"SPELL_CAST_START 451102 450854 451117 451097 431364 431494 432565 432520 431333 431637 451091 451098 431349 446615 450756 431304",
@@ -73,7 +73,7 @@ local timerSilkenShellCD					= mod:NewCDPNPTimer(18.4, 451097, nil, nil, nil, 4,
 local timerTormentingRayCD					= mod:NewCDPNPTimer(8, 431364, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerAbyssalHowlCD					= mod:NewCDPNPTimer(25.6, 450756, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerTorentingEruptionCD				= mod:NewCDNPTimer(11.2, 431349, nil, nil, nil, 3)
-local timerEnsharingShadowsCD				= mod:NewCDPNPTimer(18.1, 431309, nil, nil, nil, 5, nil, DBM_COMMON_L.CURSE_ICON)
+local timerEnsnaringShadowsCD				= mod:NewCDPNPTimer(18.1, 431309, nil, nil, nil, 5, nil, DBM_COMMON_L.CURSE_ICON)
 local timerStygianSeedCD					= mod:NewCDNPTimer(21.8, 432448, nil, nil, nil, 3)
 local timerBurstingCacoonCD					= mod:NewCDNPTimer(15.7, 451107, nil, nil, nil, 3)
 
@@ -211,7 +211,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 	elseif spellId == 431637 then
 		timerUmbrelRushCD:Start(9.1, args.sourceGUID)
 	elseif spellId == 431309 then
-		timerEnsharingShadowsCD:Start(18.1, args.sourceGUID)
+		timerEnsnaringShadowsCD:Start(18.1, args.sourceGUID)
 	elseif spellId == 432448 then
 		timerStygianSeedCD:Start(21.8, args.sourceGUID)
 	elseif spellId == 451107 then
@@ -227,7 +227,7 @@ function mod:SPELL_INTERRUPT(args)
 	elseif spellId == 432520 then
 		timerUmbrelBarrierCD:Start(24.2, args.destGUID)
 	elseif spellId == 431309 then
-		timerEnsharingShadowsCD:Start(18.1, args.destGUID)
+		timerEnsnaringShadowsCD:Start(18.1, args.destGUID)
 	end
 end
 
@@ -309,7 +309,7 @@ function mod:UNIT_DIED(args)
 	elseif cid == 213885 then--Nightfall Dark Architect
 		timerTorentingEruptionCD:Stop(args.destGUID)
 	elseif cid == 213892 or cid == 228540 then--Nightfall Shadowmage (223994 is an RP mage, not engaged)
-		timerEnsharingShadowsCD:Stop(args.destGUID)
+		timerEnsnaringShadowsCD:Stop(args.destGUID)
 	elseif cid == 210966 then--Sureki Webmage
 		timerBurstingCacoonCD:Stop(args.destGUID)
 	end
@@ -346,7 +346,7 @@ function mod:StartEngageTimers(guid, cid)
 	elseif cid == 213885 then--Nightfall Dark Architect
 		timerTorentingEruptionCD:Start(5.4, guid)--5.4-5.9
 	elseif cid == 213892 or cid == 228540 then--Nightfall Shadowmage (223994 is an RP mage, not engaged)
-		timerEnsharingShadowsCD:Start(cid == 228540 and 10.8 or 8.0, guid)--8.0-12.9 (213892) 10.8-14 (228540)
+		timerEnsnaringShadowsCD:Start(cid == 228540 and 10.8 or 8.0, guid)--8.0-12.9 (213892) 10.8-14 (228540)
 	elseif cid == 210966 then--Sureki Webmage
 		timerBurstingCacoonCD:Start(1.8, guid)--1.8-11.7
 	end

@@ -308,8 +308,8 @@ function mod:StartEngageTimers(guid, cid)
 		timerDarkEruptionCD:Start(9.3, guid)
 		--timerAscensionCD:Start(20, guid)
 	elseif cid == 224240 then--Twilight Flamerender (Formerly decapitator)
-		timerShadowflameSlashCD:Start(4.2, guid)
-		timerBlazingShadowflameCD:Start(8.6, guid)
+		timerShadowflameSlashCD:Start(3, guid)
+		timerBlazingShadowflameCD:Start(8.1, guid)
 		--timerDecapitateCD:Start(18.1, guid)--Not able to find a single cast on August 11
 	elseif cid == 224271 then--Twilight Warlock
 		timerEnvelopingShadowflameCD:Start(6.7, guid)

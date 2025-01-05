@@ -70,7 +70,7 @@ local timerDarkBarrageCD					= mod:NewCDNPTimer(27.6, 445813, nil, nil, nil, 3)
 local timerVoidWaveCD						= mod:NewCDNPTimer(15.4, 446086, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerUmbralWeaveCD					= mod:NewCDNPTimer(20, 446717, nil, nil, nil, 2)
 local timerTremorSlamCD						= mod:NewCDNPTimer(20, 447271, nil, nil, nil, 3)
-local timerRavenousSwarmCD					= mod:NewCDNPTimer(18.1, 443507, nil, nil, nil, 2)
+local timerRavenousSwarmCD					= mod:NewCDNPTimer(17.8, 443507, nil, nil, nil, 2)
 
 local xephEngaged
 
@@ -181,9 +181,7 @@ function mod:SPELL_CAST_START(args)
 		if self:AntiSpam(3, 2) then
 			warnRavenousSwarm:Show()
 		end
-		--Royal Swarmguard (220197) 18.1, Hulking Warshell (221103) 17.8
-		local timer = args:GetSrcCreatureID() == 220197 and 18.1 or 17.8
-		timerRavenousSwarmCD:Start(timer, args.sourceGUID)
+		timerRavenousSwarmCD:Start(nil, args.sourceGUID)
 	elseif spellId == 443397 then
 		if self:IsTanking("player", nil, nil, true, args.sourceGUID) and self:AntiSpam(3, 5) then
 			specWarnVenomStrike:Show()
@@ -287,11 +285,11 @@ function mod:StartEngageTimers(guid, cid)
 	if cid == 220196 then--Herald of Ansurekha
 		timerShadowsofDoubtCD:Start(9.2, guid)--9.2-10
 	elseif cid == 220195 then--Sureki Silkbinder
-		timerSilkBindingCD:Start(14.8, guid)--14.8-15.3
+		timerSilkBindingCD:Start(6.6, guid)--6.6-15.3
 	elseif cid == 220197 then--Royal Swarmsguard
 		timerEarthShatterCD:Start(5.2, guid)--5.2-7.3
 	elseif cid == 220730 then--Royal VenomShell
-		timerVenomousSprayCD:Start(6, guid)--6-6.8
+		timerVenomousSprayCD:Start(4.9, guid)--4.9-6.8
 		timerEarthShatterCD:Start(20.5, guid)--20.5-21.4
 	elseif cid == 220003 or cid == 219983 then--Hallow Resident
 		timerNullSlamCD:Start(20.5, guid)--20.5-21.2
@@ -302,13 +300,13 @@ function mod:StartEngageTimers(guid, cid)
 	elseif cid == 216339 then--Sureki Unnaturaler
 		timerVoidWaveCD:Start(5.6, guid)
 	elseif cid == 221102 then--Elder Shadeweaver
-		timerUmbralWeaveCD:Start(4.7, guid)--4.7-5.3
+		timerUmbralWeaveCD:Start(4.1, guid)--4.1-5.3
 	elseif cid == 221103 then--Hulking Warshell
 		timerTremorSlamCD:Start(8.6, guid)--8.6-10.7
 	elseif cid == 219984 then--Xeph'itik
 		xephEngaged = guid
 		timerPerfumeTossCD:Start(8.2, guid)--8.2-9.4
-		timerGossamerBarrageCD:Start(13, guid)--13-14.3
+		timerGossamerBarrageCD:Start(12.1, guid)--12.1-14.3
 	elseif cid == 220193 then--Sureki VenomStrike
 		timerVenomStrikeCD:Start(3.5, guid)
 	end

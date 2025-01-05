@@ -211,7 +211,7 @@ end
 --All timers subject to a ~0.5 second clipping due to ScanEngagedUnits
 function mod:StartEngageTimers(guid, cid)
 	if cid == 217531 then--Ixin
-		timerWebSprayCD:Start(4.4, guid)--4.4-7
+		timerWebSprayCD:Start(3.3, guid)--3.3-7
 		timerHorrifyingShrillCD:Start(12.7, guid)
 	elseif cid == 218324 then--Nakt
 		timerCalloftheBroodCD:Start(5.6, guid)

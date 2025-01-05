@@ -96,7 +96,7 @@ local timerGruesomeCleaveCD					= mod:NewCDPNPTimer(11.1, 324323, nil, nil, nil,
 local timerBoneshatterShieldCD				= mod:NewCDNPTimer(20.6, 343470, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)
 local timerGoresplatterCD					= mod:NewCDPNPTimer(20, 338353, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--20-22
 local timerMutlilateCD						= mod:NewCDNPTimer(13, 338456, nil, nil, nil, 5)--13 sec trash, 10.6 both minibosses
-local timerTenderizeCD						= mod:NewCDNPTimer(14.5, 338357, nil, nil, nil, 5)--14.5 sec trash, 12.1 Goregrind
+local timerTenderizeCD						= mod:NewCDNPTimer(13.7, 338357, nil, nil, nil, 5)--13.7 sec trash, 12.1 Goregrind
 local timerGutSliceCD						= mod:NewCDPNPTimer(12.5, 333477, nil, nil, nil, 3)
 local timerSpewDiseaseCD					= mod:NewCDNPTimer(10.6, 333479, nil, nil, nil, 3)
 local timerSpineCrushCD						= mod:NewCDNPTimer(14.0, 327240, nil, nil, nil, 3)
@@ -283,7 +283,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 		timerMutlilateCD:Start(timer, args.sourceGUID)
 	elseif spellId == 338357 then
 		--Kyrian Stickwork (172981), Goregrind (163621)
-		local timer = args:GetSrcCreatureID() == 172981 and 14.5 or 12.1
+		local timer = args:GetSrcCreatureID() == 172981 and 13.7 or 12.1
 		timerTenderizeCD:Start(timer, args.sourceGUID)
 	elseif spellId == 333477 then
 		timerGutSliceCD:Start(12.5, args.sourceGUID)
@@ -302,9 +302,9 @@ function mod:SPELL_INTERRUPT(args)
 	if not self.Options.Enabled then return end
 	if type(args.extraSpellId) ~= "number" then return end
 	if args.extraSpellId == 334748 then
-		--Harvester (166302) 15-17.5, Collector (173016) 14.1-18.3, Stitching Assistant (173044) 16.6-17.9
-		local cooldown = args:GetSrcCreatureID() == 173044 and 16.6 or args:GetSrcCreatureID() == 166302 and 15 or 14.1
-		if not memoryWastingTable[args.sourceGUID] then
+		if not memoryWastingTable[args.destGUID] then
+			--Harvester (166302) 15-17.5, Collector (173016) 14.1-18.3, Stitching Assistant (173044) 16.6-17.9
+			local cooldown = args:GetSrcCreatureID() == 173044 and 16.6 or args:GetSrcCreatureID() == 166302 and 15 or 14.1
 			timerDrainFluidsCD:Start(cooldown, args.destGUID)
 		end
 	elseif args.extraSpellId == 335143 then

@@ -90,9 +90,9 @@ function mod:SPELL_CAST_START(args)
 		timerVociferousIndoctrinationCD:Start(nil, self.vb.fakeNewsCount+1)
 		--Make timers more precise that used lowest predicted spell queue delay to use actual spell queue delay here
 		--(This is miniscule correction, like 0.5-2 seconds or so, but it's cheap and easy to do)
-		if timerSubjugateCD:GetRemaining(self.vb.subjugateCount+1) < 10.9 then
+		if timerSubjugateCD:GetRemaining(self.vb.subjugateCount+1) < 10.5 then
 			local elapsed, total = timerSubjugateCD:GetTime(self.vb.subjugateCount+1)
-			local extend = 10.9 - (total-elapsed)
+			local extend = 10.5 - (total-elapsed)
 			DBM:Debug("timerSubjugateCD extended by: "..extend, 2)
 			timerSubjugateCD:Update(elapsed, total+extend, self.vb.subjugateCount+1)
 		end
