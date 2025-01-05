@@ -324,37 +324,37 @@ end
 --]]
 
 --All timers subject to a ~0.5 second clipping due to ScanEngagedUnits
-function mod:StartEngageTimers(guid, cid)
+function mod:StartEngageTimers(guid, cid, delay)
 	if cid == 129374 then--Scrimshaw Enforcer
---		timerSlobberknockerCD:Start(16.8, guid)--Might be 10ish, wait for improved logs
+--		timerSlobberknockerCD:Start(16.8-delay, guid)--Might be 10ish, wait for improved logs
 	elseif cid == 129372 then--Blacktar Bomber
-		timerBurningTarCD:Start(8, guid)--They use fire bomb instantly
+		timerBurningTarCD:Start(8-delay, guid)--They use fire bomb instantly
 	elseif cid == 129369 then--Irontide Raider
-		timerSavageTempestCD:Start(11, guid)
+		timerSavageTempestCD:Start(11-delay, guid)
 	elseif cid == 129371 then--Riptide Shredder
-		timerSingSteelCD:Start(3.5, guid)
+		timerSingSteelCD:Start(3.5-delay, guid)
 	elseif cid == 129879 or cid == 129996 then--Irontide Cleaver (Trash and Boss version, which both now only spawn on boss)
-		timerHeavySlashCD:Start(4.2, guid)
+		timerHeavySlashCD:Start(4.2-delay, guid)
 --	elseif cid == 141939 or cid == 138255 or cid == 135263 then--Ashvane Spotter
---		timerSightedArtCD:Start(12.1, guid)
+--		timerSightedArtCD:Start(12.1-delay, guid)
 	elseif cid == 128969 then--Ashvane Commander
-		timerAzeriteChargeCD:Start(1, guid)
-		timerBolsteringShoutCD:Start(7.5, guid)
+		timerAzeriteChargeCD:Start(1-delay, guid)
+		timerBolsteringShoutCD:Start(7.5-delay, guid)
 --	elseif cid == 137516 then--Ashvane Invader
---		timerStingingVenomCoatingCD:Start(15.4, guid)--Used near instantly
+--		timerStingingVenomCoatingCD:Start(15.4-delay, guid)--Used near instantly
 	elseif cid == 137517 then--Ashvane Destroyer
-		timerFerocityCD:Start(4.2, guid)
+		timerFerocityCD:Start(4.2-delay, guid)
 	elseif cid == 129366 then--Bilge Rat Buccaneer
-		timerBananaRampageCD:Start(1.7, guid)
+		timerBananaRampageCD:Start(1.7-delay, guid)
 	elseif cid == 135241 then--Bilge Rat Pillager
-		timerStinkyVomitCD:Start(4, guid)
+		timerStinkyVomitCD:Start(4-delay, guid)
 	elseif cid == 135245 then--Billage Rat Demolisher
-		timerCrushingSlamCD:Start(5.5, guid)
-		timerTerrifyingRoarCD:Start(14, guid)
+		timerCrushingSlamCD:Start(5.5-delay, guid)
+		timerTerrifyingRoarCD:Start(14-delay, guid)
 	elseif cid == 129367 then--Bilge Rat Tempest
-		timerChoakingWatersCD:Start(5.0, guid)
+		timerChoakingWatersCD:Start(5.0-delay, guid)
 --	elseif cid == 129370 or cid == 144071 then--Ironhull WaveShaper
---		timerWatertightShellCD:Start(50, guid)--Too mcuh variance, might be health based for initial cast
+--		timerWatertightShellCD:Start(50-delay, guid)--Too mcuh variance, might be health based for initial cast
 	end
 end
 

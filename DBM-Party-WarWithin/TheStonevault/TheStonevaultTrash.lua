@@ -288,37 +288,37 @@ function mod:UNIT_DIED(args)
 end
 
 --All timers subject to a ~0.5 second clipping due to ScanEngagedUnits
-function mod:StartEngageTimers(guid, cid)
+function mod:StartEngageTimers(guid, cid, delay)
 	if cid == 210109 then--Earth Infused Golem
-		timerSeismicWaveCD:Start(4.6, guid)--4.6-9.4
-		timerGroundPoundCD:Start(13.2, guid)--13.2-18.2
+		timerSeismicWaveCD:Start(4.6-delay, guid)--4.6-9.4
+		timerGroundPoundCD:Start(13.2-delay, guid)--13.2-18.2
 	elseif cid == 212389 or cid == 212403 then--Cursedheart Invader
-		timerVoidInfectionCD:Start(8.2, guid)--8.2-10
+		timerVoidInfectionCD:Start(8.2-delay, guid)--8.2-10
 	elseif cid == 222923 then--Repurposed Loaderbox
-		timerPulverizingPounceCD:Start(6.4, guid)--6.4-11.4
+		timerPulverizingPounceCD:Start(6.4-delay, guid)--6.4-11.4
 	elseif cid == 212453 then--Ghastlyy Voidsoul
-		timerHowlingFearCD:Start(4.2, guid)--4.2-9.5
+		timerHowlingFearCD:Start(4.2-delay, guid)--4.2-9.5
 	elseif cid == 213338 or cid == 224962 then--Forgebound Mender
-		timerRestoringMetalsCD:Start(10.8, guid)--10.8-16.1
+		timerRestoringMetalsCD:Start(10.8-delay, guid)--10.8-16.1
 	elseif cid == 213343 then--Forge Loader
-		timerLavaCannonCD:Start(9.4, guid)--9.4-10.1
-		timerMoltenMortarCD:Start(11.8, guid)--11.8-13.4
+		timerLavaCannonCD:Start(9.4-delay, guid)--9.4-10.1
+		timerMoltenMortarCD:Start(11.8-delay, guid)--11.8-13.4
 	--elseif cid == 214350 then--Turned Speaker
-	--	timerCensoringGearCD:Start(18.2, guid)--Used immediately on pull
+	--	timerCensoringGearCD:Start(18.2-delay, guid)--Used immediately on pull
 	elseif cid == 212400 then--Void Touched Elemental
-		timerCrystalSalvoCD:Start(3.6, guid)--3.6-5.5
+		timerCrystalSalvoCD:Start(3.6-delay, guid)--3.6-5.5
 	elseif cid == 212765 then--Void Bound Despoiler
-		timerShadowClawsCD:Start(3, guid)--3-6.7
-		timerVoidOutburstCD:Start(7.1, guid)--5.3-8.8?
+		timerShadowClawsCD:Start(3-delay, guid)--3-6.7
+		timerVoidOutburstCD:Start(7.1-delay, guid)--5.3-8.8?
 	elseif cid == 221979 then--Void Bound Howler
-		timerPiercingWailCD:Start(5.1, guid)--Test thoroughly in folloewr dungeon
+		timerPiercingWailCD:Start(5.1-delay, guid)--Test thoroughly in folloewr dungeon
 	elseif cid == 214264 then--Cursedforge Honor Guard
-		timerShieldStampedeCD:Start(4.6, guid)
+		timerShieldStampedeCD:Start(4.6-delay, guid)
 	elseif cid == 214066 then--Cursedforge StoneShaper
-		timerEarthBurstTotemCD:Start(1.9, guid)--1.9-4.9
+		timerEarthBurstTotemCD:Start(1.9-delay, guid)--1.9-4.9
 	elseif cid == 213954 then--Rock Smasher
-		timerSmashRockCD:Start(8.5, guid)--8.5
-		timerGraniteEruptionCD:Start(14.5, guid)--14.5-16.2
+		timerSmashRockCD:Start(8.5-delay, guid)--8.5
+		timerGraniteEruptionCD:Start(14.5-delay, guid)--14.5-16.2
 	end
 end
 

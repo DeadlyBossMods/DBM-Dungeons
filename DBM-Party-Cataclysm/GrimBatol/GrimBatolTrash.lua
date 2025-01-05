@@ -292,35 +292,35 @@ function mod:UNIT_DIED(args)
 end
 
 --All timers subject to a ~0.5 second clipping due to ScanEngagedUnits
-function mod:StartEngageTimers(guid, cid)
+function mod:StartEngageTimers(guid, cid, delay)
 	if cid == 224219 then--Twilight Earthcaller
-		timerMassTremorCD:Start(8.6, guid)--8.6-13?
+		timerMassTremorCD:Start(8.6-delay, guid)--8.6-13?
 	elseif cid == 224152 then--Twilight Brute
-		timerObsidianStompCD:Start(10, guid)--hard to verify with so much noise from non combat enemies cluttering log
+		timerObsidianStompCD:Start(10-delay, guid)--hard to verify with so much noise from non combat enemies cluttering log
 	elseif cid == 224609 then--Twilight Destroyer
-		timerTwilightFlamesCD:Start(2.7, guid)--2.7--6
-		timerUmbralWindCD:Start(10.4, guid)--10.4+ (may be shorter for first drake only depending on how accurately DBM detects combat with one that flies in
+		timerTwilightFlamesCD:Start(2.7-delay, guid)--2.7--6
+		timerUmbralWindCD:Start(10.4-delay, guid)--10.4+ (may be shorter for first drake only depending on how accurately DBM detects combat with one that flies in
 	elseif cid == 224221 then--Twilight Overseer
-		timerRiveCD:Start(4.3, guid)
-		timerRecklessTacticCD:Start(5, guid)--Larger CD window
+		timerRiveCD:Start(4.3-delay, guid)
+		timerRecklessTacticCD:Start(5-delay, guid)--Larger CD window
 	elseif cid == 224249 then--Twilight LavaBender
-		timerShadowlavaBlastCD:Start(4.5, guid)
-		timerDarkEruptionCD:Start(9.3, guid)
+		timerShadowlavaBlastCD:Start(4.5-delay, guid)
+		timerDarkEruptionCD:Start(9.3-delay, guid)
 		--timerAscensionCD:Start(20, guid)
 	elseif cid == 224240 then--Twilight Flamerender (Formerly decapitator)
-		timerShadowflameSlashCD:Start(3, guid)
-		timerBlazingShadowflameCD:Start(8.1, guid)
-		--timerDecapitateCD:Start(18.1, guid)--Not able to find a single cast on August 11
+		timerShadowflameSlashCD:Start(3-delay, guid)
+		timerBlazingShadowflameCD:Start(8.1-delay, guid)
+		--timerDecapitateCD:Start(18.1-delay, guid)--Not able to find a single cast on August 11
 	elseif cid == 224271 then--Twilight Warlock
-		timerEnvelopingShadowflameCD:Start(6.7, guid)
+		timerEnvelopingShadowflameCD:Start(6.7-delay, guid)
 	elseif cid == 39392 then--Faceless Corruptor
-		timerMindPiercerCD:Start(4.3, guid)
-		timerCorruptCD:Start(8.3, guid)
+		timerMindPiercerCD:Start(4.3-delay, guid)
+		timerCorruptCD:Start(8.3-delay, guid)
 	elseif cid == 40166 then--Molten Giant
-		timerMoltenWakeCD:Start(5.2, guid)--Needs much more review
-		timerLavaFistCD:Start(8, guid)--Needs much more review
+		timerMoltenWakeCD:Start(5.2-delay, guid)--Needs much more review
+		timerLavaFistCD:Start(8-delay, guid)--Needs much more review
 	--elseif cid == 40167 then--Twilight Beguiler
-	--	timerSearMindCD:Start(18.9, guid)
+	--	timerSearMindCD:Start(18.9-delay, guid)
 	end
 end
 

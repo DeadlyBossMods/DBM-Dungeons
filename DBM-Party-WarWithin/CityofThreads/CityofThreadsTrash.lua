@@ -281,34 +281,34 @@ function mod:UNIT_DIED(args)
 end
 
 --All timers subject to a ~0.5 second clipping due to ScanEngagedUnits
-function mod:StartEngageTimers(guid, cid)
+function mod:StartEngageTimers(guid, cid, delay)
 	if cid == 220196 then--Herald of Ansurekha
-		timerShadowsofDoubtCD:Start(9.2, guid)--9.2-10
+		timerShadowsofDoubtCD:Start(9.2-delay, guid)--9.2-10
 	elseif cid == 220195 then--Sureki Silkbinder
-		timerSilkBindingCD:Start(6.6, guid)--6.6-15.3
+		timerSilkBindingCD:Start(6.6-delay, guid)--6.6-15.3
 	elseif cid == 220197 then--Royal Swarmsguard
-		timerEarthShatterCD:Start(5.2, guid)--5.2-7.3
+		timerEarthShatterCD:Start(5.2-delay, guid)--5.2-7.3
 	elseif cid == 220730 then--Royal VenomShell
-		timerVenomousSprayCD:Start(4.9, guid)--4.9-6.8
-		timerEarthShatterCD:Start(20.5, guid)--20.5-21.4
+		timerVenomousSprayCD:Start(4.9-delay, guid)--4.9-6.8
+		timerEarthShatterCD:Start(20.5-delay, guid)--20.5-21.4
 	elseif cid == 220003 or cid == 219983 then--Hallow Resident
-		timerNullSlamCD:Start(20.5, guid)--20.5-21.2
+		timerNullSlamCD:Start(20.5-delay, guid)--20.5-21.2
 	elseif cid == 223844 or cid == 224732 then--Covert Webmancer
-		timerMendingWebCD:Start(7.1, guid)--7.1-14.3
+		timerMendingWebCD:Start(7.1-delay, guid)--7.1-14.3
 	elseif cid == 216328 then--Unstable test Subject
-		timerDarkBarrageCD:Start(3.6, guid)--3.5-5.1
+		timerDarkBarrageCD:Start(3.6-delay, guid)--3.5-5.1
 	elseif cid == 216339 then--Sureki Unnaturaler
-		timerVoidWaveCD:Start(5.6, guid)
+		timerVoidWaveCD:Start(5.6-delay, guid)
 	elseif cid == 221102 then--Elder Shadeweaver
-		timerUmbralWeaveCD:Start(4.1, guid)--4.1-5.3
+		timerUmbralWeaveCD:Start(4.1-delay, guid)--4.1-5.3
 	elseif cid == 221103 then--Hulking Warshell
-		timerTremorSlamCD:Start(8.6, guid)--8.6-10.7
+		timerTremorSlamCD:Start(8.6-delay, guid)--8.6-10.7
 	elseif cid == 219984 then--Xeph'itik
 		xephEngaged = guid
-		timerPerfumeTossCD:Start(8.2, guid)--8.2-9.4
-		timerGossamerBarrageCD:Start(12.1, guid)--12.1-14.3
+		timerPerfumeTossCD:Start(8.2-delay, guid)--8.2-9.4
+		timerGossamerBarrageCD:Start(12.1-delay, guid)--12.1-14.3
 	elseif cid == 220193 then--Sureki VenomStrike
-		timerVenomStrikeCD:Start(3.5, guid)
+		timerVenomStrikeCD:Start(3.5-delay, guid)
 	end
 end
 

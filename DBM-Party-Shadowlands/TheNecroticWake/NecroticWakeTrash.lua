@@ -437,51 +437,51 @@ function mod:UNIT_DIED(args)
 end
 
 --All timers subject to a ~0.5 second clipping due to ScanEngagedUnits
-function mod:StartEngageTimers(guid, cid)
+function mod:StartEngageTimers(guid, cid, delay)
 	if cid == 173016 then--Corpse Collector
-		timerGoresplatterCD:Start(5.1, guid)
-		timerDrainFluidsCD:Start(9.3, guid)--Can be spell locked or spell queued much longer up to about 18
+		timerGoresplatterCD:Start(5.1-delay, guid)
+		timerDrainFluidsCD:Start(9.3-delay, guid)--Can be spell locked or spell queued much longer up to about 18
 	elseif cid == 166302 then--Corpse Harvester
-		timerDrainFluidsCD:Start(6.7, guid)
+		timerDrainFluidsCD:Start(6.7-delay, guid)
 	elseif cid == 165872 then--Flesh Crafter
---		timerThrowCleaverCD:Start(13, guid)--Cast instantly on pull
-		timerRepairFleshCD:Start(9.2, guid)
+--		timerThrowCleaverCD:Start(13-delay, guid)--Cast instantly on pull
+		timerRepairFleshCD:Start(9.2-delay, guid)
 	elseif cid == 173044 then--Stitching Assistant
---		timerThrowCleaverCD:Start(15.4, guid)--Cast instantly on pull
-		timerDrainFluidsCD:Start(7.4, guid)
+--		timerThrowCleaverCD:Start(15.4-delay, guid)--Cast instantly on pull
+		timerDrainFluidsCD:Start(7.4-delay, guid)
 	elseif cid == 167731 then--Separation Assistant
---		timerThrowCleaverCD:Start(14.1, guid)--Cast instantly on pull
-		timerMorbidFixationCD:Start(12.8, guid)
+--		timerThrowCleaverCD:Start(14.1-delay, guid)--Cast instantly on pull
+		timerMorbidFixationCD:Start(12.8-delay, guid)
 	elseif cid == 165137 then--Zolramus Gatekeeper
-		timerWrathOfZolramusCD:Start(5.5, guid)--about a 5 second CD, but can be delayed as much as 14 seconds due to spell lockout from kicking necrotic bolt
+		timerWrathOfZolramusCD:Start(5.5-delay, guid)--about a 5 second CD, but can be delayed as much as 14 seconds due to spell lockout from kicking necrotic bolt
 	elseif cid == 163128 then--Zolramus Sorcerer
-		timerShadowWellCD:Start(7.9, guid)--about a 10 second CD, but can be delayed as much as 27 seconds due to spell lockout from kicking necrotic bolt
+		timerShadowWellCD:Start(7.9-delay, guid)--about a 10 second CD, but can be delayed as much as 27 seconds due to spell lockout from kicking necrotic bolt
 	elseif cid == 163618 then--Zolramus Necromancer
-		timerGrimFateCD:Start(10.3, guid)
-		timerAnimatedDeadCD:Start(14.1, guid)--14.1-20
+		timerGrimFateCD:Start(10.3-delay, guid)
+		timerAnimatedDeadCD:Start(14.1-delay, guid)--14.1-20
 --	elseif cid == 165222 then--Zolramus Bonemender
---		timerBoneMendCD:Start(7, guid)--no initial CD, cast as soon as an ally needs healing, THEN goes on cooldown
+--		timerBoneMendCD:Start(7-delay, guid)--no initial CD, cast as soon as an ally needs healing, THEN goes on cooldown
 	elseif cid == 165824 then--Nar'zudah
-		timerDeathBurstCD:Start(4, guid)
-		timerGrimFateCD:Start(9, guid)--9, but sometimes 12 based on likely spellqueuing
+		timerDeathBurstCD:Start(4-delay, guid)
+		timerGrimFateCD:Start(9-delay, guid)--9, but sometimes 12 based on likely spellqueuing
 	elseif cid == 165919 then--Skeletal Marauder
-		timerGruesomeCleaveCD:Start(3.4, guid)
-		timerRaspingScreamCD:Start(13, guid)
-		--timerBoneshatterShieldCD:Start(11, guid)--Initial probably based on health threshold
+		timerGruesomeCleaveCD:Start(3.4-delay, guid)
+		timerRaspingScreamCD:Start(13-delay, guid)
+		--timerBoneshatterShieldCD:Start(11-delay, guid)--Initial probably based on health threshold
 	elseif cid == 172981 then--Kyrian Stickwork
-		timerTenderizeCD:Start(4, guid)
-		timerMutlilateCD:Start(8.1, guid)
+		timerTenderizeCD:Start(4-delay, guid)
+		timerMutlilateCD:Start(8.1-delay, guid)
 	elseif cid == 163621 then--Goregrind
-		timerMutlilateCD:Start(8.1, guid)
-		timerTenderizeCD:Start(5.1, guid)
-		timerGutSliceCD:Start(11.2, guid)
+		timerMutlilateCD:Start(8.1-delay, guid)
+		timerTenderizeCD:Start(5.1-delay, guid)
+		timerGutSliceCD:Start(11.2-delay, guid)
 	elseif cid == 163620 then--Rotspew
-		timerMutlilateCD:Start(4.3, guid)
-		timerSpewDiseaseCD:Start(8, guid)--8-10
+		timerMutlilateCD:Start(4.3-delay, guid)
+		timerSpewDiseaseCD:Start(8-delay, guid)--8-10
 	elseif cid == 165911 then--Loyal Creation
-		timerSpineCrushCD:Start(10.3, guid)
+		timerSpineCrushCD:Start(10.3-delay, guid)
 	elseif cid == 163619 then--Zolramus Bonecarver
-		timerBoneflayCD:Start(6, guid)--TODO, fix me when Linaori complains it's wrong
+		timerBoneflayCD:Start(6-delay, guid)--TODO, fix me when Linaori complains it's wrong
 	end
 end
 

@@ -424,49 +424,49 @@ function mod:UNIT_DIED(args)
 end
 
 --All timers subject to a ~0.5 second clipping due to ScanEngagedUnits
-function mod:StartEngageTimers(guid, cid)
+function mod:StartEngageTimers(guid, cid, delay)
 	if cid == 166304 then--Mistveil Stinger
-		timerAnimaInjectionCD:Start(4, guid)
+		timerAnimaInjectionCD:Start(4-delay, guid)
 	elseif cid == 166276 then--Mistveil Guardian
 		--timerBuckingRampageCD:Start(1, guid)
-		timerAnimaSlashCD:Start(6.4, guid)
+		timerAnimaSlashCD:Start(6.4-delay, guid)
 	elseif cid == 173714 then--Mistveil Nightblossom
-		timerPoisonousDischargeCD:Start(13.1, guid)--Small Sample, could be lower. 13.1-17 confirmed so far
+		timerPoisonousDischargeCD:Start(13.1-delay, guid)--Small Sample, could be lower. 13.1-17 confirmed so far
 	elseif cid == 164929 then--Tirnenn Villager
-		timerBewilderingPollenCD:Start(7.6, guid)
-		timerOvergrowthCD:Start(12.5, guid)
+		timerBewilderingPollenCD:Start(7.6-delay, guid)
+		timerOvergrowthCD:Start(12.5-delay, guid)
 	elseif cid == 164926 then--Drust Boughbreaker
-		timerBrambleBurstCD:Start(7.8, guid)
+		timerBrambleBurstCD:Start(7.8-delay, guid)
 	elseif cid == 163058 or cid == 171772 then--Mistveil Defender (171772 is the variant players don't engage with most likely)
 		--timerSpearFlurryCD:Start(1, guid)--Removed ability?
-		timerExpelCD:Start(4, guid)
-		timerMistWardCD:Start(11.1, guid)--11-12
+		timerExpelCD:Start(4-delay, guid)
+		timerMistWardCD:Start(11.1-delay, guid)--11-12
 	elseif cid == 164920 or cid == 172991 then--Drust Soulcleaver
-		timerSoulSpiritCD:Start(4.7, guid)
+		timerSoulSpiritCD:Start(4.7-delay, guid)
 	elseif cid == 166299 then--Mistveil Tender
-		timerNourishtheForestCD:Start(10, guid)--10-20, might not activate if ally doesn't need healing yet
+		timerNourishtheForestCD:Start(10-delay, guid)--10-20, might not activate if ally doesn't need healing yet
 	elseif cid == 166275 then--Mistveil Shaper
-		timerBramblethornCoatCD:Start(7.6, guid)
+		timerBramblethornCoatCD:Start(7.6-delay, guid)
 	elseif cid == 167111 then--Spinemaw Staghorn
-		timerStimulateResistanceCD:Start(4.8, guid)
-		timerStimulateRegenerationCD:Start(13.9, guid)--Initial cast might not be timer based but health based. Recasts have a CD though
-		timerAcidNovaCD:Start(9.3, guid)--9.3-14.2
+		timerStimulateResistanceCD:Start(4.8-delay, guid)
+		timerStimulateRegenerationCD:Start(13.9-delay, guid)--Initial cast might not be timer based but health based. Recasts have a CD though
+		timerAcidNovaCD:Start(9.3-delay, guid)--9.3-14.2
 	elseif cid == 167113 then --Spinemaw Acidgullet
-		timerVolatileAcidCD:Start(8.5, guid)
+		timerVolatileAcidCD:Start(8.5-delay, guid)
 	elseif cid == 164921 then--Drust Harvester
-		timerHarvestEssenceCD:Start(6.9, guid)--6.9-20
+		timerHarvestEssenceCD:Start(6.9-delay, guid)--6.9-20
 	elseif cid == 173655 then--Mistveil Matriarch
-		timerShredArmorCD:Start(6.9, guid)--6.9-13
-		timerRadiantBreathCD:Start(9, guid)--9-16
-		timerPoolofRadianceCD:Start(20, guid)--20-27
+		timerShredArmorCD:Start(6.9-delay, guid)--6.9-13
+		timerRadiantBreathCD:Start(9-delay, guid)--9-16
+		timerPoolofRadianceCD:Start(20-delay, guid)--20-27
 	elseif cid == 172312 then--Spinemaw Gorger
-		timerAcidGlobuleCD:Start(5.3, guid)--5.3-9
+		timerAcidGlobuleCD:Start(5.3-delay, guid)--5.3-9
 	elseif cid == 166301 then--Mistveil Stalker
-		timerMistveilBiteCD:Start(6, guid)
+		timerMistveilBiteCD:Start(6-delay, guid)
 	elseif cid == 173720 then--Mistveil Gorgegullet
-		timerTongueLashingCD:Start(6, guid)
+		timerTongueLashingCD:Start(6-delay, guid)
 	elseif cid == 165111 then--Drust Spiteclaw
-		timerBloodLettingCD:Start(5, guid)--Poor sample, enemy has problematic pull detection
+		timerBloodLettingCD:Start(5-delay, guid)--Poor sample, enemy has problematic pull detection
 	end
 end
 
