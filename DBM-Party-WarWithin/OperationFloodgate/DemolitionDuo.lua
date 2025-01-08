@@ -3,7 +3,7 @@ local mod	= DBM:NewMod(2649, "DBM-Party-WarWithin", 9, 1298)
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
---mod:SetCreatureID(215405)
+mod:SetCreatureID(226403, 226402)
 mod:SetEncounterID(3019)
 --mod:SetHotfixNoticeRev(20240817000000)
 --mod:SetMinSyncRevision(20240817000000)
@@ -181,12 +181,12 @@ function mod:UNIT_DIED(args)
 		if self.vb.bombCount == 0 then
 			timerBombsExplode:Start()
 		end
-	elseif cid == 0 then--Keeza
+	elseif cid == 226403 then--Keeza
 		self.vb.keezaDead = true
 		timerBombsCD:Stop()
 		timerBBBFG:Stop()
 		timerExplosiveGelCD:Stop()
-	elseif cid == 1 then--Bront
+	elseif cid == 226402 then--Bront
 		timerChargeCD:Stop()
 		timerWallopCD:Stop()
 	end
