@@ -1,7 +1,7 @@
 ## Interface: 110007, 110100
 ## X-Min-Interface: 80000
 ## Category: DBM
-## Group: DBM Dungeons
+
 ## Title:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Dungeons (WotLK)|r
 ## Title-frFR:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Groupe-WotLK|r
 ## Title-deDE:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Gruppe-WotLK|r
