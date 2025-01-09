@@ -632,64 +632,64 @@ function mod:UNIT_DIED(args)
 end
 
 --All timers subject to a ~0.5 second clipping due to ScanEngagedUnits
-function mod:StartEngageTimers(guid, cid)
+function mod:StartEngageTimers(guid, cid, delay)
 	if cid == 216584 then--Nerubian Captain
-		timerWebbedAegisCD:Start(6, guid)--Recheck with even better zone debug
-		timerWideSwipeCD:Start(3.8, guid)
+		timerWebbedAegisCD:Start(6-delay, guid)--Recheck with even better zone debug
+		timerWideSwipeCD:Start(3.8-delay, guid)
 	elseif cid == 208242 then--Nerubian Darkcaster
-		timerShadowsofStrifeCD:Start(7.8, guid)--7.8-11.2
+		timerShadowsofStrifeCD:Start(7.8-delay, guid)--7.8-11.2
 	elseif cid == 223541 then--Stolen Loader
-		timerMagmaHammerCD:Start(5.9, guid)
-		timerLavablastCD:Start(12, guid)
+		timerMagmaHammerCD:Start(5.9-delay, guid)
+		timerLavablastCD:Start(12-delay, guid)
 	elseif cid == 207460 then--Fungarian Flinger
---		timerRotWaveVolleyCD:Start(9.4, guid)
+--		timerRotWaveVolleyCD:Start(9.4-delay, guid)
 	elseif cid == 204127 then--Kobold Taskfinder
---		timerBlazingWickCD:Start(14.6, guid)
---		timerBattleCryCD:Start(30.3, guid)
+--		timerBlazingWickCD:Start(14.6-delay, guid)
+--		timerBattleCryCD:Start(30.3-delay, guid)
 --	elseif cid == 207454 then--Fungal Gutter
---		timerBattleRoarCD:Start(19.9, guid)--Cast instantly on engage
---		timerViciousStabsCD:Start(14, guid)--Unknown, difficult to filter due to RP mobs fighting in background cluttering up logs
+--		timerBattleRoarCD:Start(19.9-delay, guid)--Cast instantly on engage
+--		timerViciousStabsCD:Start(14-delay, guid)--Unknown, difficult to filter due to RP mobs fighting in background cluttering up logs
 --	elseif cid == 207456 then--Fungal Speartender
---		timerBattleRoarCD:Start(9.9, guid)--Cast instantly on engage
+--		timerBattleRoarCD:Start(9.9-delay, guid)--Cast instantly on engage
 	elseif cid == 207450 then--Fungal Stabber
---		timerDebilitatingVenomCD:Start(13.3, guid)
+--		timerDebilitatingVenomCD:Start(13.3-delay, guid)
 	elseif cid == 211062 then--Bill
-		timerBladeTossCD:Start(6.5, guid)
+		timerBladeTossCD:Start(6.5-delay, guid)
 --	elseif cid == 207455 then--Fungal Speartender
---		timerVineSpearCD:Start(14.9, guid)
+--		timerVineSpearCD:Start(14.9-delay, guid)
 	elseif cid == 213434 then--Sporesong
---		timerRelocateCD:Start(70, guid)
+--		timerRelocateCD:Start(70-delay, guid)
 	elseif cid == 208245 or cid == 220508 then--Skittering Swarmer & The Puppetmaster?
---		timerSkitterChargeCD:Start(12.5, guid)
+--		timerSkitterChargeCD:Start(12.5-delay, guid)
 	elseif cid == 207482 then--Invasive Sporecap
-		timerFungalBreathCD:Start(6, guid)
-		timerFungalBloomCD:Start(10.9, guid)
+		timerFungalBreathCD:Start(6-delay, guid)
+		timerFungalBloomCD:Start(10.9-delay, guid)
 	elseif cid == 208728 then--Treasure Wraith
---		timerCastigateCD:Start(17.8, guid)
---		timerUmbrelSlashCD:Start(17.8, guid)
+--		timerCastigateCD:Start(17.8-delay, guid)
+--		timerUmbrelSlashCD:Start(17.8-delay, guid)
 --	elseif cid == 214338 then--Kobyss Spearfisher
---		timerSpearFishCD:Start(9.2, guid)
+--		timerSpearFishCD:Start(9.2-delay, guid)
 	elseif cid == 211777 then--Spitfire Fusetender
---		timerThrowDynoCD:Start(7.2, guid)
+--		timerThrowDynoCD:Start(7.2-delay, guid)
 	elseif cid == 214551 then--Wandering Gutter
-		timerBloodthirstyCD:Start(5.6, guid)
-		timerSerratedCleaveCD:Start(11.6, guid)
+		timerBloodthirstyCD:Start(5.6-delay, guid)
+		timerSerratedCleaveCD:Start(11.6-delay, guid)
 	elseif cid == 216583 then--Chittering Fearmonger
-		timerFearfulShriekCD:Start(3.6, guid)
+		timerFearfulShriekCD:Start(3.6-delay, guid)
 	elseif cid == 219454 then--Crazed Abomination
---		timerEnrageCD:Start(23, guid)
---		timerArmorShellCD:Start(24, guid)
+--		timerEnrageCD:Start(23-delay, guid)
+--		timerArmorShellCD:Start(24-delay, guid)
 	elseif cid == 217870 then--Devouring Shade
-		timerShadowStrikeCD:Start(5, guid)
-		timerUmbralSlamCD:Start(11.2, guid)
+		timerShadowStrikeCD:Start(5-delay, guid)
+		timerUmbralSlamCD:Start(11.2-delay, guid)
 	elseif cid == 219022 or cid == 220507 then--Ascended Webfriar / The Puppetmaster?
-		timerGrimweaveOrbCD:Start(6, guid)--6 minimun time but can be massively delayed by CCs
+		timerGrimweaveOrbCD:Start(6-delay, guid)--6 minimun time but can be massively delayed by CCs
 	elseif cid == 214343 then--Kobyss Trickster
-		timerIllusionStepCD:Start(5, guid)--5-20
+		timerIllusionStepCD:Start(5-delay, guid)--5-20
 	elseif cid == 220643 then--Deepwater Makura
-		timerBubbleSurgeCD:Start(10.4, guid)
+		timerBubbleSurgeCD:Start(10.4-delay, guid)
 	elseif cid == 220432 then--Particularly Bad Guy
-		timerHidousLaughterCD:Start(3, guid)
+		timerHidousLaughterCD:Start(3-delay, guid)
 	end
 end
 

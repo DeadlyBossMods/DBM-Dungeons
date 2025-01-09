@@ -24,17 +24,19 @@ local specWarnRagingGaze			= mod:NewSpecialWarningRun(257582, nil, nil, nil, 4, 
 local yellRagingGaze				= mod:NewYell(257582)
 local specWarnInfusion				= mod:NewSpecialWarningSwitch(271698, "-Tank", nil, nil, 1, 2)
 --local specWarnResonantPulse			= mod:NewSpecialWarningDodge(258622, nil, nil, nil, 2, 2)
-local specWarnTectonicSmash			= mod:NewSpecialWarningDodge(275907, "Tank", nil, 2, 1, 2)
+local specWarnTectonicSmash			= mod:NewSpecialWarningDodgeCount(275907, nil, nil, 2, 1, 15)
 local specWarnQuake					= mod:NewSpecialWarningDodge(258627, nil, nil, nil, 2, 2)
 
 local timerCallEarthragerCD			= mod:NewNextCountTimer(60.4, 257593, nil, nil, nil, 1)
---local timerInfusionCD				= mod:NewCDTimer(13, 271698, nil, nil, nil, 3, nil, DBM_COMMON_L.DAMAGE_ICON)--Health based?
-local timerResonantPulseCD			= mod:NewCDTimer(32.2, 258622, nil, nil, nil, 2)
-local timerTectonicSmashCD			= mod:NewCDTimer(23.0, 275907, nil, nil, nil, 3)--23-28
+--local timerInfusionCD				= mod:NewCDCountTimer(13, 271698, nil, nil, nil, 3, nil, DBM_COMMON_L.DAMAGE_ICON)--Health based?
+local timerResonantPulseCD			= mod:NewCDCountTimer(32.2, 258622, nil, nil, nil, 2)
+local timerTectonicSmashCD			= mod:NewCDCountTimer(23.0, 275907, nil, nil, nil, 3)--23-28
 
 mod:AddInfoFrameOption(257481, true)
 
 mod.vb.addCount = 0
+mod.vb.pulseCount = 0
+mod.vb.smashCount = 0
 
 local updateInfoFrame
 do
@@ -71,11 +73,13 @@ end
 
 function mod:OnCombatStart(delay)
 	self.vb.addCount = 0
+	self.vb.pulseCount = 0
+	self.vb.smashCount = 0
 	timerCallEarthragerCD:Start(60-delay, 1)
 	--timerInfusionCD:Start(1-delay)--19.6
-	timerResonantPulseCD:Start(8.6-delay)
+	timerResonantPulseCD:Start(8.6-delay, 1)
 	if not self:IsNormal() then
-		timerTectonicSmashCD:Start(5-delay)
+		timerTectonicSmashCD:Start(5-delay, 1)
 	end
 	if self.Options.InfoFrame then
 		DBM.InfoFrame:SetHeader(DBM:GetSpellName(227909))
@@ -111,12 +115,16 @@ function mod:SPELL_CAST_START(args)
 		specWarnCallEarthRager:Play("bigmob")
 		timerCallEarthragerCD:Start(60, self.vb.addCount+1)--add self.vb.addCount+1
 	elseif spellId == 258622 then
+		self.vb.pulseCount = self.vb.pulseCount + 1
 		warnPulse:Show()
-		timerResonantPulseCD:Start()
+		timerResonantPulseCD:Start(nil, self.vb.pulseCount+1)
 	elseif spellId == 275907 then
-		specWarnTectonicSmash:Show()
-		specWarnTectonicSmash:Play("shockwave")
-		timerTectonicSmashCD:Start()
+		self.vb.smashCount = self.vb.smashCount + 1
+		if self:IsTanking("player", "boss1", nil, true) then
+			specWarnTectonicSmash:Show(self.vb.smashCount)
+			specWarnTectonicSmash:Play("frontal")
+		end
+		timerTectonicSmashCD:Start(nil, self.vb.smashCount+1)
 	elseif spellId == 258627 and self:AntiSpam(3.5, 1) then
 		specWarnQuake:Show()
 		specWarnQuake:Play("watchstep")

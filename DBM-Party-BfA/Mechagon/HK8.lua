@@ -28,7 +28,7 @@ mod:RegisterEventsInCombat(
  --]]
  --Stage 1
  mod:AddTimerLine(DBM:EJ_GetSectionInfo(20037))
-local warnReinforcementRelay		= mod:NewSpellAnnounce(301351, 2)
+local warnReinforcementRelay		= mod:NewCountAnnounce(301351, 2)
 local warnFulminatingZap			= mod:NewTargetNoFilterAnnounce(302274, 2, nil, "Healer")
 
 local specWarnCannonBlast			= mod:NewSpecialWarningDodge(295536, nil, nil, nil, 2, 2)
@@ -38,10 +38,10 @@ local yellFulminatingBurst			= mod:NewYell(303885, nil, nil, nil, "YELL")
 local yellFulminatingBurstFades		= mod:NewShortFadesYell(303885, nil, nil, nil, "YELL")
 
 --local timerCannonBlastCD			= mod:NewCDTimer(7.7, 295536, nil, nil, nil, 3, nil, DBM_COMMON_L.DEADLY_ICON)--7.7-13.4 variation, useless timer
-local timerReinforcementRelayCD		= mod:NewCDTimer(32.8, 301351, nil, nil, nil, 1)
-local timerWreckCD					= mod:NewCDTimer(24.3, 302279, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
---local timerFulminatingZapCD			= mod:NewCDTimer(17.0, 302274, nil, nil, nil, 3, nil, DBM_COMMON_L.HEALER_ICON)--Assumed
-local timerFulminatingBurstCD		= mod:NewCDTimer(17.0, 303885, nil, nil, nil, 3, nil, DBM_COMMON_L.HEALER_ICON)--Hard Mode
+local timerReinforcementRelayCD		= mod:NewCDCountTimer(32.8, 301351, nil, nil, nil, 1)
+local timerWreckCD					= mod:NewCDCountTimer(24.3, 302279, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+--local timerFulminatingZapCD		= mod:NewCDCountTimer(17.0, 302274, nil, nil, nil, 3, nil, DBM_COMMON_L.HEALER_ICON)--Assumed
+local timerFulminatingBurstCD		= mod:NewCDCountTimer(17.0, 303885, nil, nil, nil, 3, nil, DBM_COMMON_L.HEALER_ICON)--Hard Mode
 --Stage 2
  mod:AddTimerLine(DBM:EJ_GetSectionInfo(20039))
 local warnHaywire					= mod:NewTargetNoFilterAnnounce(296080, 1)
@@ -56,6 +56,10 @@ local timerHaywire					= mod:NewBuffActiveTimer(30, 296080, nil, nil, nil, 6)
 mod:AddNamePlateOption("NPAuraOnWalkieShockie", 296522, false)
 
 mod.vb.hard = false
+mod.vb.relayCount = 0
+mod.vb.wreckCount = 0
+--mod.vb.zapCount = 0
+mod.vb.burstCount = 0
 local unitTracked = {}
 
 --[[
@@ -89,8 +93,8 @@ function mod:OnCombatStart(delay)
 	self.vb.hard = false
 --	self:Schedule(2-delay, checkHardMode, self)
 --	timerFulminatingZapCD:Start(9.2)--SUCCESS
-	timerWreckCD:Start(15)
-	timerReinforcementRelayCD:Start(20.8)
+	timerWreckCD:Start(15, 1)
+	timerReinforcementRelayCD:Start(20.8, 1)
 	table.wipe(unitTracked)
 	if self.Options.NPAuraOnWalkieShockie then
 		DBM:FireEvent("BossMod_EnableHostileNameplates")
@@ -155,18 +159,22 @@ end
 function mod:SPELL_CAST_SUCCESS(args)
 	local spellId = args.spellId
 	if spellId == 302274 then
+--		self.vb.zapCount = self.vb.zapCount + 1
 --		timerFulminatingZapCD:Start()
 	elseif spellId == 303885 then
-		timerFulminatingBurstCD:Start()
+		self.vb.burstCount = self.vb.burstCount + 1
+		timerFulminatingBurstCD:Start(nil, self.vb.burstCount+1)
 	elseif spellId == 301351 or spellId == 303553 then--Regular, Hard
-		warnReinforcementRelay:Show()
-		timerReinforcementRelayCD:Start()
+		self.vb.relayCount = self.vb.relayCount + 1
+		warnReinforcementRelay:Show(self.vb.relayCount)
+		timerReinforcementRelayCD:Start(nil, self.vb.relayCount+1)
 	elseif spellId == 302279 then
+		self.vb.wreckCount = self.vb.wreckCount + 1
 		if self:IsTanking("player", "boss1", nil, true) then
 			specWarnWreck:Show()
 			specWarnWreck:Play("defensive")
 		end
-		timerWreckCD:Start()
+		timerWreckCD:Start(nil, self.vb.wreckCount+1)
 	elseif spellId == 301177 then--Lift Off (haywire ended, return to stage 1)
 		--TODO, need a log that didn't one phase him, might be harder to come by these days
 		--[[if self.vb.hard  then
@@ -179,8 +187,8 @@ function mod:SPELL_CAST_SUCCESS(args)
 			timerReinforcementRelayCD:Start(19.8)--Assumed
 		end--]]
 --		timerFulminatingZapCD:Start(16.7)--SUCCESS
-		timerWreckCD:Start(22.5)--Assumed
-		timerReinforcementRelayCD:Start(29.1)
+		timerWreckCD:Start(22.5, self.vb.wreckCount+1)--Assumed
+		timerReinforcementRelayCD:Start(29.1, self.vb.relayCount+1)--Assumed
 	end
 end
 

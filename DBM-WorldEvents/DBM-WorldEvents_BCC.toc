@@ -1,4 +1,6 @@
 ## Interface: 20504
+## Category: DBM
+
 ## Title:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cff69ccf0World Events|r
 ## Title-esES:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cff69ccf0Eventos del mundo|r
 ## Title-esMX:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cff69ccf0Eventos del mundo|r

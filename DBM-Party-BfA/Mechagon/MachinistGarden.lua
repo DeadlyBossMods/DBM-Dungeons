@@ -22,46 +22,59 @@ mod:RegisterEventsInCombat(
 ability.id = 285440 and type = "begincast"
  or (ability.id = 285454 or ability.id = 294855 or ability.id = 294853 or ability.id = 292332) and type = "cast"
 --]]
-local warnDiscomBomb				= mod:NewSpellAnnounce(285454, 2)
-local warnSelfTrimmingHedge			= mod:NewSpellAnnounce(294954, 2)
-local warnPlant						= mod:NewSpellAnnounce(294853, 2)
+local warnDiscomBomb				= mod:NewCountAnnounce(285454, 2)
+local warnSelfTrimmingHedge			= mod:NewCountAnnounce(294954, 2)
+local warnPlant						= mod:NewCountAnnounce(294853, 2)
 
-local specWarnFlameCannon			= mod:NewSpecialWarningSpell(285440, nil, nil, nil, 2, 2)
+local specWarnFlameCannon			= mod:NewSpecialWarningCount(285440, nil, nil, nil, 2, 2)
 local specWarnDiscomBomb			= mod:NewSpecialWarningDispel(285454, "RemoveMagic", nil, nil, 2, 2)
 --local specWarnGTFO				= mod:NewSpecialWarningGTFO(238028, nil, nil, nil, 1, 8)
 
-local timerDiscomBombCD				= mod:NewNextTimer(18.2, 285454, nil, nil, nil, 3)
-local timerFlameCannonCD			= mod:NewCDTimer(47.4, 285440, nil, nil, nil, 2)
-local timerSelfTrimmingHedgeCD		= mod:NewCDTimer(25.5, 294954, nil, nil, nil, 3)
-local timerPlantCD					= mod:NewCDTimer(45.4, 294853, nil, nil, nil, 1)
+local timerDiscomBombCD				= mod:NewNextCountTimer(18.2, 285454, nil, nil, nil, 3)
+local timerFlameCannonCD			= mod:NewCDCountTimer(47.4, 285440, nil, nil, nil, 2)
+local timerSelfTrimmingHedgeCD		= mod:NewCDCountTimer(25.5, 294954, nil, nil, nil, 3)
+local timerPlantCD					= mod:NewCDCountTimer(45.4, 294853, nil, nil, nil, 1)
+
+mod.vb.bombCount = 0
+mod.vb.cannonCount = 0
+mod.vb.hedgeCount = 0
+mod.vb.plantCount = 0
 
 function mod:OnCombatStart(delay)
-	timerSelfTrimmingHedgeCD:Start(3.4-delay)
-	timerPlantCD:Start(5.9-delay)
-	timerDiscomBombCD:Start(8.3-delay)
-	timerFlameCannonCD:Start(12.1-delay)
+	self.vb.bombCount = 0
+	self.vb.cannonCount = 0
+	self.vb.hedgeCount = 0
+	self.vb.plantCount = 0
+	timerSelfTrimmingHedgeCD:Start(3.4-delay, 1)
+	timerPlantCD:Start(5.9-delay, 1)
+	timerDiscomBombCD:Start(8.3-delay, 1)
+	timerFlameCannonCD:Start(12.1-delay, 1)
 end
 
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
 	if spellId == 285440 then
-		specWarnFlameCannon:Show()
+		self.vb.cannonCount = self.vb.cannonCount + 1
+		specWarnFlameCannon:Show(self.vb.cannonCount)
 		specWarnFlameCannon:Play("aesoon")
-		timerFlameCannonCD:Start()
+		timerFlameCannonCD:Start(nil, self.vb.cannonCount+1)
 	end
 end
 
 function mod:SPELL_CAST_SUCCESS(args)
 	local spellId = args.spellId
 	if spellId == 285454 then
-		warnDiscomBomb:Show()
-		timerDiscomBombCD:Start()
+		self.vb.bombCount = self.vb.bombCount + 1
+		warnDiscomBomb:Show(self.vb.bombCount)
+		timerDiscomBombCD:Start(nil, self.vb.bombCount+1)
 	elseif spellId == 294853 then--Activate Plant
-		warnPlant:Show()
-		timerPlantCD:Start()
+		self.vb.plantCount = self.vb.plantCount + 1
+		warnPlant:Show(self.vb.plantCount)
+		timerPlantCD:Start(nil, self.vb.plantCount+1)
 	elseif spellId == 292332 then--Self-Trimming Hedge
-		warnSelfTrimmingHedge:Show()
-		timerSelfTrimmingHedgeCD:Start()
+		self.vb.hedgeCount = self.vb.hedgeCount + 1
+		warnSelfTrimmingHedge:Show(self.vb.hedgeCount)
+		timerSelfTrimmingHedgeCD:Start(nil, self.vb.hedgeCount+1)
 	end
 end
 

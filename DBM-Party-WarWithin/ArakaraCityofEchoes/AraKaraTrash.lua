@@ -209,27 +209,27 @@ function mod:UNIT_DIED(args)
 end
 
 --All timers subject to a ~0.5 second clipping due to ScanEngagedUnits
-function mod:StartEngageTimers(guid, cid)
+function mod:StartEngageTimers(guid, cid, delay)
 	if cid == 217531 then--Ixin
-		timerWebSprayCD:Start(4.4, guid)--4.4-7
-		timerHorrifyingShrillCD:Start(12.7, guid)
+		timerWebSprayCD:Start(3.3-delay, guid)--3.3-7
+		timerHorrifyingShrillCD:Start(12.7-delay, guid)
 	elseif cid == 218324 then--Nakt
-		timerCalloftheBroodCD:Start(5.6, guid)
-		timerWebSprayCD:Start(11.7, guid)
+		timerCalloftheBroodCD:Start(5.6-delay, guid)
+		timerWebSprayCD:Start(11.7-delay, guid)
 	elseif cid == 217533 then--Atik
-		timerWebSprayCD:Start(4, guid)--4-6
-		timerPoisonousCloudCD:Start(8.8, guid)--8.8-14.4
+		timerWebSprayCD:Start(4-delay, guid)--4-6
+		timerPoisonousCloudCD:Start(8.8-delay, guid)--8.8-14.4
 	elseif cid == 216293 then--Trilling Attendant
-		timerRadiantBarrageCD:Start(2.1, guid)--2.1-3.8
+		timerRadiantBarrageCD:Start(2.1-delay, guid)--2.1-3.8
 	elseif cid == 223253 then--Bloodstained Webmage
-		timerRevoltingVolleyCD:Start(2.2, guid)--2.2-4.5
+		timerRevoltingVolleyCD:Start(2.2-delay, guid)--2.2-4.5
 	elseif cid == 216338 then--Hulking Bodyguard
-		timerImpaleCD:Start(4.4, guid)--4.8-7.6
+		timerImpaleCD:Start(4.4-delay, guid)--4.8-7.6
 	elseif cid == 216364 then--Blood Overseer
-		timerVenomVolleyCD:Start(5.2, guid)--5.2-7.4
-		timerEruptingWebsCD:Start(11.3, guid)--11.3-13.9
+		timerVenomVolleyCD:Start(5.2-delay, guid)--5.2-7.4
+		timerEruptingWebsCD:Start(11.3-delay, guid)--11.3-13.9
 	elseif cid == 217039 then--Nerubian Hauler
-		timerMassiveSlamCD:Start(3, guid)--3-4
+		timerMassiveSlamCD:Start(3-delay, guid)--3-4
 	end
 end
 

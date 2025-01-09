@@ -24,7 +24,7 @@ local warnDrillSmash				= mod:NewTargetNoFilterAnnounce(271456, 2)
 local warnSummonBooma				= mod:NewSpellAnnounce(276212, 2)
 
 --Stage One: Big Guns
-local specWarnGatlingGun			= mod:NewSpecialWarningDodge(260280, nil, nil, nil, 3, 8)
+local specWarnGatlingGun			= mod:NewSpecialWarningDodgeCount(260280, nil, nil, nil, 3, 8)
 local specWarnHomingMissile			= mod:NewSpecialWarningMoveAway(260811, nil, nil, nil, 1, 2)
 local yellHomingMissile				= mod:NewYell(260811)
 --Stage Two: Drill
@@ -36,12 +36,15 @@ local yellHeartseeker				= mod:NewYell(262515)
 --local specWarnGTFO				= mod:NewSpecialWarningGTFO(238028, nil, nil, nil, 1, 8)
 
 --Stage One: Big Guns
-local timerGatlingGunCD				= mod:NewCDTimer(20.1, 260280, nil, nil, nil, 3)
-local timerHomingMissileCD			= mod:NewCDTimer(21, 260811, nil, nil, nil, 3)
+local timerGatlingGunCD				= mod:NewCDCountTimer(20.1, 260280, nil, nil, nil, 3)
+local timerHomingMissileCD			= mod:NewCDCountTimer(21, 260811, nil, nil, nil, 3)
 --Stage Two: Drill
-local timerDrillSmashCD				= mod:NewCDTimer(8.4, 271456, nil, nil, nil, 3)--8.4--9.9
+local timerDrillSmashCD				= mod:NewCDCountTimer(8.4, 271456, nil, nil, nil, 3)--8.4--9.9
 
 local rocket = DBM:GetSpellName(166493)
+mod.vb.gatCount = 0
+mod.vb.homingCount = 0
+mod.vb.drillCount = 0
 
 function mod:DrillTarget(targetname)
 	if not targetname then return end
@@ -57,8 +60,11 @@ function mod:DrillTarget(targetname)
 end
 
 function mod:OnCombatStart(delay)
-	timerHomingMissileCD:Start(4.9-delay)
-	timerGatlingGunCD:Start(14.9-delay)
+	self.vb.gatCount = 0
+	self.vb.homingCount = 0
+	self.vb.drillCount = 0
+	timerHomingMissileCD:Start(4.9-delay, 1)
+	timerGatlingGunCD:Start(14.9-delay, 1)
 end
 
 function mod:SPELL_AURA_APPLIED(args)
@@ -66,11 +72,11 @@ function mod:SPELL_AURA_APPLIED(args)
 	if spellId == 260189 then--Configuration: Drill
 		timerGatlingGunCD:Stop()
 		timerHomingMissileCD:Stop()
-		timerDrillSmashCD:Start(17.3)
+		timerDrillSmashCD:Start(17.3, self.vb.drillCount+1)
 	elseif spellId == 260190 then--Configuration: Combat
 		timerDrillSmashCD:Stop()
-		timerHomingMissileCD:Start(7)
-		timerGatlingGunCD:Start(17)
+		timerHomingMissileCD:Start(7, self.vb.homingCount+1)
+		timerGatlingGunCD:Start(17, self.vb.gatCount+1)
 	elseif spellId == 262515 then
 		if args:IsPlayer() then
 			specWarnHeartseeker:Show()
@@ -104,20 +110,23 @@ mod.SPELL_AURA_REMOVED = mod.SPELL_AURA_REMOVED_DOSE
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
 	if spellId == 260280 then
-		specWarnGatlingGun:Show()
+		self.vb.gatCount = self.vb.gatCount + 1
+		specWarnGatlingGun:Show(self.vb.gatCount)
 		specWarnGatlingGun:Play("behindboss")
 		specWarnGatlingGun:ScheduleVoice(1.5, "keepmove")
-		timerGatlingGunCD:Start()
+		timerGatlingGunCD:Start(nil, self.vb.gatCount+1)
 	elseif spellId == 271456 then
+		self.vb.drillCount = self.vb.drillCount + 1
 		self:ScheduleMethod(0.5, "BossTargetScanner", args.sourceGUID, "DrillTarget", 0.1, 12, true)
-		timerDrillSmashCD:Start()
+		timerDrillSmashCD:Start(nil, self.vb.drillCount+1)
 	end
 end
 
 function mod:SPELL_CAST_SUCCESS(args)
 	local spellId = args.spellId
 	if spellId == 260813 then
-		timerHomingMissileCD:Start()
+		self.vb.homingCount = self.vb.homingCount + 1
+		timerHomingMissileCD:Start(nil, self.vb.homingCount+1)
 	elseif spellId == 271456 and self:AntiSpam(6, args.destName) then--Backup, should only trigger if targetscan failed
 		warnDrillSmash:Show(args.destName)
 	elseif spellId == 276212 then

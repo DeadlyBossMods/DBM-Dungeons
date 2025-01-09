@@ -37,23 +37,26 @@ local warnMagnetoArmSoon			= mod:NewSoonAnnounce(283143, 2)
 --local specWarnRecalibrate			= mod:NewSpecialWarningDodge(291865, nil, nil, nil, 2, 2)
 local specWarnGigaZap				= mod:NewSpecialWarningYouCount(292264, nil, nil, nil, 2, 2)
 local yellGigaZap					= mod:NewCountYell(292264)
-local specWarnTakeOff				= mod:NewSpecialWarningRun(291613, nil, nil, nil, 4, 2)
+local specWarnTakeOff				= mod:NewSpecialWarningRunCount(291613, nil, nil, nil, 4, 2)
 --Stage Two: Omega Buster
-local specWarnMagnetoArm			= mod:NewSpecialWarningRun(283143, nil, nil, nil, 4, 2)
-local specWarnHardMode				= mod:NewSpecialWarningSpell(292750, nil, nil, nil, 3, 2)
+local specWarnMagnetoArm			= mod:NewSpecialWarningRunCount(283143, nil, nil, nil, 4, 2)
+local specWarnHardMode				= mod:NewSpecialWarningCount(292750, nil, nil, nil, 3, 2)
 --local specWarnGTFO				= mod:NewSpecialWarningGTFO(238028, nil, nil, nil, 1, 8)
 
 --Stage One: Aerial Unit R-21/X
 local timerRecalibrateCD			= mod:NewCDCountTimer(13.4, 291865, nil, nil, nil, 3)
-local timerGigaZapCD				= mod:NewCDTimer(15.8, 292264, nil, nil, nil, 3)
-local timerTakeOffCD				= mod:NewCDTimer(35.2, 291613, nil, nil, nil, 6)
+local timerGigaZapCD				= mod:NewCDCountTimer(15.8, 292264, nil, nil, nil, 3)
+local timerTakeOffCD				= mod:NewCDCountTimer(35.2, 291613, nil, nil, nil, 6)
 local timerCuttingBeam				= mod:NewCastTimer(6, 291626, nil, nil, nil, 3)
 --Stage Two: Omega Buster
-local timerMagnetoArmCD				= mod:NewCDTimer(61.9, 283143, nil, nil, nil, 2)
-local timerHardModeCD				= mod:NewCDTimer(42.5, 292750, nil, nil, nil, 5, nil, DBM_COMMON_L.MYTHIC_ICON)--42.5-46.1
+local timerMagnetoArmCD				= mod:NewCDCountTimer(61.9, 283143, nil, nil, nil, 2)
+local timerHardModeCD				= mod:NewCDCountTimer(42.5, 292750, nil, nil, nil, 5, nil, DBM_COMMON_L.MYTHIC_ICON)--42.5-46.1
 
 mod.vb.recalibrateCount = 0
 mod.vb.zapCount = 0
+mod.vb.takeOffCount = 0
+mod.vb.armCount = 0
+mod.vb.hardModeCount = 0
 local P1RecalibrateTimers = {5.9, 12, 27.9, 15.6, 19.4}
 --All hard mode timers, do they differ if hard mode isn't active?
 --5.9, 13.3, 27.9, 15.6, 20.7
@@ -75,9 +78,12 @@ function mod:OnCombatStart(delay)
 	self:SetStage(1)
 	self.vb.recalibrateCount = 0
 	self.vb.zapCount = 0
+	self.vb.takeOffCount = 0
+	self.vb.armCount = 0
+	self.vb.hardModeCount = 0
 	timerRecalibrateCD:Start(5.9-delay, 1)
-	timerGigaZapCD:Start(8.3-delay)
-	timerTakeOffCD:Start(30.2-delay)
+	timerGigaZapCD:Start(8.3-delay, 1)
+	timerTakeOffCD:Start(30.2-delay, 1)
 end
 
 function mod:OnCombatEnd()
@@ -104,18 +110,19 @@ function mod:SPELL_CAST_START(args)
 			if self.vb.zapCount % 3 == 0 then
 				--14.8, 3.5, 3.5, 28.6, 3.5, 3.5, 23.4, 3.5, 3.5, 23.3, 3.5, 3.5
 				--14.8, 3.5, 3.5, 28.2, 3.5, 3.5
-				timerGigaZapCD:Start(self.vb.zapCount == 3 and 26.9 or 23.3)
+				timerGigaZapCD:Start(self.vb.zapCount == 3 and 26.9 or 23.3, self.vb.zapCount+1)
 			else
-				timerGigaZapCD:Start(3.5)
+				timerGigaZapCD:Start(3.5, self.vb.zapCount+1)
 			end
 		else--Stage 1
-			timerGigaZapCD:Start(15.8)--15-20, but not sequencable enough because it differs pull from pull
+			timerGigaZapCD:Start(15.8, self.vb.zapCount+1)--15-20, but not sequencable enough because it differs pull from pull
 		end
 		self:ScheduleMethod(0.1, "BossTargetScanner", args.sourceGUID, "ZapTarget", 0.1, 7, true)
 	elseif spellId == 291613 then
-		specWarnTakeOff:Show()
+		self.vb.takeOffCount = self.vb.takeOffCount + 1
+		specWarnTakeOff:Show(self.vb.takeOffCount)
 		specWarnTakeOff:Play("justrun")
-		timerTakeOffCD:Start()
+		timerTakeOffCD:Start(nil, self.vb.takeOffCount+1)
 	end
 end
 
@@ -127,14 +134,16 @@ function mod:SPELL_CAST_SUCCESS(args)
 	elseif spellId == 283551 then
 		warnMagnetoArmSoon:Show()
 	elseif spellId == 283143 then
-		specWarnMagnetoArm:Show()
+		self.vb.armCount = self.vb.armCount + 1
+		specWarnMagnetoArm:Show(self.vb.armCount)
 		specWarnMagnetoArm:Play("justrun")
 		specWarnMagnetoArm:ScheduleVoice(1.5, "keepmove")
-		timerMagnetoArmCD:Start()
+		timerMagnetoArmCD:Start(nil, self.vb.armCount+1)
 	elseif spellId == 292750 then--H.A.R.D.M.O.D.E.
-		specWarnHardMode:Show()
+		self.vb.hardModeCount = self.vb.hardModeCount + 1
+		specWarnHardMode:Show(self.vb.hardModeCount)
 		specWarnHardMode:Play("stilldanger")
-		timerHardModeCD:Start()
+		timerHardModeCD:Start(nil, self.vb.hardModeCount+1)
 	end
 end
 
@@ -159,14 +168,16 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, spellId)
 		self:SetStage(2)
 		self.vb.zapCount = 0
 		self.vb.recalibrateCount = 0
+		self.vb.takeOffCount = 0
+		self.vb.armCount = 0
 		warnPhase2:Show()
 		warnPhase2:Play("ptwo")
 		--Start P2 Timers
-		timerGigaZapCD:Start(11.4)
+		timerGigaZapCD:Start(11.4, 1)
 		--timerRecalibrateCD:Start(2)--Cast start event hidden in P2, and not the most important mechanic of fight that it needs hacks to work around
-		timerMagnetoArmCD:Start(34)
+		timerMagnetoArmCD:Start(34, 1)
 	elseif spellId == 292807 then--Cancel Skull Aura (Annihilo-tron 5000 activating on pull)
-		timerHardModeCD:Start(32.2)
+		timerHardModeCD:Start(32.2, 1)
 	end
 end
 

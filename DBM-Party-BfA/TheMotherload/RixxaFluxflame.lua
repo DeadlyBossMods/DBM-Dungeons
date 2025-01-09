@@ -24,13 +24,13 @@ local specWarnChemBurn				= mod:NewSpecialWarningDispel(259853, "RemoveMagic", n
 local specWarnPoropellantBlast		= mod:NewSpecialWarningYou(259940, nil, nil, nil, 1, 2)
 local yellPoropellantBlast			= mod:NewYell(259940)
 
-local timerAxeriteCatalystCD		= mod:NewCDTimer(13, 259022, nil, nil, nil, 3)
-local timerChemBurnCD				= mod:NewCDTimer(13, 259853, nil, nil, 2, 5, nil, DBM_COMMON_L.HEALER_ICON..DBM_COMMON_L.MAGIC_ICON)
+local timerAxeriteCatalystCD		= mod:NewCDCountTimer(13, 259022, nil, nil, nil, 3)
+local timerChemBurnCD				= mod:NewCDCountTimer(13, 259853, nil, nil, 2, 5, nil, DBM_COMMON_L.HEALER_ICON..DBM_COMMON_L.MAGIC_ICON)
 --local timerPropellantBlastCD		= mod:NewCDTimer(13, 259940, nil, nil, nil, 3)--Longer pull/more data needed (32.5, 6.0, 36.1)
 --local timerGushingCatalystCD		= mod:NewCDTimer(13, 275992, nil, nil, nil, 3, nil, DBM_COMMON_L.HEROIC_ICON)
 
-mod.vb.chemBurnCast = 0
 mod.vb.azeriteCataCast = 0
+mod.vb.chemBurnCast = 0
 
 function mod:BlastTarget(targetname)
 	if not targetname then return end
@@ -46,8 +46,8 @@ end
 function mod:OnCombatStart(delay)
 	self.vb.chemBurnCast = 0
 	self.vb.azeriteCataCast = 0
-	timerAxeriteCatalystCD:Start(4-delay)
-	timerChemBurnCD:Start(12-delay)--SUCCESS
+	timerAxeriteCatalystCD:Start(4-delay, 1)
+	timerChemBurnCD:Start(12-delay, 1)--SUCCESS
 	--timerPropellantBlastCD:Start(31-delay)
 --	if not self:IsNormal() then
 --		timerGushingCatalystCD:Start(1-delay)
@@ -72,28 +72,33 @@ end
 
 function mod:SPELL_CAST_SUCCESS(args)
 	local spellId = args.spellId
-	if spellId == 259022 or spellId == 270042 then
+	if (spellId == 259022 or spellId == 270042) and self:AntiSpam(5, 1) then
+		self.vb.azeriteCataCast = self.vb.azeriteCataCast + 1
 		warnAxeriteCatalyst:Show()
-		timerAxeriteCatalystCD:Start()
+		if self.vb.azeriteCataCast % 2 == 0 then
+			timerAxeriteCatalystCD:Start(27, self.vb.azeriteCataCast+1)
+		else
+			timerAxeriteCatalystCD:Start(15, self.vb.azeriteCataCast+1)
+		end
 	elseif spellId == 259856 and self:AntiSpam(5, 1) then
 		self.vb.chemBurnCast = self.vb.chemBurnCast + 1
 		if self.vb.chemBurnCast % 2 == 0 then
-			timerChemBurnCD:Start(27)
+			timerChemBurnCD:Start(27, self.vb.chemBurnCast+1)
 		else
-			timerChemBurnCD:Start(15)
+			timerChemBurnCD:Start(15, self.vb.chemBurnCast+1)
 		end
 	end
 end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, spellId)
-	if spellId == 270028 then
+	if spellId == 270028 and self:AntiSpam(5, 1) then
 		self.vb.azeriteCataCast = self.vb.azeriteCataCast + 1
 		warnAxeriteCatalyst:Show()
 		--timerGushingCatalystCD:Start()
 		if self.vb.azeriteCataCast % 2 == 0 then
-			timerAxeriteCatalystCD:Start(27)
+			timerAxeriteCatalystCD:Start(27, self.vb.azeriteCataCast+1)
 		else
-			timerAxeriteCatalystCD:Start(15)
+			timerAxeriteCatalystCD:Start(15, self.vb.azeriteCataCast+1)
 		end
 	end
 end

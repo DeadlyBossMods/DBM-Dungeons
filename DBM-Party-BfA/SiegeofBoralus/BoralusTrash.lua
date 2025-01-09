@@ -79,8 +79,8 @@ local timerBananaRampage			= mod:NewCastNPTimer(1.5, 272546, nil, false, nil, 5)
 local timerStinkyVomitCD			= mod:NewCDPNPTimer(16.1, 454440, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--16.1-19.4
 local timerCrushingSlamCD			= mod:NewCDNPTimer(20.6, 272711, nil, nil, nil, 2)
 local timerTerrifyingRoarCD			= mod:NewCDNPTimer(31.6, 257169, nil, nil, nil, 2)
-local timerChoakingWatersCD			= mod:NewCDPNPTimer(29.1, 272571, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--29.1-31.6
-local timerIronHookCD				= mod:NewCDNPTimer(23, 272662, nil, nil, nil, 3)
+local timerChoakingWatersCD			= mod:NewCDPNPTimer(26.7, 272571, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--26.7-31.6
+local timerIronHookCD				= mod:NewCDNPTimer(22.6, 272662, nil, nil, nil, 3)
 local timerBroadsideCD				= mod:NewCDPNPTimer(11.5, 268260, nil, nil, nil, 3)--Boss version is 9.1 from previous cast finish, but this one is 11.5
 
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc, 7 off interrupt
@@ -158,7 +158,7 @@ function mod:SPELL_CAST_START(args)
 	elseif spellId == 272662 and args:GetSrcCreatureID() == 129369 then
 		warnIronHook:Show()
 		warnIronHook:Play("pullin")
-		timerIronHookCD:Start(23, args.sourceGUID)
+		timerIronHookCD:Start(nil, args.sourceGUID)
 	elseif spellId == 257732 then
 		specWarnShatteringBellow:Show()
 		specWarnShatteringBellow:Play("stopcast")
@@ -198,7 +198,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 	elseif spellId == 257169 then
 		timerTerrifyingRoarCD:Start(28.6, args.sourceGUID)--31.6 - 3
 	elseif spellId == 272571 then
-		timerChoakingWatersCD:Start(26.6, args.sourceGUID)--29.1 - 2.5
+		timerChoakingWatersCD:Start(24.2, args.destGUID)--26.7 - 2.5
 	elseif spellId == 256957 then
 		timerWatertightShellCD:Start(50, args.sourceGUID)
 	elseif spellId == 268260 and args:GetSrcCreatureID() == 138465 then--Trash version
@@ -214,7 +214,7 @@ function mod:SPELL_INTERRUPT(args)
 	elseif args.extraSpellId == 454440 then
 		timerStinkyVomitCD:Start(15.2, args.destGUID)
 	elseif args.extraSpellId == 272571 then
-		timerChoakingWatersCD:Start(26.6, args.destGUID)--29.1 - 2.5
+		timerChoakingWatersCD:Start(24.2, args.destGUID)--26.7 - 2.5
 	end
 end
 
@@ -324,37 +324,37 @@ end
 --]]
 
 --All timers subject to a ~0.5 second clipping due to ScanEngagedUnits
-function mod:StartEngageTimers(guid, cid)
+function mod:StartEngageTimers(guid, cid, delay)
 	if cid == 129374 then--Scrimshaw Enforcer
---		timerSlobberknockerCD:Start(16.8, guid)--Might be 10ish, wait for improved logs
+--		timerSlobberknockerCD:Start(16.8-delay, guid)--Might be 10ish, wait for improved logs
 	elseif cid == 129372 then--Blacktar Bomber
-		timerBurningTarCD:Start(8, guid)--They use fire bomb instantly
+		timerBurningTarCD:Start(8-delay, guid)--They use fire bomb instantly
 	elseif cid == 129369 then--Irontide Raider
-		timerSavageTempestCD:Start(11, guid)
+		timerSavageTempestCD:Start(11-delay, guid)
 	elseif cid == 129371 then--Riptide Shredder
-		timerSingSteelCD:Start(3.5, guid)
+		timerSingSteelCD:Start(3.5-delay, guid)
 	elseif cid == 129879 or cid == 129996 then--Irontide Cleaver (Trash and Boss version, which both now only spawn on boss)
-		timerHeavySlashCD:Start(4.2, guid)
+		timerHeavySlashCD:Start(4.2-delay, guid)
 --	elseif cid == 141939 or cid == 138255 or cid == 135263 then--Ashvane Spotter
---		timerSightedArtCD:Start(12.1, guid)
+--		timerSightedArtCD:Start(12.1-delay, guid)
 	elseif cid == 128969 then--Ashvane Commander
-		timerAzeriteChargeCD:Start(2.3, guid)
-		timerBolsteringShoutCD:Start(8.1, guid)
+		timerAzeriteChargeCD:Start(1-delay, guid)
+		timerBolsteringShoutCD:Start(7.5-delay, guid)
 --	elseif cid == 137516 then--Ashvane Invader
---		timerStingingVenomCoatingCD:Start(15.4, guid)--Used near instantly
+--		timerStingingVenomCoatingCD:Start(15.4-delay, guid)--Used near instantly
 	elseif cid == 137517 then--Ashvane Destroyer
-		timerFerocityCD:Start(4.2, guid)
+		timerFerocityCD:Start(4.2-delay, guid)
 	elseif cid == 129366 then--Bilge Rat Buccaneer
-		timerBananaRampageCD:Start(1.7, guid)
+		timerBananaRampageCD:Start(1.7-delay, guid)
 	elseif cid == 135241 then--Bilge Rat Pillager
-		timerStinkyVomitCD:Start(4, guid)
+		timerStinkyVomitCD:Start(4-delay, guid)
 	elseif cid == 135245 then--Billage Rat Demolisher
-		timerCrushingSlamCD:Start(5.5, guid)
-		timerTerrifyingRoarCD:Start(14, guid)
+		timerCrushingSlamCD:Start(5.5-delay, guid)
+		timerTerrifyingRoarCD:Start(14-delay, guid)
 	elseif cid == 129367 then--Bilge Rat Tempest
-		timerChoakingWatersCD:Start(5.0, guid)
+		timerChoakingWatersCD:Start(5.0-delay, guid)
 --	elseif cid == 129370 or cid == 144071 then--Ironhull WaveShaper
---		timerWatertightShellCD:Start(50, guid)--Too mcuh variance, might be health based for initial cast
+--		timerWatertightShellCD:Start(50-delay, guid)--Too mcuh variance, might be health based for initial cast
 	end
 end
 

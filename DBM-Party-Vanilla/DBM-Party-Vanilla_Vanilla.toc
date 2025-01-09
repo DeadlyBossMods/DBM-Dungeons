@@ -1,6 +1,8 @@
 ## Interface: 11505
 ## X-Min-Interface: 11402
 
+## Category: DBM
+
 ## Title:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Dungeons (Vanilla)|r
 ## Title-deDE:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Gruppe-Vanilla|r
 ## Title-esES:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Mazmorras (Clásico)|r
