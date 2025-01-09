@@ -184,10 +184,10 @@ function mod:SPELL_CAST_SUCCESS(args)
 	elseif spellId == 471733 then
 		timerRestorativeAlgaeCD:Start(16.1, args.sourceGUID)--18.1-2
 	elseif spellId == 471736 then
+		timerJettisonkelpCD:Start(nil, args.sourceGUID)
 		if self:AntiSpam(5, 6) then
 			warnJettisonkelp:Show()
 		end
-		timerJettisonkelpCD:Start(nil, args.sourceGUID)
 	end
 end
 
