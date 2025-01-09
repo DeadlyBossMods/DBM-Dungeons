@@ -25,19 +25,18 @@ mod:RegisterEventsInCombat(
 )
 
 --TODO, improve timer handling around boss energy and Turbo Charge
---TODO, find right spell trigger for Dam!
 --NOTE, Leaping Sparks script does NOT have block for target scanning, so if they private debuff, we can still see target anyways
+--NOTE: target scanning possible on Gigazap private aura but will likely get fixed later
 --NOTE, https://www.wowhead.com/ptr-2/spell=468844/leaping-spark summons the spark
 --TODO, record new audio if "move to pool" causes lack of clarity to specifically say "move spark to pool"
---TODO, verify cast ID for starting Gigazap Timer
 local warnTurboChargeOver					= mod:NewEndAnnounce(465463, 1)
 local warnDam								= mod:NewCountAnnounce(468276, 2)
 local warnShockWaterStun					= mod:NewTargetNoFilterAnnounce(468741, 2)
 local warnLeapingSpark						= mod:NewTargetNoFilterAnnounce(468841, 2)
-local warnGigaZapLater						= mod:NewTargetNoFilterAnnounce(468813, 3, nil, "Healer")--Pre target is private aura, but dot is not, we can still warn the healer who has dots
+local warnGigaZapLater						= mod:NewTargetNoFilterAnnounce(468815, 3, nil, "Healer")--Pre target is private aura, but dot is not, we can still warn the healer who has dots
 
 local specWarnTurboCharge					= mod:NewSpecialWarningDodgeCount(465463, nil, nil, nil, 2, 2)
-local specWarnLeapingSpark					= mod:NewSpecialWarningRun(468841, nil, nil, nil, 4, 15)
+local specWarnLeapingSpark					= mod:NewSpecialWarningRun(468841, nil, nil, nil, 4, 18)
 local yellLeapingSpark						= mod:NewShortYell(468841)
 local specWarnThunderPunch					= mod:NewSpecialWarningDefensive(466190, nil, nil, nil, 1, 2)
 --local specWarnGTFO						= mod:NewSpecialWarningGTFO(372820, nil, nil, nil, 1, 8)
@@ -62,11 +61,11 @@ function mod:OnCombatStart(delay)
 	self.vb.sparksCount = 0
 	self.vb.gigaZapCount = 0
 	self.vb.punchCount = 0
-	timerTurboChargeCD:Start(1-delay)
-	timerDamCD:Start(1-delay)
-	timerLeapingSparksCD:Start(1-delay)
-	timerGigazapCD:Start(1-delay)
-	timerThunderPunchCD:Start(1-delay)
+	timerTurboChargeCD:Start(1-delay)--1.6, 60.0
+	timerDamCD:Start(1-delay)--16.0
+	timerLeapingSparksCD:Start(1-delay)--38.1
+	timerGigazapCD:Start(1-delay)--28.0, 26.0
+	timerThunderPunchCD:Start(1-delay)--24.0, 26.0
 	self:EnablePrivateAuraSound(468811, "defensive", 2)
 end
 
@@ -79,7 +78,7 @@ function mod:SPELL_CAST_START(args)
 	if spellId == 465463 then
 		self.vb.turboChargeCount = self.vb.turboChargeCount + 1
 		specWarnTurboCharge:Show(self.vb.turboChargeCount)
-		specWarnTurboCharge:Play("watchstep")
+		specWarnTurboCharge:Play("farfromline")
 		timerTurboChargeCD:Start()
 	elseif spellId == 468841 then
 		self.vb.sparksCount = self.vb.sparksCount + 1
@@ -87,6 +86,9 @@ function mod:SPELL_CAST_START(args)
 	elseif spellId == 468813 then
 		self.vb.gigaZapCount = self.vb.gigaZapCount + 1
 		timerGigazapCD:Start()
+		--"<35.71 21:43:09> [CLEU] SPELL_CAST_START#Creature-0-5769-2773-2529-226404-00007DDBE7#Geezle Gigazap(54.3%-90.0%)##nil#468813#Gigazap#nil#nil#nil#nil#nil#nil",
+		--"<35.84 21:43:10> [UNIT_TARGET] boss1#Geezle Gigazap#Target: Crenna Earth-Daughter#TargetOfTarget: Omegal",
+		--"<38.74 21:43:12> [CLEU] SPELL_AURA_APPLIED#Creature-0-5769-2773-2529-226404-00007DDBE7#Geezle Gigazap#Vehicle-0-5769-2773-2529-209072-00007DDBF6#Crenna Earth-Daughter#468815#Gigazap#DEBUFF#nil#nil#nil#nil#nil",
 	elseif spellId == 466190 then
 		self.vb.punchCount = self.vb.punchCount + 1
 		if self:IsTanking("player", "boss1", nil, true) then
@@ -110,10 +112,10 @@ function mod:SPELL_AURA_APPLIED(args)
 	local spellId = args.spellId
 	if spellId == 468741 and args:IsPlayer() or self:IsHealer() then
 		warnShockWaterStun:CombinedShow(0.3, args.destName)
-	elseif spellId == 468616 then
+	elseif spellId == 468616 and args:IsDestTypePlayer() then
 		if args:IsPlayer() then
 			specWarnLeapingSpark:Show()
-			specWarnLeapingSpark:Play("movetopool")
+			specWarnLeapingSpark:Play("sparktowater")
 			yellLeapingSpark:Yell()
 		else
 			warnLeapingSpark:Show(args.destName)
@@ -150,8 +152,10 @@ function mod:UNIT_DIED(args)
 end
 --]]
 
+--TODO, timers for shockwater?
+--"Shock Water-468723-npc:226404-00007DDBE7 = pull:25.6, 15.5",
 function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
-	if spellId == 468276 and self:AntiSpam(8, 1) then
+	if spellId == 468276 then
 		self.vb.damCount = self.vb.damCount + 1
 		warnDam:Show(self.vb.damCount)
 		timerDamCD:Start()
