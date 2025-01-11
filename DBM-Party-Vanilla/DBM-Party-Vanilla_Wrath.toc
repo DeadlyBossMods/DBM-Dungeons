@@ -50,6 +50,8 @@
 ## X-DBM-Mod-MinCoreRevision: 12473
 ## X-DBM-Mod-MinExpansion: 0
 
+locale.generated.lua
+
 Classic\localization.en.lua
 Classic\localization.de.lua
 Classic\localization.es.lua

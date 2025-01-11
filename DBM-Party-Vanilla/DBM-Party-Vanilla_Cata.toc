@@ -36,6 +36,8 @@
 ## X-WoWI-ID: 24904
 ## Version: @project-version@
 
+locale.generated.lua
+
 Retail\localization.en.lua
 Retail\localization.es.lua
 Retail\localization.cn.lua
