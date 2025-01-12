@@ -198,7 +198,7 @@ function mod:SPELL_INTERRUPT(args)
 	elseif args.extraSpellId == 463058 then
 --		timerBloodthirstyCackleCD:Start(19.1, args.destGUID)
 	elseif args.extraSpellId == 1214468 then
-		timerTrickShotCD:Start(8.6, args.sourceGUID)--12.1-3.5
+		timerTrickShotCD:Start(8.6, args.destGUID)--12.1-3.5
 	elseif args.extraSpellId == 471733 then
 		timerRestorativeAlgaeCD:Start(16.1, args.destGUID)--18.1-2
 	end
