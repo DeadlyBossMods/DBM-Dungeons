@@ -18,7 +18,7 @@ mod:RegisterEvents(
 --	"SPELL_AURA_REMOVED",
 	"UNIT_DIED",
 	"RAID_BOSS_WHISPER",
-	"UNIT_SPELLCAST_INTERRUPTED"
+	"UNIT_SPELLCAST_INTERRUPTED_UNFILTERED"
 )
 
 --TODO, FINISH bubbles timers
@@ -301,7 +301,7 @@ function mod:RAID_BOSS_WHISPER(msg)
 	end
 end
 
-function mod:UNIT_SPELLCAST_INTERRUPTED(uId, _, spellId)
+function mod:UNIT_SPELLCAST_INTERRUPTED_UNFILTERED(uId, _, spellId)
 	if spellId == 461796 then--Reload
 		local guid = UnitGUID(uId)
 		timerRPGGCD:Stop(guid)
