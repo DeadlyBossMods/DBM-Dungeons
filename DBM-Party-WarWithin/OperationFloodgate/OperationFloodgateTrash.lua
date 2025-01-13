@@ -10,14 +10,15 @@ mod:SetZone(2773)
 mod:RegisterZoneCombat(2773)
 
 mod:RegisterEvents(
-	"SPELL_CAST_START 465754 474337 1216039 465682 462771 469818 1217496 469721 465827 463058 1214468 465666 465408 471733",
+	"SPELL_CAST_START 465754 474337 1216039 465682 462771 469818 1217496 469721 465827 463058 1214468 465666 465408 471733 461796",
 	"SPELL_CAST_SUCCESS 462771 463058 1214468 469799 471733 471736",
 	"SPELL_INTERRUPT",
 	"SPELL_AURA_APPLIED 462771 463061 469799",
 --	"SPELL_AURA_APPLIED_DOSE",
 --	"SPELL_AURA_REMOVED",
 	"UNIT_DIED",
-	"RAID_BOSS_WHISPER"
+	"RAID_BOSS_WHISPER",
+	"UNIT_SPELLCAST_INTERRUPTED"
 )
 
 --TODO, FINISH bubbles timers
@@ -65,7 +66,7 @@ local timerJettisonkelpCD					= mod:NewCDNPTimer(15.8, 471736, nil, nil, nil, 5)
 local timerOverchargeCD						= mod:NewCDNPTimer(10.7, 469799, nil, nil, nil, 5, nil, DBM_COMMON_L.MAGIC_ICON)--10-15
 local timerSurveyingBeamCD					= mod:NewCDNPTimer(20.6, 462771, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerBloodthirstyCackleCD				= mod:NewCDNPTimer(100, 463058, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--TODO, add recast
-local timerTrickShotCD						= mod:NewCDNPTimer(12.1, 1214468, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--12-14 (seems stops still put it on CD)
+local timerTrickShotCD						= mod:NewCDNPTimer(10.9, 1214468, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--10.9-14 (seems stops still put it on CD)
 local timerRestorativeAlgaeCD				= mod:NewCDNPTimer(18.1, 471733, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 
 --local playerName = UnitName("player")
@@ -102,7 +103,6 @@ function mod:SPELL_CAST_START(args)
 			specWarnShreddation:Play("watchstep")
 		end
 	elseif spellId == 1216039 then
-		timerRPGGCD:Start(nil, args.sourceGUID)
 		if self:AntiSpam(3, 2) then
 			specWarnRPGG:Show()
 			specWarnRPGG:Play("watchstep")
@@ -167,6 +167,8 @@ function mod:SPELL_CAST_START(args)
 		if self:AntiSpam(3, 6) then
 			warnRapidReconstruction:Show()
 		end
+	elseif spellId == 461796 then--Reload (required to fire RPGG)
+		timerRPGGCD:Start(9, args.sourceGUID)--Reload cast time + 2
 	end
 end
 
@@ -296,5 +298,12 @@ function mod:RAID_BOSS_WHISPER(msg)
 	if msg:find("spell:1213704") then
 		specWarnZepBarrage:Show()
 		specWarnZepBarrage:Play("watchstep")
+	end
+end
+
+function mod:UNIT_SPELLCAST_INTERRUPTED(uId, _, spellId)
+	if spellId == 461796 then--Reload
+		local guid = UnitGUID(uId)
+		timerRPGGCD:Stop(guid)
 	end
 end
