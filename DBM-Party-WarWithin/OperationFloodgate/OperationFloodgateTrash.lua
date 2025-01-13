@@ -65,7 +65,7 @@ local timerJettisonkelpCD					= mod:NewCDNPTimer(15.8, 471736, nil, nil, nil, 5)
 local timerOverchargeCD						= mod:NewCDNPTimer(10.7, 469799, nil, nil, nil, 5, nil, DBM_COMMON_L.MAGIC_ICON)--10-15
 local timerSurveyingBeamCD					= mod:NewCDNPTimer(20.6, 462771, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerBloodthirstyCackleCD				= mod:NewCDNPTimer(100, 463058, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--TODO, add recast
-local timerTrickShotCD						= mod:NewCDNPTimer(12.1, 1214468, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--12-14
+local timerTrickShotCD						= mod:NewCDNPTimer(12.1, 1214468, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--12-14 (seems stops still put it on CD)
 local timerRestorativeAlgaeCD				= mod:NewCDNPTimer(18.1, 471733, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 
 --local playerName = UnitName("player")
@@ -124,6 +124,7 @@ function mod:SPELL_CAST_START(args)
 			specWarnBloodthirstyCackleKick:Play("kickcast")
 		end
 	elseif spellId == 1214468 then
+		timerTrickShotCD:Start(nil, args.sourceGUID)
 		if self:CheckInterruptFilter(args.sourceGUID, false, true) then
 			specWarnTrickShot:Show(args.sourceName)
 			specWarnTrickShot:Play("kickcast")
@@ -177,8 +178,8 @@ function mod:SPELL_CAST_SUCCESS(args)
 		timerSurveyingBeamCD:Start(19.1, args.sourceGUID)--20.6-1.5
 	elseif spellId == 463058 then
 --		timerBloodthirstyCackleCD:Start(19.1, args.sourceGUID)
-	elseif spellId == 1214468 then
-		timerTrickShotCD:Start(8.6, args.sourceGUID)--12.1-3.5
+--	elseif spellId == 1214468 then
+--		timerTrickShotCD:Start(8.6, args.sourceGUID)--12.1-3.5
 	elseif spellId == 469799 then
 		timerOverchargeCD:Start(nil, args.sourceGUID)
 	elseif spellId == 471733 then
@@ -197,8 +198,8 @@ function mod:SPELL_INTERRUPT(args)
 		timerSurveyingBeamCD:Start(19.1, args.destGUID)--20.6-1.5
 	elseif args.extraSpellId == 463058 then
 --		timerBloodthirstyCackleCD:Start(19.1, args.destGUID)
-	elseif args.extraSpellId == 1214468 then
-		timerTrickShotCD:Start(8.6, args.destGUID)--12.1-3.5
+--	elseif args.extraSpellId == 1214468 then
+--		timerTrickShotCD:Start(8.6, args.destGUID)--12.1-3.5
 	elseif args.extraSpellId == 471733 then
 		timerRestorativeAlgaeCD:Start(16.1, args.destGUID)--18.1-2
 	end
