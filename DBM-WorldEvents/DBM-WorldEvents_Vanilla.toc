@@ -1,4 +1,4 @@
-## Interface: 11505
+## Interface: 11505, 11506
 ## Category: DBM
 
 ## Title:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cff69ccf0World Events|r
