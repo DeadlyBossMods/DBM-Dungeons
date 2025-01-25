@@ -20,6 +20,7 @@ mod:RegisterCombat("combat")
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 75763 79467 449939 450077 450100",
 	"SPELL_AURA_APPLIED 75861 75792 448057",
+	"SPELL_AURA_REMOVED 448057",
 	"UNIT_SPELLCAST_SUCCEEDED boss1"
 )
 
@@ -124,6 +125,12 @@ function mod:SPELL_AURA_APPLIED(args)
 			yellAbyssal:Yell()
 			yellAbyssalFades:Countdown(spellId)
 		end
+	end
+end
+
+function mod:SPELL_AURA_REMOVED(args)
+	if args.spellId == 448057 and args:IsPlayer() then
+		yellAbyssalFades:Cancel()
 	end
 end
 
