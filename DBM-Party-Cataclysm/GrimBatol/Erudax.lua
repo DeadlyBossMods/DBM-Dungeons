@@ -8,7 +8,7 @@ else
 	mod.statTypes = "normal,heroic"
 end
 
-mod:SetRevision("20241102154000")
+mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(40484)
 mod:SetEncounterID(1049)
 mod:SetHotfixNoticeRev(20240812000000)
