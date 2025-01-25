@@ -1532,3 +1532,62 @@ L = DBM:GetModLocalization(489)
 L:SetGeneralLocalization{
 	name 		= "烏克茲·沙頂"
 }
+-----------------------------
+--Demon Fall Canyon
+-----------------------------
+--  Grimroot  --
+-----------------------------
+L = DBM:GetModLocalization("Grimroot")
+
+L:SetGeneralLocalization{
+	name 		= "獰根"
+}
+
+-----------------------------
+--  Diathorus the Seeker  --
+-----------------------------
+L = DBM:GetModLocalization("Diathorus")
+
+L:SetGeneralLocalization{
+	name 		= "『追尋者』迪亞索魯斯"
+}
+-----------------------------
+--  Destructor's Wraith  --
+-----------------------------
+L = DBM:GetModLocalization("DestructorsWraith")
+
+L:SetGeneralLocalization{
+	name 		= "毀滅者的怨靈"
+}
+-----------------------------
+--  Zilbagob  --
+-----------------------------
+L = DBM:GetModLocalization("Zilbagob")
+
+L:SetGeneralLocalization{
+	name 		= "吉爾巴戈布"
+}
+-----------------------------
+--  Azgaloth  --
+-----------------------------
+L = DBM:GetModLocalization("Azgaloth")
+
+L:SetGeneralLocalization{
+	name 		= "亞茲加洛斯"
+}
+-----------------------------
+--  Pyranis  --
+-----------------------------
+L = DBM:GetModLocalization("Pyranis")
+
+L:SetGeneralLocalization{
+	name 		= "派蘭尼斯"
+}
+-----------------------------
+--  Hellscream's Phantom  --
+-----------------------------
+L = DBM:GetModLocalization("HellscreamsPhantom")
+
+L:SetGeneralLocalization{
+	name 		= "地獄吼的幻影"
+}
