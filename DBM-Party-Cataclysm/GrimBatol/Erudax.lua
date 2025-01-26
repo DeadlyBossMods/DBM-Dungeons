@@ -121,7 +121,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		warnAbyssal:CombinedShow(0.3, args.destName)
 		if args:IsPlayer() then
 			specWarnAbyssal:Show()
-			specWarnAbyssal:Play("runout")
+			specWarnAbyssal:Play("watchstep") --or scatter?
 			yellAbyssal:Yell()
 			yellAbyssalFades:Countdown(spellId)
 		end
