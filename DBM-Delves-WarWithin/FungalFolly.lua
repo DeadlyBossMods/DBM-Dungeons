@@ -97,7 +97,7 @@ function mod:ENCOUNTER_START(eID)
 		--To confirm, both have same timer, but can be cast in any order
 		--Then other is cast 10 seconds after first cast
 		timerFungalChargeCD:Start(20.3)--31.3
-		timerFungsplosionCD:Start(21.8)--21.8
+		timerFungsplosionCD:Start(21.6)--21.8
 	end
 end
 
