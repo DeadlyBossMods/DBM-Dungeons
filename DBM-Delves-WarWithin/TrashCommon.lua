@@ -654,7 +654,7 @@ function mod:StartEngageTimers(guid, cid, delay)
 	elseif cid == 207450 then--Fungal Stabber
 --		timerDebilitatingVenomCD:Start(13.3-delay, guid)
 	elseif cid == 211062 then--Bill
-		timerBladeTossCD:Start(6.5-delay, guid)
+		timerBladeTossCD:Start(4.7-delay, guid)
 --	elseif cid == 207455 then--Fungal Speartender
 --		timerVineSpearCD:Start(14.9-delay, guid)
 	elseif cid == 213434 then--Sporesong
