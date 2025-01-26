@@ -441,6 +441,10 @@ L= DBM:GetModLocalization(1469)
 -----------------------
 L= DBM:GetModLocalization(1470)
 
+L:SetMiscLocalization{
+	RolePlay		= "還真是一點都不意外！我就知道你一定會來。"
+}
+
 -----------------------
 --Vault of Wardens Trash
 -----------------------
