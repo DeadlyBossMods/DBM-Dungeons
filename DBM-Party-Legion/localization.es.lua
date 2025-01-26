@@ -420,6 +420,16 @@ L= DBM:GetModLocalization(1469)
 ----------------------
 L= DBM:GetModLocalization(1470)
 
+if GetLocale() == "esES" then
+L:SetMiscLocalization({
+	RolePlay 		= "¡Qué predecibles! Sabía que acabaríais viniendo."
+})
+else
+L:SetMiscLocalization({
+	RolePlay 		= "¡Pero qué previsible! Sabía que vendrías."
+})
+end
+
 ----------------------
 -- Enemigos menores --
 ----------------------
