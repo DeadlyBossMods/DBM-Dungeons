@@ -100,7 +100,7 @@ if mod:IsRetail() then
 			end
 		end
 	end
-	
+
 	function mod:SPELL_AURA_REMOVED(args)
 		if args.spellId == 449474 and args:IsPlayer() then
 			yellMoltenSparkFades:Cancel()
