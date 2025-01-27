@@ -38,7 +38,7 @@ if mod:IsRetail() then
 	local timerSkullsplitterCD		= mod:NewNextCountTimer(25, 447261, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 
 	local yellRockSpikeFades		= mod:NewShortFadesYell(448870)
-	
+
 	mod.vb.roarCount = 0
 	mod.vb.spikeCount = 0
 	mod.vb.skullCount = 0
