@@ -73,7 +73,7 @@ if mod:IsRetail() then
 			timerSkullsplitterCD:Start(nil, self.vb.skullCount+1)
 		end
 	end
-	
+
 	function mod:SPELL_AURA_APPLIED(args)
 		local spellId = args.spellId
 		if spellId == 448870 then
@@ -82,7 +82,7 @@ if mod:IsRetail() then
 			end
 		end
 	end
-	
+
 	function mod:SPELL_AURA_REMOVED(args)
 		if args.spellId == 448870 and args:IsPlayer() then
 			yellRockSpikeFades:Cancel()
