@@ -20,7 +20,9 @@ mod:RegisterCombat("combat")
 if mod:IsRetail() then
 	--Retail version of mod
 	mod:RegisterEventsInCombat(
-		"SPELL_CAST_START 448847 448877 447261"
+		"SPELL_CAST_START 448847 448877 447261",
+		"SPELL_AURA_APPLIED 448870",
+		"SPELL_AURA_REMOVED 448870"
 	)
 
 	--[[
@@ -35,6 +37,8 @@ if mod:IsRetail() then
 	local timerRockSpikeCD			= mod:NewNextCountTimer(25, 448877, nil, nil, nil, 3)
 	local timerSkullsplitterCD		= mod:NewNextCountTimer(25, 447261, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 
+	local yellRockSpikeFades		= mod:NewShortFadesYell(448870)
+	
 	mod.vb.roarCount = 0
 	mod.vb.spikeCount = 0
 	mod.vb.skullCount = 0
@@ -67,6 +71,21 @@ if mod:IsRetail() then
 				specWarnSkullsplitter:Play("defensive")
 			end
 			timerSkullsplitterCD:Start(nil, self.vb.skullCount+1)
+		end
+	end
+	
+	function mod:SPELL_AURA_APPLIED(args)
+		local spellId = args.spellId
+		if spellId == 448870 then
+			if args:IsPlayer() then
+				yellRockSpikeFades:Countdown(spellId)
+			end
+		end
+	end
+	
+	function mod:SPELL_AURA_REMOVED(args)
+		if args.spellId == 448870 and args:IsPlayer() then
+			yellRockSpikeFades:Cancel()
 		end
 	end
 else
