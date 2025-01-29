@@ -12,6 +12,8 @@ mod:RegisterCombat("combat")
 mod:RegisterEventsInCombat(
 )
 
+-- TODO: confirm this still exists, Kaigy Maryla (new encounter ID) might have replaced it?
+
 function mod:OnCombatStart()
 	self:AddMsg("This DBM mod is a placeholder for new content, there are no timers or warnings yet.")
 	self:AddMsg("If you see this message well after the new content release consider updating the DBM Dungeon module to the latest version.")
