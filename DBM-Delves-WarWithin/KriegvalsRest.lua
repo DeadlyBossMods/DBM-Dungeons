@@ -38,7 +38,7 @@ function mod:SPELL_CAST_START(args)
 		timerFlamestormCD:Start()
 	elseif args.spellId == 449295 then
 		warnGroundSlam:Show()
-		timerGroundSlamCD:Start()
+		--timerGroundSlamCD:Start()
 	elseif args.spellId == 449339 then
 		specWarnRagingTantrum:Show()
 		specWarnRagingTantrum:Play("carefly")
