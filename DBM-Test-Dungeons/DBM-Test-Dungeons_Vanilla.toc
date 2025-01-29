@@ -9,6 +9,11 @@
 ## LoadOnDemand: 1
 ## X-DBM-Test: true
 
+Vanilla/KarazhanCrypts/KaigyMaryla.lua
+Vanilla/KarazhanCrypts/OperaOfMalediction.lua
+Vanilla/KarazhanCrypts/HarbingerOfSin.lua
+Vanilla/KarazhanCrypts/Kharon.lua
+
 Vanilla/DemonFallCanyon/Grimroot.lua
 Vanilla/DemonFallCanyon/DestructorsWraith.lua
 Vanilla/DemonFallCanyon/Zilbagob.lua
