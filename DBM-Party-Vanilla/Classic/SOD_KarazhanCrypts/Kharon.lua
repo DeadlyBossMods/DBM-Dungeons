@@ -11,16 +11,17 @@ mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 1217694",
-	"SPELL_AURA_APPLIED 1218038",
-	"SPELL_AURA_REMOVED 1218038",
+	"SPELL_AURA_APPLIED 1218038 1218089",
+	"SPELL_AURA_REMOVED 1218038 1218089",
 	"SPELL_AURA_APPLIED_DOSE 1217844"
 )
 
-mod:SetUsedIcons(5)
+mod:SetUsedIcons(7, 8)
 
 -- Mind Control
--- I didn't understand that mechanic, it's a 2 min debuff that can't be purged, but it somehow disappears earlier, not sure what triggers that.
+-- Kill mind controlled player, 2 sec cast, but just triggering on aura applied because the cast isn't actionable
 -- "Illimitable Dominion-1218089-npc:237439-00001A5C02 = pull:42.5, 86.2, 80.5, 80.9",
+-- "Illimitable Dominion-1218089-npc:237439-00001BDBFD = pull:40.1, 82.5, 77.7",
 
 -- Red Death
 -- Move away from boss
@@ -41,20 +42,27 @@ mod:SetUsedIcons(5)
 
 local warnWrap			= mod:NewSpecialWarningTargetChange(1218038, nil, nil, nil, 1, 2)
 local warnPlayerStacks	= mod:NewStackAnnounce(1217844, 2)
+local warnMc			= mod:NewTargetNoFilterAnnounce(1218089)
 
 local timerRedDeath		= mod:NewNextTimer(30.7, 1217694)
 local timerWrap			= mod:NewVarTimer("v64.8-73.3", 1218038, nil, nil, nil, 3)
 local timerNextStack	= mod:NewTargetCountTimer(5, 1217844)
+local timerMc			= mod:NewVarTimer("v77.5-86.2", 1218089)
 
 -- Enabled even for ranged because everyone is stacking near to the torch bearer
 local specWarnRedDeath	= mod:NewSpecialWarningMove(1217694, nil, nil, nil, 1, 2)
-local specWarnDropTorch	= mod:NewSpecialWarning("SpecWarnDropTorch", nil, nil, nil, 1, 6)
+local specWarnDropTorch	= mod:NewSpecialWarning("SpecWarnDropTorch", nil, nil, nil, 1, 18)
 
-local yellWrap = mod:NewIconTargetYell(1218038)
+local yellWrap	= mod:NewIconTargetYell(1218038)
+local yellMc	= mod:NewIconTargetYell(1218089)
+
+mod:AddSetIconOption("SetIconOnWrapTarget", 1218038, true, 0, {8})
+mod:AddSetIconOption("SetIconOnMindControlTarget", 1218089, true, 0, {7})
 
 function mod:OnCombatStart(delay)
 	timerRedDeath:Start(21.1 - delay) -- Consistent across 5 logs
 	timerWrap:Start(35.8 - delay) -- Also consistent
+	timerMc:Start("v42-45")
 end
 
 function mod:SPELL_CAST_START(args)
@@ -65,32 +73,52 @@ function mod:SPELL_CAST_START(args)
 	end
 end
 
-function mod:YellLoop(maxCount)
+function mod:YellLoop(yell, icon, maxCount)
 	maxCount = maxCount - 1
-	yellWrap:Show(5)
+	yell:Show(icon)
 	if maxCount > 0 then
-		self:ScheduleMethod(2, "YellLoop", maxCount)
+		self:ScheduleMethod(3, "YellLoop", yell, icon, maxCount)
 	end
 end
 
 function mod:SPELL_AURA_APPLIED(args)
 	if args:IsSpell(1218038) then
 		if args:IsPlayer() then
-			self:YellLoop(8)
+			self:YellLoop(yellWrap, 7, 6)
 		else
 			warnWrap:Show(args.destName)
 			warnWrap:Play("targetchange")
 		end
 		timerWrap:Start()
-		self:SetIcon(args.destName, 5)
+		if self.Options.SetIconOnWrapTarget then
+			self:SetIcon(args.destName, 5)
+		end
+	elseif args:IsSpell(1218089) then
+		if args:IsPlayer() then
+			self:YellLoop(yellMc, 8, 6)
+		end
+		timerMc:Start()
+		warnMc:Show(args.destName)
+		if self.Options.SetIconOnMindControlTarget then
+			self:SetIcon(args.destName, 8)
+		end
 	end
 end
 
 function mod:SPELL_AURA_REMOVED(args)
 	if args:IsSpell(1218038) then
-		self:RemoveIcon(args.destName)
+		if self.Options.SetIconOnWrapTarget then
+			self:RemoveIcon(args.destName)
+		end
 		if args:IsPlayer() then
-			self:UnscheduleMethod("YellLoop")
+			self:UnscheduleMethod("YellLoop", yellWrap)
+		end
+	elseif args:IsSpell(1218089) then
+		if self.Options.SetIconOnMindControlTarget then
+			self:RemoveIcon(args.destName)
+		end
+		if args:IsPlayer() then
+			self:UnscheduleMethod("YellLoop", yellMc)
 		end
 	end
 end
@@ -103,7 +131,7 @@ function mod:SPELL_AURA_APPLIED_DOSE(args)
 		if args:IsPlayer() then
 			if amount == 10 or amount == 15 or amount == 20 then -- If you have more than 20 then you better have some strategy for that, like fire res, dunno.
 				specWarnDropTorch:Show(amount)
-				specWarnDropTorch:Play("stackhigh") -- TODO: replace with "droptorch" once new Core is out
+				specWarnDropTorch:Play("droptorch")
 			end
 		else
 			if amount % 5 == 0 then
