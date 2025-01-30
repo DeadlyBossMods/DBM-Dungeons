@@ -1664,6 +1664,10 @@ L:SetGeneralLocalization{
 	name = "Dark Rider"
 }
 
+L:SetMiscLocalization{
+	Ghost = "Ghost"
+}
+
 -- Creeping Malison
 L = DBM:GetModLocalization("CreepingMalison")
 
