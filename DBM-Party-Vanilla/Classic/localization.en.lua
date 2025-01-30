@@ -1614,10 +1614,11 @@ L:SetGeneralLocalization{
 
 -- Encounter info from PTR: https://wago.tools/db2/DungeonEncounter?build=1.15.6.58185&sort[ID]=desc&filter[MapID]=2875&page=1
 
-L = DBM:GetModLocalization("KaigyMaryla")
+-- Apprentice, seems to be a randomized boss
+L = DBM:GetModLocalization("Apprentice")
 
 L:SetGeneralLocalization{
-	name = "Kaigy Maryla" -- Aka "Apprentice" in encounter data
+	name = "The Apprentice"
 }
 
 -- Harbinger of Sin
