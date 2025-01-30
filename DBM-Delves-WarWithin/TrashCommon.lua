@@ -104,7 +104,7 @@ local timerWebbedAegisCD					= mod:NewCDNPTimer(15.8, 450546, nil, nil, nil, 4, 
 local timerMagmaHammerCD					= mod:NewCDNPTimer(8.5, 445718, nil, nil, nil, 5)
 local timerLavablastCD					    = mod:NewCDNPTimer(12.2, 445781, nil, nil, nil, 3)
 local timerLavablast						= mod:NewCastNPTimer(3, 445781, DBM_COMMON_L.FRONTAL, nil, nil, 5)
-local timerBlazingWickCD					= mod:NewCDPNPTimer(14.6, 449071, nil, nil, nil, 3)
+local timerBlazingWickCD					= mod:NewCDPNPTimer(14.2, 449071, nil, nil, nil, 3)
 local timerBlazingWick						= mod:NewCastNPTimer(2.25, 449071, DBM_COMMON_L.FRONTAL, nil, nil, 5)
 local timerBattleRoarCD						= mod:NewCDPNPTimer(15.4, 414944, nil, nil, nil, 5, nil, DBM_COMMON_L.MAGIC_ICON)
 local timerDebilitatingVenomCD				= mod:NewCDNPTimer(13.4, 424614, nil, nil, nil, 5, nil, DBM_COMMON_L.POISON_ICON)
@@ -113,9 +113,9 @@ local timerVineSpearCD						= mod:NewCDNPTimer(14.9, 424891, nil, nil, nil, 3)
 local timerRelocateCD						= mod:NewCDNPTimer(70, 427812, nil, nil, nil, 3)
 local timerSkitterChargeCD					= mod:NewCDNPTimer(12.2, 450197, nil, nil, nil, 3)
 local timerFungalBreathCD					= mod:NewCDNPTimer(15.4, 415253, nil, nil, nil, 3)--28 now?
-local timerUmbralSlamCD						= mod:NewCDNPTimer(30, 443292, nil, nil, nil, 3)
-local timerUmbrelSlashCD					= mod:NewCDNPTimer(17.8, 418295, nil, nil, nil, 3)
-local timerCastigateCD						= mod:NewCDPNPTimer(17.8, 418297, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerUmbralSlamCD						= mod:NewCDNPTimer(24.8, 443292, nil, nil, nil, 3)
+local timerUmbrelSlashCD					= mod:NewCDNPTimer(17.4, 418295, nil, nil, nil, 3)
+local timerCastigateCD						= mod:NewCDPNPTimer(17.4, 418297, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerBattleCryCD						= mod:NewCDNPTimer(30.3, 448399, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerWicklighterVolleyCD				= mod:NewCDNPTimer(20.1, 445191, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--Needs more Data
 local timerSpearFishCD						= mod:NewCDNPTimer(12.1, 430036, nil, nil, nil, 3)
@@ -443,13 +443,13 @@ function mod:SPELL_CAST_SUCCESS(args)
 	elseif args.spellId == 448179 then
 		timerArmorShellCD:Start(24, args.sourceGUID)
 	elseif args.spellId == 450509 then
-		timerWideSwipeCD:Start(7.9, args.sourceGUID)--7.9-8.5
+		timerWideSwipeCD:Start(7.7, args.sourceGUID)--7.7-8.5
 	elseif args.spellId == 415250 then
 		timerFungalBloomCD:Start(nil, args.sourceGUID)
 	elseif args.spellId == 443162 then
 		timerShadowStrikeCD:Start(8.2, args.sourceGUID)--8.2-8.7
 	elseif args.spellId == 443292 then
-		timerUmbralSlamCD:Start(27, args.sourceGUID)
+		timerUmbralSlamCD:Start(24.8, args.sourceGUID)
 	elseif args.spellId == 451913 then
 		timerGrimweaveOrbCD:Start(nil, args.sourceGUID)
 	elseif args.spellId == 444915 then
@@ -698,3 +698,4 @@ end
 function mod:LeavingZoneCombat()
 	self:Stop(true)
 end
+
