@@ -1671,10 +1671,16 @@ L:SetGeneralLocalization{
 	name = "Creeping Malison"
 }
 
-
 -- Kharon
 L = DBM:GetModLocalization("KCTrash")
 
 L:SetGeneralLocalization{
 	name = "Karazhan Crypts Trash"
+}
+
+-- Unk'omon
+L = DBM:GetModLocalization("Unkomon")
+
+L:SetGeneralLocalization{
+	name = "Unk'omon"
 }
