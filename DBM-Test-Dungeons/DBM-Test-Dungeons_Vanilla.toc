@@ -13,6 +13,7 @@ Vanilla/KarazhanCrypts/KaigyMaryla.lua
 Vanilla/KarazhanCrypts/OperaOfMalediction.lua
 Vanilla/KarazhanCrypts/HarbingerOfSin.lua
 Vanilla/KarazhanCrypts/Kharon.lua
+Vanilla/KarazhanCrypts/Unkomon.lua
 
 Vanilla/DemonFallCanyon/Grimroot.lua
 Vanilla/DemonFallCanyon/DestructorsWraith.lua

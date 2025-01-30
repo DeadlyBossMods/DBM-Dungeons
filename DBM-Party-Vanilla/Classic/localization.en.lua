@@ -1684,3 +1684,11 @@ L = DBM:GetModLocalization("Unkomon")
 L:SetGeneralLocalization{
 	name = "Unk'omon"
 }
+
+L:SetWarningLocalization{
+	WarnDoom = "Doom - Decurse"
+}
+
+L:SetOptionLocalization{
+	WarnDoom = "Show announce to decurse $spell:1221577"
+}
