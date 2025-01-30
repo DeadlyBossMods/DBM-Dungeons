@@ -1532,3 +1532,62 @@ L = DBM:GetModLocalization(489)
 L:SetGeneralLocalization{
 	name 		= "Chefe Ukorz Escalpareia"
 }
+-----------------------------
+--Demon Fall Canyon
+-----------------------------
+--  Grimroot  --
+-----------------------------
+L = DBM:GetModLocalization("Grimroot")
+
+L:SetGeneralLocalization{
+	name 		= "Broterror"
+}
+
+-----------------------------
+--  Diathorus the Seeker  --
+-----------------------------
+L = DBM:GetModLocalization("Diathorus")
+
+L:SetGeneralLocalization{
+	name 		= "Diathorus, o Inquisidor"
+}
+-----------------------------
+--  Destructor's Wraith  --
+-----------------------------
+L = DBM:GetModLocalization("DestructorsWraith")
+
+L:SetGeneralLocalization{
+	name 		= "Aparição do Destruidor"
+}
+-----------------------------
+--  Zilbagob  --
+-----------------------------
+L = DBM:GetModLocalization("Zilbagob")
+
+L:SetGeneralLocalization{
+	name 		= "Zilbagob"
+}
+-----------------------------
+--  Azgaloth  --
+-----------------------------
+L = DBM:GetModLocalization("Azgaloth")
+
+L:SetGeneralLocalization{
+	name 		= "Azgaloth"
+}
+-----------------------------
+--  Pyranis  --
+-----------------------------
+L = DBM:GetModLocalization("Pyranis")
+
+L:SetGeneralLocalization{
+	name 		= "Pyranis"
+}
+-----------------------------
+--  Hellscream's Phantom  --
+-----------------------------
+L = DBM:GetModLocalization("HellscreamsPhantom")
+
+L:SetGeneralLocalization{
+	name 		= "Fantasma de Grito Infernal"
+}

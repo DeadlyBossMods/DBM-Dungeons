@@ -1614,6 +1614,12 @@ L:SetGeneralLocalization{
 
 -- Encounter info from PTR: https://wago.tools/db2/DungeonEncounter?build=1.15.6.58185&sort[ID]=desc&filter[MapID]=2875&page=1
 
+L = DBM:GetModLocalization("KaigyMaryla")
+
+L:SetGeneralLocalization{
+	name = "Kaigy Maryla" -- Aka "Apprentice" in encounter data
+}
+
 -- Harbinger of Sin
 L = DBM:GetModLocalization("HarbingerOfSin")
 
@@ -1635,11 +1641,19 @@ L:SetGeneralLocalization{
 	name = "Kharon"
 }
 
+L:SetWarningLocalization{
+	SpecWarnDropTorch = "%d stacks - drop torch!"
+}
+
 -- Opera of Malediction
 L = DBM:GetModLocalization("OperaOfMalediction")
 
 L:SetGeneralLocalization{
 	name = "Opera of Malediction"
+}
+
+L:SetMiscLocalization {
+	PullTrizivast = "Our woodland creatures find themselves constantly assailed by a vicious quilboar, Trizivast!"
 }
 
 -- Dark Rider

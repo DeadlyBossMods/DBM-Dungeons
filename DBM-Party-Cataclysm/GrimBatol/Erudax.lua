@@ -19,7 +19,8 @@ mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 75763 79467 449939 450077 450100",
-	"SPELL_AURA_APPLIED 75861 75792",
+	"SPELL_AURA_APPLIED 75861 75792 448057",
+	"SPELL_AURA_REMOVED 448057",
 	"UNIT_SPELLCAST_SUCCEEDED boss1"
 )
 
@@ -41,12 +42,16 @@ local timerGale			= mod:NewCastTimer(5, DBM:IsRetail() and 449939 or 75664, nil,
 local timerGaleCD		= mod:NewCDCountTimer(55, DBM:IsRetail() and 449939 or 75664, nil, nil, nil, 2)
 local timerAddsCD		= mod:NewCDCountTimer(54.5, 75704, nil, nil, nil, 1)
 --Add new stuff to non cata only
-local specWarnVoidSurge, specWarnCrush, timerVoidSurgeCD, timerCrushCD
+local warnAbyssal, specWarnAbyssal, specWarnVoidSurge, specWarnCrush, timerVoidSurgeCD, timerCrushCD, yellAbyssal, yellAbyssalFades
 if not mod:IsCata() then
+	warnAbyssal 		= mod:NewTargetNoFilterAnnounce(448057, 3)
+	specWarnAbyssal		= mod:NewSpecialWarningYou(448057, nil, nil, nil, 3, 2)
 	specWarnVoidSurge	= mod:NewSpecialWarningDodgeCount(450077, nil, nil, nil, 2, 2)
 	specWarnCrush		= mod:NewSpecialWarningDefensive(450100, nil, nil, nil, 2, 2)
 	timerVoidSurgeCD	= mod:NewCDCountTimer(50, 450077, nil, nil, nil, 3)
 	timerCrushCD		= mod:NewCDCountTimer(50, 450100, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+	yellAbyssal			= mod:NewShortYell(448057, nil, nil, nil, "YELL")
+	yellAbyssalFades	= mod:NewShortFadesYell(448057)
 end
 
 mod.vb.feebleCount = 0--Used for void surge in TWW
@@ -112,6 +117,20 @@ function mod:SPELL_AURA_APPLIED(args)
 		else
 			timerFeeble:Start(5, args.destName)
 		end
+	elseif spellId == 448057 then
+		warnAbyssal:CombinedShow(0.3, args.destName)
+		if args:IsPlayer() then
+			specWarnAbyssal:Show()
+			specWarnAbyssal:Play("scatter")
+			yellAbyssal:Yell()
+			yellAbyssalFades:Countdown(spellId)
+		end
+	end
+end
+
+function mod:SPELL_AURA_REMOVED(args)
+	if args.spellId == 448057 and args:IsPlayer() then
+		yellAbyssalFades:Cancel()
 	end
 end
 

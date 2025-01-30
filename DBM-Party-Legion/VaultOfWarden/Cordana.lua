@@ -7,6 +7,10 @@ mod:SetEncounterID(1818)
 
 mod:RegisterCombat("combat")
 
+mod:RegisterEvents(
+	"CHAT_MSG_MONSTER_SAY"
+)
+
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 213576 213583 197251 213685 197422",
 	"SPELL_AURA_APPLIED 205004",
@@ -28,6 +32,7 @@ local timerKickCD					= mod:NewCDTimer(16, 197251, nil, "Tank", nil, 5, nil, DBM
 local timerDeepeningShadowsCD		= mod:NewCDTimer(30.5, 213583, nil, nil, nil, 3)
 local timerCreepingDoom				= mod:NewBuffActiveTimer(35, 197422, nil, nil, nil, 6)--35-40
 local timerVengeanceCD				= mod:NewCDTimer(35, 205004, nil, nil, nil, 1)--35-40
+local timerRP						= mod:NewRPTimer(24.5)
 
 function mod:OnCombatStart(delay)
 	timerKickCD:Start(8.3-delay)
@@ -94,5 +99,17 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
 		timerKickCD:Stop()
 		specWarnHiddenStarted:Show()
 		specWarnHiddenStarted:Play("phasechange")
+	end
+end
+
+function mod:CHAT_MSG_MONSTER_SAY(msg)
+	if (msg == L.RolePlay or msg:find(L.RolePlay)) and self:LatencyCheck() then
+		self:SendSync("Roleplay")
+	end
+end
+
+function mod:OnSync(msg)
+	if msg == "Roleplay" and self:AntiSpam(10, 3) then
+		timerRP:Start()
 	end
 end

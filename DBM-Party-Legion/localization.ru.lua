@@ -447,6 +447,10 @@ L= DBM:GetModLocalization(1469)
 -----------------------
 L= DBM:GetModLocalization(1470)
 
+L:SetMiscLocalization{
+	RolePlay		= "Как предсказуемо! Я знала, что вы придете."
+}
+
 -----------------------
 --Vault of Wardens Trash
 -----------------------

@@ -2,11 +2,17 @@
 ## Category: DBM
 ## Group: DBM Tests
 ## Title:|cffffe00a<|r|cffff7d0aDBM Tests|r|cffffe00a>|r |cff69ccf0Tests for Dungeon mods|r
+## Title-ruRU:|cffffe00a<|r|cffff7d0aDBM Тесты|r|cffffe00a>|r |cff69ccf0Тесты модов Подземелий|r
 ## IconTexture: Interface/AddOns/DBM-Core/textures/dbm_airhorn
 ## Dependencies: DBM-Test
 ## DefaultState: enabled
 ## LoadOnDemand: 1
 ## X-DBM-Test: true
+
+Vanilla/KarazhanCrypts/KaigyMaryla.lua
+Vanilla/KarazhanCrypts/OperaOfMalediction.lua
+Vanilla/KarazhanCrypts/HarbingerOfSin.lua
+Vanilla/KarazhanCrypts/Kharon.lua
 
 Vanilla/DemonFallCanyon/Grimroot.lua
 Vanilla/DemonFallCanyon/DestructorsWraith.lua

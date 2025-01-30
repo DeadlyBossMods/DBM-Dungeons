@@ -102,7 +102,7 @@ local timerShadowsofStrifeCD				= mod:NewCDNPTimer(15.6, 449318, nil, nil, nil, 
 local timerRotWaveVolleyCD					= mod:NewCDNPTimer(15.2, 425040, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--15.2-17
 local timerWebbedAegisCD					= mod:NewCDNPTimer(15.8, 450546, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--14.6 BUT enemies can skip casts sometimes and make it 29.1
 local timerMagmaHammerCD					= mod:NewCDNPTimer(8.5, 445718, nil, nil, nil, 5)
-local timerLavablastCD					    = mod:NewCDNPTimer(15.8, 445781, nil, nil, nil, 3)
+local timerLavablastCD					    = mod:NewCDNPTimer(12.2, 445781, nil, nil, nil, 3)
 local timerLavablast						= mod:NewCastNPTimer(3, 445781, DBM_COMMON_L.FRONTAL, nil, nil, 5)
 local timerBlazingWickCD					= mod:NewCDPNPTimer(14.6, 449071, nil, nil, nil, 3)
 local timerBlazingWick						= mod:NewCastNPTimer(2.25, 449071, DBM_COMMON_L.FRONTAL, nil, nil, 5)
@@ -133,7 +133,7 @@ local timerShadowStrikeCD					= mod:NewCDNPTimer(15.8, 443162, nil, nil, nil, 4,
 local timerGrimweaveOrbCD					= mod:NewCDNPTimer(20.6, 451913, nil, nil, nil, 3)--23.1 but 2.5 second cast
 local timerIllusionStepCD					= mod:NewCDNPTimer(31, 444915, nil, nil, nil, 3)
 local timerBubbleSurgeCD					= mod:NewCDNPTimer(18.1, 445771, nil, nil, nil, 3)
-local timerBloodthirstyCD					= mod:NewCDNPTimer(16.2, 445406, nil, nil, nil, 3)--16.2-23
+local timerBloodthirstyCD					= mod:NewCDNPTimer(15.7, 445406, nil, nil, nil, 3)--15.7-23
 
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc, 7 off interrupt
 
@@ -433,7 +433,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 	elseif args.spellId == 372529 then
 		timerHidousLaughterCD:Start(23.4, args.sourceGUID)--25.4-2
 	elseif args.spellId == 445492 then
-		timerSerratedCleaveCD:Start(29.7, args.sourceGUID)--32.7 - 3
+		timerSerratedCleaveCD:Start(29.1, args.sourceGUID)--32.1 - 3
 	elseif args.spellId == 462686 then
 		timerSkullCrackerCD:Start(13.3, args.sourceGUID)--15.8 - 2.5
 	elseif args.spellId == 447392 then--Supply Bag (Cast when Reno Jackson Defeated)
@@ -458,7 +458,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 			warnIllusionStep:Show()
 		end
 	elseif args.spellId == 445406 then
-		timerBloodthirstyCD:Start(nil, args.sourceGUID)--16.2-23
+		timerBloodthirstyCD:Start(nil, args.sourceGUID)--15.7-23
 	end
 end
 
@@ -654,7 +654,7 @@ function mod:StartEngageTimers(guid, cid, delay)
 	elseif cid == 207450 then--Fungal Stabber
 --		timerDebilitatingVenomCD:Start(13.3-delay, guid)
 	elseif cid == 211062 then--Bill
-		timerBladeTossCD:Start(6.5-delay, guid)
+		timerBladeTossCD:Start(4.7-delay, guid)
 --	elseif cid == 207455 then--Fungal Speartender
 --		timerVineSpearCD:Start(14.9-delay, guid)
 	elseif cid == 213434 then--Sporesong
