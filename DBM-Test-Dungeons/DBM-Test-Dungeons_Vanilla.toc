@@ -11,6 +11,7 @@
 
 Vanilla/KarazhanCrypts/KaigyMaryla.lua
 Vanilla/KarazhanCrypts/OperaOfMalediction.lua
+Vanilla/KarazhanCrypts/CreepingMalison.lua
 Vanilla/KarazhanCrypts/HarbingerOfSin.lua
 Vanilla/KarazhanCrypts/Kharon.lua
 Vanilla/KarazhanCrypts/Unkomon.lua
