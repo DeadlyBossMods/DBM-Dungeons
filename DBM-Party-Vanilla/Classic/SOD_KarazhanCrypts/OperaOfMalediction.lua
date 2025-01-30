@@ -3,7 +3,7 @@ local mod	= DBM:NewMod("OperaOfMalediction", "DBM-Party-Vanilla", 22)
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
-mod:SetEncounterID(3144)
+mod:SetEncounterID(3144, 3168, 3169)
 --mod:SetCreatureID()
 mod:SetZone(2875)
 
