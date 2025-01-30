@@ -272,6 +272,6 @@ Classic\SOD_KarazhanCrypts\HarbingerOfSin.lua
 Classic\SOD_KarazhanCrypts\CreepingMalison.lua
 Classic\SOD_KarazhanCrypts\Kharon.lua
 Classic\SOD_KarazhanCrypts\DarkRider.lua
-Classic\SOD_KarazhanCrypts\Criminal.lua
+Classic\SOD_KarazhanCrypts\Unkomon.lua
 Classic\SOD_KarazhanCrypts\KCTrash.lua
 
