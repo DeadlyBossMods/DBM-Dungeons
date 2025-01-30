@@ -1654,7 +1654,9 @@ L:SetGeneralLocalization{
 }
 
 L:SetMiscLocalization {
-	PullTrizivast = "Our woodland creatures find themselves constantly assailed by a vicious quilboar, Trizivast!"
+	PullTrizivast = "For your evenings entertainment, comes a brave tale of survival, loss, and conviction.",
+	PullHanselAndGretel1 = "For your evenings entertainment, comes the lost fable of two children attempting to find their way!",
+	PullHanselAndGretel2 = "We're sorry grandmother. Your time has expired.",
 }
 
 -- Dark Rider
