@@ -34,20 +34,23 @@ mod:SetUsedIcons(5)
 
 -- Charred Skin
 -- Torch bearer gets debuff stacks that do fire damage over time. Drop torch when stacks are too high, not yet sure what a good threshold is.
+-- This was buggy and completely missing in at least one of my attempts!
+-- I wonder if you can also cheese this by dropping the torch right before the debuff triggers as it's consistent every 5 sec, but probably too annoying to do.
 -- 	"<187.32 17:48:52> [CLEU] SPELL_AURA_APPLIED_DOSE#Player-5827-02484403#Ðjs#Player-5827-02484403#Ðjs#1217844#Charred Skin#DEBUFF#10#nil#nil#nil#nil",
 
 
 local warnWrap			= mod:NewSpecialWarningTargetChange(1218038, nil, nil, nil, 1, 2)
 local warnPlayerStacks	= mod:NewStackAnnounce(1217844, 2)
 
-local timerRedDeath = mod:NewNextTimer(30.7, 1217694)
-local timerWrap		= mod:NewVarTimer("v64.8-73.3", 1218038, nil, nil, nil, 3)
+local timerRedDeath		= mod:NewNextTimer(30.7, 1217694)
+local timerWrap			= mod:NewVarTimer("v64.8-73.3", 1218038, nil, nil, nil, 3)
+local timerNextStack	= mod:NewTargetCountTimer(5, 1217844)
 
 -- Enabled even for ranged because everyone is stacking near to the torch bearer
-local specWarnRedDeath	= mod:NewSpecialWarningMoveAway(1217694, nil, nil, nil, 1, 2)
+local specWarnRedDeath	= mod:NewSpecialWarningMove(1217694, nil, nil, nil, 1, 2)
 local specWarnDropTorch	= mod:NewSpecialWarning("SpecWarnDropTorch", nil, nil, nil, 1, 6)
 
-local yellWrap = mod:NewIconRepeatYell(1218038)
+local yellWrap = mod:NewIconTargetYell(1218038)
 
 function mod:OnCombatStart(delay)
 	timerRedDeath:Start(21.1 - delay) -- Consistent across 5 logs
@@ -95,6 +98,8 @@ end
 function mod:SPELL_AURA_APPLIED_DOSE(args)
 	if args:IsSpell(1217844) then
 		local amount = args.amount or 1
+		timerNextStack:Stop()
+		timerNextStack:Start(5, amount + 1, args.destName)
 		if args:IsPlayer() then
 			if amount == 10 or amount == 15 or amount == 20 then -- If you have more than 20 then you better have some strategy for that, like fire res, dunno.
 				specWarnDropTorch:Show(amount)
