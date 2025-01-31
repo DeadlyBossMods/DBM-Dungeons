@@ -49,7 +49,7 @@ function mod:UNIT_HEALTH(uId)
 		warnPhase2Soon:Show()
 	end
 	if not warnedPhase3 and hp >= 0.26 and hp <= 0.30 then
-		warnedPhase2 = true
+		warnedPhase3 = true
 		warnPhase2Soon:Show()
 	end
 end
