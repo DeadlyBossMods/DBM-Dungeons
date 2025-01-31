@@ -48,6 +48,7 @@ local timerRedDeath		= mod:NewNextTimer(30.7, 1217694)
 local timerWrap			= mod:NewVarTimer("v64.8-73.3", 1218038, nil, nil, nil, 3)
 local timerNextStack	= mod:NewTargetCountTimer(5, 1217844)
 local timerMc			= mod:NewVarTimer("v77.5-86.2", 1218089)
+local enrageTimer		= mod:NewBerserkTimer(300)
 
 -- Enabled even for ranged because everyone is stacking near to the torch bearer
 local specWarnRedDeath	= mod:NewSpecialWarningMove(1217694, nil, nil, nil, 1, 2)
@@ -63,6 +64,7 @@ function mod:OnCombatStart(delay)
 	timerRedDeath:Start(21.1 - delay) -- Consistent across 5 logs
 	timerWrap:Start(35.8 - delay) -- Also consistent
 	timerMc:Start("v42-45")
+	enrageTimer:Start(-delay)
 end
 
 function mod:SPELL_CAST_START(args)
