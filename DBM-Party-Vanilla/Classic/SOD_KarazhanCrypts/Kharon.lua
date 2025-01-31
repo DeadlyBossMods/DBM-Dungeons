@@ -42,7 +42,6 @@ mod:SetUsedIcons(7, 8)
 
 local warnWrap			= mod:NewSpecialWarningTargetChange(1218038, nil, nil, nil, 1, 2)
 local warnPlayerStacks	= mod:NewStackAnnounce(1217844, 2)
-local warnMc			= mod:NewTargetNoFilterAnnounce(1218089)
 
 local timerRedDeath		= mod:NewNextTimer(30.7, 1217694)
 local timerWrap			= mod:NewVarTimer("v64.8-73.3", 1218038, nil, nil, nil, 3)
@@ -53,6 +52,8 @@ local enrageTimer		= mod:NewBerserkTimer(300)
 -- Enabled even for ranged because everyone is stacking near to the torch bearer
 local specWarnRedDeath	= mod:NewSpecialWarningMove(1217694, nil, nil, nil, 1, 2)
 local specWarnDropTorch	= mod:NewSpecialWarning("SpecWarnDropTorch", nil, nil, nil, 1, 18)
+local specWarnMc		= mod:NewSpecialWarningTargetChange(1218089, nil, nil, nil, 1, 2)
+
 
 local yellWrap	= mod:NewIconTargetYell(1218038)
 local yellMc	= mod:NewIconTargetYell(1218089)
@@ -101,9 +102,11 @@ function mod:SPELL_AURA_APPLIED(args)
 		-- Needs more data/I need to get mind controlled myself with a full combat log, until then let's explicitly check the GUID.
 		if args:IsPlayer() or args.destGUID == UnitGUID("player") then
 			self:YellLoop(yellMc, 8, 6)
+		else
+			specWarnMc:Show(args.destName)
+			specWarnMc:Play("targetchange")
 		end
 		timerMc:Start()
-		warnMc:Show(args.destName)
 		if self.Options.SetIconOnMindControlTarget then
 			self:SetIcon(args.destName, 8)
 		end
