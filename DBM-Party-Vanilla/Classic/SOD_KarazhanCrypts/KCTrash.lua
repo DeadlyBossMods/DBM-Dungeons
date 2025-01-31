@@ -34,7 +34,11 @@ mod:RegisterEvents(
 
 
 -- Can't use the "block" here because it's not yet in Core. Maybe time to merge.
-local specWarnGTFO	= mod:NewSpecialWarningGTFO(17742, nil, nil, nil, 1, 8)
+local specWarnGTFO	= mod:NewSpecialWarningGTFO(1222939, nil, nil, nil, 1, 8)
+
+function mod:IsEasyDungeon()
+	return false -- Only loaded on SoD where this Dungeon is certainly not easy
+end
 
 function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId, spellName)
 	if (spellId == 17742 or spellId == 1222939) and destGUID == UnitGUID("player") and self:AntiSpam(3.5, "gtfo") then
