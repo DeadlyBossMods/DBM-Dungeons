@@ -1608,3 +1608,92 @@ L = DBM:GetModLocalization("HellscreamsPhantom")
 L:SetGeneralLocalization{
 	name 		= "헬스크림의 악령"
 }
+
+-------------------------
+-- SoD Karazhan Crypts --
+-------------------------
+
+-- Apprentice, seems to be a randomized boss
+L = DBM:GetModLocalization("Apprentice")
+
+L:SetGeneralLocalization{
+	name = "수습생"
+}
+
+-- Harbinger of Sin
+L = DBM:GetModLocalization("HarbingerOfSin")
+
+L:SetGeneralLocalization{
+	name = "죄악의 전령"
+}
+
+-- Criminal
+L = DBM:GetModLocalization("KarazhanCriminal")
+
+L:SetGeneralLocalization{
+	name = "죄인"
+}
+
+-- Kharon
+L = DBM:GetModLocalization("Kharon")
+
+L:SetGeneralLocalization{
+	name = "카론"
+}
+
+L:SetWarningLocalization{
+	SpecWarnDropTorch = "%d중첩 - 횃불 떨구세요!"
+}
+
+-- Opera of Malediction
+L = DBM:GetModLocalization("OperaOfMalediction")
+
+L:SetGeneralLocalization{
+	name = "악심의 오페라"
+}
+
+L:SetMiscLocalization {
+	PullTrizivast = "오늘 저녁에 선보일 무대는 생존과 상실, 신념이 뒤얽힌 대담한 이야기입니다.",
+	PullHanselAndGretel1 = "For your evenings entertainment, comes the lost fable of two children attempting to find their way!",
+	PullHanselAndGretel2 = "We're sorry grandmother. Your time has expired.",
+}
+
+-- Dark Rider
+L = DBM:GetModLocalization("DarkRider")
+
+L:SetGeneralLocalization{
+	name = "암흑 기수"
+}
+
+L:SetMiscLocalization{
+	Ghost = "유령"
+}
+
+-- Creeping Malison
+L = DBM:GetModLocalization("CreepingMalison")
+
+L:SetGeneralLocalization{
+	name = "엄습하는 저주"
+}
+
+-- Karazhan Crypts Trash
+L = DBM:GetModLocalization("KCTrash")
+
+L:SetGeneralLocalization{
+	name = "카라잔 납골당 일반몹"
+}
+
+-- Unk'omon
+L = DBM:GetModLocalization("Unkomon")
+
+L:SetGeneralLocalization{
+	name = "운코몬"
+}
+
+L:SetWarningLocalization{
+	WarnDoom = "파멸 - 저주 해제"
+}
+
+L:SetOptionLocalization{
+	WarnDoom = "$spell:1221577 저주 해제 알림 보기"
+}
