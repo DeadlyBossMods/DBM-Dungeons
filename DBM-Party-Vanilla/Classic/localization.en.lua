@@ -1614,10 +1614,11 @@ L:SetGeneralLocalization{
 
 -- Encounter info from PTR: https://wago.tools/db2/DungeonEncounter?build=1.15.6.58185&sort[ID]=desc&filter[MapID]=2875&page=1
 
-L = DBM:GetModLocalization("KaigyMaryla")
+-- Apprentice, seems to be a randomized boss
+L = DBM:GetModLocalization("Apprentice")
 
 L:SetGeneralLocalization{
-	name = "Kaigy Maryla" -- Aka "Apprentice" in encounter data
+	name = "The Apprentice"
 }
 
 -- Harbinger of Sin
@@ -1653,7 +1654,9 @@ L:SetGeneralLocalization{
 }
 
 L:SetMiscLocalization {
-	PullTrizivast = "Our woodland creatures find themselves constantly assailed by a vicious quilboar, Trizivast!"
+	PullTrizivast = "For your evenings entertainment, comes a brave tale of survival, loss, and conviction.",
+	PullHanselAndGretel1 = "For your evenings entertainment, comes the lost fable of two children attempting to find their way!",
+	PullHanselAndGretel2 = "We're sorry grandmother. Your time has expired.",
 }
 
 -- Dark Rider
@@ -1663,9 +1666,35 @@ L:SetGeneralLocalization{
 	name = "Dark Rider"
 }
 
+L:SetMiscLocalization{
+	Ghost = "Ghost"
+}
+
 -- Creeping Malison
 L = DBM:GetModLocalization("CreepingMalison")
 
 L:SetGeneralLocalization{
 	name = "Creeping Malison"
+}
+
+-- Karazhan Crypts Trash
+L = DBM:GetModLocalization("KCTrash")
+
+L:SetGeneralLocalization{
+	name = "Karazhan Crypts Trash"
+}
+
+-- Unk'omon
+L = DBM:GetModLocalization("Unkomon")
+
+L:SetGeneralLocalization{
+	name = "Unk'omon"
+}
+
+L:SetWarningLocalization{
+	WarnDoom = "Doom - Decurse"
+}
+
+L:SetOptionLocalization{
+	WarnDoom = "Show announce to decurse $spell:1221577"
 }

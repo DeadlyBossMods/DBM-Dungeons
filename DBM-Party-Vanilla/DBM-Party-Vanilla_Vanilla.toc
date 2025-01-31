@@ -266,11 +266,12 @@ Classic\SOD_DemonFallCanyon\Pyranis.lua
 Classic\SOD_DemonFallCanyon\Diathorus.lua
 Classic\SOD_DemonFallCanyon\HellscreamsPhantom.lua
 
-Classic\SOD_KarazhanCrypts\KaigyMaryla.lua
+Classic\SOD_KarazhanCrypts\Apprentice.lua
 Classic\SOD_KarazhanCrypts\OperaOfMalediction.lua
 Classic\SOD_KarazhanCrypts\HarbingerOfSin.lua
 Classic\SOD_KarazhanCrypts\CreepingMalison.lua
 Classic\SOD_KarazhanCrypts\Kharon.lua
 Classic\SOD_KarazhanCrypts\DarkRider.lua
-Classic\SOD_KarazhanCrypts\Criminal.lua
+Classic\SOD_KarazhanCrypts\Unkomon.lua
+Classic\SOD_KarazhanCrypts\KCTrash.lua
 

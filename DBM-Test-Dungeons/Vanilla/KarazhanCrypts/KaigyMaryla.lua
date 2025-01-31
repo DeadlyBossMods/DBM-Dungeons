@@ -1,8 +1,8 @@
 DBM.Test:DefineTest{
-	name = "SoD/Party/KarazhanCrypts/KaigyMaryla",
+	name = "SoD/Party/KarazhanCrypts/Apprentice/KaigyMaryla",
 	gameVersion = "SeasonOfDiscovery",
 	addon = "DBM-Party-Vanilla",
-	mod = "KaigyMaryla",
+	mod = "Apprentice",
 	instanceInfo = {name = "Karazhan Crypts", instanceType = "party", difficultyID = 1, difficultyName = "Normal", difficultyModifier = nil, maxPlayers = 5, dynamicDifficulty = 0, isDynamic = false, instanceID = 2875, instanceGroupSize = 5, lfgDungeonID = nil},
 	players = {
 		{"Tank1",   "Player-1-00000003", class = "SHAMAN", healer = 0.00, tank = 1.00, dps = 0.66},
