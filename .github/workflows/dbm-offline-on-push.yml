@@ -15,7 +15,7 @@ jobs:
         uses: DeadlyBossMods/DBM-Offline@main
         with:
           diff-mode: false
-          dbm-mod-ref-vanilla: ${{ github.event.after }}
+          dbm-mod-ref-dungeons: ${{ github.event.after }}
           test-dbm-core-mods: true
           test-dbm-vanilla-mods: true
           test-dbm-dungeon-mods: true
