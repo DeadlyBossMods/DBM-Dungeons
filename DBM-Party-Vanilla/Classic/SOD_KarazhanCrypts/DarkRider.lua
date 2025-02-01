@@ -49,14 +49,14 @@ function mod:UNIT_HEALTH(uId)
 		warnPhase2Soon:Show()
 	end
 	if not warnedPhase3 and hp >= 0.26 and hp <= 0.30 then
-		warnedPhase2 = true
+		warnedPhase3 = true
 		warnPhase2Soon:Show()
 	end
 end
 
 function mod:SWING_DAMAGE(srcGuid, _, _, _, destGuid)
-	if srcGuid == UnitGUID("player") and self:GetCIDFromGUID(destGuid) == 238443 and self:AntiSpam(15, "AttackGhost") then
-		specWarnIllusion:Show(L.Ghost)
+	if destGuid == UnitGUID("player") and self:GetCIDFromGUID(srcGuid) == 238443 and self:AntiSpam(15, "AttackGhost") then
+		specWarnIllusion:Show(L.MirrorImage)
 		specWarnIllusion:Play("targetchange")
 	end
 end

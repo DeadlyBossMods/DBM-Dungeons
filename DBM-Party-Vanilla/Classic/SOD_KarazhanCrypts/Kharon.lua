@@ -42,16 +42,18 @@ mod:SetUsedIcons(7, 8)
 
 local warnWrap			= mod:NewSpecialWarningTargetChange(1218038, nil, nil, nil, 1, 2)
 local warnPlayerStacks	= mod:NewStackAnnounce(1217844, 2)
-local warnMc			= mod:NewTargetNoFilterAnnounce(1218089)
 
 local timerRedDeath		= mod:NewNextTimer(30.7, 1217694)
 local timerWrap			= mod:NewVarTimer("v64.8-73.3", 1218038, nil, nil, nil, 3)
 local timerNextStack	= mod:NewTargetCountTimer(5, 1217844)
 local timerMc			= mod:NewVarTimer("v77.5-86.2", 1218089)
+local enrageTimer		= mod:NewBerserkTimer(300)
 
 -- Enabled even for ranged because everyone is stacking near to the torch bearer
 local specWarnRedDeath	= mod:NewSpecialWarningMove(1217694, nil, nil, nil, 1, 2)
 local specWarnDropTorch	= mod:NewSpecialWarning("SpecWarnDropTorch", nil, nil, nil, 1, 18)
+local specWarnMc		= mod:NewSpecialWarningTargetChange(1218089, nil, nil, nil, 1, 2)
+
 
 local yellWrap	= mod:NewIconTargetYell(1218038)
 local yellMc	= mod:NewIconTargetYell(1218089)
@@ -63,6 +65,7 @@ function mod:OnCombatStart(delay)
 	timerRedDeath:Start(21.1 - delay) -- Consistent across 5 logs
 	timerWrap:Start(35.8 - delay) -- Also consistent
 	timerMc:Start("v42-45")
+	enrageTimer:Start(-delay)
 end
 
 function mod:SPELL_CAST_START(args)
@@ -94,11 +97,16 @@ function mod:SPELL_AURA_APPLIED(args)
 			self:SetIcon(args.destName, 5)
 		end
 	elseif args:IsSpell(1218089) then
-		if args:IsPlayer() then
+		-- args:IsPlayer() works as expected in tests, but I've seen people in my group where this yell didn't get canceled when we broke MC.
+		-- Unfortunately I didn't get MC'd myself, so no good data, but I suspect the flags may work out in a way that IsPlayer() is false during mind control.
+		-- Needs more data/I need to get mind controlled myself with a full combat log, until then let's explicitly check the GUID.
+		if args:IsPlayer() or args.destGUID == UnitGUID("player") then
 			self:YellLoop(yellMc, 8, 6)
+		else
+			specWarnMc:Show(args.destName)
+			specWarnMc:Play("targetchange")
 		end
 		timerMc:Start()
-		warnMc:Show(args.destName)
 		if self.Options.SetIconOnMindControlTarget then
 			self:SetIcon(args.destName, 8)
 		end
