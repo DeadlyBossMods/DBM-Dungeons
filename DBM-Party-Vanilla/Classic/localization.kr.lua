@@ -1666,7 +1666,7 @@ L:SetGeneralLocalization{
 }
 
 L:SetMiscLocalization{
-	Ghost = "유령"
+	MirrorImage = "환영"
 }
 
 -- Creeping Malison
