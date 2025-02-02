@@ -10,29 +10,83 @@ mod:SetZone(2875)
 mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
+	"SPELL_AURA_REMOVED 1220939",
 	"UNIT_HEALTH",
-	"SWING_DAMAGE"
+	"SWING_DAMAGE",
+	"SWING_MISSED",
+	"UPDATE_MOUSEOVER_UNIT",
+	"PLAYER_TARGET_CHANGED"
 )
+
+mod:SetUsedIcons(8)
 
 -- Grab Torch
 -- Two spell IDs, 1220904 and 1220905, casts on torch bearer first then on no target. Only has UCS.
 -- Trigger seems aligned with phase changes, so no warning.
 
--- I didn't understand the Torment's Illusion mechanic, it's some kind of mirror image that only you can see that you need to kill.
--- But it spawning doesn't really show up in the log, and nothing really happens if you just ignore it?
--- The only way to detect it seems to be getting hit by it?
+-- Torment's Illusion
+-- Mirror image only you can see, you have to kill it.
+-- Doesn't seem detectable except for when it starts hitting you.
 
--- There is likely a way to get a combat start timer, but the triggering yell seems inconsistent between first pull and later pulls.
--- And the fight doesn't really start, it's just him spawning. Might revisit.
+-- Phase
+-- 7 extra mobs spawn that buff themselves with Ethereal Charge (1220939), you have to attack one of them
+-- The right one seems to remove that buff from itself when it becomes attackable, let's see if we can detect that and aggressively set an icon
 
 local warnPhase2Soon = mod:NewPrePhaseAnnounce(2)
 
 local specWarnIllusion	= mod:NewSpecialWarningTargetChange(1220912, nil, nil, nil, 1, 2)
 
 local warnedPhase1, warnedPhase2, warnedPhase3
+local phaseTarget
 
 function mod:OnCombatStart()
 	warnedPhase1, warnedPhase2, warnedPhase3 = false, false, false
+	phaseTarget = nil
+end
+
+function mod:SPELL_AURA_REMOVED(args)
+	if args:IsSpell(1220939) then
+		phaseTarget = args.destGUID
+		DBM:Debug("Found real horse GUID: " .. tostring(args.destGUID))
+		self:ScanLoop(150)
+	end
+end
+
+function mod:ScanPhaseTarget(uId)
+	if not phaseTarget or not UnitGUID(uId) then
+		return
+	end
+	if UnitGUID(uId) == phaseTarget then
+		DBM:Debug("Found real horse uid: " .. tostring(uId))
+		if GetRaidTargetIndex(uId) ~= 8 then
+			SetRaidTarget(uId, 8) -- Everyone can (and should in this case) set icons
+		end
+		phaseTarget = nil
+		self:UnscheduleMethod("ScanLoop")
+	end
+end
+
+local scanIds = {"target", "mouseover", "party1target", "party2target", "party3target", "party4target"}
+
+function mod:ScanLoop(maxCount)
+	maxCount = maxCount - 1
+	if maxCount <= 0 then
+		return
+	end
+	-- Can't use normal target npc scanning because we want to trigger regardless of icon setter status
+	for _, uId in ipairs(scanIds) do
+		self:ScanPhaseTarget(uId)
+	end
+	self:ScheduleMethod(0.1, "ScanLoop", maxCount)
+end
+
+-- We need these events and the loop above to detect the real one if you don't switch targets
+function mod:UPDATE_MOUSEOVER_UNIT()
+	self:ScanPhaseTarget("mouseover")
+end
+
+function mod:PLAYER_TARGET_CHANGED()
+	self:ScanPhaseTarget("mouseover")
 end
 
 function mod:UNIT_HEALTH(uId)
@@ -60,3 +114,5 @@ function mod:SWING_DAMAGE(srcGuid, _, _, _, destGuid)
 		specWarnIllusion:Play("targetchange")
 	end
 end
+
+mod.SWING_MISSED = mod.SWING_DAMAGE
