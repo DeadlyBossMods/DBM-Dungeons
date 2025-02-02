@@ -10,7 +10,7 @@ mod:SetZone(2875)
 mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
-	"SPELL_CAST_START 1217694",
+	"SPELL_CAST_START 1217694 1217952",
 	"SPELL_AURA_APPLIED 1218038 1218089",
 	"SPELL_AURA_REMOVED 1218038 1218089",
 	"SPELL_AURA_APPLIED_DOSE 1217844"
@@ -39,15 +39,24 @@ mod:SetUsedIcons(7, 8)
 -- I wonder if you can also cheese this by dropping the torch right before the debuff triggers as it's consistent every 5 sec, but probably too annoying to do.
 -- 	"<187.32 17:48:52> [CLEU] SPELL_AURA_APPLIED_DOSE#Player-5827-02484403#Ðjs#Player-5827-02484403#Ðjs#1217844#Charred Skin#DEBUFF#10#nil#nil#nil#nil",
 
+-- Fear
+-- CAST_START times, 2 sec cast
+-- "Dreadful Visage-1217952-npc:237439-00001D2BCC = pull:30.7, 72.8, 76.0, 69.6",
+-- "Dreadful Visage-1217952-npc:237439-00001D2AAA = pull:30.7, 63.6, 67.6",
+-- "Dreadful Visage-1217952-npc:237439-00001E153E = pull:30.7, 64.7, 72.9",
+
+
+local enrageTimer		= mod:NewBerserkTimer(300)
 
 local warnWrap			= mod:NewSpecialWarningTargetChange(1218038, nil, nil, nil, 1, 2)
 local warnPlayerStacks	= mod:NewStackAnnounce(1217844, 2)
+local warnFearCast		= mod:NewCastAnnounce(1217952)
 
 local timerRedDeath		= mod:NewNextTimer(30.7, 1217694)
 local timerWrap			= mod:NewVarTimer("v64.8-73.3", 1218038, nil, nil, nil, 3)
 local timerNextStack	= mod:NewTargetCountTimer(5, 1217844)
 local timerMc			= mod:NewVarTimer("v77.5-86.2", 1218089)
-local enrageTimer		= mod:NewBerserkTimer(300)
+local timerFear			= mod:NewVarTimer("v63.6-76.0", 1217952, 5782)
 
 -- Enabled even for ranged because everyone is stacking near to the torch bearer
 local specWarnRedDeath	= mod:NewSpecialWarningMove(1217694, nil, nil, nil, 1, 2)
@@ -66,6 +75,7 @@ function mod:OnCombatStart(delay)
 	timerWrap:Start(35.8 - delay) -- Also consistent
 	timerMc:Start("v42-45")
 	enrageTimer:Start(-delay)
+	timerFear:Start(32.7)
 end
 
 function mod:SPELL_CAST_START(args)
@@ -73,6 +83,16 @@ function mod:SPELL_CAST_START(args)
 		timerRedDeath:Start()
 		specWarnRedDeath:Show()
 		specWarnRedDeath:Play("runout")
+	elseif args:IsSpell(1217952) then
+		warnFearCast:Show()
+		-- update timer to exactly 2 sec remaining, a bit ugly with var timers?
+		local _, fearTimerTotal = timerFear:GetTime()
+		if not fearTimerTotal or fearTimerTotal == 0 then
+			fearTimerTotal = 70
+		end
+		timerFear:Cancel()
+		timerFear:Update(fearTimerTotal - 2, fearTimerTotal)
+		timerFear:DelayedStart(2)
 	end
 end
 
