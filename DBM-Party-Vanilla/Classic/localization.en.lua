@@ -1657,6 +1657,7 @@ L:SetMiscLocalization {
 	PullTrizivast = "For your evenings entertainment, comes a brave tale of survival, loss, and conviction.",
 	PullHanselAndGretel1 = "For your evenings entertainment, comes the lost fable of two children attempting to find their way!",
 	PullHanselAndGretel2 = "We're sorry grandmother. Your time has expired.",
+	PullEngineers = "For your evening viewing we have a tragic story of a humble technician who has been outcast!",
 }
 
 -- Dark Rider
