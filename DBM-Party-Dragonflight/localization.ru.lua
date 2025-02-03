@@ -341,3 +341,7 @@ L = DBM:GetModLocalization("DawnoftheInfiniteTrash")
 L:SetGeneralLocalization({
 	name =	"Трэш мобы Рассвет Бесконечности"
 })
+
+L:SetOptionLocalization({
+	AutoRift	= "Автоматический выбор диалога для активации разлома после испытания"
+})
