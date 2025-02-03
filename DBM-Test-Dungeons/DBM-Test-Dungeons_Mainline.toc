@@ -10,5 +10,3 @@
 ## X-DBM-Test: true
 
 Dragonflight/UldamanLegacyOfTyr/TheLostDwarves.lua
-
-Dragonflight/UldamanLegacyOfTyr/Reports/TheLostDwarves.lua

@@ -1656,7 +1656,7 @@ L:SetGeneralLocalization{
 }
 
 L:SetMiscLocalization{
-	Ghost = "Призрак"
+	MirrorImage = "Зеркальное отражение"
 }
 
 -- Creeping Malison
@@ -1671,6 +1671,14 @@ L = DBM:GetModLocalization("Unkomon")
 
 L:SetGeneralLocalization{
 	name = "Унк'омон"
+}
+
+L:SetWarningLocalization{
+	WarnDoom = "Рок - снимите проклятие"
+}
+
+L:SetOptionLocalization{
+	WarnDoom = "Показывать предупреждение о снятии проклятия $spell:1221577"
 }
 
 -- Karazhan Crypts Trash
