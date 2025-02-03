@@ -8,6 +8,10 @@ mod:SetZone(2293)
 
 mod:RegisterCombat("combat")
 
+mod:RegisterEvents(
+	"CHAT_MSG_MONSTER_YELL"
+)
+
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 324079 323608 324589 323683 339573 339550 339706",
 	"SPELL_CAST_SUCCESS 324449",
@@ -42,6 +46,7 @@ local timerGraspingriftCD			= mod:NewCDCountTimer(30.4, 323685, nil, nil, nil, 3
 
 local timerEchoofBattleCD			= mod:NewCDCountTimer(23.5, 339550, nil, nil, nil, 3, nil, DBM_COMMON_L.MYTHIC_ICON)--23.5-30.3
 local timerGhostlyChargeCD			= mod:NewCDCountTimer(24.2, 339706, nil, nil, nil, 3, nil, DBM_COMMON_L.MYTHIC_ICON)--24.2-31.6
+local timerRP						= mod:NewRPTimer(29)
 
 mod.vb.reapingCount = 0
 mod.vb.darkCount = 0
@@ -160,3 +165,15 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
 	end
 end
 --]]
+
+function mod:CHAT_MSG_MONSTER_YELL(msg)
+	if (msg == L.RolePlay or msg:find(L.RolePlay)) and self:LatencyCheck() then
+		self:SendSync("Roleplay")
+	end
+end
+
+function mod:OnSync(msg)
+	if msg == "Roleplay" and self:AntiSpam(10, 3) then
+		timerRP:Start()
+	end
+end
