@@ -55,7 +55,7 @@ JadeSerpentTemple\JadeTempleTrash.lua
 StormstoutBrewery\OokOok.lua
 StormstoutBrewery\Hoptallus.lua
 StormstoutBrewery\YanZhu.lua
-ShadoPanMonastery\GuCloudStrike.lua
+ShadoPanMonastery\GuCloudstrike.lua
 ShadoPanMonastery\Snowdrift.lua
 ShadoPanMonastery\ShaofViolence.lua
 ShadoPanMonastery\TaranZhu.lua
