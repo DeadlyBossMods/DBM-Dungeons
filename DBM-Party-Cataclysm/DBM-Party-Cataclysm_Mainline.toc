@@ -51,7 +51,7 @@ localization.cn.lua
 localization.br.lua
 BlackrockCaverns\RomoggBonecrusher.lua
 BlackrockCaverns\Corla.lua
-BlackrockCaverns\KarshSteelBender.lua
+BlackrockCaverns\KarshSteelbender.lua
 BlackrockCaverns\Beauty.lua
 BlackrockCaverns\AscendantLordObsidius.lua
 BlackrockCaverns\BlackrockCavernsTrash.lua

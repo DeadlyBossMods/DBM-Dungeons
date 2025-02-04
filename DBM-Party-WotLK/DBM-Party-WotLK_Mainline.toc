@@ -53,7 +53,7 @@ AzjolNerub\Krikthir.lua
 AzjolNerub\Hadronox.lua
 AzjolNerub\Anubarak.lua
 OldStratholme\Meathook.lua
-OldStratholme\SalrammTheFleshcrafter.lua
+OldStratholme\SalrammTheFleshCrafter.lua
 OldStratholme\ChronoLordEpoch.lua
 OldStratholme\MalGanis.lua
 OldStratholme\OldStratholmeWaves.lua
@@ -70,10 +70,10 @@ HallsOfLightning\Bjarngrin.lua
 HallsOfLightning\Volkhan.lua
 HallsOfLightning\Ionar.lua
 HallsOfLightning\Loken.lua
-HallsOfReflection\WaveTimers.lua
-HallsOfReflection\Falric.lua
-HallsOfReflection\Marwyn.lua
-HallsOfReflection\LichKingEvent.lua
+HallsofReflection\WaveTimers.lua
+HallsofReflection\Falric.lua
+HallsofReflection\Marwyn.lua
+HallsofReflection\LichKingEvent.lua
 HallsOfStone\MaidenOfGrief.lua
 HallsOfStone\Krystallus.lua
 HallsOfStone\BrannBronzebeard.lua
