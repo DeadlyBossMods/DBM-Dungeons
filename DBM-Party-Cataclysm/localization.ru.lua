@@ -222,11 +222,11 @@ L= DBM:GetModLocalization(119)
 L= DBM:GetModLocalization(122)
 
 L:SetWarningLocalization{
-	specWarnPhase2Soon	= "2-я фаза через 5 сек"
+	specWarnPhase2Soon	= "2-я фаза через 5 сек."
 }
 
 L:SetOptionLocalization{
-	specWarnPhase2Soon	= "Спецпредупреждение перед началом 2-й фазы (5 сек)"
+	specWarnPhase2Soon	= "Спецпредупреждение перед началом 2-й фазы (5 сек.)"
 }
 
 -----------------------
@@ -255,7 +255,7 @@ L:SetOptionLocalization{
 }
 
 L:SetMiscLocalization{
-	YellAdds		= "Repel the intruders!"
+	YellAdds		= "Враг проник в крепость! К оружию!"
 }
 
 -----------------
@@ -299,7 +299,7 @@ L:SetOptionLocalization({
 	WarnSubmerge	= "Показывать предупреждения о погружении",
 	TimerEmerge		= "Показывать таймер до появления",
 	TimerSubmerge	= "Показывать таймер до погружения",
-	RangeFrame		= "Окно проверки дистанции (5м)"
+	RangeFrame		= "Окно проверки дистанции (5 м.)"
 })
 
 --------------
@@ -405,6 +405,10 @@ L:SetOptionLocalization{
 	TimerPhase		= "Показывать таймер для 2-й фазы"
 }
 
+L:SetMiscLocalization{
+	RolePlay		= "Чудовище вернулось! Оно не должно осквернить мои воды!"
+}
+
 ---------
 --Trash--
 ---------
@@ -422,7 +426,7 @@ L:SetGeneralLocalization({
 L= DBM:GetModLocalization(186)
 
 L:SetOptionLocalization{
-	RangeFrame	= "Окно проверки дистанции (10м)"
+	RangeFrame	= "Окно проверки дистанции (10 м.)"
 }
 
 ---------------
@@ -469,7 +473,7 @@ L:SetOptionLocalization{
 
 L:SetMiscLocalization{
 	YellBomb	= "Щас я вас сожгу!",
-	YellHatchAll= "Я покажу вам… что такое численное превосходство!",
+	YellHatchAll= "Я покажу вам... что такое численное превосходство!",
 	YellAdds	= "Эй, хранители! Займитесь яйцами!"
 }
 
@@ -608,7 +612,7 @@ L:SetWarningLocalization{
 }
 
 L:SetOptionLocalization{
-	WarnBarrierDown	= "Предупреждение, кода спадает барьер над цепями Хаккара",
+	WarnBarrierDown	= "Предупреждение, когда спадает барьер над цепями Хаккара",
 	BodySlamIcon	= DBM_CORE_L.AUTO_ICONS_OPTION_TARGETS:format(97198)
 }
 
