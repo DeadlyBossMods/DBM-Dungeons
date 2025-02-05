@@ -19,11 +19,11 @@ mod:RegisterEvents(
 -- Trizivast
 -- The boss itself didn't really do anything, tank & spank, didn't even notice that that was already the boss.
 -- Pull timer:
--- "<515.62 16:50:03> [CHAT_MSG_MONSTER_YELL] Good evening ladies and gentlemen! Welcome to tonights presentation!#Edgar###Onlyveins##0#0##0#4823#nil#0#false#false#false#false",
--- "<528.58 16:50:16> [CHAT_MSG_MONSTER_YELL] For your evenings entertainment, comes a brave tale of survival, loss, and conviction.#Edgar###Onlyveins##0#0##0#4833#nil#0#false#false#false#false",
--- "<535.07 16:50:23> [CHAT_MSG_MONSTER_YELL] Our woodland creatures find themselves constantly assailed by a vicious quilboar, Trizivast! This barbaric beast will stop at nothing to rid his realm of these small wolves.\13\ (\13 == \r, kek)
--- "<545.95 16:50:34> [ENCOUNTER_START] 3144#Opera of Malediction#1#5",
--- "<545.95 16:50:34> [CLEU] SPELL_DAMAGE#Player-5827-02484403#Ðjs#Creature-0-5209-2875-4757-238428-00001A4E3B#Trizivast#29228#Flame Shock",
+-- "<966.55 20:17:01> [CHAT_MSG_MONSTER_YELL] For your evenings entertainment, comes a brave tale of survival, loss, and conviction.#Edgar###Charlescoins##0#0##0#2061#nil#0#false#false#false#false",
+-- "<972.99 20:17:08> [CHAT_MSG_MONSTER_YELL] Our woodland creatures find themselves constantly assailed by a vicious quilboar, Trizivast!
+-- "<981.86 20:17:17> [DBM_Debug] ENCOUNTER_START event fired: 3144 Opera of Malediction 1 5#nil",
+-- "<981.87 20:17:17> [CLEU] SPELL_DAMAGE#Player-5827-01DA4D4D#Khalkotaurus#Creature-0-5251-2875-26526-238428-00002267B0#Trizivast#29228#Flame Shock",
+
 
 -- Hänsel and Gretel
 -- Two bosses that didn't really do anything, tank and spank.
@@ -53,7 +53,7 @@ local timerCombatStart = mod:NewCombatTimer(10)
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg:match(L.PullTrizivast) then
-		timerCombatStart:Start(17.37)
+		timerCombatStart:Start(15.31)
 	elseif msg:match(L.PullHanselAndGretel1) then
 		timerCombatStart:Start(30.9)
 	elseif msg:match(L.PullHanselAndGretel2) then
