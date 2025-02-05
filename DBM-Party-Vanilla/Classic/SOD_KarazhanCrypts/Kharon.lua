@@ -104,6 +104,18 @@ function mod:YellLoop(yell, icon, maxCount)
 	end
 end
 
+-- Something about SetIcon in dungeons seems fishy, at least on SoD, using this instead
+local function setIcon(name, icon)
+	local uId = DBM:GetRaidUnitId(name)
+	if not uId or not UnitExists(uId) then
+		return
+	end
+	local currentIcon = GetRaidTargetIndex(uId)
+	if currentIcon ~= icon then
+		SetRaidTarget(uId, icon)
+	end
+end
+
 function mod:SPELL_AURA_APPLIED(args)
 	if args:IsSpell(1218038) then
 		if args:IsPlayer() then
@@ -114,7 +126,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		end
 		timerWrap:Start()
 		if self.Options.SetIconOnWrapTarget then
-			self:SetIcon(args.destName, 5)
+			setIcon(args.destName, 5)
 		end
 	elseif args:IsSpell(1218089) then
 		-- args:IsPlayer() works as expected in tests, but I've seen people in my group where this yell didn't get canceled when we broke MC.
@@ -128,7 +140,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		end
 		timerMc:Start()
 		if self.Options.SetIconOnMindControlTarget then
-			self:SetIcon(args.destName, 8)
+			setIcon(args.destName, 8)
 		end
 	end
 end
@@ -136,14 +148,14 @@ end
 function mod:SPELL_AURA_REMOVED(args)
 	if args:IsSpell(1218038) then
 		if self.Options.SetIconOnWrapTarget then
-			self:RemoveIcon(args.destName)
+			setIcon(args.destName, 0)
 		end
 		if args:IsPlayer() then
 			self:UnscheduleMethod("YellLoop", yellWrap)
 		end
 	elseif args:IsSpell(1218089) then
 		if self.Options.SetIconOnMindControlTarget then
-			self:RemoveIcon(args.destName)
+			setIcon(args.destName, 0)
 		end
 		if args:IsPlayer() then
 			self:UnscheduleMethod("YellLoop", yellMc)
