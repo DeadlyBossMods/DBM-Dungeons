@@ -32,6 +32,8 @@ mod:SetUsedIcons(8)
 -- 7 extra mobs spawn that buff themselves with Ethereal Charge (1220939), you have to attack one of them
 -- The right one seems to remove that buff from itself when it becomes attackable, let's see if we can detect that and aggressively set an icon
 
+local enrageTimer	= mod:NewBerserkTimer(300)
+
 local warnPhase2Soon = mod:NewPrePhaseAnnounce(2)
 
 local specWarnIllusion	= mod:NewSpecialWarningTargetChange(1220912, nil, nil, nil, 1, 2)
@@ -41,7 +43,7 @@ mod.vb.phaseTarget = nil
 
 function mod:OnCombatStart()
 	warnedPhase1, warnedPhase2, warnedPhase3 = false, false, false
-	self.vb.phaseTarget = nil
+	enrageTimer:Start()
 end
 
 function mod:SPELL_AURA_REMOVED(args)
