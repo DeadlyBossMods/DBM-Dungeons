@@ -37,36 +37,36 @@ local warnPhase2Soon = mod:NewPrePhaseAnnounce(2)
 local specWarnIllusion	= mod:NewSpecialWarningTargetChange(1220912, nil, nil, nil, 1, 2)
 
 local warnedPhase1, warnedPhase2, warnedPhase3
-local phaseTarget
+mod.vb.phaseTarget = nil
 
 function mod:OnCombatStart()
 	warnedPhase1, warnedPhase2, warnedPhase3 = false, false, false
-	phaseTarget = nil
+	self.vb.phaseTarget = nil
 end
 
 function mod:SPELL_AURA_REMOVED(args)
 	if args:IsSpell(1220939) then
-		phaseTarget = args.destGUID
+		self.vb.phaseTarget = args.destGUID
 		DBM:Debug("Found real horse GUID: " .. tostring(args.destGUID))
 		self:ScanLoop(150)
 	end
 end
 
 function mod:ScanPhaseTarget(uId)
-	if not phaseTarget or not UnitGUID(uId) then
+	if not self.vb.phaseTarget or not UnitGUID(uId) then
 		return
 	end
-	if UnitGUID(uId) == phaseTarget then
+	if UnitGUID(uId) == self.vb.phaseTarget then
 		DBM:Debug("Found real horse uid: " .. tostring(uId))
 		if GetRaidTargetIndex(uId) ~= 8 then
 			SetRaidTarget(uId, 8) -- Everyone can (and should in this case) set icons
 		end
-		phaseTarget = nil
+		self.vb.phaseTarget = nil
 		self:UnscheduleMethod("ScanLoop")
 	end
 end
 
-local scanIds = {"target", "mouseover", "party1target", "party2target", "party3target", "party4target"}
+local scanIds = {"party1target", "party2target", "party3target", "party4target"}
 
 function mod:ScanLoop(maxCount)
 	maxCount = maxCount - 1
@@ -86,7 +86,7 @@ function mod:UPDATE_MOUSEOVER_UNIT()
 end
 
 function mod:PLAYER_TARGET_CHANGED()
-	self:ScanPhaseTarget("mouseover")
+	self:ScanPhaseTarget("target")
 end
 
 function mod:UNIT_HEALTH(uId)
