@@ -10,6 +10,7 @@
 ## X-DBM-Test: true
 
 Vanilla/KarazhanCrypts/KaigyMaryla.lua
+Vanilla/KarazhanCrypts/SairuhMaryla.lua
 Vanilla/KarazhanCrypts/OperaOfMalediction.lua
 Vanilla/KarazhanCrypts/CreepingMalison.lua
 Vanilla/KarazhanCrypts/HarbingerOfSin.lua
