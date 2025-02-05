@@ -210,7 +210,11 @@ L:SetGeneralLocalization({
 -----------------------
 -- Mordretha, the Endless Empress --
 -----------------------
---L= DBM:GetModLocalization(2417)
+L= DBM:GetModLocalization(2417)
+
+L:SetMiscLocalization{
+	RolePlay		= "Soldiers of Maldraxxus! Are you ready for some carnage?!"
+}
 
 ---------
 --Trash--
