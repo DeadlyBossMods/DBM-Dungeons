@@ -59,7 +59,7 @@ end
 
 function mod:SPELL_AURA_REMOVED(args)
 	if args:IsSpell(1220939) then
-		self.vb.phaseTarget = args.destGUID
+		phaseTarget = args.destGUID
 		DBM:Debug("Found real horse GUID: " .. tostring(args.destGUID))
 		self:ScanLoop(150)
 	end
@@ -76,20 +76,20 @@ function mod:ScanMirrorTarget(uId)
 end
 
 function mod:ScanPhaseTarget(uId)
-	if not self.vb.phaseTarget or not UnitGUID(uId) then
+	if not phaseTarget or not UnitGUID(uId) then
 		return
 	end
-	if UnitGUID(uId) == self.vb.phaseTarget then
+	if UnitGUID(uId) == phaseTarget then
 		DBM:Debug("Found real horse uid: " .. tostring(uId))
 		if GetRaidTargetIndex(uId) ~= 8 then
 			SetRaidTarget(uId, 8) -- Everyone can (and should in this case) set icons
 		end
-		self.vb.phaseTarget = nil
+		phaseTarget = nil
 		self:UnscheduleMethod("ScanLoop")
 	end
 end
 
-local scanIds = {"party1target", "party2target", "party3target", "party4target"}
+local scanIds = {"target", "mouseover", "party1target", "party2target", "party3target", "party4target"}
 
 function mod:ScanLoop(maxCount)
 	maxCount = maxCount - 1
