@@ -82,7 +82,7 @@ function mod:SPELL_CAST_START(args)
 	if args:IsSpell(1217694) then
 		timerRedDeath:Start()
 		specWarnRedDeath:Show()
-		specWarnRedDeath:Play("runout")
+		specWarnRedDeath:Play("watchstep")
 	elseif args:IsSpell(1217952) then
 		warnFearCast:Show()
 		-- update timer to exactly 2 sec remaining, a bit ugly with var timers?
