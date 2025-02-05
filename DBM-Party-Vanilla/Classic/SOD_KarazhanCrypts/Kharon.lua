@@ -131,7 +131,7 @@ function mod:SPELL_AURA_APPLIED(args)
 	elseif args:IsSpell(1218089) then
 		-- args:IsPlayer() works as expected in tests, but I've seen people in my group where this yell didn't get canceled when we broke MC.
 		-- Unfortunately I didn't get MC'd myself, so no good data, but I suspect the flags may work out in a way that IsPlayer() is false during mind control.
-		-- Needs more data/I need to get mind controlled myself with a full combat log, until then let's explicitly check the GUID.
+		-- Needs more data/I need to get mind controlled myself with a full combat log, until then let's explicitly check the GUID, same below at SPELL_AURA_REMOVED
 		if args:IsPlayer() or args.destGUID == UnitGUID("player") then
 			self:YellLoop(yellMc, 8, 6)
 		else
@@ -157,7 +157,7 @@ function mod:SPELL_AURA_REMOVED(args)
 		if self.Options.SetIconOnMindControlTarget then
 			setIcon(args.destName, 0)
 		end
-		if args:IsPlayer() then
+		if args.destGUID == UnitGUID("player") then
 			self:UnscheduleMethod("YellLoop", yellMc)
 		end
 	end
