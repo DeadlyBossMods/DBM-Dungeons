@@ -82,7 +82,7 @@ function mod:SPELL_CAST_START(args)
 	if args:IsSpell(1217694) then
 		timerRedDeath:Start()
 		specWarnRedDeath:Show()
-		specWarnRedDeath:Play("runout")
+		specWarnRedDeath:Play("watchstep")
 	elseif args:IsSpell(1217952) then
 		warnFearCast:Show()
 		-- update timer to exactly 2 sec remaining, a bit ugly with var timers?
@@ -104,6 +104,18 @@ function mod:YellLoop(yell, icon, maxCount)
 	end
 end
 
+-- Something about SetIcon in dungeons seems fishy, at least on SoD, using this instead
+local function setIcon(name, icon)
+	local uId = DBM:GetRaidUnitId(name)
+	if not uId or not UnitExists(uId) then
+		return
+	end
+	local currentIcon = GetRaidTargetIndex(uId)
+	if currentIcon ~= icon then
+		SetRaidTarget(uId, icon)
+	end
+end
+
 function mod:SPELL_AURA_APPLIED(args)
 	if args:IsSpell(1218038) then
 		if args:IsPlayer() then
@@ -114,12 +126,12 @@ function mod:SPELL_AURA_APPLIED(args)
 		end
 		timerWrap:Start()
 		if self.Options.SetIconOnWrapTarget then
-			self:SetIcon(args.destName, 5)
+			setIcon(args.destName, 5)
 		end
 	elseif args:IsSpell(1218089) then
 		-- args:IsPlayer() works as expected in tests, but I've seen people in my group where this yell didn't get canceled when we broke MC.
 		-- Unfortunately I didn't get MC'd myself, so no good data, but I suspect the flags may work out in a way that IsPlayer() is false during mind control.
-		-- Needs more data/I need to get mind controlled myself with a full combat log, until then let's explicitly check the GUID.
+		-- Needs more data/I need to get mind controlled myself with a full combat log, until then let's explicitly check the GUID, same below at SPELL_AURA_REMOVED
 		if args:IsPlayer() or args.destGUID == UnitGUID("player") then
 			self:YellLoop(yellMc, 8, 6)
 		else
@@ -128,7 +140,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		end
 		timerMc:Start()
 		if self.Options.SetIconOnMindControlTarget then
-			self:SetIcon(args.destName, 8)
+			setIcon(args.destName, 8)
 		end
 	end
 end
@@ -136,16 +148,16 @@ end
 function mod:SPELL_AURA_REMOVED(args)
 	if args:IsSpell(1218038) then
 		if self.Options.SetIconOnWrapTarget then
-			self:RemoveIcon(args.destName)
+			setIcon(args.destName, 0)
 		end
 		if args:IsPlayer() then
 			self:UnscheduleMethod("YellLoop", yellWrap)
 		end
 	elseif args:IsSpell(1218089) then
 		if self.Options.SetIconOnMindControlTarget then
-			self:RemoveIcon(args.destName)
+			setIcon(args.destName, 0)
 		end
-		if args:IsPlayer() then
+		if args.destGUID == UnitGUID("player") then
 			self:UnscheduleMethod("YellLoop", yellMc)
 		end
 	end
