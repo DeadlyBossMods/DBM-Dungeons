@@ -82,7 +82,6 @@ end
 
 function mod:SPELL_CAST_SUCCESS(args)
 	if args:IsSpell(1220882) then
-		warnFreezingField:Show()
 		timerFreezingField:Start()
 	elseif args:IsSpell(1220862) then
 		timerBlizzard:Start()
