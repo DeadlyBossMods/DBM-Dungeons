@@ -18,7 +18,7 @@ mod:RegisterEventsInCombat(
 	"PLAYER_TARGET_CHANGED"
 )
 
-mod:SetUsedIcons(1, 2, 3, 4, 5, 8) -- No icon setting options because everyone can and will set them, individuals disabling this doesn't really help
+mod:SetUsedIcons(1, 2, 3, 4, 5, 8) -- No icon setting option for 8 because everyone can and will set them (and it's just active for like 5 seconds)
 
 -- Grab Torch
 -- Two spell IDs, 1220904 and 1220905, casts on torch bearer first then on no target. Only has UCS.
@@ -37,6 +37,8 @@ local enrageTimer	= mod:NewBerserkTimer(300)
 local warnPhase2Soon = mod:NewPrePhaseAnnounce(2)
 
 local specWarnIllusion	= mod:NewSpecialWarningTargetChange(1220912, nil, nil, nil, 1, 2)
+
+mod:AddSetIconOption("SetIconOnIllusion", 1220912, true, 0, {1, 2, 3, 4, 5})
 
 local warnedPhase1, warnedPhase2, warnedPhase3
 local phaseTarget, myIcon
@@ -70,7 +72,9 @@ function mod:ScanMirrorTarget(uId)
 		local curIcon = GetRaidTargetIndex(uId)
 		if not curIcon or curIcon == 0 then
 			DBM:Debug("Found Torment's Illusion at " .. uId .. " setting icon")
-			SetRaidTarget(uId, myIcon)
+			if not DBM.Options.DontSetIcons and self.Options.SetIconOnIllusion then
+				SetRaidTarget(uId, myIcon) -- Only you can set the icon
+			end
 		end
 	end
 end
