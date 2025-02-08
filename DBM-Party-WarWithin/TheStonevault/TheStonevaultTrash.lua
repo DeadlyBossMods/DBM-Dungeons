@@ -147,7 +147,7 @@ function mod:SPELL_CAST_START(args)
 		end
 	elseif spellId == 448640 then
 		timerShieldStampedeCD:Start(nil, args.sourceGUID)
-		if self:AntiSpam(3, 2) then
+		if self:AntiSpam(2, 2) then
 			specWarnShieldStampede:Show()
 			specWarnShieldStampede:Play("chargemove")
 		end
