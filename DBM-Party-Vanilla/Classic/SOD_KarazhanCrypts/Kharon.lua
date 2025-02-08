@@ -106,6 +106,7 @@ end
 
 -- Something about SetIcon in dungeons seems fishy, at least on SoD, using this instead
 local function setIcon(name, icon)
+	if DBM.Options.DontSetIcons then return end
 	local uId = DBM:GetRaidUnitId(name)
 	if not uId or not UnitExists(uId) then
 		return
