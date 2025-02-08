@@ -211,11 +211,7 @@ L:SetGeneralLocalization({
 -----------------------
 -- Mordretha, the Endless Empress --
 -----------------------
-L= DBM:GetModLocalization(2417)
-
-L:SetMiscLocalization{
-	RolePlay		= "말드락서스의 병사 여러분! 학살극을 만끽할 준비는 되셨습니까?!"
-}
+--L= DBM:GetModLocalization(2417)
 
 ---------
 --Trash--
