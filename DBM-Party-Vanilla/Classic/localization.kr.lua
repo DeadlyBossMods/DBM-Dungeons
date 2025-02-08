@@ -1656,6 +1656,7 @@ L:SetMiscLocalization {
 	PullTrizivast = "오늘 저녁에 선보일 무대는 생존과 상실, 신념이 뒤얽힌 대담한 이야기입니다.",
 	PullHanselAndGretel1 = "For your evenings entertainment, comes the lost fable of two children attempting to find their way!",
 	PullHanselAndGretel2 = "We're sorry grandmother. Your time has expired.",
+	PullEngineers = "오늘 저녁에 선보일 무대는 추방자 신세가 된 어느 초라한 기술자의 비극적인 이야기입니다!",
 }
 
 -- Dark Rider
