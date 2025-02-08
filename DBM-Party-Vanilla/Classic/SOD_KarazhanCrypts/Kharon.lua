@@ -52,11 +52,11 @@ local warnWrap			= mod:NewSpecialWarningTargetChange(1218038, nil, nil, nil, 1, 
 local warnPlayerStacks	= mod:NewStackAnnounce(1217844, 2)
 local warnFearCast		= mod:NewCastAnnounce(1217952)
 
-local timerRedDeath		= mod:NewNextTimer(30.7, 1217694)
+local timerRedDeath		= mod:NewNextTimer(30.7, 1217694, nil, nil, nil, 3)
 local timerWrap			= mod:NewVarTimer("v64.8-73.3", 1218038, nil, nil, nil, 3)
-local timerNextStack	= mod:NewTargetCountTimer(5, 1217844)
-local timerMc			= mod:NewVarTimer("v77.5-86.2", 1218089)
-local timerFear			= mod:NewVarTimer("v63.6-76.0", 1217952, 5782)
+local timerNextStack	= mod:NewTargetCountTimer(5, 1217844, nil, nil, nil, 5)
+local timerMc			= mod:NewVarTimer("v77.5-86.2", 1218089, nil, nil, nil, 3)
+local timerFear			= mod:NewVarTimer("v63.6-76.0", 1217952, 5782, nil, nil, 2)
 
 -- Enabled even for ranged because everyone is stacking near to the torch bearer
 local specWarnRedDeath	= mod:NewSpecialWarningMove(1217694, nil, nil, nil, 1, 2)

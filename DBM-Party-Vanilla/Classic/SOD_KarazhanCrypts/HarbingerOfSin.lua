@@ -23,7 +23,7 @@ mod:RegisterEventsInCombat(
 --"Pull of the damned-1219420-npc:237964-00001E0279 = pull:33.6, 47.0, 43.7",
 
 local enrageTimer	= mod:NewBerserkTimer(300)
-local timerInfero	= mod:NewCastTimer(18.2, 1220927)
+local timerInfero	= mod:NewCastTimer(18.2, 1220927, nil, nil, nil, 2)
 local timerPull		= mod:NewVarTimer("v43.7-48.6", 1219420)
 
 local specWarnPull	= mod:NewSpecialWarningSoon(1219420, nil, nil, nil, 4, 2)
