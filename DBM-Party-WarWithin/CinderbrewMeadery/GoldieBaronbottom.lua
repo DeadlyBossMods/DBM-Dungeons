@@ -52,7 +52,7 @@ local timerCinderWounds						= mod:NewBuffFadesTimer(33.9, 435789, nil, nil, nil
 local timerSpreadtheLoveCD					= mod:NewAITimer(49.6, 435560, nil, nil, nil, 5)
 local timerBurningRicochetCD				= mod:NewCDCountTimer(13.3, 436644, nil, nil, nil, 3)
 local timerCashCannonCD						= mod:NewCDCountTimer(13.3, 436592, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
-local timerRP								= mod:NewRPTimer(29)
+local timerRP								= mod:NewRPTimer(9)
 
 mod:AddSetIconOption("SetIconOnRico", 436644, true, 0, {1, 2})
 
