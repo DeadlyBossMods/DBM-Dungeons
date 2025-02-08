@@ -1667,8 +1667,13 @@ L:SetGeneralLocalization{
 	name = "Dark Rider"
 }
 
+L:SetOptionLocalization{
+	EnableMinorNameplates = "Automatically enable enemy nameplates for minor units in Karazhan to show Mirror Images"
+}
+
 L:SetMiscLocalization{
-	MirrorImage = "Mirror Image"
+	MirrorImage = "Mirror Image",
+	EnabledNameplates = "DBM auto-enabled nameplates for minor enemy units while in Karazhan, this helps to detect mirror images. You can disable this in the Dark Rider mod options under Dungeons/Karazhan Crypts."
 }
 
 -- Creeping Malison

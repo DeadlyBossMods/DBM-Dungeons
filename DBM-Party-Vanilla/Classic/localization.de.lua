@@ -1595,3 +1595,90 @@ L = DBM:GetModLocalization("HellscreamsPhantom")
 L:SetGeneralLocalization{
 	name 		= "Höllschreis Phantom"
 }
+
+-------------------------
+-- SoD Karazhan Crypts --
+-------------------------
+
+L = DBM:GetModLocalization("Apprentice")
+
+L:SetGeneralLocalization{
+	name = "Der Lehrling"
+}
+
+-- Harbinger of Sin
+L = DBM:GetModLocalization("HarbingerOfSin")
+
+L:SetGeneralLocalization{
+	name = "Herold der Sünde"
+}
+
+-- Kharon
+L = DBM:GetModLocalization("Kharon")
+
+L:SetGeneralLocalization{
+	name = "Kharon"
+}
+
+L:SetWarningLocalization{
+	SpecWarnDropTorch = "%d stacks - Fackel abwerfen!"
+}
+
+-- Opera of Malediction
+L = DBM:GetModLocalization("OperaOfMalediction")
+
+L:SetGeneralLocalization{
+	name = "Oper der Verwünschung"
+}
+
+L:SetMiscLocalization {
+	PullTrizivast = "For your evenings entertainment, comes a brave tale of survival, loss, and conviction.",
+	PullHanselAndGretel1 = "For your evenings entertainment, comes the lost fable of two children attempting to find their way!",
+	PullHanselAndGretel2 = "We're sorry grandmother. Your time has expired.",
+	PullEngineers = "For your evening viewing we have a tragic story of a humble technician who has been outcast!",
+}
+
+-- Dark Rider
+L = DBM:GetModLocalization("DarkRider")
+
+L:SetGeneralLocalization{
+	name = "Dunkler Reiter"
+}
+
+L:SetOptionLocalization{
+	EnableMinorNameplates = "Automatisch Nameplates für unwichtige Gegner in Karazhan aktivieren, dies hilft Spiegelbilder zu finden"
+}
+
+L:SetMiscLocalization{
+	MirrorImage = "Spiegelbild",
+	EnabledNameplates = "DBM hat automatisch Nameplates für unwichtige Gegner in Karazhan aktiviert. Dies hilft Spiegelbilder zu finden. Diese Option kann im Dark Rider mod unter Dungeons/Karazhan Crypts deaktiviert werden."
+}
+
+-- Creeping Malison
+L = DBM:GetModLocalization("CreepingMalison")
+
+L:SetGeneralLocalization{
+	name = "Schleichender Fluch"
+}
+
+-- Karazhan Crypts Trash
+L = DBM:GetModLocalization("KCTrash")
+
+L:SetGeneralLocalization{
+	name = "Karazhan Crypts Trash"
+}
+
+-- Unk'omon
+L = DBM:GetModLocalization("Unkomon")
+
+L:SetGeneralLocalization{
+	name = "Un'G'wöhnlich"
+}
+
+L:SetWarningLocalization{
+	WarnDoom = "Verdammnis - Entfluchen"
+}
+
+L:SetOptionLocalization{
+	WarnDoom = "Zeige Warnung wenn $spell:1221577 entflucht werden muss"
+}
