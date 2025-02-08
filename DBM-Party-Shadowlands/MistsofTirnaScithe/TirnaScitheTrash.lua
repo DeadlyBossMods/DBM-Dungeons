@@ -16,7 +16,8 @@ mod:RegisterEvents(
 	"SPELL_AURA_APPLIED 322557 324914 324776 325224 340288 326046 322486 325021 323043",
 	"SPELL_AURA_APPLIED_DOSE 340288",
 	"SPELL_AURA_REMOVED 325224",
-	"UNIT_DIED"
+	"UNIT_DIED",
+	"GOSSIP_SHOW"
 )
 
 --TODO, adjust triple bite stack warnings? More often, less often?
@@ -103,6 +104,8 @@ local timerPoolofRadianceCD				= mod:NewCDNPTimer(28, 340189, nil, nil, nil, 5)-
 local timerAcidGlobuleCD				= mod:NewCDNPTimer(15.4, 326021, nil, nil, nil, 3)--Valid Nov 3
 local timerMistveilBiteCD				= mod:NewCDNPTimer(14.5, 324987, nil, nil, nil, 5)--Valid Nov 3
 local timerTongueLashingCD				= mod:NewCDPNPTimer(7.7, 340300, nil, nil, nil, 3)--Valid Aug 8
+
+mod:AddGossipOption(true, "Buff")
 
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc, 7 off interrupt
 
@@ -474,4 +477,13 @@ end
 --Caveat, it won't calls top with GUIDs, so while it might terminate bar objects, it may leave lingering nameplate icons
 function mod:LeavingZoneCombat()
 	self:Stop(true)
+end
+
+function mod:GOSSIP_SHOW()
+	local gossipOptionID = self:GetGossipID()
+	if gossipOptionID then
+		if self.Options.AutoGossipBuff and (gossipOptionID == 52979 or gossipOptionID == 52980) then
+			self:SelectGossip(gossipOptionID)
+		end
+	end
 end
