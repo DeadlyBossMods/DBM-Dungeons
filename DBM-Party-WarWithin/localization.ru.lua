@@ -199,7 +199,11 @@ L:SetGeneralLocalization({
 -----------------------------
 --  Goldie Baronbottom  --
 -----------------------------
---L = DBM:GetModLocalization(2589)
+L = DBM:GetModLocalization(2589)
+
+L:SetMiscLocalization{
+	RolePlay		= "Хорошо. Значит, с работничками вы разобрались."
+}
 
 ---------
 --Trash--

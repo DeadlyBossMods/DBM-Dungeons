@@ -55,7 +55,7 @@ function mod:SPELL_CAST_START(args)
 		specWarnShadowSweep:Show()
 		specWarnShadowSweep:Play("frontal")
 		if args:GetSrcCreatureID() == 217570 then
-			timerShadowSweepCD:Start(13.4)
+			timerShadowSweepCD:Start(12.1) --correctly
 		else
 			timerShadowSweepCD:Start(7.3)
 		end
@@ -120,7 +120,7 @@ function mod:ENCOUNTER_START(eID)
 		timerSpeakersWrathCD:Start(1)--12.1
 	elseif eID == 3007 then--Speaker Halven
 		timerShadowSweepCD:Start(5.7)
-		timerFireCD:Start(9.3)
+		timerFireCD:Start(8.8)
 		timerDesolateSurgeCD:Start(20.3)
 	elseif eID == 3008 then--Speaker Pelzeth
 		DBM:AddMsg("Boss alerts/timers not yet implemented for Speaker Pelzeth")
