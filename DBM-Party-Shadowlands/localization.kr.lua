@@ -153,7 +153,8 @@ L:SetGeneralLocalization({
 L= DBM:GetModLocalization(2399)
 
 L:SetMiscLocalization({
-	Flight	= "죽음의 날갯짓을 맞이해라!"
+	Flight	= "죽음의 날갯짓을 맞이해라!",
+	Flight2		= "하늘을 두려워 하라!"
 })
 
 -----------------------
@@ -172,8 +173,7 @@ L:SetMiscLocalization({
 L= DBM:GetModLocalization(2412)
 
 L:SetMiscLocalization({
-	RunThrough	= "이 창이 네 심장을 꿰뚫을 것이다!",
-	Flight2		= "하늘을 두려워 하라!"
+	RunThrough	= "이 창이 네 심장을 꿰뚫을 것이다!"
 })
 
 ---------
@@ -211,7 +211,11 @@ L:SetGeneralLocalization({
 -----------------------
 -- Mordretha, the Endless Empress --
 -----------------------
---L= DBM:GetModLocalization(2417)
+L= DBM:GetModLocalization(2417)
+
+L:SetMiscLocalization{
+	RolePlay		= "말드락서스의 병사 여러분! 학살극을 만끽할 준비는 되셨습니까?!"
+}
 
 ---------
 --Trash--
@@ -236,7 +240,7 @@ L:SetGeneralLocalization({
 --L= DBM:GetModLocalization(2409)
 
 -----------------------
--- Dealer G'exa --
+-- Dealer Xy'exa --
 -----------------------
 --L= DBM:GetModLocalization(2398)
 
