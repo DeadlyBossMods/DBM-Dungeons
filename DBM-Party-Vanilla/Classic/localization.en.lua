@@ -1628,13 +1628,6 @@ L:SetGeneralLocalization{
 	name = "Harbinger of Sin"
 }
 
--- Criminal
-L = DBM:GetModLocalization("KarazhanCriminal")
-
-L:SetGeneralLocalization{
-	name = "Criminal"
-}
-
 -- Kharon
 L = DBM:GetModLocalization("Kharon")
 
