@@ -1665,7 +1665,7 @@ L:SetGeneralLocalization{
 L = DBM:GetModLocalization("KCTrash")
 
 L:SetGeneralLocalization{
-	name = "Karazhan Crypts Trash"
+	name = "Karazhangruften Trash"
 }
 
 -- Unk'omon
