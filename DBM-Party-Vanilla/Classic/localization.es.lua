@@ -1649,7 +1649,7 @@ L:SetOptionLocalization{
 
 L:SetMiscLocalization{
 	MirrorImage = "Imagen Espejo",
-	EnabledNameplates = "DBM activó automáticamente las placas de nombre para unidades enemigas menores en Karazhan, esto ayuda a detectar imágenes espejo. Puedes desactivar esto en las opciones del módulo Jinete oscuro bajo Calabozos/Criptas de Karazhan."
+	EnabledNameplates = "DBM activó automáticamente las placas de nombre para unidades enemigas menores en Karazhan, esto ayuda a detectar imágenes espejo. Puedes desactivar esto en las opciones del módulo Jinete oscuro bajo Mazmorras/Criptas de Karazhan."
 }
 
 -- Creeping Malison
