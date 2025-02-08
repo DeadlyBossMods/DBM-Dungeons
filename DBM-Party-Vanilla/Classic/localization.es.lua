@@ -1619,7 +1619,7 @@ L:SetGeneralLocalization{
 }
 
 L:SetWarningLocalization{
-	SpecWarnDropTorch = "%d acumulaciones - suelta la antorcha!"
+	SpecWarnDropTorch = "¡%d acumulaciones - suelta la antorcha!"
 }
 
 -- Opera of Malediction
@@ -1663,14 +1663,14 @@ L:SetGeneralLocalization{
 L = DBM:GetModLocalization("KCTrash")
 
 L:SetGeneralLocalization{
-	name = "Bichos de Criptas de Karazhan"
+	name = "Criptas de Karazhan: Bichos"
 }
 
 -- Unk'omon
 L = DBM:GetModLocalization("Unkomon")
 
 L:SetGeneralLocalization{
-	name = "Unk'omon"
+	name = "Pok'o Kmun"
 }
 
 L:SetWarningLocalization{
