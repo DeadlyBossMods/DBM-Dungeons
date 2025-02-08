@@ -1653,7 +1653,7 @@ L:SetOptionLocalization{
 
 L:SetMiscLocalization{
 	MirrorImage = "Image Miroir",
-	EnabledNameplates = "DBM a activé automatiquement les plaques de nom pour les unités ennemies mineures à Karazhan, cela aide à détecter les images miroirs. Vous pouvez désactiver cela dans les options du module Cavalier Sombre sous Donjons/Cryptes de Karazhan."
+	EnabledNameplates = "DBM a activé automatiquement les plaques de nom pour les unités ennemies mineures à Karazhan, cela aide à détecter les images miroirs. Vous pouvez désactiver cela dans les options du module Cavalier noir sous Donjons/Cryptes de Karazhan."
 }
 
 -- Creeping Malison
