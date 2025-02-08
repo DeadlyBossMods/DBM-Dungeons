@@ -1,0 +1,13 @@
+{
+	"$schema": "https://raw.githubusercontent.com/sumneko/vscode-lua/master/setting/schema.json",
+	"runtime.version": "Lua 5.1",
+	"diagnostics.globals": [
+		"LE_PARTY_CATEGORY_INSTANCE",
+		"LE_PARTY_CATEGORY_HOME",
+		"SHIELDSLOT",
+		"TANK",
+		"ExtraActionBarFrame",
+		"SPELL_TARGET_TYPE13_DESC",
+		"BOSS"
+	]
+}
