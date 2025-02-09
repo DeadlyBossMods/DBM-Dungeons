@@ -146,7 +146,7 @@ L:SetGeneralLocalization({
 L = DBM:GetModLocalization("TheDawnbreakerTrash")
 
 L:SetGeneralLocalization({
-	name =	"여명파괴자 일반몹"
+	name =	"새벽인도자호 일반몹"
 })
 
 -------------------------
@@ -195,7 +195,11 @@ L:SetGeneralLocalization({
 -----------------------------
 --  Goldie Baronbottom  --
 -----------------------------
---L = DBM:GetModLocalization(2589)
+L = DBM:GetModLocalization(2589)
+
+L:SetMiscLocalization{
+	RolePlay		= "좋아. 내 부하 직원들을 제압할 실력은 있군."
+}
 
 ---------
 --Trash--
@@ -243,4 +247,33 @@ L = DBM:GetModLocalization("CityofThreadsTrash")
 
 L:SetGeneralLocalization({
 	name =	"실타래의 도시 일반몹"
+})
+
+-----------------------------
+--  Big M.O.M.M.A.  --
+-----------------------------
+--L = DBM:GetModLocalization(2648)
+
+-----------------------------
+--  Demolition Duo  --
+-----------------------------
+--L = DBM:GetModLocalization(2649)
+
+-----------------------------
+--  Swampface  --
+-----------------------------
+--L = DBM:GetModLocalization(2650)
+
+-----------------------------
+--  Geezle Gigazap (aka Geez nuts)  --
+-----------------------------
+--L = DBM:GetModLocalization(2651)
+
+---------
+--Trash--
+---------
+L = DBM:GetModLocalization("OperationFloodgateTrash")
+
+L:SetGeneralLocalization({
+	name =	"작전명: 수문 일반몹"
 })

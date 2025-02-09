@@ -1627,13 +1627,6 @@ L:SetGeneralLocalization{
 	name = "죄악의 전령"
 }
 
--- Criminal
-L = DBM:GetModLocalization("KarazhanCriminal")
-
-L:SetGeneralLocalization{
-	name = "죄인"
-}
-
 -- Kharon
 L = DBM:GetModLocalization("Kharon")
 
@@ -1666,8 +1659,13 @@ L:SetGeneralLocalization{
 	name = "암흑 기수"
 }
 
+L:SetOptionLocalization{
+	EnableMinorNameplates = "환영을 표시하기 위해 카라잔에서 하수인 유닛 이름표 자동 활성화"
+}
+
 L:SetMiscLocalization{
-	MirrorImage = "환영"
+	MirrorImage = "환영",
+	EnabledNameplates = "DBM이 카라잔에 있는 동안 적 하수인 이름표를 자동으로 활성화 했으며 이는 환영 감지에 도움이 됩니다. 끄려면 던전/카라잔 납골당의 암흑 기수 모드 설정으로 들어가세요."
 }
 
 -- Creeping Malison
