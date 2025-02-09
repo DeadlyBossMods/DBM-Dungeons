@@ -18,7 +18,7 @@ mod:RegisterEventsInCombat(
 	"PLAYER_TARGET_CHANGED"
 )
 
-mod:SetUsedIcons(1, 2, 3, 4, 5, 8) -- No icon setting options because everyone can and will set them, individuals disabling this doesn't really help
+mod:SetUsedIcons(1, 2, 3, 4, 5, 8) -- No icon setting option for 8 because everyone can and will set them (and it's just active for like 5 seconds)
 
 -- Grab Torch
 -- Two spell IDs, 1220904 and 1220905, casts on torch bearer first then on no target. Only has UCS.
@@ -26,7 +26,7 @@ mod:SetUsedIcons(1, 2, 3, 4, 5, 8) -- No icon setting options because everyone c
 
 -- Torment's Illusion
 -- Mirror image only you can see, you have to kill it.
--- Doesn't seem detectable except for when it starts hitting you.
+-- Only detectable via unit scanning and when it hits you (but it doesn't start attacking you by itself! you have to trigger it with some cleave/AoE for this detection method)
 
 -- Phase
 -- 7 extra mobs spawn that buff themselves with Ethereal Charge (1220939), you have to attack one of them
@@ -37,6 +37,9 @@ local enrageTimer	= mod:NewBerserkTimer(300)
 local warnPhase2Soon = mod:NewPrePhaseAnnounce(2)
 
 local specWarnIllusion	= mod:NewSpecialWarningTargetChange(1220912, nil, nil, nil, 1, 2)
+
+mod:AddSetIconOption("SetIconOnIllusion", 1220912, true, 0, {1, 2, 3, 4, 5})
+mod:AddBoolOption("EnableMinorNameplates", true, "misc")
 
 local warnedPhase1, warnedPhase2, warnedPhase3
 local phaseTarget, myIcon
@@ -57,6 +60,92 @@ function mod:OnCombatStart()
 	end
 end
 
+-- By default illusions don't even get nameplates, so we try to force enable CVars here
+
+-- Custom event handler because we need to restore it when leaving the zone
+local f = CreateFrame("Frame")
+f:RegisterEvent("LOADING_SCREEN_DISABLED")
+f:RegisterEvent("PLAYER_LOGOUT")
+local handler = function(_, event)
+	if event == "LOADING_SCREEN_DISABLED" then
+		mod:CheckInstance()
+	elseif event == "PLAYER_LOGOUT" then
+		mod:LeaveKarazhan()
+	end
+end
+f:SetScript("OnEvent", handler)
+DBM:RegisterCallback("DBMTest_Event", function(_, ...) handler(f, ...) end)
+
+local lastZone = nil
+function mod:CheckInstance()
+	local zone = select(8, GetInstanceInfo())
+	if lastZone == 2875 and zone ~= 2875 then
+		self:LeaveKarazhan()
+	elseif zone == 2875 and lastZone ~= 2875 then
+		self:EnterKarazhan()
+	end
+	lastZone = zone
+end
+mod.OnInitialize = mod.CheckInstance
+
+-- It's unfortunately a bit unclear which option we need and annoying to test with daily lockouts
+-- I got nameplates working when literally everything including friendly totems etc was enabled, but that really sucks.
+-- None of these hurt to enable in Karazhan, so for now just force-enabling them
+local cvars = {
+	"nameplateShowEnemies",
+	"nameplateShowEnemyMinus", -- "Minor Enemies" in the UI
+	-- All of these are the "Enemy Minions" option
+	"nameplateShowEnemyPets",
+	"nameplateShowEnemyTotems",
+	"nameplateShowEnemyGuardians",
+	"nameplateShowEnemyMinions",
+}
+local didEnableNameplates = false
+local savedCVars = {}
+
+local shownNameplateInfo = false
+function mod:EnterKarazhan()
+	DBM:Debug("Entering Karazhan")
+	if InCombatLockdown() then
+		DBM:Debug("Combat lockdown, retrying in 10 sec")
+		self:ScheduleMethod(10, "EnterKarazhan")
+		return
+	end
+	if not didEnableNameplates and self.Options.EnableMinorNameplates then
+		didEnableNameplates = true
+		local diff = false
+		for _, cvar in ipairs(cvars) do
+			local oldVal = GetCVar(cvar)
+			if oldVal == "0" or oldVal == 0 then
+				diff = true
+				savedCVars[cvar] = oldVal
+				SetCVar(cvar, 1)
+			end
+		end
+		if diff and not shownNameplateInfo then
+			shownNameplateInfo = true -- Once per session
+			self:AddMsg(L.EnabledNameplates)
+		end
+	end
+end
+
+function mod:LeaveKarazhan()
+	DBM:Debug("Leaving Karazhan")
+	if InCombatLockdown() then
+		DBM:Debug("Combat lockdown, retrying in 10 sec")
+		self:ScheduleMethod(10, "LeaveKarazhan")
+		return
+	end
+	if didEnableNameplates then
+		didEnableNameplates = false
+		for cvar, val in pairs(savedCVars) do
+			SetCVar(cvar, val)
+		end
+		table.wipe(savedCVars)
+	end
+end
+
+
 function mod:SPELL_AURA_REMOVED(args)
 	if args:IsSpell(1220939) then
 		phaseTarget = args.destGUID
@@ -66,13 +155,27 @@ function mod:SPELL_AURA_REMOVED(args)
 end
 
 function mod:ScanMirrorTarget(uId)
-	if myIcon and self:GetCIDFromGUID(UnitGUID(uId)) == 238443 then
+	if self:GetCIDFromGUID(UnitGUID(uId)) ~= 238443 then
+		return false
+	end
+	if myIcon then
 		local curIcon = GetRaidTargetIndex(uId)
 		if not curIcon or curIcon == 0 then
 			DBM:Debug("Found Torment's Illusion at " .. uId .. " setting icon")
-			SetRaidTarget(uId, myIcon)
+			if not DBM.Options.DontSetIcons and self.Options.SetIconOnIllusion then
+				SetRaidTarget(uId, myIcon) -- Only you can set the icon
+			end
 		end
 	end
+	-- You can see an Illusion, but you aren't targeting it, that's very bad. This is a bit spammy on purpose, similar to standing in fire or something
+	if not UnitIsUnit(uId, "target") then
+		DBM:Debug("Found mirror image at " .. tostring(uId) .. ", not your current target", 3, false, true)
+		if self:AntiSpam(3, "AttackGhost") then
+			specWarnIllusion:Show(L.MirrorImage)
+			specWarnIllusion:Play("targetchange")
+		end
+	end
+	return true
 end
 
 function mod:ScanPhaseTarget(uId)
@@ -81,7 +184,7 @@ function mod:ScanPhaseTarget(uId)
 	end
 	if UnitGUID(uId) == phaseTarget then
 		DBM:Debug("Found real horse uid: " .. tostring(uId))
-		if GetRaidTargetIndex(uId) ~= 8 then
+		if GetRaidTargetIndex(uId) ~= 8 and not DBM.Options.DontSetIcons then
 			SetRaidTarget(uId, 8) -- Everyone can (and should in this case) set icons
 		end
 		phaseTarget = nil
@@ -89,7 +192,7 @@ function mod:ScanPhaseTarget(uId)
 	end
 end
 
-local scanIds = {"target", "mouseover", "party1target", "party2target", "party3target", "party4target"}
+local horseScanIds = {"target", "mouseover", "party1target", "party2target", "party3target", "party4target"}
 
 function mod:ScanLoop(maxCount)
 	maxCount = maxCount - 1
@@ -97,18 +200,29 @@ function mod:ScanLoop(maxCount)
 		return
 	end
 	-- Can't use normal target npc scanning because we want to trigger regardless of icon setter status
-	for _, uId in ipairs(scanIds) do
+	for _, uId in ipairs(horseScanIds) do
 		self:ScanPhaseTarget(uId)
 	end
 	self:ScheduleMethod(0.1, "ScanLoop", maxCount)
 end
 
 function mod:ScanMirrorLoop()
-	-- Can't use normal target npc scanning because we have to trigger regardless of icon setter status
-	for _, uId in ipairs(scanIds) do
-		self:ScanMirrorTarget(uId)
-	end
 	self:ScheduleMethod(0.1, "ScanMirrorLoop")
+	-- Only you can see it, no point in scanning other player's targets
+	if self:ScanMirrorTarget("target") then
+		return
+	end
+	if self:ScanMirrorTarget("mouseover") then
+		return
+	end
+	-- This counts as minor unit or minion, so many nameplate options won't even show a nameplate for this by default!
+	for _, frame in pairs(C_NamePlate.GetNamePlates()) do
+		if frame.namePlateUnitToken then
+			if self:ScanMirrorTarget(frame.namePlateUnitToken) then
+				return
+			end
+		end
+	end
 end
 
 -- We need these events and the loop above to detect the real one if you don't switch targets
@@ -141,8 +255,11 @@ function mod:UNIT_HEALTH(uId)
 	end
 end
 
+-- This logic is a bit wrong for healers, because they can end up getting attacked by other player's illusion due to heal threat, but that implies someone else isn't doing their job
+-- Anyhow, this is still useful in many cases (triggering the illusion by a cleave/aoe, then not noticing it), so keeping it but with a relatively large antispam time
+-- The unit scanning above should be the most reliable way to detect it, either by nameplate or people spamming tab targeting
 function mod:SWING_DAMAGE(srcGuid, _, _, _, destGuid)
-	if destGuid == UnitGUID("player") and self:GetCIDFromGUID(srcGuid) == 238443 and self:AntiSpam(15, "AttackGhost") then
+	if destGuid == UnitGUID("player") and self:GetCIDFromGUID(srcGuid) == 238443 and UnitGUID("target") ~= srcGuid and self:AntiSpam(15, "AttackGhost") then
 		specWarnIllusion:Show(L.MirrorImage)
 		specWarnIllusion:Play("targetchange")
 	end

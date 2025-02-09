@@ -35,10 +35,10 @@ local yellShadowsofDoubt				= mod:NewYell(448560)
 local yellShadowsofDoubtFades			= mod:NewShortFadesYell(448560)
 local specWarnGTFO						= mod:NewSpecialWarningGTFO(434926, nil, nil, nil, 1, 8)
 
-local timerSubjugateCD					= mod:NewCDCountTimer(13.5, 434722, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
-local timerTerrorizeCD					= mod:NewCDCountTimer(8.4, 434779, nil, nil, nil, 3)
-local timerShadowsofDoubtCD				= mod:NewCDCountTimer(30.3, 448560, nil, nil, nil, 3, nil, DBM_COMMON_L.MYTHIC_ICON)--30.3-32.1
-local timerVociferousIndoctrinationCD	= mod:NewCDCountTimer(30.3, 434829, nil, nil, nil, 2)--30.3-31.6
+local timerSubjugateCD					= mod:NewVarCountTimer(13.5, 434722, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+local timerTerrorizeCD					= mod:NewVarCountTimer(8.4, 434779, nil, nil, nil, 3)
+local timerShadowsofDoubtCD				= mod:NewVarCountTimer("v30.3-32.1", 448560, nil, nil, nil, 3, nil, DBM_COMMON_L.MYTHIC_ICON)
+local timerVociferousIndoctrinationCD	= mod:NewVarCountTimer("v30.3-32.1", 434829, nil, nil, nil, 2)
 
 mod.vb.subjugateCount = 0
 mod.vb.terrorizeCount = 0
@@ -50,8 +50,8 @@ function mod:OnCombatStart(delay)
 	self.vb.terrorizeCount = 0
 	self.vb.doubtCount = 0
 	self.vb.fakeNewsCount = 0
-	timerSubjugateCD:Start(4.1-delay, 1)--4.1-4.8
-	timerTerrorizeCD:Start(9.1-delay, 1)--9.1-9.7
+	timerSubjugateCD:Start("v4.1-4.8", 1)--4.1-4.8
+	timerTerrorizeCD:Start("v9.1-9.7", 1)--9.1-9.7
 	timerVociferousIndoctrinationCD:Start(25.1-delay, 1)
 	if self:IsMythic() then
 		timerShadowsofDoubtCD:Start(14.1-delay, 1)
@@ -67,20 +67,20 @@ function mod:SPELL_CAST_START(args)
 			specWarnSubjugate:Play("defensive")
 		end
 		if self.vb.subjugateCount % 2 == 0 then
-			timerSubjugateCD:Start(12.8, self.vb.subjugateCount+1)--12.8-14
+			timerSubjugateCD:Start("v12.8-14", self.vb.subjugateCount+1)--12.8-14
 		else
 			--Will be delayed by Vociferous Indoctrination
-			timerSubjugateCD:Start(17.1, self.vb.subjugateCount+1)--17.1-17.6
+			timerSubjugateCD:Start("v17.1-17.6", self.vb.subjugateCount+1)--17.1-17.6
 		end
 	elseif spellId == 434779 then
 		self.vb.terrorizeCount = self.vb.terrorizeCount + 1
 		specWarnTerrorize:Show(self.vb.terrorizeCount)
 		specWarnTerrorize:Play("frontal")
 		if self.vb.terrorizeCount % 2 == 0 then
-			timerTerrorizeCD:Start(21.8, self.vb.terrorizeCount+1)--21.8-23.1
+			timerTerrorizeCD:Start("v21.8-23.1", self.vb.terrorizeCount+1)--21.8-23.1
 		else
 			--Will be delayed by Vociferous Indoctrination
-			timerTerrorizeCD:Start(8.1, self.vb.terrorizeCount+1)--8.1-8.9
+			timerTerrorizeCD:Start("v8.1-8.9", self.vb.terrorizeCount+1)--8.1-8.9
 		end
 	elseif spellId == 448560 then
 		self.vb.doubtCount = self.vb.doubtCount + 1

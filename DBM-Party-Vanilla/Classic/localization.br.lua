@@ -1591,3 +1591,93 @@ L = DBM:GetModLocalization("HellscreamsPhantom")
 L:SetGeneralLocalization{
 	name 		= "Fantasma de Grito Infernal"
 }
+
+-------------------------
+-- SoD Karazhan Crypts --
+-------------------------
+
+-- Encounter info from PTR: https://wago.tools/db2/DungeonEncounter?build=1.15.6.58185&sort[ID]=desc&filter[MapID]=2875&page=1
+
+-- Apprentice, seems to be a randomized boss
+L = DBM:GetModLocalization("Apprentice")
+
+L:SetGeneralLocalization{
+	name = "Aprendiz"
+}
+
+-- Harbinger of Sin
+L = DBM:GetModLocalization("HarbingerOfSin")
+
+L:SetGeneralLocalization{
+	name = "Emissário do Pecado"
+}
+
+-- Kharon
+L = DBM:GetModLocalization("Kharon")
+
+L:SetGeneralLocalization{
+	name = "Kharon"
+}
+
+L:SetWarningLocalization{
+	SpecWarnDropTorch = "%d acúmulos - largue a tocha!"
+}
+
+-- Opera of Malediction
+L = DBM:GetModLocalization("OperaOfMalediction")
+
+L:SetGeneralLocalization{
+	name = "Ópera da Maldição"
+}
+
+L:SetMiscLocalization {
+	PullTrizivast = "For your evenings entertainment, comes a brave tale of survival, loss, and conviction.",
+	PullHanselAndGretel1 = "For your evenings entertainment, comes the lost fable of two children attempting to find their way!",
+	PullHanselAndGretel2 = "We're sorry grandmother. Your time has expired.",
+	PullEngineers = "For your evening viewing we have a tragic story of a humble technician who has been outcast!",
+}
+
+-- Dark Rider
+L = DBM:GetModLocalization("DarkRider")
+
+L:SetGeneralLocalization{
+	name = "Cavalgante Negro"
+}
+
+L:SetOptionLocalization{
+	EnableMinorNameplates = "Ativar automaticamente as placas de nome inimigas para unidades menores em Karazhan para mostrar Imagens Espelhadas"
+}
+
+L:SetMiscLocalization{
+	MirrorImage = "Imagem Espelhada",
+	EnabledNameplates = "DBM ativou automaticamente as placas de nome para unidades inimigas menores em Karazhan, isso ajuda a detectar imagens espelhadas. Você pode desativar isso nas opções do módulo Cavalgante Negro em Masmorras/Criptas de Karazhan."
+}
+
+-- Creeping Malison
+L = DBM:GetModLocalization("CreepingMalison")
+
+L:SetGeneralLocalization{
+	name = "Praga Sorrateira"
+}
+
+-- Karazhan Crypts Trash
+L = DBM:GetModLocalization("KCTrash")
+
+L:SetGeneralLocalization{
+	name = "Criptas de Karazhan: Lixo"
+}
+
+-- Unk'omon
+L = DBM:GetModLocalization("Unkomon")
+
+L:SetGeneralLocalization{
+	name = "Ink'omum"
+}
+
+L:SetWarningLocalization{
+	WarnDoom = "Ruína - Remover maldição"
+}
+
+L:SetOptionLocalization{
+	WarnDoom = "Exibir anúncio para remover $spell:1221577"
+}

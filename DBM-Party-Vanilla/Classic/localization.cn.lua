@@ -1597,3 +1597,92 @@ L = DBM:GetModLocalization("HellscreamsPhantom")
 L:SetGeneralLocalization{
 	name 		= "地狱咆哮的幻灵"
 }
+-------------------------
+-- SoD Karazhan Crypts --
+-------------------------
+
+-- Encounter info from PTR: https://wago.tools/db2/DungeonEncounter?build=1.15.6.58185&sort[ID]=desc&filter[MapID]=2875&page=1
+
+-- Apprentice, seems to be a randomized boss
+L = DBM:GetModLocalization("Apprentice")
+
+L:SetGeneralLocalization{
+	name = "学徒"
+}
+
+-- Harbinger of Sin
+L = DBM:GetModLocalization("HarbingerOfSin")
+
+L:SetGeneralLocalization{
+	name = "罪业先驱"
+}
+
+-- Kharon
+L = DBM:GetModLocalization("Kharon")
+
+L:SetGeneralLocalization{
+	name = "卡戎"
+}
+
+L:SetWarningLocalization{
+	SpecWarnDropTorch = "%d stacks - drop torch!"
+}
+
+-- Opera of Malediction
+L = DBM:GetModLocalization("OperaOfMalediction")
+
+L:SetGeneralLocalization{
+	name = "邪咒歌剧"
+}
+
+L:SetMiscLocalization {
+	PullTrizivast = "For your evenings entertainment, comes a brave tale of survival, loss, and conviction.",
+	PullHanselAndGretel1 = "For your evenings entertainment, comes the lost fable of two children attempting to find their way!",
+	PullHanselAndGretel2 = "We're sorry grandmother. Your time has expired.",
+	PullEngineers = "For your evening viewing we have a tragic story of a humble technician who has been outcast!",
+}
+
+-- Dark Rider
+L = DBM:GetModLocalization("DarkRider")
+
+L:SetGeneralLocalization{
+	name = "黑暗骑士"
+}
+
+L:SetOptionLocalization{
+	EnableMinorNameplates = "Automatically enable enemy nameplates for minor units in Karazhan to show Mirror Images"
+}
+
+L:SetMiscLocalization{
+	MirrorImage = "Mirror Image",
+	EnabledNameplates = "DBM auto-enabled nameplates for minor enemy units while in Karazhan, this helps to detect mirror images. You can disable this in the Dark Rider mod options under Dungeons/Karazhan Crypts."
+}
+
+-- Creeping Malison
+L = DBM:GetModLocalization("CreepingMalison")
+
+L:SetGeneralLocalization{
+	name = "蠕行诅咒"
+}
+
+-- Karazhan Crypts Trash
+L = DBM:GetModLocalization("KCTrash")
+
+L:SetGeneralLocalization{
+	name = "Karazhan Crypts Trash"
+}
+
+-- Unk'omon
+L = DBM:GetModLocalization("Unkomon")
+
+L:SetGeneralLocalization{
+	name = "昂克欧蒙"
+}
+
+L:SetWarningLocalization{
+	WarnDoom = "Doom - Decurse"
+}
+
+L:SetOptionLocalization{
+	WarnDoom = "Show announce to decurse $spell:1221577"
+}

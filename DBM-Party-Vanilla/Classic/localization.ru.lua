@@ -1617,13 +1617,6 @@ L:SetGeneralLocalization{
 	name = "Вестник Греха"
 }
 
--- Criminal
-L = DBM:GetModLocalization("KarazhanCriminal")
-
-L:SetGeneralLocalization{
-	name = "Преступники"
-}
-
 -- Kharon
 L = DBM:GetModLocalization("Kharon")
 
@@ -1645,7 +1638,8 @@ L:SetGeneralLocalization{
 L:SetMiscLocalization {
 	PullTrizivast = "For your evenings entertainment, comes a brave tale of survival, loss, and conviction.",
 	PullHanselAndGretel1 = "For your evenings entertainment, comes the lost fable of two children attempting to find their way!",
-	PullHanselAndGretel2 = "We're sorry grandmother. Your time has expired."
+	PullHanselAndGretel2 = "We're sorry grandmother. Your time has expired.",
+	PullEngineers = "For your evening viewing we have a tragic story of a humble technician who has been outcast!"
 }
 
 -- Dark Rider
@@ -1655,8 +1649,13 @@ L:SetGeneralLocalization{
 	name = "Темный Всадник"
 }
 
+L:SetOptionLocalization{
+	EnableMinorNameplates = "Автоматически включить отображение зеркальных отражений на вражеских индикаторах здоровья для мелких юнитов"
+}
+
 L:SetMiscLocalization{
-	MirrorImage = "Зеркальное отражение"
+	MirrorImage = "Зеркальное отражение",
+	EnabledNameplates = "DBM автоматически включает индикаторы здоровья для мелких вражеских юнитов в Каражане, что помогает обнаружить зеркальные отражения. Вы можете отключить эту функцию в опциях мода Темного Всадника в разделе Подземелья/Склепы Каражана."
 }
 
 -- Creeping Malison
