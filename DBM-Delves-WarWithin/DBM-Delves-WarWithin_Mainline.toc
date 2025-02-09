@@ -1,7 +1,6 @@
 ## Interface: 110007, 110100
 ## X-Min-Interface: 110002
 ## Category: DBM
-## Group: DBM Delves
 ## Title:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cff4565ffDelves (TWW)|r
 ## Title-koKR:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cff4565ff구렁 (내부 전쟁)|r
 ## Title-ruRU:|cffffe00a<|r|cffff7d0aDBM Мод|r|cffffe00a>|r |cff4565ffВылазки (Война Внутри)|r
