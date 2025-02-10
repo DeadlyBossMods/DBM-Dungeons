@@ -279,5 +279,5 @@ L:SetGeneralLocalization({
 L = DBM:GetModLocalization("OperationFloodgateTrash")
 
 L:SetGeneralLocalization({
-	name =	"Трэш мобы Операция Затвор"
+	name =	"Трэш мобы Операция: Шлюз"
 })
