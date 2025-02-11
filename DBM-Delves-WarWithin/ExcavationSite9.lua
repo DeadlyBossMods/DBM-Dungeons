@@ -29,8 +29,8 @@ local specWarnHopelessCurse						= mod:NewSpecialWarningInterrupt(1213776, nil, 
 local specWarnUnansweredCall					= mod:NewSpecialWarningRun(1213700, nil, nil, nil, 4, 2)
 local specWarnMakeItRain						= mod:NewSpecialWarningDodge(1214135, nil, nil, nil, 2, 2)
 
-local timerTearItDownCD							= mod:NewVarTimer("v13.3-20.7", 1213785, nil, nil, nil, 2)
-local timerHopelessCurseCD						= mod:NewVarTimer("v18.2-36.5", 454213, nil, nil, nil, 4)
+local timerTearItDownCD							= mod:NewVarTimer("v13.3-26.7", 1213785, nil, nil, nil, 2)
+local timerHopelessCurseCD						= mod:NewVarTimer("v18.2-36.5", 1213776, nil, nil, nil, 4)
 local timerUnansweredCallCD						= mod:NewVarTimer("v35.2-36.5", 1213700, nil, nil, nil, 5)
 local timerMakeItRainCD							= mod:NewVarTimer("v13.4-17", 1214135, nil, nil, nil, 3)
 local timerGoblinIngenuityCD					= mod:NewVarTimer("v17-19.4", 1214504, nil, nil, nil, 2)
@@ -117,8 +117,8 @@ function mod:ENCOUNTER_START(eID)
 		timerMakeItRainCD:Start(7.3)
 		timerGoblinIngenuityCD:Start(10.9)
 	elseif eID == 3096 then--Harbinger Ul'thul
-		timerHopelessCurseCD:Start(6)
-		timerTearItDownCD:Start(10.8)
+		timerHopelessCurseCD:Start(5.6)
+		timerTearItDownCD:Start(7.2)
 		timerUnansweredCallCD:Start(30.3)
 	elseif eID == 3099 then--Xel'anegh the Many
 		DBM:AddMsg("Boss alerts/timers not yet implemented for Xel'anegh the Many")
