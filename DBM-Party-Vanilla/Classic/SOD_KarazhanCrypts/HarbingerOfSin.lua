@@ -47,7 +47,9 @@ function mod:SPELL_CAST_START(args)
 		if not pullTimerTotal or pullTimerTotal == 0 then
 			pullTimerTotal = 45
 		end
+		DBM:Debug("Before cancel: " .. tostring(timerPull:GetRemaining()))
 		timerPull:Cancel()
+		DBM:Debug("After cancel: " .. tostring(timerPull:GetRemaining()))
 		timerPull:Update(pullTimerTotal - 3, pullTimerTotal)
 		timerPull:DelayedStart(3)
 	elseif args:IsSpell(1219387) then
