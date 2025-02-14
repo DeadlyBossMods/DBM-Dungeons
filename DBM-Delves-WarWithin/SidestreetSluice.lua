@@ -104,7 +104,8 @@ end
 
 function mod:ENCOUNTER_START(eID)
 	if eID == 3104 then--Golden Elemental
-		DBM:AddMsg("Boss alerts/timers not yet implemented for Golden Elemental")
+		--This boss doesn't actually do anything
+		--The story for boss is to defeat 7 shaman then weaken it with coins and then kill it
 	elseif eID == 3173 then--Vindle Snapcrank
 		timerSprocketSmashCD:Start(19.5)
 	elseif eID == 3174 then--Geargrave
@@ -119,7 +120,7 @@ function mod:ENCOUNTER_END(eID, _, _, _, success)
 		if success == 1 then
 			DBM:EndCombat(self)
 		else
-			--Stop Timers manually
+			--This boss doesn't actually do anything
 		end
 	elseif eID == 3173 then--Vindle Snapcrank
 		if success == 1 then

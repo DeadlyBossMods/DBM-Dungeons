@@ -30,7 +30,7 @@ local warnBlackBloodEnd						= mod:NewEndAnnounce(451003, 2)
 
 local specWarnCallWebTerror					= mod:NewSpecialWarningSwitchCount(450568, nil, nil, nil, 1, 2)
 local specWarnAnglersWeb					= mod:NewSpecialWarningDodgeCount(450519, nil, nil, nil, 2, 15)
-local specWarnClawSmash						= mod:NewSpecialWarningDodgeCount(450451, nil, nil, nil, 2, 15)
+local specWarnClawSmash						= mod:NewSpecialWarningDodgeCount(450451, nil, nil, nil, 3, 15)
 local specWarnUnendingSpines				= mod:NewSpecialWarningDodgeCount(450872, nil, nil, nil, 2, 2)
 local specWarnEnfeeblingSpittleInterrupt	= mod:NewSpecialWarningInterruptCount(450505, false, nil, nil, 1, 2)
 local specWarnRegeneratingCarapace			= mod:NewSpecialWarningInterruptCount(450449, nil, nil, nil, 1, 2, 4)--Stage 1

@@ -78,6 +78,8 @@ local specWarnWorthlessAdorations			= mod:NewSpecialWarningDodge(1217361, nil, n
 local specWarnTakeASelfie					= mod:NewSpecialWarningDodge(1217326, nil, nil, nil, 2, 2)
 local specWarnTheresTheDoor					= mod:NewSpecialWarningDodge(1216806, nil, nil, nil, 2, 15)
 local specWarnHeedlessCharge				= mod:NewSpecialWarningDodge(1217301, nil, nil, nil, 2, 2)
+local specWarnRocketBarrage					= mod:NewSpecialWarningDodge(473550, nil, nil, nil, 2, 2)
+local specWarnBloodbath						= mod:NewSpecialWarningRun(473995, nil, nil, nil, 4, 2)
 local specWarnEchoofRenilash				= mod:NewSpecialWarningRun(434281, nil, nil, nil, 4, 2)
 local specWarnNecroticEnd					= mod:NewSpecialWarningRun(445252, nil, nil, nil, 4, 2)
 local specWarnHorrendousRoar				= mod:NewSpecialWarningRun(450492, nil, nil, nil, 4, 2)
@@ -145,6 +147,8 @@ local timerTakeASelfieCD					= mod:NewCDNPTimer(13.3, 1217326, nil, nil, nil, 3)
 local timerTheresTheDoorCD					= mod:NewCDNPTimer(14.6, 1216806, nil, nil, nil, 3)--14.6-18.1
 local timerZapCD							= mod:NewCDNPTimer(19.4, 1216805, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--19.4-25
 local timerHeedlessChargeCD					= mod:NewCDNPTimer(15.8, 1217301, nil, nil, nil, 3)--15.8-26.7
+local timerBloodBathCD						= mod:NewCDNPTimer(15.8, 473995, nil, nil, nil, 3)--40-43
+local timerRocketBarrageCD					= mod:NewCDNPTimer(19.4, 473550, nil, nil, nil, 3)--19.4-21.8
 
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc, 7 off interrupt
 
@@ -155,8 +159,8 @@ do
 		if not force and validZones[currentZone] and not eventsRegistered then
 			eventsRegistered = true
 			self:RegisterShortTermEvents(
-                "SPELL_CAST_START 449318 450546 433410 450714 445781 415253 425040 424704 424798 414944 418791 424891 450197 448399 445191 455932 445492 434281 450637 445210 448528 449071 462686 459421 448179 445774 443292 450492 450519 450505 450509 448155 448161 418295 415250 434740 470592 443482 458879 445718 451913 445771 372529 474004 473541 474511 474482 474325 474223 474206 1217361 1217326 1216806 1216805 1217301",
-                "SPELL_CAST_SUCCESS 414944 424614 418791 424891 427812 450546 450197 415253 449318 445191 430036 445252 425040 424704 448399 448528 433410 445492 462686 447392 459421 448179 450509 415250 443162 443292 451913 444915 445406 372529 473541 1216806 1216805 1217361 1217326 474206",--474325
+                "SPELL_CAST_START 449318 450546 433410 450714 445781 415253 425040 424704 424798 414944 418791 424891 450197 448399 445191 455932 445492 434281 450637 445210 448528 449071 462686 459421 448179 445774 443292 450492 450519 450505 450509 448155 448161 418295 415250 434740 470592 443482 458879 445718 451913 445771 372529 474004 473541 474511 474482 474325 474223 474206 1217361 1217326 1216806 1216805 1217301 473550",
+                "SPELL_CAST_SUCCESS 414944 424614 418791 424891 427812 450546 450197 415253 449318 445191 430036 445252 425040 424704 448399 448528 433410 445492 462686 447392 459421 448179 450509 415250 443162 443292 451913 444915 445406 372529 473541 1216806 1216805 1217361 1217326 474206 474004 473995 473550",--474325
 				"SPELL_INTERRUPT",
                 "SPELL_AURA_APPLIED 424614 449071 418297 430036 440622 441129 448161 470592 443482 458879 445407",
                 --"SPELL_AURA_REMOVED",
@@ -206,7 +210,7 @@ local function workAroundLuaLimitation(self, spellId, sourceName, sourceGUID)
 			specWarnTakeASelfie:Play("watchstep")
 		end
 	elseif spellId == 1216806 then
-		if self:AntiSpam(3, 2) then
+		if self:AntiSpam(2, 2) then--Shorter limit due to quickness of cast and needing to alert for multiple
 			specWarnTheresTheDoor:Show()
 			specWarnTheresTheDoor:Play("watchstep")
 		end
@@ -220,6 +224,16 @@ local function workAroundLuaLimitation(self, spellId, sourceName, sourceGUID)
 		if self:AntiSpam(3, 2) then
 			specWarnHeedlessCharge:Show()
 			specWarnHeedlessCharge:Play("chargemove")
+		end
+	elseif spellId == 473995 then
+		if self:AntiSpam(3, 2) then
+			specWarnBloodbath:Show()
+			specWarnBloodbath:Play("justrun")
+		end
+	elseif spellId == 473550 then
+		if self:AntiSpam(3, 2) then
+			specWarnRocketBarrage:Show()
+			specWarnRocketBarrage:Play("watchstep")
 		end
 	end
 end
@@ -433,13 +447,12 @@ function mod:SPELL_CAST_START(args)
 			specWarnBubbleSurge:Play("watchstep")
 		end
 	elseif args.spellId == 474004 then
-		timerDrillQuakeCD:Start(nil, args.sourceGUID)
 		if self:AntiSpam(3, 2) then
 			specWarnDrillQuake:Show()
 			specWarnDrillQuake:Play("watchstep")
 		end
 	elseif args.spellId == 473541 then
-		if self:AntiSpam(3, 2) then
+		if self:AntiSpam(2, 2) then
 			specWarnFlurryOfPunches:Show()
 			specWarnFlurryOfPunches:Play("watchstep")
 		end
@@ -553,6 +566,12 @@ function mod:SPELL_CAST_SUCCESS(args)
 		timerTakeASelfieCD:Start(9.8, args.sourceGUID)--13.3-3.5
 	elseif args.spellId == 474206 then
 		timerShadowStompCD:Start(25.9, args.sourceGUID)--29.9-4
+	elseif args.spellId == 474004 then
+		timerDrillQuakeCD:Start(12.2, args.sourceGUID)--15.7-3.5
+	elseif args.spellId == 473995 then
+		timerBloodBathCD:Start(35, args.sourceGUID)--40-5
+	elseif args.spellId == 473550 then
+		timerRocketBarrageCD:Start(17.4, args.sourceGUID)--19.4-2
 	end
 end
 
@@ -743,6 +762,10 @@ function mod:UNIT_DIED(args)
 		timerZapCD:Stop(args.destGUID)
 	elseif cid == 234905 then--Aggressively Lost Hobgoblin
 		timerHeedlessChargeCD:Stop(args.destGUID)
+	elseif cid == 231910 then--Masked Freelancer
+		timerBloodBathCD:Stop(args.destGUID)
+	elseif cid == 231906 then--Aerial Support Bot
+		timerRocketBarrageCD:Stop(args.destGUID)
 	end
 end
 
@@ -824,6 +847,10 @@ function mod:StartEngageTimers(guid, cid, delay)
 		timerTheresTheDoorCD:Start(10.3-delay, guid)
 	elseif cid == 234905 then--Aggressively Lost Hobgoblin
 		timerHeedlessChargeCD:Start(5.9-delay, guid)
+	elseif cid == 231910 then--Masked Freelancer
+		timerBloodBathCD:Start(31.2-delay, guid)
+	elseif cid == 231906 then--Aerial Support Bot
+		timerRocketBarrageCD:Start(7-delay, guid)
 	end
 end
 
