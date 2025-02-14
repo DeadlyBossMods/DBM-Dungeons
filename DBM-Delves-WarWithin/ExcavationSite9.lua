@@ -37,7 +37,7 @@ local timerHopelessCurseCD						= mod:NewVarTimer("v18.2-36.5", 1213776, nil, ni
 local timerUnansweredCallCD						= mod:NewVarTimer("v35.2-36.5", 1213700, nil, nil, nil, 5)
 local timerMakeItRainCD							= mod:NewVarTimer("v13.4-17", 1214135, nil, nil, nil, 3)
 local timerGoblinIngenuityCD					= mod:NewVarTimer("v17-19.4", 1214504, nil, nil, nil, 2)
-local timerTentacleSlamCD						= mod:NewCDTimer(13.4, 1213426, nil, nil, nil, 3, nil, DBM_CORE_L.DODGE_ICON)--Unknown recast
+local timerTentacleSlamCD						= mod:NewCDTimer(13.4, 1213426, nil, nil, nil, 3)--Unknown recast
 local timerTerrifyingRoarCD						= mod:NewCDTimer(33.7, 1213425, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--33.7--34.1
 
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc, 7 off interrupt
