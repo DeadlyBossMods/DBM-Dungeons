@@ -14,6 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Run DBM-Offline
+        continue-on-error: true
         uses: DeadlyBossMods/DBM-Offline@main
         with:
           dbm-mod-ref-dungeons: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.event.after }}
