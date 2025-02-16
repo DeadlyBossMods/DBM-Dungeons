@@ -5,7 +5,7 @@ local L		= mod:GetLocalizedStrings()
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(226396)
 mod:SetEncounterID(3053)
---mod:SetHotfixNoticeRev(20240817000000)
+mod:SetHotfixNoticeRev(20250215000000)
 --mod:SetMinSyncRevision(20240817000000)
 mod:SetZone(2773)
 --mod.respawnTime = 29
@@ -25,6 +25,11 @@ mod:RegisterEventsInCombat(
 )
 
 --TODO, Improve the code for pairing once we have context of how it all works to announce who your pair partner is
+--[[
+(ability.id = 473070 or ability.id = 473114 or ability.id = 469478) and type = "begincast"
+ or ability.id = 472819 and type = "applydebuff"
+ or type = "dungeonencounterstart" or type = "dungeonencounterend"
+--]]
 local specWarnRazorchokeVines				= mod:NewSpecialWarningYouCount(470038, nil, nil, nil, 1, 2)--Pre target debuff
 local specWarnVinePartner					= mod:NewSpecialWarningLink(433425, nil, nil, nil, 1, 2)
 local yellRazorchokeVines					= mod:NewIconTargetYell(433425)
@@ -34,10 +39,10 @@ local specWarnMudslide						= mod:NewSpecialWarningDodgeCount(473114, nil, nil, 
 local specWarnSludgeClaws					= mod:NewSpecialWarningDefensive(469478, nil, nil, nil, 1, 2)
 --local specWarnGTFO						= mod:NewSpecialWarningGTFO(372820, nil, nil, nil, 1, 8)
 
-local timerRazorchokeVinesCD				= mod:NewAITimer(30, 470039, nil, nil, nil, 3)
-local timerAwakenSwampCD					= mod:NewAITimer(30, 473070, nil, nil, nil, 3)
-local timerMudslideCD						= mod:NewAITimer(30, 473114, nil, nil, nil, 3)
-local timerSludgeClawsCD					= mod:NewAITimer(30, 469478, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+local timerRazorchokeVinesCD				= mod:NewNextCountTimer(30, 470039, nil, nil, nil, 3)
+local timerAwakenSwampCD					= mod:NewNextCountTimer(30, 473070, nil, nil, nil, 3)
+local timerMudslideCD						= mod:NewNextCountTimer(30, 473114, nil, nil, nil, 3)
+local timerSludgeClawsCD					= mod:NewNextCountTimer(30, 469478, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 
 mod.vb.vinesCount = 0
 mod.vb.swampCount = 0
@@ -50,10 +55,10 @@ function mod:OnCombatStart(delay)
 	self.vb.swampCount = 0
 	self.vb.mudslideCount = 0
 	self.vb.clawsCount = 0
---	timerRazorchokeVinesCD:Start(1-delay)--1, 30, 30 (commented since it's used immediately)
-	timerAwakenSwampCD:Start(1-delay)--19.0, 30.0
-	timerMudslideCD:Start(1-delay)--9.0, 30.0
-	timerSludgeClawsCD:Start(1-delay)--3.0, 30.0, 30.0
+	timerSludgeClawsCD:Start(2-delay, 1)
+	timerRazorchokeVinesCD:Start(6-delay, 1)
+	timerMudslideCD:Start(9-delay)
+	timerAwakenSwampCD:Start(19-delay)
 end
 
 --function mod:OnCombatEnd()
@@ -66,19 +71,19 @@ function mod:SPELL_CAST_START(args)
 		self.vb.swampCount = self.vb.swampCount + 1
 		specWarnAwakenSwamp:Show(self.vb.swampCount)
 		specWarnAwakenSwamp:Play("watchstep")
-		timerAwakenSwampCD:Start()--30, self.vb.swampCount+1
+		timerAwakenSwampCD:Start(nil, self.vb.swampCount+1)
 	elseif spellId == 473114 then
 		self.vb.mudslideCount = self.vb.mudslideCount + 1
 		specWarnMudslide:Show(self.vb.mudslideCount)
 		specWarnMudslide:Play("watchstep")
-		timerMudslideCD:Start()--30, self.vb.mudslideCount+1
+		timerMudslideCD:Start(nil, self.vb.mudslideCount+1)
 	elseif spellId == 469478 then
 		self.vb.clawsCount = self.vb.clawsCount + 1
 		if self:IsTanking("player", "boss1", nil, true) then
 			specWarnSludgeClaws:Show()
 			specWarnSludgeClaws:Play("defensive")
 		end
-		timerSludgeClawsCD:Start()--30, self.vb.clawsCount+1
+		timerSludgeClawsCD:Start(nil, self.vb.clawsCount+1)
 	end
 end
 
@@ -154,6 +159,6 @@ end
 function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
 	if spellId == 470039 then
 		self.vb.vinesCount = self.vb.vinesCount + 1
-		timerRazorchokeVinesCD:Start()--33.9, self.vb.vinesCount+1
+		timerRazorchokeVinesCD:Start(nil, self.vb.vinesCount+1)
 	end
 end
