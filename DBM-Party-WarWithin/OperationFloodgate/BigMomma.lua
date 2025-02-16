@@ -6,7 +6,7 @@ mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(226398)
 mod:SetEncounterID(3020)
 mod:SetUsedIcons(8, 7, 6, 5)
---mod:SetHotfixNoticeRev(20240817000000)
+mod:SetHotfixNoticeRev(20250215000000)
 --mod:SetMinSyncRevision(20240817000000)
 mod:SetZone(2773)
 --mod.respawnTime = 29
@@ -31,6 +31,11 @@ mod:RegisterEventsInCombat(
 --TODO, add interrupt nameplate timer if it actually has a cooldown (and not spam cast)
 --TODO, add custom audio for sonic boom that says "get behind objectname"
 --TODO, see if timers reset on jump start or if they just continue
+--[[
+(ability.id = 460156 or ability.id = 471585 or ability.id = 460075 or ability.id = 473351 or ability.id = 473220 or ability.id = 469981) and type = "begincast"
+ or ability.id = 460156 and type = "removebuff"
+ or type = "dungeonencounterstart" or type = "dungeonencounterend"
+--]]
 local warnJumpStart							= mod:NewCountAnnounce(460156, 1)
 local warnJumpStartOver						= mod:NewEndAnnounce(460156, 2)
 local warnDoomStorm							= mod:NewTargetNoFilterAnnounce(472452, 2)
@@ -46,12 +51,11 @@ local yellSonicBoom							= mod:NewShortYell(473220)
 local specWarnbarrier						= mod:NewSpecialWarningCount(469981, nil, nil, nil, 1, 2)
 --local specWarnGTFO						= mod:NewSpecialWarningGTFO(372820, nil, nil, nil, 1, 8)
 
-local timerJumpStartCD						= mod:NewAITimer(33.9, 460156, nil, nil, nil, 6)
-local timerMobilizeMechadronesCD			= mod:NewAITimer(33.9, 471585, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)
+local timerMobilizeMechadronesCD			= mod:NewNextCountTimer(33.9, 471585, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)
 --local timerDoomStormCD					= mod:NewCDNPTimer(33.9, 472452, nil, nil, nil, 3)
-local timerElectrocrushCD					= mod:NewAITimer(33.9, 473351, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
-local timerSonicBoomCD						= mod:NewAITimer(33.9, 473220, nil, nil, nil, 3)
-local timerBarrierCD						= mod:NewAITimer(33.9, 469981, nil, nil, nil, 5, nil, DBM_COMMON_L.DAMAGE_ICON)
+local timerElectrocrushCD					= mod:NewVarCountTimer("v20.6-21.8", 473351, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+local timerSonicBoomCD						= mod:NewNextCountTimer(21.8, 473220, nil, nil, nil, 3)
+local timerBarrierCD						= mod:NewNextCountTimer(33.9, 469981, nil, nil, nil, 5, nil, DBM_COMMON_L.DAMAGE_ICON)
 
 mod:AddInfoFrameOption(469981, true)
 mod:AddSetIconOption("SetIconOnMechs", 471585, true, 5, {8, 7, 6, 5})
@@ -92,11 +96,9 @@ function mod:OnCombatStart(delay)
 	self.vb.electroCount = 0
 	self.vb.sonicCount = 0
 	self.vb.barrierCount = 0
-	timerElectrocrushCD:Start(1-delay)--6.1, 43.7
-	timerSonicBoomCD:Start(1-delay)--15.8
-	timerJumpStartCD:Start(1-delay)--26.5
-	timerMobilizeMechadronesCD:Start(1-delay)--40.5
-	timerBarrierCD:Start(1-delay)
+	timerElectrocrushCD:Start(6-delay, 1)
+	timerSonicBoomCD:Start(15.7-delay, 1)
+	timerBarrierCD:Start(51-delay, 1)
 end
 
 function mod:OnCombatEnd()
@@ -111,7 +113,7 @@ function mod:SPELL_CAST_START(args)
 		self.vb.jumpStartCount = self.vb.jumpStartCount + 1
 		warnJumpStart:Show(self.vb.jumpStartCount)
 		--Stop Timers
-		timerMobilizeMechadronesCD:Stop()
+		timerMobilizeMechadronesCD:Start(15.1, self.vb.mechCount+1)
 		timerElectrocrushCD:Stop()
 		timerSonicBoomCD:Stop()
 		timerBarrierCD:Stop()
@@ -120,7 +122,6 @@ function mod:SPELL_CAST_START(args)
 		self.vb.addIcon = 8
 		specWarnMobilizeMechadrones:Show(self.vb.mechCount)
 		specWarnMobilizeMechadrones:Play("killbigmob")
-		timerMobilizeMechadronesCD:Start()
 	elseif spellId == 472452 or spellId == 460075 then--472452 confirmed on follower, 460075 unknown
 		self:ScheduleMethod(0.1, "BossTargetScanner", args.sourceGUID, "DoomStormTarget", 0.1, 8, true)
 	elseif spellId == 1214780 then
@@ -160,7 +161,6 @@ function mod:SPELL_CAST_START(args)
 		self.vb.barrierCount = self.vb.barrierCount + 1
 		specWarnbarrier:Show(self.vb.barrierCount)
 		specWarnbarrier:Play("attackshield")
-		timerBarrierCD:Start()
 	end
 end
 
@@ -201,11 +201,9 @@ function mod:SPELL_AURA_REMOVED(args)
 	if spellId == 460156 then
 		warnJumpStartOver:Show()
 		--restart Timers
-		timerJumpStartCD:Start(2)
-		timerMobilizeMechadronesCD:Start(2)
-		timerElectrocrushCD:Start(2)
-		timerSonicBoomCD:Start(2)
-		timerBarrierCD:Start(2)
+		timerElectrocrushCD:Start(9.2, self.vb.electroCount+1)
+		timerSonicBoomCD:Start(18.9, self.vb.sonicCount+1)
+		timerBarrierCD:Start(54.2, self.vb.barrierCount+1)
 	elseif spellId == 469981 then
 		if self.Options.InfoFrame then
 			DBM.InfoFrame:Hide()

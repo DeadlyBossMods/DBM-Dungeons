@@ -5,7 +5,7 @@ local L		= mod:GetLocalizedStrings()
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(226403, 226402)
 mod:SetEncounterID(3019)
---mod:SetHotfixNoticeRev(20240817000000)
+mod:SetHotfixNoticeRev(20250215000000)
 --mod:SetMinSyncRevision(20240817000000)
 mod:SetZone(2773)
 --mod.respawnTime = 29
@@ -29,6 +29,11 @@ mod:RegisterEventsInCombat(
 --TODO, add https://www.wowhead.com/ptr-2/spell=460602/quick-shot
 --TODO, optimize charge as needed
 --TODO, support nameplate timers when creatureIds known
+--[[
+(ability.id = 460867 or ability.id = 1217653 or ability.id = 473690 or ability.id = 459799 or ability.id = 459779) and type = "begincast"
+ or (target.id = 226403 or target.id = 226402) and type = "death"
+ or type = "dungeonencounterstart" or type = "dungeonencounterend"
+--]]
 --General
 --local specWarnGTFO						= mod:NewSpecialWarningGTFO(372820, nil, nil, nil, 1, 8)
 --Keeza Quickfuse
@@ -41,10 +46,10 @@ local specWarnBBBFG							= mod:NewSpecialWarningDodgeCount(1217653, nil, nil, D
 local specWarnExplosiveGel					= mod:NewSpecialWarningYou(473690, nil, nil, DBM_COMMON_L.KNOCKUP, 1, 2)
 local yellExplosiveGel						= mod:NewShortYell(473690, DBM_COMMON_L.KNOCKUP)
 
-local timerBigBadaBoomCD					= mod:NewAITimer(33.9, 460867, 167180, nil, nil, 5)--Short text "Bombs"
+local timerBigBadaBoomCD					= mod:NewCDCountTimer(335.3, 460867, 167180, nil, nil, 5)--Short text "Bombs"
 --local timerBombsExplode					= mod:NewCastTimer(30, 460787, 167180, nil, nil, 2, nil, DBM_COMMON_L.DEADLY_ICON)
-local timerBBBFG							= mod:NewAITimer(5, 1217653, DBM_COMMON_L.FRONTAL, nil, nil, 3)--.." (%s)"
-local timerExplosiveGelCD					= mod:NewAITimer(33.9, 473690, DBM_COMMON_L.KNOCKUP, nil, nil, 3, nil, DBM_COMMON_L.MAGIC_ICON..DBM_COMMON_L.MYTHIC_ICON)
+local timerBBBFG							= mod:NewCDCountTimer(17.7, 1217653, DBM_COMMON_L.FRONTAL, nil, nil, 3)--.." (%s)"
+local timerExplosiveGelCD					= mod:NewCDCountTimer(17.7, 473690, DBM_COMMON_L.KNOCKUP, nil, nil, 3, nil, DBM_COMMON_L.MAGIC_ICON..DBM_COMMON_L.MYTHIC_ICON)
 --Bront
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(30322))
 local warnCharge							= mod:NewTargetNoFilterAnnounce(470022, 2, nil, nil, 100)
@@ -55,8 +60,8 @@ local yellChargeFades						= mod:NewShortFadesYell(470022, 100)
 local specWarnWallop						= mod:NewSpecialWarningDefensive(459799, nil, nil, nil, 1, 2)
 local yellWallop							= mod:NewShortYell(459799)
 
-local timerChargeCD							= mod:NewAITimer(33.9, 470022, nil, nil, nil, 3)
-local timerWallopCD							= mod:NewAITimer(33.9, 459799, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+local timerChargeCD							= mod:NewVarCountTimer(33.9, 470022, nil, nil, nil, 3)
+local timerWallopCD							= mod:NewVarCountTimer("v34-38", 459799, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 
 --mod.vb.bombCount = 0
 mod.vb.bombCastCount = 0
@@ -74,11 +79,13 @@ function mod:OnCombatStart(delay)
 	self.vb.chargeCount = 0
 	self.vb.wallopCount = 0
 	self.vb.keezaDead = false
-	timerBigBadaBoomCD:Start(1-delay)--13.9
-	timerBBBFG:Start(1-delay)--6.5, 17.1
-	timerExplosiveGelCD:Start(1-delay)
-	timerChargeCD:Start(1-delay)--22.7, 4.8, 5.8
-	timerWallopCD:Start(1-delay)--5.7, 35.2, 17.0, 17.0
+	timerWallopCD:Start(5.7-delay, 1)--5.7, 35.2, 17.0, 17.0
+	timerBBBFG:Start(6.5-delay, 1)--6.5, 17.1
+	timerBigBadaBoomCD:Start(13.9-delay, 1)--13.9
+	if self:IsMythic() then
+		timerExplosiveGelCD:Start(17.6-delay, 1)
+	end
+	timerChargeCD:Start(22.7-delay, 1)
 end
 
 --function mod:OnCombatEnd()
@@ -90,18 +97,18 @@ function mod:SPELL_CAST_START(args)
 	if spellId == 460867 then
 		self.vb.bombCastCount = self.vb.bombCastCount + 1
 		warnBigBadaBoom:Show(self.vb.bombCastCount)
-		timerBigBadaBoomCD:Start()--nil, self.vb.bombCastCount+1
+		timerBigBadaBoomCD:Start(nil, self.vb.bombCastCount+1)
 	elseif spellId == 1217653 then
 		self.vb.bbbfgCount = self.vb.bbbfgCount + 1
 		specWarnBBBFG:Show(self.vb.bbbfgCount)
 		specWarnBBBFG:Play("frontal")
-		timerBBBFG:Start()--nil, self.vb.bbbfgCount+1
+		timerBBBFG:Start(nil, self.vb.bbbfgCount+1)
 	elseif spellId == 473690 then
 		self.vb.knockCount = self.vb.knockCount + 1
-		timerExplosiveGelCD:Start()--nil, self.vb.knockCount+1
+		timerExplosiveGelCD:Start(nil, self.vb.knockCount+1)
 	elseif spellId == 459799 then
 		self.vb.wallopCount = self.vb.wallopCount + 1
-		timerWallopCD:Start(self.vb.keezaDead and 17 or 35)--nil, self.vb.wallopCount+1
+		timerWallopCD:Start(self.vb.keezaDead and "v17-19" or "v34-38", self.vb.wallopCount+1)
 		if self:IsTanking("player", "boss1", nil, true) then
 			specWarnWallop:Show()
 			specWarnWallop:Play("defensive")
@@ -109,7 +116,8 @@ function mod:SPELL_CAST_START(args)
 		end
 	elseif spellId == 459779 then
 		self.vb.chargeCount = self.vb.chargeCount + 1
-		timerChargeCD:Start()--nil, self.vb.chargeCount+1
+		local timer = (self.vb.chargeCount % 3 == 0) and "v23-25" or "v4-6.3"
+		timerChargeCD:Start(timer, self.vb.chargeCount+1)
 	end
 end
 
