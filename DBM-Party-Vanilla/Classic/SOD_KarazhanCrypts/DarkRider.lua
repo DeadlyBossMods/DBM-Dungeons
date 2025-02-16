@@ -58,6 +58,11 @@ function mod:OnCombatStart()
 			break
 		end
 	end
+	if self.Options.EnableMinorNameplates then
+		--DBM:FireEvent("BossMod_EnableFriendlyNameplates")
+		DBM:FireEvent("BossMod_EnableHostileNameplates")
+		self:EnableNameplates()
+	end
 end
 
 -- By default illusions don't even get nameplates, so we try to force enable CVars here
@@ -70,7 +75,7 @@ local handler = function(_, event)
 	if event == "LOADING_SCREEN_DISABLED" then
 		mod:CheckInstance()
 	elseif event == "PLAYER_LOGOUT" then
-		mod:LeaveKarazhan()
+		mod:DisableNameplates()
 	end
 end
 f:SetScript("OnEvent", handler)
@@ -80,17 +85,14 @@ local lastZone = nil
 function mod:CheckInstance()
 	local zone = select(8, GetInstanceInfo())
 	if lastZone == 2875 and zone ~= 2875 then
-		self:LeaveKarazhan()
-	elseif zone == 2875 and lastZone ~= 2875 then
-		self:EnterKarazhan()
+		self:DisableNameplates()
 	end
 	lastZone = zone
 end
-mod.OnInitialize = mod.CheckInstance
 
 -- It's unfortunately a bit unclear which option we need and annoying to test with daily lockouts
 -- I got nameplates working when literally everything including friendly totems etc was enabled, but that really sucks.
--- None of these hurt to enable in Karazhan, so for now just force-enabling them
+-- None of these hurt to enable during this fight, so for now just force-enabling them
 local cvars = {
 	"nameplateShowEnemies",
 	"nameplateShowEnemyMinus", -- "Minor Enemies" in the UI
@@ -99,50 +101,58 @@ local cvars = {
 	"nameplateShowEnemyTotems",
 	"nameplateShowEnemyGuardians",
 	"nameplateShowEnemyMinions",
+	-- Might be needed, doesn't hurt
+	"nameplateShowFriendlyNPCs",
+	-- These are annoying to enable, I hope we don't need these, but I lack test data
+--	"nameplateShowFriendlyGuardians",
+--	"nameplateShowFriendlyMinions",
+--	"nameplateShowFriends"
 }
 local didEnableNameplates = false
 local savedCVars = {}
 
-local shownNameplateInfo = false
-function mod:EnterKarazhan()
-	DBM:Debug("Entering Karazhan")
+function mod:EnableNameplates()
 	if InCombatLockdown() then
-		DBM:Debug("Combat lockdown, retrying in 10 sec")
-		self:ScheduleMethod(10, "EnterKarazhan")
+		DBM:Debug("Failed to enable nameplates")
 		return
 	end
+	DBM:Debug("Enabling nameplates")
 	if not didEnableNameplates and self.Options.EnableMinorNameplates then
 		didEnableNameplates = true
 		local diff = false
 		for _, cvar in ipairs(cvars) do
-			local oldVal = GetCVar(cvar)
+			local oldVal = C_CVar.GetCVar(cvar)
 			if oldVal == "0" or oldVal == 0 then
 				diff = true
 				savedCVars[cvar] = oldVal
-				SetCVar(cvar, 1)
+				C_CVar.SetCVar(cvar, 1)
 			end
 		end
-		if diff and not shownNameplateInfo then
-			shownNameplateInfo = true -- Once per session
+		if diff then
 			self:AddMsg(L.EnabledNameplates)
 		end
 	end
 end
 
-function mod:LeaveKarazhan()
-	DBM:Debug("Leaving Karazhan")
-	if InCombatLockdown() then
-		DBM:Debug("Combat lockdown, retrying in 10 sec")
-		self:ScheduleMethod(10, "LeaveKarazhan")
+function mod:OnCombatEnd()
+	self:DisableNameplates()
+end
+
+function mod:DisableNameplates()
+	if not didEnableNameplates then
 		return
 	end
-	if didEnableNameplates then
-		didEnableNameplates = false
-		for cvar, val in pairs(savedCVars) do
-			SetCVar(cvar, val)
-		end
-		table.wipe(savedCVars)
+	if InCombatLockdown() then
+		DBM:Debug("Nameplate disable: Combat lockdown, retrying in 10 sec")
+		self:ScheduleMethod(10, "DisableNameplates")
+		return
 	end
+	DBM:Debug("Disabling nameplates")
+	didEnableNameplates = false
+	for cvar, val in pairs(savedCVars) do
+		C_CVar.SetCVar(cvar, val)
+	end
+	table.wipe(savedCVars)
 end
 
 
@@ -154,8 +164,10 @@ function mod:SPELL_AURA_REMOVED(args)
 	end
 end
 
+local addedPlates = {}
 function mod:ScanMirrorTarget(uId)
-	if self:GetCIDFromGUID(UnitGUID(uId)) ~= 238443 then
+	local guid = UnitGUID(uId)
+	if not guid or self:GetCIDFromGUID(guid) ~= 238443 then
 		return false
 	end
 	if myIcon then
@@ -163,9 +175,13 @@ function mod:ScanMirrorTarget(uId)
 		if not curIcon or curIcon == 0 then
 			DBM:Debug("Found Torment's Illusion at " .. uId .. " setting icon")
 			if not DBM.Options.DontSetIcons and self.Options.SetIconOnIllusion then
-				SetRaidTarget(uId, myIcon) -- Only you can set the icon
+				SetRaidTarget(uId, myIcon) -- Only you can set the icon, don't use any core function that does any filtering/election
 			end
 		end
+	end
+	if not addedPlates[guid] then
+		DBM.Nameplate:Show(true, guid, 1220912, 1220912, nil, nil, true)
+		addedPlates[guid] = true -- Saw some bugs back in BWL with Plater when setting it multiple times, just being cautious here, can be deleted if we're sure these bugs are gone
 	end
 	-- You can see an Illusion, but you aren't targeting it, that's very bad. This is a bit spammy on purpose, similar to standing in fire or something
 	if not UnitIsUnit(uId, "target") then
@@ -215,7 +231,7 @@ function mod:ScanMirrorLoop()
 	if self:ScanMirrorTarget("mouseover") then
 		return
 	end
-	-- This counts as minor unit or minion, so many nameplate options won't even show a nameplate for this by default!
+	-- These enemies are pretty odd with nameplates, see comments on the CVars above
 	for _, frame in pairs(C_NamePlate.GetNamePlates()) do
 		if frame.namePlateUnitToken then
 			if self:ScanMirrorTarget(frame.namePlateUnitToken) then
