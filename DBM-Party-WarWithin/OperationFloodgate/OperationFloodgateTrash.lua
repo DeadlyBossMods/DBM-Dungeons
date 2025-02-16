@@ -26,9 +26,10 @@ mod:RegisterEvents(
 --TODO, Darkfuse Soldier Black Blood Wound stack counter?
 --TODO, EZ-Thro Dynamite III general announce? (Venture Co Surveyor)
 --[[
-
+ability.id = 469818 and (type = "begincast" or type = "cast")
+ or stoppedAbility.id = 469818
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
- or (source.type = "NPC" and source.firstSeen = timestamp and source.id = 217531) or (target.type = "NPC" and target.firstSeen = timestamp and target.id = 217531)
+ or (source.type = "NPC" and source.firstSeen = timestamp and source.id = 231197) or (target.type = "NPC" and target.firstSeen = timestamp and target.id = 231197)
 --]]
 --local warnHorrifyingshrill					= mod:NewCastAnnounce(434802, 4)--High Prio Off interrupt
 local warnWarpBlood							= mod:NewSpellAnnounce(465827, 3)
@@ -57,17 +58,19 @@ local timerFlamethrowerCD					= mod:NewCDNPTimer(25.5, 465754, nil, nil, nil, 3)
 local timerShreddationCD					= mod:NewCDNPTimer(9.7, 474337, nil, nil, nil, 3)--9.7-15 (delayed by flamethrower most likely
 local timerRPGGCD							= mod:NewCDNPTimer(14.5, 1216039, nil, nil, nil, 3)
 local timerSurpriseInspectionCD				= mod:NewCDNPTimer(9.7, 465682, nil, nil, nil, 3)
-local timerBubbleBurpCD						= mod:NewCDNPTimer(100, 469818, nil, nil, nil, 3)--TODO, add recast
-local timerSplishSplashCD					= mod:NewCDNPTimer(100, 1217496, nil, nil, nil, 3)--TODO, add recast
-local timerBackwashCD						= mod:NewCDNPTimer(100, 469721, nil, nil, nil, 2)--TODO, add recast
+local timerBubbleBurpCD						= mod:NewCDNPTimer(21.5, 469818, nil, nil, nil, 3)
+local timerSplishSplashCD					= mod:NewCDNPTimer(21.8, 1217496, nil, nil, nil, 3)
+local timerBackwashCD						= mod:NewCDNPTimer(21.8, 469721, nil, nil, nil, 2)
 local timerWarpBloodCD						= mod:NewCDNPTimer(20.6, 465827, nil, nil, nil, 2)
 local timerSparkslamCD						= mod:NewCDNPTimer(10.9, 465666, nil, nil, nil, 3)
 local timerJettisonkelpCD					= mod:NewCDNPTimer(15.8, 471736, nil, nil, nil, 5)
 local timerOverchargeCD						= mod:NewCDNPTimer(10.7, 469799, nil, nil, nil, 5, nil, DBM_COMMON_L.MAGIC_ICON)--10-15
 local timerSurveyingBeamCD					= mod:NewCDNPTimer(20.6, 462771, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
-local timerBloodthirstyCackleCD				= mod:NewCDNPTimer(100, 463058, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--TODO, add recast
-local timerTrickShotCD						= mod:NewCDNPTimer(10.9, 1214468, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--10.9-14 (seems stops still put it on CD)
+local timerBloodthirstyCackleCD				= mod:NewCDNPTimer(18.9, 463058, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--18.9-22
+local timerTrickShotCD						= mod:NewCDNPTimer(10.9, 1214468, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--10.9-14 (seems to be buggy/random in some cases, inconsistent behaviors)
 local timerRestorativeAlgaeCD				= mod:NewCDNPTimer(18.1, 471733, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+
+local allowInterruptOnBeam = false
 
 --local playerName = UnitName("player")
 
@@ -114,6 +117,7 @@ function mod:SPELL_CAST_START(args)
 			specWarnSurpriseInspection:Play("frontal")
 		end
 	elseif spellId == 462771 then
+		allowInterruptOnBeam = true
 		if self:CheckInterruptFilter(args.sourceGUID, false, true) then
 			specWarnSurveyingBeam:Show(args.sourceName)
 			specWarnSurveyingBeam:Play("kickcast")
@@ -124,7 +128,6 @@ function mod:SPELL_CAST_START(args)
 			specWarnBloodthirstyCackleKick:Play("kickcast")
 		end
 	elseif spellId == 1214468 then
-		timerTrickShotCD:Start(nil, args.sourceGUID)
 		if self:CheckInterruptFilter(args.sourceGUID, false, true) then
 			specWarnTrickShot:Show(args.sourceName)
 			specWarnTrickShot:Play("kickcast")
@@ -135,19 +138,19 @@ function mod:SPELL_CAST_START(args)
 			specWarnRestorativeAlgae:Play("kickcast")
 		end
 	elseif spellId == 469818 then
-		--timerBubbleBurpCD:Start(nil, args.sourceGUID)
+		timerBubbleBurpCD:Start(nil, args.sourceGUID)
 		if self:AntiSpam(3, 2) then
 			specWarnBubbleBurp:Show()
 			specWarnBubbleBurp:Play("watchstep")
 		end
 	elseif spellId == 1217496 then
-		--timerSplishSplashCD:Start(nil, args.sourceGUID)
+		timerSplishSplashCD:Start(nil, args.sourceGUID)
 		if self:AntiSpam(3, 2) then
 			specWarnSplishSplash:Show()
 			specWarnSplishSplash:Play("frontal")
 		end
 	elseif spellId == 469721 then
-		--timerBackwashCD:Start(nil, args.sourceGUID)
+		timerBackwashCD:Start(nil, args.sourceGUID)
 		if self:AntiSpam(3, 4) then
 			specWarnBackwash:Show()
 			specWarnBackwash:Play("aesoon")
@@ -177,11 +180,12 @@ function mod:SPELL_CAST_SUCCESS(args)
 	local spellId = args.spellId
 	if not self:IsValidWarning(args.sourceGUID) then return end
 	if spellId == 462771 then
+		allowInterruptOnBeam = false
 		timerSurveyingBeamCD:Start(19.1, args.sourceGUID)--20.6-1.5
 	elseif spellId == 463058 then
---		timerBloodthirstyCackleCD:Start(19.1, args.sourceGUID)
---	elseif spellId == 1214468 then
---		timerTrickShotCD:Start(8.6, args.sourceGUID)--12.1-3.5
+		timerBloodthirstyCackleCD:Start(18.9, args.sourceGUID)
+	elseif spellId == 1214468 then
+		timerTrickShotCD:Start(7.4, args.sourceGUID)--10.9-3.5
 	elseif spellId == 469799 then
 		timerOverchargeCD:Start(nil, args.sourceGUID)
 	elseif spellId == 471733 then
@@ -196,12 +200,12 @@ end
 
 function mod:SPELL_INTERRUPT(args)
 	if not self.Options.Enabled then return end
-	if args.extraSpellId == 462771 then
+	if args.extraSpellId == 462771 and allowInterruptOnBeam then
 		timerSurveyingBeamCD:Start(19.1, args.destGUID)--20.6-1.5
 	elseif args.extraSpellId == 463058 then
---		timerBloodthirstyCackleCD:Start(19.1, args.destGUID)
---	elseif args.extraSpellId == 1214468 then
---		timerTrickShotCD:Start(8.6, args.destGUID)--12.1-3.5
+		timerBloodthirstyCackleCD:Start(18.9, args.destGUID)
+	elseif args.extraSpellId == 1214468 then
+		timerTrickShotCD:Start(7.4, args.destGUID)--10.9-3.5
 	elseif args.extraSpellId == 471733 then
 		timerRestorativeAlgaeCD:Start(16.1, args.destGUID)--18.1-2
 	end
