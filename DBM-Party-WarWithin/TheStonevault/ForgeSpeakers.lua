@@ -43,7 +43,7 @@ local specWarnScrapSong						= mod:NewSpecialWarningDodgeCount(428202, nil, nil,
 
 --Pretty much all of his timers can be delayed by up to 6 seconds by spell lockouts from interrupts
 local timerExhaustVentsCD					= mod:NewCDCountTimer(27, 445541, nil, nil, nil, 3)
-local timerMoltenMetalCD					= mod:NewVarCountTimer("4.8-15", 430097, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--4.8-15
+local timerMoltenMetalCD					= mod:NewVarCountTimer("v4.8-15", 430097, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--4.8-15
 local timerScrapSongCD						= mod:NewCDCountTimer(49.7, 428202, nil, nil, nil, 3)
 --Speaker Dorlita
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(28461))

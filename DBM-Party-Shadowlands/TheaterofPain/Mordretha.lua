@@ -31,7 +31,7 @@ mod:RegisterEventsInCombat(
 local warnDeathGrasp				= mod:NewTargetNoFilterAnnounce(323831, 4)
 
 local specWarnReapingScythe			= mod:NewSpecialWarningDefensive(324079, nil, nil, nil, 1, 2)
-local specWarnDarkDevastation		= mod:NewSpecialWarningDodgeCount(323608, nil, nil, nil, 2, 2)
+local specWarnDarkDevastation		= mod:NewSpecialWarningDodgeCount(323608, nil, nil, nil, 2, 15)
 local specWarnManifestDeath			= mod:NewSpecialWarningMoveAway(324449, nil, nil, nil, 1, 2)
 local yellManifestDeath				= mod:NewShortYell(324449)--Everyone gets, so short yell (no player names)
 local yellManifestDeathFades		= mod:NewShortFadesYell(324449)
@@ -81,7 +81,7 @@ function mod:SPELL_CAST_START(args)
 	elseif spellId == 323608 then
 		self.vb.darkCount = self.vb.darkCount + 1
 		specWarnDarkDevastation:Show(self.vb.darkCount)
-		specWarnDarkDevastation:Play("farfromline")
+		specWarnDarkDevastation:Play("frontal")
 		timerDarkDevastationCD:Start(nil, self.vb.darkCount+1)
 	elseif spellId == 324589 and self:CheckInterruptFilter(args.sourceGUID, false, true) then
 		specWarnDeathBolt:Show(args.sourceName)
@@ -132,7 +132,7 @@ function mod:SPELL_AURA_APPLIED(args)
 	if spellId == 324449 then
 		if args:IsPlayer() then
 			specWarnManifestDeath:Show()
-			specWarnManifestDeath:Play("runout")
+			specWarnManifestDeath:Play("scatter")
 			yellManifestDeath:Yell()
 			yellManifestDeathFades:Countdown(spellId)
 		end
