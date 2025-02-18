@@ -1665,7 +1665,7 @@ L:SetOptionLocalization{
 
 L:SetMiscLocalization{
 	MirrorImage = "환영",
-	EnabledNameplates = "DBM이 카라잔에 있는 동안 적 하수인 이름표를 자동으로 활성화 했으며 이는 환영 감지에 도움이 됩니다. 끄려면 던전/카라잔 납골당의 암흑 기수 모드 설정으로 들어가세요."
+	EnabledNameplates = "DBM이 이 전투에서 이름표를 자동으로 활성화 했으며 이는 환영 감지에 도움이 됩니다. 끄려면 던전/카라잔 납골당의 암흑 기수 모드 설정으로 들어가세요."
 }
 
 -- Creeping Malison
