@@ -25,7 +25,7 @@ mod:RegisterEvents(
 local warnQuenchingBlast					= mod:NewSpellAnnounce(430171, 2)
 local warnMoleFrenzy						= mod:NewCastAnnounce(425536, 3)--High Prio Interrupt
 local warnFlamingTether						= mod:NewCastAnnounce(426295, 3)--High Prio Interrupt
-local warnExplosiveFlame						= mod:NewCastAnnounce(424322, 3)--High Prio Interrupt
+local warnExplosiveFlame					= mod:NewCastAnnounce(424322, 3)--High Prio Interrupt
 local warnBonk								= mod:NewCastAnnounce(426883, 4, nil, nil, "Tank|Healer")
 local warnDrainLight						= mod:NewSpellAnnounce(422541, 3, nil, nil, nil, nil, nil, 3)
 local warnOHHeadlock						= mod:NewTargetNoFilterAnnounce(426619, 4)
