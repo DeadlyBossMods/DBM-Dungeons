@@ -19,8 +19,6 @@ mod:RegisterEventsInCombat(
 	"UNIT_DIED"
 )
 
---TODO, hybrid nameplate timers on combat start and rest of fight
---TODO, update all timers for 11.1
 --[[
 (ability.id = 1215741 or ability.id = 1215738 or ability.id = 1215600 or ability.id = 320069 or ability.id = 333231 or ability.id = 320182) and type = "begincast"
  or (target.id = 164451 or target.id = 164463 or target.id = 164461) and type = "death"
