@@ -212,19 +212,19 @@ end
 function mod:SPELL_AURA_APPLIED(args)
 	if not self.Options.Enabled then return end
 	local spellId = args.spellId
-	if spellId == 262092 and args:IsDestTypeHostile() and self:AntiSpam(3, 4) then
+	if spellId == 262092 and args:IsDestTypeHostile() and self:AntiSpam(3, 3) then
 		specWarnInhaleVaporsDispel:Show(args.destName)
 		specWarnInhaleVaporsDispel:Play("enrage")
-	elseif spellId == 263215 and args:IsDestTypeHostile() and self:AntiSpam(3, 4) then
+	elseif spellId == 263215 and args:IsDestTypeHostile() and self:AntiSpam(3, 3) then
 		specWarnTectonicBarrierDispel:Show(args.destName)
 		specWarnTectonicBarrierDispel:Play("helpdispel")
 	elseif spellId == 262377 and args:IsPlayer() and self:AntiSpam(3, 1) then
 		specWarnSeekandDestroy:Show()
 		specWarnSeekandDestroy:Play("justrun")
-	--elseif spellId == 262947 and args:IsDestTypeHostile() and self:AntiSpam(3, 4) then
+	--elseif spellId == 262947 and args:IsDestTypeHostile() and self:AntiSpam(3, 3) then
 	--	specWarnAzeriteInjection:Show(args.destName)
 	--	specWarnAzeriteInjection:Play("helpdispel")
-	--elseif spellId == 262540 and args:IsDestTypeHostile() and self:AntiSpam(3, 4) then
+	--elseif spellId == 262540 and args:IsDestTypeHostile() and self:AntiSpam(3, 3) then
 	--	specWarnOverchargeDispel:Show(args.destName)
 	--	specWarnOverchargeDispel:Play("helpdispel")
 	end
@@ -263,30 +263,30 @@ end
 --All timers subject to a ~0.5 second clipping due to ScanEngagedUnits
 function mod:StartEngageTimers(guid, cid, delay)
 	if cid == 134232 then--Hired Assassin
-		timerToxicBladesCD:Start(10.8, guid)--Might be shorter
-		timerFanOfKnivesCD:Start(13.3, guid)
+		timerToxicBladesCD:Start(10.8-delay, guid)--Might be shorter
+		timerFanOfKnivesCD:Start(13.3-delay, guid)
 	elseif cid == 136470 then--Refreshment Vendor
-		timerIcedSpritzerCD:Start(10.9, guid)
+		timerIcedSpritzerCD:Start(10.9-delay, guid)
 	elseif cid == 130635 then--Stonefury
-		timerTectonicBarrierCD:Start(5, guid)
-		timerFuriousQuakeCD:Start(11.8, guid)
+		timerTectonicBarrierCD:Start(5-delay, guid)
+		timerFuriousQuakeCD:Start(11.8-delay, guid)
 	elseif cid == 133432 then--Venture Co. Alchemist
-		timerEnemyToGoosCD:Start(8.5, guid)--8-15
+		timerEnemyToGoosCD:Start(8.5-delay, guid)--8-15
 	elseif cid == 137029 then--Ordnance Specialist
-		timerArtilleryBarrageCD:Start(2, guid)--Possibly even sooner
+		timerArtilleryBarrageCD:Start(2-delay, guid)--Possibly even sooner
 	elseif cid == 130435 then--Addled Thug
-		timerInhaleVaporsCD:Start(9.9, guid)
+		timerInhaleVaporsCD:Start(9.9-delay, guid)
 	elseif cid == 136139 then--Mechanized Peacekeeper
-		timerChargedShieldCD:Start(17, guid)
+		timerChargedShieldCD:Start(17-delay, guid)
 	elseif cid == 136643 then--Azerite Extractor
-		timerRapidExtractionCD:Start(15.7, guid)
+		timerRapidExtractionCD:Start(15.7-delay, guid)
 	elseif cid == 133430 then--Venture Co. Mastermind
-		timerBrainstormCD:Start(5.4, guid)
+		timerBrainstormCD:Start(5.4-delay, guid)
 	elseif cid == 133463 then--Venture Co. War Machine
-		timerChargedShotCD:Start(8.5, guid)
+		timerChargedShotCD:Start(8.5-delay, guid)
 	elseif cid == 134012 then--Taskmaster Askari
-		timerOvertimeCD:Start(10, guid)
-		timerBrutalChargeCD:Start(11, guid)
+		timerOvertimeCD:Start(10-delay, guid)
+		timerBrutalChargeCD:Start(11-delay, guid)
 	end
 end
 
