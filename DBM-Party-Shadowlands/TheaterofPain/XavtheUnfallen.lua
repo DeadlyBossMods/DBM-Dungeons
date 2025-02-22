@@ -21,6 +21,7 @@ mod:RegisterEventsInCombat(
 ability.id = 320644 and type = "begincast"
  or (ability.id = 320050 or ability.id = 320114 or ability.id = 331618) and type = "cast"
  or (ability.id = 317231 or ability.id = 320729 or ability.id = 339415) and type = "begincast"
+ or type = "dungeonencounterstart" or type = "dungeonencounterend"
 --]]
 local warnCrushingSlam				= mod:NewCountAnnounce(317231, 4)
 local warnMassiveCleave				= mod:NewCountAnnounce(320729, 4)
@@ -50,6 +51,8 @@ local allTimers = {
 	[320644] = {6.0, 30.4, 15.8, 26.8}, -- Then 30.4, 35.2, repeating...
 	--Might
 	[320050] = {16.9, 40.1, 30.4, 35.2}, -- Then 30.4, 35.2, repeating...
+	--Glory
+	[320114] = {34.1, 70.4, 65.6},--Then stops casting?
 	--Blood
 --	[320102] = {34.0, 70.5},
 	--Banner
@@ -76,7 +79,7 @@ function mod:SPELL_CAST_START(args)
 			specWarnBrutalCombo:Show()
 			specWarnBrutalCombo:Play("defensive")
 		end
-		timerBrutalComboCD:Start(allTimers[spellId][self.vb.brutalComboCount+1] or (self.vb.brutalComboCount % 2 == 1 and 30.4 or 35.2), self.vb.brutalComboCount+1)
+		timerBrutalComboCD:Start(allTimers[spellId][self.vb.brutalComboCount+1] or (self.vb.brutalComboCount % 2 == 0 and 30.4 or 35.2), self.vb.brutalComboCount+1)
 	elseif spellId == 317231 then
 		self.vb.MightCount = self.vb.MightCount + 1
 		warnCrushingSlam:Show(self.vb.MightCount)
@@ -101,13 +104,14 @@ function mod:SPELL_CAST_SUCCESS(args)
 		self.vb.MightCastCount = self.vb.MightCastCount + 1
 		specWarnMightofMaldraxxus:Show()
 		specWarnMightofMaldraxxus:Play("watchstep")
-		local timer = allTimers[spellId][self.vb.MightCastCount+1]
-		if timer then
-			timerMightofMaldraxxusCD:Start(allTimers[spellId][self.vb.MightCastCount+1] or (self.vb.MightCastCount % 2 == 1 and 30.4 or 35.2), self.vb.MightCastCount+1)
-		end
+		timerMightofMaldraxxusCD:Start(allTimers[spellId][self.vb.MightCastCount+1] or (self.vb.MightCastCount % 2 == 0 and 30.4 or 35.2), self.vb.MightCastCount+1)
 	elseif spellId == 320114 and self:AntiSpam(5, 1) then
 		self.vb.bloodCount = self.vb.bloodCount + 1
-		timerBloodandGloryCD:Start(70.5, self.vb.bloodCount+1)
+		--34.1, 70.4, 65.6
+		local timer = allTimers[spellId][self.vb.bloodCount+1]
+		if timer then
+			timerBloodandGloryCD:Start(timer, self.vb.bloodCount+1)
+		end
 	elseif spellId == 331618 then
 		self.vb.bannerCount = self.vb.bannerCount + 1
 		specWarnOppressiveBanner:Show()

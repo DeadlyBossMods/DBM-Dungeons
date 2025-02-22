@@ -232,7 +232,10 @@ end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED_UNFILTERED(uId, _, spellId)
 	if spellId == 336995 then
-		self:SendSync("BlizzardHatesCombatLog", UnitGUID(uId))
+		local guid = UnitGUID(uId)
+		if guid and self:IsValidWarning(guid) then
+			self:SendSync("BlizzardHatesCombatLog", guid)
+		end
 	end
 end
 

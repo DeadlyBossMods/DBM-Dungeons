@@ -9,128 +9,161 @@ mod:SetZone(2293)
 mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
-	"SPELL_CAST_START 1216474 1215787 474087 473513",
-	"SPELL_CAST_SUCCESS 319521 319626 319589 473959 473540",
-	"SPELL_AURA_APPLIED 319521 319416 319626 333567",
+	"SPELL_CAST_START 1215787 474087 473513 474298",
+	"SPELL_CAST_SUCCESS 473540",
+	"SPELL_AURA_APPLIED 474298 1223804"
 --	"SPELL_PERIODIC_DAMAGE",
 --	"SPELL_PERIODIC_MISSED",
-	"UNIT_SPELLCAST_SUCCEEDED boss1"
 )
 
---TODO, Spectral Reach (319669) needed?
---TODO, update timers/events for rework
 --TODO, can tank sidestep the dash?
 --[[
-(ability.id = 319521 or ability.id = 319626 or ability.id = 319589) and type = "cast"
+(ability.id = 1215787 or ability.id = 474087 or ability.id = 473513 or ability.id = 474298) and type = "begincast"
+ or (ability.id = 473540) and type = "cast"
+ or type = "dungeonencounterstart" or type = "dungeonencounterend"
 --]]
-local warnDrawSoul					= mod:NewTargetAnnounce(319521, 2)
-local warnPhantasmalParasite		= mod:NewTargetNoFilterAnnounce(319626, 3, nil, "Healer|RemoveMagic")
-local warnPossession				= mod:NewTargetNoFilterAnnounce(333567, 4)
+local warnDrawSoul					= mod:NewTargetAnnounce(474298, 2)
+local warnWellofDarkness			= mod:NewTargetNoFilterAnnounce(473540, 3, nil, "Healer|RemoveMagic")
 
-local specWarnDrawSoul				= mod:NewSpecialWarningRun(319521, nil, nil, nil, 4, 2)--Want to run away from boss to spawn it further away
---local yellDrawSoul				= mod:NewYell(319521)
-local specWarnTornSoul				= mod:NewSpecialWarningYou(319416, nil, nil, nil, 1, 2)--expel Soul debuff
---local yellTornSoul				= mod:NewYell(319416)
-local specWarnPhantasmalParasite	= mod:NewSpecialWarningMoveAway(319626, nil, nil, nil, 1, 2)
-local specWarnPhantasmalParasiteDPL	= mod:NewSpecialWarningDispel(319626, "RemoveMagic", nil, nil, 1, 2)
-local yellPhantasmalParasite		= mod:NewYell(319626)
-local specWarnGraspingHands			= mod:NewSpecialWarningDodge(319589, nil, nil, nil, 2, 2)
-local specWarnMarchoftheDamned		= mod:NewSpecialWarningDodge(1216474, nil, nil, nil, 2, 2)
-local specWarnPoltergeistDash		= mod:NewSpecialWarningDodge(474087, nil, nil, nil, 1, 15)
+local specWarnDrawSoul				= mod:NewSpecialWarningRun(474298, nil, nil, nil, 4, 2)--Want to run away from boss to spawn it further away
+local yellDrawSoul					= mod:NewYell(474298)
+local specWarnWellofDarkness		= mod:NewSpecialWarningMoveAway(473540, nil, nil, nil, 1, 2)
+local specWarnWellofDarknessDPL		= mod:NewSpecialWarningDispel(473540, "RemoveMagic", nil, nil, 1, 2)
+local yellWellofDarkness			= mod:NewYell(473540)
+local specWarnDeathSpiral			= mod:NewSpecialWarningDodgeCount(1216474, nil, nil, nil, 2, 2, 4)
+local specWarnNecroticEruption		= mod:NewSpecialWarningDodgeCount(474087, nil, nil, nil, 1, 15)
 local specWarnFeastoftheDamned		= mod:NewSpecialWarningCount(473513, nil, nil, nil, 2, 2)
 --local specWarnGTFO				= mod:NewSpecialWarningGTFO(257274, nil, nil, nil, 1, 8)
 
-local timerDrawSoulCD				= mod:NewCDCountTimer(20.5, 319521, nil, nil, nil, 3, nil, DBM_COMMON_L.DAMAGE_ICON)
-local timerPhantasmalParasiteCD		= mod:NewCDCountTimer(25.5, 319626, nil, nil, nil, 3, nil, DBM_COMMON_L.HEALER_ICON..DBM_COMMON_L.MAGIC_ICON)
-local timerGraspingHandsCD			= mod:NewCDTimer(20.6, 319589, nil, nil, nil, 3)
-local timerMarchOfTheDamnedCD		= mod:NewAITimer(20.6, 1216474, nil, nil, nil, 3)
-local timerPoltergeistDashCD		= mod:NewAITimer(20.6, 474087, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
-local timerFeastoftheDamnedCD		= mod:NewAITimer(20.6, 473513, nil, nil, nil, 2, nil, DBM_COMMON_L.HEALER_ICON)
-
---mod:GroupSpells(319521, 333567)--Draw soul is mechanic, possession is screwing up mechanic
+local timerDrawSoulCD				= mod:NewVarCountTimer("v54.6-57.1", 474298, nil, nil, nil, 3, nil, DBM_COMMON_L.DAMAGE_ICON, nil, 1, 5)
+local timerWellofDarknessCD			= mod:NewCDCountTimer(23.1, 473540, nil, nil, nil, 3, nil, DBM_COMMON_L.HEALER_ICON..DBM_COMMON_L.MAGIC_ICON)--23.1 except when delayed by other stuff
+local timerDeathSpiralCD			= mod:NewCDCountTimer(54.6, 1216474, nil, nil, nil, 3, nil, DBM_COMMON_L.MYTHIC_ICON)
+local timerNecroticEruptionCD		= mod:NewCDCountTimer(20.6, 474087, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+local timerFeastoftheDamnedCD		= mod:NewAITimer(20.6, 473513, nil, nil, nil, 2, nil, DBM_COMMON_L.HEALER_ICON)--probably same CD as draw soul, needs confirmation
 
 mod.vb.drawCount = 0
-mod.vb.parasiteCount = 0
+mod.vb.darknessCount = 0
 mod.vb.feastCount = 0
+mod.vb.spiralCount = 0
+mod.vb.necroticEruption = 0
+
+--Well of Darkness triggers 3.7 ICD
+--Death Spiral triggers 2.4 ICD
+--Draw Soul triggers 10.3 ICD???
+---@param self DBMMod
+local function updateAllTimers(self, ICD)
+	DBM:Debug("updateAllTimers running", 3)
+	if self:IsMythic() then
+		--if timerDrawSoulCD:GetRemaining(self.vb.drawCount+1) < ICD then
+		--	local elapsed, total = timerDrawSoulCD:GetTime(self.vb.drawCount+1)
+		--	local extend = ICD - (total-elapsed)
+		--	DBM:Debug("timerDrawSoulCD extended by: "..extend, 2)
+		--	timerDrawSoulCD:Update(elapsed, total+extend, self.vb.drawCount+1)
+		--end
+		if timerDeathSpiralCD:GetRemaining(self.vb.spiralCount+1) < ICD then
+			local elapsed, total = timerDeathSpiralCD:GetTime(self.vb.spiralCount+1)
+			local extend = ICD - (total-elapsed)
+			DBM:Debug("timerDeathSpiralCD extended by: "..extend, 2)
+			timerDeathSpiralCD:Update(elapsed, total+extend, self.vb.spiralCount+1)
+		end
+	else
+		if timerFeastoftheDamnedCD:GetRemaining(self.vb.feastCount+1) < ICD then
+			local elapsed, total = timerFeastoftheDamnedCD:GetTime(self.vb.feastCount+1)
+			local extend = ICD - (total-elapsed)
+			DBM:Debug("timerFeastoftheDamnedCD extended by: "..extend, 2)
+			timerFeastoftheDamnedCD:Update(elapsed, total+extend, self.vb.feastCount+1)
+		end
+	end
+	if timerWellofDarknessCD:GetRemaining(self.vb.darknessCount+1) < ICD then
+		local elapsed, total = timerWellofDarknessCD:GetTime(self.vb.darknessCount+1)
+		local extend = ICD - (total-elapsed)
+		DBM:Debug("timerWellofDarknessCD extended by: "..extend, 2)
+		timerWellofDarknessCD:Update(elapsed, total+extend, self.vb.darknessCount+1)
+	end
+	if timerNecroticEruptionCD:GetRemaining(self.vb.necroticEruption+1) < ICD then
+		local elapsed, total = timerNecroticEruptionCD:GetTime(self.vb.necroticEruption+1)
+		local extend = ICD - (total-elapsed)
+		DBM:Debug("timerNecroticEruptionCD extended by: "..extend, 2)
+		timerNecroticEruptionCD:Update(elapsed, total+extend, self.vb.necroticEruption+1)
+	end
+end
 
 function mod:OnCombatStart(delay)
 	self.vb.drawCount = 0
-	self.vb.parasiteCount = 0
+	self.vb.darknessCount = 0
 	self.vb.feastCount = 0
-	timerPhantasmalParasiteCD:Start(3.3-delay, 1)--SUCCESS
-	if DBM:GetTOC() < 110100 then--Removed in 11.1 rework
-		timerGraspingHandsCD:Start(8.2-delay)--SUCCESS
+	self.vb.spiralCount = 0
+	self.vb.necroticEruption = 0
+	timerWellofDarknessCD:Start(11.2-delay, 1)--SUCCESS event 473540
+	timerNecroticEruptionCD:Start(16.9, 1)--START (16.9-19.1)
+	if self:IsMythic() then
+		timerDeathSpiralCD:Start(7-delay, 1)--START
+		timerDrawSoulCD:Start(50.6-delay, 1)
 	else
-		timerMarchOfTheDamnedCD:Start(1-delay)--START
-		timerPoltergeistDashCD:Start(1-delay)--START
+		timerFeastoftheDamnedCD:Start(50.6-delay)--Unknown, only have mythic logs
 	end
-	timerDrawSoulCD:Start(15.5-delay, 1)
 end
 
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
-	if spellId == 1216474 or spellId == 1215787 then
-		specWarnMarchoftheDamned:Show()
-		specWarnMarchoftheDamned:Play("watchstep")
-		timerMarchOfTheDamnedCD:Start()
+	if spellId == 1215787 then
+		self.vb.spiralCount = self.vb.spiralCount + 1
+		specWarnDeathSpiral:Show(self.vb.spiralCount)
+		specWarnDeathSpiral:Play("watchstep")
+		timerDeathSpiralCD:Start(nil, self.vb.spiralCount+1)
+		updateAllTimers(self, 2.4)
 	elseif spellId == 474087 then
+		self.vb.necroticEruption = self.vb.necroticEruption + 1
 		if self:IsTanking("player", "boss1", nil, true) then
-			specWarnPoltergeistDash:Show()
-			specWarnPoltergeistDash:Play("frontal")
+			specWarnNecroticEruption:Show(self.vb.necroticEruption)
+			specWarnNecroticEruption:Play("frontal")
 		end
-		timerPoltergeistDashCD:Start()
+		timerNecroticEruptionCD:Start(nil, self.vb.necroticEruption+1)
 	elseif spellId == 473513 then
 		self.vb.feastCount = self.vb.feastCount + 1
 		specWarnFeastoftheDamned:Show(self.vb.feastCount)
 		specWarnFeastoftheDamned:Play("aesoon")
-		timerFeastoftheDamnedCD:Start()
+		timerFeastoftheDamnedCD:Start(nil, self.vb.feastCount+1)
+	elseif spellId == 474298 then
+		self.vb.drawCount = self.vb.drawCount + 1
+		timerDrawSoulCD:Start(nil, self.vb.drawCount+1)
 	end
 end
 
 function mod:SPELL_CAST_SUCCESS(args)
 	local spellId = args.spellId
-	if spellId == 319521 or spellId == 473959 then
-		self.vb.drawCount = self.vb.drawCount + 1
-		timerDrawSoulCD:Start(nil, self.vb.drawCount+1)
-	elseif spellId == 319626 or spellId == 473540 then
-		self.vb.parasiteCount = self.vb.parasiteCount + 1
-		timerPhantasmalParasiteCD:Start(nil, self.vb.parasiteCount+1)
+	if spellId == 473540 then
+		self.vb.darknessCount = self.vb.darknessCount + 1
+		timerWellofDarknessCD:Start(nil, self.vb.darknessCount+1)
+		updateAllTimers(self, 3.8)
 	end
 end
 
 function mod:SPELL_AURA_APPLIED(args)
 	local spellId = args.spellId
-	if spellId == 319521 then
+	if spellId == 474298 then
 		warnDrawSoul:CombinedShow(0.3, args.destName)
 		if args:IsPlayer() then
 			specWarnDrawSoul:Show()
 			specWarnDrawSoul:Play("justrun")
-			--yellDrawSoul:Yell()
+			yellDrawSoul:Yell()
 		end
-	elseif spellId == 319416 then
-		if args:IsPlayer() then
-			specWarnTornSoul:Show()
-			specWarnTornSoul:Play("targetyou")
-			--yellTornSoul:Yell()
-		end
-	elseif spellId == 319626 then
+	elseif spellId == 1223804 then
 		local dispelWarned = false
-		if self.Options.SpecWarn319626dispel and args:IsDestTypePlayer() and self:CheckDispelFilter("magic") then
-			specWarnPhantasmalParasiteDPL:Show(args.destName)
-			specWarnPhantasmalParasiteDPL:Play("helpdispel")
+		if self.Options.SpecWarn473540dispel and args:IsDestTypePlayer() and self:CheckDispelFilter("magic") then
+			specWarnWellofDarknessDPL:Show(args.destName)
+			specWarnWellofDarknessDPL:Play("helpdispel")
 			dispelWarned = true
 		end
 		if args:IsPlayer() then
 			if not dispelWarned then--If player is a dispeller, they may have already gotten alert to dispel themselves
-				specWarnPhantasmalParasite:Show()
-				specWarnPhantasmalParasite:Play("runout")
+				specWarnWellofDarkness:Show()
+				specWarnWellofDarkness:Play("scatter")
 			end
-			yellPhantasmalParasite:Yell()
+			yellWellofDarkness:Yell()
 		else
-			warnPhantasmalParasite:CombinedShow(0.3, args.destName)
+			warnWellofDarkness:CombinedShow(0.3, args.destName)
 		end
-	elseif spellId == 333567 then
-		warnPossession:Show(args.destName)
 	end
 end
 
@@ -143,11 +176,3 @@ function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId, spell
 end
 mod.SPELL_PERIODIC_MISSED = mod.SPELL_PERIODIC_DAMAGE
 --]]
-
-function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
-	if spellId == 319589 then
-		specWarnGraspingHands:Show()
-		specWarnGraspingHands:Play("watchstep")
-		timerGraspingHandsCD:Start()
-	end
-end
