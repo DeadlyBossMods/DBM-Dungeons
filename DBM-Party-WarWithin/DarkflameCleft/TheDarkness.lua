@@ -4,7 +4,7 @@ local L		= mod:GetLocalizedStrings()
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(208747)
 mod:SetEncounterID(2788)
-mod:SetHotfixNoticeRev(20240427000000)
+mod:SetHotfixNoticeRev(20250222000000)
 --mod:SetMinSyncRevision(20211203000000)
 mod:SetZone(2651)
 --mod.respawnTime = 29
@@ -13,7 +13,7 @@ mod.sendMainBossGUID = true
 mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
-	"SPELL_CAST_START 426943 428266 427025 427011",
+	"SPELL_CAST_START 426943 428266 427025 427011 427176",
 	"SPELL_CAST_SUCCESS 427157",
 	"SPELL_AURA_APPLIED 420307 427015",
 	"SPELL_AURA_REMOVED 427015"
@@ -41,12 +41,13 @@ local specWarnUmbralSlash					= mod:NewSpecialWarningDodgeCount(427025, nil, nil
 local specWarnShadowblast					= mod:NewSpecialWarningMoveAway(427011, nil, nil, nil, 2, 2)
 local yellShadowblast						= mod:NewShortYell(427011)
 local yellShadowblastFades					= mod:NewShortFadesYell(427011)
+local specWarnDrainLight					= mod:NewSpecialWarningInterrupt(427176, "HasInterrupt", nil, nil, 1, 2)
 --local specWarnGTFO						= mod:NewSpecialWarningGTFO(372820, nil, nil, nil, 1, 8)
 
-local timerEternalDarknessCD				= mod:NewAITimer(100, 428266, nil, nil, nil, 2, nil, DBM_COMMON_L.MAGIC_ICON)
-local timerCallDarkspawnCD					= mod:NewCDCountTimer(47.3, 427157, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
-local timerUmbralSlashCD					= mod:NewCDCountTimer(30.3, 427025, nil, nil, nil, 3)
-local timerShadowblastCD					= mod:NewCDCountTimer(30.3, 427011, nil, nil, nil, 3)
+local timerEternalDarknessCD				= mod:NewCDCountTimer(63.1, 428266, nil, nil, nil, 2, nil, DBM_COMMON_L.MAGIC_ICON)
+local timerCallDarkspawnCD					= mod:NewCDCountTimer("r46.9-51.4", 427157, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerUmbralSlashCD					= mod:NewCDCountTimer("v30.3-31.5", 427025, nil, nil, nil, 3)
+local timerShadowblastCD					= mod:NewCDCountTimer("30.3-32.3", 427011, nil, nil, nil, 3)
 
 mod.vb.eternalCount = 0
 mod.vb.callCount = 0
@@ -60,11 +61,11 @@ function mod:OnCombatStart(delay)
 	self.vb.callCount = 0
 	self.vb.umbralCount = 0
 	self.vb.blastCount = 0
-	timerShadowblastCD:Start(10.8-delay, 1)
-	timerUmbralSlashCD:Start(20.5-delay, 1)
-	timerCallDarkspawnCD:Start(30.2-delay, 1)
+	timerShadowblastCD:Start(10.6-delay, 1)
+	timerUmbralSlashCD:Start(20.3-delay, 1)
+	timerCallDarkspawnCD:Start(26.4-delay, 1)
 	if self:IsMythic() then
-		timerEternalDarknessCD:Start(1-delay)
+		timerEternalDarknessCD:Start(30.5-delay, 1)
 	end
 	if self.Options.InfoFrame then
 		DBM.InfoFrame:SetHeader(DBM:GetSpellName(422806))
@@ -86,15 +87,21 @@ function mod:SPELL_CAST_START(args)
 		self.vb.eternalCount = self.vb.eternalCount + 1
 		specWarnEternalDarkness:Show(self.vb.eternalCount)
 		specWarnEternalDarkness:Play("aesoon")
-		timerEternalDarknessCD:Start()
+		--30.5, 63.1, 63.9
+		timerEternalDarknessCD:Start(nil, self.vb.eternalCount+1)
 	elseif spellId == 427025 then
 		self.vb.umbralCount = self.vb.umbralCount + 1
 		specWarnUmbralSlash:Show(self.vb.umbralCount)
 		specWarnUmbralSlash:Play("frontal")
+		--20.3, 30.8, 30.3, 31.1, 30.3, 31.5
 		timerUmbralSlashCD:Start(nil, self.vb.umbralCount+1)
 	elseif spellId == 427011 then
 		self.vb.blastCount = self.vb.blastCount + 1
+		--10.6, 30.8, 30.3, 32.3, 30.3, 31.5
 		timerShadowblastCD:Start(nil, self.vb.blastCount+1)
+	elseif spellId == 427176 and self:CheckInterruptFilter(args.sourceGUID, false, true) then
+		specWarnDrainLight:Show(args.sourceName)
+		specWarnDrainLight:Play("kickcast")
 	end
 end
 
@@ -104,6 +111,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 		self.vb.callCount = self.vb.callCount + 1
 		specWarnCallDarkspawn:Show(args.sourceName, self.vb.callCount)
 		specWarnCallDarkspawn:Play("kickcast")
+		--26.4, 51.4, 46.9, 47.3
 		timerCallDarkspawnCD:Start(nil, self.vb.callCount+1)
 	end
 end
