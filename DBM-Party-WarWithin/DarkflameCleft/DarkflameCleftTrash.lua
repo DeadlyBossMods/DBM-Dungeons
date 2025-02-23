@@ -205,3 +205,12 @@ function mod:UNIT_DIED(args)
 		timerExplosiveFlameCD:Stop(args.destGUID)
 	end
 end
+
+--All timers subject to a ~0.5 second clipping due to ScanEngagedUnits
+function mod:StartEngageTimers(guid, cid, delay)
+
+end
+
+function mod:LeavingZoneCombat()
+	self:Stop(true)
+end
