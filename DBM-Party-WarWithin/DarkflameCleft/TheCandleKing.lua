@@ -5,7 +5,7 @@ mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(208745)
 mod:SetEncounterID(2787)
 mod:SetUsedIcons(8, 7, 6, 5, 4)
---mod:SetHotfixNoticeRev(20220322000000)
+mod:SetHotfixNoticeRev(20250222000000)
 --mod:SetMinSyncRevision(20211203000000)
 mod:SetZone(2651)
 --mod.respawnTime = 29
@@ -16,18 +16,17 @@ mod:RegisterCombat("combat")
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 420659 426145",
 	"SPELL_CAST_SUCCESS 422648",
-	"SPELL_SUMMON 420665",
+	"SPELL_SUMMON 420665 420949",
 	"SPELL_AURA_APPLIED 421653",
 	"SPELL_AURA_REMOVED 422648",
 	"SPELL_PERIODIC_DAMAGE 421067",
-	"SPELL_PERIODIC_MISSED 421067"
---	"UNIT_SPELLCAST_SUCCEEDED boss1"
+	"SPELL_PERIODIC_MISSED 421067",
+	"UNIT_SPELLCAST_SUCCEEDED boss1"
 )
 
 --TODO, verify auto marking
 --TODO, are both private aura spellids used? what's the primary (for showing in GUI)
---TODO, unit spellcast event for throw darkflame timer as it's a private aura and completely disabled in CLEU (including cast)
---TODO, remaining two timers need more data
+--TODO, timers only veted on S2 M+, not lower difficulties
 --[[
 (ability.id = 420659 or ability.id = 426145) and type = "begincast"
  or ability.id = 422648 and type = "cast"
@@ -48,10 +47,10 @@ local yellDarkflamePickaxeFades				= mod:NewShortFadesYell(422648)
 local specWarnParanoidMind					= mod:NewSpecialWarningInterruptCount(426145, "HasInterrupt", nil, nil, 1, 2)
 local specWarnGTFO							= mod:NewSpecialWarningGTFO(421067, nil, nil, nil, 1, 8)
 
-local timerEarieMoldsCD						= mod:NewCDCountTimer(31.5, 420659, nil, nil, nil, 1)
-local timerDarkflamePickaxeCD				= mod:NewAITimer(17, 422648, nil, nil, nil, 3)
-local timerParanoidMindCD					= mod:NewCDCountTimer(22, 426145, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
---local timerThrowDarkflameCD					= mod:NewAITimer(24.3, 420696, nil, nil, nil, 3)
+local timerEarieMoldsCD						= mod:NewVarCountTimer("v21.8-26.8", 420659, nil, nil, nil, 1)
+local timerDarkflamePickaxeCD				= mod:NewVarCountTimer("v23.1-27.9", 422648, nil, nil, nil, 3)
+local timerParanoidMindCD					= mod:NewVarCountTimer("v10.9-15.8", 426145, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--Usually 12.1, probably need more timer correction
+local timerThrowDarkflameCD					= mod:NewVarCountTimer("v21.9-37.6", 420696, nil, nil, nil, 3)--TODO, refine it with timer correction
 
 mod:AddSetIconOption("SetIconOnAdds", 420659, true, 5, {8, 7, 6, 5, 4})
 mod:AddPrivateAuraSoundOption(420696, true, 420696, 1)--Throw Darkflame
@@ -69,10 +68,10 @@ function mod:OnCombatStart(delay)
 	self.vb.mindCount = 0
 	self.vb.throwCount = 0
 	timerEarieMoldsCD:Start(6-delay, 1)
-	timerDarkflamePickaxeCD:Start(1-delay)
+	timerDarkflamePickaxeCD:Start(15.4-delay, 1)
 	timerParanoidMindCD:Start(10.9-delay, 1)
 	if self:IsMythic() then
---		timerThrowDarkflameCD:Start(1-delay)
+		timerThrowDarkflameCD:Start(21.4-delay, 1)
 		self:EnablePrivateAuraSound(420696, "movetostatue", 17)--Throw Darkflame
 		self:EnablePrivateAuraSound(453278, "movetostatue", 17, 420696)--Register Additional Throw Darkflame ID
 	end
@@ -88,6 +87,7 @@ function mod:SPELL_CAST_START(args)
 		self.vb.addIcon = 8
 		self.vb.statueCount = self.vb.statueCount + 1
 		warnEarieMolds:Show(self.vb.statueCount)
+		--6.9, 23.1, 23.1, 24.3, 21.8, 21.9, 25.5, 26.8, 26.7
 		timerEarieMoldsCD:Start(nil, self.vb.statueCount+1)
 	elseif spellId == 426145 then
 		self.vb.mindCount = self.vb.mindCount + 1
@@ -101,7 +101,8 @@ function mod:SPELL_CAST_SUCCESS(args)
 	local spellId = args.spellId
 	if spellId == 422648 then
 		self.vb.pickaxeCount = self.vb.pickaxeCount + 1
-		timerDarkflamePickaxeCD:Start()
+		--15.4, 23.1, 24.3, 27.9, 24.3, 25.5, 26.8, 26.7
+		timerDarkflamePickaxeCD:Start(nil, self.vb.pickaxeCount+1)
 		if args:IsPlayer() then
 			specWarnDarkflamePickaxe:Show(statueName)
 			specWarnDarkflamePickaxe:Play("movetostatue")
@@ -115,7 +116,7 @@ end
 
 function mod:SPELL_SUMMON(args)
 	local spellId = args.spellId
-	if spellId == 420665 then
+	if spellId == 420665 or spellId == 420949 then
 		if self.Options.SetIconOnAdds then
 			self:ScanForMobs(args.destGUID, 2, self.vb.addIcon, 1, nil, 12, "SetIconOnAdds")
 		end
@@ -174,10 +175,9 @@ function mod:UNIT_DIED(args)
 end
 --]]
 
---[[
 function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
-	if spellId == 74859 then
-
+	if spellId == 420696 then
+		self.vb.throwCount = self.vb.throwCount + 1
+		timerThrowDarkflameCD:Start(nil, self.vb.throwCount+1)
 	end
 end
---]]

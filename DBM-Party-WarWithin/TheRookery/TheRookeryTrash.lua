@@ -6,9 +6,7 @@ mod:SetRevision("@file-date-integer@")
 mod.isTrashMod = true
 mod.isTrashModBossFightAllowed = true
 mod:SetZone(2648)
-if DBM.Options.DebugMode then--Make it easier to collect initial nameplate timers across delves with transcriptor
-	mod:RegisterZoneCombat(2648)
-end
+mod:RegisterZoneCombat(2648)
 
 mod:RegisterEvents(
 	"SPELL_CAST_START 426893 450628 427323 427404 430013 427616 430754 423979 430805 430812 432959",
@@ -229,4 +227,13 @@ function mod:UNIT_DIED(args)
 	elseif cid == 212793 then--Void Asscendant
 		timerVoidVolleyCD:Stop()
 	end
+end
+
+--All timers subject to a ~0.5 second clipping due to ScanEngagedUnits
+function mod:StartEngageTimers(guid, cid, delay)
+
+end
+
+function mod:LeavingZoneCombat()
+	self:Stop(true)
 end

@@ -4,7 +4,7 @@ local L		= mod:GetLocalizedStrings()
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(210149)
 mod:SetEncounterID(2829)
---mod:SetHotfixNoticeRev(20220322000000)
+mod:SetHotfixNoticeRev(20250222000000)
 --mod:SetMinSyncRevision(20211203000000)
 mod:SetZone(2651)
 --mod.respawnTime = 29
@@ -13,16 +13,18 @@ mod.sendMainBossGUID = true
 mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
-	"SPELL_CAST_START 421665",
-	"SPELL_CAST_SUCCESS 422122 422682",
-	"SPELL_AURA_APPLIED 423693",
-	"SPELL_AURA_REMOVED 423693"
+	"SPELL_CAST_START 422245",
+--	"SPELL_CAST_SUCCESS 422122 422682",
+--	"SPELL_AURA_APPLIED 423693",
+	"SPELL_AURA_REMOVED 423693",
 --	"SPELL_PERIODIC_DAMAGE",
 --	"SPELL_PERIODIC_MISSED"
---	"UNIT_SPELLCAST_SUCCEEDED boss1"
+	"CHAT_MSG_RAID_BOSS_EMOTE",
+	"CHAT_MSG_RAID_WARNING",--TEMP til blizzard fixes event (if they do)
+	"RAID_BOSS_WHISPER",
+	"UNIT_SPELLCAST_START boss1"
 )
 
---TODO, need to see and transcribe fight for actual add spawn mechanics to be captured properly
 --TODO, https://www.wowhead.com/beta/spell=428268/underhanded-track-tics for mythic
 --Note, actual fixate cast is not in combat log, only applied
 --[[
@@ -33,34 +35,41 @@ or ability.id = 422122 and type = "cast"
  or ability.id = 181113 and type = "cast"
  or (source.type = "NPC" and source.firstSeen = timestamp) or (target.type = "NPC" and target.firstSeen = timestamp)
 --]]
-local warnNewMobs							= mod:NewCountAnnounce(421875, 3)
-local warnFixate							= mod:NewTargetNoFilterAnnounce(423693, 3)
+local warnNewCandle							= mod:NewTargetNoFilterAnnounce(423693, 3)
 local warnFixateOver						= mod:NewFadesAnnounce(423693, 1)
+local warnCharge							= mod:NewTargetAnnounce(422122, 2)
 
-local specWarnRecklessCharge				= mod:NewSpecialWarningCount(422122, nil, nil, nil, 2, 2)
-local specWarnRockBuster					= mod:NewSpecialWarningDefensive(421665, nil, nil, nil, 1, 2)
-local specWarnFixate						= mod:NewSpecialWarningYou(423693, nil, nil, nil, 1, 2)
-local yellFixate							= mod:NewYell(423693)
+local specWarnRecklessCharge				= mod:NewSpecialWarningYouCount(422122, nil, nil, nil, 2, 2)
+local yellCharge							= mod:NewShortYell(422122)
+local yellChargeFades						= mod:NewShortFadesYell(422122)
+local specWarnRockBuster					= mod:NewSpecialWarningDefensive(422245, nil, nil, nil, 1, 2)
+local specWarnCandle						= mod:NewSpecialWarningYou(423693, nil, nil, nil, 1, 2)
+local yellCandle							= mod:NewShortYell(423693, nil, false)
+local specWarnUnderhandedTactic				= mod:NewSpecialWarningSwitchCount(428268, "Dps", nil, nil, 1, 2)
 --local specWarnGTFO						= mod:NewSpecialWarningGTFO(372820, nil, nil, nil, 1, 8)
 
-local timerRecklessChargeCD					= mod:NewAITimer(33.9, 422122, nil, nil, nil, 3)
-local timerRockBusterCD						= mod:NewAITimer(33.9, 421665, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
-local timerNewMobsCD						= mod:NewAITimer(15, 421875, nil, nil, nil, 1)--15 except after a charge then 20? need more data
---local timerFixateCD						= mod:NewAITimer(38.9, 423693, nil, nil, nil, 3)
+local timerUnderhandedTacticCD				= mod:NewCDCountTimer(80, 428268, nil, nil, nil, 1, nil, DBM_COMMON_L.MYTHIC_ICON)
+local timerRecklessChargeCD					= mod:NewVarCountTimer("v35.2-36.2", 422122, nil, nil, nil, 3)--Can sometimes skip casts
+local timerRockBusterCD						= mod:NewVarCountTimer("v13.4-37.7", 422245, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)--Can also sometimes skip casts
+local timerLuringCandleCD					= mod:NewCDCountTimer(38.9, 422162, nil, nil, nil, 1)
 
 --local castsPerGUID = {}
 mod.vb.chargeCount = 0
 mod.vb.busterCount = 0
-mod.vb.addsCount = 0
+mod.vb.candleCount = 0
+mod.vb.tacticsCount = 0
 
 function mod:OnCombatStart(delay)
 	self.vb.chargeCount = 0
 	self.vb.busterCount = 0
-	self.vb.addsCount = 0
-	timerRecklessChargeCD:Start(1-delay)
-	timerRockBusterCD:Start(1-delay)
-	--timerNewMobsCD:Start(1-delay)--Called instantly on pull
-	--timerFixateCD:Start(12.1-delay)
+	self.vb.candleCount = 0
+	self.vb.tacticsCount = 0
+	timerRockBusterCD:Start(1.3-delay, 1)
+	timerLuringCandleCD:Start(6-delay, 1)
+	timerRecklessChargeCD:Start(28-delay, 1)
+	if self:IsMythic() then
+		timerUnderhandedTacticCD:Start(49.3-delay, 1)
+	end
 end
 
 --function mod:OnCombatEnd()
@@ -69,7 +78,7 @@ end
 
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
-	if spellId == 421665 then
+	if spellId == 422245 then
 		self.vb.busterCount = self.vb.busterCount + 1
 		if self:IsTanking("player", "boss1", nil, true) then
 			specWarnRockBuster:Show()
@@ -79,6 +88,7 @@ function mod:SPELL_CAST_START(args)
 	end
 end
 
+--[[
 function mod:SPELL_CAST_SUCCESS(args)
 	local spellId = args.spellId
 	if spellId == 422122 then
@@ -86,13 +96,11 @@ function mod:SPELL_CAST_SUCCESS(args)
 		specWarnRecklessCharge:Show(self.vb.chargeCount)
 		specWarnRecklessCharge:Play("chargemove")
 		timerRecklessChargeCD:Start()
-	elseif spellId == 422682 and self:AntiSpam(6, 1) then--Crude Weapons
-		self.vb.addsCount = self.vb.addsCount + 1
-		warnNewMobs:Show(self.vb.addsCount)
-		timerNewMobsCD:Start()
 	end
 end
+--]]
 
+--[[
 function mod:SPELL_AURA_APPLIED(args)
 	local spellId = args.spellId
 	if spellId == 423693 then
@@ -106,6 +114,7 @@ function mod:SPELL_AURA_APPLIED(args)
 	end
 end
 --mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED
+--]]
 
 function mod:SPELL_AURA_REMOVED(args)
 	local spellId = args.spellId
@@ -126,19 +135,52 @@ end
 mod.SPELL_PERIODIC_MISSED = mod.SPELL_PERIODIC_DAMAGE
 --]]
 
---[[
-function mod:UNIT_DIED(args)
-	local cid = self:GetCIDFromGUID(args.destGUID)
-	if cid == 193435 then
-
+function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
+	if msg:find("spell:428268") then
+		self.vb.tacticsCount = self.vb.tacticsCount + 1
+		specWarnUnderhandedTactic:Show(self.vb.tacticsCount)
+		specWarnUnderhandedTactic:Play("targetchange")
+		timerUnderhandedTacticCD:Start(nil, self.vb.tacticsCount+1)
 	end
 end
---]]
+mod.CHAT_MSG_RAID_WARNING = mod.CHAT_MSG_RAID_BOSS_EMOTE
 
---[[
-function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
-	if spellId == 74859 then
-
+function mod:RAID_BOSS_WHISPER(msg)
+	if msg:find("spell:423693") then
+		specWarnCandle:Show()
+		specWarnCandle:Play("justrun")
+		yellCandle:Yell()
 	end
 end
---]]
+
+function mod:OnTranscriptorSync(msg, targetName)
+	if msg:find("423693") and targetName and self:AntiSpam(5, targetName) then
+		targetName = Ambiguate(targetName, "none")
+		warnNewCandle:Show(targetName)
+	end
+end
+
+do
+	function mod:ChargeTarget(targetname, _, scanningTime)
+		if not targetname then return end
+		if targetname == UnitName("player") and self:AntiSpam(5, 5) then
+			specWarnRecklessCharge:Show(self.vb.chargeCount)
+			specWarnRecklessCharge:Play("runout")
+			yellCharge:Yell()
+			yellChargeFades:Countdown(5-scanningTime)
+		else
+			warnCharge:Show(targetname)
+		end
+	end
+
+	function mod:UNIT_SPELLCAST_START(uId, _, spellId)
+		if spellId == 422116 then
+			self.vb.chargeCount = self.vb.chargeCount + 1
+			timerRecklessChargeCD:Start(nil, self.vb.chargeCount+1)
+			self:BossUnitTargetScanner(uId, "ChargeTarget")
+		elseif spellId == 422163 then
+			self.vb.candleCount = self.vb.candleCount + 1
+			timerLuringCandleCD:Start(nil, self.vb.candleCount+1)
+		end
+	end
+end
