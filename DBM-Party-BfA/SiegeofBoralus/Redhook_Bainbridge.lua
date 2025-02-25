@@ -57,7 +57,7 @@ local specWarnCannonBarrage			= mod:NewSpecialWarningDodgeCount(257540, nil, nil
 --Chopper Redhook
 --local timerOntheHookCD			= mod:NewCDTimer(13, 257459, nil, nil, nil, 3)
 --local timerGoreCrashCD			= mod:NewCDTimer(13, 257326, nil, nil, nil, 3)--24.9, 43.3
-local timerIronHookCD				= mod:NewCDTimer(17.7, 272662, nil, nil, nil, 3)
+local timerIronHookCD				= mod:NewCDTimer(10.2, 272662, nil, nil, nil, 3)
 --Sergeant Bainbridge
 --local timerIronGazeCD				= mod:NewCDTimer(13, 260954, nil, nil, nil, 3)
 --local timerSteelTempestCD			= mod:NewCDTimer(13, 260924, nil, nil, nil, 3)
