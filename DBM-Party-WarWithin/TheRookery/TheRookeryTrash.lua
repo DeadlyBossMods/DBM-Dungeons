@@ -273,7 +273,7 @@ function mod:StartEngageTimers(guid, cid, delay)
 	elseif cid == 214419 then--Corrupted Rookguard
 		timerVoidCrushCD:Start(8.4-delay, guid)
 	elseif cid == 207199 then--Cursed Rook Tender
---		timerLightningSurgeCD:Start(0.5-delay, guid)
+		timerLightningSurgeCD:Start(10-delay, guid)
 	elseif cid == 214421 then--Corrupted Thunderer
 		timerAttractingShadowsCD:Start(5.6-delay, guid)
 		timerArcingVoidCD:Start(8-delay, guid)
