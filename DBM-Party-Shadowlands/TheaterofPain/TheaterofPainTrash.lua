@@ -51,7 +51,7 @@ local specWarnBattleTrance					= mod:NewSpecialWarningInterrupt(342139, "HasInte
 local specWarnDemoralizingShout				= mod:NewSpecialWarningInterrupt(330562, "HasInterrupt", nil, nil, 1, 2)
 local specWarnBindSoul						= mod:NewSpecialWarningInterrupt(330810, "HasInterrupt", nil, nil, 1, 2)
 local specWarnNecroticBoltVolley			= mod:NewSpecialWarningInterrupt(330868, "HasInterrupt", nil, nil, 1, 2)
-local specWarnBoneSpear						= mod:NewSpecialWarningInterrupt(342675, "HasInterrupt", nil, nil, 1, 2)
+local specWarnBoneSpear						= mod:NewSpecialWarningInterrupt(342675, "HasInterrupt", nil, nil, 1, 2)--cast every 3.6 seconds (it's 3.5 second cast, so basically spam cast)
 local specWarnMeatShield					= mod:NewSpecialWarningInterrupt(341977, "HasInterrupt", nil, nil, 1, 2)
 
 local timerSoulstormCD						= mod:NewCDNPTimer(26.7, 323043, nil, nil, nil, 2, nil, DBM_COMMON_L.HEALER_ICON)
@@ -69,7 +69,7 @@ local timerWhirlingBladeCD					= mod:NewCDNPTimer(16.6, 336996, nil, nil, nil, 3
 local timerRagingTantrumCD					= mod:NewCDNPTimer(18.2, 333241, nil, nil, nil, 5, nil, DBM_COMMON_L.ENRAGE_ICON)
 local timerWitheringDischargeCD				= mod:NewCDNPTimer(24.1, 341969, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerNecroticBoltVolleyCD				= mod:NewCDNPTimer(22.5, 330868, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
-local timerBoneSpearCD						= mod:NewCDNPTimer(23.1, 342675, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+--local timerBoneSpearCD						= mod:NewCDNPTimer(23.1, 342675, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--CD deleted in Feb 28th hotfixes
 local timerMeatShieldCD						= mod:NewCDNPTimer(20.6, 341977, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--20.6-25
 local timerDemoralizingShoutCD				= mod:NewCDNPTimer(17, 330562, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerBindSoulCD						= mod:NewCDNPTimer(20.6, 330810, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
@@ -190,8 +190,8 @@ function mod:SPELL_CAST_SUCCESS(args)
 		timerWitheringDischargeCD:Start(24.1, args.sourceGUID)
 	elseif spellId == 330868 then
 		timerNecroticBoltVolleyCD:Start(22.5, args.sourceGUID)
-	elseif spellId == 342675 then
-		timerBoneSpearCD:Start(23.1, args.sourceGUID)
+--	elseif spellId == 342675 then
+--		timerBoneSpearCD:Start(23.1, args.sourceGUID)
 	elseif spellId == 341977 then
 		timerMeatShieldCD:Start(20.6, args.sourceGUID)
 	elseif spellId == 330562 then
@@ -206,8 +206,8 @@ function mod:SPELL_INTERRUPT(args)
 		timerWitheringDischargeCD:Start(24.1, args.destGUID)
 	elseif args.extraSpellId == 330868 then
 		timerNecroticBoltVolleyCD:Start(22.5, args.destGUID)
-	elseif args.extraSpellId == 342675 then
-		timerBoneSpearCD:Start(23.1, args.destGUID)
+--	elseif args.extraSpellId == 342675 then
+--		timerBoneSpearCD:Start(23.1, args.destGUID)
 	elseif args.extraSpellId == 341977 then
 		timerMeatShieldCD:Start(20.6, args.destGUID)
 	elseif args.extraSpellId == 330562 then
@@ -271,8 +271,8 @@ function mod:UNIT_DIED(args)
 		timerWitheringDischargeCD:Stop(args.destGUID)
 	elseif cid == 160495 then--Maniacal Soulbinder
 		timerNecroticBoltVolleyCD:Stop(args.destGUID)
-	elseif cid == 170882 then--Bone Magus
-		timerBoneSpearCD:Stop(args.destGUID)
+--	elseif cid == 170882 then--Bone Magus
+--		timerBoneSpearCD:Stop(args.destGUID)
 	elseif cid == 170690 then--Diseased Horror
 		timerMeatShieldCD:Stop(args.destGUID)
 	elseif cid == 164506 then--Ancient Captain
@@ -312,8 +312,8 @@ function mod:StartEngageTimers(guid, cid, delay)
 		timerWitheringDischargeCD:Start(13-delay, guid)
 	elseif cid == 160495 then--Maniacal Soulbinder
 		timerNecroticBoltVolleyCD:Start(12-delay, guid)
-	elseif cid == 170882 then--Bone Magus
-		timerBoneSpearCD:Start(11-delay, guid)
+--	elseif cid == 170882 then--Bone Magus
+--		timerBoneSpearCD:Start(11-delay, guid)
 --	elseif cid == 170690 then--Diseased Horror
 --		timerMeatShieldCD:Start(21-delay, guid)--Initial is likely health based
 	elseif cid == 164506 then--Ancient Captain
