@@ -11,7 +11,7 @@ mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 269029 268230 268260 463182",
-	"SPELL_CAST_SUCCESS 268963 268752 181089 268230",
+	"SPELL_CAST_SUCCESS 268963 268752 181089 268230 463182",
 	"SPELL_AURA_APPLIED 272421",
 	"UNIT_DIED"
 --	"UNIT_SPELLCAST_START boss1 boss2 boss3 boss4 boss5",--boss and Adds
@@ -39,7 +39,7 @@ local timerRicochetCD				= mod:NewCDCountTimer(17.9, 463182, nil, nil, nil, 3)
 --local timerWithdrawCD				= mod:NewCDCountTimer(40, 268752, nil, nil, nil, 6)--Health based now
 local timerCleartheDeckCD			= mod:NewCDCountTimer(17.7, 269029, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerCrimsonSwipeCD			= mod:NewCDNPTimer(10.6, 268230, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)--11.8-12.2 now
-local timerBroadsideCD				= mod:NewVarCountTimer("v12.1-14.2", 268260, nil, nil, nil, 3)--12.1-14.2
+local timerBroadsideCD				= mod:NewVarCountTimer("v10.9-14.2", 268260, nil, nil, nil, 3)--10.9-14.2
 
 mod.vb.massBombCount = 0
 mod.vb.ricochetCount = 0
@@ -58,7 +58,7 @@ function mod:OnCombatStart(delay)
 	timerCleartheDeckCD:Start(3.5-delay, 1)
 	timerRicochetCD:Start(9.0-delay, 1)--Could be shorter, but most people trigger gutshot on pull
 	if self:IsMythic() then
-		timerMassBombardmentCD:Start(10.1-delay, 1)
+		timerMassBombardmentCD:Start("v1.3-10.1"-delay, 1)
 	end
 --	timerWithdrawCD:Start(13.1-delay, 1)
 end
@@ -78,11 +78,9 @@ function mod:SPELL_CAST_START(args)
 		self.vb.broadCount = self.vb.broadCount + 1
 		specWarnBroadside:Show(self.vb.broadCount)
 		specWarnBroadside:Play("watchstep")
-		timerBroadsideCD:Start(11.1, self.vb.broadCount+1)--11.1-14.6 in TWW (formerly 10.9)
+		timerBroadsideCD:Start(nil, self.vb.broadCount+1)--10.9-14.6 in TWW
 	elseif spellId == 463182 then
-		self.vb.ricochetCount = self.vb.ricochetCount + 1
-		warnFieryRicochet:Show(self.vb.ricochetCount)
-		timerRicochetCD:Start(18.2, self.vb.ricochetCount+1)
+		warnFieryRicochet:Show(self.vb.ricochetCount+1)
 	end
 end
 
@@ -93,6 +91,9 @@ function mod:SPELL_CAST_SUCCESS(args)
 		timerBroadsideCD:Stop()
 	elseif spellId == 268230 then
 		timerCrimsonSwipeCD:Start(nil, args.sourceGUID)
+	elseif spellId == 463182 then
+		self.vb.ricochetCount = self.vb.ricochetCount + 1
+		timerRicochetCD:Start(16.2, self.vb.ricochetCount+1)--18.2-2
 	elseif spellId == 268752 then--Withdraw (boss Leaving)
 		self:SetStage(2)
 		self.vb.withdrawCount = self.vb.withdrawCount + 1
@@ -100,7 +101,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 		timerCleartheDeckCD:Stop()
 		timerRicochetCD:Stop()
 		timerMassBombardmentCD:Stop()
-		timerBroadsideCD:Start(10.9, self.vb.broadCount+1)--10.9-15 in TWW
+		timerBroadsideCD:Start("v10.9-15", self.vb.broadCount+1)--10.9-15 in TWW
 	elseif spellId == 181089 then--Encounter Event (boss returning)
 		self:SetStage(1)
 		timerBroadsideCD:Stop()

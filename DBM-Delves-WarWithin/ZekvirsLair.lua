@@ -10,7 +10,6 @@ mod:SetHotfixNoticeRev(20240914000000)
 mod:SetMinSyncRevision(20240914000000)
 mod:SetZone(2682)
 
---mod:RegisterCombat("scenario", 2682)
 mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(

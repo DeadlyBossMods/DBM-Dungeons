@@ -189,7 +189,7 @@ end
 
 ---@param self DBMMod
 local function workAroundLuaLimitation(self, spellId, sourceName, sourceGUID)
-	if spellId == 474223 then
+	if spellId == 474223 and self:IsValidWarning(sourceGUID) then
 		timerConcussiveSmashCD:Start(nil, sourceGUID)
 		if self:AntiSpam(3, 5) then
 			warnConcussiveSmash:Show()
@@ -446,7 +446,7 @@ function mod:SPELL_CAST_START(args)
 			specWarnBubbleSurge:Show()
 			specWarnBubbleSurge:Play("watchstep")
 		end
-	elseif args.spellId == 474004 then
+	elseif args.spellId == 474004 and self:IsValidWarning(args.sourceGUID) then
 		if self:AntiSpam(3, 2) then
 			specWarnDrillQuake:Show()
 			specWarnDrillQuake:Play("watchstep")

@@ -133,12 +133,12 @@ function mod:SPELL_CAST_SUCCESS(args)
 		self.vb.frenzyCount = self.vb.frenzyCount + 1
 		timerUnholyFrenzyCD:Start(nil, self.vb.frenzyCount+1)
 		--if remainig time on land of the dead is < 2.4, it's extended by this every time (this one variates more, 2.4 to 5 likely to a necrotic bolt spell lockout)
-		if timerLandoftheDeadCD:GetRemaining(self.vb.deadCount+1) < 2.4 then
-			local elapsed, total = timerLandoftheDeadCD:GetTime(self.vb.deadCount+1)
-			local extend = 2.4 - (total-elapsed)
-			DBM:Debug("timerLandoftheDeadCD extended by: "..extend, 2)
-			timerLandoftheDeadCD:Update(elapsed, total+extend, self.vb.deadCount+1)
-		end
+		--if timerLandoftheDeadCD:GetRemaining(self.vb.deadCount+1) < 2.4 then
+		--	local elapsed, total = timerLandoftheDeadCD:GetTime(self.vb.deadCount+1)
+		--	local extend = 2.4 - (total-elapsed)
+		--	DBM:Debug("timerLandoftheDeadCD extended by: "..extend, 2)
+		--	timerLandoftheDeadCD:Update(elapsed, total+extend, self.vb.deadCount+1)
+		--end
 	end
 end
 
