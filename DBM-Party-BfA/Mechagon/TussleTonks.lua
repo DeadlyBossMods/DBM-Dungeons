@@ -4,6 +4,7 @@ local L		= mod:GetLocalizedStrings()
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(144244, 145185)
 mod:SetEncounterID(2257)
+mod:SetHotfixNoticeRev(20250303000000)
 mod:SetBossHPInfoToHighest()
 mod:SetZone(2097)
 
@@ -14,8 +15,8 @@ mod:RegisterEvents(
 )
 
 mod:RegisterEventsInCombat(
-	"SPELL_CAST_START 285020 283422 285388 1215065 1215102 1216431",
-	"SPELL_CAST_SUCCESS 285344 285152",
+	"SPELL_CAST_START 283422 1215065 1215102 1216431 282801 285152",
+	"SPELL_CAST_SUCCESS 1216443 282801 1215194 1215102",
 	"SPELL_AURA_REMOVED 282801",
 --	"SPELL_AURA_REMOVED_DOSE 282801",
 	"UNIT_DIED"
@@ -28,31 +29,27 @@ mod:RegisterEventsInCombat(
 --TODO, can tank dodge pummel?
 --TODO, target scan battle mine?
 --[[
-(ability.id = 285020 or ability.id = 283422 or ability.id = 285388) and type = "begincast"
- or (ability.id = 285344 or ability.id = 285152) and type = "cast"
+(ability.id = 282801 or ability.id = 283422 or ability.id = 1215065 or ability.id = 1215102 or ability.id = 1216431 or ability.id = 285152) and type = "begincast"
+ or (ability.id = 282801 or ability.id = 1215194 or ability.id = 1215102 or ability.id = 1216443) and type = "cast"
+ or ability.id = 282801 and type = "removebuff"
+ or type = "dungeonencounterstart" or type = "dungeonencounterend"
  --]]
- --Obsolete (pre 11.1)
-local warnLayMine					= mod:NewCountAnnounce(285351, 2)
-
-local specWarnVentJets				= mod:NewSpecialWarningDodge(285388, nil, nil, nil, 2, 2)
-local specWarnWhirlingEdge			= mod:NewSpecialWarningDodge(285020, "Tank", nil, nil, 1, 2)
-
-local timerVentJetsCD				= mod:NewCDTimer(40.1, 285388, nil, nil, nil, 2)
-local timerLayMineCD				= mod:NewCDTimer(12.1, 285351, nil, nil, nil, 3)
-local timerWhirlingEdgeCD			= mod:NewNextTimer(32.4, 285020, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 --General
+local warnElectricalStorm			= mod:NewSpellAnnounce(1216443, 2)
 --local specWarnGTFO				= mod:NewSpecialWarningGTFO(238028, nil, nil, nil, 1, 8)
 
 local timerRP						= mod:NewRPTimer(68)
 --The Platinum Pummeler
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(19237))
+local warnPlatingCast				= mod:NewCastAnnounce(282801, 2)
 local warnPlating					= mod:NewFadesAnnounce(282801, 1)
 
 local specWarnPlatinumPummel		= mod:NewSpecialWarningDodgeCount(1215065, nil, nil, nil, 1, 15)
 local specWarnGroundPound			= mod:NewSpecialWarningCount(1215102, nil, nil, nil, 2, 2)
 
-local timerPlatinumPummelCD			= mod:NewAITimer(12.1, 1215065, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
-local timerGroundPoundCD			= mod:NewAITimer(12.1, 1215102, nil, nil, nil, 3, nil, DBM_COMMON_L.HEALER_ICON)
+local timerPlatinumPlatingCD		= mod:NewCDCountTimer(36.2, 282801, nil, nil, nil, 5)
+local timerPlatinumPummelCD			= mod:NewCDCountTimer(15.2, 1215065, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+local timerGroundPoundCD			= mod:NewCDCountTimer(18.1, 1215102, nil, nil, nil, 3, nil, DBM_COMMON_L.HEALER_ICON)
 --Gnomercy
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(19236))
 local warnMaxThrust					= mod:NewTargetNoFilterAnnounce(283565, 2)
@@ -64,12 +61,11 @@ local specWarnBattleMine			= mod:NewSpecialWarningDodgeCount(1216431, nil, nil, 
 local specWarnFoeFlipper			= mod:NewSpecialWarningYouCount(285153, nil, nil, nil, 1, 2)
 local yellFoeFlipper				= mod:NewYell(285153)
 
-local timerMaxThrustCD				= mod:NewCDTimer(45.8, 283565, nil, nil, nil, 3)
-local timerBattlemineCD				= mod:NewAITimer(12.1, 1216431, nil, nil, nil, 3)
---local timerFoeFlipperCD				= mod:NewCDTimer(13.4, 285153, nil, nil, nil, 3)
+local timerMaxThrustCD				= mod:NewCDCountTimer(35.2, 283565, nil, nil, nil, 3)
+local timerBattlemineCD				= mod:NewCDCountTimer(17.0, 1216431, nil, nil, nil, 3)
+local timerFoeFlipperCD				= mod:NewCDCountTimer(15.8, 285153, nil, nil, nil, 3)
 
-local isNewShit = DBM:GetTOC() >= 110100
-
+mod.vb.platinumPlatingCastCount = 0
 mod.vb.platinumPummelCount = 0
 mod.vb.groundPoundCount = 0
 mod.vb.trustCount = 0
@@ -87,73 +83,107 @@ function mod:ThrustTarget(targetname)
 	end
 end
 
+function mod:FoeTarget(targetname)
+	if not targetname then return end
+	if targetname == UnitName("player") then
+		specWarnFoeFlipper:Show(self.vb.foeCount)
+		specWarnFoeFlipper:Play("targetyou")
+		yellFoeFlipper:Yell()
+	else
+		warnFoeFlipper:Show(targetname)
+	end
+end
+
 function mod:OnCombatStart(delay)
+	self.vb.platinumPlatingCastCount = 0
 	self.vb.platinumPummelCount = 0
 	self.vb.groundPoundCount = 0
 	self.vb.trustCount = 0
 	self.vb.mineCount = 0
 	self.vb.foeCount = 0
-	--timerMaxThrustCD:Start(3-delay)
-	if not isNewShit then
-		timerWhirlingEdgeCD:Start(8.2-delay)--No longer used in 11.1
-		timerLayMineCD:Start(15.5-delay)----No longer used in 11.1
-		timerVentJetsCD:Start(22.8-delay)--No longer used in 11.1?
-	else
-		timerPlatinumPummelCD:Start(1-delay)
-		timerGroundPoundCD:Start(1-delay)
-		timerBattlemineCD:Start(1-delay)
-	end
-	--timerFoeFlipperCD:Start(16.7-delay)
+	timerFoeFlipperCD:Start(5.8-delay, 1)
+	timerPlatinumPummelCD:Start(7-delay, 1)
+	timerBattlemineCD:Start(12.1-delay, 1)
+	timerGroundPoundCD:Start(13.1-delay, 1)
+	timerMaxThrustCD:Start(36.2-delay, 1)
+	timerPlatinumPlatingCD:Start(37.2-delay, 1)
 end
 
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
-	if spellId == 285020 then
-		specWarnWhirlingEdge:Show()
-		specWarnWhirlingEdge:Play("shockwave")
-		timerWhirlingEdgeCD:Start()
-	elseif spellId == 283422 then
+	if spellId == 283422 then
 		self.vb.trustCount = self.vb.trustCount + 1
-		timerMaxThrustCD:Start()--self.vb.trustCount+1
+		--"Maximum Thrust-283565-npc:145185-000032308F = pull:39.2, 35.2, 35.2, 35.2",
+		timerMaxThrustCD:Start(self.vb.trustCount+1)
 		self:BossTargetScanner(args.sourceGUID, "ThrustTarget", 0.1, 7)
-	elseif spellId == 285388 then
-		specWarnVentJets:Show()
-		specWarnVentJets:Play("watchstep")
-		timerVentJetsCD:Start()
 	elseif spellId == 1215065 then
 		self.vb.platinumPummelCount = self.vb.platinumPummelCount + 1
 		specWarnPlatinumPummel:Show(self.vb.platinumPummelCount)
 		specWarnPlatinumPummel:Play("frontal")
-		timerPlatinumPummelCD:Start()--nil, self.vb.platinumPummelCount+1
+		timerPlatinumPummelCD:Start(nil, self.vb.platinumPummelCount+1)
 	elseif spellId == 1215102 then
-		self.vb.groundPoundCount = self.vb.groundPoundCount + 1
-		specWarnGroundPound:Show(self.vb.groundPoundCount)
+		specWarnGroundPound:Show(self.vb.groundPoundCount+1)
 		specWarnGroundPound:Play("aesoon")
-		timerGroundPoundCD:Start()--nil, self.vb.groundPoundCount+1
 	elseif spellId == 1216431 then
 		self.vb.mineCount = self.vb.mineCount + 1
 		specWarnBattleMine:Show(self.vb.mineCount)
 		specWarnBattleMine:Play("watchstep")
-		timerBattlemineCD:Start()--self.vb.mineCount+1
+		--"B.4.T.T.L.3. Mine-1216431-npc:145185-000032308F = pull:13.1, 17.0, 28.0, 35.2, 35.2, 35.2",
+		if self.vb.mineCount == 1 then
+			timerBattlemineCD:Start(17, 2)
+		elseif self.vb.mineCount == 2 then
+			timerBattlemineCD:Start(28, 3)
+		else
+			timerBattlemineCD:Start(35.2, self.vb.mineCount+1)
+		end
+	elseif spellId == 282801 then
+		--Count and timer not here since cast can be interrupted and we only want to increment on successful cast
+		warnPlatingCast:Show()
+	elseif spellId == 285152 then
+		self.vb.foeCount = self.vb.foeCount + 1
+		self:BossTargetScanner(args.sourceGUID, "FoeTarget", 0.1, 8)
+		--Might be worth using UnitTarget scanner instead based on below
+		--"<167.34 19:37:12> [UNIT_SPELLCAST_START] Gnomercy 4.U.(99.2%-17.0%){Target:Relop} -Foe Flipper- 2.5s [[boss2:Cast-3-5770-2097-16037-285152-001CB23057:285152]]",
+		--"<167.34 19:37:12> [CLEU] SPELL_CAST_START#Creature-0-5770-2097-16037-145185-000032303A#Gnomercy 4.U.(99.3%-17.0%)##nil#285152#Foe Flipper#nil#nil#nil#nil#nil#nil",
+		--"<167.34 19:37:12> [UNIT_SPELLCAST_SUCCEEDED] Gnomercy 4.U.(99.2%-17.0%){Target:Relop} -Foe Flipper- [[boss2:Cast-3-5770-2097-16037-285150-001C323057:285150]]",
+---->	--"<167.34 19:37:12> [UNIT_TARGET] boss2#Gnomercy 4.U.#Target: Shirumw#TargetOfTarget: Gnomercy 4.U.",
+		--"<169.83 19:37:14> [UNIT_SPELLCAST_SUCCEEDED] Gnomercy 4.U.(97.4%-22.0%){Target:Shirumw} -Foe Flipper- [[boss2:Cast-3-5770-2097-16037-285152-001CB23057:285152]]",
+		--"<169.83 19:37:14> [UNIT_SPELLCAST_STOP] Gnomercy 4.U.(97.4%-22.0%){Target:Shirumw} -Foe Flipper- [[boss2:Cast-3-5770-2097-16037-285152-001CB23057:285152]]",
+		--"<169.83 19:37:14> [CLEU] SPELL_CAST_SUCCESS#Creature-0-5770-2097-16037-145185-000032303A#Gnomercy 4.U.(97.4%-22.0%)#Player-5764-0042C929#Shirumw#285152#Foe Flipper#nil#nil#nil#nil#nil#nil",
+		--"Foe Flipper-285152-npc:145185-000032308F = pull:5.8, 15.8, 29.2, 15.8, 19.4, 15.8, 19.4, 15.8, 19.4, 15.8",
+		if self.vb.foeCount == 2 then
+			timerFoeFlipperCD:Start(29.2, 3)
+		elseif self.vb.foeCount % 2 == 1 then
+			timerFoeFlipperCD:Start(15.8, self.vb.foeCount+1)
+		else
+			timerFoeFlipperCD:Start(19.4, self.vb.foeCount+1)
+		end
 	end
 end
 
 function mod:SPELL_CAST_SUCCESS(args)
 	local spellId = args.spellId
-	if spellId == 285344 then
-		self.vb.mineCount = self.vb.mineCount + 1
-		warnLayMine:Show(self.vb.mineCount)
-		timerLayMineCD:Start(nil, self.vb.mineCount+1)
-	elseif spellId == 285152 then
-		self.vb.foeCount = self.vb.foeCount + 1
-		if args:IsPlayer() then
-			specWarnFoeFlipper:Show(self.vb.foeCount)
-			specWarnFoeFlipper:Play("targetyou")
-			yellFoeFlipper:Yell()
-		else
-			warnFoeFlipper:Show(args.destName)
+	if spellId == 1216443 and self.vb.bossLeft == 1 then
+		warnElectricalStorm:Show()
+	elseif spellId == 282801 then
+		self.vb.platinumPlatingCastCount = self.vb.platinumPlatingCastCount + 1
+		--"Platinum Plating-282801-npc:144244-000032308F = pull:42.2, 42.5, 41.3",
+		timerPlatinumPlatingCD:Start(35.2, self.vb.platinumPlatingCastCount+1)--36.2 - 1
+	elseif spellId == 1215194 then--Stunnned
+		--Add 5 seconds to timer when boss is stunned
+		timerPlatinumPlatingCD:AddTime(5, self.vb.platinumPlatingCastCount+1)
+		--Extend timers that come off CD during stun
+		if timerGroundPoundCD:GetRemaining(self.vb.groundPoundCount+1) < 5.3 then
+			local elapsed, total = timerGroundPoundCD:GetTime(self.vb.groundPoundCount+1)
+			local extend = 5.3 - (total-elapsed)
+			DBM:Debug("timerGroundPoundCD extended by: "..extend, 2)
+			timerGroundPoundCD:Stop()
+			timerGroundPoundCD:Update(elapsed, total+extend, self.vb.groundPoundCount+1)
 		end
-		--timerFoeFlipperCD:Start()
+	elseif spellId == 1215102 then
+		self.vb.groundPoundCount = self.vb.groundPoundCount + 1
+		--"Ground Pound-1215102-npc:144244-000032308F = pull:13.1, 18.2, 25.5, 18.2, 20.6, 18.2, 21.9, 18.2",
+		timerGroundPoundCD:Start(15.2, self.vb.groundPoundCount+1)--18.2-3
 	end
 end
 
@@ -161,7 +191,6 @@ function mod:SPELL_AURA_REMOVED(args)
 	local spellId = args.spellId
 	if spellId == 282801 then
 		warnPlating:Show()
-		timerWhirlingEdgeCD:Stop()
 	end
 end
 --mod.SPELL_AURA_REMOVED_DOSE = mod.SPELL_AURA_REMOVED
@@ -169,12 +198,13 @@ end
 function mod:UNIT_DIED(args)
 	local cid = self:GetCIDFromGUID(args.destGUID)
 	if cid == 144244 then--The Platinum Pummeler
-		timerWhirlingEdgeCD:Stop()
 		timerPlatinumPummelCD:Stop()
+		timerGroundPoundCD:Stop()
+		timerPlatinumPlatingCD:Stop()
 	elseif cid == 145185 then--Gnomercy 4.U.
-		--timerFoeFlipperCD:Stop()
-		timerVentJetsCD:Stop()
+		timerFoeFlipperCD:Stop()
 		timerMaxThrustCD:Stop()
+		timerBattlemineCD:Stop()
 	end
 end
 

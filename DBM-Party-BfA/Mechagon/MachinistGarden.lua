@@ -30,10 +30,10 @@ local specWarnFlameCannon			= mod:NewSpecialWarningCount(285440, nil, nil, nil, 
 local specWarnDiscomBomb			= mod:NewSpecialWarningDispel(285454, "RemoveMagic", nil, nil, 2, 2)
 --local specWarnGTFO				= mod:NewSpecialWarningGTFO(238028, nil, nil, nil, 1, 8)
 
-local timerDiscomBombCD				= mod:NewNextCountTimer(18.2, 285454, nil, nil, nil, 3)
+local timerDiscomBombCD				= mod:NewNextCountTimer(20.6, 285454, nil, nil, nil, 3)
 local timerFlameCannonCD			= mod:NewCDCountTimer(47.4, 285440, nil, nil, nil, 2)
 local timerSelfTrimmingHedgeCD		= mod:NewCDCountTimer(25.5, 294954, nil, nil, nil, 3)
-local timerPlantCD					= mod:NewCDCountTimer(45.4, 294853, nil, nil, nil, 1)
+local timerPlantCD					= mod:NewVarCountTimer("v46.1-47.4", 294853, nil, nil, nil, 1)
 
 mod.vb.bombCount = 0
 mod.vb.cannonCount = 0
@@ -74,6 +74,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 	elseif spellId == 292332 then--Self-Trimming Hedge
 		self.vb.hedgeCount = self.vb.hedgeCount + 1
 		warnSelfTrimmingHedge:Show(self.vb.hedgeCount)
+		--"Self-Trimming Hedge-292332-npc:144248-0000322FAF = pull:3.7, 25.5, 25.5, 25.5, 25.5, 25.5",
 		timerSelfTrimmingHedgeCD:Start(nil, self.vb.hedgeCount+1)
 	end
 end
