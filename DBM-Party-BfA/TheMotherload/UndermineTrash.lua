@@ -31,6 +31,7 @@ local warnRapidExtraction					= mod:NewCastAnnounce(473168, 2)--, nil, nil, nil,
 local warnChargedShot						= mod:NewCastAnnounce(269429, 2)
 local warnBrutalCharge						= mod:NewTargetNoFilterAnnounce(1214751, 2)
 local warnOvertime							= mod:NewSpellAnnounce(1213139, 2, nil, "Tank|Healer|RemoveEnrage")
+local warnInhaleVapors						= mod:NewTargetNoFilterAnnounce(262092, 2, nil, "Tank|RemoveEnrage")
 
 local specWarnForceCannon					= mod:NewSpecialWarningDodge(268865, nil, nil, nil, 2, 2)
 local specWarnArtilleryBarrage				= mod:NewSpecialWarningDodge(269090, nil, nil, nil, 2, 2)
@@ -44,7 +45,6 @@ local specWarnTectonicBarrier				= mod:NewSpecialWarningInterrupt(263215, false,
 local specWarnToxicBlades					= mod:NewSpecialWarningInterrupt(269302, "HasInterrupt", nil, nil, 1, 2)
 local specWarnTectonicBarrierDispel			= mod:NewSpecialWarningDispel(263215, "MagicDispeller", nil, nil, 1, 2)
 local specWarnEnemyToGoo					= mod:NewSpecialWarningInterrupt(268797, "HasInterrupt", nil, nil, 1, 2)--High Prio
-local specWarnInhaleVaporsDispel			= mod:NewSpecialWarningDispel(262092, "RemoveEnrage", nil, 2, 1, 2)
 
 local timerFanOfKnivesCD					= mod:NewCDNPTimer(20.6, 267354, nil, nil, nil, 3)
 local timerIcedSpritzerCD					= mod:NewCDPNPTimer(24.4, 280604, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
@@ -214,8 +214,7 @@ function mod:SPELL_AURA_APPLIED(args)
 	if not self.Options.Enabled then return end
 	local spellId = args.spellId
 	if spellId == 262092 and args:IsDestTypeHostile() and self:IsValidWarning(args.destGUID) and self:AntiSpam(3, 3) then
-		specWarnInhaleVaporsDispel:Show(args.destName)
-		specWarnInhaleVaporsDispel:Play("enrage")
+		warnInhaleVapors:Show(args.destName)
 	elseif spellId == 263215 and args:IsDestTypeHostile() and self:IsValidWarning(args.destGUID) and self:AntiSpam(3, 3) then
 		specWarnTectonicBarrierDispel:Show(args.destName)
 		specWarnTectonicBarrierDispel:Play("helpdispel")
