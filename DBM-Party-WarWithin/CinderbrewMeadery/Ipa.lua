@@ -39,10 +39,10 @@ local specWarnBurningFermentation			= mod:NewSpecialWarningCount(439202, nil, ni
 local specWarnBottomsUppercut				= mod:NewSpecialWarningDefensive(439031, nil, nil, nil, 1, 2)
 local specWarnGTFO							= mod:NewSpecialWarningGTFO(441179, nil, nil, nil, 1, 8)
 
-local timerSpoutingStoutCD					= mod:NewCDCountTimer(47.3, 439365, nil, nil, nil, 1)
+local timerSpoutingStoutCD					= mod:NewNextCountTimer(47.3, 439365, nil, nil, nil, 1)
 local timerRelocationForm					= mod:NewCastTimer(20, 448718, nil, nil, nil, 1)
-local timerBurningFermentationCD			= mod:NewCDCountTimer(47.3, 439202, nil, nil, nil, 2, nil, DBM_COMMON_L.HEALER_ICON..DBM_COMMON_L.MAGIC_ICON)
-local timerBottomsUppercutCD				= mod:NewCDCountTimer(47.3, 439031, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+local timerBurningFermentationCD			= mod:NewNextCountTimer(47.3, 439202, nil, nil, nil, 2, nil, DBM_COMMON_L.HEALER_ICON..DBM_COMMON_L.MAGIC_ICON)
+local timerBottomsUppercutCD				= mod:NewNextCountTimer(47.3, 439031, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 
 mod:AddNamePlateOption("NPOnFrothy", 442122)
 
@@ -55,7 +55,7 @@ function mod:OnCombatStart(delay)
 	self.vb.fermCount = 0
 	self.vb.uppercutCount = 0
 	timerSpoutingStoutCD:Start(10, 1)
-	timerBottomsUppercutCD:Start(26.4, 1)
+	timerBottomsUppercutCD:Start(26.3, 1)
 	timerBurningFermentationCD:Start(35.1, 1)
 	if self.Options.NPOnFrothy then
 		DBM:FireEvent("BossMod_EnableHostileNameplates")
