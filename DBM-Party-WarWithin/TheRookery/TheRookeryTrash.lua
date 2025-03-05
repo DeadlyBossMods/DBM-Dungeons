@@ -20,10 +20,10 @@ mod:RegisterEvents(
 
 --TODO, more spells probably
 --[[
-(ability.id = 1214628) and (type = "begincast" or type = "cast")
- or stoppedAbility.id = 1214628
+(ability.id = 450628) and (type = "begincast" or type = "cast")
+ or stoppedAbility.id = 450628
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
- or (source.type = "NPC" and source.firstSeen = timestamp and source.id = 212739) or (target.type = "NPC" and target.firstSeen = timestamp and target.id = 212739)
+ or (source.type = "NPC" and source.firstSeen = timestamp and source.id = 209801) or (target.type = "NPC" and target.firstSeen = timestamp and target.id = 209801)
 --]]
 --TODO, add Oblivion Wave frontal on tank
 --TODO, void shell gone?
@@ -52,9 +52,10 @@ local specWarnArcingVoid					= mod:NewSpecialWarningInterrupt(430805, "HasInterr
 
 --Almost all timers probably wrong now, but can't use public WCL to fix this since all logs short
 --Also, all of them were moved to success preemtively but if stops actually DO put any of these on CD, then the preemtive move actually broke timer
-local timerBoundingVoidCD					= mod:NewCDPNPTimer(18.2, 426893, nil, nil, nil, 3)
-local timerEntropyShieldCD					= mod:NewCDNPTimer(27.1, 450628, nil, nil, nil, 5)--Single cast instance, poor sample
-local timerLocalizedStormCD					= mod:NewCDNPTimer(24.2, 427404, nil, nil, nil, 2)
+local timerBoundingVoidCD					= mod:NewCDPNPTimer(18.2, 426893, nil, nil, nil, 3)--S2 Confirmed
+local timerEntropyShieldCD					= mod:NewCDNPTimer(27.1, 450628, nil, nil, nil, 5)--S2 Confirmed
+local timerLocalizedStormCD					= mod:NewCDNPTimer(23.1, 427404, nil, nil, nil, 2)
+local timerWildLightningCD					= mod:NewCDNPTimer(20.6, 474018, nil, nil, nil, 3)
 --local timerThunderstrikeCD				= mod:NewCDNPTimer(15.1, 430013, nil, nil, nil, 3)
 --local timerEnergizedBarrageCD				= mod:NewCDPNPTimer(5, 427616, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)--MUCH lower CD in 11.1
 local timerLightningSurgeCD					= mod:NewCDNPTimer(18.3, 427260, nil, nil, nil, 5, nil, DBM_COMMON_L.ENRAGE_ICON)--17-2 due to waiting for success
@@ -62,7 +63,6 @@ local timerLightningSurgeCD					= mod:NewCDNPTimer(18.3, 427260, nil, nil, nil, 
 local timerSeepingCorruptionCD				= mod:NewCDNPTimer(20.3, 430179, nil, nil, nil, 3, nil, DBM_COMMON_L.CURSE_ICON)
 local timerArcingVoidCD						= mod:NewCDPNPTimer(18.1, 430805, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerAttractingShadowsCD				= mod:NewCDNPTimer(21.9, 430812, nil, nil, nil, 2)--21.9-24.2
-local timerWildLightningCD					= mod:NewCDNPTimer(20.6, 474018, nil, nil, nil, 3)
 local timerVoidCrushCD						= mod:NewCDNPTimer(20.7, 474031, nil, nil, nil, 3)--Can stutter cast
 local timerFeastingVoidCD					= mod:NewCDNPTimer(21, 1214523, nil, nil, nil, 5)
 local timerUmbralWaveCD						= mod:NewCDNPTimer(23, 1214546, nil, nil, nil, 3)--23-29

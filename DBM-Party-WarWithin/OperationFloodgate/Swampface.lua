@@ -61,9 +61,9 @@ function mod:OnCombatStart(delay)
 	timerAwakenSwampCD:Start(19-delay)
 end
 
---function mod:OnCombatEnd()
-
---end
+function mod:OnCombatEnd()
+	table.wipe(vineTargets)
+end
 
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
@@ -158,6 +158,7 @@ end
 --Vines Cast not in combat log (only debuffs, but this is more efficent timer start)
 function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
 	if spellId == 470039 then
+		table.wipe(vineTargets)
 		self.vb.vinesCount = self.vb.vinesCount + 1
 		timerRazorchokeVinesCD:Start(nil, self.vb.vinesCount+1)
 	end
