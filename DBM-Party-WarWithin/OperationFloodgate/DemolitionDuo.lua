@@ -46,7 +46,7 @@ local specWarnBBBFG							= mod:NewSpecialWarningDodgeCount(1217653, nil, nil, D
 local specWarnExplosiveGel					= mod:NewSpecialWarningYou(473690, nil, nil, DBM_COMMON_L.KNOCKUP, 1, 2)
 local yellExplosiveGel						= mod:NewShortYell(473690, DBM_COMMON_L.KNOCKUP)
 
-local timerBigBadaBoomCD					= mod:NewCDCountTimer(335.3, 460867, 167180, nil, nil, 5)--Short text "Bombs"
+local timerBigBadaBoomCD					= mod:NewCDCountTimer(35.3, 460867, 167180, nil, nil, 5)--Short text "Bombs"
 --local timerBombsExplode					= mod:NewCastTimer(30, 460787, 167180, nil, nil, 2, nil, DBM_COMMON_L.DEADLY_ICON)
 local timerBBBFG							= mod:NewCDCountTimer(17.7, 1217653, DBM_COMMON_L.FRONTAL, nil, nil, 3)--.." (%s)"
 local timerExplosiveGelCD					= mod:NewCDCountTimer(17.7, 473690, DBM_COMMON_L.KNOCKUP, nil, nil, 3, nil, DBM_COMMON_L.MAGIC_ICON..DBM_COMMON_L.MYTHIC_ICON)
