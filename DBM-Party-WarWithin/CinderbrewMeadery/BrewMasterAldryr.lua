@@ -35,11 +35,9 @@ local warnThrowCinderbrew					= mod:NewCountAnnounce(432179, 2)
 
 local specWarnBlazingBelch					= mod:NewSpecialWarningDodgeCount(432198, nil, nil, nil, 2, 2)
 local specWarnKegSmash						= mod:NewSpecialWarningCount(432229, nil, nil, nil, 1, 2)
---local yellSomeAbility						= mod:NewYell(372107)
 local specWarnBrawl							= mod:NewSpecialWarningDodge(445180, nil, nil, nil, 2, 2)
 local specWarnGTFO							= mod:NewSpecialWarningGTFO(432196, nil, nil, nil, 1, 8)
 
-local timerHappyHourCD						= mod:NewCDCountTimer(52.1, 442525, nil, nil, nil, 6)
 local timerBlazingBelchCD					= mod:NewCDCountTimer(23, 432198, nil, nil, nil, 3)
 local timerThrowCinderbrewCD				= mod:NewCDCountTimer(18.1, 432179, nil, nil, nil, 3)
 local timerKegSmashCD						= mod:NewCDCountTimer(14.5, 432229, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)--13.7
@@ -59,7 +57,6 @@ function mod:OnCombatStart(delay)
 	timerKegSmashCD:Start(5.8, 1)
 	timerThrowCinderbrewCD:Start(10.6, 1)
 	timerBlazingBelchCD:Start(14.3, 1)
-	timerHappyHourCD:Start(26.5, 1)
 	if self.Options.NPAuraOnThirsty then
 		DBM:FireEvent("BossMod_EnableHostileNameplates")
 	end
@@ -98,15 +95,6 @@ function mod:SPELL_CAST_START(args)
 	end
 end
 
---[[
-function mod:SPELL_CAST_SUCCESS(args)
-	local spellId = args.spellId
-	if spellId == 372858 then
-
-	end
-end
---]]
-
 function mod:SPELL_AURA_APPLIED(args)
 	local spellId = args.spellId
 	if spellId == 431896 then
@@ -119,7 +107,7 @@ end
 
 function mod:SPELL_AURA_REMOVED(args)
 	local spellId = args.spellId
-	if spellId == 442525 then
+	if spellId == 442525 then--Happy Hour
 		self.vb.belchCount = 0
 		self.vb.cinderbrewCount = 0
 		self.vb.kegCount = 0
@@ -131,7 +119,6 @@ function mod:SPELL_AURA_REMOVED(args)
 		timerKegSmashCD:Start(8.4, 1)
 		timerThrowCinderbrewCD:Start(13.2, 1)
 		timerBlazingBelchCD:Start(16.9, 1)
-		timerHappyHourCD:Start(52.1, self.vb.happyHourCount+1)
 	elseif spellId == 431896 then
 		if self.Options.NPAuraOnThirsty then
 			DBM.Nameplate:Hide(true, args.destGUID, spellId)
@@ -152,14 +139,6 @@ function mod:UNIT_DIED(args)
 	local cid = self:GetCIDFromGUID(args.destGUID)
 	if cid == 193435 then
 
-	end
-end
---]]
-
---[[
-function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
-	if spellId == 445150 and self:AntiSpam(3, 1) then
-		specWarnBrawl:Show()
 	end
 end
 --]]

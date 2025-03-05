@@ -58,7 +58,7 @@ function mod:OnCombatStart(delay)
 	timerCleartheDeckCD:Start(3.5-delay, 1)
 	timerRicochetCD:Start(9.0-delay, 1)--Could be shorter, but most people trigger gutshot on pull
 	if self:IsMythic() then
-		timerMassBombardmentCD:Start("v1.3-10.1"-delay, 1)
+		timerMassBombardmentCD:Start("v1.3-10.1", 1)
 	end
 --	timerWithdrawCD:Start(13.1-delay, 1)
 end

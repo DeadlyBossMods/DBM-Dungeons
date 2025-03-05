@@ -12,8 +12,8 @@ mod:RegisterEvents(
 	"SPELL_CAST_START 424621 424423 424431 448515 424462 424420 427484 427356 427601 444296 427609 462859 446776 448787 448485 448492 427897 427357 464240 448791 435156 444743 435165",
 	"SPELL_CAST_SUCCESS 453458 427484 427342 462859 427356 446776 424420 444728 424429 444743",
 	"SPELL_INTERRUPT",
-	"SPELL_AURA_APPLIED 426964 424430 427621 444728",
-	"SPELL_AURA_APPLIED_DOSE 426964",
+	"SPELL_AURA_APPLIED 426964 424430 427621 444728 424419",
+	"SPELL_AURA_APPLIED_DOSE 426964 424419",
 --	"SPELL_AURA_REMOVED",
 	"UNIT_DIED"
 )
@@ -87,23 +87,23 @@ mod:AddTimerLine(DBM:EJ_GetSectionInfo(27825))
 local specWarnBrutalSmash					= mod:NewSpecialWarningDodge(424621, nil, nil, nil, 2, 2)
 local specWarnLungingStrike					= mod:NewSpecialWarningMoveAway(424423, nil, nil, nil, 1, 2)
 
-local timerBrutalSmashCD					= mod:NewCDNPTimer(30.3, 424621, nil, nil, nil, 3)
-local timerLungingStrikeCD					= mod:NewCDNPTimer(14.5, 424423, nil, nil, nil, 3)
+local timerBrutalSmashCD					= mod:NewCDTimer(30.3, 424621, nil, nil, nil, 3)--Using full timer instead of nameplate only so we can cleaner update it
+local timerLungingStrikeCD					= mod:NewCDTimer(14.5, 424423, nil, nil, nil, 3)
 --Elaena Emberlanz
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(27828))
 local specWarnHolyRadiance					= mod:NewSpecialWarningMoveAway(424431, nil, nil, nil, 2, 2)
 local specWarnDivineJudgement				= mod:NewSpecialWarningDefensive(448515, nil, nil, nil, 2, 2)
 
-local timerHolyRadianceCD					= mod:NewCDNPTimer(36.4, 424431, nil, nil, nil, 2, nil, DBM_COMMON_L.HEALER_ICON)
-local timerDivineJudgementCD				= mod:NewCDNPTimer(14.6, 448515, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+local timerHolyRadianceCD					= mod:NewCDTimer(36.4, 424431, nil, nil, nil, 2, nil, DBM_COMMON_L.HEALER_ICON)
+local timerDivineJudgementCD				= mod:NewCDTimer(14.6, 448515, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 
 --Taener Duelmal
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(27831))
 local specWarnEmberStorm					= mod:NewSpecialWarningDodge(424462, nil, nil, nil, 2, 2)
 local specWarnCinderblast					= mod:NewSpecialWarningInterrupt(424420, "HasInterrupt", nil, nil, 1, 2)
 
-local timerEmberStormCD						= mod:NewCDNPTimer(24.3, 424462, nil, nil, nil, 3)--24.3-40
-local timerCinderblastCD					= mod:NewCDPNPTimer(15.6, 424420, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--Can be MASSIVE delayed by cinderstorm or just rng
+local timerEmberStormCD						= mod:NewCDTimer(24.3, 424462, nil, nil, nil, 3)--24.3-40
+local timerCinderblastCD					= mod:NewCDTimer(15.6, 424420, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--Can be MASSIVE delayed by cinderstorm or just rng
 
 --local playerName = UnitName("player")
 
@@ -310,6 +310,15 @@ function mod:SPELL_AURA_APPLIED(args)
 	elseif spellId == 444728 and args:IsDestTypeHostile() and self:AntiSpam(3, 3) then
 		specWarnTemplarsWrath:Show(args.destName)
 		specWarnTemplarsWrath:Play("dispelboss")
+	elseif spellId == 424419 then--Warcry from Captain Dailcry
+		local cid = self:GetCIDFromGUID(args.destGUID)
+		if cid == 211291 or cid == 239836 then--sergeant-shaynemail (boss/trash)
+			timerBrutalSmashCD:RemoveTime(12.5, args.destGUID)
+		elseif cid == 211290 or cid == 239833 then--elaena-emberlanz (boss/trash)
+			timerDivineJudgementCD:RemoveTime(12.5, args.destGUID)
+		elseif cid == 211289 or cid == 239834 then--taener-duelmal (boss/trash)
+			timerEmberStormCD:RemoveTime(12.5, args.destGUID)
+		end
 	end
 end
 mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED

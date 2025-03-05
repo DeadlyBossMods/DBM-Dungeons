@@ -13,12 +13,13 @@ mod.sendMainBossGUID = true
 mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
-	"SPELL_CAST_START 444546 423539 451605 423536 444609 444608",
+	"SPELL_CAST_START 444546 423539 451605 423536 444609 444608 428169",
 	"SPELL_CAST_SUCCESS 423588",
 	"SPELL_AURA_APPLIED 423588",
 	"SPELL_AURA_REMOVED 423588",
 	"SPELL_PERIODIC_DAMAGE 425556",
-	"SPELL_PERIODIC_MISSED 425556"
+	"SPELL_PERIODIC_MISSED 425556",
+	"RAID_BOSS_WHISPER"
 --	"UNIT_SPELLCAST_SUCCEEDED boss1"
 )
 
@@ -28,22 +29,23 @@ mod:RegisterEventsInCombat(
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
 --]]
 --TODO, does boss have a really long RP that's included in ENCOUNTER_START
---TODO, how barrier affects timers. with only a single log I will make no assumptions and leave AI timers for now
 local warnBarrierofLight					= mod:NewCountAnnounce(423588, 3)
+local warnPurifyingLight					= mod:NewCountAnnounce(444546, 2)--Precast
+local warnPurifyingLightTargets				= mod:NewTargetNoFilterAnnounce(444546, 2)--target like 6 seconds later
 
 local specWarnEmbracetheLight				= mod:NewSpecialWarningInterruptCount(423664, "HasInterrupt", nil, nil, 1, 2)
-local specWarnPurifyingLight				= mod:NewSpecialWarningDodgeCount(444546, nil, nil, nil, 2, 2)
---local yellSomeAbility						= mod:NewYell(372107)
-local specWarnInnerLight					= mod:NewSpecialWarningCount(423539, nil, nil, nil, 2, 2)
+local specWarnPurifyingLight				= mod:NewSpecialWarningYou(444546, nil, nil, nil, 1, 2)
+local yellPurifyingLight					= mod:NewYell(444546)
+local specWarnInnerFire						= mod:NewSpecialWarningCount(423539, nil, nil, nil, 2, 2)
 local specWarnHolyFlame						= mod:NewSpecialWarningDodgeCount(451606, nil, nil, nil, 2, 2)--451605 has no tooltip, debuff ID used for option key
 local specWarnHolySmite						= mod:NewSpecialWarningInterruptCount(423536, false, nil, nil, 1, 2)--Very short cooldown
+local specWarnBlindingLight					= mod:NewSpecialWarningLookAway(428169, nil, nil, nil, 2, 2, 4)
 local specWarnGTFO							= mod:NewSpecialWarningGTFO(425556, nil, nil, nil, 1, 8)
 
---local timerBarrierofLightCD				= mod:NewAITimer(33.9, 423588, nil, nil, nil, 5, nil, DBM_COMMON_L.DAMAGE_ICON)
-local timerPurifyingLightCD					= mod:NewCDCountTimer(23, 444546, nil, nil, nil, 3)
-local timerInnerLightCD						= mod:NewVarCountTimer(23, 423539, nil, nil, nil, 2)
-local timerHolyFlameCD						= mod:NewVarCountTimer("v8.4-15.7", 451606, nil, nil, nil, 3, nil, DBM_COMMON_L.MAGIC_ICON)--8.4-15.7
-
+local timerPurifyingLightCD					= mod:NewVarCountTimer("v29.1-35", 444546, nil, nil, nil, 3)
+local timerInnerFireCD						= mod:NewVarCountTimer("v21.8-25.5", 423539, nil, nil, nil, 2)
+local timerHolyFlameCD						= mod:NewVarCountTimer("v12.1-21.8", 451606, nil, nil, nil, 3, nil, DBM_COMMON_L.MAGIC_ICON)
+local timerBlindingLightCD					= mod:NewVarCountTimer("v24.3-36.4", 428169, nil, nil, nil, 2, nil, DBM_COMMON_L.MYTHIC_ICON)
 mod:AddInfoFrameOption(423588)
 
 mod.vb.barrierCount = 0
@@ -51,6 +53,7 @@ mod.vb.purifyingCount = 0
 mod.vb.innerCount = 0
 mod.vb.holyFlameCount = 0
 mod.vb.holySmiteCount = 0
+mod.vb.blindingCount = 0
 
 function mod:OnCombatStart(delay)
 	self:SetStage(1)
@@ -59,10 +62,13 @@ function mod:OnCombatStart(delay)
 	self.vb.innerCount = 0
 	self.vb.holyFlameCount = 0
 	self.vb.holySmiteCount = 0
+	self.vb.blindingCount = 0
 	timerHolyFlameCD:Start(7-delay, 1)--7-8.1 (but can also sometimes not get cast at all for 45 seconds
 	timerPurifyingLightCD:Start(10.5-delay, 1)--10.5
-	timerInnerLightCD:Start("v15.5-19", 1)--15.5-19
---	timerBarrierofLightCD:Start(1-delay)--69 (need more sample size, i've seen too much variation, plus it's only cast once so it might be just health based?
+	timerInnerFireCD:Start("v15.5-19", 1)--15.5-19
+	if self:IsMythic() then
+		timerBlindingLightCD:Start(14.5-delay, 1)
+	end
 end
 
 function mod:OnCombatEnd()
@@ -75,14 +81,13 @@ function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
 	if spellId == 444546 then
 		self.vb.purifyingCount = self.vb.purifyingCount + 1
-		specWarnPurifyingLight:Show(self.vb.purifyingCount)
-		specWarnPurifyingLight:Play("watchstep")
+		warnPurifyingLight:Show(self.vb.purifyingCount)
 		timerPurifyingLightCD:Start(nil, self.vb.purifyingCount+1)
 	elseif spellId == 423539 or spellId == 444608 then
 		self.vb.innerCount = self.vb.innerCount + 1
-		specWarnInnerLight:Show(self.vb.innerCount)
-		specWarnInnerLight:Play("aesoon")
-		timerInnerLightCD:Start(nil, self.vb.innerCount+1)
+		specWarnInnerFire:Show(self.vb.innerCount)
+		specWarnInnerFire:Play("aesoon")
+		timerInnerFireCD:Start(nil, self.vb.innerCount+1)
 	elseif spellId == 451605 then
 		--8.1, 13.3, 9.7, 13.4, 9.7, 53.4, 9.7, 13.3, 9.7",
 		self.vb.holyFlameCount = self.vb.holyFlameCount + 1
@@ -103,9 +108,17 @@ function mod:SPELL_CAST_START(args)
 	elseif spellId == 444609 then--Stoke the flame (cast after interrupting Inner Light
 --		self.vb.holyFlameCount = 0
 		self:SetStage(2)
-		timerHolyFlameCD:Start(4.3, self.vb.holyFlameCount+1)--If it's not cast before purifying Light, it gets delayed til after
-		timerPurifyingLightCD:Start(4.5, self.vb.purifyingCount+1)
-		timerInnerLightCD:Start(10.9, self.vb.innerCount+1)
+		timerInnerFireCD:Start(4.8, self.vb.innerCount+1)
+		timerPurifyingLightCD:Start(7.2, self.vb.purifyingCount+1)
+		timerHolyFlameCD:Start(15, self.vb.holyFlameCount+1)--If it's not cast before purifying Light, it gets delayed til after
+		if self:IsMythic() then
+			timerBlindingLightCD:Start(11, self.vb.blindingCount+1)
+		end
+	elseif spellId == 428169 then
+		self.vb.blindingCount = self.vb.blindingCount + 1
+		specWarnBlindingLight:Show(args.sourceName)
+		specWarnBlindingLight:Play("turnaway")
+		timerBlindingLightCD:Start(nil, self.vb.blindingCount+1)
 	end
 end
 
@@ -114,17 +127,16 @@ function mod:SPELL_CAST_SUCCESS(args)
 	if spellId == 423588 then
 		self.vb.barrierCount = self.vb.barrierCount + 1
 		warnBarrierofLight:Show(self.vb.barrierCount)
---		timerBarrierofLightCD:Start()
 	end
 end
 
 function mod:SPELL_AURA_APPLIED(args)
 	local spellId = args.spellId
 	if spellId == 423588 then
---		timerBarrierofLightCD:Stop()
 		timerPurifyingLightCD:Stop()
-		timerInnerLightCD:Stop()
+		timerInnerFireCD:Stop()
 		timerHolyFlameCD:Stop()
+		timerBlindingLightCD:Stop()
 		if self.Options.InfoFrame then
 			DBM.InfoFrame:SetHeader(args.spellName)
 			DBM.InfoFrame:Show(2, "enemyabsorb", nil, args.amount, "boss1")
@@ -151,6 +163,24 @@ function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId, spell
 	end
 end
 mod.SPELL_PERIODIC_MISSED = mod.SPELL_PERIODIC_DAMAGE
+
+function mod:RAID_BOSS_WHISPER(msg)
+	if msg:find("425556") then
+		specWarnPurifyingLight:Show()
+		specWarnPurifyingLight:Play("laserrun")
+		yellPurifyingLight:Yell()
+	end
+end
+
+function mod:OnTranscriptorSync(msg, targetName)
+	if msg:find("425556") and targetName then
+		targetName = Ambiguate(targetName, "none")
+		if self:AntiSpam(4, targetName) then
+			if UnitName("player") == targetName then return end--Player already got warned
+			warnPurifyingLightTargets:Show(targetName)
+		end
+	end
+end
 
 --[[
 function mod:UNIT_DIED(args)
