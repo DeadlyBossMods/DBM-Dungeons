@@ -108,7 +108,7 @@ function mod:SPELL_CAST_START(args)
 			end
 		else
 			local timer = self:GetFromTimersTable(allTimers, false, self.vb.timerSet, spellId, self.vb.impaleCount+1)
-			if timer then
+			if timer and timer > 0 then
 				timerImpaleCD:Start(timer, self.vb.impaleCount+1)
 			end
 		end
@@ -140,7 +140,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 			end
 		else
 			local timer = self:GetFromTimersTable(allTimers, false, self.vb.timerSet, spellId, self.vb.infestationCount+1)
-			if timer then
+			if timer and timer > 0 then
 				timerInfestationCD:Start(timer, self.vb.infestationCount+1)
 			end
 		end

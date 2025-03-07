@@ -149,7 +149,7 @@ function mod:SPELL_CAST_START(args)
 			specWarnObsidianBlast:Play("defensive")
 		end
 		local timer = self:GetFromTimersTable(allTimers, false, self.vb.phase, spellId, self.vb.obsidianCount+1)
-		if timer then
+		if timer and timer > 0 then
 			timerObsidianBlastCD:Start(timer, self.vb.obsidianCount+1)
 		else
 			timerObsidianBlastCD:Start(17, self.vb.obsidianCount+1)--Still start a timer with lowest known value
@@ -162,7 +162,7 @@ function mod:SPELL_CAST_START(args)
 			specWarnObsidianBeam:Play("defensive")
 		end
 		local timer = self:GetFromTimersTable(allTimers, false, self.vb.phase, spellId, self.vb.obsidianCount+1)
-		if timer then
+		if timer and timer > 0 then
 			timerObsidianBeamCD:Start(timer, self.vb.obsidianCount+1)
 		else
 			timerObsidianBeamCD:Start(23.5, self.vb.obsidianCount+1)--Still start a timer with lowest known value
@@ -173,7 +173,7 @@ function mod:SPELL_CAST_START(args)
 		specWarnCollapsingDarkness:Show(self.vb.collapsingCount)
 		specWarnCollapsingDarkness:Play("watchstep")
 		local timer = self:GetFromTimersTable(allTimers, false, self.vb.phase, spellId, self.vb.collapsingCount+1)
-		if timer then
+		if timer and timer > 0 then
 			timerCollapsingDarknessCD:Start(timer, self.vb.collapsingCount+1)
 		else
 			timerCollapsingDarknessCD:Start(18, self.vb.collapsingCount+1)--Still start a timer with lowest known value
@@ -184,7 +184,7 @@ function mod:SPELL_CAST_START(args)
 		specWarnCollapsingNight:Show(self.vb.collapsingCount)
 		specWarnCollapsingNight:Play("watchstep")
 		local timer = self:GetFromTimersTable(allTimers, false, self.vb.phase, spellId, self.vb.collapsingCount+1)
-		if timer then
+		if timer and timer > 0 then
 			timerCollapsingNightCD:Start(timer, self.vb.collapsingCount+1)
 		else
 			timerCollapsingNightCD:Start(25.1, self.vb.collapsingCount+1)--Still start a timer with lowest known value
@@ -193,7 +193,7 @@ function mod:SPELL_CAST_START(args)
 	elseif spellId == 426734 then
 		self.vb.shadowsCount = self.vb.shadowsCount + 1
 		local timer = self:GetFromTimersTable(allTimers, false, self.vb.phase, self:IsMythic() and 4267342 or 4267341, self.vb.shadowsCount+1)
-		if timer then
+		if timer and timer > 0 then
 			timerBurningShadowsCD:Start(timer, self.vb.shadowsCount+1)
 		else
 			timerBurningShadowsCD:Start(17, self.vb.shadowsCount+1)--Still start a timer with lowest known value

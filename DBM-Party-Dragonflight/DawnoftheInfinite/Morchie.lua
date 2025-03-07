@@ -125,7 +125,7 @@ function mod:SPELL_CAST_START(args)
 		specWarnSandBlast:Show(self.vb.blastCount)
 		specWarnSandBlast:Play("shockwave")
 		local timer = self:GetFromTimersTable(allTimers, false, false, spellId, self.vb.blastCount+1)
-		if timer then
+		if timer and timer > 0 then
 			timerSandBlastCD:Start(timer, self.vb.blastCount+1)
 		else
 			if not askShown then
@@ -139,7 +139,7 @@ function mod:SPELL_CAST_START(args)
 		self.vb.problemIcons = 1
 		warnMoreProblems:Show(self.vb.problemIcons)
 		local timer = self:GetFromTimersTable(allTimers, false, false, spellId, self.vb.problemsCount+1)
-		if timer then
+		if timer and timer > 0 then
 			timerMoreProblemsCD:Start(timer, self.vb.problemsCount+1)
 		else
 			if not askShown then
@@ -154,7 +154,7 @@ function mod:SPELL_CAST_START(args)
 		self.vb.facesCount = self.vb.facesCount + 1
 		warnFamiliarFaces:Show(self.vb.facesCount)
 		local timer = self:GetFromTimersTable(allTimers, false, false, 405279, self.vb.facesCount+1)
-		if timer then
+		if timer and timer > 0 then
 			timerFamiliarFacesCD:Start(timer, self.vb.facesCount+1)
 		else
 			if not askShown then
@@ -167,7 +167,7 @@ function mod:SPELL_CAST_START(args)
 		specWarnTimeTraps:Show(self.vb.trapsCount)
 		specWarnTimeTraps:Play("watchstep")
 		local timer = self:GetFromTimersTable(allTimers, false, false, spellId, self.vb.trapsCount+1)
-		if timer then
+		if timer and timer > 0 then
 			timerTimeTrapsCD:Start(timer, self.vb.trapsCount+1)
 		else
 			if not askShown then

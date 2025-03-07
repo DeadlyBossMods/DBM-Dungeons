@@ -49,7 +49,7 @@ mod.vb.gatCount = 0
 mod.vb.homingCount = 0
 mod.vb.drillCount = 0
 
-function mod:DrillTarget(targetname, _, scanTime)
+function mod:DrillTarget(targetname, _, _, scanTime)
 	if not targetname then return end
 	if self:AntiSpam(4, targetname) then--Antispam to lock out redundant later warning from firing if this one succeeds
 		if targetname == UnitName("player") then
