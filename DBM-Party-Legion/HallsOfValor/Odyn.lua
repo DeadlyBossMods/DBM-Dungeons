@@ -116,7 +116,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 --		timerSpearCD:Start(18)
 		local nextCount = self.vb.brandCount+1
 --		local timer = brandTimers[nextCount]
---		if timer then
+--		if timer and timer > 0 then
 			timerRunicBrandCD:Start(nil, nextCount)
 --		end
 	end

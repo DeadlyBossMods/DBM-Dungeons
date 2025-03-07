@@ -101,7 +101,7 @@ function mod:SPELL_CAST_START(args)
 		warnRecalibrate:Show()
 		warnRecalibrate:Play("watchorb")
 		local timer = P1RecalibrateTimers[self.vb.recalibrateCount+1] or 12
-		if timer then
+		if timer and timer > 0 then
 			timerRecalibrateCD:Start(timer, self.vb.recalibrateCount+1)
 		end
 	elseif spellId == 291928 or spellId == 292264 then--Stage 1, Stage 2

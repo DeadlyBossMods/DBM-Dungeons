@@ -16,7 +16,7 @@ function mod:SPELL_AURA_APPLIED(args)
 	if args:IsSpell(24742) and args:IsPlayer() then
 		local timer = C_Map.GetBestMapForUnit("player") == 1456 and 14.8 -- Thunder Bluff
 			or C_Map.GetBestMapForUnit("player") == 1429 and 4.83 -- Elwynn Forest
-		if timer then
+		if timer and timer > 0 then
 			timerMagicWings:Start(timer)
 			specWarnCancelNow:Schedule(timer)
 		end
