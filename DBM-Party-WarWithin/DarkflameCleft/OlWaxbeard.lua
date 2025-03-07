@@ -161,13 +161,14 @@ function mod:OnTranscriptorSync(msg, targetName)
 end
 
 do
-	function mod:ChargeTarget(targetname, _, scanningTime)
+	--UNIT target scanners don't support scanning time in a clean way
+	function mod:ChargeTarget(targetname)
 		if not targetname then return end
 		if targetname == UnitName("player") and self:AntiSpam(5, 5) then
 			specWarnRecklessCharge:Show(self.vb.chargeCount)
 			specWarnRecklessCharge:Play("runout")
 			yellCharge:Yell()
-			yellChargeFades:Countdown(5-scanningTime)
+			yellChargeFades:Countdown(4.9)--Just subtracking .1 outright
 		else
 			warnCharge:Show(targetname)
 		end
