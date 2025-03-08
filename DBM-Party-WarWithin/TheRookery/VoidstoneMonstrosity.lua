@@ -54,7 +54,7 @@ local yellStormridersChargeFades		= mod:NewShortFadesYell(458082)
 local specWarnGTFO						= mod:NewSpecialWarningGTFO(433067, nil, nil, nil, 1, 8)
 
 local timerNullUpheavalCD				= mod:NewVarCountTimer("v32.8-34.8", 423305, nil, nil, nil, 3)
-local timerUnleashedCorruptionCD		= mod:NewVarCountTimer("v17.4-18.2", 429487, nil, nil, nil, 3)
+local timerUnleashedCorruptionCD		= mod:NewVarCountTimer("v17.0-18.2", 429487, nil, nil, nil, 3)
 local timerOblivionWaveCD				= mod:NewVarCountTimer("v13.4-15", 445457, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerStormridersChargeCD			= mod:NewVarCountTimer("v32.8-34.8", 458082, nil, nil, nil, 3)
 local timerVengeanceActive				= mod:NewBuffActiveTimer(20, 423839, nil, nil, nil, 6)
@@ -75,9 +75,9 @@ function mod:OnCombatStart(delay)
 	self.vb.vengeanceCount = 0
 	self.vb.riderCount = 0
 	timerOblivionWaveCD:Start(5.8, 1)
-	timerUnleashedCorruptionCD:Start(11.1, 1)
-	timerNullUpheavalCD:Start(17.2, 1)
-	timerStormridersChargeCD:Start(20.2, 1)
+	timerUnleashedCorruptionCD:Start(10.6, 1)
+	timerNullUpheavalCD:Start(16.7, 1)
+	timerStormridersChargeCD:Start(19.7, 1)
 	if self.Options.NameplateOnReshape then
 		DBM:FireEvent("BossMod_EnableHostileNameplates")
 	end
@@ -121,7 +121,7 @@ end
 
 function mod:SPELL_CAST_SUCCESS(args)
 	local spellId = args.spellId
-	if spellId == 458082 then
+	if spellId == 458082 and self:AntiSpam(3, 1) then
 		self.vb.riderCount = self.vb.riderCount + 1
 		timerStormridersChargeCD:Start(nil, self.vb.riderCount+1)
 	elseif spellId == 423839 then
@@ -146,7 +146,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		if self.Options.NameplateOnReshape then
 			DBM.Nameplate:Show(true, args.destGUID, spellId, nil, 15)
 		end
-	elseif spellId == 429028 and self:AntiSpam(3, 1) then
+	elseif spellId == 429028 and self:AntiSpam(3, 2) then
 		warnCorruptionPulse:Show(args.destName)
 	elseif spellId == 429493 then
 		warnUnleashedCorruption:CombinedShow(0.5, args.destName)
@@ -191,7 +191,7 @@ function mod:SPELL_AURA_REMOVED(args)
 end
 
 function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId, spellName)
-	if spellId == 433067 and destGUID == UnitGUID("player") and self:AntiSpam(3, 2) then
+	if spellId == 433067 and destGUID == UnitGUID("player") and self:AntiSpam(3, 3) then
 		specWarnGTFO:Show(spellName)
 		specWarnGTFO:Play("watchfeet")
 	end

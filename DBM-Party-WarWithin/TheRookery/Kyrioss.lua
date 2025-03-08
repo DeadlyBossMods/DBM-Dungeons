@@ -59,9 +59,9 @@ function mod:OnCombatStart(delay)
 --	self.vb.stormheartCount = 0
 	self.vb.crashingThunderCount = 0
 --	timerStormheartCD:Start(1, 1)
-	timerCrashingThunderCD:Start(5.8, 1)
+	timerCrashingThunderCD:Start(5.2, 1)
 	timerWildLightningCD:Start(9.4, 1)
-	timerLightningTorrentCD:Start(16.7, 1)
+	timerLightningTorrentCD:Start(16.1, 1)
 	--Dash timer started in torrent
 end
 
@@ -85,7 +85,7 @@ function mod:SPELL_CAST_START(args)
 		specWarnCrashingThunder:Play("watchstep")
 		--"Crashing Thunder-1214325-npc:209230-000034D362 = pull:5.8, 42.5, 15.8, 40.1, 15.8",
 		if self.vb.crashingThunderCount == 1 then
-			timerCrashingThunderCD:Start(42.5, 2)
+			timerCrashingThunderCD:Start(41.3, 2)
 		elseif self.vb.crashingThunderCount % 2 == 0 then
 			timerCrashingThunderCD:Start(15.8, self.vb.crashingThunderCount+1)
 		else
