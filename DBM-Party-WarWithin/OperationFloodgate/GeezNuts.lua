@@ -89,8 +89,9 @@ function mod:SPELL_CAST_START(args)
 		timerLeapingSparksCD:Start(nil, self.vb.sparksCount+1)
 	elseif spellId == 468813 then
 		self.vb.gigaZapCount = self.vb.gigaZapCount + 1
-		local timer = (self.vb.gigaZapCount % 2 == 0) and 34 or 26
+		local timer = (self.vb.gigaZapCount % 2 == 0) and 36 or 28
 		timerGigazapCD:Start(timer, self.vb.gigaZapCount+1)
+		--"Gigazap-468813-npc:226404-00004BAEAB = pull:28.0, 28.0, 36.0, 28.0, 36.0",
 		--"<35.71 21:43:09> [CLEU] SPELL_CAST_START#Creature-0-5769-2773-2529-226404-00007DDBE7#Geezle Gigazap(54.3%-90.0%)##nil#468813#Gigazap#nil#nil#nil#nil#nil#nil",
 		--"<35.84 21:43:10> [UNIT_TARGET] boss1#Geezle Gigazap#Target: Crenna Earth-Daughter#TargetOfTarget: Omegal",
 		--"<38.74 21:43:12> [CLEU] SPELL_AURA_APPLIED#Creature-0-5769-2773-2529-226404-00007DDBE7#Geezle Gigazap#Vehicle-0-5769-2773-2529-209072-00007DDBF6#Crenna Earth-Daughter#468815#Gigazap#DEBUFF#nil#nil#nil#nil#nil",
@@ -100,7 +101,8 @@ function mod:SPELL_CAST_START(args)
 			specWarnThunderPunch:Show()
 			specWarnThunderPunch:Play("defensive")
 		end
-		local timer = (self.vb.gigaZapCount % 2 == 0) and 34 or 26
+		local timer = (self.vb.punchCount % 2 == 0) and 36 or 24
+		--"Thunder Punch-466190-npc:226404-00004BAEAB = pull:24.0, 28.0, 36.0, 28.0, 36.0",
 		timerThunderPunchCD:Start(timer, self.vb.punchCount+1)
 	end
 end
