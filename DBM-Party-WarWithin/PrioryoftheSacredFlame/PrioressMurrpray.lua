@@ -46,6 +46,8 @@ local timerPurifyingLightCD					= mod:NewVarCountTimer("v29.1-35", 444546, nil, 
 local timerInnerFireCD						= mod:NewVarCountTimer("v21.8-25.5", 423539, nil, nil, nil, 2)
 local timerHolyFlameCD						= mod:NewVarCountTimer("v12.1-21.8", 451606, nil, nil, nil, 3, nil, DBM_COMMON_L.MAGIC_ICON)
 local timerBlindingLightCD					= mod:NewVarCountTimer("v24.3-36.4", 428169, nil, nil, nil, 2, nil, DBM_COMMON_L.MYTHIC_ICON)
+local timerBlindingLight					= mod:NewCastTimer(4, 428169, nil, nil, nil, 7, nil, nil, nil, 1, 3)
+
 mod:AddInfoFrameOption(423588)
 
 mod.vb.barrierCount = 0
@@ -119,6 +121,7 @@ function mod:SPELL_CAST_START(args)
 		specWarnBlindingLight:Show(args.sourceName)
 		specWarnBlindingLight:Play("turnaway")
 		timerBlindingLightCD:Start(nil, self.vb.blindingCount+1)
+		timerBlindingLight:Start()
 	end
 end
 
@@ -137,6 +140,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		timerInnerFireCD:Stop()
 		timerHolyFlameCD:Stop()
 		timerBlindingLightCD:Stop()
+		timerBlindingLight:Stop()
 		if self.Options.InfoFrame then
 			DBM.InfoFrame:SetHeader(args.spellName)
 			DBM.InfoFrame:Show(2, "enemyabsorb", nil, args.amount, "boss1")
