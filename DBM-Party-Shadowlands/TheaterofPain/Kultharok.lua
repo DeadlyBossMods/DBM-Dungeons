@@ -22,10 +22,9 @@ mod:RegisterEventsInCombat(
  or (ability.id = 473540) and type = "cast"
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
 --]]
-local warnDrawSoul					= mod:NewTargetAnnounce(474298, 2)
 local warnWellofDarkness			= mod:NewTargetNoFilterAnnounce(473540, 3, nil, "Healer|RemoveMagic")
 
-local specWarnDrawSoul				= mod:NewSpecialWarningRun(474298, nil, nil, nil, 4, 2)--Want to run away from boss to spawn it further away
+local specWarnDrawSoul				= mod:NewSpecialWarningMoveTo(474298, nil, nil, nil, 1, 2)--Want to run away from boss to spawn it further away
 local yellDrawSoul					= mod:NewYell(474298)
 local specWarnWellofDarkness		= mod:NewSpecialWarningMoveAway(473540, nil, nil, nil, 1, 2)
 local specWarnWellofDarknessDPL		= mod:NewSpecialWarningDispel(473540, "RemoveMagic", nil, nil, 1, 2)
@@ -94,11 +93,11 @@ function mod:OnCombatStart(delay)
 	self.vb.feastCount = 0
 	self.vb.spiralCount = 0
 	self.vb.necroticEruption = 0
-	timerWellofDarknessCD:Start(11.2-delay, 1)--SUCCESS event 473540
+	timerWellofDarknessCD:Start(10.9-delay, 1)--SUCCESS event 473540
 	timerNecroticEruptionCD:Start(16.9, 1)--START (16.9-19.1)
 	if self:IsMythic() then
-		timerDeathSpiralCD:Start(7-delay, 1)--START
-		timerDrawSoulCD:Start(50.6-delay, 1)
+		timerDeathSpiralCD:Start(6-delay, 1)--START
+		timerDrawSoulCD:Start(25.1-delay, 1)
 	else
 		timerFeastoftheDamnedCD:Start(50.6-delay)--Unknown, only have mythic logs
 	end
@@ -110,7 +109,8 @@ function mod:SPELL_CAST_START(args)
 		self.vb.spiralCount = self.vb.spiralCount + 1
 		specWarnDeathSpiral:Show(self.vb.spiralCount)
 		specWarnDeathSpiral:Play("watchstep")
-		timerDeathSpiralCD:Start(nil, self.vb.spiralCount+1)
+		--"Death Spiral-1215787-npc:162309-00004BDA78 = pull:6.0, 30.4, 54.6, 55.8",
+		timerDeathSpiralCD:Start((self.vb.spiralCount == 1) and 30.4 or 54.6, self.vb.spiralCount+1)
 		updateAllTimers(self, 2.4)
 	elseif spellId == 474087 then
 		self.vb.necroticEruption = self.vb.necroticEruption + 1
@@ -118,7 +118,9 @@ function mod:SPELL_CAST_START(args)
 			specWarnNecroticEruption:Show(self.vb.necroticEruption)
 			specWarnNecroticEruption:Play("frontal")
 		end
-		timerNecroticEruptionCD:Start(nil, self.vb.necroticEruption+1)
+		--Necrotic Eruption-474087-npc:162309-00004BDA78 = pull:17.0, 30.4, 22.0, 32.7, 22.2",
+		local timer = self.vb.necroticEruption == 1 and 30.4 or (self.vb.necroticEruption % 2 == 0) and 22.0 or 32.7
+		timerNecroticEruptionCD:Start(timer, self.vb.necroticEruption+1)
 	elseif spellId == 473513 then
 		self.vb.feastCount = self.vb.feastCount + 1
 		specWarnFeastoftheDamned:Show(self.vb.feastCount)
@@ -126,6 +128,7 @@ function mod:SPELL_CAST_START(args)
 		timerFeastoftheDamnedCD:Start(nil, self.vb.feastCount+1)
 	elseif spellId == 474298 then
 		self.vb.drawCount = self.vb.drawCount + 1
+		--"Draw Soul-474298-npc:162309-00004BDA78 = pull:25.4, 54.7, 55.8",
 		timerDrawSoulCD:Start(nil, self.vb.drawCount+1)
 	end
 end
@@ -142,10 +145,9 @@ end
 function mod:SPELL_AURA_APPLIED(args)
 	local spellId = args.spellId
 	if spellId == 474298 then
-		warnDrawSoul:CombinedShow(0.3, args.destName)
 		if args:IsPlayer() then
-			specWarnDrawSoul:Show()
-			specWarnDrawSoul:Play("justrun")
+			specWarnDrawSoul:Show(DBM_COMMON_L.ALLIES)
+			specWarnDrawSoul:Play("gather")
 			yellDrawSoul:Yell()
 		end
 	elseif spellId == 1223804 then
