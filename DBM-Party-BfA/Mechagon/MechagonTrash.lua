@@ -47,6 +47,7 @@ local warnNanoslicer				= mod:NewStackAnnounce(299502, 2, nil, "Tank|Healer")--M
 local warnChainblade				= mod:NewStackAnnounce(293670, 2, nil, "Tank|Healer")--Workshop Defender
 local warnShrunk					= mod:NewTargetNoFilterAnnounce(284219, 1)
 local FieryJaws						= mod:NewTargetNoFilterAnnounce(1217819, 2, nil, "Healer|RemoveMagic")--(S2 confirmed)
+local warnCorrosiveGunk				= mod:NewSpellAnnounce(1215412, 2)--(S2 confirmed)
 
 local specWarnMegaDrill				= mod:NewSpecialWarningSpell(1215409, nil, nil, nil, 2, 2)--Waste Processing Unit (294324 old version) (S2 confirmed)
 local specWarnProcessWaste			= mod:NewSpecialWarningSpell(294290, nil, nil, nil, 1, 15)--Waste Processing Unit
@@ -63,7 +64,7 @@ local specWarnRocketBarrage			= mod:NewSpecialWarningDodge(294103, nil, nil, nil
 local specWarnSonicPulse			= mod:NewSpecialWarningDodge(293986, nil, nil, nil, 2, 2)--Blastatron X-80/Spider Tank (S2 confirmed)
 --local specWarnLaunchHERockets		= mod:NewSpecialWarningDodge(294015, nil, nil, nil, 2, 2)--Blastatron X-80/Spider Tank (S2 confirmed, but not logged, passive 4 second repeater)
 local specWarnCapacitorDischarge	= mod:NewSpecialWarningDodge(295169, nil, nil, nil, 3, 2)--Blastatron X-80 (S2 confirmed)
-local specwarnCorrosiveGunk			= mod:NewSpecialWarningMoveTo(1215412, nil, nil, nil, 12, 2)
+--local specwarnCorrosiveGunk		= mod:NewSpecialWarningMoveTo(1215412, nil, nil, nil, 12, 2)
 local specWarnConsume				= mod:NewSpecialWarningRun(300687, nil, nil, nil, 4, 2)--Toxic Monstrosity
 local specWarnGyroScrap				= mod:NewSpecialWarningRun(300159, "Melee", nil, nil, 4, 2)--Heavy Scrapbot
 local specWarnShrinkYou				= mod:NewSpecialWarningYou(284219, nil, nil, nil, 1, 2)
@@ -236,9 +237,10 @@ function mod:SPELL_CAST_START(args)
 			warnPuncture:Show()
 		end
 	elseif spellId == 1215412 then
-		if self:AntiSpam(3, 2) then
-			specwarnCorrosiveGunk:Show(DBM_COMMON_L.BREAK_LOS)
-			specwarnCorrosiveGunk:Play("breaklos")
+		if self:AntiSpam(3, 6) then
+			--specwarnCorrosiveGunk:Show(DBM_COMMON_L.BREAK_LOS)
+			--specwarnCorrosiveGunk:Play("breaklos")
+			warnCorrosiveGunk:Show()
 		end
 	elseif spellId == 297128 then
 		timerShortOutCD:Start(nil, args.sourceGUID)
