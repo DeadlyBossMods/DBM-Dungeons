@@ -91,7 +91,7 @@ local timerBrutalSmashCD					= mod:NewCDTimer(30.3, 424621, nil, nil, nil, 3)--U
 local timerLungingStrikeCD					= mod:NewCDTimer(14.5, 424423, nil, nil, nil, 3)
 --Elaena Emberlanz
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(27828))
-local specWarnHolyRadiance					= mod:NewSpecialWarningMoveAway(424431, nil, nil, nil, 2, 2)
+local specWarnHolyRadiance					= mod:NewSpecialWarningSpell(424431, nil, nil, nil, 2, 2)
 local specWarnDivineJudgement				= mod:NewSpecialWarningDefensive(448515, nil, nil, nil, 2, 2)
 
 local timerHolyRadianceCD					= mod:NewCDTimer(36.4, 424431, nil, nil, nil, 2, nil, DBM_COMMON_L.HEALER_ICON)
@@ -393,14 +393,14 @@ function mod:StartEngageTimers(guid, cid, delay, uID)
 		timerCinderblastCD:Start(8.4-delay, guid)--8.4-11.8
 		timerEmberStormCD:Start(25.5, guid)
 	elseif cid == 239834 then--taener-duelmal (trash)
+		timerEmberStormCD:Start(27.7, guid)--Corrected by transcriptor, but still feels iffy
 		timerCinderblastCD:Start(30-delay, guid)
-		timerEmberStormCD:Start(50, guid)
 	elseif cid == 239833 then--elaena-emberlanz trash
 		timerDivineJudgementCD:Start(19-delay, guid)
 		timerHolyRadianceCD:Start(38.5, guid)
 	elseif cid == 211290 then--elaena-emberlanz Boss
 		timerDivineJudgementCD:Start(8.4-delay, guid)
-		timerHolyRadianceCD:Start(27, guid)
+		timerHolyRadianceCD:Start(26.6, guid)
 	elseif cid == 206694 then--Fervent Sharpshooter
 		timerPotShotCD:Start(8-delay, guid)--Most definitely wrong
 		timerCaltropsCD:Start(16-delay, guid)

@@ -112,7 +112,7 @@ function mod:SPELL_CAST_START(args)
 		self:SetStage(2)
 		timerInnerFireCD:Start(4.8, self.vb.innerCount+1)
 		timerPurifyingLightCD:Start(7.2, self.vb.purifyingCount+1)
-		timerHolyFlameCD:Start(15, self.vb.holyFlameCount+1)--If it's not cast before purifying Light, it gets delayed til after
+		timerHolyFlameCD:Start(12.9, self.vb.holyFlameCount+1)
 		if self:IsMythic() then
 			timerBlindingLightCD:Start(11, self.vb.blindingCount+1)
 		end

@@ -60,7 +60,7 @@ function mod:OnCombatStart(delay)
 	self.vb.pierceCount = 0
 	timerPierceArmorCD:Start(6-delay, 1)
 	timerHurlSpearCD:Start(9.7-delay, 1)
-	timerBattleCryCD:Start(14.9-delay, 1)
+	timerBattleCryCD:Start(14.2-delay, 1)
 	timerSavageMaulingCD:Start(13.3-delay, 1)
 end
 
