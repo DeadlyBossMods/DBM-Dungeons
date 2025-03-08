@@ -237,7 +237,7 @@ function mod:SPELL_CAST_START(args)
 		end
 	elseif spellId == 1215412 then
 		if self:AntiSpam(3, 2) then
-			specwarnCorrosiveGunk:Show()
+			specwarnCorrosiveGunk:Show(DBM_COMMON_L.BREAK_LOS)
 			specwarnCorrosiveGunk:Play("breaklos")
 		end
 	elseif spellId == 297128 then
