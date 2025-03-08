@@ -47,7 +47,7 @@ local timerGraspingriftCD			= mod:NewCDCountTimer(30.4, 323685, nil, nil, nil, 3
 
 local timerEchoofBattleCD			= mod:NewCDCountTimer(24.2, 339550, nil, nil, nil, 3, nil, DBM_COMMON_L.MYTHIC_ICON)--24.3-30.3
 local timerGhostlyChargeCD			= mod:NewCDCountTimer(24.2, 339706, nil, nil, nil, 3, nil, DBM_COMMON_L.MYTHIC_ICON)--24.2-31.6
-local timerRP						= mod:NewRPTimer(29)
+local timerRP						= mod:NewRPTimer(25)
 
 mod.vb.reapingCount = 0
 mod.vb.darkCount = 0
