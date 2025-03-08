@@ -4,6 +4,7 @@ local L		= mod:GetLocalizedStrings()
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(129227)
 mod:SetEncounterID(2106)
+mod:SetUsedIcons(8)
 mod:SetHotfixNoticeRev(20250302000000)
 mod:DisableESCombatDetection()--ES fires for nearby trash even if boss isn't pulled
 mod:SetZone(1594)
@@ -13,7 +14,7 @@ mod:RegisterCombat("combat")
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 257593 258622 275907 258627 271698",
 --	"SPELL_CAST_SUCCESS",
-	"SPELL_AURA_APPLIED 257582",
+	"SPELL_AURA_APPLIED 257582 271698",
 	"UNIT_SPELLCAST_SUCCEEDED boss1"
 )
 
@@ -34,6 +35,7 @@ local timerResonantPulseCD			= mod:NewVarCountTimer("v40.1-44.9", 258622, nil, n
 local timerTectonicSmashCD			= mod:NewVarCountTimer("v14.6-25.5", 275907, nil, nil, nil, 3)
 
 mod:AddInfoFrameOption(257481, true)
+mod:AddSetIconOption("SetIconOnInfusion", 271698, true, 5, {8})
 
 mod.vb.addCount = 0
 mod.vb.pulseCount = 0
@@ -103,7 +105,7 @@ function mod:SPELL_CAST_START(args)
 		self.vb.addCount = self.vb.addCount + 1
 		specWarnCallEarthRager:Show(self.vb.addCount)
 		specWarnCallEarthRager:Play("bigmob")
-		timerCallEarthragerCD:Start(60, self.vb.addCount+1)--add self.vb.addCount+1
+		timerCallEarthragerCD:Start(nil, self.vb.addCount+1)
 	elseif spellId == 258622 then
 		self.vb.pulseCount = self.vb.pulseCount + 1
 		warnPulse:Show()
@@ -144,6 +146,10 @@ function mod:SPELL_AURA_APPLIED(args)
 			specWarnRagingGaze:Play("justrun")
 			specWarnRagingGaze:ScheduleVoice(1.5, "keepmove")
 			yellRagingGaze:Yell()
+		end
+	elseif spellId == 271698 then
+		if self.Options.SetIconOnInfusion then
+			self:ScanForMobs(args.destGUID, 2, 8, 1, nil, 8, "SetIconOnInfusion", nil, nil, true, true)
 		end
 	end
 end
