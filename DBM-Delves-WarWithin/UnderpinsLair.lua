@@ -14,14 +14,19 @@ mod:SetZone(2831)--Demolition Dome
 mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
-	"SPELL_CAST_START 1214052 1213852 1217371 1215521 1214043 1214053",
+	"SPELL_CAST_START 1214052 1213852 1217371 1215521 1214043 1214053 1217667 1217661",
 	"SPELL_CAST_SUCCESS 1214147",
 --	"SPELL_AURA_APPLIED",
-	"SPELL_AURA_REMOVED 1214052"
+	"SPELL_AURA_REMOVED 1214052 1217667"
 --	"SPELL_PERIODIC_DAMAGE",
 --	"UNIT_DIED"
 )
 
+--[[
+(ability.id = 1214052 or ability.id = 1213852 or ability.id = 1217371 or ability.id = 1215521 or ability.id = 1214053 or ability.id = 1217667 or ability.id = 1217661) and type = "begincast"
+or ability.id = 1214147 and type = "cast"
+or (ability.id = 1217667 or ability.id = 1214052) and type = "removebuff"
+--]]
 local warnBombs							= mod:NewCountAnnounce(1214147, 2, nil, nil, nil, nil, nil, 2)
 local warnMoltenCannon					= mod:NewSpellAnnounce(1214043, 2, nil, false, nil, nil, nil, 2)--Utterly spammed, so warning off by default
 
@@ -64,7 +69,7 @@ function mod:OnCombatStart(delay)
 end
 
 function mod:SPELL_CAST_START(args)
-	if args.spellId == 1214052 then
+	if args.spellId == 1214052 or args.spellId == 1217667 then
 		self.vb.shieldCount = self.vb.shieldCount + 1
 		specWarnShield:Show(self.vb.shieldCount)
 		specWarnShield:Play("attackshield")
@@ -77,7 +82,7 @@ function mod:SPELL_CAST_START(args)
 		specWarnFlamethrower:Show(self.vb.crushCount)
 		specWarnFlamethrower:Play("frontal")
 		timerFlamethrowerCD:Start(nil, self.vb.crushCount+1)
-	elseif args.spellId == 1215521 then
+	elseif args.spellId == 1215521 or args.spellId == 1217661 then
 		self.vb.addsCount = self.vb.addsCount + 1
 		specWarnCronies:Show(self.vb.addsCount)
 		specWarnCronies:Play("killmob")
@@ -110,7 +115,7 @@ function mod:SPELL_AURA_REMOVED(args)
 	--"<146.98 02:23:22> [CLEU] SPELL_AURA_REMOVED#Vehicle-0-3778-2831-15161-234168-000047DE31#The Underpin#Vehicle-0-3778-2831-15161-234168-000047DE31#The Underpin#1214052#Divert Energy to Shields#BUFF#0#nil#nil#nil#nil",
 	--"<191.98 02:24:07> [UNIT_POWER_UPDATE] boss1#The Underpin#TYPE:ENERGY/3#MAIN:100/100#ALT:0/0",
 	--"<200.02 02:24:15> [CLEU] SPELL_CAST_START#Vehicle-0-3778-2831-15161-234168-000047DE31#The Underpin(46.1%-100.0%)##nil#1214052#Divert Energy to Shields#nil#nil#nil#nil#nil#nil",
-	if args.spellId == 1214052 then
+	if args.spellId == 1214052 or args.spellId == 1217667 then
 		timerShieldCD:Start(nil, self.vb.shieldCount+1)
 		timerRechargeCast:Stop()
 	end
