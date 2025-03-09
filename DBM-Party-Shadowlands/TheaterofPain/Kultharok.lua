@@ -27,7 +27,6 @@ local warnWellofDarkness			= mod:NewTargetNoFilterAnnounce(473540, 3, nil, "Heal
 local specWarnDrawSoul				= mod:NewSpecialWarningMoveTo(474298, nil, nil, nil, 1, 2)--Want to run away from boss to spawn it further away
 local yellDrawSoul					= mod:NewYell(474298)
 local specWarnWellofDarkness		= mod:NewSpecialWarningMoveAway(473540, nil, nil, nil, 1, 2)
-local specWarnWellofDarknessDPL		= mod:NewSpecialWarningDispel(473540, "RemoveMagic", nil, nil, 1, 2)
 local yellWellofDarkness			= mod:NewYell(473540)
 local specWarnDeathSpiral			= mod:NewSpecialWarningDodgeCount(1216474, nil, nil, nil, 2, 2, 4)
 local specWarnNecroticEruption		= mod:NewSpecialWarningDodgeCount(474087, nil, nil, nil, 1, 15)
@@ -151,17 +150,9 @@ function mod:SPELL_AURA_APPLIED(args)
 			yellDrawSoul:Yell()
 		end
 	elseif spellId == 1223804 then
-		local dispelWarned = false
-		if self.Options.SpecWarn473540dispel and args:IsDestTypePlayer() and self:CheckDispelFilter("magic") then
-			specWarnWellofDarknessDPL:Show(args.destName)
-			specWarnWellofDarknessDPL:Play("helpdispel")
-			dispelWarned = true
-		end
 		if args:IsPlayer() then
-			if not dispelWarned then--If player is a dispeller, they may have already gotten alert to dispel themselves
-				specWarnWellofDarkness:Show()
-				specWarnWellofDarkness:Play("scatter")
-			end
+			specWarnWellofDarkness:Show()
+			specWarnWellofDarkness:Play("scatter")
 			yellWellofDarkness:Yell()
 		else
 			warnWellofDarkness:CombinedShow(0.3, args.destName)
