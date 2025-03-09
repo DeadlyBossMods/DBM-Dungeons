@@ -77,16 +77,16 @@ function mod:SPELL_CAST_START(args)
 		self.vb.crushCount = self.vb.crushCount + 1
 		specWarnCrush:Show(self.vb.crushCount)
 		specWarnCrush:Play("shockwave")
-		timerCrushCD:Start(nil, self.vb.crushCount+1)
+		timerCrushCD:Start(self:IsMythic() and "v15.1-34.6" or "v20.2-45.4", self.vb.crushCount+1)
 	elseif args.spellId == 1217371 then
 		specWarnFlamethrower:Show(self.vb.crushCount)
 		specWarnFlamethrower:Play("frontal")
-		timerFlamethrowerCD:Start(nil, self.vb.crushCount+1)
+		timerFlamethrowerCD:Start(self:IsMythic() and "v15.1-32.7" or "v20.2-42.5", self.vb.crushCount+1)
 	elseif args.spellId == 1215521 or args.spellId == 1217661 then
 		self.vb.addsCount = self.vb.addsCount + 1
 		specWarnCronies:Show(self.vb.addsCount)
 		specWarnCronies:Play("killmob")
-		timerCroniesCD:Start(nil, self.vb.addsCount+1)
+		timerCroniesCD:Start(self:IsMythic() and "v57-65.5" or "v72.6-89.4", self.vb.addsCount+1)
 	elseif args.spellId == 1214043 and self:AntiSpam(4, 1) then
 		warnMoltenCannon:Show()
 		warnMoltenCannon:Play("watchorb")
@@ -98,7 +98,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 		self.vb.bombCount = self.vb.bombCount + 1
 		warnBombs:Show(self.vb.bombCount)
 		warnBombs:Play("bombsoon")
-		timerBombsCD:Start(nil, self.vb.bombCount+1)
+		timerBombsCD:Start(self:IsMythic() and "v20.5-40.1" or "v25.5-41.3", self.vb.bombCount+1)
 	end
 end
 
