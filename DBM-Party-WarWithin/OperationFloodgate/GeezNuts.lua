@@ -82,7 +82,8 @@ function mod:SPELL_CAST_START(args)
 	if spellId == 465463 then
 		self.vb.turboChargeCount = self.vb.turboChargeCount + 1
 		specWarnTurboCharge:Show(self.vb.turboChargeCount)
-		specWarnTurboCharge:Play("farfromline")
+		specWarnTurboCharge:Play("aesoon")
+		specWarnTurboCharge:ScheduleVoice(2, "farfromline")
 		timerTurboChargeCD:Start(nil, self.vb.turboChargeCount+1)
 	elseif spellId == 468841 then
 		self.vb.sparksCount = self.vb.sparksCount + 1

@@ -41,7 +41,7 @@ local warnJumpStartOver						= mod:NewEndAnnounce(460156, 2)
 local warnDoomStorm							= mod:NewTargetNoFilterAnnounce(472452, 2)
 local warnSonicBoom							= mod:NewTargetNoFilterAnnounce(473220, 2)
 
-local specWarnMobilizeMechadrones			= mod:NewSpecialWarningSwitchCount(433740, "-Healer", nil, nil, 1, 2)
+local specWarnMobilizeMechadrones			= mod:NewSpecialWarningSwitchCount(471585, "-Healer", nil, nil, 1, 2)
 local specWarnDoomStorm						= mod:NewSpecialWarningMoveAway(472452, nil, nil, nil, 1, 2)
 local yellDoomStorm							= mod:NewShortYell(472452)
 local specWarnMaximumDistortion				= mod:NewSpecialWarningInterruptCount(1214780, "HasInterrupt", nil, nil, 1, 2, 4)
