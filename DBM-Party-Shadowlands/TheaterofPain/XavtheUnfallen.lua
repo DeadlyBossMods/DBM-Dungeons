@@ -67,7 +67,7 @@ function mod:OnCombatStart(delay)
 	self.vb.bannerCount = 0
 	timerBrutalComboCD:Start(5.8-delay, 1)
 	timerOppressiveBannerCD:Start(10.7-delay, 1)
-	timerMightofMaldraxxusCD:Start(17.1-delay, 1)
+	timerMightofMaldraxxusCD:Start(16.7-delay, 1)
 	timerBloodandGloryCD:Start(33.9-delay, 1)--SUCCESS
 end
 

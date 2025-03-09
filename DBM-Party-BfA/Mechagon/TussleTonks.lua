@@ -16,7 +16,7 @@ mod:RegisterEvents(
 
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 283422 1215065 1215102 1216431 282801 285152",
-	"SPELL_CAST_SUCCESS 1216443 282801 1215194 1215102",
+	"SPELL_CAST_SUCCESS 1216443 282801 1215194 1215102 1215065",
 	"SPELL_AURA_REMOVED 282801",
 --	"SPELL_AURA_REMOVED_DOSE 282801",
 	"UNIT_DIED"
@@ -48,7 +48,7 @@ local specWarnPlatinumPummel		= mod:NewSpecialWarningDodgeCount(1215065, nil, ni
 local specWarnGroundPound			= mod:NewSpecialWarningCount(1215102, nil, nil, nil, 2, 2)
 
 local timerPlatinumPlatingCD		= mod:NewCDCountTimer(36.2, 282801, nil, nil, nil, 5)
-local timerPlatinumPummelCD			= mod:NewCDCountTimer(15.2, 1215065, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+local timerPlatinumPummelCD			= mod:NewVarCountTimer("v15.2-27.9", 1215065, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerGroundPoundCD			= mod:NewCDCountTimer(18.1, 1215102, nil, nil, nil, 3, nil, DBM_COMMON_L.HEALER_ICON)
 --Gnomercy
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(19236))
@@ -117,10 +117,8 @@ function mod:SPELL_CAST_START(args)
 		timerMaxThrustCD:Start(self.vb.trustCount+1)
 		self:BossTargetScanner(args.sourceGUID, "ThrustTarget", 0.1, 7)
 	elseif spellId == 1215065 then
-		self.vb.platinumPummelCount = self.vb.platinumPummelCount + 1
-		specWarnPlatinumPummel:Show(self.vb.platinumPummelCount)
+		specWarnPlatinumPummel:Show(self.vb.platinumPummelCount+1)
 		specWarnPlatinumPummel:Play("frontal")
-		timerPlatinumPummelCD:Start(nil, self.vb.platinumPummelCount+1)
 	elseif spellId == 1215102 then
 		specWarnGroundPound:Show(self.vb.groundPoundCount+1)
 		specWarnGroundPound:Play("aesoon")
@@ -184,6 +182,10 @@ function mod:SPELL_CAST_SUCCESS(args)
 		self.vb.groundPoundCount = self.vb.groundPoundCount + 1
 		--"Ground Pound-1215102-npc:144244-000032308F = pull:13.1, 18.2, 25.5, 18.2, 20.6, 18.2, 21.9, 18.2",
 		timerGroundPoundCD:Start(15.2, self.vb.groundPoundCount+1)--18.2-3
+	elseif spellId == 1215065 then--can stutter cast, we only want to raise count and start timer on finished casts
+		self.vb.platinumPummelCount = self.vb.platinumPummelCount + 1
+		--"Platinum Pummel-1215065-npc:144244-00004A67A1 = pull:7.3, 15.8, 17.0, 21.8, 19.4, 17.0, 6.1, 15.8, 15.8, 23.1, 18.2, 27.9",
+		timerPlatinumPummelCD:Start(12.8, self.vb.platinumPummelCount+1)
 	end
 end
 

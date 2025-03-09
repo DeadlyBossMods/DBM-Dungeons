@@ -56,7 +56,7 @@ function mod:OnCombatStart(delay)
 	self.vb.mudslideCount = 0
 	self.vb.clawsCount = 0
 	timerSludgeClawsCD:Start(2-delay, 1)
-	timerRazorchokeVinesCD:Start(6-delay, 1)
+--	timerRazorchokeVinesCD:Start(1-delay, 1)--Now cast instantly on pull
 	timerMudslideCD:Start(9-delay)
 	timerAwakenSwampCD:Start(19-delay)
 end

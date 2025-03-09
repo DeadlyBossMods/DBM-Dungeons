@@ -59,7 +59,7 @@ local timerRapidExtractionCD				= mod:NewCDNPTimer(24.2, 473168, nil, nil, nil, 
 local timerBrainstormCD						= mod:NewCDNPTimer(17, 473304, nil, nil, nil, 3)--17-18.2
 local timerChargedShotCD					= mod:NewCDNPTimer(17, 269429, nil, nil, nil, 3)
 local timerBrutalChargeCD					= mod:NewCDNPTimer(12.2, 1214751, nil, nil, nil, 3)--Massive SLam used immediate after, so no need for slam NP timer
-local timerOvertimeCD						= mod:NewCDNPTimer(14.6, 1213139, nil, "Tank|Healer|RemoveEnrage", nil, 5, nil, DBM_COMMON_L.ENRAGE_ICON)
+local timerOvertimeCD						= mod:NewCDNPTimer(10.4, 1213139, nil, "Tank|Healer|RemoveEnrage", nil, 5, nil, DBM_COMMON_L.ENRAGE_ICON)
 
 --Abilities removed in 11.1
 --local warnRepair							= mod:NewCastAnnounce(262554, 4)--Removed in 11.1?

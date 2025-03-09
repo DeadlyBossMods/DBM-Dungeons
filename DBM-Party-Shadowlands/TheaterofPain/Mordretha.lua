@@ -111,7 +111,7 @@ function mod:OnCombatStart(delay)
 	self.vb.ghostlyCount = 0
 	timerReapingScytheCD:Start(8.1-delay, 1)
 	timerDarkDevastationCD:Start(15.7-delay, 1)
-	timerGraspingriftCD:Start(24.3-delay, 1)
+	timerGraspingriftCD:Start(24.0-delay, 1)
 	timerManifesstDeathCD:Start(25.5-delay, 1)
 end
 

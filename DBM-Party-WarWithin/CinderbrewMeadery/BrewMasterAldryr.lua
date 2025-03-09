@@ -54,8 +54,8 @@ function mod:OnCombatStart(delay)
 	self.vb.belchCount = 0
 	self.vb.cinderbrewCount = 0
 	self.vb.kegCount = 0
-	timerKegSmashCD:Start(5.8, 1)
-	timerThrowCinderbrewCD:Start(10.6, 1)
+	timerKegSmashCD:Start(5.2, 1)
+	timerThrowCinderbrewCD:Start(10.1, 1)
 	timerBlazingBelchCD:Start(14.3, 1)
 	if self.Options.NPAuraOnThirsty then
 		DBM:FireEvent("BossMod_EnableHostileNameplates")

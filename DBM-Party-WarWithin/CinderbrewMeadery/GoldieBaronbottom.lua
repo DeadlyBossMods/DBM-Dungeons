@@ -47,7 +47,7 @@ local yellBurningRicochetFades				= mod:NewIconFadesYell(436644)
 local specWarnCashCannon					= mod:NewSpecialWarningCount(436592, nil, nil, nil, 2, 2)
 --local specWarnGTFO						= mod:NewSpecialWarningGTFO(372820, nil, nil, nil, 1, 8)
 
-local timerLetItHailCD						= mod:NewNextCountTimer(55.9, 435622, nil, nil, nil, 2)
+local timerLetItHailCD						= mod:NewNextCountTimer(55.5, 435622, nil, nil, nil, 2)
 local timerCinderWounds						= mod:NewBuffFadesTimer(33.9, 435789, nil, nil, nil, 5, nil, DBM_COMMON_L.MAGIC_ICON)
 local timerSpreadtheLoveCD					= mod:NewNextCountTimer(55.2, 435560, nil, nil, nil, 5)
 local timerBurningRicochetCD				= mod:NewNextCountTimer(13.3, 436644, nil, nil, nil, 3)
@@ -74,7 +74,7 @@ function mod:OnCombatStart(delay)
 	self.vb.cannonCount = 0
 --	timerSpreadtheLoveCD:Start(1)--Instantly on Pull
 	timerCashCannonCD:Start(8.1, 1)
-	timerBurningRicochetCD:Start(20.5, 1)
+	timerBurningRicochetCD:Start(17, 1)
 	timerLetItHailCD:Start(40.8, 1)
 end
 
@@ -103,7 +103,8 @@ function mod:SPELL_CAST_START(args)
 			specWarnCashCannon:Play("carefly")
 		end
 		--"Cash Cannon-436592-npc:214661-000034ED7F = pull:8.1, 14.5, 14.6, 26.7, 14.6, 14.6, 26.7, 14.6, 14.5, 26.7, 14.6",
-		if self.vb.cannonCount % 3 == 1 then
+		--"Cash Cannon-436592-npc:214661-00004A5C73 = pull:8.6, 14.1, 15.0, 26.3, 14.5, 14.6",
+		if self.vb.cannonCount % 3 == 0 then
 			timerCashCannonCD:Start(26.7, self.vb.cannonCount+1)
 		else
 			timerCashCannonCD:Start(14.6, self.vb.cannonCount+1)
@@ -113,7 +114,7 @@ function mod:SPELL_CAST_START(args)
 		self.vb.ricochetCount = self.vb.ricochetCount + 1
 		--"Burning Ricochet-436637-npc:214661-000034ED7F = pull:20.5, 14.5, 41.3, 14.6, 41.3, 14.6, 41.3",
 		if self.vb.ricochetCount % 2 == 0 then
-			timerBurningRicochetCD:Start(41.3, self.vb.ricochetCount+1)
+			timerBurningRicochetCD:Start(40.9, self.vb.ricochetCount+1)
 		else
 			timerBurningRicochetCD:Start(14.6, self.vb.ricochetCount+1)
 		end

@@ -58,7 +58,7 @@ function mod:OnCombatStart(delay)
 	if not self:IsNormal() then
 		timerThrowCoinsCD:Start(12.2-delay, 1)
 	end
-	timerCoinMagnetCD:Start(43.3-delay, 1)
+	timerCoinMagnetCD:Start(40.0-delay, 1)
 end
 
 function mod:SPELL_CAST_START(args)

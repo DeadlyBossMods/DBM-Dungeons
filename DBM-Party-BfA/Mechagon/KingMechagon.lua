@@ -46,7 +46,7 @@ local specWarnHardMode				= mod:NewSpecialWarningCount(292750, nil, nil, nil, 3,
 --local specWarnGTFO				= mod:NewSpecialWarningGTFO(238028, nil, nil, nil, 1, 8)
 
 --Stage One: Aerial Unit R-21/X
-local timerRecalibrateCD			= mod:NewCDCountTimer("v13.4-16.3", 291865, nil, nil, nil, 3)
+local timerRecalibrateCD			= mod:NewVarCountTimer("v12.2-20.6", 291865, nil, nil, nil, 3)
 local timerMegaZapCD				= mod:NewCDCountTimer(15.8, 291928, nil, nil, nil, 3)
 local timerTakeOffCD				= mod:NewCDCountTimer(35.2, 291613, nil, nil, nil, 6)
 local timerCuttingBeam				= mod:NewCastTimer(6, 291626, nil, nil, nil, 3)
@@ -59,7 +59,6 @@ mod.vb.zapCount = 0
 mod.vb.takeOffCount = 0
 mod.vb.armCount = 0
 mod.vb.hardModeCount = 0
-local P1RecalibrateTimers = {5.9, 12, 27.9, 15.6, 19.4, 15.5}
 --All hard mode timers, do they differ if hard mode isn't active?
 --5.9, 13.3, 27.9, 15.6, 20.7
 --5.9, 13.3, 28.8, 17.0, 19.4
@@ -83,7 +82,7 @@ function mod:OnCombatStart(delay)
 	self.vb.takeOffCount = 0
 	self.vb.armCount = 0
 	self.vb.hardModeCount = 0
-	timerRecalibrateCD:Start(5.9-delay, 1)
+	timerRecalibrateCD:Start(4.8-delay, 1)
 	timerMegaZapCD:Start(8.3-delay, 1)--8.3-9.7
 	timerTakeOffCD:Start("v30.2-35.2", 1)
 end
@@ -100,10 +99,7 @@ function mod:SPELL_CAST_START(args)
 		self.vb.recalibrateCount = self.vb.recalibrateCount + 1
 		warnRecalibrate:Show()
 		warnRecalibrate:Play("watchorb")
-		local timer = P1RecalibrateTimers[self.vb.recalibrateCount+1] or 12
-		if timer and timer > 0 then
-			timerRecalibrateCD:Start(timer, self.vb.recalibrateCount+1)
-		end
+		timerRecalibrateCD:Start(nil, self.vb.recalibrateCount+1)
 	elseif spellId == 291928 or spellId == 292264 then--Stage 1, Stage 2
 		self.vb.zapCount = self.vb.zapCount + 1
 		--specWarnMegaZap:Show()

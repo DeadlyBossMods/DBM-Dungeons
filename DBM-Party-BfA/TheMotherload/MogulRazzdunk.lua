@@ -42,7 +42,7 @@ local yellHeartseeker				= mod:NewYell(262515)
 local timerGatlingGunCD				= mod:NewCDCountTimer(20.1, 260280, nil, nil, nil, 3)
 local timerHomingMissileCD			= mod:NewCDCountTimer(21, 260811, nil, nil, nil, 3)
 --Stage Two: Drill
-local timerDrillSmashCD				= mod:NewVarCountTimer("v11.3-12.1", 271456, nil, nil, nil, 3)
+local timerDrillSmashCD				= mod:NewVarCountTimer("v9.7-12.1", 271456, nil, nil, nil, 3)
 
 local rocket = DBM:GetSpellName(166493)
 mod.vb.gatCount = 0
@@ -99,9 +99,10 @@ function mod:SPELL_CAST_START(args)
 		self.vb.homingCount = self.vb.homingCount + 1
 		--"Homing Missile-260813-npc:129232-000034EF89 = pull:5.0, 30.0, 30.0, 67.7, 21.0, 24.0, 21.0",
 		--"Homing Missile-260813-npc:129232-000044832B = pull:5.0, 30.0, 30.0, 30.0, 84.6, 21.0, 24.0, 21.1, 24.0, 21.1, 23.9, 21.1, 23.9, 21.1, 24.0, 21.0, 24.0",
+		--"Homing Missile-260813-npc:129232-00004BCB7B = pull:5.0, 30.0, 30.0, 73.5, 21.0, 24.0, 21.0",
 		if self:GetStage(3) then
 			if self.vb.homingCount % 2 == 0 then
-				timerHomingMissileCD:Start(24, self.vb.homingCount+1)
+				timerHomingMissileCD:Start(23.9, self.vb.homingCount+1)
 			else
 				timerHomingMissileCD:Start(21, self.vb.homingCount+1)
 			end
@@ -129,9 +130,12 @@ function mod:SPELL_AURA_APPLIED(args)
 		timerDrillSmashCD:Start(17, self.vb.drillCount+1)
 	elseif spellId == 260190 and self:IsInCombat() then--Configuration: Combat
 		self:SetStage(3)
+		--These counts have to reset or timers break
+		self.vb.homingCount = 0
+		self.vb.gatCount = 0
 		timerDrillSmashCD:Stop()
-		timerHomingMissileCD:Start("v7-8.3", self.vb.homingCount+1)
-		timerGatlingGunCD:Start("v17-18.3", self.vb.gatCount+1)
+		timerHomingMissileCD:Start("v7-8.3", 1)
+		timerGatlingGunCD:Start("v17-18.3", 1)
 	elseif spellId == 262515 then
 		if args:IsPlayer() then
 			specWarnHeartseeker:Show()
