@@ -4,8 +4,8 @@ local L		= mod:GetLocalizedStrings()
 mod.statTypes = "normal,mythic"--Best way to really call it
 
 mod:SetRevision("@file-date-integer@")
---mod:SetCreatureID(225204)--Non hard one placeholder on load. Real one set in OnCombatStart
-mod:SetEncounterID(3126, 3138)
+mod:SetCreatureID(234168)--Non hard placeholder on load. Real one set in OnCombatStart
+mod:SetEncounterID(3126, 3138)--Normal, Hard
 --mod:SetHotfixNoticeRev(20240914000000)
 --mod:SetMinSyncRevision(20240914000000)
 mod:SetZone(2831)--Demolition Dome
@@ -14,48 +14,88 @@ mod:SetZone(2831)--Demolition Dome
 mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
---	"SPELL_CAST_START",
---	"SPELL_CAST_SUCCESS",
+	"SPELL_CAST_START 1214052 1213852 1217371 1215521 1214043 1214053",
+	"SPELL_CAST_SUCCESS 1214147",
 --	"SPELL_AURA_APPLIED",
---	"SPELL_AURA_REMOVED",
+	"SPELL_AURA_REMOVED 1214052"
 --	"SPELL_PERIODIC_DAMAGE",
 --	"UNIT_DIED"
 )
 
---local warnEnfeeblingSpittle					= mod:NewCountAnnounce(450505, 2)
+local warnBombs							= mod:NewCountAnnounce(1214147, 2, nil, nil, nil, nil, nil, 2)
+local warnMoltenCannon					= mod:NewSpellAnnounce(1214043, 2, nil, false, nil, nil, nil, 2)--Utterly spammed, so warning off by default
 
---local specWarnCallWebTerror					= mod:NewSpecialWarningCount(450568, nil, nil, nil, 1, 2)
+local specWarnShield					= mod:NewSpecialWarningCount(1214052, nil, nil, nil, 1, 2)
+local specWarnCrush						= mod:NewSpecialWarningDodgeCount(1213852, nil, nil, nil, 2, 2)
+local specWarnFlamethrower				= mod:NewSpecialWarningDodgeCount(1217371, nil, nil, nil, 2, 15)
+local specWarnCronies					= mod:NewSpecialWarningSwitchCount(1215521, nil, nil, nil, 1, 2)
 
---local timerAnglersWebCD						= mod:NewAITimer(21.8, 450519, nil, nil, nil, 5)
+local timerShieldCD						= mod:NewVarCountTimer("v45-53", 1214052, nil, nil, nil, 5)--45 seconds til full power, but boss is a dicksucker and doesn't cast it right away
+local timerRechargeCast					= mod:NewCastTimer(15, 1214053, nil, nil, nil, 5)
+local timerCrushCD						= mod:NewVarCountTimer("v20.2-45.4", 1213852, nil, nil, nil, 3)
+local timerFlamethrowerCD				= mod:NewVarCountTimer("v20.2-42.5", 1217371, nil, nil, nil, 3)
+local timerBombsCD						= mod:NewVarCountTimer("v25.5-41.3", 1214147, nil, nil, nil, 5)
+local timerCroniesCD					= mod:NewVarCountTimer("v72.6-89.4", 1215521, nil, nil, nil, 1)
 
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc, 7 off interrupt
 
---[[
+mod.vb.shieldCount = 0
+mod.vb.crushCount = 0
+mod.vb.bombCount = 0
+mod.vb.addsCount = 0
+
 function mod:OnCombatStart(delay)
+	self.vb.shieldCount = 0
+	self.vb.crushCount = 0
+	self.vb.bombCount = 0
+	self.vb.addsCount = 0
+	--Don't have mythic logs yet so using same timers for all right now
+	timerCrushCD:Start(4.8-delay, 1)
+	timerFlamethrowerCD:Start(9.6-delay, 1)
+	timerBombsCD:Start(13.3-delay, 1)
+	timerCroniesCD:Start(17.3-delay, 1)
+	timerShieldCD:Start(46.1-delay, 1)
 	if self:IsMythic() then
 		--self:SetStage(1)
-		--self:SetCreatureID(221427)
+		self:SetCreatureID(236626)
 	else
-		--self:SetCreatureID(225204)
+		self:SetCreatureID(234168)
 	end
 end
---]]
 
---[[
 function mod:SPELL_CAST_START(args)
-	if args.spellId == 450519 then
-
+	if args.spellId == 1214052 then
+		self.vb.shieldCount = self.vb.shieldCount + 1
+		specWarnShield:Show(self.vb.shieldCount)
+		specWarnShield:Play("attackshield")
+	elseif args.spellId == 1213852 then
+		self.vb.crushCount = self.vb.crushCount + 1
+		specWarnCrush:Show(self.vb.crushCount)
+		specWarnCrush:Play("shockwave")
+		timerCrushCD:Start(nil, self.vb.crushCount+1)
+	elseif args.spellId == 1217371 then
+		specWarnFlamethrower:Show(self.vb.crushCount)
+		specWarnFlamethrower:Play("frontal")
+		timerFlamethrowerCD:Start(nil, self.vb.crushCount+1)
+	elseif args.spellId == 1215521 then
+		self.vb.addsCount = self.vb.addsCount + 1
+		specWarnCronies:Show(self.vb.addsCount)
+		specWarnCronies:Play("killmob")
+		timerCroniesCD:Start(nil, self.vb.addsCount+1)
+	elseif args.spellId == 1214043 and self:AntiSpam(4, 1) then
+		warnMoltenCannon:Show()
+		warnMoltenCannon:Play("watchorb")
 	end
 end
---]]
 
---[[
 function mod:SPELL_CAST_SUCCESS(args)
-	if args.spellId == 138680 then
-
+	if args.spellId == 1214147 then
+		self.vb.bombCount = self.vb.bombCount + 1
+		warnBombs:Show(self.vb.bombCount)
+		warnBombs:Play("bombsoon")
+		timerBombsCD:Start(nil, self.vb.bombCount+1)
 	end
 end
---]]
 
 --[[
 function mod:SPELL_AURA_APPLIED(args)
@@ -64,13 +104,17 @@ function mod:SPELL_AURA_APPLIED(args)
 end
 --]]
 
---[[
 function mod:SPELL_AURA_REMOVED(args)
-	if args.spellId == 451003 then
-
+	--"<79.00 02:22:14> [CLEU] SPELL_AURA_REMOVED#Vehicle-0-3778-2831-15161-234168-000047DE31#The Underpin#Vehicle-0-3778-2831-15161-234168-000047DE31#The Underpin#1214052#Divert Energy to Shields#BUFF#0#nil#nil#nil#nil",
+	--"<130.81 02:23:05> [CLEU] SPELL_CAST_START#Vehicle-0-3778-2831-15161-234168-000047DE31#The Underpin(57.0%-100.0%)##nil#1214052#Divert Energy to Shields#nil#nil#nil#nil#nil#nil",
+	--"<146.98 02:23:22> [CLEU] SPELL_AURA_REMOVED#Vehicle-0-3778-2831-15161-234168-000047DE31#The Underpin#Vehicle-0-3778-2831-15161-234168-000047DE31#The Underpin#1214052#Divert Energy to Shields#BUFF#0#nil#nil#nil#nil",
+	--"<191.98 02:24:07> [UNIT_POWER_UPDATE] boss1#The Underpin#TYPE:ENERGY/3#MAIN:100/100#ALT:0/0",
+	--"<200.02 02:24:15> [CLEU] SPELL_CAST_START#Vehicle-0-3778-2831-15161-234168-000047DE31#The Underpin(46.1%-100.0%)##nil#1214052#Divert Energy to Shields#nil#nil#nil#nil#nil#nil",
+	if args.spellId == 1214052 then
+		timerShieldCD:Start(nil, self.vb.shieldCount+1)
+		timerRechargeCast:Stop()
 	end
 end
---]]
 
 --[[
 function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId)
@@ -86,7 +130,7 @@ function mod:UNIT_DIED(args)
 
 	--end
 	local cid = self:GetCIDFromGUID(args.destGUID)
-	if cid == 224077 then--Egg Cocoon
+	if cid == 224077 then
 
 	end
 end
