@@ -1,5 +1,5 @@
 name: DBM-Offline test diff
-run-name: DBM-Offline
+run-name: DBM-Offline on PR
 
 on:
   push:
@@ -14,12 +14,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Run DBM-Offline
-        continue-on-error: true
         uses: DeadlyBossMods/DBM-Offline@main
         with:
+          repo-under-test: dungeons
           dbm-mod-ref-dungeons: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.event.after }}
           dbm-mod-base-ref-dungeons: ${{ github.event_name == 'pull_request' && github.event.pull_request.base.sha || github.event.before }}
           test-dbm-dungeon-mods: true
-          upload-repo-branch: diff-dungeons-${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.event.after }}-${{ github.event_name == 'pull_request' && github.event.pull_request.base.sha || github.event.before }}
-          upload-token: ${{ secrets.TEST_RESULT_UPLOAD_TOKEN }}
-          comment-token: ${{ secrets.GITHUB_TOKEN }}
