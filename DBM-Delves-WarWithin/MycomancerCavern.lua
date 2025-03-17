@@ -23,6 +23,7 @@ local warnSporesong							= mod:NewCastAnnounce(453897, 2)
 local warnSwampBolt							= mod:NewSpellAnnounce(449965, 2)
 
 local specWarnMuckCharge					= mod:NewSpecialWarningDodge(454213, nil, nil, nil, 2, 2)
+local specWarnSporesong						= mod:NewSpecialWarningCast(453897, "SpellCaster", nil, nil, 2, 2)
 
 local timerMuckChargeCD						= mod:NewCDTimer(25.5, 454213, nil, nil, nil, 3)
 local timerSporesongCD						= mod:NewCDTimer(25.5, 453897, nil, nil, nil, 3)
@@ -43,7 +44,12 @@ function mod:SPELL_CAST_START(args)
 		timerSwampBoltCD:Start()
 	elseif args.spellId == 453897 then
 		--"Sporesong-453897-npc:220314-0000497D69 = pull:15.5, 29.1, 29.1, 29.1, 29.1, 29.1",
-		warnSporesong:Show()
+		if self.Options.SpecWarn453897cast then
+			specWarnSporesong:Show()
+			specWarnSporesong:Play("stopcast")
+		else
+			warnSporesong:Show()
+		end
 		timerSporesongCD:Start()
 	end
 end
