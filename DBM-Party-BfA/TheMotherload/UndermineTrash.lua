@@ -187,7 +187,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 		timerBrutalChargeCD:Start(12.2, args.sourceGUID)
 		warnBrutalCharge:Show(args.destName)
 	elseif spellId == 1213139 then
-		timerOvertimeCD:Start(14.6, args.destName)
+		timerOvertimeCD:Start(14.4, args.sourceGUID)
 		warnOvertime:Show()
 	--elseif spellId == 262515 and self:AntiSpam(2.5, args.destName) then
 	--	warnAzeriteHeartseeker:CombinedShow(0.5, args.destName)
