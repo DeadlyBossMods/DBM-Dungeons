@@ -105,7 +105,7 @@ function mod:OnCombatStart(delay)
 	timerPlatinumPummelCD:Start(7-delay, 1)
 	timerBattlemineCD:Start(12.1-delay, 1)
 	timerGroundPoundCD:Start(13.1-delay, 1)
-	timerMaxThrustCD:Start(36.2-delay, 1)
+	timerMaxThrustCD:Start(35.2-delay, 1)
 	timerPlatinumPlatingCD:Start(37.2-delay, 1)
 end
 
@@ -150,7 +150,7 @@ function mod:SPELL_CAST_START(args)
 		--"<169.83 19:37:14> [CLEU] SPELL_CAST_SUCCESS#Creature-0-5770-2097-16037-145185-000032303A#Gnomercy 4.U.(97.4%-22.0%)#Player-5764-0042C929#Shirumw#285152#Foe Flipper#nil#nil#nil#nil#nil#nil",
 		--"Foe Flipper-285152-npc:145185-000032308F = pull:5.8, 15.8, 29.2, 15.8, 19.4, 15.8, 19.4, 15.8, 19.4, 15.8",
 		if self.vb.foeCount == 2 then
-			timerFoeFlipperCD:Start(29.2, 3)
+			timerFoeFlipperCD:Start(28, 3)
 		elseif self.vb.foeCount % 2 == 1 then
 			timerFoeFlipperCD:Start(15.8, self.vb.foeCount+1)
 		else
