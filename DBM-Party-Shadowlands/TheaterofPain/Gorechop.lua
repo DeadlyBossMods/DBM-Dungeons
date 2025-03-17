@@ -28,7 +28,7 @@ local specWarnTenderizingSmash		= mod:NewSpecialWarningRunCount(318406, nil, nil
 local specWarnHatefulStrike			= mod:NewSpecialWarningDefensive(323515, nil, nil, nil, 1, 2)
 local specWarnGTFO					= mod:NewSpecialWarningGTFO(323130, nil, nil, nil, 1, 8)
 
-local timerMeatHooksCD				= mod:NewCDCountTimer(20.6, 322795, nil, nil, nil, 1)--"v20.6-24.3"
+local timerMeatHooksCD				= mod:NewCDCountTimer(20.2, 322795, nil, nil, nil, 1)--"v20.6-24.3"
 local timerTenderizingSmashCD		= mod:NewCDCountTimer(19.4, 318406, nil, nil, nil, 3, nil, DBM_COMMON_L.DEADLY_ICON)--19.4 unless delayed by another spell
 local timerHatefulStrikeCD			= mod:NewCDCountTimer(14.6, 323515, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)--14.6 unless delayed by other spells (up to 19.4)
 
@@ -63,9 +63,9 @@ function mod:OnCombatStart(delay)
 	self.vb.hookCount = 0
 	self.vb.smashCount = 0
 	self.vb.strikeCount = 0
-	timerHatefulStrikeCD:Start(9.7-delay, 1)
+	timerHatefulStrikeCD:Start(8.6-delay, 1)
 	timerMeatHooksCD:Start(5.8-delay, 1)
-	timerTenderizingSmashCD:Start(14.5-delay, 1)
+	timerTenderizingSmashCD:Start(14.1-delay, 1)
 end
 
 function mod:SPELL_CAST_START(args)
