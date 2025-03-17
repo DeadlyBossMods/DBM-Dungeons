@@ -86,7 +86,7 @@ function mod:SPELL_CAST_START(args)
 		self.vb.addsCount = self.vb.addsCount + 1
 		specWarnCronies:Show(self.vb.addsCount)
 		specWarnCronies:Play("killmob")
-		timerCroniesCD:Start(self:IsMythic() and "v57-65.5" or "v72.6-89.4", self.vb.addsCount+1)
+		timerCroniesCD:Start(self:IsMythic() and "v47.8-65.5" or "v72.6-89.4", self.vb.addsCount+1)
 	elseif args.spellId == 1214043 and self:AntiSpam(4, 1) then
 		warnMoltenCannon:Show()
 		warnMoltenCannon:Play("watchorb")
