@@ -142,13 +142,12 @@ function mod:SPELL_CAST_START(args)
 		timerUmbralWaveCD:Start(nil, args.sourceGUID)
 		if self:AntiSpam(3, 2) then
 			specWarnUmbralWave:Show()
-			specWarnUmbralWave:Play("watchwave")
+			specWarnUmbralWave:Play("watchorb")
 		end
 	elseif spellId == 472764 then
 		timerVoidExtractionCD:Start(nil, args.sourceGUID)
 		if self:AntiSpam(3, 6) then
 			warnVoidExtraction:Show()
-			warnVoidExtraction:Play("watchwave")
 		end
 	end
 end

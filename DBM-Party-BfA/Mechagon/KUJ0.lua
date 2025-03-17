@@ -34,7 +34,7 @@ local specWarnVentingFlames			= mod:NewSpecialWarningMoveTo(291946, nil, nil, ni
 local timerAurDropCD				= mod:NewNextCountTimer(32.7, 291930, nil, nil, nil, 3)
 local timerExplosiveLeapCD			= mod:NewNextCountTimer(34, 291972, nil, nil, nil, 3)
 local timerVentingFlamesCD			= mod:NewCDCountTimer(13.4, 291946, nil, nil, nil, 2, nil, DBM_COMMON_L.DEADLY_ICON)
-local timerBlazingChompCD			= mod:NewVarCountTimer("v15.8-18.2", 294929, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+local timerBlazingChompCD			= mod:NewVarCountTimer("v15.8-19.4", 294929, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 
 mod.vb.airDropCount = 0
 mod.vb.leapCount = 0
@@ -46,7 +46,7 @@ function mod:OnCombatStart(delay)
 	self.vb.leapCount = 0
 	self.vb.flamesCount = 0
 	self.vb.chompCount = 0
-	timerAurDropCD:Start("v6.1-9.2", 1)--SUCCESS
+	timerAurDropCD:Start("v5.8-9.2", 1)--SUCCESS
 	timerBlazingChompCD:Start(10.6-delay, 1)--SUCCESS
 	timerVentingFlamesCD:Start(15.5-delay, 1)--START
 	timerExplosiveLeapCD:Start(38.6-delay, 1)--START

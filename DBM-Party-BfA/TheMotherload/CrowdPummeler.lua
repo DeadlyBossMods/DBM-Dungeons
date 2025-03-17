@@ -33,11 +33,11 @@ local specWarnShockingClaw			= mod:NewSpecialWarningDodgeCount(257337, nil, nil,
 local specWarnThrowCoins			= mod:NewSpecialWarningMove(271784, "Tank", nil, nil, 1, 2)
 --local specWarnGTFO				= mod:NewSpecialWarningGTFO(238028, nil, nil, nil, 1, 8)
 
-local timerStaticPulseCD			= mod:NewVarCountTimer("v43.7-48.1", 262347, nil, nil, nil, 2)
-local timerFootbombLauncherCD		= mod:NewVarCountTimer("v42.5-48.1", 269493, nil, nil, nil, 5)
+local timerStaticPulseCD			= mod:NewVarCountTimer("v43.7-48.5", 262347, nil, nil, nil, 2)
+local timerFootbombLauncherCD		= mod:NewVarCountTimer("v42.5-48.5", 269493, nil, nil, nil, 5)
 local timerBlazingAzerite			= mod:NewBuffFadesTimer(15, 256493, nil, nil, nil, 5)
-local timerShockingClawCD			= mod:NewVarCountTimer("v41.2-45.6", 257337, nil, nil, nil, 3)--time shorted by 2.5 cause we start timer at success but want it to expire at start
-local timerThrowCoinsCD				= mod:NewVarCountTimer("v43.7-48.1", 271784, nil, nil, nil, 3, nil, DBM_COMMON_L.HEROIC_ICON..DBM_COMMON_L.TANK_ICON)--18.8, 17.4, 25.5, 25.5
+local timerShockingClawCD			= mod:NewVarCountTimer("v41.2-48.5", 257337, nil, nil, nil, 3)--time shorted by 2.5 cause we start timer at success but want it to expire at start
+local timerThrowCoinsCD				= mod:NewVarCountTimer("v43.7-48.5", 271784, nil, nil, nil, 3, nil, DBM_COMMON_L.HEROIC_ICON..DBM_COMMON_L.TANK_ICON)--18.8, 17.4, 25.5, 25.5
 local timerCoinMagnetCD				= mod:NewCDCountTimer(43.3, 271903, nil, nil, nil, 3)--Needs more data, probably same as the rest though
 
 mod.vb.pulseCount = 0
@@ -53,7 +53,7 @@ function mod:OnCombatStart(delay)
 	self.vb.coinCast = 0
 	self.vb.magnetCount = 0
 	timerStaticPulseCD:Start(6.2-delay, 1)
-	timerFootbombLauncherCD:Start(19.5-delay, 1)
+	timerFootbombLauncherCD:Start(19.3-delay, 1)
 	timerShockingClawCD:Start(30.4-delay, 1)
 	if not self:IsNormal() then
 		timerThrowCoinsCD:Start(12.2-delay, 1)

@@ -35,7 +35,7 @@ local specWarnCrush						= mod:NewSpecialWarningDodgeCount(1213852, nil, nil, ni
 local specWarnFlamethrower				= mod:NewSpecialWarningDodgeCount(1217371, nil, nil, nil, 2, 15)
 local specWarnCronies					= mod:NewSpecialWarningSwitchCount(1215521, nil, nil, nil, 1, 2)
 
-local timerShieldCD						= mod:NewVarCountTimer("v45-53", 1214052, nil, nil, nil, 5)--45 seconds til full power, but boss is a dicksucker and doesn't cast it right away
+local timerShieldCD						= mod:NewVarCountTimer("v45-58.5", 1214052, nil, nil, nil, 5)--45 seconds til full power, but boss is a dicksucker and doesn't cast it right away
 local timerRechargeCast					= mod:NewCastTimer(15, 1214053, nil, nil, nil, 5)
 local timerCrushCD						= mod:NewVarCountTimer("v20.2-45.4", 1213852, nil, nil, nil, 3)
 local timerFlamethrowerCD				= mod:NewVarCountTimer("v20.2-42.5", 1217371, nil, nil, nil, 3)
@@ -86,7 +86,7 @@ function mod:SPELL_CAST_START(args)
 		self.vb.addsCount = self.vb.addsCount + 1
 		specWarnCronies:Show(self.vb.addsCount)
 		specWarnCronies:Play("killmob")
-		timerCroniesCD:Start(self:IsMythic() and "v57-65.5" or "v72.6-89.4", self.vb.addsCount+1)
+		timerCroniesCD:Start(self:IsMythic() and "v47.7-65.5" or "v67.9-89.4", self.vb.addsCount+1)
 	elseif args.spellId == 1214043 and self:AntiSpam(4, 1) then
 		warnMoltenCannon:Show()
 		warnMoltenCannon:Play("watchorb")

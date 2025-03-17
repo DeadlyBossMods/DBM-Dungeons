@@ -36,7 +36,7 @@ local timerTearItDownCD							= mod:NewVarTimer("v13.3-26.7", 1213785, nil, nil,
 local timerHopelessCurseCD						= mod:NewVarTimer("v18.2-36.5", 1213776, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerUnansweredCallCD						= mod:NewVarTimer("v35.2-36.5", 1213700, nil, nil, nil, 5)
 local timerMakeItRainCD							= mod:NewVarTimer("v13.4-17", 1214135, nil, nil, nil, 3)
-local timerGoblinIngenuityCD					= mod:NewVarTimer("v17-19.4", 1214504, nil, nil, nil, 2)
+local timerGoblinIngenuityCD					= mod:NewVarTimer("v16.6-19.4", 1214504, nil, nil, nil, 2)
 local timerTentacleSlamCD						= mod:NewCDTimer(13.4, 1213426, nil, nil, nil, 3)--Unknown recast
 local timerTerrifyingRoarCD						= mod:NewCDTimer(33.7, 1213425, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--33.7--34.1
 
@@ -134,11 +134,11 @@ end
 
 function mod:ENCOUNTER_START(eID)
 	if eID == 3095 then--Craggle Fritzbrains
+		timerGoblinIngenuityCD:Start(6.8)
 		timerMakeItRainCD:Start(7.3)
-		timerGoblinIngenuityCD:Start(10.9)
 	elseif eID == 3096 then--Harbinger Ul'thul
-		timerHopelessCurseCD:Start(5.6)
-		timerTearItDownCD:Start(7.2)
+		timerHopelessCurseCD:Start(3.5)
+		timerTearItDownCD:Start(5.9)
 		timerUnansweredCallCD:Start(30.3)
 	elseif eID == 3099 then--Xel'anegh the Many
 		self:RegisterBossUnitScan(3)

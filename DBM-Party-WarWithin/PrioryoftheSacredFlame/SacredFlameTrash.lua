@@ -87,7 +87,7 @@ mod:AddTimerLine(DBM:EJ_GetSectionInfo(27825))
 local specWarnBrutalSmash					= mod:NewSpecialWarningDodge(424621, nil, nil, nil, 2, 2)
 local specWarnLungingStrike					= mod:NewSpecialWarningMoveAway(424423, nil, nil, nil, 1, 2)
 
-local timerBrutalSmashCD					= mod:NewCDTimer(30.3, 424621, nil, nil, nil, 3)--Using full timer instead of nameplate only so we can cleaner update it
+local timerBrutalSmashCD					= mod:NewCDTimer(29.2, 424621, nil, nil, nil, 3)--Using full timer instead of nameplate only so we can cleaner update it
 local timerLungingStrikeCD					= mod:NewCDTimer(14.5, 424423, nil, nil, nil, 3)
 --Elaena Emberlanz
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(27828))

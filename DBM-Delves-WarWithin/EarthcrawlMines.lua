@@ -9,7 +9,7 @@ mod:SetZone(2680)
 mod:RegisterCombat("scenario", 2680)
 
 mod:RegisterEventsInCombat(
-	"SPELL_CAST_START 448443 448444 449568",
+	"SPELL_CAST_START 448443 448444 449568 1217905 1217913",
 --	"SPELL_CAST_SUCCESS",
 --	"SPELL_AURA_APPLIED",
 --	"SPELL_AURA_REMOVED",
@@ -22,13 +22,17 @@ mod:RegisterEventsInCombat(
 
 local warnCurseOfAgony						= mod:NewSpellAnnounce(448443, 2)
 local warnRunicShackles						= mod:NewSpellAnnounce(448444, 2)
+local warnCallMoleMachine					= mod:NewSpellAnnounce(1217905, 2)
 
 local specWarnBurningCart					= mod:NewSpecialWarningDodge(448412, nil, nil, nil, 2, 2)
+local specWarnDarkBurning					= mod:NewSpecialWarningSpell(1217913, nil, nil, nil, 2, 2)
 
 local timerCurseOfAgonyCD					= mod:NewCDTimer(23.2, 448443, nil, nil, nil, 3, nil, DBM_COMMON_L.CURSE_ICON)
 local timerRunicShacklesCD					= mod:NewCDTimer(32.9, 448444, nil, nil, nil, 3, nil, DBM_COMMON_L.CURSE_ICON)
 local timerWebBoltCD						= mod:NewCDTimer(6, 449568, nil, false, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerBurningCartCD					= mod:NewCDTimer(35.2, 448412, nil, nil, nil, 3, nil, DBM_COMMON_L.DEADLY_ICON)
+local timerCallMoleMachineCD				= mod:NewVarTimer("v16.9-19.3", 1217905, nil, nil, nil, 1)
+local timerDarkBurningCD					= mod:NewCDTimer(21.7, 1217913, nil, nil, nil, 2)
 
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc, 7 off interrupt
 
@@ -44,6 +48,15 @@ function mod:SPELL_CAST_START(args)
 		timerRunicShacklesCD:Start()
 	elseif args.spellId == 449568 then
 		timerWebBoltCD:Start()
+	elseif args.spellId == 1217905 then
+		--"Call Mole Machine-1217905-npc:216863-00005738DD = pull:3.8, 18.1, 16.9, 17.1, 19.3",
+		warnCallMoleMachine:Show()
+		timerCallMoleMachineCD:Start()
+	elseif args.spellId == 1217913 then
+		--"Dark Burn-1217913-npc:216863-00005738DD = pull:18.3, 21.9, 21.7, 22.0",
+		specWarnDarkBurning:Show()
+		specWarnDarkBurning:Play("aesoon")
+		timerDarkBurningCD:Start()
 	end
 end
 
@@ -98,7 +111,8 @@ function mod:ENCOUNTER_START(eID)
 		timerBurningCartCD:Start(12.1)
 		timerRunicShacklesCD:Start(20.2)
 	elseif eID == 3005 then--Maklin Drillstab
-		DBM:AddMsg("Boss alerts/timers not yet implemented for Maklin Drillstab")
+		timerCallMoleMachineCD:Start(3.8)
+		timerDarkBurningCD:Start(18.3)
 	elseif eID == 3100 then--The Biggest Bug
 		DBM:AddMsg("Boss alerts/timers not yet implemented for The Biggest Bug")
 	end
@@ -118,7 +132,8 @@ function mod:ENCOUNTER_END(eID, _, _, _, success)
 		if success == 1 then
 			DBM:EndCombat(self)
 		else
-			--Timers
+			timerCallMoleMachineCD:Stop()
+			timerDarkBurningCD:Stop()
 		end
 	elseif eID == 3100 then--The Biggest Bug
 		if success == 1 then

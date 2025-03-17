@@ -39,8 +39,8 @@ local specWarnBrawl							= mod:NewSpecialWarningDodge(445180, nil, nil, nil, 2,
 local specWarnGTFO							= mod:NewSpecialWarningGTFO(432196, nil, nil, nil, 1, 8)
 
 local timerBlazingBelchCD					= mod:NewCDCountTimer(23, 432198, nil, nil, nil, 3)
-local timerThrowCinderbrewCD				= mod:NewCDCountTimer(18.1, 432179, nil, nil, nil, 3)
-local timerKegSmashCD						= mod:NewCDCountTimer(14.5, 432229, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)--13.7
+local timerThrowCinderbrewCD				= mod:NewCDCountTimer(17.8, 432179, nil, nil, nil, 3)
+local timerKegSmashCD						= mod:NewVarCountTimer("v13.7-14.5", 432229, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 
 mod:AddNamePlateOption("NPAuraOnThirsty", 431896)
 
@@ -118,7 +118,7 @@ function mod:SPELL_AURA_REMOVED(args)
 		end
 		timerKegSmashCD:Start(8.4, 1)
 		timerThrowCinderbrewCD:Start(13.2, 1)
-		timerBlazingBelchCD:Start(16.9, 1)
+		timerBlazingBelchCD:Start(16.7, 1)
 	elseif spellId == 431896 then
 		if self.Options.NPAuraOnThirsty then
 			DBM.Nameplate:Hide(true, args.destGUID, spellId)
