@@ -69,7 +69,7 @@ function mod:OnCombatStart(delay)
 	timerPurifyingLightCD:Start(10.5-delay, 1)--10.5
 	timerInnerFireCD:Start("v15.5-19", 1)--15.5-19
 	if self:IsMythic() then
-		timerBlindingLightCD:Start(14.5-delay, 1)
+		timerBlindingLightCD:Start(13.6-delay, 1)
 	end
 end
 
@@ -110,11 +110,11 @@ function mod:SPELL_CAST_START(args)
 	elseif spellId == 444609 then--Stoke the flame (cast after interrupting Inner Light
 --		self.vb.holyFlameCount = 0
 		self:SetStage(2)
-		timerInnerFireCD:Start(4.8, self.vb.innerCount+1)
-		timerPurifyingLightCD:Start(7.2, self.vb.purifyingCount+1)
-		timerHolyFlameCD:Start(12.9, self.vb.holyFlameCount+1)
+		timerHolyFlameCD:Start(14.5, self.vb.holyFlameCount+1)
+		timerInnerFireCD:Start(18.2, self.vb.innerCount+1)
+		timerPurifyingLightCD:Start(20.6, self.vb.purifyingCount+1)
 		if self:IsMythic() then
-			timerBlindingLightCD:Start(11, self.vb.blindingCount+1)
+			timerBlindingLightCD:Start(24.2, self.vb.blindingCount+1)
 		end
 	elseif spellId == 428169 then
 		self.vb.blindingCount = self.vb.blindingCount + 1
