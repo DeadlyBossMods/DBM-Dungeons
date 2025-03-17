@@ -137,8 +137,8 @@ function mod:ENCOUNTER_START(eID)
 		timerMakeItRainCD:Start(7.3)
 		timerGoblinIngenuityCD:Start(10.9)
 	elseif eID == 3096 then--Harbinger Ul'thul
-		timerHopelessCurseCD:Start(5.6)
-		timerTearItDownCD:Start(7.2)
+		timerHopelessCurseCD:Start(3.5)
+		timerTearItDownCD:Start(5.9)
 		timerUnansweredCallCD:Start(30.3)
 	elseif eID == 3099 then--Xel'anegh the Many
 		self:RegisterBossUnitScan(3)

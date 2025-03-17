@@ -160,7 +160,7 @@ do
 			eventsRegistered = true
 			self:RegisterShortTermEvents(
                 "SPELL_CAST_START 449318 450546 433410 450714 445781 415253 425040 424704 424798 414944 418791 424891 450197 448399 445191 455932 445492 434281 450637 445210 448528 449071 462686 459421 448179 445774 443292 450492 450519 450505 450509 448155 448161 418295 415250 434740 470592 443482 458879 445718 451913 445771 372529 474004 473541 474511 474482 474325 474223 474206 1217361 1217326 1216806 1216805 1217301 473550",
-                "SPELL_CAST_SUCCESS 414944 424614 418791 424891 427812 450546 450197 415253 449318 445191 430036 445252 425040 424704 448399 448528 433410 445492 462686 447392 459421 448179 450509 415250 443162 443292 451913 444915 445406 372529 473541 1216806 1216805 1217361 1217326 474206 474004 473995 473550",--474325
+                "SPELL_CAST_SUCCESS 414944 424614 418791 424891 427812 450546 450197 415253 449318 445191 430036 445252 425040 424704 448399 448528 433410 445492 462686 447392 459421 448179 450509 415250 443162 443292 451913 444915 445406 372529 473541 1216806 1216805 1217361 1217326 474206 474004 473995 473550 474482 418295",--474325
 				"SPELL_INTERRUPT",
                 "SPELL_AURA_APPLIED 424614 449071 418297 430036 440622 441129 448161 470592 443482 458879 445407",
                 --"SPELL_AURA_REMOVED",
@@ -277,7 +277,6 @@ function mod:SPELL_CAST_START(args)
 			specWarnUmbralSlam:Play("frontal")
 		end
 	elseif args.spellId == 418295 then
-		timerUmbrelSlashCD:Start(nil, args.sourceGUID)
 		if self:AntiSpam(3, 2) then
 			specWarnUmbralSlash:Show()
 			specWarnUmbralSlash:Play("frontal")
@@ -462,7 +461,6 @@ function mod:SPELL_CAST_START(args)
 			warnShadowSmash:Show()
 		end
 	elseif args.spellId == 474482 then
-		timerLureoftheVoidCD:Start(nil, args.sourceGUID)
 		if self:AntiSpam(3, 5) then
 			warnLureoftheVoid:Show()
 			warnLureoftheVoid:Play("pullin")
@@ -561,17 +559,21 @@ function mod:SPELL_CAST_SUCCESS(args)
 	elseif args.spellId == 1216805 then
 		timerZapCD:Start(18.5, args.sourceGUID)--20.5-2
 	elseif args.spellId == 1217361 then
-		timerWorthlessAdorationsCD:Start(13.5, args.sourceGUID)--15-1.5
+		timerWorthlessAdorationsCD:Start(12.1, args.sourceGUID)--13.6-1.5
 	elseif args.spellId == 1217326 then
 		timerTakeASelfieCD:Start(9.8, args.sourceGUID)--13.3-3.5
-	elseif args.spellId == 474206 then
+	elseif args.spellId == 474206 and self:IsValidWarning(args.sourceGUID) then
 		timerShadowStompCD:Start(25.9, args.sourceGUID)--29.9-4
-	elseif args.spellId == 474004 then
-		timerDrillQuakeCD:Start(12.2, args.sourceGUID)--15.7-3.5
+	elseif args.spellId == 474004 and self:IsValidWarning(args.sourceGUID) then
+		timerDrillQuakeCD:Start(9, args.sourceGUID)--12.5-3.5
 	elseif args.spellId == 473995 then
 		timerBloodBathCD:Start(35, args.sourceGUID)--40-5
 	elseif args.spellId == 473550 then
 		timerRocketBarrageCD:Start(17.4, args.sourceGUID)--19.4-2
+	elseif args.spellId == 474482 then
+		timerLureoftheVoidCD:Start(20.1, args.sourceGUID)--22.1 - 2
+	elseif args.spellId == 418295 then
+		timerUmbrelSlashCD:Start(15.9, args.sourceGUID)--17.4-1.5
 	end
 end
 
@@ -833,11 +835,11 @@ function mod:StartEngageTimers(guid, cid, delay)
 	elseif cid == 231904 then--Punchy Thug
 		timerFlurryOfPunchesCD:Start(3-delay, guid)
 	elseif cid == 234553 then--Dark Walker
-		timerShadowSmashCD:Start(6.4-delay, guid)--6.4-7.2
-		timerLureoftheVoidCD:Start(15.7-delay, guid)
+		timerShadowSmashCD:Start(5.7-delay, guid)--5.7-7.2
+		timerLureoftheVoidCD:Start(15.4-delay, guid)
 		--timerAbysmalGraspCD:Start(32-delay, guid)
 	elseif cid == 234208 then--Hideous Amalgamation
-		timerConcussiveSmashCD:Start(7.7-delay, guid)
+		--timerConcussiveSmashCD:Start(7.7-delay, guid)--Can be used instantly on pull
 		timerShadowStompCD:Start(28.6-delay, guid)--Probably totally wrong, not enough data
 	elseif cid == 234900 then--Underpin's Adoring Fan
 		timerWorthlessAdorationsCD:Start(4.9-delay, guid)
@@ -846,7 +848,7 @@ function mod:StartEngageTimers(guid, cid, delay)
 		timerZapCD:Start(5.1-delay, guid)
 		timerTheresTheDoorCD:Start(10.3-delay, guid)
 	elseif cid == 234905 then--Aggressively Lost Hobgoblin
-		timerHeedlessChargeCD:Start(5.9-delay, guid)
+		timerHeedlessChargeCD:Start(3.5-delay, guid)
 	elseif cid == 231910 then--Masked Freelancer
 		timerBloodBathCD:Start(31.2-delay, guid)
 	elseif cid == 231906 then--Aerial Support Bot
