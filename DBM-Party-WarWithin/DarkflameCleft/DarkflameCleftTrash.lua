@@ -9,7 +9,7 @@ mod:SetZone(2651)
 mod:RegisterZoneCombat(2651)
 
 mod:RegisterEvents(
-	"SPELL_CAST_START 425536 423501 430171 426883 426261 426295 426619 440652 424322 428066 423479 428563 1218117 422541",--422414
+	"SPELL_CAST_START 425536 423501 430171 426883 426261 426295 426619 440652 424322 428066 423479 428563 1218117 422541 426260",--422414
 	"SPELL_CAST_SUCCESS 422541 424322 428019 425536 426883 426295 1218131",--426295 422414
 	"SPELL_INTERRUPT",
 	"SPELL_AURA_APPLIED 425555 428019 424650",
@@ -47,6 +47,7 @@ local yellCeaselessFlame					= mod:NewYell(426261)
 --local specWarnShadowSmash					= mod:NewSpecialWarningDodge(422414, nil, nil, nil, 2, 15)
 local specWarnSurgingFlame					= mod:NewSpecialWarningDodge(440652, nil, nil, nil, 2, 2)
 local specWarnBurningCandles				= mod:NewSpecialWarningDodge(1218131, nil, nil, nil, 2, 2)
+local specWarnPyroPummel					= mod:NewSpecialWarningDodge(426260, nil, nil, nil, 2, 15)--Not CD based, conditional based, so no NP timer
 local specWarnOHHeadlock					= mod:NewSpecialWarningYou(426619, nil, nil, nil, 1, 2)
 --local specWarnStormshield					= mod:NewSpecialWarningDispel(386223, "MagicDispeller", nil, nil, 1, 2)
 local specWarnMoleFrenzy					= mod:NewSpecialWarningInterrupt(425536, "HasInterrupt", nil, nil, 1, 2)--High Prio Interrupt
@@ -181,6 +182,11 @@ function mod:SPELL_CAST_START(args)
 			specWarnDrainLight:Play("kickcast")
 		elseif self:AntiSpam(3, 7) then
 			warnDrainLight:Show()
+		end
+	elseif spellId == 426260 then
+		if self:AntiSpam(3, 2) then
+			specWarnPyroPummel:Show()
+			specWarnPyroPummel:Play("frontal")
 		end
 	end
 end
