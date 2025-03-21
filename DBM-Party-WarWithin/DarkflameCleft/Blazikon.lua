@@ -62,8 +62,8 @@ function mod:OnCombatStart(delay)
 	self.vb.gustCount = 0
 	self.vb.infernoCount = 0
 	self.vb.breathCount = 0
-	timerDousingBreathCD:Start(3.6-delay, 1)
-	timerWicklighterBarrageCD:Start(7.3-delay, 1)
+	timerDousingBreathCD:Start(3.4-delay, 1)
+	timerWicklighterBarrageCD:Start(7.0-delay, 1)
 	timerEnkindlingInfernoCD:Start(20.5-delay, 1)
 	timerExtinguishingGustCD:Start(25.5-delay, 1)
 	timerInciteFlamesCD:Start(37.6-delay, 1)

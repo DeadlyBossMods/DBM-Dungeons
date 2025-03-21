@@ -78,7 +78,7 @@ function mod:VoidCrushtarget(targetname)
 	if targetname == UnitName("player") then
 		if self:AntiSpam(4, 5) then
 			specWarnVoidCrush:Show()
-			specWarnVoidCrush:Play("runout")
+			specWarnVoidCrush:Play("scatter")
 		end
 		yellVoidCrush:Yell()
 	end

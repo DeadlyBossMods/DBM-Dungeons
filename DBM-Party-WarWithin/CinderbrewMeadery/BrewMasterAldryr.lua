@@ -15,7 +15,7 @@ mod:RegisterCombat("combat")
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 442525 432198 432179 432229",
 --	"SPELL_CAST_SUCCESS",
-	"SPELL_AURA_APPLIED 431896",
+	"SPELL_AURA_APPLIED 431896 432182",
 	"SPELL_AURA_REMOVED 442525 431896",
 	"SPELL_PERIODIC_DAMAGE 432196",
 	"SPELL_PERIODIC_MISSED 432196"
@@ -33,6 +33,7 @@ local warnHappyHour							= mod:NewSpellAnnounce(442525, 3)
 local warnHappyHourOver						= mod:NewEndAnnounce(442525, 2)
 local warnThrowCinderbrew					= mod:NewCountAnnounce(432179, 2)
 
+local specWarnThrowCinderBrew				= mod:NewSpecialWarningYou(432179, nil, nil, nil, 1, 17)
 local specWarnBlazingBelch					= mod:NewSpecialWarningDodgeCount(432198, nil, nil, nil, 2, 2)
 local specWarnKegSmash						= mod:NewSpecialWarningCount(432229, nil, nil, nil, 1, 2)
 local specWarnBrawl							= mod:NewSpecialWarningDodge(445180, nil, nil, nil, 2, 2)
@@ -101,6 +102,9 @@ function mod:SPELL_AURA_APPLIED(args)
 		if self.Options.NPAuraOnThirsty then
 			DBM.Nameplate:Show(true, args.destGUID, spellId)
 		end
+	elseif spellId == 432182 and args:IsPlayer() then
+		specWarnThrowCinderBrew:Show()
+		specWarnThrowCinderBrew:Play("debuffyou")
 	end
 end
 --mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED
