@@ -42,11 +42,11 @@ local specWarnBurningLight					= mod:NewSpecialWarningInterruptCount(423051, "Ha
 local specWarnHammerofPurity				= mod:NewSpecialWarningDodgeCount(423062, nil, nil, nil, 2, 2)
 --local specWarnGTFO						= mod:NewSpecialWarningGTFO(372820, nil, nil, nil, 1, 8)
 
-local timerVindictiveWrathCD				= mod:NewCDCountTimer(48.5, 422969, nil, nil, nil, 6)
-local timerCastigatorsShieldCD				= mod:NewCDCountTimer(30.3, 423015, nil, nil, nil, 3)
-local timerBurningLightCD					= mod:NewCDCountTimer(40.0, 423051, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
-local timerHammerofPurityCD					= mod:NewCDCountTimer(30.3, 423062, nil, nil, nil, 3)
-local timerSacredPyreCD						= mod:NewCDCountTimer(38.8, 446368, nil, nil, nil, 5, nil, DBM_COMMON_L.MYTHIC_ICON)
+local timerVindictiveWrathCD				= mod:NewCDCountTimer(68.8, 422969, nil, nil, nil, 6)
+local timerCastigatorsShieldCD				= mod:NewVarCountTimer("v33.6-34", 423015, nil, nil, nil, 3)
+local timerBurningLightCD					= mod:NewVarCountTimer("v33.6-34", 423051, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerHammerofPurityCD					= mod:NewVarCountTimer("v35.2-36", 423062, nil, nil, nil, 3)
+local timerSacredPyreCD						= mod:NewVarCountTimer("v33.6-34", 446368, nil, nil, nil, 5, nil, DBM_COMMON_L.MYTHIC_ICON)
 
 --local castsPerGUID = {}
 
@@ -66,10 +66,10 @@ function mod:OnCombatStart(delay)
 	self.vb.pyreCount = 0
 	self.vb.flamesRemaining = 3
 	self.vb.wrathActive = false
-	timerHammerofPurityCD:Start(7.4-delay, 1)
-	timerBurningLightCD:Start(21.5-delay, 1)
+	timerHammerofPurityCD:Start(7.3-delay, 1)
 	timerCastigatorsShieldCD:Start(23.0-delay, 1)
-	timerVindictiveWrathCD:Start(31.3-delay, 1)
+	timerBurningLightCD:Start(29.2-delay, 1)
+	timerVindictiveWrathCD:Start(35.2-delay, 1)
 	if self:IsMythic() then
 		timerSacredPyreCD:Start(15.4-delay, 1)
 	end
