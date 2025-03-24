@@ -33,7 +33,7 @@ local specWarnNecroticEruption		= mod:NewSpecialWarningDodgeCount(474087, nil, n
 local specWarnFeastoftheDamned		= mod:NewSpecialWarningCount(473513, nil, nil, nil, 2, 2)
 --local specWarnGTFO				= mod:NewSpecialWarningGTFO(257274, nil, nil, nil, 1, 8)
 
-local timerDrawSoulCD				= mod:NewVarCountTimer("v54.6-57.1", 474298, nil, nil, nil, 3, nil, DBM_COMMON_L.DAMAGE_ICON, nil, 1, 5)
+local timerDrawSoulCD				= mod:NewVarCountTimer("v53.4-57.1", 474298, nil, nil, nil, 3, nil, DBM_COMMON_L.DAMAGE_ICON, nil, 1, 5)
 local timerWellofDarknessCD			= mod:NewCDCountTimer(23.1, 473540, nil, nil, nil, 3, nil, DBM_COMMON_L.HEALER_ICON..DBM_COMMON_L.MAGIC_ICON)--23.1 except when delayed by other stuff
 local timerDeathSpiralCD			= mod:NewCDCountTimer(54.6, 1216474, nil, nil, nil, 3, nil, DBM_COMMON_L.MYTHIC_ICON)
 local timerNecroticEruptionCD		= mod:NewCDCountTimer(20.6, 474087, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON)

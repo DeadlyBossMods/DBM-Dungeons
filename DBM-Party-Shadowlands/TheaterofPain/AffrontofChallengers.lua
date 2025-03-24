@@ -48,7 +48,7 @@ local yellSearingDeath					= mod:NewYell(333231)
 local specWarnWitheringTouch			= mod:NewSpecialWarningDispel(1215600, "RemoveMagic", nil, nil, 1, 2)
 
 local timerSearingDeathCD				= mod:NewCDCountTimer(42.5, 333231, nil, nil, nil, 3)--Ultimate
-local timerWitheringTouchCD				= mod:NewVarCountTimer("v18.2-22", 1215600, nil, nil, nil, 5, nil, DBM_COMMON_L.MAGIC_ICON)--No clean way to correct so we'll use variance timer
+local timerWitheringTouchCD				= mod:NewVarCountTimer("v17-22", 1215600, nil, nil, nil, 5, nil, DBM_COMMON_L.MAGIC_ICON)--No clean way to correct so we'll use variance timer
 
 --General
 mod.vb.willCount = 0
@@ -92,7 +92,7 @@ function mod:SPELL_CAST_START(args)
 		self.vb.smashCount = self.vb.smashCount + 1
 		specWarnMightySmash:Show(self.vb.smashCount)
 		specWarnMightySmash:Play("aesoon")
-		local timer = self.vb.willCount == 2 and 15.8 or self.vb.willCount == 1 and 30.4 or 43.7
+		local timer = self.vb.willCount == 2 and 15.8 or self.vb.willCount == 1 and 29.1 or 43.7
 		timerMightySmashCD:Start(timer, self.vb.smashCount+1, args.sourceGUID)
 		--If < 4.5 seconds remaining on mortal strike, it'll be delayed until after mighty smash
 		if timerMortalStrikeCD:GetRemaining(self.vb.mortalStrikeCount+1, args.sourceGUID) < 4.5 then
