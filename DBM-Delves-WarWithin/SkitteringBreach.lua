@@ -32,9 +32,9 @@ local specWarnShadowDrain				= mod:NewSpecialWarningInterrupt(458853, "HasInterr
 local timerDarkAbatementCD				= mod:NewCDTimer(20, 454762, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)
 local timerDarkriftSmashCD				= mod:NewCDTimer(12.1, 440806, nil, nil, nil, 5)
 local timerShadowWaveCD					= mod:NewCDTimer(15.4, 458874, nil, nil, nil, 3)
-local timerBlessingofDuskCD				= mod:NewCDTimer(28.7, 458879, nil, nil, nil, 4, nil, DBM_CORE_L.INTERRUPT_ICON)
+local timerBlessingofDuskCD				= mod:NewCDTimer(28.7, 458879, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerShadowSpinCD					= mod:NewCDTimer(22.9, 458834, nil, nil, nil, 3)
-local timerShadowDrainCD				= mod:NewCDTimer(30, 458853, nil, nil, nil, 4, nil, DBM_CORE_L.INTERRUPT_ICON)
+local timerShadowDrainCD				= mod:NewCDTimer(30, 458853, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc, 7 off interrupt
 
