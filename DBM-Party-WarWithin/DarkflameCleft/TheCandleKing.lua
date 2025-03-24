@@ -68,10 +68,10 @@ function mod:OnCombatStart(delay)
 	self.vb.mindCount = 0
 	self.vb.throwCount = 0
 	timerEarieMoldsCD:Start(6-delay, 1)
-	timerDarkflamePickaxeCD:Start(15.4-delay, 1)
+	timerDarkflamePickaxeCD:Start(13.4-delay, 1)
 	timerParanoidMindCD:Start(9.4-delay, 1)
 	if self:IsMythic() then
-		timerThrowDarkflameCD:Start(21.4-delay, 1)
+		timerThrowDarkflameCD:Start(20.7-delay, 1)
 		self:EnablePrivateAuraSound(420696, "movetostatue", 17)--Throw Darkflame
 		self:EnablePrivateAuraSound(453278, "movetostatue", 17, 420696)--Register Additional Throw Darkflame ID
 	end
