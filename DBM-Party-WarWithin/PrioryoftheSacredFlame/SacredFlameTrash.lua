@@ -393,7 +393,7 @@ function mod:StartEngageTimers(guid, cid, delay, uID)
 		timerCinderblastCD:Start(8.4-delay, guid)--8.4-11.8
 		timerEmberStormCD:Start(25.5, guid)
 	elseif cid == 239834 then--taener-duelmal (trash)
-		timerEmberStormCD:Start(27.7, guid)--Corrected by transcriptor, but still feels iffy
+		timerEmberStormCD:Start(25.6, guid)
 		timerCinderblastCD:Start(30-delay, guid)
 	elseif cid == 239833 then--elaena-emberlanz trash
 		timerDivineJudgementCD:Start(19-delay, guid)

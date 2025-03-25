@@ -140,7 +140,12 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
 		self.vb.tacticsCount = self.vb.tacticsCount + 1
 		specWarnUnderhandedTactic:Show(self.vb.tacticsCount)
 		specWarnUnderhandedTactic:Play("targetchange")
-		timerUnderhandedTacticCD:Start(nil, self.vb.tacticsCount+1)
+		--The alternation of 48 and 32 results in old 80 timing combined
+		if self.vb.tacticsCount % 2 == 0 then
+			timerUnderhandedTacticCD:Start(48, self.vb.tacticsCount+1)
+		else
+			timerUnderhandedTacticCD:Start(32, self.vb.tacticsCount+1)
+		end
 	end
 end
 mod.CHAT_MSG_RAID_WARNING = mod.CHAT_MSG_RAID_BOSS_EMOTE
