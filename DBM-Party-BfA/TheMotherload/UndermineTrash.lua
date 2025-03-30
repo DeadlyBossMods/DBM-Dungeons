@@ -10,7 +10,7 @@ mod.isTrashMod = true
 mod.isTrashModBossFightAllowed = true
 
 mod:RegisterEvents(
-	"SPELL_CAST_START 268865 268797 262092 263202 267354 280604 268702 263215 269302 263628 473168 473304 269429 1214754",--262554, 263275, 268709 268129 263103 263066 262540 267433
+	"SPELL_CAST_START 268865 268797 262092 263202 267354 280604 268702 263215 269302 263628 473168 473304 269429 1214754 1217279",--262554, 263275, 268709 268129 263103 263066 262540 267433
 	"SPELL_CAST_SUCCESS 280604 268702 263215 268797 269090 269302 1213893 473168 1214751 1213139",--262515
 	"SPELL_INTERRUPT",
 	"SPELL_AURA_APPLIED 262092 263215 262377",--262540 262947
@@ -38,6 +38,8 @@ local specWarnArtilleryBarrage				= mod:NewSpecialWarningDodge(269090, nil, nil,
 local specWarnBrainstorm					= mod:NewSpecialWarningDodge(473304, nil, nil, nil, 2, 2)
 local specWarnMassiveSlam					= mod:NewSpecialWarningDodge(1214754, nil, nil, nil, 2, 2)
 local specWarnSeekandDestroy				= mod:NewSpecialWarningRun(262377, nil, nil, nil, 4, 2)
+local specWarnUppercut						= mod:NewSpecialWarningYou(1217280, nil, nil, nil, 1, 2)
+local yellUppercut							= mod:NewShortYell(1217280)
 local specWarnRockLance						= mod:NewSpecialWarningInterrupt(263202, false, nil, nil, 1, 2)--No cooldown, just spell lock. spammed ability
 local specWarnIcedSpritzer					= mod:NewSpecialWarningInterrupt(280604, "HasInterrupt", nil, nil, 1, 2)--High Prio
 local specWarnFuriousQuake					= mod:NewSpecialWarningInterrupt(268702, "HasInterrupt", nil, nil, 1, 2)--High Prio
@@ -60,6 +62,7 @@ local timerBrainstormCD						= mod:NewCDNPTimer(17, 473304, nil, nil, nil, 3)--1
 local timerChargedShotCD					= mod:NewCDNPTimer(17, 269429, nil, nil, nil, 3)
 local timerBrutalChargeCD					= mod:NewCDNPTimer(12.2, 1214751, nil, nil, nil, 3)--Massive SLam used immediate after, so no need for slam NP timer
 local timerOvertimeCD						= mod:NewCDNPTimer(10.4, 1213139, nil, "Tank|Healer|RemoveEnrage", nil, 5, nil, DBM_COMMON_L.ENRAGE_ICON)
+local timerUppercutCD						= mod:NewCDNPTimer(22.3, 1217280, nil, nil, nil, 3)
 
 --Abilities removed in 11.1
 --local warnRepair							= mod:NewCastAnnounce(262554, 4)--Removed in 11.1?
@@ -75,6 +78,17 @@ local timerOvertimeCD						= mod:NewCDNPTimer(10.4, 1213139, nil, "Tank|Healer|R
 --local specWarnOverchargeDispel			= mod:NewSpecialWarningDispel(262540, "MagicDispeller", nil, nil, 1, 2)
 
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc, 7 GTFO
+
+function mod:UppercutTarget(targetname)
+	if not targetname then return end
+	if self:AntiSpam(3, targetname) then
+		if targetname == UnitName("player") then
+			specWarnUppercut:Show()
+			specWarnUppercut:Play("carefly")
+			yellUppercut:Yell()
+		end
+	end
+end
 
 function mod:SPELL_CAST_START(args)
 	if not self.Options.Enabled then return end
@@ -135,6 +149,9 @@ function mod:SPELL_CAST_START(args)
 			specWarnMassiveSlam:Show()
 			specWarnMassiveSlam:Play("watchstep")
 		end
+	elseif spellId == 1217279 then
+		self:ScheduleMethod(0.1, "BossTargetScanner", args.sourceGUID, "UppercutTarget", 0.1, 6)
+		timerUppercutCD:Start(nil, args.sourceGUID)
 	--elseif spellId == 267433 and self:AntiSpam(4, 1) then--IsValidWarning removed because it caused most activate mechs not to announce. re-add if it becomes problem
 	--	warnActivateMech:Show()
 	--elseif spellId == 263275 and self:IsValidWarning(args.sourceGUID) then
@@ -246,6 +263,7 @@ function mod:UNIT_DIED(args)
 		timerArtilleryBarrageCD:Stop(args.destGUID)
 	elseif cid == 130435 then--Addled Thug
 		timerInhaleVaporsCD:Stop(args.destGUID)
+		timerUppercutCD:Stop(args.destGUID)
 	elseif cid == 136139 then--Mechanized Peacekeeper
 		timerChargedShieldCD:Stop(args.destGUID)
 	elseif cid == 136643 then--Azerite Extractor
@@ -276,6 +294,7 @@ function mod:StartEngageTimers(guid, cid, delay)
 		timerArtilleryBarrageCD:Start(2-delay, guid)--Possibly even sooner
 	elseif cid == 130435 then--Addled Thug
 		timerInhaleVaporsCD:Start(9.9-delay, guid)
+		timerUppercutCD:Start(17.6-delay, guid)--Iffy, these mobs fire affecting combat before they're actually affecting combat so initial timers can be glitchy
 	elseif cid == 136139 then--Mechanized Peacekeeper
 		timerChargedShieldCD:Start(17-delay, guid)
 	elseif cid == 136643 then--Azerite Extractor
