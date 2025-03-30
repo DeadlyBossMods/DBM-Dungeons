@@ -53,10 +53,10 @@ local yellStormridersCharge				= mod:NewShortYell(458082)
 local yellStormridersChargeFades		= mod:NewShortFadesYell(458082)
 local specWarnGTFO						= mod:NewSpecialWarningGTFO(433067, nil, nil, nil, 1, 8)
 
-local timerNullUpheavalCD				= mod:NewVarCountTimer("v32.8-34.8", 423305, nil, nil, nil, 3)
-local timerUnleashedCorruptionCD		= mod:NewVarCountTimer("v17.0-18.2", 429487, nil, nil, nil, 3)
-local timerOblivionWaveCD				= mod:NewVarCountTimer("v13.4-15", 445457, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
-local timerStormridersChargeCD			= mod:NewVarCountTimer("v32.8-34.8", 458082, nil, nil, nil, 3)
+local timerNullUpheavalCD				= mod:NewVarCountTimer("v32.8-39.5", 423305, nil, nil, nil, 3)
+local timerUnleashedCorruptionCD		= mod:NewVarCountTimer("v17.0-25.2", 429487, nil, nil, nil, 3)
+local timerOblivionWaveCD				= mod:NewVarCountTimer("v13.4-19.2", 445457, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+local timerStormridersChargeCD			= mod:NewVarCountTimer("v32.8-39.5", 458082, nil, nil, nil, 3)
 local timerVengeanceActive				= mod:NewBuffActiveTimer(20, 423839, nil, nil, nil, 6)
 
 mod:AddInfoFrameOption(445262)
@@ -74,8 +74,8 @@ function mod:OnCombatStart(delay)
 	self.vb.oblivionCount = 0
 	self.vb.vengeanceCount = 0
 	self.vb.riderCount = 0
-	timerOblivionWaveCD:Start(5.8, 1)
-	timerUnleashedCorruptionCD:Start(10.6, 1)
+	timerOblivionWaveCD:Start(5.2, 1)
+	timerUnleashedCorruptionCD:Start(10.1, 1)
 	timerNullUpheavalCD:Start(16.7, 1)
 	timerStormridersChargeCD:Start(19.7, 1)
 	if self.Options.NameplateOnReshape then
@@ -181,10 +181,16 @@ function mod:SPELL_AURA_REMOVED(args)
 	elseif spellId == 423839 then
 		timerVengeanceActive:Stop()
 		--Resume timers
+		--In addition, they're all extended by about 4 sec
 		timerNullUpheavalCD:Resume(self.vb.NullUpheavalCount+1)
 		timerUnleashedCorruptionCD:Resume(self.vb.unleashedCount+1)
 		timerOblivionWaveCD:Resume(self.vb.oblivionCount+1)
 		timerStormridersChargeCD:Resume(self.vb.riderCount+1)
+		--Not sure what addtime will do to a variance timer, especially one in the neg at time of pause.
+		--timerNullUpheavalCD:AddTime(3.8, self.vb.NullUpheavalCount+1)
+		--timerUnleashedCorruptionCD:AddTime(3.8, self.vb.unleashedCount+1)
+		--timerOblivionWaveCD:AddTime(3.8, self.vb.oblivionCount+1)
+		--timerStormridersChargeCD:AddTime(3.8, self.vb.riderCount+1)
 	elseif spellId == 458082 and args:IsPlayer() then
 		yellStormridersChargeFades:Cancel()
 	end
