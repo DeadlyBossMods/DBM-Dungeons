@@ -42,7 +42,7 @@ local specWarnHolySmite						= mod:NewSpecialWarningInterruptCount(423536, false
 local specWarnBlindingLight					= mod:NewSpecialWarningLookAway(428169, nil, nil, nil, 2, 2, 4)
 local specWarnGTFO							= mod:NewSpecialWarningGTFO(425556, nil, nil, nil, 1, 8)
 
-local timerPurifyingLightCD					= mod:NewVarCountTimer("v29.1-35", 444546, nil, nil, nil, 3)
+local timerPurifyingLightCD					= mod:NewVarCountTimer("v28.7-35", 444546, nil, nil, nil, 3)
 local timerInnerFireCD						= mod:NewVarCountTimer("v21.8-25.5", 423539, nil, nil, nil, 2)
 local timerHolyFlameCD						= mod:NewVarCountTimer("v12.1-21.8", 451606, nil, nil, nil, 3, nil, DBM_COMMON_L.MAGIC_ICON)
 local timerBlindingLightCD					= mod:NewVarCountTimer("v24.3-36.4", 428169, nil, nil, nil, 2, nil, DBM_COMMON_L.MYTHIC_ICON)
@@ -111,8 +111,10 @@ function mod:SPELL_CAST_START(args)
 --		self.vb.holyFlameCount = 0
 		self:SetStage(2)
 		timerHolyFlameCD:Start(14.5, self.vb.holyFlameCount+1)
+		--Inner and purify can swap positions
+		--Whichever is 18.2 the other is 20.6
 		timerInnerFireCD:Start(18.2, self.vb.innerCount+1)
-		timerPurifyingLightCD:Start(20.6, self.vb.purifyingCount+1)
+		timerPurifyingLightCD:Start(18.2, self.vb.purifyingCount+1)
 		if self:IsMythic() then
 			timerBlindingLightCD:Start(24.2, self.vb.blindingCount+1)
 		end
