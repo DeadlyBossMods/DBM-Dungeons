@@ -400,7 +400,7 @@ function mod:StartEngageTimers(guid, cid, delay, uID)
 		timerHolyRadianceCD:Start(38.5, guid)
 	elseif cid == 211290 then--elaena-emberlanz Boss
 		timerDivineJudgementCD:Start(8.4-delay, guid)
-		timerHolyRadianceCD:Start(26.6, guid)
+		timerHolyRadianceCD:Start(16.9, guid)--16.9-26.6
 	elseif cid == 206694 then--Fervent Sharpshooter
 		timerPotShotCD:Start(8-delay, guid)--Most definitely wrong
 		timerCaltropsCD:Start(16-delay, guid)

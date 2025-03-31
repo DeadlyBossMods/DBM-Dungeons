@@ -57,7 +57,7 @@ function mod:OnCombatStart(delay)
 	else--Heroic and Mythic 0
 		timerChaoticCorruptionCD:Start(5.8, 1)
 		timerCrushRealityCD:Start(9.4, 1)
-		timerDarkGravityCD:Start(30.1, 1)
+		timerDarkGravityCD:Start(17, 1)
 	end
 	if self.Options.InfoFrame and self:IsMythic() then
 		DBM.InfoFrame:SetHeader(DBM:GetSpellName(424797))

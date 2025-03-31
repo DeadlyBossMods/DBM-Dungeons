@@ -43,7 +43,7 @@ local specWarnRPGG							= mod:NewSpecialWarningDodge(1216039, nil, nil, nil, 2,
 local specWarnSurpriseInspection			= mod:NewSpecialWarningDodge(465682, nil, nil, nil, 2, 15)
 local specWarnBubbleBurp					= mod:NewSpecialWarningDodge(469818, nil, nil, nil, 2, 2)
 local specWarnSplishSplash					= mod:NewSpecialWarningDodge(1217496, nil, nil, nil, 2, 15)
-local specWarnSparkslam						= mod:NewSpecialWarningDodge(465666, nil, nil, nil, 2, 2)
+local specWarnSparkslam						= mod:NewSpecialWarningDefensive(465666, nil, nil, nil, 1, 2)
 local specWarnBackwash						= mod:NewSpecialWarningSpell(469721, nil, nil, nil, 2, 2)
 local specWarnSurveyingBeamFailure			= mod:NewSpecialWarningRun(462771, nil, nil, nil, 4, 2)
 --local yellChainLightning					= mod:NewYell(387127)
@@ -62,7 +62,7 @@ local timerBubbleBurpCD						= mod:NewCDNPTimer(21.5, 469818, nil, nil, nil, 3)
 local timerSplishSplashCD					= mod:NewCDNPTimer(21.8, 1217496, nil, nil, nil, 3)
 local timerBackwashCD						= mod:NewCDNPTimer(21.8, 469721, nil, nil, nil, 2)
 local timerWarpBloodCD						= mod:NewCDNPTimer(20.6, 465827, nil, nil, nil, 2)
-local timerSparkslamCD						= mod:NewCDNPTimer(10.9, 465666, nil, nil, nil, 3)
+local timerSparkslamCD						= mod:NewCDNPTimer(10.9, 465666, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerJettisonkelpCD					= mod:NewCDNPTimer(15.8, 471736, nil, nil, nil, 5)
 local timerOverchargeCD						= mod:NewCDNPTimer(10.7, 469799, nil, nil, nil, 5, nil, DBM_COMMON_L.MAGIC_ICON)--10-15
 local timerSurveyingBeamCD					= mod:NewCDNPTimer(20.6, 462771, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
@@ -162,9 +162,9 @@ function mod:SPELL_CAST_START(args)
 		end
 	elseif spellId == 465666 then
 		timerSparkslamCD:Start(nil, args.sourceGUID)
-		if self:AntiSpam(3, 2) then
+		if self:IsTanking("player", nil, nil, true, args.sourceGUID) then
 			specWarnSparkslam:Show()
-			specWarnSparkslam:Play("watchstep")
+			specWarnSparkslam:Play("defensive")
 		end
 	elseif spellId == 465408 then
 		if self:AntiSpam(3, 6) then

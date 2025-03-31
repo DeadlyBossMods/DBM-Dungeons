@@ -36,7 +36,7 @@ mod:RegisterEventsInCombat(
 local warnTurboChargeOver					= mod:NewEndAnnounce(465463, 1)
 local warnDam								= mod:NewCountAnnounce(468276, 2)
 local warnShockWaterStun					= mod:NewTargetNoFilterAnnounce(468741, 2)
-local warnLeapingSpark						= mod:NewTargetNoFilterAnnounce(468841, 2)
+local warnLeapingSpark						= mod:NewTargetNoFilterAnnounce(468841, 2, nil, false, 2)--off by default since it's spammmy in bad groups
 local warnGigaZapLater						= mod:NewTargetNoFilterAnnounce(468815, 3, nil, "Healer")--Pre target is private aura, but dot is not, we can still warn the healer who has dots
 
 local specWarnTurboCharge					= mod:NewSpecialWarningDodgeCount(465463, nil, nil, nil, 2, 2)
@@ -119,7 +119,7 @@ end
 
 function mod:SPELL_AURA_APPLIED(args)
 	local spellId = args.spellId
-	if spellId == 468741 and args:IsPlayer() or self:IsHealer() then
+	if spellId == 468741 and args:IsPlayer() or (self:IsHealer() and args:IsDestTypePlayer()) then
 		warnShockWaterStun:CombinedShow(0.3, args.destName)
 	elseif spellId == 468616 and args:IsDestTypePlayer() then
 		if args:IsPlayer() then
