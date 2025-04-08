@@ -11,32 +11,26 @@ on:
       - master
 
 jobs:
-  build:
+  test:
+    name: Testing
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
         with:
-          fetch-depth: 0
-
+          path: ./workspace
       - name: Install and run Luacheck
         uses: nebularg/actions-luacheck@v1
         with:
           args: "--no-color -q"
+          path:  ${{ github.workspace }}/workspace
 
-      - name: Run DBM Checks
-        uses: DeadlyBossMods/DBM-Actions@master
-
-      - name: Create Retail Package
-        uses: BigWigsMods/packager@master
-        if: ${{ github.event_name != 'pull_request' }}
+      - name: LuaLS check
+        uses: DeadlyBossMods/LuaLS-config@main
         with:
-          args: -n "DBM-Dungeons-{project-version}"
-        env:
-          CF_API_KEY: ${{ secrets.CF_API_KEY }}
-          GITHUB_OAUTH: ${{ secrets.GITHUB_TOKEN }}
-          WOWI_API_TOKEN: ${{ secrets.WOWI_API_TOKEN }}
-          WAGO_API_TOKEN: ${{ secrets.WAGO_API_TOKEN }}
+          luals-check-dir: ${{ github.workspace }}/workspace
+          extra-args: "--num_threads 4"
 
       - name: Send Status to Discord
         uses: nebularg/actions-discord-webhook@v1
@@ -44,3 +38,30 @@ jobs:
           webhook_url: ${{ secrets.DISCORD_WEBHOOK }}
           status: ${{ job.status }}
         if: ${{ failure() }}
+
+  deploy:
+    name: Deployment
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name != 'pull_request' }}
+    needs:
+      - test
+    strategy:
+      fail-fast: false
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Strip uncompressed test data
+        if: startsWith(github.ref, 'refs/tags/')
+        shell: bash
+        run: |
+          cd "${{ github.workspace }}"
+          find DBM-Test-* -name \*.lua -not -path '*/Reports/*' -print0 | xargs -0 -n1 sed -i -z 's/--@strip-from-release@.*@end-strip-from-release@/-- Raw test log stripped from release build./'
+      - name: Create Package
+        uses: BigWigsMods/packager@master
+        env:
+          CF_API_KEY: ${{ secrets.CF_API_KEY }}
+          GITHUB_OAUTH: ${{ secrets.GITHUB_TOKEN }}
+          WOWI_API_TOKEN: ${{ secrets.WOWI_API_TOKEN }}
+          WAGO_API_TOKEN: ${{ secrets.WAGO_API_TOKEN }}
