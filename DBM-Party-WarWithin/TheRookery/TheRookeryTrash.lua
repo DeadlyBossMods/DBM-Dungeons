@@ -46,7 +46,7 @@ local specWarnVoidCrush						= mod:NewSpecialWarningMoveAway(474031, nil, nil, n
 local yellVoidCrush							= mod:NewShortYell(474031)
 local specWarnSeepingCorruptionDispel		= mod:NewSpecialWarningDispel(430179, "RemoveCurse", nil, nil, 1, 2)
 local specWarnLightingSurgeDispel			= mod:NewSpecialWarningDispel(427260, "RemoveEnrage", nil, nil, 1, 2)
-local specWarnFeastingVoid					= mod:NewSpecialWarningDispel(1214523, "MagicDispeller", nil, nil, 1, 2)
+local specWarnFeastingVoid					= mod:NewSpecialWarningDispel(1214523, "RemoveMagic", nil, 2, 1, 2)
 local specWarnLightingSurge					= mod:NewSpecialWarningInterrupt(427260, "HasInterrupt", nil, nil, 1, 2)
 local specWarnArcingVoid					= mod:NewSpecialWarningInterrupt(430805, "HasInterrupt", nil, nil, 1, 2)
 
@@ -217,7 +217,7 @@ function mod:SPELL_AURA_APPLIED(args)
 	elseif spellId == 427260 and self:AntiSpam(3, 3) then
 		specWarnLightingSurgeDispel:Show(args.destName)
 		specWarnLightingSurgeDispel:Play("enrage")
-	elseif spellId == 1214523 and self:AntiSpam(3, 3) then
+	elseif spellId == 1214523 and self:CheckDispelFilter("magic") and args:IsDestTypePlayer() and self:AntiSpam(3, 3) then
 		specWarnFeastingVoid:Show(args.destName)
 		specWarnFeastingVoid:Play("dispelnow")
 	end
