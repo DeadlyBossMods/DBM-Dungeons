@@ -10,8 +10,8 @@ mod.isTrashMod = true
 mod.isTrashModBossFightAllowed = true
 
 mod:RegisterEvents(
-	"SPELL_CAST_START 341902 341969 330614 342139 333861 330562 333294 331237 317605 342135 330716 1215850 331316 331288 332708 333241 330868 342675 341977",
-	"SPELL_CAST_SUCCESS 330810 341969 330868 342675 341977 330562",
+	"SPELL_CAST_START 341902 341969 330614 342139 333861 330562 333294 331237 317605 342135 330716 1215850 331316 331288 332708 333241 330868 342675 341977 330586",
+	"SPELL_CAST_SUCCESS 330810 341969 330868 342675 341977 330562 330586",
 	"SPELL_INTERRUPT",
 	"SPELL_AURA_APPLIED 341902 333241",
 	"UNIT_SPELLCAST_SUCCEEDED_UNFILTERED",
@@ -40,6 +40,7 @@ local specWarnEarthcrusher					= mod:NewSpecialWarningDodge(1215850, nil, nil, n
 local specWarnGroundSmash					= mod:NewSpecialWarningDodge(332708, nil, nil, nil, 2, 2)
 local specWarnWhirlingBlade					= mod:NewSpecialWarningDodge(336996, nil, nil, nil, 2, 2)
 local specWarnRicochetingBlade				= mod:NewSpecialWarningMoveAway(333861, nil, nil, nil, 1, 12)
+local specWarnDevourFlesh					= mod:NewSpecialWarningDefensive(330586, nil, nil, nil, 1, 2)
 local yellRicochetingBlade					= mod:NewYell(333861)
 local specWarnWhirlwind						= mod:NewSpecialWarningRun(317605, "Melee", nil, nil, 4, 2)
 local specWarnInterruptingRoar				= mod:NewSpecialWarningCast(342135, "SpellCaster", nil, nil, 1, 2)
@@ -73,6 +74,7 @@ local timerNecroticBoltVolleyCD				= mod:NewCDNPTimer(22.5, 330868, nil, nil, ni
 local timerMeatShieldCD						= mod:NewCDNPTimer(20.6, 341977, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--20.6-25
 local timerDemoralizingShoutCD				= mod:NewCDNPTimer(17, 330562, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerBindSoulCD						= mod:NewCDNPTimer(20.6, 330810, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerDevourFleshCD					= mod:NewCDNPTimer(27.4, 330586, nil, nil, nil, 5)
 
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc, 7 GTFO
 
@@ -174,6 +176,11 @@ function mod:SPELL_CAST_START(args)
 		end
 	elseif spellId == 333241 then
 		timerRagingTantrumCD:Start(nil, args.sourceGUID)
+	elseif spellId == 330586 then
+		if self:IsTanking("player", nil, nil, nil, args.sourceGUID) and self:AntiSpam(3, 5) then
+			specWarnDevourFlesh:Show()
+			specWarnDevourFlesh:Play("defensive")
+		end
 	end
 end
 
@@ -196,6 +203,8 @@ function mod:SPELL_CAST_SUCCESS(args)
 		timerMeatShieldCD:Start(20.6, args.sourceGUID)
 	elseif spellId == 330562 then
 		timerDemoralizingShoutCD:Start(17, args.sourceGUID)
+	elseif spellId == 330586 then
+		timerDevourFleshCD:Start(24.9, args.sourceGUID)--27.4-2.5
 	end
 end
 
@@ -279,6 +288,8 @@ function mod:UNIT_DIED(args)
 		timerDemoralizingShoutCD:Stop(args.destGUID)
 	elseif cid == 169875 then--Shackled Soul
 		timerBindSoulCD:Stop(args.destGUID)
+	elseif cid == 169927 then--Putrid Butcher
+		timerDevourFleshCD:Stop(args.destGUID)
 	end
 end
 
@@ -320,6 +331,8 @@ function mod:StartEngageTimers(guid, cid, delay)
 		timerDemoralizingShoutCD:Start(4.6-delay, guid)
 	elseif cid == 169875 then--Shackled Soul
 		timerBindSoulCD:Start(12.5-delay, guid)
+--	elseif cid == 169927 then--Putrid Butcher
+--		timerDevourFleshCD:Start(20.1-delay, guid)
 	end
 end
 

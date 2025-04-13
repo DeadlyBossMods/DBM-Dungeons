@@ -49,8 +49,6 @@ mod.vb.bannerCount = 0
 local allTimers = {
 	--Combo
 	[320644] = {6.0, 30.4, 15.8, 26.8}, -- Then 30.4, 35.2, repeating...
-	--Might
-	[320050] = {16.9, 40.1, 30.4, 35.2}, -- Then 30.4, 35.2, repeating...
 	--Glory
 	[320114] = {34.1, 70.4, 65.6},--Then stops casting?
 	--Blood
@@ -104,7 +102,9 @@ function mod:SPELL_CAST_SUCCESS(args)
 		self.vb.MightCastCount = self.vb.MightCastCount + 1
 		specWarnMightofMaldraxxus:Show()
 		specWarnMightofMaldraxxus:Play("watchstep")
-		timerMightofMaldraxxusCD:Start(allTimers[spellId][self.vb.MightCastCount+1] or (self.vb.MightCastCount % 2 == 0 and 30.4 or 35.2), self.vb.MightCastCount+1)
+		--"Might of Maldraxxus-320050-npc:162329-000074872F = pull:17.0, 35.1, 30.4, 35.2",
+		--"Might of Maldraxxus-320050-npc:162329-0000734A7E = pull:16.9, 40.1, 30.3, 35.3",
+		timerMightofMaldraxxusCD:Start(self.vb.MightCastCount % 2 == 0 and 30.4 or 35.2, self.vb.MightCastCount+1)--maybe also change to "v30.4-35.2"
 	elseif spellId == 320114 and self:AntiSpam(5, 1) then
 		self.vb.bloodCount = self.vb.bloodCount + 1
 		--34.1, 70.4, 65.6
@@ -116,11 +116,14 @@ function mod:SPELL_CAST_SUCCESS(args)
 		self.vb.bannerCount = self.vb.bannerCount + 1
 		specWarnOppressiveBanner:Show()
 		specWarnOppressiveBanner:Play("attacktotem")--Technically banner, but better than "kill mob"
-		if self.vb.bannerCount % 2 == 0 then
-			timerOppressiveBannerCD:Start(35, self.vb.bannerCount+1)
-		else
-			timerOppressiveBannerCD:Start(30, self.vb.bannerCount+1)
-		end
+		--"Oppressive Banner-331618-npc:162329-000074872F = pull:10.9, 30.3, 30.3, 30.4, 35.2",
+		--"Oppressive Banner-331618-npc:162329-0000734A7E = pull:10.8, 30.4, 35.2, 30.4, 35.2",
+		timerOppressiveBannerCD:Start("v30.4-35.2", self.vb.bannerCount+1)
+		--if self.vb.bannerCount % 2 == 0 then
+		--	timerOppressiveBannerCD:Start(35, self.vb.bannerCount+1)
+		--else
+		--	timerOppressiveBannerCD:Start(30, self.vb.bannerCount+1)
+		--end
 	end
 end
 
