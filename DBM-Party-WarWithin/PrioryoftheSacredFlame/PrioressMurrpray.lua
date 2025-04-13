@@ -42,7 +42,7 @@ local specWarnHolySmite						= mod:NewSpecialWarningInterruptCount(423536, false
 local specWarnBlindingLight					= mod:NewSpecialWarningLookAway(428169, nil, nil, nil, 2, 2, 4)
 local specWarnGTFO							= mod:NewSpecialWarningGTFO(425556, nil, nil, nil, 1, 8)
 
-local timerPurifyingLightCD					= mod:NewVarCountTimer("v28.7-35", 444546, nil, nil, nil, 3)
+local timerPurifyingLightCD					= mod:NewVarCountTimer("v28.7-35.2", 444546, nil, nil, nil, 3)
 local timerInnerFireCD						= mod:NewVarCountTimer("v21.8-25.5", 423539, nil, nil, nil, 2)
 local timerHolyFlameCD						= mod:NewVarCountTimer("v12.1-21.8", 451606, nil, nil, nil, 3, nil, DBM_COMMON_L.MAGIC_ICON)
 local timerBlindingLightCD					= mod:NewVarCountTimer("v24.3-36.4", 428169, nil, nil, nil, 2, nil, DBM_COMMON_L.MYTHIC_ICON)
