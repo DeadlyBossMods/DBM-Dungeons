@@ -135,7 +135,7 @@ function mod:OnCombatStart(delay)
 	else
 		timerMoltenMetalCD:Start(3.3-delay, 1)--3.3-5.2
 		timerExhaustVentsCD:Start(8.3-delay, 1)--At least on follower, don't know about heroic or normal yet
-		timerScrapSongCD:Start(18.0-delay, 1)
+		timerScrapSongCD:Start(15.4-delay, 1)
 		--
 		timerIgneousHammerCD:Start(6.9-delay, 1)
 		timerLavaCannonCD:Start(13.0-delay, 1)

@@ -10,8 +10,8 @@ mod.isTrashMod = true
 mod.isTrashModBossFightAllowed = true
 
 mod:RegisterEvents(
-	"SPELL_CAST_START 341902 341969 330614 342139 333861 330562 333294 331237 317605 342135 330716 1215850 331316 331288 332708 333241 330868 342675 341977",
-	"SPELL_CAST_SUCCESS 330810 341969 330868 342675 341977 330562",
+	"SPELL_CAST_START 341902 341969 330614 342139 333861 330562 333294 331237 317605 342135 330716 1215850 331316 331288 332708 333241 330868 342675 341977 330586 334023 333845 333827",
+	"SPELL_CAST_SUCCESS 330810 341969 330868 342675 341977 330562 330586 333845",
 	"SPELL_INTERRUPT",
 	"SPELL_AURA_APPLIED 341902 333241",
 	"UNIT_SPELLCAST_SUCCEEDED_UNFILTERED",
@@ -29,6 +29,8 @@ mod:RegisterEvents(
 local warnSoulstorm							= mod:NewSpellAnnounce(330716, 2)
 local warnSavageFlurry						= mod:NewSpellAnnounce(331316, 3, nil, "Tank|Healer")
 local warnColossalSmash						= mod:NewSpellAnnounce(331288, 3, nil, "Tank|Healer")
+local warnUnbalancingBlow					= mod:NewSpellAnnounce(333845, 4, nil, "Tank|Healer")
+local warnSeismicStomp						= mod:NewSpellAnnounce(333827, 3)
 local warnRicochetingBlade					= mod:NewTargetNoFilterAnnounce(333861, 4)
 
 --General
@@ -39,7 +41,9 @@ local specWarnBoneSpikes					= mod:NewSpecialWarningDodge(331237, nil, nil, nil,
 local specWarnEarthcrusher					= mod:NewSpecialWarningDodge(1215850, nil, nil, nil, 2, 2)
 local specWarnGroundSmash					= mod:NewSpecialWarningDodge(332708, nil, nil, nil, 2, 2)
 local specWarnWhirlingBlade					= mod:NewSpecialWarningDodge(336996, nil, nil, nil, 2, 2)
+local specWarnBloodthirstyCharge			= mod:NewSpecialWarningDodge(334023, nil, nil, nil, 2, 2)
 local specWarnRicochetingBlade				= mod:NewSpecialWarningMoveAway(333861, nil, nil, nil, 1, 12)
+local specWarnDevourFlesh					= mod:NewSpecialWarningDefensive(330586, nil, nil, nil, 1, 2)
 local yellRicochetingBlade					= mod:NewYell(333861)
 local specWarnWhirlwind						= mod:NewSpecialWarningRun(317605, "Melee", nil, nil, 4, 2)
 local specWarnInterruptingRoar				= mod:NewSpecialWarningCast(342135, "SpellCaster", nil, nil, 1, 2)
@@ -60,11 +64,11 @@ local timerDeathwindsCD						= mod:NewCDNPTimer(10.9, 333294, nil, nil, nil, 3)
 local timerBoneSpikesCD						= mod:NewCDNPTimer(33.6, 331237, nil, nil, nil, 3)
 local timerRicochetingBladeCD				= mod:NewCDNPTimer(12.1, 333861, nil, nil, nil, 3)--12.1 for Harugia the Bloodthirsty,
 local timerWhirlwindCD						= mod:NewCDNPTimer(26.7, 317605, nil, nil, nil, 3)
-local timerSavageFlurryCD					= mod:NewCDNPTimer(13.4, 331316, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
-local timerEarthcrusherCD					= mod:NewCDNPTimer(13.4, 1215850, nil, nil, nil, 3)
+local timerSavageFlurryCD					= mod:NewCDNPTimer(13.3, 331316, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+local timerEarthcrusherCD					= mod:NewCDNPTimer(13.3, 1215850, nil, nil, nil, 3)
 local timerInterruptingRoarCD				= mod:NewCDNPTimer(18.1, 342135, nil, nil, nil, 5)--Can spell queue up to 21.8 due to other abilities
 local timerColossalSmashCD					= mod:NewCDNPTimer(9.7, 331288, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)--9.7 but can spell queue up to 23 seconds due to other 2 abilities
-local timerGroundSmashCD					= mod:NewCDNPTimer(12.2, 332708, nil, nil, nil, 3)
+--local timerGroundSmashCD					= mod:NewCDNPTimer(12.2, 332708, nil, nil, nil, 3)
 local timerWhirlingBladeCD					= mod:NewCDNPTimer(16.6, 336996, nil, nil, nil, 3)
 local timerRagingTantrumCD					= mod:NewCDNPTimer(18.2, 333241, nil, nil, nil, 5, nil, DBM_COMMON_L.ENRAGE_ICON)
 local timerWitheringDischargeCD				= mod:NewCDNPTimer(24.1, 341969, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
@@ -73,6 +77,10 @@ local timerNecroticBoltVolleyCD				= mod:NewCDNPTimer(22.5, 330868, nil, nil, ni
 local timerMeatShieldCD						= mod:NewCDNPTimer(20.6, 341977, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--20.6-25
 local timerDemoralizingShoutCD				= mod:NewCDNPTimer(17, 330562, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerBindSoulCD						= mod:NewCDNPTimer(20.6, 330810, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerDevourFleshCD					= mod:NewCDNPTimer(27.4, 330586, nil, nil, nil, 5)
+local timerBloodthirstyChargeCD				= mod:NewCDNPTimer(18.2, 334023, nil, nil, nil, 3)
+local timerUnbalancingBlowCD				= mod:NewCDNPTimer(8.2, 333845, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+local timerSeismicStompCD					= mod:NewCDNPTimer(16.9, 333827, nil, nil, nil, 2)
 
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc, 7 GTFO
 
@@ -167,18 +175,37 @@ function mod:SPELL_CAST_START(args)
 			warnColossalSmash:Show()
 		end
 	elseif spellId == 332708 then
-		timerGroundSmashCD:Start(nil, args.sourceGUID)
+--		timerGroundSmashCD:Start(nil, args.sourceGUID)
 		if self:AntiSpam(3, 2) then
 			specWarnGroundSmash:Show()
 			specWarnGroundSmash:Play("watchstep")
 		end
 	elseif spellId == 333241 then
 		timerRagingTantrumCD:Start(nil, args.sourceGUID)
+	elseif spellId == 330586 then
+		if self:IsTanking("player", nil, nil, nil, args.sourceGUID) and self:AntiSpam(3, 5) then
+			specWarnDevourFlesh:Show()
+			specWarnDevourFlesh:Play("defensive")
+		end
+	elseif spellId == 334023 then
+		timerBloodthirstyChargeCD:Start(nil, args.sourceGUID)
+		if self:AntiSpam(3, 2) then
+			specWarnBloodthirstyCharge:Show()
+			specWarnBloodthirstyCharge:Play("chargemove")
+		end
+	elseif spellId == 333845 then
+		if self:AntiSpam(3, 5) then
+			warnUnbalancingBlow:Show()
+		end
+	elseif spellId == 333827 then
+		timerSeismicStompCD:Start(nil, args.sourceGUID)
+		warnSeismicStomp:Show()
 	end
 end
 
 function mod:SPELL_CAST_SUCCESS(args)
 	if not self.Options.Enabled then return end
+	if not self:IsValidWarning(args.sourceGUID) then return end--Filter all casts done by mobs in combat with npcs/other mobs.
 	local spellId = args.spellId
 	if spellId == 330810  then
 		timerBindSoulCD:Start(nil, args.sourceGUID)
@@ -196,6 +223,11 @@ function mod:SPELL_CAST_SUCCESS(args)
 		timerMeatShieldCD:Start(20.6, args.sourceGUID)
 	elseif spellId == 330562 then
 		timerDemoralizingShoutCD:Start(17, args.sourceGUID)
+	elseif spellId == 330586 then
+		timerDevourFleshCD:Start(24.9, args.sourceGUID)--27.4-2.5
+	elseif spellId == 333845 then
+		local timer = self:GetCIDFromGUID(args.sourceGUID) == 167534 and 9.2 or 15.3--15.3 for Rek the Hardened, 9.2 for Harugia the Bloodthirsty
+		timerUnbalancingBlowCD:Start(timer, args.sourceGUID)
 	end
 end
 
@@ -249,22 +281,32 @@ function mod:UNIT_DIED(args)
 		timerDeathwindsCD:Stop(args.destGUID)
 	elseif cid == 162763 then--Soulforged Bonereaver
 		timerBoneSpikesCD:Stop(args.destGUID)
+	--Begin Mini Bosses
 	elseif cid == 167536 then--Harugia the Bloodthirsty
 		timerRicochetingBladeCD:Stop(args.destGUID)
+		timerUnbalancingBlowCD:Stop(args.destGUID)
+		timerBloodthirstyChargeCD:Stop(args.destGUID)
 	elseif cid == 167533 then--Advent Nevermore
-		timerRicochetingBladeCD:Stop(args.destGUID)
+		timerSeismicStompCD:Stop(args.destGUID)
+		timerWhirlingBladeCD:Stop(args.destGUID)
+		timerColossalSmashCD:Stop(args.destGUID)
 	elseif cid == 167538 then--Dokigg the Brutalizer
 		timerWhirlwindCD:Stop(args.destGUID)
 		timerSavageFlurryCD:Stop(args.destGUID)
 		timerEarthcrusherCD:Stop(args.destGUID)
 	elseif cid == 167532 then--Heavin the Breaker
+		timerWhirlwindCD:Stop(args.destGUID)
 		timerInterruptingRoarCD:Stop(args.destGUID)
 		timerColossalSmashCD:Stop(args.destGUID)
-		timerGroundSmashCD:Stop(args.destGUID)
 	elseif cid == 162744 then--Nekthara the Mangler
 		timerInterruptingRoarCD:Stop(args.destGUID)
-		timerWhirlwindCD:Stop(args.destGUID)
 		timerWhirlingBladeCD:Stop(args.destGUID)
+		timerColossalSmashCD:Stop(args.destGUID)
+	elseif cid == 167534 then--Rek the Hardened
+		timerWhirlwindCD:Stop(args.destGUID)
+		timerUnbalancingBlowCD:Stop(args.destGUID)
+		--Swift Strikes
+	--End Minibosses
 	elseif cid == 170850 then--Raging Bloodhorn
 		timerRagingTantrumCD:Stop(args.destGUID)
 	elseif cid == 174210 then--Blighted Sludge-Spewer
@@ -279,6 +321,8 @@ function mod:UNIT_DIED(args)
 		timerDemoralizingShoutCD:Stop(args.destGUID)
 	elseif cid == 169875 then--Shackled Soul
 		timerBindSoulCD:Stop(args.destGUID)
+	elseif cid == 169927 then--Putrid Butcher
+		timerDevourFleshCD:Stop(args.destGUID)
 	end
 end
 
@@ -292,20 +336,34 @@ function mod:StartEngageTimers(guid, cid, delay)
 		timerDeathwindsCD:Start(3.6-delay, guid)
 	elseif cid == 162763 then--Soulforged Bonereaver
 		timerBoneSpikesCD:Start(6.1-delay, guid)--Could be 5.7
+	--Begin Minibosses
 	elseif cid == 167536 then--Harugia the Bloodthirsty
-		timerRicochetingBladeCD:Start(3.6-delay, guid)
+		timerRicochetingBladeCD:Start(2.4-delay, guid)
+		timerUnbalancingBlowCD:Start(6-delay, guid)
+		timerBloodthirstyChargeCD:Start(9.3-delay, guid)
+	elseif cid == 167533 then--Advent Nevermore
+		--Initial timers unknown. this mob is usually skipped
+		--timerSeismicStompCD:Start(8.2-delay, guid)
+		--timerWhirlingBladeCD:Start(38.1-delay, guid)
+		--timerColossalSmashCD:Start(38.1-delay, guid)
 	elseif cid == 167538 then--Dokigg the Brutalizer
+		--Initial timers unknown. this mob is usually skipped
 		timerWhirlwindCD:Start(6.6-delay, guid)
 		timerSavageFlurryCD:Start(38.1-delay, guid)--IFFY, could happen sooner maybe?
 		timerEarthcrusherCD:Start(47.8-delay, guid)--IFFY, could happen sooner maybe?
 	elseif cid == 167532 then--Heavin the Breaker
-		timerInterruptingRoarCD:Start(6-delay, guid)
-		timerGroundSmashCD:Start(10.5-delay, guid)
-		timerColossalSmashCD:Start(15.5-delay, guid)
+		timerInterruptingRoarCD:Start(3.5-delay, guid)
+		timerColossalSmashCD:Start(8.4-delay, guid)
+		timerWhirlwindCD:Start(12-delay, guid)
 	elseif cid == 162744 then--Nekthara the Mangler
-		timerWhirlwindCD:Start(4-delay, guid)
-		timerWhirlingBladeCD:Start(9-delay, guid)
-		timerInterruptingRoarCD:Start(11-delay, guid)
+		timerWhirlingBladeCD:Start(4-delay, guid)
+		timerInterruptingRoarCD:Start(6.8-delay, guid)
+		timerColossalSmashCD:Start(12.4-delay, guid)
+	elseif cid == 167534 then--Rek the Hardened
+		--Swift Strikes (2.4)
+		timerWhirlwindCD:Start(6.1-delay, guid)
+		timerUnbalancingBlowCD:Start(11-delay, guid)
+	--End Minibosses
 	elseif cid == 170850 then--Raging Bloodhorn
 		timerRagingTantrumCD:Start(8.5-delay, guid)
 	elseif cid == 174210 then--Blighted Sludge-Spewer
@@ -320,6 +378,8 @@ function mod:StartEngageTimers(guid, cid, delay)
 		timerDemoralizingShoutCD:Start(4.6-delay, guid)
 	elseif cid == 169875 then--Shackled Soul
 		timerBindSoulCD:Start(12.5-delay, guid)
+--	elseif cid == 169927 then--Putrid Butcher
+--		timerDevourFleshCD:Start(20.1-delay, guid)
 	end
 end
 

@@ -94,7 +94,7 @@ mod:AddTimerLine(DBM:EJ_GetSectionInfo(27828))
 local specWarnHolyRadiance					= mod:NewSpecialWarningSpell(424431, nil, nil, nil, 2, 2)
 local specWarnDivineJudgement				= mod:NewSpecialWarningDefensive(448515, nil, nil, nil, 2, 2)
 
-local timerHolyRadianceCD					= mod:NewCDTimer(36.4, 424431, nil, nil, nil, 2, nil, DBM_COMMON_L.HEALER_ICON)
+local timerHolyRadianceCD					= mod:NewCDTimer(25.5, 424431, nil, nil, nil, 2, nil, DBM_COMMON_L.HEALER_ICON)
 local timerDivineJudgementCD				= mod:NewCDTimer(14.6, 448515, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 
 --Taener Duelmal
@@ -399,7 +399,7 @@ function mod:StartEngageTimers(guid, cid, delay, uID)
 		timerDivineJudgementCD:Start(19-delay, guid)
 		timerHolyRadianceCD:Start(38.5, guid)
 	elseif cid == 211290 then--elaena-emberlanz Boss
-		timerDivineJudgementCD:Start(8.4-delay, guid)
+		timerDivineJudgementCD:Start(8.1-delay, guid)
 		timerHolyRadianceCD:Start(16.9, guid)--16.9-26.6
 	elseif cid == 206694 then--Fervent Sharpshooter
 		timerPotShotCD:Start(8-delay, guid)--Most definitely wrong
