@@ -60,6 +60,9 @@ jobs:
           find DBM-Test-* -name \*.lua -not -path '*/Reports/*' -print0 | xargs -0 -n1 sed -i -z 's/--@strip-from-release@.*@end-strip-from-release@/-- Raw test log stripped from release build./'
       - name: Create Package
         uses: BigWigsMods/packager@master
+        if: ${{ github.event_name != 'pull_request' }}
+        with:
+          args: -n "DBM-Dungeons-{project-version}"
         env:
           CF_API_KEY: ${{ secrets.CF_API_KEY }}
           GITHUB_OAUTH: ${{ secrets.GITHUB_TOKEN }}
