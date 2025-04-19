@@ -66,7 +66,7 @@ function mod:SPELL_CAST_START(args)
 			specWarnBrutalCombo:Show()
 			specWarnBrutalCombo:Play("defensive")
 		end
-		timerBrutalComboCD:Start("v15.8-30", self.vb.brutalComboCount+1)
+		timerBrutalComboCD:Start("v15.8-35.2", self.vb.brutalComboCount+1)
 	elseif spellId == 317231 then
 		self.vb.MightCount = self.vb.MightCount + 1
 		warnCrushingSlam:Show(self.vb.MightCount)
@@ -93,7 +93,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 		specWarnMightofMaldraxxus:Play("watchstep")
 		--"Might of Maldraxxus-320050-npc:162329-000074872F = pull:17.0, 35.1, 30.4, 35.2",
 		--"Might of Maldraxxus-320050-npc:162329-0000734A7E = pull:16.9, 40.1, 30.3, 35.3",
-		timerMightofMaldraxxusCD:Start("v30.4-35.2", self.vb.MightCastCount+1)--maybe also change to "v30.4-35.2"
+		timerMightofMaldraxxusCD:Start("v30.4-40.1", self.vb.MightCastCount+1)--maybe also change to "v30.4-35.2"
 	elseif spellId == 320114 and self:AntiSpam(5, 1) then
 		self.vb.bloodCount = self.vb.bloodCount + 1
 		--34.1, 70.4, 65.6

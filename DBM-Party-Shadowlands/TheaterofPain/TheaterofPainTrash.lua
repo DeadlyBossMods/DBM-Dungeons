@@ -60,23 +60,23 @@ local specWarnMeatShield					= mod:NewSpecialWarningInterrupt(341977, "HasInterr
 
 local timerSoulstormCD						= mod:NewCDNPTimer(26.7, 330716, nil, nil, nil, 2, nil, DBM_COMMON_L.HEALER_ICON)
 local timerVileEruptionCD					= mod:NewCDNPTimer(15.4, 330614, nil, nil, nil, 3)--15.4-16.2
-local timerDeathwindsCD						= mod:NewCDNPTimer(10.9, 333294, nil, nil, nil, 3)
+local timerDeathwindsCD						= mod:NewCDNPTimer(8.4, 333294, nil, nil, nil, 3)
 local timerBoneSpikesCD						= mod:NewCDNPTimer(33.6, 331237, nil, nil, nil, 3)
 local timerRicochetingBladeCD				= mod:NewCDNPTimer(12.1, 333861, nil, nil, nil, 3)--12.1 for Harugia the Bloodthirsty,
 local timerWhirlwindCD						= mod:NewCDNPTimer(26.7, 317605, nil, nil, nil, 3)
 local timerSavageFlurryCD					= mod:NewCDNPTimer(13.3, 331316, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerEarthcrusherCD					= mod:NewCDNPTimer(13.3, 1215850, nil, nil, nil, 3)
-local timerInterruptingRoarCD				= mod:NewCDNPTimer(18.1, 342135, nil, nil, nil, 5)--Can spell queue up to 21.8 due to other abilities
+local timerInterruptingRoarCD				= mod:NewCDNPTimer(17.8, 342135, nil, nil, nil, 5)--Can spell queue up to 21.8 due to other abilities
 local timerColossalSmashCD					= mod:NewCDNPTimer(9.7, 331288, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)--9.7 but can spell queue up to 23 seconds due to other 2 abilities
 --local timerGroundSmashCD					= mod:NewCDNPTimer(12.2, 332708, nil, nil, nil, 3)
-local timerWhirlingBladeCD					= mod:NewCDNPTimer(16.6, 336996, nil, nil, nil, 3)
+local timerWhirlingBladeCD					= mod:NewCDNPTimer(12.2, 336996, nil, nil, nil, 3)--12.2-16.6
 local timerRagingTantrumCD					= mod:NewCDNPTimer(18.2, 333241, nil, nil, nil, 5, nil, DBM_COMMON_L.ENRAGE_ICON)
 local timerWitheringDischargeCD				= mod:NewCDNPTimer(24.1, 341969, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerNecroticBoltVolleyCD				= mod:NewCDNPTimer(22.5, 330868, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 --local timerBoneSpearCD						= mod:NewCDNPTimer(23.1, 342675, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--CD deleted in Feb 28th hotfixes
 local timerMeatShieldCD						= mod:NewCDNPTimer(20.6, 341977, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--20.6-25
 local timerDemoralizingShoutCD				= mod:NewCDNPTimer(17, 330562, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
-local timerBindSoulCD						= mod:NewCDNPTimer(20.6, 330810, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerBindSoulCD						= mod:NewCDNPTimer(14.4, 330810, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--14.4-20.6
 local timerDevourFleshCD					= mod:NewCDNPTimer(27.4, 330586, nil, nil, nil, 5)
 local timerBloodthirstyChargeCD				= mod:NewCDNPTimer(18.2, 334023, nil, nil, nil, 3)
 local timerUnbalancingBlowCD				= mod:NewCDNPTimer(8.2, 333845, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
@@ -117,9 +117,12 @@ function mod:SPELL_CAST_START(args)
 	elseif spellId == 342675 and self:CheckInterruptFilter(args.sourceGUID, false, true) then
 		specWarnBoneSpear:Show(args.sourceName)
 		specWarnBoneSpear:Play("kickcast")
-	elseif spellId == 341977 and self:CheckInterruptFilter(args.sourceGUID, false, true) then
-		specWarnMeatShield:Show(args.sourceName)
-		specWarnMeatShield:Play("kickcast")
+	elseif spellId == 341977 then
+		timerMeatShieldCD:Start(nil, args.sourceGUID)--rare exception that triggers on cast start
+		if self:CheckInterruptFilter(args.sourceGUID, false, true) then
+			specWarnMeatShield:Show(args.sourceName)
+			specWarnMeatShield:Play("kickcast")
+		end
 	elseif spellId == 330614 then
 		timerVileEruptionCD:Start(nil, args.sourceGUID)
 		if self:AntiSpam(3, 2) then
@@ -139,13 +142,14 @@ function mod:SPELL_CAST_START(args)
 			specWarnBoneSpikes:Play("watchstep")
 		end
 	elseif spellId == 317605 then
-		timerWhirlwindCD:Start(nil, args.sourceGUID)
+		local timer = self:GetCIDFromGUID(args.sourceGUID) == 167538 and 26.7 or 20.6--26.7 for Dokigg the Brutalizer, shorter for others
+		timerWhirlwindCD:Start(timer, args.sourceGUID)
 		if self:AntiSpam(3, 1) then
 			specWarnWhirlwind:Show()
 			specWarnWhirlwind:Play("justrun")
 		end
 	elseif spellId == 342135 then
-		timerInterruptingRoarCD:Start(nil, args.sourceGUID)--18.1 seconds unless delayed by other spell queuing
+		timerInterruptingRoarCD:Start(nil, args.sourceGUID)--17.8 seconds unless delayed by other spell queuing
 		if self:AntiSpam(3, 1) then
 			specWarnInterruptingRoar:Show()
 			specWarnInterruptingRoar:Play("stopcast")
@@ -219,8 +223,8 @@ function mod:SPELL_CAST_SUCCESS(args)
 		timerNecroticBoltVolleyCD:Start(22.5, args.sourceGUID)
 --	elseif spellId == 342675 then
 --		timerBoneSpearCD:Start(23.1, args.sourceGUID)
-	elseif spellId == 341977 then
-		timerMeatShieldCD:Start(20.6, args.sourceGUID)
+--	elseif spellId == 341977 then
+--		timerMeatShieldCD:Start(20.6, args.sourceGUID)
 	elseif spellId == 330562 then
 		timerDemoralizingShoutCD:Start(17, args.sourceGUID)
 	elseif spellId == 330586 then
@@ -240,8 +244,8 @@ function mod:SPELL_INTERRUPT(args)
 		timerNecroticBoltVolleyCD:Start(22.5, args.destGUID)
 --	elseif args.extraSpellId == 342675 then
 --		timerBoneSpearCD:Start(23.1, args.destGUID)
-	elseif args.extraSpellId == 341977 then
-		timerMeatShieldCD:Start(20.6, args.destGUID)
+--	elseif args.extraSpellId == 341977 then
+--		timerMeatShieldCD:Start(20.6, args.destGUID)
 	elseif args.extraSpellId == 330562 then
 		timerDemoralizingShoutCD:Start(17, args.destGUID)
 	end
@@ -347,10 +351,9 @@ function mod:StartEngageTimers(guid, cid, delay)
 		--timerWhirlingBladeCD:Start(38.1-delay, guid)
 		--timerColossalSmashCD:Start(38.1-delay, guid)
 	elseif cid == 167538 then--Dokigg the Brutalizer
-		--Initial timers unknown. this mob is usually skipped
+		timerSavageFlurryCD:Start(2.8-delay, guid)--2.8 but wild swing
 		timerWhirlwindCD:Start(6.6-delay, guid)
-		timerSavageFlurryCD:Start(38.1-delay, guid)--IFFY, could happen sooner maybe?
-		timerEarthcrusherCD:Start(47.8-delay, guid)--IFFY, could happen sooner maybe?
+		timerEarthcrusherCD:Start(12.6-delay, guid)
 	elseif cid == 167532 then--Heavin the Breaker
 		timerInterruptingRoarCD:Start(3.5-delay, guid)
 		timerColossalSmashCD:Start(8.4-delay, guid)
@@ -367,7 +370,7 @@ function mod:StartEngageTimers(guid, cid, delay)
 	elseif cid == 170850 then--Raging Bloodhorn
 		timerRagingTantrumCD:Start(8.5-delay, guid)
 	elseif cid == 174210 then--Blighted Sludge-Spewer
-		timerWitheringDischargeCD:Start(13-delay, guid)
+		timerWitheringDischargeCD:Start(9-delay, guid)
 	elseif cid == 160495 then--Maniacal Soulbinder
 		timerNecroticBoltVolleyCD:Start(12-delay, guid)
 --	elseif cid == 170882 then--Bone Magus
@@ -377,7 +380,7 @@ function mod:StartEngageTimers(guid, cid, delay)
 	elseif cid == 164506 then--Ancient Captain
 		timerDemoralizingShoutCD:Start(4.6-delay, guid)
 	elseif cid == 169875 then--Shackled Soul
-		timerBindSoulCD:Start(12.5-delay, guid)
+		timerBindSoulCD:Start(9.7-delay, guid)
 --	elseif cid == 169927 then--Putrid Butcher
 --		timerDevourFleshCD:Start(20.1-delay, guid)
 	end

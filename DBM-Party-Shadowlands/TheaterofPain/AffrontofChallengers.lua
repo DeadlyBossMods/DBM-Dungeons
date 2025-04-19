@@ -48,7 +48,7 @@ local yellSearingDeath					= mod:NewYell(333231)
 local specWarnWitheringTouch			= mod:NewSpecialWarningDispel(1215600, "RemoveMagic", nil, nil, 1, 2)
 
 local timerSearingDeathCD				= mod:NewCDCountTimer(42.5, 333231, nil, nil, nil, 3)--Ultimate
-local timerWitheringTouchCD				= mod:NewVarCountTimer("v17-22", 1215600, nil, nil, nil, 5, nil, DBM_COMMON_L.MAGIC_ICON)--No clean way to correct so we'll use variance timer
+local timerWitheringTouchCD				= mod:NewVarCountTimer("v17-25.3", 1215600, nil, nil, nil, 5, nil, DBM_COMMON_L.MAGIC_ICON)--No clean way to correct so we'll use variance timer
 
 --General
 mod.vb.willCount = 0
