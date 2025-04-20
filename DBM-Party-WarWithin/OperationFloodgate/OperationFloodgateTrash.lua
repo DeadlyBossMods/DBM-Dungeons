@@ -57,16 +57,16 @@ local specWarnRestorativeAlgae				= mod:NewSpecialWarningInterrupt(471733, "HasI
 local timerFlamethrowerCD					= mod:NewCDNPTimer(25.5, 465754, nil, nil, nil, 3)
 local timerShreddationCD					= mod:NewCDNPTimer(9.7, 474337, nil, nil, nil, 3)--9.7-15 (delayed by flamethrower most likely
 local timerRPGGCD							= mod:NewCDNPTimer(14.5, 1216039, nil, nil, nil, 3)
-local timerSurpriseInspectionCD				= mod:NewCDNPTimer(9.7, 465682, nil, nil, nil, 3)
+local timerSurpriseInspectionCD				= mod:NewCDNPTimer(7.1, 465682, nil, nil, nil, 3)--7.1-9.7
 local timerBubbleBurpCD						= mod:NewCDNPTimer(21.5, 469818, nil, nil, nil, 3)
 local timerSplishSplashCD					= mod:NewCDNPTimer(21.8, 1217496, nil, nil, nil, 3)
 local timerBackwashCD						= mod:NewCDNPTimer(21.8, 469721, nil, nil, nil, 2)
 local timerWarpBloodCD						= mod:NewCDNPTimer(20.6, 465827, nil, nil, nil, 2)
 local timerSparkslamCD						= mod:NewCDNPTimer(10.9, 465666, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerJettisonkelpCD					= mod:NewCDNPTimer(15.8, 471736, nil, nil, nil, 5)
-local timerOverchargeCD						= mod:NewCDNPTimer(10.7, 469799, nil, nil, nil, 5, nil, DBM_COMMON_L.MAGIC_ICON)--10-15
+local timerOverchargeCD						= mod:NewCDNPTimer(9.3, 469799, nil, nil, nil, 5, nil, DBM_COMMON_L.MAGIC_ICON)--10-15
 local timerSurveyingBeamCD					= mod:NewCDNPTimer(20.6, 462771, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
-local timerBloodthirstyCackleCD				= mod:NewCDNPTimer(18.9, 463058, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--18.9-22
+local timerBloodthirstyCackleCD				= mod:NewCDNPTimer(18, 463058, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--18-22
 local timerTrickShotCD						= mod:NewCDNPTimer(10.9, 1214468, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--10.9-14 (seems to be buggy/random in some cases, inconsistent behaviors)
 local timerRestorativeAlgaeCD				= mod:NewCDNPTimer(18.1, 471733, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 
@@ -269,11 +269,11 @@ function mod:StartEngageTimers(guid, cid, delay)
 	elseif cid == 229212 then--Darkfuse Demolitionist
 		timerRPGGCD:Start(2-delay, guid)
 	elseif cid == 231385 then--Darkfuse Inspector
-		timerSurpriseInspectionCD:Start(8-delay, guid)
+		timerSurpriseInspectionCD:Start(6.1-delay, guid)
 	elseif cid == 229686 then--Venture Co. Surveyor
 		timerSurveyingBeamCD:Start(7-delay, guid)
 	elseif cid == 231197 then--Bubbles
-		timerBubbleBurpCD:Start(4.5-delay, guid)
+		timerBubbleBurpCD:Start(4.3-delay, guid)
 		timerSplishSplashCD:Start(9-delay, guid)
 		timerBackwashCD:Start(15-delay, guid)
 	elseif cid == 230748 then--Darkfuse Bloodwarper
@@ -285,7 +285,7 @@ function mod:StartEngageTimers(guid, cid, delay)
 	elseif cid == 231325 then--darkfuse jumpstarter
 		timerSparkslamCD:Start(6-delay, guid)
 	elseif cid == 231312 then--Venture Co. Electrician
-		timerOverchargeCD:Start(7-delay, guid)
+		timerOverchargeCD:Start(3.9-delay, guid)
 	elseif cid == 231223 then--Disturbed Kelp
 		timerJettisonkelpCD:Start(7-delay, guid)
 --		timerRestorativeAlgaeCD:Start(13-delay, guid)--Probably health based for first cast
