@@ -33,7 +33,7 @@ local specWarnDiscomBomb			= mod:NewSpecialWarningDispel(285454, "RemoveMagic", 
 local timerDiscomBombCD				= mod:NewNextCountTimer(20.6, 285454, nil, nil, nil, 3)
 local timerFlameCannonCD			= mod:NewCDCountTimer(47.4, 285440, nil, nil, nil, 2)
 local timerSelfTrimmingHedgeCD		= mod:NewCDCountTimer(25.5, 294954, nil, nil, nil, 3)
-local timerPlantCD					= mod:NewVarCountTimer("v46.1-47.4", 294853, nil, nil, nil, 1)
+local timerPlantCD					= mod:NewVarCountTimer("v46.1-48.7", 294853, nil, nil, nil, 1)
 
 mod.vb.bombCount = 0
 mod.vb.cannonCount = 0
@@ -48,7 +48,7 @@ function mod:OnCombatStart(delay)
 	timerSelfTrimmingHedgeCD:Start(3.4-delay, 1)
 	timerPlantCD:Start(5.9-delay, 1)
 	timerDiscomBombCD:Start(8.3-delay, 1)
-	timerFlameCannonCD:Start(12.1-delay, 1)
+	timerFlameCannonCD:Start(11.9-delay, 1)
 end
 
 function mod:SPELL_CAST_START(args)
