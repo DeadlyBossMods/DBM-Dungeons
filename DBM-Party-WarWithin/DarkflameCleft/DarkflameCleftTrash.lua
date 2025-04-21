@@ -61,8 +61,8 @@ local specwarnPanicked						= mod:NewSpecialWarningDispel(424650, "RemoveEnrage"
 
 local timerWildWallopCD						= mod:NewCDNPTimer(21, 423501, nil, nil, nil, 3)--S2 value
 local timerOverpoweringRoarCD				= mod:NewCDNPTimer(23, 428066, nil, nil, nil, 2)--S2 value
-local timerQuenchingBlastCD					= mod:NewCDNPTimer(17.8, 430171, nil, nil, nil, 2)--17.8-18.3 usually 18.2
-local timerSurgingFlameCD					= mod:NewCDNPTimer(26.7, 440652, nil, nil, nil, 3)
+local timerQuenchingBlastCD					= mod:NewCDNPTimer(15.5, 430171, nil, nil, nil, 2)--15.5-18.3 usually 18.2
+local timerSurgingFlameCD					= mod:NewCDNPTimer(24.4, 440652, nil, nil, nil, 3)
 local timerMoleFrenzyCD						= mod:NewCDPNPTimer(25.8, 425536, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerBonkCD							= mod:NewCDNPTimer(17, 426883, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)--15-24
 local timerCeaselessFlameCD					= mod:NewCDPNPTimer(36.2, 426261, nil, nil, nil, 3)
@@ -206,7 +206,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 	elseif spellId == 425536 then
 		timerMoleFrenzyCD:Start(23.8, args.sourceGUID)--25.8-2
 	elseif spellId == 426883 then
-		timerBonkCD:Start(15, args.sourceGUID)--17-2
+		timerBonkCD:Start(14.6, args.sourceGUID)--17-2
 	elseif spellId == 426295 then
 		timerFlamingTetherCD:Start(36.7, args.sourceGUID)
 	elseif spellId == 1218131 and self:AntiSpam(3, 9) then
@@ -282,29 +282,29 @@ end
 --All timers subject to a ~0.5 second clipping due to ScanEngagedUnits
 function mod:StartEngageTimers(guid, cid, delay)
 	if cid == 210818 then--Lowly Moleherd
-		timerMoleFrenzyCD:Start(6.4-delay, guid)
+		timerMoleFrenzyCD:Start(5.9-delay, guid)
 	elseif cid == 211121 then--Rank Overseeer
-		timerWildWallopCD:Start(10.8-delay, guid)--9.5-14.5???
-		timerOverpoweringRoarCD:Start(14.5-delay, guid)--10.2-14.5
+		timerWildWallopCD:Start(9.5-delay, guid)--9.5-14.5
+		timerOverpoweringRoarCD:Start(10.2-delay, guid)--10.2-14.5
 	elseif cid == 208450 then--Wandering Candle
-		timerQuenchingBlastCD:Start(8-delay, guid)
-		timerSurgingFlameCD:Start(12.9-delay, guid)
+		timerQuenchingBlastCD:Start(6.9-delay, guid)
+		timerSurgingFlameCD:Start(12.2-delay, guid)
 	elseif cid == 212383 then--Kobold Taskworker
-		timerBonkCD:Start(5.7-delay, guid)
+		timerBonkCD:Start(4.2-delay, guid)
 	elseif cid == 212412 then--Sootsnout
 		timerCeaselessFlameCD:Start(7.4-delay, guid)
 		timerBurningCandlesCD:Start(15.5-delay, guid)
 		timerFlamingTetherCD:Start(24-delay, guid)
 	elseif cid == 212411 then--Torchsnarl
-		timerOHHeadlockCD:Start(2-delay, guid)
-		timerMassiveStompCD:Start(12.8-delay, guid)
+--		timerOHHeadlockCD:Start(2-delay, guid)--Used near instantly
+		timerMassiveStompCD:Start(5.0-delay, guid)
 	elseif cid == 208456 then--Shuffling Horror
 	--	timerShadowSmashCD:Start(12-delay, guid)
 		timerDrainLightCD:Start(2.2-delay, guid)
 	--elseif cid == 211228 or cid == 220815 or cid == 223770 or cid == 223772 or cid == 223773 or cid == 223774 or cid == 223775 or cid == 223776 or cid == 223777 then--Blazing Fiend
 	--	timerExplosiveFlameCD:Start(20.4-delay, guid)--Used instantly on engage, no initial CD
 	elseif cid == 210812 then--Royal Wicklighter
-		timerFlashPointCD:Start(7-delay, guid)
+		timerFlashPointCD:Start(6.7-delay, guid)
 	end
 end
 

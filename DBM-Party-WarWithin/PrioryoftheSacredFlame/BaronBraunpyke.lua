@@ -46,7 +46,7 @@ local timerVindictiveWrathCD				= mod:NewCDCountTimer(68.8, 422969, nil, nil, ni
 local timerCastigatorsShieldCD				= mod:NewVarCountTimer("v33.6-34", 423015, nil, nil, nil, 3)
 local timerBurningLightCD					= mod:NewVarCountTimer("v33.6-34", 423051, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerHammerofPurityCD					= mod:NewVarCountTimer("v35.2-36", 423062, nil, nil, nil, 3)
-local timerSacredPyreCD						= mod:NewVarCountTimer("v33.6-34", 446368, nil, nil, nil, 5, nil, DBM_COMMON_L.MYTHIC_ICON)
+local timerSacredPyreCD						= mod:NewVarCountTimer("v33.6-35.2", 446368, nil, nil, nil, 5, nil, DBM_COMMON_L.MYTHIC_ICON)
 
 --local castsPerGUID = {}
 
@@ -67,7 +67,7 @@ function mod:OnCombatStart(delay)
 	self.vb.flamesRemaining = 3
 	self.vb.wrathActive = false
 	timerHammerofPurityCD:Start(7.3-delay, 1)
-	timerCastigatorsShieldCD:Start(23.0-delay, 1)
+	timerCastigatorsShieldCD:Start(22.1-delay, 1)
 	timerBurningLightCD:Start(29.2-delay, 1)
 	timerVindictiveWrathCD:Start(35.2-delay, 1)
 	if self:IsMythic() then

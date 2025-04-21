@@ -160,7 +160,7 @@ function mod:SPELL_CAST_START(args)
 	elseif spellId == 469981 then
 		self.vb.barrierCount = self.vb.barrierCount + 1
 		specWarnbarrier:Show(self.vb.barrierCount)
-		specWarnbarrier:Play("attackshield")
+		specWarnbarrier:Play("killmob")
 	end
 end
 

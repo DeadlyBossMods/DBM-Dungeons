@@ -11,7 +11,7 @@ mod.isTrashModBossFightAllowed = true
 
 mod:RegisterEvents(
 	"SPELL_CAST_START 268865 268797 262092 263202 267354 280604 268702 263215 269302 263628 473168 473304 269429 1214754 1217279",--262554, 263275, 268709 268129 263103 263066 262540 267433
-	"SPELL_CAST_SUCCESS 280604 268702 263215 268797 269090 269302 1213893 473168 1214751 1213139",--262515
+	"SPELL_CAST_SUCCESS 280604 268702 263215 268797 269090 269302 1213893 473168 1214751 1213139 1217279",--262515
 	"SPELL_INTERRUPT",
 	"SPELL_AURA_APPLIED 262092 263215 262377",--262540 262947
 	"UNIT_DIED"
@@ -55,14 +55,14 @@ local timerTectonicBarrierCD				= mod:NewCDNPTimer(20.9, 263215, nil, nil, nil, 
 local timerEnemyToGoosCD					= mod:NewCDPNPTimer(24.2, 268797, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerArtilleryBarrageCD				= mod:NewCDNPTimer(12.1, 269090, nil, nil, nil, 3)
 local timerInhaleVaporsCD					= mod:NewCDNPTimer(21.9, 262092, nil, nil, nil, 5, nil, DBM_COMMON_L.ENRAGE_ICON)
-local timerToxicBladesCD					= mod:NewCDNPTimer(27.8, 269302, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerToxicBladesCD					= mod:NewCDNPTimer(25.6, 269302, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerChargedShieldCD					= mod:NewCDNPTimer(20.9, 263628, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerRapidExtractionCD				= mod:NewCDNPTimer(24.2, 473168, nil, nil, nil, 3)
 local timerBrainstormCD						= mod:NewCDNPTimer(17, 473304, nil, nil, nil, 3)--17-18.2
 local timerChargedShotCD					= mod:NewCDNPTimer(17, 269429, nil, nil, nil, 3)
 local timerBrutalChargeCD					= mod:NewCDNPTimer(12.2, 1214751, nil, nil, nil, 3)--Massive SLam used immediate after, so no need for slam NP timer
 local timerOvertimeCD						= mod:NewCDNPTimer(10.4, 1213139, nil, "Tank|Healer|RemoveEnrage", nil, 5, nil, DBM_COMMON_L.ENRAGE_ICON)
-local timerUppercutCD						= mod:NewCDNPTimer(22.3, 1217280, nil, nil, nil, 3)
+local timerUppercutCD						= mod:NewCDNPTimer(20.3, 1217280, nil, nil, nil, 3)
 
 --Abilities removed in 11.1
 --local warnRepair							= mod:NewCastAnnounce(262554, 4)--Removed in 11.1?
@@ -181,7 +181,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 	if not self.Options.Enabled then return end
 	local spellId = args.spellId
 	if spellId == 280604 then
-		timerIcedSpritzerCD:Start(24.4, args.sourceGUID)
+		timerIcedSpritzerCD:Start(21.5, args.sourceGUID)
 	elseif spellId == 268702 then
 		timerFuriousQuakeCD:Start(24.6, args.sourceGUID)
 	elseif spellId == 263215 then
@@ -204,10 +204,12 @@ function mod:SPELL_CAST_SUCCESS(args)
 		timerBrutalChargeCD:Start(12.2, args.sourceGUID)
 		warnBrutalCharge:Show(args.destName)
 	elseif spellId == 1213139 then
-		timerOvertimeCD:Start(14.4, args.sourceGUID)
+		timerOvertimeCD:Start(10.9, args.sourceGUID)
 		warnOvertime:Show()
 	--elseif spellId == 262515 and self:AntiSpam(2.5, args.destName) then
 	--	warnAzeriteHeartseeker:CombinedShow(0.5, args.destName)
+	elseif spellId == 1217279 then
+		timerUppercutCD:Start(nil, args.sourceGUID)
 	end
 end
 
@@ -215,7 +217,7 @@ function mod:SPELL_INTERRUPT(args)
 	if not self.Options.Enabled then return end
 	if type(args.extraSpellId) ~= "number" then return end
 	if args.extraSpellId == 280604 then
-		timerIcedSpritzerCD:Start(24.4, args.destGUID)
+		timerIcedSpritzerCD:Start(21.5, args.destGUID)
 	elseif args.extraSpellId == 268702 then
 		timerFuriousQuakeCD:Start(24.6, args.destGUID)
 	elseif args.extraSpellId == 263215 then
@@ -281,7 +283,7 @@ end
 --All timers subject to a ~0.5 second clipping due to ScanEngagedUnits
 function mod:StartEngageTimers(guid, cid, delay)
 	if cid == 134232 then--Hired Assassin
-		timerToxicBladesCD:Start(10.8-delay, guid)--Might be shorter
+		timerToxicBladesCD:Start(10-delay, guid)
 		timerFanOfKnivesCD:Start(13.3-delay, guid)
 	elseif cid == 136470 then--Refreshment Vendor
 		timerIcedSpritzerCD:Start(10.9-delay, guid)
@@ -293,10 +295,10 @@ function mod:StartEngageTimers(guid, cid, delay)
 	elseif cid == 137029 then--Ordnance Specialist
 		timerArtilleryBarrageCD:Start(2-delay, guid)--Possibly even sooner
 	elseif cid == 130435 then--Addled Thug
-		timerInhaleVaporsCD:Start(9.9-delay, guid)
-		timerUppercutCD:Start(17.6-delay, guid)--Iffy, these mobs fire affecting combat before they're actually affecting combat so initial timers can be glitchy
+		timerInhaleVaporsCD:Start(9.9-delay, guid)--3.6 (sus, it might have been caused by late detection)
+		timerUppercutCD:Start(17.6-delay, guid)--Iffy 9.5, these mobs fire affecting combat before they're actually affecting combat so initial timers can be glitchy
 	elseif cid == 136139 then--Mechanized Peacekeeper
-		timerChargedShieldCD:Start(17-delay, guid)
+		timerChargedShieldCD:Start(16.7-delay, guid)
 	elseif cid == 136643 then--Azerite Extractor
 		timerRapidExtractionCD:Start(15.7-delay, guid)
 	elseif cid == 133430 then--Venture Co. Mastermind
@@ -304,8 +306,8 @@ function mod:StartEngageTimers(guid, cid, delay)
 	elseif cid == 133463 then--Venture Co. War Machine
 		timerChargedShotCD:Start(8.5-delay, guid)
 	elseif cid == 134012 then--Taskmaster Askari
-		timerOvertimeCD:Start(10-delay, guid)
-		timerBrutalChargeCD:Start(11-delay, guid)
+		timerOvertimeCD:Start(8.1-delay, guid)
+		timerBrutalChargeCD:Start(10-delay, guid)
 	end
 end
 

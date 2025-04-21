@@ -130,7 +130,7 @@ function mod:SPELL_CAST_START(args)
 		if self.vb.mineCount == 1 then
 			timerBattlemineCD:Start(17, 2)
 		elseif self.vb.mineCount == 2 then
-			timerBattlemineCD:Start(28, 3)
+			timerBattlemineCD:Start(27.5, 3)
 		else
 			timerBattlemineCD:Start(35.2, self.vb.mineCount+1)
 		end

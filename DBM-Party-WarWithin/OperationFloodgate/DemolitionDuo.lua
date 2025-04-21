@@ -108,7 +108,9 @@ function mod:SPELL_CAST_START(args)
 		timerExplosiveGelCD:Start(nil, self.vb.knockCount+1)
 	elseif spellId == 459799 then
 		self.vb.wallopCount = self.vb.wallopCount + 1
-		timerWallopCD:Start(nil, self.vb.wallopCount+1)
+		if not self.vb.keezaDead then--Once keeza dead it has no Cd and boss just spams it
+			timerWallopCD:Start(nil, self.vb.wallopCount+1)
+		end
 		if self:IsTanking("player", "boss1", nil, true) then
 			specWarnWallop:Show()
 			specWarnWallop:Play("defensive")
@@ -117,7 +119,7 @@ function mod:SPELL_CAST_START(args)
 	elseif spellId == 459779 then
 		self.vb.chargeCount = self.vb.chargeCount + 1
 		--"Barreling Charge-459779-npc:226402-00004D0020 = pull:24.8, 5.6, 6.0, 27.5, 5.4, 5.1",
-		local timer = (self.vb.chargeCount % 3 == 0) and "v23-27.5" or "v4-6.3"
+		local timer = (self.vb.chargeCount % 3 == 0) and "v23-33.3" or "v4-6.3"
 		timerChargeCD:Start(timer, self.vb.chargeCount+1)
 	end
 end

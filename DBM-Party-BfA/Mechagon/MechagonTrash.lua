@@ -95,20 +95,20 @@ local specWarnEnrageDispel			= mod:NewSpecialWarningDispel(300414, "RemoveEnrage
 
 local timerConsumeCD				= mod:NewCDNPTimer(20, 300687, nil, nil, nil, 2)--Toxic Monstrosity. 20 second based on guide, not actual log. might need fixing
 local timerDetonateCD				= mod:NewCDPNPTimer(22.5, 301088, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--Small sample
-local timerMegaDrillCD				= mod:NewCDNPTimer(25.5, 1215409, nil, nil, nil, 2)
-local timerFieryJawsCD				= mod:NewCDNPTimer(19.4, 1217819, nil, nil, nil, 3)--19.4-21.9
+local timerMegaDrillCD				= mod:NewCDNPTimer(23.6, 1215409, nil, nil, nil, 2)
+local timerFieryJawsCD				= mod:NewCDNPTimer(18.4, 1217819, nil, nil, nil, 3)--18.4-21.9
 local timerSonicPulseCD				= mod:NewCDNPTimer(13.3, 293986, nil, nil, nil, 3)--6.0 for Blastatron X-80, 13.3 for Spider Tank
 local timerCapacitorDischargeCD		= mod:NewCDNPTimer(27.9, 295169, nil, nil, nil, 3)
 local timerShieldGeneratorCD		= mod:NewCDNPTimer(21.9, 293683, nil, nil, nil, 5)
 local timerTuneUpCD					= mod:NewCDNPTimer(20.6, 293729, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
-local timerRocketBarrageCD			= mod:NewCDNPTimer(17, 294103, nil, nil, nil, 3)
+local timerRocketBarrageCD			= mod:NewCDNPTimer(16.6, 294103, nil, nil, nil, 3)
 local timerFlyingPeckCD				= mod:NewCDNPTimer(15.8, 294073, nil, nil, nil, 5)
-local timerPunctureCD				= mod:NewCDNPTimer(23, 1215411, nil, nil, nil, 5)
+local timerPunctureCD				= mod:NewCDNPTimer(19.3, 1215411, nil, nil, nil, 5)
 local timerCorrosiveGunkCD			= mod:NewCDNPTimer(20.1, 1215412, nil, nil, nil, 2)
 local timerSquirrelCD				= mod:NewCDNPTimer(14.6, 293854, nil, nil, nil, 1)
 local timerArcingZapCD				= mod:NewCDNPTimer(20.9, 294195, nil, nil, nil, 5)
-local timerShortOutCD				= mod:NewCDNPTimer(27.9, 297128, nil, nil, nil, 2)
-local timerOverclockCD				= mod:NewCDNPTimer(15, 293930, nil, nil, nil, 5)--15-17.8
+local timerShortOutCD				= mod:NewCDNPTimer(27.5, 297128, nil, nil, nil, 2)
+local timerOverclockCD				= mod:NewCDNPTimer(15, 293930, nil, nil, nil, 5)--15-20.6
 
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc, 7 GTFO
 
@@ -300,7 +300,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 		warnSquirrel:Show()--no antispam FOR NOW
 	elseif spellId == 294195 then
 		timerArcingZapCD:Start(nil, args.sourceGUID)
-	elseif spellId == 293930 then
+	elseif spellId == 293930 and self:AntiSpam(3, args.sourceGUID) then--Mob fires 2 success events per cast
 		timerOverclockCD:Start(nil, args.sourceGUID)
 	end
 end
@@ -441,10 +441,10 @@ function mod:StartEngageTimers(guid, cid, delay)
 	elseif cid == 144296 then--Spider Tank
 		timerSonicPulseCD:Start(6-delay, guid)
 	elseif cid == 151476 then--Blastatron X-80
-		timerSonicPulseCD:Start(2.7-delay, guid)
-		timerCapacitorDischargeCD:Start(18-delay, guid)
-	elseif cid == 144299 then--Workshop Defender
-		timerShieldGeneratorCD:Start(13.2-delay, guid)
+		--timerSonicPulseCD:Start(1.2-delay, guid)--Not worth showing a 1.2 timer
+		timerCapacitorDischargeCD:Start(17.8-delay, guid)
+--	elseif cid == 144299 then--Workshop Defender
+--		timerShieldGeneratorCD:Start(13.2-delay, guid)--Used instantly on engage now
 	elseif cid == 151659 then--Rocket Tonk
 		timerRocketBarrageCD:Start(5-delay, guid)
 	elseif cid == 144295 then--Mechagon Mechanic
@@ -455,11 +455,11 @@ function mod:StartEngageTimers(guid, cid, delay)
 	elseif cid == 236033 then--Metal Gunk
 		timerCorrosiveGunkCD:Start(11-delay, guid)
 	elseif cid == 144294 then--Mechagon Tinkerer
-		timerSquirrelCD:Start(5.2-delay, guid)
+		timerSquirrelCD:Start(4.7-delay, guid)
 	elseif cid == 144298 or cid == 151649 then--Defense Bot Mk1 and Mk3
-		timerArcingZapCD:Start(9.5-delay, guid)
+		--timerArcingZapCD:Start(9.5-delay, guid)--Used on engage now
 		if cid == 144298 then--Mk3 only
-			timerShortOutCD:Start(14.3-delay, guid)
+			timerShortOutCD:Start(11.1-delay, guid)
 		end
 	end
 end

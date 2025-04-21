@@ -14,7 +14,7 @@ mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 423305 429487 445457 424371",
-	"SPELL_CAST_SUCCESS 458082 423839",
+	"SPELL_CAST_SUCCESS 458082 423839 423305",
 	"SPELL_AURA_APPLIED 445262 428269 429028 429493 458082",
 	"SPELL_AURA_REMOVED 445262 428269 423839 458082",
 	"SPELL_PERIODIC_DAMAGE 433067",
@@ -53,10 +53,10 @@ local yellStormridersCharge				= mod:NewShortYell(458082)
 local yellStormridersChargeFades		= mod:NewShortFadesYell(458082)
 local specWarnGTFO						= mod:NewSpecialWarningGTFO(433067, nil, nil, nil, 1, 8)
 
-local timerNullUpheavalCD				= mod:NewVarCountTimer("v32.8-39.5", 423305, nil, nil, nil, 3)
+local timerNullUpheavalCD				= mod:NewVarCountTimer("v29.8-40.8", 423305, nil, nil, nil, 3)
 local timerUnleashedCorruptionCD		= mod:NewVarCountTimer("v17.0-25.2", 429487, nil, nil, nil, 3)
 local timerOblivionWaveCD				= mod:NewVarCountTimer("v13.4-19.2", 445457, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
-local timerStormridersChargeCD			= mod:NewVarCountTimer("v32.8-39.5", 458082, nil, nil, nil, 3)
+local timerStormridersChargeCD			= mod:NewVarCountTimer("v32.8-40.7", 458082, nil, nil, nil, 3)
 local timerVengeanceActive				= mod:NewBuffActiveTimer(20, 423839, nil, nil, nil, 6)
 
 mod:AddInfoFrameOption(445262)
@@ -99,10 +99,8 @@ end
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
 	if spellId == 423305 then
-		self.vb.NullUpheavalCount = self.vb.NullUpheavalCount + 1
-		specWarnNullUpheaval:Show(self.vb.NullUpheavalCount)
+		specWarnNullUpheaval:Show(self.vb.NullUpheavalCount+1)
 		specWarnNullUpheaval:Play("watchstep")
-		timerNullUpheavalCD:Start(nil, self.vb.NullUpheavalCount+1)
 	elseif spellId == 429487 then
 		self.vb.unleashedCount = self.vb.unleashedCount + 1
 		timerUnleashedCorruptionCD:Start(nil, self.vb.unleashedCount+1)
@@ -124,6 +122,10 @@ function mod:SPELL_CAST_SUCCESS(args)
 	if spellId == 458082 and self:AntiSpam(3, 1) then
 		self.vb.riderCount = self.vb.riderCount + 1
 		timerStormridersChargeCD:Start(nil, self.vb.riderCount+1)
+	elseif spellId == 423305 then
+		--Only increment count and start timer if cast finishes, because cast can be interrupted by storms vengeance (and then boss retains full energy and doesn't go on CD)
+		self.vb.NullUpheavalCount = self.vb.NullUpheavalCount + 1
+		timerNullUpheavalCD:Start(nil, self.vb.NullUpheavalCount+1)
 	elseif spellId == 423839 then
 		timerVengeanceActive:Start()
 		--Pause timers
