@@ -10,7 +10,7 @@ mod:SetZone(2773)
 mod:RegisterZoneCombat(2773)
 
 mod:RegisterEvents(
-	"SPELL_CAST_START 465754 474337 1216039 465682 462771 469818 1217496 469721 465827 463058 1214468 465666 465408 471733 461796",
+	"SPELL_CAST_START 465754 474337 1216039 465682 462771 469818 1217496 469721 465827 463058 1214468 465666 465408 471733 461796 468726 468631",
 	"SPELL_CAST_SUCCESS 462771 463058 1214468 469799 471733 471736",
 	"SPELL_INTERRUPT",
 	"SPELL_AURA_APPLIED 462771 463061 469799",
@@ -43,6 +43,7 @@ local specWarnRPGG							= mod:NewSpecialWarningDodge(1216039, nil, nil, nil, 2,
 local specWarnSurpriseInspection			= mod:NewSpecialWarningDodge(465682, nil, nil, nil, 2, 15)
 local specWarnBubbleBurp					= mod:NewSpecialWarningDodge(469818, nil, nil, nil, 2, 2)
 local specWarnSplishSplash					= mod:NewSpecialWarningDodge(1217496, nil, nil, nil, 2, 15)
+local specwarnPlantSeaBombs					= mod:NewSpecialWarningDodge(468726, nil, nil, nil, 2, 2)--Not enough data to add timers
 local specWarnSparkslam						= mod:NewSpecialWarningDefensive(465666, nil, nil, nil, 1, 2)
 local specWarnBackwash						= mod:NewSpecialWarningSpell(469721, nil, nil, nil, 2, 2)
 local specWarnSurveyingBeamFailure			= mod:NewSpecialWarningRun(462771, nil, nil, nil, 4, 2)
@@ -53,6 +54,7 @@ local specWarnBloodthirstyCackleKick		= mod:NewSpecialWarningInterrupt(463058, "
 local specWarnSurveyingBeam					= mod:NewSpecialWarningInterrupt(462771, "HasInterrupt", nil, nil, 1, 2)
 local specWarnTrickShot						= mod:NewSpecialWarningInterrupt(1214468, "HasInterrupt", nil, nil, 1, 2)
 local specWarnRestorativeAlgae				= mod:NewSpecialWarningInterrupt(471733, "HasInterrupt", nil, nil, 1, 2)
+local specWarnHarpoon						= mod:NewSpecialWarningInterrupt(468631, "HasInterrupt", nil, nil, 1, 2)
 
 local timerFlamethrowerCD					= mod:NewCDNPTimer(25.5, 465754, nil, nil, nil, 3)
 local timerShreddationCD					= mod:NewCDNPTimer(9.7, 474337, nil, nil, nil, 3)--9.7-15 (delayed by flamethrower most likely
@@ -69,6 +71,8 @@ local timerSurveyingBeamCD					= mod:NewCDNPTimer(20.6, 462771, nil, nil, nil, 4
 local timerBloodthirstyCackleCD				= mod:NewCDNPTimer(18, 463058, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--18-22
 local timerTrickShotCD						= mod:NewCDNPTimer(10.9, 1214468, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--10.9-14 (seems to be buggy/random in some cases, inconsistent behaviors)
 local timerRestorativeAlgaeCD				= mod:NewCDNPTimer(18.1, 471733, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+--local timerPlantSeaBombsCD				= mod:NewCDNPTimer(20.6, 468726, nil, nil, nil, 3)--Not enough data, these mobs are skipped by more skilled groups
+--local timerHarpoonCD						= mod:NewCDNPTimer(20.6, 468631, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--Not enough data, these mobs are skipped by more skilled groups
 
 local allowInterruptOnBeam = false
 
@@ -132,6 +136,11 @@ function mod:SPELL_CAST_START(args)
 			specWarnTrickShot:Show(args.sourceName)
 			specWarnTrickShot:Play("kickcast")
 		end
+	elseif spellId == 468631 then
+		if self:CheckInterruptFilter(args.sourceGUID, false, true) then
+			specWarnHarpoon:Show(args.sourceName)
+			specWarnHarpoon:Play("kickcast")
+		end
 	elseif spellId == 471733 then
 		if self:CheckInterruptFilter(args.sourceGUID, false, true) then
 			specWarnRestorativeAlgae:Show(args.sourceName)
@@ -172,6 +181,12 @@ function mod:SPELL_CAST_START(args)
 		end
 	elseif spellId == 461796 then--Reload (required to fire RPGG)
 		timerRPGGCD:Start(9, args.sourceGUID)--Reload cast time + 2
+	elseif spellId == 468726 then
+		--timerPlantSeaBombsCD:Start(nil, args.sourceGUID)
+		if self:AntiSpam(3, 2) then
+			specwarnPlantSeaBombs:Show()
+			specwarnPlantSeaBombs:Play("watchstep")
+		end
 	end
 end
 
@@ -258,6 +273,9 @@ function mod:UNIT_DIED(args)
 	elseif cid == 231223 then--Disturbed Kelp
 		timerRestorativeAlgaeCD:Stop(args.destGUID)
 		timerJettisonkelpCD:Stop(args.destGUID)
+	elseif cid == 231496 then--Venture Co. Diver
+		--timerPlantSeaBombsCD:Stop(args.destGUID)
+		--timerHarpoonCD:Stop(args.destGUID)
 	end
 end
 
@@ -289,6 +307,9 @@ function mod:StartEngageTimers(guid, cid, delay)
 	elseif cid == 231223 then--Disturbed Kelp
 		timerJettisonkelpCD:Start(7-delay, guid)
 --		timerRestorativeAlgaeCD:Start(13-delay, guid)--Probably health based for first cast
+	elseif cid == 231496 then--Venture Co. Diver
+		--timerPlantSeaBombsCD:Start(7-delay, guid)
+		--timerHarpoonCD:Start(7-delay, guid)
 	end
 end
 
