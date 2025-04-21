@@ -64,25 +64,25 @@ local specWarnSpillDrink					= mod:NewSpecialWarningDispel(441214, "RemoveEnrage
 --All timers need rechecking, but can't use public WCL to fix this since all logs short
 local timerEruptingInfernoCD				= mod:NewCDNPTimer(17.1, 437956, nil, nil, nil, 3, nil, DBM_COMMON_L.MAGIC_ICON)--S2 updated
 local timerBoilingFlamesCD					= mod:NewCDPNPTimer(24.3, 437721, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--S2 updated
-local timerCinderbrewTossCD					= mod:NewCDNPTimer(12.1, 434706, nil, nil, nil, 3)--S2 updated
+local timerCinderbrewTossCD					= mod:NewCDNPTimer(11.8, 434706, nil, nil, nil, 3)--S2 updated
 local timerThrowChairCD						= mod:NewCDNPTimer(15.8, 434756, nil, nil, nil, 3)--S2 Updated
 local timerHighSteaksCD						= mod:NewCDNPTimer(20.3, 434998, nil, nil, nil, 3)--S2 Updated
 local timerRecklessDeliveryCD				= mod:NewCDPNPTimer(30.3, 448619, nil, nil, nil, 3)--S2 Updated
 local timerFailedBatchCD					= mod:NewCDNPTimer(22.2, 441434, nil, nil, nil, 5)--22.6-25.6 --S2 Updated
 local timerSpillDrinkCD						= mod:NewCDNPTimer(20, 441214, nil, nil, nil, 5)--S2 confirmed
-local timerBeesWaxCD						= mod:NewCDNPTimer(25.4, 442589, nil, nil, nil, 3)--S2 confirmed
-local timerDownwardTrendCD					= mod:NewCDNPTimer(12.7, 439467, nil, nil, nil, 3)--S2 confirmed
+local timerBeesWaxCD						= mod:NewCDNPTimer(25.1, 442589, nil, nil, nil, 3)--S2 confirmed
+local timerDownwardTrendCD					= mod:NewCDNPTimer(12.1, 439467, nil, nil, nil, 3)--S2 confirmed
 local timerRejuvenatingHoneyCD				= mod:NewCDPNPTimer(24.2, 441627, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--S2 Updated
 local timerMeanMugCD						= mod:NewCDNPTimer(15.8, 434773, nil, nil, nil, 5)--S2 Updated
-local timerVolatileKegCD					= mod:NewCDNPTimer(24.3, 463218, nil, nil, nil, 2)--S2 Updated
+local timerVolatileKegCD					= mod:NewCDNPTimer(24.1, 463218, nil, nil, nil, 2)--S2 Updated
 local timerTenderizeCD						= mod:NewCDNPTimer(18.2, 463206, nil, nil, nil, 2)--S2 Updated
-local timerFreeSamplesCD					= mod:NewCDNPTimer(17.1, 441242, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--S2 Updated
+local timerFreeSamplesCD					= mod:NewCDNPTimer(16.6, 441242, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--S2 Updated
 local timerShreddingStingCD					= mod:NewCDNPTimer(12.1, 441410, nil, nil, nil, 3)--S2 Updated
 local timerBeastialWrathCD					= mod:NewCDNPTimer(18.4, 441351, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--S2 Updated (good 4 sec of variance)
 local timerBeezookaCD						= mod:NewCDNPTimer(18.2, 441119, nil, nil, nil, 3)--S2 Updated
 local timerSwarmingSurpriseCD				= mod:NewCDNPTimer(23.1, 442995, nil, nil, nil, 2)--S2 Updated
 local timerHoneyVolleyCD					= mod:NewCDNPTimer(24.1, 440687, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--S2 Updated
-local timerRainofHoneyCD					= mod:NewCDNPTimer(17, 440876, nil, nil, nil, 3)--S2 Updated
+local timerRainofHoneyCD					= mod:NewCDNPTimer(16.6, 440876, nil, nil, nil, 3)--S2 Updated
 
 mod:AddGossipOption(true, "Buff")
 
@@ -264,9 +264,7 @@ end
 function mod:SPELL_INTERRUPT(args)
 	if not self.Options.Enabled then return end
 	local spellId = args.extraSpellId
-	if spellId == 437721 then
-		timerBoilingFlamesCD:Start(24.3, args.destGUID)
-	elseif spellId == 441627 then
+	if spellId == 441627 then
 		timerRejuvenatingHoneyCD:Start(24.2, args.destGUID)
 	elseif spellId == 441242 then
 		timerFreeSamplesCD:Start(17.1, args.destGUID)
@@ -274,6 +272,8 @@ function mod:SPELL_INTERRUPT(args)
 		timerBeastialWrathCD:Start(18.4, args.destGUID)
 	elseif spellId == 440687 then
 		timerHoneyVolleyCD:Start(24.1, args.destGUID)
+	--elseif spellId == 437721 then
+	--	timerBoilingFlamesCD:Start(24.3, args.destGUID)
 	end
 end
 
@@ -347,15 +347,15 @@ end
 --All timers subject to a ~0.5 second clipping due to ScanEngagedUnits
 function mod:StartEngageTimers(guid, cid, delay)
 	if cid == 218671 then--Venture Co Pyromaniac
-		timerEruptingInfernoCD:Start(9.4-delay, guid)
-		timerBoilingFlamesCD:Start(16.5-delay, guid)
+		timerEruptingInfernoCD:Start(8.9-delay, guid)
+		timerBoilingFlamesCD:Start(16-delay, guid)
 	elseif cid == 210269 then--Hired Muscle
-		timerVolatileKegCD:Start(9-delay, guid)
-		timerThrowChairCD:Start(13.8-delay, guid)
+		timerVolatileKegCD:Start(8.1-delay, guid)
+		timerThrowChairCD:Start(13-delay, guid)
 	elseif cid == 214920 then--Tasting Room Agent
-		timerCinderbrewTossCD:Start(13.4-delay, guid)
+		timerCinderbrewTossCD:Start(11.2-delay, guid)
 	elseif cid == 214697 then--Chef Chewie
-		timerTenderizeCD:Start(8.4-delay, guid)
+		timerTenderizeCD:Start(8.2-delay, guid)
 		timerHighSteaksCD:Start(12.3-delay, guid)
 	elseif cid == 223423 then--Careless Hobgoblin
 		timerRecklessDeliveryCD:Start(9.1-delay, guid)
@@ -364,10 +364,10 @@ function mod:StartEngageTimers(guid, cid, delay)
 		timerRejuvenatingHoneyCD:Start(14.5-delay, guid)--Super iffy, most heals don't have initial CDs just initial threshold of health
 	elseif cid == 220060 then--Taste Tester
 		timerSpillDrinkCD:Start(9.5-delay, guid)
-		timerFreeSamplesCD:Start(15.4-delay, guid)
+		timerFreeSamplesCD:Start(11.1-delay, guid)--11.1-15.4
 	elseif cid == 220946 then--Venture Co Honey Harvester
-		timerSwarmingSurpriseCD:Start(10-delay, guid)
-		timerBeesWaxCD:Start(17.2-delay, guid)
+		timerSwarmingSurpriseCD:Start(4.5-delay, guid)--4.5-10
+		timerBeesWaxCD:Start(10.6-delay, guid)--10.6--17
 	elseif cid == 219588 then--Yes Man
 		timerDownwardTrendCD:Start(5-delay, guid)
 	elseif cid == 214668 then--Venture Co. Patron
@@ -376,10 +376,10 @@ function mod:StartEngageTimers(guid, cid, delay)
 		timerShreddingStingCD:Start(9.4-delay, guid)
 	elseif cid == 210264 then--Bee Wrangler
 		timerBeezookaCD:Start(7-delay, guid)
-		timerBeastialWrathCD:Start(13-delay, guid)
+		timerBeastialWrathCD:Start(3.7-delay, guid)--3.7-11.4
 	elseif cid == 220141 then--Royal Jelly Purveyor
-		timerHoneyVolleyCD:Start(11.5-delay, guid)
-		timerRainofHoneyCD:Start(17.5-delay, guid)
+		timerHoneyVolleyCD:Start(4.8-delay, guid)--4.8-10.1
+		timerRainofHoneyCD:Start(16.2-delay, guid)
 	end
 end
 
