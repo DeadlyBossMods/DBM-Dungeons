@@ -55,7 +55,7 @@ local specWarnArcingVoid					= mod:NewSpecialWarningInterrupt(430805, "HasInterr
 local timerBoundingVoidCD					= mod:NewCDPNPTimer(18.2, 426893, nil, nil, nil, 3)--S2 Confirmed
 local timerEntropyShieldCD					= mod:NewCDNPTimer(27.1, 450628, nil, nil, nil, 5)--S2 Confirmed
 local timerLocalizedStormCD					= mod:NewCDNPTimer(23.1, 427404, nil, nil, nil, 2)
-local timerWildLightningCD					= mod:NewCDNPTimer(20.6, 474018, nil, nil, nil, 3)
+local timerWildLightningCD					= mod:NewCDNPTimer(20.2, 474018, nil, nil, nil, 3)
 --local timerThunderstrikeCD				= mod:NewCDNPTimer(15.1, 430013, nil, nil, nil, 3)
 --local timerEnergizedBarrageCD				= mod:NewCDPNPTimer(5, 427616, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)--MUCH lower CD in 11.1
 local timerLightningSurgeCD					= mod:NewCDNPTimer(18.3, 427260, nil, nil, nil, 5, nil, DBM_COMMON_L.ENRAGE_ICON)--17-2 due to waiting for success
@@ -65,7 +65,7 @@ local timerArcingVoidCD						= mod:NewCDPNPTimer(18.1, 430805, nil, "HasInterrup
 local timerAttractingShadowsCD				= mod:NewCDNPTimer(21.9, 430812, nil, nil, nil, 2)--21.9-24.2
 local timerVoidCrushCD						= mod:NewCDNPTimer(20.7, 474031, nil, nil, nil, 3)--Can stutter cast
 local timerFeastingVoidCD					= mod:NewCDNPTimer(21, 1214523, nil, nil, nil, 5)
-local timerUmbralWaveCD						= mod:NewCDNPTimer(23, 1214546, nil, nil, nil, 3)--23-29
+local timerUmbralWaveCD						= mod:NewCDNPTimer(21.9, 1214546, nil, nil, nil, 3)--21.9-29
 local timerVoidExtractionCD					= mod:NewCDNPTimer(18.2, 472764, nil, nil, nil, 3)
 local timerUnleashedDarknessCD				= mod:NewCDNPTimer(18.2, 1214628, nil, nil, nil, 3)
 
@@ -262,7 +262,7 @@ function mod:StartEngageTimers(guid, cid, delay)
 		timerEntropyShieldCD:Start(9-delay, guid)
 	elseif cid == 212786 then--Cursed Stormrider
 		timerWildLightningCD:Start(11-delay, guid)
-		timerLocalizedStormCD:Start(16.7-delay, guid)
+		timerLocalizedStormCD:Start(15.9-delay, guid)
 --	elseif cid == 207186 then--Unruly Stormrook
 --		timerThunderstrikeCD:Start(0.5-delay, guid)
 --		timerEnergizedBarrageCD:Start(0.5-delay, guid)
@@ -270,17 +270,17 @@ function mod:StartEngageTimers(guid, cid, delay)
 --		timerVoidShellCD:Start(0.5-delay, guid)
 		timerSeepingCorruptionCD:Start(16.7-delay, guid)
 	elseif cid == 214419 then--Corrupted Rookguard
-		timerVoidCrushCD:Start(8.4-delay, guid)
+		timerVoidCrushCD:Start(7.8-delay, guid)
 	elseif cid == 207199 then--Cursed Rook Tender
-		timerLightningSurgeCD:Start(10-delay, guid)
+		timerLightningSurgeCD:Start(9.8-delay, guid)
 	elseif cid == 214421 then--Corrupted Thunderer
-		timerAttractingShadowsCD:Start(5.6-delay, guid)
+		timerAttractingShadowsCD:Start(4.4-delay, guid)
 		timerArcingVoidCD:Start(8-delay, guid)
 	elseif cid == 212793 then--Void Asscendant
-		timerFeastingVoidCD:Start(12.1-delay, guid)
+		timerFeastingVoidCD:Start(11.2-delay, guid)
 		timerUmbralWaveCD:Start(15.5-delay, guid)
 	elseif cid == 212739 then--Consuming Voidstone
-		timerVoidExtractionCD:Start(14-delay, guid)--100% wrong
+		timerVoidExtractionCD:Start(4.5-delay, guid)--4.5-5.9
 		timerUnleashedDarknessCD:Start(29.1-delay, guid)--100% wrong
 	end
 end
