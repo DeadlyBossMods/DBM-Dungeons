@@ -29,7 +29,7 @@ local yellDrawSoul					= mod:NewYell(474298)
 local specWarnWellofDarkness		= mod:NewSpecialWarningMoveAway(473540, nil, nil, nil, 1, 2)
 local yellWellofDarkness			= mod:NewYell(473540)
 local specWarnDeathSpiral			= mod:NewSpecialWarningDodgeCount(1216474, nil, nil, nil, 2, 2, 4)
-local specWarnNecroticEruption		= mod:NewSpecialWarningDodgeCount(474087, nil, nil, nil, 1, 15)
+local specWarnNecroticEruption		= mod:NewSpecialWarningCount(474087, nil, nil, nil, 1, 15)
 local specWarnFeastoftheDamned		= mod:NewSpecialWarningCount(473513, nil, nil, nil, 2, 2)
 --local specWarnGTFO				= mod:NewSpecialWarningGTFO(257274, nil, nil, nil, 1, 8)
 
