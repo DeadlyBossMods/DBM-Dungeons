@@ -674,7 +674,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		else
 			warnEnrage:Show()
 		end
-	elseif args.spellId == 470592 or args.spellId == 443482 or args.spellId == 458879 then
+	elseif (args.spellId == 470592 or args.spellId == 443482 or args.spellId == 458879) and args:IsDestTypeHostile() then
 		specWarnBlessingofDuskDispel:Show(args.destName)
 		specWarnBlessingofDuskDispel:Play("dispelboss")
 	elseif args.spellId == 445407 then
