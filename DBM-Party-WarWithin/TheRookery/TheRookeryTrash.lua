@@ -261,7 +261,7 @@ function mod:StartEngageTimers(guid, cid, delay)
 		timerBoundingVoidCD:Start(6-delay, guid)
 		timerEntropyShieldCD:Start(9-delay, guid)
 	elseif cid == 212786 then--Cursed Stormrider
-		timerWildLightningCD:Start(11-delay, guid)
+		timerWildLightningCD:Start(10.8-delay, guid)
 		timerLocalizedStormCD:Start(15.9-delay, guid)
 --	elseif cid == 207186 then--Unruly Stormrook
 --		timerThunderstrikeCD:Start(0.5-delay, guid)
@@ -281,7 +281,7 @@ function mod:StartEngageTimers(guid, cid, delay)
 		timerUmbralWaveCD:Start(15.5-delay, guid)
 	elseif cid == 212739 then--Consuming Voidstone
 		timerVoidExtractionCD:Start(4.5-delay, guid)--4.5-5.9
-		timerUnleashedDarknessCD:Start(29.1-delay, guid)--100% wrong
+		timerUnleashedDarknessCD:Start(20.6-delay, guid)--20.6-25.4
 	end
 end
 
