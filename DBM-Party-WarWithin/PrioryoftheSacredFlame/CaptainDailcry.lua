@@ -43,7 +43,7 @@ local specWarnPierceArmor					= mod:NewSpecialWarningDefensive(424414, nil, nil,
 
 local timerSavageMaulingCD					= mod:NewCDCountTimer(25.1, 447439, nil, nil, nil, 3)
 local timerBattleCryCD						= mod:NewVarCountTimer("v26.3-30.7", 424419, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--15.8-18.2
-local timerHurlSpearCD						= mod:NewVarCountTimer("v30.3-34.9", 447270, nil, nil, nil, 3)
+local timerHurlSpearCD						= mod:NewVarCountTimer("v30.3-35.8", 447270, nil, nil, nil, 3)
 local timerPierceArmorCD					= mod:NewVarCountTimer("v13.3-23", 424414, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 
 mod:AddInfoFrameOption(447443)
@@ -59,8 +59,8 @@ function mod:OnCombatStart(delay)
 	self.vb.spearCount = 0
 	self.vb.pierceCount = 0
 	timerPierceArmorCD:Start(6-delay, 1)
-	timerHurlSpearCD:Start(9.7-delay, 1)
-	timerBattleCryCD:Start(14.2-delay, 1)
+	timerHurlSpearCD:Start(8.7-delay, 1)
+	timerBattleCryCD:Start(12.3-delay, 1)
 	timerSavageMaulingCD:Start(13.3-delay, 1)
 end
 
