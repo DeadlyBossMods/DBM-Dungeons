@@ -10,11 +10,11 @@ mod:RegisterZoneCombat(2649)
 
 mod:RegisterEvents(
 	"SPELL_CAST_START 424621 424423 424431 448515 424462 424420 427484 427356 427601 444296 427609 462859 446776 448787 448485 448492 427897 427357 464240 448791 435156 444743 435165",
-	"SPELL_CAST_SUCCESS 453458 427484 427342 462859 427356 446776 424420 444728 424429 444743",
+	"SPELL_CAST_SUCCESS 453458 427484 427342 462859 427356 446776 424420 444728 424429 444743 448787",
 	"SPELL_INTERRUPT",
 	"SPELL_AURA_APPLIED 426964 424430 427621 444728 424419",
 	"SPELL_AURA_APPLIED_DOSE 426964 424419",
-	"SPELL_AURA_REMOVED 448787",
+	"SPELL_AURA_REMOVED 428150",
 	"UNIT_DIED"
 )
 --TODO, target scan lunging strike?
@@ -66,9 +66,9 @@ local timerGreaterHealCD					= mod:NewCDPNPTimer(21.8, 427356, nil, nil, nil, 4,
 local timerDefendCD							= mod:NewCDNPTimer(30.3, 427342, nil, nil, nil, 5)
 local timerImpaleCD							= mod:NewCDNPTimer(17, 444296, nil, nil, nil, 3)--17 unless delayed by disrupting shout
 local timerDisruptingShoutCD				= mod:NewCDNPTimer(23, 427609, nil, nil, nil, 2)
-local timerPotShotCD						= mod:NewCDNPTimer(12.1, 462859, nil, nil, nil, 3)
+local timerPotShotCD						= mod:NewCDNPTimer(12.1, 462859, nil, nil, nil, 3)--8.9
 local timerPounceCD							= mod:NewCDNPTimer(17, 446776, nil, nil, nil, 3)
-local timerPurificationCD					= mod:NewCDNPTimer(20, 448787, nil, nil, nil, 5)
+local timerPurificationCD					= mod:NewCDNPTimer(17, 448787, nil, nil, nil, 5)
 local timerShieldSlamCD						= mod:NewCDNPTimer(9.7, 448485, nil, nil, nil, 5)--9.7-13.8
 local timerThunderclapCD					= mod:NewCDNPTimer(15.8, 448492, nil, nil, nil, 2)
 local timerHeatWaveCD						= mod:NewCDNPTimer(18.2, 427897, nil, nil, nil, 2)
@@ -202,7 +202,6 @@ function mod:SPELL_CAST_START(args)
 			warnPounce:Play("crowdcontrol")
 		end
 	elseif spellId == 448787 then
-		timerPurificationCD:Start(nil, args.sourceGUID)
 		self:ScheduleMethod(0.1, "BossTargetScanner", args.sourceGUID, "Purtarget", 0.1, 4)
 	elseif spellId == 448485 then
 		timerShieldSlamCD:Start(nil, args.sourceGUID)
@@ -267,7 +266,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 			warnDefend:Play("crowdcontrol")
 		end
 	elseif spellId == 462859 then
-		timerPotShotCD:Start(10.1, args.sourceGUID)--12.1-2
+		timerPotShotCD:Start(8.9, args.sourceGUID)--10.9-2
 	elseif spellId == 427356 then
 		timerGreaterHealCD:Start(21.8, args.sourceGUID)
 	elseif spellId == 446776 then
@@ -279,7 +278,9 @@ function mod:SPELL_CAST_SUCCESS(args)
 	elseif spellId == 424429 then
 		timerConsecrationCD:Start(23, args.sourceGUID)
 	elseif spellId == 444743 then
-		timerFireballVolleyCD:Start(23.7, args.sourceGUID)
+		timerFireballVolleyCD:Start(22.4, args.sourceGUID)
+	elseif spellId == 448787 then
+		timerPurificationCD:Start(15, args.sourceGUID)
 	end
 end
 
@@ -291,7 +292,7 @@ function mod:SPELL_INTERRUPT(args)
 	elseif spellId == 424420 then
 		timerCinderblastCD:Start(15.6, args.destGUID)
 	elseif spellId == 444743 then
-		timerFireballVolleyCD:Start(23.7, args.destGUID)
+		timerFireballVolleyCD:Start(22.4, args.destGUID)
 	end
 end
 
@@ -327,7 +328,7 @@ mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED
 function mod:SPELL_AURA_REMOVED(args)
 	if not self.Options.Enabled then return end
 	local spellId = args.spellId
-	if spellId == 448787 then
+	if spellId == 428150 then
 		timerReflectiveShieldCD:Start(20.7, args.destGUID)
 	end
 end
@@ -401,14 +402,14 @@ function mod:StartEngageTimers(guid, cid, delay, uID)
 		timerDivineJudgementCD:Start(8.1-delay, guid)
 		timerHolyRadianceCD:Start(16.9, guid)--16.9-26.6
 	elseif cid == 206694 then--Fervent Sharpshooter
-		timerPotShotCD:Start(8-delay, guid)--Most definitely wrong
+		timerPotShotCD:Start(6.1-delay, guid)
 		timerCaltropsCD:Start(12.1-delay, guid)
 	elseif cid == 206698 then--Fanatical Conjurer
 		timerFlamestrikeCD:Start(10.4-delay, guid)
 --	elseif cid == 206705 then--Arathi Footman
 --		timerDefendCD:Start(0.5-delay, guid)--Likely has no initial timer, seems quite random. Could be health threshold check
 	elseif cid == 206696 then--Arathi Knight
-		timerImpaleCD:Start(4.8-delay, guid)
+		timerImpaleCD:Start(3.6-delay, guid)
 		timerDisruptingShoutCD:Start(20.6-delay, guid)
 	--elseif cid == 206697 then--Devout Priest
 	--	timerGreaterHealCD:Start(0.5-delay, guid)--Initila has health trigger
@@ -417,8 +418,8 @@ function mod:StartEngageTimers(guid, cid, delay, uID)
 	elseif cid == 206710 then--Lightspawn
 		timerPurificationCD:Start(6.6-delay, guid)
 	elseif cid == 212826 then--Guard Captain Suleyman
-		timerShieldSlamCD:Start(5-delay, guid)
-		timerThunderclapCD:Start(16-delay, guid)
+		timerShieldSlamCD:Start(4.2-delay, guid)
+		timerThunderclapCD:Start(15.8-delay, guid)
 	elseif cid == 212831 then--Forge Master Damian
 		timerHeatWaveCD:Start(12-delay, guid)
 	elseif cid == 212827 then--High Priest Aemya
@@ -429,7 +430,7 @@ function mod:StartEngageTimers(guid, cid, delay, uID)
 		timerConsecrationCD:Start(10-delay, guid)
 		timerSacredtollCD:Start(15.5-delay, guid)
 	elseif cid == 221760 then--Risen Mage
-		timerFireballVolleyCD:Start(11.1-delay, guid)
+		timerFireballVolleyCD:Start(8.3-delay, guid)
 	elseif cid == 217658 then--Sir Braunpyke
 		timerBlazingStrikeCD:Start(8.2-delay, guid)
 	end
