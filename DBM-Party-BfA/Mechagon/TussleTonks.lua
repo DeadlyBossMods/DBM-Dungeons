@@ -63,7 +63,7 @@ local yellFoeFlipper				= mod:NewYell(285153)
 
 local timerMaxThrustCD				= mod:NewCDCountTimer(35.2, 283565, nil, nil, nil, 3)
 local timerBattlemineCD				= mod:NewCDCountTimer(17.0, 1216431, nil, nil, nil, 3)
-local timerFoeFlipperCD				= mod:NewCDCountTimer(15.8, 285153, nil, nil, nil, 3)
+local timerFoeFlipperCD				= mod:NewCDCountTimer(15.4, 285153, nil, nil, nil, 3)
 
 mod.vb.platinumPlatingCastCount = 0
 mod.vb.platinumPummelCount = 0
@@ -101,7 +101,7 @@ function mod:OnCombatStart(delay)
 	self.vb.trustCount = 0
 	self.vb.mineCount = 0
 	self.vb.foeCount = 0
-	timerFoeFlipperCD:Start(5.8-delay, 1)
+	timerFoeFlipperCD:Start(5.2-delay, 1)
 	timerPlatinumPummelCD:Start(7-delay, 1)
 	timerBattlemineCD:Start(12.1-delay, 1)
 	timerGroundPoundCD:Start(13.1-delay, 1)
