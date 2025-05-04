@@ -151,7 +151,6 @@ function mod:SPELL_CAST_START(args)
 		end
 	elseif spellId == 1217279 then
 		self:ScheduleMethod(0.1, "BossTargetScanner", args.sourceGUID, "UppercutTarget", 0.1, 6)
-		timerUppercutCD:Start(nil, args.sourceGUID)
 	--elseif spellId == 267433 and self:AntiSpam(4, 1) then--IsValidWarning removed because it caused most activate mechs not to announce. re-add if it becomes problem
 	--	warnActivateMech:Show()
 	--elseif spellId == 263275 and self:IsValidWarning(args.sourceGUID) then
@@ -183,7 +182,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 	if spellId == 280604 then
 		timerIcedSpritzerCD:Start(21.5, args.sourceGUID)
 	elseif spellId == 268702 then
-		timerFuriousQuakeCD:Start(24.6, args.sourceGUID)
+		timerFuriousQuakeCD:Start(24.1, args.sourceGUID)
 	elseif spellId == 263215 then
 		timerTectonicBarrierCD:Start(20.9, args.sourceGUID)
 	elseif spellId == 268797 then
@@ -219,7 +218,7 @@ function mod:SPELL_INTERRUPT(args)
 	if args.extraSpellId == 280604 then
 		timerIcedSpritzerCD:Start(21.5, args.destGUID)
 	elseif args.extraSpellId == 268702 then
-		timerFuriousQuakeCD:Start(24.6, args.destGUID)
+		timerFuriousQuakeCD:Start(24.1, args.destGUID)
 	elseif args.extraSpellId == 263215 then
 		timerTectonicBarrierCD:Start(20.9, args.destGUID)
 	elseif args.extraSpellId == 268797 then
@@ -283,7 +282,7 @@ end
 --All timers subject to a ~0.5 second clipping due to ScanEngagedUnits
 function mod:StartEngageTimers(guid, cid, delay)
 	if cid == 134232 then--Hired Assassin
-		timerToxicBladesCD:Start(10-delay, guid)
+		timerToxicBladesCD:Start(9.8-delay, guid)
 		timerFanOfKnivesCD:Start(13.3-delay, guid)
 	elseif cid == 136470 then--Refreshment Vendor
 		timerIcedSpritzerCD:Start(10.9-delay, guid)
@@ -292,11 +291,11 @@ function mod:StartEngageTimers(guid, cid, delay)
 		timerFuriousQuakeCD:Start(11.8-delay, guid)
 	elseif cid == 133432 then--Venture Co. Alchemist
 		timerEnemyToGoosCD:Start(8.5-delay, guid)--8-15
-	elseif cid == 137029 then--Ordnance Specialist
-		timerArtilleryBarrageCD:Start(2-delay, guid)--Possibly even sooner
+--	elseif cid == 137029 then--Ordnance Specialist
+--		timerArtilleryBarrageCD:Start(1.5-delay, guid)--Used pretty much instantly on pull
 	elseif cid == 130435 then--Addled Thug
 		timerInhaleVaporsCD:Start(9.9-delay, guid)--3.6 (sus, it might have been caused by late detection)
-		timerUppercutCD:Start(17.6-delay, guid)--Iffy 9.5, these mobs fire affecting combat before they're actually affecting combat so initial timers can be glitchy
+		timerUppercutCD:Start(16.5-delay, guid)--Iffy 9.5, these mobs fire affecting combat before they're actually affecting combat so initial timers can be glitchy
 	elseif cid == 136139 then--Mechanized Peacekeeper
 		timerChargedShieldCD:Start(16.7-delay, guid)
 	elseif cid == 136643 then--Azerite Extractor
@@ -304,9 +303,9 @@ function mod:StartEngageTimers(guid, cid, delay)
 	elseif cid == 133430 then--Venture Co. Mastermind
 		timerBrainstormCD:Start(5.4-delay, guid)
 	elseif cid == 133463 then--Venture Co. War Machine
-		timerChargedShotCD:Start(8.5-delay, guid)
+		timerChargedShotCD:Start(6.9-delay, guid)
 	elseif cid == 134012 then--Taskmaster Askari
-		timerOvertimeCD:Start(8.1-delay, guid)
+		timerOvertimeCD:Start(6.9-delay, guid)
 		timerBrutalChargeCD:Start(10-delay, guid)
 	end
 end

@@ -434,10 +434,10 @@ function mod:StartEngageTimers(guid, cid, delay)
 	elseif cid == 151657 then--Bomb Tonk
 		timerDetonateCD:Start(9.8-delay, guid)
 	elseif cid == 144293 then--Waste Processing Unit
-		timerPunctureCD:Start(10-delay, guid)
+		timerPunctureCD:Start(7.1-delay, guid)
 		timerMegaDrillCD:Start(13.1-delay, guid)
 	elseif cid == 151773 then--Junkyard D.0.G.
-		timerFieryJawsCD:Start(10-delay, guid)
+		timerFieryJawsCD:Start(8.9-delay, guid)
 	elseif cid == 144296 then--Spider Tank
 		timerSonicPulseCD:Start(6-delay, guid)
 	elseif cid == 151476 then--Blastatron X-80

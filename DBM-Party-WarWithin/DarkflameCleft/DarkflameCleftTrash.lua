@@ -72,7 +72,7 @@ local timerMassiveStompCD					= mod:NewCDNPTimer(18.2, 1218117, nil, nil, nil, 2
 local timerDrainLightCD						= mod:NewCDPNPTimer(16.2, 422541, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 --local timerShadowSmashCD					= mod:NewCDPNPTimer(12, 422414, nil, nil, nil, 3)
 local timerExplosiveFlameCD					= mod:NewCDPNPTimer(22.8, 424322, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--Possibly even higher CD
-local timerFlashPointCD						= mod:NewCDNPTimer(14.1, 428019, nil, nil, nil, 5)
+local timerFlashPointCD						= mod:NewCDNPTimer(13.6, 428019, nil, nil, nil, 5)
 local timerBurningCandlesCD					= mod:NewCDNPTimer(17, 1218131, nil, nil, nil, 3)
 
 --local playerName = UnitName("player")
@@ -284,17 +284,17 @@ function mod:StartEngageTimers(guid, cid, delay)
 	if cid == 210818 then--Lowly Moleherd
 		timerMoleFrenzyCD:Start(5.9-delay, guid)
 	elseif cid == 211121 then--Rank Overseeer
-		timerWildWallopCD:Start(9.5-delay, guid)--9.5-14.5
+		timerWildWallopCD:Start(8.8-delay, guid)--8.8-14.5
 		timerOverpoweringRoarCD:Start(10.2-delay, guid)--10.2-14.5
 	elseif cid == 208450 then--Wandering Candle
-		timerQuenchingBlastCD:Start(6.9-delay, guid)
-		timerSurgingFlameCD:Start(12.2-delay, guid)
+		timerQuenchingBlastCD:Start(4.7-delay, guid)
+		timerSurgingFlameCD:Start(10.7-delay, guid)
 	elseif cid == 212383 then--Kobold Taskworker
 		timerBonkCD:Start(4.2-delay, guid)
 	elseif cid == 212412 then--Sootsnout
 		timerCeaselessFlameCD:Start(7.4-delay, guid)
-		timerBurningCandlesCD:Start(15.5-delay, guid)
-		timerFlamingTetherCD:Start(24-delay, guid)
+		timerBurningCandlesCD:Start(9.9-delay, guid)
+		timerFlamingTetherCD:Start(22.6-delay, guid)
 	elseif cid == 212411 then--Torchsnarl
 --		timerOHHeadlockCD:Start(2-delay, guid)--Used near instantly
 		timerMassiveStompCD:Start(5.0-delay, guid)
@@ -304,7 +304,7 @@ function mod:StartEngageTimers(guid, cid, delay)
 	--elseif cid == 211228 or cid == 220815 or cid == 223770 or cid == 223772 or cid == 223773 or cid == 223774 or cid == 223775 or cid == 223776 or cid == 223777 then--Blazing Fiend
 	--	timerExplosiveFlameCD:Start(20.4-delay, guid)--Used instantly on engage, no initial CD
 	elseif cid == 210812 then--Royal Wicklighter
-		timerFlashPointCD:Start(6.7-delay, guid)
+		timerFlashPointCD:Start(5.7-delay, guid)
 	end
 end
 

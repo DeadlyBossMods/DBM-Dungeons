@@ -54,7 +54,7 @@ function mod:OnCombatStart(delay)
 	self.vb.magnetCount = 0
 	timerStaticPulseCD:Start(6.2-delay, 1)
 	timerFootbombLauncherCD:Start(19.3-delay, 1)
-	timerShockingClawCD:Start(30.4-delay, 1)
+	timerShockingClawCD:Start(30.1-delay, 1)
 	if not self:IsNormal() then
 		timerThrowCoinsCD:Start(12.2-delay, 1)
 	end
