@@ -147,7 +147,6 @@ function mod:SPELL_CAST_START(args)
 		self:ScheduleMethod(0.1, "BossTargetScanner", args.sourceGUID, "CinderbrewTarget", 0.1, 6)
 		timerCinderbrewTossCD:Start(nil, args.sourceGUID)
 	elseif spellId == 434756 then
-		timerThrowChairCD:Start(nil, args.sourceGUID)
 		self:ScheduleMethod(0.1, "BossTargetScanner", args.sourceGUID, "ThrowChair", 0.1, 6)
 	elseif spellId == 437721 then
 		if self:CheckInterruptFilter(args.sourceGUID, false, true) then
@@ -231,7 +230,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 	elseif spellId == 441214 then
 		timerSpillDrinkCD:Start(20, args.sourceGUID)
 	elseif spellId == 441434 then
-		timerFailedBatchCD:Start(22.8, args.sourceGUID)
+		timerFailedBatchCD:Start(22, args.sourceGUID)
 		if self:AntiSpam(3, 6) then
 			specWarnFailedBatch:Show()
 			specWarnFailedBatch:Play("targetchange")
@@ -258,6 +257,8 @@ function mod:SPELL_CAST_SUCCESS(args)
 			specWarnRainOfHoney:Show()
 			specWarnRainOfHoney:Play("watchstep")
 		end
+	elseif spellId == 434756 then
+		timerThrowChairCD:Start(nil, args.sourceGUID)
 	end
 end
 
@@ -347,7 +348,7 @@ end
 --All timers subject to a ~0.5 second clipping due to ScanEngagedUnits
 function mod:StartEngageTimers(guid, cid, delay)
 	if cid == 218671 then--Venture Co Pyromaniac
-		timerEruptingInfernoCD:Start(6.9-delay, guid)
+		timerEruptingInfernoCD:Start(6.6-delay, guid)
 		timerBoilingFlamesCD:Start(10.7-delay, guid)
 	elseif cid == 210269 then--Hired Muscle
 		timerVolatileKegCD:Start(8.1-delay, guid)
@@ -358,7 +359,7 @@ function mod:StartEngageTimers(guid, cid, delay)
 		timerTenderizeCD:Start(8.2-delay, guid)
 		timerHighSteaksCD:Start(12.3-delay, guid)
 	elseif cid == 223423 then--Careless Hobgoblin
-		timerRecklessDeliveryCD:Start(9.1-delay, guid)
+		timerRecklessDeliveryCD:Start(8.7-delay, guid)
 	elseif cid == 222964 then--Flavor Scientist
 		timerFailedBatchCD:Start(8.5-delay, guid)
 		timerRejuvenatingHoneyCD:Start(14.5-delay, guid)--Super iffy, most heals don't have initial CDs just initial threshold of health
