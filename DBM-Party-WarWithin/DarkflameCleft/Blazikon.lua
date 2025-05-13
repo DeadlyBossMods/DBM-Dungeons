@@ -39,11 +39,11 @@ local specWarnInciteFlames					= mod:NewSpecialWarningCount(424212, nil, nil, ni
 --local yellExtinguishingGust				= mod:NewShortYell(429113)
 --local specWarnGTFO						= mod:NewSpecialWarningGTFO(372820, nil, nil, nil, 1, 8)
 
-local timerWicklighterBarrageCD				= mod:NewNextCountTimer(60.7, 421817, nil, nil, nil, 3)
-local timerInciteFlamesCD					= mod:NewNextCountTimer(60.7, 424212, nil, nil, nil, 2)
-local timerExtinguishingGustCD				= mod:NewNextCountTimer(60.7, 421910, nil, nil, nil, 3, nil, DBM_COMMON_L.MYTHIC_ICON)
+local timerWicklighterBarrageCD				= mod:NewNextCountTimer(60.3, 421817, nil, nil, nil, 3)
+local timerInciteFlamesCD					= mod:NewNextCountTimer(60.3, 424212, nil, nil, nil, 2)
+local timerExtinguishingGustCD				= mod:NewNextCountTimer(60.3, 421910, nil, nil, nil, 3, nil, DBM_COMMON_L.MYTHIC_ICON)
 local timerEnkindlingInfernoCD				= mod:NewNextCountTimer(30.3, 423109, nil, nil, nil, 2)
-local timerDousingBreathCD					= mod:NewNextCountTimer(60.7, 425394, nil, nil, nil, 2)
+local timerDousingBreathCD					= mod:NewNextCountTimer(60.3, 425394, nil, nil, nil, 2)
 
 mod:AddSetIconOption("IconOnWick", 421817, true, 0, {1, 2, 3})
 mod:AddPrivateAuraSoundOption(423080, true, 429113, 1)
