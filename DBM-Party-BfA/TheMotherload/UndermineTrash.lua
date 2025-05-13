@@ -49,7 +49,7 @@ local specWarnTectonicBarrierDispel			= mod:NewSpecialWarningDispel(263215, "Mag
 local specWarnEnemyToGoo					= mod:NewSpecialWarningInterrupt(268797, "HasInterrupt", nil, nil, 1, 2)--High Prio
 
 local timerFanOfKnivesCD					= mod:NewCDNPTimer(20.6, 267354, nil, nil, nil, 3)
-local timerIcedSpritzerCD					= mod:NewCDPNPTimer(24.4, 280604, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerIcedSpritzerCD					= mod:NewCDPNPTimer(24.0, 280604, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerFuriousQuakeCD					= mod:NewCDNPTimer(24.6, 268702, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--Small sample, need more data
 local timerTectonicBarrierCD				= mod:NewCDNPTimer(20.9, 263215, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--19.3-21.3?
 local timerEnemyToGoosCD					= mod:NewCDPNPTimer(24.2, 268797, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
@@ -78,6 +78,8 @@ local timerUppercutCD						= mod:NewCDNPTimer(20.3, 1217280, nil, nil, nil, 3)
 --local specWarnOverchargeDispel			= mod:NewSpecialWarningDispel(262540, "MagicDispeller", nil, nil, 1, 2)
 
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc, 7 GTFO
+
+local annoyingCasts = {}
 
 function mod:UppercutTarget(targetname)
 	if not targetname then return end
@@ -180,7 +182,10 @@ function mod:SPELL_CAST_SUCCESS(args)
 	if not self.Options.Enabled then return end
 	local spellId = args.spellId
 	if spellId == 280604 then
-		timerIcedSpritzerCD:Start(21.5, args.sourceGUID)
+		if not annoyingCasts[args.sourceGUID] then
+			annoyingCasts[args.sourceGUID] = true
+			timerIcedSpritzerCD:Start(21.5, args.sourceGUID)
+		end
 	elseif spellId == 268702 then
 		timerFuriousQuakeCD:Start(24.1, args.sourceGUID)
 	elseif spellId == 263215 then
@@ -216,7 +221,10 @@ function mod:SPELL_INTERRUPT(args)
 	if not self.Options.Enabled then return end
 	if type(args.extraSpellId) ~= "number" then return end
 	if args.extraSpellId == 280604 then
-		timerIcedSpritzerCD:Start(21.5, args.destGUID)
+		if not annoyingCasts[args.destGUID] then
+			annoyingCasts[args.destGUID] = true
+			timerIcedSpritzerCD:Start(21.5, args.destGUID)
+		end
 	elseif args.extraSpellId == 268702 then
 		timerFuriousQuakeCD:Start(24.1, args.destGUID)
 	elseif args.extraSpellId == 263215 then
@@ -255,6 +263,7 @@ function mod:UNIT_DIED(args)
 		timerToxicBladesCD:Stop(args.destGUID)
 	elseif cid == 136470 then--Refreshment Vendor
 		timerIcedSpritzerCD:Stop(args.destGUID)
+		annoyingCasts[args.destGUID] = nil
 	elseif cid == 130635 then--Stonefury
 		timerFuriousQuakeCD:Stop(args.destGUID)
 		timerTectonicBarrierCD:Stop(args.destGUID)

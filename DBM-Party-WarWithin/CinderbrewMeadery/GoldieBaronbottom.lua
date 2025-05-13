@@ -51,7 +51,7 @@ local timerLetItHailCD						= mod:NewNextCountTimer(55.5, 435622, nil, nil, nil,
 local timerCinderWounds						= mod:NewBuffFadesTimer(33.9, 435789, nil, nil, nil, 5, nil, DBM_COMMON_L.MAGIC_ICON)
 local timerSpreadtheLoveCD					= mod:NewNextCountTimer(55.2, 435560, nil, nil, nil, 5)
 local timerBurningRicochetCD				= mod:NewNextCountTimer(13.3, 436644, nil, nil, nil, 3)
-local timerCashCannonCD						= mod:NewNextCountTimer(13.3, 436592, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+local timerCashCannonCD						= mod:NewCDCountTimer(12.5, 436592, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerRP								= mod:NewRPTimer(9)
 
 mod:AddSetIconOption("SetIconOnRico", 436644, true, 0, {1, 2})
@@ -74,7 +74,7 @@ function mod:OnCombatStart(delay)
 	self.vb.cannonCount = 0
 --	timerSpreadtheLoveCD:Start(1)--Instantly on Pull
 	timerCashCannonCD:Start(8.1, 1)
-	timerBurningRicochetCD:Start(17, 1)
+	timerBurningRicochetCD:Start(16.6, 1)
 	timerLetItHailCD:Start(40.8, 1)
 end
 

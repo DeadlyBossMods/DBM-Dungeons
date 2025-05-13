@@ -1,4 +1,3 @@
-if DBM:GetTOC() < 110100 then return end
 local mod	= DBM:NewMod("z2815", "DBM-Delves-WarWithin")
 local L		= mod:GetLocalizedStrings()
 

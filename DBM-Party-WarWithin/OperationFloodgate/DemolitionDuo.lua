@@ -1,4 +1,3 @@
-if DBM:GetTOC() < 110100 then return end
 local mod	= DBM:NewMod(2649, "DBM-Party-WarWithin", 9, 1298)
 local L		= mod:GetLocalizedStrings()
 
@@ -61,7 +60,7 @@ local specWarnWallop						= mod:NewSpecialWarningDefensive(459799, nil, nil, nil
 local yellWallop							= mod:NewShortYell(459799)
 
 local timerChargeCD							= mod:NewVarCountTimer(33.9, 470022, nil, nil, nil, 3)
-local timerWallopCD							= mod:NewVarCountTimer("v17-28", 459799, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+local timerWallopCD							= mod:NewVarCountTimer("v17-32.8", 459799, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 
 --mod.vb.bombCount = 0
 mod.vb.bombCastCount = 0
