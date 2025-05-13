@@ -33,7 +33,7 @@ local specWarnDiscomBomb			= mod:NewSpecialWarningDispel(285454, "RemoveMagic", 
 local timerDiscomBombCD				= mod:NewNextCountTimer(20.6, 285454, nil, nil, nil, 3)
 local timerFlameCannonCD			= mod:NewCDCountTimer(47.4, 285440, nil, nil, nil, 2)
 local timerSelfTrimmingHedgeCD		= mod:NewCDCountTimer(25.5, 294954, nil, nil, nil, 3)
-local timerPlantCD					= mod:NewVarCountTimer("v46.1-48.7", 294853, nil, nil, nil, 1)
+local timerPlantCD					= mod:NewVarCountTimer("v46.1-49.7", 294853, nil, nil, nil, 1)
 
 mod.vb.bombCount = 0
 mod.vb.cannonCount = 0
