@@ -96,7 +96,7 @@ function mod:OnCombatStart(delay)
 	self.vb.sonicCount = 0
 	self.vb.barrierCount = 0
 	timerElectrocrushCD:Start(6-delay, 1)
-	timerSonicBoomCD:Start(15.7-delay, 1)
+	timerSonicBoomCD:Start(15.4-delay, 1)
 	timerBarrierCD:Start(51-delay, 1)
 end
 
