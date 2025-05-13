@@ -402,7 +402,7 @@ function mod:StartEngageTimers(guid, cid, delay, uID)
 		timerDivineJudgementCD:Start(8.1-delay, guid)
 		timerHolyRadianceCD:Start(16.9, guid)--16.9-26.6
 	elseif cid == 206694 then--Fervent Sharpshooter
-		timerPotShotCD:Start(6.1-delay, guid)
+		timerPotShotCD:Start(4.8-delay, guid)
 		timerCaltropsCD:Start(12.1-delay, guid)
 	elseif cid == 206698 then--Fanatical Conjurer
 		timerFlamestrikeCD:Start(10.4-delay, guid)
@@ -410,7 +410,7 @@ function mod:StartEngageTimers(guid, cid, delay, uID)
 --		timerDefendCD:Start(0.5-delay, guid)--Likely has no initial timer, seems quite random. Could be health threshold check
 	elseif cid == 206696 then--Arathi Knight
 		timerImpaleCD:Start(3.6-delay, guid)
-		timerDisruptingShoutCD:Start(20.6-delay, guid)
+		timerDisruptingShoutCD:Start(19.5-delay, guid)
 	--elseif cid == 206697 then--Devout Priest
 	--	timerGreaterHealCD:Start(0.5-delay, guid)--Initila has health trigger
 	elseif cid == 206699 then--War Lynx
@@ -418,7 +418,7 @@ function mod:StartEngageTimers(guid, cid, delay, uID)
 	elseif cid == 206710 then--Lightspawn
 		timerPurificationCD:Start(6.6-delay, guid)
 	elseif cid == 212826 then--Guard Captain Suleyman
-		timerShieldSlamCD:Start(4.2-delay, guid)
+		timerShieldSlamCD:Start(3.6-delay, guid)
 		timerThunderclapCD:Start(15.8-delay, guid)
 	elseif cid == 212831 then--Forge Master Damian
 		timerHeatWaveCD:Start(12-delay, guid)

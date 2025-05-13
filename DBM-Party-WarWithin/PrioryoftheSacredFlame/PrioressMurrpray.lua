@@ -66,7 +66,7 @@ function mod:OnCombatStart(delay)
 	self.vb.holySmiteCount = 0
 	self.vb.blindingCount = 0
 	timerHolyFlameCD:Start(7-delay, 1)--7-8.1 (but can also sometimes not get cast at all for 45 seconds
-	timerPurifyingLightCD:Start(10.5-delay, 1)--10.5
+	timerPurifyingLightCD:Start(10-delay, 1)--10.5
 	timerInnerFireCD:Start("v15.5-19.4", 1)--15.5-19
 	if self:IsMythic() then
 		timerBlindingLightCD:Start(13.6-delay, 1)
