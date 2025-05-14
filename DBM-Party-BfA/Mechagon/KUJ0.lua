@@ -34,7 +34,7 @@ local specWarnVentingFlames			= mod:NewSpecialWarningMoveTo(291946, nil, nil, ni
 local timerAurDropCD				= mod:NewNextCountTimer(32.7, 291930, nil, nil, nil, 3)
 local timerExplosiveLeapCD			= mod:NewNextCountTimer(34, 291972, nil, nil, nil, 3)
 local timerVentingFlamesCD			= mod:NewCDCountTimer(13.4, 291946, nil, nil, nil, 2, nil, DBM_COMMON_L.DEADLY_ICON)
-local timerBlazingChompCD			= mod:NewVarCountTimer("v15.8-34", 294929, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+local timerBlazingChompCD			= mod:NewVarCountTimer("v15.4-34", 294929, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 
 mod.vb.airDropCount = 0
 mod.vb.leapCount = 0
@@ -46,10 +46,10 @@ function mod:OnCombatStart(delay)
 	self.vb.leapCount = 0
 	self.vb.flamesCount = 0
 	self.vb.chompCount = 0
-	timerAurDropCD:Start("v5.8-9.2", 1)--SUCCESS
+	timerAurDropCD:Start("v5-9.2", 1)--SUCCESS
 	timerBlazingChompCD:Start(10.6-delay, 1)--SUCCESS
 	timerVentingFlamesCD:Start(15.5-delay, 1)--START
-	timerExplosiveLeapCD:Start(38.6-delay, 1)--START
+	timerExplosiveLeapCD:Start(36.6-delay, 1)--START
 end
 
 function mod:SPELL_CAST_START(args)
@@ -75,7 +75,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 		warnAirDrop:Show(self.vb.airDropCount)
 		--7.2, 26.3, 34.0, 34.0, 34.0
 		--"Air Drop-291922-npc:144246-0000322FAF = pull:6.1, 26.4, 34.0, 34.0, 34.0",
-		timerAurDropCD:Start(self.vb.airDropCount == 1 and 26.3 or 34)
+		timerAurDropCD:Start(self.vb.airDropCount == 1 and 26.3 or 32.6)
 	elseif spellId == 294929 then
 		self.vb.chompCount = self.vb.chompCount + 1
 		--10.7, 18.2, 18.2, 17.0, 17.0, 15.8

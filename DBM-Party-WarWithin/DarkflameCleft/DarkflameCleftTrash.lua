@@ -284,7 +284,7 @@ function mod:StartEngageTimers(guid, cid, delay)
 	if cid == 210818 then--Lowly Moleherd
 		timerMoleFrenzyCD:Start(5.9-delay, guid)
 	elseif cid == 211121 then--Rank Overseeer
-		timerWildWallopCD:Start(8.8-delay, guid)--8.8-14.5
+		timerWildWallopCD:Start(8.4-delay, guid)--8.8-14.5
 		timerOverpoweringRoarCD:Start(10.2-delay, guid)--10.2-14.5
 	elseif cid == 208450 then--Wandering Candle
 		timerQuenchingBlastCD:Start(4.7-delay, guid)
@@ -292,9 +292,9 @@ function mod:StartEngageTimers(guid, cid, delay)
 	elseif cid == 212383 then--Kobold Taskworker
 		timerBonkCD:Start(4.2-delay, guid)
 	elseif cid == 212412 then--Sootsnout
-		timerCeaselessFlameCD:Start(7.4-delay, guid)
+		timerCeaselessFlameCD:Start(6.2-delay, guid)
 		timerBurningCandlesCD:Start(9.9-delay, guid)
-		timerFlamingTetherCD:Start(22.6-delay, guid)
+		timerFlamingTetherCD:Start(21.5-delay, guid)
 	elseif cid == 212411 then--Torchsnarl
 --		timerOHHeadlockCD:Start(2-delay, guid)--Used near instantly
 		timerMassiveStompCD:Start(5.0-delay, guid)
@@ -304,7 +304,7 @@ function mod:StartEngageTimers(guid, cid, delay)
 	--elseif cid == 211228 or cid == 220815 or cid == 223770 or cid == 223772 or cid == 223773 or cid == 223774 or cid == 223775 or cid == 223776 or cid == 223777 then--Blazing Fiend
 	--	timerExplosiveFlameCD:Start(20.4-delay, guid)--Used instantly on engage, no initial CD
 	elseif cid == 210812 then--Royal Wicklighter
-		timerFlashPointCD:Start(5.7-delay, guid)
+		timerFlashPointCD:Start(3.7-delay, guid)
 	end
 end
 

@@ -45,7 +45,7 @@ local specWarnDrainLight					= mod:NewSpecialWarningInterrupt(427176, "HasInterr
 --local specWarnGTFO						= mod:NewSpecialWarningGTFO(372820, nil, nil, nil, 1, 8)
 
 local timerEternalDarknessCD				= mod:NewCDCountTimer(63.1, 428266, nil, nil, nil, 2, nil, DBM_COMMON_L.MAGIC_ICON)
-local timerCallDarkspawnCD					= mod:NewVarCountTimer("v46.2-51.8", 427157, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerCallDarkspawnCD					= mod:NewVarCountTimer("v46.2-52.1", 427157, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerUmbralSlashCD					= mod:NewVarCountTimer("v30.3-34", 427025, nil, nil, nil, 3)
 local timerShadowblastCD					= mod:NewVarCountTimer("v30.3-34", 427011, nil, nil, nil, 3)
 

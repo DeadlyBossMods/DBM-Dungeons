@@ -48,10 +48,10 @@ local specWarnHardMode				= mod:NewSpecialWarningCount(292750, nil, nil, nil, 3,
 --Stage One: Aerial Unit R-21/X
 local timerRecalibrateCD			= mod:NewVarCountTimer("v12.2-20.6", 291865, nil, nil, nil, 3)
 local timerMegaZapCD				= mod:NewCDCountTimer(15.8, 291928, nil, nil, nil, 3)
-local timerTakeOffCD				= mod:NewCDCountTimer(35.2, 291613, nil, nil, nil, 6)
+local timerTakeOffCD				= mod:NewVarCountTimer(34, 291613, nil, nil, nil, 6)
 local timerCuttingBeam				= mod:NewCastTimer(6, 291626, nil, nil, nil, 3)
 --Stage Two: Omega Buster
-local timerMagnetoArmCD				= mod:NewCDCountTimer(61.9, 283143, nil, nil, nil, 2)
+local timerMagnetoArmCD				= mod:NewCDCountTimer(61.1, 283143, nil, nil, nil, 2)
 local timerHardModeCD				= mod:NewCDCountTimer(42.5, 292750, nil, nil, nil, 5, nil, DBM_COMMON_L.MYTHIC_ICON)--42.5-46.1
 
 mod.vb.recalibrateCount = 0
@@ -84,7 +84,7 @@ function mod:OnCombatStart(delay)
 	self.vb.hardModeCount = 0
 	timerRecalibrateCD:Start(4.8-delay, 1)
 	timerMegaZapCD:Start(8.3-delay, 1)--8.3-9.7
-	timerTakeOffCD:Start("v30.2-35.2", 1)
+	timerTakeOffCD:Start("v30.2-36.4", 1)
 end
 
 function mod:SPELL_CAST_START(args)
@@ -108,7 +108,7 @@ function mod:SPELL_CAST_START(args)
 				timerMegaZapCD:Start(3.5, self.vb.zapCount+1)
 			end
 		else--Stage 1
-			timerMegaZapCD:Start(15.8, self.vb.zapCount+1)--15-20, but not sequencable enough because it differs pull from pull
+			timerMegaZapCD:Start(15.4, self.vb.zapCount+1)--15-20, but not sequencable enough because it differs pull from pull
 			--"Mega-Zap-291928-npc:150396-0000322FAF = pull:9.9, 15.4, 18.1, 16.3, 20.6, 15.5, 19.9", --TWW S2. We do timer correction with take off
 		end
 		self:ScheduleMethod(0.1, "BossTargetScanner", args.sourceGUID, "ZapTarget", 0.1, 7, true)
