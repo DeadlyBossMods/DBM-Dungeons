@@ -97,9 +97,9 @@ function mod:SPELL_CAST_START(args)
 		self.vb.wildCount = self.vb.wildCount + 1
 		specWarnWildLightning:Show(self.vb.wildCount)
 		specWarnWildLightning:Play("watchstep")
-		--"Wild Lightning-474018-npc:209230-000034D362 = pull:9.4, 42.5, 15.8, 40.1, 15.8",
+		--"Wild Lightning-474018-npc:209230-000034D362 = pull:9.4, 42.1, 15.8, 40.1, 15.8",
 		if self.vb.wildCount == 1 then
-			timerWildLightningCD:Start(42.5, 2)
+			timerWildLightningCD:Start(42.1, 2)
 		elseif self.vb.wildCount % 2 == 0 then
 			timerWildLightningCD:Start(15.8, self.vb.wildCount+1)
 		else

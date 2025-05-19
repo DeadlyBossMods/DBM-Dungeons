@@ -54,9 +54,9 @@ local yellStormridersChargeFades		= mod:NewShortFadesYell(458082)
 local specWarnGTFO						= mod:NewSpecialWarningGTFO(433067, nil, nil, nil, 1, 8)
 
 local timerNullUpheavalCD				= mod:NewVarCountTimer("v29.8-40.8", 423305, nil, nil, nil, 3)
-local timerUnleashedCorruptionCD		= mod:NewVarCountTimer("v17.0-25.2", 429487, nil, nil, nil, 3)
-local timerOblivionWaveCD				= mod:NewVarCountTimer("v13.4-20", 445457, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
-local timerStormridersChargeCD			= mod:NewVarCountTimer("v32.8-40.7", 458082, nil, nil, nil, 3)
+local timerUnleashedCorruptionCD		= mod:NewVarCountTimer("v17.0-26.3", 429487, nil, nil, nil, 3)
+local timerOblivionWaveCD				= mod:NewVarCountTimer("v13.4-21.2", 445457, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+local timerStormridersChargeCD			= mod:NewVarCountTimer("v32.8-41.9", 458082, nil, nil, nil, 3)
 local timerVengeanceActive				= mod:NewBuffActiveTimer(20, 423839, nil, nil, nil, 6)
 
 mod:AddInfoFrameOption(445262)

@@ -35,8 +35,8 @@ local specWarnDarkGravity					= mod:NewSpecialWarningRunCount(425048, nil, nil, 
 local specWarnCrushReality					= mod:NewSpecialWarningDodgeCount(424958, nil, nil, nil, 2, 2)
 local specWarnGTFO							= mod:NewSpecialWarningGTFO(424966, nil, nil, nil, 1, 8)
 
-local timerChaoticCorruptionCD				= mod:NewCDCountTimer(32.3, 424737, nil, nil, nil, 3)
-local timerDarkGravityCD					= mod:NewCDCountTimer(32.3, 425048, nil, nil, nil, 2)
+local timerChaoticCorruptionCD				= mod:NewCDCountTimer(32, 424737, nil, nil, nil, 3)
+local timerDarkGravityCD					= mod:NewCDCountTimer(32, 425048, nil, nil, nil, 2)
 local timerCrushRealityCD					= mod:NewCDCountTimer(15.7, 424958, nil, nil, nil, 3)
 
 mod:AddInfoFrameOption(424797)

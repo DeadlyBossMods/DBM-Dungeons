@@ -60,7 +60,7 @@ local specWarnMeatShield					= mod:NewSpecialWarningInterrupt(341977, "HasInterr
 
 local timerSoulstormCD						= mod:NewCDNPTimer(26.7, 330716, nil, nil, nil, 2, nil, DBM_COMMON_L.HEALER_ICON)
 local timerVileEruptionCD					= mod:NewCDNPTimer(15.4, 330614, nil, nil, nil, 3)--15.4-16.2
-local timerDeathwindsCD						= mod:NewCDNPTimer(8.4, 333294, nil, nil, nil, 3)
+local timerDeathwindsCD						= mod:NewCDNPTimer(8.1, 333294, nil, nil, nil, 3)
 local timerBoneSpikesCD						= mod:NewCDNPTimer(33.6, 331237, nil, nil, nil, 3)
 local timerRicochetingBladeCD				= mod:NewCDNPTimer(12.1, 333861, nil, nil, nil, 3)--12.1 for Harugia the Bloodthirsty,
 local timerWhirlwindCD						= mod:NewCDNPTimer(26.7, 317605, nil, nil, nil, 3)
@@ -361,18 +361,18 @@ function mod:StartEngageTimers(guid, cid, delay)
 	elseif cid == 162744 then--Nekthara the Mangler
 		timerWhirlingBladeCD:Start(4-delay, guid)
 		timerInterruptingRoarCD:Start(6.8-delay, guid)
-		timerColossalSmashCD:Start(12.4-delay, guid)
+		timerColossalSmashCD:Start(12.1-delay, guid)
 	elseif cid == 167534 then--Rek the Hardened
 		--Swift Strikes (2.4)
 		timerWhirlwindCD:Start(6.1-delay, guid)
 		timerUnbalancingBlowCD:Start(11-delay, guid)
 	--End Minibosses
 	elseif cid == 170850 then--Raging Bloodhorn
-		timerRagingTantrumCD:Start(8.5-delay, guid)
+		timerRagingTantrumCD:Start(7.4-delay, guid)
 	elseif cid == 174210 then--Blighted Sludge-Spewer
 		timerWitheringDischargeCD:Start(9-delay, guid)
 	elseif cid == 160495 then--Maniacal Soulbinder
-		timerNecroticBoltVolleyCD:Start(12-delay, guid)
+		timerNecroticBoltVolleyCD:Start(11-delay, guid)
 --	elseif cid == 170882 then--Bone Magus
 --		timerBoneSpearCD:Start(11-delay, guid)
 --	elseif cid == 170690 then--Diseased Horror
@@ -380,7 +380,7 @@ function mod:StartEngageTimers(guid, cid, delay)
 	elseif cid == 164506 then--Ancient Captain
 		timerDemoralizingShoutCD:Start(4.4-delay, guid)
 	elseif cid == 169875 then--Shackled Soul
-		timerBindSoulCD:Start(9.7-delay, guid)
+		timerBindSoulCD:Start(8.5-delay, guid)
 --	elseif cid == 169927 then--Putrid Butcher
 --		timerDevourFleshCD:Start(20.1-delay, guid)
 	end
