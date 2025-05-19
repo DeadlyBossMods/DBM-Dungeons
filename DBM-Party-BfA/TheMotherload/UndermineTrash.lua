@@ -187,7 +187,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 			timerIcedSpritzerCD:Start(21.5, args.sourceGUID)
 		end
 	elseif spellId == 268702 then
-		timerFuriousQuakeCD:Start(24.1, args.sourceGUID)
+		timerFuriousQuakeCD:Start(22.7, args.sourceGUID)
 	elseif spellId == 263215 then
 		timerTectonicBarrierCD:Start(20.9, args.sourceGUID)
 	elseif spellId == 268797 then
@@ -199,7 +199,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 			specWarnArtilleryBarrage:Play("watchstep")
 		end
 	elseif spellId == 269302 then
-		timerToxicBladesCD:Start(27.8, args.sourceGUID)
+		timerToxicBladesCD:Start(25.7, args.sourceGUID)
 	elseif spellId == 1213893 then
 		warnActivateMech:Show()
 	elseif spellId == 473168 then
@@ -226,13 +226,13 @@ function mod:SPELL_INTERRUPT(args)
 			timerIcedSpritzerCD:Start(21.5, args.destGUID)
 		end
 	elseif args.extraSpellId == 268702 then
-		timerFuriousQuakeCD:Start(24.1, args.destGUID)
+		timerFuriousQuakeCD:Start(22.7, args.destGUID)
 	elseif args.extraSpellId == 263215 then
 		timerTectonicBarrierCD:Start(20.9, args.destGUID)
 	elseif args.extraSpellId == 268797 then
 		timerEnemyToGoosCD:Start(24.2, args.destGUID)
 	elseif args.extraSpellId == 269302 then
-		timerToxicBladesCD:Start(27.8, args.destGUID)
+		timerToxicBladesCD:Start(25.7, args.destGUID)
 	end
 end
 
@@ -291,15 +291,15 @@ end
 --All timers subject to a ~0.5 second clipping due to ScanEngagedUnits
 function mod:StartEngageTimers(guid, cid, delay)
 	if cid == 134232 then--Hired Assassin
-		timerToxicBladesCD:Start(9.8-delay, guid)
+		timerToxicBladesCD:Start(9.6-delay, guid)
 		timerFanOfKnivesCD:Start(13.3-delay, guid)
 	elseif cid == 136470 then--Refreshment Vendor
 		timerIcedSpritzerCD:Start(10.9-delay, guid)
 	elseif cid == 130635 then--Stonefury
 		timerTectonicBarrierCD:Start(5-delay, guid)
-		timerFuriousQuakeCD:Start(11.8-delay, guid)
+		timerFuriousQuakeCD:Start(11.3-delay, guid)
 	elseif cid == 133432 then--Venture Co. Alchemist
-		timerEnemyToGoosCD:Start(8.5-delay, guid)--8-15
+		timerEnemyToGoosCD:Start(7.9-delay, guid)--7.9-15
 --	elseif cid == 137029 then--Ordnance Specialist
 --		timerArtilleryBarrageCD:Start(1.5-delay, guid)--Used pretty much instantly on pull
 	elseif cid == 130435 then--Addled Thug
