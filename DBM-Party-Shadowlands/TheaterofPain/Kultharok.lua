@@ -109,7 +109,7 @@ function mod:SPELL_CAST_START(args)
 		specWarnDeathSpiral:Show(self.vb.spiralCount)
 		specWarnDeathSpiral:Play("watchstep")
 		--"Death Spiral-1215787-npc:162309-00004BDA78 = pull:6.0, 30.4, 54.6, 55.8",
-		timerDeathSpiralCD:Start((self.vb.spiralCount == 1) and 29.1 or "v53.4-57.1", self.vb.spiralCount+1)
+		timerDeathSpiralCD:Start((self.vb.spiralCount == 1) and 27.9 or "v53.4-57.1", self.vb.spiralCount+1)
 		updateAllTimers(self, 2.4)
 	elseif spellId == 474087 then
 		self.vb.necroticEruption = self.vb.necroticEruption + 1

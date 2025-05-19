@@ -129,7 +129,7 @@ function mod:SPELL_CAST_START(args)
 		specWarnDarkDevastation:Show(self.vb.darkCount)
 		specWarnDarkDevastation:Play("frontal")
 		timerDarkDevastationCD:Start(nil, self.vb.darkCount+1)
-		updateAllTimers(self, 8.3)
+		updateAllTimers(self, 8.1)
 	elseif spellId == 324589 and self:CheckInterruptFilter(args.sourceGUID, false, true) then
 		specWarnDeathBolt:Show(args.sourceName)
 		specWarnDeathBolt:Play("kickcast")

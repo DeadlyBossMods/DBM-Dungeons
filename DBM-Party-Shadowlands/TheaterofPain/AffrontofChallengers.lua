@@ -109,7 +109,7 @@ function mod:SPELL_CAST_START(args)
 		timerMortalStrikeCD:Start(nil, self.vb.mortalStrikeCount+1, args.sourceGUID)
 	elseif spellId == 333231 then
 		self.vb.deathCount = self.vb.deathCount + 1
-		local timer = self.vb.willCount == 2 and 14.6 or self.vb.willCount == 1 and 27.9 or 42.5
+		local timer = self.vb.willCount == 2 and 14.6 or self.vb.willCount == 1 and 27.9 or 41.3
 		timerSearingDeathCD:Start(timer, self.vb.deathCount+1, args.sourceGUID)--self.vb.deathCount+1
 	elseif spellId == 320182 then
 		self.vb.sporeCount = self.vb.sporeCount + 1
