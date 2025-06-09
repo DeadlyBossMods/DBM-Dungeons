@@ -6,7 +6,7 @@ mod.statTypes = "normal,heroic,challenge,timewalker,duos"
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(59153)
 mod:SetEncounterID(1428)
-mod:SetZone(1007, 2769)--Scholomance, Duos
+mod:SetZone(1007, 2849)--Scholomance, Duos
 
 mod:RegisterCombat("combat")
 

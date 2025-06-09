@@ -8,7 +8,7 @@ end
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(47162)
 mod:SetEncounterID(1064, 2976, 2981)
-mod:SetZone(36, 1688, 2769)--OG Deadmines, Cata Deadmines, Duos
+mod:SetZone(36, 1688, 2849)--OG Deadmines, Cata Deadmines, Duos
 
 mod:RegisterCombat("combat")
 

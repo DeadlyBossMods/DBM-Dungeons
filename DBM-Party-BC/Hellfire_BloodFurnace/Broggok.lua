@@ -8,7 +8,7 @@ end
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(17380)
 mod:SetEncounterID(1924)
-mod:SetZone(256, 2769)--Blood Furnace, Duos
+mod:SetZone(256, 2849)--Blood Furnace, Duos
 
 if not mod:IsRetail() then
 	mod:SetModelID(19372)

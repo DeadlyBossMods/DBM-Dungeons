@@ -10,7 +10,7 @@ mod:SetCreatureID(17797)
 mod:SetEncounterID(1942)
 mod:SetModelScale(0.95)
 mod:SetModelID(11268)--Custom ID for a reason on retail?
-mod:SetZone(261, 2769)--Steamvault, Duos
+mod:SetZone(261, 2849)--Steamvault, Duos
 
 mod:RegisterCombat("combat")
 

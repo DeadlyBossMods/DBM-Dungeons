@@ -8,7 +8,7 @@ end
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(17796)
 mod:SetEncounterID(1943)
-mod:SetZone(261, 2769)--Steamvault, Duos
+mod:SetZone(261, 2849)--Steamvault, Duos
 
 if not mod:IsRetail() then
 	mod:SetModelID(18638)

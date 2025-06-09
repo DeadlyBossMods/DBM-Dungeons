@@ -8,7 +8,7 @@ end
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(17306)
 mod:SetEncounterID(1893)
-mod:SetZone(248, 2769)--Hellfire ramparts, Duos
+mod:SetZone(248, 2849)--Hellfire ramparts, Duos
 
 mod:SetModelID(18236)
 mod:SetModelOffset(-0.2, 0, -0.3)
