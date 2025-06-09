@@ -1,10 +1,14 @@
 local mod	= DBM:NewMod(99, "DBM-Party-Cataclysm", 6, 64)
 local L		= mod:GetLocalizedStrings()
 
+if mod:IsRetail() then
+	mod.statTypes = "normal,heroic,duos"
+end
+
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(46963)
 mod:SetEncounterID(1073)
-mod:SetZone(33)
+mod:SetZone(33, 2769)--SFK, Duos
 
 mod:RegisterCombat("combat")
 

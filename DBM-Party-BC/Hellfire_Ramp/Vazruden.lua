@@ -5,6 +5,7 @@ mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(17537, 17307)
 mod:SetEncounterID(1892)
 mod:SetBossHPInfoToHighest()
+mod:SetZone(248)
 
 if not mod:IsRetail() then
 	mod:SetModelID(18407)

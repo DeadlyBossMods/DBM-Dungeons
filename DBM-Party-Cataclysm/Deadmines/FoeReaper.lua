@@ -1,11 +1,15 @@
 local mod	= DBM:NewMod(91, "DBM-Party-Cataclysm", 2, 63)
 local L		= mod:GetLocalizedStrings()
 
+if mod:IsRetail() then
+	mod.statTypes = "normal,heroic,duos"
+end
+
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(43778)
 mod:SetEncounterID(1063, 2975, 2980)
 mod:SetUsedIcons(8)
-mod:SetZone(36, 1688)
+mod:SetZone(36, 1688, 2769)--OG Deadmines, Cata Deadmines, Duos
 
 mod:RegisterCombat("combat")
 
