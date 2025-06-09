@@ -30,7 +30,7 @@ local timerIceShards	= mod:NewBuffActiveTimer(5, 93527)
 local timerRedMix		= mod:NewBuffActiveTimer(10, 93689, nil, nil, nil, 6)
 
 function mod:SPELL_AURA_APPLIED(args)
-	if args.spellId == 93527 then
+	if args.spellId == 93527 and not self:IsDuo() then--Inconsiquential in duos
 		warnIceShards:Show()
 		timerIceShards:Start()
 	elseif args.spellId == 93689 and self:AntiSpam(4, 1) then--Red Light
@@ -49,9 +49,9 @@ end
 mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED
 
 function mod:SPELL_CAST_START(args)
-	if args.spellId == 93505 then
+	if args.spellId == 93505 and not self:IsDuo() then
 		warnFrostMix:Show()
-	elseif args.spellId == 93697 then
+	elseif args.spellId == 93697 and not self:IsDuo() then
 		warnPoisonMix:Show()
 	end
 end
