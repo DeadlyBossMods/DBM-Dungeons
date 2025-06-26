@@ -280,3 +280,27 @@ L = DBM:GetModLocalization("OperationFloodgateTrash")
 L:SetGeneralLocalization({
 	name =	"Operation: Floodgate Trash"
 })
+
+-----------------------------
+--  Azhiccar  --
+-----------------------------
+--L = DBM:GetModLocalization(2675)
+
+-----------------------------
+--  Taah'bat and A'wazj  --
+-----------------------------
+--L = DBM:GetModLocalization(2676)
+
+-----------------------------
+--  Soul-Scribe  --
+-----------------------------
+--L = DBM:GetModLocalization(2677)
+
+---------
+--Trash--
+---------
+L = DBM:GetModLocalization("EcoDomeAldaniTrash")
+
+L:SetGeneralLocalization({
+	name =	"Eco-Dome Al'dani Trash"
+})

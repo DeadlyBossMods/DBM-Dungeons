@@ -92,10 +92,6 @@ function mod:OnCombatEnd()
 	end
 end
 
---function mod:OnCombatEnd()
-
---end
-
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
 	if spellId == 423305 then
