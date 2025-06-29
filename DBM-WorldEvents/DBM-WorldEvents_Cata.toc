@@ -1,4 +1,4 @@
-## Interface: 40401, 40402
+## Interface: 40402
 ## Category: DBM
 
 ## Title:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cff69ccf0World Events|r
