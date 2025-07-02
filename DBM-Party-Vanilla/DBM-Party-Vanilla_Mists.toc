@@ -1,0 +1,215 @@
+## Interface: 50500
+## X-Min-Interface-Mists: 50500
+## Category: DBM
+
+## Title:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Dungeons (Vanilla)|r
+## Title-deDE:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Gruppe-Vanilla|r
+## Title-esES:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Mazmorras (Clásico)|r
+## Title-koKR:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0던전 (오리지널)|r
+## Title-zhTW:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0隊伍首領-傳統|r
+## Title-zhCN:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0队伍首领 (经典旧世)|r
+## Title-ruRU:|cffffe00a<|r|cffff7d0aDBM Мод|r|cffffe00a>|r |cffc030c0Классические подземелья|r
+## Author: MysticalOS
+## LoadOnDemand: 1
+## RequiredDeps: DBM-Core
+## SavedVariables: DBMPartyVanilla_AllSavedVars
+## SavedVariablesPerCharacter: DBMPartyVanilla_SavedStats
+## IconTexture: Interface\AddOns\DBM-Core\textures\dbm_airhorn
+## X-DBM-Mod: 1
+## X-DBM-Mod-Type: PARTY
+## X-DBM-Mod-Category: Classic
+## X-DBM-StatTypes: normal
+## X-DBM-Mod-SubCategoriesID: 48,230,429,90,229|Lower,349,389,129,47,329,34,109,70,43,209,289|Legacy,189|Legacy,229|Upper
+## X-DBM-Mod-SubCategoriesID-koKR: 48,230,429,90,229|하층,349,389,129,47,329,34,109,70,43,209,289|구버전,189|구버전,229|상층
+## X-DBM-Mod-Name: Dungeons (Vanilla)
+## X-DBM-Mod-Name-deDE: Gruppe (Vanilla)
+## X-DBM-Mod-Name-esES: Mazmorras (Clásico)
+## X-DBM-Mod-Name-koKR: 던전 (오리지널)
+## X-DBM-Mod-Name-zhTW: 隊伍首領 (傳統)
+## X-DBM-Mod-Name-zhCN: 队伍首领 (经典旧世)
+## X-DBM-Mod-Name-ruRU: Классические подземелья
+## X-DBM-Mod-Sort: 1102
+## X-DBM-Mod-MapID: 48,230,429,90,229,349,389,129,47,329,34,109,70,43,209,289,189
+## X-DBM-Mod-MinCoreRevision: 20200524142133
+## X-DBM-Mod-MinExpansion: 0
+## X-Curse-Project-ID: 314994
+## X-WoWI-ID: 24904
+## Version: @project-version@
+
+locale.generated.lua
+
+Retail\localization.en.lua
+Retail\localization.es.lua
+Retail\localization.cn.lua
+Retail\localization.kr.lua
+
+Retail\BlackfathomDeeps\GhamooRa.lua
+Retail\BlackfathomDeeps\Domina.lua
+Retail\BlackfathomDeeps\Korul.lua
+Retail\BlackfathomDeeps\Thruk.lua
+Retail\BlackfathomDeeps\Guardian.lua
+Retail\BlackfathomDeeps\Gore.lua
+Retail\BlackfathomDeeps\Bathiel.lua
+Retail\BlackfathomDeeps\Akumai.lua
+
+Shared\BlackrockDepths\Gerstahn.lua
+Shared\BlackrockDepths\LordRoccor.lua
+Shared\BlackrockDepths\HoundmasterGrebmar.lua
+Shared\BlackrockDepths\RingofLaw.lua
+Shared\BlackrockDepths\PyromancerLoregrain.lua
+Shared\BlackrockDepths\LordIncendius.lua
+Shared\BlackrockDepths\WardenStilgiss.lua
+Shared\BlackrockDepths\FineousDarkvire.lua
+Shared\BlackrockDepths\BaelGar.lua
+Shared\BlackrockDepths\GeneralAngerforge.lua
+Shared\BlackrockDepths\GolemLordArgelmach.lua
+Shared\BlackrockDepths\HurleyBlackbreath.lua
+Shared\BlackrockDepths\Phalanx.lua
+Shared\BlackrockDepths\PluggerSpazzring.lua
+Shared\BlackrockDepths\AmbassadorFlamelash.lua
+Shared\BlackrockDepths\TheSeven.lua
+Shared\BlackrockDepths\Magmus.lua
+Shared\BlackrockDepths\EmperorDagranThaurissan.lua
+
+Shared\DireMaul\ZevrimThornhoof.lua
+Shared\DireMaul\Hydrospawn.lua
+Shared\DireMaul\Lethtendris.lua
+Shared\DireMaul\Alzzin.lua
+Shared\DireMaul\TendrisWarpwood.lua
+Shared\DireMaul\IllyannaRavensoak.lua
+Shared\DireMaul\MagisterKelendris.lua
+Shared\DireMaul\Immolthar.lua
+Shared\DireMaul\PrinceTortheldrin.lua
+Shared\DireMaul\GuardMoldar.lua
+Shared\DireMaul\StomperKreeg.lua
+Shared\DireMaul\GuardFengus.lua
+Shared\DireMaul\GuardSlipkik.lua
+Shared\DireMaul\CaptainKromcrush.lua
+Shared\DireMaul\ChoRush.lua
+Shared\DireMaul\KingGordok.lua
+
+Shared\Gnomeregan\Grubbis.lua
+Shared\Gnomeregan\ViscousFallout.lua
+Shared\Gnomeregan\Electrocutioner6000.lua
+Shared\Gnomeregan\CrowdPummeler.lua
+Shared\Gnomeregan\MekgineerThermaplugg.lua
+
+Shared\LowerBlackrockSpire\HighlordOmokk.lua
+Shared\LowerBlackrockSpire\ShadowHunterVoshgajin.lua
+Shared\LowerBlackrockSpire\WarMasterVoone.lua
+Shared\LowerBlackrockSpire\MotherSmolderweb.lua
+Shared\LowerBlackrockSpire\UrokDoomhowl.lua
+Shared\LowerBlackrockSpire\QuartermasterZigris.lua
+Shared\LowerBlackrockSpire\Halycon.lua
+Shared\LowerBlackrockSpire\Gizrul.lua
+Shared\LowerBlackrockSpire\OverlordWyrmthalak.lua
+
+Classic\UpperBlackrockSpire\PyroguardEmberseer.lua
+Classic\UpperBlackrockSpire\SolakarFlamewreath.lua
+Classic\UpperBlackrockSpire\GoralukAnvilcrack.lua
+Classic\UpperBlackrockSpire\JedRunewatcher.lua
+Classic\UpperBlackrockSpire\WarchiefRendBlackhand.lua
+Classic\UpperBlackrockSpire\TheBeast.lua
+Classic\UpperBlackrockSpire\LordValthalak.lua
+Classic\UpperBlackrockSpire\GeneralDrakkisath.lua
+
+Shared\Maraudon\Noxxion.lua
+Shared\Maraudon\Razorlash.lua
+Shared\Maraudon\TinkererGizlock.lua
+Shared\Maraudon\LordVyletongue.lua
+Shared\Maraudon\CelebrastheCursed.lua
+Shared\Maraudon\Landslide.lua
+Shared\Maraudon\Rotgrip.lua
+Shared\Maraudon\PrincessTheradras.lua
+
+Retail\RagefireChasm\Adarogg.lua
+Retail\RagefireChasm\Koranthal.lua
+Retail\RagefireChasm\Slagmaw.lua
+Retail\RagefireChasm\Gordoth.lua
+
+Retail\RazorfenDowns\Aarux.lua
+Retail\RazorfenDowns\MordressFireEye.lua
+Retail\RazorfenDowns\Mushlump.lua
+Retail\RazorfenDowns\DeathSpeakerBlackhorn.lua
+Retail\RazorfenDowns\AmnenartheColdbringer.lua
+
+Retail\RazorfenKraul\HunterBonetusk.lua
+Retail\RazorfenKraul\Roogug.lua
+Retail\RazorfenKraul\WarlordRamtusk.lua
+Retail\RazorfenKraul\Groyat.lua
+Retail\RazorfenKraul\CharlgaRazorflank.lua
+
+Shared\Stratholme\HearthsingerForresten.lua
+Shared\Stratholme\TimmytheCruel.lua
+Shared\Stratholme\CommanderMalor.lua
+Shared\Stratholme\WilleyHopebreaker.lua
+Shared\Stratholme\InstructorGalford.lua
+Shared\Stratholme\Balnazzar.lua
+Shared\Stratholme\TheUnforgiven.lua
+Shared\Stratholme\BaronessAnastari.lua
+Shared\Stratholme\Narubenkan.lua
+Shared\Stratholme\MalekithePallid.lua
+Shared\Stratholme\MagistrateBarthilas.lua
+Shared\Stratholme\RamsteintheGorger.lua
+Shared\Stratholme\LordAuriusRivendare.lua
+
+Retail\StormwindStockaid\Hogger.lua
+Retail\StormwindStockaid\LordOverheat.lua
+Retail\StormwindStockaid\Moloch.lua
+
+Shared\SunkenTemple\AvatarofHakkar.lua
+Shared\SunkenTemple\JammalantheProphet.lua
+Shared\SunkenTemple\Dreamscythe.lua
+Shared\SunkenTemple\Weaver.lua
+Shared\SunkenTemple\Morphaz.lua
+Shared\SunkenTemple\Hazzas.lua
+Shared\SunkenTemple\ShadeofEranikus.lua
+
+Shared\Uldaman\Revelosh.lua
+Shared\Uldaman\TheLostDwarves.lua
+Shared\Uldaman\Ironaya.lua
+Shared\Uldaman\ObsidianSentinel.lua
+Shared\Uldaman\AncientStoneKeeper.lua
+Shared\Uldaman\GalgannFirehammer.lua
+Shared\Uldaman\Grimlok.lua
+Shared\Uldaman\Archaedas.lua
+
+Shared\WailingCaverns\LadyAnacondra.lua
+Shared\WailingCaverns\LordPythas.lua
+Shared\WailingCaverns\LordCobrahn.lua
+Shared\WailingCaverns\Kresh.lua
+Shared\WailingCaverns\Skum.lua
+Shared\WailingCaverns\LordSerpentis.lua
+Shared\WailingCaverns\VerantheEverliving.lua
+Shared\WailingCaverns\MutanustheDevourer.lua
+Shared\WailingCaverns\DeviateFaerieDragon.lua
+
+Shared\ZulFarrak\Gahzrilla.lua
+Shared\ZulFarrak\Antusul.lua
+Shared\ZulFarrak\ThekatheMartyr.lua
+Shared\ZulFarrak\WitchDoctorZumrah.lua
+Shared\ZulFarrak\HydromancerVelrath.lua
+Shared\ZulFarrak\Nekrum_Sezzziz.lua
+Shared\ZulFarrak\ChiefUkorzSandscalp.lua
+
+Shared\Scholomance_Old\KirtonostheHerald.lua
+Shared\Scholomance_Old\JandiceBarov.lua
+Shared\Scholomance_Old\Rattlegore.lua
+Shared\Scholomance_Old\MardukBlackpool.lua
+Shared\Scholomance_Old\Vectus.lua
+Shared\Scholomance_Old\RasFrostwhisper.lua
+Shared\Scholomance_Old\InstructorMalicia.lua
+Shared\Scholomance_Old\DoctorTheolenKrastinov.lua
+Shared\Scholomance_Old\LorekeeperPolkelt.lua
+Shared\Scholomance_Old\TheRavenian.lua
+Shared\Scholomance_Old\LordAlexeiBarov.lua
+Shared\Scholomance_Old\LadyIlluciaBarov.lua
+Shared\Scholomance_Old\DarkmasterGandling.lua
+
+Shared\ScarletMonastery_Old\InterrogatorVishas.lua
+Shared\ScarletMonastery_Old\BloodmageThalnos.lua
+Shared\ScarletMonastery_Old\HoundmasterLoksey.lua
+Shared\ScarletMonastery_Old\ArcanistDoan.lua
+Shared\ScarletMonastery_Old\Herod.lua
+Shared\ScarletMonastery_Old\Mograine_and_Whitemane.lua
+Shared\ScarletMonastery_Old\HighInquisitorFairbanks.lua
