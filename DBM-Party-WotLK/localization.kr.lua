@@ -662,13 +662,8 @@ L:SetGeneralLocalization{
 	name 		= "흑기사"
 }
 
-L:SetOptionLocalization({
-	AchievementCheck	= "'이건 약과야' 업적 실패시 파티 대화로 알림"
-})
-
 L:SetMiscLocalization({
 	Pull				= "잘했네. 오늘 자네의 가치를 잘 보여주었...",
-	AchievementFailed	= ">> 업적 실패: %s|1이;가; 구울 폭발에 맞음 <<",
 	YellCombatEnd		= "안 돼! 또 무릎 꿇을 수는... 없는데..."	-- can also be "No! I must not fail... again ..."
 })
 
@@ -732,14 +727,9 @@ L = DBM:GetModLocalization(608)
 L:SetGeneralLocalization{
 	name 		= "제련장인 가프로스트"
 }
-L:SetOptionLocalization({
-	AchievementCheck	= "'11번은 제발!' 업적 실패시 파티 대화로 알림"
-})
 
 L:SetMiscLocalization({
-	SaroniteRockThrow	= "거대한 사로나이트 덩어리를 당신에게 던집니다!",
-	AchievementWarning	= "경고: %s의 영구 결빙 %d중첩",
-	AchievementFailed	= ">> 업적 실패 : %s의 영구 결빙 %d중첩 <<"
+	SaroniteRockThrow	= "거대한 사로나이트 덩어리를 당신에게 던집니다!"
 })
 
 ----------------------------

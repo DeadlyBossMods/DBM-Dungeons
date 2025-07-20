@@ -34,13 +34,6 @@ local timerDeepFreezeCD			= mod:NewCDTimer(19, 70381, nil, "Healer", 2, 5, nil, 
 local timerDeepFreeze			= mod:NewTargetTimer(14, 70381, nil, false, 3, 5)
 
 mod:AddSetIconOption("SetIconOnSaroniteRockTarget", 68789, true, 0, {8})
-mod:AddBoolOption("AchievementCheck", false, "announce")
-
-mod.vb.warnedfailed = false
-
-function mod:OnCombatStart(delay)
-	self.vb.warnedfailed = false
-end
 
 function mod:SPELL_CAST_START(args)
 	if args.spellId == 68788 then
@@ -67,15 +60,6 @@ function mod:SPELL_AURA_APPLIED_DOSE(args)
 		if amount >= 9 and args:IsPlayer() and self:AntiSpam(5) then --11 stacks is what's needed for achievement, 9 to give you time to clear/dispel
 			specWarnPermafrost:Show(amount)
 			specWarnPermafrost:Play("stackhigh")
-		end
-		if self.Options.AchievementCheck and not self.vb.warnedfailed then
-			local channel = IsInGroup(2) and "INSTANCE_CHAT" or "PARTY"
-			if amount == 9 or amount == 10 then
-				SendChatMessage(L.AchievementWarning:format(args.destName, amount), channel)
-			elseif amount > 11 then
-				SendChatMessage(L.AchievementFailed:format(args.destName, amount), channel)
-				self.vb.warnedfailed = true
-			end
 		end
 	end
 end

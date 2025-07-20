@@ -676,13 +676,8 @@ L:SetGeneralLocalization{
 	name 		= "黑骑士"
 }
 
-L:SetOptionLocalization({
-	AchievementCheck		= "报告'这还不算惨'成就的失败信息给小队"
-})
-
 L:SetMiscLocalization({
 	Pull			= "干得好，今天，你证明了自己的实力。",
-	AchievementFailed	= ">> 成就失败: %s 被食尸鬼爆炸击中了 <<",
 	YellCombatEnd	= "勇士们，祝贺你们！经历过一系列计划之中和意料之外的试炼，你们终于取得了胜利。"	-- can also be "No! I must not fail... again ..."
 })
 
@@ -748,14 +743,8 @@ L:SetGeneralLocalization{
 	name 		= "熔炉之主加弗斯特"
 }
 
-L:SetOptionLocalization({
-	AchievementCheck			= "为'11大限'成就发送报警到队伍频道"
-})
-
 L:SetMiscLocalization({
-	SaroniteRockThrow	= "%s 向你用力投出一大块萨隆邪铁巨石！",
-	AchievementWarning	= "小心: %s 已拥有 %d 层永冻",
-	AchievementFailed	= ">> 成就失败: %s 已超过 %d 层永冻 <<"
+	SaroniteRockThrow	= "%s 向你用力投出一大块萨隆邪铁巨石！"
 })
 
 ----------------------------

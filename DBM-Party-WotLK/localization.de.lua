@@ -456,13 +456,8 @@ L:SetMiscLocalization({
 ------------------------
 L = DBM:GetModLocalization(637)
 
-L:SetOptionLocalization({
-	AchievementCheck		= "Verkünde Fehlschlag des Erfolgs 'Ich hab' schon Schlimmeres gesehen' an Gruppe"
-})
-
 L:SetMiscLocalization({
 	Pull				= "Gut gemacht. Ihr habt Euch heute bewiesen-",
-	AchievementFailed	= ">> ERFOLG FEHLGESCHLAGEN: %s wurde von Ghulexplosion getroffen <<",
 	YellCombatEnd		= "Meine Glückwünsche, Champions. In Prüfungen sowohl geplant als auch unerwartet habt Ihr triumphiert."	-- can also be "Nein! Ich darf nicht... wieder... versagen..."
 })
 
@@ -509,14 +504,8 @@ L:SetMiscLocalization({
 ----------------------------
 L = DBM:GetModLocalization(608)
 
-L:SetOptionLocalization({
-	AchievementCheck			= "Verkünde Warnungen für den Erfolg 'Elfer raus!' an Gruppe"
-})
-
 L:SetMiscLocalization({
-	SaroniteRockThrow	= "%s schleudert Euch einen massiven Saronitstein entgegen!",
-	AchievementWarning	= "Warnung: %s hat %d Stapel von Permafrost",
-	AchievementFailed	= ">> ERFOLG FEHLGESCHLAGEN: %s hat %d Stapel von Permafrost <<"
+	SaroniteRockThrow	= "%s schleudert Euch einen massiven Saronitstein entgegen!"
 })
 
 ----------------------------
