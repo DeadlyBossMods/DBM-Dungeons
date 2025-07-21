@@ -35,7 +35,10 @@ local specWarnDragonStrike		= mod:NewSpecialWarningDefensive(106823, nil, nil, n
 local specWarnDragonKick		= mod:NewSpecialWarningDodge(106856, nil, nil, nil, 2, 2)
 local specWarnJadeDragonStrike	= mod:NewSpecialWarningDefensive(106841, nil, nil, nil, 1, 2)
 local specWarnJadeDragonKick	= mod:NewSpecialWarningDodge(106864, nil, nil, nil, 2, 2)
-local specWarnJadeBreath		= mod:NewSpecialWarningDodge(396907, nil, nil, nil, 2, 2)
+local specWarnJadeBreath
+if mod:IsRetail() then
+	specWarnJadeBreath			= mod:NewSpecialWarningDodge(396907, nil, nil, nil, 2, 2)--Retail only
+end
 local specWarnGTFO				= mod:NewSpecialWarningGTFO(118540, nil, nil, nil, 1, 8)
 
 local timerDragonStrikeCD		= mod:NewNextTimer(15.7, 106823, nil, nil, 2, 5, nil, DBM_COMMON_L.TANK_ICON..DBM_COMMON_L.HEALER_ICON)--Kicks affect entire group as well (which are part of tank combo)
