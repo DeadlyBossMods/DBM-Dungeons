@@ -313,7 +313,7 @@ function mod:StartEngageTimers(guid, cid, delay)
 end
 
 --Abort timers when all players out of combat, so NP timers clear on a wipe
---Caveat, it won't calls top with GUIDs, so while it might terminate bar objects, it may leave lingering nameplate icons
+--Caveat, it won't call stop with GUIDs, so while it might terminate bar objects, it may leave lingering nameplate icons
 function mod:LeavingZoneCombat()
 	--Xeph'itik is a special case, he doesn't die, so we need to clear his timers some other way
 	if xephEngaged then

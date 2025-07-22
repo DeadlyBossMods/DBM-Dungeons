@@ -3,6 +3,7 @@ local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
 mod:SetZone(2441)
+mod:RegisterZoneCombat(2441)
 --mod:SetModelID(47785)
 
 mod.isTrashMod = true
@@ -14,9 +15,16 @@ mod:RegisterEvents(
 	"SPELL_SUMMON 355132",
 	"SPELL_AURA_APPLIED 355888 355915 355980 357229 357029 355581 356407",
 --	"SPELL_AURA_APPLIED_DOSE",
-	"SPELL_AURA_REMOVED 357029"
+	"SPELL_AURA_REMOVED 357029",
+	"UNIT_DIED"
 )
 
+--[[
+(ability.id = 341902) and (type = "begincast" or type = "cast")
+ or stoppedAbility.id = 341902
+ or type = "dungeonencounterstart" or type = "dungeonencounterend"
+ or (source.type = "NPC" and source.firstSeen = timestamp and source.id = 174197) or (target.type = "NPC" and target.firstSeen = timestamp and target.id = 174197)
+--]]
 local warnHardLightBaton					= mod:NewTargetNoFilterAnnounce(355888, 3, nil, "Healer|RemoveMagic")--Customs Security
 local warnRadiantPulse						= mod:NewSpellAnnounce(356548, 2)--Zo'honn
 local warnBeamSplicer						= mod:NewSpellAnnounce(356001, 3)--Armored Overseer
@@ -182,3 +190,23 @@ function mod:SPELL_AURA_REMOVED(args)
 	end
 end
 
+function mod:UNIT_DIED(args)
+	if not self.Options.Enabled then return end
+	local cid = self:GetCIDFromGUID(args.destGUID)
+	if cid == 0 then--???
+
+	end
+end
+
+--All timers subject to a ~0.5 second clipping due to ScanEngagedUnits
+function mod:StartEngageTimers(guid, cid, delay)
+	if cid == 0 then--???
+
+	end
+end
+
+--Abort timers when all players out of combat, so NP timers clear on a wipe
+--Caveat, it won't call stop with GUIDs, so while it might terminate bar objects, it may leave lingering nameplate icons
+function mod:LeavingZoneCombat()
+	self:Stop(true)
+end
