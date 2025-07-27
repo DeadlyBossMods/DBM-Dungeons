@@ -1,3 +1,4 @@
+if DBM:IsMop() then return end
 local mod	= DBM:NewMod("JadeTempleTrash", "DBM-Party-MoP", 1)
 local L		= mod:GetLocalizedStrings()
 

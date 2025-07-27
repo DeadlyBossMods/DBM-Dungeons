@@ -17,8 +17,8 @@ mod:RegisterEvents(
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 67729",
 	"SPELL_AURA_APPLIED 67823 67751",
-	"SPELL_DAMAGE 67781 67729",
-	"SPELL_MISSED 67781 67729"
+	"SPELL_DAMAGE 67781",
+	"SPELL_MISSED 67781"
 )
 
 local warnMarked			= mod:NewTargetNoFilterAnnounce(67823, 3)
@@ -31,14 +31,7 @@ local timerMarked			= mod:NewTargetTimer(10, 67823, nil, nil, nil, 3)
 local timerExplode			= mod:NewCastTimer(4, 67729, nil, nil, nil, 2)
 
 mod:AddSetIconOption("SetIconOnMarkedTarget", 67823, false, 0, {8})
-mod:AddBoolOption("AchievementCheck", false, "announce")
 --mod:GroupSpells(67751, 67729)
-
-local warnedfailed = false
-
-function mod:OnCombatStart(delay)
-	warnedfailed = false
-end
 
 function mod:SPELL_CAST_START(args)
 	if args.spellId == 67729 and self:AntiSpam(2, 2) then
@@ -52,11 +45,6 @@ function mod:SPELL_DAMAGE(_, _, _, _, destGUID, destName, _, _, spellId)
 	if spellId == 67781 and destGUID == UnitGUID("player") and self:AntiSpam(3, 1) then
 		specWarnDesecration:Show()
 		specWarnDesecration:Play("watchfeet")
-	elseif spellId == 67729 then
-		if self.Options.AchievementCheck and not warnedfailed then
-			SendChatMessage(L.AchievementFailed:format(destName), "PARTY")
-			warnedfailed = true
-		end
 	end
 end
 mod.SPELL_MISSED = mod.SPELL_DAMAGE

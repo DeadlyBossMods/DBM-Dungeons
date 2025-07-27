@@ -3,6 +3,7 @@ local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
 mod:SetZone(2287)
+mod:RegisterZoneCombat(2287)
 --mod:SetModelID(47785)
 
 mod.isTrashMod = true
@@ -10,11 +11,17 @@ mod.isTrashModBossFightAllowed = true
 
 mod:RegisterEvents(
 	"SPELL_CAST_START 326409 326450 325523 325700 325701 326607 326441",
-	"SPELL_AURA_APPLIED 326450 326891"
---	"SPELL_AURA_REMOVED 326409"
+	"SPELL_AURA_APPLIED 326450 326891",
+--	"SPELL_AURA_REMOVED 326409",
+	"UNIT_DIED"
 )
 
---All warnings/recommendations drycoded from https://www.wowhead.com/guides/halls-of-atonement-shadowlands-dungeon-strategy-guide
+--[[
+(ability.id = 341902) and (type = "begincast" or type = "cast")
+ or stoppedAbility.id = 341902
+ or type = "dungeonencounterstart" or type = "dungeonencounterend"
+ or (source.type = "NPC" and source.firstSeen = timestamp and source.id = 174197) or (target.type = "NPC" and target.firstSeen = timestamp and target.id = 174197)
+--]]
 --Notable Halkias Trash
 local warnThrash						= mod:NewSpellAnnounce(326409, 3)
 local warnLoyalBeasts					= mod:NewCastAnnounce(326450, 4)--Announce the cast, in case someone can stun it
@@ -85,3 +92,24 @@ function mod:SPELL_AURA_REMOVED(args)
 	end
 end
 --]]
+
+function mod:UNIT_DIED(args)
+	if not self.Options.Enabled then return end
+	local cid = self:GetCIDFromGUID(args.destGUID)
+	if cid == 0 then--???
+
+	end
+end
+
+--All timers subject to a ~0.5 second clipping due to ScanEngagedUnits
+function mod:StartEngageTimers(guid, cid, delay)
+	if cid == 0 then--???
+
+	end
+end
+
+--Abort timers when all players out of combat, so NP timers clear on a wipe
+--Caveat, it won't call stop with GUIDs, so while it might terminate bar objects, it may leave lingering nameplate icons
+function mod:LeavingZoneCombat()
+	self:Stop(true)
+end

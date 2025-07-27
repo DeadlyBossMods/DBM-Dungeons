@@ -454,13 +454,8 @@ L:SetMiscLocalization({
 ------------------------
 L = DBM:GetModLocalization(637)
 
-L:SetOptionLocalization({
-	AchievementCheck		= "Объявлять о провале достижения 'Бывало и хуже' в чат группы"
-})
-
 L:SetMiscLocalization({
 	Pull				= "Великолепно. Сегодня вы в честной борьбе заслужили…",
-	AchievementFailed	= ">> ДОСТИЖЕНИЕ ПРОВАЛЕНО: %s получил урон от Взрыва вурдалака <<",
 	YellCombatEnd		= "Нет! Я не могу... снова... проиграть."
 })
 
@@ -507,14 +502,8 @@ L:SetMiscLocalization({
 ----------------------------
 L = DBM:GetModLocalization(608)
 
-L:SetOptionLocalization({
-	AchievementCheck			= "Объявлять о достижении 'Не жди до одиннадцати!' в чат группы"
-})
-
 L:SetMiscLocalization({
-	SaroniteRockThrow	= "%s швыряет в вас глыбой саронита!",
-	AchievementWarning	= "Предупреждение: %s получил %d стаков Вечной мерзлоты",
-	AchievementFailed	= ">> ДОСТИЖЕНИЕ ПРОВАЛЕНО: %s получил %d стаков Вечной мерзлоты <<"
+	SaroniteRockThrow	= "%s швыряет в вас глыбой саронита!"
 })
 
 ----------------------------

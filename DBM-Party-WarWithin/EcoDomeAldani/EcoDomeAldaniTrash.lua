@@ -15,7 +15,7 @@ mod:RegisterEvents(
 --	"SPELL_AURA_APPLIED",
 --	"SPELL_AURA_APPLIED_DOSE",
 --	"SPELL_AURA_REMOVED",
---	"UNIT_DIED"
+	"UNIT_DIED"
 )
 
 --[[
@@ -92,7 +92,6 @@ end
 --mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED
 --]]
 
---[[
 function mod:UNIT_DIED(args)
 	if not self.Options.Enabled then return end
 	local cid = self:GetCIDFromGUID(args.destGUID)
@@ -100,7 +99,6 @@ function mod:UNIT_DIED(args)
 
 	end
 end
---]]
 
 --All timers subject to a ~0.5 second clipping due to ScanEngagedUnits
 function mod:StartEngageTimers(guid, cid, delay)

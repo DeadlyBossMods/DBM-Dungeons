@@ -25,7 +25,6 @@ mod:RegisterEvents(
 --4/6 12:57:22.825  UNIT_DISSIPATES,0x0000000000000000,nil,0x80000000,0x80000000,0xF130DEF800005B63,"Corrupted Scroll",0xa48,0x0
 -------------------------------------------
 local warnIntensity			= mod:NewStackAnnounce(113315, 3)
-local warnUltimatePower		= mod:NewTargetAnnounce(113309, 4)
 
 local specWarnIntensity		= mod:NewSpecialWarning("SpecWarnIntensity", "-Healer", nil, 2, 1, 2)
 local specWarnUltimatePower	= mod:NewSpecialWarningTarget(113309, nil, nil, nil, 2, 2)

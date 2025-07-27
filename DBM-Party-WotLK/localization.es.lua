@@ -475,13 +475,8 @@ L:SetMiscLocalization({
 ------------------------
 L = DBM:GetModLocalization(637)
 
-L:SetOptionLocalization({
-	AchievementCheck		= "Anunciar fallo del logro 'Podría ser peor' al grupo"
-})
-
 L:SetMiscLocalization({
 	Pull			= "Bien hecho. Hoy has demostrado algo...",
-	AchievementFailed	= ">> LOGRO FALLADO: %s ha sido alcanzado por Explosión de necrófago <<",
 	YellCombatEnd	= "¡No! No debo fallar... otra vez..."
 })
 
@@ -538,14 +533,8 @@ L:SetMiscLocalization({
 -------------------------------
 L = DBM:GetModLocalization(608)
 
-L:SetOptionLocalization({
-	AchievementCheck	= "Anunciar avisos del logro 'Solo once campanadas' en el chat de grupo"
-})
-
 L:SetMiscLocalization({
-	SaroniteRockThrow	= "¡%s te lanza un pedrusco de saronita enorme!",
-	AchievementWarning	= "Aviso: %s tiene %d acumulaciones de Escarcha permanente",
-	AchievementFailed	= ">> LOGRO FALLADO: %s tiene %d acumulaciones de Escarcha permanente <<"
+	SaroniteRockThrow	= "¡%s te lanza un pedrusco de saronita enorme!"
 })
 
 --------------------------------
