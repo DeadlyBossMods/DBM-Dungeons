@@ -207,11 +207,11 @@ L:SetGeneralLocalization{
 }
 
 L:SetWarningLocalization({
-	warnSummon	= "Механик паровой оснастки - Смени Цель"
+	warnSummon	= "Механик паровой оснастки - переключитесь"
 })
 
 L:SetOptionLocalization({
-	warnSummon	= "Показывать предупреждение для Механик паровой оснастки"
+	warnSummon	= "Показывать предупреждение для Механика паровой оснастки"
 })
 
 L:SetMiscLocalization({
@@ -328,7 +328,7 @@ L:SetWarningLocalization({
 })
 
 L:SetOptionLocalization({
-	warnBrood	= "Показывать предупреждение для Потомок Анзу",
+	warnBrood	= "Показывать предупреждение для Потомка Анзу",
 	warnStoned	= "Показывать предупреждение для духов, превращающихся в камень"
 })
 
@@ -461,7 +461,7 @@ L:SetTimerLocalization({
 })
 
 L:SetOptionLocalization({
-    WarnWavePortalSoon	= "Показывать предварительное предупреждение для нового портала",
+    WarnWavePortalSoon	= "Заранее предупреждать о новом портале",
     WarnWavePortal		= "Показывать предупреждение для нового портала",
     WarnBossPortal		= "Показывать предупреждение для появления босса",
 	TimerNextPortal		= "Показывать таймер для следующего портала (после Босса)",
