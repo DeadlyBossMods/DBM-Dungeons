@@ -19,7 +19,8 @@ mod:RegisterEventsInCombat(
 	"SPELL_AURA_APPLIED_DOSE 1217247",
 --	"SPELL_AURA_REMOVED",
 	"SPELL_PERIODIC_DAMAGE 1217446",
-	"SPELL_PERIODIC_MISSED 1217446"
+	"SPELL_PERIODIC_MISSED 1217446",
+	"RAID_BOSS_WHISPER"
 )
 
 --[[
@@ -27,14 +28,14 @@ mod:RegisterEventsInCombat(
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
 --]]
 --TODO, only had WCL for this mod, so can't detect Toxic targets yet. Need transcriptor to identify events
---local warnToxicRegurgitation			= mod:NewTargetNoFilterAnnounce(1227745, 3)
+local warnToxicRegurgitation			= mod:NewTargetNoFilterAnnounce(1227745, 3)
 local warnFeastStack					= mod:NewStackAnnounce(1217247, 4)
 
 local specWarnDevour					= mod:NewSpecialWarningCount(1217232, nil, nil, nil, 2, 12)
 local specWarnInvadingShriek			= mod:NewSpecialWarningSwitchCount(1217327, "Dps", nil, nil, 1, 2)
---local specWarnToxicRegurgitation		= mod:NewSpecialWarningMoveAwayCount(1227745, nil, nil, nil, 1, 2)
---local yellToxicRegurgitation			= mod:NewShortYell(1227745)
---local yellToxicRegurgitationFades		= mod:NewShortFadesYell(1227745)
+local specWarnToxicRegurgitation		= mod:NewSpecialWarningMoveAwayCount(1227745, nil, nil, nil, 1, 2)
+local yellToxicRegurgitation			= mod:NewShortYell(1227745)
+local yellToxicRegurgitationFades		= mod:NewShortFadesYell(1227745)
 local specWarnGTFO						= mod:NewSpecialWarningGTFO(1217446, nil, nil, nil, 1, 8)
 
 local timerDevourCD						= mod:NewCDCountTimer(86.1, 1217232, nil, nil, nil, 2)
@@ -119,6 +120,22 @@ function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId, spell
 	end
 end
 mod.SPELL_PERIODIC_MISSED = mod.SPELL_PERIODIC_DAMAGE
+
+function mod:RAID_BOSS_WHISPER(msg)
+	if msg:find("spell:1227748") then
+		specWarnToxicRegurgitation:Show(self.vb.toxicRegurgitationCount)
+		specWarnToxicRegurgitation:Play("runout")
+		yellToxicRegurgitation:Yell()
+		yellToxicRegurgitationFades:Countdown(8)
+	end
+end
+
+function mod:OnTranscriptorSync(msg, targetName)
+	if msg:find("1227748") and targetName and self:AntiSpam(5, targetName) then
+		targetName = Ambiguate(targetName, "none")
+		warnToxicRegurgitation:Show(targetName)
+	end
+end
 
 --[[
 function mod:UNIT_DIED(args)
