@@ -168,7 +168,7 @@ L:SetWarningLocalization({
 })
 
 L:SetOptionLocalization({
-	WarnSplitSoon	= "Предварительное предупреждение о разделении"
+	WarnSplitSoon	= "Заранее предупреждать о разделении"
 })
 
 -------------
@@ -199,7 +199,7 @@ L= DBM:GetModLocalization(117)
 L= DBM:GetModLocalization(118)
 
 L:SetOptionLocalization{
-	RangeFrame	= "Окно проверки дистанции (5м)"
+	RangeFrame	= "Показывать окно проверки дистанции (5 м.)"
 }
 
 ----------
@@ -226,7 +226,7 @@ L:SetWarningLocalization{
 }
 
 L:SetOptionLocalization{
-	specWarnPhase2Soon	= "Спецпредупреждение перед началом 2-й фазы (5 сек.)"
+	specWarnPhase2Soon	= "Показывать спецпредупреждение перед началом 2-й фазы (5 сек.)"
 }
 
 -----------------------
@@ -251,7 +251,7 @@ L:SetTimerLocalization({
 })
 
 L:SetOptionLocalization{
-	TimerAdds		= "Показывать таймер для помощников"
+	TimerAdds		= "Показывать таймер до следующих помощников"
 }
 
 L:SetMiscLocalization{
@@ -314,16 +314,16 @@ L:SetWarningLocalization({
 })
 
 L:SetTimerLocalization({
-	TimerAirphase				= "След. воздушная фаза",
-	TimerGroundphase			= "След. наземная фаза"
+	TimerAirphase				= "След. Воздушная фаза",
+	TimerGroundphase			= "След. Наземная фаза"
 })
 
 L:SetOptionLocalization({
-	WarnAirphase				= "Предупреждать, когда Камнешкур взлетает",
-	WarnGroundphase				= "Предупреждать, когда Камнешкур приземляется",
-	TimerAirphase				= "Показывать таймер для следующей воздушной фазы",
-	TimerGroundphase			= "Показывать таймер для следующей наземной фазы",
-	specWarnCrystalStorm		= "Спецпредупреждение для $spell:92265"
+	WarnAirphase				= "Показывать предупреждение, когда Камнешкур взлетает",
+	WarnGroundphase				= "Показывать предупреждение, когда Камнешкур приземляется",
+	TimerAirphase				= "Показывать таймер до следующей воздушной фазы",
+	TimerGroundphase			= "Показывать таймер до следующей наземной фазы",
+	specWarnCrystalStorm		= "Показывать спецпредупреждение для $spell:92265"
 })
 
 -----------
@@ -436,9 +436,9 @@ L= DBM:GetModLocalization(187)
 
 L:SetWarningLocalization{
 	WarnBear		= "Облик медведя",
-	WarnBearSoon	= "Облик медведя через 5 секунд",
+	WarnBearSoon	= "Облик медведя через 5 сек.",
 	WarnNormal		= "Обычный облик",
-	WarnNormalSoon	= "Обычный облик через 5 секунд"
+	WarnNormalSoon	= "Обычный облик через 5 сек."
 }
 
 L:SetTimerLocalization{
@@ -451,9 +451,9 @@ L:SetOptionLocalization{
 	WarnBearSoon	= "Показывать предупреждение о скорой смене облика на медвежий",
 	WarnNormal		= "Показывать предупреждения для обычного облика",
 	WarnNormalSoon	= "Показывать предупреждение о скорой смене облика на обычный",
-	TimerBear		= "Показывать таймер облика медведя",
-	TimerNormal		= "Показывать таймер обычного облика",
-	InfoFrame		= "Показывать игроков с $spell:42402"
+	TimerBear		= "Показывать таймер до облика медведя",
+	TimerNormal		= "Показывать таймер до обычного облика",
+	InfoFrame		= "Показывать инфофрейм для игроков, на которых $spell:42402"
 }
 
 L:SetMiscLocalization{
@@ -511,7 +511,7 @@ L:SetOptionLocalization{
 }
 
 L:SetMiscLocalization{
-	YellPull	= "Сегодня духи попируют на славу!"
+	YellPull	= "Тьма поглотит вас!"
 }
 
 -------------
@@ -520,7 +520,7 @@ L:SetMiscLocalization{
 L= DBM:GetModLocalization(191)
 
 L:SetTimerLocalization{
-	timerNextForm	= "Смена формы"
+	timerNextForm	= "След. Смена формы"
 }
 
 L:SetOptionLocalization{
@@ -531,7 +531,7 @@ L:SetOptionLocalization{
 }
 
 L:SetMiscLocalization{
-	PlayerDebuffs	= "Без дебаффа"
+	PlayerDebuffs	= "С дебаффом"
 }
 
 -----------------
@@ -553,7 +553,7 @@ L:SetWarningLocalization{
 
 L:SetOptionLocalization{
 	WarnRevive		= "Показывать количество оставшихся духов",
-	SpecWarnOhgan	= "Предупреждение, когда Оган возрождается"
+	SpecWarnOhgan	= "Показывать предупреждение, когда Оган возрождается"
 }
 
 ----------------------
@@ -590,16 +590,16 @@ L= DBM:GetModLocalization(181)
 L= DBM:GetModLocalization(184)
 
 L:SetWarningLocalization{
-	SpecWarnToxic	= "Воспользуйтесь зелёным котлом!"
+	SpecWarnToxic	= "Получите Едкую щелочь"
 }
 
 L:SetOptionLocalization{
-	SpecWarnToxic	= "Спецпредупреждение, когда на Вас нет $spell:96328",
-	InfoFrame		= "Показывать игроков без $spell:96328"
+	SpecWarnToxic	= "Показывать спецпредупреждение, кесли у Вас отсутствует дебафф $spell:96328",
+	InfoFrame		= "Показывать инфофрейм для игроков, на которых отсутствует дебафф $spell:96328"
 }
 
 L:SetMiscLocalization{
-	PlayerDebuffs	= "Без зелёного дебаффа"
+	PlayerDebuffs	= "Без Едкой щелочи"
 }
 
 ----------------------------
@@ -612,7 +612,7 @@ L:SetWarningLocalization{
 }
 
 L:SetOptionLocalization{
-	WarnBarrierDown	= "Предупреждение, когда спадает барьер над цепями Хаккара",
+	WarnBarrierDown	= "Показывать предупреждение, когда спадает барьер над цепями Хаккара",
 	BodySlamIcon	= DBM_CORE_L.AUTO_ICONS_OPTION_TARGETS:format(97198)
 }
 
@@ -637,7 +637,7 @@ L:SetTimerLocalization{
 }
 
 L:SetOptionLocalization{
-	TimerFlarecoreDetonate	= "Отсчет времени до взрыва $spell:101927"
+	TimerFlarecoreDetonate	= "Показывать таймер до взрыва $spell:101927"
 }
 
 ----------------------
@@ -685,7 +685,7 @@ L:SetTimerLocalization{
 
 L:SetOptionLocalization{
 	WarnAdds	= "Предупреждать о скором появлении новых помощников",
-	TimerAdds	= "Отсчет времени до появлении новых помощников"
+	TimerAdds	= "Показывать таймер до появления новых помощников"
 }
 
 L:SetMiscLocalization{
@@ -702,7 +702,7 @@ L:SetTimerLocalization{
 }
 
 L:SetOptionLocalization{
-	TimerTyrandeHelp	= "Отсчет времени, когда Тиранде нужна помощь"
+	TimerTyrandeHelp	= "Показывать таймер до момента, когда Тиранде понадобится помощь"
 }
 
 L:SetMiscLocalization{
