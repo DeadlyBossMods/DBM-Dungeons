@@ -321,7 +321,7 @@ L:SetMiscLocalization({
 L= DBM:GetModLocalization(2533)--Alliance ID used for both factions (2534 is horde id)
 
 L:SetGeneralLocalization({
-	name =	"Time-Lost Battlefield"--Manual local because auto inserts Alliance or horde to name and mod combines them since singular encounter ID
+	name =	"Затерянное во времени поле битвы"--Manual local because auto inserts Alliance or horde to name and mod combines them since singular encounter ID
 })
 
 L:SetMiscLocalization({
@@ -343,5 +343,5 @@ L:SetGeneralLocalization({
 })
 
 L:SetOptionLocalization({
-	AutoRift	= "Автоматический выбор диалога для активации разлома после испытания"
+	AutoRift	= "Автоматически выбирать диалог для активации разлома после испытания"
 })
