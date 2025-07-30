@@ -70,7 +70,7 @@ L:SetWarningLocalization({
 })
 
 L:SetOptionLocalization({
-	SpecWarnFizzyBubbles	= "Спецпредупреждение, когда на Вас нет $spell:114459",
+	SpecWarnFizzyBubbles	= "Показывать спецпредупреждение, если у Вас отсутствует дебафф $spell:114459",
 	RangeFrame				= DBM_CORE_L.AUTO_RANGE_OPTION_TEXT:format(10, 106546)
 })
 
@@ -124,7 +124,7 @@ L:SetMiscLocalization({
 L= DBM:GetModLocalization(686)
 
 L:SetOptionLocalization({
-	InfoFrame			= "Показывать информационное окно для $journal:5827"
+	InfoFrame			= "Показывать инфофрейм для $journal:5827"
 })
 
 -----------------------
@@ -199,7 +199,7 @@ L:SetTimerLocalization({
 })
 
 L:SetOptionLocalization({
-	TimerWave	= "Отсчёт времени до следующей волны подкреплений"
+	TimerWave	= "Отсчет времени до следующей волны подкреплений"
 })
 
 L:SetMiscLocalization({
@@ -240,9 +240,9 @@ L:SetWarningLocalization({
 })
 
 L:SetOptionLocalization({
-	SpecWarnGetBoned	= "Спецпредупреждение, когда на Вас нет $spell:113996",
-	SpecWarnDoctor		= "Спецпредупреждение, когда появляется Доктор Теолен Крастинов",
-	InfoFrame			= "Показывать информационное окно для игроков без $spell:113996"
+	SpecWarnGetBoned	= "Показывать спецпредупреждение, если у Вас отсутствует дебафф $spell:113996",
+	SpecWarnDoctor		= "Показывать спецпредупреждение, когда появляется Доктор Теолен Крастинов",
+	InfoFrame			= "Показывать инфофрейм для игроков, на которых отсутствует дебафф $spell:113996"
 })
 
 L:SetMiscLocalization({

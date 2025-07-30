@@ -84,19 +84,19 @@ L:SetGeneralLocalization({
 L= DBM:GetModLocalization(2405)
 
 L:SetWarningLocalization({
-	warnInfestor					= "Паразитический заразитель на %s",
-	specWarnParasiticInfesterKick	= "Паразитический заразитель - Прервать!"
+	warnInfestor					= "Паразит-заразитель на %s",
+	specWarnParasiticInfesterKick	= "Паразит-заразитель - Прервать! (%s)"
 })
 
 L:SetTimerLocalization{
-	timerParasiticInfesterCD		= "~Заразитель"
+	timerParasiticInfesterCD		= "Заразитель (%s)"
 }
 
 L:SetOptionLocalization({
-	warnInfestor					= "Объявить цели, на которых Паразитический заразитель",
-	specWarnParasiticInfesterKick	= "Показать специальное предупреждение, чтобы прервать Паразитический заразитель",
-	timerParasiticInfesterCD		= "Показать таймер для Паразитический заразитель",
-	yellParasiticInfester			= "Кричать, когда на Вас действует Паразитический заразитель"
+	warnInfestor					= "Показывать предупреждение для целей, на которых Паразит-заразитель",
+	specWarnParasiticInfesterKick	= "Показывать спецпредупреждение для прерывания каста Паразиту-заразителю (с подсчетом)",
+	timerParasiticInfesterCD		= "Отсчет времени до появления Паразита-заразителя (с подсчетом)",
+	yellParasiticInfester			= "Кричать, когда на Вас Паразит-заразитель"
 })
 
 L:SetMiscLocalization({
@@ -153,8 +153,8 @@ L:SetGeneralLocalization({
 L= DBM:GetModLocalization(2399)
 
 L:SetMiscLocalization({
-	Flight	= "Your doom takes flight!",
-	Flight2	= "Fear the skies!"
+	Flight	= "Смерть летит за вами!",
+	Flight2	= "Ужас с небес!"
 })
 
 -----------------------

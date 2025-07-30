@@ -23,7 +23,7 @@ L:SetTimerLocalization{
 }
 
 L:SetOptionLocalization({
-	TrioActiveTimer		= "Отсчет времени до вступления Троих аптекарей в бой"
+	TrioActiveTimer		= "Отсчет времени до схватки с Тремя аптекарями"
 })
 
 L:SetMiscLocalization({
@@ -46,8 +46,8 @@ L:SetTimerLocalization{
 }
 
 L:SetOptionLocalization({
-	Emerged			= "Предупреждение, когда Ахун появляется",
-	specWarnAttack	= "Спецпредупреждение, когда Ахун становится уязвим",
+	Emerged			= "Показывать предупреждение, когда Ахун появляется",
+	specWarnAttack	= "Показывать спецпредупреждение, когда Ахун становится уязвим",
 	SubmergeTimer	= "Отсчет времени до исчезновения",
 	EmergeTimer		= "Отсчет времени до появления"
 })
@@ -67,8 +67,8 @@ L:SetWarningLocalization({
 })
 
 L:SetOptionLocalization({
-	specWarnBrew		= "Спецпредупреждение для $spell:47376",
-	specWarnBrewStun	= "Спецпредупреждение для $spell:47340"
+	specWarnBrew		= "Показывать спецпредупреждение для $spell:47376",
+	specWarnBrewStun	= "Показывать спецпредупреждение для $spell:47340"
 })
 
 L:SetMiscLocalization({
@@ -85,7 +85,7 @@ L:SetGeneralLocalization({
 })
 
 L:SetOptionLocalization({
-	NormalizeVolume			= "Автоматически нормализуйте громкость звукового канала DIALOG, чтобы она соответствовала громкости музыкального звукового канала в зоне Хмельного фестиваля, чтобы он не был таким раздражающе громким.<br/>Если громкость звука музыки не установлена, то громкость будет отключена."
+	NormalizeVolume			= "Автоматически нормализовать громкость звукового канала DIALOG, чтобы она соответствовала громкости музыкального звукового канала в зоне Хмельного фестиваля, чтобы он не был таким раздражающе громким.<br/>Если громкость звука музыки не установлена, то громкость будет отключена."
 })
 
 -----------------------------
@@ -100,13 +100,13 @@ L:SetWarningLocalization({
 })
 
 L:SetOptionLocalization({
-	WarnPhase				= "Предупреждение о смене фаз",
-	warnHorsemanSoldiers	= "Предупреждение о призыве Пульсирующих тыкв",
-	warnHorsemanHead		= "Предупреждение о появлении Всадника без головы"
+	WarnPhase				= "Показывать предупреждение о смене фаз",
+	warnHorsemanSoldiers	= "Показывать предупреждение о призыве Пульсирующих тыкв",
+	warnHorsemanHead		= "Показывать предупреждение о появлении Всадника без головы"
 })
 
 L:SetMiscLocalization({
-	HorsemanSummon			= "Всадник встает…",
+	HorsemanSummon			= "Всадник встает...",
 	HorsemanSoldiers		= "Восстаньте слуги, устремитесь в бой! Пусть павший рыцарь обретет покой!"
 })
 
@@ -134,12 +134,12 @@ L:SetWarningLocalization({
 })
 
 L:SetTimerLocalization{
-	timerWave		= "След. большая волна"
+	timerWave		= "След. Большая волна"
 }
 
 L:SetOptionLocalization({
 	warnTotalAdds	= "Объявлять общее число появившихся аддов между каждой большой волной",
-	specWarnWave	= "Спецпредупреждение, когда начинается большая волна",
+	specWarnWave	= "Показывать спецпредупреждение, когда начинается большая волна",
 	timerWave		= "Отсчет времени до следующей большой волны"
 })
 
@@ -188,11 +188,11 @@ L:SetGeneralLocalization({
 
 L:SetWarningLocalization{
 	WarnEmerge				= "Ануб'арак появляется",
-	WarnEmergeSoon			= "Появится в течение 10 секунд",
+	WarnEmergeSoon			= "Появится через 10 сек.",
 	WarnSubmerge			= "Ануб'арак закапывается",
-	WarnSubmergeSoon		= "Закопается в течение 10 секунд",
-	WarningTeleportNow		= "Телепортирован",
-	WarningTeleportSoon		= "Телепортация в течение 10 секунд"
+	WarnSubmergeSoon		= "Закопается через 10 сек.",
+	WarningTeleportNow		= "Телепортировался",
+	WarningTeleportSoon		= "Телепортация через 10 сек."
 }
 
 L:SetTimerLocalization{
@@ -208,14 +208,14 @@ L:SetMiscLocalization{
 
 L:SetOptionLocalization{
 	WarnEmerge				= "Показывать предупреждение о появлении",
-	WarnEmergeSoon			= "Показывать предварительное предупреждение о появлении",
+	WarnEmergeSoon			= "Заранее предупреждать о появлении",
 	WarnSubmerge			= "Показывать предупреждение о закапывании",
-	WarnSubmergeSoon		= "Показывать предварительное предупреждение о закапывании",
-	TimerEmerge				= "Показывать таймер для появления",
-	TimerSubmerge			= "Показывать таймер для закапывания",
+	WarnSubmergeSoon		= "Заранее предупреждать о закапывании",
+	TimerEmerge				= "Отсчет времени до появления",
+	TimerSubmerge			= "Отсчет времени до закапывания",
 	WarningTeleportNow		= "Показывать предупреждение для телепортации",
-	WarningTeleportSoon		= "Показывать предварительное предупреждение для телепортации",
-	TimerTeleport			= "Показывать таймер для телепортации"
+	WarningTeleportSoon		= "Заранее предупреждать о телепортации",
+	TimerTeleport			= "Отсчет времени до телепортации"
 }
 
 --------------------------
@@ -233,8 +233,8 @@ L:SetWarningLocalization({
 })
 
 L:SetOptionLocalization({
-	warnSplittingBlow			= "Показывать предупреждения о местоположении для $spell:98951",
-	warnEngulfingFlame			= "Показывать предупреждения о местоположении для $spell:99171"
+	warnSplittingBlow			= "Показывать предупреждение о местоположении для $spell:98951",
+	warnEngulfingFlame			= "Показывать предупреждение о местоположении для $spell:99171"
 })
 
 ----------------------------------
@@ -355,18 +355,18 @@ L:SetGeneralLocalization({
 })
 
 L:SetWarningLocalization({
-	warnGameOverQuest	= "Заработано %d из %d возможных появившихся очков",
-	warnGameOverNoQuest	= "Игра окончилась с всего %d возможных появившихся очков",
+	warnGameOverQuest	= "Заработано %d из %d возможных очков",
+	warnGameOverNoQuest	= "Игра закончилась с общим количеством возможных очков %d",
 	warnGnoll			= "Гнолл появился",
 	warnHogger			= "Хоггер появился",
 	specWarnHogger		= "Хоггер появился!"
 })
 
 L:SetOptionLocalization({
-	warnGameOver	= "Объявлять общее возможное число очков при завершении игры",
-	warnGnoll		= "Объявлять появление Гнолла",
-	warnHogger		= "Объявлять появление Хоггера",
-	specWarnHogger	= "Спецпредупреждение при появлении Хоггера"
+	warnGameOver	= "Объявлять максимальное количество очков после завершения игры",
+	warnGnoll		= "Показывать предупреждение о появлении Гнолла",
+	warnHogger		= "Показывать предупреждение о появлении Хоггера",
+	specWarnHogger	= "Показывать спецпредупреждение о появлении Хоггера"
 })
 
 ------------------------

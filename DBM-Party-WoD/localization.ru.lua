@@ -79,8 +79,8 @@ L= DBM:GetModLocalization(1138)
 L= DBM:GetModLocalization(1163)
 
 L:SetWarningLocalization({
-	warnGrenadeDown			= "%s выпали",
-	warnMortarDown			= "%s выпали"
+	warnGrenadeDown			= "%s выпала",
+	warnMortarDown			= "%s выпала"
 })
 
 -----------------------
@@ -230,8 +230,8 @@ L:SetWarningLocalization({
 })
 
 L:SetOptionLocalization({
-	warnAdd			= "Показать предупреждение для Голем-защитник Небесного Пути",
-	specWarnAdd		= "Показать спецпредупреждение о переключении целей для Голем-защитник Небесного Пути"
+	warnAdd			= "Показывать предупреждение для Голема-защитника Небесного Пути",
+	specWarnAdd		= "Показывать спецпредупреждение для переключения на Голема-защитника Небесного Пути"
 })
 
 -------------
