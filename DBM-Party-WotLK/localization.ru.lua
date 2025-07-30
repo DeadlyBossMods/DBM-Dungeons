@@ -134,13 +134,13 @@ L:SetWarningLocalization({
 
 L:SetTimerLocalization({
 	TimerWaveIn		= "Следующая волна (6)",
-	TimerRoleplay	= "Вступительное представление"
+	TimerRoleplay	= "Ролевая игра"
 })
 
 L:SetOptionLocalization({
 	WarningWaveNow	= "Показывать предупреждение о новой волне",
-	TimerWaveIn		= "Отсчет времени до cледующей волны (после босса 5-й волны)",
-	TimerRoleplay	= "Отсчет времени до вступительного представления"
+	TimerWaveIn		= "Отсчет времени до cледующей волны (после 5-й волны босса)",
+	TimerRoleplay	= "Отсчет времени до Ролевой игры"
 })
 
 L:SetMiscLocalization({
@@ -420,7 +420,7 @@ L:SetGeneralLocalization{
 }
 
 L:SetOptionLocalization({
-	MakeitCountTimer	= "Отсчет времени до 'Вам всем зачтется' (достижение)"
+	MakeitCountTimer	= "Отсчет времени до \"Вам всем зачтется\" (достижение)"
 })
 
 L:SetMiscLocalization({
@@ -640,7 +640,7 @@ L:SetTimerLocalization({
 })
 
 L:SetOptionLocalization({
-	WarningPortalNow		= "Показывать предупреждение для нового портала",
+	WarningPortalNow		= "Показывать предупреждение о новом портале",
 	WarningPortalSoon		= "Заранее предупреждать о новом портале",
 	WarningBossNow			= "Показывать предупреждение о появлении босса",
 	TimerPortalIn			= "Отсчет времени до следующего портала (после босса)",
@@ -786,15 +786,15 @@ L:SetWarningLocalization({
 })
 
 L:SetTimerLocalization({
-	TimerNextWave	= "Следующая волна"
+	TimerNextWave	= "След. Волна"
 })
 
 L:SetOptionLocalization({
 	WarnNewWave			= "Показывать предупреждение о вступлении босса в бой",
-	WarnNewWaveSoon		= "Заранее предупреждать о новой волне (после босса 5-й волны)",
+	WarnNewWaveSoon		= "Заранее предупреждать о новой волне (после 5-й волны босса)",
 	ShowAllWaveWarnings	= "Показывать предупреждения для всех волн",
-	TimerNextWave		= "Отсчет времени до следующей волны (после босса 5-й волны)",
-	ShowAllWaveTimers	= "Заранее предупреждать и отсчитывать время для всех волн (неточный)"
+	TimerNextWave		= "Отсчет времени до следующей волны (после 5-й волны босса)",
+	ShowAllWaveTimers	= "Заранее предупреждать и отсчитывать время для всех волн (неточно)"
 })
 
 --------------
