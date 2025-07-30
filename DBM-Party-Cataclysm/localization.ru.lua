@@ -251,7 +251,7 @@ L:SetTimerLocalization({
 })
 
 L:SetOptionLocalization{
-	TimerAdds		= "Показывать таймер до следующих помощников"
+	TimerAdds		= "Отсчет времени до следующих помощников"
 }
 
 L:SetMiscLocalization{
@@ -295,11 +295,11 @@ L:SetTimerLocalization({
 })
 
 L:SetOptionLocalization({
-	WarnEmerge		= "Показывать предупреждения о появлении",
-	WarnSubmerge	= "Показывать предупреждения о погружении",
-	TimerEmerge		= "Показывать таймер до появления",
-	TimerSubmerge	= "Показывать таймер до погружения",
-	RangeFrame		= "Окно проверки дистанции (5 м.)"
+	WarnEmerge		= "Показывать предупреждение о появлении",
+	WarnSubmerge	= "Показывать предупреждение о погружении",
+	TimerEmerge		= "Отсчет времени до появления",
+	TimerSubmerge	= "Отсчет времени до погружения",
+	RangeFrame		= "Показывать окно проверки дистанции (5 м.)"
 })
 
 --------------
@@ -321,8 +321,8 @@ L:SetTimerLocalization({
 L:SetOptionLocalization({
 	WarnAirphase				= "Показывать предупреждение, когда Камнешкур взлетает",
 	WarnGroundphase				= "Показывать предупреждение, когда Камнешкур приземляется",
-	TimerAirphase				= "Показывать таймер до следующей воздушной фазы",
-	TimerGroundphase			= "Показывать таймер до следующей наземной фазы",
+	TimerAirphase				= "Отсчет времени до следующей воздушной фазы",
+	TimerGroundphase			= "Отсчет времени до следующей наземной фазы",
 	specWarnCrystalStorm		= "Показывать спецпредупреждение для $spell:92265"
 })
 
@@ -402,7 +402,7 @@ L:SetTimerLocalization{
 }
 
 L:SetOptionLocalization{
-	TimerPhase		= "Показывать таймер для 2-й фазы"
+	TimerPhase		= "Отсчет времени до 2-й фазы"
 }
 
 L:SetMiscLocalization{
@@ -426,7 +426,7 @@ L:SetGeneralLocalization({
 L= DBM:GetModLocalization(186)
 
 L:SetOptionLocalization{
-	RangeFrame	= "Окно проверки дистанции (10 м.)"
+	RangeFrame	= "Показывать окно проверки дистанции (10 м.)"
 }
 
 ---------------
@@ -447,12 +447,12 @@ L:SetTimerLocalization{
 }
 
 L:SetOptionLocalization{
-	WarnBear		= "Показывать предупреждения для облика медведя",
+	WarnBear		= "Показывать предупреждение для облика медведя",
 	WarnBearSoon	= "Показывать предупреждение о скорой смене облика на медвежий",
-	WarnNormal		= "Показывать предупреждения для обычного облика",
+	WarnNormal		= "Показывать предупреждение для обычного облика",
 	WarnNormalSoon	= "Показывать предупреждение о скорой смене облика на обычный",
-	TimerBear		= "Показывать таймер до облика медведя",
-	TimerNormal		= "Показывать таймер до обычного облика",
+	TimerBear		= "Отсчет времени до облика медведя",
+	TimerNormal		= "Отсчет времени до обычного облика",
 	InfoFrame		= "Показывать инфофрейм для игроков, на которых $spell:42402"
 }
 
@@ -488,8 +488,8 @@ L:SetWarningLocalization{
 }
 
 L:SetOptionLocalization{
-	WarnSpirit	= "Показывать предупреждения для фазы духа",
-	WarnNormal	= "Показывать предупреждения для обычной фазы "
+	WarnSpirit	= "Показывать предупреждение для фазы духа",
+	WarnNormal	= "Показывать предупреждение для обычной фазы "
 }
 
 L:SetMiscLocalization{
@@ -507,7 +507,7 @@ L:SetTimerLocalization{
 }
 
 L:SetOptionLocalization{
-	TimerSiphon	= "Показывать таймер для $spell:43501"
+	TimerSiphon	= "Отсчет времени до $spell:43501"
 }
 
 L:SetMiscLocalization{
@@ -637,7 +637,7 @@ L:SetTimerLocalization{
 }
 
 L:SetOptionLocalization{
-	TimerFlarecoreDetonate	= "Показывать таймер до взрыва $spell:101927"
+	TimerFlarecoreDetonate	= "Отсчет времени до взрыва $spell:101927"
 }
 
 ----------------------
@@ -684,8 +684,8 @@ L:SetTimerLocalization{
 }
 
 L:SetOptionLocalization{
-	WarnAdds	= "Предупреждать о скором появлении новых помощников",
-	TimerAdds	= "Показывать таймер до появления новых помощников"
+	WarnAdds	= "Показывать предупреждение о скором появлении новых помощников",
+	TimerAdds	= "Отсчет времени до появления новых помощников"
 }
 
 L:SetMiscLocalization{
@@ -702,7 +702,7 @@ L:SetTimerLocalization{
 }
 
 L:SetOptionLocalization{
-	TimerTyrandeHelp	= "Показывать таймер до момента, когда Тиранде понадобится помощь"
+	TimerTyrandeHelp	= "Отсчет времени до момента, когда Тиранде понадобится помощь"
 }
 
 L:SetMiscLocalization{
