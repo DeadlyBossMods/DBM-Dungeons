@@ -199,7 +199,7 @@ L:SetTimerLocalization({
 })
 
 L:SetOptionLocalization({
-	TimerWave	= "Показывать таймер до следующей волны подкреплений"
+	TimerWave	= "Отсчет времени до следующей волны подкреплений"
 })
 
 L:SetMiscLocalization({
