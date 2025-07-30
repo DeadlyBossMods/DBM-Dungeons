@@ -23,7 +23,7 @@ L:SetTimerLocalization{
 }
 
 L:SetOptionLocalization({
-	TrioActiveTimer		= "Отсчет времени до вступления Троих аптекарей в бой"
+	TrioActiveTimer		= "Отсчет времени до схватки с Тремя аптекарями"
 })
 
 L:SetMiscLocalization({
