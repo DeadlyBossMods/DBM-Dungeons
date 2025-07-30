@@ -276,7 +276,7 @@ L:SetTimerLocalization({
 })
 
 L:SetOptionLocalization({
-	timerZaelaReturns	= "Показывать таймер до возвращения Зелы"
+	timerZaelaReturns	= "Отсчет времени до возвращения Зелы"
 })
 
 -------------
