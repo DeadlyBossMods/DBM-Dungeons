@@ -412,8 +412,8 @@ L:SetTimerLocalization({
 L:SetOptionLocalization({
 	WarningPortalNow		= "Показывать предупреждение о новом портале",
 	WarningPortalSoon		= "Заранее предупреждать о новом портале",
-	WarningBossNow			= "Предупреждать о появлении босса",
-	TimerPortal				= "Показывать таймер до следующего портала (после босса)"
+	WarningBossNow			= "Показывать предупреждение о появлении босса",
+	TimerPortal				= "Отсчет времени до следующего портала (после босса)"
 })
 
 L:SetMiscLocalization({
