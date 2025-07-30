@@ -23,7 +23,7 @@ L:SetTimerLocalization{
 }
 
 L:SetOptionLocalization({
-	TrioActiveTimer		= "Показывать таймер до вступления Троих аптекарей в бой"
+	TrioActiveTimer		= "Отсчет времени до вступления Троих аптекарей в бой"
 })
 
 L:SetMiscLocalization({
@@ -48,8 +48,8 @@ L:SetTimerLocalization{
 L:SetOptionLocalization({
 	Emerged			= "Показывать предупреждение, когда Ахун появляется",
 	specWarnAttack	= "Показывать спецпредупреждение, когда Ахун становится уязвим",
-	SubmergeTimer	= "Показывать таймер до исчезновения",
-	EmergeTimer		= "Показывать таймер до появления"
+	SubmergeTimer	= "Отсчет времени до исчезновения",
+	EmergeTimer		= "Отсчет времени до появления"
 })
 
 L:SetMiscLocalization({
@@ -140,7 +140,7 @@ L:SetTimerLocalization{
 L:SetOptionLocalization({
 	warnTotalAdds	= "Объявлять общее число появившихся аддов между каждой большой волной",
 	specWarnWave	= "Показывать спецпредупреждение, когда начинается большая волна",
-	timerWave		= "Показывать таймер до следующей большой волны"
+	timerWave		= "Отсчет времени до следующей большой волны"
 })
 
 L:SetMiscLocalization({
@@ -211,11 +211,11 @@ L:SetOptionLocalization{
 	WarnEmergeSoon			= "Заранее предупреждать о появлении",
 	WarnSubmerge			= "Показывать предупреждение о закапывании",
 	WarnSubmergeSoon		= "Заранее предупреждать о закапывании",
-	TimerEmerge				= "Показывать таймер до появления",
-	TimerSubmerge			= "Показывать таймер до закапывания",
+	TimerEmerge				= "Отсчет времени до появления",
+	TimerSubmerge			= "Отсчет времени до закапывания",
 	WarningTeleportNow		= "Показывать предупреждение для телепортации",
 	WarningTeleportSoon		= "Заранее предупреждать о телепортации",
-	TimerTeleport			= "Показывать таймер до телепортации"
+	TimerTeleport			= "Отсчет времени до телепортации"
 }
 
 --------------------------
@@ -233,8 +233,8 @@ L:SetWarningLocalization({
 })
 
 L:SetOptionLocalization({
-	warnSplittingBlow			= "Показывать предупреждения о местоположении для $spell:98951",
-	warnEngulfingFlame			= "Показывать предупреждения о местоположении для $spell:99171"
+	warnSplittingBlow			= "Показывать предупреждение о местоположении для $spell:98951",
+	warnEngulfingFlame			= "Показывать предупреждение о местоположении для $spell:99171"
 })
 
 ----------------------------------
