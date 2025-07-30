@@ -93,8 +93,8 @@ L:SetTimerLocalization{
 }
 
 L:SetOptionLocalization({
-	warnInfestor					= "Объявлять цели, на которых Паразит-заразитель",
-	specWarnParasiticInfesterKick	= "Показывать спецпредупреждение, чтобы прервать каст Паразиту-заразителю (с подсчетом)",
+	warnInfestor					= "Показывать предупреждение для целей, на которых Паразит-заразитель",
+	specWarnParasiticInfesterKick	= "Показывать спецпредупреждение для прерывания каста Паразиту-заразителю (с подсчетом)",
 	timerParasiticInfesterCD		= "Отсчет времени до появления Паразита-заразителя (с подсчетом)",
 	yellParasiticInfester			= "Кричать, когда на Вас Паразит-заразитель"
 })
