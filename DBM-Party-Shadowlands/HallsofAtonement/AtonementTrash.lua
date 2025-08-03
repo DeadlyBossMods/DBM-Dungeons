@@ -10,11 +10,11 @@ mod.isTrashMod = true
 mod.isTrashModBossFightAllowed = true
 
 mod:RegisterEvents(
-	"SPELL_CAST_START 326409 326450 325523 325700 326607 326441 338003 1237071 326997 1235326 1235766",
-	"SPELL_CAST_SUCCESS 325876 326450 1237071 326997 1235326 325701 326638",
+	"SPELL_CAST_START 326409 326450 325523 325700 1235762 326441 338003 1237071 326997 1235326 1235766 326794 326847 1236614",
+	"SPELL_CAST_SUCCESS 325876 326450 1237071 326997 1235326 325701 326638 326879",
 	"SPELL_INTERRUPT",
-	"SPELL_AURA_APPLIED 326450 326891 325876",
-	"SPELL_AURA_REMOVED 325876",--326409
+	"SPELL_AURA_APPLIED 326450 326891 325876 1235762 1236614",
+	"SPELL_AURA_REMOVED 325876 1236614",--326409
 	"UNIT_DIED"
 )
 
@@ -24,24 +24,31 @@ mod:RegisterEvents(
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
  or (source.type = "NPC" and source.firstSeen = timestamp and source.id = 174197) or (target.type = "NPC" and target.firstSeen = timestamp and target.id = 174197)
 --]]
+--TODO, anglebiters have a diff version of wicked bolt? can't really confirm it
+--TODO, ideal warning for Dark Communion
+--TODO, worth warning https://www.wowhead.com/ptr-2/spell=340446/mark-of-envy ?
 local warnHurlGlaive					= mod:NewTargetNoFilterAnnounce(326638, 2)
 local warnMortalStrike					= mod:NewCastAnnounce(1235766, 3, nil, nil, "Tank|Healer")
+local warnDarkCommunion					= mod:NewSpellAnnounce(326794, 2)
+local warnDisperseSins					= mod:NewSpellAnnounce(326847, 3)
+local warnDisplayOfPower				= mod:NewSpellAnnounce(1236614, 2)--activation
 
 local specWarnThrash					= mod:NewSpecialWarningSpell(326409, nil, nil, nil, 2, 2)
 local specWarnSinQuake					= mod:NewSpecialWarningDodge(326441, nil, nil, nil, 2, 2)
-local specWarnDeadlyThrust				= mod:NewSpecialWarningDodge(325523, "Tank", nil, nil, 1, 2)
-local specWarnTurnToStoneOther			= mod:NewSpecialWarningDodge(326607, nil, nil, nil, 2, 2)
+local specWarnDeadlyThrust				= mod:NewSpecialWarningDodge(325523, "Tank", nil, nil, 1, 2)--Removed?
 local specWarnPowerfulSwipe				= mod:NewSpecialWarningDodge(326997, nil, nil, nil, 2, 15)
+local specWarnTurntoStone				= mod:NewSpecialWarningDodge(1235762, nil, nil, nil, 2, 2)
+local specWarnDisplayOfPower			= mod:NewSpecialWarningMoveAway(1236614, nil, nil, nil, 1, 2)--spread alert toward the end of debuff
 local specWarnMarkofObliteration		= mod:NewSpecialWarningMoveAway(325876, nil, nil, nil, 1, 2)--backup if no dispel
 local yellMarkofObliterationFades		= mod:NewShortFadesYell(325876)
 local specWarnStoneFist					= mod:NewSpecialWarningDefensive(1237071, nil, nil, nil, 2, 2)
 local specWarnDisruptingScreech			= mod:NewSpecialWarningCast(1235326, "SpellCaster", nil, nil, 2, 2)
-local specWarnLoyalBeasts				= mod:NewSpecialWarningDispel(326450, "RemoveEnrage|Tank", nil, nil, 1, 2)--Target because it's hybrid warning
 local specWarnLoyalBeastsInterrupt		= mod:NewSpecialWarningInterrupt(326450, "HasInterrupt", nil, nil, 1, 2)
 local specWarnCollectSins				= mod:NewSpecialWarningInterrupt(325700, "HasInterrupt", nil, nil, 1, 2)
 local specWarnSiphonLife				= mod:NewSpecialWarningInterrupt(325701, "HasInterrupt", nil, nil, 1, 2)
-local specWarnTurntoStone				= mod:NewSpecialWarningInterrupt(326607, "HasInterrupt", nil, nil, 1, 2)
 local specWarnWickedBolt				= mod:NewSpecialWarningInterrupt(338003, "HasInterrupt", nil, nil, 1, 2)--No CD, just spammed
+local specWarnLoyalBeasts				= mod:NewSpecialWarningDispel(326450, "RemoveEnrage|Tank", nil, nil, 1, 2)--Target because it's hybrid warning
+local specWarnTurnToStoneDispel			= mod:NewSpecialWarningDispel(1235762, "RemoveMagic", nil, nil, 2, 2)--326607 old version
 local specWarnMarkofObliterationDispel	= mod:NewSpecialWarningDispel(325876, "RemoveMagic", nil, nil, 1, 2)
 
 local timerMarkofObliterationCD			= mod:NewCDNPTimer(23, 325876, nil, nil, nil, 3)
@@ -54,6 +61,11 @@ local timerThrashCD						= mod:NewCDNPTimer(23, 326409, nil, nil, nil, 2)
 local timerSinQuakeCD					= mod:NewCDNPTimer(23, 326441, nil, nil, nil, 3)--always 11 seconds after thrash (thrash is 10 sec + 1 sec)
 local timerHurlGlaiveCD					= mod:NewCDNPTimer(17, 326638, nil, nil, nil, 3)--17-20.7
 local timerMortalStrikeCD				= mod:NewCDNPTimer(14.6, 1235766, nil, "Tank|Healer", nil, 5)--14.6-21.9
+local timerTurntoStoneCD				= mod:NewCDNPTimer(24.3, 1235762, nil, nil, nil, 3)
+local timerAnkleBiterCD					= mod:NewCDNPTimer(10.9, 326879, nil, nil, nil, 5)--10.9-12.1
+local timerDarkCommunionCD				= mod:NewCDNPTimer(32.8, 326794, nil, nil, nil, 1)
+local timerDisperseSinsCD				= mod:NewCDNPTimer(10.9, 326847, nil, nil, nil, 3)--10.9-21.8
+local timerDisplayOfPowerCD				= mod:NewCDNPTimer(32.8, 1236614, nil, nil, nil, 3)
 
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 generalized
 
@@ -84,13 +96,11 @@ function mod:SPELL_CAST_START(args)
 	elseif spellId == 338003 and self:CheckInterruptFilter(args.sourceGUID, false, true) then
 		specWarnWickedBolt:Show(args.sourceName)
 		specWarnWickedBolt:Play("kickcast")
-	elseif spellId == 326607 then
-		if self:CheckInterruptFilter(args.sourceGUID, false, true) then
-			specWarnTurntoStone:Show(args.sourceName)
-			specWarnTurntoStone:Play("kickcast")
-		elseif self:AntiSpam(3, 2) then
-			specWarnTurnToStoneOther:Show()
-			specWarnTurnToStoneOther:Play("watchstep")
+	elseif spellId == 1235762 then
+		timerTurntoStoneCD:Start(nil, args.sourceGUID)
+		if self:AntiSpam(3, 2) then
+			specWarnTurntoStone:Show()
+			specWarnTurntoStone:Play("watchstep")
 		end
 	elseif spellId == 1237071 and self:IsTanking("player", nil, nil, true, args.sourceGUID) and self:AntiSpam(3, 5) then
 		specWarnStoneFist:Show()
@@ -108,6 +118,15 @@ function mod:SPELL_CAST_START(args)
 		if self:AntiSpam(3, 5) then
 			warnMortalStrike:Show()
 		end
+	elseif spellId == 326794 then
+		timerDarkCommunionCD:Start(nil, args.sourceGUID)
+		warnDarkCommunion:Show()
+	elseif spellId == 326847 then
+		warnDisperseSins:Show()
+		timerDisperseSinsCD:Start(nil, args.sourceGUID)
+	elseif spellId == 1236614 then
+		warnDisplayOfPower:Show()
+		timerDisplayOfPowerCD:Start(nil, args.sourceGUID)
 	end
 end
 
@@ -135,6 +154,8 @@ function mod:SPELL_CAST_SUCCESS(args)
 		if self:AntiSpam(3, 6) then
 			warnHurlGlaive:Show(args.destName)
 		end
+	elseif spellId == 326879 then
+		timerAnkleBiterCD:Start(nil, args.sourceGUID)
 	end
 end
 
@@ -162,6 +183,14 @@ function mod:SPELL_AURA_APPLIED(args)
 			specWarnMarkofObliterationDispel:Show(args.destName)
 			specWarnMarkofObliterationDispel:Play("dispelnow")
 		end
+	elseif spellId == 1235762 then
+		if self:CheckDispelFilter("magic") and self:AntiSpam(3, 3) then
+			specWarnTurnToStoneDispel:Show(args.destName)
+			specWarnTurnToStoneDispel:Play("dispelnow")
+		end
+	elseif spellId == 1236614 and args:IsPlayer() then
+		specWarnDisplayOfPower:Schedule(12)
+		specWarnDisplayOfPower:ScheduleVoice(12, "scatter")
 	end
 end
 
@@ -177,6 +206,9 @@ function mod:SPELL_AURA_REMOVED(args)
 			specWarnMarkofObliteration:CancelVoice()
 			yellMarkofObliterationFades:Cancel()
 		end
+	elseif spellId == 1236614 and args:IsPlayer() then
+		specWarnDisplayOfPower:Cancel()
+		specWarnDisplayOfPower:CancelVoice()
 	--elseif spellId == 326409 then
 	--	specWarnSinQuake:Show()
 	--	specWarnSinQuake:Play("watchstep")
@@ -203,6 +235,13 @@ function mod:UNIT_DIED(args)
 		timerHurlGlaiveCD:Stop(args.destGUID)
 	elseif cid == 167612 then--Stoneborn Reaver
 		timerMortalStrikeCD:Stop(args.destGUID)
+		timerTurntoStoneCD:Stop(args.destGUID)
+	elseif cid == 167610 then--Stonefiend Anklebiter
+		timerAnkleBiterCD:Stop(args.destGUID)
+	elseif cid == 167876 then--Inquisitor Sigar
+		timerDarkCommunionCD:Stop(args.destGUID)
+		timerDisperseSinsCD:Stop(args.destGUID)
+		timerDisplayOfPowerCD:Stop(args.destGUID)
 	end
 end
 
@@ -226,6 +265,13 @@ function mod:StartEngageTimers(guid, cid, delay)
 		timerHurlGlaiveCD:Start(7.5-delay, guid)--Iffy
 	elseif cid == 167612 then--Stoneborn Reaver
 		timerMortalStrikeCD:Start(4.8-delay, guid)--Iffy
+		timerTurntoStoneCD:Start(20.5-delay, guid)--Iffy
+	elseif cid == 167610 then--Stonefiend Anklebiter
+		timerAnkleBiterCD:Start(8.5-delay, guid)--Iffy
+	elseif cid == 167876 then--Inquisitor Sigar
+		timerDarkCommunionCD:Start(6-delay, guid)--Iffy
+		timerDisperseSinsCD:Start(10.5-delay, guid)--Iffy
+		timerDisplayOfPowerCD:Start(19.1-delay, guid)--Iffy
 	end
 end
 
