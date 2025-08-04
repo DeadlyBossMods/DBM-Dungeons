@@ -149,7 +149,7 @@ function mod:SPELL_AURA_APPLIED(args)
 			self:SetIcon(args.destName, 1)
 		end
 	elseif spellId == 349933 then
-		if self.Options.InfoFrame then
+		if self.Options.InfoFrame and not DBM.Test.testRunning then
 			local bossUnitID = self:GetUnitIdFromGUID(args.destGUID)
 			DBM.InfoFrame:SetHeader(args.spellName)
 			DBM.InfoFrame:Show(2, "enemyabsorb", nil, args.amount, bossUnitID)

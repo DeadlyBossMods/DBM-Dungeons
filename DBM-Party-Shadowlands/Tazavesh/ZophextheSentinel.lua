@@ -51,12 +51,6 @@ function mod:OnCombatStart(delay)
 	timerInterrogationCD:Start(31.6-delay)
 end
 
-function mod:OnCombatEnd()
-	if self.Options.InfoFrame then
-		DBM.InfoFrame:Hide()
-	end
-end
-
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
 	if spellId == 346204 then

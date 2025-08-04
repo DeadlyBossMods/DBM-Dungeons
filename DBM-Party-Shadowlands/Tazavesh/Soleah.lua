@@ -152,7 +152,7 @@ end
 function mod:SPELL_AURA_APPLIED(args)
 	local spellId = args.spellId
 	if spellId == 357190 then
-		if self.Options.InfoFrame and not DBM.InfoFrame:IsShown() then
+		if self.Options.InfoFrame and not DBM.InfoFrame:IsShown() and not DBM.Test.testRunning then
 			DBM.InfoFrame:SetHeader(args.spellName)
 			DBM.InfoFrame:Show(5, "playerbaddebuff", 357190)
 		end
