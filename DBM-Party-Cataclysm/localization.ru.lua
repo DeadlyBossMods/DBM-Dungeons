@@ -633,7 +633,7 @@ L= DBM:GetModLocalization(340)
 L= DBM:GetModLocalization(285)
 
 L:SetTimerLocalization{
-	TimerFlarecoreDetonate	= "Взрыв Пламенных недр"
+	TimerFlarecoreDetonate	= "Взрыв пламенных недр"
 }
 
 L:SetOptionLocalization{
