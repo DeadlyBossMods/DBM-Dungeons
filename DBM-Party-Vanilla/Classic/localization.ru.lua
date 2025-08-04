@@ -318,6 +318,12 @@ L = DBM:GetModLocalization("WarchiefRendBlackhand")
 L:SetGeneralLocalization{
 	name 		= "Вождь Ренд Чернорук"
 }
+
+L:SetMiscLocalization{
+	Pull1 = "Превосходно... эти ничтожества пришли как раз вовремя - мой легион пора кормить. Приветствую, смертные!",
+	Pull2 = "ЭТОГО НЕ МОЖЕТ БЫТЬ! Ренд, расправься с этими ничтожествами!"
+}
+
 -----------------------------
 --  The Beast  --
 -----------------------------
@@ -1255,7 +1261,7 @@ L:SetTimerLocalization{
 	TimerGuards	= "Появление Караульных"
 }
 L:SetOptionLocalization{
-	TimerGuards	= "Показывать таймер до прибытия Караульных Черной Стражи после победы над боссом"
+	TimerGuards	= "Отсчет времени до прибытия Караульных Черной Стражи после победы над боссом"
 }
 -----------------------------
 --  Baron Rivendare  --
@@ -1650,7 +1656,7 @@ L:SetGeneralLocalization{
 }
 
 L:SetOptionLocalization{
-	EnableMinorNameplates = "Автоматически включить отображение зеркальных отражений на вражеских индикаторах здоровья для мелких юнитов"
+	EnableMinorNameplates = "Автоматически включить отображение $spell:424198 на вражеских индикаторах здоровья для мелких юнитов в Каражане"
 }
 
 L:SetMiscLocalization{
