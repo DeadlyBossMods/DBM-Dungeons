@@ -4,7 +4,7 @@ DBM.Test:DefineTest{
 	addon = "DBM-Party-Shadowlands",
 	mod = 2454,
 	encounterId = 2441,
-	instanceInfo = {name = "Tazavesh", instanceType = "the Veiled Market", difficultyID = "party", difficultyName = 23, difficultyModifier = 0, maxPlayers = "Mythic", dynamicDifficulty = 5, isDynamic = 0, instanceID = false, instanceGroupSize = "2441, 5", lfgDungeonID = nil},
+	instanceInfo = {name = "Tazavesh", instanceType = "party", difficultyID = 23, difficultyName = "Mythic", difficultyModifier = nil, maxPlayers = 5, dynamicDifficulty = 0, isDynamic = false, instanceID = 2441, instanceGroupSize = 5, lfgDungeonID = nil},
 	players = {
 		{"Tank1",   "Player-1-00000005", class = "MONK", healer = 0.00, tank = 1.00, dps = 0.54, healed = 0.00, logRecorder = true},
 		{"Tank2",   "Player-1-00000006", class = "MAGE", healer = 0.00, tank = 1.00, dps = 0.32, healed = 1.00},
