@@ -71,6 +71,7 @@ local timerDisplayOfPowerCD				= mod:NewCDNPTimer(32.8, 1236614, nil, nil, nil, 
 
 function mod:SPELL_CAST_START(args)
 	if not self.Options.Enabled then return end
+	if not self:IsValidWarning(args.sourceGUID) then return end
 	local spellId = args.spellId
 	if spellId == 326409 then
 		timerThrashCD:Start(nil, args.sourceGUID)
@@ -132,6 +133,7 @@ end
 
 function mod:SPELL_CAST_SUCCESS(args)
 	if not self.Options.Enabled then return end
+	if not self:IsValidWarning(args.sourceGUID) then return end
 	local spellId = args.spellId
 	if spellId == 325876 then
 		timerMarkofObliterationCD:Start(nil, args.sourceGUID)
