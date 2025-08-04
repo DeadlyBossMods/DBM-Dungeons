@@ -10,3 +10,12 @@
 ## X-DBM-Test: true
 
 Dragonflight/UldamanLegacyOfTyr/TheLostDwarves.lua
+
+Shadowlands/Tazavesh/Zephex_HardMode_Kill.lua
+Shadowlands/Tazavesh/GrandMenagerie_HardMode_Kill.lua
+Shadowlands/Tazavesh/MailroomMayhem_HardMode_Kill.lua
+Shadowlands/Tazavesh/MyzasOasis_HardMode_Kill.lua
+Shadowlands/Tazavesh/Soazmi_HardMode_Kill.lua
+Shadowlands/Tazavesh/Hylbrande_HardMode_Kill.lua
+Shadowlands/Tazavesh/TimecapnHooktail_HardMode_Kill.lua
+Shadowlands/Tazavesh/Soleah_HardMode_Kill.lua
