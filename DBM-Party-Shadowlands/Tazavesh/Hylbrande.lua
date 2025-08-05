@@ -47,7 +47,7 @@ local specWarnLigtningNova			= mod:NewSpecialWarningInterrupt(358131, "HasInterr
 
 local timerShearingSwingsCD			= mod:NewCDTimer(10.9, 346116, nil, nil, nil, 5, nil, DBM_COMMON_L.HEALER_ICON)
 local timerTitanicCrashCD			= mod:NewCDTimer(23.1, 347094, nil, nil, nil, 3)
-local timerPurgedbyFireCD			= mod:NewCDTimer(17, 346959, nil, nil, nil, 3)
+local timerPurgedbyFireCD			= mod:NewCDTimer(16.7, 346959, nil, nil, nil, 3)
 local timerSanitizingCycleCD		= mod:NewCDTimer(99, 346766, nil, nil, nil, 6)
 local timerVaultPurifierCD			= mod:NewCDTimer(29.1, -23004, nil, nil, nil, 1, "136116", DBM_COMMON_L.DAMAGE_ICON)
 local timerPurifyingBurstCD			= mod:NewCDTimer(20.2, 353312, nil, nil, nil, 2)
@@ -63,7 +63,7 @@ function mod:OnCombatStart(delay)
 	self.vb.cycleCount = 0
 	self.vb.burstCount = 0
 	--TODO, hard mode check shit for purifying Burst (is it cast more often? or just more targets?)
-	timerPurifyingBurstCD:Start(6-delay)
+	timerPurifyingBurstCD:Start(5.2-delay)
 	timerShearingSwingsCD:Start(8.5-delay)
 	if self:IsMythic() and not self:IsMythicPlus() then
 		timerPurgedbyFireCD:Start(10.8-delay)
