@@ -10,7 +10,7 @@ mod.isTrashMod = true
 mod.isTrashModBossFightAllowed = true
 
 mod:RegisterEvents(
-	"SPELL_CAST_START 356548 352390 354297 355930 355934 356001 357197 347775 355057 355225 355584 357226 357260 356407 356404 347903 357229 355048 355464 355429 355577 356133 356843 1244650 357238 357196 353836 352796 356537",
+	"SPELL_CAST_START 356548 352390 354297 355930 355934 356001 357197 347775 355057 355225 355584 357226 357260 356407 356404 347903 357229 355048 355464 355429 355577 356133 356843 1244650 357238 357196 353836 352796 356537 355830",
 	"SPELL_CAST_SUCCESS 355234 355048 355057 355132 356133 368661 357260 355888 355900 355915 355934",
 	"SPELL_INTERRUPT",
 	"SPELL_AURA_APPLIED 355888 355915 355980 357229 357029 355581 356407 356133",
@@ -33,9 +33,11 @@ local warnRadiantPulse						= mod:NewSpellAnnounce(356548, 2)--(S3 Valid)
 local warnChronolightEnhancer				= mod:NewCastAnnounce(357229, 3, nil, nil, false)
 local warnSuperSaison						= mod:NewCastAnnounce(356133, 3, nil, nil, "Tank|RemoveEnrage")--(S3 Valid)
 local warnProxyStrike						= mod:NewCastAnnounce(352796, 3, nil, nil, "Tank|Healer")--(S3 Valid)
+local warnQuickblade						= mod:NewSpellAnnounce(355830, 3)--(S3 Valid)
 
 local specWarnGTFO							= mod:NewSpecialWarningGTFO(355581, nil, nil, nil, 1, 8)
 local specWarnTidalStomp					= mod:NewSpecialWarningSpell(355429, nil, nil, nil, 2, 2)
+local yellQuickblade						= mod:NewShortYell(355830)
 local specWarnDisruptionGrenade				= mod:NewSpecialWarningDodge(355900, nil, nil, nil, 2, 2)--(S3 Valid)
 local specWarnRiftBlasts					= mod:NewSpecialWarningDodge(352390, nil, nil, nil, 2, 2)
 local specWarnLightshardRetreat				= mod:NewSpecialWarningDodge(357197, nil, nil, nil, 2, 2)
@@ -93,6 +95,7 @@ local timerHardLightBarrierCD				= mod:NewCDNPTimer(21.2, 355934, nil, nil, nil,
 local timerBeamSplicerCD					= mod:NewCDNPTimer(23.1, 356001, nil, nil, nil, 3)
 local timerEmpGlyphofRestraintCD			= mod:NewCDNPTimer(23.1, 356537, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerRiftBlastsCD						= mod:NewCDNPTimer(23.1, 352390, nil, nil, nil, 3)
+local timerQuickbladeCD						= mod:NewCDNPTimer(14.2, 355830, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc
 
@@ -213,6 +216,14 @@ function mod:SPELL_CAST_START(args)
 		if self:CheckInterruptFilter(args.sourceGUID, false, true) then
 			specWarnEmpGlyphofRestraint:Show(args.sourceName)
 			specWarnEmpGlyphofRestraint:Play("kickcast")
+		end
+	elseif spellId == 355830 then
+		timerQuickbladeCD:Start(nil, args.sourceGUID)
+		if self:AntiSpam(3, 5) then
+			warnQuickblade:Show()
+		end
+		if self:IsTanking("player", nil, nil, true, args.sourceGUID) then
+			yellQuickblade:Yell()
 		end
 	end
 end
@@ -357,6 +368,8 @@ function mod:UNIT_DIED(args)
 		timerGlyphofRestraintCD:Stop(args.destGUID)
 	elseif cid == 177817 then--Support Officer
 		timerHardLightBarrierCD:Stop(args.destGUID)
+	elseif cid == 179893 then--Cartel Skulker
+		timerQuickbladeCD:Stop(args.destGUID)
 	end
 end
 
@@ -399,6 +412,10 @@ function mod:StartEngageTimers(guid, cid, delay)
 		timerDisruptionGrenadeCD:Start(10.5-delay, guid)
 	elseif cid == 177816 then--Interrogation Specialist
 		timerGlyphofRestraintCD:Start(7-delay, guid)
+--	elseif cid == 177817 then--Support Officer
+--		timerHardLightBarrierCD:Start(11-delay, guid)--Used Instantly on engage
+	elseif cid == 179893 then--Cartel Skulker
+		timerQuickbladeCD:Start(6-delay, guid)
 	end
 end
 
