@@ -25,6 +25,7 @@ mod:RegisterEventsInCombat(
  or ability.id = 357189 or ability.id = 347152
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
 --]]
+--TODO, needs massive fixup once I can compare M+ to M0 version on WCL
 local warnDivide					= mod:NewCountAnnounce(347249, 3)
 local warnQuickblade				= mod:NewSpellAnnounce(347623, 3)
 
@@ -118,7 +119,7 @@ end
 mod.SPELL_PERIODIC_MISSED = mod.SPELL_PERIODIC_DAMAGE
 --]]
 
-function mod:CHAT_MSG_MONSTER_SAY(msg, npc, _, _, target)
+function mod:CHAT_MSG_MONSTER_SAY(msg)
 	if (msg == L.RPTrigger or msg:find(L.RPTrigger)) and self:LatencyCheck() then
 		self:SendSync("SolamiRP")
 	end
