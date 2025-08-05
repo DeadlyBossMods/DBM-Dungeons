@@ -72,7 +72,7 @@ local specWarnAgonizingTorment	= mod:NewSpecialWarningInterrupt(308366, "HasInte
 local specWarnEntropicMissiles	= mod:NewSpecialWarningInterrupt(309035, "HasInterrupt", nil, nil, 1, 2)
 local specWarnMentalAssault		= mod:NewSpecialWarningInterrupt(296537, "HasInterrupt", nil, nil, 1, 2)
 local specWarnShadowShift		= mod:NewSpecialWarningInterrupt(308575, "HasInterrupt", nil, nil, 1, 2)
-local specWarnTouchoftheAbyss	= mod:NewSpecialWarningInterrupt(298033, "HasInterrupt", nil, nil, 1, 2)
+local specWarnTouchoftheAbyss	= mod:NewSpecialWarningInterrupt(298033, "HasInterrupt", nil, 2, 3, 2)
 local specWarnPsychicScream		= mod:NewSpecialWarningInterrupt(308375, "HasInterrupt", nil, nil, 1, 2)
 local specWarnImproveMorale		= mod:NewSpecialWarningInterrupt(308998, "HasInterrupt", nil, nil, 1, 2)--possibly 9.7 CD
 local specWarnVoidBuffet		= mod:NewSpecialWarningInterrupt(297315, "HasInterrupt", nil, nil, 1, 2)
@@ -88,7 +88,7 @@ local specWarnDarkSmash			= mod:NewSpecialWarningDodge(296718, nil, nil, nil, 2,
 local specWarnBrutalSmash		= mod:NewSpecialWarningDodge(309882, nil, nil, nil, 2, 2)
 local specWarnRainofFire		= mod:NewSpecialWarningDodge(308801, nil, nil, nil, 2, 2)
 --Hogger
-local specWarnMaddeningCall		= mod:NewSpecialWarningInterrupt(1223112, "HasInterrupt", nil, nil, 1, 2)
+local specWarnMaddeningCall		= mod:NewSpecialWarningInterrupt(1223112, "HasInterrupt", nil, 2, 3, 2)
 
 --General
 local timerGiftoftheTitan		= mod:NewBuffFadesTimer(20, 313698, nil, nil, nil, 5)
