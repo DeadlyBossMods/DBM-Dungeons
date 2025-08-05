@@ -11,7 +11,7 @@ mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 350916 350922 355438 350919 359028 357404 357513 357436 357542 359222",
-	"SPELL_CAST_SUCCESS 181089",
+	"SPELL_CAST_SUCCESS 181089 1244630",
 	"SPELL_AURA_APPLIED 353706 353835",
 	"SPELL_AURA_REMOVED 353706",
 --	"SPELL_PERIODIC_DAMAGE",
@@ -36,6 +36,7 @@ mod:RegisterEventsInCombat(
 --Stage One: Unruly Patrons
 local warnRottenFood				= mod:NewSpellAnnounce(359222, 2)
 local warnSuppression				= mod:NewTargetNoFilterAnnounce(353835, 2)
+local warnSoundblast				= mod:NewTargetNoFilterAnnounce(1244630, 2, nil, "Healer")--Hard Mode
 --Stage Two: Closing Time
 
 --Hard Mode
@@ -63,10 +64,11 @@ local timerMenacingShoutCD				= mod:NewCDTimer(15.8, 350922, nil, nil, nil, 4, n
 local timerSupressionSparkCD			= mod:NewCDTimer(37.6, 355438, nil, nil, nil, 2, nil, DBM_COMMON_L.TANK_ICON)
 local timerCrowdControlCD				= mod:NewCDTimer(21.8, 350919, nil, nil, nil, 3)
 --Hard Mode Timers
-local timerDischordantSongCD			= mod:NewCDTimer(18.2, 357404, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
-local timerDrumrollCD					= mod:NewCDTimer(27.9, 357513, nil, nil, nil, 2)
-local timerInfectiousSoloCD				= mod:NewCDTimer(20.6, 357436, nil, nil, nil, 2)
-local timerRipChordCD					= mod:NewCDTimer(17, 357542, nil, nil, nil, 3)
+local timerDischordantSongCD			= mod:NewCDNPTimer(18.2, 357404, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerDrumrollCD					= mod:NewCDNPTimer(27.9, 357513, nil, nil, nil, 2)
+local timerInfectiousSoloCD				= mod:NewCDNPTimer(20.6, 357436, nil, nil, nil, 2)
+local timerRipChordCD					= mod:NewCDNPTimer(17, 357542, nil, nil, nil, 3)
+local timerSoundblastCD					= mod:NewCDNPTimer(18.2, 1244630, nil, nil, nil, 3)
 
 mod:AddRangeFrameOption(5, 359222)
 mod:AddNamePlateOption("NPAuraOnRowdy", 353706)
@@ -75,6 +77,7 @@ local activeBossGUIDS = {}
 
 function mod:OnCombatStart(delay)
 	self:SetStage(1)
+	self:RegisterZoneCombat(2441)
 	timerRottenFoodCD:Start(20.5-delay)
 	if self.Options.RangeFrame then
 		DBM.RangeCheck:Show(5)
@@ -85,6 +88,7 @@ function mod:OnCombatStart(delay)
 end
 
 function mod:OnCombatEnd()
+	self:UnregisterZoneCombat(2441)
 	table.wipe(activeBossGUIDS)
 	if self.Options.RangeFrame then
 		DBM.RangeCheck:Hide()
@@ -130,17 +134,17 @@ function mod:SPELL_CAST_START(args)
 			specWarnDischordantSong:Show(args.sourceName)
 			specWarnDischordantSong:Play("kickcast")
 		end
-		timerDischordantSongCD:Start()
+		timerDischordantSongCD:Start(nil, args.sourceGUID)
 	elseif spellId == 357513 then
 		warnDrumroll:Show()
-		timerDrumrollCD:Start()
+		timerDrumrollCD:Start(nil, args.sourceGUID)
 	elseif spellId == 357436 then
 		specWarnInfectiousSolo:Show()
 		specWarnInfectiousSolo:Play("justrun")
-		timerInfectiousSoloCD:Start()
+		timerInfectiousSoloCD:Start(nil, args.sourceGUID)
 	elseif spellId == 357542 then
 		warnRipChord:Show()
-		timerRipChordCD:Start()
+		timerRipChordCD:Start(nil, args.sourceGUID)
 	elseif spellId == 359222 and self:AntiSpam(4, 2) then
 		warnRottenFood:Show()
 		timerRottenFoodCD:Start()
@@ -155,6 +159,9 @@ function mod:SPELL_CAST_SUCCESS(args)
 		timerMenacingShoutCD:Start(12.5, args.sourceGUID)--Boss version
 		timerSupressionSparkCD:Start(19.8)
 		timerCrowdControlCD:Start(27.1)
+	elseif spellId == 1244630 then
+		warnSoundblast:Show(args.destName)
+		timerSoundblastCD:Start(nil, args.sourceGUID)
 	end
 end
 
@@ -197,13 +204,31 @@ function mod:UNIT_DIED(args)
 		timerSecuritySlamCD:Stop(args.destGUID)
 		timerMenacingShoutCD:Stop(args.destGUID)
 	elseif cid == 180399 then--Evaile
-		timerDischordantSongCD:Stop()
+		timerDischordantSongCD:Stop(args.destGUID)
 	elseif cid == 180485 then--Hips
-		timerDrumrollCD:Stop()
+		timerDrumrollCD:Stop(args.destGUID)
 	elseif cid == 180470 then--Verethian
-		timerInfectiousSoloCD:Stop()
+		timerInfectiousSoloCD:Stop(args.destGUID)
 	elseif cid == 180484 then--Vilt
-		timerRipChordCD:Stop()
+		timerRipChordCD:Stop(args.destGUID)
+	elseif cid == 180486 then--Dirtwhistle
+		timerSoundblastCD:Stop(args.destGUID)
+	end
+end
+
+--All timers subject to a ~0.5 second clipping due to ScanEngagedUnits
+--These will need extra tweaking when I get better debug on live with DBM. BW combat scanner and debug isn't as detailed
+function mod:StartEngageTimers(guid, cid, delay)
+	if cid == 180470 then--Verethian
+		timerInfectiousSoloCD:Start(9.4-delay, guid)
+	elseif cid == 180399 then--Evaile
+		timerDischordantSongCD:Start(16.1-delay, guid)
+	elseif cid == 180485 then--Hips
+		timerDrumrollCD:Start(5-delay, guid)
+	elseif cid == 180484 then--Vilt
+		timerRipChordCD:Start(16.4-delay, guid)
+	elseif cid == 180486 then--Dirtwhistle
+		timerSoundblastCD:Start(6-delay, guid)
 	end
 end
 
