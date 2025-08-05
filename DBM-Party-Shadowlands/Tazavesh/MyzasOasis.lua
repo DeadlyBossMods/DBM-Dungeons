@@ -36,7 +36,6 @@ mod:RegisterEventsInCombat(
 --Stage One: Unruly Patrons
 local warnRottenFood				= mod:NewSpellAnnounce(359222, 2)
 local warnSuppression				= mod:NewTargetNoFilterAnnounce(353835, 2)
-local warnSecuritySlam				= mod:NewSpellAnnounce(350916, 2)
 --Stage Two: Closing Time
 
 --Hard Mode
@@ -64,10 +63,10 @@ local timerMenacingShoutCD				= mod:NewCDTimer(15.8, 350922, nil, nil, nil, 4, n
 local timerSupressionSparkCD			= mod:NewCDTimer(37.6, 355438, nil, nil, nil, 2, nil, DBM_COMMON_L.TANK_ICON)
 local timerCrowdControlCD				= mod:NewCDTimer(21.8, 350919, nil, nil, nil, 3)
 --Hard Mode Timers
-local timerDischordantSongCD			= mod:NewAITimer(15.8, 357404, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
-local timerDrumrollCD					= mod:NewAITimer(15.8, 357513, nil, nil, nil, 2)
-local timerInfectiousSoloCD				= mod:NewAITimer(15.8, 357436, nil, nil, nil, 2)
-local timerRipChordCD					= mod:NewAITimer(15.8, 357542, nil, nil, nil, 3)
+local timerDischordantSongCD			= mod:NewCDTimer(18.2, 357404, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerDrumrollCD					= mod:NewCDTimer(27.9, 357513, nil, nil, nil, 2)
+local timerInfectiousSoloCD				= mod:NewCDTimer(20.6, 357436, nil, nil, nil, 2)
+local timerRipChordCD					= mod:NewCDTimer(17, 357542, nil, nil, nil, 3)
 
 mod:AddRangeFrameOption(5, 359222)
 mod:AddNamePlateOption("NPAuraOnRowdy", 353706)
@@ -98,11 +97,9 @@ end
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
 	if spellId == 350916 or spellId == 359028 then
-		if self:IsTanking("player", nil, nil, true, args.sourceGUID) then
+		if self:IsTanking("player", nil, nil, true, args.sourceGUID) and self:AntiSpam(3, 1) then
 			specWarnSecuritySlam:Show()
 			specWarnSecuritySlam:Play("defensive")
-		else
-			warnSecuritySlam:Show()
 		end
 		if spellId == 350916 then--Security Guards
 			timerSecuritySlamCD:Start(13.7, args.sourceGUID)
@@ -144,7 +141,7 @@ function mod:SPELL_CAST_START(args)
 	elseif spellId == 357542 then
 		warnRipChord:Show()
 		timerRipChordCD:Start()
-	elseif spellId == 359222 and self:AntiSpam(4, 1) then
+	elseif spellId == 359222 and self:AntiSpam(4, 2) then
 		warnRottenFood:Show()
 		timerRottenFoodCD:Start()
 	end
@@ -183,7 +180,7 @@ end
 
 --[[
 function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId, spellName)
-	if spellId == 320366 and destGUID == UnitGUID("player") and self:AntiSpam(2, 2) then
+	if spellId == 320366 and destGUID == UnitGUID("player") and self:AntiSpam(2, 3) then
 		specWarnGTFO:Show(spellName)
 		specWarnGTFO:Play("watchfeet")
 	end

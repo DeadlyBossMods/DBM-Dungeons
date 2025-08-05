@@ -19,6 +19,7 @@ mod:RegisterEventsInCombat(
 
 --Notes: Cannon Barrage has no entries for cast, only damage, no clean timers/warnings for it so omitted
 --TODO, Fix hook swipe when blizzard re-enables the ability they accidentally deleted.
+--NOTE:, Double time is no longer in combat log and now uses https://www.wowhead.com/ptr-2/spell=1240213/double-time worth re-adding?
 --[[
 (ability.id = 347149 or ability.id = 350517 or ability.id = 347151) and type = "begincast"
  or ability.id = 352345 and type = "cast"
@@ -27,54 +28,55 @@ mod:RegisterEventsInCombat(
 --]]
 --Boss
 local warnHookd						= mod:NewTargetNoFilterAnnounce(354334, 2, nil, "Healer")
-local warnDoubleTime				= mod:NewCastAnnounce(350517, 3)
+--local warnDoubleTime				= mod:NewCastAnnounce(350517, 3)
 
 local specWarnInfiniteBreath		= mod:NewSpecialWarningCount(347149, "Tank", nil, nil, 1, 2)
 local specWarnAnchorShot			= mod:NewSpecialWarningYou(352345, nil, nil, nil, 1, 2)
 local specWarnGTFO					= mod:NewSpecialWarningGTFO(358947, nil, nil, nil, 1, 8)
 
-local timerInfiniteBreathCD			= mod:NewCDTimer(12, 347149, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+local timerInfiniteBreathCD			= mod:NewCDTimer(15, 347149, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 --local timerHookSwipeCD				= mod:NewCDTimer(12, 347151, nil, nil, nil, 3, nil, DBM_COMMON_L.HEALER_ICON)
-local timerDoubleTimeCD				= mod:NewCDTimer(54.6, 350517, nil, nil, nil, 3)
+--local timerDoubleTimeCD				= mod:NewCDTimer(54.6, 350517, nil, nil, nil, 3)
 
 --mod:GroupSpells(347151, 354334)--Group Hook'd debuff with Hook Swipe
 --Corsair Cannoneers
---local warnCannonBarrage				= mod:NewSpellAnnounce(347370, 3)
+--local warnCannonBarrage			= mod:NewSpellAnnounce(347370, 3)
 local warnAnchorShot				= mod:NewTargetNoFilterAnnounce(352345, 3)
 
-local timerAnchorShotCD				= mod:NewCDTimer(11, 352345, nil, nil, nil, 3)
+local timerAnchorShotCD				= mod:NewCDTimer(20, 352345, nil, nil, nil, 3)
 
 mod.vb.breathCount = 0
 mod.vb.anchorCount = 0
 
---Maybe worth adding?
+--Maybe worth adding? (quest still valid years later)
 --"Super Saison-356133-npc:180015-000048C7C5 = pull:28.5, 30.4, 30.4",
 --"Sword Toss-368661-npc:179386-000048C7C6 = pull:12.7, 14.6, 14.6",
 --These are handled different right now but might sequence if other handling faulters
 --"Infinite Breath-347149-npc:175546-000048CB60 = pull:15.0, 12.0, 12.0, 12.0, 12.0, 12.0, 12.0, 12.0, 12.0, 7.0, 12.0, 12.0, 12.0, 12.0, 7.0, 12.0, 12.0, 12.0", -- [9]
---"Anchor Shot-352345-npc:176178-000048C7C5 = pull:59.0, 21.0, 20.0, 14.0, 21.0, 20.0, 14.0, 21.0, 20.0", -- [1]
+--"Anchor Shot-352345-npc:176178-000048C7C5 = pull:59.0, 21.0, 20.0, 14.0, 21.0, 20.0, 14.0, 21.0, 20.0", -- [1]--OLD
+--"Anchor Shot-352345-npc:176178-00000FBFBE = pull:15.0, 20.0, 20.0, 20.0, 20.0, 20.1, 20.0",--NEW
 
 function mod:OnCombatStart(delay)
 	self.vb.breathCount = 0
 	self.vb.anchorCount = 0
 --	timerHookSwipeCD:Start(8.2-delay)--April 5th hotfixes broke it and he doesn't cast this anymore
 	timerInfiniteBreathCD:Start(12-delay)
-	timerDoubleTimeCD:Start(55-delay)
+--	timerDoubleTimeCD:Start(55-delay)
 	--Cannoneers
-	timerAnchorShotCD:Start(58.9-delay)
+	timerAnchorShotCD:Start(15-delay)
 end
 
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
-	if spellId == 350517 then
-		warnDoubleTime:Show()
-		timerDoubleTimeCD:Start()
+	if spellId == 347151 then
+--		timerHookSwipeCD:Start()--Work Needed
+--	elseif spellId == 350517 then
+--		warnDoubleTime:Show()
+--		timerDoubleTimeCD:Start()
 		--When he casts double time it removes 5 seconds from current breath timer
-		timerInfiniteBreathCD:RemoveTime(5)
+--		timerInfiniteBreathCD:RemoveTime(5)
 		--It also removes 6 seconds from current Anchor Shot timer
 --		timerAnchorShotCD:RemoveTime(6)--Handled via counting for now, but counting may fail if pull is long enough
-	elseif spellId == 347151 then
---		timerHookSwipeCD:Start()--Work Needed
 	end
 end
 
