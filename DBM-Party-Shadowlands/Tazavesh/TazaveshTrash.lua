@@ -10,8 +10,8 @@ mod.isTrashMod = true
 mod.isTrashModBossFightAllowed = true
 
 mod:RegisterEvents(
-	"SPELL_CAST_START 356548 352390 354297 356537 355888 355900 355930 355934 356001 357197 347775 355057 355225 355584 357226 357260 356407 356404 347903 357229 355048 355464 355429 355577 356133 356843 1244650 357238 357196 353836",
-	"SPELL_CAST_SUCCESS 355234 355048 355057 355132 356133 368661 357260",
+	"SPELL_CAST_START 356548 352390 354297 355930 355934 356001 357197 347775 355057 355225 355584 357226 357260 356407 356404 347903 357229 355048 355464 355429 355577 356133 356843 1244650 357238 357196 353836 352796 356537",
+	"SPELL_CAST_SUCCESS 355234 355048 355057 355132 356133 368661 357260 355888 355900 355915 355934",
 	"SPELL_INTERRUPT",
 	"SPELL_AURA_APPLIED 355888 355915 355980 357229 357029 355581 356407 356133",
 --	"SPELL_AURA_APPLIED_DOSE",
@@ -26,16 +26,17 @@ mod:RegisterEvents(
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
  or (source.type = "NPC" and source.firstSeen = timestamp and source.id = 174197) or (target.type = "NPC" and target.firstSeen = timestamp and target.id = 174197)
 --]]
-local warnHardLightBaton					= mod:NewTargetNoFilterAnnounce(355888, 3, nil, "Healer|RemoveMagic")
+--TODO improve or clarify proxy strike warning?
+local warnHardLightBaton					= mod:NewTargetNoFilterAnnounce(355888, 3, nil, "Tank|MagicDispeller")--(S3 Valid)
 local warnHyperlightBomb					= mod:NewTargetAnnounce(357029, 3)
-local warnRadiantPulse						= mod:NewSpellAnnounce(356548, 2)
-local warnBeamSplicer						= mod:NewSpellAnnounce(356001, 3)
+local warnRadiantPulse						= mod:NewSpellAnnounce(356548, 2)--(S3 Valid)
 local warnChronolightEnhancer				= mod:NewCastAnnounce(357229, 3, nil, nil, false)
 local warnSuperSaison						= mod:NewCastAnnounce(356133, 3, nil, nil, "Tank|RemoveEnrage")--(S3 Valid)
+local warnProxyStrike						= mod:NewCastAnnounce(352796, 3, nil, nil, "Tank|Healer")--(S3 Valid)
 
 local specWarnGTFO							= mod:NewSpecialWarningGTFO(355581, nil, nil, nil, 1, 8)
 local specWarnTidalStomp					= mod:NewSpecialWarningSpell(355429, nil, nil, nil, 2, 2)
-local specWarnDisruptionGrenade				= mod:NewSpecialWarningDodge(355900, nil, nil, nil, 2, 2)
+local specWarnDisruptionGrenade				= mod:NewSpecialWarningDodge(355900, nil, nil, nil, 2, 2)--(S3 Valid)
 local specWarnRiftBlasts					= mod:NewSpecialWarningDodge(352390, nil, nil, nil, 2, 2)
 local specWarnLightshardRetreat				= mod:NewSpecialWarningDodge(357197, nil, nil, nil, 2, 2)
 local specWarnDriftingStar					= mod:NewSpecialWarningDodge(357226, nil, nil, nil, 2, 2)--(S3 Valid)
@@ -44,6 +45,7 @@ local specWarnBoulderThrow					= mod:NewSpecialWarningDodge(355464, nil, nil, ni
 local specWarnCrackle						= mod:NewSpecialWarningDodge(355577, nil, nil, nil, 2, 2)--(S3 Valid)
 local specWarnTidalBurst					= mod:NewSpecialWarningDodge(1244650, nil, nil, nil, 2, 2)--(S3 Valid)
 local specWarnSwordToss						= mod:NewSpecialWarningDodge(368661, nil, nil, nil, 2, 2)--(S3 Valid)
+local specWarnBeamSplicer					= mod:NewSpecialWarningDodge(356001, nil, nil, nil, 2, 2)--(S3 Valid)
 local specWarnChronolightEnhancer			= mod:NewSpecialWarningRun(357229, "Tank", nil, nil, 4, 2)
 local specWarnHyperlightBomb				= mod:NewSpecialWarningMoveAway(357029, nil, nil, nil, 1, 2)
 local yellHyperlightBomb					= mod:NewYell(357029)
@@ -52,11 +54,9 @@ local specWarnInvigoratingFishStick			= mod:NewSpecialWarningSwitch(355132, "-He
 local specWarnChargedPulse					= mod:NewSpecialWarningRun(355584, nil, nil, nil, 4, 2)--(S3 Valid)
 local specWarnWanderingPulsar				= mod:NewSpecialWarningSwitch(357238, "-Healer", nil, nil, 1, 2)
 local specWarnShellcrackerDefensive			= mod:NewSpecialWarningDefensive(355048, nil, nil, nil, 1, 2)--(S3 Valid)
-local specWarnHardLightBaton				= mod:NewSpecialWarningInterrupt(355888, "Tank", nil, nil, 1, 2)
 local specWarnSparkBurn						= mod:NewSpecialWarningInterrupt(355930, false, nil, nil, 1, 2)
-local specWarnHardLightBarrier				= mod:NewSpecialWarningInterrupt(355934, "HasInterrupt", nil, nil, 1, 2)
+local specWarnHardLightBarrier				= mod:NewSpecialWarningInterrupt(355934, "HasInterrupt", nil, nil, 1, 2)--(S3 Valid)
 local specWarnHyperlightBolt				= mod:NewSpecialWarningInterrupt(354297, false, nil, 2, 1, 2)--Spammy if interrupt off CD (S3 Valid)
-local specWarnEmpoweredGlyphofRestraint		= mod:NewSpecialWarningInterrupt(356537, "HasInterrupt", nil, nil, 1, 2)
 local specWarnSpamFilter					= mod:NewSpecialWarningInterrupt(347775, "HasInterrupt", nil, nil, 1, 2)
 local specWarnJunkMail						= mod:NewSpecialWarningInterrupt(347903, false, nil, nil, 1, 2)--spammed, off just in case
 local specWarnCryofMrrggllrrgg				= mod:NewSpecialWarningInterrupt(355057, "HasInterrupt", nil, nil, 1, 2)--(S3 Valid)
@@ -65,8 +65,9 @@ local specWarnUnstableRift					= mod:NewSpecialWarningInterrupt(357260, "HasInte
 local specWarnAncientDread					= mod:NewSpecialWarningInterrupt(356407, "HasInterrupt", nil, nil, 1, 2)
 local specWarnLavaBreath					= mod:NewSpecialWarningInterrupt(356404, "HasInterrupt", nil, nil, 1, 2)
 local specWarnBrackishBolt					= mod:NewSpecialWarningInterrupt(356843, "HasInterrupt", nil, nil, 1, 2)--(S3 Valid)
-local specWarnGlyphofRestraint				= mod:NewSpecialWarningDispel(355915, "RemoveMagic", nil, nil, 1, 2)
-local specWarnRefractionShield				= mod:NewSpecialWarningDispel(355980, "MagicDispeller", nil, nil, 1, 2)
+local specWarnEmpGlyphofRestraint			= mod:NewSpecialWarningInterrupt(356537, "HasInterrupt", nil, nil, 1, 2)--(S3 Valid)
+local specWarnGlyphofRestraint				= mod:NewSpecialWarningDispel(355915, "RemoveMagic", nil, nil, 1, 2)--(S3 Valid)
+local specWarnRefractionShield				= mod:NewSpecialWarningDispel(355980, "MagicDispeller", nil, nil, 1, 2)--(S3 Valid)
 local specWarnAncientDreadDispel			= mod:NewSpecialWarningDispel(356407, "RemoveCurse", nil, nil, 1, 2)
 
 local timerVolatilePufferfishCD				= mod:NewCDNPTimer(17, 355234, nil, nil, nil, 3)
@@ -83,6 +84,15 @@ local timerSwordTossCD						= mod:NewCDNPTimer(14.5, 368661, nil, nil, nil, 3)
 local timerDriftingStarCD					= mod:NewCDNPTimer(16.6, 357226, nil, nil, nil, 3)
 local timerWanderingPulsarCD				= mod:NewCDNPTimer(26.7, 357238, nil, nil, nil, 1)
 local timerUnstableRiftCD					= mod:NewCDPNPTimer(21.5, 357260, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerProxyStrikeCD					= mod:NewCDNPTimer(30.4, 352796, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)--Multiple enemies and CDs
+local timerRadiantPulseCD					= mod:NewCDNPTimer(26.8, 356548, nil, nil, nil, 2)--Multiple enemies and CDs
+local timerHardLightBatonCD					= mod:NewCDNPTimer(24.3, 355888, nil, nil, nil, 3)--Multiple enemies and CDs
+local timerDisruptionGrenadeCD				= mod:NewCDNPTimer(18.2, 355900, nil, nil, nil, 3)
+local timerGlyphofRestraintCD				= mod:NewCDNPTimer(17, 355915, nil, nil, nil, 3, nil, DBM_COMMON_L.MAGIC_ICON)
+local timerHardLightBarrierCD				= mod:NewCDNPTimer(21.2, 355934, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerBeamSplicerCD					= mod:NewCDNPTimer(23.1, 356001, nil, nil, nil, 3)
+local timerEmpGlyphofRestraintCD			= mod:NewCDNPTimer(23.1, 356537, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerRiftBlastsCD						= mod:NewCDNPTimer(23.1, 352390, nil, nil, nil, 3)
 
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc
 
@@ -91,13 +101,17 @@ function mod:SPELL_CAST_START(args)
 	if not self:IsValidWarning(args.sourceGUID) then return end
 	local spellId = args.spellId
 	if spellId == 356548 then
-		warnRadiantPulse:Show()
-	elseif spellId == 352390 and self:AntiSpam(3, 2) then
-		specWarnRiftBlasts:Show()
-		specWarnRiftBlasts:Play("watchstep")
-	elseif spellId == 355900 and self:AntiSpam(3, 2) then
-		specWarnDisruptionGrenade:Show()
-		specWarnDisruptionGrenade:Play("watchstep")
+		local timer = args:GetSrcCreatureID() == 179334 and 26.8 or 30.4 --Portalmancer Zo'honn <Cartel Zo>, Gatewarden Zo'mazz <Cartel Zo>
+		if self:AntiSpam(3, 4) then
+			warnRadiantPulse:Show()
+		end
+		timerRadiantPulseCD:Start(timer, args.sourceGUID)
+	elseif spellId == 352390 then
+		timerRiftBlastsCD:Start(nil, args.sourceGUID)
+		if self:AntiSpam(3, 2) then
+			specWarnRiftBlasts:Show()
+			specWarnRiftBlasts:Play("watchstep")
+		end
 	elseif spellId == 357197 and self:AntiSpam(3, 2) then
 		specWarnLightshardRetreat:Show()
 		specWarnLightshardRetreat:Play("watchstep")
@@ -110,12 +124,6 @@ function mod:SPELL_CAST_START(args)
 	elseif (spellId == 353836 or spellId == 354297 or spellId == 357196) and self:CheckInterruptFilter(args.sourceGUID, false, true) then
 		specWarnHyperlightBolt:Show(args.sourceName)
 		specWarnHyperlightBolt:Play("kickcast")
-	elseif spellId == 356537 and self:CheckInterruptFilter(args.sourceGUID, false, true) then
-		specWarnEmpoweredGlyphofRestraint:Show(args.sourceName)
-		specWarnEmpoweredGlyphofRestraint:Play("kickcast")
-	elseif spellId == 355888 and self:CheckInterruptFilter(args.sourceGUID, false, true) then
-		specWarnHardLightBaton:Show(args.sourceName)
-		specWarnHardLightBaton:Play("kickcast")
 	elseif spellId == 355930 and self:CheckInterruptFilter(args.sourceGUID, false, true) then
 		specWarnSparkBurn:Show(args.sourceName)
 		specWarnSparkBurn:Play("kickcast")
@@ -149,7 +157,11 @@ function mod:SPELL_CAST_START(args)
 		specWarnBrackishBolt:Show(args.sourceName)
 		specWarnBrackishBolt:Play("kickcast")
 	elseif spellId == 356001 then
-		warnBeamSplicer:Show()
+		timerBeamSplicerCD:Start(nil, args.sourceGUID)
+		if self:AntiSpam(3, 2) then
+			specWarnBeamSplicer:Show()
+			specWarnBeamSplicer:Play("watchstep")
+		end
 	elseif spellId == 357229 then
 		warnChronolightEnhancer:Show()
 	elseif spellId == 355584 then
@@ -189,6 +201,19 @@ function mod:SPELL_CAST_START(args)
 			specWarnWanderingPulsar:Show()
 			specWarnWanderingPulsar:Play("targetchange")
 		end
+	elseif spellId == 352796 then
+		if self:AntiSpam(3, 5) then
+			warnProxyStrike:Show()
+		end
+		--Gatewarden timer not known so purposely set high to find it quickly from debug prints
+		local timer = args:GetSrcCreatureID() == 177808 and 30.4 or 50.4 --Armored Overseer <Cartel Zo>, Gatewarden Zo'mazz <Cartel Zo>
+		timerProxyStrikeCD:Start(timer, args.sourceGUID)
+	elseif spellId == 356537 then
+		timerEmpGlyphofRestraintCD:Start(nil, args.sourceGUID)
+		if self:CheckInterruptFilter(args.sourceGUID, false, true) then
+			specWarnEmpGlyphofRestraint:Show(args.sourceName)
+			specWarnEmpGlyphofRestraint:Play("kickcast")
+		end
 	end
 end
 
@@ -222,6 +247,18 @@ function mod:SPELL_CAST_SUCCESS(args)
 		end
 	elseif spellId == 357260 then
 		timerUnstableRiftCD:Start(nil, args.sourceGUID)
+	elseif spellId == 355888 then
+		timerHardLightBatonCD:Start(nil, args.sourceGUID)
+	elseif spellId == 355900 then
+		timerDisruptionGrenadeCD:Start(nil, args.sourceGUID)
+		if self:AntiSpam(3, 2) then
+			specWarnDisruptionGrenade:Show()
+			specWarnDisruptionGrenade:Play("watchstep")
+		end
+	elseif spellId == 355915 then
+		timerGlyphofRestraintCD:Start(nil, args.sourceGUID)
+	elseif spellId == 355934 then
+		timerHardLightBarrierCD:Start(nil, args.sourceGUID)
 	end
 end
 
@@ -232,6 +269,8 @@ function mod:SPELL_INTERRUPT(args)
 		timerCryofMrrggllrrggCD:Start(30.9, args.sourceGUID)
 	elseif args.extraSpellId == 357260 then
 		timerUnstableRiftCD:Start(nil, args.sourceGUID)
+	elseif args.extraSpellId == 355934 then
+		timerHardLightBarrierCD:Start(nil, args.sourceGUID)
 	end
 end
 
@@ -301,6 +340,23 @@ function mod:UNIT_DIED(args)
 	elseif cid == 180429 then--AdornedStarseer
 		timerDriftingStarCD:Stop(args.destGUID)
 		timerWanderingPulsarCD:Stop(args.destGUID)
+	elseif cid == 177808 then--Armored Overseer <Cartel Zo>
+		timerProxyStrikeCD:Stop(args.destGUID)
+		timerBeamSplicerCD:Stop(args.destGUID)
+	elseif cid == 178392 then--Gatewarden Zo'mazz <Cartel Zo>
+		timerProxyStrikeCD:Stop(args.destGUID)
+		timerRadiantPulseCD:Stop(args.destGUID)
+	elseif cid == 179334 then--Portalmancer Zo'honn <Cartel Zo>
+		timerRadiantPulseCD:Stop(args.destGUID)
+		timerEmpGlyphofRestraintCD:Stop(args.destGUID)
+		timerRiftBlastsCD:Stop(args.destGUID)
+	elseif cid == 177807 then--Customs Security
+		timerHardLightBatonCD:Stop(args.destGUID)
+		timerDisruptionGrenadeCD:Stop(args.destGUID)
+	elseif cid == 177816 then--Interrogation Specialist
+		timerGlyphofRestraintCD:Stop(args.destGUID)
+	elseif cid == 177817 then--Support Officer
+		timerHardLightBarrierCD:Stop(args.destGUID)
 	end
 end
 
@@ -328,6 +384,21 @@ function mod:StartEngageTimers(guid, cid, delay)
 	elseif cid == 180429 then--AdornedStarseer
 		timerDriftingStarCD:Start(7.2-delay, guid)
 		timerWanderingPulsarCD:Start(13.3-delay, guid)
+	elseif cid == 177808 then--Armored Overseer <Cartel Zo>
+		timerBeamSplicerCD:Start(7-delay, guid)
+		timerProxyStrikeCD:Start(11-delay, guid)
+	elseif cid == 178392 then--Gatewarden Zo'mazz <Cartel Zo>
+		timerProxyStrikeCD:Start(8.4-delay, guid)
+		timerRadiantPulseCD:Start(14.5-delay, guid)
+	elseif cid == 179334 then--Portalmancer Zo'honn <Cartel Zo>
+--		timerRadiantPulseCD:Start(14.5-delay, guid)--Used instantly on engage
+		timerRiftBlastsCD:Start(7.2-delay, guid)
+		timerEmpGlyphofRestraintCD:Start(11-delay, guid)
+	elseif cid == 177807 then--Customs Security
+		timerHardLightBatonCD:Start(2.3-delay, guid)
+		timerDisruptionGrenadeCD:Start(10.5-delay, guid)
+	elseif cid == 177816 then--Interrogation Specialist
+		timerGlyphofRestraintCD:Start(7-delay, guid)
 	end
 end
 

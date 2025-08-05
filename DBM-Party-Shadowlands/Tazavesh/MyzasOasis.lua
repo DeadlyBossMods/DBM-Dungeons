@@ -217,7 +217,6 @@ function mod:UNIT_DIED(args)
 end
 
 --All timers subject to a ~0.5 second clipping due to ScanEngagedUnits
---These will need extra tweaking when I get better debug on live with DBM. BW combat scanner and debug isn't as detailed
 function mod:StartEngageTimers(guid, cid, delay)
 	if cid == 180470 then--Verethian
 		timerInfectiousSoloCD:Start(9.4-delay, guid)
