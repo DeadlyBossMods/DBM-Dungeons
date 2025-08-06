@@ -149,7 +149,7 @@ function mod:SPELL_AURA_APPLIED(args)
 			self:SetIcon(args.destName, 1)
 		end
 	elseif spellId == 349933 then
-		if self.Options.InfoFrame then
+		if self.Options.InfoFrame and not DBM.Test.testRunning then
 			local bossUnitID = self:GetUnitIdFromGUID(args.destGUID)
 			DBM.InfoFrame:SetHeader(args.spellName)
 			DBM.InfoFrame:Show(2, "enemyabsorb", nil, args.amount, bossUnitID)
@@ -204,16 +204,16 @@ function mod:RAID_BOSS_WHISPER(msg)
 	end
 end
 
-function mod:CHAT_MSG_MONSTER_SAY(msg, npc, _, _, target)
+function mod:CHAT_MSG_MONSTER_SAY(msg)
 	--"<457.34 22:32:38> [CHAT_MSG_MONSTER_SAY] Are rampaging beasts ruining your day? We have the solution!#Xy'noc###Omegal##0#0##0#1027#nil#0#false#false#false#false", -- [6130]
 	--"<480.65 22:33:01> [INSTANCE_ENCOUNTER_ENGAGE_UNIT] Fake Args:#boss1#true#true#true#Achillite#Creature-0-4228-2441-29407-176555-00002A9633#elite#1982340#bo
 	--"<481.86 22:33:02> [CLEU] SPELL_CAST_SUCCESS#Creature-0-4228-2441-29407-176555-00002A9633#Achillite##nil#181089#Encounter Event#nil#nil", -- [6420]
-	if (msg == L.AchilliteRPTrigger or msg:find(L.AchilliteRPTrigger)) and self:LatencyCheck() then
+	if (msg == L.AchilliteRPTrigger or msg:find(L.AchilliteRPTrigger)) then
 		self:SendSync("AchilliteRP")
 	--"<506.68 22:33:27> [CHAT_MSG_MONSTER_SAY] Now's my chance! That axe is mine!#Venza Goldfuse###Omegal##0#0##0#1039#nil#0#false#false#false#false", -- [6741]
 	--"<530.43 22:33:51> [INSTANCE_ENCOUNTER_ENGAGE_UNIT] Fake Args:#boss1#true#true#true#Achillite#Creature-0-4228-2441-29407-176555-00002A9633#elite#43829#boss2#true#true#true#Venza Goldfuse#Creature-0-4228-2441-29407-176705-00002A
 	--"<530.43 22:33:51> [CLEU] SPELL_CAST_SUCCESS#Creature-0-4228-2441-29407-176705-00002A9633#Venza Goldfuse##nil#181089#Encounter Event#nil#nil", -- [7113]
-	elseif (msg == L.VenzaRPTrigger or msg:find(L.VenzaRPTrigger)) and self:LatencyCheck() then
+	elseif (msg == L.VenzaRPTrigger or msg:find(L.VenzaRPTrigger)) then
 		self:SendSync("VenzaRP")
 	end
 end

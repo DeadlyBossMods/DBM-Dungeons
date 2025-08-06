@@ -32,10 +32,10 @@ local yellMoneyOrder				= mod:NewYell(346962, nil, nil, nil, "YELL")
 local yellMoneyOrderFades			= mod:NewShortFadesYell(346962, nil, nil, nil, "YELL")
 local specWarnGTFO					= mod:NewSpecialWarningGTFO(346329, nil, nil, nil, 1, 8)
 
-local timerUnstableGoodsCD			= mod:NewCDTimer(51.8, 346947, nil, nil, nil, 5)
-local timerHazardousLiquidsCD		= mod:NewCDTimer(52.1, 346286, nil, nil, nil, 3)
-local timerFanMailCD				= mod:NewCDTimer(25.1, 346293, nil, nil, nil, 2, nil, DBM_COMMON_L.HEALER_ICON)
-local timerMoneyOrderCD				= mod:NewCDTimer(50.6, 346962, nil, nil, nil, 3)
+local timerUnstableGoodsCD			= mod:NewCDTimer(42.5, 346947, nil, nil, nil, 5)
+local timerHazardousLiquidsCD		= mod:NewCDTimer(42.5, 346286, nil, nil, nil, 3)
+local timerFanMailCD				= mod:NewCDTimer(42.5, 346293, nil, nil, nil, 2, nil, DBM_COMMON_L.HEALER_ICON)--25.1
+local timerMoneyOrderCD				= mod:NewCDTimer(42.5, 346962, nil, nil, nil, 3)
 
 --mod:GroupSpells(369133, 346947)--Unstable goods, one for spawn and one for holdin it, two diff icons so separated on purpose
 
@@ -45,10 +45,10 @@ mod.vb.fanCount = 0
 function mod:OnCombatStart(delay)
 	self.vb.goodPhase = 0
 	self.vb.fanCount = 0
-	timerHazardousLiquidsCD:Start(6.9-delay)
-	timerFanMailCD:Start(16.1-delay)
-	timerMoneyOrderCD:Start(23.4-delay)
-	timerUnstableGoodsCD:Start(30.6-delay)--START
+	timerHazardousLiquidsCD:Start(6.1-delay)
+	timerFanMailCD:Start(15.8-delay)
+	timerMoneyOrderCD:Start(23.0-delay)
+	timerUnstableGoodsCD:Start(35.2-delay)--START
 end
 
 function mod:SPELL_CAST_START(args)
@@ -57,9 +57,11 @@ function mod:SPELL_CAST_START(args)
 		self.vb.goodPhase = self.vb.goodPhase + 1
 		specWarnUnstableGoods:Show(self.vb.goodPhase)
 		specWarnUnstableGoods:Play("specialsoon")
+		--"Unstable Goods-346947-npc:175646-00000FBFBE = pull:35.2, 43.7, 43.8",
 		timerUnstableGoodsCD:Start()
 	elseif spellId == 346286 then
 		warnHazardousLiquids:Show()
+		--"Hazardous Liquids-346286-npc:175646-00000FBFBE = pull:6.1, 42.5, 43.7",
 		timerHazardousLiquidsCD:Start()
 	elseif spellId == 346742 or spellId == 346293 then--Which one used? or maybe it's hard and non hard?
 		self.vb.fanCount = self.vb.fanCount + 1
@@ -72,6 +74,7 @@ end
 function mod:SPELL_CAST_SUCCESS(args)
 	local spellId = args.spellId
 	if spellId == 346962 then
+		--"Money Order-346962-npc:175646-00000FBFBE = pull:23.0, 42.5, 43.8",
 		timerMoneyOrderCD:Start()
 	end
 end

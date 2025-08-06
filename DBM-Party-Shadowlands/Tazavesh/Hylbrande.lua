@@ -47,10 +47,10 @@ local specWarnLigtningNova			= mod:NewSpecialWarningInterrupt(358131, "HasInterr
 
 local timerShearingSwingsCD			= mod:NewCDTimer(10.9, 346116, nil, nil, nil, 5, nil, DBM_COMMON_L.HEALER_ICON)
 local timerTitanicCrashCD			= mod:NewCDTimer(23.1, 347094, nil, nil, nil, 3)
-local timerPurgedbyFireCD			= mod:NewCDTimer(17, 346959, nil, nil, nil, 3)
-local timerSanitizingCycleCD		= mod:NewCDTimer(11, 346766, nil, nil, nil, 6)
+local timerPurgedbyFireCD			= mod:NewCDTimer(16.7, 346959, nil, nil, nil, 3)
+local timerSanitizingCycleCD		= mod:NewCDTimer(99, 346766, nil, nil, nil, 6)
 local timerVaultPurifierCD			= mod:NewCDTimer(29.1, -23004, nil, nil, nil, 1, "136116", DBM_COMMON_L.DAMAGE_ICON)
-local timerPurifyingBurstCD			= mod:NewCDTimer(23.1, 353312, nil, nil, nil, 2)
+local timerPurifyingBurstCD			= mod:NewCDTimer(20.2, 353312, nil, nil, nil, 2)
 local timerTitanicInsight			= mod:NewTargetTimer(15, 346427, nil, nil, nil, 5)
 
 mod:AddSetIconOption("SetIconOnAdds", "ej23004", true, 5, {1, 2})
@@ -63,9 +63,13 @@ function mod:OnCombatStart(delay)
 	self.vb.cycleCount = 0
 	self.vb.burstCount = 0
 	--TODO, hard mode check shit for purifying Burst (is it cast more often? or just more targets?)
-	timerPurifyingBurstCD:Start(6-delay)
+	timerPurifyingBurstCD:Start(5.2-delay)
 	timerShearingSwingsCD:Start(8.5-delay)
-	timerPurgedbyFireCD:Start(12.1-delay)
+	if self:IsMythic() and not self:IsMythicPlus() then
+		timerPurgedbyFireCD:Start(10.8-delay)
+	else
+		timerPurgedbyFireCD:Start(12.1-delay)
+	end
 	timerTitanicCrashCD:Start(15.8-delay)
 	timerVaultPurifierCD:Start(22.3-delay)
 	timerSanitizingCycleCD:Start(37.8-delay)
@@ -102,7 +106,7 @@ function mod:SPELL_CAST_START(args)
 	elseif spellId == 353312 then
 		self.vb.burstCount = self.vb.burstCount + 1
 		warnPurifyingBurst:Show(self.vb.burstCount)
-		if timerSanitizingCycleCD:GetRemaining() >= 23.1 then
+		if timerSanitizingCycleCD:GetRemaining() >= 20.2 then
 			timerPurifyingBurstCD:Start()
 		end
 	end
@@ -152,11 +156,11 @@ function mod:SPELL_AURA_REMOVED(args)
 		self.vb.cycleCount = self.vb.cycleCount + 1
 		--TODO, hard mode check shit for purifying Burst
 		timerPurifyingBurstCD:Start(13.2)
-		timerShearingSwingsCD:Start(15.6)
-		timerPurgedbyFireCD:Start(19.3)
+		timerShearingSwingsCD:Start(15.6)--Might be 17.7 now
+		timerPurgedbyFireCD:Start(19)
 		timerTitanicCrashCD:Start(22.9)
-		timerVaultPurifierCD:Start(23.4)
-		timerSanitizingCycleCD:Start(68.1)
+		timerVaultPurifierCD:Start(23)
+		timerSanitizingCycleCD:Start(68.1)--Needs reconfirmation
 	end
 end
 
