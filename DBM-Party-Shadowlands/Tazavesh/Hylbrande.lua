@@ -45,48 +45,58 @@ local specWarnSanitizingCycle		= mod:NewSpecialWarningCount(346766, nil, nil, ni
 local specWarnLigtningNova			= mod:NewSpecialWarningInterrupt(358131, "HasInterrupt", nil, nil, 1, 2)--Hard Mode
 --local specWarnGTFO				= mod:NewSpecialWarningGTFO(320366, nil, nil, nil, 1, 8)
 
-local timerShearingSwingsCD			= mod:NewCDTimer(10.9, 346116, nil, nil, nil, 5, nil, DBM_COMMON_L.HEALER_ICON)
-local timerTitanicCrashCD			= mod:NewCDTimer(23.1, 347094, nil, nil, nil, 3)
-local timerPurgedbyFireCD			= mod:NewCDTimer(16.7, 346959, nil, nil, nil, 3)
-local timerSanitizingCycleCD		= mod:NewCDTimer(99, 346766, nil, nil, nil, 6)
-local timerVaultPurifierCD			= mod:NewCDTimer(29.1, -23004, nil, nil, nil, 1, "136116", DBM_COMMON_L.DAMAGE_ICON)
-local timerPurifyingBurstCD			= mod:NewCDTimer(20.2, 353312, nil, nil, nil, 2)
+local timerShearingSwingsCD			= mod:NewCDCountTimer(10.9, 346116, nil, nil, nil, 5, nil, DBM_COMMON_L.HEALER_ICON)
+local timerTitanicCrashCD			= mod:NewCDCountTimer(23.1, 347094, nil, nil, nil, 3)
+local timerPurgedbyFireCD			= mod:NewCDCountTimer(16.7, 346959, nil, nil, nil, 3)
+local timerSanitizingCycleCD		= mod:NewCDCountTimer(99, 346766, nil, nil, nil, 6)
+local timerVaultPurifierCD			= mod:NewCDCountTimer(29.1, -23004, nil, nil, nil, 1, "136116", DBM_COMMON_L.DAMAGE_ICON)
+local timerPurifyingBurstCD			= mod:NewCDCountTimer(20.2, 353312, nil, nil, nil, 2)
 local timerTitanicInsight			= mod:NewTargetTimer(15, 346427, nil, nil, nil, 5)
 
-mod:AddSetIconOption("SetIconOnAdds", "ej23004", true, 5, {1, 2})
+mod:AddSetIconOption("SetIconOnAdds", -23004, true, 5, {1, 2})
 
+mod.vb.swingsCount = 0
+mod.vb.titanicCrashCount = 0
+mod.vb.purgedCount = 0
 mod.vb.cycleCount = 0
+mod.vb.vaultPurifierCount = 0
 mod.vb.burstCount = 0
 mod.vb.addIcon = 1
 
 function mod:OnCombatStart(delay)
+	self.vb.swingsCount = 0
+	self.vb.titanicCrashCount = 0
+	self.vb.purgedCount = 0
 	self.vb.cycleCount = 0
+	self.vb.vaultPurifierCount = 0
 	self.vb.burstCount = 0
 	--TODO, hard mode check shit for purifying Burst (is it cast more often? or just more targets?)
-	timerPurifyingBurstCD:Start(5.2-delay)
-	timerShearingSwingsCD:Start(8.5-delay)
+	timerPurifyingBurstCD:Start(5.2-delay, 1)
+	timerShearingSwingsCD:Start(8.5-delay, 1)
 	if self:IsMythic() and not self:IsMythicPlus() then
-		timerPurgedbyFireCD:Start(10.8-delay)
+		timerPurgedbyFireCD:Start(10.8-delay, 1)
 	else
-		timerPurgedbyFireCD:Start(12.1-delay)
+		timerPurgedbyFireCD:Start(12.1-delay, 1)
 	end
-	timerTitanicCrashCD:Start(15.8-delay)
-	timerVaultPurifierCD:Start(22.3-delay)
-	timerSanitizingCycleCD:Start(37.8-delay)
+	timerTitanicCrashCD:Start(15.8-delay, 1)
+	timerVaultPurifierCD:Start(22.3-delay, 1)
+	timerSanitizingCycleCD:Start(37.8-delay, 1)
 end
 
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
 	if spellId == 347094 then
+		self.vb.titanicCrashCount = self.vb.titanicCrashCount + 1
 		specWarnTitanicCrash:Show()
 		specWarnTitanicCrash:Play("shockwave")
-		if timerSanitizingCycleCD:GetRemaining() >= 23.1 then
-			timerTitanicCrashCD:Start()
+		if timerSanitizingCycleCD:GetRemaining(self.vb.cycleCount+1) >= 23.1 then
+			timerTitanicCrashCD:Start(nil, self.vb.titanicCrashCount+1)
 		end
 	elseif spellId == 346957 then
 --		warnPurgedbyFire:Show()
-		if timerSanitizingCycleCD:GetRemaining() >= 17 then
-			timerPurgedbyFireCD:Start()
+		self.vb.purgedCount = self.vb.purgedCount + 1
+		if timerSanitizingCycleCD:GetRemaining(self.vb.cycleCount+1) >= 17 then
+			timerPurgedbyFireCD:Start(nil, self.vb.purgedCount+1)
 		end
 	elseif spellId == 346766 and self:AntiSpam(3, 1) then
 		self.vb.cycleCount = self.vb.cycleCount + 1
@@ -106,8 +116,8 @@ function mod:SPELL_CAST_START(args)
 	elseif spellId == 353312 then
 		self.vb.burstCount = self.vb.burstCount + 1
 		warnPurifyingBurst:Show(self.vb.burstCount)
-		if timerSanitizingCycleCD:GetRemaining() >= 20.2 then
-			timerPurifyingBurstCD:Start()
+		if timerSanitizingCycleCD:GetRemaining(self.vb.cycleCount+1) >= 20.2 then
+			timerPurifyingBurstCD:Start(nil, self.vb.burstCount+1)
 		end
 	end
 end
@@ -115,18 +125,20 @@ end
 function mod:SPELL_CAST_SUCCESS(args)
 	local spellId = args.spellId
 	if spellId == 346116 then
+		self.vb.swingsCount = self.vb.swingsCount + 1
 		if self:IsTanking("player", "boss1", nil, true) then
 			specWarnShearingSwings:Show()
 			specWarnShearingSwings:Play("defensive")
 		end
-		if timerSanitizingCycleCD:GetRemaining() >= 10.9 then
-			timerShearingSwingsCD:Start()
+		if timerSanitizingCycleCD:GetRemaining(self.vb.cycleCount+1) >= 10.9 then
+			timerShearingSwingsCD:Start(nil, self.vb.swingsCount+1)
 		end
 	elseif spellId == 181113 then
 		if self:AntiSpam(3, 2) then
+			self.vb.vaultPurifierCount = self.vb.vaultPurifierCount + 1
 			warnVaultPurifier:Show()
-			if timerSanitizingCycleCD:GetRemaining() >= 29.1 then
-				timerVaultPurifierCD:Start()
+			if timerSanitizingCycleCD:GetRemaining(self.vb.cycleCount+1) >= 29.1 then
+				timerVaultPurifierCD:Start(nil, self.vb.vaultPurifierCount+1)
 			end
 		end
 		if self.Options.SetIconOnAdds then
@@ -155,12 +167,12 @@ function mod:SPELL_AURA_REMOVED(args)
 	elseif spellId == 346766 and self:AntiSpam(3, 3) then
 		self.vb.cycleCount = self.vb.cycleCount + 1
 		--TODO, hard mode check shit for purifying Burst
-		timerPurifyingBurstCD:Start(13.2)
-		timerShearingSwingsCD:Start(15.6)--Might be 17.7 now
-		timerPurgedbyFireCD:Start(19)
-		timerTitanicCrashCD:Start(22.9)
-		timerVaultPurifierCD:Start(23)
-		timerSanitizingCycleCD:Start(68.1)--Needs reconfirmation
+		timerPurifyingBurstCD:Start(13.2, self.vb.burstCount+1)
+		timerShearingSwingsCD:Start(15.6, self.vb.swingsCount+1)--Might be 17.7 now
+		timerPurgedbyFireCD:Start(19, self.vb.purgedCount+1)
+		timerTitanicCrashCD:Start(22.9, self.vb.titanicCrashCount+1)
+		timerVaultPurifierCD:Start(23, self.vb.vaultPurifierCount+1)
+		timerSanitizingCycleCD:Start(68.1, self.vb.cycleCount+1)--Needs reconfirmation
 	end
 end
 
@@ -202,7 +214,7 @@ end
 
 --"<18.17 01:11:30> [UNIT_SPELLCAST_SUCCEEDED] Hylbrande(??) -[DNT] Summon Vault Defender- [[boss1:Cast-3-4234-2441-16984-346971-002B48CA12:346971]]", -- [147]
 --"<22.32 01:11:34> [CLEU] SPELL_CAST_SUCCESS#Creature-0-4234-2441-16984-176551-000048CA12#Vault Purifier##nil#181113#Encounter Spawn#nil#nil", -- [188]
-function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
+function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, spellId)
 	if spellId == 346971 then--Summon Vault Defender
 		self.vb.addIcon = 1
 		warnVaultPurifierSoon:Show()
