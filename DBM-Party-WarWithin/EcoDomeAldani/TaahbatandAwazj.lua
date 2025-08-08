@@ -97,7 +97,7 @@ function mod:SPELL_AURA_APPLIED(args)
 	if spellId == 1219731 and self.vb.blitzActive then
 		self.vb.blitzActive = false
 		timerDestabalized:Start()
-		timerRiftClawsCD:Start(24, self.vb.riftClawsCount+1)
+		timerRiftClawsCD:Start(23.6, self.vb.riftClawsCount+1)
 		timerBindingJavelinCD:Start(30.1, self.vb.blitzCount+1)
 		timerWarpStrikeCD:Start(41, self.vb.warpStrikeCount+1)
 		timerArcaneBlitzCD:Start(78.6, self.vb.blitzCount+1)

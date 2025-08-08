@@ -54,7 +54,7 @@ function mod:OnCombatStart(delay)
 	self.vb.devourCount = 0
 	self.vb.invadingShriekCount = 0
 	self.vb.toxicRegurgitationCount = 0
-	timerInvadingShriekCD:Start(5.7-delay, 1)
+	timerInvadingShriekCD:Start(5.1-delay, 1)
 	timerToxicRegurgitationCD:Start(15.4-delay, 1)
 	timerDevourCD:Start(60-delay, 1)
 end
@@ -77,7 +77,7 @@ function mod:SPELL_CAST_START(args)
 		if self.vb.invadingShriekCount % 2 == 0 then
 			timerInvadingShriekCD:Start(48.5, self.vb.invadingShriekCount+1)
 		else
-			timerInvadingShriekCD:Start(37.6, self.vb.invadingShriekCount+1)
+			timerInvadingShriekCD:Start(37.2, self.vb.invadingShriekCount+1)
 		end
 	elseif spellId == 1227745 then
 		self.vb.toxicRegurgitationCount = self.vb.toxicRegurgitationCount + 1
@@ -133,7 +133,7 @@ end
 function mod:OnTranscriptorSync(msg, targetName)
 	if msg:find("1227748") and targetName and self:AntiSpam(5, targetName) then
 		targetName = Ambiguate(targetName, "none")
-		warnToxicRegurgitation:Show(targetName)
+		warnToxicRegurgitation:CombinedShow(0.5, targetName)
 	end
 end
 

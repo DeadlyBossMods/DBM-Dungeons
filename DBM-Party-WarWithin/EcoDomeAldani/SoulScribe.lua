@@ -34,7 +34,7 @@ local warnFatebound						= mod:NewCountAnnounce(1224865, 3, nil, nil, DBM_CORE_L
 local specWarnWoundedFate				= mod:NewSpecialWarningYou(1226444, nil, nil, nil, 1, 2)
 local specWarnEternalWeave				= mod:NewSpecialWarningCount(1236703, nil, nil, nil, 2, 2)
 local specWarnDreadoftheUnknown			= mod:NewSpecialWarningCount(1225218, nil, nil, nil, 2, 2)--Redo audio when mechanic clear
-local specWarnCeremonialDaggers			= mod:NewSpecialWarningSoakCount(1225174, nil, nil, nil, 2, 2)
+local specWarnCeremonialDaggers			= mod:NewSpecialWarningCount(1225174, nil, nil, nil, 2, 2)
 
 local timerWhispersofFateCD				= mod:NewCDCountTimer(30, 1224793, nil, nil, nil, 5)
 local timerEternalWeaveCD				= mod:NewCDCountTimer(87.5, 1236703, nil, nil, nil, 6)
@@ -51,9 +51,9 @@ function mod:OnCombatStart(delay)
 	self.vb.weaveCount = 0
 	self.vb.dreadCount = 0
 	self.vb.daggerCount = 0
-	timerWhispersofFateCD:Start(6.4-delay, 1)
-	timerCeremonialDaggersCD:Start(10-delay, 1)
-	timerDreadoftheUnknownCD:Start(28.2-delay, 1)
+	timerWhispersofFateCD:Start(6.1-delay, 1)
+	timerCeremonialDaggersCD:Start(9.6-delay, 1)
+	timerDreadoftheUnknownCD:Start(27.8-delay, 1)
 	timerEternalWeaveCD:Start(56.2-delay, 1)
 end
 
@@ -84,7 +84,7 @@ function mod:SPELL_CAST_START(args)
 	elseif spellId == 1225174 then
 		self.vb.daggerCount = self.vb.daggerCount + 1
 		specWarnCeremonialDaggers:Show(self.vb.daggerCount)
-		specWarnCeremonialDaggers:Play("helpsoak")
+		specWarnCeremonialDaggers:Play("lineyou")
 		if self.vb.daggerCount % 2 == 0 then
 			timerCeremonialDaggersCD:Start(51, self.vb.daggerCount+1)
 		else
