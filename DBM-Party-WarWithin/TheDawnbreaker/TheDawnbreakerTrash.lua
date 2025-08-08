@@ -319,7 +319,7 @@ end
 function mod:StartEngageTimers(guid, cid, delay)
 	if cid == 211261 then--Ascendant Vis'coxria
 		timerShadowyDecayCD:Start(3.6-delay, guid)--3.6-5.5
-		timerAbyssalBlastCD:Start(13.3-delay, guid)--13.3-15.2
+		timerAbyssalBlastCD:Start(12.4-delay, guid)--12.4-15.2
 	elseif cid == 211263 then--Deathscreamer Iken'tak
 		timerAbyssalBlastCD:Start(5.8-delay, guid)--5.8-6.8
 		timerDarkOrbCD:Start(12.8-delay, guid)--12.8-13.1
@@ -346,7 +346,7 @@ function mod:StartEngageTimers(guid, cid, delay)
 	elseif cid == 213885 then--Nightfall Dark Architect
 		timerTorentingEruptionCD:Start(5.4-delay, guid)--5.4-5.9
 	elseif cid == 213892 or cid == 228540 then--Nightfall Shadowmage (223994 is an RP mage, not engaged)
-		timerEnsnaringShadowsCD:Start(cid == 228540 and (10.8-delay) or (8.0-delay), guid)--8.0-12.9 (213892) 10.8-14 (228540)
+		timerEnsnaringShadowsCD:Start(cid == 228540 and (10.8-delay) or (7.3-delay), guid)--7.3-12.9 (213892) 10.8-14 (228540)
 	elseif cid == 210966 then--Sureki Webmage
 		timerBurstingCacoonCD:Start(1.8-delay, guid)--1.8-11.7
 	end
