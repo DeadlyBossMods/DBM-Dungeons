@@ -26,7 +26,7 @@ mod:RegisterEvents(
  or (source.type = "NPC" and source.firstSeen = timestamp and source.id = 217531) or (target.type = "NPC" and target.firstSeen = timestamp and target.id = 217531)
 --]]
 local warnHorrifyingshrill					= mod:NewCastAnnounce(434802, 4)--High Prio Off interrupt
-local warnRadiantBarrage					= mod:NewCastAnnounce(434793, 4)--High Prio Off interrupt
+local warnRadiantBarrage					= mod:NewSpellAnnounce(434793, 4)--High Prio Off interrupt
 local warnVenomVolley						= mod:NewCastAnnounce(433841, 4)--High Prio Off interrupt
 local warnAlarmShill						= mod:NewCastAnnounce(432967, 4, nil, nil, nil, nil, nil, 2)
 local warnToxicRupture						= mod:NewSpellAnnounce(438622, 4, nil, "Melee")
@@ -52,7 +52,7 @@ local timerRadiantBarrageCD					= mod:NewCDNPTimer(16.8, 434793, nil, nil, nil, 
 local timerCalloftheBroodCD					= mod:NewCDNPTimer(26.6, 438877, nil, nil, nil, 1)
 local timerPoisonousCloudCD					= mod:NewCDNPTimer(15.3, 438826, nil, nil, nil, 3)--15.3-24.7
 local timerRevoltingVolleyCD				= mod:NewCDNPTimer(18.3, 448248, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
-local timerImpaleCD							= mod:NewCDPNPTimer(14.2, 453161, nil, nil, nil, 3)
+local timerImpaleCD							= mod:NewCDPNPTimer(10.9, 453161, nil, nil, nil, 3)
 local timerVenomVolleyCD					= mod:NewCDPNPTimer(18.2, 433841, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerEruptingWebsCD					= mod:NewCDNPTimer(18.1, 433845, nil, nil, nil, 3)
 
@@ -109,7 +109,7 @@ function mod:SPELL_CAST_START(args)
 			specWarnRevoltingVolley:Play("kickcast")
 		end
 	elseif spellId == 453161 then
-		timerImpaleCD:Start(14.2, args.sourceGUID)
+		timerImpaleCD:Start(nil, args.sourceGUID)
 		if self:AntiSpam(3, 2) then
 			specWarnImpale:Show()
 			specWarnImpale:Play("frontal")

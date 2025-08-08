@@ -84,10 +84,10 @@ function mod:SPELL_CAST_START(args)
 			specWarnAlertingShrill:ScheduleVoice(2, "killmob")
 		end
 		timerAlertingShrillCD:Start(nil, self.vb.shrillCount+1)
-		--if time remaining on Voracious Bite is < 7.2, it's extended by this every time
-		if timerVoraciousBiteCD:GetRemaining(self.vb.biteCount+1) < 7.2 then
+		--if time remaining on Voracious Bite is < 6.9, it's extended by this every time
+		if timerVoraciousBiteCD:GetRemaining(self.vb.biteCount+1) < 6.9 then
 			local elapsed, total = timerVoraciousBiteCD:GetTime(self.vb.biteCount+1)
-			local extend = 7.2 - (total-elapsed)
+			local extend = 6.9 - (total-elapsed)
 			DBM:Debug("timerVoraciousBiteCD extended by: "..extend, 2)
 			timerVoraciousBiteCD:Update(elapsed, total+extend, self.vb.biteCount+1)
 		end

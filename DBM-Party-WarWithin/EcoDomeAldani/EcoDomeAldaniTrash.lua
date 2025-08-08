@@ -58,7 +58,7 @@ local timerGluttonousMiasmaCD				= mod:NewCDNPTimer(15.2, 1221190, nil, nil, nil
 local timerVolatileEjectionCD				= mod:NewCDNPTimer(16.6, 1226111, nil, nil, nil, 3)--20.6 but cast time adjusted
 local timerArcaneSlashCD					= mod:NewCDNPTimer(15.2, 1235368, nil, nil, nil, 3)--18.2 but cast time adjusted
 local timerWarpCD							= mod:NewCDNPTimer(9.2, 1222356, nil, nil, nil, 3)--12.2 but cast time adjusted
-local timerFarstalkersLeapCD				= mod:NewCDNPTimer(13.4, 1221679, nil, nil, nil, 3)
+local timerFarstalkersLeapCD				= mod:NewCDNPTimer(11.8, 1221679, nil, nil, nil, 3)--11.8-13.3
 local timerArcingZapCD						= mod:NewCDPNPTimer(24.2, 1229510, nil, nil, nil, 4)
 local timerArcingEnergyCD					= mod:NewCDNPTimer(10.9, 1221483, nil, nil, nil, 3)--actually alternates between 10.9 and 13.3 due to a spell queue
 local timerErraticRitualCD					= mod:NewCDPNPTimer(19.8, 1221532, nil, nil, nil, 2)--19.8-31.6
@@ -279,18 +279,18 @@ function mod:StartEngageTimers(guid, cid, delay)
 	elseif cid == 234960 then--Tamed Ruinstalker
 		timerWarpCD:Start(6-delay, guid)--Iffy
 	elseif cid == 234962 then--Wastelander Farstalker
-		timerFarstalkersLeapCD:Start(7-delay, guid)--Iffy
+		timerFarstalkersLeapCD:Start(3.8-delay, guid)--3.8-7
 		timerArcingZapCD:Start(9.9-delay, guid)
 	elseif cid == 234957 then--Wastelander Ritualist
-		timerArcingEnergyCD:Start(11.2-delay, guid)--Iffy
+		timerArcingEnergyCD:Start(9.7-delay, guid)
 	elseif cid == 234955 then--Wastelander Pactspeaker
 		timerErraticRitualCD:Start(8.5-delay, guid)--Iffy
 		timerConsumeSpiritCD:Start(25.8-delay, guid)--Iffy
 	elseif cid == 235151 then--K'aresh Elemental
-		timerEmbraceOfKareshCD:Start(8.5-delay, guid)--Iffy
+		timerEmbraceOfKareshCD:Start(7.1-delay, guid)
 	elseif cid == 234918 then--Wastes Creeper
 		timerGloomBiteCD:Start(5.3-delay, guid)--Iff
-		timerBurrowingEruptionCD:Start(10.2-delay, guid)--Iffy
+		timerBurrowingEruptionCD:Start(8.8-delay, guid)
 	elseif cid == 245092 then--Burrowing Creeper
 		timerBurrowChargeCD:Start(5.5-delay, guid)--Iffy
 		timerStingingSandstormCD:Start(13.8-delay, guid)--Iffy
