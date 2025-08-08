@@ -14,11 +14,11 @@ L= DBM:GetModLocalization(105)
 L= DBM:GetModLocalization(106)
 
 L:SetWarningLocalization({
-	WarnAdd		= "Помощник освобожден"
+	WarnAdd		= "Адд освобожден"
 })
 
 L:SetOptionLocalization({
-	WarnAdd		= "Показывать предупреждение, когда на помощнике истекает эффект $spell:75608"
+	WarnAdd		= "Показывать предупреждение, когда на адде истекает бафф $spell:75608"
 })
 
 -----------------------
@@ -247,11 +247,11 @@ L= DBM:GetModLocalization(97)
 L= DBM:GetModLocalization(98)
 
 L:SetTimerLocalization({
-	TimerAdds		= "След. помощники"
+	TimerAdds		= "След. Адды"
 })
 
 L:SetOptionLocalization{
-	TimerAdds		= "Отсчет времени до следующих помощников"
+	TimerAdds		= "Отсчет времени до следующих аддов"
 }
 
 L:SetMiscLocalization{
@@ -525,7 +525,7 @@ L:SetTimerLocalization{
 
 L:SetOptionLocalization{
 	timerNextForm	= "Отсчет времени до следующей смены формы",
-	InfoFrame		= "Показывать игроков, пораженных $spell:42402",
+	InfoFrame		= "Показывать инфофрейм для игроков, на которых $spell:42402",
 	ThrowIcon		= DBM_CORE_L.AUTO_ICONS_OPTION_TARGETS:format(43093),
 	ClawRageIcon	= DBM_CORE_L.AUTO_ICONS_OPTION_TARGETS:format(43150)
 }
@@ -676,16 +676,16 @@ L:SetMiscLocalization{
 L= DBM:GetModLocalization(291)
 
 L:SetWarningLocalization{
-	WarnAdds	= "Скоро новые помощники"
+	WarnAdds	= "Скоро новые адды"
 }
 
 L:SetTimerLocalization{
-	TimerAdds	= "Новые помощники"
+	TimerAdds	= "След. Адды"
 }
 
 L:SetOptionLocalization{
-	WarnAdds	= "Показывать предупреждение о скором появлении новых помощников",
-	TimerAdds	= "Отсчет времени до появления новых помощников"
+	WarnAdds	= "Показывать предупреждение о скором появлении новых аддов",
+	TimerAdds	= "Отсчет времени до появления новых аддов"
 }
 
 L:SetMiscLocalization{
