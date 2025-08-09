@@ -251,7 +251,7 @@ end
 --Most timers need adjustment, had bad logs
 function mod:StartEngageTimers(guid, cid, delay)
 	if cid == 165414 then--Depraved Obliterator
-		timerMarkofObliterationCD:Start(9.6-delay, guid)--Iffy
+		timerMarkofObliterationCD:Start(6.9-delay, guid)--6.9-10
 	elseif cid == 164562 then--Depraved Houndmaster
 		timerLoyalBeastsCD:Start(3-delay, guid)--Can get massively delayed
 	elseif cid == 167607 then--Stoneborn Slasher
