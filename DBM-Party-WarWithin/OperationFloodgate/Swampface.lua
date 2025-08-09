@@ -13,13 +13,12 @@ mod.sendMainBossGUID = true
 mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
+	"SPELL_CAST_SUCCESS 1214337"
+)
+
+mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 473070 473114 469478",
---	"SPELL_CAST_SUCCESS",
 	"SPELL_AURA_APPLIED 470038 472819",
---	"SPELL_AURA_REMOVED"
---	"SPELL_AURA_REMOVED"
---	"SPELL_PERIODIC_DAMAGE",
---	"SPELL_PERIODIC_MISSED"
 	"UNIT_SPELLCAST_SUCCEEDED boss1"
 )
 
@@ -38,6 +37,7 @@ local specWarnMudslide						= mod:NewSpecialWarningDodgeCount(473114, nil, nil, 
 local specWarnSludgeClaws					= mod:NewSpecialWarningDefensive(469478, nil, nil, nil, 1, 2)
 --local specWarnGTFO						= mod:NewSpecialWarningGTFO(372820, nil, nil, nil, 1, 8)
 
+local timerRP								= mod:NewRPTimer(19)
 local timerRazorchokeVinesCD				= mod:NewNextCountTimer(30, 470039, nil, nil, nil, 3)
 local timerAwakenSwampCD					= mod:NewNextCountTimer(30, 473070, nil, nil, nil, 3)
 local timerMudslideCD						= mod:NewNextCountTimer(30, 473114, nil, nil, nil, 3)
@@ -86,14 +86,15 @@ function mod:SPELL_CAST_START(args)
 	end
 end
 
---[[
+--"<147.34 22:50:30> [CLEU] SPELL_CAST_SUCCESS#Player-77-0F82F3AB#Possecutor-Thunderlord(100.0%-65.0%)#Creature-0-4212-2773-29843-234373-000014141A#Bomb Pile#1214337#Plant Bombs#nil#nil#nil#nil#nil#nil",
+--"<161.44 22:50:44> [PLAYER_TARGET_CHANGED] 82 Hostile (elite Elemental) - Swampface # Vehicle-0-4212-2773-29843-226396-000014147D",
+--"<166.37 22:50:49> [NAME_PLATE_UNIT_ADDED] Swampface#Vehicle-0-4212-2773-29843-226396-000014147D",
 function mod:SPELL_CAST_SUCCESS(args)
 	local spellId = args.spellId
-	if spellId == 470039 and self:AntiSpam(8, 1) then
-
+	if spellId == 1214337 then
+		timerRP:Start()
 	end
 end
---]]
 
 function mod:SPELL_AURA_APPLIED(args)
 	local spellId = args.spellId
@@ -125,34 +126,6 @@ function mod:SPELL_AURA_APPLIED(args)
 	end
 end
 --mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED
-
---[[
-function mod:SPELL_AURA_REMOVED(args)
-	local spellId = args.spellId
-	if spellId == 434408 then
-
-	end
-end
---]]
-
---[[
-function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId, spellName)
-	if spellId == 372820 and destGUID == UnitGUID("player") and self:AntiSpam(3, 2) then
-		specWarnGTFO:Show(spellName)
-		specWarnGTFO:Play("watchfeet")
-	end
-end
-mod.SPELL_PERIODIC_MISSED = mod.SPELL_PERIODIC_DAMAGE
---]]
-
---[[
-function mod:UNIT_DIED(args)
-	local cid = self:GetCIDFromGUID(args.destGUID)
-	if cid == 193435 then
-
-	end
-end
---]]
 
 --Vines Cast not in combat log (only debuffs, but this is more efficent timer start)
 function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)

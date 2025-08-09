@@ -9,8 +9,8 @@ mod:SetZone(2649)
 mod:RegisterZoneCombat(2649)
 
 mod:RegisterEvents(
-	"SPELL_CAST_START 424621 424423 424431 448515 424462 424420 427484 427356 427601 444296 427609 462859 446776 448787 448485 448492 427897 427357 464240 448791 435156 444743 435165",
-	"SPELL_CAST_SUCCESS 453458 427484 427342 462859 427356 446776 424420 444728 424429 444743 448787",
+	"SPELL_CAST_START 424621 424423 424431 448515 424462 424420 427484 427356 427601 427609 462859 446776 448787 448485 448492 427897 427357 464240 448791 435156 444743 435165 427950",
+	"SPELL_CAST_SUCCESS 453458 427484 427342 462859 427356 446776 424420 444728 424429 444743 448787 444296 427950",
 	"SPELL_INTERRUPT",
 	"SPELL_AURA_APPLIED 426964 424430 427621 444728 424419",
 	"SPELL_AURA_APPLIED_DOSE 426964 424419",
@@ -21,12 +21,11 @@ mod:RegisterEvents(
 --TODO, longer pulls for Trusted Guard timers
 --TODO, nameplate timer for https://www.wowhead.com/beta/spell=424421/fireball on Taener Duelmal?
 --TODO, Add Holy Smite? It's cast every 6 seconds give or take
---TODO, add https://www.wowhead.com/ptr-2/spell=427950/seal-of-flame ? it has 17 second cd and lats 15 seconds.
 --TODO, add https://www.wowhead.com/spell=427596/seal-of-lights-fury ? 12 second cd and 8 second duration, so once again it's mostly active
 --TODO, reflective shield upgrade to special warning?
 --[[
-(ability.id = 444743) and (type = "begincast" or type = "cast")
- or stoppedAbility.id = 444743
+(ability.id = 424420) and (type = "begincast" or type = "cast")
+ or stoppedAbility.id = 424420
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
  or (source.type = "NPC" and source.firstSeen = timestamp and source.id = 221760) or (target.type = "NPC" and target.firstSeen = timestamp and target.id = 221760)
 
@@ -44,7 +43,8 @@ local warnHeatWave							= mod:NewCastAnnounce(427897, 3)
 local warnSacredToll						= mod:NewCastAnnounce(448791, 3)
 local warnLightExpulsion					= mod:NewCastAnnounce(435156, 3)--On death spell, no CD
 local warnBlazingStrike						= mod:NewCastAnnounce(435165, 3, nil, nil, "Tank|Healer")
-local warnImpale							= mod:NewTargetNoFilterAnnounce(444296, 3, nil, "Healer|RemoveBleed")
+local warnSealofFlame						= mod:NewCastAnnounce(427950, 3)
+local warnImpale							= mod:NewTargetNoFilterAnnounce(427621, 3, nil, "Healer|RemoveBleed")
 local warnPurification						= mod:NewTargetNoFilterAnnounce(448787, 4, nil, "Healer")
 local warnReflectiveShield					= mod:NewTargetNoFilterAnnounce(464240, 3)
 
@@ -60,18 +60,19 @@ local specWarnFireballVolley				= mod:NewSpecialWarningInterrupt(444743, nil, ni
 local specWarnTemplarsWrath					= mod:NewSpecialWarningDispel(444728, "MagicDispeller", nil, nil, 1, 2)
 local specWarnGTFO							= mod:NewSpecialWarningGTFO(424430, nil, nil, nil, 1, 8)
 
-local timerCaltropsCD						= mod:NewCDNPTimer(24.2, 453458, nil, nil, nil, 3)--S2 updated
-local timerFlamestrikeCD					= mod:NewCDNPTimer(23, 427484, nil, nil, nil, 3)
-local timerGreaterHealCD					= mod:NewCDPNPTimer(21.8, 427356, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--S2 Updated (21.8-25.8)
+local timerCaltropsCD						= mod:NewCDNPTimer(27.8, 453458, nil, nil, nil, 3)--S3 updated
+local timerFlamestrikeCD					= mod:NewCDNPTimer(22.6, 427484, nil, nil, nil, 3)
+local timerGreaterHealCD					= mod:NewCDPNPTimer(21.8, 427356, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--S2 Updated (21.8-25.8) (might be 25.1 in S3, needs more data)
 local timerDefendCD							= mod:NewCDNPTimer(30.3, 427342, nil, nil, nil, 5)
-local timerImpaleCD							= mod:NewCDNPTimer(17, 444296, nil, nil, nil, 3)--17 unless delayed by disrupting shout
+local timerImpaleCD							= mod:NewCDNPTimer(15.8, 427621, nil, nil, nil, 3)
 local timerDisruptingShoutCD				= mod:NewCDNPTimer(23, 427609, nil, nil, nil, 2)
-local timerPotShotCD						= mod:NewCDNPTimer(12.1, 462859, nil, nil, nil, 3)--8.9
+local timerPotShotCD						= mod:NewCDNPTimer(8.1, 462859, nil, nil, nil, 3)--8.1-10
 local timerPounceCD							= mod:NewCDNPTimer(17, 446776, nil, nil, nil, 3)
 local timerPurificationCD					= mod:NewCDNPTimer(17, 448787, nil, nil, nil, 5)
 local timerShieldSlamCD						= mod:NewCDNPTimer(9.7, 448485, nil, nil, nil, 5)--9.7-13.8
 local timerThunderclapCD					= mod:NewCDNPTimer(15.8, 448492, nil, nil, nil, 2)
 local timerHeatWaveCD						= mod:NewCDNPTimer(18.2, 427897, nil, nil, nil, 2)
+local timerSealofFlameCD					= mod:NewCDNPTimer(30.3, 427950, nil, nil, nil, 5)--Worth having now that CD was doubled
 local timerReflectiveShieldCD				= mod:NewCDNPTimer(20.7, 464240, nil, nil, nil, 5)
 local timerTemplarsWrathCD					= mod:NewCDNPTimer(23.1, 444728, nil, nil, nil, 5)
 local timerConsecrationCD					= mod:NewCDNPTimer(23, 424429, nil, nil, nil, 3)
@@ -100,7 +101,7 @@ local timerDivineJudgementCD				= mod:NewCDTimer(14.6, 448515, nil, nil, nil, 5,
 --Taener Duelmal
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(27831))
 local specWarnEmberStorm					= mod:NewSpecialWarningDodge(424462, nil, nil, nil, 2, 2)
-local specWarnCinderblast					= mod:NewSpecialWarningInterrupt(424420, "HasInterrupt", nil, nil, 1, 2)
+local specWarnCinderblast					= mod:NewSpecialWarningInterrupt(424420, "HasInterrupt", nil, nil, 1, 2)--No longer cast in 11.2? nothing on WCL
 
 local timerEmberStormCD						= mod:NewCDTimer(24.3, 424462, nil, nil, nil, 3)--24.3-40
 local timerCinderblastCD					= mod:NewCDTimer(15.6, 424420, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--Can be MASSIVE delayed by cinderstorm or just rng
@@ -186,8 +187,6 @@ function mod:SPELL_CAST_START(args)
 		if self:AntiSpam(3, 6) then
 			warnBurstofLight:Show()
 		end
-	elseif spellId == 444296 then
-		timerImpaleCD:Start(nil, args.sourceGUID)
 	elseif spellId == 427609 then
 		timerDisruptingShoutCD:Start(nil, args.sourceGUID)
 		if self:AntiSpam(3, 1) then
@@ -244,6 +243,10 @@ function mod:SPELL_CAST_START(args)
 		if self:AntiSpam(3, 5) then
 			warnBlazingStrike:Show()
 		end
+	elseif spellId == 427950 then
+		if self:AntiSpam(3, 4) then
+			warnSealofFlame:Show()
+		end
 	end
 end
 
@@ -281,6 +284,10 @@ function mod:SPELL_CAST_SUCCESS(args)
 		timerFireballVolleyCD:Start(22.4, args.sourceGUID)
 	elseif spellId == 448787 then
 		timerPurificationCD:Start(15, args.sourceGUID)
+	elseif spellId == 444296 then
+		timerImpaleCD:Start(nil, args.sourceGUID)
+	elseif spellId == 427950 then
+		timerSealofFlameCD:Start(nil, args.sourceGUID)
 	end
 end
 
@@ -366,6 +373,7 @@ function mod:UNIT_DIED(args)
 		timerThunderclapCD:Stop(args.destGUID)
 	elseif cid == 212831 then--Forge Master Damian
 		timerHeatWaveCD:Stop(args.destGUID)
+		timerSealofFlameCD:Stop(args.destGUID)
 	elseif cid == 212827 then--High Priest Aemya
 		timerReflectiveShieldCD:Stop(args.destGUID)
 	elseif cid == 207949 then--Zealous Templar
@@ -390,10 +398,10 @@ function mod:StartEngageTimers(guid, cid, delay, uID)
 --		timerLungingStrikeCD:Start(20.8-delay, guid)
 --		timerBrutalSmashCD:Start(41.9, guid)--41.9-49.6???
 	elseif cid == 211289 then--taener-duelmal (boss1)
-		timerCinderblastCD:Start(8.4-delay, guid)--8.4-11.8
+		--timerCinderblastCD:Start(8.4-delay, guid)--8.4-11.8 (Disabled in 11.2?)
 		timerEmberStormCD:Start(24.9, guid)
 	elseif cid == 239834 then--taener-duelmal (trash)
-		timerCinderblastCD:Start(14-delay, guid)
+--		timerCinderblastCD:Start(14-delay, guid)--(Disabled in 11.2?)
 		timerEmberStormCD:Start(24.9, guid)
 	elseif cid == 239833 then--elaena-emberlanz trash
 		timerDivineJudgementCD:Start(19-delay, guid)
@@ -422,6 +430,7 @@ function mod:StartEngageTimers(guid, cid, delay, uID)
 		timerThunderclapCD:Start(15.8-delay, guid)
 	elseif cid == 212831 then--Forge Master Damian
 		timerHeatWaveCD:Start(12-delay, guid)
+		timerSealofFlameCD:Start(16-delay, guid)
 	elseif cid == 212827 then--High Priest Aemya
 		timerReflectiveShieldCD:Start(4.6-delay, guid)
 	elseif cid == 207949 then--Zealous Templar

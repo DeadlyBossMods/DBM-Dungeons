@@ -13,13 +13,13 @@ mod.sendMainBossGUID = true
 mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
-	"SPELL_CAST_START 424419 447270 424414",
+	"SPELL_CAST_START 424419 424414 1238780",--447270
 	"SPELL_CAST_SUCCESS 424414 447443",
 	"SPELL_AURA_APPLIED 447443 447439 424419",
 	"SPELL_AURA_APPLIED_DOSE 424419",
-	"SPELL_AURA_REMOVED 447443"
---	"SPELL_PERIODIC_DAMAGE",
---	"SPELL_PERIODIC_MISSED"
+	"SPELL_AURA_REMOVED 447443",
+	"SPELL_PERIODIC_DAMAGE 1238782",
+	"SPELL_PERIODIC_MISSED 1238782"
 --	"UNIT_DIED"
 --	"UNIT_SPELLCAST_SUCCEEDED boss1"
 )
@@ -27,7 +27,7 @@ mod:RegisterEventsInCombat(
 --NOTE, the abilities of sub bosses are all in trash mod due to fact that you can (and should) pull them separately from boss
 --TODO, track Strength in Numbers by purposely pulling boss wrong?
 --[[
-(ability.id = 424419 or ability.id = 447270 or ability.id = 424414) and type = "begincast"
+(ability.id = 424419 or ability.id = 447270 or ability.id = 424414 or ability.id = 1238780) and type = "begincast"
  or ability.id = 447443 and (type = "applydebuff" or type = "removedebuff")
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
 --]]
@@ -37,14 +37,16 @@ local warnSavageMauling						= mod:NewTargetNoFilterAnnounce(447439, 3)
 
 local specWarnBattleCry						= mod:NewSpecialWarningInterruptCount(424419, nil, nil, nil, 1, 2)
 local specWarnBattleCryDispel				= mod:NewSpecialWarningDispel(424419, "RemoveEnrage", nil, nil, 1, 2)
-local specWarnHurlSpear						= mod:NewSpecialWarningDodgeCount(447270, nil, nil, nil, 2, 2)
+--local specWarnHurlSpear					= mod:NewSpecialWarningDodgeCount(447270, nil, nil, nil, 2, 2)--Replaced by Earthshattering Spear
+local specWarnEarthshatteringSpear			= mod:NewSpecialWarningDodgeCount(1238780, nil, nil, nil, 2, 2)
 local specWarnPierceArmor					= mod:NewSpecialWarningDefensive(424414, nil, nil, nil, 1, 2)
---local specWarnGTFO						= mod:NewSpecialWarningGTFO(372820, nil, nil, nil, 1, 8)
+local specWarnGTFO							= mod:NewSpecialWarningGTFO(1238782, nil, nil, nil, 1, 8)
 
 local timerSavageMaulingCD					= mod:NewCDCountTimer(25.1, 447439, nil, nil, nil, 3)
-local timerBattleCryCD						= mod:NewVarCountTimer("v26.3-30.7", 424419, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--15.8-18.2
-local timerHurlSpearCD						= mod:NewVarCountTimer("v30.3-35.8", 447270, nil, nil, nil, 3)
-local timerPierceArmorCD					= mod:NewVarCountTimer("v13.3-23", 424414, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+local timerBattleCryCD						= mod:NewVarCountTimer("v27.9-29.1", 424419, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--15.8-18.2
+--local timerHurlSpearCD					= mod:NewVarCountTimer("v30.3-35.8", 447270, nil, nil, nil, 3)
+local timerEarthshatteringSpearCD			= mod:NewVarCountTimer("v25.4-28.3", 1238780, nil, nil, nil, 3)
+local timerPierceArmorCD					= mod:NewVarCountTimer("v13.1-17.6", 424414, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 
 mod:AddInfoFrameOption(447443)
 
@@ -58,10 +60,10 @@ function mod:OnCombatStart(delay)
 	self.vb.battleCryCount = 0
 	self.vb.spearCount = 0
 	self.vb.pierceCount = 0
-	timerPierceArmorCD:Start(6-delay, 1)
-	timerHurlSpearCD:Start(8.7-delay, 1)
+	timerPierceArmorCD:Start(5.7-delay, 1)
+	timerEarthshatteringSpearCD:Start(9.3-delay, 1)
 	timerBattleCryCD:Start(12.3-delay, 1)
-	timerSavageMaulingCD:Start(13.3-delay, 1)
+	timerSavageMaulingCD:Start(19-delay, 1)
 end
 
 function mod:OnCombatEnd()
@@ -77,11 +79,16 @@ function mod:SPELL_CAST_START(args)
 		specWarnBattleCry:Show(args.sourceName, self.vb.battleCryCount)
 		specWarnBattleCry:Play("kickcast")
 		timerBattleCryCD:Start(nil, self.vb.battleCryCount+1)
-	elseif spellId == 447270 then
+--	elseif spellId == 447270 then
+--		self.vb.spearCount = self.vb.spearCount + 1
+--		specWarnHurlSpear:Show(self.vb.spearCount)
+--		specWarnHurlSpear:Play("watchstep")
+--		timerHurlSpearCD:Start(nil, self.vb.spearCount+1)
+	elseif spellId == 1238780 then
 		self.vb.spearCount = self.vb.spearCount + 1
-		specWarnHurlSpear:Show(self.vb.spearCount)
-		specWarnHurlSpear:Play("watchstep")
-		timerHurlSpearCD:Start(nil, self.vb.spearCount+1)
+		specWarnEarthshatteringSpear:Show(self.vb.spearCount)
+		specWarnEarthshatteringSpear:Play("watchstep")
+		timerEarthshatteringSpearCD:Start(nil, self.vb.spearCount+1)
 	elseif spellId == 424414 then
 		if self:IsTanking("player", "boss1", nil, true) then
 			specWarnPierceArmor:Show()
@@ -131,12 +138,10 @@ function mod:SPELL_AURA_REMOVED(args)
 	end
 end
 
---[[
 function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId, spellName)
-	if spellId == 372820 and destGUID == UnitGUID("player") and self:AntiSpam(3, 2) then
+	if spellId == 1238782 and destGUID == UnitGUID("player") and self:AntiSpam(3, 2) then
 		specWarnGTFO:Show(spellName)
 		specWarnGTFO:Play("watchfeet")
 	end
 end
 mod.SPELL_PERIODIC_MISSED = mod.SPELL_PERIODIC_DAMAGE
---]]
