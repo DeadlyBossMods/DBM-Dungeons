@@ -22,7 +22,6 @@ mod:RegisterEventsInCombat(
 	"UNIT_SPELLCAST_SUCCEEDED boss1"
 )
 
---TODO, Improve the code for pairing once we have context of how it all works to announce who your pair partner is
 --[[
 (ability.id = 473070 or ability.id = 473114 or ability.id = 469478) and type = "begincast"
  or ability.id = 472819 and type = "applydebuff"
