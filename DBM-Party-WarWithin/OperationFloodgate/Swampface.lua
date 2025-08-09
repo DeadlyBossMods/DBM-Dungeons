@@ -12,7 +12,7 @@ mod.sendMainBossGUID = true
 
 mod:RegisterCombat("combat")
 
-mod:RegisterEventsInCombat(
+mod:RegisterEvents(
 	"SPELL_CAST_SUCCESS 1214337"
 )
 
