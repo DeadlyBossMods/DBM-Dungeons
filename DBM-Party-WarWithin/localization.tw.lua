@@ -275,3 +275,27 @@ L = DBM:GetModLocalization("OperationFloodgateTrash")
 L:SetGeneralLocalization({
 	name =	"水閘行動小怪"
 })
+
+-----------------------------
+--  Azhiccar  --
+-----------------------------
+--L = DBM:GetModLocalization(2675)
+
+-----------------------------
+--  Taah'bat and A'wazj  --
+-----------------------------
+--L = DBM:GetModLocalization(2676)
+
+-----------------------------
+--  Soul-Scribe  --
+-----------------------------
+--L = DBM:GetModLocalization(2677)
+
+---------
+--Trash--
+---------
+L = DBM:GetModLocalization("EcoDomeAldaniTrash")
+
+L:SetGeneralLocalization({
+	name =	"埃達尼秘境小怪"
+})
