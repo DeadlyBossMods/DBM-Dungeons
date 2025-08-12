@@ -1,4 +1,4 @@
---Mini Dragon <流浪者酒馆-Brilla@金色平原(The Golden Plains-CN)> projecteurs@gmail.NOSPAM.com 20241231
+--Mini Dragon <流浪者酒馆-Brilla@金色平原(The Golden Plains-CN)> projecteurs@gmail.NOSPAM.com 20250811
 --Blizzard Entertainment
 
 if GetLocale() ~= "zhCN" then return end
@@ -198,7 +198,11 @@ L:SetGeneralLocalization({
 -----------------------------
 --  Goldie Baronbottom  --
 -----------------------------
---L = DBM:GetModLocalization(2589)
+L = DBM:GetModLocalization(2589)
+
+L:SetMiscLocalization{
+	RolePlay		= "好吧，我的员工被你们放倒了。"
+}
 
 ---------
 --Trash--
@@ -277,4 +281,30 @@ L = DBM:GetModLocalization("OperationFloodgateTrash")
 
 L:SetGeneralLocalization({
 	name =	"水闸行动小怪"
+})
+
+----------
+-- 奥尔达尼生态圆顶
+-----------------------------
+--  Azhiccar  --
+-----------------------------
+--L = DBM:GetModLocalization(2675)
+
+-----------------------------
+--  Taah'bat and A'wazj  --
+-----------------------------
+--L = DBM:GetModLocalization(2676)
+
+-----------------------------
+--  Soul-Scribe  --
+-----------------------------
+--L = DBM:GetModLocalization(2677)
+
+---------
+--Trash--
+---------
+L = DBM:GetModLocalization("EcoDomeAldaniTrash")
+
+L:SetGeneralLocalization({
+	name =	"生态圆顶小怪"
 })
