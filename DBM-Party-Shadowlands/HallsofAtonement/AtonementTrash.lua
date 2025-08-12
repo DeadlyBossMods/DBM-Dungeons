@@ -56,8 +56,8 @@ local timerLoyalBeastsCD				= mod:NewCDNPTimer(23.7, 326450, nil, nil, nil, 4)
 local timerStoneFistCD					= mod:NewCDPNPTimer(15.2, 1237071, nil, "Tank|Healer", nil, 5)--18.2 minus cast time
 local timerPowerfulSwipeCD				= mod:NewCDPNPTimer(21.5, 326997, nil, nil, nil, 2)--23 minus cast time
 local timerDisruptingScreechCD			= mod:NewCDPNPTimer(29.7, 1235326, nil, "SpellCaster", nil, 2)--32.7 minus cast time
-local timerSiphonLifeCD					= mod:NewCDNPTimer(17, 325701, nil, nil, nil, 4)--17-21.8
-local timerThrashCD						= mod:NewCDNPTimer(23, 326409, nil, nil, nil, 2)
+local timerSiphonLifeCD					= mod:NewCDNPTimer(16.6, 325701, nil, nil, nil, 4)--16.6-21.8
+local timerThrashCD						= mod:NewCDNPTimer(22.2, 326409, nil, nil, nil, 2)
 local timerSinQuakeCD					= mod:NewCDNPTimer(23, 326441, nil, nil, nil, 3)--always 11 seconds after thrash (thrash is 10 sec + 1 sec)
 local timerHurlGlaiveCD					= mod:NewCDNPTimer(17, 326638, nil, nil, nil, 3)--17-20.7
 local timerMortalStrikeCD				= mod:NewCDNPTimer(14.6, 1235766, nil, "Tank|Healer", nil, 5)--14.6-21.9
@@ -251,9 +251,9 @@ end
 --Most timers need adjustment, had bad logs
 function mod:StartEngageTimers(guid, cid, delay)
 	if cid == 165414 then--Depraved Obliterator
-		timerMarkofObliterationCD:Start(10-delay, guid)--Iffy
+		timerMarkofObliterationCD:Start(6.9-delay, guid)--6.9-10
 	elseif cid == 164562 then--Depraved Houndmaster
-		timerLoyalBeastsCD:Start(14.2-delay, guid)--Iffy
+		timerLoyalBeastsCD:Start(3-delay, guid)--Can get massively delayed
 	elseif cid == 167607 then--Stoneborn Slasher
 		timerStoneFistCD:Start(5-delay, guid)--Iffy
 		timerPowerfulSwipeCD:Start(10-delay, guid)--Iffy
@@ -261,7 +261,7 @@ function mod:StartEngageTimers(guid, cid, delay)
 	elseif cid == 165529 then--Depraved Collector
 		timerSiphonLifeCD:Start(3-delay, guid)--Iffy
 	elseif cid == 164557 then--Shard of Halkias
-		timerThrashCD:Start(7-delay, guid)--Iffy
+		timerThrashCD:Start(6.8-delay, guid)
 		--No need to start Sin Quake here, it'll be started by Thrash
 	elseif cid == 167611 then--Stoneborn Eviscerator
 		timerHurlGlaiveCD:Start(7.5-delay, guid)--Iffy
@@ -269,11 +269,11 @@ function mod:StartEngageTimers(guid, cid, delay)
 		timerMortalStrikeCD:Start(4.8-delay, guid)--Iffy
 		timerTurntoStoneCD:Start(20.5-delay, guid)--Iffy
 	elseif cid == 167610 then--Stonefiend Anklebiter
-		timerAnkleBiterCD:Start(8.5-delay, guid)--Iffy
+		timerAnkleBiterCD:Start(5.8-delay, guid)
 	elseif cid == 167876 then--Inquisitor Sigar
 		timerDarkCommunionCD:Start(6-delay, guid)--Iffy
 		timerDisperseSinsCD:Start(10.5-delay, guid)--Iffy
-		timerDisplayOfPowerCD:Start(19.1-delay, guid)--Iffy
+		timerDisplayOfPowerCD:Start(15.6-delay, guid)
 	end
 end
 

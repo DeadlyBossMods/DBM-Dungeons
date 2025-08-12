@@ -4,6 +4,8 @@ local L		= mod:GetLocalizedStrings()
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(164185)
 mod:SetEncounterID(2380)
+mod:SetHotfixNoticeRev(20250808000000)
+--mod:SetMinSyncRevision(20211203000000)
 mod:SetZone(2287)
 
 mod:RegisterCombat("combat")
@@ -25,26 +27,32 @@ mod:RegisterEventsInCombat(
 --[[
 (ability.id = 319941 or ability.id = 319733) and type = "begincast"
  or (ability.id = 328206 or ability.id = 326389) and type = "cast"
+ or type = "dungeonencounterstart" or type = "dungeonencounterend"
  --]]
-local warnStoneShatteringLeap		= mod:NewTargetNoFilterAnnounce(319592, 3)
-local warnStonesCall				= mod:NewSpellAnnounce(319733, 2)
+local warnStoneShatteringLeap		= mod:NewTargetNoFilterAnnounce(319941, 3)
+local warnStonesCall				= mod:NewCountAnnounce(319733, 2)
 
-local specWarnCurseofStoneDispel	= mod:NewSpecialWarningDispel(319603, "RemoveCurse", nil, nil, 1, 2)
-local specWarnCurseofStone			= mod:NewSpecialWarningYou(319603, nil, nil, nil, 1, 2)
-local specWarnBloodTorrent			= mod:NewSpecialWarningSpell(319702, nil, nil, nil, 2, 2)
-local specWarnStoneShatteringLeap	= mod:NewSpecialWarningYou(319592, nil, 47482, nil, 1, 2)
-local yellStoneShatteringLeap		= mod:NewYell(319592, 47482)
-local yellStoneShatteringLeapFades	= mod:NewShortFadesYell(319592, 47482)
+local specWarnCurseofStoneDispel	= mod:NewSpecialWarningDispel(328206, "RemoveCurse", nil, nil, 1, 2)
+local specWarnCurseofStone			= mod:NewSpecialWarningYou(328206, nil, nil, nil, 1, 2)
+local specWarnBloodTorrent			= mod:NewSpecialWarningCount(326389, nil, nil, nil, 2, 2)
+local specWarnStoneShatteringLeap	= mod:NewSpecialWarningYou(319941, nil, 47482, nil, 1, 2)
+local yellStoneShatteringLeap		= mod:NewYell(319941, 47482)
+local yellStoneShatteringLeapFades	= mod:NewShortFadesYell(319941, 47482)
 --local specWarnGTFO					= mod:NewSpecialWarningGTFO(257274, nil, nil, nil, 1, 8)
 
-local timerStoneCallCD				= mod:NewCDTimer(37.6, 319733, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)--37.6-49.19 (42-51 now? Or maybe health based)
-local timerStoneShatteringLeapCD	= mod:NewCDTimer(29.1, 319592, 47482, nil, nil, 3)--shortText "Leap"
-local timerCurseofStoneCD			= mod:NewCDTimer(29.1, 319603, nil, nil, nil, 3, nil, DBM_COMMON_L.CURSE_ICON)
-local timerBloodTorrentCD			= mod:NewCDTimer(16.9, 319702, nil, nil, nil, 2)--16.9 unless delayed by one of other casts
+local timerStoneCallCD				= mod:NewVarCountTimer("v42.5-51.8", 319733, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)
+local timerStoneShatteringLeapCD	= mod:NewVarCountTimer("v28.3-32.7", 319941, 47482, nil, nil, 3)--shortText "Leap"
+local timerCurseofStoneCD			= mod:NewVarCountTimer("v28.3-32.7", 328206, nil, nil, nil, 3, nil, DBM_COMMON_L.CURSE_ICON)
+local timerBloodTorrentCD			= mod:NewVarCountTimer("v16.9-25.5", 326389, nil, nil, nil, 2)--16.9 unless delayed by one of other casts
 
 mod:AddNamePlateOption("NPAuraOnStoneForm", 319724)
 
-function mod:LeapTarget(targetname, uId, bossuid, scanningTime)
+mod.vb.stoneCallCount = 0
+mod.vb.shatteringLeapCount = 0
+mod.vb.curseCount = 0
+mod.vb.torrentCount = 0
+
+function mod:LeapTarget(targetname, _, _, scanningTime)
 	if not targetname then return end
 	if targetname == UnitName("player") then
 		specWarnStoneShatteringLeap:Show()
@@ -57,10 +65,14 @@ function mod:LeapTarget(targetname, uId, bossuid, scanningTime)
 end
 
 function mod:OnCombatStart(delay)
-	timerBloodTorrentCD:Start(7.5-delay)--SUCCESS
-	timerStoneCallCD:Start(10.9-delay)--START
-	timerStoneShatteringLeapCD:Start(20.6-delay)--START
-	timerCurseofStoneCD:Start(21.3-delay)--SUCCESS
+	self.vb.stoneCallCount = 0
+	self.vb.shatteringLeapCount = 0
+	self.vb.curseCount = 0
+	self.vb.torrentCount = 0
+	timerBloodTorrentCD:Start(6-delay, 1)--SUCCESS
+	timerStoneCallCD:Start(9.2-delay, 1)--START
+	timerCurseofStoneCD:Start(21.6-delay, 1)--SUCCESS
+	timerStoneShatteringLeapCD:Start(23.1-delay, 1)--START
 	if self.Options.NPAuraOnStoneForm then
 		DBM:FireEvent("BossMod_EnableHostileNameplates")
 	end
@@ -75,22 +87,26 @@ end
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
 	if spellId == 319733 then
-		warnStonesCall:Show()
-		timerStoneCallCD:Start()
+		self.vb.stoneCallCount = self.vb.stoneCallCount + 1
+		warnStonesCall:Show(self.vb.stoneCallCount)
+		timerStoneCallCD:Start(nil, self.vb.stoneCallCount+1)
 	elseif spellId == 319941 then
+		self.vb.shatteringLeapCount = self.vb.shatteringLeapCount + 1
 		self:ScheduleMethod(0.2, "BossTargetScanner", args.sourceGUID, "LeapTarget", 0.1, 8, true, nil, nil, nil, true)
-		timerStoneShatteringLeapCD:Start()
+		timerStoneShatteringLeapCD:Start(nil, self.vb.shatteringLeapCount+1)
 	end
 end
 
 function mod:SPELL_CAST_SUCCESS(args)
 	local spellId = args.spellId
 	if spellId == 328206 then
-		timerCurseofStoneCD:Start()
+		self.vb.curseCount = self.vb.curseCount + 1
+		timerCurseofStoneCD:Start(nil, self.vb.curseCount+1)
 	elseif spellId == 326389 then
-		specWarnBloodTorrent:Show()
+		self.vb.torrentCount = self.vb.torrentCount + 1
+		specWarnBloodTorrent:Show(self.vb.torrentCount)
 		specWarnBloodTorrent:Play("aesoon")
-		timerBloodTorrentCD:Start()
+		timerBloodTorrentCD:Start(nil, self.vb.torrentCount+1)
 	end
 end
 

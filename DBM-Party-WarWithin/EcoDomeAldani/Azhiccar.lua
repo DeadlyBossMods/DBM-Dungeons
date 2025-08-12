@@ -126,7 +126,7 @@ function mod:RAID_BOSS_WHISPER(msg)
 		specWarnToxicRegurgitation:Show(self.vb.toxicRegurgitationCount)
 		specWarnToxicRegurgitation:Play("runout")
 		yellToxicRegurgitation:Yell()
-		yellToxicRegurgitationFades:Countdown(8)
+		yellToxicRegurgitationFades:Countdown(6)--6 On Mythic 0, maybe lower on M+? (tooltip says 8 btw, typical blizzard)
 	end
 end
 

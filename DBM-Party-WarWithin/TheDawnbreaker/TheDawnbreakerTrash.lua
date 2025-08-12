@@ -9,8 +9,8 @@ mod:SetZone(2662)
 mod:RegisterZoneCombat(2662, nil, true)
 
 mod:RegisterEvents(
-	"SPELL_CAST_START 451102 450854 451117 451097 431364 431494 432565 432520 431333 431637 451091 451098 431349 446615 450756 431304",
-	"SPELL_CAST_SUCCESS 451112 450756 451102 431349 451119 450854 451117 451097 431364 431494 432565 432520 431637 431309 432448 451107",
+	"SPELL_CAST_START 451102 450854 451117 451097 431364 431494 432565 432520 431333 451091 451098 431349 446615 450756 431304",--431637
+	"SPELL_CAST_SUCCESS 451112 450756 451102 431349 451119 450854 451117 451097 431364 431494 432565 432520 431309 432448 451107",--431637
 	"SPELL_INTERRUPT",
 	"SPELL_AURA_APPLIED 451097 432520 451112 431309 432448 451107",
 --	"SPELL_AURA_APPLIED_DOSE",
@@ -22,6 +22,7 @@ mod:RegisterEvents(
 --TODO, more high priority interrupt CDs and alerts?
 --TODO, Silken Shell needs rechecking, i moved event handler but i couldn't confirm CD is still same
 --TODO, https://www.wowhead.com/beta/spell=431304/dark-floes is super rare in logs and cannot get CD for it cause no mob lives long enough to cast it twice
+--TODO, some of initial timers NOT checked for S3 yet, by time I got to this dungeon I was tired so I only worked on recasts
 --[[
 (ability.id = 450756 or ability.id = 451091 or ability.id = 451102 or ability.id = 446615 or ability.id = 431349 or ability.id = 451119 or ability.id = 450854 or ability.id = 451117 or ability.id = 451097 or ability.id = 431364 or ability.id = 431494 or ability.id = 432565 or ability.id = 432520 or ability.id = 431333 or ability.id = 431637 or ability.id = 431309 or ability.id = 431304) and (type = "begincast" or type = "cast")
  or (ability.id = 451112 or ability.id = 432448 or ability.id = 451107) and type = "cast"
@@ -33,7 +34,7 @@ local warnReinforcements					= mod:NewSpellAnnounce(446615, 2)
 local warnDarkFloes							= mod:NewSpellAnnounce(431304, 2)
 local warnSilkenShell						= mod:NewCastAnnounce(451097, 3)--High prio interrupt
 local warnAbyssalHowl						= mod:NewCastAnnounce(450756, 3)--High prio interrupt
-local warnUmbrelRush						= mod:NewCastAnnounce(431637, 2)
+--local warnUmbrelRush						= mod:NewCastAnnounce(431637, 2)
 local warnUmbralBarrier						= mod:NewCastAnnounce(432520, 2, nil, nil, nil, nil, nil, 2)
 local warnPlantArathiBomb					= mod:NewCastAnnounce(451091, 3, 15)
 local warnEnsaringShadows					= mod:NewTargetNoFilterAnnounce(431309, 2, nil, "RemoveCurse")
@@ -61,21 +62,21 @@ local specWarnTacticiansRageDispel			= mod:NewSpecialWarningDispel(451112, "Remo
 
 local timerDarkFloesCD						= mod:NewCDNPTimer(20.8, 431304, nil, nil, nil, 1)
 local timerAbyssalBlastCD					= mod:NewCDNPTimer(9.4, 451119, nil, "Tank|Healer", nil, 5)--9.4-23.98 (wildly varient due to lower priority over other abilities)
-local timerShadowyDecayCD					= mod:NewCDNPTimer(23.4, 451102, nil, nil, nil, 2)
-local timerDarkOrbCD						= mod:NewCDPNPTimer(14.2, 450854, nil, nil, nil, 3)--14.2-36.8 (wildly varient due to lower priority over other abilities)
-local timerTerrifyingSlamCD					= mod:NewCDNPTimer(21.2, 451117, nil, nil, nil, 2)
-local timerBlackEdgeCD						= mod:NewCDPNPTimer(10.3, 431494, nil, nil, nil, 3)
-local timerBlackHailCD						= mod:NewCDNPTimer(12.5, 432565, nil, nil, nil, 3)
-local timerUmbrelRushCD						= mod:NewCDNPTimer(9.1, 431637, nil, nil, nil, 3)
-local timerUmbrelBarrierCD					= mod:NewCDPNPTimer(24.2, 432520, nil, nil, nil, 5, nil, DBM_COMMON_L.MAGIC_ICON)--Single log with single cast, not great sample
+local timerShadowyDecayCD					= mod:NewCDNPTimer(25.9, 451102, nil, nil, nil, 2)
+local timerDarkOrbCD						= mod:NewCDPNPTimer(20.2, 450854, nil, nil, nil, 3)--14.2-36.8 (wildly varient due to lower priority over other abilities)
+local timerTerrifyingSlamCD					= mod:NewCDNPTimer(23.3, 451117, nil, nil, nil, 2)
+local timerBlackEdgeCD						= mod:NewCDPNPTimer(12.2, 431494, nil, nil, nil, 3)
+local timerBlackHailCD						= mod:NewCDNPTimer(16.9, 432565, nil, nil, nil, 3)
+--local timerUmbrelRushCD					= mod:NewCDNPTimer(9.1, 431637, nil, nil, nil, 3)--Effectively spammed now
+local timerUmbrelBarrierCD					= mod:NewCDPNPTimer(24.2, 432520, nil, nil, nil, 5, nil, DBM_COMMON_L.MAGIC_ICON)--Single log with single cast, not great sample (just as hard to vet in S3)
 local timerTacticiansRageCD					= mod:NewCDNPTimer(18.2, 451112, nil, nil, nil, 5, nil, DBM_COMMON_L.MAGIC_ICON)
-local timerSilkenShellCD					= mod:NewCDPNPTimer(18.4, 451097, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerSilkenShellCD					= mod:NewCDPNPTimer(18.4, 451097, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--Removed in 11.2?
 local timerTormentingRayCD					= mod:NewCDPNPTimer(8, 431364, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
-local timerAbyssalHowlCD					= mod:NewCDPNPTimer(25.6, 450756, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerAbyssalHowlCD					= mod:NewCDPNPTimer(23.2, 450756, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerTorentingEruptionCD				= mod:NewCDNPTimer(11.2, 431349, nil, nil, nil, 3)
-local timerEnsnaringShadowsCD				= mod:NewCDPNPTimer(18.1, 431309, nil, nil, nil, 5, nil, DBM_COMMON_L.CURSE_ICON)
-local timerStygianSeedCD					= mod:NewCDNPTimer(21.8, 432448, nil, nil, nil, 3)
-local timerBurstingCacoonCD					= mod:NewCDNPTimer(15.7, 451107, nil, nil, nil, 3)
+local timerEnsnaringShadowsCD				= mod:NewCDPNPTimer(25.4, 431309, nil, nil, nil, 5, nil, DBM_COMMON_L.CURSE_ICON)--Single Sample, could be wrong
+local timerStygianSeedCD					= mod:NewCDNPTimer(19.6, 432448, nil, nil, nil, 3)
+local timerBurstingCacoonCD					= mod:NewCDNPTimer(19.3, 451107, nil, nil, nil, 3)
 
 --local playerName = UnitName("player")
 
@@ -153,10 +154,10 @@ function mod:SPELL_CAST_START(args)
 			specWarnTormentingBeam:Show(args.sourceName)
 			specWarnTormentingBeam:Play("kickcast")
 		end
-	elseif spellId == 431637 then
-		if self:AntiSpam(3, 6) then
-			warnUmbrelRush:Show()
-		end
+--	elseif spellId == 431637 then
+--		if self:AntiSpam(3, 6) then
+--			warnUmbrelRush:Show()
+--		end
 	elseif spellId == 451091 then
 		if self:AntiSpam(3, 6) then
 			warnPlantArathiBomb:Show()
@@ -187,35 +188,35 @@ function mod:SPELL_CAST_SUCCESS(args)
 	if spellId == 451112 then
 		timerTacticiansRageCD:Start(18.2, args.sourceGUID)
 	elseif spellId == 450756 then
-		timerAbyssalHowlCD:Start(25.6, args.sourceGUID)
+		timerAbyssalHowlCD:Start(23.2, args.sourceGUID)
 	elseif spellId == 451102 then
-		timerShadowyDecayCD:Start(23.4, args.sourceGUID)
+		timerShadowyDecayCD:Start(nil, args.sourceGUID)
 	elseif spellId == 431349 then
 		timerTorentingEruptionCD:Start(11.2, args.sourceGUID)
 	elseif spellId == 451119 then
 		timerAbyssalBlastCD:Start(9.4, args.sourceGUID)
 	elseif spellId == 450854 then--Trash Version
-		timerDarkOrbCD:Start(14.2, args.sourceGUID)
+		timerDarkOrbCD:Start(nil, args.sourceGUID)
 	elseif spellId == 451117 then
-		timerTerrifyingSlamCD:Start(21.2, args.sourceGUID)
+		timerTerrifyingSlamCD:Start(nil, args.sourceGUID)
 	elseif spellId == 451097 then
 		timerSilkenShellCD:Start(18.4, args.sourceGUID)
 	elseif spellId == 431364 then
 		timerTormentingRayCD:Start(8, args.sourceGUID)
 	elseif spellId == 431494 then
-		timerBlackEdgeCD:Start(10.3, args.sourceGUID)
+		timerBlackEdgeCD:Start(nil, args.sourceGUID)
 	elseif spellId == 432565 then
-		timerBlackHailCD:Start(12.5, args.sourceGUID)
+		timerBlackHailCD:Start(nil, args.sourceGUID)
 	elseif spellId == 432520 then
 		timerUmbrelBarrierCD:Start(24.2, args.sourceGUID)
-	elseif spellId == 431637 then
-		timerUmbrelRushCD:Start(9.1, args.sourceGUID)
+--	elseif spellId == 431637 then
+--		timerUmbrelRushCD:Start(9.1, args.sourceGUID)
 	elseif spellId == 431309 then
 		timerEnsnaringShadowsCD:Start(18.1, args.sourceGUID)
 	elseif spellId == 432448 then
-		timerStygianSeedCD:Start(21.8, args.sourceGUID)
+		timerStygianSeedCD:Start(nil, args.sourceGUID)
 	elseif spellId == 451107 then
-		timerBurstingCacoonCD:Start(15.7, args.sourceGUID)
+		timerBurstingCacoonCD:Start(nil, args.sourceGUID)
 	end
 end
 
@@ -223,11 +224,9 @@ function mod:SPELL_INTERRUPT(args)
 	if not self.Options.Enabled then return end
 	local spellId = args.extraSpellId
 	if spellId == 450756 then
-		timerAbyssalHowlCD:Start(25.6, args.destGUID)
+		timerAbyssalHowlCD:Start(23.2, args.destGUID)
 	elseif spellId == 432520 then
 		timerUmbrelBarrierCD:Start(24.2, args.destGUID)
-	elseif spellId == 431309 then
-		timerEnsnaringShadowsCD:Start(18.1, args.destGUID)
 	end
 end
 
@@ -302,8 +301,8 @@ function mod:UNIT_DIED(args)
 		timerBlackHailCD:Stop(args.destGUID)
 	elseif cid == 213893 or cid == 228539 then--Nightfall Darkcaster
 		timerUmbrelBarrierCD:Stop(args.destGUID)
-	elseif cid == 213895 or cid == 228537 then--Nightfall Shadowalker
-		timerUmbrelRushCD:Stop(args.destGUID)
+--	elseif cid == 213895 or cid == 228537 then--Nightfall Shadowalker
+--		timerUmbrelRushCD:Stop(args.destGUID)
 	elseif cid == 214762 then--Nightfall Commander
 		timerAbyssalHowlCD:Stop(args.destGUID)
 	elseif cid == 213885 then--Nightfall Dark Architect
@@ -319,7 +318,7 @@ end
 function mod:StartEngageTimers(guid, cid, delay)
 	if cid == 211261 then--Ascendant Vis'coxria
 		timerShadowyDecayCD:Start(3.6-delay, guid)--3.6-5.5
-		timerAbyssalBlastCD:Start(13.3-delay, guid)--13.3-15.2
+		timerAbyssalBlastCD:Start(12.4-delay, guid)--12.4-15.2
 	elseif cid == 211263 then--Deathscreamer Iken'tak
 		timerAbyssalBlastCD:Start(5.8-delay, guid)--5.8-6.8
 		timerDarkOrbCD:Start(12.8-delay, guid)--12.8-13.1
@@ -336,7 +335,7 @@ function mod:StartEngageTimers(guid, cid, delay)
 		timerTacticiansRageCD:Start(7.4-delay, guid)--7.4-11.7
 	elseif cid == 211341 then--Manifested Shadow
 		timerBlackHailCD:Start(5.3-delay, guid)--5.3-8.8
-		timerDarkFloesCD:Start(40-delay, guid)--Quite consistent
+	--	timerDarkFloesCD:Start(40-delay, guid)--Doesn't exist, or not cast after 40 anymore
 --	elseif cid == 213893 or cid == 228539 then--Nightfall Darkcaster
 --		timerUmbrelBarrierCD:Start(8.6-delay, guid)--8.6-17 (first cast not likley timer based but health threshold based)
 --	elseif cid == 213895 or cid == 228537 then--Nightfall Shadowalker
@@ -346,7 +345,7 @@ function mod:StartEngageTimers(guid, cid, delay)
 	elseif cid == 213885 then--Nightfall Dark Architect
 		timerTorentingEruptionCD:Start(5.4-delay, guid)--5.4-5.9
 	elseif cid == 213892 or cid == 228540 then--Nightfall Shadowmage (223994 is an RP mage, not engaged)
-		timerEnsnaringShadowsCD:Start(cid == 228540 and (10.8-delay) or (8.0-delay), guid)--8.0-12.9 (213892) 10.8-14 (228540)
+		timerEnsnaringShadowsCD:Start(cid == 228540 and (10.8-delay) or (7.3-delay), guid)--7.3-12.9 (213892) 10.8-14 (228540)
 	elseif cid == 210966 then--Sureki Webmage
 		timerBurstingCacoonCD:Start(1.8-delay, guid)--1.8-11.7
 	end

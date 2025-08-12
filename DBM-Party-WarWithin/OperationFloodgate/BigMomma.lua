@@ -202,7 +202,7 @@ function mod:SPELL_AURA_REMOVED(args)
 		--restart Timers
 		timerElectrocrushCD:Start(9.2, self.vb.electroCount+1)
 		timerSonicBoomCD:Start(18.9, self.vb.sonicCount+1)
-		timerBarrierCD:Start(54.2, self.vb.barrierCount+1)
+		timerBarrierCD:Start(60.4, self.vb.barrierCount+1)
 	elseif spellId == 469981 then
 		if self.Options.InfoFrame then
 			DBM.InfoFrame:Hide()

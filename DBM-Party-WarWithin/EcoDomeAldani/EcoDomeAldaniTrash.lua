@@ -9,8 +9,8 @@ mod:SetZone(2830)
 mod:RegisterZoneCombat(2830)
 
 mod:RegisterEvents(
-	"SPELL_CAST_START 1229474 426893 1221190 1226111 1235368 1222356 1229510 1222815 1221483 1221532 1226306 1222341 1223007 1237195 1237220 1215850",
-	"SPELL_CAST_SUCCESS 426893 1221190 1226111 1235368 1222356 1221679 1229510 1223000 1222341",
+	"SPELL_CAST_START 1229474 426893 1221190 1226111 1235368 1222356 1229510 1222815 1221532 1226306 1222341 1223007 1237195 1237220 1215850",
+	"SPELL_CAST_SUCCESS 426893 1221190 1226111 1235368 1222356 1221679 1229510 1223000 1222341 1221483",
 	"SPELL_INTERRUPT",
 	"SPELL_AURA_APPLIED 1221133 1221483 1231608 1223000 1239229",
 --	"SPELL_AURA_APPLIED_DOSE",
@@ -39,7 +39,9 @@ local specErraticRitual						= mod:NewSpecialWarningSpell(1221532, nil, nil, nil
 local specWarnStingingSandstorm				= mod:NewSpecialWarningSpell(1237220, nil, nil, nil, 2, 2)
 local specWarnConsumeSpirit					= mod:NewSpecialWarningSwitch(1226306, "-Healer", nil, nil, 1, 2)
 local specWarnGluttonousMiasma				= mod:NewSpecialWarningDodge(1221190, nil, nil, nil, 2, 2)
-local specWarnVolatileEjection				= mod:NewSpecialWarningDodge(1226111, nil, nil, nil, 2, 2)
+local specWarnVolatileEjection				= mod:NewSpecialWarningYou(1226111, nil, nil, nil, 1, 2)
+local yellVolatileEjection					= mod:NewShortYell(1226111)
+local specWarnVolatileEjectionOther			= mod:NewSpecialWarningTarget(1226111, nil, nil, nil, 2, 2)
 local specWarnWarp							= mod:NewSpecialWarningDodge(1222356, nil, nil, nil, 2, 2)
 local specWarnBurrowingEruption				= mod:NewSpecialWarningDodge(1223007, nil, nil, nil, 2, 2)
 local specWarnBurrowCharge					= mod:NewSpecialWarningDodge(1237195, nil, nil, nil, 2, 2)
@@ -60,7 +62,7 @@ local timerArcaneSlashCD					= mod:NewCDNPTimer(15.2, 1235368, nil, nil, nil, 3)
 local timerWarpCD							= mod:NewCDNPTimer(9.2, 1222356, nil, nil, nil, 3)--12.2 but cast time adjusted
 local timerFarstalkersLeapCD				= mod:NewCDNPTimer(11.8, 1221679, nil, nil, nil, 3)--11.8-13.3
 local timerArcingZapCD						= mod:NewCDPNPTimer(24.2, 1229510, nil, nil, nil, 4)
-local timerArcingEnergyCD					= mod:NewCDNPTimer(10.9, 1221483, nil, nil, nil, 3)--actually alternates between 10.9 and 13.3 due to a spell queue
+local timerArcingEnergyCD					= mod:NewCDNPTimer(9.4, 1221483, nil, nil, nil, 3)--actually alternates between 10.9 and 13.3 due to a spell queue
 local timerErraticRitualCD					= mod:NewCDPNPTimer(19.8, 1221532, nil, nil, nil, 2)--19.8-31.6
 local timerConsumeSpiritCD					= mod:NewCDPNPTimer(51.9, 1226306, nil, nil, nil, 1)--Iffy
 local timerEmbraceOfKareshCD				= mod:NewCDNPTimer(20.7, 1223000, nil, nil, nil, 5)--Iffy
@@ -74,18 +76,21 @@ local timerEarthCrusherCD					= mod:NewCDPNPTimer(31.7, 1215850, nil, nil, nil, 
 
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc, 7 off interrupt
 
---[[
-function mod:VoidCrushtarget(targetname)
+function mod:VolatileTarget(targetname)
 	if not targetname then return end
 	if targetname == UnitName("player") then
 		if self:AntiSpam(4, 5) then
-			specWarnVoidCrush:Show()
-			specWarnVoidCrush:Play("scatter")
+			specWarnVolatileEjection:Show()
+			specWarnVolatileEjection:Play("targetyou")
 		end
-		yellVoidCrush:Yell()
+		yellVolatileEjection:Yell()
+	else
+		if self:AntiSpam(3, 2) then
+			specWarnVolatileEjectionOther:Show(targetname)
+			specWarnVolatileEjectionOther:Play("frontal")
+		end
 	end
 end
---]]
 
 function mod:SPELL_CAST_START(args)
 	if not self.Options.Enabled then return end
@@ -105,10 +110,7 @@ function mod:SPELL_CAST_START(args)
 			specWarnGluttonousMiasma:Play("watchstep")
 		end
 	elseif spellId == 1226111 then
-		if self:AntiSpam(3, 2) then
-			specWarnVolatileEjection:Show()
-			specWarnVolatileEjection:Play("frontal")
-		end
+		self:ScheduleMethod(0.1, "BossTargetScanner", args.sourceGUID, "VolatileTarget", 0.1, 4)
 	elseif spellId == 1235368 then
 		if self:AntiSpam(3, 5) then
 			warnArcaneSlash:Show()
@@ -126,8 +128,6 @@ function mod:SPELL_CAST_START(args)
 	elseif spellId == 1222815 and self:CheckInterruptFilter(args.sourceGUID, nil, true) then
 		specWarnArcaneBolt:Show(args.sourceName)
 		specWarnArcaneBolt:Play("kickcast")
-	elseif spellId == 1221483 then
-		timerArcingEnergyCD:Start(nil, args.sourceGUID)
 	elseif spellId == 1221532 then
 		if self:AntiSpam(3, 2) then
 			specErraticRitual:Show()
@@ -196,6 +196,8 @@ function mod:SPELL_CAST_SUCCESS(args)
 		timerEmbraceOfKareshCD:Start(nil, args.sourceGUID)
 	elseif spellId == 1222341 then
 		timerGloomBiteCD:Start(nil, args.sourceGUID)
+	elseif spellId == 1221483 then
+		timerArcingEnergyCD:Start(nil, args.sourceGUID)
 	end
 end
 
@@ -282,7 +284,7 @@ function mod:StartEngageTimers(guid, cid, delay)
 		timerFarstalkersLeapCD:Start(3.8-delay, guid)--3.8-7
 		timerArcingZapCD:Start(9.9-delay, guid)
 	elseif cid == 234957 then--Wastelander Ritualist
-		timerArcingEnergyCD:Start(9.7-delay, guid)
+		timerArcingEnergyCD:Start(8.5-delay, guid)
 	elseif cid == 234955 then--Wastelander Pactspeaker
 		timerErraticRitualCD:Start(8.5-delay, guid)--Iffy
 		timerConsumeSpiritCD:Start(25.8-delay, guid)--Iffy
