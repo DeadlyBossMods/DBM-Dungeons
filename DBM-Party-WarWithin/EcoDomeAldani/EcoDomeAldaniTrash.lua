@@ -116,9 +116,9 @@ function mod:SPELL_CAST_START(args)
 			warnArcaneSlash:Show()
 		end
 	elseif spellId == 1222356 then
-		if self:AntiSpam(3, 2) then
+		if self:AntiSpam(3.5, 2) then
 			specWarnWarp:Show()
-			specWarnWarp:Play("watchstep")
+			specWarnWarp:Play("farfromline")
 		end
 	elseif spellId == 1229510 then
 		if self:CheckInterruptFilter(args.sourceGUID, nil, true) then
