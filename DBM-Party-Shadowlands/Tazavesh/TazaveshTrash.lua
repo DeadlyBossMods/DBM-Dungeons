@@ -120,7 +120,7 @@ local timerQuellingStrikeCD					= mod:NewCDNPTimer(15.7, 355637, nil, nil, nil, 
 local timerPhalanxFieldCD					= mod:NewCDNPTimer(30.3, 355640, nil, nil, nil, 5)
 local timerPowerKickCD						= mod:NewCDNPTimer(9.4, 355477, nil, nil, nil, 5)--Only know Commanders
 local timerForceMultiplierCD				= mod:NewCDNPTimer(29.1, 1244443, nil, nil, nil, 5)
-local timerShockMinesCD						= mod:NewCDNPTimer(13.2, 355473, nil, nil, nil, 3)
+local timerShockMinesCD						= mod:NewCDNPTimer(26.4, 355473, nil, nil, nil, 3)
 local timerLethalForceCD					= mod:NewCDNPTimer(13.2, 355479, nil, nil, nil, 3)
 
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc
