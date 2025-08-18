@@ -75,7 +75,7 @@ function mod:SPELL_CAST_START(args)
 		specWarnInvadingShriek:Show(self.vb.invadingShriekCount)
 		specWarnInvadingShriek:Play("killmob")
 		if self.vb.invadingShriekCount % 2 == 0 then
-			timerInvadingShriekCD:Start(48.5, self.vb.invadingShriekCount+1)
+			timerInvadingShriekCD:Start(47.3, self.vb.invadingShriekCount+1)
 		else
 			timerInvadingShriekCD:Start(37.2, self.vb.invadingShriekCount+1)
 		end

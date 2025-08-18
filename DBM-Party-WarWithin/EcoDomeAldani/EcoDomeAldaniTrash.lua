@@ -38,7 +38,7 @@ local specWarnGorgingSmash					= mod:NewSpecialWarningSpell(426893, nil, nil, ni
 local specErraticRitual						= mod:NewSpecialWarningSpell(1221532, nil, nil, nil, 2, 2)
 local specWarnStingingSandstorm				= mod:NewSpecialWarningSpell(1237220, nil, nil, nil, 2, 2)
 local specWarnConsumeSpirit					= mod:NewSpecialWarningSwitch(1226306, "-Healer", nil, nil, 1, 2)
-local specWarnGluttonousMiasma				= mod:NewSpecialWarningDodge(1221190, nil, nil, nil, 2, 2)
+local specWarnGluttonousMiasma				= mod:NewSpecialWarningMoveAway(1221190, nil, nil, nil, 2, 2)
 local specWarnVolatileEjection				= mod:NewSpecialWarningYou(1226111, nil, nil, nil, 1, 2)
 local yellVolatileEjection					= mod:NewShortYell(1226111)
 local specWarnVolatileEjectionOther			= mod:NewSpecialWarningTarget(1226111, nil, nil, nil, 2, 2)
@@ -105,9 +105,9 @@ function mod:SPELL_CAST_START(args)
 			specWarnGorgingSmash:Play("aesoon")
 		end
 	elseif spellId == 1221190 then
-		if self:AntiSpam(3, 2) then
+		if self:AntiSpam(3, 6) then
 			specWarnGluttonousMiasma:Show()
-			specWarnGluttonousMiasma:Play("watchstep")
+			specWarnGluttonousMiasma:Play("scatter")
 		end
 	elseif spellId == 1226111 then
 		self:ScheduleMethod(0.1, "BossTargetScanner", args.sourceGUID, "VolatileTarget", 0.1, 4)
