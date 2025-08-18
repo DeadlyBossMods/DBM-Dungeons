@@ -98,8 +98,8 @@ function mod:SPELL_AURA_APPLIED(args)
 		self.vb.blitzActive = false
 		timerDestabalized:Start()
 		timerRiftClawsCD:Start(23.6, self.vb.riftClawsCount+1)
-		timerBindingJavelinCD:Start(30.1, self.vb.blitzCount+1)
-		timerWarpStrikeCD:Start(41, self.vb.warpStrikeCount+1)
+		timerBindingJavelinCD:Start(29.9, self.vb.blitzCount+1)
+		timerWarpStrikeCD:Start(40.8, self.vb.warpStrikeCount+1)
 		timerArcaneBlitzCD:Start(78.6, self.vb.blitzCount+1)
 	elseif spellId == 1219457 then
 		warnIncorporeal:Schedule(0.5, args.destName, args.amount or 3)

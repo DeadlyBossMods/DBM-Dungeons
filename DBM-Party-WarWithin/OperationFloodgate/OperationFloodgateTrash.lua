@@ -118,7 +118,6 @@ function mod:SPELL_CAST_START(args)
 			specWarnSurpriseInspection:Play("frontal")
 		end
 	elseif spellId == 462771 then
-		allowInterruptOnBeam = true
 		if self:CheckInterruptFilter(args.sourceGUID, false, true) then
 			specWarnSurveyingBeam:Show(args.sourceName)
 			specWarnSurveyingBeam:Play("kickcast")

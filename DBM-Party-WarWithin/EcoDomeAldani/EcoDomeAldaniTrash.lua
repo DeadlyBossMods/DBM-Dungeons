@@ -65,7 +65,7 @@ local timerArcingZapCD						= mod:NewCDPNPTimer(24.2, 1229510, nil, nil, nil, 4)
 local timerArcingEnergyCD					= mod:NewCDNPTimer(9.4, 1221483, nil, nil, nil, 3)--actually alternates between 10.9 and 13.3 due to a spell queue
 local timerErraticRitualCD					= mod:NewCDPNPTimer(19.8, 1221532, nil, nil, nil, 2)--19.8-31.6
 local timerConsumeSpiritCD					= mod:NewCDPNPTimer(51.9, 1226306, nil, nil, nil, 1)--Iffy
-local timerEmbraceOfKareshCD				= mod:NewCDNPTimer(20.7, 1223000, nil, nil, nil, 5)--Iffy
+local timerEmbraceOfKareshCD				= mod:NewCDNPTimer(17, 1223000, nil, nil, nil, 5)
 local timerGloomBiteCD						= mod:NewCDNPTimer(12.1, 1222341, nil, nil, nil, 5)--Iffy 14.6-2.5
 local timerBurrowingEruptionCD				= mod:NewCDNPTimer(18.3, 1223007, nil, nil, nil, 3)--Iffy
 local timerBurrowChargeCD					= mod:NewCDNPTimer(19.5, 1237195, nil, nil, nil, 3)--Iffy 19.5-25
@@ -274,7 +274,7 @@ function mod:StartEngageTimers(guid, cid, delay)
 	if cid == 234883 then--Voracious Gorger
 		timerGorgingSmashCD:Start(24-delay, guid)
 	elseif cid == 236995 then--Ravenous Destroyer
-		timerGluttonousMiasmaCD:Start(8-delay, guid)--Iffy
+		timerGluttonousMiasmaCD:Start(7.7-delay, guid)
 		timerVolatileEjectionCD:Start(14-delay, guid)--Iffy
 --	elseif cid == 242631 then--Overcharged Sentinel
 --		timerArcaneSlashCD:Start(8-delay, guid)--UNKNOWN, placeholder
