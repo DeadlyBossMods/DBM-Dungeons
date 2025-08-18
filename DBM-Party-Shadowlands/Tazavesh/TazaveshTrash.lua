@@ -11,7 +11,7 @@ mod.isTrashModBossFightAllowed = true
 
 mod:RegisterEvents(
 	"SPELL_CAST_START 356548 352390 354297 355930 355934 356001 347775 355057 355225 355584 357226 357260 356407 356404 347903 357229 355048 355464 355429 355577 356133 356843 1244650 357238 357196 353836 352796 356537 355830 356967 1240821 1240912 347721 347716 355477 1244443 355473 355479",
-	"SPELL_CAST_SUCCESS 355234 355048 355057 355132 356133 368661 357260 355888 355900 355915 355934 357029 357197 357229 347775 355637 355640",
+	"SPELL_CAST_SUCCESS 355234 355048 355057 355132 356133 368661 357260 355888 355900 355915 355934 357029 357197 357229 347775 355637 355640 347716",
 	"SPELL_INTERRUPT",
 	"SPELL_AURA_APPLIED 355888 355915 355980 357229 357029 355581 356407 356133 355480",
 --	"SPELL_AURA_APPLIED_DOSE",
@@ -114,7 +114,7 @@ local timerLightshardRetreatCD				= mod:NewCDNPTimer(15.8, 357197, nil, nil, nil
 local timerChronolightEnhancerCD			= mod:NewCDNPTimer(28.2, 357229, nil, nil, nil, 5)
 local timerEnergizedSlamCD					= mod:NewCDNPTimer(23.1, 1240821, nil, nil, nil, 5)
 local timerPierceCD							= mod:NewCDNPTimer(21.8, 1240912, nil, "Tank|Healer", nil, 5)
-local timerLetterOpenerCD					= mod:NewCDNPTimer(26.7, 347716, nil, "Tank|Healer", nil, 5)
+local timerLetterOpenerCD					= mod:NewCDNPTimer(25.2, 347716, nil, "Tank|Healer", nil, 5)
 local timerSpamFilterCD						= mod:NewCDNPTimer(21, 347775, nil, nil, nil, 4)
 local timerQuellingStrikeCD					= mod:NewCDNPTimer(15.7, 355637, nil, nil, nil, 3)
 local timerPhalanxFieldCD					= mod:NewCDNPTimer(30.3, 355640, nil, nil, nil, 5)
@@ -268,7 +268,6 @@ function mod:SPELL_CAST_START(args)
 		warnOpenCage:Show()
 		warnOpenCage:Play("crowdcontrol")
 	elseif spellId == 347716 then
-		timerLetterOpenerCD:Start(nil, args.sourceGUID)
 		if self:AntiSpam(3, 5) then
 			warnLetterOpener:Show()
 		end
@@ -277,7 +276,7 @@ function mod:SPELL_CAST_START(args)
 		if timer then
 			timerPowerKickCD:Start(timer, args.sourceGUID)
 		end
-		if self:AntiSpam(3, 5) then
+		if self:IsTanking("player", nil, nil, true, args.sourceGUID) and self:AntiSpam(3, 5) then
 			specWarnPowerKick:Show()
 			specWarnPowerKick:Play("carefly")
 		end
@@ -363,6 +362,8 @@ function mod:SPELL_CAST_SUCCESS(args)
 			warnPhalanxField:Show()
 			warnPhalanxField:Play("crowdcontrol")
 		end
+	elseif spellId == 347716 then
+		timerLetterOpenerCD:Start(nil, args.sourceGUID)
 	end
 end
 
@@ -523,8 +524,8 @@ function mod:StartEngageTimers(guid, cid, delay)
 		timerBeamSplicerCD:Start(7-delay, guid)
 		timerProxyStrikeCD:Start(11-delay, guid)
 	elseif cid == 178392 then--Gatewarden Zo'mazz <Cartel Zo>
-		timerProxyStrikeCD:Start(8.4-delay, guid)
-		timerRadiantPulseCD:Start(14.5-delay, guid)
+		timerProxyStrikeCD:Start(6-delay, guid)
+		timerRadiantPulseCD:Start(12.1-delay, guid)
 	elseif cid == 179334 then--Portalmancer Zo'honn <Cartel Zo>
 --		timerRadiantPulseCD:Start(14.5-delay, guid)--Used instantly on engage
 		timerRiftBlastsCD:Start(7.2-delay, guid)
@@ -546,15 +547,15 @@ function mod:StartEngageTimers(guid, cid, delay)
 --		timerChronolightEnhancerCD:Start(12.2-delay, guid)--Most people skip this mobs so logs don't really exist
 --		timerHyperlightBackhandCD:Start(16.2-delay, guid)
 	elseif cid == 246285 then--Bazaar Overseer
-		timerEnergizedSlamCD:Start(11-delay, guid)
-		timerPierceCD:Start(18.5-delay, guid)
+		timerEnergizedSlamCD:Start(10-delay, guid)
+		timerPierceCD:Start(16-delay, guid)
 	elseif cid == 176394 then--Post Worker
-		timerLetterOpenerCD:Start(8.9-delay, guid)
+		timerLetterOpenerCD:Start(6.8-delay, guid)
 	elseif cid == 176395 then--Mailemental
 		timerSpamFilterCD:Start(14.6-delay, guid)
 	elseif cid == 179840 then--Market Peacekeeper
-		timerQuellingStrikeCD:Start(3.5-delay, guid)
-		timerPhalanxFieldCD:Start(12.2-delay, guid)
+		timerQuellingStrikeCD:Start(2.9-delay, guid)
+		timerPhalanxFieldCD:Start(8.3-delay, guid)
 	elseif cid == 179842 then--Commerce Enforcer
 		timerPowerKickCD:Start(8-delay, guid)--Iffy, bad data
 		--timerForceMultiplierCD:Start(7.3-delay, guid)
