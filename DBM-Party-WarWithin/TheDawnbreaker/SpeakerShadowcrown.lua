@@ -30,8 +30,8 @@ mod:RegisterEventsInCombat(
 local warnBurnignShadows					= mod:NewTargetNoFilterAnnounce(426734, 3, nil, "RemoveMagic|Healer")
 
 local specWarnDarknessComes					= mod:NewSpecialWarningCount(453859, nil, nil, nil, 3, 2)
-local specWarnObsidianBlast					= mod:NewSpecialWarningDefensive(425264, nil, nil, nil, 1, 2)--Heroic and Lower
-local specWarnObsidianBeam					= mod:NewSpecialWarningDefensive(453212, nil, nil, nil, 1, 2, 4)--Mythic and Higher
+local specWarnObsidianBlast					= mod:NewSpecialWarningCount(425264, nil, nil, nil, 1, 2)--Heroic and Lower
+local specWarnObsidianBeam					= mod:NewSpecialWarningCount(453212, nil, nil, nil, 1, 2, 4)--Mythic and Higher
 local specWarnCollapsingDarkness			= mod:NewSpecialWarningDodgeCount(445996, nil, nil, nil, 2, 2)--Heroic and Lower
 local specWarnCollapsingNight				= mod:NewSpecialWarningDodgeCount(453140, nil, nil, nil, 2, 2, 4)--Mythic and Higher
 local specWarnBurningShadows				= mod:NewSpecialWarningYou(426734, nil, nil, nil, 1, 2)
@@ -144,10 +144,11 @@ function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
 	if spellId == 425264 then--Non Mythic
 		self.vb.obsidianCount = self.vb.obsidianCount + 1
-		if self:IsTanking("player", "boss1", nil, true) then
-			specWarnObsidianBlast:Show()
+		specWarnObsidianBlast:Show(self.vb.obsidianCount)
+		if self:IsTanking("player", nil, nil, true) then
 			specWarnObsidianBlast:Play("defensive")
 		end
+		specWarnObsidianBlast:ScheduleVoice(1, "farfromline")
 		local timer = self:GetFromTimersTable(allTimers, false, self.vb.phase, spellId, self.vb.obsidianCount+1)
 		if timer and timer > 0 then
 			timerObsidianBlastCD:Start(timer, self.vb.obsidianCount+1)
@@ -157,10 +158,11 @@ function mod:SPELL_CAST_START(args)
 --		updateAllTimers(self, 3.4)
 	elseif spellId == 453212 then--Mythic
 		self.vb.obsidianCount = self.vb.obsidianCount + 1
-		if self:IsTanking("player", "boss1", nil, true) then
-			specWarnObsidianBeam:Show()
+		specWarnObsidianBeam:Show(self.vb.obsidianCount)
+		if self:IsTanking("player", nil, nil, true) then
 			specWarnObsidianBeam:Play("defensive")
 		end
+		specWarnObsidianBeam:ScheduleVoice(1, "farfromline")
 		local timer = self:GetFromTimersTable(allTimers, false, self.vb.phase, spellId, self.vb.obsidianCount+1)
 		if timer and timer > 0 then
 			timerObsidianBeamCD:Start(timer, self.vb.obsidianCount+1)

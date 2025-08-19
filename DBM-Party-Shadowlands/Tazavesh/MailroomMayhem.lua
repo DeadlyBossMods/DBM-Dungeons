@@ -49,7 +49,7 @@ function mod:OnCombatStart(delay)
 	self.vb.fanCount = 0
 	self.vb.liquidsCount = 0
 	self.vb.moCount = 0
-	timerHazardousLiquidsCD:Start(6.1-delay, 1)
+	timerHazardousLiquidsCD:Start(5-delay, 1)
 	timerFanMailCD:Start(15.8-delay, 1)
 	timerMoneyOrderCD:Start(23.0-delay, 1)
 	timerUnstableGoodsCD:Start(35.2-delay, 1)

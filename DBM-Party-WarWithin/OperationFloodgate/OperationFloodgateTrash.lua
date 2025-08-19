@@ -73,8 +73,6 @@ local timerRestorativeAlgaeCD				= mod:NewCDNPTimer(18.1, 471733, nil, nil, nil,
 --local timerHarpoonCD						= mod:NewCDNPTimer(20.6, 468631, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--Not enough data, these mobs are skipped by more skilled groups
 local timerWindUpCD							= mod:NewCDNPTimer(18.2, 465120, nil, nil, nil, 3)
 
-local allowInterruptOnBeam = false
-
 --local playerName = UnitName("player")
 
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc, 7 off interrupt
@@ -120,7 +118,6 @@ function mod:SPELL_CAST_START(args)
 			specWarnSurpriseInspection:Play("frontal")
 		end
 	elseif spellId == 462771 then
-		allowInterruptOnBeam = true
 		if self:CheckInterruptFilter(args.sourceGUID, false, true) then
 			specWarnSurveyingBeam:Show(args.sourceName)
 			specWarnSurveyingBeam:Play("kickcast")
@@ -193,8 +190,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 	if not self.Options.Enabled then return end
 	local spellId = args.spellId
 	if not self:IsValidWarning(args.sourceGUID) then return end
-	if spellId == 462771 then
-		allowInterruptOnBeam = false
+	if spellId == 462771 and self:AntiSpam(5, args.sourceGUID) then
 		timerSurveyingBeamCD:Start(19.1, args.sourceGUID)--20.6-1.5
 	elseif spellId == 463058 then
 		timerBloodthirstyCackleCD:Start(18.9, args.sourceGUID)
@@ -220,7 +216,7 @@ end
 
 function mod:SPELL_INTERRUPT(args)
 	if not self.Options.Enabled then return end
-	if args.extraSpellId == 462771 and allowInterruptOnBeam then
+	if args.extraSpellId == 462771 and self:AntiSpam(5, args.destGUID) then
 		timerSurveyingBeamCD:Start(19.1, args.destGUID)--20.6-1.5
 	elseif args.extraSpellId == 463058 then
 		timerBloodthirstyCackleCD:Start(18.9, args.destGUID)
@@ -289,7 +285,7 @@ end
 --All timers subject to a ~0.1-1 second clipping due to ScanEngagedUnits
 function mod:StartEngageTimers(guid, cid, delay)
 	if cid == 230740 then--Shredinator 3000
-		timerShreddationCD:Start(3.5-delay, guid)
+		timerShreddationCD:Start(2.4-delay, guid)
 		timerFlamethrowerCD:Start(7-delay, guid)
 	elseif cid == 229212 then--Darkfuse Demolitionist
 		timerRPGGCD:Start(2-delay, guid)
