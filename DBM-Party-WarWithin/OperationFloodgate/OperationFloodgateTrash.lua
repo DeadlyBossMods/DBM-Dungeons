@@ -10,7 +10,7 @@ mod:RegisterZoneCombat(2773)
 
 mod:RegisterEvents(
 	"SPELL_CAST_START 465754 474337 1216039 465682 462771 469818 1217496 469721 465827 463058 1214468 465666 465408 471733 461796 468726 468631",
-	"SPELL_CAST_SUCCESS 462771 463058 1214468 469799 471733 471736 465120",
+	"SPELL_CAST_SUCCESS 462771 463058 1214468 469799 471733 471736 465120 465682",
 	"SPELL_INTERRUPT",
 	"SPELL_AURA_APPLIED 462771 463061 469799",
 --	"SPELL_AURA_APPLIED_DOSE",
@@ -57,7 +57,7 @@ local specWarnHarpoon						= mod:NewSpecialWarningInterrupt(468631, "HasInterrup
 local timerFlamethrowerCD					= mod:NewCDNPTimer(25.5, 465754, nil, nil, nil, 3)--(might also be 18-25 if it lives long enough?)
 local timerShreddationCD					= mod:NewCDNPTimer(18.2, 474337, nil, nil, nil, 3)--18.2-25.4 (delayed by flamethrower most likely
 local timerRPGGCD							= mod:NewCDNPTimer(14.5, 1216039, nil, nil, nil, 3)
-local timerSurpriseInspectionCD				= mod:NewCDNPTimer(6.2, 465682, nil, nil, nil, 3)--6.2-9.7
+local timerSurpriseInspectionCD				= mod:NewCDNPTimer(3.7, 465682, nil, nil, nil, 3)--6.2-9.7 (then 2.5 subtracted)
 --local timerBubbleBurpCD					= mod:NewCDNPTimer(21.5, 469818, nil, nil, nil, 3)
 --local timerSplishSplashCD					= mod:NewCDNPTimer(21.8, 1217496, nil, nil, nil, 3)
 --local timerBackwashCD						= mod:NewCDNPTimer(21.8, 469721, nil, nil, nil, 2)
@@ -65,7 +65,7 @@ local timerWarpBloodCD						= mod:NewCDNPTimer(20.6, 465827, nil, nil, nil, 2)
 local timerSparkslamCD						= mod:NewCDNPTimer(10.9, 465666, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerJettisonkelpCD					= mod:NewCDNPTimer(15.8, 471736, nil, nil, nil, 5)
 local timerOverchargeCD						= mod:NewCDNPTimer(8.6, 469799, nil, nil, nil, 5, nil, DBM_COMMON_L.MAGIC_ICON)--8.6-15
-local timerSurveyingBeamCD					= mod:NewCDNPTimer(20.6, 462771, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerSurveyingBeamCD					= mod:NewCDNPTimer(20.2, 462771, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerBloodthirstyCackleCD				= mod:NewCDNPTimer(18, 463058, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--18-22
 local timerTrickShotCD						= mod:NewCDNPTimer(10.9, 1214468, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--10.9-14 (seems to be buggy/random in some cases, inconsistent behaviors)
 local timerRestorativeAlgaeCD				= mod:NewCDNPTimer(18.1, 471733, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
@@ -112,7 +112,6 @@ function mod:SPELL_CAST_START(args)
 			specWarnRPGG:Play("watchstep")
 		end
 	elseif spellId == 465682 then
-		timerSurpriseInspectionCD:Start(nil, args.sourceGUID)
 		if self:AntiSpam(3, 2) then
 			specWarnSurpriseInspection:Show()
 			specWarnSurpriseInspection:Play("frontal")
@@ -191,7 +190,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 	local spellId = args.spellId
 	if not self:IsValidWarning(args.sourceGUID) then return end
 	if spellId == 462771 and self:AntiSpam(5, args.sourceGUID) then
-		timerSurveyingBeamCD:Start(19.1, args.sourceGUID)--20.6-1.5
+		timerSurveyingBeamCD:Start(18.7, args.sourceGUID)--20.2-1.5
 	elseif spellId == 463058 then
 		timerBloodthirstyCackleCD:Start(18.9, args.sourceGUID)
 	elseif spellId == 1214468 then
@@ -211,13 +210,15 @@ function mod:SPELL_CAST_SUCCESS(args)
 		if self:AntiSpam(3, 6) then
 			warnWindUp:Show()
 		end
+	elseif spellId == 465682 then
+		timerSurpriseInspectionCD:Start(nil, args.sourceGUID)
 	end
 end
 
 function mod:SPELL_INTERRUPT(args)
 	if not self.Options.Enabled then return end
 	if args.extraSpellId == 462771 and self:AntiSpam(5, args.destGUID) then
-		timerSurveyingBeamCD:Start(19.1, args.destGUID)--20.6-1.5
+		timerSurveyingBeamCD:Start(18.7, args.destGUID)--20.2-1.5
 	elseif args.extraSpellId == 463058 then
 		timerBloodthirstyCackleCD:Start(18.9, args.destGUID)
 	elseif args.extraSpellId == 1214468 then
@@ -308,13 +309,13 @@ function mod:StartEngageTimers(guid, cid, delay)
 	elseif cid == 231312 then--Venture Co. Electrician
 		timerOverchargeCD:Start(3.9-delay, guid)
 	elseif cid == 231223 then--Disturbed Kelp
-		timerJettisonkelpCD:Start(7-delay, guid)
+		timerJettisonkelpCD:Start(5.6-delay, guid)
 --		timerRestorativeAlgaeCD:Start(13-delay, guid)--Probably health based for first cast
 	elseif cid == 231496 then--Venture Co. Diver
 		--timerPlantSeaBombsCD:Start(7-delay, guid)
 		--timerHarpoonCD:Start(7-delay, guid)
 	elseif cid == 231014 then--Loaderbot
-		timerWindUpCD:Start(9-delay, guid)
+		timerWindUpCD:Start(6.4-delay, guid)
 	end
 end
 
