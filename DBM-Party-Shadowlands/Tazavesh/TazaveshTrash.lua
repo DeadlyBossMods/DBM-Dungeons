@@ -84,7 +84,7 @@ local specWarnGlyphofRestraint				= mod:NewSpecialWarningDispel(355915, "RemoveM
 local specWarnRefractionShield				= mod:NewSpecialWarningDispel(355980, "MagicDispeller", nil, nil, 1, 2)--(S3 Valid)
 local specWarnAncientDreadDispel			= mod:NewSpecialWarningDispel(356407, "RemoveCurse", nil, nil, 1, 2)
 
-local timerVolatilePufferfishCD				= mod:NewCDNPTimer(17, 355234, nil, nil, nil, 3)
+local timerVolatilePufferfishCD				= mod:NewCDNPTimer(14.4, 355234, nil, nil, nil, 3)
 local timerShellcrackerCD					= mod:NewCDNPTimer(14.3, 355048, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)--15.8 minus cast time
 local timerCryofMrrggllrrggCD				= mod:NewCDPNPTimer(33.9, 355057, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerInvigoratingFishStickCD			= mod:NewCDPNPTimer(27.9, 355132, nil, nil, nil, 1)
@@ -95,7 +95,7 @@ local timerCrackleCD						= mod:NewCDNPTimer(8.5, 355577, nil, nil, nil, 3)--8.5
 local timerSuperSaisonCD					= mod:NewCDNPTimer(30.3, 356133, nil, nil, nil, 5)--32.8 minus cast time
 local timerTidalBurstCD						= mod:NewCDNPTimer(18.2, 1244650, nil, nil, nil, 2)
 local timerSwordTossCD						= mod:NewCDNPTimer(14.5, 368661, nil, nil, nil, 3)
-local timerDriftingStarCD					= mod:NewCDNPTimer(16.6, 357226, nil, nil, nil, 3)
+local timerDriftingStarCD					= mod:NewCDNPTimer(16.3, 357226, nil, nil, nil, 3)
 local timerWanderingPulsarCD				= mod:NewCDNPTimer(26.7, 357238, nil, nil, nil, 1)
 local timerUnstableRiftCD					= mod:NewCDPNPTimer(21.5, 357260, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerProxyStrikeCD					= mod:NewCDNPTimer(30.4, 352796, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)--Multiple enemies and CDs
@@ -371,13 +371,13 @@ function mod:SPELL_INTERRUPT(args)
 	if not self.Options.Enabled then return end
 	if type(args.extraSpellId) ~= "number" then return end
 	if args.extraSpellId == 355057 then
-		timerCryofMrrggllrrggCD:Start(30.9, args.sourceGUID)
+		timerCryofMrrggllrrggCD:Start(30.9, args.destGUID)
 	elseif args.extraSpellId == 357260 then
-		timerUnstableRiftCD:Start(nil, args.sourceGUID)
+		timerUnstableRiftCD:Start(nil, args.destGUID)
 	elseif args.extraSpellId == 355934 then
-		timerHardLightBarrierCD:Start(nil, args.sourceGUID)
+		timerHardLightBarrierCD:Start(nil, args.destGUID)
 	elseif args.extraSpellId == 347775 then
-		timerSpamFilterCD:Start(nil, args.sourceGUID)
+		timerSpamFilterCD:Start(nil, args.destGUID)
 	end
 end
 
@@ -499,27 +499,27 @@ end
 --All timers subject to a ~0.5 second clipping due to ScanEngagedUnits
 function mod:StartEngageTimers(guid, cid, delay)
 	if cid == 178142 then--Murkbrine Fishmancer
-		timerVolatilePufferfishCD:Start(17.2-delay, guid)--iffy
+		timerVolatilePufferfishCD:Start(8.4-delay, guid)--Large variation
 	elseif cid == 178139 then--Murkbrine Shellcrusher
-		timerShellcrackerCD:Start(12.1-delay, guid)--iffy, seems to be possible to massively delay
+		timerShellcrackerCD:Start(10.5-delay, guid)--seems to be possible to massively delay
 --		timerCryofMrrggllrrggCD:Start(14-delay, guid)--extremeley variable, likley health based
 	elseif cid == 178141 then--Murkbrine Scalebinder
-		timerInvigoratingFishStickCD:Start(13.2-delay, guid)--iffy, seems to be possible to massively delay
+		timerInvigoratingFishStickCD:Start(6.2-delay, guid)--Large variation
 	elseif cid == 178165 then--Coastwalker Goliath
 		timerTidalStompCD:Start(11-delay, guid)--iffy, seems to be possible to massively delay
 		timerBoulderThrowCD:Start(17-delay, guid)--iffy
 	elseif cid == 178171 then--Stormforged Guardian
-		timerCrackleCD:Start(4.8-delay, guid)
-		timerChargedPulseCD:Start(11-delay, guid)
+		timerCrackleCD:Start(4.1-delay, guid)
+		timerChargedPulseCD:Start(10.2-delay, guid)
 	elseif cid == 180015 then--Burly Deckhand
-		timerSuperSaisonCD:Start(11-delay, guid)
+		timerSuperSaisonCD:Start(9.6-delay, guid)
 	elseif cid == 179388 then--Hourglass Tidesage
-		timerTidalBurstCD:Start(9.4-delay, guid)
+		timerTidalBurstCD:Start(8.5-delay, guid)
 	elseif cid == 179386 then--Corsair Officer
 		timerSwordTossCD:Start(7.1-delay, guid)
 	elseif cid == 180429 then--AdornedStarseer
 		timerDriftingStarCD:Start(7.2-delay, guid)
-		timerWanderingPulsarCD:Start(13.3-delay, guid)
+		timerWanderingPulsarCD:Start(12.3-delay, guid)
 	elseif cid == 177808 then--Armored Overseer <Cartel Zo>
 		timerBeamSplicerCD:Start(7-delay, guid)
 		timerProxyStrikeCD:Start(11-delay, guid)

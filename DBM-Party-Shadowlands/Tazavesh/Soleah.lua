@@ -67,8 +67,8 @@ function mod:OnCombatStart(delay)
 	self.vb.hyperlightCount = 0
 	self.vb.starCount = 0
 	table.wipe(castsPerGUID)
-	timerSummonAssassinsCD:Start(6.9-delay)
-	timerHyperlightSparkCD:Start(12.1-delay)
+	timerSummonAssassinsCD:Start(6.0-delay)
+	timerHyperlightSparkCD:Start(11.1-delay)
 	timerCollapsingStarCD:Start(20.6-delay)
 end
 
