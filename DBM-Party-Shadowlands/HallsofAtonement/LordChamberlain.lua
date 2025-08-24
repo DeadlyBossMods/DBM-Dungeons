@@ -54,7 +54,7 @@ function mod:OnCombatStart(delay)
 	self.vb.woeCount = 0
 	--timerStigmaofPrideCD:Start(6.5-delay)--SUCCESS
 	timerTelekineticTossCD:Start(8-delay, 1)
-	timerUnleashedSufferingCD:Start(15.7-delay, 1)--But sometimes never cast and boss goes into more tosses instead
+	timerUnleashedSufferingCD:Start(14.7-delay, 1)--But sometimes never cast and boss goes into more tosses instead
 	timerEruptingTormentCD:Start(25.4-delay, 1)
 end
 
