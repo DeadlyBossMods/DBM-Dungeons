@@ -10,7 +10,7 @@ mod.isTrashMod = true
 mod.isTrashModBossFightAllowed = true
 
 mod:RegisterEvents(
-	"SPELL_CAST_START 356548 352390 354297 355930 355934 356001 347775 355057 355225 355584 357226 357260 356407 356404 347903 357229 355048 355464 355429 355577 356133 356843 1244650 357238 357196 353836 352796 356537 355830 356967 1240821 1240912 347721 347716 355477 1244443 355473 355479",
+	"SPELL_CAST_START 356548 352390 354297 355930 355934 356001 347775 355057 355225 355584 357226 357260 356407 356404 347903 357229 355048 355464 355429 355577 356133 356843 1244650 357238 357196 353836 352796 356537 355830 356967 1240821 1240912 347721 347716 355477 1244443 355473 355479 357512 357508",
 	"SPELL_CAST_SUCCESS 355234 355048 355057 355132 356133 368661 357260 355888 355900 355915 355934 357029 357197 357229 347775 355637 355640 347716",
 	"SPELL_INTERRUPT",
 	"SPELL_AURA_APPLIED 355888 355915 355980 357229 357029 355581 356407 356133 355480",
@@ -55,14 +55,18 @@ local specWarnCrackle						= mod:NewSpecialWarningDodge(355577, nil, nil, nil, 2
 local specWarnTidalBurst					= mod:NewSpecialWarningDodge(1244650, nil, nil, nil, 2, 2)--(S3 Valid)
 local specWarnSwordToss						= mod:NewSpecialWarningDodge(368661, nil, nil, nil, 2, 2)--(S3 Valid)
 local specWarnBeamSplicer					= mod:NewSpecialWarningDodge(356001, nil, nil, nil, 2, 2)--(S3 Valid)
-local specWarnEnergizedSlam					= mod:NewSpecialWarningDodge(1240821, nil, nil, nil, 2, 2)--(S3 Valid)
+local specWarnFrenziedChargeAvoid			= mod:NewSpecialWarningDodge(357512, nil, nil, nil, 2, 2)
 local specWarnShockMines					= mod:NewSpecialWarningDodge(355473, nil, nil, nil, 2, 2)--(S3 Valid)
+local specWarnWildThrash					= mod:NewSpecialWarningDodge(357508, nil, nil, nil, 2, 2)--(S3 Valid)
+local specWarnEnergizedSlam					= mod:NewSpecialWarningMoveAway(1240821, nil, nil, nil, 2, 2)--(S3 Valid)
 local specWarnChronolightEnhancer			= mod:NewSpecialWarningRun(357229, false, nil, nil, 4, 2)--(S3 Valid)
 local specWarnChargedPulse					= mod:NewSpecialWarningRun(355584, nil, nil, nil, 4, 2)--(S3 Valid)
 local specWarnHyperlightBomb				= mod:NewSpecialWarningMoveAway(357029, nil, nil, nil, 1, 2)--(S3 Valid)
-local yellHyperlightBomb					= mod:NewYell(357029)
+local yellHyperlightBomb					= mod:NewShortYell(357029)
 local yellHyperlightBombFades				= mod:NewShortFadesYell(357029)
 local specWarnLethalForce					= mod:NewSpecialWarningYou(355480, nil, nil, nil, 1, 2)--(S3 Valid)
+local specWarnFrenziedCharge				= mod:NewSpecialWarningYou(357512, nil, nil, nil, 1, 17)
+local yellFrenziedCharge					= mod:NewShortYell(357512)
 local specWarnInvigoratingFishStick			= mod:NewSpecialWarningSwitch(355132, "-Healer", nil, nil, 1, 2)--(S3 Valid)
 local specWarnWanderingPulsar				= mod:NewSpecialWarningSwitch(357238, "-Healer", nil, nil, 1, 2)
 local specWarnShellcrackerDefensive			= mod:NewSpecialWarningDefensive(355048, nil, nil, nil, 1, 2)--(S3 Valid)
@@ -122,8 +126,24 @@ local timerPowerKickCD						= mod:NewCDNPTimer(9.4, 355477, nil, nil, nil, 5)--O
 local timerForceMultiplierCD				= mod:NewCDNPTimer(29.1, 1244443, nil, nil, nil, 5)
 local timerShockMinesCD						= mod:NewCDNPTimer(26.4, 355473, nil, nil, nil, 3)
 local timerLethalForceCD					= mod:NewCDNPTimer(13.2, 355479, nil, nil, nil, 3)
+local timerFrenziedChargeCD					= mod:NewCDNPTimer(17.0, 357512, nil, nil, nil, 3)
+local timerWildThrashCD						= mod:NewCDNPTimer(26.7, 357508, nil, nil, nil, 3)
 
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc
+
+function mod:FrenziedChargeTarget(targetname, uId)
+	if not targetname then return end
+	if self:AntiSpam(3, targetname) then
+		if targetname == UnitName("player") then
+			specWarnFrenziedCharge:Show()
+			specWarnFrenziedCharge:Play("lineyou")
+			yellFrenziedCharge:Yell()
+		else
+			specWarnFrenziedChargeAvoid:Show()
+			specWarnFrenziedChargeAvoid:Play("chargemove")
+		end
+	end
+end
 
 function mod:SPELL_CAST_START(args)
 	if not self.Options.Enabled then return end
@@ -257,7 +277,7 @@ function mod:SPELL_CAST_START(args)
 		timerEnergizedSlamCD:Start(nil, args.sourceGUID)
 		if self:AntiSpam(3, 2) then
 			specWarnEnergizedSlam:Show()
-			specWarnEnergizedSlam:Play("watchstep")
+			specWarnEnergizedSlam:Play("scatter")
 		end
 	elseif spellId == 1240912 then
 		timerPierceCD:Start(nil, args.sourceGUID)
@@ -294,6 +314,15 @@ function mod:SPELL_CAST_START(args)
 		end
 	elseif spellId == 355479 then
 		timerLethalForceCD:Start(nil, args.sourceGUID)
+	elseif spellId == 357512 then
+		timerFrenziedChargeCD:Start(nil, args.sourceGUID)
+		self:ScheduleMethod(0.1, "BossTargetScanner", args.sourceGUID, "FrenziedChargeTarget", 0.1, 6)
+	elseif spellId == 357508 then
+		timerWildThrashCD:Start(nil, args.sourceGUID)
+		if self:AntiSpam(3, 2) then
+			specWarnWildThrash:Show()
+			specWarnWildThrash:Play("watchstep")
+		end
 	end
 end
 
@@ -493,6 +522,9 @@ function mod:UNIT_DIED(args)
 		timerShockMinesCD:Stop(args.destGUID)
 		timerPowerKickCD:Stop(args.destGUID)
 		timerLethalForceCD:Stop(args.destGUID)
+	elseif cid == 180495 then--Enraged Direhorn
+		timerFrenziedChargeCD:Stop(args.destGUID)
+		timerWildThrashCD:Stop(args.destGUID)
 	end
 end
 
@@ -563,6 +595,9 @@ function mod:StartEngageTimers(guid, cid, delay)
 		timerShockMinesCD:Start(3-delay, guid)--Iffy, bad data
 		timerPowerKickCD:Start(8-delay, guid)--Iffy, bad data
 		timerLethalForceCD:Start(6-delay, guid)--Iffy, bad data
+	elseif cid == 180495 then--Enraged Direhorn
+		timerFrenziedChargeCD:Start(6.5-delay, guid)
+		timerWildThrashCD:Start(12.3-delay, guid)
 	end
 end
 
