@@ -60,14 +60,14 @@ local specWarnFireballVolley				= mod:NewSpecialWarningInterrupt(444743, nil, ni
 local specWarnTemplarsWrath					= mod:NewSpecialWarningDispel(444728, "MagicDispeller", nil, nil, 1, 2)
 local specWarnGTFO							= mod:NewSpecialWarningGTFO(424430, nil, nil, nil, 1, 8)
 
-local timerCaltropsCD						= mod:NewCDNPTimer(27.8, 453458, nil, nil, nil, 3)--S3 updated
+local timerCaltropsCD						= mod:NewCDNPTimer(26.6, 453458, nil, nil, nil, 3)--S3 updated
 local timerFlamestrikeCD					= mod:NewCDNPTimer(22.6, 427484, nil, nil, nil, 3)
 local timerGreaterHealCD					= mod:NewCDPNPTimer(21.8, 427356, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--S2 Updated (21.8-25.8) (might be 25.1 in S3, needs more data)
 local timerDefendCD							= mod:NewCDNPTimer(30.3, 427342, nil, nil, nil, 5)
 local timerImpaleCD							= mod:NewCDNPTimer(15.8, 427621, nil, nil, nil, 3)
 local timerDisruptingShoutCD				= mod:NewCDNPTimer(23, 427609, nil, nil, nil, 2)
 local timerPotShotCD						= mod:NewCDNPTimer(8.1, 462859, nil, nil, nil, 3)--8.1-10
-local timerPounceCD							= mod:NewCDNPTimer(17, 446776, nil, nil, nil, 3)
+local timerPounceCD							= mod:NewCDNPTimer(16.7, 446776, nil, nil, nil, 3)
 local timerPurificationCD					= mod:NewCDNPTimer(17, 448787, nil, nil, nil, 5)
 local timerShieldSlamCD						= mod:NewCDNPTimer(9.7, 448485, nil, nil, nil, 5)--9.7-13.8
 local timerThunderclapCD					= mod:NewCDNPTimer(15.8, 448492, nil, nil, nil, 2)
@@ -273,7 +273,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 	elseif spellId == 427356 then
 		timerGreaterHealCD:Start(21.8, args.sourceGUID)
 	elseif spellId == 446776 then
-		timerPounceCD:Start(15.5, args.sourceGUID)--17-1.5
+		timerPounceCD:Start(15.2, args.sourceGUID)--16.7-1.5
 	elseif spellId == 424420 then
 		timerCinderblastCD:Start(15.6, args.sourceGUID)
 	elseif spellId == 444728 then
@@ -404,32 +404,32 @@ function mod:StartEngageTimers(guid, cid, delay, uID)
 --		timerCinderblastCD:Start(14-delay, guid)--(Disabled in 11.2?)
 		timerEmberStormCD:Start(24.9, guid)
 	elseif cid == 239833 then--elaena-emberlanz trash
-		timerDivineJudgementCD:Start(19-delay, guid)
-		timerHolyRadianceCD:Start(38.5, guid)
+		timerDivineJudgementCD:Start(9.3-delay, guid)
+		timerHolyRadianceCD:Start(27.1, guid)
 	elseif cid == 211290 then--elaena-emberlanz Boss
 		timerDivineJudgementCD:Start(8.1-delay, guid)
 		timerHolyRadianceCD:Start(16.9, guid)--16.9-26.6
 	elseif cid == 206694 then--Fervent Sharpshooter
-		timerPotShotCD:Start(4.8-delay, guid)
-		timerCaltropsCD:Start(12.1-delay, guid)
+		timerPotShotCD:Start(3.3-delay, guid)
+		timerCaltropsCD:Start(9.3-delay, guid)
 	elseif cid == 206698 then--Fanatical Conjurer
-		timerFlamestrikeCD:Start(10.4-delay, guid)
+		timerFlamestrikeCD:Start(9.7-delay, guid)
 --	elseif cid == 206705 then--Arathi Footman
 --		timerDefendCD:Start(0.5-delay, guid)--Likely has no initial timer, seems quite random. Could be health threshold check
 	elseif cid == 206696 then--Arathi Knight
-		timerImpaleCD:Start(3.6-delay, guid)
+		timerImpaleCD:Start(1.7-delay, guid)
 		timerDisruptingShoutCD:Start(19.5-delay, guid)
 	--elseif cid == 206697 then--Devout Priest
 	--	timerGreaterHealCD:Start(0.5-delay, guid)--Initila has health trigger
 	elseif cid == 206699 then--War Lynx
-		timerPounceCD:Start(6.4-delay, guid)
+		timerPounceCD:Start(5.6-delay, guid)
 	elseif cid == 206710 then--Lightspawn
 		timerPurificationCD:Start(6.6-delay, guid)
 	elseif cid == 212826 then--Guard Captain Suleyman
-		timerShieldSlamCD:Start(3.6-delay, guid)
+		timerShieldSlamCD:Start(2.7-delay, guid)
 		timerThunderclapCD:Start(15.8-delay, guid)
 	elseif cid == 212831 then--Forge Master Damian
-		timerHeatWaveCD:Start(12-delay, guid)
+		timerHeatWaveCD:Start(6.2-delay, guid)
 		timerSealofFlameCD:Start(16-delay, guid)
 	elseif cid == 212827 then--High Priest Aemya
 		timerReflectiveShieldCD:Start(4.6-delay, guid)
@@ -437,11 +437,11 @@ function mod:StartEngageTimers(guid, cid, delay, uID)
 		timerTemplarsWrathCD:Start(7.6-delay, guid)
 	elseif cid == 206704 then
 		timerConsecrationCD:Start(10-delay, guid)
-		timerSacredtollCD:Start(15.5-delay, guid)
+		timerSacredtollCD:Start(13.3-delay, guid)
 	elseif cid == 221760 then--Risen Mage
 		timerFireballVolleyCD:Start(8.3-delay, guid)
 	elseif cid == 217658 then--Sir Braunpyke
-		timerBlazingStrikeCD:Start(8.2-delay, guid)
+		timerBlazingStrikeCD:Start(7.3-delay, guid)
 	end
 end
 

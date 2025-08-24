@@ -110,13 +110,13 @@ function mod:SPELL_CAST_START(args)
 	elseif spellId == 444609 then--Stoke the flame (cast after interrupting Inner Light
 --		self.vb.holyFlameCount = 0
 		self:SetStage(2)
-		timerHolyFlameCD:Start("v12.1-14.5", self.vb.holyFlameCount+1)
+		timerHolyFlameCD:Start("v12.1-15", self.vb.holyFlameCount+1)
 		--Inner and purify can swap positions
 		--Whichever is 15.8-18.2 the other is 20.6
-		timerInnerFireCD:Start("v15.8-20.6", self.vb.innerCount+1)
-		timerPurifyingLightCD:Start("v15.8-20.6", self.vb.purifyingCount+1)
+		timerInnerFireCD:Start("v15.8-21.9", self.vb.innerCount+1)
+		timerPurifyingLightCD:Start("v15.8-21", self.vb.purifyingCount+1)
 		if self:IsMythic() then
-			timerBlindingLightCD:Start("v21.9-24.2", self.vb.blindingCount+1)
+			timerBlindingLightCD:Start("v21.9-24.6", self.vb.blindingCount+1)
 		end
 	elseif spellId == 428169 then
 		self.vb.blindingCount = self.vb.blindingCount + 1
