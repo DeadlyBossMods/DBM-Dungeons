@@ -53,7 +53,6 @@ mod.vb.shadowsCount = 0
 
 --Attempt at handling the predictable spell queues with hardcoded table
 --if this fails, ugglier updateAllTimers will be used as fallback
-local warnedTimerMissing = false--Single warn for single spell to avoid spam. As long as user finds ONE missing timer, their log is useful
 local allTimers = {
 	[1] = {
 		[425264] = {6, 34.3},--Obsidian Blast (Non Mythic)
@@ -61,7 +60,7 @@ local allTimers = {
 		[445996] = {13.1},--Collapsing Darkness (Non Mythic)
 		[453140] = {23.3, 28.1, 25.9},--Collapsing Night (Mythic)
 		[4267341] = {9.3, 35.5},--Burning Shadows (Non Mythic)
-		[4267342] = {19.2, 15.7, 24.1},--Burning Shadows (Mythic)
+		[4267342] = {19.2, 15.7, 22.4},--Burning Shadows (Mythic)
 	},
 	[2] = {
 		[425264] = {6.8, 17},--Obsidian Blast (Non Mythic)
