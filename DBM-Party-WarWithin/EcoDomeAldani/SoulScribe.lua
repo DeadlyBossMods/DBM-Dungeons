@@ -79,12 +79,12 @@ function mod:SPELL_CAST_START(args)
 	elseif spellId == 1225218 then
 		self.vb.dreadCount = self.vb.dreadCount + 1
 		specWarnDreadoftheUnknown:Show(self.vb.dreadCount)
-		specWarnDreadoftheUnknown:Play("aesoon")
+		specWarnDreadoftheUnknown:Play("ghostsoon")
 		timerDreadoftheUnknownCD:Start(nil, self.vb.dreadCount+1)
 	elseif spellId == 1225174 then
 		self.vb.daggerCount = self.vb.daggerCount + 1
 		specWarnCeremonialDaggers:Show(self.vb.daggerCount)
-		specWarnCeremonialDaggers:Play("lineyou")
+		specWarnCeremonialDaggers:Play("ghostsoon")
 		if self.vb.daggerCount % 2 == 0 then
 			timerCeremonialDaggersCD:Start(51, self.vb.daggerCount+1)
 		else
