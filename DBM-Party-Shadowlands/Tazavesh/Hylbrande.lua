@@ -45,7 +45,7 @@ local specWarnSanitizingCycle		= mod:NewSpecialWarningCount(346766, nil, nil, ni
 local specWarnLigtningNova			= mod:NewSpecialWarningInterrupt(358131, "HasInterrupt", nil, nil, 1, 2)--Hard Mode
 --local specWarnGTFO				= mod:NewSpecialWarningGTFO(320366, nil, nil, nil, 1, 8)
 
-local timerShearingSwingsCD			= mod:NewCDCountTimer(10.9, 346116, nil, nil, nil, 5, nil, DBM_COMMON_L.HEALER_ICON)
+local timerShearingSwingsCD			= mod:NewCDCountTimer(10.5, 346116, nil, nil, nil, 5, nil, DBM_COMMON_L.HEALER_ICON)
 local timerTitanicCrashCD			= mod:NewCDCountTimer(23.1, 347094, nil, nil, nil, 3)
 local timerPurgedbyFireCD			= mod:NewCDCountTimer(15.7, 346959, nil, nil, nil, 3)
 local timerSanitizingCycleCD		= mod:NewCDCountTimer(99, 346766, nil, nil, nil, 6)
@@ -167,7 +167,7 @@ function mod:SPELL_AURA_REMOVED(args)
 		timerShearingSwingsCD:Start(15.6, self.vb.swingsCount+1)--Might be 17.7 now
 		timerPurgedbyFireCD:Start(19, self.vb.purgedCount+1)
 		timerTitanicCrashCD:Start(22.9, self.vb.titanicCrashCount+1)
-		timerVaultPurifierCD:Start(23, self.vb.vaultPurifierCount+1)
+		timerVaultPurifierCD:Start(21.8, self.vb.vaultPurifierCount+1)
 		timerSanitizingCycleCD:Start(68.1, self.vb.cycleCount+1)--Needs reconfirmation
 	end
 end

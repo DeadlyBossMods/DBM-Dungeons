@@ -65,9 +65,9 @@ local timerSupressionSparkCD			= mod:NewCDTimer(37.6, 355438, nil, nil, nil, 2, 
 local timerCrowdControlCD				= mod:NewCDTimer(21.8, 350919, nil, nil, nil, 3)
 --Hard Mode Timers
 local timerDischordantSongCD			= mod:NewCDNPTimer(18.2, 357404, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
-local timerDrumrollCD					= mod:NewCDNPTimer(27.9, 357513, nil, nil, nil, 2)
-local timerInfectiousSoloCD				= mod:NewCDNPTimer(20.6, 357436, nil, nil, nil, 2)
-local timerRipChordCD					= mod:NewCDNPTimer(17, 357542, nil, nil, nil, 3)
+local timerDrumrollCD					= mod:NewCDNPTimer(27.4, 357513, nil, nil, nil, 2)
+local timerInfectiousSoloCD				= mod:NewCDNPTimer(20.2, 357436, nil, nil, nil, 2)
+local timerRipChordCD					= mod:NewCDNPTimer(16.6, 357542, nil, nil, nil, 3)
 local timerSoundblastCD					= mod:NewCDNPTimer(18.2, 1244630, nil, nil, nil, 3)
 
 mod:AddRangeFrameOption(5, 359222)

@@ -92,7 +92,7 @@ local timerVolatilePufferfishCD				= mod:NewCDNPTimer(14.4, 355234, nil, nil, ni
 local timerShellcrackerCD					= mod:NewCDNPTimer(14.3, 355048, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)--15.8 minus cast time
 local timerCryofMrrggllrrggCD				= mod:NewCDPNPTimer(33.9, 355057, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerInvigoratingFishStickCD			= mod:NewCDPNPTimer(27.9, 355132, nil, nil, nil, 1)
-local timerBoulderThrowCD					= mod:NewCDNPTimer(23, 355464, nil, nil, nil, 3)
+local timerBoulderThrowCD					= mod:NewCDNPTimer(19.4, 355464, nil, nil, nil, 3)--Might still be 23 on M+
 local timerTidalStompCD						= mod:NewCDPNPTimer(20, 355429, nil, nil, nil, 2)
 local timerChargedPulseCD					= mod:NewCDNPTimer(20.6, 355584, nil, nil, nil, 3)--20.6-26
 local timerCrackleCD						= mod:NewCDNPTimer(8.5, 355577, nil, nil, nil, 3)--8.5-20.6
@@ -124,7 +124,7 @@ local timerQuellingStrikeCD					= mod:NewCDNPTimer(15.4, 355637, nil, nil, nil, 
 local timerPhalanxFieldCD					= mod:NewCDNPTimer(30.3, 355640, nil, nil, nil, 5)
 local timerPowerKickCD						= mod:NewCDNPTimer(9.4, 355477, nil, nil, nil, 5)--Only know Commanders
 local timerForceMultiplierCD				= mod:NewCDNPTimer(29.1, 1244443, nil, nil, nil, 5)
-local timerShockMinesCD						= mod:NewCDNPTimer(26.4, 355473, nil, nil, nil, 3)
+local timerShockMinesCD						= mod:NewCDNPTimer(25.4, 355473, nil, nil, nil, 3)
 local timerLethalForceCD					= mod:NewCDNPTimer(13.2, 355479, nil, nil, nil, 3)
 local timerFrenziedChargeCD					= mod:NewCDNPTimer(14.0, 357512, nil, nil, nil, 3)--17 - 3
 local timerWildThrashCD						= mod:NewCDNPTimer(26.7, 357508, nil, nil, nil, 3)
@@ -540,19 +540,19 @@ function mod:StartEngageTimers(guid, cid, delay)
 		timerInvigoratingFishStickCD:Start(6.2-delay, guid)--Large variation
 	elseif cid == 178165 then--Coastwalker Goliath
 		timerTidalStompCD:Start(11-delay, guid)--iffy, seems to be possible to massively delay
-		timerBoulderThrowCD:Start(17-delay, guid)--iffy
+		timerBoulderThrowCD:Start(9.3-delay, guid)--Seems possible to massive delay
 	elseif cid == 178171 then--Stormforged Guardian
-		timerCrackleCD:Start(4.1-delay, guid)
-		timerChargedPulseCD:Start(10.2-delay, guid)
+		timerCrackleCD:Start(3.5-delay, guid)
+		timerChargedPulseCD:Start(9.7-delay, guid)
 	elseif cid == 180015 then--Burly Deckhand
 		timerSuperSaisonCD:Start(9.6-delay, guid)
 	elseif cid == 179388 then--Hourglass Tidesage
 		timerTidalBurstCD:Start(8.5-delay, guid)
 	elseif cid == 179386 then--Corsair Officer
-		timerSwordTossCD:Start(7.1-delay, guid)
+		timerSwordTossCD:Start(6.8-delay, guid)
 	elseif cid == 180429 then--AdornedStarseer
-		timerDriftingStarCD:Start(7.2-delay, guid)
-		timerWanderingPulsarCD:Start(12.3-delay, guid)
+		timerDriftingStarCD:Start(6.9-delay, guid)
+		timerWanderingPulsarCD:Start(11.9-delay, guid)
 	elseif cid == 177808 then--Armored Overseer <Cartel Zo>
 		timerBeamSplicerCD:Start(7-delay, guid)
 		timerProxyStrikeCD:Start(11-delay, guid)
