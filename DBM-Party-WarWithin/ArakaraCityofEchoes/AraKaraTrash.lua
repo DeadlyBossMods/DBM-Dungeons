@@ -236,8 +236,8 @@ function mod:StartEngageTimers(guid, cid, delay)
 		timerCalloftheBroodCD:Start(9.7-delay, guid)
 		timerWebSprayCD:Start(14.3-delay, guid)
 	elseif cid == 217533 then--Atik
-		timerWebSprayCD:Start(4-delay, guid)--4-6
-		timerPoisonousCloudCD:Start(8.8-delay, guid)--8.8-14.4
+		timerWebSprayCD:Start(3.6-delay, guid)--3.6-6
+		timerPoisonousCloudCD:Start(7.9-delay, guid)--7.9-14.4
 	elseif cid == 216293 then--Trilling Attendant
 		timerRadiantBarrageCD:Start(2.1-delay, guid)--2.1-3.8
 	elseif cid == 223253 then--Bloodstained Webmage
