@@ -35,7 +35,7 @@ local specWarnEruptingTorment		= mod:NewSpecialWarningRunCount(1236973, nil, nil
 local specWarnRitualofWoe			= mod:NewSpecialWarningSoakCount(328791, nil, nil, nil, 1, 7)
 --local specWarnGTFO					= mod:NewSpecialWarningGTFO(257274, nil, nil, nil, 1, 8)
 
-local timerTelekineticTossCD		= mod:NewVarCountTimer("v9.7-12.2", 323142, nil, nil, nil, 3)
+local timerTelekineticTossCD		= mod:NewVarCountTimer("v9.7-12.5", 323142, nil, nil, nil, 3)
 local timerUnleashedSufferingCD		= mod:NewVarCountTimer("v21.8-24.3", 323236, nil, nil, nil, 3)
 --local timerStigmaofPrideCD		= mod:NewCDTimer(27.8, 323437, nil, nil, nil, 5, nil, DBM_COMMON_L.HEALER_ICON)
 local timerEruptingTormentCD		= mod:NewVarCountTimer("v23-24.3", 1236973, nil, nil, nil, 3)
@@ -54,7 +54,7 @@ function mod:OnCombatStart(delay)
 	self.vb.woeCount = 0
 	--timerStigmaofPrideCD:Start(6.5-delay)--SUCCESS
 	timerTelekineticTossCD:Start(8-delay, 1)
-	timerUnleashedSufferingCD:Start(14.7-delay, 1)--But sometimes never cast and boss goes into more tosses instead
+	timerUnleashedSufferingCD:Start(14.5-delay, 1)--But sometimes never cast and boss goes into more tosses instead
 	timerEruptingTormentCD:Start(25.4-delay, 1)
 end
 
