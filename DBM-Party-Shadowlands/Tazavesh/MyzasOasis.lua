@@ -108,14 +108,14 @@ function mod:SPELL_CAST_START(args)
 		if spellId == 350916 then--Security Guards
 			timerSecuritySlamCD:Start(13.7, args.sourceGUID)
 		else--Boss (stage 2)
-			timerSecuritySlamCD:Start(15.8, args.sourceGUID)--15.8 but lowest spell priority, meaming it's often queued a long time
+			timerSecuritySlamCD:Start(14.6, args.sourceGUID)--14.6-15.8 but lowest spell priority, meaming it's often queued a long time
 		end
 	elseif spellId == 350922 then
 		if self:CheckInterruptFilter(args.sourceGUID, false, true) then
 			specWarnMenacingShout:Show(args.sourceName)
 			specWarnMenacingShout:Play("kickcast")
 		end
-		if args:GetSrcCreatureID() == 166970 then--Main boss
+		if args:GetSrcCreatureID() == 176563 then--Main boss
 			timerMenacingShoutCD:Start(21.5, args.sourceGUID)
 		else
 			timerMenacingShoutCD:Start(25.5, args.sourceGUID)

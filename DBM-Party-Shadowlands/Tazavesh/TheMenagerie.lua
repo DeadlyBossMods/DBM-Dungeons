@@ -43,7 +43,7 @@ local specWarnGripofHunger			= mod:NewSpecialWarningRun(349663, nil, nil, nil, 4
 local specWarnGrandConsumption		= mod:NewSpecialWarningDodge(349663, nil, nil, nil, 2, 2)
 
 local timerGripofHungerCD			= mod:NewCDTimer(23, 349663, nil, nil, nil, 2)--23-30
-local timerGrandconsumptionCD		= mod:NewCDTimer(30.3, 349797, nil, nil, nil, 3)
+local timerGrandconsumptionCD		= mod:NewCDTimer(30, 349797, nil, nil, nil, 3)
 
 mod:AddSetIconOption("SetIconOnGluttony", 349627, true, 0, {1})
 --Achillite
