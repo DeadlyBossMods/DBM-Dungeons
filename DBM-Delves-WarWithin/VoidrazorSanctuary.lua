@@ -4,8 +4,8 @@ local L		= mod:GetLocalizedStrings()
 mod.statTypes = "normal,mythic"
 
 mod:SetRevision("@file-date-integer@")
---mod:SetCreatureID(225204)--Non hard one placeholder on load. Real one set in OnCombatStart
---mod:SetEncounterID(2987, 2985)
+mod:SetCreatureID(244752)--Non hard one placeholder on load. Real one set in OnCombatStart
+mod:SetEncounterID(3326, 3325)
 mod:SetHotfixNoticeRev(20240422000000)
 mod:SetMinSyncRevision(20240422000000)
 mod:SetZone(2951)
@@ -30,6 +30,14 @@ mod:RegisterEventsInCombat(
 --local timerEncasingWebshotCD			= mod:NewCDTimer(31.1, 447143, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc, 7 off interrupt
+
+function mod:OnCombatStart(delay)
+	if self:IsMythic() then
+		self:SetCreatureID(244753)
+	else
+		self:SetCreatureID(244752)
+	end
+end
 
 --[[
 function mod:SPELL_CAST_START(args)
