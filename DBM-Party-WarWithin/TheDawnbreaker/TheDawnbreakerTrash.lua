@@ -345,7 +345,7 @@ function mod:StartEngageTimers(guid, cid, delay)
 	elseif cid == 213885 then--Nightfall Dark Architect
 		timerTorentingEruptionCD:Start(5.4-delay, guid)--5.4-5.9
 	elseif cid == 213892 or cid == 228540 then--Nightfall Shadowmage (223994 is an RP mage, not engaged)
-		timerEnsnaringShadowsCD:Start(cid == 228540 and (9.5-delay) or (7-delay), guid)--7-12.9 (213892) 9.5-14 (228540)
+		timerEnsnaringShadowsCD:Start(cid == 228540 and (7.5-delay) or (4.6-delay), guid)--4.6-12.9 (213892) 7.5-14 (228540)
 	elseif cid == 210966 then--Sureki Webmage
 		timerBurstingCacoonCD:Start(1.8-delay, guid)--1.8-11.7
 	end
