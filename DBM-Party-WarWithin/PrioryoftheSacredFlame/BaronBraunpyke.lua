@@ -43,10 +43,10 @@ local specWarnHammerofPurity				= mod:NewSpecialWarningDodgeCount(423062, nil, n
 --local specWarnGTFO						= mod:NewSpecialWarningGTFO(372820, nil, nil, nil, 1, 8)
 
 local timerVindictiveWrathCD				= mod:NewCDCountTimer(68.8, 422969, nil, nil, nil, 6)
-local timerCastigatorsShieldCD				= mod:NewVarCountTimer("v33.1-34", 423015, nil, nil, nil, 3)
-local timerBurningLightCD					= mod:NewVarCountTimer("v33.1-34", 423051, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
-local timerHammerofPurityCD					= mod:NewVarCountTimer("v35.2-36", 423062, nil, nil, nil, 3)
-local timerSacredPyreCD						= mod:NewVarCountTimer("v33.1-35.2", 446368, nil, nil, nil, 5, nil, DBM_COMMON_L.MYTHIC_ICON)
+local timerCastigatorsShieldCD				= mod:NewVarCountTimer("v33.1-34.7", 423015, nil, nil, nil, 3)
+local timerBurningLightCD					= mod:NewVarCountTimer("v33.1-34.4", 423051, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerHammerofPurityCD					= mod:NewVarCountTimer("v35.2-36.4", 423062, nil, nil, nil, 3)
+local timerSacredPyreCD						= mod:NewVarCountTimer("v33.1-36", 446368, nil, nil, nil, 5, nil, DBM_COMMON_L.MYTHIC_ICON)
 
 --local castsPerGUID = {}
 

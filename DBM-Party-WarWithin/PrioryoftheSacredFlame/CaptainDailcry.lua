@@ -43,7 +43,7 @@ local specWarnPierceArmor					= mod:NewSpecialWarningDefensive(424414, nil, nil,
 local specWarnGTFO							= mod:NewSpecialWarningGTFO(1238782, nil, nil, nil, 1, 8)
 
 local timerSavageMaulingCD					= mod:NewCDCountTimer(25.1, 447439, nil, nil, nil, 3)
-local timerBattleCryCD						= mod:NewVarCountTimer("v27.4-32.6", 424419, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--15.8-18.2
+local timerBattleCryCD						= mod:NewVarCountTimer("v27.4-33.4", 424419, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 --local timerHurlSpearCD					= mod:NewVarCountTimer("v30.3-35.8", 447270, nil, nil, nil, 3)
 local timerEarthshatteringSpearCD			= mod:NewVarCountTimer("v25.4-28.3", 1238780, nil, nil, nil, 3)
 local timerPierceArmorCD					= mod:NewVarCountTimer("v13.1-17.6", 424414, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
