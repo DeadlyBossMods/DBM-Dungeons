@@ -251,7 +251,7 @@ end
 --Most timers need adjustment, had bad logs
 function mod:StartEngageTimers(guid, cid, delay)
 	if cid == 165414 then--Depraved Obliterator
-		timerMarkofObliterationCD:Start(6.9-delay, guid)--6.9-10
+		timerMarkofObliterationCD:Start(6.6-delay, guid)--6.6-10
 	elseif cid == 164562 then--Depraved Houndmaster
 		timerLoyalBeastsCD:Start(2.5-delay, guid)--Can get massively delayed
 	elseif cid == 167607 then--Stoneborn Slasher
@@ -259,17 +259,17 @@ function mod:StartEngageTimers(guid, cid, delay)
 		timerPowerfulSwipeCD:Start(10-delay, guid)--Iffy
 		timerDisruptingScreechCD:Start(15.8-delay, guid)--Iffy
 	elseif cid == 165529 then--Depraved Collector
-		timerSiphonLifeCD:Start(3-delay, guid)--Iffy
+		timerSiphonLifeCD:Start(2.4-delay, guid)
 	elseif cid == 164557 then--Shard of Halkias
 		timerThrashCD:Start(6.8-delay, guid)
 		--No need to start Sin Quake here, it'll be started by Thrash
 	elseif cid == 167611 then--Stoneborn Eviscerator
-		timerHurlGlaiveCD:Start(7.5-delay, guid)--Iffy
+		timerHurlGlaiveCD:Start(4.4-delay, guid)
 	elseif cid == 167612 then--Stoneborn Reaver
 		timerMortalStrikeCD:Start(4.5-delay, guid)
 		timerTurntoStoneCD:Start(20.2-delay, guid)
 	elseif cid == 167610 then--Stonefiend Anklebiter
-		timerAnkleBiterCD:Start(4.8-delay, guid)
+		timerAnkleBiterCD:Start(2-delay, guid)
 	elseif cid == 167876 then--Inquisitor Sigar
 		timerDarkCommunionCD:Start(4.9-delay, guid)
 		timerDisperseSinsCD:Start(10.5-delay, guid)--Iffy
