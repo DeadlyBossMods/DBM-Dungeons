@@ -34,7 +34,7 @@ local warnInpoundContrabandEnded	= mod:NewEndAnnounce(345770, 1)
 
 local specWarnInterrogation			= mod:NewSpecialWarningRun(347949, nil, nil, nil, 4, 2)
 local yellInterrogation				= mod:NewYell(347949)
-local specWarnInterrogationOther	= mod:NewSpecialWarningSwitch(347949, "Dps", nil, nil, 1, 2)
+local specWarnInterrogationOther	= mod:NewSpecialWarningSwitchCustom(347949, "Dps", nil, nil, 1, 2)
 local specWarnContainmentCell		= mod:NewSpecialWarningYou(345990, false, nil, nil, 1, 2)--Optional, but probably don't need, you already know it's you from targetting debuff
 local specWarnInpoundContraband		= mod:NewSpecialWarningYou(345770, nil, nil, nil, 1, 2)
 local specWarnGTFO					= mod:NewSpecialWarningGTFO(348366, nil, nil, nil, 1, 8)
@@ -76,7 +76,7 @@ function mod:SPELL_AURA_APPLIED(args)
 			specWarnInterrogation:Play("targetyou")
 			yellInterrogation:Yell()
 		else
-			specWarnInterrogationOther:Show()
+			specWarnInterrogationOther:Show(args.destName)
 			specWarnInterrogationOther:Play("targetchange")
 		end
 	elseif spellId == 348128 then

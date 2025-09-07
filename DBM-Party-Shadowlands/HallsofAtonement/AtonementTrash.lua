@@ -51,7 +51,7 @@ local specWarnLoyalBeasts				= mod:NewSpecialWarningDispel(326450, "RemoveEnrage
 local specWarnTurnToStoneDispel			= mod:NewSpecialWarningDispel(1235762, "RemoveMagic", nil, nil, 2, 2)--326607 old version
 local specWarnMarkofObliterationDispel	= mod:NewSpecialWarningDispel(325876, "RemoveMagic", nil, nil, 1, 2)
 
-local timerMarkofObliterationCD			= mod:NewCDNPTimer(22.5, 325876, nil, nil, nil, 3)
+local timerMarkofObliterationCD			= mod:NewCDNPTimer(22.2, 325876, nil, nil, nil, 3)
 local timerLoyalBeastsCD				= mod:NewCDNPTimer(23.7, 326450, nil, nil, nil, 4)
 local timerStoneFistCD					= mod:NewCDPNPTimer(15.2, 1237071, nil, "Tank|Healer", nil, 5)--18.2 minus cast time
 local timerPowerfulSwipeCD				= mod:NewCDPNPTimer(21.5, 326997, nil, nil, nil, 2)--23 minus cast time
@@ -60,10 +60,10 @@ local timerSiphonLifeCD					= mod:NewCDNPTimer(15.8, 325701, nil, nil, nil, 4)--
 local timerThrashCD						= mod:NewCDNPTimer(22.2, 326409, nil, nil, nil, 2)
 local timerSinQuakeCD					= mod:NewCDNPTimer(23, 326441, nil, nil, nil, 3)--always 11 seconds after thrash (thrash is 10 sec + 1 sec)
 local timerHurlGlaiveCD					= mod:NewCDNPTimer(16.7, 326638, nil, nil, nil, 3)--16.7-20.7
-local timerMortalStrikeCD				= mod:NewCDNPTimer(14.6, 1235766, nil, "Tank|Healer", nil, 5)--14.6-21.9
-local timerTurntoStoneCD				= mod:NewCDNPTimer(24.3, 1235762, nil, nil, nil, 3)
+local timerMortalStrikeCD				= mod:NewCDNPTimer(14.2, 1235766, nil, "Tank|Healer", nil, 5)--14.6-21.9
+local timerTurntoStoneCD				= mod:NewCDNPTimer(23.9, 1235762, nil, nil, nil, 3)
 local timerAnkleBiterCD					= mod:NewCDNPTimer(10.1, 326879, nil, nil, nil, 5)--10.1-12.1
-local timerDarkCommunionCD				= mod:NewCDNPTimer(32.4, 326794, nil, nil, nil, 1)
+local timerDarkCommunionCD				= mod:NewCDNPTimer(31.6, 326794, nil, nil, nil, 1)
 local timerDisperseSinsCD				= mod:NewCDNPTimer(10.9, 326847, nil, nil, nil, 3)--10.9-21.8
 local timerDisplayOfPowerCD				= mod:NewCDNPTimer(32.8, 1236614, nil, nil, nil, 3)
 
@@ -179,7 +179,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		if args:IsPlayer() then
 			specWarnMarkofObliteration:Schedule(8)
 			specWarnMarkofObliteration:ScheduleVoice(8, "runout")
-			yellMarkofObliterationFades:Countdown(spellId)
+			yellMarkofObliterationFades:Countdown(spellId, 4)
 		end
 		if self:CheckDispelFilter("magic") and self:AntiSpam(3, 3) then
 			specWarnMarkofObliterationDispel:Show(args.destName)
@@ -251,27 +251,27 @@ end
 --Most timers need adjustment, had bad logs
 function mod:StartEngageTimers(guid, cid, delay)
 	if cid == 165414 then--Depraved Obliterator
-		timerMarkofObliterationCD:Start(6.9-delay, guid)--6.9-10
+		timerMarkofObliterationCD:Start(6.6-delay, guid)--6.6-10
 	elseif cid == 164562 then--Depraved Houndmaster
-		timerLoyalBeastsCD:Start(3-delay, guid)--Can get massively delayed
+		timerLoyalBeastsCD:Start(15-delay, guid)--Can be as early as 2.5, but is almost always massively delayed so gonna use delayed timer here
 	elseif cid == 167607 then--Stoneborn Slasher
 		timerStoneFistCD:Start(5-delay, guid)--Iffy
 		timerPowerfulSwipeCD:Start(10-delay, guid)--Iffy
 		timerDisruptingScreechCD:Start(15.8-delay, guid)--Iffy
 	elseif cid == 165529 then--Depraved Collector
-		timerSiphonLifeCD:Start(3-delay, guid)--Iffy
+		timerSiphonLifeCD:Start(2.4-delay, guid)
 	elseif cid == 164557 then--Shard of Halkias
 		timerThrashCD:Start(6.8-delay, guid)
 		--No need to start Sin Quake here, it'll be started by Thrash
 	elseif cid == 167611 then--Stoneborn Eviscerator
-		timerHurlGlaiveCD:Start(7.5-delay, guid)--Iffy
+		timerHurlGlaiveCD:Start(4.4-delay, guid)
 	elseif cid == 167612 then--Stoneborn Reaver
-		timerMortalStrikeCD:Start(4.8-delay, guid)--Iffy
+		timerMortalStrikeCD:Start(4.5-delay, guid)
 		timerTurntoStoneCD:Start(20.2-delay, guid)
 	elseif cid == 167610 then--Stonefiend Anklebiter
-		timerAnkleBiterCD:Start(5.8-delay, guid)
+		timerAnkleBiterCD:Start(2-delay, guid)
 	elseif cid == 167876 then--Inquisitor Sigar
-		timerDarkCommunionCD:Start(6-delay, guid)--Iffy
+		timerDarkCommunionCD:Start(4.9-delay, guid)
 		timerDisperseSinsCD:Start(10.5-delay, guid)--Iffy
 		timerDisplayOfPowerCD:Start(15.6-delay, guid)
 	end

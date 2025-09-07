@@ -45,9 +45,9 @@ local specWarnSanitizingCycle		= mod:NewSpecialWarningCount(346766, nil, nil, ni
 local specWarnLigtningNova			= mod:NewSpecialWarningInterrupt(358131, "HasInterrupt", nil, nil, 1, 2)--Hard Mode
 --local specWarnGTFO				= mod:NewSpecialWarningGTFO(320366, nil, nil, nil, 1, 8)
 
-local timerShearingSwingsCD			= mod:NewCDCountTimer(10.9, 346116, nil, nil, nil, 5, nil, DBM_COMMON_L.HEALER_ICON)
+local timerShearingSwingsCD			= mod:NewCDCountTimer(10.5, 346116, nil, nil, nil, 5, nil, DBM_COMMON_L.HEALER_ICON)
 local timerTitanicCrashCD			= mod:NewCDCountTimer(23.1, 347094, nil, nil, nil, 3)
-local timerPurgedbyFireCD			= mod:NewCDCountTimer(16.7, 346959, nil, nil, nil, 3)
+local timerPurgedbyFireCD			= mod:NewCDCountTimer(15.7, 346959, nil, nil, nil, 3)
 local timerSanitizingCycleCD		= mod:NewCDCountTimer(99, 346766, nil, nil, nil, 6)
 local timerVaultPurifierCD			= mod:NewCDCountTimer(29.1, -23004, nil, nil, nil, 1, "136116", DBM_COMMON_L.DAMAGE_ICON)
 local timerPurifyingBurstCD			= mod:NewCDCountTimer(20.2, 353312, nil, nil, nil, 2)
@@ -73,11 +73,7 @@ function mod:OnCombatStart(delay)
 	--TODO, hard mode check shit for purifying Burst (is it cast more often? or just more targets?)
 	timerPurifyingBurstCD:Start(5.2-delay, 1)
 	timerShearingSwingsCD:Start(8.5-delay, 1)
-	if self:IsMythic() and not self:IsMythicPlus() then
-		timerPurgedbyFireCD:Start(10.8-delay, 1)
-	else
-		timerPurgedbyFireCD:Start(12.1-delay, 1)
-	end
+	timerPurgedbyFireCD:Start(10.8-delay, 1)
 	timerTitanicCrashCD:Start(15.8-delay, 1)
 	timerVaultPurifierCD:Start(22.3-delay, 1)
 	timerSanitizingCycleCD:Start(37.8-delay, 1)
@@ -171,7 +167,7 @@ function mod:SPELL_AURA_REMOVED(args)
 		timerShearingSwingsCD:Start(15.6, self.vb.swingsCount+1)--Might be 17.7 now
 		timerPurgedbyFireCD:Start(19, self.vb.purgedCount+1)
 		timerTitanicCrashCD:Start(22.9, self.vb.titanicCrashCount+1)
-		timerVaultPurifierCD:Start(23, self.vb.vaultPurifierCount+1)
+		timerVaultPurifierCD:Start(21.8, self.vb.vaultPurifierCount+1)
 		timerSanitizingCycleCD:Start(68.1, self.vb.cycleCount+1)--Needs reconfirmation
 	end
 end

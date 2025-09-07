@@ -1,12 +1,16 @@
 local mod	= DBM:NewMod("z2951", "DBM-Delves-WarWithin")
 local L		= mod:GetLocalizedStrings()
 
+mod.statTypes = "normal,mythic"
+
 mod:SetRevision("@file-date-integer@")
+mod:SetCreatureID(244752)--Non hard one placeholder on load. Real one set in OnCombatStart
+mod:SetEncounterID(3326, 3325)
 mod:SetHotfixNoticeRev(20240422000000)
 mod:SetMinSyncRevision(20240422000000)
 mod:SetZone(2951)
 
-mod:RegisterCombat("scenario", 2951)
+mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
 --	"SPELL_CAST_START",
@@ -14,9 +18,7 @@ mod:RegisterEventsInCombat(
 --	"SPELL_AURA_APPLIED",
 --	"SPELL_AURA_REMOVED",
 --	"SPELL_PERIODIC_DAMAGE",
---	"UNIT_DIED",
-	"ENCOUNTER_START",
-	"ENCOUNTER_END"
+--	"UNIT_DIED"
 )
 
 --local warnDrones						= mod:NewSpellAnnounce(449072, 2)
@@ -28,6 +30,14 @@ mod:RegisterEventsInCombat(
 --local timerEncasingWebshotCD			= mod:NewCDTimer(31.1, 447143, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc, 7 off interrupt
+
+function mod:OnCombatStart(delay)
+	if self:IsMythic() then
+		self:SetCreatureID(244753)
+	else
+		self:SetCreatureID(244752)
+	end
+end
 
 --[[
 function mod:SPELL_CAST_START(args)
@@ -79,27 +89,3 @@ function mod:UNIT_DIED(args)
 	end
 end
 --]]
-
-function mod:ENCOUNTER_START(eID)
-	if eID == 3325 then--Nexus-Princess Ky'veza
-		DBM:AddMsg("Boss alerts/timers not yet implemented for Nexus-Princess Ky'veza 1")
-	elseif eID == 3326 then--RNexus-Princess Ky'veza
-		DBM:AddMsg("Boss alerts/timers not yet implemented for Nexus-Princess Ky'veza 2")
-	end
-end
-
-function mod:ENCOUNTER_END(eID, _, _, _, success)
-	if eID == 3325 then--Nexus-Princess Ky'veza
-		if success == 1 then
-			DBM:EndCombat(self)
-		else
-			--Stop Timers manually
-		end
-	elseif eID == 3326 then--RNexus-Princess Ky'veza
-		if success == 1 then
-			DBM:EndCombat(self)
-		else
-			--Stop Timers manually
-		end
-	end
-end

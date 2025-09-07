@@ -28,8 +28,8 @@ mod:RegisterEventsInCombat(
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
 --]]
 local specWarnRazorchokeVines				= mod:NewSpecialWarningYouCount(470038, nil, nil, nil, 1, 2)--Pre target debuff
-local specWarnVinePartner					= mod:NewSpecialWarningLink(433425, nil, nil, nil, 1, 2)
-local yellRazorchokeVines					= mod:NewIconTargetYell(433425)
+local specWarnVinePartner					= mod:NewSpecialWarningLink(470039, nil, nil, nil, 1, 2)
+local yellRazorchokeVines					= mod:NewIconTargetYell(470039)
 --local yellInfestationFades				= mod:NewShortFadesYell(433740)
 local specWarnAwakenSwamp					= mod:NewSpecialWarningDodgeCount(473070, nil, nil, nil, 2, 2)
 local specWarnMudslide						= mod:NewSpecialWarningDodgeCount(473114, nil, nil, nil, 2, 2)
