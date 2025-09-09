@@ -49,12 +49,15 @@ local warnShadowSmash						= mod:NewCastAnnounce(474511, 3)
 local warnLureoftheVoid						= mod:NewCastAnnounce(474482, 3, nil, nil, nil, nil, nil, 12)
 local warnConcussiveSmash					= mod:NewCastAnnounce(474223, 3)
 local warnCrankshaftAssault					= mod:NewCastAnnounce(455613, 4)--Annoying but not deadly. Overcharged Delve ability
+local warnKyvezzaSpawn						= mod:NewCastAnnounce(1245156, 4)
 local warnEnrage							= mod:NewSpellAnnounce(448161, 3)
 local warnThrowDyno							= mod:NewSpellAnnounce(448600, 3)
 local warnIllusionStep						= mod:NewSpellAnnounce(444915, 3)
 
 local specWarnSpearFish						= mod:NewSpecialWarningYou(430036, nil, nil, nil, 2, 12)
 local specWarnFungalBloom					= mod:NewSpecialWarningSpell(415250, nil, nil, nil, 2, 2)
+local specWarnDarkMassacre					= mod:NewSpecialWarningSpell(1245203, nil, nil, nil, 2, 2)
+local specWarnNexusDaggers					= mod:NewSpecialWarningDodge(1245240, nil, nil, nil, 2, 2)
 local specWarnFearfulShriek					= mod:NewSpecialWarningDodge(433410, nil, nil, nil, 2, 2)
 local specWarnHidousLaughter				= mod:NewSpecialWarningDodge(372529, nil, nil, nil, 2, 2)
 local specWarnJaggedBarbs					= mod:NewSpecialWarningDodge(450714, nil, nil, nil, 2, 15)--8.5-26
@@ -89,6 +92,8 @@ local specWarnSandCrash						= mod:NewSpecialWarningDodge(1243017, nil, nil, nil
 local specWarnVorpalCleave					= mod:NewSpecialWarningDodge(1236256, nil, nil, nil, 2, 15)--S3
 local specWarnNullBreath					= mod:NewSpecialWarningDodge(1231144, nil, nil, nil, 2, 15)--S3
 local specWarnArcaneGeyser					= mod:NewSpecialWarningDodge(1236770, nil, nil, nil, 2, 2)--S3
+local specWarnEssenceCleave					= mod:NewSpecialWarningDodge(1238737, nil, nil, nil, 2, 15)
+local specWarnGravityShatter				= mod:NewSpecialWarningDodge(1238713, nil, nil, nil, 2, 2)
 local specWarnBloodbath						= mod:NewSpecialWarningRun(473995, nil, nil, nil, 4, 2)
 local specWarnEchoofRenilash				= mod:NewSpecialWarningRun(434281, nil, nil, nil, 4, 2)
 local specWarnNecroticEnd					= mod:NewSpecialWarningRun(445252, nil, nil, nil, 4, 2)
@@ -177,6 +182,11 @@ local timerSandCrashCD						= mod:NewCDNPTimer(19.9, 1243017, nil, nil, nil, 3)
 --local timerNullBreathCD					= mod:NewCDNPTimer(15.8, 1231144, nil, nil, nil, 3)--Unknown
 --local timerSandsOfKareshCD				= mod:NewCDNPTimer(15.8, 1242469, nil, nil, nil, 4)--Unknown
 --local timerArcaneGeyserCD					= mod:NewCDNPTimer(15.8, 1236770, nil, nil, nil, 3)--Unknown
+local timerEssenceCleaveCD					= mod:NewCDNPTimer(11.4, 1238737, nil, nil, nil, 3)
+--local timerGravityShatterCD				= mod:NewCDNPTimer(15.8, 1238713, nil, nil, nil, 3)--Unknown
+local timerKyvezzaSpawnCast					= mod:NewCastTimer(6, 1245156, nil, nil, nil, 1)
+local timerDarkMassacreCD					= mod:NewCDNPTimer(30.3, 1245203, nil, nil, nil, 5)
+local timerNexusDaggersCD					= mod:NewCDNPTimer(30.3, 1245240, nil, nil, nil, 3)
 
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc, 7 off interrupt
 
@@ -187,8 +197,8 @@ do
 		if not force and validZones[currentZone] and not eventsRegistered then
 			eventsRegistered = true
 			self:RegisterShortTermEvents(
-                "SPELL_CAST_START 449318 450546 433410 450714 445781 415253 425040 424704 424798 414944 418791 424891 450197 448399 445191 455932 445492 434281 450637 445210 448528 449071 462686 459421 448179 445774 443292 450492 450519 450505 450509 448155 448161 418295 415250 434740 470592 443482 458879 445718 451913 445771 372529 474004 473541 474511 474482 474325 474223 474206 1217361 1217326 1216806 1216805 1217301 473550 1214238 1239731 455613 1220472 1243017 1236256 1231144 1242469 1242469 1236770",
-                "SPELL_CAST_SUCCESS 414944 424614 418791 424891 427812 450546 450197 415253 449318 445191 430036 445252 425040 424704 448399 448528 433410 445492 462686 447392 459421 448179 450509 415250 443162 443292 451913 444915 445406 372529 473541 1216806 1216805 1217361 1217326 474206 474004 473995 473550 474482 418295 1214238 1214246 1243017",--474325
+                "SPELL_CAST_START 449318 450546 433410 450714 445781 415253 425040 424704 424798 414944 418791 424891 450197 448399 445191 455932 445492 434281 450637 445210 448528 449071 462686 459421 448179 445774 443292 450492 450519 450505 450509 448155 448161 418295 415250 434740 470592 443482 458879 445718 451913 445771 372529 474004 473541 474511 474482 474325 474223 474206 1217361 1217326 1216806 1216805 1217301 473550 1214238 1239731 455613 1220472 1243017 1236256 1231144 1242469 1242469 1236770 1238737 1238713 1245203 1245156 1245240",
+                "SPELL_CAST_SUCCESS 414944 424614 418791 424891 427812 450546 450197 415253 449318 445191 430036 445252 425040 424704 448399 448528 433410 445492 462686 447392 459421 448179 450509 415250 443162 443292 451913 444915 445406 372529 473541 1216806 1216805 1217361 1217326 474206 474004 473995 473550 474482 418295 1214238 1214246 1243017 1238737",--474325
 				"SPELL_INTERRUPT",
                 "SPELL_AURA_APPLIED 424614 449071 418297 430036 440622 441129 448161 470592 443482 458879 445407 1220472",
                 --"SPELL_AURA_REMOVED",
@@ -216,7 +226,7 @@ do
 end
 
 ---@param self DBMMod
-local function workAroundLuaLimitation(self, spellId, sourceName, sourceGUID)
+local function workAroundLuaLimitation(self, spellId, sourceName, sourceGUID, args)
 	if spellId == 474223 and self:IsValidWarning(sourceGUID) then
 		timerConcussiveSmashCD:Start(nil, sourceGUID)
 		if self:AntiSpam(3, 5) then
@@ -326,6 +336,31 @@ local function workAroundLuaLimitation(self, spellId, sourceName, sourceGUID)
 		if self:AntiSpam(3, 2) then
 			specWarnArcaneGeyser:Show()
 			specWarnArcaneGeyser:Play("watchstep")
+		end
+	elseif spellId == 1238737 then
+		if self:AntiSpam(3, 2) then
+			specWarnEssenceCleave:Show()
+			specWarnEssenceCleave:Play("frontal")
+		end
+	elseif spellId == 1238713 then
+		if self:AntiSpam(3, 2) then
+			specWarnGravityShatter:Show()
+			specWarnGravityShatter:Play("watchstep")
+		end
+	elseif spellId == 1245203 then
+		timerDarkMassacreCD:Start(nil, sourceGUID)
+		if self:AntiSpam(3, 5) then
+			specWarnDarkMassacre:Show()
+			specWarnDarkMassacre:Play("ghostsoon")
+		end
+	elseif spellId == 1245156 then
+		warnKyvezzaSpawn:Show()
+		timerKyvezzaSpawnCast:Start()
+	elseif spellId == 1245240 and args:GetSrcCreatureID() == 244755 then
+		timerNexusDaggersCD:Start(nil, sourceGUID)
+		if self:AntiSpam(3, 2) then
+			specWarnNexusDaggers:Show()
+			specWarnNexusDaggers:Play("farfromline")
 		end
 	end
 end
@@ -563,7 +598,7 @@ function mod:SPELL_CAST_START(args)
 			specWarnAbyssalGrasp:Play("watchstep")
 		end
 	else
-		workAroundLuaLimitation(self, args.spellId, args.sourceName, args.sourceGUID)
+		workAroundLuaLimitation(self, args.spellId, args.sourceName, args.sourceGUID, args)
 	end
 end
 
@@ -672,6 +707,8 @@ function mod:SPELL_CAST_SUCCESS(args)
 		timerCrushingPinchCD:Start(8.1, args.sourceGUID)
 	elseif args.spellId == 1243017 then
 		timerSandCrashCD:Start(19.9, args.sourceGUID)
+	elseif args.spellId == 1238737 then
+		timerEssenceCleaveCD:Start(11.4, args.sourceGUID)
 	end
 end
 
@@ -882,6 +919,12 @@ function mod:UNIT_DIED(args)
 		timerOverchargeCD:Stop(args.destGUID)
 	elseif cid == 244415 then--Pactsworn Dustblade
 		timerSandCrashCD:Stop(args.destGUID)
+	elseif cid == 244448 then--Invasive Phasecrawler
+		timerEssenceCleaveCD:Stop(args.destGUID)
+		--timerGravityShatterCD:Stop(args.destGUID)
+	elseif cid == 244755 then--Nexus-Princess Ky'veza
+		timerDarkMassacreCD:Stop(args.destGUID)
+		timerNexusDaggersCD:Stop(args.destGUID)
 	end
 end
 
@@ -978,6 +1021,12 @@ function mod:StartEngageTimers(guid, cid, delay)
 		timerOverchargedSlamCD:Start(22.9-delay, guid)
 	elseif cid == 244415 then--Pactsworn Dustblade
 		timerSandCrashCD:Start(9.8-delay, guid)
+	elseif cid == 244448 then--Invasive Phasecrawler
+		timerEssenceCleaveCD:Start(20-delay, guid)--Probably very wrong, single pull of data
+		--timerGravityShatterCD:Start(10.6-delay, guid)
+	elseif cid == 244755 then--Nexus-Princess Ky'veza
+		timerDarkMassacreCD:Start(15.5-delay, guid)
+		timerNexusDaggersCD:Start(29.8-delay, guid)
 	end
 end
 
