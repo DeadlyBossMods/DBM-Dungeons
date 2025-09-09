@@ -41,6 +41,7 @@ local warnPhalanxField						= mod:NewSpellAnnounce(355640, 3)--(S3 Valid)
 local warnForceMultiplier					= mod:NewCastAnnounce(1244443, 4, nil, nil, nil, nil, nil, 3)--(S3 Valid)
 local warnQuickblade						= mod:NewSpellAnnounce(355830, 3)--(S3 Valid)
 local warnQuellingStrike					= mod:NewSpellAnnounce(355637, 3)--(S3 Valid)
+local warnSwordToss							= mod:NewSpellAnnounce(368661, 3)--(S3 Valid)
 
 local specWarnGTFO							= mod:NewSpecialWarningGTFO(355581, nil, nil, nil, 1, 8)
 local specWarnTidalStomp					= mod:NewSpecialWarningSpell(355429, nil, nil, nil, 2, 2)
@@ -53,7 +54,6 @@ local specWarnVolatilePufferfish			= mod:NewSpecialWarningDodge(355234, nil, nil
 local specWarnBoulderThrow					= mod:NewSpecialWarningDodge(355464, nil, nil, nil, 2, 2)
 local specWarnCrackle						= mod:NewSpecialWarningDodge(355577, nil, nil, nil, 2, 2)--(S3 Valid)
 local specWarnTidalBurst					= mod:NewSpecialWarningDodge(1244650, nil, nil, nil, 2, 2)--(S3 Valid)
-local specWarnSwordToss						= mod:NewSpecialWarningDodge(368661, nil, nil, nil, 2, 2)--(S3 Valid)
 local specWarnBeamSplicer					= mod:NewSpecialWarningDodge(356001, nil, nil, nil, 2, 2)--(S3 Valid)
 local specWarnFrenziedChargeAvoid			= mod:NewSpecialWarningDodge(357512, nil, nil, nil, 2, 2)
 local specWarnShockMines					= mod:NewSpecialWarningDodge(355473, nil, nil, nil, 2, 2)--(S3 Valid)
@@ -349,9 +349,8 @@ function mod:SPELL_CAST_SUCCESS(args)
 		timerSuperSaisonCD:Start(nil, args.sourceGUID)
 	elseif spellId == 368661 then
 		timerSwordTossCD:Start(nil, args.sourceGUID)
-		if self:AntiSpam(3, 2) then
-			specWarnSwordToss:Show()
-			specWarnSwordToss:Play("watchstep")
+		if self:AntiSpam(3, 4) then
+			warnSwordToss:Show()
 		end
 	elseif spellId == 357260 then
 		timerUnstableRiftCD:Start(nil, args.sourceGUID)

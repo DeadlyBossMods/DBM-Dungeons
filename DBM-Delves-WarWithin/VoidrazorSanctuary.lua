@@ -38,6 +38,34 @@ mod.vb.invokeTheShadowsCount = 0
 mod.vb.netherRiftCount = 0
 mod.vb.daggersCount = 0
 
+--Scheduled checks for skipped casts due to using the healing curio that stuns boss for 5 seconds.
+--These checks will run 10 seconds after expected cast, but be unscheduled on cast.
+local function checkForSkippedMassacre(self)
+	self.vb.darkMassacreCount = self.vb.darkMassacreCount + 1
+	local cd = 30
+	if self.vb.darkMassacreCount % 2 == 0 then
+		cd = 59.9
+	end
+	timerDarkMassacreCD:Start(cd-10, self.vb.darkMassacreCount+1)
+	self:Schedule(cd, checkForSkippedMassacre, self)
+end
+
+local function checkForSkippedRift(self)
+	self.vb.netherRiftCount = self.vb.netherRiftCount + 1
+	local cd = 30
+	if self.vb.netherRiftCount % 2 == 0 then
+		cd = 59.9
+	end
+	timerNetherRiftCD:Start(cd-10, self.vb.netherRiftCount+1)
+	self:Schedule(cd, checkForSkippedRift, self)
+end
+
+local function checkForSkippedDaggers(self)
+	self.vb.daggersCount = self.vb.daggersCount + 1
+	timerNexusDaggersCD:Start(19.9, self.vb.daggersCount+1)
+	self:Schedule(29.9, checkForSkippedDaggers, self)
+end
+
 function mod:OnCombatStart(delay)
 	if self:IsMythic() then
 		self:SetCreatureID(244753)
@@ -50,33 +78,10 @@ function mod:OnCombatStart(delay)
 	self.vb.daggersCount = 0
 	--Nexus daggers used on pull
 	timerNetherRiftCD:Start(5.2-delay)
+	self:Schedule(15.2, checkForSkippedRift, self)
 	timerDarkMassacreCD:Start(20-delay, 1)
+	self:Schedule(30, checkForSkippedMassacre, self)
 	timerInvokeTheShadowsCD:Start(64.1-delay, 1)
-end
-
---Scheduled checks for skipped casts due to using the healing curio that stuns boss for 5 seconds.
---These checks will run 10 seconds after expected cast, but be unscheduled on cast.
-local function checkForSkippedMassacre(self)
-	self.vb.darkMassacreCount = self.vb.darkMassacreCount + 1
-	local cd = 30
-	if self.vb.darkMassacreCount % 2 == 0 then
-		cd = 59.9
-	end
-	timerDarkMassacreCD:Start(cd-10, self.vb.darkMassacreCount+1)
-end
-
-local function checkForSkippedRift(self)
-	self.vb.netherRiftCount = self.vb.netherRiftCount + 1
-	local cd = 30
-	if self.vb.netherRiftCount % 2 == 0 then
-		cd = 59.9
-	end
-	timerNetherRiftCD:Start(cd-10, self.vb.netherRiftCount+1)
-end
-
-local function checkForSkippedDaggers(self)
-	self.vb.daggersCount = self.vb.daggersCount + 1
-	timerNexusDaggersCD:Start(19.9, self.vb.daggersCount+1)
 end
 
 function mod:SPELL_CAST_START(args)
