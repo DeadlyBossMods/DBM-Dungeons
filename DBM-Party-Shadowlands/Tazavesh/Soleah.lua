@@ -69,7 +69,7 @@ function mod:OnCombatStart(delay)
 	table.wipe(castsPerGUID)
 	timerSummonAssassinsCD:Start(6.0-delay)
 	timerHyperlightSparkCD:Start(11.1-delay)
-	timerCollapsingStarCD:Start(20.6-delay)
+	timerCollapsingStarCD:Start(20.2-delay)
 end
 
 function mod:OnCombatEnd()

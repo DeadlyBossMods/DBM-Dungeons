@@ -88,7 +88,7 @@ local specWarnGlyphofRestraint				= mod:NewSpecialWarningDispel(355915, "RemoveM
 local specWarnRefractionShield				= mod:NewSpecialWarningDispel(355980, "MagicDispeller", nil, nil, 1, 2)--(S3 Valid)
 local specWarnAncientDreadDispel			= mod:NewSpecialWarningDispel(356407, "RemoveCurse", nil, nil, 1, 2)
 
-local timerVolatilePufferfishCD				= mod:NewCDNPTimer(14.4, 355234, nil, nil, nil, 3)
+local timerVolatilePufferfishCD				= mod:NewCDNPTimer(14.1, 355234, nil, nil, nil, 3)
 local timerShellcrackerCD					= mod:NewCDNPTimer(14.3, 355048, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)--15.8 minus cast time
 local timerCryofMrrggllrrggCD				= mod:NewCDPNPTimer(33.9, 355057, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerInvigoratingFishStickCD			= mod:NewCDPNPTimer(27.9, 355132, nil, nil, nil, 1)
@@ -98,7 +98,7 @@ local timerChargedPulseCD					= mod:NewCDNPTimer(20.6, 355584, nil, nil, nil, 3)
 local timerCrackleCD						= mod:NewCDNPTimer(8.5, 355577, nil, nil, nil, 3)--8.5-20.6
 local timerSuperSaisonCD					= mod:NewCDNPTimer(30.3, 356133, nil, nil, nil, 5)--32.8 minus cast time
 local timerTidalBurstCD						= mod:NewCDNPTimer(18.2, 1244650, nil, nil, nil, 2)
-local timerSwordTossCD						= mod:NewCDNPTimer(14.5, 368661, nil, nil, nil, 3)
+local timerSwordTossCD						= mod:NewCDNPTimer(14.1, 368661, nil, nil, nil, 3)
 local timerDriftingStarCD					= mod:NewCDNPTimer(16.3, 357226, nil, nil, nil, 3)
 local timerWanderingPulsarCD				= mod:NewCDNPTimer(26.7, 357238, nil, nil, nil, 1)
 local timerUnstableRiftCD					= mod:NewCDPNPTimer(21.5, 357260, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
@@ -116,7 +116,7 @@ local timerHyperlightBombCD					= mod:NewCDNPTimer(18.2, 357029, nil, nil, nil, 
 local timerLightshardRetreatCD				= mod:NewCDNPTimer(15.8, 357197, nil, nil, nil, 3)
 --local timerHyperlightBackhandCD			= mod:NewCDNPTimer(16.2, 356967, nil, "Tank|Healer", nil, 5)--Almost no groups see 1 cast, let alone 2
 local timerChronolightEnhancerCD			= mod:NewCDNPTimer(28.2, 357229, nil, nil, nil, 5)
-local timerEnergizedSlamCD					= mod:NewCDNPTimer(23.1, 1240821, nil, nil, nil, 5)
+local timerEnergizedSlamCD					= mod:NewCDNPTimer(22.6, 1240821, nil, nil, nil, 5)
 local timerPierceCD							= mod:NewCDNPTimer(21.8, 1240912, nil, "Tank|Healer", nil, 5)
 local timerLetterOpenerCD					= mod:NewCDNPTimer(25.2, 347716, nil, "Tank|Healer", nil, 5)
 local timerSpamFilterCD						= mod:NewCDNPTimer(21, 347775, nil, nil, nil, 4)
@@ -532,37 +532,37 @@ end
 --All timers subject to a ~0.5 second clipping due to ScanEngagedUnits
 function mod:StartEngageTimers(guid, cid, delay)
 	if cid == 178142 then--Murkbrine Fishmancer
-		timerVolatilePufferfishCD:Start(8.4-delay, guid)--Large variation
+		timerVolatilePufferfishCD:Start(7.6-delay, guid)--Large variation
 	elseif cid == 178139 then--Murkbrine Shellcrusher
-		timerShellcrackerCD:Start(10.5-delay, guid)--seems to be possible to massively delay
+		timerShellcrackerCD:Start(9.4-delay, guid)--seems to be possible to massively delay
 --		timerCryofMrrggllrrggCD:Start(14-delay, guid)--extremeley variable, likley health based
 	elseif cid == 178141 then--Murkbrine Scalebinder
 		timerInvigoratingFishStickCD:Start(6.2-delay, guid)--Large variation
 	elseif cid == 178165 then--Coastwalker Goliath
-		timerTidalStompCD:Start(11-delay, guid)--iffy, seems to be possible to massively delay
-		timerBoulderThrowCD:Start(9.3-delay, guid)--Seems possible to massive delay
+		timerTidalStompCD:Start(10.4-delay, guid)--Seems possible to massively delay
+		timerBoulderThrowCD:Start(9.3-delay, guid)--Seems possible to massively delay
 	elseif cid == 178171 then--Stormforged Guardian
 		timerCrackleCD:Start(3.5-delay, guid)
 		timerChargedPulseCD:Start(9.7-delay, guid)
 	elseif cid == 180015 then--Burly Deckhand
-		timerSuperSaisonCD:Start(9.6-delay, guid)
+		timerSuperSaisonCD:Start(8.2-delay, guid)
 	elseif cid == 179388 then--Hourglass Tidesage
-		timerTidalBurstCD:Start(8.5-delay, guid)
+		timerTidalBurstCD:Start(6-delay, guid)--6-8.5
 	elseif cid == 179386 then--Corsair Officer
 		timerSwordTossCD:Start(6.8-delay, guid)
 	elseif cid == 180429 then--AdornedStarseer
-		timerDriftingStarCD:Start(6.9-delay, guid)
-		timerWanderingPulsarCD:Start(11.9-delay, guid)
+		timerDriftingStarCD:Start(6.2-delay, guid)
+		timerWanderingPulsarCD:Start(11.3-delay, guid)
 	elseif cid == 177808 then--Armored Overseer <Cartel Zo>
 		timerBeamSplicerCD:Start(7-delay, guid)
-		timerProxyStrikeCD:Start(11-delay, guid)
+		timerProxyStrikeCD:Start(10.7-delay, guid)
 	elseif cid == 178392 then--Gatewarden Zo'mazz <Cartel Zo>
 		timerProxyStrikeCD:Start(6-delay, guid)
 		timerRadiantPulseCD:Start(12.1-delay, guid)
 	elseif cid == 179334 then--Portalmancer Zo'honn <Cartel Zo>
 --		timerRadiantPulseCD:Start(14.5-delay, guid)--Used instantly on engage
 		timerRiftBlastsCD:Start(7.2-delay, guid)
-		timerEmpGlyphofRestraintCD:Start(11-delay, guid)
+		timerEmpGlyphofRestraintCD:Start(10.7-delay, guid)
 	elseif cid == 177807 then--Customs Security
 		timerHardLightBatonCD:Start(2.3-delay, guid)
 		timerDisruptionGrenadeCD:Start(10.5-delay, guid)
