@@ -261,7 +261,7 @@ function mod:StartEngageTimers(guid, cid, delay)
 	elseif cid == 165529 then--Depraved Collector
 		timerSiphonLifeCD:Start(2.4-delay, guid)
 	elseif cid == 164557 then--Shard of Halkias
-		timerThrashCD:Start(6.8-delay, guid)
+		timerThrashCD:Start(6-delay, guid)
 		--No need to start Sin Quake here, it'll be started by Thrash
 	elseif cid == 167611 then--Stoneborn Eviscerator
 		timerHurlGlaiveCD:Start(4.4-delay, guid)
