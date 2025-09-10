@@ -9,12 +9,10 @@ mod:SetZone(2830)
 mod:RegisterZoneCombat(2830)
 
 mod:RegisterEvents(
-	"SPELL_CAST_START 1229474 426893 1221190 1226111 1235368 1222356 1229510 1222815 1221532 1226306 1222341 1223007 1237195 1237220 1215850",
+	"SPELL_CAST_START 1229474 426893 1226111 1235368 1222356 1229510 1222815 1221532 1226306 1222341 1223007 1237195 1237220 1215850",
 	"SPELL_CAST_SUCCESS 426893 1221190 1226111 1235368 1222356 1221679 1229510 1223000 1222341 1221483",
 	"SPELL_INTERRUPT",
-	"SPELL_AURA_APPLIED 1221133 1221483 1231608 1223000 1239229",
---	"SPELL_AURA_APPLIED_DOSE",
---	"SPELL_AURA_REMOVED",
+	"SPELL_AURA_APPLIED 1221133 1221483 1231608 1223000 1239229 1221190",
 	"UNIT_DIED"
 )
 
@@ -103,11 +101,6 @@ function mod:SPELL_CAST_START(args)
 		if self:AntiSpam(3, 4) then
 			specWarnGorgingSmash:Show()
 			specWarnGorgingSmash:Play("aesoon")
-		end
-	elseif spellId == 1221190 then
-		if self:AntiSpam(3, 6) then
-			specWarnGluttonousMiasma:Show()
-			specWarnGluttonousMiasma:Play("scatter")
 		end
 	elseif spellId == 1226111 then
 		self:ScheduleMethod(0.1, "BossTargetScanner", args.sourceGUID, "VolatileTarget", 0.1, 4)
@@ -233,6 +226,11 @@ function mod:SPELL_AURA_APPLIED(args)
 		specWarnEmbraceOfKaresh:Play("dispelnow")
 	elseif spellId == 1239229 and args:IsPlayer() then
 		warnKareshiSurge:Show()
+	elseif spellId == 1221190 and args:IsPlayer() then
+		if self:AntiSpam(3, 1) then
+			specWarnGluttonousMiasma:Show()
+			specWarnGluttonousMiasma:Play("scatter")
+		end
 	end
 end
 --mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED

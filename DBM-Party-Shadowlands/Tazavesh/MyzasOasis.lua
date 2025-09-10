@@ -156,7 +156,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 	if spellId == 181089 then
 		self:SetStage(2)
 		timerSecuritySlamCD:Start(6.4, args.sourceGUID)--Boss version 6.4-8.6
-		timerMenacingShoutCD:Start(12.5, args.sourceGUID)--Boss version
+		timerMenacingShoutCD:Start(12.1, args.sourceGUID)--Boss version
 		timerSupressionSparkCD:Start(19.8)
 		timerCrowdControlCD:Start(27.1)
 	elseif spellId == 1244630 then
