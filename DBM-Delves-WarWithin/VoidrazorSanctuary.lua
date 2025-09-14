@@ -2,6 +2,7 @@ local mod	= DBM:NewMod("z2951", "DBM-Delves-WarWithin")
 local L		= mod:GetLocalizedStrings()
 
 mod.statTypes = "normal,mythic"
+mod.soloChallenge = true
 
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(244752)--Non hard one placeholder on load. Real one set in OnCombatStart
