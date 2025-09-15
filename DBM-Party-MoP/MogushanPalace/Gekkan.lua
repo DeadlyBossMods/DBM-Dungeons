@@ -1,7 +1,9 @@
 local mod	= DBM:NewMod(690, "DBM-Party-MoP", 5, 321)
 local L		= mod:GetLocalizedStrings()
 
-mod.statTypes = "normal,heroic,challenge,timewalker"
+if DBM:IsRetail() then
+	mod.statTypes = "normal,heroic,challenge,timewalker"
+end
 
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(61243, 61337, 61338, 61339, 61340)--61243 (Gekkan), 61337 (Glintrok Ironhide), 61338 (Glintrok Skulker), 61339 (Glintrok Oracle), 61340 (Glintrok Hexxer)

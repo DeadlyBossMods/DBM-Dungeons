@@ -1,7 +1,9 @@
 local mod	= DBM:NewMod(666, "DBM-Party-MoP", 7, 246)
 local L		= mod:GetLocalizedStrings()
 
-mod.statTypes = "normal,heroic,challenge,timewalker"
+if DBM:IsRetail() then
+	mod.statTypes = "normal,heroic,challenge,timewalker"
+end
 
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(58722)--58722 is Body, 58791 is soul. Body is engaged first

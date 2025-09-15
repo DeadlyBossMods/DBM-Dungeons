@@ -1,4 +1,4 @@
-## Interface: 50500
+## Interface: 50500, 50501
 ## X-Min-Interface-Mists: 50500
 ## Category: DBM
 
@@ -18,7 +18,7 @@
 ## X-DBM-Mod: 1
 ## X-DBM-Mod-Type: PARTY
 ## X-DBM-Mod-Category: MOP
-## X-DBM-StatTypes: normal,heroic,challenge
+## X-DBM-StatTypes: normal,heroic,mythic,challenge
 ## X-DBM-Mod-SubCategoriesID: 960, 961, 959, 962, 994, 1011, 1007, 1001, 1004
 ## X-DBM-Mod-Name: Dungeons (MoP)
 ## X-DBM-Mod-Name-koKR: 던전 (판다)
