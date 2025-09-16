@@ -266,8 +266,7 @@ function mod:SPELL_CAST_START(args)
 		if self:AntiSpam(3, 5) then
 			warnProxyStrike:Show()
 		end
-		--Gatewarden timer not known so purposely set high to find it quickly from debug prints
-		local timer = args:GetSrcCreatureID() == 177808 and 30.4 or 50.4 --Armored Overseer <Cartel Zo>, Gatewarden Zo'mazz <Cartel Zo>
+		local timer = args:GetSrcCreatureID() == 177808 and 30.4 or 25.5 --Armored Overseer <Cartel Zo>, Gatewarden Zo'mazz <Cartel Zo>
 		timerProxyStrikeCD:Start(timer, args.sourceGUID)
 	elseif spellId == 356537 then
 		timerEmpGlyphofRestraintCD:Start(nil, args.sourceGUID)
@@ -574,7 +573,7 @@ function mod:StartEngageTimers(guid, cid, delay)
 		timerDriftingStarCD:Start(6.2-delay, guid)
 		timerWanderingPulsarCD:Start(11.3-delay, guid)
 	elseif cid == 177808 then--Armored Overseer <Cartel Zo>
-		timerBeamSplicerCD:Start(7-delay, guid)
+		timerBeamSplicerCD:Start(6.5-delay, guid)
 		timerProxyStrikeCD:Start(10.7-delay, guid)
 	elseif cid == 178392 then--Gatewarden Zo'mazz <Cartel Zo>
 		timerProxyStrikeCD:Start(6-delay, guid)
@@ -591,11 +590,11 @@ function mod:StartEngageTimers(guid, cid, delay)
 --	elseif cid == 177817 then--Support Officer
 --		timerHardLightBarrierCD:Start(11-delay, guid)--Used Instantly on engage
 	elseif cid == 179893 then--Cartel Skulker
-		timerQuickbladeCD:Start(6-delay, guid)
+		timerQuickbladeCD:Start(5-delay, guid)
 	elseif cid == 180335 then--Cartel Smuggler
 		timerHyperlightBombCD:Start(4-delay, guid)
 	elseif cid == 180336 then--Cartel Wiseguy
-		timerLightshardRetreatCD:Start(16.2-delay, guid)
+		timerLightshardRetreatCD:Start(10.4-delay, guid)
 --	elseif cid == 180348 then--Cartel Muscle
 --		timerChronolightEnhancerCD:Start(12.2-delay, guid)--Most people skip this mobs so logs don't really exist
 --		timerHyperlightBackhandCD:Start(16.2-delay, guid)
