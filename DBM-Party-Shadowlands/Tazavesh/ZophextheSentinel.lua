@@ -42,7 +42,7 @@ local specWarnGTFO					= mod:NewSpecialWarningGTFO(348366, nil, nil, nil, 1, 8)
 
 local timerInterrogationCD			= mod:NewCDTimer(40.1, 348350, nil, nil, nil, 3)
 local timerArmedSecurityCD			= mod:NewVarTimer("v34.4-53", 346204, nil, nil, nil, 6)
-local timerImpoundContrabandCD		= mod:NewVarTimer("26.7-35.8", 345770, nil, nil, nil, 3)--Can't be cast if containment is still active
+local timerImpoundContrabandCD		= mod:NewVarTimer("v26.7-35.8", 345770, nil, nil, nil, 3)--Can't be cast if containment is still active
 local timerChargedSlashCD			= mod:NewVarTimer("v17-24.4", 1236348, nil, nil, nil, 3)
 --local timerStichNeedleCD			= mod:NewAITimer(15.8, 320200, nil, nil, nil, 5, nil, DBM_COMMON_L.HEALER_ICON)--Basically spammed
 
