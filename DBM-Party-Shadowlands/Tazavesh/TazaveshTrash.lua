@@ -58,6 +58,7 @@ local specWarnBeamSplicer					= mod:NewSpecialWarningDodge(356001, nil, nil, nil
 local specWarnFrenziedChargeAvoid			= mod:NewSpecialWarningDodge(357512, nil, nil, nil, 2, 2)
 local specWarnShockMines					= mod:NewSpecialWarningDodge(355473, nil, nil, nil, 2, 2)--(S3 Valid)
 local specWarnWildThrash					= mod:NewSpecialWarningDodge(357508, nil, nil, nil, 2, 2)--(S3 Valid)
+local specWarnLavaBreath					= mod:NewSpecialWarningDodge(356404, nil, nil, nil, 2, 15)--(S3 Valid)
 local specWarnEnergizedSlam					= mod:NewSpecialWarningMoveAway(1240821, nil, nil, nil, 2, 2)--(S3 Valid)
 local specWarnChronolightEnhancer			= mod:NewSpecialWarningRun(357229, false, nil, nil, 4, 2)--(S3 Valid)
 local specWarnChargedPulse					= mod:NewSpecialWarningRun(355584, nil, nil, nil, 4, 2)--(S3 Valid)
@@ -81,7 +82,6 @@ local specWarnCryofMrrggllrrgg				= mod:NewSpecialWarningInterrupt(355057, "HasI
 local specWarnWaterbolt						= mod:NewSpecialWarningInterrupt(355225, false, nil, nil, 1, 2)--(S3 Valid)
 local specWarnUnstableRift					= mod:NewSpecialWarningInterrupt(357260, "HasInterrupt", nil, nil, 1, 2)
 local specWarnAncientDread					= mod:NewSpecialWarningInterrupt(356407, "HasInterrupt", nil, nil, 1, 2)
-local specWarnLavaBreath					= mod:NewSpecialWarningInterrupt(356404, "HasInterrupt", nil, nil, 1, 2)
 local specWarnBrackishBolt					= mod:NewSpecialWarningInterrupt(356843, "HasInterrupt", nil, nil, 1, 2)--(S3 Valid)
 local specWarnEmpGlyphofRestraint			= mod:NewSpecialWarningInterrupt(356537, "HasInterrupt", nil, nil, 1, 2)--(S3 Valid)
 local specWarnGlyphofRestraint				= mod:NewSpecialWarningDispel(355915, "RemoveMagic", nil, nil, 1, 2)--(S3 Valid)
@@ -128,8 +128,17 @@ local timerShockMinesCD						= mod:NewCDNPTimer(25.4, 355473, nil, nil, nil, 3)
 local timerLethalForceCD					= mod:NewCDNPTimer(13.2, 355479, nil, nil, nil, 3)
 local timerFrenziedChargeCD					= mod:NewCDNPTimer(14.0, 357512, nil, nil, nil, 3)--17 - 3
 local timerWildThrashCD						= mod:NewCDNPTimer(26.7, 357508, nil, nil, nil, 3)
+local timerLavaBreathCD						= mod:NewCDNPTimer(19.4, 356404, nil, nil, nil, 3)
+local timerAncientDreadCD					= mod:NewCDNPTimer(29.1, 356407, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc
+
+local function checkEnergySlam(self)
+	if DBM:UnitDebuff("player", 1240820) then
+		specWarnEnergizedSlam:Show()
+		specWarnEnergizedSlam:Play("runout")
+	end
+end
 
 function mod:FrenziedChargeTarget(targetname, uId)
 	if not targetname then return end
@@ -193,12 +202,18 @@ function mod:SPELL_CAST_START(args)
 	elseif spellId == 357260 and self:CheckInterruptFilter(args.sourceGUID, false, true) then
 		specWarnUnstableRift:Show(args.sourceName)
 		specWarnUnstableRift:Play("kickcast")
-	elseif spellId == 356407 and self:CheckInterruptFilter(args.sourceGUID, false, true) then
-		specWarnAncientDread:Show(args.sourceName)
-		specWarnAncientDread:Play("kickcast")
-	elseif spellId == 356404 and self:CheckInterruptFilter(args.sourceGUID, false, true) then
-		specWarnLavaBreath:Show(args.sourceName)
-		specWarnLavaBreath:Play("kickcast")
+	elseif spellId == 356407 then
+		timerAncientDreadCD:Start(nil, args.sourceGUID)
+		if self:CheckInterruptFilter(args.sourceGUID, false, true) then
+			specWarnAncientDread:Show(args.sourceName)
+			specWarnAncientDread:Play("kickcast")
+		end
+	elseif spellId == 356404 then
+		timerLavaBreathCD:Start(nil, args.sourceGUID)
+		if self:AntiSpam(3, 2) then
+			specWarnLavaBreath:Show()
+			specWarnLavaBreath:Play("frontal")
+		end
 	elseif spellId == 356843 and self:CheckInterruptFilter(args.sourceGUID, false, true) then
 		specWarnBrackishBolt:Show(args.sourceName)
 		specWarnBrackishBolt:Play("kickcast")
@@ -251,8 +266,7 @@ function mod:SPELL_CAST_START(args)
 		if self:AntiSpam(3, 5) then
 			warnProxyStrike:Show()
 		end
-		--Gatewarden timer not known so purposely set high to find it quickly from debug prints
-		local timer = args:GetSrcCreatureID() == 177808 and 30.4 or 50.4 --Armored Overseer <Cartel Zo>, Gatewarden Zo'mazz <Cartel Zo>
+		local timer = args:GetSrcCreatureID() == 177808 and 30.4 or 25.5 --Armored Overseer <Cartel Zo>, Gatewarden Zo'mazz <Cartel Zo>
 		timerProxyStrikeCD:Start(timer, args.sourceGUID)
 	elseif spellId == 356537 then
 		timerEmpGlyphofRestraintCD:Start(nil, args.sourceGUID)
@@ -275,10 +289,13 @@ function mod:SPELL_CAST_START(args)
 		end
 	elseif spellId == 1240821 then
 		timerEnergizedSlamCD:Start(nil, args.sourceGUID)
-		if self:AntiSpam(3, 2) then
-			specWarnEnergizedSlam:Show()
-			specWarnEnergizedSlam:Play("scatter")
-		end
+		--Energy slam has hidden aura/debuff for victims we have to check manually for
+		self:Unschedule(checkEnergySlam)
+		self:Schedule(0.5, checkEnergySlam, self)
+		--if self:AntiSpam(3, 2) then
+		--	specWarnEnergizedSlam:Show()
+		--	specWarnEnergizedSlam:Play("scatter")
+		--end
 	elseif spellId == 1240912 then
 		timerPierceCD:Start(nil, args.sourceGUID)
 		if self:AntiSpam(3, 5) then
@@ -525,6 +542,9 @@ function mod:UNIT_DIED(args)
 	elseif cid == 180495 then--Enraged Direhorn
 		timerFrenziedChargeCD:Stop(args.destGUID)
 		timerWildThrashCD:Stop(args.destGUID)
+	elseif cid == 180091 then--Ancient Core Hound
+		timerLavaBreathCD:Stop(args.destGUID)
+		timerAncientDreadCD:Stop(args.destGUID)
 	end
 end
 
@@ -553,7 +573,7 @@ function mod:StartEngageTimers(guid, cid, delay)
 		timerDriftingStarCD:Start(6.2-delay, guid)
 		timerWanderingPulsarCD:Start(11.3-delay, guid)
 	elseif cid == 177808 then--Armored Overseer <Cartel Zo>
-		timerBeamSplicerCD:Start(7-delay, guid)
+		timerBeamSplicerCD:Start(6.5-delay, guid)
 		timerProxyStrikeCD:Start(10.7-delay, guid)
 	elseif cid == 178392 then--Gatewarden Zo'mazz <Cartel Zo>
 		timerProxyStrikeCD:Start(6-delay, guid)
@@ -570,11 +590,11 @@ function mod:StartEngageTimers(guid, cid, delay)
 --	elseif cid == 177817 then--Support Officer
 --		timerHardLightBarrierCD:Start(11-delay, guid)--Used Instantly on engage
 	elseif cid == 179893 then--Cartel Skulker
-		timerQuickbladeCD:Start(6-delay, guid)
+		timerQuickbladeCD:Start(5-delay, guid)
 	elseif cid == 180335 then--Cartel Smuggler
 		timerHyperlightBombCD:Start(4-delay, guid)
 	elseif cid == 180336 then--Cartel Wiseguy
-		timerLightshardRetreatCD:Start(16.2-delay, guid)
+		timerLightshardRetreatCD:Start(10.4-delay, guid)
 --	elseif cid == 180348 then--Cartel Muscle
 --		timerChronolightEnhancerCD:Start(12.2-delay, guid)--Most people skip this mobs so logs don't really exist
 --		timerHyperlightBackhandCD:Start(16.2-delay, guid)
@@ -598,6 +618,9 @@ function mod:StartEngageTimers(guid, cid, delay)
 	elseif cid == 180495 then--Enraged Direhorn
 		timerFrenziedChargeCD:Start(6.5-delay, guid)
 		timerWildThrashCD:Start(12.3-delay, guid)
+	elseif cid == 180091 then--Ancient Core Hound
+		timerLavaBreathCD:Start(8.5-delay, guid)
+		timerAncientDreadCD:Start(13.4-delay, guid)
 	end
 end
 

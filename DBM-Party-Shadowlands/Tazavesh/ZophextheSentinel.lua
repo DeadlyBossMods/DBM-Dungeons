@@ -4,14 +4,14 @@ local L		= mod:GetLocalizedStrings()
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(175616)
 mod:SetEncounterID(2425)
-mod:SetHotfixNoticeRev(20220405000000)
+mod:SetHotfixNoticeRev(20250916000000)
 mod:SetZone(2441)
 
 mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
-	"SPELL_CAST_START 346204",
---	"SPELL_CAST_SUCCESS 346006",
+	"SPELL_CAST_START 346204 1236348 348350",
+	"SPELL_CAST_SUCCESS 346006",
 	"SPELL_AURA_APPLIED 347949 348128 345770 345990",
 	"SPELL_AURA_REMOVED 345770 345990",
 	"SPELL_PERIODIC_DAMAGE 348366",
@@ -21,7 +21,7 @@ mod:RegisterEventsInCombat(
 --Improve/add timers for armed/disarmed phases because it'll probably alternate a buffactive timer instead of CD
 --TODO, what do with https://ptr.wowhead.com/spell=347964/rotary-body-armor ?
 --[[
-(ability.id = 348350 or ability.id = 346204) and type = "begincast"
+(ability.id = 348350 or ability.id = 346204 or ability.id = 1236348) and type = "begincast"
  or ability.id = 346006 and type = "cast"
  or ability.id = 345990 and (type = "applydebuff" or type = "removedebuff")
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
@@ -32,41 +32,47 @@ local warnContainmentCell			= mod:NewTargetNoFilterAnnounce(345990)--When cell f
 local warnInpoundContraband			= mod:NewTargetNoFilterAnnounce(345770, 2)--Not filtered, because if it's on a tank or healer its kinda important
 local warnInpoundContrabandEnded	= mod:NewEndAnnounce(345770, 1)
 
-local specWarnInterrogation			= mod:NewSpecialWarningRun(347949, nil, nil, nil, 4, 2)
-local yellInterrogation				= mod:NewYell(347949)
-local specWarnInterrogationOther	= mod:NewSpecialWarningSwitchCustom(347949, "Dps", nil, nil, 1, 2)
+local specWarnInterrogation			= mod:NewSpecialWarningRun(348350, nil, nil, nil, 4, 2)
+local yellInterrogation				= mod:NewYell(348350)
+local specWarnInterrogationOther	= mod:NewSpecialWarningSwitchCustom(348350, "Dps", nil, nil, 1, 2)
 local specWarnContainmentCell		= mod:NewSpecialWarningYou(345990, false, nil, nil, 1, 2)--Optional, but probably don't need, you already know it's you from targetting debuff
 local specWarnInpoundContraband		= mod:NewSpecialWarningYou(345770, nil, nil, nil, 1, 2)
+local specWarnChargedSlash			= mod:NewSpecialWarningDodge(1236348, nil, nil, nil, 2, 15)
 local specWarnGTFO					= mod:NewSpecialWarningGTFO(348366, nil, nil, nil, 1, 8)
 
---Timers have spell queuing and ordering issues. min times lazily used because it's a 5 man and not worth effort to detect/auto update when spell queuing occurs
-local timerInterrogationCD			= mod:NewCDTimer(30.8, 347949, nil, nil, nil, 3)--30.8-32
-local timerArmedSecurityCD			= mod:NewCDTimer(34.4, 346204, nil, nil, nil, 6)--Only initial, More work is needed to correct timer aroound containment pausing the ability
-local timerImpoundContrabandCD		= mod:NewCDTimer(26.7, 345770, nil, nil, nil, 3)--Can't be cast if containment is still active
+local timerInterrogationCD			= mod:NewCDTimer(40.1, 348350, nil, nil, nil, 3)
+local timerArmedSecurityCD			= mod:NewVarTimer("v34.4-53", 346204, nil, nil, nil, 6)
+local timerImpoundContrabandCD		= mod:NewVarTimer("v26.7-35.8", 345770, nil, nil, nil, 3)--Can't be cast if containment is still active
+local timerChargedSlashCD			= mod:NewVarTimer("v17-24.4", 1236348, nil, nil, nil, 3)
 --local timerStichNeedleCD			= mod:NewAITimer(15.8, 320200, nil, nil, nil, 5, nil, DBM_COMMON_L.HEALER_ICON)--Basically spammed
 
 function mod:OnCombatStart(delay)
 	timerArmedSecurityCD:Start(7.2-delay)
+	timerChargedSlashCD:Start(12.1-delay)
 	timerImpoundContrabandCD:Start(18.1-delay)
-	timerInterrogationCD:Start(31.6-delay)
+	timerInterrogationCD:Start(39.8-delay)
 end
 
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
 	if spellId == 346204 then
 		warnArmedSecurity:Show()
---		timerArmedSecurityCD:Start()
+		timerArmedSecurityCD:Start()
+	elseif spellId == 1236348 then
+		specWarnChargedSlash:Show()
+		specWarnChargedSlash:Play("frontal")
+		timerChargedSlashCD:Start()
+	elseif spellId == 348350 then
+		timerInterrogationCD:Start()
 	end
 end
 
---[[
 function mod:SPELL_CAST_SUCCESS(args)
 	local spellId = args.spellId
 	if spellId == 346006 then
---		timerImpoundContrabandCD:Start()--Not reliable beyond first cast
+		timerImpoundContrabandCD:Start()
 	end
 end
---]]
 
 function mod:SPELL_AURA_APPLIED(args)
 	local spellId = args.spellId
@@ -88,6 +94,11 @@ function mod:SPELL_AURA_APPLIED(args)
 			specWarnInpoundContraband:Play("targetyou")
 		end
 	elseif spellId == 345990 then
+		timerInterrogationCD:Stop()
+		timerImpoundContrabandCD:Stop()
+		timerArmedSecurityCD:Stop()
+		timerChargedSlashCD:Stop()
+		--Timers resume on removal
 		if args:IsPlayer() then
 			specWarnContainmentCell:Show()
 			specWarnContainmentCell:Play("targetyou")
@@ -104,7 +115,10 @@ function mod:SPELL_AURA_REMOVED(args)
 			warnInpoundContrabandEnded:Show()
 		end
 	elseif spellId == 345990 then--Containment Cell
-		timerInterrogationCD:Start()
+		timerArmedSecurityCD:Start(7)
+		timerChargedSlashCD:Start(12.7)
+		timerImpoundContrabandCD:Start(21)
+		timerInterrogationCD:Start(32.5)
 	end
 end
 
