@@ -45,7 +45,7 @@
 ## X-DBM-Mod-Name-ptBR: Eventos Mundiais
 ## X-DBM-Mod-Name-frFR: Évènements Mondiaux
 ## X-DBM-Mod-Name-itIT: Eventi Mondiali
-## X-DBM-Mod-MapID: 230,189,33,547,530
+## X-DBM-Mod-MapID: 230,189,33,547,530,974
 ## X-DBM-Mod-Sort: 1054
 ## X-DBM-Mod-LoadCID: 20130,18166
 ## X-DBM-Mod-MinCoreRevision: 12473
