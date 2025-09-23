@@ -584,7 +584,7 @@ function mod:StartEngageTimers(guid, cid, delay)
 		timerEmpGlyphofRestraintCD:Start(10.7-delay, guid)
 	elseif cid == 177807 then--Customs Security
 		timerHardLightBatonCD:Start(2.3-delay, guid)
-		timerDisruptionGrenadeCD:Start(10.5-delay, guid)
+		timerDisruptionGrenadeCD:Start(6.2-delay, guid)
 	elseif cid == 177816 then--Interrogation Specialist
 		timerGlyphofRestraintCD:Start(7-delay, guid)
 --	elseif cid == 177817 then--Support Officer
