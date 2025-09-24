@@ -9,7 +9,7 @@ mod:SetZone(2815)
 mod:RegisterCombat("scenario", 2815)
 
 mod:RegisterEventsInCombat(
-	"SPELL_CAST_START 1213776 1213700 1213785 1214135 1214504 1213425 1213426",
+	"SPELL_CAST_START 1213776 1213700 1213785 1214135 1214504 1213425 1213426 1245765 1245667",
 --	"SPELL_CAST_SUCCESS",
 	"SPELL_AURA_APPLIED 1213838",
 --	"SPELL_AURA_REMOVED",
@@ -21,14 +21,17 @@ mod:RegisterEventsInCombat(
 
 --TODO, possibly improve variance with more data
 --TODO, get more timer data for tentacle slam recast
+--https://www.wowhead.com/spell=1245784/crumbling-slam is also used by Beste but seems inconsiquential
 local warnTearItDown							= mod:NewCastAnnounce(1213785, 2)
 local warnGoblinIngenuity						= mod:NewCastAnnounce(1214504, 2)
+local warnRegurgitateKobold						= mod:NewCastAnnounce(1245667, 2)
 local warnUnansweredCall						= mod:NewTargetNoFilterAnnounce(1213700, 2)
 
 local specWarnHopelessCurse						= mod:NewSpecialWarningInterrupt(1213776, nil, nil, nil, 1, 2)
 local specWarnUnansweredCall					= mod:NewSpecialWarningRun(1213700, nil, nil, nil, 4, 2)
 local specWarnMakeItRain						= mod:NewSpecialWarningDodge(1214135, nil, nil, nil, 2, 2)
 local specWarnTentacleSlam						= mod:NewSpecialWarningDodge(1213426, nil, nil, nil, 2, 2)
+local specWarnFearsomRoar						= mod:NewSpecialWarningDodge(1245765, nil, nil, nil, 2, 15)
 local specWarnTerrifyingRoar					= mod:NewSpecialWarningInterrupt(1213425, "HasInterrupt", nil, nil, 1, 2)
 
 local timerTearItDownCD							= mod:NewVarTimer("v13.3-26.7", 1213785, nil, nil, nil, 2)
@@ -38,6 +41,8 @@ local timerMakeItRainCD							= mod:NewVarTimer("v13.4-17", 1214135, nil, nil, n
 local timerGoblinIngenuityCD					= mod:NewVarTimer("v16.6-19.4", 1214504, nil, nil, nil, 2)
 local timerTentacleSlamCD						= mod:NewCDTimer(13.4, 1213426, nil, nil, nil, 3)--Unknown recast
 local timerTerrifyingRoarCD						= mod:NewCDTimer(33.7, 1213425, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--33.7--34.1
+local timerFearsomRoarCD						= mod:NewCDTimer(19.3, 1245765, nil, nil, nil, 3)
+local timerRegurgitateKoboldCD					= mod:NewVarTimer("v17-19.3", 1245667, nil, nil, nil, 1)
 
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc, 7 off interrupt
 
@@ -72,6 +77,15 @@ function mod:SPELL_CAST_START(args)
 		--pull:15.8
 		specWarnTentacleSlam:Show()
 		specWarnTentacleSlam:Play("watchstep")
+	elseif args.spellId == 1245765 then
+		--pull:16.1, 19.3, 19.4",
+		specWarnFearsomRoar:Show()
+		specWarnFearsomRoar:Play("frontal")
+		timerFearsomRoarCD:Start()
+	elseif args.spellId == 1245667 then
+		--pull:3.9, 17.0, 19.3"
+		warnRegurgitateKobold:Show()
+		timerRegurgitateKoboldCD:Start()
 	end
 end
 
@@ -144,6 +158,9 @@ function mod:ENCOUNTER_START(eID)
 		self:RegisterShortTermEvents(
 			"UNIT_DIED"
 		)
+	elseif eID == 3210 then--Beste Glatisant
+		timerRegurgitateKoboldCD:Start(3.9)
+		timerFearsomRoarCD:Start(16.1)
 	end
 end
 
@@ -171,6 +188,14 @@ function mod:ENCOUNTER_END(eID, _, _, _, success)
 			DBM:EndCombat(self)
 		else
 			--Stop Timers manually
+		end
+	elseif eID == 3210 then--Beste Glatisant
+		if success == 1 then
+			DBM:EndCombat(self)
+		else
+			--Stop Timers manually
+			timerFearsomRoarCD:Stop()
+			timerRegurgitateKoboldCD:Stop()
 		end
 	end
 end
