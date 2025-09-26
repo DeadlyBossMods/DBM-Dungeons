@@ -47,7 +47,6 @@ local timerAnchorShotCD				= mod:NewCDTimer(20, 352345, nil, nil, nil, 3)
 --11.2
 local warnTimeBomb 						= mod:NewTargetNoFilterAnnounce(1240097, 2, nil, "-RemoveMagic")
 local specWarnTimeBombDispel			= mod:NewSpecialWarningDispel(1240097, "RemoveMagic", nil, nil, 1, 2)
-local yellTimeBomb						= mod:NewShortYell(1240097, nil, nil, nil, "YELL")
 
 mod.vb.breathCount = 0
 mod.vb.anchorCount = 0
@@ -115,9 +114,6 @@ function mod:SPELL_AURA_APPLIED(args)
 		warnTimeBomb:CombinedShow(0.5, args.destName)
 		specWarnTimeBombDispel:CombinedShow(0.5, args.destName)
 		specWarnTimeBombDispel:ScheduleVoice(0.5, "helpdispel")
-		if args:IsPlayer() then
-			yellTimeBomb:Yell()
-		end
 	end
 end
 
