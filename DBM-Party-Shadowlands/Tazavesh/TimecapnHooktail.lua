@@ -12,7 +12,7 @@ mod:RegisterCombat("combat")
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 350517 347151",
 	"SPELL_CAST_SUCCESS 352345",
-	"SPELL_AURA_APPLIED 354334 350134",
+	"SPELL_AURA_APPLIED 354334 350134 1240097",
 	"SPELL_PERIODIC_DAMAGE 358947",
 	"SPELL_PERIODIC_MISSED 358947"
 )
@@ -44,6 +44,10 @@ local timerInfiniteBreathCD			= mod:NewCDTimer(15, 347149, nil, "Tank", nil, 5, 
 local warnAnchorShot				= mod:NewTargetNoFilterAnnounce(352345, 3)
 
 local timerAnchorShotCD				= mod:NewCDTimer(20, 352345, nil, nil, nil, 3)
+--11.2
+local warnTimeBomb 						= mod:NewTargetNoFilterAnnounce(1240097, 2, nil, "-RemoveMagic")
+local specWarnTimeBombDispel			= mod:NewSpecialWarningDispel(1240097, "RemoveMagic", nil, nil, 1, 2)
+local yellTimeBomb						= mod:NewShortYell(1240097, nil, nil, nil, "YELL")
 
 mod.vb.breathCount = 0
 mod.vb.anchorCount = 0
@@ -107,6 +111,13 @@ function mod:SPELL_AURA_APPLIED(args)
 		specWarnInfiniteBreath:Show(self.vb.breathCount)
 		specWarnInfiniteBreath:Play("breathsoon")
 		timerInfiniteBreathCD:Start()
+	elseif spellId == 1240097 then
+		warnTimeBomb:CombinedShow(0.5, args.destName)
+		specWarnTimeBombDispel:CombinedShow(0.5, args.destName)
+		specWarnTimeBombDispel:ScheduleVoice(0.5, "helpdispel")
+		if args:IsPlayer() then
+			yellTimeBomb:Yell()
+		end
 	end
 end
 
