@@ -42,6 +42,8 @@ local warnForceMultiplier					= mod:NewCastAnnounce(1244443, 4, nil, nil, nil, n
 local warnQuickblade						= mod:NewSpellAnnounce(355830, 3)--(S3 Valid)
 local warnQuellingStrike					= mod:NewSpellAnnounce(355637, 3)--(S3 Valid)
 local warnSwordToss							= mod:NewSpellAnnounce(368661, 3)--(S3 Valid)
+local warnUnstableRift						= mod:NewCastAnnounce(357260, 2)
+local warnCryofMrrggllrrgg					= mod:NewCastAnnounce(355057, 2)
 
 local specWarnGTFO							= mod:NewSpecialWarningGTFO(355581, nil, nil, nil, 1, 8)
 local specWarnTidalStomp					= mod:NewSpecialWarningSpell(355429, nil, nil, nil, 2, 2)
@@ -192,6 +194,7 @@ function mod:SPELL_CAST_START(args)
 		specWarnJunkMail:Show(args.sourceName)
 		specWarnJunkMail:Play("kickcast")
 	elseif spellId == 355057 then
+		warnCryofMrrggllrrgg:Show()
 		if self:CheckInterruptFilter(args.sourceGUID, false, true) then
 			specWarnCryofMrrggllrrgg:Show(args.sourceName)
 			specWarnCryofMrrggllrrgg:Play("kickcast")
@@ -199,9 +202,12 @@ function mod:SPELL_CAST_START(args)
 	elseif spellId == 355225 and self:CheckInterruptFilter(args.sourceGUID, false, true) then
 		specWarnWaterbolt:Show(args.sourceName)
 		specWarnWaterbolt:Play("kickcast")
-	elseif spellId == 357260 and self:CheckInterruptFilter(args.sourceGUID, false, true) then
-		specWarnUnstableRift:Show(args.sourceName)
-		specWarnUnstableRift:Play("kickcast")
+	elseif spellId == 357260 then
+		warnUnstableRift:Show()
+		if self:CheckInterruptFilter(args.sourceGUID, false, true) then
+			specWarnUnstableRift:Show(args.sourceName)
+			specWarnUnstableRift:Play("kickcast")
+		end
 	elseif spellId == 356407 then
 		timerAncientDreadCD:Start(nil, args.sourceGUID)
 		if self:CheckInterruptFilter(args.sourceGUID, false, true) then
