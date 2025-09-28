@@ -318,6 +318,10 @@ L = DBM:GetModLocalization("WarchiefRendBlackhand")
 L:SetGeneralLocalization{
 	name 		= "Chef de guerre Rend Main-noire"
 }
+L:SetMiscLocalization{
+	Pull1 = "Excellent... Il semble que ces pitoyables insectes soient arrivés en temps et en heure pour nourrir ma légion. Bienvenue, mortels !", -- Yell when you jump into the arena
+	Pull2 = "CELA NE PEUT ÊTRE ! Rend, occupez-vous de ces insectes !", -- Yell when you defeat the last wave
+}
 -----------------------------
 --  The Beast  --
 -----------------------------
