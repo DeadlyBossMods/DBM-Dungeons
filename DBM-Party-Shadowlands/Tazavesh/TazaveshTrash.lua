@@ -569,8 +569,8 @@ function mod:StartEngageTimers(guid, cid, delay)
 		timerTidalStompCD:Start(10.4-delay, guid)--Seems possible to massively delay
 		timerBoulderThrowCD:Start(9.3-delay, guid)--Seems possible to massively delay
 	elseif cid == 178171 then--Stormforged Guardian
-		timerCrackleCD:Start(3.5-delay, guid)
-		timerChargedPulseCD:Start(9.7-delay, guid)
+		timerCrackleCD:Start(2-delay, guid)
+		timerChargedPulseCD:Start(7.9-delay, guid)
 	elseif cid == 180015 then--Burly Deckhand
 		timerSuperSaisonCD:Start(8.2-delay, guid)
 	elseif cid == 179388 then--Hourglass Tidesage

@@ -167,7 +167,7 @@ function mod:SPELL_AURA_REMOVED(args)
 		timerShearingSwingsCD:Start(15.6, self.vb.swingsCount+1)--Might be 17.7 now
 		timerPurgedbyFireCD:Start(18.3, self.vb.purgedCount+1)
 		timerTitanicCrashCD:Start(22.9, self.vb.titanicCrashCount+1)
-		timerVaultPurifierCD:Start(21.3, self.vb.vaultPurifierCount+1)
+		timerVaultPurifierCD:Start(21, self.vb.vaultPurifierCount+1)
 		timerSanitizingCycleCD:Start(68.1, self.vb.cycleCount+1)--Needs reconfirmation
 	end
 end
