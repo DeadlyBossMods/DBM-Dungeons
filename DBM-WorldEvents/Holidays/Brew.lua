@@ -13,7 +13,7 @@ mod:RegisterEvents(
 	"ZONE_CHANGED_NEW_AREA"
 )
 
-mod:AddBoolOption("NormalizeVolume", true, "misc")
+mod:AddBoolOption("NormalizeVolume", false, "misc")
 
 local setActive = false
 local function CheckEventActive()
@@ -33,11 +33,11 @@ CheckEventActive()
 
 --Volume normalizing or disabling for blizzard stupidly putting the area's music on DIALOG audio channel, making it blaringly loud
 local function setDialog(self, set)
-	if not self.Options.NormalizeVolume then return end
+	if not self.Options.NormalizeVolume or not self.Options.Enabled then return end
 	if set then
 		local musicEnabled = GetCVarBool("Sound_EnableMusic") or true
 		local musicVolume = tonumber(GetCVar("Sound_MusicVolume"))
-		self.Options.SoundOption = tonumber(GetCVar("Sound_DialogVolume")) or 1
+		DBM.Options.RestoreBrewSoundVolume = tonumber(GetCVar("Sound_DialogVolume")) or 1
 		if musicEnabled and musicVolume then--Normalize volume to music volume level
 			DBM:Debug("Setting normalized volume to music volume of: "..musicVolume)
 			SetCVar("Sound_DialogVolume", musicVolume)
@@ -46,10 +46,10 @@ local function setDialog(self, set)
 			SetCVar("Sound_DialogVolume", 0)
 		end
 	else
-		if self.Options.SoundOption then
-			DBM:Debug("Restoring Dialog volume to saved value of: "..self.Options.SoundOption)
-			SetCVar("Sound_DialogVolume", self.Options.SoundOption)
-			self.Options.SoundOption = nil
+		if DBM.Options.RestoreBrewSoundVolume then
+			DBM:Debug("Restoring Dialog volume to saved value of: "..DBM.Options.RestoreBrewSoundVolume)
+			SetCVar("Sound_DialogVolume", DBM.Options.RestoreBrewSoundVolume)
+			DBM.Options.RestoreBrewSoundVolume = nil
 		end
 	end
 end
@@ -64,7 +64,7 @@ function mod:ZONE_CHANGED_NEW_AREA()
 		end
 	else
 		--Even if event isn't active. If a sound option was stored, restore it
-		if self.Options.SoundOption then
+		if DBM.Options.RestoreBrewSoundVolume then
 			setDialog(self)
 		end
 	end
