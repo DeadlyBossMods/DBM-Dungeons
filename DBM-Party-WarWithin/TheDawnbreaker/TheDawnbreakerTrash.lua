@@ -12,7 +12,7 @@ mod:RegisterEvents(
 	"SPELL_CAST_START 451102 450854 451117 451097 431364 431494 432565 432520 431333 451091 451098 431349 446615 450756 431304",--431637
 	"SPELL_CAST_SUCCESS 451112 450756 451102 431349 451119 450854 451117 451097 431364 431494 432565 432520 431309 432448 451107",--431637
 	"SPELL_INTERRUPT",
-	"SPELL_AURA_APPLIED 451097 432520 451112 431309 432448 451107",
+	"SPELL_AURA_APPLIED 451097 451112 431309 432448 451107",
 --	"SPELL_AURA_APPLIED_DOSE",
 	"SPELL_AURA_REMOVED 432448 451107",
 	"UNIT_DIED"
@@ -57,7 +57,6 @@ local specWarnTormentingRay					= mod:NewSpecialWarningInterrupt(431364, "HasInt
 local specWarnTormentingBeam				= mod:NewSpecialWarningInterrupt(431333, "HasInterrupt", nil, nil, 1, 2)--High prio
 local specWarnAbyssalHowl					= mod:NewSpecialWarningInterrupt(450756, "HasInterrupt", nil, nil, 1, 2)--High prio
 local specWarnSilkenShellDispel				= mod:NewSpecialWarningDispel(451097, "MagicDispeller", nil, nil, 1, 2)
-local specWarnUmbrelBarrierDispel			= mod:NewSpecialWarningDispel(432520, "MagicDispeller", nil, nil, 1, 2)
 local specWarnTacticiansRageDispel			= mod:NewSpecialWarningDispel(451112, "RemoveEnrage", nil, nil, 1, 2)
 
 local timerDarkFloesCD						= mod:NewCDNPTimer(20.8, 431304, nil, nil, nil, 1)
@@ -236,9 +235,6 @@ function mod:SPELL_AURA_APPLIED(args)
 	if spellId == 451097 and self:AntiSpam(4, 3) then
 		specWarnSilkenShellDispel:Show(args.destName)
 		specWarnSilkenShellDispel:Play("helpdispel")
-	elseif spellId == 432520 and self:AntiSpam(4, 3) then
-		specWarnUmbrelBarrierDispel:Show(args.destName)
-		specWarnUmbrelBarrierDispel:Play("helpdispel")
 	elseif spellId == 451112 and self:AntiSpam(4, 3) then
 		specWarnTacticiansRageDispel:Show(args.destName)
 		specWarnTacticiansRageDispel:Play("enrage")
