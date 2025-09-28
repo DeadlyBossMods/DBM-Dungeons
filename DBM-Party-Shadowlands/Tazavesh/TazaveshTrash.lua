@@ -133,7 +133,7 @@ local timerWildThrashCD						= mod:NewCDNPTimer(26.7, 357508, nil, nil, nil, 3)
 local timerLavaBreathCD						= mod:NewCDNPTimer(19.4, 356404, nil, nil, nil, 3)
 local timerAncientDreadCD					= mod:NewCDNPTimer(29.1, 356407, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 
---Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc
+--Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc, 7 off interrupt
 
 local function checkEnergySlam(self)
 	if DBM:UnitDebuff("player", 1240820) then
@@ -194,19 +194,21 @@ function mod:SPELL_CAST_START(args)
 		specWarnJunkMail:Show(args.sourceName)
 		specWarnJunkMail:Play("kickcast")
 	elseif spellId == 355057 then
-		warnCryofMrrggllrrgg:Show()
-		if self:CheckInterruptFilter(args.sourceGUID, false, true) then
+		if self.Options.SpecWarn355057interrupt and self:CheckInterruptFilter(args.sourceGUID, false, true) then
 			specWarnCryofMrrggllrrgg:Show(args.sourceName)
 			specWarnCryofMrrggllrrgg:Play("kickcast")
+		elseif self:AntiSpam(3, 7) then
+			warnCryofMrrggllrrgg:Show()
 		end
 	elseif spellId == 355225 and self:CheckInterruptFilter(args.sourceGUID, false, true) then
 		specWarnWaterbolt:Show(args.sourceName)
 		specWarnWaterbolt:Play("kickcast")
 	elseif spellId == 357260 then
-		warnUnstableRift:Show()
-		if self:CheckInterruptFilter(args.sourceGUID, false, true) then
+		if self.Options.SpecWarn357260interrupt and self:CheckInterruptFilter(args.sourceGUID, false, true) then
 			specWarnUnstableRift:Show(args.sourceName)
 			specWarnUnstableRift:Play("kickcast")
+		elseif self:AntiSpam(3, 7) then
+			warnUnstableRift:Show()
 		end
 	elseif spellId == 356407 then
 		timerAncientDreadCD:Start(nil, args.sourceGUID)

@@ -45,8 +45,8 @@ local warnAnchorShot				= mod:NewTargetNoFilterAnnounce(352345, 3)
 
 local timerAnchorShotCD				= mod:NewCDTimer(20, 352345, nil, nil, nil, 3)
 --11.2
-local warnTimeBomb 						= mod:NewTargetNoFilterAnnounce(1240097, 2, nil, "-RemoveMagic")
-local specWarnTimeBombDispel			= mod:NewSpecialWarningDispel(1240097, "RemoveMagic", nil, nil, 1, 2)
+local warnTimeBomb 					= mod:NewTargetNoFilterAnnounce(1240097, 2)--On by default because dps and healers should know about, but it'll filter at mod level
+local specWarnTimeBombDispel		= mod:NewSpecialWarningDispel(1240097, false, nil, nil, 1, 2)--Off by default, because if it's on by default people will dispel it right away like on auto pilot, and it's a huge dps loss to not sit on it for a while
 
 mod.vb.breathCount = 0
 mod.vb.anchorCount = 0
@@ -111,9 +111,12 @@ function mod:SPELL_AURA_APPLIED(args)
 		specWarnInfiniteBreath:Play("breathsoon")
 		timerInfiniteBreathCD:Start()
 	elseif spellId == 1240097 then
-		warnTimeBomb:CombinedShow(0.5, args.destName)
-		specWarnTimeBombDispel:CombinedShow(0.5, args.destName)
-		specWarnTimeBombDispel:ScheduleVoice(0.5, "helpdispel")
+		if self.Options.SpecWarn1240097dispel and self:CheckDispelFilter("magic") then
+			specWarnTimeBombDispel:CombinedShow(0.5, args.destName)
+			specWarnTimeBombDispel:ScheduleVoice(0.5, "helpdispel")
+		else
+			warnTimeBomb:CombinedShow(0.5, args.destName)
+		end
 	end
 end
 
