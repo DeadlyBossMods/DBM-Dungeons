@@ -13,6 +13,7 @@ mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 350517 347151",
 	"SPELL_CAST_SUCCESS 352345",
 	"SPELL_AURA_APPLIED 354334 350134 1240097",
+	"SPELL_AURA_REMOVED 350134",
 	"SPELL_PERIODIC_DAMAGE 358947",
 	"SPELL_PERIODIC_MISSED 358947"
 )
@@ -27,10 +28,12 @@ mod:RegisterEventsInCombat(
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
 --]]
 --Boss
+local warnInfiniteBreath			= mod:NewTargetCountAnnounce(347149, 4, nil, nil, nil, nil, nil, nil, true)
 local warnHookd						= mod:NewTargetNoFilterAnnounce(354334, 2, nil, "Healer")
 --local warnDoubleTime				= mod:NewCastAnnounce(350517, 3)
 
-local specWarnInfiniteBreath		= mod:NewSpecialWarningCount(347149, "Tank", nil, nil, 1, 2)
+local specWarnInfiniteBreath		= mod:NewSpecialWarningCount(347149, nil, nil, nil, 1, 2)
+local specWarnInfiniteBreathDodge	= mod:NewSpecialWarningDodgeCount(347149, nil, nil, nil, 3, 2)
 local specWarnAnchorShot			= mod:NewSpecialWarningYou(352345, nil, nil, nil, 1, 2)
 local specWarnGTFO					= mod:NewSpecialWarningGTFO(358947, nil, nil, nil, 1, 8)
 
@@ -45,7 +48,7 @@ local warnAnchorShot				= mod:NewTargetNoFilterAnnounce(352345, 3)
 
 local timerAnchorShotCD				= mod:NewCDTimer(20, 352345, nil, nil, nil, 3)
 --11.2
-local warnTimeBomb 					= mod:NewTargetNoFilterAnnounce(1240097, 2)--On by default because dps and healers should know about, but it'll filter at mod level
+local warnTimeBomb 					= mod:NewTargetNoFilterAnnounce(1240097, 2, nil, "-Tank")--On by default for all but the tank
 local specWarnTimeBombDispel		= mod:NewSpecialWarningDispel(1240097, false, nil, nil, 1, 2)--Off by default, because if it's on by default people will dispel it right away like on auto pilot, and it's a huge dps loss to not sit on it for a while
 
 mod.vb.breathCount = 0
@@ -107,8 +110,12 @@ function mod:SPELL_AURA_APPLIED(args)
 		warnHookd:Show(args.destName)
 	elseif spellId == 350134 then
 		self.vb.breathCount = self.vb.breathCount + 1
-		specWarnInfiniteBreath:Show(self.vb.breathCount)
-		specWarnInfiniteBreath:Play("breathsoon")
+		if args:IsPlayer() then
+			specWarnInfiniteBreath:Show(self.vb.breathCount)
+			specWarnInfiniteBreath:Play("bait")
+		else
+			warnInfiniteBreath:Show(self.vb.breathCount, args.destName)
+		end
 		timerInfiniteBreathCD:Start()
 	elseif spellId == 1240097 then
 		if self.Options.SpecWarn1240097dispel and self:CheckDispelFilter("magic") then
@@ -117,6 +124,14 @@ function mod:SPELL_AURA_APPLIED(args)
 		else
 			warnTimeBomb:CombinedShow(0.5, args.destName)
 		end
+	end
+end
+
+function mod:SPELL_AURA_REMOVED(args)
+	local spellId = args.spellId
+	if spellId == 350134 and args:IsPlayer() then
+		specWarnInfiniteBreathDodge:Show(self.vb.breathCount)
+		specWarnInfiniteBreathDodge:Play("breathsoon")
 	end
 end
 
