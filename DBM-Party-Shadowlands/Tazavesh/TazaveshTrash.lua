@@ -102,7 +102,7 @@ local timerSuperSaisonCD					= mod:NewCDNPTimer(30.3, 356133, nil, nil, nil, 5)-
 local timerTidalBurstCD						= mod:NewCDNPTimer(18.2, 1244650, nil, nil, nil, 2)
 local timerSwordTossCD						= mod:NewCDNPTimer(14.1, 368661, nil, nil, nil, 3)
 local timerDriftingStarCD					= mod:NewCDNPTimer(16.3, 357226, nil, nil, nil, 3)
-local timerWanderingPulsarCD				= mod:NewCDNPTimer(26.7, 357238, nil, nil, nil, 1)
+local timerWanderingPulsarCD				= mod:NewCDNPTimer(26.5, 357238, nil, nil, nil, 1)
 local timerUnstableRiftCD					= mod:NewCDPNPTimer(21.5, 357260, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerProxyStrikeCD					= mod:NewCDNPTimer(30.4, 352796, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)--Multiple enemies and CDs
 local timerRadiantPulseCD					= mod:NewCDNPTimer(26.8, 356548, nil, nil, nil, 2)--Multiple enemies and CDs
@@ -110,7 +110,7 @@ local timerHardLightBatonCD					= mod:NewCDNPTimer(24.3, 355888, nil, nil, nil, 
 local timerDisruptionGrenadeCD				= mod:NewCDNPTimer(18.2, 355900, nil, nil, nil, 3)
 local timerGlyphofRestraintCD				= mod:NewCDNPTimer(16.2, 355915, nil, nil, nil, 3, nil, DBM_COMMON_L.MAGIC_ICON)
 local timerHardLightBarrierCD				= mod:NewCDNPTimer(21.2, 355934, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
-local timerBeamSplicerCD					= mod:NewCDNPTimer(23.1, 356001, nil, nil, nil, 3)
+local timerBeamSplicerCD					= mod:NewCDNPTimer(22.6, 356001, nil, nil, nil, 3)
 local timerEmpGlyphofRestraintCD			= mod:NewCDNPTimer(23.1, 356537, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerRiftBlastsCD						= mod:NewCDNPTimer(23.1, 352390, nil, nil, nil, 3)
 local timerQuickbladeCD						= mod:NewCDNPTimer(14.2, 355830, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
@@ -607,7 +607,7 @@ function mod:StartEngageTimers(guid, cid, delay)
 --		timerChronolightEnhancerCD:Start(12.2-delay, guid)--Most people skip this mobs so logs don't really exist
 --		timerHyperlightBackhandCD:Start(16.2-delay, guid)
 	elseif cid == 246285 then--Bazaar Overseer
-		timerEnergizedSlamCD:Start(9.7-delay, guid)
+		timerEnergizedSlamCD:Start(8.7-delay, guid)
 		timerPierceCD:Start(15.7-delay, guid)
 	elseif cid == 176394 then--Post Worker
 		timerLetterOpenerCD:Start(6.8-delay, guid)
@@ -627,8 +627,8 @@ function mod:StartEngageTimers(guid, cid, delay)
 		timerFrenziedChargeCD:Start(6.5-delay, guid)
 		timerWildThrashCD:Start(12.3-delay, guid)
 	elseif cid == 180091 then--Ancient Core Hound
-		timerLavaBreathCD:Start(8.5-delay, guid)
-		timerAncientDreadCD:Start(13.4-delay, guid)
+		timerLavaBreathCD:Start(8.1-delay, guid)
+		timerAncientDreadCD:Start(13-delay, guid)
 	end
 end
 
