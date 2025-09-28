@@ -325,7 +325,7 @@ function mod:StartEngageTimers(guid, cid, delay)
 --		timerSilkenShellCD:Start(18.4, guid)
 	elseif cid == 214761 then--Nightfall Ritualist
 --		timerTormentingRayCD:Start(1.4, guid)--0.1-1.8
-		timerStygianSeedCD:Start(9.2-delay, guid)--9.2-11.3
+		timerStygianSeedCD:Start(7.2-delay, guid)--7.2-11.3
 	elseif cid == 213934 then--Nightfall Tactician
 		timerBlackEdgeCD:Start(3.2-delay, guid)--3.2-6.2
 		timerTacticiansRageCD:Start(7.4-delay, guid)--7.4-11.7
@@ -341,7 +341,7 @@ function mod:StartEngageTimers(guid, cid, delay)
 	elseif cid == 213885 then--Nightfall Dark Architect
 		timerTorentingEruptionCD:Start(5.4-delay, guid)--5.4-5.9
 	elseif cid == 213892 or cid == 228540 then--Nightfall Shadowmage (223994 is an RP mage, not engaged)
-		timerEnsnaringShadowsCD:Start(cid == 228540 and (7.5-delay) or (4.6-delay), guid)--4.6-12.9 (213892) 7.5-14 (228540)
+		timerEnsnaringShadowsCD:Start(cid == 228540 and (6.5-delay) or (4.6-delay), guid)--4.6-12.9 (213892) 7.5-14 (228540)
 	elseif cid == 210966 then--Sureki Webmage
 		timerBurstingCacoonCD:Start(1.8-delay, guid)--1.8-11.7
 	end
