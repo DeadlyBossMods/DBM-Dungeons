@@ -96,6 +96,7 @@ local specWarnArcaneGeyser					= mod:NewSpecialWarningDodge(1236770, nil, nil, n
 local specWarnEssenceCleave					= mod:NewSpecialWarningDodge(1238737, nil, nil, nil, 2, 15)
 local specWarnGravityShatter				= mod:NewSpecialWarningDodge(1238713, nil, nil, nil, 2, 2)
 local specWarnChargeThrough					= mod:NewSpecialWarningDodge(1244249, nil, nil, nil, 2, 2)
+local specWarnForwardCharge					= mod:NewSpecialWarningDodge(1216790, nil, nil, nil, 2, 2)
 local specWarnBloodbath						= mod:NewSpecialWarningRun(473995, nil, nil, nil, 4, 2)
 local specWarnEchoofRenilash				= mod:NewSpecialWarningRun(434281, nil, nil, nil, 4, 2)
 local specWarnNecroticEnd					= mod:NewSpecialWarningRun(445252, nil, nil, nil, 4, 2)
@@ -118,6 +119,7 @@ local specWarnEnfeeblingSpittleInterrupt	= mod:NewSpecialWarningInterrupt(450505
 local specWarnHardenShell					= mod:NewSpecialWarningInterrupt(1214238, nil, nil, nil, 1, 2)
 local specWarnOverchargeKick				= mod:NewSpecialWarningInterrupt(1220472, nil, nil, nil, 1, 2)--Overcharged Delve ability
 local specWarnTerrifyingScreech				= mod:NewSpecialWarningInterrupt(1244108, nil, nil, nil, 1, 2)
+local specWarnAlphaCannon					= mod:NewSpecialWarningInterrupt(1216794, nil, nil, nil, 1, 2)--S2 (no timer, insufficient data and inconsiquential)
 
 local timerFearfulShriekCD					= mod:NewCDPNPTimer(13.4, 433410, nil, nil, nil, 3)
 local timerHidousLaughterCD					= mod:NewCDPNPTimer(25.4, 372529, nil, nil, nil, 3)--25.4-29.8
@@ -200,7 +202,7 @@ do
 		if not force and validZones[currentZone] and not eventsRegistered then
 			eventsRegistered = true
 			self:RegisterShortTermEvents(
-                "SPELL_CAST_START 449318 450546 433410 450714 445781 415253 425040 424704 424798 414944 418791 424891 450197 448399 445191 455932 445492 434281 450637 445210 448528 449071 462686 459421 448179 445774 443292 450492 450519 450505 450509 448155 448161 418295 415250 434740 470592 443482 458879 445718 451913 445771 372529 474004 473541 474511 474482 474325 474223 474206 1217361 1217326 1216806 1216805 1217301 473550 1214238 1239731 455613 1220472 1243017 1236256 1231144 1242469 1242469 1236770 1238737 1238713 1245203 1245156 1245240 1244249 450142",
+                "SPELL_CAST_START 449318 450546 433410 450714 445781 415253 425040 424704 424798 414944 418791 424891 450197 448399 445191 455932 445492 434281 450637 445210 448528 449071 462686 459421 448179 445774 443292 450492 450519 450505 450509 448155 448161 418295 415250 434740 470592 443482 458879 445718 451913 445771 372529 474004 473541 474511 474482 474325 474223 474206 1217361 1217326 1216806 1216805 1217301 473550 1214238 1239731 455613 1220472 1243017 1236256 1231144 1242469 1242469 1236770 1238737 1238713 1245203 1245156 1245240 1244249 450142 1216794 1216790",
                 "SPELL_CAST_SUCCESS 414944 424614 418791 424891 427812 450546 450197 415253 449318 445191 430036 445252 425040 424704 448399 448528 433410 445492 462686 447392 459421 448179 450509 415250 443162 443292 451913 444915 445406 372529 473541 1216806 1216805 1217361 1217326 474206 474004 473995 473550 474482 418295 1214238 1214246 1243017 1238737 474223",--474325
 				"SPELL_INTERRUPT",
                 "SPELL_AURA_APPLIED 424614 449071 418297 430036 440622 441129 448161 470592 443482 458879 445407 1220472",
@@ -375,6 +377,16 @@ local function workAroundLuaLimitation(self, spellId, sourceName, sourceGUID, ar
 			specWarnBurnAway:Play("aesoon")
 		end
 		timerBurnAwayCD:Start(nil, args.sourceGUID)
+	elseif spellId == 1216794 then
+		if self:CheckInterruptFilter(sourceGUID, false, true) then
+			specWarnAlphaCannon:Show(sourceName)
+			specWarnAlphaCannon:Play("kickcast")
+		end
+	elseif spellId == 1216790 then
+		if self:AntiSpam(3, 2) then
+			specWarnForwardCharge:Show()
+			specWarnForwardCharge:Play("chargemove")
+		end
 	end
 end
 
