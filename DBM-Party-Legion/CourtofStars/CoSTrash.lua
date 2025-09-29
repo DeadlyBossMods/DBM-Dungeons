@@ -20,6 +20,7 @@ for i = 1, #frames do
 end
 mod:RegisterEvents(
 	"SPELL_CAST_START 209027 212031 209485 209410 209413 211470 211464 209404 209495 225100 211299 209378 397892 397897 207979 212784 207980 212773 210261 209033 211473",
+	"SPELL_CAST_SUCCESS 209033",
 	"SPELL_AURA_APPLIED 209033 209512 397907 373552",
 	"SPELL_AURA_REMOVED 397907",
 	"UNIT_DIED",
@@ -117,7 +118,6 @@ function mod:SPELL_CAST_START(args)
 			specWarnShockwave:Play("shockwave")
 		end
 	elseif spellId == 209033 then
-		timerFortificationCD:Start(nil, args.sourceGUID)
 		if self:CheckInterruptFilter(args.sourceGUID, false, true) then
 			specWarnFortification:Show(args.sourceName)
 			specWarnFortification:Play("kickcast")
@@ -207,6 +207,14 @@ function mod:SPELL_CAST_START(args)
 		if self:AntiSpam(3, 5) then
 			warnShadowSlash:Show()
 		end
+	end
+end
+
+function mod:SPELL_CAST_SUCCESS(args)
+	if not self.Options.Enabled then return end
+	local spellId = args.spellId
+	if spellId == 209033 then
+		timerFortificationCD:Start(16.1, args.sourceGUID)--18.1-2
 	end
 end
 
