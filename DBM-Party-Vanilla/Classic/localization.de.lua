@@ -318,6 +318,10 @@ L = DBM:GetModLocalization("WarchiefRendBlackhand")
 L:SetGeneralLocalization{
 	name 		= "Kriegshäuptling Rend Blackhand"
 }
+L:SetMiscLocalization{
+	Pull1 = "Vorzüglich... es scheint, als wären die lästigen Insekten gerade rechtzeitig eingetroffen, um meiner Legion als Nahrung zu dienen. Willkommen, sterbliche Wesen!", -- Yell when you jump into the arena
+	Pull2 = "DAS KANN NICHT SEIN!!! Rend, kümmert Euch um diese Insekten.", -- Yell when you defeat the last wave
+}
 -----------------------------
 --  The Beast  --
 -----------------------------
@@ -1682,3 +1686,4 @@ L:SetWarningLocalization{
 L:SetOptionLocalization{
 	WarnDoom = "Zeige Warnung wenn $spell:1221577 entflucht werden muss"
 }
+

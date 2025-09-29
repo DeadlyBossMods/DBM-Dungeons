@@ -42,6 +42,8 @@ local warnForceMultiplier					= mod:NewCastAnnounce(1244443, 4, nil, nil, nil, n
 local warnQuickblade						= mod:NewSpellAnnounce(355830, 3)--(S3 Valid)
 local warnQuellingStrike					= mod:NewSpellAnnounce(355637, 3)--(S3 Valid)
 local warnSwordToss							= mod:NewSpellAnnounce(368661, 3)--(S3 Valid)
+local warnUnstableRift						= mod:NewCastAnnounce(357260, 2)
+local warnCryofMrrggllrrgg					= mod:NewCastAnnounce(355057, 2)
 
 local specWarnGTFO							= mod:NewSpecialWarningGTFO(355581, nil, nil, nil, 1, 8)
 local specWarnTidalStomp					= mod:NewSpecialWarningSpell(355429, nil, nil, nil, 2, 2)
@@ -100,7 +102,7 @@ local timerSuperSaisonCD					= mod:NewCDNPTimer(30.3, 356133, nil, nil, nil, 5)-
 local timerTidalBurstCD						= mod:NewCDNPTimer(18.2, 1244650, nil, nil, nil, 2)
 local timerSwordTossCD						= mod:NewCDNPTimer(14.1, 368661, nil, nil, nil, 3)
 local timerDriftingStarCD					= mod:NewCDNPTimer(16.3, 357226, nil, nil, nil, 3)
-local timerWanderingPulsarCD				= mod:NewCDNPTimer(26.7, 357238, nil, nil, nil, 1)
+local timerWanderingPulsarCD				= mod:NewCDNPTimer(26.5, 357238, nil, nil, nil, 1)
 local timerUnstableRiftCD					= mod:NewCDPNPTimer(21.5, 357260, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerProxyStrikeCD					= mod:NewCDNPTimer(30.4, 352796, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)--Multiple enemies and CDs
 local timerRadiantPulseCD					= mod:NewCDNPTimer(26.8, 356548, nil, nil, nil, 2)--Multiple enemies and CDs
@@ -108,7 +110,7 @@ local timerHardLightBatonCD					= mod:NewCDNPTimer(24.3, 355888, nil, nil, nil, 
 local timerDisruptionGrenadeCD				= mod:NewCDNPTimer(18.2, 355900, nil, nil, nil, 3)
 local timerGlyphofRestraintCD				= mod:NewCDNPTimer(16.2, 355915, nil, nil, nil, 3, nil, DBM_COMMON_L.MAGIC_ICON)
 local timerHardLightBarrierCD				= mod:NewCDNPTimer(21.2, 355934, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
-local timerBeamSplicerCD					= mod:NewCDNPTimer(23.1, 356001, nil, nil, nil, 3)
+local timerBeamSplicerCD					= mod:NewCDNPTimer(22.6, 356001, nil, nil, nil, 3)
 local timerEmpGlyphofRestraintCD			= mod:NewCDNPTimer(23.1, 356537, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerRiftBlastsCD						= mod:NewCDNPTimer(23.1, 352390, nil, nil, nil, 3)
 local timerQuickbladeCD						= mod:NewCDNPTimer(14.2, 355830, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
@@ -131,7 +133,7 @@ local timerWildThrashCD						= mod:NewCDNPTimer(26.7, 357508, nil, nil, nil, 3)
 local timerLavaBreathCD						= mod:NewCDNPTimer(19.4, 356404, nil, nil, nil, 3)
 local timerAncientDreadCD					= mod:NewCDNPTimer(29.1, 356407, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 
---Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc
+--Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc, 7 off interrupt
 
 local function checkEnergySlam(self)
 	if DBM:UnitDebuff("player", 1240820) then
@@ -192,16 +194,22 @@ function mod:SPELL_CAST_START(args)
 		specWarnJunkMail:Show(args.sourceName)
 		specWarnJunkMail:Play("kickcast")
 	elseif spellId == 355057 then
-		if self:CheckInterruptFilter(args.sourceGUID, false, true) then
+		if self.Options.SpecWarn355057interrupt and self:CheckInterruptFilter(args.sourceGUID, false, true) then
 			specWarnCryofMrrggllrrgg:Show(args.sourceName)
 			specWarnCryofMrrggllrrgg:Play("kickcast")
+		elseif self:AntiSpam(3, 7) then
+			warnCryofMrrggllrrgg:Show()
 		end
 	elseif spellId == 355225 and self:CheckInterruptFilter(args.sourceGUID, false, true) then
 		specWarnWaterbolt:Show(args.sourceName)
 		specWarnWaterbolt:Play("kickcast")
-	elseif spellId == 357260 and self:CheckInterruptFilter(args.sourceGUID, false, true) then
-		specWarnUnstableRift:Show(args.sourceName)
-		specWarnUnstableRift:Play("kickcast")
+	elseif spellId == 357260 then
+		if self.Options.SpecWarn357260interrupt and self:CheckInterruptFilter(args.sourceGUID, false, true) then
+			specWarnUnstableRift:Show(args.sourceName)
+			specWarnUnstableRift:Play("kickcast")
+		elseif self:AntiSpam(3, 7) then
+			warnUnstableRift:Show()
+		end
 	elseif spellId == 356407 then
 		timerAncientDreadCD:Start(nil, args.sourceGUID)
 		if self:CheckInterruptFilter(args.sourceGUID, false, true) then
@@ -561,8 +569,8 @@ function mod:StartEngageTimers(guid, cid, delay)
 		timerTidalStompCD:Start(10.4-delay, guid)--Seems possible to massively delay
 		timerBoulderThrowCD:Start(9.3-delay, guid)--Seems possible to massively delay
 	elseif cid == 178171 then--Stormforged Guardian
-		timerCrackleCD:Start(3.5-delay, guid)
-		timerChargedPulseCD:Start(9.7-delay, guid)
+		timerCrackleCD:Start(2-delay, guid)
+		timerChargedPulseCD:Start(7.9-delay, guid)
 	elseif cid == 180015 then--Burly Deckhand
 		timerSuperSaisonCD:Start(8.2-delay, guid)
 	elseif cid == 179388 then--Hourglass Tidesage
@@ -599,7 +607,7 @@ function mod:StartEngageTimers(guid, cid, delay)
 --		timerChronolightEnhancerCD:Start(12.2-delay, guid)--Most people skip this mobs so logs don't really exist
 --		timerHyperlightBackhandCD:Start(16.2-delay, guid)
 	elseif cid == 246285 then--Bazaar Overseer
-		timerEnergizedSlamCD:Start(9.7-delay, guid)
+		timerEnergizedSlamCD:Start(8.7-delay, guid)
 		timerPierceCD:Start(15.7-delay, guid)
 	elseif cid == 176394 then--Post Worker
 		timerLetterOpenerCD:Start(6.8-delay, guid)
@@ -619,8 +627,8 @@ function mod:StartEngageTimers(guid, cid, delay)
 		timerFrenziedChargeCD:Start(6.5-delay, guid)
 		timerWildThrashCD:Start(12.3-delay, guid)
 	elseif cid == 180091 then--Ancient Core Hound
-		timerLavaBreathCD:Start(8.5-delay, guid)
-		timerAncientDreadCD:Start(13.4-delay, guid)
+		timerLavaBreathCD:Start(8.1-delay, guid)
+		timerAncientDreadCD:Start(13-delay, guid)
 	end
 end
 

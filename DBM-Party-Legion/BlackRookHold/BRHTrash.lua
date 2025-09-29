@@ -24,6 +24,7 @@ mod:RegisterEvents(
 --TODO, add Etch? http://www.wowhead.com/spell=198959/etch
 --TODO, can't find spellId for Priceless artifact puddles. when found, add GTFO
 --TODO, despite what two guides say, fel frenzy doesn't exist in any M+ logs at all
+--TODO, HIGH chance most nameplate timers are wrong in Legion Remix, if so they'll be disabled in remix with "not self:IsRemix()" checks
 --NOTE, trash uses 194966 just like boss, the expression will pick up both
 local warnSoulEchoes				= mod:NewTargetAnnounce(194966, 2)
 local warnSacrificeSoul				= mod:NewTargetNoFilterAnnounce(200105, 2)

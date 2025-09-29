@@ -17,6 +17,7 @@ mod:RegisterEvents(
 )
 
 --TODO wicked dagger (199674)?
+--TODO, HIGH chance most nameplate timers are wrong in Legion Remix, if so they'll be disabled in remix with "not self:IsRemix()" checks
 local warnCrackle					= mod:NewTargetAnnounce(199805, 2)
 local warnCracklingStorm			= mod:NewTargetAnnounce(198892, 2)
 local warnThunderousBolt			= mod:NewCastAnnounce(198595, 3)

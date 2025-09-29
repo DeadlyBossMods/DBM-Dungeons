@@ -290,7 +290,7 @@ function mod:StartEngageTimers(guid, cid, delay)
 		timerEmbraceOfKareshCD:Start(7.1-delay, guid)
 	elseif cid == 234918 then--Wastes Creeper
 		timerGloomBiteCD:Start(5.3-delay, guid)--Iff
-		timerBurrowingEruptionCD:Start(8.8-delay, guid)
+		timerBurrowingEruptionCD:Start(8.5-delay, guid)
 	elseif cid == 245092 then--Burrowing Creeper
 		timerBurrowChargeCD:Start(5.5-delay, guid)--Iffy
 		timerStingingSandstormCD:Start(13.8-delay, guid)--Iffy

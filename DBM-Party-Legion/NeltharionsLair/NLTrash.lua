@@ -18,6 +18,7 @@ mod:RegisterEvents(
 (ability.id = 183088 or ability.id = 226296 or ability.id = 202108 or ability.id = 193505 or ability.id = 226287 or ability.id = 183548 or ability.id = 193585 or ability.id = 226406 or ability.id = 202181 or ability.id = 193941 or ability.id = 226347 or ability.id = 183539 or ability.id = 201983 or ability.id = 200154) and type = "begincast"
  or (ability.id = 183433 or ability.id = 183526) and type = "cast"
 --]]
+--TODO, HIGH chance most nameplate timers are wrong in Legion Remix, if so they'll be disabled in remix with "not self:IsRemix()" checks
 local warnSubmerge						= mod:NewSpellAnnounce(183433, 3)
 local warnWarDrums						= mod:NewSpellAnnounce(183526, 4)
 local warnBurningHatred					= mod:NewTargetAnnounce(200154, 3)
@@ -29,7 +30,7 @@ local warnPiercingShards				= mod:NewCastAnnounce(226296, 4, nil, nil, "Tank|Hea
 local warnFracture						= mod:NewCastAnnounce(193505, 3, nil, nil, "Tank|Healer")
 local warnEmberSwipe					= mod:NewCastAnnounce(226406, 3, nil, nil, "Tank|Healer")
 local warnImpalingShard					= mod:NewCastAnnounce(193941, 3, nil, nil, "Tank|Healer")
-local warnPetrifyingTotem				= mod:NewCastAnnounce(202108, 3)
+--local warnPetrifyingTotem				= mod:NewCastAnnounce(202108, 3)
 local warnBound							= mod:NewCastAnnounce(193585, 3)
 local warnStoneShatter					= mod:NewCastAnnounce(226347, 3)
 local warnBarbedTongue					= mod:NewCastAnnounce(183539, 3)

@@ -56,8 +56,8 @@ function mod:OnCombatStart(delay)
 	self.vb.warpStrikeCount = 0
 	self.vb.riftClawsCount = 0
 	timerRiftClawsCD:Start(5.2-delay, 1)
-	timerBindingJavelinCD:Start(11.2-delay, 1)
-	timerWarpStrikeCD:Start(22.1-delay, 1)
+	timerBindingJavelinCD:Start(10.9-delay, 1)
+	timerWarpStrikeCD:Start(21.8-delay, 1)
 	timerArcaneBlitzCD:Start(34-delay, 1)
 end
 

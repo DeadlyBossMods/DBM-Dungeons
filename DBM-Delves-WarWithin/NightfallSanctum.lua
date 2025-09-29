@@ -19,9 +19,9 @@ mod:RegisterEventsInCombat(
 	"ENCOUNTER_END"
 )
 
---NOTE: This one lacks encounter ID for easy win detection and boss timers
 --"Blessing of Dusk-443482-npc:229855-000036A342 = pull:17.0, 29.0, 28.1",
 --"Blessing of Dusk-443482-npc:230904-000036A342 = pull:10.8, 30.3",
+--"Blessing of Dusk-470592-npc:234058-0000617914 = pull:8.1, 36.5",
 --NOTE: Shadow Wave is a shared ability with Xanventh in Skittering Breach, but so far not shared by any trash so duplicated instead of trash mod
 local warnFire								= mod:NewSpellAnnounce(443908, 2)--Speaker Halven
 
@@ -34,7 +34,7 @@ local specWarnShadowWave					= mod:NewSpecialWarningDodge(458874, nil, nil, nil,
 local timerDesolateSurgeCD					= mod:NewCDTimer(26.7, 443840, nil, nil, nil, 3)--Speaker Halven
 local timerFireCD							= mod:NewCDTimer(12.1, 443908, nil, nil, nil, 3)--Speaker Halven
 local timerShadowSweepCD					= mod:NewCDTimer(12.1, 443837, nil, nil, nil, 3)--Speaker Halven and Speaker Davenruth (need more data on Davenruth's timer)
-local timerSpeakersWrathCD					= mod:NewAITimer(12.1, 444408, nil, nil, nil, 3)--Speaker Davenruth
+local timerSpeakersWrathCD					= mod:NewAITimer(12.1, 444408, nil, nil, nil, 3)--Speaker Davenruth/Speaker Wicke (need more data)
 local timerShadowWaveCD						= mod:NewCDNPTimer(12, 458874, nil, nil, nil, 5)
 
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc, 7 off interrupt
@@ -126,8 +126,8 @@ function mod:ENCOUNTER_START(eID)
 		DBM:AddMsg("Boss alerts/timers not yet implemented for Speaker Pelzeth")
 --	elseif eID == 3050 then--Cult Leaders
 
-	elseif eID == 3147 then--Speaker Wicke
-		DBM:AddMsg("Boss alerts/timers not yet implemented for Speaker Wicke")
+	elseif eID == 3147 then--Speaker Wicke/Reformed Fury
+		timerSpeakersWrathCD:Start(1)--13.0, 23.1
 	end
 end
 

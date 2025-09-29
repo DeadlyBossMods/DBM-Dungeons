@@ -24,6 +24,7 @@ mod:RegisterEvents(
  or ability.id = 225484 and type = "applydebuff"
 --]]
 --TODO, Grievous Rip is lacking a cast event, probably needs UNIT_SPELLCAST
+--TODO, HIGH chance most nameplate timers are wrong in Legion Remix, if so they'll be disabled in remix with "not self:IsRemix()" checks
 local warnSpewCorruption			= mod:NewSpellAnnounce(218755, 2)
 local warnMaddeningRoar				= mod:NewSpellAnnounce(200580, 3)
 local warnStarShower				= mod:NewSpellAnnounce(200658, 3)
