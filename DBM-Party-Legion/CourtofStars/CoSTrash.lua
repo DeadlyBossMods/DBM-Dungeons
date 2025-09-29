@@ -33,6 +33,7 @@ end
 
 --TODO, at least 1-2 more GTFOs I forgot names of
 --TODO, target scan https://www.wowhead.com/beta/spell=397897/crushing-leap ?
+--TODO, HIGH chance most nameplate timers are wrong in Legion Remix, if so they'll be disabled in remix with "not self:IsRemix()" checks
 --[[
 (ability.id = 209033 or ability.id = 209027 or ability.id = 212031 or ability.id = 207979 or ability.id = 209485 or ability.id = 209410
  or ability.id = 209413 or ability.id = 211470 or ability.id = 225100 or ability.id = 211299 or ability.id = 207980 or ability.id = 212773
