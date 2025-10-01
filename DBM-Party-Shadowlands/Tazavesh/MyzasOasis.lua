@@ -118,7 +118,7 @@ function mod:SPELL_CAST_START(args)
 		if args:GetSrcCreatureID() == 176563 then--Main boss
 			timerMenacingShoutCD:Start(21.5, args.sourceGUID)
 		else
-			timerMenacingShoutCD:Start(25.5, args.sourceGUID)
+			timerMenacingShoutCD:Start(23.1, args.sourceGUID)
 		end
 	elseif spellId == 355438 then
 		specWarnSupressionSpark:Show()
@@ -157,7 +157,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 		self:SetStage(2)
 		timerSecuritySlamCD:Start(6.4, args.sourceGUID)--Boss version 6.4-8.6
 		timerMenacingShoutCD:Start(12.1, args.sourceGUID)--Boss version
-		timerSupressionSparkCD:Start(19.8)
+		timerSupressionSparkCD:Start(18.5)
 		timerCrowdControlCD:Start(27.1)
 	elseif spellId == 1244630 then
 		warnSoundblast:Show(args.destName)

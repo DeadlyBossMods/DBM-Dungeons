@@ -10,8 +10,8 @@ mod:SetZone(2441)
 mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
-	"SPELL_CAST_START 346204 1236348 348350",
-	"SPELL_CAST_SUCCESS 346006",
+	"SPELL_CAST_START 346204 1236348",
+	"SPELL_CAST_SUCCESS 346006 348350",
 	"SPELL_AURA_APPLIED 347949 348128 345770 345990",
 	"SPELL_AURA_REMOVED 345770 345990",
 	"SPELL_PERIODIC_DAMAGE 348366",
@@ -62,8 +62,6 @@ function mod:SPELL_CAST_START(args)
 		specWarnChargedSlash:Show()
 		specWarnChargedSlash:Play("frontal")
 		timerChargedSlashCD:Start()
-	elseif spellId == 348350 then
-		timerInterrogationCD:Start()
 	end
 end
 
@@ -71,6 +69,8 @@ function mod:SPELL_CAST_SUCCESS(args)
 	local spellId = args.spellId
 	if spellId == 346006 then
 		timerImpoundContrabandCD:Start()
+	elseif spellId == 348350 then
+		timerInterrogationCD:Start(38.6)
 	end
 end
 

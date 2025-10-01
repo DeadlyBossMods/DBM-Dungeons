@@ -59,7 +59,7 @@ local timerVolatileEjectionCD				= mod:NewCDNPTimer(16.6, 1226111, nil, nil, nil
 local timerArcaneSlashCD					= mod:NewCDNPTimer(15.2, 1235368, nil, nil, nil, 3)--18.2 but cast time adjusted
 local timerWarpCD							= mod:NewCDNPTimer(9.2, 1222356, nil, nil, nil, 3)--12.2 but cast time adjusted
 local timerFarstalkersLeapCD				= mod:NewCDNPTimer(11.8, 1221679, nil, nil, nil, 3)--11.8-13.3
-local timerArcingZapCD						= mod:NewCDPNPTimer(24.2, 1229510, nil, nil, nil, 4)
+local timerArcingZapCD						= mod:NewCDPNPTimer(23.8, 1229510, nil, nil, nil, 4)
 local timerArcingEnergyCD					= mod:NewCDNPTimer(9.4, 1221483, nil, nil, nil, 3)--actually alternates between 10.9 and 13.3 due to a spell queue
 local timerErraticRitualCD					= mod:NewCDPNPTimer(19.8, 1221532, nil, nil, nil, 2)--19.8-31.6
 local timerConsumeSpiritCD					= mod:NewCDPNPTimer(51.9, 1226306, nil, nil, nil, 1)--Iffy
@@ -277,10 +277,10 @@ function mod:StartEngageTimers(guid, cid, delay)
 --	elseif cid == 242631 then--Overcharged Sentinel
 --		timerArcaneSlashCD:Start(8-delay, guid)--UNKNOWN, placeholder
 	elseif cid == 234960 then--Tamed Ruinstalker
-		timerWarpCD:Start(6-delay, guid)--Iffy
+		timerWarpCD:Start(3.9-delay, guid)
 	elseif cid == 234962 then--Wastelander Farstalker
-		timerFarstalkersLeapCD:Start(3.8-delay, guid)--3.8-7
-		timerArcingZapCD:Start(9.9-delay, guid)
+--		timerFarstalkersLeapCD:Start(2.1-delay, guid)--0-7
+		timerArcingZapCD:Start(4.2-delay, guid)
 	elseif cid == 234957 then--Wastelander Ritualist
 		timerArcingEnergyCD:Start(8.5-delay, guid)
 	elseif cid == 234955 then--Wastelander Pactspeaker
