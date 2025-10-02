@@ -220,7 +220,10 @@ do
 				name = Ambiguate(name, "none")
 				local diffID, currWave = C_Scenario.GetProvingGroundsInfo()--, maxWave, duration
 				local message = L.ReplyWhisper:format(UnitName("player"), mode[diffID], currWave)
-				--TODO, change this in 12.0 when SendChatMessage is blocked in combat
+				if self:IsPostMidnight() then
+					--Post midnight yell restrictions in instances
+					return
+				end
 				if msg == "status" then
 					SendChatMessage(message, "WHISPER", nil, name)
 				elseif self:AntiSpam(20, name) then--If not "status" then auto respond only once per 20 seconds per person.
