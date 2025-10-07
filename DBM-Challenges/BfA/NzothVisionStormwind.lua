@@ -451,7 +451,6 @@ function mod:ENCOUNTER_START(encounterID)
 	elseif encounterID == 2374 or encounterID == 3082 then--Therum Deepforge
 		local unitID, GUID = DBM:GetUnitIdFromCID(233679)--Therum Deepforge
 		if unitID then
-			GUID = UnitGUID(unitID)
 			timerExplosiveOrdnanceCD:Start(2.4, GUID)
 			timerForgeBreathCD:Start(8.5, GUID)
 		else
@@ -464,7 +463,7 @@ end
 --None of these boss abilities are in combat log
 function mod:UNIT_SPELLCAST_SUCCEEDED_UNFILTERED(uId, _, spellId)
 	if (spellId == 305708 or spellId == 312260) and self:AntiSpam(2, 1) then--First one is mini boss second is alleria
-		local cid, guid = self:GetUnitCreatureId(uId), UnitGUID(uId)
+		local cid, guid = self:GetUnitCreatureId(uId)
 		self:SendSync("ExplosiveOrd", cid, guid)
 	elseif spellId == 309035 and self:AntiSpam(2, 1) then
 		self:SendSync("EntropicMissiles")
