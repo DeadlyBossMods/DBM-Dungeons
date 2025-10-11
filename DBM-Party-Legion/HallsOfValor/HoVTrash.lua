@@ -126,7 +126,7 @@ function mod:SPELL_CAST_START(args)
 		end
 		timerBlastofLightCD:Start(nil, args.sourceGUID)
 	elseif spellId == 198595 then
-		timerThunderousBoltCD:Start(nil, args.sourceGUID)
+		timerThunderousBoltCD:Start(self:IsRemix() and 3.6 or 4.8, args.sourceGUID)
 		if self.Options.SpecWarn198595interrupt and self:CheckInterruptFilter(args.sourceGUID, false, true) then
 			specWarnThunderousBolt:Show(args.sourceName)
 			specWarnThunderousBolt:Play("kickcast")
