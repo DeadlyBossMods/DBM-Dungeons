@@ -120,6 +120,7 @@ function mod:SPELL_CAST_START(args)
 		self:ScheduleMethod(0.2, "BossTargetScanner", args.sourceGUID, "ShieldTarget", 0.1, 8, true)
 	elseif spellId == 375924 then
 		local bossUid = DBM:GetUnitIdFromGUID(args.sourceGUID)
+		if not bossUid then return end--Won't happen but satisfies LuaLS
 		local bossPower = UnitPower(bossUid)--If boss power is ever less than 100 when this is cast, they're defeated
 		if bossPower == 100 and self:AntiSpam(8, 1) then--at least one caster is alive, start next timer
 			timerLongboatRaidCD:Start(77.7)
