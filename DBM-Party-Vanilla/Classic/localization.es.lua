@@ -318,6 +318,10 @@ L = DBM:GetModLocalization("WarchiefRendBlackhand")
 L:SetGeneralLocalization{
 	name 		= "Jefe de Guerra Desgarro Puño Negro"
 }
+L:SetMiscLocalization{
+	Pull1 = "Excelente... es como si esos entrometidos insectos vinieran justo a tiempo para servir de comida a mi legión. ¡Bienvenidos, mortales!", -- Yell when you jump into the arena
+	Pull2 = "¡¡NO PUEDE SER!! Rend, encárgate de esos insectos.", -- Yell when you defeat the last wave
+}
 -----------------------------
 --  The Beast  --
 -----------------------------
@@ -1680,3 +1684,4 @@ L:SetWarningLocalization{
 L:SetOptionLocalization{
 	WarnDoom = "Mostrar anuncio para eliminar $spell:1221577"
 }
+
