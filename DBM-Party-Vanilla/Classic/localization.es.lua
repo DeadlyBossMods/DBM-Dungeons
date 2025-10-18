@@ -535,6 +535,10 @@ L = DBM:GetModLocalization(416)
 L:SetGeneralLocalization{
 	name 		= "Cho'Rush el Observador"
 }
+
+L:SetMiscLocalization{
+    Defeat = "¡El rey está muerto, OH, NO! ¡Invoca a Mizzle el Astuto! ¡Sabe qué hay que hacer!"
+}
 ----------------
 -- Rey Gordok --
 ----------------
@@ -1684,4 +1688,5 @@ L:SetWarningLocalization{
 L:SetOptionLocalization{
 	WarnDoom = "Mostrar anuncio para eliminar $spell:1221577"
 }
+
 
