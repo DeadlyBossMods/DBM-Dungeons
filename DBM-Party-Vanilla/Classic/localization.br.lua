@@ -318,6 +318,10 @@ L = DBM:GetModLocalization("WarchiefRendBlackhand")
 L:SetGeneralLocalization{
 	name 		= "Chefe Guerreiro Laceral Mão Negra"
 }
+L:SetMiscLocalization{
+    Pull1 = "Excelente... parece que os insetos enxeridos chegaram bem na hora de alimentar minha legião. Bem-vindos, mortais!", -- Yell when you jump into the arena
+    Pull2 = "NÃO PODE SER!!! Laceral, cuide desses insetos.", -- Yell when you defeat the last wave
+}
 -----------------------------
 --  The Beast  --
 -----------------------------
