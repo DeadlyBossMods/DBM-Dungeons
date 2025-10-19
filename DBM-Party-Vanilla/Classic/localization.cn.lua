@@ -1,4 +1,4 @@
--- Last update: 2020/07/28 （重新整理）
+-- Last update: 2025/10/18 （重新整理）
 if GetLocale() ~= "zhCN" then return end
 local L
 
@@ -320,6 +320,12 @@ L = DBM:GetModLocalization("WarchiefRendBlackhand")
 L:SetGeneralLocalization{
 	name 		= "大酋长雷德·黑手"
 }
+
+L:SetMiscLocalization{
+	Pull1 = "很好……看起来好像这些爱管闲事的小人物来得正是时候。欢迎凡人！！", -- Yell when you jump into the arena
+	Pull2 = "这不可能！！！雷德，解决掉这些家伙。" -- Yell when you defeat the last wave
+}
+
 -----------------------------
 --  The Beast  --
 -----------------------------
@@ -533,6 +539,10 @@ L = DBM:GetModLocalization(416)
 
 L:SetGeneralLocalization{
 	name 		= "观察者克鲁什"
+}
+
+L:SetMiscLocalization{
+    Defeat	= "国王死了——哦，不！召唤米兹勒！他知道下一步该怎么做！"
 }
 -----------------------------
 --  King Gordok  --
@@ -1625,7 +1635,7 @@ L:SetGeneralLocalization{
 }
 
 L:SetWarningLocalization{
-	SpecWarnDropTorch = "%d stacks - drop torch!"
+	SpecWarnDropTorch = "%d层 - 快丢掉火炬！"
 }
 
 -- Opera of Malediction
@@ -1686,3 +1696,4 @@ L:SetWarningLocalization{
 L:SetOptionLocalization{
 	WarnDoom = "Show announce to decurse $spell:1221577"
 }
+
