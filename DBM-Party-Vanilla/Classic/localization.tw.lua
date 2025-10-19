@@ -270,7 +270,7 @@ L:SetGeneralLocalization{
 L = DBM:GetModLocalization(396)
 
 L:SetGeneralLocalization{
-	name 		= "維姆薩拉克主宰"
+	name 		= "維姆薩拉克"
 }
 
 -------------------------
@@ -1680,4 +1680,5 @@ L:SetWarningLocalization{
 L:SetOptionLocalization{
 	WarnDoom = "Show announce to decurse $spell:1221577"
 }
+
 
