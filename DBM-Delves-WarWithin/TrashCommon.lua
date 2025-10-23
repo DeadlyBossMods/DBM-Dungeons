@@ -1051,7 +1051,7 @@ function mod:StartEngageTimers(guid, cid, delay)
 	elseif cid == 244415 then--Pactsworn Dustblade
 		timerSandCrashCD:Start(9.8-delay, guid)
 	elseif cid == 244448 then--Invasive Phasecrawler
-		timerEssenceCleaveCD:Start(20-delay, guid)--Probably very wrong, single pull of data
+		timerEssenceCleaveCD:Start(6.8-delay, guid)
 		--timerGravityShatterCD:Start(10.6-delay, guid)
 	elseif cid == 244755 then--Nexus-Princess Ky'veza
 		timerDarkMassacreCD:Start(15.5-delay, guid)
