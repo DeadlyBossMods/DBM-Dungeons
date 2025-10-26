@@ -1,0 +1,57 @@
+## Interface: 110205, 120000
+## Category: DBM
+
+## Title:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Dungeons (Midnight)|r
+## Title-koKR:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0던전 (미드나이트)|r
+## Title-ruRU:|cffffe00a<|r|cffff7d0aDBM Мод|r|cffffe00a>|r |cffc030c0Подземелья (Полночь)|r
+## Title-zhCN:|cffffe00a<|r|cffff7d0aDBM 模组|r|cffffe00a>|r |cffc030c0队伍首领 (午夜)|r
+## Title-zhTW:|cffffe00a<|r|cffff7d0aDBM 模組|r|cffffe00a>|r |cffc030c0隊伍首領 (午夜)|r
+## LoadOnDemand: 1
+## RequiredDeps: DBM-Core
+## SavedVariables: DBMPartyMidnight_AllSavedVars
+## SavedVariablesPerCharacter: DBMPartyMidnight_SavedStats
+## IconTexture: Interface\AddOns\DBM-Core\textures\dbm_airhorn
+## X-DBM-Mod: 1
+## X-DBM-Mod-Type: PARTY
+## X-DBM-Mod-Category: MIDNIGHT
+## X-DBM-StatTypes: follower,normal,heroic,mythic,challenge
+## X-DBM-Mod-SubCategoriesID: 2805, 2813, 2811, 2859, 2825
+## X-DBM-Mod-Name: Dungeons (Midnight)
+## X-DBM-Mod-Name-koKR: 던전 (미드나이트)
+## X-DBM-Mod-Name-ruRU: Подземелья (Полночь)
+## X-DBM-Mod-Name-zhCN: 队伍首领 (午夜)
+## X-DBM-Mod-Name-zhTW: 隊伍首領 (午夜)
+## X-DBM-Mod-Sort: 105
+## X-DBM-Mod-MapID: 2805, 2813, 2811, 2859, 2825
+## X-DBM-Mod-MinCoreRevision: 20230716000000
+## X-DBM-Mod-MinExpansion: 11
+## X-Curse-Project-ID: 314994
+## X-WoWI-ID: 24904
+## X-Wago-ID: xZKxZENk
+## Version: @project-version@
+
+# localization.en.lua
+
+WindrunnerSpire\Emberdawn.lua
+WindrunnerSpire\DerelictDuo.lua
+WindrunnerSpire\CommanderKroluk.lua
+WindrunnerSpire\TheRestlessHeart.lua
+
+MurderRow\KystiaManaheart.lua
+MurderRow\ZaenBladesorrow.lua
+MurderRow\XathuuxtheAnnihilator.lua
+MurderRow\LithielCinderfury.lua
+
+MagistersTerrace\ArcanotronCustos.lua
+MagistersTerrace\SeranelSunlash.lua
+MagistersTerrace\Gemellus.lua
+MagistersTerrace\Degentrius.lua
+
+TheBlindingVale\LightblossomTrinity.lua
+TheBlindingVale\IkuzztheLightHunter.lua
+TheBlindingVale\LightwardenRuia.lua
+TheBlindingVale\Ziekket.lua
+
+DenofNalorakk\TheHoardmonger.lua
+DenofNalorakk\SentinelofWinter.lua
+DenofNalorakk\Nalorakk.lua
