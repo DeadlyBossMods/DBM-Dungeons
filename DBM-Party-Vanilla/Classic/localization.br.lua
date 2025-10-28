@@ -535,6 +535,10 @@ L = DBM:GetModLocalization(416)
 L:SetGeneralLocalization{
 	name 		= "Ez'Magg, o Observador"
 }
+
+L:SetMiscLocalization{
+    Defeat	= "O Rei tá morto... AI, NÃO! Nós precisa do Mizzle, o Malandro! Ele vai saber o que fazer!"
+}
 ----------------
 -- King Gordok --
 ----------------
