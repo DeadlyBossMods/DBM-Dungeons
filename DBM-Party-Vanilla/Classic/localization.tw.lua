@@ -318,6 +318,11 @@ L = DBM:GetModLocalization("WarchiefRendBlackhand")
 L:SetGeneralLocalization{
 	name 		= "大酋長雷德·黑手"
 }
+
+L:SetMiscLocalization{
+	Pull1 = "Excellent... it would appear as if the meddlesome insects have arrived just in time to feed my legion. Welcome, mortals!", -- Yell when you jump into the arena
+	Pull2 = "THIS CANNOT BE!!! Rend, deal with these insects.", -- Yell when you defeat the last wave
+}
 -----------------------------
 --  The Beast  --
 -----------------------------
@@ -530,6 +535,10 @@ L = DBM:GetModLocalization(416)
 
 L:SetGeneralLocalization{
 	name 		= "觀察者克魯什"
+}
+
+L:SetMiscLocalization{
+    Defeat	= "國王死了——哦，不！召喚米茲勒！他知道下一步該怎麼做！"
 }
 ----------------
 -- King Gordok --
@@ -1680,5 +1689,6 @@ L:SetWarningLocalization{
 L:SetOptionLocalization{
 	WarnDoom = "Show announce to decurse $spell:1221577"
 }
+
 
 
