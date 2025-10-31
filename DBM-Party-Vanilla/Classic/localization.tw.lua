@@ -337,7 +337,7 @@ L:SetGeneralLocalization{
 L = DBM:GetModLocalization("LordValthalak")
 
 L:SetGeneralLocalization{
-	name 		= "瓦薩拉克領主"
+	name 		= "瓦薩拉克"
 }
 -----------------------------
 --  General Drakkisath  --
@@ -1689,6 +1689,7 @@ L:SetWarningLocalization{
 L:SetOptionLocalization{
 	WarnDoom = "Show announce to decurse $spell:1221577"
 }
+
 
 
 
