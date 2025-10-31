@@ -320,8 +320,8 @@ L:SetGeneralLocalization{
 }
 
 L:SetMiscLocalization{
-	Pull1 = "Excellent... it would appear as if the meddlesome insects have arrived just in time to feed my legion. Welcome, mortals!", -- Yell when you jump into the arena
-	Pull2 = "THIS CANNOT BE!!! Rend, deal with these insects.", -- Yell when you defeat the last wave
+	Pull1 = "很好……看起來好像這些愛管閒事的小人物來得正是時候。歡迎，凡人！！", -- Yell when you jump into the arena
+	Pull2 = "這不可能！！！雷德，解決掉這些傢伙。", -- Yell when you defeat the last wave
 }
 -----------------------------
 --  The Beast  --
@@ -1689,6 +1689,7 @@ L:SetWarningLocalization{
 L:SetOptionLocalization{
 	WarnDoom = "Show announce to decurse $spell:1221577"
 }
+
 
 
 
