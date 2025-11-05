@@ -17,7 +17,7 @@ L:SetGeneralLocalization{
 L = DBM:GetModLocalization("LadySerevess")
 
 L:SetGeneralLocalization{
-	name 		= "薩利維絲女士"
+	name 		= "薩利維絲"
 }
 -----------------------------
 --  Gelihast  --
@@ -41,7 +41,7 @@ L:SetGeneralLocalization{
 L = DBM:GetModLocalization("TwilightLordKelris")
 
 L:SetGeneralLocalization{
-	name 		= "暮光領主克爾里斯"
+	name 		= "夢遊者克爾里斯"
 }
 -----------------------------
 --  Aku'mai  --
@@ -60,7 +60,7 @@ L:SetGeneralLocalization{
 L = DBM:GetModLocalization(369)
 
 L:SetGeneralLocalization{
-	name 		= "高階審問者格斯塔恩"
+	name 		= "審訊官格斯塔恩"
 }
 -----------------
 -- Lord Roccor --
@@ -68,7 +68,7 @@ L:SetGeneralLocalization{
 L = DBM:GetModLocalization(370)
 
 L:SetGeneralLocalization{
-	name 		= "洛考爾領主"
+	name 		= "洛考爾"
 }
 ------------------------------
 -- Hound Master Grebmar --
@@ -100,7 +100,7 @@ L:SetGeneralLocalization{
 L = DBM:GetModLocalization(374)
 
 L:SetGeneralLocalization{
-	name 		= "伊森迪奧斯領主"
+	name 		= "伊森迪奧斯"
 }
 --------------------------
 -- Warden Stilgiss --
@@ -108,7 +108,7 @@ L:SetGeneralLocalization{
 L = DBM:GetModLocalization(375)
 
 L:SetGeneralLocalization{
-	name 		= "守衛斯迪爾基斯"
+	name 		= "典獄官斯迪爾基斯"
 }
 ----------------------
 -- Fineous Darkvire --
@@ -140,7 +140,7 @@ L:SetGeneralLocalization{
 L = DBM:GetModLocalization(379)
 
 L:SetGeneralLocalization{
-	name 		= "魔像領主阿格曼奇"
+	name 		= "傀儡統帥阿格曼奇"
 }
 ----------------------
 -- Hurley Blackbreath --
@@ -320,8 +320,8 @@ L:SetGeneralLocalization{
 }
 
 L:SetMiscLocalization{
-	Pull1 = "Excellent... it would appear as if the meddlesome insects have arrived just in time to feed my legion. Welcome, mortals!", -- Yell when you jump into the arena
-	Pull2 = "THIS CANNOT BE!!! Rend, deal with these insects.", -- Yell when you defeat the last wave
+	Pull1 = "很好……看起來好像這些愛管閒事的小人物來得正是時候。歡迎，凡人！！", -- Yell when you jump into the arena
+	Pull2 = "這不可能！！！雷德，解決掉這些傢伙。", -- Yell when you defeat the last wave
 }
 -----------------------------
 --  The Beast  --
@@ -337,7 +337,7 @@ L:SetGeneralLocalization{
 L = DBM:GetModLocalization("LordValthalak")
 
 L:SetGeneralLocalization{
-	name 		= "瓦薩拉克領主"
+	name 		= "瓦薩拉克"
 }
 -----------------------------
 --  General Drakkisath  --
@@ -412,7 +412,7 @@ L:SetGeneralLocalization{
 L = DBM:GetModLocalization("Cookie")
 
 L:SetGeneralLocalization{
-	name 		= "廚師"
+	name 		= "曲奇"
 }
 --------------------------------
 -- Dire Maul - 230J/429M (3) --
@@ -462,7 +462,7 @@ L:SetGeneralLocalization{
 L = DBM:GetModLocalization(407)
 
 L:SetGeneralLocalization{
-	name 		= "伊琳娜·鴉橡"
+	name 		= "伊琳娜·暗木"
 }
 ------------------------
 -- Magister Kalendris --
@@ -618,7 +618,7 @@ L:SetGeneralLocalization{
 L = DBM:GetModLocalization(425)
 
 L:SetGeneralLocalization{
-	name 		= "技工吉茲洛克"
+	name 		= "工匠吉茲洛克"
 }
 
 -----------------------------
@@ -627,7 +627,7 @@ L:SetGeneralLocalization{
 L = DBM:GetModLocalization(427)
 
 L:SetGeneralLocalization{
-	name 		= "維利塔恩領主"
+	name 		= "維利塔恩"
 }
 
 -----------------------------
@@ -774,7 +774,7 @@ L:SetGeneralLocalization{
 L = DBM:GetModLocalization("AggemThorncurse")
 
 L:SetGeneralLocalization{
-	name 		= "阿葛金‧棘咒"
+	name 		= "阿格姆"
 }
 
 -----------------------------
@@ -792,7 +792,7 @@ L:SetGeneralLocalization{
 L = DBM:GetModLocalization("OverlordRamtusk")
 
 L:SetGeneralLocalization{
-	name 		= "拉姆塔斯主宰"
+	name 		= "主宰拉姆塔斯"
 }
 
 -----------------------------
@@ -866,7 +866,7 @@ L:SetGeneralLocalization{
 L = DBM:GetModLocalization("ArcanistDoan")
 
 L:SetGeneralLocalization{
-	name 		= "秘法師杜安"
+	name 		= "祕法師杜安"
 }
 
 -----------------------------
@@ -884,7 +884,7 @@ L:SetGeneralLocalization{
 L = DBM:GetModLocalization("Mograine_and_Whitemane")
 
 L:SetGeneralLocalization{
-	name 		= "莫格萊尼 & 懷特邁恩"
+	name 		= "莫格萊尼和懷特邁恩"
 }
 
 -----------------------------
@@ -893,7 +893,7 @@ L:SetGeneralLocalization{
 L = DBM:GetModLocalization("Fairbanks")
 
 L:SetGeneralLocalization{
-	name 		= "高等審判官法爾班克斯"
+	name 		= "大檢察官法爾班克斯"
 }
 
 -------------------------
@@ -994,7 +994,7 @@ L:SetGeneralLocalization{
 L = DBM:GetModLocalization("LordAlexeiBarov")
 
 L:SetGeneralLocalization{
-	name 		= "阿萊克斯·巴羅夫領主"
+	name 		= "阿萊克斯·巴羅夫"
 }
 
 -----------------------------
@@ -1003,7 +1003,7 @@ L:SetGeneralLocalization{
 L = DBM:GetModLocalization("LadyIlluciaBarov")
 
 L:SetGeneralLocalization{
-	name 		= "伊露希亞·巴羅夫女士"
+	name 		= "伊露希亞·巴羅夫"
 }
 
 -----------------------------
@@ -1067,7 +1067,7 @@ L:SetGeneralLocalization{
 L = DBM:GetModLocalization("DeathswornCaptain")
 
 L:SetGeneralLocalization{
-	name 		= "死亡誓言者隊長"
+	name 		= "死亡之誓"
 }
 
 -----------------------------
@@ -1105,7 +1105,7 @@ L:SetGeneralLocalization{
 L = DBM:GetModLocalization("Targorr")
 
 L:SetGeneralLocalization{
-	name 		= "可怕的塔格爾"
+	name 		= "可怕的塔高爾"
 }
 -----------------------------
 --  Kam Deepfury  --
@@ -1183,7 +1183,7 @@ L:SetGeneralLocalization{
 L = DBM:GetModLocalization(446)
 
 L:SetGeneralLocalization{
-	name 		= "砲手威利"
+	name 		= "炮手威利"
 }
 
 -----------------------------
@@ -1411,7 +1411,7 @@ L:SetGeneralLocalization{
 L = DBM:GetModLocalization(476)
 
 L:SetGeneralLocalization{
-	name 		= "皮薩斯領主"
+	name 		= "皮薩斯"
 }
 
 -----------------------------
@@ -1420,7 +1420,7 @@ L:SetGeneralLocalization{
 L = DBM:GetModLocalization(475)
 
 L:SetGeneralLocalization{
-	name 		= "考布萊恩領主"
+	name 		= "考布萊恩"
 }
 
 -----------------------------
@@ -1447,7 +1447,7 @@ L:SetGeneralLocalization{
 L = DBM:GetModLocalization(479)
 
 L:SetGeneralLocalization{
-	name 		= "瑟芬迪斯領主"
+	name 		= "瑟芬迪斯"
 }
 
 -----------------------------
@@ -1456,7 +1456,7 @@ L:SetGeneralLocalization{
 L = DBM:GetModLocalization(480)
 
 L:SetGeneralLocalization{
-	name 		= "永生的沃爾丹"
+	name 		= "永生者沃爾丹"
 }
 
 -----------------------------
@@ -1512,11 +1512,11 @@ L:SetGeneralLocalization{
 L = DBM:GetModLocalization(486)
 
 L:SetGeneralLocalization{
-	name 		= "巫醫·祖穆拉恩"
+	name 		= "巫醫祖穆拉恩"
 }
 
 -----------------------------
---  Hydromancer Velrath (not in Dungeon Journal)  --
+--  Hydromancer Velrath  --
 -----------------------------
 L = DBM:GetModLocalization("HydromancerVelrath")
 
@@ -1530,7 +1530,7 @@ L:SetGeneralLocalization{
 L = DBM:GetModLocalization(487)
 
 L:SetGeneralLocalization{
-	name 		= "耐克魯姆 & 暗影祭司塞瑟斯"
+	name 		= "耐克魯姆和暗影祭司塞瑟斯"
 }
 
 -----------------------------
@@ -1689,6 +1689,10 @@ L:SetWarningLocalization{
 L:SetOptionLocalization{
 	WarnDoom = "Show announce to decurse $spell:1221577"
 }
+
+
+
+
 
 
 
