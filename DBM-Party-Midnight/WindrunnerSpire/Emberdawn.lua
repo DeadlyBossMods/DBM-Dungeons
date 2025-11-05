@@ -1,4 +1,4 @@
-local mod	= DBM:NewMod(2655, "DBM-Raids-Midnight", 1, 1299)
+local mod	= DBM:NewMod(2655, "DBM-Party-Midnight", 1, 1299)
 --local L		= mod:GetLocalizedStrings()--Nothing to localize for blank mods
 
 mod:SetRevision("@file-date-integer@")
