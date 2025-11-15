@@ -888,7 +888,7 @@ L:SetGeneralLocalization{
 L = DBM:GetModLocalization("Mograine_and_Whitemane")
 
 L:SetGeneralLocalization{
-	name 		= "莫格莱尼 & 怀特迈恩"
+	name 		= "莫格莱尼和怀特迈恩"
 }
 
 -----------------------------
@@ -1536,7 +1536,7 @@ L:SetGeneralLocalization{
 L = DBM:GetModLocalization(487)
 
 L:SetGeneralLocalization{
-	name 		= "耐克鲁姆 & 暗影祭司塞瑟斯"
+	name 		= "耐克鲁姆和暗影祭司塞瑟斯"
 }
 
 -----------------------------
@@ -1696,4 +1696,5 @@ L:SetWarningLocalization{
 L:SetOptionLocalization{
 	WarnDoom = "Show announce to decurse $spell:1221577"
 }
+
 
