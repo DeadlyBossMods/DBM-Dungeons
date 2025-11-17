@@ -1,3 +1,4 @@
+if DBM:IsPostMidnight() then return end
 local mod	= DBM:NewMod("UldamanLegacyofTyrTrash", "DBM-Party-Dragonflight", 2)
 local L		= mod:GetLocalizedStrings()
 

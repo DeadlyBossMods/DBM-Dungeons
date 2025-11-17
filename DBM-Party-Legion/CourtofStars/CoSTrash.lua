@@ -1,3 +1,4 @@
+--TODO, remove all BUT GOSSIP stuff from midnight
 local mod	= DBM:NewMod("CoSTrash", "DBM-Party-Legion", 7)
 local L		= mod:GetLocalizedStrings()
 

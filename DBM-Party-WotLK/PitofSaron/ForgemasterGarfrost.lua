@@ -2,15 +2,20 @@ local mod	= DBM:NewMod(608, "DBM-Party-WotLK", 15, 278)
 local L		= mod:GetLocalizedStrings()
 
 if not mod:IsClassic() then
-	mod.statTypes = "normal,heroic,timewalker"
+	mod.statTypes = "normal,heroic,mythic,challenge,timewalker"
 end
 
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(36494)
 mod:SetEncounterID(1999)
-mod:SetUsedIcons(8)
+if not DBM:IsPostMidnight() then
+	mod:SetUsedIcons(8)
+end
 
 mod:RegisterCombat("combat")
+
+--TODO, some actual custom sounds and timer disables when apis added
+if DBM:IsPostMidnight() then return end
 
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 68788",

@@ -8,6 +8,9 @@ mod:SetUsedIcons(1)
 
 mod:RegisterCombat("combat")
 
+--TODO, some actual custom sounds and timer disables when apis added
+if DBM:IsPostMidnight() then return end
+
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 246134 244579",
 	"SPELL_CAST_SUCCESS 244602",
