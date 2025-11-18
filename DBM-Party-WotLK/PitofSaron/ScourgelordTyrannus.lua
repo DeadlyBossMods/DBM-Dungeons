@@ -2,18 +2,23 @@ local mod	= DBM:NewMod(610, "DBM-Party-WotLK", 15, 278)
 local L		= mod:GetLocalizedStrings()
 
 if not mod:IsClassic() then
-	mod.statTypes = "normal,heroic,timewalker"
+	mod.statTypes = "normal,heroic,mythic,challenge,timewalker"
 end
 
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(36658, 36661)
 mod:SetEncounterID(2000)
-mod:DisableESCombatDetection()
-mod:SetUsedIcons(8)
+if not DBM:IsPostMidnight() then
+	mod:DisableESCombatDetection()
+	mod:SetUsedIcons(8)
+end
 mod:SetHotfixNoticeRev(20220119000000)
 mod:SetMinSyncRevision(20220119000000)
 
 mod:RegisterCombat("combat")
+
+--TODO, some actual custom sounds and timer disables when apis added
+if DBM:IsPostMidnight() then return end
 
 mod:RegisterEvents(
 	"CHAT_MSG_MONSTER_YELL"

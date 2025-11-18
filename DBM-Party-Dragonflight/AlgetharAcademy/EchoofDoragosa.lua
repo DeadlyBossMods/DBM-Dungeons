@@ -11,6 +11,9 @@ mod.sendMainBossGUID = true
 
 mod:RegisterCombat("combat")
 
+--TODO, some actual custom sounds and timer disables when apis added
+if DBM:IsPostMidnight() then return end
+
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 374361 388822",
 	"SPELL_CAST_SUCCESS 374343",

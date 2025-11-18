@@ -9,6 +9,9 @@ mod:SetEncounterID(1698)
 
 mod:RegisterCombat("combat")
 
+--TODO, some actual custom sounds and timer disables when apis added
+if DBM:IsPostMidnight() then return end
+
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 153544 156793 153315",
 	"SPELL_CAST_SUCCESS 165731",

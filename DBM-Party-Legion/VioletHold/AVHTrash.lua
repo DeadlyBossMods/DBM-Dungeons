@@ -1,3 +1,4 @@
+if DBM:IsPostMidnight() then return end
 local mod	= DBM:NewMod("AVHTrash", "DBM-Party-Legion", 9)
 local L		= mod:GetLocalizedStrings()
 
