@@ -286,7 +286,7 @@ L:SetGeneralLocalization{
 	name 		= "烈焰卫士艾博希尔"
 }
 L:SetMiscLocalization{
-	Pull		= "%s 开始恢复实力!"
+	Pull		= "%s开始恢复实力！"
 }
 -----------------------------
 --  Solakar Flamewreath  --
@@ -1696,5 +1696,6 @@ L:SetWarningLocalization{
 L:SetOptionLocalization{
 	WarnDoom = "Show announce to decurse $spell:1221577"
 }
+
 
 
