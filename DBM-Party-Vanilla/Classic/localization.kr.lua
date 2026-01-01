@@ -1696,4 +1696,3 @@ L:SetWarningLocalization{
 L:SetOptionLocalization{
 	WarnDoom = "$spell:1221577 저주 해제 알림 보기"
 }
-
