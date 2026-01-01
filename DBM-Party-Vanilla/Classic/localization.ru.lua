@@ -284,7 +284,7 @@ L:SetGeneralLocalization{
 	name 		= "Пиростраж Углевзор"
 }
 L:SetMiscLocalization{
-	Pull		= "%s начинает восстанавливать прежнюю силу!"
+	Pull		= "Еще немного, и %s восстановит прежнюю силу!"
 }
 -----------------------------
 --  Solakar Flamewreath  --
