@@ -62,6 +62,15 @@ function mod:OnCombatStart(delay)
 	end
 end
 
+--Midnight edition of combat start
+function mod:OnLimitedCombatStart()
+	--Not ideal to do every pull, but cleanest way to ensure it's done
+	local trashmod = DBM:GetModByName("CoSTrash")
+	if trashmod and trashmod.Options.SpyHelper then
+		trashmod:ResetGossipState()
+	end
+end
+
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
 	if spellId == 209602 then
