@@ -1,3 +1,4 @@
+if DBM:IsPostMidnight() then return end
 local mod	= DBM:NewMod("MechagonTrash", "DBM-Party-BfA", 11)
 local L		= mod:GetLocalizedStrings()
 

@@ -1,3 +1,4 @@
+if DBM:IsPostMidnight() then return end
 local mod	= DBM:NewMod("TheaterofPainTrash", "DBM-Party-Shadowlands", 6)
 local L		= mod:GetLocalizedStrings()
 

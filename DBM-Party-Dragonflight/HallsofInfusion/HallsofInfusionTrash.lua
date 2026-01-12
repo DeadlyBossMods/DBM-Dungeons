@@ -1,4 +1,3 @@
-if DBM:IsPostMidnight() then return end
 local mod	= DBM:NewMod("HallsofInfusionTrash", "DBM-Party-Dragonflight", 8)
 local L		= mod:GetLocalizedStrings()
 
@@ -9,12 +8,12 @@ mod.isTrashMod = true
 mod.isTrashModBossFightAllowed = true
 
 mod:RegisterEvents(
-	"SPELL_CAST_START 390290 374080 375351 375348 375327 375384 374563 374045 374339 374066 374020 395694 374699 374706 375079 374823 385141 377341 377402 376171 437719",
-	"SPELL_CAST_SUCCESS 374073",
-	"SPELL_AURA_APPLIED 374724 374615 391610 391613 377384 377402 437717",
-	"SPELL_AURA_APPLIED_DOSE 374389",
+--	"SPELL_CAST_START 390290 374080 375351 375348 375327 375384 374563 374045 374339 374066 374020 395694 374699 374706 375079 374823 385141 377341 377402 376171 437719",
+--	"SPELL_CAST_SUCCESS 374073",
+--	"SPELL_AURA_APPLIED 374724 374615 391610 391613 377384 377402 437717",
+--	"SPELL_AURA_APPLIED_DOSE 374389",
 --	"SPELL_AURA_REMOVED 437717",
-	"UNIT_DIED",
+--	"UNIT_DIED",
 	"GOSSIP_SHOW"
 )
 
@@ -27,63 +26,63 @@ mod:RegisterEvents(
 (ability.id = 390290 or ability.id = 374080 or ability.id = 375351 or ability.id = 375348 or ability.id = 375327 or ability.id = 375384 or ability.id = 374563 or ability.id = 374045 or ability.id = 374339 or ability.id = 374066 or ability.id = 374020 or ability.id = 395694 or ability.id = 374699 or ability.id = 374706 or ability.id = 375079 or ability.id = 374823 or ability.id = 385141 or ability.id = 377341 or ability.id = 377402 or ability.id = 437719) and type = "begincast"
  or ability.id = 374724 and type = "applydebuff"
 --]]
-local warnBlastingGust						= mod:NewCastAnnounce(374080, 4)
-local warnContainmentBeam					= mod:NewCastAnnounce(374020, 2, nil, nil, false)--Can be spammy, it's kind of sort of a passive constant cast of these mobs, so opt in
-local warnExpulse							= mod:NewCastAnnounce(374045, 3)
-local warnDemoralizingShout					= mod:NewCastAnnounce(374339, 2)
-local warnElementalFocus					= mod:NewCastAnnounce(395694, 4)
-local warnCauterize							= mod:NewCastAnnounce(374699, 3)--20.6?
-local warnWhirlingFury						= mod:NewCastAnnounce(375079, 3)
-local warnZephyrsCall						= mod:NewCastAnnounce(374823, 2)
-local warnTidalDivergence					= mod:NewCastAnnounce(377341, 3)
-local warnAqueousBarrier					= mod:NewCastAnnounce(377402, 4)
-local warnRefreshingTides					= mod:NewCastAnnounce(376171, 3)
-local warnCheapShot							= mod:NewTargetNoFilterAnnounce(374615, 4)
-local warnMoltenSubduction					= mod:NewTargetNoFilterAnnounce(374724, 3)
-local warnThunderstrike						= mod:NewTargetAnnounce(437719, 2)
-
-local specWarnGulpSwogToxin					= mod:NewSpecialWarningStack(374389, nil, 8, nil, nil, 1, 6)
-local specWarnOceanicBreath					= mod:NewSpecialWarningDodge(375351, nil, nil, nil, 2, 2)
-local specWarnGustingBreath					= mod:NewSpecialWarningDodge(375348, nil, nil, nil, 2, 2)
-local specWarnTectonicBreath				= mod:NewSpecialWarningDodge(375327, nil, nil, nil, 2, 2)
-local specWarnRumblingEarth					= mod:NewSpecialWarningDodge(375384, nil, nil, nil, 2, 2)
-local specWarnDazzle						= mod:NewSpecialWarningDodge(374563, nil, nil, nil, 2, 2)
-local specWarnFlashFlood					= mod:NewSpecialWarningDodge(390290, nil, nil, nil, 3, 2)
-local specWarnThunderstorm					= mod:NewSpecialWarningYou(385141, nil, nil, nil, 1, 2)
-local specWarnCreepingMold					= mod:NewSpecialWarningYou(391613, nil, nil, nil, 2, 2)
-local specWarnThunderstrike					= mod:NewSpecialWarningMoveAway(437719, nil, nil, nil, 1, 2)
-local yellThunderstrike						= mod:NewYell(437719)
-local specWarnCreepingMoldDispel			= mod:NewSpecialWarningDispel(391613, "RemoveDisease", nil, nil, 1, 2)
-local specWarnBindingWinds					= mod:NewSpecialWarningDispel(391610, "RemoveMagic", nil, nil, 1, 2)
-local specWarnBoilingRage					= mod:NewSpecialWarningDispel(377384, "RemoveEnrage", nil, nil, 1, 2)
-local specWarnAqueousBarrierDispel			= mod:NewSpecialWarningDispel(377402, "MagicDispeller", nil, nil, 1, 2)
-local yellThunderstorm						= mod:NewYell(385141)
---local yellConcentrateAnimaFades				= mod:NewShortFadesYell(339525)
-local specWarnBlastingGust					= mod:NewSpecialWarningInterrupt(374080, "HasInterrupt", nil, nil, 1, 2)
-local specWarnExpulse						= mod:NewSpecialWarningInterrupt(374045, "HasInterrupt", nil, nil, 1, 2)
-local specWarnDemoShout						= mod:NewSpecialWarningInterrupt(374339, "HasInterrupt", nil, nil, 1, 2)
-local specWarnEarthShield					= mod:NewSpecialWarningInterrupt(374066, "HasInterrupt", nil, nil, 1, 2)
-local specWarnElementalFocus				= mod:NewSpecialWarningInterrupt(395694, "HasInterrupt", nil, nil, 1, 2)
-local specWarnCauterize						= mod:NewSpecialWarningInterrupt(374699, "HasInterrupt", nil, nil, 1, 2)
-local specWarnPyreticBurst					= mod:NewSpecialWarningInterrupt(374706, false, nil, nil, 1, 2)
-local specWarnTidalDivergence				= mod:NewSpecialWarningInterrupt(377341, "HasInterrupt", nil, nil, 1, 2)
-local specWarnAqueousBarrier				= mod:NewSpecialWarningInterrupt(377402, "HasInterrupt", nil, nil, 1, 2)
-local specWarnRefreshingTides				= mod:NewSpecialWarningInterrupt(376171, "HasInterrupt", nil, nil, 1, 2)
-
-local timerDemoShoutCD						= mod:NewCDNPTimer(30, 374339, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
-local timerDazzleCD							= mod:NewCDNPTimer(17, 374563, nil, nil, nil, 3)
-local timerZephyrsCallCD					= mod:NewCDNPTimer(23.1, 374823, nil, nil, nil, 1)
-local timerWhirlingFuryCD					= mod:NewCDNPTimer(16.2, 375079, nil, nil, nil, 2)
-local timerMoltenSubductionCD				= mod:NewCDNPTimer(20.6, 374724, nil, nil, nil, 3)
-local timerOceanicBreathCD					= mod:NewCDNPTimer(18.1, 375351, nil, nil, nil, 3)
-local timerGustingBreathCD					= mod:NewCDNPTimer(19.3, 375348, nil, nil, nil, 3)--Could also be 18.1, but need bigger sample
-local timerTectonicBreathCD					= mod:NewCDNPTimer(18.1, 375327, nil, nil, nil, 3)
-local timerThunderstormCD					= mod:NewCDNPTimer(19.4, 385141, nil, nil, nil, 3)
-local timerAqueousBarrierCD					= mod:NewCDNPTimer(17.3, 377402, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
-local timerFlashFloodCD						= mod:NewCDNPTimer(23, 390290, nil, nil, nil, 2)
-local timerRefreshingTidesCD				= mod:NewCDNPTimer(30, 376171, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
-local timerThunderstrikeCD					= mod:NewCDNPTimer(23.1, 437719, nil, nil, nil, 3)
-local timerSeismicSlamCD					= mod:NewCDNPTimer(17, 374073, nil, nil, nil, 3)
+--local warnBlastingGust						= mod:NewCastAnnounce(374080, 4)
+--local warnContainmentBeam					= mod:NewCastAnnounce(374020, 2, nil, nil, false)--Can be spammy, it's kind of sort of a passive constant cast of these mobs, so opt in
+--local warnExpulse							= mod:NewCastAnnounce(374045, 3)
+--local warnDemoralizingShout					= mod:NewCastAnnounce(374339, 2)
+--local warnElementalFocus					= mod:NewCastAnnounce(395694, 4)
+--local warnCauterize							= mod:NewCastAnnounce(374699, 3)--20.6?
+--local warnWhirlingFury						= mod:NewCastAnnounce(375079, 3)
+--local warnZephyrsCall						= mod:NewCastAnnounce(374823, 2)
+--local warnTidalDivergence					= mod:NewCastAnnounce(377341, 3)
+--local warnAqueousBarrier					= mod:NewCastAnnounce(377402, 4)
+--local warnRefreshingTides					= mod:NewCastAnnounce(376171, 3)
+--local warnCheapShot							= mod:NewTargetNoFilterAnnounce(374615, 4)
+--local warnMoltenSubduction					= mod:NewTargetNoFilterAnnounce(374724, 3)
+--local warnThunderstrike						= mod:NewTargetAnnounce(437719, 2)
+--
+--local specWarnGulpSwogToxin					= mod:NewSpecialWarningStack(374389, nil, 8, nil, nil, 1, 6)
+--local specWarnOceanicBreath					= mod:NewSpecialWarningDodge(375351, nil, nil, nil, 2, 2)
+--local specWarnGustingBreath					= mod:NewSpecialWarningDodge(375348, nil, nil, nil, 2, 2)
+--local specWarnTectonicBreath				= mod:NewSpecialWarningDodge(375327, nil, nil, nil, 2, 2)
+--local specWarnRumblingEarth					= mod:NewSpecialWarningDodge(375384, nil, nil, nil, 2, 2)
+--local specWarnDazzle						= mod:NewSpecialWarningDodge(374563, nil, nil, nil, 2, 2)
+--local specWarnFlashFlood					= mod:NewSpecialWarningDodge(390290, nil, nil, nil, 3, 2)
+--local specWarnThunderstorm					= mod:NewSpecialWarningYou(385141, nil, nil, nil, 1, 2)
+--local specWarnCreepingMold					= mod:NewSpecialWarningYou(391613, nil, nil, nil, 2, 2)
+--local specWarnThunderstrike					= mod:NewSpecialWarningMoveAway(437719, nil, nil, nil, 1, 2)
+--local yellThunderstrike						= mod:NewYell(437719)
+--local specWarnCreepingMoldDispel			= mod:NewSpecialWarningDispel(391613, "RemoveDisease", nil, nil, 1, 2)
+--local specWarnBindingWinds					= mod:NewSpecialWarningDispel(391610, "RemoveMagic", nil, nil, 1, 2)
+--local specWarnBoilingRage					= mod:NewSpecialWarningDispel(377384, "RemoveEnrage", nil, nil, 1, 2)
+--local specWarnAqueousBarrierDispel			= mod:NewSpecialWarningDispel(377402, "MagicDispeller", nil, nil, 1, 2)
+--local yellThunderstorm						= mod:NewYell(385141)
+----local yellConcentrateAnimaFades				= mod:NewShortFadesYell(339525)
+--local specWarnBlastingGust					= mod:NewSpecialWarningInterrupt(374080, "HasInterrupt", nil, nil, 1, 2)
+--local specWarnExpulse						= mod:NewSpecialWarningInterrupt(374045, "HasInterrupt", nil, nil, 1, 2)
+--local specWarnDemoShout						= mod:NewSpecialWarningInterrupt(374339, "HasInterrupt", nil, nil, 1, 2)
+--local specWarnEarthShield					= mod:NewSpecialWarningInterrupt(374066, "HasInterrupt", nil, nil, 1, 2)
+--local specWarnElementalFocus				= mod:NewSpecialWarningInterrupt(395694, "HasInterrupt", nil, nil, 1, 2)
+--local specWarnCauterize						= mod:NewSpecialWarningInterrupt(374699, "HasInterrupt", nil, nil, 1, 2)
+--local specWarnPyreticBurst					= mod:NewSpecialWarningInterrupt(374706, false, nil, nil, 1, 2)
+--local specWarnTidalDivergence				= mod:NewSpecialWarningInterrupt(377341, "HasInterrupt", nil, nil, 1, 2)
+--local specWarnAqueousBarrier				= mod:NewSpecialWarningInterrupt(377402, "HasInterrupt", nil, nil, 1, 2)
+--local specWarnRefreshingTides				= mod:NewSpecialWarningInterrupt(376171, "HasInterrupt", nil, nil, 1, 2)
+--
+--local timerDemoShoutCD						= mod:NewCDNPTimer(30, 374339, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+--local timerDazzleCD							= mod:NewCDNPTimer(17, 374563, nil, nil, nil, 3)
+--local timerZephyrsCallCD					= mod:NewCDNPTimer(23.1, 374823, nil, nil, nil, 1)
+--local timerWhirlingFuryCD					= mod:NewCDNPTimer(16.2, 375079, nil, nil, nil, 2)
+--local timerMoltenSubductionCD				= mod:NewCDNPTimer(20.6, 374724, nil, nil, nil, 3)
+--local timerOceanicBreathCD					= mod:NewCDNPTimer(18.1, 375351, nil, nil, nil, 3)
+--local timerGustingBreathCD					= mod:NewCDNPTimer(19.3, 375348, nil, nil, nil, 3)--Could also be 18.1, but need bigger sample
+--local timerTectonicBreathCD					= mod:NewCDNPTimer(18.1, 375327, nil, nil, nil, 3)
+--local timerThunderstormCD					= mod:NewCDNPTimer(19.4, 385141, nil, nil, nil, 3)
+--local timerAqueousBarrierCD					= mod:NewCDNPTimer(17.3, 377402, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+--local timerFlashFloodCD						= mod:NewCDNPTimer(23, 390290, nil, nil, nil, 2)
+--local timerRefreshingTidesCD				= mod:NewCDNPTimer(30, 376171, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+--local timerThunderstrikeCD					= mod:NewCDNPTimer(23.1, 437719, nil, nil, nil, 3)
+--local timerSeismicSlamCD					= mod:NewCDNPTimer(17, 374073, nil, nil, nil, 3)
 
 mod:AddGossipOption(true, "Buff")
 
@@ -91,6 +90,7 @@ mod:AddGossipOption(true, "Buff")
 
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc, 7 off interrupt
 
+--[[
 function mod:ThunderstormTarget(targetname)
 	if not targetname then return end
 	if targetname == UnitName("player") then
@@ -280,6 +280,7 @@ function mod:SPELL_AURA_APPLIED(args)
 	end
 end
 mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED
+--]]
 
 --[[
 function mod:SPELL_AURA_REMOVED(args)
@@ -290,6 +291,7 @@ function mod:SPELL_AURA_REMOVED(args)
 end
 --]]
 
+--[[
 function mod:UNIT_DIED(args)
 	local cid = self:GetCIDFromGUID(args.destGUID)
 	if cid == 190340 then--Refi Defender
@@ -319,6 +321,7 @@ function mod:UNIT_DIED(args)
 		timerSeismicSlamCD:Stop(args.destGUID)
 	end
 end
+--]]
 
 function mod:GOSSIP_SHOW()
 	local gossipOptionID = self:GetGossipID()

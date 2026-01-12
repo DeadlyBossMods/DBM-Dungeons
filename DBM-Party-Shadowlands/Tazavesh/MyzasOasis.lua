@@ -88,7 +88,9 @@ function mod:OnCombatStart(delay)
 end
 
 function mod:OnCombatEnd()
-	self:UnregisterZoneCombat(2441)
+	if not DBM:IsPostMidnight() then
+		self:UnregisterZoneCombat(2441)
+	end
 	table.wipe(activeBossGUIDS)
 	if self.Options.RangeFrame then
 		DBM.RangeCheck:Hide()
