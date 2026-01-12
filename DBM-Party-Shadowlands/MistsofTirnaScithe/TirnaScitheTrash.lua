@@ -1,3 +1,4 @@
+if DBM:IsPostMidnight() then return end
 local mod	= DBM:NewMod("TirnaScitheTrash", "DBM-Party-Shadowlands", 3)
 local L		= mod:GetLocalizedStrings()
 
@@ -10,13 +11,13 @@ mod.isTrashMod = true
 mod.isTrashModBossFightAllowed = true
 
 mod:RegisterEvents(
-	"SPELL_CAST_START 321968 324909 324923 324914 324776 340305 340304 340300 340160 340189 326046 460092 463256 463248 340208 340289 326021 463217",--325418 331718 331743
-	"SPELL_CAST_SUCCESS 325418 340544 322938 325223 340279 321968 324923 322486 322557 324914 324776 326046 463248 463256 340160 340208 340189 326021 460092 324987 340300 463217 323043",--331718 331743
-	"SPELL_INTERRUPT",
-	"SPELL_AURA_APPLIED 322557 324914 324776 325224 340288 326046 322486 325021 323043",
-	"SPELL_AURA_APPLIED_DOSE 340288",
-	"SPELL_AURA_REMOVED 325224",
-	"UNIT_DIED",
+--	"SPELL_CAST_START 321968 324909 324923 324914 324776 340305 340304 340300 340160 340189 326046 460092 463256 463248 340208 340289 326021 463217",--325418 331718 331743
+--	"SPELL_CAST_SUCCESS 325418 340544 322938 325223 340279 321968 324923 322486 322557 324914 324776 326046 463248 463256 340160 340208 340189 326021 460092 324987 340300 463217 323043",--331718 331743
+--	"SPELL_INTERRUPT",
+--	"SPELL_AURA_APPLIED 322557 324914 324776 325224 340288 326046 322486 325021 323043",
+--	"SPELL_AURA_APPLIED_DOSE 340288",
+--	"SPELL_AURA_REMOVED 325224",
+--	"UNIT_DIED",
 	"GOSSIP_SHOW"
 )
 
@@ -33,82 +34,83 @@ mod:RegisterEvents(
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
  or (source.type = "NPC" and source.firstSeen = timestamp and source.id = 165111) or (target.type = "NPC" and target.firstSeen = timestamp and target.id = 165111)
 --]]
-local warnOvergrowth					= mod:NewTargetAnnounce(322486, 4)
-local warnFuriousThrashing				= mod:NewSpellAnnounce(324909, 3)--No CD timer because no one has ever seen it cast twice in a row
-local warnTripleBite					= mod:NewStackAnnounce(340288, 2, nil, "Tank|Healer|RemovePoison")
-local warnCrushingLeap					= mod:NewSpellAnnounce(340305, 3)--Change to target warning if target scan debug checks out
-local warnVolatileAcid					= mod:NewTargetAnnounce(325418, 3)
-local warnHarvestEssence				= mod:NewCastAnnounce(322938, 4, 6)--High Prio off internet
-local warnNourishtheForest				= mod:NewCastAnnounce(324914, 4)--High Prio off internet
---local warnBuckingRampage				= mod:NewSpellAnnounce(331743, 3, nil, "Melee")--Annoying spell that can do a lot of burst damage to melee that's not interruptable
-local warnMistveilTear					= mod:NewTargetNoFilterAnnounce(325021, 3, nil, "Tank|Healer|RemoveBleed")
-local warnExpel							= mod:NewTargetAnnounce(463248, 3)
-
---General
---local specWarnGTFO					= mod:NewSpecialWarningGTFO(257274, nil, nil, nil, 1, 8)
-local specWarnAcidNova					= mod:NewSpecialWarningSpell(460092, nil, nil, nil, 2, 2)
-local specWarnBrambleBurst				= mod:NewSpecialWarningDodge(324923, nil, nil, nil, 2, 2)
---local specWarnSpearFlurry				= mod:NewSpecialWarningDodge(331718, nil, nil, nil, 2, 15)--Retired for now.
-local specWarnPoisonousSecretions		= mod:NewSpecialWarningDodge(340304, nil, nil, nil, 2, 2)
-local specWarnTongueLashing				= mod:NewSpecialWarningDodge(340300, nil, nil, nil, 2, 2)
-local specWarnRadiantBreath				= mod:NewSpecialWarningDodge(340160, nil, nil, nil, 2, 2)
-local specWarnPoisonousDischarge		= mod:NewSpecialWarningDodge(340279, nil, nil, nil, 2, 2)
-local specWarnBewilderingPollen			= mod:NewSpecialWarningDodge(321968, nil, nil, nil, 1, 15)
-local specWarnExpel						= mod:NewSpecialWarningYou(463248, nil, nil, nil, 2, 2)
-local specWarnAcidGlobule				= mod:NewSpecialWarningDodge(326021, nil, nil, nil, 2, 2)
-local specWarnOvergrowth				= mod:NewSpecialWarningMoveTo(322486, nil, nil, nil, 1, 11)
-local specWarnShredArmor				= mod:NewSpecialWarningDefensive(340208, nil, nil, nil, 1, 2)
-local specWarnAnimaSlash				= mod:NewSpecialWarningDefensive(463217, nil, nil, nil, 1, 2)
-local specWarnSoulSplit					= mod:NewSpecialWarningDispel(322557, "RemoveMagic", nil, nil, 1, 2)
-local specWarnNourishtheForestDispel	= mod:NewSpecialWarningDispel(324914, "MagicDispeller", nil, nil, 1, 2)
-local specWarnBramblethornCoatDispel	= mod:NewSpecialWarningDispel(324776, "MagicDispeller", nil, nil, 1, 2)
-local specWarnStimulateResistanceDispel	= mod:NewSpecialWarningDispel(326046, "MagicDispeller", nil, nil, 1, 2)
-local specWarnBloodlettingDispel		= mod:NewSpecialWarningDispel(323043, "RemoveBleed", nil, nil, 1, 2)
-local specWarnPoolOfRadiance			= mod:NewSpecialWarningMove(340189, nil, nil, nil, 1, 10)
-local specWarnMistWard					= mod:NewSpecialWarningMove(463256, nil, nil, nil, 1, 10)
-local specWarnVolatileAcid				= mod:NewSpecialWarningMoveAway(325418, nil, nil, nil, 1, 2)
-local yellVolatileAcid					= mod:NewShortYell(325418)
-local specWarnAnimaInjection			= mod:NewSpecialWarningMoveAway(325224, nil, nil, nil, 1, 2)
-local yellAnimaInjection				= mod:NewShortYell(325224)
-local yellAnimaInjectionFades			= mod:NewShortFadesYell(325224)
-local specWarnHarvestEssence			= mod:NewSpecialWarningInterrupt(322938, "HasInterrupt", nil, nil, 1, 2)--High Prio Interrupt
-local specWarnNourishtheForest			= mod:NewSpecialWarningInterrupt(324914, "HasInterrupt", nil, nil, 1, 2)--High Prio Interrupt
-local specWarnBramblethornCoat			= mod:NewSpecialWarningInterrupt(324776, "HasInterrupt", nil, nil, 1, 2)
-local specWarnStimulateResistance		= mod:NewSpecialWarningInterrupt(326046, "HasInterrupt", nil, nil, 1, 2)
-local specWarnStimulateRegeneration		= mod:NewSpecialWarningInterrupt(340544, "HasInterrupt", nil, nil, 1, 2)
-
---Cooldowns only show Recast time after successful interrupt or cast finish
---This means stunned/CCed mobs will not show recast timers since abilities do not go on cooldown
-local timerBloodLettingCD				= mod:NewCDNPTimer(13.1, 323043, nil, nil, nil, 5, nil, DBM_COMMON_L.HEALER_ICON)
-local timerBewilderingPollenCD			= mod:NewCDPNPTimer(12.2, 321968, nil, nil, nil, 3)--Valid Aug 8
-local timerOvergrowthCD					= mod:NewCDNPTimer(15.3, 322486, nil, nil, nil, 3)--Valid Aug 8
-local timerBrambleBurstCD				= mod:NewCDNPTimer(13.5, 324923, nil, nil, nil, 3)--Valid Aug 8
---local timerSpearFlurryCD				= mod:NewCDNPTimer(9.3, 331718, nil, false, nil, 3)--Disabled in current season
-local timerAnimaInjectionCD				= mod:NewCDNPTimer(14.1, 325224, nil, nil, nil, 3)--Valid Aug 8
---local timerBuckingRampageCD			= mod:NewCDNPTimer(15.2, 331743, nil, nil, nil, 3)--Disabled in current season
-local timerPoisonousDischargeCD			= mod:NewCDNPTimer(21.2, 340279, nil, nil, nil, 3)--??? not seen in logs, mob avoided?
-local timerSoulSpiritCD					= mod:NewCDNPTimer(13.6, 322557, nil, nil, nil, 5)--Valid Jan 4 25
-local timerVolatileAcidCD				= mod:NewCDNPTimer(11.3, 325418, nil, nil, nil, 3)--Valid Aug 8, HIGHLY variable though (like 12-19)
-local timerNourishtheForestCD			= mod:NewCDPNPTimer(15.9, 324914, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--Valid Aug 8
-local timerBramblethornCoatCD			= mod:NewCDPNPTimer(21.6, 324776, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--Valid Aug 8, 21.6-24.something
-local timerStimulateResistanceCD		= mod:NewCDPNPTimer(15.8, 326046, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--Valid Aug 8
-local timerStimulateRegenerationCD		= mod:NewCDPNPTimer(21.9, 340544, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--Valid Aug 8, but could be lower
-local timerAcidNovaCD					= mod:NewCDNPTimer(18, 460092, nil, nil, nil, 3)--Valid Aug 8
-local timerHarvestEssenceCD				= mod:NewCDPNPTimer(13.9, 322938, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)----Valid Jan 4 25. This one does go on CD if stunned because it's channeled not cast start
-local timerExpelCD						= mod:NewCDNPTimer(15.1, 463248, nil, nil, nil, 3)--Valid Aug 8
-local timerMistWardCD					= mod:NewCDNPTimer(22.9, 463256, nil, nil, nil, 5)--Valid Aug 8, One of two creatures has CD, the other does not.
-local timerRadiantBreathCD				= mod:NewCDPNPTimer(10.4, 340160, nil, nil, nil, 3)--Valid Aug 8
-local timerShredArmorCD					= mod:NewCDNPTimer(10.6, 340208, nil, nil, nil, 5)----Valid Aug 8, Possible same as breath
-local timerAnimaSlashCD					= mod:NewCDNPTimer(13, 463217, nil, nil, nil, 5)--Valid Nov 4
-local timerPoolofRadianceCD				= mod:NewCDNPTimer(28, 340189, nil, nil, nil, 5)--Valid Aug 8
-local timerAcidGlobuleCD				= mod:NewCDNPTimer(15.4, 326021, nil, nil, nil, 3)--Valid Nov 3
-local timerMistveilBiteCD				= mod:NewCDNPTimer(14.5, 324987, nil, nil, nil, 5)--Valid Nov 3
-local timerTongueLashingCD				= mod:NewCDPNPTimer(7.7, 340300, nil, nil, nil, 3)--Valid Aug 8
+--local warnOvergrowth					= mod:NewTargetAnnounce(322486, 4)
+--local warnFuriousThrashing				= mod:NewSpellAnnounce(324909, 3)--No CD timer because no one has ever seen it cast twice in a row
+--local warnTripleBite					= mod:NewStackAnnounce(340288, 2, nil, "Tank|Healer|RemovePoison")
+--local warnCrushingLeap					= mod:NewSpellAnnounce(340305, 3)--Change to target warning if target scan debug checks out
+--local warnVolatileAcid					= mod:NewTargetAnnounce(325418, 3)
+--local warnHarvestEssence				= mod:NewCastAnnounce(322938, 4, 6)--High Prio off internet
+--local warnNourishtheForest				= mod:NewCastAnnounce(324914, 4)--High Prio off internet
+----local warnBuckingRampage				= mod:NewSpellAnnounce(331743, 3, nil, "Melee")--Annoying spell that can do a lot of burst damage to melee that's not interruptable
+--local warnMistveilTear					= mod:NewTargetNoFilterAnnounce(325021, 3, nil, "Tank|Healer|RemoveBleed")
+--local warnExpel							= mod:NewTargetAnnounce(463248, 3)
+--
+----General
+----local specWarnGTFO					= mod:NewSpecialWarningGTFO(257274, nil, nil, nil, 1, 8)
+--local specWarnAcidNova					= mod:NewSpecialWarningSpell(460092, nil, nil, nil, 2, 2)
+--local specWarnBrambleBurst				= mod:NewSpecialWarningDodge(324923, nil, nil, nil, 2, 2)
+----local specWarnSpearFlurry				= mod:NewSpecialWarningDodge(331718, nil, nil, nil, 2, 15)--Retired for now.
+--local specWarnPoisonousSecretions		= mod:NewSpecialWarningDodge(340304, nil, nil, nil, 2, 2)
+--local specWarnTongueLashing				= mod:NewSpecialWarningDodge(340300, nil, nil, nil, 2, 2)
+--local specWarnRadiantBreath				= mod:NewSpecialWarningDodge(340160, nil, nil, nil, 2, 2)
+--local specWarnPoisonousDischarge		= mod:NewSpecialWarningDodge(340279, nil, nil, nil, 2, 2)
+--local specWarnBewilderingPollen			= mod:NewSpecialWarningDodge(321968, nil, nil, nil, 1, 15)
+--local specWarnExpel						= mod:NewSpecialWarningYou(463248, nil, nil, nil, 2, 2)
+--local specWarnAcidGlobule				= mod:NewSpecialWarningDodge(326021, nil, nil, nil, 2, 2)
+--local specWarnOvergrowth				= mod:NewSpecialWarningMoveTo(322486, nil, nil, nil, 1, 11)
+--local specWarnShredArmor				= mod:NewSpecialWarningDefensive(340208, nil, nil, nil, 1, 2)
+--local specWarnAnimaSlash				= mod:NewSpecialWarningDefensive(463217, nil, nil, nil, 1, 2)
+--local specWarnSoulSplit					= mod:NewSpecialWarningDispel(322557, "RemoveMagic", nil, nil, 1, 2)
+--local specWarnNourishtheForestDispel	= mod:NewSpecialWarningDispel(324914, "MagicDispeller", nil, nil, 1, 2)
+--local specWarnBramblethornCoatDispel	= mod:NewSpecialWarningDispel(324776, "MagicDispeller", nil, nil, 1, 2)
+--local specWarnStimulateResistanceDispel	= mod:NewSpecialWarningDispel(326046, "MagicDispeller", nil, nil, 1, 2)
+--local specWarnBloodlettingDispel		= mod:NewSpecialWarningDispel(323043, "RemoveBleed", nil, nil, 1, 2)
+--local specWarnPoolOfRadiance			= mod:NewSpecialWarningMove(340189, nil, nil, nil, 1, 10)
+--local specWarnMistWard					= mod:NewSpecialWarningMove(463256, nil, nil, nil, 1, 10)
+--local specWarnVolatileAcid				= mod:NewSpecialWarningMoveAway(325418, nil, nil, nil, 1, 2)
+--local yellVolatileAcid					= mod:NewShortYell(325418)
+--local specWarnAnimaInjection			= mod:NewSpecialWarningMoveAway(325224, nil, nil, nil, 1, 2)
+--local yellAnimaInjection				= mod:NewShortYell(325224)
+--local yellAnimaInjectionFades			= mod:NewShortFadesYell(325224)
+--local specWarnHarvestEssence			= mod:NewSpecialWarningInterrupt(322938, "HasInterrupt", nil, nil, 1, 2)--High Prio Interrupt
+--local specWarnNourishtheForest			= mod:NewSpecialWarningInterrupt(324914, "HasInterrupt", nil, nil, 1, 2)--High Prio Interrupt
+--local specWarnBramblethornCoat			= mod:NewSpecialWarningInterrupt(324776, "HasInterrupt", nil, nil, 1, 2)
+--local specWarnStimulateResistance		= mod:NewSpecialWarningInterrupt(326046, "HasInterrupt", nil, nil, 1, 2)
+--local specWarnStimulateRegeneration		= mod:NewSpecialWarningInterrupt(340544, "HasInterrupt", nil, nil, 1, 2)
+--
+----Cooldowns only show Recast time after successful interrupt or cast finish
+----This means stunned/CCed mobs will not show recast timers since abilities do not go on cooldown
+--local timerBloodLettingCD				= mod:NewCDNPTimer(13.1, 323043, nil, nil, nil, 5, nil, DBM_COMMON_L.HEALER_ICON)
+--local timerBewilderingPollenCD			= mod:NewCDPNPTimer(12.2, 321968, nil, nil, nil, 3)--Valid Aug 8
+--local timerOvergrowthCD					= mod:NewCDNPTimer(15.3, 322486, nil, nil, nil, 3)--Valid Aug 8
+--local timerBrambleBurstCD				= mod:NewCDNPTimer(13.5, 324923, nil, nil, nil, 3)--Valid Aug 8
+----local timerSpearFlurryCD				= mod:NewCDNPTimer(9.3, 331718, nil, false, nil, 3)--Disabled in current season
+--local timerAnimaInjectionCD				= mod:NewCDNPTimer(14.1, 325224, nil, nil, nil, 3)--Valid Aug 8
+----local timerBuckingRampageCD			= mod:NewCDNPTimer(15.2, 331743, nil, nil, nil, 3)--Disabled in current season
+--local timerPoisonousDischargeCD			= mod:NewCDNPTimer(21.2, 340279, nil, nil, nil, 3)--??? not seen in logs, mob avoided?
+--local timerSoulSpiritCD					= mod:NewCDNPTimer(13.6, 322557, nil, nil, nil, 5)--Valid Jan 4 25
+--local timerVolatileAcidCD				= mod:NewCDNPTimer(11.3, 325418, nil, nil, nil, 3)--Valid Aug 8, HIGHLY variable though (like 12-19)
+--local timerNourishtheForestCD			= mod:NewCDPNPTimer(15.9, 324914, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--Valid Aug 8
+--local timerBramblethornCoatCD			= mod:NewCDPNPTimer(21.6, 324776, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--Valid Aug 8, 21.6-24.something
+--local timerStimulateResistanceCD		= mod:NewCDPNPTimer(15.8, 326046, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--Valid Aug 8
+--local timerStimulateRegenerationCD		= mod:NewCDPNPTimer(21.9, 340544, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--Valid Aug 8, but could be lower
+--local timerAcidNovaCD					= mod:NewCDNPTimer(18, 460092, nil, nil, nil, 3)--Valid Aug 8
+--local timerHarvestEssenceCD				= mod:NewCDPNPTimer(13.9, 322938, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)----Valid Jan 4 25. This one does go on CD if stunned because it's channeled not cast start
+--local timerExpelCD						= mod:NewCDNPTimer(15.1, 463248, nil, nil, nil, 3)--Valid Aug 8
+--local timerMistWardCD					= mod:NewCDNPTimer(22.9, 463256, nil, nil, nil, 5)--Valid Aug 8, One of two creatures has CD, the other does not.
+--local timerRadiantBreathCD				= mod:NewCDPNPTimer(10.4, 340160, nil, nil, nil, 3)--Valid Aug 8
+--local timerShredArmorCD					= mod:NewCDNPTimer(10.6, 340208, nil, nil, nil, 5)----Valid Aug 8, Possible same as breath
+--local timerAnimaSlashCD					= mod:NewCDNPTimer(13, 463217, nil, nil, nil, 5)--Valid Nov 4
+--local timerPoolofRadianceCD				= mod:NewCDNPTimer(28, 340189, nil, nil, nil, 5)--Valid Aug 8
+--local timerAcidGlobuleCD				= mod:NewCDNPTimer(15.4, 326021, nil, nil, nil, 3)--Valid Nov 3
+--local timerMistveilBiteCD				= mod:NewCDNPTimer(14.5, 324987, nil, nil, nil, 5)--Valid Nov 3
+--local timerTongueLashingCD				= mod:NewCDPNPTimer(7.7, 340300, nil, nil, nil, 3)--Valid Aug 8
 
 mod:AddGossipOption(true, "Buff")
 
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc, 7 off interrupt
 
+--[[
 function mod:CrushingLeap(targetname, _, unituid)
 	--Now has death check cause it's possible for mob to die before cast finishes and we don't want scan to return target if it won't finish
 	if not targetname or (unituid and UnitIsDead(unituid)) then return end
@@ -131,6 +133,7 @@ function mod:ExpelTarget(targetname, _, unituid)
 		warnExpel:Show(targetname)
 	end
 end
+--]]
 
 --[[
 --About 1 second faster than debuff
@@ -149,6 +152,7 @@ function mod:VolatileAcid(targetname, _, unituid)
 end
 --]]
 
+--[[
 function mod:SPELL_CAST_START(args)
 	if not self.Options.Enabled then return end
 	if not self:IsValidWarning(args.sourceGUID) then return end--Filter all casts done by mobs in combat with npcs/other mobs.
@@ -478,6 +482,7 @@ end
 function mod:LeavingZoneCombat()
 	self:Stop(true)
 end
+--]]
 
 function mod:GOSSIP_SHOW()
 	local gossipOptionID = self:GetGossipID()

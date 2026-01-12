@@ -20,14 +20,14 @@ for i = 1, #frames do
 	frames[i]:UnregisterEvent("GOSSIP_SHOW")
 end
 mod:RegisterEvents(
-	"SPELL_CAST_START 209027 212031 209485 209410 209413 211470 211464 209404 209495 225100 211299 209378 397892 397897 207979 212784 207980 212773 210261 209033 211473",
-	"SPELL_CAST_SUCCESS 209033",
-	"SPELL_AURA_APPLIED 209033 209512 397907 373552",
-	"SPELL_AURA_REMOVED 397907",
-	"UNIT_DIED",
-	"CHAT_MSG_MONSTER_SAY",
-	"GOSSIP_SHOW",
-	"UPDATE_MOUSEOVER_UNIT"
+--	"SPELL_CAST_START 209027 212031 209485 209410 209413 211470 211464 209404 209495 225100 211299 209378 397892 397897 207979 212784 207980 212773 210261 209033 211473",
+--	"SPELL_CAST_SUCCESS 209033",
+--	"SPELL_AURA_APPLIED 209033 209512 397907 373552",
+--	"SPELL_AURA_REMOVED 397907",
+--	"UNIT_DIED",
+--	"CHAT_MSG_MONSTER_SAY",
+--	"UPDATE_MOUSEOVER_UNIT",
+	"GOSSIP_SHOW"
 )
 for i = 1, #frames do
 	frames[i]:RegisterEvent("GOSSIP_SHOW")
@@ -35,70 +35,71 @@ end
 
 --TODO, at least 1-2 more GTFOs I forgot names of
 --TODO, target scan https://www.wowhead.com/beta/spell=397897/crushing-leap ?
---TODO, HIGH chance most nameplate timers are wrong in Legion Remix, if so they'll be disabled in remix with "not self:IsRemix()" checks
+--TODO, re-enable some stuff if a legion classic happens that doesn't have addon restrictions
 --[[
 (ability.id = 209033 or ability.id = 209027 or ability.id = 212031 or ability.id = 207979 or ability.id = 209485 or ability.id = 209410
  or ability.id = 209413 or ability.id = 211470 or ability.id = 225100 or ability.id = 211299 or ability.id = 207980 or ability.id = 212773
  or ability.id = 211464 or ability.id = 209404 or ability.id = 209495 or ability.id = 209378 or ability.id = 397892 or ability.id = 397897
  or ability.id = 212784 or ability.id = 211473) and type = "begincast"
 --]]
-local warnAvailableItems			= mod:NewAnnounce("warnAvailableItems", 1)
-local warnImpendingDoom				= mod:NewTargetAnnounce(397907, 2)
-local warnSoundAlarm				= mod:NewCastAnnounce(210261, 4)
-local warnSubdue					= mod:NewCastAnnounce(212773, 3)
-local warnCrushingLeap				= mod:NewCastAnnounce(397897, 3)
-local warnEyeStorm					= mod:NewCastAnnounce(212784, 4)
-local warnShadowSlash				= mod:NewCastAnnounce(211473, 4, nil, nil, "Tank|Healer")
-local warnHypnosisBat				= mod:NewTargetNoFilterAnnounce(373552, 3)
+--local warnAvailableItems			= mod:NewAnnounce("warnAvailableItems", 1)
+--local warnImpendingDoom				= mod:NewTargetAnnounce(397907, 2)
+--local warnSoundAlarm				= mod:NewCastAnnounce(210261, 4)
+--local warnSubdue					= mod:NewCastAnnounce(212773, 3)
+--local warnCrushingLeap				= mod:NewCastAnnounce(397897, 3)
+--local warnEyeStorm					= mod:NewCastAnnounce(212784, 4)
+--local warnShadowSlash				= mod:NewCastAnnounce(211473, 4, nil, nil, "Tank|Healer")
+--local warnHypnosisBat				= mod:NewTargetNoFilterAnnounce(373552, 3)
+--
+--local specWarnFortificationDispel	= mod:NewSpecialWarningDispel(209033, "MagicDispeller", nil, nil, 1, 2)
+--local specWarnQuellingStrike		= mod:NewSpecialWarningDodge(209027, "Melee", nil, 2, 1, 2)
+--local specWarnChargedBlast			= mod:NewSpecialWarningDodge(212031, "Tank", nil, nil, 1, 2)
+--local specWarnChargedSmash			= mod:NewSpecialWarningDodge(209495, "Melee", nil, 2, 1, 2)
+--local specWarnShockwave				= mod:NewSpecialWarningDodge(207979, nil, nil, nil, 2, 2)
+--local specWarnSubdue				= mod:NewSpecialWarningInterrupt(212773, "HasInterrupt", nil, nil, 1, 2)
+--local specWarnFortification			= mod:NewSpecialWarningInterrupt(209033, false, nil, nil, 1, 2)--Opt in. There are still higher prio interrupts in most packs with guards and this can be dispelled after the fact
+--local specWarnDrainMagic			= mod:NewSpecialWarningInterrupt(209485, "HasInterrupt", nil, nil, 1, 2)
+--local specWarnNightfallOrb			= mod:NewSpecialWarningInterrupt(209410, "HasInterrupt", nil, nil, 1, 2)
+--local specWarnSuppress				= mod:NewSpecialWarningInterrupt(209413, "HasInterrupt", nil, nil, 1, 2)
+--local specWarnBewitch				= mod:NewSpecialWarningInterrupt(211470, "HasInterrupt", nil, nil, 1, 2)
+--local specWarnChargingStation		= mod:NewSpecialWarningInterrupt(225100, "HasInterrupt", nil, nil, 1, 2)
+--local specWarnSearingGlare			= mod:NewSpecialWarningInterrupt(211299, "HasInterrupt", nil, nil, 1, 2)
+--local specWarnDisintegrationBeam	= mod:NewSpecialWarningInterrupt(207980, "HasInterrupt", nil, nil, 1, 2)
+--local specWarnFelDetonation			= mod:NewSpecialWarningMoveTo(211464, nil, nil, nil, 2, 13)
+--local specWarnSealMagic				= mod:NewSpecialWarningRun(209404, false, nil, 2, 4, 2)
+--local specWarnWhirlingBlades		= mod:NewSpecialWarningRun(209378, "Melee", nil, nil, 4, 2)
+--local specWarnScreamofPain			= mod:NewSpecialWarningCast(397892, "SpellCaster", nil, nil, 1, 2)
+--local specWarnImpendingDoom			= mod:NewSpecialWarningMoveAway(397907, nil, nil, nil, 1, 2)
+--local yellImpendingDoom				= mod:NewYell(397907)
+--local yellImpendingDoomFades		= mod:NewShortFadesYell(397907)
+--local specWarnGTFO					= mod:NewSpecialWarningGTFO(209512, nil, nil, nil, 1, 8)
+--
+--local timerQuellingStrikeCD			= mod:NewCDNPTimer(12, 209027, nil, "Tank", nil, 3, nil, DBM_COMMON_L.TANK_ICON)--Mostly for tank to be aware of mob positioning before CD comes off
+--local timerFortificationCD			= mod:NewCDNPTimer(18.1, 209033, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+--local timerSealMagicCD				= mod:NewCDNPTimer(18.1, 209404, nil, "SpellCaster", nil, 3)
+--local timerChargingStationCD		= mod:NewCDNPTimer(13.3, 225100, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+--local timerSuppressCD				= mod:NewCDNPTimer(17, 209413, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+--local timerSearingGlareCD			= mod:NewCDNPTimer(8.4, 211299, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+--local timerEyeStormCD				= mod:NewCDNPTimer(20.6, 212784, nil, nil, nil, 5)--Role color cause it needs a disrupt (stun, knockback) to interrupt.
+--local timerBewitchCD				= mod:NewCDNPTimer(17, 211470, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+--local timerShadowSlashCD			= mod:NewCDNPTimer(18.2, 211473, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+--local timerFelDetonationCD			= mod:NewCDNPTimer(12.1, 211464, nil, nil, nil, 2)
+--local timerScreamofPainCD			= mod:NewCDNPTimer(14.6, 397892, nil, nil, nil, 2)
+--local timerWhirlingBladesCD			= mod:NewCDNPTimer(18.2, 209378, nil, "Melee", nil, 2)
+--local timerDisintegrationBeamCD		= mod:NewCDNPTimer(6.1, 207980, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+--local timerShockwaveCD				= mod:NewCDNPTimer(8.4, 207979, nil, nil, nil, 3)
+--local timerCrushingLeapCD			= mod:NewCDNPTimer(16.9, 397897, nil, nil, nil, 3)
 
-local specWarnFortificationDispel	= mod:NewSpecialWarningDispel(209033, "MagicDispeller", nil, nil, 1, 2)
-local specWarnQuellingStrike		= mod:NewSpecialWarningDodge(209027, "Melee", nil, 2, 1, 2)
-local specWarnChargedBlast			= mod:NewSpecialWarningDodge(212031, "Tank", nil, nil, 1, 2)
-local specWarnChargedSmash			= mod:NewSpecialWarningDodge(209495, "Melee", nil, 2, 1, 2)
-local specWarnShockwave				= mod:NewSpecialWarningDodge(207979, nil, nil, nil, 2, 2)
-local specWarnSubdue				= mod:NewSpecialWarningInterrupt(212773, "HasInterrupt", nil, nil, 1, 2)
-local specWarnFortification			= mod:NewSpecialWarningInterrupt(209033, false, nil, nil, 1, 2)--Opt in. There are still higher prio interrupts in most packs with guards and this can be dispelled after the fact
-local specWarnDrainMagic			= mod:NewSpecialWarningInterrupt(209485, "HasInterrupt", nil, nil, 1, 2)
-local specWarnNightfallOrb			= mod:NewSpecialWarningInterrupt(209410, "HasInterrupt", nil, nil, 1, 2)
-local specWarnSuppress				= mod:NewSpecialWarningInterrupt(209413, "HasInterrupt", nil, nil, 1, 2)
-local specWarnBewitch				= mod:NewSpecialWarningInterrupt(211470, "HasInterrupt", nil, nil, 1, 2)
-local specWarnChargingStation		= mod:NewSpecialWarningInterrupt(225100, "HasInterrupt", nil, nil, 1, 2)
-local specWarnSearingGlare			= mod:NewSpecialWarningInterrupt(211299, "HasInterrupt", nil, nil, 1, 2)
-local specWarnDisintegrationBeam	= mod:NewSpecialWarningInterrupt(207980, "HasInterrupt", nil, nil, 1, 2)
-local specWarnFelDetonation			= mod:NewSpecialWarningMoveTo(211464, nil, nil, nil, 2, 13)
-local specWarnSealMagic				= mod:NewSpecialWarningRun(209404, false, nil, 2, 4, 2)
-local specWarnWhirlingBlades		= mod:NewSpecialWarningRun(209378, "Melee", nil, nil, 4, 2)
-local specWarnScreamofPain			= mod:NewSpecialWarningCast(397892, "SpellCaster", nil, nil, 1, 2)
-local specWarnImpendingDoom			= mod:NewSpecialWarningMoveAway(397907, nil, nil, nil, 1, 2)
-local yellImpendingDoom				= mod:NewYell(397907)
-local yellImpendingDoomFades		= mod:NewShortFadesYell(397907)
-local specWarnGTFO					= mod:NewSpecialWarningGTFO(209512, nil, nil, nil, 1, 8)
-
-local timerQuellingStrikeCD			= mod:NewCDNPTimer(12, 209027, nil, "Tank", nil, 3, nil, DBM_COMMON_L.TANK_ICON)--Mostly for tank to be aware of mob positioning before CD comes off
-local timerFortificationCD			= mod:NewCDNPTimer(18.1, 209033, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
-local timerSealMagicCD				= mod:NewCDNPTimer(18.1, 209404, nil, "SpellCaster", nil, 3)
-local timerChargingStationCD		= mod:NewCDNPTimer(13.3, 225100, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
-local timerSuppressCD				= mod:NewCDNPTimer(17, 209413, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
-local timerSearingGlareCD			= mod:NewCDNPTimer(8.4, 211299, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
-local timerEyeStormCD				= mod:NewCDNPTimer(20.6, 212784, nil, nil, nil, 5)--Role color cause it needs a disrupt (stun, knockback) to interrupt.
-local timerBewitchCD				= mod:NewCDNPTimer(17, 211470, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
-local timerShadowSlashCD			= mod:NewCDNPTimer(18.2, 211473, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
-local timerFelDetonationCD			= mod:NewCDNPTimer(12.1, 211464, nil, nil, nil, 2)
-local timerScreamofPainCD			= mod:NewCDNPTimer(14.6, 397892, nil, nil, nil, 2)
-local timerWhirlingBladesCD			= mod:NewCDNPTimer(18.2, 209378, nil, "Melee", nil, 2)
-local timerDisintegrationBeamCD		= mod:NewCDNPTimer(6.1, 207980, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
-local timerShockwaveCD				= mod:NewCDNPTimer(8.4, 207979, nil, nil, nil, 3)
-local timerCrushingLeapCD			= mod:NewCDNPTimer(16.9, 397897, nil, nil, nil, 3)
-
-mod:AddGossipOption(true, "Buff")
-mod:AddGossipOption(true, "Action")
+--mod:AddGossipOption(true, "Buff")
+--mod:AddGossipOption(true, "Action")
 mod:AddBoolOption("SpyHelper", true)
-mod:AddBoolOption("SendToChat2", true)
+--mod:AddBoolOption("SendToChat2", true)
 mod:AddBoolOption("SpyHelperClose2", false)
 
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 generalized, 7 GTFO
-local SendChatMessage = C_ChatInfo.SendChatMessage or SendChatMessage--Temp compat code
+--local SendChatMessage = C_ChatInfo.SendChatMessage or SendChatMessage--Temp compat code
 
+--[[
 function mod:SPELL_CAST_START(args)
 	if not self.Options.Enabled then return end
 	if not self:IsValidWarning(args.sourceGUID) then return end
@@ -277,8 +278,10 @@ function mod:UNIT_DIED(args)
 		timerCrushingLeapCD:Stop(args.destGUID)
 	end
 end
+--]]
 
 do
+	--[[
 	--Court notable NPC stuff
 	--Old professions icon Ids/skill levels maintained in case classic ever gets up to legion
 	--Parts of code modified from littlewigs with permission for max intermod operability and no wheel re-inventing
@@ -551,6 +554,7 @@ do
 			assessUsable(self, cid, item)
 		end
 	end
+--]]
 
 	--Court Clue Stuff
 	local clueTotal = 0
@@ -611,6 +615,7 @@ do
 		DBM.InfoFrame:Hide()
 	end
 
+	--[[
 	function mod:CHAT_MSG_MONSTER_SAY(msg, _, _, _, target)
 		if msg:find(L.Found) or msg == L.Found then
 			self:SendSync("Finished", target)
@@ -628,13 +633,14 @@ do
 			end
 		end
 	end
+	--]]
 
 	function mod:GOSSIP_SHOW()
-		local cid = DBM:GetUnitCreatureId("npc")
-		if self.Options.AutoGossipBuff and notableBuffNPCs[cid] then
-			self:SelectGossip(1)
-			return
-		end
+		--local cid = DBM:GetUnitCreatureId("npc")
+		--if self.Options.AutoGossipBuff and notableBuffNPCs[cid] then
+		--	self:SelectGossip(1)
+		--	return
+		--end
 		local gossipOptionID = self:GetGossipID()
 		if gossipOptionID then
 			if self.Options.AutoGossipAction and gossipOptionID == 45624 then -- Boat
@@ -676,12 +682,12 @@ do
 				hints[clue] = true
 				callUpdate(clue)
 			end
-		elseif msg == "Finished" then
-			self:ResetGossipState()
-			if clue then
-				local targetname = DBM:GetUnitFullName(clue) or clue
-				DBM:AddMsg(L.SpyFound:format(targetname))
-			end
+		--elseif msg == "Finished" then
+		--	self:ResetGossipState()
+		--	if clue then
+		--		local targetname = DBM:GetUnitFullName(clue) or clue
+		--		DBM:AddMsg(L.SpyFound:format(targetname))
+		--	end
 		end
 	end
 	function mod:OnBWSync(msg, extra, sender)
@@ -691,37 +697,37 @@ do
 				hints[extra] = true
 				callUpdate(extra)
 			end
-		elseif msg == "itemAvailable" and extra then
-			extra = tonumber(extra)
-			local item = notableBuffNPCs[extra] or notableNonBuffNPCs[extra]
-			if item then
-				assessUsable(self, extra, item)
-			end
-		elseif msg == "getProfessions" then
-			--Answer BW profession requests using BW comms
-			local professions = {}
-			for _,id in pairs({GetProfessions()}) do
-				local _, icon, skill = GetProfessionInfo(id) -- name is localized, so use icon instead
-				professions[icon] = skill
-			end
-			local profString = ""
-			for k,v in pairs(professions) do
-				profString = profString .. k .. ":" .. v .. "#"
-			end
-			self:SendBigWigsSync("professions", profString)
-		elseif msg == "professions" and extra then
-			--DBM and BW will both just parse the bigiwgs comms for profession data
-			for icon, skill in extra:gmatch("(%d+):(%d+)#") do
-				icon = tonumber(icon)
-				if icon then
-					skill = tonumber(skill)
-					if not professionCache[icon] then
-						professionCache[icon] = {}
-					end
-					professionCache[icon][#professionCache[icon]+1] = {name=sender, skill=skill}
-				end
-			end
-			self:AntiSpam(300, "CoSProf")
+		--elseif msg == "itemAvailable" and extra then
+		--	extra = tonumber(extra)
+		--	local item = notableBuffNPCs[extra] or notableNonBuffNPCs[extra]
+		--	if item then
+		--		assessUsable(self, extra, item)
+		--	end
+		--elseif msg == "getProfessions" then
+		--	--Answer BW profession requests using BW comms
+		--	local professions = {}
+		--	for _,id in pairs({GetProfessions()}) do
+		--		local _, icon, skill = GetProfessionInfo(id) -- name is localized, so use icon instead
+		--		professions[icon] = skill
+		--	end
+		--	local profString = ""
+		--	for k,v in pairs(professions) do
+		--		profString = profString .. k .. ":" .. v .. "#"
+		--	end
+		--	self:SendBigWigsSync("professions", profString)
+		--elseif msg == "professions" and extra then
+		--	--DBM and BW will both just parse the bigiwgs comms for profession data
+		--	for icon, skill in extra:gmatch("(%d+):(%d+)#") do
+		--		icon = tonumber(icon)
+		--		if icon then
+		--			skill = tonumber(skill)
+		--			if not professionCache[icon] then
+		--				professionCache[icon] = {}
+		--			end
+		--			professionCache[icon][#professionCache[icon]+1] = {name=sender, skill=skill}
+		--		end
+		--	end
+		--	self:AntiSpam(300, "CoSProf")
 		end
 	end
 end

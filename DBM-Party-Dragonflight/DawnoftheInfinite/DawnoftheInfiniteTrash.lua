@@ -1,5 +1,3 @@
-
-if DBM:IsPostMidnight() then return end
 local mod	= DBM:NewMod("DawnoftheInfiniteTrash", "DBM-Party-Dragonflight", 9)
 local L		= mod:GetLocalizedStrings()
 
@@ -11,12 +9,12 @@ mod.isTrashMod = true
 mod.isTrashModBossFightAllowed = true
 
 mod:RegisterEvents(
-	"SPELL_CAST_START 415770 413487 415435 415437 413529 413621 413622 412806 411958 412505 400165 413607 412136 413024 413023 412922 417481 419327 412378 412262 412233 412200 413427 407205 407535 419351 413544 412215 418200 411300 407891 415769 415436 412156",
-	"SPELL_CAST_SUCCESS 411994 412012 418435",
-	"SPELL_AURA_APPLIED 412063 415554 415437 413547",
+--	"SPELL_CAST_START 415770 413487 415435 415437 413529 413621 413622 412806 411958 412505 400165 413607 412136 413024 413023 412922 417481 419327 412378 412262 412233 412200 413427 407205 407535 419351 413544 412215 418200 411300 407891 415769 415436 412156",
+--	"SPELL_CAST_SUCCESS 411994 412012 418435",
+--	"SPELL_AURA_APPLIED 412063 415554 415437 413547",
 --	"SPELL_AURA_APPLIED_DOSE",
 --	"SPELL_AURA_REMOVED",
-	"UNIT_DIED",
+--	"UNIT_DIED",
 	"GOSSIP_SHOW"
 )
 
@@ -27,104 +25,105 @@ mod:RegisterEvents(
 --TODO, add https://www.wowhead.com/ptr-2/spell=411952/millennium-aid ?
 --TODO, electro Juiced Gigablast timer still needs data
 --TODO, Healing wave timer
-local warnTemposlice						= mod:NewSpellAnnounce(412012, 3, nil, nil, nil, nil, nil, 3)--High Prio Stun
-local warnElectroJuicedGigablast			= mod:NewCastAnnounce(412200, 3, nil, nil, nil, nil, nil, 3)--High Prio Stun
-local warnInfiniteSchism					= mod:NewCastAnnounce(419327, 3)--, nil, nil, nil, nil, nil, 3
-local warnDeployGoblinSappers				= mod:NewCastAnnounce(407535, 3, nil, nil, nil, nil, nil, 3)
-local warnTripleStrike						= mod:NewCastAnnounce(413487, 3, nil, nil, "Tank")
-local warnRendingCleave						= mod:NewCastAnnounce(412505, 3, nil, nil, "Tank")--High Prio
-local warnTitanicBulwark					= mod:NewCastAnnounce(413024, 3, nil, nil, "Tank")
-local warnStatickyPunch						= mod:NewCastAnnounce(412262, 3, nil, nil, "Tank")
-local warnBloom								= mod:NewCastAnnounce(413544, 3)
-local warnCorrodingVolley					= mod:NewCastAnnounce(413607, 4)--High Prio Off Interrupt
-local warnEnervateKick						= mod:NewCastAnnounce(415437, 4)--High Prio Off Interrupt
-local warnInfiniteBoltVolley				= mod:NewCastAnnounce(415770, 4)--High Prio Off Interrupt
-local warnDisplacedChronosequence			= mod:NewCastAnnounce(417481, 4)--High Prio Off Interrupt
-local warnInfiniteBurn						= mod:NewCastAnnounce(418200, 4)--High Prio Off Interrupt
-local warnFishBoltVolley					= mod:NewCastAnnounce(411300, 4)--High Prio Off Interrupt
-local warnDizzyingSands						= mod:NewCastAnnounce(412378, 4)--High Prio Off Interrupt
-local warnRocketBoltVolley					= mod:NewCastAnnounce(412233, 4)--High Prio Off Interrupt
-local warnHealingWave						= mod:NewCastAnnounce(407891, 4)--High Prio Off Interrupt
-local warnEnervate							= mod:NewTargetAnnounce(415437, 3)
-
-local specWarnInfiniteFury					= mod:NewSpecialWarningSpell(413622, nil, nil, nil, 2, 2)
-local specWarnAncientRadiance				= mod:NewSpecialWarningSpell(413023, nil, nil, nil, 2, 2)
-local specWarnTemporalStrike				= mod:NewSpecialWarningDodge(412136, nil, nil, nil, 2, 2)
-local specWarnTimerip						= mod:NewSpecialWarningDodge(412063, nil, nil, nil, 2, 2)
-local specWarnUntwist						= mod:NewSpecialWarningDodge(413529, nil, nil, nil, 2, 2)
-local specWarnTimelessCurse					= mod:NewSpecialWarningDodge(413621, nil, nil, nil, 2, 2)
-local specWarnBlightSpew					= mod:NewSpecialWarningDodge(412806, nil, nil, nil, 2, 2)
-local specWarnOrbofContemplation			= mod:NewSpecialWarningDodge(412129, nil, nil, nil, 2, 2)--High Prio
-local yellOrbofContemplation				= mod:NewShortYell(412129)--targets off a player, but everyone needs to dodge the orb
---local specWarnElectroJuicedGigablast		= mod:NewSpecialWarningDodge(412200, nil, nil, nil, 2, 2)
-local specWarnVolatileMortar				= mod:NewSpecialWarningDodge(407205, nil, nil, nil, 2, 2)
-local specWarnBronzeExhalation				= mod:NewSpecialWarningDodge(419351, nil, nil, nil, 2, 2)--High Prio
-local specWarnShroudingSandstorm			= mod:NewSpecialWarningDodge(412215, nil, nil, nil, 2, 2)--High Prio
-local specWarnBombingRun					= mod:NewSpecialWarningDodge(412156, nil, nil, nil, 2, 2)
-local specWarnEnervateYou					= mod:NewSpecialWarningMoveAway(415437, nil, nil, nil, 1, 2)
-local yellEnervate							= mod:NewShortYell(415437)
---local yellAstralBombFades					= mod:NewShortFadesYell(387843)
-local specWarnChronoburst					= mod:NewSpecialWarningDispel(415769, "RemoveMagic", nil, nil, 1, 2)
-local yellChronoburst						= mod:NewShortYell(415769)
-local specWarnEnervateDispel				= mod:NewSpecialWarningDispel(415437, "RemoveMagic", nil, nil, 1, 2)
-local specWarnBloom							= mod:NewSpecialWarningDispel(413544, "RemoveMagic", nil, nil, 1, 2)
-local specWarnInfiniteBoltVolley			= mod:NewSpecialWarningInterrupt(415770, "HasInterrupt", nil, nil, 1, 2)--High Prio
-local specWarnChronomelt					= mod:NewSpecialWarningInterrupt(411994, "HasInterrupt", nil, nil, 1, 2)
-local specWarnInfiniteBolt					= mod:NewSpecialWarningInterrupt(415435, "HasInterrupt", nil, nil, 1, 2)
-local specWarnEnervate						= mod:NewSpecialWarningInterrupt(415437, "HasInterrupt", nil, nil, 1, 2)--High Prio
-local specWarnStonebolt						= mod:NewSpecialWarningInterrupt(411958, "HasInterrupt", nil, nil, 1, 2)
-local specWarnCorrodingVolley				= mod:NewSpecialWarningInterrupt(413607, "HasInterrupt", nil, nil, 1, 2)
-local specWarnEpochBolt						= mod:NewSpecialWarningInterrupt(400165, false, nil, 2, 1, 2)--Lower prio over Corroding Volley
-local specWarnBindingGrasp					= mod:NewSpecialWarningInterrupt(412922, "HasInterrupt", nil, nil, 1, 2)
-local specWarnDisplacedChronosequence		= mod:NewSpecialWarningInterrupt(417481, "HasInterrupt", nil, nil, 1, 2)--High Prio
-local specWarnDizzyingSands					= mod:NewSpecialWarningInterrupt(412378, "HasInterrupt", nil, nil, 1, 2)--High Prio
-local specWarnRocketBoltVolley				= mod:NewSpecialWarningInterrupt(412233, "HasInterrupt", nil, nil, 1, 2)--High Prio
-local specWarnInfiniteBurn					= mod:NewSpecialWarningInterrupt(418200, "HasInterrupt", nil, nil, 1, 2)--High Prio
-local specWarnFishBoltVolley				= mod:NewSpecialWarningInterrupt(411300, "HasInterrupt", nil, nil, 1, 2)--High Prio
-local specWarnHealingWave					= mod:NewSpecialWarningInterrupt(407891, "HasInterrupt", nil, nil, 1, 2)--High Prio
-local specWarnTimebeam						= mod:NewSpecialWarningInterrupt(413427, "HasInterrupt", nil, nil, 1, 2)
-
---First half
-local timerChronomeltCD						= mod:NewCDNPTimer(18.2, 411994, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
---local timerTemposliceCD					= mod:NewCDNPTimer(21.8, 378003, nil, nil, nil, 5)--21-37, disabled for now
-local timerChronoBurstCD					= mod:NewCDNPTimer(20.6, 415769, nil, nil, nil, 5, nil, DBM_COMMON_L.MAGIC_ICON)
-local timerInfiniteBoltVolleyCD				= mod:NewCDNPTimer(13.3, 415770, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
-local timerTripleStrikeCD					= mod:NewCDNPTimer(12.1, 413487, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
-local timerTaintedSandsCD					= mod:NewCDNPTimer(13.3, 415436, nil, nil, nil, 3)
-local timerEnervateCD						= mod:NewCDNPTimer(13.3, 415437, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
-local timerBloomCD							= mod:NewCDNPTimer(18.2, 413544, nil, nil, nil, 5, nil, DBM_COMMON_L.MAGIC_ICON)
-local timerUntwistCD						= mod:NewCDNPTimer(13.3, 413529, nil, nil, nil, 3)
-local timerTimelessCurseCD					= mod:NewCDNPTimer(14.6, 413621, nil, nil, nil, 3)
-local timerInfiniteFuryCD					= mod:NewCDNPTimer(19.8, 413622, nil, nil, nil, 2)
-local timerBlightSpewCD						= mod:NewCDNPTimer(13.3, 412806, nil, nil, nil, 3)
-local timerStoneboltCD						= mod:NewCDNPTimer(10.9, 411958, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
---Second half
-local timerRendingCleaveCD					= mod:NewCDNPTimer(8.4, 412505, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)--10.5-13.3
-local timerCorrodingVolleyCD				= mod:NewCDNPTimer(18.2, 413607, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
-local timerTemporalStrikeCD					= mod:NewCDNPTimer(11.2, 412136, nil, nil, nil, 2)--11.2-18
-local timerTitanticBulwarkCD				= mod:NewCDNPTimer(25.4, 413024, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
-local timerAncientRadianceCD				= mod:NewCDNPTimer(9.7, 413023, nil, nil, nil, 2)--9.7-15
-local timerOrbofContemplationCD				= mod:NewCDNPTimer(13.3, 412129, nil, nil, nil, 3)
-local timerShroudingSandstormCD				= mod:NewCDNPTimer(23.1, 412215, nil, nil, nil, 2)--Updated Jan 23rd per hotfixes
-local timerBindingGraspCD					= mod:NewCDNPTimer(19.4, 412922, nil, nil, nil, 3)
-local timerDisplacedChronosequenceCD		= mod:NewCDNPTimer(16.1, 417481, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
-local timerInfiniteSchismCD					= mod:NewCDNPTimer(26.7, 419327, nil, nil, nil, 5)
-local timerDizzyingSandsCD					= mod:NewCDNPTimer(16.1, 412378, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
-local timerStatickyPunchCD					= mod:NewCDNPTimer(12.1, 412262, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
-local timerRocketBoltVolleyCD				= mod:NewCDNPTimer(19.5, 412233, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--Subpar data
-local timerInfiniteBurnCD					= mod:NewCDNPTimer(13.3, 418200, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
---local timerElectroJuicedGigablastCD		= mod:NewCDNPTimer(26.7, 412200, nil, nil, nil, 5)--Insuffiicent Data, NYI
-local timerBombingRunCD						= mod:NewCDNPTimer(17, 412156, nil, nil, nil, 3)
-local timerTimeBeamCD						= mod:NewCDNPTimer(7.2, 413427, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
-local timerVolatileMortarCD					= mod:NewCDNPTimer(19.5, 407205, nil, nil, nil, 3)
-local timerDeployGoblinSappersCD			= mod:NewCDNPTimer(30.3, 407535, nil, nil, nil, 5)--Poor data
-local timerBronzeExhalationCD				= mod:NewCDNPTimer(19.8, 419351, nil, nil, nil, 3)
-local timerFishBoltVolleyCD					= mod:NewCDNPTimer(10.4, 411300, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+--local warnTemposlice						= mod:NewSpellAnnounce(412012, 3, nil, nil, nil, nil, nil, 3)--High Prio Stun
+--local warnElectroJuicedGigablast			= mod:NewCastAnnounce(412200, 3, nil, nil, nil, nil, nil, 3)--High Prio Stun
+--local warnInfiniteSchism					= mod:NewCastAnnounce(419327, 3)--, nil, nil, nil, nil, nil, 3
+--local warnDeployGoblinSappers				= mod:NewCastAnnounce(407535, 3, nil, nil, nil, nil, nil, 3)
+--local warnTripleStrike						= mod:NewCastAnnounce(413487, 3, nil, nil, "Tank")
+--local warnRendingCleave						= mod:NewCastAnnounce(412505, 3, nil, nil, "Tank")--High Prio
+--local warnTitanicBulwark					= mod:NewCastAnnounce(413024, 3, nil, nil, "Tank")
+--local warnStatickyPunch						= mod:NewCastAnnounce(412262, 3, nil, nil, "Tank")
+--local warnBloom								= mod:NewCastAnnounce(413544, 3)
+--local warnCorrodingVolley					= mod:NewCastAnnounce(413607, 4)--High Prio Off Interrupt
+--local warnEnervateKick						= mod:NewCastAnnounce(415437, 4)--High Prio Off Interrupt
+--local warnInfiniteBoltVolley				= mod:NewCastAnnounce(415770, 4)--High Prio Off Interrupt
+--local warnDisplacedChronosequence			= mod:NewCastAnnounce(417481, 4)--High Prio Off Interrupt
+--local warnInfiniteBurn						= mod:NewCastAnnounce(418200, 4)--High Prio Off Interrupt
+--local warnFishBoltVolley					= mod:NewCastAnnounce(411300, 4)--High Prio Off Interrupt
+--local warnDizzyingSands						= mod:NewCastAnnounce(412378, 4)--High Prio Off Interrupt
+--local warnRocketBoltVolley					= mod:NewCastAnnounce(412233, 4)--High Prio Off Interrupt
+--local warnHealingWave						= mod:NewCastAnnounce(407891, 4)--High Prio Off Interrupt
+--local warnEnervate							= mod:NewTargetAnnounce(415437, 3)
+--
+--local specWarnInfiniteFury					= mod:NewSpecialWarningSpell(413622, nil, nil, nil, 2, 2)
+--local specWarnAncientRadiance				= mod:NewSpecialWarningSpell(413023, nil, nil, nil, 2, 2)
+--local specWarnTemporalStrike				= mod:NewSpecialWarningDodge(412136, nil, nil, nil, 2, 2)
+--local specWarnTimerip						= mod:NewSpecialWarningDodge(412063, nil, nil, nil, 2, 2)
+--local specWarnUntwist						= mod:NewSpecialWarningDodge(413529, nil, nil, nil, 2, 2)
+--local specWarnTimelessCurse					= mod:NewSpecialWarningDodge(413621, nil, nil, nil, 2, 2)
+--local specWarnBlightSpew					= mod:NewSpecialWarningDodge(412806, nil, nil, nil, 2, 2)
+--local specWarnOrbofContemplation			= mod:NewSpecialWarningDodge(412129, nil, nil, nil, 2, 2)--High Prio
+--local yellOrbofContemplation				= mod:NewShortYell(412129)--targets off a player, but everyone needs to dodge the orb
+----local specWarnElectroJuicedGigablast		= mod:NewSpecialWarningDodge(412200, nil, nil, nil, 2, 2)
+--local specWarnVolatileMortar				= mod:NewSpecialWarningDodge(407205, nil, nil, nil, 2, 2)
+--local specWarnBronzeExhalation				= mod:NewSpecialWarningDodge(419351, nil, nil, nil, 2, 2)--High Prio
+--local specWarnShroudingSandstorm			= mod:NewSpecialWarningDodge(412215, nil, nil, nil, 2, 2)--High Prio
+--local specWarnBombingRun					= mod:NewSpecialWarningDodge(412156, nil, nil, nil, 2, 2)
+--local specWarnEnervateYou					= mod:NewSpecialWarningMoveAway(415437, nil, nil, nil, 1, 2)
+--local yellEnervate							= mod:NewShortYell(415437)
+----local yellAstralBombFades					= mod:NewShortFadesYell(387843)
+--local specWarnChronoburst					= mod:NewSpecialWarningDispel(415769, "RemoveMagic", nil, nil, 1, 2)
+--local yellChronoburst						= mod:NewShortYell(415769)
+--local specWarnEnervateDispel				= mod:NewSpecialWarningDispel(415437, "RemoveMagic", nil, nil, 1, 2)
+--local specWarnBloom							= mod:NewSpecialWarningDispel(413544, "RemoveMagic", nil, nil, 1, 2)
+--local specWarnInfiniteBoltVolley			= mod:NewSpecialWarningInterrupt(415770, "HasInterrupt", nil, nil, 1, 2)--High Prio
+--local specWarnChronomelt					= mod:NewSpecialWarningInterrupt(411994, "HasInterrupt", nil, nil, 1, 2)
+--local specWarnInfiniteBolt					= mod:NewSpecialWarningInterrupt(415435, "HasInterrupt", nil, nil, 1, 2)
+--local specWarnEnervate						= mod:NewSpecialWarningInterrupt(415437, "HasInterrupt", nil, nil, 1, 2)--High Prio
+--local specWarnStonebolt						= mod:NewSpecialWarningInterrupt(411958, "HasInterrupt", nil, nil, 1, 2)
+--local specWarnCorrodingVolley				= mod:NewSpecialWarningInterrupt(413607, "HasInterrupt", nil, nil, 1, 2)
+--local specWarnEpochBolt						= mod:NewSpecialWarningInterrupt(400165, false, nil, 2, 1, 2)--Lower prio over Corroding Volley
+--local specWarnBindingGrasp					= mod:NewSpecialWarningInterrupt(412922, "HasInterrupt", nil, nil, 1, 2)
+--local specWarnDisplacedChronosequence		= mod:NewSpecialWarningInterrupt(417481, "HasInterrupt", nil, nil, 1, 2)--High Prio
+--local specWarnDizzyingSands					= mod:NewSpecialWarningInterrupt(412378, "HasInterrupt", nil, nil, 1, 2)--High Prio
+--local specWarnRocketBoltVolley				= mod:NewSpecialWarningInterrupt(412233, "HasInterrupt", nil, nil, 1, 2)--High Prio
+--local specWarnInfiniteBurn					= mod:NewSpecialWarningInterrupt(418200, "HasInterrupt", nil, nil, 1, 2)--High Prio
+--local specWarnFishBoltVolley				= mod:NewSpecialWarningInterrupt(411300, "HasInterrupt", nil, nil, 1, 2)--High Prio
+--local specWarnHealingWave					= mod:NewSpecialWarningInterrupt(407891, "HasInterrupt", nil, nil, 1, 2)--High Prio
+--local specWarnTimebeam						= mod:NewSpecialWarningInterrupt(413427, "HasInterrupt", nil, nil, 1, 2)
+--
+----First half
+--local timerChronomeltCD						= mod:NewCDNPTimer(18.2, 411994, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+----local timerTemposliceCD					= mod:NewCDNPTimer(21.8, 378003, nil, nil, nil, 5)--21-37, disabled for now
+--local timerChronoBurstCD					= mod:NewCDNPTimer(20.6, 415769, nil, nil, nil, 5, nil, DBM_COMMON_L.MAGIC_ICON)
+--local timerInfiniteBoltVolleyCD				= mod:NewCDNPTimer(13.3, 415770, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+--local timerTripleStrikeCD					= mod:NewCDNPTimer(12.1, 413487, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+--local timerTaintedSandsCD					= mod:NewCDNPTimer(13.3, 415436, nil, nil, nil, 3)
+--local timerEnervateCD						= mod:NewCDNPTimer(13.3, 415437, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+--local timerBloomCD							= mod:NewCDNPTimer(18.2, 413544, nil, nil, nil, 5, nil, DBM_COMMON_L.MAGIC_ICON)
+--local timerUntwistCD						= mod:NewCDNPTimer(13.3, 413529, nil, nil, nil, 3)
+--local timerTimelessCurseCD					= mod:NewCDNPTimer(14.6, 413621, nil, nil, nil, 3)
+--local timerInfiniteFuryCD					= mod:NewCDNPTimer(19.8, 413622, nil, nil, nil, 2)
+--local timerBlightSpewCD						= mod:NewCDNPTimer(13.3, 412806, nil, nil, nil, 3)
+--local timerStoneboltCD						= mod:NewCDNPTimer(10.9, 411958, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+----Second half
+--local timerRendingCleaveCD					= mod:NewCDNPTimer(8.4, 412505, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)--10.5-13.3
+--local timerCorrodingVolleyCD				= mod:NewCDNPTimer(18.2, 413607, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+--local timerTemporalStrikeCD					= mod:NewCDNPTimer(11.2, 412136, nil, nil, nil, 2)--11.2-18
+--local timerTitanticBulwarkCD				= mod:NewCDNPTimer(25.4, 413024, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+--local timerAncientRadianceCD				= mod:NewCDNPTimer(9.7, 413023, nil, nil, nil, 2)--9.7-15
+--local timerOrbofContemplationCD				= mod:NewCDNPTimer(13.3, 412129, nil, nil, nil, 3)
+--local timerShroudingSandstormCD				= mod:NewCDNPTimer(23.1, 412215, nil, nil, nil, 2)--Updated Jan 23rd per hotfixes
+--local timerBindingGraspCD					= mod:NewCDNPTimer(19.4, 412922, nil, nil, nil, 3)
+--local timerDisplacedChronosequenceCD		= mod:NewCDNPTimer(16.1, 417481, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+--local timerInfiniteSchismCD					= mod:NewCDNPTimer(26.7, 419327, nil, nil, nil, 5)
+--local timerDizzyingSandsCD					= mod:NewCDNPTimer(16.1, 412378, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+--local timerStatickyPunchCD					= mod:NewCDNPTimer(12.1, 412262, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+--local timerRocketBoltVolleyCD				= mod:NewCDNPTimer(19.5, 412233, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--Subpar data
+--local timerInfiniteBurnCD					= mod:NewCDNPTimer(13.3, 418200, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+----local timerElectroJuicedGigablastCD		= mod:NewCDNPTimer(26.7, 412200, nil, nil, nil, 5)--Insuffiicent Data, NYI
+--local timerBombingRunCD						= mod:NewCDNPTimer(17, 412156, nil, nil, nil, 3)
+--local timerTimeBeamCD						= mod:NewCDNPTimer(7.2, 413427, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+--local timerVolatileMortarCD					= mod:NewCDNPTimer(19.5, 407205, nil, nil, nil, 3)
+--local timerDeployGoblinSappersCD			= mod:NewCDNPTimer(30.3, 407535, nil, nil, nil, 5)--Poor data
+--local timerBronzeExhalationCD				= mod:NewCDNPTimer(19.8, 419351, nil, nil, nil, 3)
+--local timerFishBoltVolleyCD					= mod:NewCDNPTimer(10.4, 411300, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 
 mod:AddGossipOption(true, "Action")
 
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc, 7 off interrupt, 8 GTFO
 
+--[[
 local function additionalIds(self, args)
 	local spellId = args.spellId
 	if spellId == 412200 then
@@ -483,6 +482,7 @@ function mod:UNIT_DIED(args)
 		timerInfiniteBurnCD:Stop(args.destGUID)
 	end
 end
+--]]
 
 function mod:GOSSIP_SHOW()
 	local gossipOptionID = self:GetGossipID()

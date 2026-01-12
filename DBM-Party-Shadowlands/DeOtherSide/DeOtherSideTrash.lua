@@ -1,3 +1,4 @@
+if DBM:IsPostMidnight() then return end
 local mod	= DBM:NewMod("DeOtherSideTrash", "DBM-Party-Shadowlands", 7)
 local L		= mod:GetLocalizedStrings()
 
@@ -21,7 +22,7 @@ local warnUndyingRage					= mod:NewTargetNoFilterAnnounce(333227, 4, nil, "Tank|
 local warnEnragedMask					= mod:NewSpellAnnounce(342869, 2)
 
 --General
---local specWarnGTFO						= mod:NewSpecialWarningGTFO(257274, nil, nil, nil, 1, 8)
+--local specWarnGTFO					= mod:NewSpecialWarningGTFO(257274, nil, nil, nil, 1, 8)
 --Notable Ring Trash
 local specWarnEruptingDarkness			= mod:NewSpecialWarningDodge(334051, nil, nil, nil, 2, 2)
 local specWarnRage						= mod:NewSpecialWarningSpell(333787, "Healer", nil, nil, 2, 2)

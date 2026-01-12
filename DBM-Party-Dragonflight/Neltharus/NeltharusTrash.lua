@@ -1,4 +1,3 @@
-if DBM:IsPostMidnight() then return end
 local mod	= DBM:NewMod("NeltharusTrash", "DBM-Party-Dragonflight", 4)
 local L		= mod:GetLocalizedStrings()
 
@@ -9,12 +8,12 @@ mod.isTrashMod = true
 mod.isTrashModBossFightAllowed = true
 
 mod:RegisterEvents(
-	"SPELL_CAST_START 382708 376186 372566 372311 372201 381663 378282 384597 378847 372615 372561 395427 379406 384161 372262 372971 372223 373084 378827 384623",
-	"SPELL_CAST_SUCCESS 376169 372296 374451 384597",
-	"SPELL_AURA_APPLIED 384161 373089 371875 373540 372461 382791 383651",
+--	"SPELL_CAST_START 382708 376186 372566 372311 372201 381663 378282 384597 378847 372615 372561 395427 379406 384161 372262 372971 372223 373084 378827 384623",
+--	"SPELL_CAST_SUCCESS 376169 372296 374451 384597",
+--	"SPELL_AURA_APPLIED 384161 373089 371875 373540 372461 382791 383651",
 --	"SPELL_AURA_APPLIED_DOSE 339528",
-	"SPELL_AURA_REMOVED 382791 383651",
-	"UNIT_DIED",
+--	"SPELL_AURA_REMOVED 382791 383651",
+--	"UNIT_DIED",
 	"GOSSIP_SHOW"
 )
 
@@ -27,68 +26,69 @@ mod:RegisterEvents(
 (ability.id = 384623 or ability.id = 378827 or ability.id = 382708 or ability.id = 376186 or ability.id = 372566 or ability.id = 372311 or ability.id = 372201 or ability.id = 381663 or ability.id = 378282 or ability.id = 384597 or ability.id = 378847 or ability.id = 372615 or ability.id = 372561 or ability.id = 395427 or ability.id = 379406 or ability.id = 384161 or ability.id = 372262 or ability.id = 372971 or ability.id = 372223 or ability.id = 373084) and type = "begincast"
  or (ability.id = 376169 or ability.id = 372296) and type = "cast"
  or ability.id = 383654
---]]
-local warnBlazingSlash						= mod:NewCastAnnounce(384597, 3, nil, nil, "Tank|Healer")
-local warnBrutalStrike						= mod:NewCastAnnounce(378847, 3, nil, nil, "Tank|Healer")
-local warnReverberatingSlam					= mod:NewCastAnnounce(372971, 3, nil, nil, "Tank|Healer")
-local warnMoltencore						= mod:NewCastAnnounce(378282, 4)
-local warnBurningRoar						= mod:NewCastAnnounce(395427, 4)
-local warnMoteofCombustion					= mod:NewCastAnnounce(384161, 4)
-local warnMendingClay						= mod:NewCastAnnounce(372223, 3)
-local warnForgestomp						= mod:NewCastAnnounce(384623, 3)
-local warnBoldAmbush						= mod:NewTargetNoFilterAnnounce(372566, 3)
-local warnBindingSpear						= mod:NewTargetNoFilterAnnounce(372561, 3)
-local warnMoltenBarrier						= mod:NewTargetNoFilterAnnounce(382791, 4)
-local warnBurningChain						= mod:NewTargetNoFilterAnnounce(374451, 1)
-
-local specWarnTempest						= mod:NewSpecialWarningSpell(381663, nil, nil, nil, 2, 13)--pushbackincoming
-local specWarnVolcanicGuard					= mod:NewSpecialWarningDodge(382708, nil, nil, nil, 1, 2)
-local specWarnEruptiveCrush					= mod:NewSpecialWarningDodge(376186, nil, nil, nil, 2, 2)
-local specWarnMagmaFist						= mod:NewSpecialWarningDodge(372311, nil, nil, nil, 2, 2)
-local specWarnExplosiveConcoction			= mod:NewSpecialWarningDodge(378827, nil, nil, nil, 2, 2)
-local specWarnScorchingBreath				= mod:NewSpecialWarningDodge(372201, nil, nil, nil, 2, 2)
-local specWarnThrowLava						= mod:NewSpecialWarningDodge(379406, nil, nil, nil, 2, 2)
-local specWarnPierceMarrow					= mod:NewSpecialWarningDodge(372262, nil, nil, nil, 2, 2)
-local specWarnBindingSpear					= mod:NewSpecialWarningDodge(372561, nil, nil, nil, 2, 2)
-local specWarnConflagrantBattery			= mod:NewSpecialWarningDodge(372296, nil, nil, nil, 2, 2)
-local yellBindingSpear						= mod:NewYell(372561)
-local specWarnScorchingFusillade			= mod:NewSpecialWarningMoveAway(372543, nil, nil, nil, 1, 2)
-local yellScorchingFusillade				= mod:NewYell(372543)
-local specWarnMoteofCombustionYou			= mod:NewSpecialWarningYou(384161, nil, nil, nil, 1, 2)
-local yellMoteofCombustion					= mod:NewYell(384161)
-local specWarnBoldAmbush					= mod:NewSpecialWarningYou(372566, nil, nil, nil, 1, 2)
-local yellBoldAmbush						= mod:NewYell(372566)
-local specWarnImbuedMagma					= mod:NewSpecialWarningDispel(372461, "RemoveMagic", nil, nil, 1, 2)
-local specWarnFiredUp						= mod:NewSpecialWarningDispel(371875, "RemoveEnrage", nil, nil, 2, 2)
-local specWarnMoltenCore					= mod:NewSpecialWarningInterrupt(378282, "HasInterrupt", nil, nil, 1, 2)
-local specWarnEmberReach					= mod:NewSpecialWarningInterrupt(372615, "HasInterrupt", nil, nil, 1, 2)
-local specWarnBurningRoar					= mod:NewSpecialWarningInterrupt(395427, "HasInterrupt", nil, nil, 1, 2)
-local specWarnMoteofCombustion				= mod:NewSpecialWarningInterrupt(384161, "HasInterrupt", nil, nil, 1, 2)
-local specWarnMendingClay					= mod:NewSpecialWarningInterrupt(372223, "HasInterrupt", nil, nil, 1, 2)
-local specWarnMoltenArmy					= mod:NewSpecialWarningInterrupt(383651, "HasInterrupt", nil, nil, 1, 2)
-
-local timerMagmaFistCD						= mod:NewCDNPTimer(25.4, 372311, nil, nil, nil, 3)
-local timerBrutalStrikeCD					= mod:NewCDNPTimer(15.1, 378847, nil, "Tank|Healer", nil, 5)
-local timerBlazingSlashCD					= mod:NewCDNPTimer(12.4, 384597, nil, "Tank|Healer", nil, 5)--Doesn't go on cooldown if stunned
-local timerVolcanicGuardCD					= mod:NewCDNPTimer(25.1, 382708, nil, nil, nil, 3)
-local timerExplosiveConcoctionCD			= mod:NewCDNPTimer(18.2, 378827, nil, nil, nil, 3)
-local timerBindingSpearCD					= mod:NewCDNPTimer(25.4, 372561, nil, nil, nil, 3)
-local timerMendingClayCD					= mod:NewCDNPTimer(25.4, 372223, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
-local timerBurningRoarCD					= mod:NewCDNPTimer(20.5, 395427, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
-local timerMoltenCoreCD						= mod:NewCDNPTimer(8.1, 378282, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
-local timerEruptiveCrushCD					= mod:NewCDNPTimer(15.7, 376186, nil, nil, nil, 3)
-local timerScorchingBreathCD				= mod:NewCDNPTimer(16.1, 372201, nil, nil, nil, 3)
-local timerMoteofCombustionCD				= mod:NewCDNPTimer(18.2, 384161, nil, nil, nil, 3)
-local timerThrowLavaCD						= mod:NewCDNPTimer(12.1, 379406, nil, nil, nil, 3)
-local timerPierceMarrowCD					= mod:NewCDNPTimer(10.9, 372262, nil, nil, nil, 3)
-local timerScorchingFusilladeCD				= mod:NewCDNPTimer(23, 372543, nil, nil, nil, 3)
-local timerConflagrantBatteryCD				= mod:NewCDNPTimer(22.6, 372296, nil, nil, nil, 3)
---local timerReverbSlamCD					= mod:NewCDNPTimer(17, 372971, nil, nil, nil, 3)--8-17? needs further review
-local timerCandescentTempestCD				= mod:NewCDNPTimer(27.5, 381663, nil, nil, nil, 2)
-local timerForgestompCD						= mod:NewCDNPTimer(17.3, 384623, nil, nil, nil, 2)
+----]]
+--local warnBlazingSlash						= mod:NewCastAnnounce(384597, 3, nil, nil, "Tank|Healer")
+--local warnBrutalStrike						= mod:NewCastAnnounce(378847, 3, nil, nil, "Tank|Healer")
+--local warnReverberatingSlam					= mod:NewCastAnnounce(372971, 3, nil, nil, "Tank|Healer")
+--local warnMoltencore						= mod:NewCastAnnounce(378282, 4)
+--local warnBurningRoar						= mod:NewCastAnnounce(395427, 4)
+--local warnMoteofCombustion					= mod:NewCastAnnounce(384161, 4)
+--local warnMendingClay						= mod:NewCastAnnounce(372223, 3)
+--local warnForgestomp						= mod:NewCastAnnounce(384623, 3)
+--local warnBoldAmbush						= mod:NewTargetNoFilterAnnounce(372566, 3)
+--local warnBindingSpear						= mod:NewTargetNoFilterAnnounce(372561, 3)
+--local warnMoltenBarrier						= mod:NewTargetNoFilterAnnounce(382791, 4)
+--local warnBurningChain						= mod:NewTargetNoFilterAnnounce(374451, 1)
+--
+--local specWarnTempest						= mod:NewSpecialWarningSpell(381663, nil, nil, nil, 2, 13)--pushbackincoming
+--local specWarnVolcanicGuard					= mod:NewSpecialWarningDodge(382708, nil, nil, nil, 1, 2)
+--local specWarnEruptiveCrush					= mod:NewSpecialWarningDodge(376186, nil, nil, nil, 2, 2)
+--local specWarnMagmaFist						= mod:NewSpecialWarningDodge(372311, nil, nil, nil, 2, 2)
+--local specWarnExplosiveConcoction			= mod:NewSpecialWarningDodge(378827, nil, nil, nil, 2, 2)
+--local specWarnScorchingBreath				= mod:NewSpecialWarningDodge(372201, nil, nil, nil, 2, 2)
+--local specWarnThrowLava						= mod:NewSpecialWarningDodge(379406, nil, nil, nil, 2, 2)
+--local specWarnPierceMarrow					= mod:NewSpecialWarningDodge(372262, nil, nil, nil, 2, 2)
+--local specWarnBindingSpear					= mod:NewSpecialWarningDodge(372561, nil, nil, nil, 2, 2)
+--local specWarnConflagrantBattery			= mod:NewSpecialWarningDodge(372296, nil, nil, nil, 2, 2)
+--local yellBindingSpear						= mod:NewYell(372561)
+--local specWarnScorchingFusillade			= mod:NewSpecialWarningMoveAway(372543, nil, nil, nil, 1, 2)
+--local yellScorchingFusillade				= mod:NewYell(372543)
+--local specWarnMoteofCombustionYou			= mod:NewSpecialWarningYou(384161, nil, nil, nil, 1, 2)
+--local yellMoteofCombustion					= mod:NewYell(384161)
+--local specWarnBoldAmbush					= mod:NewSpecialWarningYou(372566, nil, nil, nil, 1, 2)
+--local yellBoldAmbush						= mod:NewYell(372566)
+--local specWarnImbuedMagma					= mod:NewSpecialWarningDispel(372461, "RemoveMagic", nil, nil, 1, 2)
+--local specWarnFiredUp						= mod:NewSpecialWarningDispel(371875, "RemoveEnrage", nil, nil, 2, 2)
+--local specWarnMoltenCore					= mod:NewSpecialWarningInterrupt(378282, "HasInterrupt", nil, nil, 1, 2)
+--local specWarnEmberReach					= mod:NewSpecialWarningInterrupt(372615, "HasInterrupt", nil, nil, 1, 2)
+--local specWarnBurningRoar					= mod:NewSpecialWarningInterrupt(395427, "HasInterrupt", nil, nil, 1, 2)
+--local specWarnMoteofCombustion				= mod:NewSpecialWarningInterrupt(384161, "HasInterrupt", nil, nil, 1, 2)
+--local specWarnMendingClay					= mod:NewSpecialWarningInterrupt(372223, "HasInterrupt", nil, nil, 1, 2)
+--local specWarnMoltenArmy					= mod:NewSpecialWarningInterrupt(383651, "HasInterrupt", nil, nil, 1, 2)
+--
+--local timerMagmaFistCD						= mod:NewCDNPTimer(25.4, 372311, nil, nil, nil, 3)
+--local timerBrutalStrikeCD					= mod:NewCDNPTimer(15.1, 378847, nil, "Tank|Healer", nil, 5)
+--local timerBlazingSlashCD					= mod:NewCDNPTimer(12.4, 384597, nil, "Tank|Healer", nil, 5)--Doesn't go on cooldown if stunned
+--local timerVolcanicGuardCD					= mod:NewCDNPTimer(25.1, 382708, nil, nil, nil, 3)
+--local timerExplosiveConcoctionCD			= mod:NewCDNPTimer(18.2, 378827, nil, nil, nil, 3)
+--local timerBindingSpearCD					= mod:NewCDNPTimer(25.4, 372561, nil, nil, nil, 3)
+--local timerMendingClayCD					= mod:NewCDNPTimer(25.4, 372223, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+--local timerBurningRoarCD					= mod:NewCDNPTimer(20.5, 395427, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+--local timerMoltenCoreCD						= mod:NewCDNPTimer(8.1, 378282, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+--local timerEruptiveCrushCD					= mod:NewCDNPTimer(15.7, 376186, nil, nil, nil, 3)
+--local timerScorchingBreathCD				= mod:NewCDNPTimer(16.1, 372201, nil, nil, nil, 3)
+--local timerMoteofCombustionCD				= mod:NewCDNPTimer(18.2, 384161, nil, nil, nil, 3)
+--local timerThrowLavaCD						= mod:NewCDNPTimer(12.1, 379406, nil, nil, nil, 3)
+--local timerPierceMarrowCD					= mod:NewCDNPTimer(10.9, 372262, nil, nil, nil, 3)
+--local timerScorchingFusilladeCD				= mod:NewCDNPTimer(23, 372543, nil, nil, nil, 3)
+--local timerConflagrantBatteryCD				= mod:NewCDNPTimer(22.6, 372296, nil, nil, nil, 3)
+----local timerReverbSlamCD					= mod:NewCDNPTimer(17, 372971, nil, nil, nil, 3)--8-17? needs further review
+--local timerCandescentTempestCD				= mod:NewCDNPTimer(27.5, 381663, nil, nil, nil, 2)
+--local timerForgestompCD						= mod:NewCDNPTimer(17.3, 384623, nil, nil, nil, 2)
 
 mod:AddGossipOption(true, "Buff")
 
+--[[
 --local playerName = UnitName("player")
 
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc, 7 off interrupt
@@ -329,6 +329,7 @@ function mod:UNIT_DIED(args)
 		timerMoltenCoreCD:Stop(args.destGUID)
 	end
 end
+--]]
 
 function mod:GOSSIP_SHOW()
 	local gossipOptionID = self:GetGossipID()
