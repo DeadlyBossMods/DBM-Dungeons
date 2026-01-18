@@ -12,20 +12,20 @@ mod.sendMainBossGUID = true
 
 mod:RegisterCombat("combat")
 
+mod:AddPrivateAuraSoundOption(433740, true, 433740, 1)
+
+function mod:OnLimitedCombatStart()
+	self:EnablePrivateAuraSound(433740, "runout", 2)
+end
+
+--[[
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 435012 439506 433766 442210",
 	"SPELL_CAST_SUCCESS 433740",
 	"SPELL_AURA_APPLIED 433740",
 	"SPELL_AURA_REMOVED 434408 433740"
---	"SPELL_AURA_REMOVED"
---	"SPELL_PERIODIC_DAMAGE",
---	"SPELL_PERIODIC_MISSED"
---	"UNIT_SPELLCAST_SUCCEEDED boss1"
 )
-
---TODO: Charge also casts Impale. Eye also casts Impale AND Infestion. So Impale and Infestation timers will need enough data to separate true CDs from chained mechanics
---TODO: Target scan Burrowing Charge and impale?
---TODO, add Bloodstained Webmage on mythic, including it's web wrap
+--]]
 --[[
 (ability.id = 435012 or ability.id = 439506 or ability.id = 433766) and type = "begincast"
  or ability.id = 433740 and type = "cast"
@@ -33,6 +33,7 @@ mod:RegisterEventsInCombat(
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
  or ability.id = 442210 and (type = "begincast" or type = "cast") or stoppedAbility.id = 442210
 --]]
+--[[
 local warnImpale							= mod:NewCountAnnounce(433425, 3)
 local warnBurrowCharge						= mod:NewCountAnnounce(439506, 3)
 
@@ -82,15 +83,10 @@ function mod:OnCombatStart(delay)
 	self.vb.infestationCount = 0
 	self.vb.eyeCount = 0
 	self.vb.stormActive = false
---	timerInfestationCD:Start(1-delay, 1)--Instantly on pull
 	timerImpaleCD:Start(4.4-delay, 1)
 	timerBurrowChargeCD:Start(14.2-delay, 1)
 	timerEyeOfTheStormCD:Start(30.7-delay, 1)
 end
-
---function mod:OnCombatEnd()
-
---end
 
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
@@ -156,7 +152,6 @@ function mod:SPELL_AURA_APPLIED(args)
 		yellInfestationFades:Countdown(spellId)
 	end
 end
---mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED
 
 function mod:SPELL_AURA_REMOVED(args)
 	local spellId = args.spellId
@@ -173,32 +168,6 @@ function mod:SPELL_AURA_REMOVED(args)
 		if args:IsPlayer() then
 			yellInfestationFades:Cancel()
 		end
-	end
-end
-
---[[
-function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId, spellName)
-	if spellId == 372820 and destGUID == UnitGUID("player") and self:AntiSpam(3, 2) then
-		specWarnGTFO:Show(spellName)
-		specWarnGTFO:Play("watchfeet")
-	end
-end
-mod.SPELL_PERIODIC_MISSED = mod.SPELL_PERIODIC_DAMAGE
---]]
-
---[[
-function mod:UNIT_DIED(args)
-	local cid = self:GetCIDFromGUID(args.destGUID)
-	if cid == 193435 then
-
-	end
-end
---]]
-
---[[
-function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
-	if spellId == 74859 then
-
 	end
 end
 --]]

@@ -4,7 +4,7 @@ local L		= mod:GetLocalizedStrings()
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(213179)
 mod:SetEncounterID(2926)
-mod:SetUsedIcons(1, 2, 3, 4)
+--mod:SetUsedIcons(1, 2, 3, 4)
 mod:SetHotfixNoticeRev(20240818000000)
 --mod:SetMinSyncRevision(20211203000000)
 mod:SetZone(2660)
@@ -13,23 +13,20 @@ mod.sendMainBossGUID = true
 
 mod:RegisterCombat("combat")
 
+--[[
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 438471 438476 438473",
---	"SPELL_CAST_SUCCESS",
 	"SPELL_SUMMON 439040",
 	"SPELL_AURA_APPLIED 446794 439070 436614",
 	"SPELL_AURA_APPLIED_DOSE 446794 434830"
---	"SPELL_AURA_REMOVED"
---	"SPELL_PERIODIC_DAMAGE",
---	"SPELL_PERIODIC_MISSED"
---	"UNIT_SPELLCAST_SUCCEEDED boss1"
 )
+--]]
 
---TODO, if higher difficulties kill adds instead of CC/control them, swap to 8-5 icons instead of 1-4
 --[[
 (ability.id = 438471 or ability.id = 438476 or ability.id = 438473) and type = "begincast"
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
 --]]
+--[[
 local warnInsatiable						= mod:NewStackAnnounce(446794, 4)
 local warnVileWebbing						= mod:NewCountAnnounce(434830, 3, nil, nil, DBM_CORE_L.AUTO_ANNOUNCE_OPTIONS.stack:format(434830))--Player
 local warnWebWrap							= mod:NewTargetNoFilterAnnounce(436614, 2, nil, "RemoveMagic")
@@ -38,8 +35,6 @@ local specWarnAlertingShrill				= mod:NewSpecialWarningCount(438476, nil, nil, n
 local specWarnGossamerOnslaught				= mod:NewSpecialWarningDodgeCount(438473, nil, nil, nil, 2, 2)
 local specWarnVoraciousBite					= mod:NewSpecialWarningDefensive(438471, nil, nil, nil, 1, 2)
 local specWarnHunger						= mod:NewSpecialWarningRun(439070, nil, nil, nil, 1, 2)
---local yellSomeAbility						= mod:NewYell(372107)
---local specWarnGTFO						= mod:NewSpecialWarningGTFO(372820, nil, nil, nil, 1, 8)
 
 local timerVoraciousBiteCD					= mod:NewCDCountTimer(14.1, 438471, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerAlertingShrillCD					= mod:NewVarCountTimer("v38.7-40.9", 438476, nil, nil, nil, 1)--38.7-40.9
@@ -61,10 +56,6 @@ function mod:OnCombatStart(delay)
 	timerAlertingShrillCD:Start(10-delay, 1)
 	timerGossamerOnslaughtCD:Start(30.0-delay, 1)
 end
-
---function mod:OnCombatEnd()
-
---end
 
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
@@ -106,15 +97,6 @@ function mod:SPELL_CAST_START(args)
 	end
 end
 
---[[
-function mod:SPELL_CAST_SUCCESS(args)
-	local spellId = args.spellId
-	if spellId == 372858 then
-
-	end
-end
---]]
-
 function mod:SPELL_SUMMON(args)
 	local spellId = args.spellId
 	if spellId == 439040 then
@@ -142,30 +124,4 @@ function mod:SPELL_AURA_APPLIED(args)
 	end
 end
 mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED
-
---[[
-function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId, spellName)
-	if spellId == 372820 and destGUID == UnitGUID("player") and self:AntiSpam(3, 2) then
-		specWarnGTFO:Show(spellName)
-		specWarnGTFO:Play("watchfeet")
-	end
-end
-mod.SPELL_PERIODIC_MISSED = mod.SPELL_PERIODIC_DAMAGE
---]]
-
---[[
-function mod:UNIT_DIED(args)
-	local cid = self:GetCIDFromGUID(args.destGUID)
-	if cid == 193435 then
-
-	end
-end
---]]
-
---[[
-function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
-	if spellId == 74859 then
-
-	end
-end
 --]]

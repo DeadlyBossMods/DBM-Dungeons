@@ -12,14 +12,24 @@ mod.sendMainBossGUID = true
 
 mod:RegisterCombat("combat")
 
+mod:AddPrivateAuraSoundOption(434406, true, 434407, 1)--Rolling Acid target
+mod:AddPrivateAuraSoundOption(439783, true, 434089, 1)--Spineret's Strands target
+
+function mod:OnLimitedCombatStart()
+	self:EnablePrivateAuraSound(434406, "targetyou", 2)--Likely dungeon version of Rolling Acid
+	self:EnablePrivateAuraSound(439790, "targetyou", 2, 434406)--Likely the raid version of Rolling Acid
+	self:EnablePrivateAuraSound(439783, "runout", 12)--Likely the dungeon version of Spinneret's Strands
+	self:EnablePrivateAuraSound(434090, "runout", 12, 439783)--Likely the raid version of Spinneret's Strands
+end
+
+--[[
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 434407 448213 448888 434089",
 	"SPELL_AURA_APPLIED 449042",
 	"SPELL_INTERRUPT",
 	"SPELL_DAMAGE 434726"
---	"SPELL_PERIODIC_DAMAGE",
---	"SPELL_PERIODIC_MISSED"
 )
+--]]
 
 --https://www.warcraftlogs.com/reports/a1Dz7jN4xKWLbHvC#fight=last&pins=2%24Off%24%23244F4B%24expression%24(ability.id%20%3D%20434407%20or%20ability.id%20%3D%20448213%20or%20ability.id%20%3D%20448888%20or%20ability.id%20%3D%20439784%20or%20ability.id%20%3D%20434089)%20and%20type%20%3D%20%22begincast%22%0A%20or%20ability.id%20%3D%20438875%20and%20type%20%3D%20%22cast%22%0A%20or%20ability.id%20%3D%20449734%20and%20(type%20%3D%20%22begincast%22%20or%20type%20%3D%20%22removebuff%22)%20or%20stoppedAbility.id%20%3D%20449734%0A%20or%20ability.id%20%3D%20434726%20and%20type%20%3D%20%22damage%22%0A%20or%20type%20%3D%20%22dungeonencounterstart%22%20or%20type%20%3D%20%22dungeonencounterend%22&view=events
 --NOTE, some spellIds might be mixed up with raid version (and viceversa). Both are included for safety.
@@ -31,6 +41,7 @@ mod:RegisterEventsInCombat(
  or ability.id = 438875 and type = "cast"
  or ability.id = 434726 and type = "damage"
 --]]
+--[[
 local warnBlazing							= mod:NewCountAnnounce(434726, 1)
 local warnRollingAcid						= mod:NewIncomingCountAnnounce(434407, 2)--General announce, private aura sound will be personal emphasis
 local warnRadiantLight						= mod:NewYouAnnounce(449042, 1)
@@ -38,7 +49,6 @@ local warnSpinneretsStrands					= mod:NewIncomingCountAnnounce(434089, 3)--Gener
 
 local specWarnExpelWebs						= mod:NewSpecialWarningDodgeCount(448213, nil, nil, nil, 1, 2, 4)
 local specWarnErosiveSpray					= mod:NewSpecialWarningCount(448888, nil, nil, nil, 2, 2)
---local specWarnGTFO						= mod:NewSpecialWarningGTFO(372820, nil, nil, nil, 1, 8)
 
 --most timers actual value not known, due to fact that they are ICD impacted. Lowest seen on mythic is 15.2, lowest seen on non mythic is 20
 local timerRollingAcidCD					= mod:NewCDCountTimer(15.2, 434407, nil, nil, nil, 3)
@@ -143,7 +153,6 @@ function mod:SPELL_AURA_APPLIED(args)
 		warnRadiantLight:Show()
 	end
 end
---mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED
 
 function mod:SPELL_INTERRUPT(args)
 	if type(args.extraSpellId) == "number" and args.extraSpellId == 449734 then
@@ -173,13 +182,4 @@ function mod:SPELL_DAMAGE(_, _, _, _, _, _, _, _, spellId)
 		end
 	end
 end
-
---[[
-function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId, spellName)
-	if spellId == 372820 and destGUID == UnitGUID("player") and self:AntiSpam(3, 2) then
-		specWarnGTFO:Show(spellName)
-		specWarnGTFO:Play("watchfeet")
-	end
-end
-mod.SPELL_PERIODIC_MISSED = mod.SPELL_PERIODIC_DAMAGE
 --]]

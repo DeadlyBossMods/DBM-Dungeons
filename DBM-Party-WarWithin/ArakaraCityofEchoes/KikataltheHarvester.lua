@@ -12,22 +12,20 @@ mod.sendMainBossGUID = true
 
 mod:RegisterCombat("combat")
 
+--[[
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 432117 432227 432130 461487",
---	"SPELL_CAST_SUCCESS 431985"
 	"SPELL_AURA_APPLIED 432031"
---	"SPELL_AURA_REMOVED"
---	"SPELL_PERIODIC_DAMAGE",
---	"SPELL_PERIODIC_MISSED"
 )
+--]]
 
---TODO, grasping spammy
 --[[
 (ability.id = 432117 or ability.id = 432227 or ability.id = 432130 or ability.id = 461487) and type = "begincast"
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
 
  or ability.id = 431985 and type = "cast"
 --]]
+--[[
 local warnVenomVolley						= mod:NewCountAnnounce(432227, 3)
 local warnCultivatedPoisons					= mod:NewCountAnnounce(461487, 3)
 local warnSingularity						= mod:NewCastAnnounce(432117, 4)
@@ -61,10 +59,6 @@ function mod:OnCombatStart(delay)
 	end
 	timerCosmicSingularityCD:Start(26.5-delay, 1)
 end
-
---function mod:OnCombatEnd()
-
---end
 
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
@@ -137,15 +131,6 @@ function mod:SPELL_CAST_START(args)
 	end
 end
 
---[[
-function mod:SPELL_CAST_SUCCESS(args)
-	local spellId = args.spellId
-	if spellId == 431985 then
-		timerAddsCD:Start()
-	end
-end
---]]
-
 function mod:SPELL_AURA_APPLIED(args)
 	local spellId = args.spellId
 	if spellId == 432031 then
@@ -155,14 +140,4 @@ function mod:SPELL_AURA_APPLIED(args)
 		end
 	end
 end
---mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED
-
---[[
-function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId, spellName)
-	if spellId == 372820 and destGUID == UnitGUID("player") and self:AntiSpam(3, 2) then
-		specWarnGTFO:Show(spellName)
-		specWarnGTFO:Play("watchfeet")
-	end
-end
-mod.SPELL_PERIODIC_MISSED = mod.SPELL_PERIODIC_DAMAGE
 --]]
