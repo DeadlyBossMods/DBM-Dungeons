@@ -5,23 +5,24 @@ mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(211089)
 mod:SetEncounterID(2838)
 mod:SetHotfixNoticeRev(20240706000000)
---mod:SetMinSyncRevision(20211203000000)
 mod:SetZone(2662)
 --mod.respawnTime = 29
 mod.sendMainBossGUID = true
 
 mod:RegisterCombat("combat")
 
+mod:AddPrivateAuraSoundOption(426865, true, 426860, 1)--Dark Orb target
+
+function mod:OnLimitedCombatStart()
+	self:EnablePrivateAuraSound(426865, "targetyou", 2)--Dark Orb
+	self:EnablePrivateAuraSound(450855, "targetyou", 2, 426865)--Register Additional ID
+end
+
+--[[
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 427001 426860 426787 452127 452099"
---	"SPELL_SUMMON 452145"
---	"SPELL_CAST_SUCCESS",
---	"SPELL_AURA_APPLIED",
---	"SPELL_AURA_REMOVED"
---	"SPELL_PERIODIC_DAMAGE",
---	"SPELL_PERIODIC_MISSED"
---	"UNIT_SPELLCAST_SUCCEEDED boss1"
 )
+--]]
 
 --[[
 (target.name = "Anub'ikkaj" or target.name = "Ascendant Vis'coxria" or target.name = "Deathscreamer Iken'tak" or target.name = "Ixkreten the Unbreakable") and (type = "applybuff" or type = "removebuff" or type = "death" or type = "removebuffstack" or type = "applybuffstack")
@@ -33,7 +34,7 @@ mod:RegisterEventsInCombat(
  or ability.id = 452145 and type = "summon"
  or ability.id = 452099 and type = "begincast"
 --]]
---TODO, auto marking Animate Shadows? 7 of them always spawn so it may be overkill
+--[[
 local warnAnimatedShadows					= mod:NewCountAnnounce(452127, 3)--Change to switch alert if they have to die asap
 
 local specWarnTerrifyingSlam				= mod:NewSpecialWarningRunCount(427001, nil, nil, nil, 4, 2)
@@ -178,60 +179,6 @@ function mod:SPELL_CAST_START(args)
 				specWarnCongealedDarkness:Play("kickcast")
 			end
 		end
-	end
-end
-
---[[
-function mod:SPELL_SUMMON(args)
-	local spellId = args.spellId
-	if spellId == 452145 then
-
-	end
-end
---]]
-
---[[
-function mod:SPELL_CAST_SUCCESS(args)
-	local spellId = args.spellId
-	if spellId == 372858 then
-
-	end
-end
---]]
-
---[[
-function mod:SPELL_AURA_APPLIED(args)
-	local spellId = args.spellId
-	if spellId == 372858 then
-
-	end
-end
---mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED
---]]
-
---[[
-function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId, spellName)
-	if spellId == 372820 and destGUID == UnitGUID("player") and self:AntiSpam(3, 2) then
-		specWarnGTFO:Show(spellName)
-		specWarnGTFO:Play("watchfeet")
-	end
-end
-mod.SPELL_PERIODIC_MISSED = mod.SPELL_PERIODIC_DAMAGE
---]]
-
---[[
-function mod:UNIT_DIED(args)
-	local cid = self:GetCIDFromGUID(args.destGUID)
-	if cid == 193435 then
-
-	end
-end
---]]
-
---[[
-function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
-	if spellId == 74859 then
-
 	end
 end
 --]]

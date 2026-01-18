@@ -12,21 +12,26 @@ mod.sendMainBossGUID = true
 
 mod:RegisterCombat("combat")
 
+mod:AddPrivateAuraSoundOption(426735, true, 426735, 1)
+
+function mod:OnLimitedCombatStart()
+	self:EnablePrivateAuraSound(426735, "targetyou", 2)
+end
+
+--[[
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 425264 453212 445996 453140 426734",
---	"SPELL_CAST_SUCCESS",
 	"SPELL_AURA_APPLIED 453859 426735",
 	"SPELL_AURA_REMOVED 453859"
---	"SPELL_PERIODIC_DAMAGE",
---	"SPELL_PERIODIC_MISSED"
 )
+--]]
 
---TODO, do something with https://www.wowhead.com/beta/spell=426736/shadow-shroud ? i can't think of anything productive. It's more of unit frames thing
 --[[
 (ability.id = 425264 or ability.id = 453212 or ability.id = 445996 or ability.id = 453140 or ability.id = 426734) and type = "begincast"
  or ability.id = 453859 and (type = "applybuff" or type = "removebuff")
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
 --]]
+--[[
 local warnBurnignShadows					= mod:NewTargetNoFilterAnnounce(426734, 3, nil, "RemoveMagic|Healer")
 
 local specWarnDarknessComes					= mod:NewSpecialWarningCount(453859, nil, nil, nil, 3, 2)
@@ -35,8 +40,6 @@ local specWarnObsidianBeam					= mod:NewSpecialWarningCount(453212, nil, nil, ni
 local specWarnCollapsingDarkness			= mod:NewSpecialWarningDodgeCount(445996, nil, nil, nil, 2, 2)--Heroic and Lower
 local specWarnCollapsingNight				= mod:NewSpecialWarningDodgeCount(453140, nil, nil, nil, 2, 2, 4)--Mythic and Higher
 local specWarnBurningShadows				= mod:NewSpecialWarningYou(426734, nil, nil, nil, 1, 2)
---local yellSomeAbility						= mod:NewYell(372107)
---local specWarnGTFO						= mod:NewSpecialWarningGTFO(372820, nil, nil, nil, 1, 8)
 
 --Like all bosses in this zone, shorted cooldowns are not fully known. Boss has long ICDs and spell queue issues
 local timerObsidianBlastCD					= mod:NewCDCountTimer(17, 425264, nil, nil, nil, 5)--Heroic and Lower
@@ -72,50 +75,6 @@ local allTimers = {
 	},								---23.5
 }
 
---The ability queue priority is so predictable, it may be possible to fully sequence this bosses timers in a table, but I want to see a LOT more tables first
---Collapsing Night and Collapsing Darkness triggers 3.4 second ICD
---Burning Shadows triggers 3.7-4.1 second ICD
---Obsidian Blast triggers 3.4 second ICD
---Obsidian Beam triggers 12.1 second ICD in stage 1 and unknown 10.8 second ICD in stage 2
---[[
-local function updateAllTimers(self, ICD)
-	DBM:Debug("updateAllTimers running", 3)
-	if timerBurningShadowsCD:GetRemaining(self.vb.shadowsCount+1) < ICD then
-		local elapsed, total = timerBurningShadowsCD:GetTime(self.vb.shadowsCount+1)
-		local extend = ICD - (total-elapsed)
-		DBM:Debug("timerBurningShadowsCD extended by: "..extend, 2)
-		timerBurningShadowsCD:Update(elapsed, total+extend, self.vb.shadowsCount+1)
-	end
-	if self:IsMythic() then
-		if timerObsidianBeamCD:GetRemaining(self.vb.obsidianCount+1) < ICD then
-			local elapsed, total = timerObsidianBeamCD:GetTime(self.vb.obsidianCount+1)
-			local extend = ICD - (total-elapsed)
-			DBM:Debug("timerObsidianBeamCD extended by: "..extend, 2)
-			timerObsidianBeamCD:Update(elapsed, total+extend, self.vb.obsidianCount+1)
-		end
-		if timerCollapsingNightCD:GetRemaining(self.vb.collapsingCount+1) < ICD then
-			local elapsed, total = timerCollapsingNightCD:GetTime(self.vb.collapsingCount+1)
-			local extend = ICD - (total-elapsed)
-			DBM:Debug("timerCollapsingNightCD extended by: "..extend, 2)
-			timerCollapsingNightCD:Update(elapsed, total+extend, self.vb.collapsingCount+1)
-		end
-	else
-		if timerObsidianBlastCD:GetRemaining(self.vb.obsidianCount+1) < ICD then
-			local elapsed, total = timerObsidianBlastCD:GetTime(self.vb.obsidianCount+1)
-			local extend = ICD - (total-elapsed)
-			DBM:Debug("timerObsidianBlastCD extended by: "..extend, 2)
-			timerObsidianBlastCD:Update(elapsed, total+extend, self.vb.obsidianCount+1)
-		end
-		if timerCollapsingDarknessCD:GetRemaining(self.vb.collapsingCount+1) < ICD then
-			local elapsed, total = timerCollapsingDarknessCD:GetTime(self.vb.collapsingCount+1)
-			local extend = ICD - (total-elapsed)
-			DBM:Debug("timerCollapsingDarknessCD extended by: "..extend, 2)
-			timerCollapsingDarknessCD:Update(elapsed, total+extend, self.vb.collapsingCount+1)
-		end
-	end
-end
---]]
-
 function mod:OnCombatStart(delay)
 	self:SetStage(1)
 	self.vb.darknessCount = 0
@@ -135,10 +94,6 @@ function mod:OnCombatStart(delay)
 	end
 end
 
---function mod:OnCombatEnd()
-
---end
-
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
 	if spellId == 425264 then--Non Mythic
@@ -154,7 +109,6 @@ function mod:SPELL_CAST_START(args)
 		else
 			timerObsidianBlastCD:Start(17, self.vb.obsidianCount+1)--Still start a timer with lowest known value
 		end
---		updateAllTimers(self, 3.4)
 	elseif spellId == 453212 then--Mythic
 		self.vb.obsidianCount = self.vb.obsidianCount + 1
 		specWarnObsidianBeam:Show(self.vb.obsidianCount)
@@ -168,7 +122,6 @@ function mod:SPELL_CAST_START(args)
 		else
 			timerObsidianBeamCD:Start(23.5, self.vb.obsidianCount+1)--Still start a timer with lowest known value
 		end
---		updateAllTimers(self, self:GetStage(1) and 12.1 or 10.8)
 	elseif spellId == 445996 then--Non Mythic
 		self.vb.collapsingCount = self.vb.collapsingCount + 1
 		specWarnCollapsingDarkness:Show(self.vb.collapsingCount)
@@ -179,7 +132,6 @@ function mod:SPELL_CAST_START(args)
 		else
 			timerCollapsingDarknessCD:Start(18, self.vb.collapsingCount+1)--Still start a timer with lowest known value
 		end
---		updateAllTimers(self, 3.4)
 	elseif spellId == 453140 then--Mythic
 		self.vb.collapsingCount = self.vb.collapsingCount + 1
 		specWarnCollapsingNight:Show(self.vb.collapsingCount)
@@ -190,7 +142,6 @@ function mod:SPELL_CAST_START(args)
 		else
 			timerCollapsingNightCD:Start(25.1, self.vb.collapsingCount+1)--Still start a timer with lowest known value
 		end
---		updateAllTimers(self, 3.4)
 	elseif spellId == 426734 then
 		self.vb.shadowsCount = self.vb.shadowsCount + 1
 		local timer = self:GetFromTimersTable(allTimers, false, self.vb.phase, self:IsMythic() and 4267342 or 4267341, self.vb.shadowsCount+1)
@@ -199,18 +150,8 @@ function mod:SPELL_CAST_START(args)
 		else
 			timerBurningShadowsCD:Start(17, self.vb.shadowsCount+1)--Still start a timer with lowest known value
 		end
---		updateAllTimers(self, 3.7)
 	end
 end
-
---[[
-function mod:SPELL_CAST_SUCCESS(args)
-	local spellId = args.spellId
-	if spellId == 372858 then
-
-	end
-end
---]]
 
 function mod:SPELL_AURA_APPLIED(args)
 	local spellId = args.spellId
@@ -234,7 +175,6 @@ function mod:SPELL_AURA_APPLIED(args)
 		end
 	end
 end
---mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED
 
 function mod:SPELL_AURA_REMOVED(args)
 	local spellId = args.spellId
@@ -260,13 +200,4 @@ function mod:SPELL_AURA_REMOVED(args)
 		end
 	end
 end
-
---[[
-function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId, spellName)
-	if spellId == 372820 and destGUID == UnitGUID("player") and self:AntiSpam(3, 2) then
-		specWarnGTFO:Show(spellName)
-		specWarnGTFO:Play("watchfeet")
-	end
-end
-mod.SPELL_PERIODIC_MISSED = mod.SPELL_PERIODIC_DAMAGE
 --]]
