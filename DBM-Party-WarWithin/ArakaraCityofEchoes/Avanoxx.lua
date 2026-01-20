@@ -13,6 +13,14 @@ mod.sendMainBossGUID = true
 
 mod:RegisterCombat("combat")
 
+mod:AddPrivateAuraSoundOption(439070, true, 439070, 1)
+mod:AddPrivateAuraSoundOption(434830, true, 434830, 1)--GTFO
+
+function mod:OnLimitedCombatStart()
+	self:EnablePrivateAuraSound(439070, "justrun", 2)
+	self:EnablePrivateAuraSound(434830, "watchfeet", 8)
+end
+
 --[[
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 438471 438476 438473",

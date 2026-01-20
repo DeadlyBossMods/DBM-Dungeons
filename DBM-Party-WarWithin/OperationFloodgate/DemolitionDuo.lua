@@ -12,29 +12,30 @@ mod.sendMainBossGUID = true
 
 mod:RegisterCombat("combat")
 
+--Midnight private aura replacements
+mod:AddPrivateAuraSoundOption(473713, true, 473713, 1)
+mod:AddPrivateAuraSoundOption(470022, true, 470022, 1)
+
+function mod:OnLimitedCombatStart()
+	self:EnablePrivateAuraSound(473713, "targetyou", 2)
+	self:EnablePrivateAuraSound(470022, "chargemove", 2)
+end
+
+--[[
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 460867 1217653 473690 459799 459779",
---	"SPELL_CAST_SUCCESS",
---	"SPELL_SUMMON 473524 460781",
 	"SPELL_AURA_APPLIED 473713 470022",
 	"SPELL_AURA_REMOVED 470022",
---	"SPELL_PERIODIC_DAMAGE",
---	"SPELL_PERIODIC_MISSED"
 	"UNIT_DIED"
---	"UNIT_SPELLCAST_SUCCEEDED boss1"
 )
+--]]
 
---TODO, DO NOT FORGET to add the count to common local for BBBFG
---TODO, add https://www.wowhead.com/ptr-2/spell=460602/quick-shot
---TODO, optimize charge as needed
---TODO, support nameplate timers when creatureIds known
 --[[
 (ability.id = 460867 or ability.id = 1217653 or ability.id = 473690 or ability.id = 459799 or ability.id = 459779) and type = "begincast"
  or (target.id = 226403 or target.id = 226402) and type = "death"
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
 --]]
---General
---local specWarnGTFO						= mod:NewSpecialWarningGTFO(372820, nil, nil, nil, 1, 8)
+--[[
 --Keeza Quickfuse
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(30321))
 --TODO, evertthing
@@ -87,10 +88,6 @@ function mod:OnCombatStart(delay)
 	timerChargeCD:Start(22.7-delay, 1)
 end
 
---function mod:OnCombatEnd()
-
---end
-
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
 	if spellId == 460867 then
@@ -123,27 +120,6 @@ function mod:SPELL_CAST_START(args)
 	end
 end
 
---[[
-function mod:SPELL_CAST_SUCCESS(args)
-	local spellId = args.spellId
-	if spellId == 459779 then
-
-	end
-end
---]]
-
---[[
-function mod:SPELL_SUMMON(args)
-	local spellId = args.spellId
-	if spellId == 473524 or spellId == 460781 then
-		self.vb.bombCount = self.vb.bombCount + 1
-		if self.vb.bombCount == 1 then
-			timerBombsExplode:Start()
-		end
-	end
-end
---]]
-
 function mod:SPELL_AURA_APPLIED(args)
 	local spellId = args.spellId
 	if spellId == 473713 then
@@ -165,7 +141,6 @@ function mod:SPELL_AURA_APPLIED(args)
 		end
 	end
 end
---mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED
 
 function mod:SPELL_AURA_REMOVED(args)
 	local spellId = args.spellId
@@ -175,16 +150,6 @@ function mod:SPELL_AURA_REMOVED(args)
 		end
 	end
 end
-
---[[
-function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId, spellName)
-	if spellId == 372820 and destGUID == UnitGUID("player") and self:AntiSpam(3, 2) then
-		specWarnGTFO:Show(spellName)
-		specWarnGTFO:Play("watchfeet")
-	end
-end
-mod.SPELL_PERIODIC_MISSED = mod.SPELL_PERIODIC_DAMAGE
---]]
 
 function mod:UNIT_DIED(args)
 	local cid = self:GetCIDFromGUID(args.destGUID)
@@ -201,13 +166,6 @@ function mod:UNIT_DIED(args)
 	--	if self.vb.bombCount == 0 then
 	--		timerBombsExplode:Stop()
 	--	end
-	end
-end
-
---[[
-function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
-	if spellId == 74859 then
-
 	end
 end
 --]]

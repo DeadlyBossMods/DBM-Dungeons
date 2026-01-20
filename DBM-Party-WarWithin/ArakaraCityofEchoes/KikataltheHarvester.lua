@@ -12,6 +12,12 @@ mod.sendMainBossGUID = true
 
 mod:RegisterCombat("combat")
 
+mod:AddPrivateAuraSoundOption(432119, true, 432119, 1)
+
+function mod:OnLimitedCombatStart()
+	self:EnablePrivateAuraSound(432119, "defensive", 2)
+end
+
 --[[
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 432117 432227 432130 461487",
