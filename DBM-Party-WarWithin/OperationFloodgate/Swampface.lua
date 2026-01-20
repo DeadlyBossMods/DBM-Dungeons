@@ -12,6 +12,14 @@ mod.sendMainBossGUID = true
 
 mod:RegisterCombat("combat")
 
+--Midnight private aura replacements
+mod:AddPrivateAuraSoundOption(470038, true, 470038, 1)
+
+function mod:OnLimitedCombatStart()
+	self:EnablePrivateAuraSound(470038, "linegather", 2)
+end
+
+--[[
 mod:RegisterEvents(
 	"SPELL_CAST_SUCCESS 1214337"
 )
@@ -21,12 +29,14 @@ mod:RegisterEventsInCombat(
 	"SPELL_AURA_APPLIED 470038 472819",
 	"UNIT_SPELLCAST_SUCCEEDED boss1"
 )
+--]]
 
 --[[
 (ability.id = 473070 or ability.id = 473114 or ability.id = 469478) and type = "begincast"
  or ability.id = 472819 and type = "applydebuff"
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
 --]]
+--[[
 local specWarnRazorchokeVines				= mod:NewSpecialWarningYouCount(470038, nil, nil, nil, 1, 2)--Pre target debuff
 local specWarnVinePartner					= mod:NewSpecialWarningLink(470039, nil, nil, nil, 1, 2)
 local yellRazorchokeVines					= mod:NewIconTargetYell(470039)
@@ -120,11 +130,8 @@ function mod:SPELL_AURA_APPLIED(args)
 				yellRazorchokeVines:Yell(icon)
 			end
 		end
---	elseif spellId == 473508 or spellId == 470041 then
-		--DO stuff
 	end
 end
---mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED
 
 --Vines Cast not in combat log (only debuffs, but this is more efficent timer start)
 function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
@@ -134,3 +141,4 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
 		timerRazorchokeVinesCD:Start(nil, self.vb.vinesCount+1)
 	end
 end
+--]]

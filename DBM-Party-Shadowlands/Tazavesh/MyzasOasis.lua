@@ -9,30 +9,33 @@ mod:SetZone(2441)
 
 mod:RegisterCombat("combat")
 
+--Midnight private aura replacements
+mod:AddPrivateAuraSoundOption(353835, true, 353835, 1)
+mod:AddPrivateAuraSoundOption(355439, true, 355439, 1)
+
+function mod:OnLimitedCombatStart()
+	self:EnablePrivateAuraSound(353835, "debuffyou", 17)
+	self:EnablePrivateAuraSound(355439, "range5", 2)
+end
+
+--[[
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 350916 350922 355438 350919 359028 357404 357513 357436 357542 359222",
 	"SPELL_CAST_SUCCESS 181089 1244630",
 	"SPELL_AURA_APPLIED 353706 353835",
 	"SPELL_AURA_REMOVED 353706",
---	"SPELL_PERIODIC_DAMAGE",
---	"SPELL_PERIODIC_MISSED",
 	"UNIT_DIED"
---	"UNIT_SPELLCAST_SUCCEEDED boss1"
 )
+--]]
 
---TODO, detect and show who has what instrument on infoframe?
---TODO, detect and timer when new patrons enter stage?
 --https://ptr.wowhead.com/spell=348566/throw-drink target scanable/worth adding chat yell to?
 --https://ptr.wowhead.com/spell=353826/carrying-drink can be used to detect Brawling Patron spawns?
---Do more with Disruptive Patron?
---TODO, appropriate warning for Crowd Control
---TODO, upgrade drumroll to special warning?
---TODO, detect who vere is on, and distance check to that person to only alert solo for those near them (and who they're fixating)
 --[[
 (ability.id = 350916 or ability.id = 359028 or ability.id = 350916 or ability.id = 350922 or ability.id = 355438 or ability.id = 350919 or ability.id = 357404 or ability.id = 357513 or ability.id = 357436 or ability.id = 357542 or ability.id = 359222) and type = "begincast"
  or ability.id = 181089 and type = "cast"
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
 --]]
+--[[
 --Stage One: Unruly Patrons
 local warnRottenFood				= mod:NewSpellAnnounce(359222, 2)
 local warnSuppression				= mod:NewTargetNoFilterAnnounce(353835, 2)
@@ -45,7 +48,6 @@ local warnRipChord					= mod:NewSpellAnnounce(357542, 2)
 
 --Stage One: Unruly Patrons
 local specWarnSecuritySlam			= mod:NewSpecialWarningDefensive(350916, nil, nil, nil, 1, 2)--Reused for boss too
---local yellEmbalmingIchor			= mod:NewYell(327664)
 local specWarnMenacingShout			= mod:NewSpecialWarningInterrupt(350922, "HasInterrupt", nil, nil, 1, 2)
 --local specWarnGTFO				= mod:NewSpecialWarningGTFO(320366, nil, nil, nil, 1, 8)
 --Stage Two: Closing Time
@@ -70,7 +72,6 @@ local timerInfectiousSoloCD				= mod:NewCDNPTimer(20.2, 357436, nil, nil, nil, 2
 local timerRipChordCD					= mod:NewCDNPTimer(16.6, 357542, nil, nil, nil, 3)
 local timerSoundblastCD					= mod:NewCDNPTimer(18.2, 1244630, nil, nil, nil, 3)
 
-mod:AddRangeFrameOption(5, 359222)
 mod:AddNamePlateOption("NPAuraOnRowdy", 353706)
 
 local activeBossGUIDS = {}
@@ -79,9 +80,6 @@ function mod:OnCombatStart(delay)
 	self:SetStage(1)
 	self:RegisterZoneCombat(2441)
 	timerRottenFoodCD:Start(20.5-delay)
-	if self.Options.RangeFrame then
-		DBM.RangeCheck:Show(5)
-	end
 	if self.Options.NPAuraOnRowdy then
 		DBM:FireEvent("BossMod_EnableHostileNameplates")
 	end
@@ -92,9 +90,6 @@ function mod:OnCombatEnd()
 		self:UnregisterZoneCombat(2441)
 	end
 	table.wipe(activeBossGUIDS)
-	if self.Options.RangeFrame then
-		DBM.RangeCheck:Hide()
-	end
 	if self.Options.NPAuraOnRowdy then
 		DBM.Nameplate:Hide(true, nil, nil, nil, true, true)
 	end
@@ -187,16 +182,6 @@ function mod:SPELL_AURA_REMOVED(args)
 	end
 end
 
---[[
-function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId, spellName)
-	if spellId == 320366 and destGUID == UnitGUID("player") and self:AntiSpam(2, 3) then
-		specWarnGTFO:Show(spellName)
-		specWarnGTFO:Play("watchfeet")
-	end
-end
-mod.SPELL_PERIODIC_MISSED = mod.SPELL_PERIODIC_DAMAGE
---]]
-
 --https://ptr.wowhead.com/npc=176565/disruptive-patron
 --https://ptr.wowhead.com/npc=180159/brawling-patron
 --https://ptr.wowhead.com/npc=176562/brawling-patron
@@ -230,13 +215,6 @@ function mod:StartEngageTimers(guid, cid, delay)
 		timerRipChordCD:Start(16.4-delay, guid)
 	elseif cid == 180486 then--Dirtwhistle
 		timerSoundblastCD:Start(6-delay, guid)
-	end
-end
-
---[[
-function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
-	if spellId == 257453  then
-
 	end
 end
 --]]

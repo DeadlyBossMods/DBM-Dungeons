@@ -9,6 +9,19 @@ mod:SetZone(2441)
 
 mod:RegisterCombat("combat")
 
+--Midnight private aura replacements
+--Recheck https://www.wowhead.com/beta/spell=347949/interrogation when this dungeon returns
+mod:AddPrivateAuraSoundOption(348366, true, 348366, 1)--GTFO
+mod:AddPrivateAuraSoundOption(345990, true, 345990, 1)
+mod:AddPrivateAuraSoundOption(345770, true, 345770, 1)
+
+function mod:OnLimitedCombatStart()
+	self:EnablePrivateAuraSound(348366, "watchfeet", 8)
+	self:EnablePrivateAuraSound(345990, "debuffyou", 17)
+	self:EnablePrivateAuraSound(345770, "targetyou", 2)--TODO, custom audio should be added by the time this dungeon returns
+end
+
+--[[
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 346204 1236348",
 	"SPELL_CAST_SUCCESS 346006 348350",
@@ -17,6 +30,7 @@ mod:RegisterEventsInCombat(
 	"SPELL_PERIODIC_DAMAGE 348366",
 	"SPELL_PERIODIC_MISSED 348366"
 )
+--]]
 
 --Improve/add timers for armed/disarmed phases because it'll probably alternate a buffactive timer instead of CD
 --TODO, what do with https://ptr.wowhead.com/spell=347964/rotary-body-armor ?
@@ -26,6 +40,7 @@ mod:RegisterEventsInCombat(
  or ability.id = 345990 and (type = "applydebuff" or type = "removedebuff")
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
 --]]
+--[[
 local warnArmedSecurity				= mod:NewSpellAnnounce(346204, 2)
 local warnFullyArmed				= mod:NewSpellAnnounce(348128, 3, nil, "Tank|Healer")
 local warnContainmentCell			= mod:NewTargetNoFilterAnnounce(345990)--When cell forms
@@ -129,3 +144,4 @@ function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId, spell
 	end
 end
 mod.SPELL_PERIODIC_MISSED = mod.SPELL_PERIODIC_DAMAGE
+--]]

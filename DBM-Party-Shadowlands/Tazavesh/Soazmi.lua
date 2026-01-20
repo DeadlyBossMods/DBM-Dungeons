@@ -9,6 +9,7 @@ mod:SetZone(2441)
 
 mod:RegisterCombat("combat")
 
+--[[
 mod:RegisterEvents(
 	"CHAT_MSG_MONSTER_SAY"
 )
@@ -19,6 +20,7 @@ mod:RegisterEventsInCombat(
 	"SPELL_AURA_REMOVED 357189 347152 1245677 1245751",
 	"SPELL_AURA_REMOVED_DOSE 357189 347152 1245677 1245751"
 )
+--]]
 
 --[[
 (ability.id = 347392 or ability.id = 347249 or ability.id = 347414 or ability.id = 347623 or ability.id = 347610 or ability.id = 357188 or ability.id = 347150) and type = "begincast"
@@ -26,13 +28,13 @@ mod:RegisterEventsInCombat(
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
 --]]
 --TODO, needs massive fixup once I can compare M+ to M0 version on WCL
+--[[
 local warnDivide					= mod:NewCountAnnounce(347249, 3)
 local warnQuickblade				= mod:NewSpellAnnounce(347623, 3)
 
 local specWarnShurl					= mod:NewSpecialWarningMoveTo(347481, nil, nil, nil, 4, 2)
 local specWarnDoubleTechnique		= mod:NewSpecialWarningInterruptCount(357188, "HasInterrupt", nil, nil, 1, 3)
 local specWarnTripleTechnique		= mod:NewSpecialWarningInterruptCount(347150, "HasInterrupt", nil, nil, 1, 3)
---local specWarnGTFO				= mod:NewSpecialWarningGTFO(320366, nil, nil, nil, 1, 8)
 
 --Both timers are 15 but boss spell queuing is a nightmare. quickblade delays shurl and shurl delays quickblade and they can come in any order
 --Double and triple technique also delay both even more
@@ -109,16 +111,6 @@ function mod:SPELL_AURA_REMOVED(args)
 end
 mod.SPELL_AURA_REMOVED_DOSE = mod.SPELL_AURA_REMOVED
 
---[[
-function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId, spellName)
-	if spellId == 320366 and destGUID == UnitGUID("player") and self:AntiSpam(2, 2) then
-		specWarnGTFO:Show(spellName)
-		specWarnGTFO:Play("watchfeet")
-	end
-end
-mod.SPELL_PERIODIC_MISSED = mod.SPELL_PERIODIC_DAMAGE
---]]
-
 function mod:CHAT_MSG_MONSTER_SAY(msg)
 	if (msg == L.RPTrigger or msg:find(L.RPTrigger)) and self:LatencyCheck() then
 		self:SendSync("SolamiRP")
@@ -130,3 +122,4 @@ function mod:OnSync(msg, targetname)
 		timerRP:Start()
 	end
 end
+--]]

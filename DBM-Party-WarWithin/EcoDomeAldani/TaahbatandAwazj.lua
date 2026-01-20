@@ -12,26 +12,34 @@ mod:SetZone(2830)
 
 mod:RegisterCombat("combat")
 
+mod:AddPrivateAuraSoundOption(1220427, true, 1220427, 1)
+mod:AddPrivateAuraSoundOption(1236126, true, 1236126, 1)
+
+function mod:OnLimitedCombatStart()
+	self:EnablePrivateAuraSound(1220427, "lineyou", 17)
+	self:EnablePrivateAuraSound(1227142, "lineyou", 17, 1220427)
+	self:EnablePrivateAuraSound(1236126, "targetyou", 2)
+end
+
+--[[
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 1219700 1236130 1227918 1219482",
 	"SPELL_AURA_APPLIED 1219731 1219457 1236126 1219731",
 	"SPELL_AURA_REMOVED_DOSE 1219457"
---	"SPELL_PERIODIC_DAMAGE",
---	"SPELL_PERIODIC_MISSED"
 )
+--]]
 
---TODO, nameplate timers for bosses? their abilities kind of go hand in hand so it's awkward for them
 --NOTE: Blitz warp strike is spammed (1227900). Target information is unknown without transcriptor but it doesn't appear CLEU logged 1227918 is non blitz cast ID
 --[[
 ability.id = 1219700 and type = "begincast" or ability.id = 1219731 and type = "applydebuff"
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
 --]]
+--[[
 local warnIncorporeal					= mod:NewStackAnnounce(1219457, 1)
 local warnBindingJavelin				= mod:NewTargetNoFilterAnnounce(1236130, 3)
 local warnWarpStrike					= mod:NewCountAnnounce(1227918, 3)
 
 local specWarnArcaneBlitz				= mod:NewSpecialWarningCount(1219700, nil, nil, nil, 1, 2)
---local yellWarpStrike					= mod:NewYell(1227918)
 local specWarnRiftClaws					= mod:NewSpecialWarningDefensive(1219482, nil, nil, nil, 1, 2)
 
 local timerArcaneBlitzCD				= mod:NewCDCountTimer(30, 1219700, nil, nil, nil, 6)
@@ -39,9 +47,6 @@ local timerBindingJavelinCD				= mod:NewCDCountTimer(26.7, 1236130, nil, nil, ni
 local timerWarpStrikeCD					= mod:NewCDCountTimer(26.7, 1227918, nil, nil, nil, 3)
 local timerRiftClawsCD					= mod:NewVarCountTimer("v23.5-26.7", 1219482, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerDestabalized					= mod:NewBuffActiveTimer(15, 1219731, nil, nil, nil, 5)
-
---mod:AddInfoFrameOption(445262)
---mod:AddNamePlateOption("NameplateOnReshape", 428269)
 
 mod.vb.blitzCount = 0
 mod.vb.blitzActive = false
@@ -60,10 +65,6 @@ function mod:OnCombatStart(delay)
 	timerWarpStrikeCD:Start(21.8-delay, 1)
 	timerArcaneBlitzCD:Start(34-delay, 1)
 end
-
---function mod:OnCombatEnd()
-
---end
 
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
@@ -108,22 +109,4 @@ function mod:SPELL_AURA_APPLIED(args)
 	end
 end
 mod.SPELL_AURA_REMOVED_DOSE = mod.SPELL_AURA_APPLIED
-
---[[
-function mod:SPELL_AURA_REMOVED(args)
-	local spellId = args.spellId
-	if spellId == 445262 then
-
-	end
-end
---]]
-
---[[
-function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId, spellName)
-	if spellId == 433067 and destGUID == UnitGUID("player") and self:AntiSpam(3, 3) then
-		specWarnGTFO:Show(spellName)
-		specWarnGTFO:Play("watchfeet")
-	end
-end
-mod.SPELL_PERIODIC_MISSED = mod.SPELL_PERIODIC_DAMAGE
 --]]

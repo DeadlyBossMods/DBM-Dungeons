@@ -12,25 +12,30 @@ mod.sendMainBossGUID = true
 
 mod:RegisterCombat("combat")
 
+--Midnight private aura replacements
+mod:AddPrivateAuraSoundOption(1238782, true, 1238782, 1)--GTFO
+
+function mod:OnLimitedCombatStart()
+	self:EnablePrivateAuraSound(1238782, "watchfeet", 8)
+end
+
+--[[
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 422969 423051 446657 446368 423062 446598",
---	"SPELL_CAST_SUCCESS",
 	"SPELL_AURA_APPLIED 446403",
 	"SPELL_AURA_APPLIED_DOSE 446403",
 	"SPELL_AURA_REMOVED 422969",
 	"SPELL_MISSED 446403",
---	"SPELL_PERIODIC_DAMAGE",
---	"SPELL_PERIODIC_MISSED"
 	"UNIT_SPELLCAST_SUCCEEDED boss1"
 )
+--]]
 
---TODO, Pyre tracking on infoframe?
---TODO, timers only vetted for mythic+ . mythic 0 and and heroic and normal and follower not vetted or tested at all
 --[[
 (ability.id = 422969 or ability.id = 423051 or ability.id = 446657 or ability.id = 446368) and type = "begincast"
  or (ability.id = 423015 or ability.id = 446649) and type = "applybuff"
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
 --]]
+--[[
 --Announce fade of wrath too?
 local warnVindictiveWrath					= mod:NewCountAnnounce(422969, 3)
 local warnVindictiveWrathFades				= mod:NewFadesAnnounce(422969, 1)
@@ -104,15 +109,6 @@ function mod:SPELL_CAST_START(args)
 	end
 end
 
---[[
-function mod:SPELL_CAST_SUCCESS(args)
-	local spellId = args.spellId
-	if spellId == 372858 then
-
-	end
-end
---]]
-
 function mod:SPELL_AURA_APPLIED(args)
 	local spellId = args.spellId
 	if spellId == 446403 then
@@ -140,25 +136,6 @@ function mod:SPELL_AURA_REMOVED(args)
 	end
 end
 
---[[
-function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId, spellName)
-	if spellId == 372820 and destGUID == UnitGUID("player") and self:AntiSpam(3, 2) then
-		specWarnGTFO:Show(spellName)
-		specWarnGTFO:Play("watchfeet")
-	end
-end
-mod.SPELL_PERIODIC_MISSED = mod.SPELL_PERIODIC_DAMAGE
---]]
-
---[[
-function mod:UNIT_DIED(args)
-	local cid = self:GetCIDFromGUID(args.destGUID)
-	if cid == 193435 then
-
-	end
-end
---]]
-
 --NOTE, hammer of purity has a CLEU event now but i need to do more data verification first to see if it's usable
 --NOTE, Castigator shield has a CLEU event now, but it isn't always cast, so it has to use this for cast/timer since even if it's not cast, it incurs a CD
 function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
@@ -169,3 +146,4 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
 		timerCastigatorsShieldCD:Start(nil, self.vb.shieldCount+1)
 	end
 end
+--]]

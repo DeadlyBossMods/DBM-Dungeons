@@ -13,28 +13,29 @@ mod.sendMainBossGUID = true
 
 mod:RegisterCombat("combat")
 
+--Midnight private aura replacements
+mod:AddPrivateAuraSoundOption(473287, true, 473287, 1)--GTFO
+
+function mod:OnLimitedCombatStart()
+	self:EnablePrivateAuraSound(473287, "watchfeet", 8)
+end
+
+--[[
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 460156 471585 472452 460075 1214780 473351 473220 469981",
---	"SPELL_CAST_SUCCESS",
 	"SPELL_SUMMON 471595",
 	"SPELL_AURA_APPLIED 473354 469981",
 	"SPELL_AURA_REMOVED 460156 469981",
---	"SPELL_AURA_REMOVED"
---	"SPELL_PERIODIC_DAMAGE",
---	"SPELL_PERIODIC_MISSED"
 	"UNIT_DIED"
---	"UNIT_SPELLCAST_SUCCEEDED boss1"
 )
+--]]
 
---TODO, finetune scoping of interrupt on whether or not cooldown should be checked
---TODO, add interrupt nameplate timer if it actually has a cooldown (and not spam cast)
---TODO, add custom audio for sonic boom that says "get behind objectname"
---TODO, see if timers reset on jump start or if they just continue
 --[[
 (ability.id = 460156 or ability.id = 471585 or ability.id = 460075 or ability.id = 473351 or ability.id = 473220 or ability.id = 469981) and type = "begincast"
  or ability.id = 460156 and type = "removebuff"
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
 --]]
+--[[
 local warnJumpStart							= mod:NewCountAnnounce(460156, 1)
 local warnJumpStartOver						= mod:NewEndAnnounce(460156, 2)
 local warnDoomStorm							= mod:NewTargetNoFilterAnnounce(472452, 2)
@@ -163,16 +164,6 @@ function mod:SPELL_CAST_START(args)
 	end
 end
 
-
---[[
-function mod:SPELL_CAST_SUCCESS(args)
-	local spellId = args.spellId
-	if spellId == 433740 then
-
-	end
-end
---]]
-
 function mod:SPELL_SUMMON(args)
 	local spellId = args.spellId
 	if spellId == 471595 then
@@ -210,28 +201,10 @@ function mod:SPELL_AURA_REMOVED(args)
 	end
 end
 
-
---[[
-function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId, spellName)
-	if spellId == 372820 and destGUID == UnitGUID("player") and self:AntiSpam(3, 2) then
-		specWarnGTFO:Show(spellName)
-		specWarnGTFO:Play("watchfeet")
-	end
-end
-mod.SPELL_PERIODIC_MISSED = mod.SPELL_PERIODIC_DAMAGE
---]]
-
 function mod:UNIT_DIED(args)
 	local cid = self:GetCIDFromGUID(args.destGUID)
 	if cid == 228424 then--Mobilize Mechadrones
 		--timerDoomStormCD:Stop(args.destGUID)
-	end
-end
-
---[[
-function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
-	if spellId == 74859 then
-
 	end
 end
 --]]

@@ -12,6 +12,7 @@ mod.sendMainBossGUID = true
 
 mod:RegisterCombat("combat")
 
+--[[
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 424419 424414 1238780",--447270
 	"SPELL_CAST_SUCCESS 424414 447443",
@@ -20,18 +21,17 @@ mod:RegisterEventsInCombat(
 	"SPELL_AURA_REMOVED 447443",
 	"SPELL_PERIODIC_DAMAGE 1238782",
 	"SPELL_PERIODIC_MISSED 1238782"
---	"UNIT_DIED"
---	"UNIT_SPELLCAST_SUCCEEDED boss1"
 )
+--]]
 
 --NOTE, the abilities of sub bosses are all in trash mod due to fact that you can (and should) pull them separately from boss
---TODO, track Strength in Numbers by purposely pulling boss wrong?
 --[[
 (ability.id = 424419 or ability.id = 447270 or ability.id = 424414 or ability.id = 1238780) and type = "begincast"
  or ability.id = 447443 and (type = "applydebuff" or type = "removedebuff")
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
 --]]
 --Captain Dailcry
+--[[
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(27821))
 local warnSavageMauling						= mod:NewTargetNoFilterAnnounce(447439, 3)
 
@@ -79,11 +79,6 @@ function mod:SPELL_CAST_START(args)
 		specWarnBattleCry:Show(args.sourceName, self.vb.battleCryCount)
 		specWarnBattleCry:Play("kickcast")
 		timerBattleCryCD:Start(nil, self.vb.battleCryCount+1)
---	elseif spellId == 447270 then
---		self.vb.spearCount = self.vb.spearCount + 1
---		specWarnHurlSpear:Show(self.vb.spearCount)
---		specWarnHurlSpear:Play("watchstep")
---		timerHurlSpearCD:Start(nil, self.vb.spearCount+1)
 	elseif spellId == 1238780 then
 		self.vb.spearCount = self.vb.spearCount + 1
 		specWarnEarthshatteringSpear:Show(self.vb.spearCount)
@@ -145,3 +140,4 @@ function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId, spell
 	end
 end
 mod.SPELL_PERIODIC_MISSED = mod.SPELL_PERIODIC_DAMAGE
+--]]

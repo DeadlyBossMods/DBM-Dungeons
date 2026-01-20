@@ -9,6 +9,17 @@ mod:SetZone(2441)
 
 mod:RegisterCombat("combat")
 
+--Midnight private aura replacements
+--No private aura for https://www.wowhead.com/beta/spell=350134/infinite-breath yet. Check it if dungeon returns
+mod:AddPrivateAuraSoundOption(1240097, true, 1240097, 1)
+mod:AddPrivateAuraSoundOption(358947, true, 358947, 1)--GTFO
+
+function mod:OnLimitedCombatStart()
+	self:EnablePrivateAuraSound(1240097, "debuffyou", 17)
+	self:EnablePrivateAuraSound(358947, "watchfeet", 8)
+end
+
+--[[
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 350517 347151",
 	"SPELL_CAST_SUCCESS 352345",
@@ -17,6 +28,7 @@ mod:RegisterEventsInCombat(
 	"SPELL_PERIODIC_DAMAGE 358947",
 	"SPELL_PERIODIC_MISSED 358947"
 )
+--]]
 
 --Notes: Cannon Barrage has no entries for cast, only damage, no clean timers/warnings for it so omitted
 --TODO, Fix hook swipe when blizzard re-enables the ability they accidentally deleted.
@@ -27,6 +39,7 @@ mod:RegisterEventsInCombat(
  or ability.id = 350134 and type = "applydebuff"
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
 --]]
+--[[
 --Boss
 local warnInfiniteBreath			= mod:NewTargetCountAnnounce(347149, 4, nil, nil, nil, nil, nil, nil, true)
 local warnHookd						= mod:NewTargetNoFilterAnnounce(354334, 2, nil, "Healer")
@@ -142,3 +155,4 @@ function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId, spell
 	end
 end
 mod.SPELL_PERIODIC_MISSED = mod.SPELL_PERIODIC_DAMAGE
+--]]

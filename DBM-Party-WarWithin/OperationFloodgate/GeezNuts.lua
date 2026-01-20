@@ -12,26 +12,35 @@ mod.sendMainBossGUID = true
 
 mod:RegisterCombat("combat")
 
+--Midnight private aura replacements
+mod:AddPrivateAuraSoundOption(468811, true, 468813, 1)--Gigazap
+mod:AddPrivateAuraSoundOption(468723, true, 468723, 1)
+mod:AddPrivateAuraSoundOption(468616, true, 468616, 1)
+
+function mod:OnLimitedCombatStart()
+	self:EnablePrivateAuraSound(468811, "defensive", 2)
+	self:EnablePrivateAuraSound(468723, "watchfeet", 8)
+	self:EnablePrivateAuraSound(468616, "sparktowater", 18)
+end
+
+--[[
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 465463 468841 468813 468815 466190",
 	"SPELL_CAST_SUCCESS 468276",
 	"SPELL_AURA_APPLIED 468741 468616 468815",
---	"SPELL_AURA_REMOVED"
 	"SPELL_AURA_REMOVED 465463 468616",
---	"SPELL_PERIODIC_DAMAGE",
---	"SPELL_PERIODIC_MISSED"
 	"UNIT_SPELLCAST_SUCCEEDED boss1"
 )
+--]]
 
---TODO, improve timer handling around boss energy and Turbo Charge
 --NOTE, Leaping Sparks script does NOT have block for target scanning, so if they private debuff, we can still see target anyways
 --NOTE: target scanning possible on Gigazap private aura but will likely get fixed later
 --NOTE, https://www.wowhead.com/ptr-2/spell=468844/leaping-spark summons the spark
---TODO, record new audio if "move to pool" causes lack of clarity to specifically say "move spark to pool"
 --[[
 (ability.id = 465463 or ability.id = 468841 or ability.id = 468813 or ability.id = 468815 or ability.id = 466190) and type = "begincast"
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
 --]]
+--[[
 local warnTurboChargeOver					= mod:NewEndAnnounce(465463, 1)
 local warnDam								= mod:NewCountAnnounce(468276, 2)
 local warnShockWaterStun					= mod:NewTargetNoFilterAnnounce(468741, 2)
@@ -71,10 +80,6 @@ function mod:OnCombatStart(delay)
 	timerLeapingSparksCD:Start(38-delay, 1)
 	self:EnablePrivateAuraSound(468811, "defensive", 2)
 end
-
---function mod:OnCombatEnd()
-
---end
 
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
@@ -132,7 +137,6 @@ function mod:SPELL_AURA_APPLIED(args)
 		warnGigaZapLater:PreciseShow(2, args.destName)
 	end
 end
---mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED
 
 function mod:SPELL_AURA_REMOVED(args)
 	local spellId = args.spellId
@@ -141,26 +145,6 @@ function mod:SPELL_AURA_REMOVED(args)
 	end
 end
 
---[[
-function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId, spellName)
-	if spellId == 372820 and destGUID == UnitGUID("player") and self:AntiSpam(3, 2) then
-		specWarnGTFO:Show(spellName)
-		specWarnGTFO:Play("watchfeet")
-	end
-end
-mod.SPELL_PERIODIC_MISSED = mod.SPELL_PERIODIC_DAMAGE
---]]
-
---[[
-function mod:UNIT_DIED(args)
-	local cid = self:GetCIDFromGUID(args.destGUID)
-	if cid == 193435 then
-
-	end
-end
---]]
-
---TODO, timers for shockwater?
 --"Shock Water-468723-npc:226404-00007DDBE7 = pull:25.6, 15.5",
 function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
 	if spellId == 468276 then
@@ -169,3 +153,4 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
 		timerDamCD:Start(nil, self.vb.damCount+1)
 	end
 end
+--]]

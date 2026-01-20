@@ -10,17 +10,26 @@ mod:SetZone(2441)
 
 mod:RegisterCombat("combat")
 
+--Midnight private aura replacements
+mod:AddPrivateAuraSoundOption(349627, true, 349627, 1)
+mod:AddPrivateAuraSoundOption(350101, true, 350101, 1)
+
+function mod:OnLimitedCombatStart()
+	self:EnablePrivateAuraSound(349627, "debuffyou", 17)
+	self:EnablePrivateAuraSound(350101, "targetyou", 2)
+end
+
+--[[
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 349663 349797 349987 349934 349954 350086 350101",
 	"SPELL_CAST_SUCCESS 181089",
 	"SPELL_AURA_APPLIED 349627 349933 349954 350037",
 	"SPELL_AURA_REMOVED 349627 349933",
---	"SPELL_PERIODIC_DAMAGE",
---	"SPELL_PERIODIC_MISSED",
 	"UNIT_DIED",
 	"RAID_BOSS_WHISPER",
 	"CHAT_MSG_MONSTER_SAY"
 )
+--]]
 
 --TODO, find way of detecting hard mode timers
 --[[
@@ -30,8 +39,7 @@ mod:RegisterEventsInCombat(
  or target.id = 176556 and type = "death"
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
 --]]
---General
---local specWarnGTFO				= mod:NewSpecialWarningGTFO(320366, nil, nil, nil, 1, 8)
+--[[
 --Alcruux
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(23159))
 local warnGluttony					= mod:NewTargetNoFilterAnnounce(349627, 2)
@@ -180,16 +188,6 @@ function mod:SPELL_AURA_REMOVED(args)
 	end
 end
 
---[[
-function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId, spellName)
-	if spellId == 320366 and destGUID == UnitGUID("player") and self:AntiSpam(2, 2) then
-		specWarnGTFO:Show(spellName)
-		specWarnGTFO:Play("watchfeet")
-	end
-end
-mod.SPELL_PERIODIC_MISSED = mod.SPELL_PERIODIC_DAMAGE
---]]
-
 function mod:UNIT_DIED(args)
 	local cid = self:GetCIDFromGUID(args.destGUID)
 	if cid == 176556 then--Alcruux
@@ -218,7 +216,7 @@ function mod:CHAT_MSG_MONSTER_SAY(msg)
 	end
 end
 
-function mod:OnSync(msg, targetname)
+function mod:OnSync(msg)
 	if not self:IsInCombat() then return end
 	if msg == "AchilliteRP" then
 		timerAchilliteCD:Start(23.3)
@@ -226,3 +224,4 @@ function mod:OnSync(msg, targetname)
 		timerVenzaCD:Start(23.7)
 	end
 end
+--]]

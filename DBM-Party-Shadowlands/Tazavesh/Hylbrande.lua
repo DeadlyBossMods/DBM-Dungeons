@@ -10,25 +10,31 @@ mod:SetZone(2441)
 
 mod:RegisterCombat("combat")
 
+--Midnight private aura replacements
+mod:AddPrivateAuraSoundOption(358131, true, 358131, 1)
+
+function mod:OnLimitedCombatStart()
+	self:EnablePrivateAuraSound(358131, "debuffyou", 17)
+end
+
+--[[
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 347094 346957 346766 358131 353312",
 	"SPELL_CAST_SUCCESS 346116 181113",
 	"SPELL_AURA_APPLIED 358131 346427",
 	"SPELL_AURA_REMOVED 347958 346766 346427",
---	"SPELL_PERIODIC_DAMAGE",
---	"SPELL_PERIODIC_MISSED",
---	"UNIT_DIED"
 	"RAID_BOSS_WHISPER",
 	"UNIT_SPELLCAST_SUCCEEDED boss1"
 )
+--]]
 
---TODO, Are swings dogeable by tank?
 --[[
 (ability.id = 347094 or ability.id = 346957 or ability.id = 346766 or ability.id = 358131 or ability.id = 353312) and type = "begincast"
  or (ability.id = 346116 or ability.id = 181113) and type = "cast"
  or ability.id = 346766
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
 --]]
+--[[
 local warnPurgedbyFire				= mod:NewTargetNoFilterAnnounce(346959, 2)
 local warnKeepersprotection			= mod:NewEndAnnounce(347958, 1)
 local warnLightningNova				= mod:NewTargetNoFilterAnnounce(358131, 3)
@@ -70,7 +76,6 @@ function mod:OnCombatStart(delay)
 	self.vb.cycleCount = 0
 	self.vb.vaultPurifierCount = 0
 	self.vb.burstCount = 0
-	--TODO, hard mode check shit for purifying Burst (is it cast more often? or just more targets?)
 	timerPurifyingBurstCD:Start(5.2-delay, 1)
 	timerShearingSwingsCD:Start(8.5-delay, 1)
 	timerPurgedbyFireCD:Start(10.1-delay, 1)
@@ -173,7 +178,7 @@ function mod:SPELL_AURA_REMOVED(args)
 end
 
 --"<20.66 04:58:21> [CLEU] SPELL_CAST_START#Creature-0-4255-2441-7585-175667-000065FF9A#Защитная турель титанов##nil#346957#Очищение огнем#nil#nil", -- [239]
---"<20.66 04:58:21> [UNIT_SPELLCAST_SUCCEEDED] Хильбранд(Хаосхантер) -Очищение огнем- [[boss1:Cast-3-4255-2441-7585-346964-0007E6003E:346964]]", -- [240]
+--"<20.66 04:58:21> [UNIT_SPELLCAST_SUCCEEDED] Хильбранд(Хаосхантер) -Очищение огнем- boss1:Cast-3-4255-2441-7585-346964-0007E6003E:346964", -- [240]
 --"<20.85 04:58:21> [CHAT_MSG_RAID_BOSS_WHISPER] %s получает новую цель.#Защитная турель титанов###Хаосхантер##0#0##0#46#nil#0#false#false#false#false", -- [241]
 --"<20.85 04:58:21> [RAID_BOSS_WHISPER] %s получает новую цель.#Защитная турель титанов#3#true", -- [242]
 function mod:RAID_BOSS_WHISPER()
@@ -189,31 +194,12 @@ function mod:OnTranscriptorSync(_, targetName)
 	end
 end
 
---[[
-function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId, spellName)
-	if spellId == 320366 and destGUID == UnitGUID("player") and self:AntiSpam(2, 4) then
-		specWarnGTFO:Show(spellName)
-		specWarnGTFO:Play("watchfeet")
-	end
-end
-mod.SPELL_PERIODIC_MISSED = mod.SPELL_PERIODIC_DAMAGE
-
-function mod:UNIT_DIED(args)
-	local cid = self:GetCIDFromGUID(args.destGUID)
-	if cid == 176551 then--vault-purifier
-
-	elseif cid == 180640 then--stormbound-breaker
-
-	end
-end
---]]
-
---"<18.17 01:11:30> [UNIT_SPELLCAST_SUCCEEDED] Hylbrande(??) -[DNT] Summon Vault Defender- [[boss1:Cast-3-4234-2441-16984-346971-002B48CA12:346971]]", -- [147]
---"<22.32 01:11:34> [CLEU] SPELL_CAST_SUCCESS#Creature-0-4234-2441-16984-176551-000048CA12#Vault Purifier##nil#181113#Encounter Spawn#nil#nil", -- [188]
+--"<18.17 01:11:30> [UNIT_SPELLCAST_SUCCEEDED] Hylbrande(??) -DNT Summon Vault Defender- boss1:Cast-3-4234-2441-16984-346971-002B48CA12:346971",
+--"<22.32 01:11:34> [CLEU] SPELL_CAST_SUCCESS#Creature-0-4234-2441-16984-176551-000048CA12#Vault Purifier##nil#181113#Encounter Spawn#nil#nil",
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, spellId)
 	if spellId == 346971 then--Summon Vault Defender
 		self.vb.addIcon = 1
 		warnVaultPurifierSoon:Show()
 	end
 end
-
+--]]

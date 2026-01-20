@@ -12,6 +12,15 @@ mod.sendMainBossGUID = true
 
 mod:RegisterCombat("combat")
 
+--Midnight private aura replacements
+--Could not find a private aura for Purifying Light
+mod:AddPrivateAuraSoundOption(425556, true, 425556, 1)--GTFO
+
+function mod:OnLimitedCombatStart()
+	self:EnablePrivateAuraSound(425556, "watchfeet", 8)
+end
+
+--[[
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 444546 423539 451605 423536 444609 444608 428169",
 	"SPELL_CAST_SUCCESS 423588",
@@ -20,15 +29,15 @@ mod:RegisterEventsInCombat(
 	"SPELL_PERIODIC_DAMAGE 425556",
 	"SPELL_PERIODIC_MISSED 425556",
 	"RAID_BOSS_WHISPER"
---	"UNIT_SPELLCAST_SUCCEEDED boss1"
 )
+--]]
 
 --[[
 (ability.id = 444546 or ability.id = 423539 or ability.id = 451605 or ability.id = 423536 or ability.id = 444609 or ability.id = 444608) and type = "begincast"
  or ability.id = 423588 and (type = "cast" or type = "applybuff" or type = "removebuff")
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
 --]]
---TODO, does boss have a really long RP that's included in ENCOUNTER_START
+--[[
 local warnBarrierofLight					= mod:NewCountAnnounce(423588, 3)
 local warnPurifyingLight					= mod:NewCountAnnounce(444546, 2)--Precast
 local warnPurifyingLightTargets				= mod:NewTargetNoFilterAnnounce(444546, 2)--target like 6 seconds later
@@ -149,7 +158,6 @@ function mod:SPELL_AURA_APPLIED(args)
 		end
 	end
 end
---mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED
 
 function mod:SPELL_AURA_REMOVED(args)
 	local spellId = args.spellId
@@ -185,22 +193,6 @@ function mod:OnTranscriptorSync(msg, targetName)
 			if UnitName("player") == targetName then return end--Player already got warned
 			warnPurifyingLightTargets:Show(targetName)
 		end
-	end
-end
-
---[[
-function mod:UNIT_DIED(args)
-	local cid = self:GetCIDFromGUID(args.destGUID)
-	if cid == 193435 then
-
-	end
-end
---]]
-
---[[
-function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
-	if spellId == 74859 then
-
 	end
 end
 --]]

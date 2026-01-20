@@ -14,12 +14,14 @@ mod:RegisterCombat("combat")
 
 mod:AddPrivateAuraSoundOption(434406, true, 434407, 1)--Rolling Acid target
 mod:AddPrivateAuraSoundOption(439783, true, 434089, 1)--Spineret's Strands target
+mod:AddPrivateAuraSoundOption(438957, true, 438957, 1)--GTFO
 
 function mod:OnLimitedCombatStart()
 	self:EnablePrivateAuraSound(434406, "targetyou", 2)--Likely dungeon version of Rolling Acid
 	self:EnablePrivateAuraSound(439790, "targetyou", 2, 434406)--Likely the raid version of Rolling Acid
 	self:EnablePrivateAuraSound(439783, "runout", 12)--Likely the dungeon version of Spinneret's Strands
 	self:EnablePrivateAuraSound(434090, "runout", 12, 439783)--Likely the raid version of Spinneret's Strands
+	self:EnablePrivateAuraSound(438957, "watchfeet", 8)--Acidic Pools ground effect
 end
 
 --[[
