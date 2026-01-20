@@ -10,14 +10,12 @@ mod:SetZone(2287)
 
 mod:RegisterCombat("combat")
 
+--[[
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 323393 323236 328791 327885 1236973 329104",
 	"SPELL_CAST_SUCCESS 329113 323142"--323437
---	"SPELL_AURA_APPLIED"--323437
---	"SPELL_PERIODIC_DAMAGE",
---	"SPELL_PERIODIC_MISSED",
---	"UNIT_SPELLCAST_SUCCEEDED boss1"
 )
+--]]
 
 --[[
 (ability.id = 323393 or ability.id = 328791 or ability.id = 323236 or ability.id = 327885 or ability.id = 1236973 or ability.id = 329104) and type = "begincast"
@@ -25,7 +23,7 @@ mod:RegisterEventsInCombat(
  or ability.id = 323143 and type = "applybuff"
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
 --]]
---TODO, sigma only cast once entire fight?
+--[[
 local warnTelekineticToss			= mod:NewCountAnnounce(323142, 2)
 --local warnStigmaofPride				= mod:NewTargetNoFilterAnnounce(323437, 4)
 
@@ -102,30 +100,6 @@ function mod:SPELL_CAST_SUCCESS(args)
 		self.vb.tossCount = self.vb.tossCount + 1
 		warnTelekineticToss:Show(self.vb.tossCount)
 		timerTelekineticTossCD:Start(nil, self.vb.tossCount+1)
-	end
-end
-
---[[
-function mod:SPELL_AURA_APPLIED(args)
-	local spellId = args.spellId
-	if spellId == 323437 then
-
-	end
-end
---]]
-
---[[
-function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId, spellName)
-	if spellId == 309991 and destGUID == UnitGUID("player") and self:AntiSpam(2, 2) then
-		specWarnGTFO:Show(spellName)
-		specWarnGTFO:Play("watchfeet")
-	end
-end
-mod.SPELL_PERIODIC_MISSED = mod.SPELL_PERIODIC_DAMAGE
-
-function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
-	if spellId == 257453  then
-
 	end
 end
 --]]

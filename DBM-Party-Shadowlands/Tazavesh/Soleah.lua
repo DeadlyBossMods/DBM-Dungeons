@@ -9,15 +9,15 @@ mod:SetZone(2441)
 
 mod:RegisterCombat("combat")
 
+--[[
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 350796 355922 353635 351119 350875 351096 351646",
 	"SPELL_CAST_SUCCESS 181089 351124",
 	"SPELL_AURA_APPLIED 357190 350804 351086",
 	"SPELL_AURA_APPLIED_DOSE 350804",
 	"SPELL_AURA_REMOVED 350804 351086"
---	"SPELL_PERIODIC_DAMAGE",
---	"SPELL_PERIODIC_MISSED"
 )
+--]]
 
 --TODO, figure out right P1 hyperlight id
 --TODO, verify the kind of mechanics that nova and fragmentation are
@@ -29,6 +29,7 @@ mod:RegisterEventsInCombat(
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
  or ability.id = 351119 and type = "begincast"
 --]]
+--[[
 --Stage One: Final Preparations
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(23344))
 local warnCollapsingStar			= mod:NewCountAnnounce(353635, 3)
@@ -183,13 +184,4 @@ function mod:SPELL_AURA_REMOVED(args)
 		timerPowerOverwhelmingCD:Start(65.2)
 	end
 end
-
---[[
-function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId, spellName)
-	if spellId == 320366 and destGUID == UnitGUID("player") and self:AntiSpam(2, 2) then
-		specWarnGTFO:Show(spellName)
-		specWarnGTFO:Play("watchfeet")
-	end
-end
-mod.SPELL_PERIODIC_MISSED = mod.SPELL_PERIODIC_DAMAGE
 --]]

@@ -9,18 +9,22 @@ mod:SetZone(2441)
 
 mod:RegisterCombat("combat")
 
+--Midnight private aura replacements
+--There are two other PAs but they are not useful since they are not player actionable PAs
+mod:AddPrivateAuraSoundOption(346962, true, 346962, 1)
+
+function mod:OnLimitedCombatStart()
+	self:EnablePrivateAuraSound(346962, "gathershare", 2)
+end
+
+--[[
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 346947 346286 346742 346293",
 	"SPELL_CAST_SUCCESS 346962",
 	"SPELL_AURA_APPLIED 346844 346329 346962 346403 356374 369133",
 	"SPELL_AURA_REMOVED 346962"
---	"SPELL_PERIODIC_DAMAGE",
---	"SPELL_PERIODIC_MISSED",
---	"UNIT_DIED"
---	"UNIT_SPELLCAST_SUCCEEDED boss1"
 )
 
---TODO, package tracking with icon/infoframe for tosses as well?
 local warnHazardousLiquids			= mod:NewSpellAnnounce(346286, 2)
 local warnAlchemicalResidue			= mod:NewTargetNoFilterAnnounce(346844, 2, nil, false, 2)
 local warnUnstableGoods				= mod:NewTargetNoFilterAnnounce(369133, 2)--Holding package
@@ -36,8 +40,6 @@ local timerUnstableGoodsCD			= mod:NewCDCountTimer(42.5, 346947, nil, nil, nil, 
 local timerHazardousLiquidsCD		= mod:NewCDCountTimer(42.5, 346286, nil, nil, nil, 3)
 local timerFanMailCD				= mod:NewCDCountTimer(42.5, 346293, nil, nil, nil, 2, nil, DBM_COMMON_L.HEALER_ICON)
 local timerMoneyOrderCD				= mod:NewCDCountTimer(42.5, 346962, nil, nil, nil, 3)
-
---mod:GroupSpells(369133, 346947)--Unstable goods, one for spawn and one for holdin it, two diff icons so separated on purpose
 
 mod.vb.goodsCount = 0
 mod.vb.fanCount = 0
@@ -112,29 +114,6 @@ function mod:SPELL_AURA_REMOVED(args)
 		if args:IsPlayer() then
 			yellMoneyOrderFades:Cancel()
 		end
-	end
-end
-
---[[
-function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId, spellName)
-	if spellId == 320366 and destGUID == UnitGUID("player") and self:AntiSpam(2, 2) then
-		specWarnGTFO:Show(spellName)
-		specWarnGTFO:Play("watchfeet")
-	end
-end
-mod.SPELL_PERIODIC_MISSED = mod.SPELL_PERIODIC_DAMAGE
-
-function mod:UNIT_DIED(args)
-	local cid = self:GetCIDFromGUID(args.destGUID)
-	if cid == 164578 then
-
-	end
-end
-
-
-function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
-	if spellId == 257453  then
-
 	end
 end
 --]]

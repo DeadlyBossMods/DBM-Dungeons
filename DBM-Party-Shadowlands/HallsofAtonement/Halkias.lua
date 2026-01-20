@@ -10,14 +10,22 @@ mod:SetZone(2287)
 
 mod:RegisterCombat("combat")
 
+--Midnight private aura replacements
+mod:AddPrivateAuraSoundOption(323001, true, 323001, 1)--GTFO
+
+function mod:OnLimitedCombatStart()
+	self:EnablePrivateAuraSound(323001, "watchfeet", 8)
+end
+
+--[[
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 322936 322711",
 	"SPELL_CAST_SUCCESS 322943",
 	"SPELL_AURA_APPLIED 322977",
 	"SPELL_PERIODIC_DAMAGE 323001",
 	"SPELL_PERIODIC_MISSED 323001"
---	"UNIT_SPELLCAST_SUCCEEDED boss1"
 )
+--]]
 
 --TODO, Target scan Heave Debris? it's instant cast, maybe it has an emote?
 --Sinlight visions deleted?
@@ -28,6 +36,7 @@ mod:RegisterEventsInCombat(
  or ability.id = 322977 and type = "applydebuff"
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
 --]]
+--[[
 local warnHeaveDebris				= mod:NewCountAnnounce(322943, 3)
 
 local specWarnCrumblingSlam			= mod:NewSpecialWarningMove(322936, "Tank", nil, nil, 1, 2)
@@ -100,11 +109,4 @@ function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId, spell
 	end
 end
 mod.SPELL_PERIODIC_MISSED = mod.SPELL_PERIODIC_DAMAGE
-
---[[
-function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
-	if spellId == 257453  then
-
-	end
-end
 --]]
