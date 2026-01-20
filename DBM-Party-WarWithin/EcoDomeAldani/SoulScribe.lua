@@ -12,22 +12,25 @@ mod.sendMainBossGUID = true
 
 mod:RegisterCombat("combat")
 
+mod:AddPrivateAuraSoundOption(1226444, true, 1226444, 1)
+
+function mod:OnLimitedCombatStart()
+	self:EnablePrivateAuraSound(1226444, "targetyou", 2)
+end
+
+--[[
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 1224793 1236703 1225218 1225174",
---	"SPELL_CAST_SUCCESS",
 	"SPELL_AURA_APPLIED 1224865 1226444",
 	"SPELL_AURA_APPLIED_DOSE 1224865"
---	"SPELL_AURA_REMOVED",
---	"SPELL_PERIODIC_DAMAGE",
---	"SPELL_PERIODIC_MISSED"
---	"UNIT_SPELLCAST_SUCCEEDED boss1"
 )
+--]]
 
 --[[
 
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
 --]]
---TODO, how does dread of the unknown work, it's poorly writen in journal. do you dodge stuff on ground, or do players get debuffs and have to scatter to not hit each other
+--[[
 local warnWhispersofFate				= mod:NewCountAnnounce(1224793, 3)
 local warnFatebound						= mod:NewCountAnnounce(1224865, 3, nil, nil, DBM_CORE_L.AUTO_ANNOUNCE_OPTIONS.stack:format(1224865))
 
@@ -56,10 +59,6 @@ function mod:OnCombatStart(delay)
 	timerDreadoftheUnknownCD:Start(27.8-delay, 1)
 	timerEternalWeaveCD:Start(56.2-delay, 1)
 end
-
---function mod:OnCombatEnd()
-
---end
 
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
@@ -93,15 +92,6 @@ function mod:SPELL_CAST_START(args)
 	end
 end
 
---[[
-function mod:SPELL_CAST_SUCCESS(args)
-	local spellId = args.spellId
-	if spellId == 458082 then
-
-	end
-end
---]]
-
 function mod:SPELL_AURA_APPLIED(args)
 	local spellId = args.spellId
 	if spellId == 1224865 and args:IsPlayer() then
@@ -112,39 +102,4 @@ function mod:SPELL_AURA_APPLIED(args)
 	end
 end
 mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED
-
---[[
-function mod:SPELL_AURA_REMOVED(args)
-	local spellId = args.spellId
-	if spellId == 445262 then
-
-	end
-end
---]]
-
---[[
-function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId, spellName)
-	if spellId == 433067 and destGUID == UnitGUID("player") and self:AntiSpam(3, 3) then
-		specWarnGTFO:Show(spellName)
-		specWarnGTFO:Play("watchfeet")
-	end
-end
-mod.SPELL_PERIODIC_MISSED = mod.SPELL_PERIODIC_DAMAGE
---]]
-
---[[
-function mod:UNIT_DIED(args)
-	local cid = self:GetCIDFromGUID(args.destGUID)
-	if cid == 193435 then
-
-	end
-end
---]]
-
---[[
-function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
-	if spellId == 74859 then
-
-	end
-end
 --]]

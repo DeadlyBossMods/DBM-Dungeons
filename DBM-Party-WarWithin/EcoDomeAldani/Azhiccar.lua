@@ -12,22 +12,30 @@ mod.sendMainBossGUID = true
 
 mod:RegisterCombat("combat")
 
+--Midnight private aura replacements
+mod:AddPrivateAuraSoundOption(1217446, true, 1217446, 1)--GTFO
+
+function mod:OnLimitedCombatStart()
+	self:EnablePrivateAuraSound(1217446, "watchfeet", 8)
+end
+
+--[[
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 1217232 1217327 1227745",
 	"SPELL_CAST_SUCCESS 1217232",
 	"SPELL_AURA_APPLIED 1217247",
 	"SPELL_AURA_APPLIED_DOSE 1217247",
---	"SPELL_AURA_REMOVED",
 	"SPELL_PERIODIC_DAMAGE 1217446",
 	"SPELL_PERIODIC_MISSED 1217446",
 	"RAID_BOSS_WHISPER"
 )
+--]]
 
 --[[
 
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
 --]]
---TODO, only had WCL for this mod, so can't detect Toxic targets yet. Need transcriptor to identify events
+--[[
 local warnToxicRegurgitation			= mod:NewTargetNoFilterAnnounce(1227745, 3)
 local warnFeastStack					= mod:NewStackAnnounce(1217247, 4)
 
@@ -43,9 +51,6 @@ local timerDevourCast					= mod:NewCastTimer(18, 1217232, nil, nil, nil, 5)
 local timerInvadingShriekCD				= mod:NewCDCountTimer(30.1, 1217327, nil, nil, nil, 1)
 local timerToxicRegurgitationCD			= mod:NewCDCountTimer(30.1, 1227745, nil, nil, nil, 3)
 
---mod:AddInfoFrameOption(445262)
---mod:AddNamePlateOption("NameplateOnReshape", 428269)
-
 mod.vb.devourCount = 0
 mod.vb.invadingShriekCount = 0
 mod.vb.toxicRegurgitationCount = 0
@@ -58,10 +63,6 @@ function mod:OnCombatStart(delay)
 	timerToxicRegurgitationCD:Start(15.4-delay, 1)
 	timerDevourCD:Start(60-delay, 1)
 end
-
---function mod:OnCombatEnd()
-
---end
 
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
@@ -104,15 +105,6 @@ function mod:SPELL_AURA_APPLIED(args)
 end
 mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED
 
---[[
-function mod:SPELL_AURA_REMOVED(args)
-	local spellId = args.spellId
-	if spellId == 445262 then
-
-	end
-end
---]]
-
 function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId, spellName)
 	if spellId == 1217446 and destGUID == UnitGUID("player") and self:AntiSpam(3, 1) then
 		specWarnGTFO:Show(spellName)
@@ -134,22 +126,6 @@ function mod:OnTranscriptorSync(msg, targetName)
 	if msg:find("1227748") and targetName and self:AntiSpam(5, targetName) then
 		targetName = Ambiguate(targetName, "none")
 		warnToxicRegurgitation:CombinedShow(0.5, targetName)
-	end
-end
-
---[[
-function mod:UNIT_DIED(args)
-	local cid = self:GetCIDFromGUID(args.destGUID)
-	if cid == 193435 then
-
-	end
-end
---]]
-
---[[
-function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
-	if spellId == 74859 then
-
 	end
 end
 --]]
