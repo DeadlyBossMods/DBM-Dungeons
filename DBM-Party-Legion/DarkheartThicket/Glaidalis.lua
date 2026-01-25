@@ -105,7 +105,9 @@ function mod:OnCombatEnd(wipe, secondRun)
 	end
 	if not wipe and not secondRun then
 		local DHTTrash = DBM:GetModByName("DHTTrash")
-		DHTTrash:ResetSecondBossRP()
+		if DHTTrash then
+			DHTTrash:ResetSecondBossRP()
+		end
 	end
 end
 

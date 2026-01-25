@@ -96,7 +96,9 @@ if (wowToc >= 100200) then
 	function mod:OnCombatEnd(wipe, secondRun)
 		if not wipe and not secondRun then
 			local EverBloomTrash = DBM:GetModByName("EverBloomTrash")
-			EverBloomTrash:PortalRP()
+			if EverBloomTrash then
+				EverBloomTrash:PortalRP()
+			end
 		end
 	end
 
