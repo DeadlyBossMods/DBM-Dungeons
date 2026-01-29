@@ -89,7 +89,9 @@ end
 function mod:OnCombatEnd(wipe, secondRun)
 	if not wipe and not secondRun then
 		local BRHTrash = DBM:GetModByName("BRHTrash")
-		BRHTrash:StartFirstRP()
+		if BRHTrash then
+			BRHTrash:StartFirstRP()
+		end
 	end
 --	if self.Options.RangeFrame then
 --		DBM.RangeCheck:Hide()
