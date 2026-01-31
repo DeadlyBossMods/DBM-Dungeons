@@ -15,4 +15,9 @@ mod:RegisterCombat("combat")
 
 --)
 
---TODO. Not a damn thing
+--Note: Stygian Ichor is missing PA sound for GTFO but should probably have one
+mod:AddPrivateAuraSoundOption(1215897, true, 1215897, 1)
+
+function mod:OnLimitedCombatStart()
+	self:EnablePrivateAuraSound(1215897, "scatter", 2)
+end

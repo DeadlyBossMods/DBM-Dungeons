@@ -15,4 +15,11 @@ mod:RegisterCombat("combat")
 
 --)
 
---TODO. Not a damn thing
+--Watch for more private auras to get added post launch
+mod:AddPrivateAuraSoundOption(1223958, true, 1223958, 1)
+mod:AddPrivateAuraSoundOption(1224104, true, 1224104, 1)
+
+function mod:OnLimitedCombatStart()
+	self:EnablePrivateAuraSound(1223958, "runout", 2)
+	self:EnablePrivateAuraSound(1224104, "watchfeet", 8)
+end
