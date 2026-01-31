@@ -15,4 +15,13 @@ mod:RegisterCombat("combat")
 
 --)
 
---TODO. Not a damn thing
+--https://www.wowhead.com/beta/spell=467620/rampage has a private aura but we should use the boss mod api to register defensive sound on cast begin instead
+mod:AddPrivateAuraSoundOption(470966, true, 470966, 1)
+mod:AddPrivateAuraSoundOption(468924, true, 468924, 1)
+mod:AddPrivateAuraSoundOption(1283247, true, 1283247, 1)
+
+function mod:OnLimitedCombatStart()
+	self:EnablePrivateAuraSound(470966, "justrun", 2)
+	self:EnablePrivateAuraSound(468924, "watchfeet", 8)
+	self:EnablePrivateAuraSound(1283247, "targetyou", 2)
+end

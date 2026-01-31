@@ -61,7 +61,6 @@ function mod:OnCombatStart(delay)
 	timerHolyWardCD:Start(8)--8-16
 	timerNetherAbberationCD:Start(9.6)--9.6-12.3
 	timerInfernalCD:Start(37.5)--37-43
-	DBM:AddMsg("There is a chance some of these timers are health based and can't be completely relied upon. More data is needed")
 end
 
 function mod:SPELL_CAST_START(args)
