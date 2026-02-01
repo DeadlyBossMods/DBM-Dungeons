@@ -65,8 +65,8 @@ do
 			lastCount = count or 1
 		elseif name and gameActive and lastCount ~= count then
 			--Stack count changed
-			lastCount = count
-			warnRings:Show(count)
+			lastCount = count or 0
+			warnRings:Show(lastCount)
 			timerGame:Stop()
 			timerGame:Start(expires-GetTime())
 		elseif not name and gameActive then
