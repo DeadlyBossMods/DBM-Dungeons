@@ -15,4 +15,8 @@ mod:RegisterCombat("combat")
 
 --)
 
---TODO. Not a damn thing
+mod:AddPrivateAuraSoundOption(1235405, false, 1235405, 1)
+
+function mod:OnLimitedCombatStart()
+	self:EnablePrivateAuraSound(1235405, "screwup", 18)
+end

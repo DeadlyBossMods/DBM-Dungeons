@@ -15,4 +15,4 @@ mod:RegisterCombat("combat")
 
 --)
 
---TODO. Not a damn thing
+--TODO. Add cast alerts later, no useful private auras
