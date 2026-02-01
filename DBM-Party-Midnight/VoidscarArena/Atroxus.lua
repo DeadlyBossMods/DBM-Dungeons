@@ -15,4 +15,10 @@ mod:RegisterCombat("combat")
 
 --)
 
---TODO. Not a damn thing
+mod:AddPrivateAuraSoundOption(1283506, true, 1283506, 4)
+mod:AddPrivateAuraSoundOption(1222484, true, 1222484, 1)
+
+function mod:OnLimitedCombatStart()
+	self:EnablePrivateAuraSound(1283506, "justrun", 2)
+	self:EnablePrivateAuraSound(1222484, "watchfeet", 8)
+end

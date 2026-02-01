@@ -15,4 +15,12 @@ mod:RegisterCombat("combat")
 
 --)
 
---TODO. Not a damn thing
+mod:AddPrivateAuraSoundOption(1263983, true, 1263983, 4)
+mod:AddPrivateAuraSoundOption(1282770, true, 1282770, 1)--Pre debuff
+mod:AddPrivateAuraSoundOption(1248130, true, 1282770, 1)--GTFO
+
+function mod:OnLimitedCombatStart()
+	self:EnablePrivateAuraSound(1263983, "orbrun", 2)
+	self:EnablePrivateAuraSound(1282770, "runout", 2)
+	self:EnablePrivateAuraSound(1282770, "watchfeet", 8)
+end
