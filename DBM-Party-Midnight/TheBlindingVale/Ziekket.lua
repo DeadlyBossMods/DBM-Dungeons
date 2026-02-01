@@ -15,4 +15,12 @@ mod:RegisterCombat("combat")
 
 --)
 
---TODO. Not a damn thing
+mod:AddPrivateAuraSoundOption(1253690, true, 1253690, 1)--FIX ME if not pre positioned spell
+mod:AddPrivateAuraSoundOption(1246751, true, 1246751, 1)
+mod:AddPrivateAuraSoundOption(1246753, true, 1246753, 1)
+
+function mod:OnLimitedCombatStart()
+	self:EnablePrivateAuraSound(1253690, "movetomobs", 14)
+	self:EnablePrivateAuraSound(1246751, "watchfeet", 8)
+	self:EnablePrivateAuraSound(1246753, "watchfeet", 8)
+end

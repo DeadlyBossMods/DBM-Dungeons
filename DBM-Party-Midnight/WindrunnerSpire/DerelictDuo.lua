@@ -15,7 +15,7 @@ mod:RegisterCombat("combat")
 
 --)
 
-mod:AddPrivateAuraSoundOption(1253834, true, 1253834, 1)
+mod:AddPrivateAuraSoundOption(1253834, true, 1253834, 4)
 mod:AddPrivateAuraSoundOption(472793, true, 472793, 1)
 
 function mod:OnLimitedCombatStart()

@@ -15,4 +15,8 @@ mod:RegisterCombat("combat")
 
 --)
 
---TODO. Not a damn thing
+mod:AddPrivateAuraSoundOption(1237091, true, 1237091, 4)
+
+function mod:OnLimitedCombatStart()
+	self:EnablePrivateAuraSound(1237091, "justrun", 2)
+end

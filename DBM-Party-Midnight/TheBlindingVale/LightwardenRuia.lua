@@ -15,4 +15,10 @@ mod:RegisterCombat("combat")
 
 --)
 
---TODO. Not a damn thing
+mod:AddPrivateAuraSoundOption(1239825, true, 1239825, 1)
+mod:AddPrivateAuraSoundOption(1240222, true, 1240222, 1)
+
+function mod:OnLimitedCombatStart()
+	self:EnablePrivateAuraSound(1239825, "runout", 2)
+	self:EnablePrivateAuraSound(1240222, "lineyou", 17)--Change sound later if incorrect
+end
