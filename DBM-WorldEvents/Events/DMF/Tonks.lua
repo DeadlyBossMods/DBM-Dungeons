@@ -31,6 +31,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, spellId)
+	if self:issecretvalue(spellId) then return end
 	if spellId == 102178 then
 		timerGame:Start()
 	end
