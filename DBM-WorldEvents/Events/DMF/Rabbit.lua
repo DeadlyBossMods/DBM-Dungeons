@@ -4,8 +4,12 @@ local L		= mod:GetLocalizedStrings()
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(58336)
 mod:SetModelID(328)
+mod:SetZone(974)
 
 mod:RegisterCombat("combat")
+
+--Rest of mod below this point is only useful pre midnight
+if DBM:IsPostMidnight() then return end
 
 mod:RegisterEventsInCombat(
 	"SPELL_AURA_APPLIED 114078"

@@ -2,13 +2,21 @@ local mod	= DBM:NewMod("Tonks", "DBM-WorldEvents", 3)
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
+mod:SetZone(974)
 
-mod:RegisterEvents(
-	"SPELL_CAST_SUCCESS 102341",
-	"UNIT_SPELLCAST_SUCCEEDED player",
-	"UNIT_DIED",
-	"UNIT_EXITED_VEHICLE player"
-)
+if DBM:IsPostMidnight() then
+	mod:RegisterSafeEvents(
+		"UNIT_SPELLCAST_SUCCEEDED player",
+		"UNIT_EXITED_VEHICLE player"
+	)
+else
+	mod:RegisterEvents(
+		"SPELL_CAST_SUCCESS 102341",
+		"UNIT_SPELLCAST_SUCCEEDED player",
+		"UNIT_DIED",
+		"UNIT_EXITED_VEHICLE player"
+	)
+end
 mod.noStatistics = true
 
 local specWarnMarked			= mod:NewSpecialWarningRun(102341, nil, nil, 2, 4, 2)
