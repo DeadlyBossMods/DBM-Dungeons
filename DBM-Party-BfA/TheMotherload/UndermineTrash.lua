@@ -1,3 +1,29 @@
+if IsTestBuild() or IsBetaBuild() then
+	--Test mod for the boss at entrance of motherload on test/beta servers
+	local mod	= DBM:NewMod("TestDummyBoss", "DBM-Party-BfA", 7)
+
+	mod:SetEncounterID(3463)
+	mod:SetZone(1594)
+
+	mod:RegisterCombat("combat")
+
+	mod:AddCustomAlertSoundOption(1280960, true, 1)
+	mod:AddCustomAlertSoundOption(1280958, true, 1)
+	mod:AddCustomAlertSoundOption(1280946, true, 2)
+	mod:AddCustomTimerOptions(1280960, true, 4, 0)
+	mod:AddCustomTimerOptions(1280958, true, 5, 0)
+	mod:AddCustomTimerOptions(1280946, true, 3, 1)
+
+	function mod:OnLimitedCombatStart()
+		self:EnableTimelineOptions(1280946, 421)
+		self:EnableTimelineOptions(1280958, 422)
+		self:EnableTimelineOptions(1280960, 423)
+		self:EnableAlertOptions(1280946, 421, "kickcast", 2)
+		self:EnableAlertOptions(1280958, 422, "kickcast", 2)
+		self:EnableAlertOptions(1280960, 423, "watchstep", 2)
+	end
+end
+
 if DBM:IsPostMidnight() then return end
 local mod	= DBM:NewMod("MotherloadTrash", "DBM-Party-BfA", 7)
 local L		= mod:GetLocalizedStrings()
