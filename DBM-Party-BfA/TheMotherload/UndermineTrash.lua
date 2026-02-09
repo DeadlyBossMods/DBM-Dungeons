@@ -15,6 +15,7 @@ if IsTestBuild() or IsBetaBuild() then
 	mod:AddCustomTimerOptions(1280946, true, 3, 1)
 
 	function mod:OnLimitedCombatStart()
+		self:DisableSpecialWarningSounds()--Prevents special warning sounds playing from the ENCOUNTER_WARNING api
 		self:EnableTimelineOptions(1280946, 421)
 		self:EnableTimelineOptions(1280958, 422)
 		self:EnableTimelineOptions(1280960, 423)

@@ -10,7 +10,7 @@ mod:SetModelID(16176)
 mod:SetReCombatTime(10)
 mod:RegisterCombat("combat")
 
-mod:RegisterEvents(
+mod:RegisterSafeEvents(
 	"CHAT_MSG_MONSTER_SAY",
 	"GOSSIP_SHOW"
 )
@@ -52,6 +52,7 @@ end
 mod.SPELL_PERIODIC_MISSED = mod.SPELL_PERIODIC_DAMAGE
 
 function mod:CHAT_MSG_MONSTER_SAY(msg)
+	if self:issecretvalue(msg) then return end
 	if msg == L.SayCombatStart or msg:find(L.SayCombatStart) then
 		self:SendSync("TrioPulled")
 	end
