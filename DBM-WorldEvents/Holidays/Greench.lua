@@ -16,11 +16,12 @@ mod:RegisterCombat("combat")
 mod:SetWipeTime(20)
 
 if isRetail then
-	mod:RegisterEventsInCombat(
-		"SPELL_CAST_START 451185 451046 451251",
-		"SPELL_CAST_SUCCESS 426643",
-		"SPELL_AURA_APPLIED 426643"
-	)
+	--Do nothing
+	--mod:RegisterEventsInCombat(
+	--	"SPELL_CAST_START 451185 451046 451251",
+	--	"SPELL_CAST_SUCCESS 426643",
+	--	"SPELL_AURA_APPLIED 426643"
+	--)
 else
 	mod:RegisterEventsInCombat(
 		"SPELL_CAST_START 101907",
@@ -35,15 +36,15 @@ local warn39TonSmash, warnGiftofGiving, timerGiftOfGivingCD, specWarnPresentPand
 local warnSnowCrash, warnSnowman, warnTree, timerSnowmanCD, timerTreeCD, timerCrushCD, timerSnowCrash--Legacy
 local specWarnShrinkHeart, timerShrinkHeartCD--Shared
 if isRetail then
-	warn39TonSmash				= mod:NewSpellAnnounce(451185, 3)
-	warnGiftofGiving			= mod:NewSpellAnnounce(451046, 2)
-
-	specWarnShrinkHeart			= mod:NewSpecialWarningDispel(426643, "RemoveMagic", nil, nil, 1, 2)
-	specWarnPresentPandemonium	= mod:NewSpecialWarningSwitch(451254, nil, nil, nil, 1, 2)
-
-	timerShrinkHeartCD			= mod:NewCDTimer(32.5, 426643, nil, nil, nil, 2)--Unknown recast time
---	timer39TonSmashCD			= mod:NewCDTimer(10, 451185, nil, nil, nil, 3)--Unknown recast time
-	timerGiftOfGivingCD			= mod:NewCDTimer(13.6, 451046, nil, nil, nil, 3)--Iffy recast time
+	--warn39TonSmash				= mod:NewSpellAnnounce(451185, 3)
+	--warnGiftofGiving			= mod:NewSpellAnnounce(451046, 2)
+--
+	--specWarnShrinkHeart			= mod:NewSpecialWarningDispel(426643, "RemoveMagic", nil, nil, 1, 2)
+	--specWarnPresentPandemonium	= mod:NewSpecialWarningSwitch(451254, nil, nil, nil, 1, 2)
+--
+	--timerShrinkHeartCD			= mod:NewCDTimer(32.5, 426643, nil, nil, nil, 2)--Unknown recast time
+--	--timer39TonSmashCD			= mod:NewCDTimer(10, 451185, nil, nil, nil, 3)--Unknown recast time
+	--timerGiftOfGivingCD			= mod:NewCDTimer(13.6, 451046, nil, nil, nil, 3)--Iffy recast time
 else
 	warnSnowman					= mod:NewSpellAnnounce(101910, 2)
 	warnSnowCrash				= mod:NewCastAnnounce(101907, 3)
@@ -52,10 +53,10 @@ else
 	specWarnShrinkHeart			= mod:NewSpecialWarningMove(101873, nil, nil, nil, 1, 2)
 
 	timerShrinkHeartCD			= mod:NewCDTimer(32.5, 101873, nil, nil, nil, 2)
-	timerSnowmanCD			= mod:NewCDTimer(10, 101910, nil, nil, nil, 3)--He alternates these
-	timerTreeCD				= mod:NewCDTimer(10, 101938, nil, nil, nil, 3)
+	timerSnowmanCD				= mod:NewCDTimer(10, 101910, nil, nil, nil, 3)--He alternates these
+	timerTreeCD					= mod:NewCDTimer(10, 101938, nil, nil, nil, 3)
 	timerCrushCD				= mod:NewCDTimer(5, 101885, nil, nil, nil, 3)--Used 5 seconds after tree casts (on the tree itself). Right before stomp he stops targeting tank. He has no target during stomp, usable for cast trigger? Only trigger in log is the stomp landing.
-	timerSnowCrash			= mod:NewCastTimer(5, 101907)
+	timerSnowCrash				= mod:NewCastTimer(5, 101907)
 end
 
 function mod:OnCombatStart(delay)
@@ -74,20 +75,20 @@ function mod:SPELL_CAST_START(args)
 	if args.spellId == 101907 then
 		warnSnowCrash:Show()
 		timerSnowCrash:Start()
-	elseif args.spellId == 451185 then
-		warn39TonSmash:Show()
+	--elseif args.spellId == 451185 then
+		--warn39TonSmash:Show()
 		--timer39TonSmashCD:Start()
-	elseif args.spellId == 451046 then
-		warnGiftofGiving:Show()
-		timerGiftOfGivingCD:Start()
-	elseif args.spellId == 451251 then
-		specWarnPresentPandemonium:Show()
-		specWarnPresentPandemonium:Play("targetchange")
+	--elseif args.spellId == 451046 then
+		--warnGiftofGiving:Show()
+		--timerGiftOfGivingCD:Start()
+	--elseif args.spellId == 451251 then
+		--specWarnPresentPandemonium:Show()
+		--specWarnPresentPandemonium:Play("targetchange")
 	end
 end
 
 function mod:SPELL_CAST_SUCCESS(args)
-	if args.spellId == 101873 or args.spellId == 426643 then
+	if args.spellId == 101873 then--or args.spellId == 426643
 		timerShrinkHeartCD:Start()
 	end
 end
@@ -98,9 +99,9 @@ function mod:SPELL_AURA_APPLIED(args)
 		---@diagnostic disable-next-line: param-type-mismatch
 		specWarnShrinkHeart:Show()
 		specWarnShrinkHeart:Play("keepmove")
-	elseif args.spellId == 426643 and args:IsDestTypePlayer() and self:CheckDispelFilter("magic") then
-		specWarnShrinkHeart:CombinedShow(1, args.destName)
-		specWarnShrinkHeart:ScheduleVoice(1, "helpdispel")
+	--elseif args.spellId == 426643 and args:IsDestTypePlayer() and self:CheckDispelFilter("magic") then
+	--	specWarnShrinkHeart:CombinedShow(1, args.destName)
+	--	specWarnShrinkHeart:ScheduleVoice(1, "helpdispel")
 	end
 end
 mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED

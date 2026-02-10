@@ -9,6 +9,8 @@ mod:SetReCombatTime(10)
 
 mod:RegisterCombat("combat")
 
+if DBM:IsPostMidnight() then return end
+
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 47310",
 	"SPELL_AURA_APPLIED 47376 47340 47442 51413",
