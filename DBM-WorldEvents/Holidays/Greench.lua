@@ -32,7 +32,7 @@ else
 	)
 end
 
-local warn39TonSmash, warnGiftofGiving, timerGiftOfGivingCD, specWarnPresentPandemonium--Retail
+--local warn39TonSmash, warnGiftofGiving, timerGiftOfGivingCD, specWarnPresentPandemonium--Retail
 local warnSnowCrash, warnSnowman, warnTree, timerSnowmanCD, timerTreeCD, timerCrushCD, timerSnowCrash--Legacy
 local specWarnShrinkHeart, timerShrinkHeartCD--Shared
 if isRetail then

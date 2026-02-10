@@ -10,6 +10,29 @@ mod:SetZone(2287)
 
 mod:RegisterCombat("combat")
 
+--Custom Sounds on cast/cooldown expiring
+mod:AddCustomAlertSoundOption(323142, true, 2)--Telekinetic Toss
+mod:AddCustomAlertSoundOption(323236, true, 2)--Unleashed Suffering
+mod:AddCustomAlertSoundOption(1236973, true, 2)--Erupting Torment
+mod:AddCustomAlertSoundOption(328791, true, 2)--Ritual of Woe
+--Custom timer colors, countdowns, and disables
+mod:AddCustomTimerOptions(323142, true, 3, 0)
+mod:AddCustomTimerOptions(323236, true, 3, 0)
+mod:AddCustomTimerOptions(1236973, true, 3, 0)
+mod:AddCustomTimerOptions(328791, true, 5, 0)
+function mod:OnLimitedCombatStart()
+	self:DisableSpecialWarningSounds()
+	self:EnableAlertOptions(323142, 511, "farfromline", 2)
+	self:EnableAlertOptions(323236, 512, "frontal", 15)
+	self:EnableAlertOptions(1236973, 513, "justrun", 3)
+	self:EnableAlertOptions(328791, 514, "helpsoak", 7)
+
+	self:EnableTimelineOptions(323142, 511)
+	self:EnableTimelineOptions(323236, 512)
+	self:EnableTimelineOptions(1236973, 513)
+	self:EnableTimelineOptions(328791, 514)
+end
+
 --[[
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 323393 323236 328791 327885 1236973 329104",
@@ -25,13 +48,13 @@ mod:RegisterEventsInCombat(
 --]]
 --[[
 local warnTelekineticToss			= mod:NewCountAnnounce(323142, 2)
---local warnStigmaofPride				= mod:NewTargetNoFilterAnnounce(323437, 4)
+--local warnStigmaofPride			= mod:NewTargetNoFilterAnnounce(323437, 4)
 
 local specWarnUnleashedSuffering	= mod:NewSpecialWarningDodgeCount(323236, nil, nil, nil, 2, 2)
 local specWarnTelekineticOnslaught	= mod:NewSpecialWarningDodge(329113, nil, nil, nil, 2, 2)
 local specWarnEruptingTorment		= mod:NewSpecialWarningRunCount(1236973, nil, nil, nil, 4, 2)--327885
 local specWarnRitualofWoe			= mod:NewSpecialWarningSoakCount(328791, nil, nil, nil, 1, 7)
---local specWarnGTFO					= mod:NewSpecialWarningGTFO(257274, nil, nil, nil, 1, 8)
+--local specWarnGTFO				= mod:NewSpecialWarningGTFO(257274, nil, nil, nil, 1, 8)
 
 local timerTelekineticTossCD		= mod:NewVarCountTimer("v9.7-12.5", 323142, nil, nil, nil, 3)
 local timerUnleashedSufferingCD		= mod:NewVarCountTimer("v21.8-24.3", 323236, nil, nil, nil, 3)

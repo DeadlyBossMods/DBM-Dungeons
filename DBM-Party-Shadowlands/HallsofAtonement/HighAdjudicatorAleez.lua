@@ -10,10 +10,29 @@ mod:SetZone(2287)
 
 mod:RegisterCombat("combat")
 
+--Note, Anima Bolt skipped since it's just a spammed interrupt and we do not have access to antispam interrupt tech with secret api
+--TODO, test event ID 506 for fixate (323650) to see if it's personal only or everyone
+--Custom Sounds on cast/cooldown expiring
+mod:AddCustomAlertSoundOption(323597, true, 2)
+mod:AddCustomAlertSoundOption(329340, true, 2)
+--Custom timer colors, countdowns, and disables
+mod:AddCustomTimerOptions(323538, true, 4, 0)
+mod:AddCustomTimerOptions(323597, true, 1, 0)
+mod:AddCustomTimerOptions(1236513, true, 3, 0)
+mod:AddCustomTimerOptions(329340, true, 3, 0)
 --Midnight private aura replacements
-mod:AddPrivateAuraSoundOption(1236513, true, 1236513, 1)--GTFO
+mod:AddPrivateAuraSoundOption(1236513, true, 1236513, 1)
 
 function mod:OnLimitedCombatStart()
+	self:DisableSpecialWarningSounds()
+	self:EnableAlertOptions(323597, 503, "ghostsoon", 2)
+	self:EnableAlertOptions(329340, 505, "watchstep", 2)
+
+	self:EnableTimelineOptions(323538, 502)
+	self:EnableTimelineOptions(323597, 503)
+	self:EnableTimelineOptions(1236513, 504)
+	self:EnableTimelineOptions(329340, 505)
+
 	self:EnablePrivateAuraSound(1236513, "watchfeet", 8)
 end
 
