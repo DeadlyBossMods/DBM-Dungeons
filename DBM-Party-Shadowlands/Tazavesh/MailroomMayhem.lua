@@ -9,11 +9,30 @@ mod:SetZone(2441)
 
 mod:RegisterCombat("combat")
 
+--Custom Sounds on cast/cooldown expiring
+mod:AddCustomAlertSoundOption(346742, true, 2)--Fan Mail
+mod:AddCustomAlertSoundOption(346286, true, 1)--Money Order
+mod:AddCustomAlertSoundOption(346947, true, 1)--Unstable Goods
+--Custom timer colors, countdowns, and disables
+mod:AddCustomTimerOptions(346742, true, 2, 0)
+mod:AddCustomTimerOptions(346962, true, 3, 0)--Money Order
+mod:AddCustomTimerOptions(346286, true, 5, 0)
+mod:AddCustomTimerOptions(346947, true, 5, 0)
 --Midnight private aura replacements
 --There are two other PAs but they are not useful since they are not player actionable PAs
 mod:AddPrivateAuraSoundOption(346962, true, 346962, 1)
 
 function mod:OnLimitedCombatStart()
+	self:DisableSpecialWarningSounds()
+	self:EnableAlertOptions(346742, 574, "aesoon", 2)
+	self:EnableAlertOptions(346286, 576, "catchballs", 12)
+	self:EnableAlertOptions(346947, 577, "specialsoon", 1)
+
+	self:EnableTimelineOptions(346742, 574)
+	self:EnableTimelineOptions(346962, 575)
+	self:EnableTimelineOptions(346286, 576)
+	self:EnableTimelineOptions(346947, 577)
+
 	self:EnablePrivateAuraSound(346962, "gathershare", 2)
 end
 

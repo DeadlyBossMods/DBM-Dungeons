@@ -9,11 +9,32 @@ mod:SetZone(2441)
 
 mod:RegisterCombat("combat")
 
+--Custom Sounds on cast/cooldown expiring
+mod:AddCustomAlertSoundOption(359028, true, 2)--Security Slam
+mod:AddCustomAlertSoundOption(350919, true, 2)--Crowd Control
+mod:AddCustomAlertSoundOption(350922, false, 1)--Menacing Shout (off by default since no way to filter interrupts by target or CD anymore)
+--Custom timer colors, countdowns, and disables
+mod:AddCustomTimerOptions(359028, true, 5, 0)
+mod:AddCustomTimerOptions(350919, true, 3, 0)
+mod:AddCustomTimerOptions(350922, true, 4, 0)
+mod:AddCustomTimerOptions(353835, true, 3, 0)--Suppression Spark
 --Midnight private aura replacements
 mod:AddPrivateAuraSoundOption(353835, true, 353835, 1)
 mod:AddPrivateAuraSoundOption(355439, true, 355439, 1)
 
 function mod:OnLimitedCombatStart()
+	self:DisableSpecialWarningSounds()
+	if self:IsTank() then
+		self:EnableAlertOptions(359028, 578, "defensive", 2)
+	end
+	self:EnableAlertOptions(350919, 579, "frontal", 15)
+	self:EnableAlertOptions(350922, 580, "kickcast", 2)
+
+	self:EnableTimelineOptions(359028, 578)
+	self:EnableTimelineOptions(350919, 579)
+	self:EnableTimelineOptions(350922, 580)
+	self:EnableTimelineOptions(353835, 581)
+
 	self:EnablePrivateAuraSound(353835, "debuffyou", 17)
 	self:EnablePrivateAuraSound(355439, "range5", 2)
 end
