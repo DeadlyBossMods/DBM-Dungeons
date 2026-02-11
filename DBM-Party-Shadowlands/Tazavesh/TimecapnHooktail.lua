@@ -9,14 +9,31 @@ mod:SetZone(2441)
 
 mod:RegisterCombat("combat")
 
+--Custom Sounds on cast/cooldown expiring
+mod:AddCustomAlertSoundOption(350134, true, 2)--Infinite Breath
+--Custom timer colors, countdowns, and disables
+mod:AddCustomTimerOptions(350134, true, 5, 0)--Infinite Breath
+mod:AddCustomTimerOptions(347371, true, 3, 0)--Grapeshot
+mod:AddCustomTimerOptions(1240097, true, 4, 0)--Time Bomb
+mod:AddCustomTimerOptions(352345, true, 3, 0)--Anchor Shot
 --Midnight private aura replacements
 --No private aura for https://www.wowhead.com/beta/spell=350134/infinite-breath yet. Check it if dungeon returns
-mod:AddPrivateAuraSoundOption(1240097, true, 1240097, 1)
+mod:AddPrivateAuraSoundOption(1240097, true, 1240097, 1)--Time Bomb
+mod:AddPrivateAuraSoundOption(352345, true, 352345, 1)--Anchor Shot
 mod:AddPrivateAuraSoundOption(358947, true, 358947, 1)--GTFO
 
 function mod:OnLimitedCombatStart()
+	self:DisableSpecialWarningSounds()
+	self:EnableAlertOptions(350134, 591, "breathsoon", 2)
+
+	self:EnableTimelineOptions(350134, 591)
+	self:EnableTimelineOptions(347371, 592)
+	self:EnableTimelineOptions(1240097, 593)
+	self:EnableTimelineOptions(352345, 594)
+
 	self:EnablePrivateAuraSound(1240097, "debuffyou", 17)
 	self:EnablePrivateAuraSound(358947, "watchfeet", 8)
+	self:EnablePrivateAuraSound(352345, "targetyou", 2)
 end
 
 --[[
