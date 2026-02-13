@@ -12,132 +12,28 @@ mod.sendMainBossGUID = true
 
 mod:RegisterCombat("combat")
 
---[[
-mod:RegisterEventsInCombat(
-	"SPELL_CAST_START 424419 424414 1238780",--447270
-	"SPELL_CAST_SUCCESS 424414 447443",
-	"SPELL_AURA_APPLIED 447443 447439 424419",
-	"SPELL_AURA_APPLIED_DOSE 424419",
-	"SPELL_AURA_REMOVED 447443",
-	"SPELL_PERIODIC_DAMAGE 1238782",
-	"SPELL_PERIODIC_MISSED 1238782"
-)
---]]
+--NOTE: Hurl Spear(447270)/Earthshattering Spear(1238780) has no event ID
+--Custom Sounds on cast/cooldown expiring
+mod:AddCustomAlertSoundOption(424414, true, 1)
+mod:AddCustomAlertSoundOption(424419, "HasInterrupt", 1)
+--Custom timer colors, countdowns, and disables
+mod:AddCustomTimerOptions(424414, true, 5, 0)
+mod:AddCustomTimerOptions(424419, true, 4, 0)
+mod:AddCustomTimerOptions(447439, true, 3, 0)
+--Private Auras
+mod:AddPrivateAuraSoundOption(447439, true, 447439, 8)
 
---NOTE, the abilities of sub bosses are all in trash mod due to fact that you can (and should) pull them separately from boss
---[[
-(ability.id = 424419 or ability.id = 447270 or ability.id = 424414 or ability.id = 1238780) and type = "begincast"
- or ability.id = 447443 and (type = "applydebuff" or type = "removedebuff")
- or type = "dungeonencounterstart" or type = "dungeonencounterend"
---]]
---Captain Dailcry
---[[
-mod:AddTimerLine(DBM:EJ_GetSectionInfo(27821))
-local warnSavageMauling						= mod:NewTargetNoFilterAnnounce(447439, 3)
+function mod:OnLimitedCombatStart()
+	self:DisableSpecialWarningSounds()
 
-local specWarnBattleCry						= mod:NewSpecialWarningInterruptCount(424419, nil, nil, nil, 1, 2)
-local specWarnBattleCryDispel				= mod:NewSpecialWarningDispel(424419, "RemoveEnrage", nil, nil, 1, 2)
---local specWarnHurlSpear					= mod:NewSpecialWarningDodgeCount(447270, nil, nil, nil, 2, 2)--Replaced by Earthshattering Spear
-local specWarnEarthshatteringSpear			= mod:NewSpecialWarningDodgeCount(1238780, nil, nil, nil, 2, 2)
-local specWarnPierceArmor					= mod:NewSpecialWarningDefensive(424414, nil, nil, nil, 1, 2)
-local specWarnGTFO							= mod:NewSpecialWarningGTFO(1238782, nil, nil, nil, 1, 8)
-
-local timerSavageMaulingCD					= mod:NewCDCountTimer(25.1, 447439, nil, nil, nil, 3)
-local timerBattleCryCD						= mod:NewVarCountTimer("v27.4-33.4", 424419, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
---local timerHurlSpearCD					= mod:NewVarCountTimer("v30.3-35.8", 447270, nil, nil, nil, 3)
-local timerEarthshatteringSpearCD			= mod:NewVarCountTimer("v25.4-28.3", 1238780, nil, nil, nil, 3)
-local timerPierceArmorCD					= mod:NewVarCountTimer("v13.1-17.6", 424414, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
-
-mod:AddInfoFrameOption(447443)
-
-mod.vb.savageCount = 0
-mod.vb.battleCryCount = 0
-mod.vb.spearCount = 0
-mod.vb.pierceCount = 0
-
-function mod:OnCombatStart(delay)
-	self.vb.savageCount = 0
-	self.vb.battleCryCount = 0
-	self.vb.spearCount = 0
-	self.vb.pierceCount = 0
-	timerPierceArmorCD:Start(5.7-delay, 1)
-	timerEarthshatteringSpearCD:Start(9.3-delay, 1)
-	timerBattleCryCD:Start(12.3-delay, 1)
-	timerSavageMaulingCD:Start(14.4-delay, 1)
-end
-
-function mod:OnCombatEnd()
-	if self.Options.InfoFrame then
-		DBM.InfoFrame:Hide()
+	if self:IsTank() then
+		self:EnableAlertOptions(424414, 525, "defensive", 2)
 	end
-end
+	self:EnableAlertOptions(424419, 526, "kickcast", 2)
 
-function mod:SPELL_CAST_START(args)
-	local spellId = args.spellId
-	if spellId == 424419 then
-		self.vb.battleCryCount = self.vb.battleCryCount + 1
-		specWarnBattleCry:Show(args.sourceName, self.vb.battleCryCount)
-		specWarnBattleCry:Play("kickcast")
-		timerBattleCryCD:Start(nil, self.vb.battleCryCount+1)
-	elseif spellId == 1238780 then
-		self.vb.spearCount = self.vb.spearCount + 1
-		specWarnEarthshatteringSpear:Show(self.vb.spearCount)
-		specWarnEarthshatteringSpear:Play("watchstep")
-		timerEarthshatteringSpearCD:Start(nil, self.vb.spearCount+1)
-	elseif spellId == 424414 then
-		if self:IsTanking("player", "boss1", nil, true) then
-			specWarnPierceArmor:Show()
-			specWarnPierceArmor:Play("defensive")
-		end
-	end
-end
+	self:EnableTimelineOptions(424414, 525)
+	self:EnableTimelineOptions(424419, 526)
+	self:EnableTimelineOptions(447439, 527)
 
-function mod:SPELL_CAST_SUCCESS(args)
-	local spellId = args.spellId
-	if spellId == 424414 then
-		self.vb.pierceCount = self.vb.pierceCount + 1
-		timerPierceArmorCD:Start("v10.8-21.5", self.vb.pierceCount+1)--("v13.3-23") - 2.5
-	elseif spellId == 447443 then
-		self.vb.savageCount = self.vb.savageCount + 1
-		--timerSavageMaulingCD:Start(nil, self.vb.savageCount+1)
-	end
+	self:EnablePrivateAuraSound(447439, "defensive", 2)
 end
-
-function mod:SPELL_AURA_APPLIED(args)
-	local spellId = args.spellId
-	if spellId == 447443 then
-		if self.Options.InfoFrame then
-			DBM.InfoFrame:SetHeader(args.spellName)
-			DBM.InfoFrame:Show(2, "enemyabsorb", nil, args.amount, "boss1")
-		end
-	elseif spellId == 447439 then
-		warnSavageMauling:Show(args.destName)
-	elseif spellId == 424419 then
-		specWarnBattleCryDispel:CombinedShow(0.3, args.destName)
-		specWarnBattleCryDispel:ScheduleVoice(0.3, "enrage")
-		local cid = self:GetCIDFromGUID(args.destGUID)
-		if cid == 207946 then--Captain Dailcry
-			timerSavageMaulingCD:RemoveTime(12.5, self.vb.savageCount+1)
-		end
-	end
-end
-mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED
-
-function mod:SPELL_AURA_REMOVED(args)
-	local spellId = args.spellId
-	if spellId == 447443 then
-		timerSavageMaulingCD:Start(nil, self.vb.savageCount+1)
-		if self.Options.InfoFrame then
-			DBM.InfoFrame:Hide()
-		end
-	end
-end
-
-function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId, spellName)
-	if spellId == 1238782 and destGUID == UnitGUID("player") and self:AntiSpam(3, 2) then
-		specWarnGTFO:Show(spellName)
-		specWarnGTFO:Play("watchfeet")
-	end
-end
-mod.SPELL_PERIODIC_MISSED = mod.SPELL_PERIODIC_DAMAGE
---]]

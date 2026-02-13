@@ -12,11 +12,33 @@ mod.sendMainBossGUID = true
 
 mod:RegisterCombat("combat")
 
+--NOTE: Holy Smite not worth adding with it's short cooldown. Spammy
+--Custom Sounds on cast/cooldown expiring
+mod:AddCustomAlertSoundOption(444608, true, 2)
+mod:AddCustomAlertSoundOption(428169, true, 2)
+mod:AddCustomAlertSoundOption(451605, true, 2)
+mod:AddCustomAlertSoundOption(444546, true, 2)
+--Custom timer colors, countdowns, and disables
+mod:AddCustomTimerOptions(444608, true, 2, 0)
+mod:AddCustomTimerOptions(428169, true, 2, 0)
+mod:AddCustomTimerOptions(451605, true, 3, 0)
+mod:AddCustomTimerOptions(444546, true, 3, 0)
 --Midnight private aura replacements
 --Could not find a private aura for Purifying Light
 mod:AddPrivateAuraSoundOption(425556, true, 425556, 1)--GTFO
 
 function mod:OnLimitedCombatStart()
+	self:DisableSpecialWarningSounds()
+	self:EnableAlertOptions(444608, 534, "aesoon", 2)
+	self:EnableAlertOptions(428169, 535, "turnaway", 2)
+	self:EnableAlertOptions(451605, 536, "watchstep", 2)
+	self:EnableAlertOptions(444546, 537, "laserrun", 2)
+
+	self:EnableTimelineOptions(444608, 534)
+	self:EnableTimelineOptions(428169, 535)
+	self:EnableTimelineOptions(451605, 536)
+	self:EnableTimelineOptions(444546, 537)
+
 	self:EnablePrivateAuraSound(425556, "watchfeet", 8)
 end
 
