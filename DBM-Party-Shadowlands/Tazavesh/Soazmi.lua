@@ -15,8 +15,8 @@ mod:RegisterSafeEvents(
 
 --Custom Sounds on cast/cooldown expiring
 mod:AddCustomAlertSoundOption(347481, true, 2)--Shurl
-mod:AddCustomAlertSoundOption(347150, "HasInterrupt", 5)--Triple Technique
-mod:AddCustomAlertSoundOption(357188, "HasInterrupt", 5)--Double Technique
+mod:AddCustomAlertSoundOption(347150, "HasInterrupt", 1)--Triple Technique
+mod:AddCustomAlertSoundOption(357188, "HasInterrupt", 1)--Double Technique
 --Custom timer colors, countdowns, and disables
 mod:AddCustomTimerOptions(347481, true, 2, 0)--Shurl
 mod:AddCustomTimerOptions(1248209, true, 5, 0)--Phase Slash
