@@ -12,101 +12,29 @@ mod:SetZone(2830)
 
 mod:RegisterCombat("combat")
 
-mod:AddPrivateAuraSoundOption(1220427, true, 1220427, 1)
-mod:AddPrivateAuraSoundOption(1236126, true, 1236126, 1)
+--Custom Sounds on cast/cooldown expiring
+mod:AddCustomAlertSoundOption(1219482, true, 1)--Rift Claws
+mod:AddCustomAlertSoundOption(1219700, true, 2)--Arcane Blitz
+--custom timer colors, countdowns, and disables
+mod:AddCustomTimerOptions(1219482, nil, 5, 0)--Rift Claws
+mod:AddCustomTimerOptions(1236126, nil, 3, 0)--Binding Javelin
+mod:AddCustomTimerOptions(1220427, nil, 3, 0)--Warp Strike
+mod:AddCustomTimerOptions(1219700, nil, 6, 0)--Arcane Blitz
+--Midnight private aura replacements
+mod:AddPrivateAuraSoundOption(1220427, true, 1220427, 1)--Warp Strike
+mod:AddPrivateAuraSoundOption(1236126, true, 1236126, 1)--Binding Javelin
 
 function mod:OnLimitedCombatStart()
-	self:EnablePrivateAuraSound(1220427, "lineyou", 17)
-	self:EnablePrivateAuraSound(1227142, "lineyou", 17, 1220427)
+	self:DisableSpecialWarningSounds()
+
+	self:EnableAlertOptions(1219482, 484, "defensive", 2)
+	self:EnableAlertOptions(1219700, 487, "specialsoon", 2)
+
+	self:EnableTimelineOptions(1219482, 484)
+	self:EnableTimelineOptions(1236126, 485)
+	self:EnableTimelineOptions(1220427, 486, 491)
+	self:EnableTimelineOptions(1219700, 487)
+
+	self:EnablePrivateAuraSound({1220427,1227142}, "lineyou", 17)
 	self:EnablePrivateAuraSound(1236126, "targetyou", 2)
 end
-
---[[
-mod:RegisterEventsInCombat(
-	"SPELL_CAST_START 1219700 1236130 1227918 1219482",
-	"SPELL_AURA_APPLIED 1219731 1219457 1236126 1219731",
-	"SPELL_AURA_REMOVED_DOSE 1219457"
-)
---]]
-
---NOTE: Blitz warp strike is spammed (1227900). Target information is unknown without transcriptor but it doesn't appear CLEU logged 1227918 is non blitz cast ID
---[[
-ability.id = 1219700 and type = "begincast" or ability.id = 1219731 and type = "applydebuff"
- or type = "dungeonencounterstart" or type = "dungeonencounterend"
---]]
---[[
-local warnIncorporeal					= mod:NewStackAnnounce(1219457, 1)
-local warnBindingJavelin				= mod:NewTargetNoFilterAnnounce(1236130, 3)
-local warnWarpStrike					= mod:NewCountAnnounce(1227918, 3)
-
-local specWarnArcaneBlitz				= mod:NewSpecialWarningCount(1219700, nil, nil, nil, 1, 2)
-local specWarnRiftClaws					= mod:NewSpecialWarningDefensive(1219482, nil, nil, nil, 1, 2)
-
-local timerArcaneBlitzCD				= mod:NewCDCountTimer(30, 1219700, nil, nil, nil, 6)
-local timerBindingJavelinCD				= mod:NewCDCountTimer(26.7, 1236130, nil, nil, nil, 3)
-local timerWarpStrikeCD					= mod:NewCDCountTimer(26.7, 1227918, nil, nil, nil, 3)
-local timerRiftClawsCD					= mod:NewVarCountTimer("v23.5-26.7", 1219482, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
-local timerDestabalized					= mod:NewBuffActiveTimer(15, 1219731, nil, nil, nil, 5)
-
-mod.vb.blitzCount = 0
-mod.vb.blitzActive = false
-mod.vb.javelinCount = 0
-mod.vb.warpStrikeCount = 0
-mod.vb.riftClawsCount = 0
-
-function mod:OnCombatStart(delay)
-	self.vb.blitzCount = 0
-	self.vb.blitzActive = false
-	self.vb.javelinCount = 0
-	self.vb.warpStrikeCount = 0
-	self.vb.riftClawsCount = 0
-	timerRiftClawsCD:Start(5.2-delay, 1)
-	timerBindingJavelinCD:Start(10.9-delay, 1)
-	timerWarpStrikeCD:Start(21.8-delay, 1)
-	timerArcaneBlitzCD:Start(34-delay, 1)
-end
-
-function mod:SPELL_CAST_START(args)
-	local spellId = args.spellId
-	if spellId == 1219700 then
-		self.vb.blitzActive = true
-		self.vb.blitzCount = self.vb.blitzCount + 1
-		specWarnArcaneBlitz:Show(self.vb.blitzCount)
-		specWarnArcaneBlitz:Play("specialsoon")
-		timerBindingJavelinCD:Stop()
-		timerWarpStrikeCD:Stop()
-		timerRiftClawsCD:Stop()
-	elseif spellId == 1236130 then
-		self.vb.javelinCount = self.vb.javelinCount + 1
-		timerBindingJavelinCD:Start(nil, self.vb.javelinCount+1)
-	elseif spellId == 1227918 then
-		self.vb.warpStrikeCount = self.vb.warpStrikeCount + 1
-		warnWarpStrike:Show(self.vb.warpStrikeCount)
-		timerWarpStrikeCD:Start(nil, self.vb.warpStrikeCount+1)
-	elseif spellId == 1219482 then
-		self.vb.riftClawsCount = self.vb.riftClawsCount + 1
-		if self:IsTanking("player", nil, nil, true, args.sourceGUID) then
-			specWarnRiftClaws:Show()
-			specWarnRiftClaws:Play("defensive")
-		end
-		timerRiftClawsCD:Start(nil, self.vb.riftClawsCount+1)
-	end
-end
-
-function mod:SPELL_AURA_APPLIED(args)
-	local spellId = args.spellId
-	if spellId == 1219731 and self.vb.blitzActive then
-		self.vb.blitzActive = false
-		timerDestabalized:Start()
-		timerRiftClawsCD:Start(23.6, self.vb.riftClawsCount+1)
-		timerBindingJavelinCD:Start(29.9, self.vb.blitzCount+1)
-		timerWarpStrikeCD:Start(40.8, self.vb.warpStrikeCount+1)
-		timerArcaneBlitzCD:Start(78.6, self.vb.blitzCount+1)
-	elseif spellId == 1219457 then
-		warnIncorporeal:Schedule(0.5, args.destName, args.amount or 3)
-	elseif spellId == 1236126 then
-		warnBindingJavelin:CombinedShow(0.5, args.destName)
-	end
-end
-mod.SPELL_AURA_REMOVED_DOSE = mod.SPELL_AURA_APPLIED
---]]
