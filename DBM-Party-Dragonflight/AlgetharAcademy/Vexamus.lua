@@ -17,6 +17,7 @@ if DBM:IsPostMidnight() then
 	mod:AddCustomAlertSoundOption(385974, true, 2)--Arcane Orbs
 	mod:AddCustomAlertSoundOption(386173, true, 2)--Mana Bombs
 	mod:AddCustomAlertSoundOption(385958, true, 1)--Arcane Expulsion
+	mod:AddCustomAlertSoundOption(388537, true, 2)--Arcane Fissure
 	--Custom timer colors, countdowns, and disables
 	mod:AddCustomTimerOptions(385974, nil, 5, 0)
 	mod:AddCustomTimerOptions(386173, nil, 3, 0)

@@ -21,7 +21,7 @@ mod:AddCustomTimerOptions(424414, true, 5, 0)
 mod:AddCustomTimerOptions(424419, true, 4, 0)
 mod:AddCustomTimerOptions(447439, true, 3, 0)
 --Private Auras
-mod:AddPrivateAuraSoundOption(447439, true, 447439, 8)
+mod:AddPrivateAuraSoundOption(447439, true, 447439, 1)
 
 function mod:OnLimitedCombatStart()
 	self:DisableSpecialWarningSounds()
