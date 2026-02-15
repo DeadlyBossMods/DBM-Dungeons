@@ -5,6 +5,7 @@ mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(191736)
 mod:SetEncounterID(2564)
 mod:SetHotfixNoticeRev(20221127000000)
+mod:SetZone(2526)
 --mod:SetMinSyncRevision(20211203000000)
 --mod.respawnTime = 29
 mod.sendMainBossGUID = true
