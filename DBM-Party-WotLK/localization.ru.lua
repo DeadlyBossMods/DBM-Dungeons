@@ -749,6 +749,12 @@ L:SetMiscLocalization({
 	YellCombatEnd	= "Не может быть... Иней... Предупреди..."
 })
 
+L = DBM:GetModLocalization("PitOfSaronTrash")
+
+L:SetGeneralLocalization({
+	name = "Трэш мобы Яма Сарона"
+})
+
 ----------------------
 --  Forge of Souls  --
 ----------------------
