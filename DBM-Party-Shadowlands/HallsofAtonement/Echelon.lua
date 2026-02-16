@@ -10,7 +10,27 @@ mod:SetZone(2287)
 
 mod:RegisterCombat("combat")
 
---NANI, blizzard forgot about this boss?
+--Custom Sounds on cast/cooldown expiring
+mod:AddCustomAlertSoundOption(326389, true, 2)--Blood Torrent
+mod:AddCustomAlertSoundOption(319733, true, 1)--Stone Call
+mod:AddCustomAlertSoundOption(319941, true, 2)--Stone Shattering Leap
+--Custom timer colors, countdowns, and disables
+mod:AddCustomTimerOptions(326389, true, 2, 0)
+mod:AddCustomTimerOptions(319733, true, 1, 0)
+mod:AddCustomTimerOptions(328206, true, 3, 0)--Curse of Stone
+mod:AddCustomTimerOptions(319941, true, 3, 0)
+
+function mod:OnLimitedCombatStart()
+	self:DisableSpecialWarningSounds()
+	self:EnableAlertOptions(326389, 488, "aesoon", 2)
+	self:EnableAlertOptions(319733, 489, "mobsoon", 2)
+	self:EnableAlertOptions(319941, 496, "specialsoon", 2)
+
+	self:EnableTimelineOptions(326389, 488)
+	self:EnableTimelineOptions(319733, 489)
+	self:EnableTimelineOptions(328206, 490)
+	self:EnableTimelineOptions(319941, 496)
+end
 
 --[[
 mod:RegisterEventsInCombat(

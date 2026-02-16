@@ -10,20 +10,10 @@ mod:SetModelID(16176)
 mod:SetReCombatTime(10)
 mod:RegisterCombat("combat")
 
-mod:RegisterEvents(
+mod:RegisterSafeEvents(
 	"CHAT_MSG_MONSTER_SAY",
 	"GOSSIP_SHOW"
 )
-
-mod:RegisterEventsInCombat(
-	"SPELL_CAST_START 68821",
-	"SPELL_PERIODIC_DAMAGE 68927 68934",
-	"SPELL_PERIODIC_MISSED 68927 68934"
-)
-
-local warnChainReaction			= mod:NewCastAnnounce(68821, 3, nil, nil, "Melee", 2)
-
-local specWarnGTFO				= mod:NewSpecialWarningGTFO(68927, nil, nil, nil, 1, 8)
 
 local timerHummel				= mod:NewTimer(10.5, "HummelActive", "132349", nil, false, "TrioActiveTimer")
 local timerBaxter				= mod:NewTimer(16, "BaxterActive", "132349", nil, false, "TrioActiveTimer")
@@ -37,21 +27,8 @@ function mod:GOSSIP_SHOW()
 	end
 end
 
-function mod:SPELL_CAST_START(args)
-	if args.spellId == 68821 and self:AntiSpam(3, 1) then
-		warnChainReaction:Show()
-	end
-end
-
-function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId, spellName)
-	if (spellId == 68927 or spellId == 68934) and destGUID == UnitGUID("player") and self:AntiSpam(3, 2) then
-		specWarnGTFO:Show(spellName)
-		specWarnGTFO:Play("watchfeet")
-	end
-end
-mod.SPELL_PERIODIC_MISSED = mod.SPELL_PERIODIC_DAMAGE
-
 function mod:CHAT_MSG_MONSTER_SAY(msg)
+	if self:issecretvalue(msg) then return end
 	if msg == L.SayCombatStart or msg:find(L.SayCombatStart) then
 		self:SendSync("TrioPulled")
 	end
@@ -66,3 +43,29 @@ function mod:OnSync(msg)
 		end
 	end
 end
+
+if DBM:IsPostMidnight() then return end
+
+mod:RegisterEventsInCombat(
+	"SPELL_CAST_START 68821",
+	"SPELL_PERIODIC_DAMAGE 68927 68934",
+	"SPELL_PERIODIC_MISSED 68927 68934"
+)
+
+local warnChainReaction			= mod:NewCastAnnounce(68821, 3, nil, nil, "Melee", 2)
+
+local specWarnGTFO				= mod:NewSpecialWarningGTFO(68927, nil, nil, nil, 1, 8)
+
+function mod:SPELL_CAST_START(args)
+	if args.spellId == 68821 and self:AntiSpam(3, 1) then
+		warnChainReaction:Show()
+	end
+end
+
+function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId, spellName)
+	if (spellId == 68927 or spellId == 68934) and destGUID == UnitGUID("player") and self:AntiSpam(3, 2) then
+		specWarnGTFO:Show(spellName)
+		specWarnGTFO:Play("watchfeet")
+	end
+end
+mod.SPELL_PERIODIC_MISSED = mod.SPELL_PERIODIC_DAMAGE

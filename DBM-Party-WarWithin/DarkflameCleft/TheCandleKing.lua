@@ -72,8 +72,7 @@ function mod:OnCombatStart(delay)
 	timerParanoidMindCD:Start(9.4-delay, 1)
 	if self:IsMythic() then
 		timerThrowDarkflameCD:Start(20.7-delay, 1)
-		self:EnablePrivateAuraSound(420696, "movetostatue", 17)--Throw Darkflame
-		self:EnablePrivateAuraSound(453278, "movetostatue", 17, 420696)--Register Additional Throw Darkflame ID
+		self:EnablePrivateAuraSound({420696,453278}, "movetostatue", 17)--Throw Darkflame
 	end
 end
 

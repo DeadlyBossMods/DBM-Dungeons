@@ -4,8 +4,12 @@ local L		= mod:GetLocalizedStrings()
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(71992)
 --mod:SetModelID(328)
+mod:SetZone(974)
 
 mod:RegisterCombat("combat")
+
+--Rest of mod below this point is only useful pre midnight
+if DBM:IsPostMidnight() then return end
 
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 144546 144590 144602 144702",

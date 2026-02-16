@@ -10,10 +10,31 @@ mod:SetZone(2287)
 
 mod:RegisterCombat("combat")
 
+--Custom Sounds on cast/cooldown expiring
+mod:AddCustomAlertSoundOption(322711, true, 2)--Refracted Sinlight
+mod:AddCustomAlertSoundOption(322936, true, 2)--Crumbling Slam
+mod:AddCustomAlertSoundOption(322943, false, 1)--Heave Debris
+--Custom timer colors, countdowns, and disables
+mod:AddCustomTimerOptions(322711, true, 3, 0)
+mod:AddCustomTimerOptions(322936, true, 5, 0)
+mod:AddCustomTimerOptions(322943, true, 3, 0)
+mod:AddCustomTimerOptions(322977, true, 3, 0)--Sinlight Visions
 --Midnight private aura replacements
 mod:AddPrivateAuraSoundOption(323001, true, 323001, 1)--GTFO
 
 function mod:OnLimitedCombatStart()
+	self:DisableSpecialWarningSounds()
+	self:EnableAlertOptions(322711, 477, "watchstep", 2)
+	if self:IsTank() then
+		self:EnableAlertOptions(322936, 478, "moveboss", 2)
+	end
+	self:EnableAlertOptions(322943, 479, "watchstep", 2)
+
+	self:EnableTimelineOptions(322711, 477)
+	self:EnableTimelineOptions(322936, 478)
+	self:EnableTimelineOptions(322943, 479)
+	self:EnableTimelineOptions(322977, 480)
+
 	self:EnablePrivateAuraSound(323001, "watchfeet", 8)
 end
 

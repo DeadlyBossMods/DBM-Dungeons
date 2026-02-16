@@ -748,6 +748,12 @@ L:SetMiscLocalization({
 	YellCombatEnd	= "Impossible.... Rimefang.... warn...."
 })
 
+L = DBM:GetModLocalization("PitOfSaronTrash")
+
+L:SetGeneralLocalization({
+	name = "PoS Trash"
+})
+
 ----------------------
 --  Forge of Souls  --
 ----------------------

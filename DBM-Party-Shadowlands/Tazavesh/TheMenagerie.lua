@@ -10,11 +10,38 @@ mod:SetZone(2441)
 
 mod:RegisterCombat("combat")
 
+--Custom Sounds on cast/cooldown expiring
+mod:AddCustomAlertSoundOption(349663, true, 4)--Grip of Hunger
+mod:AddCustomAlertSoundOption(349797, true, 2)--Grand Consumption
+mod:AddCustomAlertSoundOption(349987, true, 2)--Venting Protocol
+mod:AddCustomAlertSoundOption(350086, true, 4)--Whirling Annihilation
+--Custom timer colors, countdowns, and disables
+mod:AddCustomTimerOptions(349663, true, 2, 0)
+mod:AddCustomTimerOptions(349797, true, 3, 0)
+mod:AddCustomTimerOptions(349987, true, 3, 0)
+mod:AddCustomTimerOptions(349934, true, 2, 0)--Flagellation Protocol
+mod:AddCustomTimerOptions(349954, true, 3, 0)--Purification Protocol
+mod:AddCustomTimerOptions(350086, true, 2, 0)
+mod:AddCustomTimerOptions(350101, true, 3, 0)
 --Midnight private aura replacements
-mod:AddPrivateAuraSoundOption(349627, true, 349627, 1)
-mod:AddPrivateAuraSoundOption(350101, true, 350101, 1)
+mod:AddPrivateAuraSoundOption(349627, true, 349627, 1)--Gluttony
+mod:AddPrivateAuraSoundOption(350101, true, 350101, 1)--Chains of Damnation
 
 function mod:OnLimitedCombatStart()
+	self:DisableSpecialWarningSounds()
+	self:EnableAlertOptions(349663, 567, "justrun", 2)
+	self:EnableAlertOptions(349797, 568, "watchorb", 2)
+	self:EnableAlertOptions(349987, 569, "watchorb", 2)
+	self:EnableAlertOptions(350086, 572, "justrun", 2)
+
+	self:EnableTimelineOptions(349663, 567)
+	self:EnableTimelineOptions(349797, 568)
+	self:EnableTimelineOptions(349987, 569)
+	self:EnableTimelineOptions(349934, 570)
+	self:EnableTimelineOptions(349954, 571)
+	self:EnableTimelineOptions(350086, 572)
+	self:EnableTimelineOptions(350101, 573)
+
 	self:EnablePrivateAuraSound(349627, "debuffyou", 17)
 	self:EnablePrivateAuraSound(350101, "targetyou", 2)
 end
@@ -48,7 +75,7 @@ local specWarnGluttony				= mod:NewSpecialWarningYou(349627, nil, nil, nil, 1, 2
 local yellGluttony					= mod:NewYell(349627)
 local yellGluttonyFades				= mod:NewShortFadesYell(349627)
 local specWarnGripofHunger			= mod:NewSpecialWarningRun(349663, nil, nil, nil, 4, 2)
-local specWarnGrandConsumption		= mod:NewSpecialWarningDodge(349663, nil, nil, nil, 2, 2)
+local specWarnGrandConsumption		= mod:NewSpecialWarningDodge(349797, nil, nil, nil, 2, 2)
 
 local timerGripofHungerCD			= mod:NewCDTimer(23, 349663, nil, nil, nil, 2)--23-30
 local timerGrandconsumptionCD		= mod:NewCDTimer(30, 349797, nil, nil, nil, 3)

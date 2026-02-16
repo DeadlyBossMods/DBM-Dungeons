@@ -9,13 +9,29 @@ mod:SetZone(2441)
 
 mod:RegisterCombat("combat")
 
+--TODO, add 345990/566 if it's needed for a bar color
+--Custom Sounds on cast/cooldown expiring
+mod:AddCustomAlertSoundOption(1236348, true, 2)--Charged Slash
+--Custom timer colors, countdowns, and disables
+mod:AddCustomTimerOptions(1236348, true, 3, 0)
+mod:AddCustomTimerOptions(348350, true, 3, 0)--Interrogation
+mod:AddCustomTimerOptions(346006, true, 3, 0)--Impound Contraband
+mod:AddCustomTimerOptions(346204, true, 5, 0)--Armed Security
 --Midnight private aura replacements
 --Recheck https://www.wowhead.com/beta/spell=347949/interrogation when this dungeon returns
 mod:AddPrivateAuraSoundOption(348366, true, 348366, 1)--GTFO
-mod:AddPrivateAuraSoundOption(345990, true, 345990, 1)
-mod:AddPrivateAuraSoundOption(345770, true, 345770, 1)
+mod:AddPrivateAuraSoundOption(345990, true, 348350, 1)--Containment Cell
+mod:AddPrivateAuraSoundOption(345770, true, 346006, 1)--Impound Contraband
 
 function mod:OnLimitedCombatStart()
+	self:DisableSpecialWarningSounds()
+	self:EnableAlertOptions(1236348, 562, "frontal", 15)
+
+	self:EnableTimelineOptions(1236348, 562)
+	self:EnableTimelineOptions(348350, 563)
+	self:EnableTimelineOptions(346006, 564)
+	self:EnableTimelineOptions(346204, 565)
+
 	self:EnablePrivateAuraSound(348366, "watchfeet", 8)
 	self:EnablePrivateAuraSound(345990, "debuffyou", 17)
 	self:EnablePrivateAuraSound(345770, "targetyou", 2)--TODO, custom audio should be added by the time this dungeon returns

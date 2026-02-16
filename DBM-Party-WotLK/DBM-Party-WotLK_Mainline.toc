@@ -111,3 +111,4 @@ ForgeofSouls\DevourerofSouls.lua
 PitofSaron\Ick.lua
 PitofSaron\ForgemasterGarfrost.lua
 PitofSaron\ScourgelordTyrannus.lua
+PitofSaron\PitOfSaronTrash.lua

@@ -12,160 +12,32 @@ mod.sendMainBossGUID = true
 
 mod:RegisterCombat("combat")
 
+--Custom Sounds on cast/cooldown expiring
+mod:AddCustomAlertSoundOption(459799, true, 1)
+mod:AddCustomAlertSoundOption(1217653, true, 2)
+--Custom timer colors, countdowns, and disables
+mod:AddCustomTimerOptions(459799, "Tank|Healer", 5, 0)
+mod:AddCustomTimerOptions(459779, true, 3, 0)
+mod:AddCustomTimerOptions(460867, true, 5, 0)
+mod:AddCustomTimerOptions(1217653, true, 3, 0)
+mod:AddCustomTimerOptions(473690, true, 3, 0)
 --Midnight private aura replacements
-mod:AddPrivateAuraSoundOption(473713, true, 473713, 1)
-mod:AddPrivateAuraSoundOption(470022, true, 470022, 1)
+mod:AddPrivateAuraSoundOption(473713, true, 473690, 1)--Debuff
+mod:AddPrivateAuraSoundOption(470022, true, 459779, 1)--Charge
 
 function mod:OnLimitedCombatStart()
+	self:DisableSpecialWarningSounds()
+	if self:IsTank() then
+		self:EnableAlertOptions(459799, 469, "defensive", 2)
+	end
+	self:EnableAlertOptions(1217653, 472, "frontal", 2)
+
+	self:EnableTimelineOptions(459799, 469)
+	self:EnableTimelineOptions(459779, 470)
+	self:EnableTimelineOptions(460867, 471)
+	self:EnableTimelineOptions(1217653, 472)
+	self:EnableTimelineOptions(473690, 473)
+
 	self:EnablePrivateAuraSound(473713, "targetyou", 2)
 	self:EnablePrivateAuraSound(470022, "chargemove", 2)
 end
-
---[[
-mod:RegisterEventsInCombat(
-	"SPELL_CAST_START 460867 1217653 473690 459799 459779",
-	"SPELL_AURA_APPLIED 473713 470022",
-	"SPELL_AURA_REMOVED 470022",
-	"UNIT_DIED"
-)
---]]
-
---[[
-(ability.id = 460867 or ability.id = 1217653 or ability.id = 473690 or ability.id = 459799 or ability.id = 459779) and type = "begincast"
- or (target.id = 226403 or target.id = 226402) and type = "death"
- or type = "dungeonencounterstart" or type = "dungeonencounterend"
---]]
---[[
---Keeza Quickfuse
-mod:AddTimerLine(DBM:EJ_GetSectionInfo(30321))
---TODO, evertthing
-local warnBigBadaBoom						= mod:NewCountAnnounce(460867, 3, nil, nil, 167180)
-local warnExplosiveGel						= mod:NewTargetNoFilterAnnounce(473690, 2, nil, "RemoveMagic", DBM_COMMON_L.KNOCKUP)
-
-local specWarnBBBFG							= mod:NewSpecialWarningDodgeCount(1217653, nil, nil, DBM_COMMON_L.FRONTAL, 2, 15)
-local specWarnExplosiveGel					= mod:NewSpecialWarningYou(473690, nil, nil, DBM_COMMON_L.KNOCKUP, 1, 2)
-local yellExplosiveGel						= mod:NewShortYell(473690, DBM_COMMON_L.KNOCKUP)
-
-local timerBigBadaBoomCD					= mod:NewCDCountTimer(35.3, 460867, 167180, nil, nil, 5)--Short text "Bombs"
---local timerBombsExplode					= mod:NewCastTimer(30, 460787, 167180, nil, nil, 2, nil, DBM_COMMON_L.DEADLY_ICON)
-local timerBBBFG							= mod:NewCDCountTimer(17.7, 1217653, DBM_COMMON_L.FRONTAL, nil, nil, 3)--.." (%s)"
-local timerExplosiveGelCD					= mod:NewCDCountTimer(17.7, 473690, DBM_COMMON_L.KNOCKUP, nil, nil, 3, nil, DBM_COMMON_L.MAGIC_ICON..DBM_COMMON_L.MYTHIC_ICON)
---Bront
-mod:AddTimerLine(DBM:EJ_GetSectionInfo(30322))
-local warnCharge							= mod:NewTargetNoFilterAnnounce(470022, 2, nil, nil, 100)
-
-local specWarnCharge						= mod:NewSpecialWarningYou(470022, nil, 100, nil, 1, 2)
-local yellCharge							= mod:NewShortYell(470022, 100)
-local yellChargeFades						= mod:NewShortFadesYell(470022, 100)
-local specWarnWallop						= mod:NewSpecialWarningDefensive(459799, nil, nil, nil, 1, 2)
-local yellWallop							= mod:NewShortYell(459799)
-
-local timerChargeCD							= mod:NewVarCountTimer(33.9, 470022, nil, nil, nil, 3)
-local timerWallopCD							= mod:NewVarCountTimer("v17-38.8", 459799, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
-
---mod.vb.bombCount = 0
-mod.vb.bombCastCount = 0
-mod.vb.bbbfgCount = 0
-mod.vb.knockCount = 0
-mod.vb.chargeCount = 0
-mod.vb.wallopCount = 0
-mod.vb.keezaDead = false
-
-function mod:OnCombatStart(delay)
-	--self.vb.bombCount = 0
-	self.vb.bombCastCount = 0
-	self.vb.bbbfgCount = 0
-	self.vb.knockCount = 0
-	self.vb.chargeCount = 0
-	self.vb.wallopCount = 0
-	self.vb.keezaDead = false
-	timerWallopCD:Start(5.7-delay, 1)--5.7, 35.2, 17.0, 17.0
-	timerBBBFG:Start(6.5-delay, 1)--6.5, 17.1
-	timerBigBadaBoomCD:Start(13.9-delay, 1)--13.9
-	if self:IsMythic() then
-		timerExplosiveGelCD:Start(17.6-delay, 1)
-	end
-	timerChargeCD:Start(22.7-delay, 1)
-end
-
-function mod:SPELL_CAST_START(args)
-	local spellId = args.spellId
-	if spellId == 460867 then
-		self.vb.bombCastCount = self.vb.bombCastCount + 1
-		warnBigBadaBoom:Show(self.vb.bombCastCount)
-		timerBigBadaBoomCD:Start(nil, self.vb.bombCastCount+1)
-	elseif spellId == 1217653 then
-		self.vb.bbbfgCount = self.vb.bbbfgCount + 1
-		specWarnBBBFG:Show(self.vb.bbbfgCount)
-		specWarnBBBFG:Play("frontal")
-		timerBBBFG:Start(nil, self.vb.bbbfgCount+1)
-	elseif spellId == 473690 then
-		self.vb.knockCount = self.vb.knockCount + 1
-		timerExplosiveGelCD:Start(nil, self.vb.knockCount+1)
-	elseif spellId == 459799 then
-		self.vb.wallopCount = self.vb.wallopCount + 1
-		if not self.vb.keezaDead then--Once keeza dead it has no Cd and boss just spams it
-			timerWallopCD:Start(nil, self.vb.wallopCount+1)
-		end
-		if self:IsTanking("player", "boss1", nil, true) then
-			specWarnWallop:Show()
-			specWarnWallop:Play("defensive")
-			yellWallop:Yell()
-		end
-	elseif spellId == 459779 then
-		self.vb.chargeCount = self.vb.chargeCount + 1
-		--"Barreling Charge-459779-npc:226402-00004D0020 = pull:24.8, 5.6, 6.0, 27.5, 5.4, 5.1",
-		local timer = (self.vb.chargeCount % 3 == 0) and "v23-33.3" or "v4-6.3"
-		timerChargeCD:Start(timer, self.vb.chargeCount+1)
-	end
-end
-
-function mod:SPELL_AURA_APPLIED(args)
-	local spellId = args.spellId
-	if spellId == 473713 then
-		if args:IsPlayer() then
-			specWarnExplosiveGel:Show()
-			specWarnExplosiveGel:Play("targetyou")
-			yellExplosiveGel:Yell()
-		else
-			warnExplosiveGel:Show(args.destName)
-		end
-	elseif spellId == 470022 then
-		if args:IsPlayer() then
-			specWarnCharge:Show()
-			specWarnCharge:Play("targetyou")
-			yellCharge:Yell()
-			yellChargeFades:Countdown(spellId)
-		else
-			warnCharge:Show(args.destName)
-		end
-	end
-end
-
-function mod:SPELL_AURA_REMOVED(args)
-	local spellId = args.spellId
-	if spellId == 470022 then
-		if args:IsPlayer() then
-			yellChargeFades:Cancel()
-		end
-	end
-end
-
-function mod:UNIT_DIED(args)
-	local cid = self:GetCIDFromGUID(args.destGUID)
-	if cid == 226403 then--Keeza
-		self.vb.keezaDead = true
-		timerBigBadaBoomCD:Stop()
-		timerBBBFG:Stop()
-		timerExplosiveGelCD:Stop()
-	elseif cid == 226402 then--Bront
-		timerChargeCD:Stop()
-		timerWallopCD:Stop()
-	--elseif cid == 234528 or cid == 237446 then
-	--	self.vb.bombCount = self.vb.bombCount - 1
-	--	if self.vb.bombCount == 0 then
-	--		timerBombsExplode:Stop()
-	--	end
-	end
-end
---]]

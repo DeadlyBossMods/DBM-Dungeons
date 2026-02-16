@@ -10,10 +10,33 @@ mod:SetZone(2441)
 
 mod:RegisterCombat("combat")
 
+--Custom Sounds on cast/cooldown expiring
+mod:AddCustomAlertSoundOption(346957, true, 2)--Purged by Fire
+mod:AddCustomAlertSoundOption(347094, true, 2)--Titanic Crash
+mod:AddCustomAlertSoundOption(346116, true, 1)--Shearing Swings
+mod:AddCustomAlertSoundOption(346766, true, 1)--Sanitizing Cycle
+--Custom timer colors, countdowns, and disables
+mod:AddCustomTimerOptions(346957, true, 3, 0)
+mod:AddCustomTimerOptions(347094, true, 3, 0)
+mod:AddCustomTimerOptions(346116, true, 5, 0)
+mod:AddCustomTimerOptions(346766, true, 6, 0)
 --Midnight private aura replacements
 mod:AddPrivateAuraSoundOption(358131, true, 358131, 1)
 
 function mod:OnLimitedCombatStart()
+	self:DisableSpecialWarningSounds()
+	self:EnableAlertOptions(346957, 586, "watchstep", 2)
+	self:EnableAlertOptions(347094, {587, 589}, "frontal", 15)
+	if self:IsTank() then
+		self:EnableAlertOptions(346116, 588, "defensive", 2)
+	end
+	self:EnableAlertOptions(346766, 590, "specialsoon", 1)
+
+	self:EnableTimelineOptions(346957, 586)
+	self:EnableTimelineOptions(347094, 587, 589)
+	self:EnableTimelineOptions(346116, 588)
+	self:EnableTimelineOptions(346766, 590)
+
 	self:EnablePrivateAuraSound(358131, "debuffyou", 17)
 end
 
