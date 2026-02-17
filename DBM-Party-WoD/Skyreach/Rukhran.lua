@@ -10,67 +10,95 @@ mod:SetEncounterID(1700)
 mod:RegisterCombat("combat")
 
 --TODO, some actual custom sounds and timer disables when apis added
-if DBM:IsPostMidnight() then return end
+if DBM:IsPostMidnight() then
+	--Custom Sounds on cast/cooldown expiring
+	mod:AddCustomAlertSoundOption(1253510, true, 1)--Sun Break
+	mod:AddCustomAlertSoundOption(1253519, true, 2)--Burning Claws
+	mod:AddCustomAlertSoundOption(1253527, true, 2)--Searing Quills
+	mod:AddCustomAlertSoundOption(1253511, false, 2)--Blaze of Glory (could be spammy with multiple birds so off by default)
+	--Custom timer colors, countdowns, and disables
+	mod:AddCustomTimerOptions(1253510, true, 1, 0)
+	mod:AddCustomTimerOptions(1253519, "Tank|Healer", 5, 0)
+	mod:AddCustomTimerOptions(1253527, true, 2, 0)
+	--Midnight private aura replacements
+	mod:AddPrivateAuraSoundOption(1253511, true, 1253511, 1)--Burning Pursuit
 
-mod:RegisterEventsInCombat(
-	"SPELL_AURA_REMOVED 159382",
-	"SPELL_CAST_START 153810 153794 159382",
-	"RAID_BOSS_WHISPER"
-)
-
-local warnSolarFlare			= mod:NewSpellAnnounce(153810, 3)
-
-local specWarnPierceArmor		= mod:NewSpecialWarningDefensive(153794, nil, nil, nil, 1, 2)
-local specWarnFixate			= mod:NewSpecialWarningYou(176544, nil, nil, nil, 1, 2)
-local specWarnQuills			= mod:NewSpecialWarningMoveTo(159382, nil, nil, nil, 2, 13)
-local specWarnQuillsEnd			= mod:NewSpecialWarningEnd(159382, nil, nil, nil, 1, 2)
-
-local timerSolarFlareCD			= mod:NewCDTimer(17, 153810, nil, nil, nil, 3)
-local timerQuills				= mod:NewBuffActiveTimer(17, 159382, nil, nil, nil, 2, nil, DBM_COMMON_L.HEALER_ICON)
-
-local skyTrashMod = DBM:GetModByName("SkyreachTrash")
-
-function mod:OnCombatStart(delay)
-	timerSolarFlareCD:Start(11-delay)
---	if self:IsHard() then
-		--timerQuillsCD:Start(33-delay)--Needs review
---	end
-	if skyTrashMod and skyTrashMod.Options.RangeFrame and skyTrashMod.vb.debuffCount ~= 0 then--In case of bug where range frame gets stuck open from trash pulls before this boss.
-		skyTrashMod.vb.debuffCount = 0--Fix variable
-		DBM.RangeCheck:Hide()--Close range frame.
-	end
-end
-
-function mod:SPELL_AURA_REMOVED(args)
-	local spellId = args.spellId
-	if spellId == 159382 then
-		specWarnQuillsEnd:Show()
-		specWarnQuillsEnd:Play("safenow")
-	end
-end
-
-function mod:SPELL_CAST_START(args)
-	local spellId = args.spellId
-	if spellId == 153810 then
-		warnSolarFlare:Show()
-		timerSolarFlareCD:Start()
-		warnSolarFlare:Play("mobsoon")
-		if self:IsDps() then
-			warnSolarFlare:ScheduleVoice(2, "mobkill")
+	function mod:OnLimitedCombatStart()
+		self:DisableSpecialWarningSounds()
+		self:EnableAlertOptions(1253510, 305, "mobsoon", 2)
+		if self:IsTank() then
+			self:EnableAlertOptions(1253519, 306, "defensive", 2)
 		end
-	elseif spellId == 153794 then
-		if self:IsTanking("player", "boss1", nil, true) then
-			specWarnPierceArmor:Show()
-			specWarnPierceArmor:Play("defensive")
-		end
-	elseif spellId == 159382 then
-		specWarnQuills:Show(DBM_COMMON_L.BREAK_LOS)
-		specWarnQuills:Play("breaklos")
-		timerQuills:Start()
-	end
-end
+		self:EnableAlertOptions(1253527, 308, "breaklos", 12)
+		self:EnableAlertOptions(1253511, 603, "watchstep", 2)
 
-function mod:RAID_BOSS_WHISPER()
-	specWarnFixate:Show()
-	specWarnFixate:Play("targetyou")
+		self:EnableTimelineOptions(1253510, 305)
+		self:EnableTimelineOptions(1253519, 306)
+		self:EnableTimelineOptions(1253527, 308)
+
+		self:EnablePrivateAuraSound(1253511, "targetyou", 2)
+	end
+else
+	mod:RegisterEventsInCombat(
+		"SPELL_AURA_REMOVED 159382",
+		"SPELL_CAST_START 153810 153794 159382",
+		"RAID_BOSS_WHISPER"
+	)
+
+	local warnSolarFlare			= mod:NewSpellAnnounce(153810, 3)
+
+	local specWarnPierceArmor		= mod:NewSpecialWarningDefensive(153794, nil, nil, nil, 1, 2)
+	local specWarnFixate			= mod:NewSpecialWarningYou(176544, nil, nil, nil, 1, 2)
+	local specWarnQuills			= mod:NewSpecialWarningMoveTo(159382, nil, nil, nil, 2, 13)
+	local specWarnQuillsEnd			= mod:NewSpecialWarningEnd(159382, nil, nil, nil, 1, 2)
+
+	local timerSolarFlareCD			= mod:NewCDTimer(17, 153810, nil, nil, nil, 3)
+	local timerQuills				= mod:NewBuffActiveTimer(17, 159382, nil, nil, nil, 2, nil, DBM_COMMON_L.HEALER_ICON)
+
+	local skyTrashMod = DBM:GetModByName("SkyreachTrash")
+
+	function mod:OnCombatStart(delay)
+		timerSolarFlareCD:Start(11-delay)
+	--	if self:IsHard() then
+			--timerQuillsCD:Start(33-delay)--Needs review
+	--	end
+		if skyTrashMod and skyTrashMod.Options.RangeFrame and skyTrashMod.vb.debuffCount ~= 0 then--In case of bug where range frame gets stuck open from trash pulls before this boss.
+			skyTrashMod.vb.debuffCount = 0--Fix variable
+			DBM.RangeCheck:Hide()--Close range frame.
+		end
+	end
+
+	function mod:SPELL_AURA_REMOVED(args)
+		local spellId = args.spellId
+		if spellId == 159382 then
+			specWarnQuillsEnd:Show()
+			specWarnQuillsEnd:Play("safenow")
+		end
+	end
+
+	function mod:SPELL_CAST_START(args)
+		local spellId = args.spellId
+		if spellId == 153810 then
+			warnSolarFlare:Show()
+			timerSolarFlareCD:Start()
+			warnSolarFlare:Play("mobsoon")
+			if self:IsDps() then
+				warnSolarFlare:ScheduleVoice(2, "mobkill")
+			end
+		elseif spellId == 153794 then
+			if self:IsTanking("player", "boss1", nil, true) then
+				specWarnPierceArmor:Show()
+				specWarnPierceArmor:Play("defensive")
+			end
+		elseif spellId == 159382 then
+			specWarnQuills:Show(DBM_COMMON_L.BREAK_LOS)
+			specWarnQuills:Play("breaklos")
+			timerQuills:Start()
+		end
+	end
+
+	function mod:RAID_BOSS_WHISPER()
+		specWarnFixate:Show()
+		specWarnFixate:Play("targetyou")
+	end
 end
