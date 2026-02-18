@@ -32,7 +32,7 @@ function mod:OnLimitedCombatStart()
 	self:EnableAlertOptions(444608, 534, "aesoon", 2)
 	self:EnableAlertOptions(428169, 535, "turnaway", 2)
 	self:EnableAlertOptions(451605, 536, "watchstep", 2)
-	self:EnableAlertOptions(444546, 537, "laserrun", 2)
+	self:EnableAlertOptions(444546, 537, "watchstep", 2)--Generic but we can't get actual beam target
 
 	self:EnableTimelineOptions(444608, 534)
 	self:EnableTimelineOptions(428169, 535)
