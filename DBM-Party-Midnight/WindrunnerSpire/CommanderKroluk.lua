@@ -15,12 +15,37 @@ mod:RegisterCombat("combat")
 
 --)
 
---https://www.wowhead.com/beta/spell=467620/rampage has a private aura but we should use the boss mod api to register defensive sound on cast begin instead
-mod:AddPrivateAuraSoundOption(470966, true, 470966, 4)
-mod:AddPrivateAuraSoundOption(468924, true, 468924, 1)
-mod:AddPrivateAuraSoundOption(1283247, true, 1283247, 1)
+--NOTE, intimidating shout has two spellid and two encounter event IDs, determine if they should be combined or separated
+--Same with reckless Leap and rampage
+--Custom Sounds on cast/cooldown expiring
+mod:AddCustomAlertSoundOption(467620, true, 1)--Rampage
+mod:AddCustomAlertSoundOption(1253026, true, 2)--Intimidating Shout (also 1253272)
+mod:AddCustomAlertSoundOption(472043, true, 2)--Rallying Bellow
+--Custom timer colors, countdowns, and disables
+mod:AddCustomTimerOptions(467620, true, 5, 0)
+mod:AddCustomTimerOptions(1253026, true, 2, 0)
+mod:AddCustomTimerOptions(1283247, true, 3, 0)
+mod:AddCustomTimerOptions(472043, true, 1, 0)
+mod:AddCustomTimerOptions(470966, true, 2, 0)
+--Midnight private aura replacements
+mod:AddPrivateAuraSoundOption(470966, true, 470966, 4, 1)--Bladestorm target
+mod:AddPrivateAuraSoundOption(468924, true, 470966, 1, 2)--Bladestorm GTFO
+mod:AddPrivateAuraSoundOption(1283247, true, 1283247, 1, 1)--Reckless Leap target
 
 function mod:OnLimitedCombatStart()
+	self:DisableSpecialWarningSounds()
+	if self:IsTank() then
+		self:EnableAlertOptions(467620, {210,556}, "defensive", 2)
+	end
+	self:EnableAlertOptions(1253026, {211,213}, "gathershare", 2)
+	self:EnableAlertOptions(472043, 215, "mobsoon", 2)
+
+	self:EnableTimelineOptions(467620, 210, 556)
+	self:EnableTimelineOptions(1253026, 211, 213)
+	self:EnableTimelineOptions(1283247, 212, 214)
+	self:EnableTimelineOptions(472043, 215)
+	self:EnableTimelineOptions(470966, 216)
+
 	self:EnablePrivateAuraSound(470966, "justrun", 2)
 	self:EnablePrivateAuraSound(468924, "watchfeet", 8)
 	self:EnablePrivateAuraSound(1283247, "targetyou", 2)

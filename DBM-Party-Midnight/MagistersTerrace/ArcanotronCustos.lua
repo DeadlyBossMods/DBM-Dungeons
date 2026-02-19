@@ -14,11 +14,32 @@ mod:RegisterCombat("combat")
 --mod:RegisterEventsInCombat(
 
 --)
-
-mod:AddPrivateAuraSoundOption(1214089, true, 1214089, 1)
-mod:AddPrivateAuraSoundOption(1214038, true, 1214038, 1)
+--Custom Sounds on cast/cooldown expiring
+mod:AddCustomAlertSoundOption(474345, true, 2)--Refueling Protocol
+mod:AddCustomAlertSoundOption(474496, true, 1)--Repulsing Slam
+mod:AddCustomAlertSoundOption(1214081, true, 2)--Arcane Expulsion
+--Custom timer colors, countdowns, and disables
+mod:AddCustomTimerOptions(474345, true, 5, 0)
+mod:AddCustomTimerOptions(474496, true, 5, 0)
+mod:AddCustomTimerOptions(474496, true, 3, 0)
+mod:AddCustomTimerOptions(474496, true, 2, 0)
+--Midnight private aura replacements
+mod:AddPrivateAuraSoundOption(1214089, true, 1214089, 1, 2)--Arcane Residue (GTFO)
+mod:AddPrivateAuraSoundOption(1214038, true, 1214038, 1, 1)--Ethereal Shackles
 
 function mod:OnLimitedCombatStart()
+	self:DisableSpecialWarningSounds()
+	self:EnableAlertOptions(474345, 281, "catchballs", 12)
+	if self:IsTank() then
+		self:EnableAlertOptions(474496, 286, "carefly", 2)
+	end
+	self:EnableAlertOptions(474496, 288, "carefly", 2)
+
+	self:EnableTimelineOptions(474345, 281)
+	self:EnableTimelineOptions(474496, 286)
+	self:EnableTimelineOptions(474496, 287)
+	self:EnableTimelineOptions(474496, 288)
+
 	self:EnablePrivateAuraSound(1214089, "watchfeet", 8)
 	self:EnablePrivateAuraSound(1214038, "debuffyou", 17)
 end
