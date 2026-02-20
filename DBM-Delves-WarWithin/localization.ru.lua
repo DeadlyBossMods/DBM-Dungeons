@@ -331,7 +331,7 @@ L:SetGeneralLocalization({
 L = DBM:GetModLocalization("VoidriderChallnax")
 
 L:SetGeneralLocalization({
-	name =	"Наездница Бездны Чаллнакс
+	name =	"Наездница Бездны Чаллнакс"
 })
 
 -----------------------
