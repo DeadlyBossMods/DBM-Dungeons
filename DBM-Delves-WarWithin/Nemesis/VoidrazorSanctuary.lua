@@ -17,7 +17,7 @@ mod:RegisterCombat("combat")
 mod:AddCustomAlertSoundOption(1245240, true, 2)--Nexus Daggers
 mod:AddCustomAlertSoundOption(1245582, true, 2)--Nether Rift
 mod:AddCustomAlertSoundOption(1245203, true, 2)--Dark Massacre
-mod:AddCustomAlertSoundOption(1244462, true, 2)--Invoke the Shadows
+mod:AddCustomAlertSoundOption(1244462, true, 1)--Invoke the Shadows
 --Custom timer colors, countdowns, and disables
 mod:AddCustomTimerOptions(1245240, nil, 3, 0)
 mod:AddCustomTimerOptions(1245582, nil, 2, 0)
