@@ -218,6 +218,15 @@ L:SetGeneralLocalization({
 })
 
 -----------------------
+-- <<< Cragpine >>> --
+-----------------------
+L = DBM:GetModLocalization("Cragpine")
+
+L:SetGeneralLocalization({
+	name =	"Камнеельник"
+})
+
+-----------------------
 -- <<< Leviathan Caller >>> --
 -----------------------
 L = DBM:GetModLocalization("LeviathanCaller")
