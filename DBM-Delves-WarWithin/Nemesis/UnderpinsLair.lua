@@ -111,12 +111,6 @@ function mod:SPELL_CAST_SUCCESS(args)
 		timerBombsCD:Start(self:IsMythic() and "v20.5-40.1" or "v25.5-41.3", self.vb.bombCount+1)
 	end
 end
-
---[[
-function mod:SPELL_AURA_APPLIED(args)
-	if args.spellId == 450505 then
-	end
-end
 --]]
 
 --[[
