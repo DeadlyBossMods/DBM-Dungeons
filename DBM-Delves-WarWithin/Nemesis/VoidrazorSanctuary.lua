@@ -13,7 +13,29 @@ mod:SetZone(2951)
 
 mod:RegisterCombat("combat")
 
+--Custom Sounds on cast/cooldown expiring
+mod:AddCustomAlertSoundOption(1245240, true, 2)--Nexus Daggers
+mod:AddCustomAlertSoundOption(1245582, true, 2)--Nether Rift
+mod:AddCustomAlertSoundOption(1245203, true, 2)--Dark Massacre
+mod:AddCustomAlertSoundOption(1244462, true, 2)--Invoke the Shadows
+--Custom timer colors, countdowns, and disables
+mod:AddCustomTimerOptions(1245240, nil, 3, 0)
+mod:AddCustomTimerOptions(1245582, nil, 2, 0)
+mod:AddCustomTimerOptions(1245203, nil, 5, 0)
+mod:AddCustomTimerOptions(1244462, nil, 6, 0)
+
 function mod:OnLimitedCombatStart()
+	self:DisableSpecialWarningSounds()
+	self:EnableAlertOptions(1245240, 521, "farfromline", 2)
+	self:EnableAlertOptions(1245582, 522, "pullin", 12)
+	self:EnableAlertOptions(1245203, 523, "ghostsoon", 2)
+	self:EnableAlertOptions(1244462, 524, "phasechange", 2)
+
+	self:EnableTimelineOptions(1245240, 521)
+	self:EnableTimelineOptions(1245582, 522)
+	self:EnableTimelineOptions(1245203, 523)
+	self:EnableTimelineOptions(1244462, 524)
+
 	if self:IsMythic() then
 		self:SetCreatureID(244753)
 	else
