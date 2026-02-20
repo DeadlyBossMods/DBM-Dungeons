@@ -2,87 +2,361 @@ if GetLocale() ~= "ruRU" then return end
 local L
 
 -----------------------
--- <<< Delve Trash >>> --
+-- <<< Captain Nil'hitan >>> --
 -----------------------
-L = DBM:GetModLocalization("DelveTrashCommon")
+L = DBM:GetModLocalization("CaptainNilhitan")
 
 L:SetGeneralLocalization({
-	name =	"Трэш мобы Вылазки"
+	name =	"Captain Nil'hitan"
 })
 
----------------------
--- Fungal Folly --
----------------------
---L = DBM:GetModLocalization("z2664")
+-----------------------
+-- <<< Beste Glatisant >>> --
+-----------------------
+L = DBM:GetModLocalization("BesteGlatisant")
 
---L:SetTimerLocalization({
+L:SetGeneralLocalization({
+	name =	"Beste Glatisant"
+})
 
---})
+-----------------------
+-- <<< Craggle Fritzbrains >>> --
+-----------------------
+L = DBM:GetModLocalization("CraggleFritzbrains")
 
---L:SetOptionLocalization({
+L:SetGeneralLocalization({
+	name =	"Craggle Fritzbrains"
+})
 
---})
+-----------------------
+-- <<< Harbinger Ul'thul >>> --
+-----------------------
+L = DBM:GetModLocalization("HarbingerUlthul")
 
---L:SetMiscLocalization({
+L:SetGeneralLocalization({
+	name =	"Harbinger Ul'thul"
+})
 
---})
+-----------------------
+-- <<< Xel'anegh the Many >>> --
+-----------------------
+L = DBM:GetModLocalization("XelanegtheMany")
 
----------------------
--- Mycomancer Cavern --
----------------------
---L = DBM:GetModLocalization("z2679")
+L:SetGeneralLocalization({
+	name =	"Xel'anegh the Many"
+})
 
----------------------
--- Earthcrawl Mines --
----------------------
---L = DBM:GetModLocalization("z2680")
+-----------------------
+-- <<< Bogpiper >>> --
+-----------------------
+L = DBM:GetModLocalization("BogpipeTheBog")
 
----------------------
--- Kriegval's Rest --
----------------------
---L = DBM:GetModLocalization("z2681")
+L:SetGeneralLocalization({
+	name =	"Bogpiper"
+})
 
----------------------
--- Zekvir's Lair --
----------------------
---L = DBM:GetModLocalization("z2682")
+-----------------------
+-- <<< Spinshroom >>> --
+-----------------------
+L = DBM:GetModLocalization("Spinshroom")
 
----------------------
--- The Waterworks --
----------------------
---L = DBM:GetModLocalization("z2683")
+L:SetGeneralLocalization({
+	name =	"Spinshroom"
+})
 
----------------------
--- The Dread Pit --
----------------------
---L = DBM:GetModLocalization("z2684")
+-----------------------
+-- <<< Reformed Fury >>> --
+-----------------------
+L = DBM:GetModLocalization("ReformedFury")
 
----------------------
--- Skittering Breach --
----------------------
---L = DBM:GetModLocalization("z2685")
+L:SetGeneralLocalization({
+	name =	"Reformed Fury"
+})
 
----------------------
--- Nightfal--L Sanctum --
----------------------
---L = DBM:GetModLocalization("z2686")
+-----------------------
+-- <<< Speaker Halven >>> --
+-----------------------
+L = DBM:GetModLocalization("SpeakerHalven")
 
----------------------
--- The Sinkhole --
----------------------
---L = DBM:GetModLocalization("z2687")
+L:SetGeneralLocalization({
+	name =	"Speaker Halven"
+})
 
----------------------
--- The Spiral Weave --
----------------------
---L = DBM:GetModLocalization("z2688")
+-----------------------
+-- <<< Speaker Pelzeth >>> --
+-----------------------
+L = DBM:GetModLocalization("SpeakerPelzeth")
 
----------------------
--- Tak-Rethan Abyss --
----------------------
---L = DBM:GetModLocalization("z2689")
+L:SetGeneralLocalization({
+	name =	"Speaker Pelzeth"
+})
 
----------------------
--- The Underkeep --
----------------------
---L = DBM:GetModLocalization("z2690")
+-----------------------
+-- <<< Cult Leaders >>> --
+-----------------------
+L = DBM:GetModLocalization("CultLeaders")
+
+L:SetGeneralLocalization({
+	name =	"Cult Leaders"
+})
+
+-----------------------
+-- <<< Speaker Wicke >>> --
+-----------------------
+L = DBM:GetModLocalization("SpeakerWicke")
+
+L:SetGeneralLocalization({
+	name =	"Speaker Wicke"
+})
+
+-----------------------
+-- <<< Waxface >>> --
+-----------------------
+L = DBM:GetModLocalization("Waxface")
+
+L:SetGeneralLocalization({
+	name =	"Waxface"
+})
+
+-----------------------
+-- <<< Shroomspew >>> --
+-----------------------
+L = DBM:GetModLocalization("Shroomspew")
+
+L:SetGeneralLocalization({
+	name =	"Shroomspew"
+})
+
+-----------------------
+-- <<< Golden Elemental >>> --
+-----------------------
+L = DBM:GetModLocalization("GoldenElemental")
+
+L:SetGeneralLocalization({
+	name =	"Golden Elemental"
+})
+
+-----------------------
+-- <<< Vindle Snapcrank >>> --
+-----------------------
+L = DBM:GetModLocalization("VindleSnapcrank")
+
+L:SetGeneralLocalization({
+	name =	"Vindle Snapcrank"
+})
+
+-----------------------
+-- <<< Geargrave >>> --
+-----------------------
+L = DBM:GetModLocalization("Geargrave")
+
+L:SetGeneralLocalization({
+	name =	"Geargrave"
+})
+
+-----------------------
+-- <<< Nerl'athekk the Skulking >>> --
+-----------------------
+L = DBM:GetModLocalization("Nerlathekk")
+
+L:SetGeneralLocalization({
+	name =	"Nerl'athekk the Skulking"
+})
+
+-----------------------
+-- <<< Speaker Xanventh >>> --
+-----------------------
+L = DBM:GetModLocalization("SpeakerXanventh")
+
+L:SetGeneralLocalization({
+	name =	"Speaker Xanventh"
+})
+
+-----------------------
+-- <<< Cave Giant Boss >>> --
+-----------------------
+L = DBM:GetModLocalization("CaveGiantBoss")
+
+L:SetGeneralLocalization({
+	name =	"Cave Giant Boss"
+})
+
+-----------------------
+-- <<< Faceless One >>> --
+-----------------------
+L = DBM:GetModLocalization("FacelessOne")
+
+L:SetGeneralLocalization({
+	name =	"Faceless One"
+})
+
+-----------------------
+-- <<< Mirror Master Murkna >>> --
+-----------------------
+L = DBM:GetModLocalization("MirrorMasterMurkna")
+
+L:SetGeneralLocalization({
+	name =	"Mirror Master Murkna"
+})
+
+-----------------------
+-- <<< Bloated Drowner >>> --
+-----------------------
+L = DBM:GetModLocalization("BloatedDrowner")
+
+L:SetGeneralLocalization({
+	name =	"Bloated Drowner"
+})
+
+-----------------------
+-- <<< Cragpie >>> --
+-----------------------
+L = DBM:GetModLocalization("Cragpie")
+
+L:SetGeneralLocalization({
+	name =	"Cragpie"
+})
+
+-----------------------
+-- <<< Leviathan Caller >>> --
+-----------------------
+L = DBM:GetModLocalization("LeviathanCaller")
+
+L:SetGeneralLocalization({
+	name =	"Leviathan Caller"
+})
+
+-----------------------
+-- <<< Overseer Kaskel >>> --
+-----------------------
+L = DBM:GetModLocalization("OverseerKaskel")
+
+L:SetGeneralLocalization({
+	name =	"Overseer Kaskel"
+})
+
+-----------------------
+-- <<< The Puppetmaster >>> --
+-----------------------
+L = DBM:GetModLocalization("ThePuppetmaster")
+
+L:SetGeneralLocalization({
+	name =	"The Puppetmaster"
+})
+
+-----------------------
+-- <<< Researcher Ven'kex >>> --
+-----------------------
+L = DBM:GetModLocalization("ResearcherVenKex")
+
+L:SetGeneralLocalization({
+	name =	"Researcher Ven'kex"
+})
+
+-----------------------
+-- <<< Researcher Xik'vik >>> --
+-----------------------
+L = DBM:GetModLocalization("ResearcherXikvik")
+
+L:SetGeneralLocalization({
+	name =	"Researcher Xik'vik"
+})
+
+-----------------------
+-- <<< Crazed Abomination >>> --
+-----------------------
+L = DBM:GetModLocalization("CrazedAbomination")
+
+L:SetGeneralLocalization({
+	name =	"Crazed Abomination"
+})
+
+-----------------------
+-- <<< Torque Clanfire and Sprok >>> --
+-----------------------
+L = DBM:GetModLocalization("TorqueClanfire")
+
+L:SetGeneralLocalization({
+	name =	"Torque Clanfire and Sprok"
+})
+
+-----------------------
+-- <<< Tomb-Raider Drywhisker >>> --
+-----------------------
+L = DBM:GetModLocalization("TombRaiderDrywhisker")
+
+L:SetGeneralLocalization({
+	name =	"Tomb-Raider Drywhisker"
+})
+
+-----------------------
+-- <<< Under-Lord Vik'tis >>> --
+-----------------------
+L = DBM:GetModLocalization("UnderLordViktis")
+
+L:SetGeneralLocalization({
+	name =	"Under-Lord Vik'tis"
+})
+
+-----------------------
+-- <<< Undersea Abomination >>> --
+-----------------------
+L = DBM:GetModLocalization("UnderseaAbomination")
+
+L:SetGeneralLocalization({
+	name =	"Undersea Abomination"
+})
+
+-----------------------
+-- <<< Evolved Nerubian Leaders >>> --
+-----------------------
+L = DBM:GetModLocalization("EvolvedNerubianLeaders")
+
+L:SetGeneralLocalization({
+	name =	"Evolved Nerubian Leaders"
+})
+
+-----------------------
+-- <<< Portalmaster Halsan >>> --
+-----------------------
+L = DBM:GetModLocalization("PortalmasterHalsan")
+
+L:SetGeneralLocalization({
+	name =	"Portalmaster Halsan"
+})
+
+-----------------------
+-- <<< Voidrider Challnax >>> --
+-----------------------
+L = DBM:GetModLocalization("VoidriderChallnax")
+
+L:SetGeneralLocalization({
+	name =	"Voidrider Challnax"
+})
+
+-----------------------
+-- <<< Web General Ab'enar >>> --
+-----------------------
+L = DBM:GetModLocalization("WebGeneralAbEnar")
+
+L:SetGeneralLocalization({
+	name =	"Web General Ab'enar"
+})
+
+-----------------------
+-- <<< Maklin Drillstab >>> --
+-----------------------
+L = DBM:GetModLocalization("MaklinDrillstab")
+
+L:SetGeneralLocalization({
+	name =	"Maklin Drillstab"
+})
+
+-----------------------
+-- <<< The Biggest Bug >>> --
+-----------------------
+L = DBM:GetModLocalization("TheBiggestBug")
+
+L:SetGeneralLocalization({
+	name =	"The Biggest Bug"
+})

@@ -16,6 +16,11 @@
 ## X-DBM-Mod-Type: SCENARIO
 ## X-DBM-Mod-Category: OTHER
 ## X-DBM-StatTypes: normal
+## X-DBM-Mod-SubCategories: Nemesis,Boss Encounters,Zones
+## X-DBM-Mod-SubCategories-koKR: 네메시스,보스
+## X-DBM-Mod-SubCategories-ruRU: Немезис,Боссы,Зоны
+## X-DBM-Mod-SubCategories-zhTW: 復仇者,首領,地區
+## X-DBM-Mod-SubCategories-zhCN: 复仇者,首领,地区
 ## X-DBM-Mod-Name: Delves (TWW)
 ## X-DBM-Mod-Name-koKR: 구렁 (내부 전쟁)
 ## X-DBM-Mod-Name-ruRU: Вылазки (Война Внутри)
@@ -31,24 +36,64 @@ localization.en.lua
 localization.kr.lua
 localization.ru.lua
 localization.cn.lua
-TrashCommon.lua
-FungalFolly.lua
-MycomancerCavern.lua
-EarthcrawlMines.lua
-KriegvalsRest.lua
-TheWaterworks.lua
-TheDreadPit.lua
-SkitteringBreach.lua
-NightfallSanctum.lua
-TheSinkhole.lua
-TheSpiralWeave.lua
-TakRethanAbyss.lua
-TheUnderkeep.lua
-ZekvirsLair.lua
 
-ExcavationSite9.lua
-SidestreetSluice.lua
-UnderpinsLair.lua
+Nemesis\ZekvirsLair.lua
+Nemesis\UnderpinsLair.lua
+Nemesis\VoidrazorSanctuary.lua
 
-ArchivalAssault.lua
-VoidrazorSanctuary.lua
+Encounters\CaptainNilhitan.lua
+Encounters\BesteGlatisant.lua
+Encounters\CraggleFritzbrains.lua
+Encounters\HarbingerUlthul.lua
+Encounters\XelanegtheMany.lua
+Encounters\Bogpiper.lua
+Encounters\Spinshroom.lua
+Encounters\ReformedFury.lua
+Encounters\SpeakerHalven.lua
+Encounters\SpeakerPelzeth.lua
+Encounters\CultLeaders.lua
+Encounters\SpeakerWicke.lua
+Encounters\Waxface.lua
+Encounters\Shroomspew.lua
+Encounters\GoldenElemental.lua
+Encounters\VindleSnapcrank.lua
+Encounters\Geargrave.lua
+Encounters\Nerlathekk.lua
+Encounters\SpeakerXanventh.lua
+Encounters\CaveGiantBoss.lua
+Encounters\FacelessOne.lua
+Encounters\MirrorMasterMurkna.lua
+Encounters\BloatedDrowner.lua
+Encounters\Cragpie.lua
+Encounters\LeviathanCaller.lua
+Encounters\OverseerKaskel.lua
+Encounters\ThePuppetmaster.lua
+Encounters\ResearcherVenKex.lua
+Encounters\ResearcherXikvik.lua
+Encounters\CrazedAbomination.lua
+Encounters\TorqueClanfire.lua
+Encounters\TombRaiderDrywhisker.lua
+Encounters\UnderLordViktis.lua
+Encounters\UnderseaAbomination.lua
+Encounters\EvolvedNerubianLeaders.lua
+Encounters\PortalmasterHalsan.lua
+Encounters\VoidriderChallnax.lua
+Encounters\WebGeneralAbEnar.lua
+Encounters\MaklinDrillstab.lua
+Encounters\TheBiggestBug.lua
+
+Zones\FungalFolly.lua
+Zones\MycomancerCavern.lua
+Zones\EarthcrawlMines.lua
+Zones\KriegvalsRest.lua
+Zones\TheWaterworks.lua
+Zones\TheDreadPit.lua
+Zones\SkitteringBreach.lua
+Zones\NightfallSanctum.lua
+Zones\TheSinkhole.lua
+Zones\TheSpiralWeave.lua
+Zones\TakRethanAbyss.lua
+Zones\TheUnderkeep.lua
+Zones\ExcavationSite9.lua
+Zones\SidestreetSluice.lua
+Zones\ArchivalAssault.lua
