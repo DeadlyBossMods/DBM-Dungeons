@@ -28,7 +28,6 @@ mod:AddCustomTimerOptions(444546, true, 3, 0)
 mod:AddPrivateAuraSoundOption(425556, true, 425556, 1, 2)--GTFO
 
 function mod:OnLimitedCombatStart()
-	self:DisableSpecialWarningSounds()
 	self:EnableAlertOptions(444608, 534, "aesoon", 2)
 	self:EnableAlertOptions(428169, 535, "turnaway", 2)
 	self:EnableAlertOptions(451605, 536, "watchstep", 2)

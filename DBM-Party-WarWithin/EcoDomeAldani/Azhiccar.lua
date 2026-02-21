@@ -24,7 +24,6 @@ mod:AddPrivateAuraSoundOption(1227748, true, 1227748, 1)--Toxic Regurgitation Ta
 mod:AddPrivateAuraSoundOption(1217439, true, 1217446, 1)--GTFO
 
 function mod:OnLimitedCombatStart()
-	self:DisableSpecialWarningSounds()
 	self:EnableAlertOptions(1217327, 2, "killmob", 1)
 	self:EnableAlertOptions(1217232, 461, "pullin", 2)
 

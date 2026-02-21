@@ -28,7 +28,6 @@ mod:AddPrivateAuraSoundOption(468723, true, 468723, 1)
 mod:AddPrivateAuraSoundOption(468616, true, 468616, 1)
 
 function mod:OnLimitedCombatStart()
-	self:DisableSpecialWarningSounds()
 	self:EnableAlertOptions(465463, 515, "farfromline", 2)
 	self:EnableAlertOptions(466190, 519, "carefly", 2)
 

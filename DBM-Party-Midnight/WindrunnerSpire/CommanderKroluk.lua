@@ -33,7 +33,6 @@ mod:AddPrivateAuraSoundOption(468924, true, 470966, 1, 2)--Bladestorm GTFO
 mod:AddPrivateAuraSoundOption(1283247, true, 1283247, 1, 1)--Reckless Leap target
 
 function mod:OnLimitedCombatStart()
-	self:DisableSpecialWarningSounds()
 	if self:IsTank() then
 		self:EnableAlertOptions(467620, {210,556}, "defensive", 2)
 	end

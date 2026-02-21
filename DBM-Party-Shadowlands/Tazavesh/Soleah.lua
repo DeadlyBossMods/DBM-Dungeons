@@ -26,7 +26,6 @@ mod:AddCustomTimerOptions(351096, true, 3, 0)
 mod:AddCustomTimerOptions(351646, true, 3, 0)
 
 function mod:OnLimitedCombatStart()
-	self:DisableSpecialWarningSounds()
 	self:EnableAlertOptions(350796, 595, "specialsoon", 2)
 	self:EnableAlertOptions(351124, 596, "mobsoon", 2)
 	self:EnableAlertOptions(353632, 597, "helpsoak", 1)

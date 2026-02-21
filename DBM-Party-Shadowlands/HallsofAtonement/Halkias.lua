@@ -23,7 +23,6 @@ mod:AddCustomTimerOptions(322977, true, 3, 0)--Sinlight Visions
 mod:AddPrivateAuraSoundOption(323001, true, 323001, 1)--GTFO
 
 function mod:OnLimitedCombatStart()
-	self:DisableSpecialWarningSounds()
 	self:EnableAlertOptions(322711, 477, "watchstep", 2)
 	if self:IsTank() then
 		self:EnableAlertOptions(322936, 478, "moveboss", 2)

@@ -28,7 +28,6 @@ mod:AddPrivateAuraSoundOption(1214089, true, 1214089, 1, 2)--Arcane Residue (GTF
 mod:AddPrivateAuraSoundOption(1214038, true, 1214038, 1, 1)--Ethereal Shackles
 
 function mod:OnLimitedCombatStart()
-	self:DisableSpecialWarningSounds()
 	self:EnableAlertOptions(474345, 281, "catchballs", 12)
 	if self:IsTank() then
 		self:EnableAlertOptions(474496, 286, "carefly", 2)

@@ -29,7 +29,6 @@ mod:AddCustomTimerOptions(1225193, true, 2, 0)
 mod:AddPrivateAuraSoundOption(1225787, true, 1225787, 1, 1)--Runic Mark
 
 function mod:OnLimitedCombatStart()
-	self:DisableSpecialWarningSounds()
 	self:EnableAlertOptions(1224903, 93, "watchstep", 2)
 	self:EnableAlertOptions(1248689, 94, "dispelboss", 2)
 	self:EnableAlertOptions(1225193, 96, "movetopool", 15)--Maybe "findshield" instead

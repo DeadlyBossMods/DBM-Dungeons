@@ -1,0 +1,68 @@
+## Interface: 120001
+## X-Min-Interface: 110002
+## Category: DBM
+## Title:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cff4565ffDelves (Midnight)|r
+## Title-koKR:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cff4565ff구렁 (자정)|r
+## Title-ruRU:|cffffe00a<|r|cffff7d0aDBM Мод|r|cffffe00a>|r |cff4565ffВылазки (Полночь)|r
+## Title-zhTW:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cff4565ff探究 (午夜)|r
+## Title-zhCN:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cff4565ff地下堡 (午夜)|r
+## Author: MysticalOS
+## LoadOnDemand: 1
+## RequiredDeps: DBM-Core
+## SavedVariables: DBMDelvesMidnight_AllSavedVars
+## SavedVariablesPerCharacter: DBMDelvesMidnight_SavedStats
+## IconTexture: Interface\AddOns\DBM-Core\textures\dbm_airhorn
+## X-DBM-Mod: 1
+## X-DBM-Mod-Type: SCENARIO
+## X-DBM-Mod-Category: OTHER
+## X-DBM-StatTypes: normal
+## X-DBM-Mod-SubCategories: Nemesis,Boss Encounters,Zones
+## X-DBM-Mod-SubCategories-koKR: 네메시스,보스,지역
+## X-DBM-Mod-SubCategories-ruRU: Немезис,Боссы,Зоны
+## X-DBM-Mod-SubCategories-zhTW: 復仇者,首領,地區
+## X-DBM-Mod-SubCategories-zhCN: 复仇者,首领,地区
+## X-DBM-Mod-Name: Delves (Midnight)
+## X-DBM-Mod-Name-koKR: 구렁 (자정)
+## X-DBM-Mod-Name-ruRU: Вылазки (Полночь)
+## X-DBM-Mod-Name-zhTW: 探究 (午夜)
+## X-DBM-Mod-Name-zhCN: 地下堡 (午夜)
+## X-DBM-Mod-Sort: 125
+## X-DBM-Mod-MapID: 3003, 2961, 2962, 2963, 2964, 2953, 2933, 2952, 2979, 2965, 2966
+## X-DBM-Mod-MinCoreRevision: 20200524142133
+## X-DBM-Mod-MinExpansion: 12
+## Version: @project-version@
+
+localization.en.lua
+localization.kr.lua
+localization.ru.lua
+localization.cn.lua
+
+Nemesis\TormentsRise.lua
+
+Encounters\InfiltratorGulkat.lua
+Encounters\BladeMasterDarza.lua
+Encounters\SpiritflayerJinma.lua
+Encounters\Mycomight.lua
+Encounters\Spinshroom.lua
+Encounters\Brightthorn.lua
+Encounters\MulthAul.lua
+Encounters\Lumenia.lua
+Encounters\GladiusSlaurna.lua
+Encounters\EsuritusParhelion.lua
+Encounters\Hydrangea.lua
+Encounters\VoidScornedVagrant.lua
+Encounters\InfiltratorGarand.lua
+Encounters\Antenorian.lua
+Encounters\ChiefArcanistPatram.lua
+Encounters\EsuritusSunkiller.lua
+
+Zones\TheDarkway.lua
+Zones\TwilightCrypts.lua
+Zones\AtalAman.lua
+Zones\TheGrudgePit.lua
+Zones\TheGulfOfMemory.lua
+Zones\ParphelionPlaza.lua
+Zones\CollegiateCalamity.lua
+Zones\TheShadowEnclave.lua
+Zones\ShadowguardPoint.lua
+Zones\SunkkillerSanctum.lua

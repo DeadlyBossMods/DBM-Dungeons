@@ -31,7 +31,6 @@ mod:AddPrivateAuraSoundOption(474129, true, 472745, 1, 1)--Splattering Spew
 mod:AddPrivateAuraSoundOption(472777, true, 472777, 4, 2)--Gunk Splatter GTFO
 
 function mod:OnLimitedCombatStart()
-	self:DisableSpecialWarningSounds()
 	if self:IsTank() then
 		self:EnableAlertOptions(472888, 25, "defensive", 2)
 	end

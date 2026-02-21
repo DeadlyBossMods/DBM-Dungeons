@@ -28,7 +28,6 @@ mod:AddPrivateAuraSoundOption(439783, true, 434089, 1)--Spineret's Strands targe
 mod:AddPrivateAuraSoundOption(438957, true, 438957, 1)--GTFO
 
 function mod:OnLimitedCombatStart()
-	self:DisableSpecialWarningSounds()
 	self:EnableAlertOptions(448888, 626, "aesoon", 2)
 	self:EnableAlertOptions(448213, 628, "watchstep", 2)
 	self:EnableAlertOptions(434655, 630, "bombsoon", 2)

@@ -29,7 +29,6 @@ mod:AddPrivateAuraSoundOption(1253709, true, 1253709, 1, 1)--Neural Link
 mod:AddPrivateAuraSoundOption(1224299, true, 1224299, 1, 1)--Astral Grasp
 
 function mod:OnLimitedCombatStart()
-	self:DisableSpecialWarningSounds()
 
 	self:EnableAlertOptions(1223847, 635, "specialsoon", 2)
 

@@ -24,7 +24,6 @@ mod:AddCustomTimerOptions(461487, nil, 5, 0)--Cultivated Poisons (might also be 
 mod:AddPrivateAuraSoundOption(432119, true, 432119, 1)--Screwing up Cosmic Singularity (Faded)
 
 function mod:OnLimitedCombatStart()
-	self:DisableSpecialWarningSounds()
 	self:EnableAlertOptions(432117, 552, "movetopool", 15)
 	self:EnableAlertOptions(432130, 553, "watchstep", 2)
 

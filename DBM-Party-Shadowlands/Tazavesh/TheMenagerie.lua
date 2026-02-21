@@ -28,7 +28,6 @@ mod:AddPrivateAuraSoundOption(349627, true, 349627, 1)--Gluttony
 mod:AddPrivateAuraSoundOption(350101, true, 350101, 1)--Chains of Damnation
 
 function mod:OnLimitedCombatStart()
-	self:DisableSpecialWarningSounds()
 	self:EnableAlertOptions(349663, 567, "justrun", 2)
 	self:EnableAlertOptions(349797, 568, "watchorb", 2)
 	self:EnableAlertOptions(349987, 569, "watchorb", 2)

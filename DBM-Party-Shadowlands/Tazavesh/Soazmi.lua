@@ -24,7 +24,6 @@ mod:AddCustomTimerOptions(347150, true, 4, 0)--Triple Technique
 mod:AddCustomTimerOptions(357188, true, 4, 0)--Double Technique
 
 function mod:OnLimitedCombatStart()
-	self:DisableSpecialWarningSounds()
 	self:EnableAlertOptions(347481, 582, "specialsoon", 2)
 	self:EnableAlertOptions(347150, 584, "kickcast", 2)
 	self:EnableAlertOptions(357188, 585, "kickcast", 2)

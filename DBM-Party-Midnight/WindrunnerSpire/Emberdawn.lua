@@ -29,7 +29,6 @@ mod:AddPrivateAuraSoundOption(466559, true, 466556, 1, 1)--Flaming Updraft
 mod:AddPrivateAuraSoundOption(472118, false, 472118, 1, 2)--Ignited Embers. GTFO that's off by default because under certain conditions you do not want to avoid it
 
 function mod:OnLimitedCombatStart()
-	self:DisableSpecialWarningSounds()
 	if self:IsTank() then
 		self:EnableAlertOptions(466064, 239, "defensive", 2)
 	end

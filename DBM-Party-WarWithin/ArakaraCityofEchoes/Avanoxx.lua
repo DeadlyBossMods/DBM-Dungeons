@@ -26,7 +26,6 @@ mod:AddPrivateAuraSoundOption(439070, true, 439070, 1)
 mod:AddPrivateAuraSoundOption(434830, true, 434830, 1)--GTFO
 
 function mod:OnLimitedCombatStart()
-	self:DisableSpecialWarningSounds()
 	if self:IsTank() then
 		self:EnableAlertOptions(438471, 539, "defensive", 2)
 	end

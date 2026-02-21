@@ -24,7 +24,6 @@ mod:AddCustomTimerOptions(346766, true, 6, 0)
 mod:AddPrivateAuraSoundOption(358131, true, 358131, 1)
 
 function mod:OnLimitedCombatStart()
-	self:DisableSpecialWarningSounds()
 	self:EnableAlertOptions(346957, 586, "watchstep", 2)
 	self:EnableAlertOptions(347094, {587, 589}, "frontal", 15)
 	if self:IsTank() then

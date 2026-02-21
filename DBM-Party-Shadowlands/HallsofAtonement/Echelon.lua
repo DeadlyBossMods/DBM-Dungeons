@@ -21,7 +21,6 @@ mod:AddCustomTimerOptions(328206, true, 3, 0)--Curse of Stone
 mod:AddCustomTimerOptions(319941, true, 3, 0)
 
 function mod:OnLimitedCombatStart()
-	self:DisableSpecialWarningSounds()
 	self:EnableAlertOptions(326389, 488, "aesoon", 2)
 	self:EnableAlertOptions(319733, 489, "mobsoon", 2)
 	self:EnableAlertOptions(319941, 496, "specialsoon", 2)
