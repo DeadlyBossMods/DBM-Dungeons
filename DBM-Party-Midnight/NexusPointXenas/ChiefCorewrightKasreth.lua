@@ -16,9 +16,9 @@ mod:RegisterCombat("combat")
 --)
 
 --Custom Sounds on cast/cooldown expiring
-mod:AddCustomAlertSoundOption(1257509, true, 2)
-mod:AddCustomAlertSoundOption(1251183, true, 2)
-mod:AddCustomAlertSoundOption(1264048, true, 2)
+mod:AddCustomAlertSoundOption(1257509, true, 2)--Corespark Detonation
+mod:AddCustomAlertSoundOption(1251183, true, 2)--Leyline Array
+mod:AddCustomAlertSoundOption(1264048, true, 2)--Flux Collapse
 --Custom timer colors, countdowns, and disables
 mod:AddCustomTimerOptions(1257509, true, 3, 0)--Corespark Detonation
 mod:AddCustomTimerOptions(1251785, true, 3, 0)--Reflux Charge
