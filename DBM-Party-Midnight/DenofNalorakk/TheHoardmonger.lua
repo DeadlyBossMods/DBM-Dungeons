@@ -15,7 +15,7 @@ mod:RegisterCombat("combat")
 
 --)
 
-mod:AddPrivateAuraSoundOption(1235405, false, 1235405, 1)
+mod:AddPrivateAuraSoundOption(1235405, false, 1235405, 1)--Bonespiked
 
 function mod:OnLimitedCombatStart()
 	self:EnablePrivateAuraSound(1235405, "screwup", 18)

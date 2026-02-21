@@ -30,7 +30,9 @@ if DBM:IsPostMidnight() then
 	function mod:OnLimitedCombatStart()
 		self:DisableSpecialWarningSounds()
 
-		self:EnableAlertOptions(1282251, 294, "defensive", 2)
+		if self:IsTank() then
+			self:EnableAlertOptions(1282251, 294, "defensive", 2)
+		end
 		self:EnableAlertOptions(374341, 295, "scattersoon", 2)
 		self:EnableAlertOptions(388820, 296, "runout", 2)
 

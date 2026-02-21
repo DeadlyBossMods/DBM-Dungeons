@@ -15,8 +15,8 @@ mod:RegisterCombat("combat")
 
 --)
 
-mod:AddPrivateAuraSoundOption(1239825, true, 1239825, 1)
-mod:AddPrivateAuraSoundOption(1240222, true, 1240222, 1)
+mod:AddPrivateAuraSoundOption(1239825, true, 1239825, 1)--Lightfire
+mod:AddPrivateAuraSoundOption(1240222, true, 1240222, 1)--Pulverizing Strikes
 
 function mod:OnLimitedCombatStart()
 	self:EnablePrivateAuraSound(1239825, "runout", 2)

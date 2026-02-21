@@ -15,7 +15,7 @@ mod:RegisterCombat("combat")
 
 --)
 
-mod:AddPrivateAuraSoundOption(1237091, true, 1237091, 4)
+mod:AddPrivateAuraSoundOption(1237091, true, 1237091, 4)--Bloodthirsty Gaze
 
 function mod:OnLimitedCombatStart()
 	self:EnablePrivateAuraSound(1237091, "justrun", 2)

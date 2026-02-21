@@ -20,7 +20,7 @@ mod:AddCustomAlertSoundOption(468429, true, 1)--Bullseye Windblast
 mod:AddCustomAlertSoundOption(472556, true, 2)--Arrow Rain
 mod:AddCustomAlertSoundOption(472662, true, 3)--Tempest Slash
 --Custom timer colors, countdowns, and disables
-mod:AddCustomTimerOptions(468429, true, 3, 0)
+mod:AddCustomTimerOptions(468429, true, 3, 0)--Bullseye Windblast
 mod:AddCustomTimerOptions(474528, true, 1, 0)--Bolt Gale
 mod:AddCustomTimerOptions(472556, true, 3, 0)--Arrow Rain
 mod:AddCustomTimerOptions(472662, true, 5, 0)--Tempest Slash

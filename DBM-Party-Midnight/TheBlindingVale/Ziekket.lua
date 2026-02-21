@@ -16,8 +16,8 @@ mod:RegisterCombat("combat")
 --)
 
 mod:AddPrivateAuraSoundOption(1253690, true, 1253690, 1)--FIX ME if not pre positioned spell
-mod:AddPrivateAuraSoundOption(1246751, true, 1246751, 1)
-mod:AddPrivateAuraSoundOption(1246753, true, 1246753, 1)
+mod:AddPrivateAuraSoundOption(1246751, true, 1246751, 1)--Concentrated Lightbeam
+mod:AddPrivateAuraSoundOption(1246753, true, 1246753, 1)--Lightsap
 
 function mod:OnLimitedCombatStart()
 	self:EnablePrivateAuraSound(1253690, "movetomobs", 14)

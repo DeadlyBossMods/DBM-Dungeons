@@ -21,10 +21,10 @@ mod:AddCustomAlertSoundOption(1224903, true, 2)--Suppression Zone
 mod:AddCustomAlertSoundOption(1248689, "MagicDispeller", 1)--Hastening Ward
 mod:AddCustomAlertSoundOption(1225193, true, 2)--Wave of Silence
 --Custom timer colors, countdowns, and disables
-mod:AddCustomTimerOptions(1224903, true, 3, 0)
-mod:AddCustomTimerOptions(1248689, true, 5, 0)
-mod:AddCustomTimerOptions(1225787, true, 3, 0)
-mod:AddCustomTimerOptions(1225193, true, 2, 0)
+mod:AddCustomTimerOptions(1224903, true, 3, 0)--Suppression Zone
+mod:AddCustomTimerOptions(1248689, true, 5, 0)--Hastening Ward
+mod:AddCustomTimerOptions(1225787, true, 3, 0)--Runic Mark
+mod:AddCustomTimerOptions(1225193, true, 2, 0)--Wave of Silence
 -- Midnights private aura replacements
 mod:AddPrivateAuraSoundOption(1225787, true, 1225787, 1, 1)--Runic Mark
 

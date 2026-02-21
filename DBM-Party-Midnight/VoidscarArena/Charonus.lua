@@ -15,7 +15,7 @@ mod:RegisterCombat("combat")
 
 --)
 
-mod:AddPrivateAuraSoundOption(1263983, true, 1263983, 4)
+mod:AddPrivateAuraSoundOption(1263983, true, 1263983, 4)--Condensed Mass
 mod:AddPrivateAuraSoundOption(1282770, true, 1282770, 1)--Pre debuff
 mod:AddPrivateAuraSoundOption(1248130, true, 1282770, 1)--GTFO
 

@@ -15,8 +15,8 @@ mod:RegisterCombat("combat")
 
 --)
 
-mod:AddPrivateAuraSoundOption(474234, true, 474234, 1)
-mod:AddPrivateAuraSoundOption(1218203, true, 1218203, 1)
+mod:AddPrivateAuraSoundOption(474234, true, 474234, 1)--Burning Steps
+mod:AddPrivateAuraSoundOption(1218203, true, 1218203, 1)--Fingers of Gul'dan
 
 function mod:OnLimitedCombatStart()
 	self:EnablePrivateAuraSound(474234, "watchfeet", 8)

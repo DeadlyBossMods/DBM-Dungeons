@@ -15,8 +15,8 @@ mod:RegisterCombat("combat")
 
 --)
 
-mod:AddPrivateAuraSoundOption(1225011, true, 1225011, 1)
-mod:AddPrivateAuraSoundOption(1222098, true, 1222098, 1)
+mod:AddPrivateAuraSoundOption(1225011, true, 1225011, 1)--Ethereal Shards
+mod:AddPrivateAuraSoundOption(1222098, true, 1222098, 1)--Nether Dash
 
 function mod:OnLimitedCombatStart()
 	self:EnablePrivateAuraSound(1225011, "debuffyou", 17)--change to "lineyou" if it uses a line
