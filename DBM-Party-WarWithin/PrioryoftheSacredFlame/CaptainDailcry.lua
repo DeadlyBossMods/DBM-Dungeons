@@ -24,7 +24,6 @@ mod:AddCustomTimerOptions(447439, true, 3, 0)
 mod:AddPrivateAuraSoundOption(447439, true, 447439, 1)
 
 function mod:OnLimitedCombatStart()
-	self:DisableSpecialWarningSounds()
 
 	if self:IsTank() then
 		self:EnableAlertOptions(424414, 525, "defensive", 2)

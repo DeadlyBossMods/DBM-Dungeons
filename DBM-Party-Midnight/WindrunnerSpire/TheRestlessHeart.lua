@@ -32,7 +32,6 @@ mod:AddPrivateAuraSoundOption(472662, true, 472662, 1, 1)--Tempest Slash
 mod:AddPrivateAuraSoundOption(1216042, true, 1216042, 1, 1)--Squall Leap
 
 function mod:OnLimitedCombatStart()
-	self:DisableSpecialWarningSounds()
 	self:EnableAlertOptions(468429, 21, "watchstep", 2)
 	self:EnableAlertOptions(472556, 23, "specialsoon", 2)
 	if self:IsTank() then

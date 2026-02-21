@@ -23,7 +23,6 @@ mod:AddPrivateAuraSoundOption(352345, true, 352345, 1)--Anchor Shot
 mod:AddPrivateAuraSoundOption(358947, true, 358947, 1)--GTFO
 
 function mod:OnLimitedCombatStart()
-	self:DisableSpecialWarningSounds()
 	self:EnableAlertOptions(350134, 591, "breathsoon", 2)
 
 	self:EnableTimelineOptions(350134, 591)

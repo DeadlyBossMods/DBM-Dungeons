@@ -25,7 +25,6 @@ mod:AddPrivateAuraSoundOption(1220427, true, 1220427, 1)--Warp Strike
 mod:AddPrivateAuraSoundOption(1236126, true, 1236126, 1)--Binding Javelin
 
 function mod:OnLimitedCombatStart()
-	self:DisableSpecialWarningSounds()
 
 	self:EnableAlertOptions(1219482, 484, "defensive", 2)
 	self:EnableAlertOptions(1219700, 487, "specialsoon", 2)

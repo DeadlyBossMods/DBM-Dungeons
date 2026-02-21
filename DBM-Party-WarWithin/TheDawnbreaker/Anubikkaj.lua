@@ -23,7 +23,6 @@ mod:AddCustomTimerOptions(452127, nil, 1, 0)--Animate Shadows
 mod:AddPrivateAuraSoundOption(426865, true, 426860, 1)--Dark Orb target
 
 function mod:OnLimitedCombatStart()
-	self:DisableSpecialWarningSounds()
 	self:EnableAlertOptions(426787, 622, "aesoon", 2)
 	if self:IsTank() then
 		self:EnableAlertOptions(427001, 624, "carefly", 2)

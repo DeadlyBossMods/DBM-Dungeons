@@ -29,7 +29,6 @@ mod:AddCustomTimerOptions(1280113, true, 5, 0)
 mod:AddPrivateAuraSoundOption(1215897, true, 1215897, 1, 1)--Devouring Entropy
 
 function mod:OnLimitedCombatStart()
-	self:DisableSpecialWarningSounds()
 	self:EnableAlertOptions(1215087, 292, "catchballs", 12)
 	if self:IsTank() then
 		self:EnableAlertOptions(1280113, 420, "defensive", 2)

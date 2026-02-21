@@ -26,7 +26,6 @@ mod:AddPrivateAuraSoundOption(1226444, true, 1226444, 1)
 mod:AddPrivateAuraSoundOption(1225221, true, 1225221, 1)
 
 function mod:OnLimitedCombatStart()
-	self:DisableSpecialWarningSounds()
 
 	self:EnableAlertOptions(1224793, 544, "ghostsoon", 2)
 	self:EnableAlertOptions(1225174, 546, "ghostsoon", 2)

@@ -24,7 +24,6 @@ mod:AddPrivateAuraSoundOption(345990, true, 348350, 1)--Containment Cell
 mod:AddPrivateAuraSoundOption(345770, true, 346006, 1)--Impound Contraband
 
 function mod:OnLimitedCombatStart()
-	self:DisableSpecialWarningSounds()
 	self:EnableAlertOptions(1236348, 562, "frontal", 15)
 
 	self:EnableTimelineOptions(1236348, 562)

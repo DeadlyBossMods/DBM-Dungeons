@@ -25,7 +25,6 @@ mod:AddCustomTimerOptions(473070, true, 3, 0)
 mod:AddPrivateAuraSoundOption(470038, true, 470038, 1)
 
 function mod:OnLimitedCombatStart()
-	self:DisableSpecialWarningSounds()
 	self:EnableAlertOptions(469478, 508, "defensive", 2)
 	self:EnableAlertOptions(473114, 509, "frontal", 15)
 	self:EnableAlertOptions(473070, 510, "watchwave", 2)
