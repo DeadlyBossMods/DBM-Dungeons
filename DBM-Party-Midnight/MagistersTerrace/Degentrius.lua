@@ -23,8 +23,8 @@ mod:AddCustomAlertSoundOption(1215087, true, 2)--Unstable Void Essence
 mod:AddCustomAlertSoundOption(1280113, true, 1)--Hulking Fragment
 --Custom timer colors, countdowns, and disables
 mod:AddCustomTimerOptions(1215897, true, 3, 0)--Devouring Entropy
-mod:AddCustomTimerOptions(1215087, true, 5, 0)
-mod:AddCustomTimerOptions(1280113, true, 5, 0)
+mod:AddCustomTimerOptions(1215087, true, 5, 0)--Unstable Void Essence
+mod:AddCustomTimerOptions(1280113, true, 5, 0)--Hulking Fragment
 --Midnight private aura replacements
 mod:AddPrivateAuraSoundOption(1215897, true, 1215897, 1, 1)--Devouring Entropy
 

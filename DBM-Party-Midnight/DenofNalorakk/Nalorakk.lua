@@ -15,8 +15,8 @@ mod:RegisterCombat("combat")
 
 --)
 
-mod:AddPrivateAuraSoundOption(1242869, true, 1242869, 1)
-mod:AddPrivateAuraSoundOption(1261781, true, 1261781, 1)
+mod:AddPrivateAuraSoundOption(1242869, true, 1242869, 1)--Echoing Maul
+mod:AddPrivateAuraSoundOption(1261781, true, 1261781, 1)--Defensive Stance
 
 function mod:OnLimitedCombatStart()
 	self:EnablePrivateAuraSound(1242869, "scatter", 2)

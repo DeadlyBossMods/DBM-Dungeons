@@ -19,9 +19,9 @@ mod:RegisterCombat("combat")
 mod:AddCustomAlertSoundOption(472888, true, 1)--Bone Hack
 mod:AddCustomAlertSoundOption(472736, true, 2)--Debilitating shriek
 --Custom timer colors, countdowns, and disables
-mod:AddCustomTimerOptions(472888, true, 2, 0)
+mod:AddCustomTimerOptions(472888, true, 2, 0)--Bone Hack
 mod:AddCustomTimerOptions(474105, true, 1, 0)--Curse of Darkness
-mod:AddCustomTimerOptions(472736, true, 2, 0)
+mod:AddCustomTimerOptions(472736, true, 2, 0)--Debilitating Shriek
 mod:AddCustomTimerOptions(472777, true, 3, 0)--Splattering Spew
 mod:AddCustomTimerOptions(472795, true, 3, 0)--Heaving Yank
 --Midnight private aura replacements

@@ -18,10 +18,10 @@ mod:RegisterCombat("combat")
 --Custom Sounds on cast/cooldown expiring
 mod:AddCustomAlertSoundOption(1223847, false, 2)
 --Custom timer colors, countdowns, and disables
-mod:AddCustomTimerOptions(1253709, true, 3, 0)
-mod:AddCustomTimerOptions(1224299, true, 3, 0)
-mod:AddCustomTimerOptions(1224104, true, 3, 0)
-mod:AddCustomTimerOptions(1223958, true, 3, 0)
+mod:AddCustomTimerOptions(1253709, true, 3, 0)--Neural Link
+mod:AddCustomTimerOptions(1224299, true, 3, 0)--Astral Grasp
+mod:AddCustomTimerOptions(1224104, true, 3, 0)--Void Secretions
+mod:AddCustomTimerOptions(1223958, true, 3, 0)--Cosmic Sting
 -- Midnights private aura replacements
 mod:AddPrivateAuraSoundOption(1223958, true, 1223958, 1, 1)--Cosmic Sting
 mod:AddPrivateAuraSoundOption(1224104, true, 1224104, 1, 2)--Void Secretions

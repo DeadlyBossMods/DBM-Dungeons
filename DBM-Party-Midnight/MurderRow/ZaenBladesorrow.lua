@@ -15,8 +15,8 @@ mod:RegisterCombat("combat")
 
 --)
 
-mod:AddPrivateAuraSoundOption(474545, true, 474545, 1)
-mod:AddPrivateAuraSoundOption(1214352, true, 1214352, 1)
+mod:AddPrivateAuraSoundOption(474545, true, 474545, 1)--Murder in a Row
+mod:AddPrivateAuraSoundOption(1214352, true, 1214352, 1)--Fire Bomb
 
 function mod:OnLimitedCombatStart()
 	self:EnablePrivateAuraSound(474545, "breaklos", 12)

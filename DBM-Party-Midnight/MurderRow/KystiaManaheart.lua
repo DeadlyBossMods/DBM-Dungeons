@@ -15,7 +15,7 @@ mod:RegisterCombat("combat")
 
 --)
 
-mod:AddPrivateAuraSoundOption(1253813, true, 1253813, 1)
+mod:AddPrivateAuraSoundOption(1253813, true, 1253813, 1)--Fel Spray
 
 function mod:OnLimitedCombatStart()
 	self:EnablePrivateAuraSound(1253813, "watchfeet", 8)

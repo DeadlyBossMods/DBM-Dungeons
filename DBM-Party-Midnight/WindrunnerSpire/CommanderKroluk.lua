@@ -22,11 +22,11 @@ mod:AddCustomAlertSoundOption(467620, true, 1)--Rampage
 mod:AddCustomAlertSoundOption(1253026, true, 2)--Intimidating Shout (also 1253272)
 mod:AddCustomAlertSoundOption(472043, true, 2)--Rallying Bellow
 --Custom timer colors, countdowns, and disables
-mod:AddCustomTimerOptions(467620, true, 5, 0)
-mod:AddCustomTimerOptions(1253026, true, 2, 0)
-mod:AddCustomTimerOptions(1283247, true, 3, 0)
-mod:AddCustomTimerOptions(472043, true, 1, 0)
-mod:AddCustomTimerOptions(470966, true, 2, 0)
+mod:AddCustomTimerOptions(467620, true, 5, 0)--Rampage
+mod:AddCustomTimerOptions(1253026, true, 2, 0)--Intimidating Shout
+mod:AddCustomTimerOptions(1283247, true, 3, 0)--Reckless Leap
+mod:AddCustomTimerOptions(472043, true, 1, 0)--Rallying Bellow
+mod:AddCustomTimerOptions(470966, true, 2, 0)--Bladestorm
 --Midnight private aura replacements
 mod:AddPrivateAuraSoundOption(470966, true, 470966, 4, 1)--Bladestorm target
 mod:AddPrivateAuraSoundOption(468924, true, 470966, 1, 2)--Bladestorm GTFO
@@ -47,5 +47,5 @@ function mod:OnLimitedCombatStart()
 
 	self:EnablePrivateAuraSound(470966, "justrun", 2)
 	self:EnablePrivateAuraSound(468924, "watchfeet", 8)
-	self:EnablePrivateAuraSound(1283247, "targetyou", 2)
+	self:EnablePrivateAuraSound(1283247, "runout", 2)
 end
