@@ -23,13 +23,13 @@ mod:AddCustomTimerOptions(328791, true, 5, 0)
 function mod:OnLimitedCombatStart()
 	self:EnableAlertOptions(323142, 511, "farfromline", 2)
 	self:EnableAlertOptions(323236, 512, "frontal", 15)
-	self:EnableAlertOptions(1236973, 513, "justrun", 3)
-	self:EnableAlertOptions(328791, 514, "helpsoak", 7)
+	self:EnableAlertOptions(1236973, 514, "justrun", 3)
+	self:EnableAlertOptions(328791, 516, "helpsoak", 7)
 
 	self:EnableTimelineOptions(323142, 511)
 	self:EnableTimelineOptions(323236, 512)
-	self:EnableTimelineOptions(1236973, 513)
-	self:EnableTimelineOptions(328791, 514)
+	self:EnableTimelineOptions(1236973, 514)
+	self:EnableTimelineOptions(328791, 516)
 end
 
 --[[
