@@ -19,6 +19,6 @@ mod:AddPrivateAuraSoundOption(1283506, true, 1283506, 4)--Fixate
 mod:AddPrivateAuraSoundOption(1222484, true, 1222484, 1)--Poison Pool
 
 function mod:OnLimitedCombatStart()
-	self:EnablePrivateAuraSound(1283506, "justrun", 2)
+	self:EnablePrivateAuraSound(1283506, "fixateyou", 19)
 	self:EnablePrivateAuraSound(1222484, "watchfeet", 8)
 end
