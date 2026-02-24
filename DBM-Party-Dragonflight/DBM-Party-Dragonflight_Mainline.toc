@@ -28,7 +28,6 @@
 ## X-DBM-Mod-MinCoreRevision: 20230716000000
 ## X-DBM-Mod-MinExpansion: 9
 ## X-Curse-Project-ID: 314994
-## X-WoWI-ID: 24904
 ## X-Wago-ID: xZKxZENk
 ## Version: @project-version@
 
