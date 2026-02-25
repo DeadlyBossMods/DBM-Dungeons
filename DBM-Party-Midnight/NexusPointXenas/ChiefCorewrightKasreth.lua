@@ -29,9 +29,9 @@ mod:AddPrivateAuraSoundOption(1251785, true, 1214089, 1, 1)--Reflux Charge
 mod:AddPrivateAuraSoundOption(1264042, true, 1264042, 1, 2)--Arcane Spill
 
 function mod:OnLimitedCombatStart()
-	self:EnableAlertOptions(1257509, 106, "watchstep", 2)
-	self:EnableAlertOptions(1251183, 108, "farfromline", 2)
-	self:EnableAlertOptions(1264048, 172, "watchstep", 2)
+	self:EnableAlertOptions(1257509, 106, "watchstep", 2, 2)
+	self:EnableAlertOptions(1251183, 108, "farfromline", 2, 3)
+	self:EnableAlertOptions(1264048, 172, "watchstep", 2, 2)
 
 	self:EnableTimelineOptions(1257509, 106)
 	self:EnableTimelineOptions(1251785, 107)
