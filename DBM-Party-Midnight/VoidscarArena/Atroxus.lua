@@ -15,8 +15,8 @@ mod:RegisterCombat("combat")
 
 --)
 
-mod:AddPrivateAuraSoundOption(1283506, true, 1283506, 4)--Fixate
-mod:AddPrivateAuraSoundOption(1222484, true, 1222484, 1)--Poison Pool
+mod:AddPrivateAuraSoundOption(1283506, true, 1283506, 4, 1)--Fixate
+mod:AddPrivateAuraSoundOption(1222484, true, 1222484, 1, 2)--Poison Pool
 
 function mod:OnLimitedCombatStart()
 	self:EnablePrivateAuraSound(1283506, "fixateyou", 19)

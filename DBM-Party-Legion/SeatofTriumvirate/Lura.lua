@@ -29,10 +29,10 @@ if DBM:IsPostMidnight() then
 		self:DisableSpecialWarningSounds()
 		self:EnableAlertOptions(1265419, 248, "specialsoon", 2)
 		self:EnableAlertOptions(1265421, 249, "aesoon", 2)
-		self:EnableAlertOptions(1265426, 251, "watchstep", 2)
-		self:EnableAlertOptions(1264196, 252, "aesoon", 2)
-		self:EnableAlertOptions(1265689, 253, "stilldanger", 2)
-		self:EnableAlertOptions(1266001, 254, "carefly", 2)
+		self:EnableAlertOptions(1265426, 250, "watchstep", 2)
+		self:EnableAlertOptions(1264196, 251, "aesoon", 2)
+		self:EnableAlertOptions(1265689, 252, "stilldanger", 2)
+		self:EnableAlertOptions(1266001, 254, "carefly", 2, 4, 0)--Check if event actually works
 
 		self:EnableTimelineOptions(1265419, 248)
 		self:EnableTimelineOptions(1265421, 249)
