@@ -41,7 +41,7 @@ function mod:OnLimitedCombatStart()
 
 	self:EnableTimelineOptions(1234753, 173)
 	self:EnableTimelineOptions(1234850, 174)
-	self:EnableTimelineOptions(1261276, 175, 176)
+	self:EnableTimelineOptions(1261276, {175, 176})
 	self:EnableTimelineOptions(1235564, 177)
 
 	self:EnablePrivateAuraSound(1234802, "watchfeet", 8)

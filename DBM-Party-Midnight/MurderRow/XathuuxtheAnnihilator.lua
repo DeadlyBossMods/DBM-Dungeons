@@ -24,8 +24,8 @@ mod:AddCustomTimerOptions(473898, true, 5, 0)--Legion Strike
 mod:AddCustomTimerOptions(474197, true, 2, 0)--Demonic Rage
 mod:AddCustomTimerOptions(1214663, true, 3, 0)--Axe Toss
 --Midnight private aura replacements
-mod:AddPrivateAuraSoundOption(474234, true, 474234, 1)--Burning Steps
---mod:AddPrivateAuraSoundOption(1218203, true, 1218203, 1)--Fingers of Gul'dan
+mod:AddPrivateAuraSoundOption(474234, true, 474234, 1, 2)--Burning Steps
+--mod:AddPrivateAuraSoundOption(1218203, true, 1218203, 1, 1)--Fingers of Gul'dan
 
 function mod:OnLimitedCombatStart()
 	if self:IsTank() then
