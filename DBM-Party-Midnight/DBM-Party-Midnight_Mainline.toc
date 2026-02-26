@@ -4,8 +4,8 @@
 ## Title:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Dungeons (Midnight)|r
 ## Title-koKR:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0던전 (한밤)|r
 ## Title-ruRU:|cffffe00a<|r|cffff7d0aDBM Мод|r|cffffe00a>|r |cffc030c0Подземелья (Полночь)|r
-## Title-zhCN:|cffffe00a<|r|cffff7d0aDBM 模组|r|cffffe00a>|r |cffc030c0队伍首领 (午夜)|r
-## Title-zhTW:|cffffe00a<|r|cffff7d0aDBM 模組|r|cffffe00a>|r |cffc030c0隊伍首領 (午夜)|r
+## Title-zhCN:|cffffe00a<|r|cffff7d0aDBM 模组|r|cffffe00a>|r |cffc030c0队伍首领 (至暗之夜)|r
+## Title-zhTW:|cffffe00a<|r|cffff7d0aDBM 模組|r|cffffe00a>|r |cffc030c0隊伍首領 (至暗之夜)|r
 ## LoadOnDemand: 1
 ## RequiredDeps: DBM-Core
 ## SavedVariables: DBMPartyMidnight_AllSavedVars
@@ -19,8 +19,8 @@
 ## X-DBM-Mod-Name: Dungeons (Midnight)
 ## X-DBM-Mod-Name-koKR: 던전 (한밤)
 ## X-DBM-Mod-Name-ruRU: Подземелья (Полночь)
-## X-DBM-Mod-Name-zhCN: 队伍首领 (午夜)
-## X-DBM-Mod-Name-zhTW: 隊伍首領 (午夜)
+## X-DBM-Mod-Name-zhCN: 队伍首领 (至暗之夜)
+## X-DBM-Mod-Name-zhTW: 隊伍首領 (至暗之夜)
 ## X-DBM-Mod-Sort: 105
 ## X-DBM-Mod-MapID: 2805, 2813, 2811, 2859, 2825, 2923, 2874, 2915
 ## X-DBM-Mod-MinCoreRevision: 20230716000000
@@ -66,3 +66,4 @@ MaisaraCaverns\Raktul.lua
 NexusPointXenas\Lothraxion.lua
 NexusPointXenas\CorewardenNysarra.lua
 NexusPointXenas\ChiefCorewrightKasreth.lua
+
