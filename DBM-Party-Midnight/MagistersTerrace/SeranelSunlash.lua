@@ -35,7 +35,7 @@ function mod:OnLimitedCombatStart()
 
 	self:EnableTimelineOptions(1224903, 93)
 	self:EnableTimelineOptions(1248689, 94)
-	self:EnableTimelineOptions(1225787, 95, 513)
+	self:EnableTimelineOptions(1225787, {95, 513})
 	self:EnableTimelineOptions(1225193, 96)
 
 	self:EnablePrivateAuraSound({1225787,1225792}, "debuffyou", 17)

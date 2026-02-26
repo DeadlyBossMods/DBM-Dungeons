@@ -33,7 +33,7 @@ function mod:OnLimitedCombatStart()
 	self:EnableAlertOptions(1283246, 549, "mobsoon", 2)
 	self:EnableAlertOptions(433766, 550, "movetoboss", 14)
 
-	self:EnableTimelineOptions(433425, 542, 551)
+	self:EnableTimelineOptions(433425, {542, 551})
 	self:EnableTimelineOptions(439506, 543)
 	self:EnableTimelineOptions(433740, 545)
 	self:EnableTimelineOptions(1283246, 549)

@@ -32,7 +32,7 @@ function mod:OnLimitedCombatStart()
 	self:EnableAlertOptions(346766, 590, "specialsoon", 1)
 
 	self:EnableTimelineOptions(346957, 586)
-	self:EnableTimelineOptions(347094, 587, 589)
+	self:EnableTimelineOptions(347094, {587, 589})
 	self:EnableTimelineOptions(346116, 588)
 	self:EnableTimelineOptions(346766, 590)
 

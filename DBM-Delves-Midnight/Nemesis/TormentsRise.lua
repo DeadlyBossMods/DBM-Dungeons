@@ -29,9 +29,9 @@ function mod:OnLimitedCombatStart()
 	self:EnableAlertOptions(1256355, {391,394}, "defensive", 2)
 	self:EnableAlertOptions(1256351, {392,393}, "aesoon", 2)
 
-	self:EnableTimelineOptions(1256358, 390, 395)
-	self:EnableTimelineOptions(1256355, 391, 394)
-	self:EnableTimelineOptions(1256351, 392, 393)
+	self:EnableTimelineOptions(1256358, {390, 395})
+	self:EnableTimelineOptions(1256355, {391, 394})
+	self:EnableTimelineOptions(1256351, {392, 393})
 
 	--if self:IsMythic() then
 	--	self:SetCreatureID(244753)

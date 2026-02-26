@@ -25,13 +25,14 @@ mod:AddPrivateAuraSoundOption(1220427, true, 1220427, 1)--Warp Strike
 mod:AddPrivateAuraSoundOption(1236126, true, 1236126, 1)--Binding Javelin
 
 function mod:OnLimitedCombatStart()
-
-	self:EnableAlertOptions(1219482, 484, "defensive", 2)
+	if self:IsTank() then
+		self:EnableAlertOptions(1219482, 484, "defensive", 2)
+	end
 	self:EnableAlertOptions(1219700, 487, "specialsoon", 2)
 
 	self:EnableTimelineOptions(1219482, 484)
 	self:EnableTimelineOptions(1236126, 485)
-	self:EnableTimelineOptions(1220427, 486, 491)
+	self:EnableTimelineOptions(1220427, {486, 491})
 	self:EnableTimelineOptions(1219700, 487)
 
 	self:EnablePrivateAuraSound({1220427,1227142}, "lineyou", 17)

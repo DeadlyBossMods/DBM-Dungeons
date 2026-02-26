@@ -25,7 +25,7 @@ mod:AddCustomTimerOptions(1251785, true, 3, 0)--Reflux Charge
 mod:AddCustomTimerOptions(1251183, true, 3, 0)--Leyline Array
 mod:AddCustomTimerOptions(1264048, true, 3, 0)--Flux Collapse
 --Midnight private aura replacements
-mod:AddPrivateAuraSoundOption(1251785, true, 1214089, 1, 1)--Reflux Charge
+mod:AddPrivateAuraSoundOption(1251785, true, 1251785, 1, 1)--Reflux Charge
 mod:AddPrivateAuraSoundOption(1264042, true, 1264042, 1, 2)--Arcane Spill
 
 function mod:OnLimitedCombatStart()

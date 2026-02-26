@@ -39,9 +39,9 @@ function mod:OnLimitedCombatStart()
 	self:EnableAlertOptions(1253026, {211,213}, "gathershare", 2)
 	self:EnableAlertOptions(472043, 215, "mobsoon", 2)
 
-	self:EnableTimelineOptions(467620, 210, 556)
-	self:EnableTimelineOptions(1253026, 211, 213)
-	self:EnableTimelineOptions(1283247, 212, 214)
+	self:EnableTimelineOptions(467620, {210, 556})
+	self:EnableTimelineOptions(1253026, {211, 213})
+	self:EnableTimelineOptions(1283247, {212, 214})
 	self:EnableTimelineOptions(472043, 215)
 	self:EnableTimelineOptions(470966, 216)
 

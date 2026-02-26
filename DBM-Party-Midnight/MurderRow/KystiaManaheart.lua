@@ -14,9 +14,35 @@ mod:RegisterCombat("combat")
 --mod:RegisterEventsInCombat(
 
 --)
-
-mod:AddPrivateAuraSoundOption(1253813, true, 1253813, 1)--Fel Spray
+--NOTE: Chaos Barrage has no event ID, but some wierd spell called "escape" (https://www.wowhead.com/spell=1248184/escape) does
+--Custom Sounds on cast/cooldown expiring
+mod:AddCustomAlertSoundOption(1264095, true, 1)--Mirror Images
+mod:AddCustomAlertSoundOption(1253813, true, 2)--Fel Spray
+mod:AddCustomAlertSoundOption(474240, true, 2)--Fel Nova
+mod:AddCustomAlertSoundOption(1230304, true, 2)--Light Infusion
+--Custom timer colors, countdowns, and disables
+mod:AddCustomTimerOptions(1264095, true, 1, 0)--Mirror Images
+mod:AddCustomTimerOptions(1253813, true, 3, 0)--Fel Spray
+mod:AddCustomTimerOptions(474240, true, 3, 0)--Fel Nova
+mod:AddCustomTimerOptions(1230304, true, 5, 0)--Light Infusion
+--Midnight private aura replacements
+mod:AddPrivateAuraSoundOption(1253813, true, 1253813, 1, 2)--Fel Spray
 
 function mod:OnLimitedCombatStart()
+	self:EnableAlertOptions(1264095, 120, "mobsoon", 2, 2)--Change when I can access AWS again
+	self:EnableAlertOptions(1253813, 122, "frontal", 15, 2)
+	self:EnableAlertOptions(474240, 202, "watchstep", 2, 3)--Change audio to carefly?
+	self:EnableAlertOptions(1230304, 610, "phasechange", 2, 1)--it might not have timer (or warning for that matter) we need to log this
+
+	self:EnableTimelineOptions(1264095, 120)
+	self:EnableTimelineOptions(1253813, 122)
+	self:EnableTimelineOptions(474240, 202)
+	self:EnableTimelineOptions(1230304, 610)
+
 	self:EnablePrivateAuraSound(1253813, "watchfeet", 8)
+	DBM:Debug("watch events closely on this one")
+	DBM:Debug("watch events closely on this one")
+	DBM:Debug("watch events closely on this one")
+	DBM:Debug("watch events closely on this one")
+	DBM:Debug("watch events closely on this one")
 end
