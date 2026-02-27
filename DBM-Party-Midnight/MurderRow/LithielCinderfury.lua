@@ -31,7 +31,7 @@ mod:AddCustomTimerOptions(1224478, true, 6, 0)--Malefic Wave
 function mod:OnLimitedCombatStart()
 	self:EnableAlertOptions(1218203, 37, "watchstep", 2, 2)--Or change to mobssoon?
 	self:EnableAlertOptions(474408, 38, "bigmob", 1, 2)
-	self:EnableAlertOptions(1224478, 207, "specialsoon", 2, 2)
+	self:EnableAlertOptions(1224478, 207, "specialsoon", 2, 2)--Has no timer or text warning?
 
 	self:EnableTimelineOptions(1218203, 37)
 	self:EnableTimelineOptions(474408, 38)
