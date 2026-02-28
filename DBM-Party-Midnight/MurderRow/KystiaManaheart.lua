@@ -32,7 +32,7 @@ function mod:OnLimitedCombatStart()
 	self:EnableAlertOptions(1264095, 120, "mobsoon", 2, 2)--Change when I can access AWS again
 	self:EnableAlertOptions(1253813, 122, "frontal", 15, 2)
 	self:EnableAlertOptions(474240, 202, "watchstep", 2, 3)--Change audio to carefly?
-	self:EnableAlertOptions(1230304, 610, "phasechange", 2, 1)--it might not have timer (or warning for that matter) we need to log this
+	self:EnableAlertOptions(1230304, 610, "targetchange", 2, 1, 0)--No timer, text warning only, override sound type 0
 
 	self:EnableTimelineOptions(1264095, 120)
 	self:EnableTimelineOptions(1253813, 122)
@@ -40,9 +40,4 @@ function mod:OnLimitedCombatStart()
 	self:EnableTimelineOptions(1230304, 610)
 
 	self:EnablePrivateAuraSound(1253813, "watchfeet", 8)
-	DBM:Debug("watch events closely on this one")
-	DBM:Debug("watch events closely on this one")
-	DBM:Debug("watch events closely on this one")
-	DBM:Debug("watch events closely on this one")
-	DBM:Debug("watch events closely on this one")
 end

@@ -16,7 +16,7 @@ mod:RegisterCombat("combat")
 --)
 
 --Custom Sounds on cast/cooldown expiring
-mod:AddCustomAlertSoundOption(1223847, false, 2)
+mod:AddCustomAlertSoundOption(1223847, true, 2)
 --Custom timer colors, countdowns, and disables
 mod:AddCustomTimerOptions(1253709, true, 3, 0)--Neural Link
 mod:AddCustomTimerOptions(1224299, true, 3, 0)--Astral Grasp
@@ -29,8 +29,8 @@ mod:AddPrivateAuraSoundOption(1253709, true, 1253709, 1, 1)--Neural Link
 mod:AddPrivateAuraSoundOption(1224299, true, 1224299, 1, 1)--Astral Grasp
 
 function mod:OnLimitedCombatStart()
-
-	self:EnableAlertOptions(1223847, 635, "specialsoon", 2)
+	self:DisableSpecialWarningSounds()--Manually called on this fight because it's possible to have no sounds registered if triplicate is disabled
+	self:EnableAlertOptions(1223847, 635, "specialsoon", 2, 2, 0)--No timer
 
 	self:EnableTimelineOptions(1253709, 97)
 	self:EnableTimelineOptions(1224299, 98)
@@ -41,4 +41,5 @@ function mod:OnLimitedCombatStart()
 	self:EnablePrivateAuraSound(1224104, "watchfeet", 8)
 	self:EnablePrivateAuraSound(1253709, "linegather", 2)
 	self:EnablePrivateAuraSound(1224299, "pullin", 12)
+	DBM:Debug("recheck mod after revisions")
 end
