@@ -18,6 +18,7 @@ mod:RegisterCombat("combat")
 --Custom Sounds on cast/cooldown expiring
 mod:AddCustomAlertSoundOption(1227264, true, 2)--Cosmic Blast
 mod:AddCustomAlertSoundOption(1222758, true, 2)--Void Cascade
+mod:AddCustomAlertSoundOption(1263982, true, 2)--Gravity Orbs
 --Custom timer colors, countdowns, and disables
 mod:AddCustomTimerOptions(1282770, true, 3, 0)--Unstable Singularity
 mod:AddCustomTimerOptions(1227264, true, 2, 0)--Cosmic Blast
@@ -30,6 +31,7 @@ mod:AddPrivateAuraSoundOption(1248130, true, 1282770, 1, 2)--GTFO
 
 function mod:OnLimitedCombatStart()
 	self:EnableAlertOptions(1227264, 57, "carefly", 2, 2)
+	self:EnableAlertOptions(1263982, 58, "specialsoon", 2, 2, 0)
 	self:EnableAlertOptions(1222758, 171, "watchstep", 2, 2)--Review
 
 	self:EnableTimelineOptions(1282770, 56)
