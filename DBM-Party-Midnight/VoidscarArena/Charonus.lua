@@ -39,7 +39,7 @@ function mod:OnLimitedCombatStart()
 	self:EnableTimelineOptions(1263982, 58)
 	self:EnableTimelineOptions(1222758, 171)
 
-	self:EnablePrivateAuraSound(1263983, "orbrun", 2)
+	self:EnablePrivateAuraSound(1263983, "orbrun", 2)--Doesn't seem to be working?
 	self:EnablePrivateAuraSound(1282770, "runout", 2)
 	self:EnablePrivateAuraSound(1248130, "watchfeet", 8)
 	DBM:Debug("check void cascade private aura")
