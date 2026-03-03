@@ -26,7 +26,7 @@ mod:AddCustomTimerOptions(1253813, true, 3, 0)--Fel Spray
 mod:AddCustomTimerOptions(474240, true, 3, 0)--Fel Nova
 mod:AddCustomTimerOptions(1230304, true, 5, 0)--Light Infusion
 --Midnight private aura replacements
-mod:AddPrivateAuraSoundOption(1253813, true, 1253813, 1, 2)--Fel Spray
+--mod:AddPrivateAuraSoundOption(1253813, true, 1253813, 1, 2)--Fel Spray
 
 function mod:OnLimitedCombatStart()
 	self:EnableAlertOptions(1264095, 120, "mobsoon", 2, 2)--Change when I can access AWS again
@@ -39,5 +39,5 @@ function mod:OnLimitedCombatStart()
 	self:EnableTimelineOptions(474240, 202)
 	self:EnableTimelineOptions(1230304, 610)
 
-	self:EnablePrivateAuraSound(1253813, "watchfeet", 8)
+	--self:EnablePrivateAuraSound(1253813, "watchfeet", 8)
 end

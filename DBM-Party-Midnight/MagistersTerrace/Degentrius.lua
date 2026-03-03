@@ -26,7 +26,7 @@ mod:AddCustomTimerOptions(1215897, true, 3, 0)--Devouring Entropy
 mod:AddCustomTimerOptions(1215087, true, 5, 0)--Unstable Void Essence
 mod:AddCustomTimerOptions(1280113, true, 5, 0)--Hulking Fragment
 --Midnight private aura replacements
-mod:AddPrivateAuraSoundOption(1215897, true, 1215897, 1, 1)--Devouring Entropy
+--mod:AddPrivateAuraSoundOption(1215897, true, 1215897, 1, 1)--Devouring Entropy
 
 function mod:OnLimitedCombatStart()
 	self:EnableAlertOptions(1215087, 292, "catchballs", 12)
@@ -38,5 +38,5 @@ function mod:OnLimitedCombatStart()
 	self:EnableTimelineOptions(1215087, 292)
 	self:EnableTimelineOptions(1280113, 420)
 
-	self:EnablePrivateAuraSound(1215897, "scatter", 2)
+	--self:EnablePrivateAuraSound(1215897, "scatter", 2)
 end
