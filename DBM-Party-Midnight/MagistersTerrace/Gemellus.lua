@@ -23,10 +23,10 @@ mod:AddCustomTimerOptions(1224299, true, 3, 0)--Astral Grasp
 mod:AddCustomTimerOptions(1224104, true, 3, 0)--Void Secretions
 mod:AddCustomTimerOptions(1223958, true, 3, 0)--Cosmic Sting
 -- Midnights private aura replacements
---mod:AddPrivateAuraSoundOption(1223958, true, 1223958, 1, 1)--Cosmic Sting
---mod:AddPrivateAuraSoundOption(1224104, true, 1224104, 1, 2)--Void Secretions
+mod:AddPrivateAuraSoundOption(1223958, true, 1223958, 1, 1)--Cosmic Sting
+mod:AddPrivateAuraSoundOption(1224104, true, 1224104, 1, 2)--Void Secretions
 mod:AddPrivateAuraSoundOption(1253709, true, 1253709, 1, 1)--Neural Link
---mod:AddPrivateAuraSoundOption(1224299, true, 1224299, 1, 1)--Astral Grasp
+mod:AddPrivateAuraSoundOption(1224299, true, 1224299, 1, 1)--Astral Grasp
 
 function mod:OnLimitedCombatStart()
 	self:DisableSpecialWarningSounds()--Manually called on this fight because it's possible to have no sounds registered if triplicate is disabled
@@ -37,9 +37,9 @@ function mod:OnLimitedCombatStart()
 	self:EnableTimelineOptions(1224104, 99)
 	self:EnableTimelineOptions(1223958, 100)
 
-	--self:EnablePrivateAuraSound(1223958, "runout", 2)
-	--self:EnablePrivateAuraSound(1224104, "watchfeet", 8)
+	self:EnablePrivateAuraSound(1223958, "runout", 2)
+	self:EnablePrivateAuraSound(1224104, "watchfeet", 8)
 	self:EnablePrivateAuraSound(1253709, "linegather", 2)
-	--self:EnablePrivateAuraSound(1224299, "pullin", 12)
+	self:EnablePrivateAuraSound(1224299, "pullin", 12)
 	DBM:Debug("recheck mod after revisions")
 end

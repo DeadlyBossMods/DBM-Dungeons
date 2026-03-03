@@ -26,7 +26,7 @@ mod:AddCustomTimerOptions(1235623, true, 3, 0)--Raging Squall
 mod:AddCustomTimerOptions(1235783, true, 1, 0)--Shattering Frostspike
 mod:AddCustomTimerOptions(1235656, true, 2, 0)--Eternal Winter
 --Midnight private aura replacements
---mod:AddPrivateAuraSoundOption(1235641, true, 1235641, 1, 2)--Raging Squall
+mod:AddPrivateAuraSoundOption(1235641, true, 1235641, 1, 2)--Raging Squall
 
 function mod:OnLimitedCombatStart()
 	self:EnableAlertOptions(1235548, 67, "helpdispel", 2, 3)
@@ -39,5 +39,5 @@ function mod:OnLimitedCombatStart()
 	self:EnableTimelineOptions(1235783, 69)
 	self:EnableTimelineOptions(1235656, 70)
 
-	--self:EnablePrivateAuraSound(1235641, "watchfeet", 8)
+	self:EnablePrivateAuraSound(1235641, "watchfeet", 8)
 end

@@ -32,7 +32,7 @@ mod:AddCustomTimerOptions(1251996, true, 3, 0)--Deaths' Embrace
 mod:AddCustomTimerOptions(1252130, true, 1, 0)--Wrest Phantoms
 mod:AddCustomTimerOptions(1250708, true, 4, 0)--Necrotic Convergence
 --Midnight private aura replacements
---mod:AddPrivateAuraSoundOption(1252130, true, 1252130, 1, 2)--Unmake damage
+mod:AddPrivateAuraSoundOption(1252130, true, 1252130, 1, 2)--Unmake damage
 mod:AddPrivateAuraSoundOption(1251775, true, 1251775, 1, 2)--Final Pursuit
 
 function mod:OnLimitedCombatStart()
@@ -50,6 +50,6 @@ function mod:OnLimitedCombatStart()
 	self:EnableTimelineOptions(1252130, 19)
 	self:EnableTimelineOptions(1250708, 20)
 
-	--self:EnablePrivateAuraSound(1252130, "watchfeet", 8)--Change or remove if wrong
+	self:EnablePrivateAuraSound(1252130, "watchfeet", 8)--Change or remove if wrong
 	self:EnablePrivateAuraSound(1251775, "fixateyou", 19)
 end
