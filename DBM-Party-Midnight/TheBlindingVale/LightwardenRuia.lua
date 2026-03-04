@@ -34,6 +34,7 @@ mod:AddPrivateAuraSoundOption(1239825, true, 1239825, 1, 1)--Lightfire
 mod:AddPrivateAuraSoundOption(1240222, true, 1240222, 1, 1)--Pulverizing Strikes
 
 function mod:OnLimitedCombatStart()
+	self:FixBlizzardAPI()--Force hide bars over certain time to work around poor programming on this boss fight from blizzard
 	self:EnableAlertOptions(1240098, 182, "watchstep", 2, 3)
 	self:EnableAlertOptions(1241058, 184, "healfull", 2, 3)
 	self:EnableAlertOptions(1239885, 185, "phasechange", 2, 2)
