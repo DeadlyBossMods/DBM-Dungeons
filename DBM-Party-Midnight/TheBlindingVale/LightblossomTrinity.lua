@@ -37,7 +37,7 @@ function mod:OnLimitedCombatStart()
 		self:EnableAlertOptions(1234753, 173, "defensive", 2, 3)
 	end
 	self:EnableAlertOptions(1234850, 174, "chargemove", 2, 2)
-	self:EnableAlertOptions(1235564, 177, "soakbeam", 17, 2)
+	self:EnableAlertOptions(1235564, 177, "helpsoak", 2, 2)
 
 	self:EnableTimelineOptions(1234753, 173)
 	self:EnableTimelineOptions(1234850, 174)

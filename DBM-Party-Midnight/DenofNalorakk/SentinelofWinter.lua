@@ -15,6 +15,7 @@ mod:RegisterCombat("combat")
 
 --)
 
+--TODO, recheck if rimeshatter has an event?
 -- Custon Sounds on cast/cooldown expiring
 mod:AddCustomAlertSoundOption(1235548, "Healer", 2)--Glacial Torment
 mod:AddCustomAlertSoundOption(1235623, true, 2)--Raging Squall
