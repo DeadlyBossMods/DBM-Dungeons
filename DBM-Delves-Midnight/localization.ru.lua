@@ -39,7 +39,7 @@ L:SetGeneralLocalization({
 -----------------------
 -- <<< Spinshroom >>> --
 -----------------------
-L = DBM:GetModLocalization("Spinshroom")
+L = DBM:GetModLocalization("SpinshroomMid")
 
 L:SetGeneralLocalization({
 	name =	"Spinshroom"
