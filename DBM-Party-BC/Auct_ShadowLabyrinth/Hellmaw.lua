@@ -5,6 +5,8 @@ mod:SetRevision("@file-date-integer@")
 
 mod:SetCreatureID(18731)
 mod:SetEncounterID(1908)
+mod:SetZone(555)
+
 mod:RegisterCombat("combat")
 
 if not mod:IsRetail() then

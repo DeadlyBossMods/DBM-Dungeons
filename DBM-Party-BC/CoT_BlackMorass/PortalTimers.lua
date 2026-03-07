@@ -4,6 +4,7 @@ local L		= mod:GetLocalizedStrings()
 mod.noStatistics = true
 
 mod:SetRevision("@file-date-integer@")
+mod:SetZone(269)
 
 mod:RegisterEvents(
 	"UPDATE_UI_WIDGET",

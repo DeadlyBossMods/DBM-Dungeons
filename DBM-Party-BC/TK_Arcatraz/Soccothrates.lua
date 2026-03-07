@@ -9,6 +9,7 @@ mod:SetRevision("@file-date-integer@")
 
 mod:SetCreatureID(20886)
 mod:SetEncounterID(1915)
+mod:SetZone(552)
 
 if not mod:IsRetail() then
 	mod:SetModelID(19977)

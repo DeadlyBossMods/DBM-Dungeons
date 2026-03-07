@@ -6,9 +6,9 @@ if mod:IsRetail() then
 end
 
 mod:SetRevision("@file-date-integer@")
-
 mod:SetCreatureID(24723)
 mod:SetEncounterID(1897)
+mod:SetZone(585)
 
 --if not mod:IsRetail() then
 --	mod:SetModelID(22731)--Unknown, two bosses have same ID

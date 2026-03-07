@@ -4,6 +4,7 @@ local L		= mod:GetLocalizedStrings()
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(18371)
 mod:SetEncounterID(1890)
+mod:SetZone(558)
 
 if not mod:IsRetail() then
 	mod:SetModelID(18916)

@@ -9,6 +9,7 @@ mod:SetRevision("@file-date-integer@")
 
 mod:SetCreatureID(24744)
 mod:SetEncounterID(1898)
+mod:SetZone(585)
 
 --if not mod:IsRetail() then
 --	mod:SetModelID(22731)--Unknown, two bosses have same ID
