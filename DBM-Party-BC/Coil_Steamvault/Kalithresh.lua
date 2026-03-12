@@ -4,7 +4,7 @@ local L		= mod:GetLocalizedStrings()
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(17798)
 mod:SetEncounterID(1944)
-mod:SetZone(261)
+mod:SetZone(545)
 
 local channelId
 if not mod:IsRetail() then

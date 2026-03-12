@@ -15,7 +15,6 @@ mod:RegisterCombat("combat")
 
 --)
 
---NOTE, https://www.wowhead.com/spell=1218465/server and https://www.wowhead.com/spell=1218466/cleaner need to be added to trashmod somehow
 --Custon Sounds on cast/cooldown expiring
 mod:AddCustomAlertSoundOption(474765, true, 2)--Same Day Delivery
 mod:AddCustomAlertSoundOption(474478, true, 2)--Killing Spree

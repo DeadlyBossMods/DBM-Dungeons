@@ -14,7 +14,7 @@
 ## IconTexture: Interface\AddOns\DBM-Core\textures\dbm_airhorn
 ## X-DBM-Mod: 1
 ## X-DBM-Mod-Type: SCENARIO
-## X-DBM-Mod-Category: OTHER
+## X-DBM-Mod-Category: SCENARIO
 ## X-DBM-StatTypes: normal
 ## X-DBM-Mod-SubCategories: Nemesis,Boss Encounters,Zones
 ## X-DBM-Mod-SubCategories-koKR: 네메시스,보스

@@ -2,9 +2,9 @@ local mod = DBM:NewMod(565, "DBM-Party-BC", 13, 258)
 local L = mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
-
 mod:SetCreatureID(19220)
 mod:SetEncounterID(1931)
+mod:SetZone(554)
 
 if not mod:IsRetail() then
 	mod:SetModelID(20033)
