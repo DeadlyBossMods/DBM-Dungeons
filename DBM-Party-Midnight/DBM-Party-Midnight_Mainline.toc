@@ -30,6 +30,7 @@
 ## Version: @project-version@
 
 localization.en.lua
+localization.ru.lua
 
 WindrunnerSpire\Emberdawn.lua
 WindrunnerSpire\DerelictDuo.lua
@@ -67,4 +68,5 @@ MaisaraCaverns\Raktul.lua
 NexusPointXenas\Lothraxion.lua
 NexusPointXenas\CorewardenNysarra.lua
 NexusPointXenas\ChiefCorewrightKasreth.lua
+
 
