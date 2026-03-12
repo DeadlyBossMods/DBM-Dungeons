@@ -25,11 +25,11 @@ mod:AddCustomAlertSoundOption(1224478, true, 2)--Malefic Wave
 --Custom timer colors, countdowns, and disables
 mod:AddCustomTimerOptions(1218203, true, 1, 0)--Fingers off Guldan
 mod:AddCustomTimerOptions(474408, true, 1, 0)--Summon Vilefiend
-mod:AddCustomTimerOptions(1224478, true, 6, 0)--Malefic Wave
+mod:AddCustomTimerOptions(1224478, true, 2, 0)--Malefic Wave
 --Midnight private aura replacements
 
 function mod:OnLimitedCombatStart()
-	self:EnableAlertOptions(1218203, 37, "scatter", 2, 2)--Or change to mobssoon?
+	self:EnableAlertOptions(1218203, 37, "range5", 2, 2)--Or change to mobssoon?
 	self:EnableAlertOptions(474408, 38, "bigmob", 1, 2)
 	self:EnableAlertOptions(1224478, 207, "usegate", 19, 2)--Has no timer or text warning?
 

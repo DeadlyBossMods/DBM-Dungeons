@@ -15,31 +15,34 @@ mod:RegisterCombat("combat")
 
 --)
 
+--TODO, find out if cosmic sting has a personal alert
 --Custom Sounds on cast/cooldown expiring
 mod:AddCustomAlertSoundOption(1223847, true, 2)
+mod:AddCustomAlertSoundOption(1224299, true, 2)--Private aura is disabled so we have to use this now
 --Custom timer colors, countdowns, and disables
 mod:AddCustomTimerOptions(1253709, true, 3, 0)--Neural Link
 mod:AddCustomTimerOptions(1224299, true, 3, 0)--Astral Grasp
 mod:AddCustomTimerOptions(1224104, true, 3, 0)--Void Secretions
 mod:AddCustomTimerOptions(1223958, true, 3, 0)--Cosmic Sting
+mod:AddCustomTimerOptions(1223847, true, 5, 0)--Triplicate
 -- Midnights private aura replacements
-mod:AddPrivateAuraSoundOption(1223958, true, 1223958, 1, 1)--Cosmic Sting
+--mod:AddPrivateAuraSoundOption(1223958, true, 1223958, 1, 1)--Cosmic Sting
 mod:AddPrivateAuraSoundOption(1224104, true, 1224104, 1, 2)--Void Secretions
 mod:AddPrivateAuraSoundOption(1253709, true, 1253709, 1, 1)--Neural Link
-mod:AddPrivateAuraSoundOption(1224299, true, 1224299, 1, 1)--Astral Grasp
+--mod:AddPrivateAuraSoundOption(1224299, true, 1224299, 1, 1)--Astral Grasp
 
 function mod:OnLimitedCombatStart()
-	self:DisableSpecialWarningSounds()--Manually called on this fight because it's possible to have no sounds registered if triplicate is disabled
-	self:EnableAlertOptions(1223847, 635, "specialsoon", 2, 2, 0)--No timer
+	self:EnableAlertOptions(1223847, 635, "specialsoon", 2, 2, 0)--No timer beyond first cast
+	self:EnableAlertOptions(1224299, 98, "pullin", 2, 2, 0)--No longer a private aura, but does give a personal warning with ENCOUNTER_WARNING api
 
 	self:EnableTimelineOptions(1253709, 97)
 	self:EnableTimelineOptions(1224299, 98)
 	self:EnableTimelineOptions(1224104, 99)
 	self:EnableTimelineOptions(1223958, 100)
+	self:EnableTimelineOptions(1223847, 635)
 
-	self:EnablePrivateAuraSound(1223958, "runout", 2)
+--	self:EnablePrivateAuraSound(1223958, "runout", 2)
 	self:EnablePrivateAuraSound(1224104, "watchfeet", 8)
 	self:EnablePrivateAuraSound(1253709, "linegather", 2)
-	self:EnablePrivateAuraSound(1224299, "pullin", 12)
-	DBM:Debug("recheck mod after revisions")
+--	self:EnablePrivateAuraSound(1224299, "pullin", 12)
 end

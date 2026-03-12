@@ -25,14 +25,14 @@ mod:AddCustomTimerOptions(466064, true, 5, 0)--Searing
 mod:AddCustomTimerOptions(466556, true, 3, 0)--Flaming Updraft
 mod:AddCustomTimerOptions(465904, true, 2, 0)--Burning Gale
 --TODO, fix privaet aura GTFO sound defaults if assumption is wrong
-mod:AddPrivateAuraSoundOption(466559, true, 466556, 1, 1)--Flaming Updraft
+mod:AddPrivateAuraSoundOption(466559, true, 466556, 1, 1)--Flaming Updraft (Currently disabled by blizzard, so hidden from UI autoamtically by core)
 mod:AddPrivateAuraSoundOption(472118, false, 472118, 1, 2)--Ignited Embers. GTFO that's off by default because under certain conditions you do not want to avoid it
 
 function mod:OnLimitedCombatStart()
 	if self:IsTank() then
 		self:EnableAlertOptions(466064, 239, "defensive", 2)
 	end
-	self:EnableAlertOptions(465904, 242, "carefly", 2)
+	self:EnableAlertOptions(465904, 242, "pushbackincoming", 13)
 
 	self:EnableTimelineOptions(466064, 239)
 	self:EnableTimelineOptions(466556, 241)

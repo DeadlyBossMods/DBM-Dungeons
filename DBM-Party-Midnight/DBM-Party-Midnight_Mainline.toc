@@ -29,7 +29,7 @@
 ## X-Wago-ID: xZKxZENk
 ## Version: @project-version@
 
-# localization.en.lua
+localization.en.lua
 
 WindrunnerSpire\Emberdawn.lua
 WindrunnerSpire\DerelictDuo.lua
@@ -40,6 +40,7 @@ MurderRow\KystiaManaheart.lua
 MurderRow\ZaenBladesorrow.lua
 MurderRow\XathuuxtheAnnihilator.lua
 MurderRow\LithielCinderfury.lua
+MurderRow\MurderRowTrash.lua
 
 MagistersTerrace\ArcanotronCustos.lua
 MagistersTerrace\SeranelSunlash.lua

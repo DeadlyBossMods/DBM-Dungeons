@@ -33,7 +33,7 @@ mod:AddCustomTimerOptions(1252130, true, 1, 0)--Wrest Phantoms
 mod:AddCustomTimerOptions(1250708, true, 4, 0)--Necrotic Convergence
 --Midnight private aura replacements
 mod:AddPrivateAuraSoundOption(1252130, true, 1252130, 1, 2)--Unmake damage
-mod:AddPrivateAuraSoundOption(1251775, true, 1251775, 1, 2)--Final Pursuit
+mod:AddPrivateAuraSoundOption(1251775, true, 1251775, 1, 2)--Final Pursuit (also encounterevent ID 688 which was hotfixed in recently. Indicating this private aura might zap soon)
 
 function mod:OnLimitedCombatStart()
 	if self:IsTank() then

@@ -29,7 +29,7 @@ mod:AddCustomTimerOptions(1230304, true, 5, 0)--Light Infusion
 mod:AddPrivateAuraSoundOption(1253813, true, 1253813, 1, 2)--Fel Spray
 
 function mod:OnLimitedCombatStart()
-	self:EnableAlertOptions(1264095, 120, "mobsoon", 2, 2)--Change when I can access AWS again
+	self:EnableAlertOptions(1264095, 120, "crowdcontrol", 3, 2)--Change when I can access AWS again
 	self:EnableAlertOptions(1253813, 122, "frontal", 15, 2)
 	self:EnableAlertOptions(474240, 202, "watchstep", 2, 3)--Change audio to carefly?
 	self:EnableAlertOptions(1230304, 610, "targetchange", 2, 1, 0)--No timer, text warning only, override sound type 0

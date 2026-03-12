@@ -19,7 +19,7 @@ mod:AddCustomAlertSoundOption(474345, true, 2)--Refueling Protocol
 mod:AddCustomAlertSoundOption(474496, true, 1)--Repulsing Slam
 mod:AddCustomAlertSoundOption(1214081, true, 2)--Arcane Expulsion
 --Custom timer colors, countdowns, and disables
-mod:AddCustomTimerOptions(474345, true, 5, 0)--Refueling Protocol
+mod:AddCustomTimerOptions(474345, true, 6, 0)--Refueling Protocol
 mod:AddCustomTimerOptions(474496, true, 5, 0)--Repulsing Slam
 mod:AddCustomTimerOptions(1214038, true, 3, 0)--Ethereal Shackles
 mod:AddCustomTimerOptions(1214081, true, 2, 0)--Arcane Expulsion
@@ -28,11 +28,11 @@ mod:AddPrivateAuraSoundOption(1214089, true, 1214089, 1, 2)--Arcane Residue (GTF
 mod:AddPrivateAuraSoundOption(1214038, true, 1214038, 1, 1)--Ethereal Shackles
 
 function mod:OnLimitedCombatStart()
-	self:EnableAlertOptions(474345, 281, "catchballs", 12)
+	self:EnableAlertOptions(474345, 281, "catchballs", 12, 3)--Doesn't work? but it should?
 	if self:IsTank() then
-		self:EnableAlertOptions(474496, 286, "carefly", 2)
+		self:EnableAlertOptions(474496, 286, "carefly", 2, 2)
 	end
-	self:EnableAlertOptions(1214081, 288, "carefly", 2)
+	self:EnableAlertOptions(1214081, 288, "carefly", 2, 3)
 
 	self:EnableTimelineOptions(474345, 281)
 	self:EnableTimelineOptions(474496, 286)
