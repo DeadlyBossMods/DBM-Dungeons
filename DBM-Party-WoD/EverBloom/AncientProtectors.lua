@@ -111,11 +111,6 @@ if (wowToc >= 100200) then
 		self:Schedule(1, scanBosses, self, delay)--1 second delay to give IEEU time to populate boss guids
 	end
 
-	--function mod:OnCombatEnd()
-	--	if self.Options.RangeFrame then
-	--		DBM.RangeCheck:Hide()
-	--	end
-	--end
 
 	function mod:SPELL_CAST_START(args)
 		local spellId = args.spellId

@@ -42,7 +42,6 @@ local timerEmpyrealOrdnanceCD		= mod:NewCDTimer(26.7, 321936, nil, nil, nil, 3)
 local timerPurifyingBlastCD			= mod:NewCDTimer(13.4, 334053, nil, nil, nil, 3)--Wild variations do to spell queuing problems
 local timerChargedStompCD			= mod:NewCDTimer(13.4, 324608, nil, nil, nil, 3, nil, DBM_COMMON_L.MAGIC_ICON)--Wild variations do to spell queuing problems
 
-mod:AddRangeFrameOption(8, 334053)
 mod:AddInfoFrameOption(327416, true)
 mod:AddNamePlateOption("NPAuraOnAnimaField", 324392)
 
@@ -61,9 +60,6 @@ function mod:OnCombatStart(delay)
 	timerPurifyingBlastCD:Start(8.4-delay)
 	timerChargedStompCD:Start(14.3-delay)--Wild pull variation depending on boss casts ordinance or stomp first
 	timerEmpyrealOrdnanceCD:Start(16.9-delay)--Wild pull variation depending on boss casts ordinance or stomp first
-	if self.Options.RangeFrame then
-		DBM.RangeCheck:Show(8)
-	end
 	if self.Options.InfoFrame then
 		DBM.InfoFrame:SetHeader(DBM_CORE_L.INFOFRAME_POWER)
 		DBM.InfoFrame:Show(3, "enemypower", 2)
@@ -74,9 +70,6 @@ function mod:OnCombatStart(delay)
 end
 
 function mod:OnCombatEnd()
-	if self.Options.RangeFrame then
-		DBM.RangeCheck:Hide()
-	end
 	if self.Options.InfoFrame then
 		DBM.InfoFrame:Hide()
 	end

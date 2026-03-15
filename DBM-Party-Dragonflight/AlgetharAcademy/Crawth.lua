@@ -42,7 +42,7 @@ if DBM:IsPostMidnight() then
 else
 	mod:RegisterEventsInCombat(
 		"SPELL_CAST_START 377034 377004 376997",
-		"SPELL_CAST_SUCCESS 377004 376781",
+		"SPELL_CAST_SUCCESS 376781",
 		"SPELL_AURA_APPLIED 376781 181089",
 		"SPELL_AURA_REMOVED 376781"
 	)
@@ -68,8 +68,6 @@ else
 	local timerDeafeningScreechCD					= mod:NewCDCountTimer(22.7, 377004, nil, nil, nil, 3)
 	local timerSavagePeckCD							= mod:NewCDTimer(13.6, 376997, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)--Spell queued intoo oblivion often
 
-	mod:AddRangeFrameOption(4, 377004)
-
 	mod.vb.ScreechCount = 0
 
 	function mod:GustTarget(targetname)
@@ -87,9 +85,6 @@ else
 	end
 
 	function mod:OnCombatEnd()
-		if self.Options.RangeFrame then
-			DBM.RangeCheck:Hide()
-		end
 	end
 
 	function mod:SPELL_CAST_START(args)
@@ -109,9 +104,6 @@ else
 				specWarnDeafeningScreech:Play("scatter")
 			end
 			timerDeafeningScreechCD:Start(nil, self.vb.ScreechCount+1)
-			if self.Options.RangeFrame then
-				DBM.RangeCheck:Show(4)
-			end
 		elseif spellId == 376997 then
 			timerSavagePeckCD:Start()
 			if self:IsTanking("player", "boss1", nil, true) then
@@ -123,11 +115,7 @@ else
 
 	function mod:SPELL_CAST_SUCCESS(args)
 		local spellId = args.spellId
-		if spellId == 377004 then
-			if self.Options.RangeFrame then
-				DBM.RangeCheck:Hide()
-			end
-		elseif spellId == 376781 then
+		if spellId == 376781 then
 			specWarnFirestorm:Show()
 			specWarnFirestorm:Play("watchstep")
 		end

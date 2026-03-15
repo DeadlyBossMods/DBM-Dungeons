@@ -64,11 +64,6 @@ if (wowToc >= 100200) then
 		timerEarthfuryCD:Start(20.3-delay)
 	end
 
-	--function mod:OnCombatEnd()
-	--	if self.Options.RangeFrame then
-	--		DBM.RangeCheck:Hide()
-	--	end
-	--end
 
 	function mod:SPELL_CAST_START(args)
 		local spellId = args.spellId

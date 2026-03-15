@@ -10,7 +10,7 @@ mod:SetEncounterID(2100)
 mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
-	"SPELL_CAST_START 270185 269266 269456 269366 270590",
+	"SPELL_CAST_START 270185 269266 269456 269366",
 	"SPELL_CAST_SUCCESS 274991 269984",
 	"SPELL_AURA_APPLIED 270624 275014",
 	"UNIT_DIED",
@@ -39,7 +39,6 @@ local timerPutridWatersCD			= mod:NewCDCountTimer(19.9, 275014, nil, nil, nil, 5
 local timerSlamCD					= mod:NewCDTimer(6, 269266, nil, nil, 2, 2)
 --local timerDemolisherTerrorCD		= mod:NewCDCountTimer(20, 270605, nil, nil, nil, 1, nil, DBM_COMMON_L.TANK_ICON..DBM_COMMON_L.DAMAGE_ICON)
 
-mod:AddRangeFrameOption(5, 275014)
 
 local seenAdds = {}
 mod.vb.watersCount = 0
@@ -51,16 +50,10 @@ function mod:OnCombatStart(delay)
 	timerPutridWatersCD:Start(3-delay, 1)
 	timerCalloftheDeepCD:Start(6.1-delay)
 	--timerDemolisherTerrorCD:Start(19.9-delay, 1)--Should be started by IEEU event
-	if self.Options.RangeFrame then
-		DBM.RangeCheck:Show(5)
-	end
 end
 
 function mod:OnCombatEnd()
 	table.wipe(seenAdds)
-	if self.Options.RangeFrame then
-		DBM.RangeCheck:Hide()
-	end
 end
 
 function mod:SPELL_CAST_START(args)

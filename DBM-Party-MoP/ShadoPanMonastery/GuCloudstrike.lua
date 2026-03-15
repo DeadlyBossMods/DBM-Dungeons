@@ -26,7 +26,6 @@ local warnLightningBreath		= mod:NewSpellAnnounce(102573, 3)
 local warnOverchargedSoul		= mod:NewSpellAnnounce(110852, 3)--Phase 3
 
 local specWarnStaticField		= mod:NewSpecialWarningMoveAway(106923, nil, nil, nil, 1, 2)
-local specWarnStaticFieldNear	= mod:NewSpecialWarningClose(106923, nil, nil, nil, 1, 2)
 local yellStaticField			= mod:NewYell(106923)
 local specWarnMagneticShroud	= mod:NewSpecialWarningSpell(107140, nil, nil, nil, 2, 2)
 
@@ -57,14 +56,6 @@ function mod:StaticFieldTarget(targetname, uId)
 			specWarnStaticField:Show()
 			specWarnStaticField:Play("runout")
 			yellStaticField:Yell()
-		else
-			if uId then
-				local inRange = DBM.RangeCheck:GetDistance("player", uId)
-				if inRange and inRange < 6 then
-					specWarnStaticFieldNear:Show(targetname)
-					specWarnStaticFieldNear:Play("runaway")
-				end
-			end
 		end
 	end
 end

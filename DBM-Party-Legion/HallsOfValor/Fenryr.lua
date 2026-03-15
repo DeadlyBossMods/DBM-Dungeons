@@ -14,7 +14,7 @@ mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 196838 196543 197558 196512",
 	"SPELL_CAST_SUCCESS 196567 196512 207707",
 	"SPELL_AURA_APPLIED 197556 196838",
-	"SPELL_AURA_REMOVED 197556 196838",
+	"SPELL_AURA_REMOVED 196838",
 	"UNIT_DIED"
 )
 
@@ -41,7 +41,6 @@ local timerHowlCD						= mod:NewCDTimer(31.5, 196543, nil, "SpellCaster", nil, 2
 local timerScentCD						= mod:NewCDTimer(37.6, 196838, nil, nil, nil, 3)--seems 37 now, up from old 34
 local timerWolvesCD						= mod:NewCDTimer(33.8, -12600, nil, nil, nil, 1, 199184)--33.8-56
 
-mod:AddRangeFrameOption(10, 197556)
 
 mod.vb.clawCount = 0
 
@@ -103,9 +102,6 @@ end
 
 function mod:OnCombatEnd()
 	self:UnregisterShortTermEvents()
-	if self.Options.RangeFrame then
-		DBM.RangeCheck:Hide()
-	end
 end
 
 function mod:SPELL_CAST_START(args)
@@ -163,9 +159,6 @@ function mod:SPELL_AURA_APPLIED(args)
 			specWarnLeap:Show()
 			specWarnLeap:Play("runout")
 			yellLeap:Yell()
-			if self.Options.RangeFrame then
-				DBM.RangeCheck:Show(10)
-			end
 		end
 	elseif spellId == 196838 then
 		--Backup if target scan failed
@@ -183,9 +176,7 @@ end
 
 function mod:SPELL_AURA_REMOVED(args)
 	local spellId = args.spellId
-	if spellId == 197556 and args:IsPlayer() and self.Options.RangeFrame then
-		DBM.RangeCheck:Hide()
-	elseif spellId == 196838 and args:IsPlayer() then
+	if spellId == 196838 and args:IsPlayer() then
 		warnFixateEnded:Show()
 	end
 end

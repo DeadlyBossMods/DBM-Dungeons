@@ -93,9 +93,7 @@ function mod:OnCombatEnd(wipe, secondRun)
 			BRHTrash:StartFirstRP()
 		end
 	end
---	if self.Options.RangeFrame then
---		DBM.RangeCheck:Hide()
---	end
+
 end
 
 function mod:SPELL_CAST_START(args)

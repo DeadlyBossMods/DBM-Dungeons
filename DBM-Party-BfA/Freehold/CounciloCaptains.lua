@@ -57,7 +57,6 @@ local timerWhirlpoolofBladesCD		= mod:NewCDTimer(22.7, 267533, nil, nil, nil, 3)
 local timerLuckySevensCD			= mod:NewNextTimer(29.1, 257117, nil, nil, nil, 5)
 local timerTradeWindsVigorCD		= mod:NewNextTimer(26.7, 281329, nil, nil, nil, 5)
 
-mod:AddRangeFrameOption(5, 267522)
 --Raoul
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(17023))
 local warnTappedKeg					= mod:NewSpellAnnounce(272884, 1)
@@ -99,9 +98,6 @@ local function scanCaptains(self, isPull, delay)
 					if cid == 126845 then--Jolly
 						timerCuttingSurgeCD:Start(4.1-delay, bossGUID)
 						timerWhirlpoolofBladesCD:Start(9.8-delay, bossGUID)
-						if self.Options.RangeFrame then
-							DBM.RangeCheck:Show(5)
-						end
 					elseif cid == 126847 then--Raoul
 						timerBarrelSmashCD:Start(5-delay, bossGUID)
 						timerBlackoutBarrelCD:Start(16.9-delay, bossGUID)
@@ -152,9 +148,6 @@ function mod:OnCombatStart(delay)
 end
 
 function mod:OnCombatEnd()
-	if self.Options.RangeFrame then
-		DBM.RangeCheck:Hide()
-	end
 end
 
 function mod:OnTimerRecovery()

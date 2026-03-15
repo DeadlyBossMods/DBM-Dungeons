@@ -13,9 +13,7 @@ mod:RegisterCombat("combat")
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 192018 192307 200901",
 	"SPELL_CAST_SUCCESS 192044",
-	"SPELL_AURA_APPLIED 192048 192133 192132",
-	"SPELL_AURA_REMOVED 192048"
---	"UNIT_SPELLCAST_SUCCEEDED boss1"
+	"SPELL_AURA_APPLIED 192048"
 )
 
 --Notes: expel light could be supported with AGGRESSIVE timer correction around spell queuing and ability turning on and off, it's just not worth effort
@@ -41,8 +39,6 @@ local yellExpelLight				= mod:NewYell(192048)
 local timerShieldOfLightCD			= mod:NewCDTimer(26.6, 192018, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON, nil, mod:IsTank() and 2 or nil, 4)--26.6-34
 local timerSpecialCD				= mod:NewCDSpecialTimer(30, nil, nil, nil, nil, 2, nil, DBM_COMMON_L.DEADLY_ICON, nil, 1, 4)--Shared timer by eye of storm and Sanctify
 local timerExpelLightCD				= mod:NewCDTimer(23, 192048, nil, nil, nil, 3)--May be lower but almost always delayed by spell queue ICDs
-
-mod:AddRangeFrameOption(8, 192048)
 
 local eyeShortName = DBM:GetSpellName(91320)--Inner Eye
 
@@ -77,9 +73,6 @@ function mod:OnCombatStart(delay)
 end
 
 function mod:OnCombatEnd()
-	if self.Options.RangeFrame then
-		DBM.RangeCheck:Hide()
-	end
 end
 
 function mod:SPELL_CAST_START(args)
@@ -119,19 +112,9 @@ function mod:SPELL_AURA_APPLIED(args)
 			specWarnExpelLight:Show()
 			specWarnExpelLight:Play("runout")
 			yellExpelLight:Yell()
-			if self.Options.RangeFrame then
-				DBM.RangeCheck:Hide()
-			end
 		else
 			warnExpelLight:Show(args.destName)
 		end
-	end
-end
-
-function mod:SPELL_AURA_REMOVED(args)
-	local spellId = args.spellId
-	if spellId == 192048 and args:IsPlayer() and self.Options.RangeFrame then
-		DBM.RangeCheck:Hide()
 	end
 end
 

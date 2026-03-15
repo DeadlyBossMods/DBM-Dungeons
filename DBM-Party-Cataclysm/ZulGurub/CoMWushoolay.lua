@@ -18,7 +18,6 @@ local warnRush			= mod:NewTargetNoFilterAnnounce(96697, 3)
 local warnRod			= mod:NewCastAnnounce(96698, 4)
 
 local specWarnRush		= mod:NewSpecialWarningYou(96697, nil, nil, nil, 1, 2)--Assumed target scanning even works here, if it doesn't mod will be broken.
-local specWarnRushNear	= mod:NewSpecialWarningClose(96697, nil, nil, nil, 1, 2)--Assumed target scanning even works here, if it doesn't mod will be broken.
 local specWarnCloud		= mod:NewSpecialWarningMove(96710, nil, nil, nil, 1, 8)
 
 local timerRushCD		= mod:NewNextTimer(25, 96697, nil, nil, nil, 3)
@@ -34,16 +33,7 @@ function mod:LightingRushTarget()
 		specWarnRush:Show()
 		specWarnRush:Play("targetyou")
 	else
-		local uId = DBM:GetRaidUnitId(targetname)
-		if uId then
-			local inRange = DBM.RangeCheck:GetDistance("player", uId)
-			if inRange and inRange < 14 then
-				specWarnRushNear:Show(targetname)
-				specWarnRushNear:Play("runaway")
-			else
-				warnRush:Show(targetname)
-			end
-		end
+		warnRush:Show(targetname)
 	end
 end
 

@@ -39,7 +39,6 @@ local timerRotburstTotemCD						= mod:NewCDTimer(17, 373944, nil, nil, nil, 1, n
 local timerChokingRotcloutCD					= mod:NewCDTimer(42.5, 376170, nil, nil, nil, 3, nil, DBM_COMMON_L.MYTHIC_ICON)
 local timerDecayStrikeCD						= mod:NewCDCountTimer(19.4, 373917, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 
-mod:AddRangeFrameOption(5, 373941)
 mod:AddInfoFrameOption(373896, true)
 mod:AddSetIconOption("SetIconOnRotburstTotem", 373944, true, 5, {8})
 
@@ -59,16 +58,10 @@ function mod:OnCombatStart(delay)
 		DBM.InfoFrame:SetHeader(DBM:GetSpellName(373896))
 		DBM.InfoFrame:Show(5, "table", WitheringRotStacks, 1)
 	end
-	if self.Options.RangeFrame then
-		DBM.RangeCheck:Show(5)
-	end
 end
 
 function mod:OnCombatEnd()
 	table.wipe(WitheringRotStacks)
-	if self.Options.RangeFrame then
-		DBM.RangeCheck:Hide()
-	end
 	if self.Options.InfoFrame then
 		DBM.InfoFrame:Hide()
 	end

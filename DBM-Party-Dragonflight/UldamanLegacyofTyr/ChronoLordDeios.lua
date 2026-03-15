@@ -14,7 +14,6 @@ mod:RegisterCombat("combat")
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 376292 376208 376049 375727",
 	"SPELL_AURA_APPLIED 376325 377405",
-	"SPELL_AURA_REMOVED 377405",
 	"SPELL_PERIODIC_DAMAGE 376325",
 	"SPELL_PERIODIC_MISSED 376325"
 )
@@ -44,8 +43,6 @@ local timerWingBuffetCD							= mod:NewCDCountTimer(23, 376049, nil, nil, nil, 2
 local timerTimeSinkCD							= mod:NewCDTimer(15.7, 377405, nil, nil, nil, 3, nil, DBM_COMMON_L.HEROIC_ICON..DBM_COMMON_L.MAGIC_ICON)
 local timerSandBreathCD							= mod:NewCDCountTimer(18.1, 375727, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 
-mod:AddRangeFrameOption(5, 377405)
-
 mod.vb.orbSet = 0
 mod.vb.rewindCount = 0
 mod.vb.breathCount = 0
@@ -68,9 +65,6 @@ function mod:OnCombatStart(delay)
 end
 
 function mod:OnCombatEnd()
-	if self.Options.RangeFrame then
-		DBM.RangeCheck:Hide()
-	end
 end
 
 function mod:SPELL_CAST_START(args)
@@ -131,17 +125,7 @@ function mod:SPELL_AURA_APPLIED(args)
 			specWarnTimeSink:Show()
 			specWarnTimeSink:Play("range5")
 			yellTimeSink:Yell()
-			if self.Options.RangeFrame then
-				DBM.RangeCheck:Show(5)
-			end
 		end
-	end
-end
-
-function mod:SPELL_AURA_REMOVED(args)
-	local spellId = args.spellId
-	if spellId == 377405 and args:IsPlayer() and self.Options.RangeFrame then
-		DBM.RangeCheck:Hide()
 	end
 end
 

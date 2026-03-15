@@ -26,7 +26,6 @@ mod:RegisterEventsInCombat(
 --General
 local warnLightningShield			= mod:NewTargetNoFilterAnnounce(263246, 3)
 
-mod:AddRangeFrameOption("8")
 mod:AddInfoFrameOption(263246, true)
 mod:AddSetIconOption("SetIconOnNoLit", 263246, true, 5, {8})
 --Aspix
@@ -91,9 +90,6 @@ function mod:OnCombatStart(delay)
 end
 
 function mod:OnCombatEnd()
-	if self.Options.RangeFrame then
-		DBM.RangeCheck:Hide()
-	end
 	if self.Options.InfoFrame then
 		DBM.InfoFrame:Hide()
 	end
@@ -110,9 +106,6 @@ function mod:SPELL_AURA_APPLIED(args)
 			timerArcingBladeCD:Stop()
 			timerCycloneStrikeCD:Stop()
 			--timerArcDashCD:Start(11.2)
-			if self.Options.RangeFrame then
-				DBM.RangeCheck:Show(8)
-			end
 		elseif cid == 133944 then--Aspix
 			timerConductionCD:Start(11.6)
 			timerStaticShockCD:Start(20)
@@ -128,9 +121,6 @@ function mod:SPELL_AURA_APPLIED(args)
 			specWarnConduction:Play("runout")
 			yellConduction:Yell()
 			yellConductionFades:Countdown(5)
-			if self.Options.RangeFrame then
-				DBM.RangeCheck:Show(8)
-			end
 		else
 			warnConduction:Show(args.destName)
 		end
@@ -149,9 +139,6 @@ function mod:SPELL_AURA_REMOVED(args)
 			if not self:IsNormal() then
 				--timerArcingBladeCD:Start(2)
 			end
-			if self.Options.RangeFrame then
-				DBM.RangeCheck:Hide()
-			end
 		elseif cid == 133944 then--Aspix
 			timerConductionCD:Stop()
 			timerStaticShockCD:Stop()
@@ -159,9 +146,6 @@ function mod:SPELL_AURA_REMOVED(args)
 	elseif spellId == 263371 then
 		if args:IsPlayer() then
 			yellConductionFades:Cancel()
-			if self.Options.RangeFrame then
-				DBM.RangeCheck:Hide()
-			end
 		end
 	end
 end

@@ -11,7 +11,7 @@ mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 320008 320787 320141 320168 321061 320132 320823",
-	"SPELL_CAST_SUCCESS 324047 320132",
+	"SPELL_CAST_SUCCESS 324047",
 	"SPELL_AURA_APPLIED 320786 320147 323877 342905",
 	"SPELL_AURA_APPLIED_DOSE 320786 320147",
 	"SPELL_AURA_REMOVED 320786 342905",
@@ -64,7 +64,6 @@ local timerExperimentalSquirrelBombCD	= mod:NewCDTimer(7.9, 320823, nil, nil, ni
 local timerAerialRocketChickenCD		= mod:NewNextTimer(13, 321061, 45255, nil, nil, 3)--Shortname Rocket Chicken
 local timerShadowfuryCD					= mod:NewNextCountTimer(13, 320132, nil, nil, nil, 3)
 
-mod:AddRangeFrameOption(8, 320132)
 
 local millHouse, millificent = DBM:EJ_GetSectionInfo(22027), DBM:EJ_GetSectionInfo(22031)
 local VulnerabilityStacks = {}
@@ -86,9 +85,6 @@ end
 function mod:OnCombatEnd()
 	if self.Options.InfoFrame then
 		DBM.InfoFrame:Hide()
-	end
-	if self.Options.RangeFrame then
-		DBM.RangeCheck:Hide()
 	end
 end
 
@@ -135,9 +131,6 @@ function mod:SPELL_CAST_START(args)
 		specWarnShadowfury:Play("behindboss")
 		local timer = self.vb.furyCount == 1 and 15 or self.vb.furyCount == 2 and 11 or 8--8 is guessed, since these timers were nerfed to match milhouse
 		timerShadowfuryCD:Start(timer, self.vb.furyCount+1)
-		if self.Options.RangeFrame then
-			DBM.RangeCheck:Show(8)
-		end
 	elseif spellId == 320823 then
 		timerExperimentalSquirrelBombCD:Start()
 	end
@@ -149,10 +142,6 @@ function mod:SPELL_CAST_SUCCESS(args)
 		self.vb.laserCount = self.vb.laserCount
 		local timer = self.vb.laserCount == 1 and 15 or self.vb.laserCount == 2 and 12 or 8--8 is guessed based on pattern of other boss
 		timerLaserCD:Start(timer, self.vb.laserCount+1)
-	elseif spellId == 320132 then
-		if self.Options.RangeFrame then
-			DBM.RangeCheck:Hide()
-		end
 	end
 end
 

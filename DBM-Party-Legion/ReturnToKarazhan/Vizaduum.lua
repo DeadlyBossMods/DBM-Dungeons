@@ -49,7 +49,6 @@ local timerBombardmentCD			= mod:NewCDTimer(25, 229284, 229287, nil, nil, 3)
 --local berserkTimer					= mod:NewBerserkTimer(300)
 
 mod:AddSetIconOption("SetIconOnShadows", 229159, true, 0, {1, 2, 3})
-mod:AddRangeFrameOption(6, 230066)
 --mod:AddInfoFrameOption(198108, false)
 
 mod.vb.kickCount = 0
@@ -74,9 +73,6 @@ function mod:OnCombatStart(delay)
 end
 
 function mod:OnCombatEnd()
-	if self.Options.RangeFrame then
-		DBM.RangeCheck:Hide()
-	end
 end
 
 function mod:SPELL_CAST_START(args)
@@ -117,9 +113,6 @@ function mod:SPELL_CAST_SUCCESS(args)
 			warnPhase3:Show()
 			--Variable based on how long it takesto engage boss
 			timerChaoticShadowsCD:Start(41)
-			if self.Options.RangeFrame then
-				DBM.RangeCheck:Show(6)
-			end
 		end
 	elseif spellId == 230084 then--Stabilize Rift
 		DBM:Debug("THE RIFT")--Why is this here?

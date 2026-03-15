@@ -88,9 +88,7 @@ end
 
 function mod:OnCombatEnd()
 	table.wipe(seenMobs)
---	if self.Options.RangeFrame then
---		DBM.RangeCheck:Hide()
---	end
+
 end
 
 function mod:SPELL_CAST_START(args)

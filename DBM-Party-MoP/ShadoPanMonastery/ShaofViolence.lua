@@ -23,7 +23,6 @@ local warnShaSpike				= mod:NewTargetAnnounce(106877, 3)
 local warnEnrage				= mod:NewSpellAnnounce(38166, 4)
 
 local specWarnShaSpike			= mod:NewSpecialWarningMoveAway(106877, nil, nil, nil, 1, 2)
-local specWarnShaSpikeNear		= mod:NewSpecialWarningClose(106877, nil, nil, nil, 1, 2)
 
 local timerDisorientingSmashCD	= mod:NewCDTimer(13, 106872, nil, nil, nil, 5, nil, DBM_COMMON_L.MAGIC_ICON..DBM_COMMON_L.HEALER_ICON)
 local timerShaSpikeCD			= mod:NewNextTimer(8.5, 106877, nil, nil, nil, 3)
@@ -34,15 +33,7 @@ function mod:ShaSpikeTarget(targetname, uId)
 		specWarnShaSpike:Show()
 		specWarnShaSpike:Play("runout")
 	else
-		if uId then
-			local inRange = DBM.RangeCheck:GetDistance("player", uId)
-			if inRange and inRange < 6 then
-				specWarnShaSpikeNear:Show(targetname)
-				specWarnShaSpikeNear:Play("runaway")
-			else
-				warnShaSpike:Show(targetname)
-			end
-		end
+		warnShaSpike:Show(targetname)
 	end
 end
 

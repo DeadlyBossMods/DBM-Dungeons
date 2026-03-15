@@ -27,18 +27,10 @@ local yellScentBlood	= mod:NewYell(81690)
 local timerScentBlood	= mod:NewTargetTimer(30, 81690, nil, nil, nil, 3)
 local timerDustFlail	= mod:NewBuffActiveTimer(5, 81642, nil, nil, nil, 3)
 
-mod:AddBoolOption("RangeFrame")
-
 function mod:OnCombatStart(delay)
-	if self.Options.RangeFrame then
-		DBM.RangeCheck:Show(5)
-	end
 end
 
 function mod:OnCombatEnd()
-	if self.Options.RangeFrame then
-		DBM.RangeCheck:Hide()
-	end
 end
 
 function mod:SPELL_AURA_APPLIED(args)

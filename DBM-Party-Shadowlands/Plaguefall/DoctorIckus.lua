@@ -50,7 +50,6 @@ local timerSlimeInjectionCD			= mod:NewCDTimer(17, 329110, nil, nil, nil, 5, nil
 --local timerPestilenceSurgeCD		= mod:NewCDTimer(38.1, 332617, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)--Too unreliable, 30-80, sometimes not even cast at all
 --local timerVirulentExplosion		= mod:NewCastTimer(30, 321406, nil, nil, nil, 2, nil, DBM_COMMON_L.DEADLY_ICON)--no CD, health based trigger
 
-mod:AddRangeFrameOption(5, 322410)
 
 mod.vb.lungeCount = 0
 
@@ -60,18 +59,12 @@ function mod:OnCombatStart(delay)
 	timerSlimeInjectionCD:Start(9.7-delay)--Too much variation on initial timer, if it acts up again it's being deleted
 	timerSlimeLungeCD:Start(33.2-delay)
 --	timerPestilenceSurgeCD:Start(40-delay)
-	if self.Options.RangeFrame then
-		DBM.RangeCheck:Show(5)
-	end
 --	if self.Options.NPAuraOnRapidInfection or self.Options.NPAuraOnCongealing then
 --		DBM:FireEvent("BossMod_EnableHostileNameplates")
 --	end
 end
 
 function mod:OnCombatEnd()
-	if self.Options.RangeFrame then
-		DBM.RangeCheck:Hide()
-	end
 --	if self.Options.NPAuraOnRapidInfection or self.Options.NPAuraOnCongealing then
 --		DBM.Nameplate:Hide(true, nil, nil, nil, true, true)
 --	end

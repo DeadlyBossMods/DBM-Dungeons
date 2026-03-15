@@ -39,16 +39,11 @@ local timerCarbonationCD	= mod:NewNextTimer(64, 115003, nil, nil, nil, 6)
 local timerCarbonation		= mod:NewBuffActiveTimer(23, 115003, nil, nil, nil, 6)
 local timerFizzyBubbles		= mod:NewBuffFadesTimer(20, 114459, nil, nil, nil, 5)
 
-mod:AddBoolOption("RangeFrame")
-
 function mod:OnCombatStart(delay)
 --	timerBlackoutBrewCD:Start(7-delay)-- cannot determine what spells will be used.
 end
 
 function mod:OnCombatEnd()
-	if self.Options.RangeFrame then
-		DBM.RangeCheck:Hide()
-	end
 end
 
 function mod:SPELL_AURA_APPLIED(args)
@@ -57,9 +52,6 @@ function mod:SPELL_AURA_APPLIED(args)
 			specWarnBloat:Show()
 			specWarnBloat:Play("targetyou")
 			timerBloat:Start()
-			if self.Options.RangeFrame then
-				DBM.RangeCheck:Show(10)
-			end
 		else
 			warnBloat:Show(args.destName)
 		end
@@ -73,9 +65,6 @@ mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED
 function mod:SPELL_AURA_REMOVED(args)
 	if args.spellId == 106546 and args:IsPlayer() then
 		timerBloat:Cancel()
-		if self.Options.RangeFrame then
-			DBM.RangeCheck:Hide()
-		end
 	end
 end
 

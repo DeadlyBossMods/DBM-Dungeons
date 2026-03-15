@@ -25,7 +25,6 @@ local timerCallSeasCD				= mod:NewNextTimer(30, 193051, nil, nil, nil, 2)
 local timerGroundSlamCD				= mod:NewCDTimer(18.2, 193093, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON)--18.2-30
 local timerBubblesCD				= mod:NewNextTimer(32, 193018, nil, "-Tank", nil, 3, nil, DBM_COMMON_L.DEADLY_ICON)
 
-mod:AddRangeFrameOption(5, 193152)
 
 function mod:OnCombatStart(delay)
 --	timerGroundSlamCD:Start(6-delay)--More data, 6-32? pssht
@@ -35,9 +34,6 @@ function mod:OnCombatStart(delay)
 end
 
 function mod:OnCombatEnd()
-	if self.Options.RangeFrame then
-		DBM.RangeCheck:Hide()
-	end
 end
 
 function mod:SPELL_CAST_START(args)
@@ -46,9 +42,6 @@ function mod:SPELL_CAST_START(args)
 		specWarnQuake:Show()
 		specWarnQuake:Play("range5")
 		timerQuakeCD:Start()
-		if self.Options.RangeFrame then
-			DBM.RangeCheck:Show(5, nil, nil, nil, nil, 5.5)
-		end
 	elseif spellId == 193093 then
 		specWarnGroundSlam:Show()
 		specWarnGroundSlam:Play("shockwave")

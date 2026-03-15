@@ -33,7 +33,6 @@ local specWarnSintouchedAnima		= mod:NewSpecialWarningDispel(328494, "RemoveCurs
 local timerCastigateCD				= mod:NewNextTimer(20.5, 322554, nil, nil, nil, 3)
 local timerCoalesceManifestationCD	= mod:NewCDTimer(29.5, 322574, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)--30 with a standard variationn of 1
 
-mod:AddRangeFrameOption(8, 322554)
 mod:AddNamePlateOption("NPAuraOnEnergy", 323548)
 
 mod.vb.AddsActive = 0
@@ -55,18 +54,12 @@ function mod:OnCombatStart(delay)
 	table.wipe(unitTracked)
 	timerCastigateCD:Start(3.7-delay)
 	timerCoalesceManifestationCD:Start(14.6-delay)
-	if self.Options.RangeFrame then
-		DBM.RangeCheck:Show(8)
-	end
 	if self.Options.NPAuraOnEnergy then
 		DBM:FireEvent("BossMod_EnableHostileNameplates")
 	end
 end
 
 function mod:OnCombatEnd()
-	if self.Options.RangeFrame then
-		DBM.RangeCheck:Hide()
-	end
 	if self.Options.NPAuraOnEnergy then
 		DBM.Nameplate:Hide(true, nil, nil, nil, true, true)
 	end

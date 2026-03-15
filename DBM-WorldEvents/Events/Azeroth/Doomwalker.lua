@@ -19,18 +19,11 @@ local timerChargeCD			= mod:NewCDTimer(42, 32637, nil, nil, nil, 3)
 local timerQuakeCD			= mod:NewCDTimer(52, 32686, nil, nil, nil, 2)
 local timerQuake			= mod:NewBuffActiveTimer(8, 32686, nil, nil, nil, 2)
 
-mod:AddRangeFrameOption("10")
 
 function mod:OnCombatStart(delay)
-	if self.Options.RangeFrame then
-		DBM.RangeCheck:Show(10)
-	end
 end
 
 function mod:OnCombatEnd()
-	if self.Options.RangeFrame then
-		DBM.RangeCheck:Hide()
-	end
 end
 
 function mod:SPELL_CAST_START(args)

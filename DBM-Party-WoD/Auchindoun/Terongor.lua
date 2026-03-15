@@ -64,7 +64,6 @@ local timerSeedOfMelevolenceCD	= mod:NewCDTimer(22, 156921, nil, nil, nil, 3)--2
 local timerChaosWaveCD			= mod:NewCDTimer(13, 157001, nil, nil, nil, 3)--13-17 variation
 local timerDemonicLeapCD		= mod:NewCDTimer(20, 157039, nil, nil, nil, 3)
 
-mod:AddRangeFrameOption(10, 156921)
 
 local seedDebuff = DBM:GetSpellName(156921)
 local DebuffFilter
@@ -105,9 +104,6 @@ function mod:OnCombatStart(delay)
 end
 
 function mod:OnCombatEnd()
-	if self.Options.RangeFrame then
-		DBM.RangeCheck:Hide()
-	end
 end
 
 function mod:SPELL_AURA_APPLIED(args)
@@ -125,13 +121,6 @@ function mod:SPELL_AURA_APPLIED(args)
 		if args:IsPlayer() then
 			specWarnSeedOfMelevolence:Show()
 			specWarnSeedOfMelevolence:Play("runout")
-		end
-		if self.Options.RangeFrame then
-			if DBM:UnitDebuff("player", seedDebuff) then--You have debuff, show everyone
-				DBM.RangeCheck:Show(10, nil)
-			else--You do not have debuff, only show players who do
-				DBM.RangeCheck:Show(10, DebuffFilter)
-			end
 		end
 	elseif spellId == 157168 then
 		timerFixate:Start(args.destName)
@@ -160,9 +149,6 @@ function mod:SPELL_AURA_REMOVED(args)
 	if spellId == 156921 and args:IsDestTypePlayer() then
 		self.vb.seedCount = self.vb.seedCount - 1
 		timerSeedOfMelevolence:Cancel(args.destName)
-		if self.Options.RangeFrame and self.vb.seedCount == 0 then
-			DBM.RangeCheck:Hide()
-		end
 	elseif spellId == 157168 then
 		timerFixate:Cancel(args.destName)
 	end

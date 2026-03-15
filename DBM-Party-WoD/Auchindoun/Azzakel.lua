@@ -40,17 +40,10 @@ local timerFelLash					= mod:NewTargetTimer(7.5, 153234, nil, "Tank|Healer", 2, 
 local timerClawsOfArgus				= mod:NewBuffActiveTimer(20, 153764, nil, nil, nil, 6)
 local timerClawsOfArgusCD			= mod:NewNextTimer(70, 153764, nil, nil, nil, 6, nil, nil, nil, 1, 4)
 
-mod:AddRangeFrameOption(5, 153396)
 
 mod.vb.debuffCount = 0
 mod.vb.flamesCast = 2
 local curtainDebuff = DBM:GetSpellName(153396)
-local debuffFilter
-do
-	debuffFilter = function(uId)
-		return DBM:UnitDebuff(uId, curtainDebuff)
-	end
-end
 
 function mod:OnCombatStart(delay)
 	self.vb.debuffCount = 0
@@ -61,9 +54,6 @@ function mod:OnCombatStart(delay)
 end
 
 function mod:OnCombatEnd()
-	if self.Options.RangeFrame then
-		DBM.RangeCheck:Hide()
-	end
 end
 
 function mod:SPELL_CAST_SUCCESS(args)
@@ -86,13 +76,6 @@ function mod:SPELL_AURA_APPLIED(args)
 			yellWarnCurtainOfFlame:Yell()
 			specWarnCurtainOfFlame:Play("runout")
 		end
-		if self.Options.RangeFrame then
-			if DBM:UnitDebuff("player", curtainDebuff) then--You have debuff, show everyone
-				DBM.RangeCheck:Show(5, nil)
-			else--You do not have debuff, only show players who do
-				DBM.RangeCheck:Show(5, debuffFilter)
-			end
-		end
 	elseif spellId == 153234 then
 		timerFelLash:Start(args.destName)
 		if args:IsPlayer() then
@@ -108,9 +91,6 @@ function mod:SPELL_AURA_REMOVED(args)
 	local spellId = args.spellId
 	if spellId == 153392 then
 		self.vb.debuffCount = self.vb.debuffCount - 1
-		if self.Options.RangeFrame and self.vb.debuffCount == 0 then
-			DBM.RangeCheck:Hide()
-		end
 	elseif spellId == 153764 then--Claws of Argus ending
 		self.vb.flamesCast = 0
 		specWarnClawsOfArgusEnd:Show()

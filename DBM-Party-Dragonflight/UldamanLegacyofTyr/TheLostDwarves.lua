@@ -58,7 +58,6 @@ local timerLongboatRaidCD						= mod:NewCDTimer(27.4, 375924, nil, nil, nil, 6)
 
 local specWarnGTFO								= mod:NewSpecialWarningGTFO(377825, nil, nil, nil, 1, 8)
 
-mod:AddRangeFrameOption(5, 369677)
 
 function mod:ShieldTarget(targetname)
 	if not targetname then return end
@@ -92,15 +91,9 @@ end
 
 function mod:OnCombatStart(delay)
 	self:Schedule(1, scanBosses, self, delay)--1 second delay to give IEEU time to populate boss guids
-	if self.Options.RangeFrame then
-		DBM.RangeCheck:Show(5)
-	end
 end
 
 function mod:OnCombatEnd()
-	if self.Options.RangeFrame then
-		DBM.RangeCheck:Hide()
-	end
 end
 
 function mod:SPELL_CAST_START(args)
