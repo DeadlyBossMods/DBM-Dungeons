@@ -67,8 +67,6 @@ local timerEyeBeamCD				= mod:NewCDCountTimer(13.5, 197696, nil, nil, nil, 3)
 local timerBonebreakingStrikeCD		= mod:NewCDNPTimer(21.8, 197974, nil, nil, nil, 3)
 local timerGroundedCD				= mod:NewStageContextTimer(44.8, -12277, nil, nil, nil, 6, 197394)
 
---mod:AddRangeFrameOption(5, 197546)--Range not given for Brutal Glaive
-
 mod.vb.glaiveCount = 0
 mod.vb.shearCount = 0
 mod.vb.rushCount = 0
