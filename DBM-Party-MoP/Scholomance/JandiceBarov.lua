@@ -6,6 +6,7 @@ if DBM:IsRetail() then
 end
 
 mod:SetRevision("@file-date-integer@")
+mod:DisableHardcodedOptions()
 mod:SetCreatureID(59184)--59220 seem to be her mirror images
 mod:SetEncounterID(1427)
 mod:SetZone(1007)

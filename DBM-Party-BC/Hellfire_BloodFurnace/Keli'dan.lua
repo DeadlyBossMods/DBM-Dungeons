@@ -6,6 +6,7 @@ if mod:IsRetail() then
 end
 
 mod:SetRevision("@file-date-integer@")
+mod:DisableHardcodedOptions()
 mod:SetCreatureID(17377)--17377 is boss, 17653 are channelers that just pull with him.
 mod:SetEncounterID(1923)
 mod:SetZone(542)

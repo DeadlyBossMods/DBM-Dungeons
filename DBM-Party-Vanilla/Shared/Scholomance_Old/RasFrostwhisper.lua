@@ -2,6 +2,7 @@ local mod	= DBM:NewMod("RasFrostwhisper", "DBM-Party-Vanilla", DBM:IsPostCata() 
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
+mod:DisableHardcodedOptions()
 mod:SetCreatureID(10508)
 mod:SetEncounterID(mod:IsClassic() and 2810 or 456)
 mod:SetZone(289)

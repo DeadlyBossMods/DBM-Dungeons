@@ -6,6 +6,7 @@ if mod:IsRetail() then
 end
 
 mod:SetRevision("@file-date-integer@")
+mod:DisableHardcodedOptions()
 mod:SetCreatureID(24560)--24560 is main boss.
 mod:SetEncounterID(1895)
 mod:SetZone(585)

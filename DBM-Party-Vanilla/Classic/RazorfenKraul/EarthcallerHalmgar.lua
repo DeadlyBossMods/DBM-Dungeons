@@ -2,6 +2,7 @@ local mod	= DBM:NewMod("EarthcallerHalmgar", "DBM-Party-Vanilla", 11)
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
+mod:DisableHardcodedOptions()
 mod:SetCreatureID(4842)
 --mod:SetEncounterID(438)
 mod:SetZone(47)

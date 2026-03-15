@@ -4,6 +4,7 @@ local mod	= DBM:NewMod("AlderynandMynir", "DBM-Challenges", 1)
 mod.statTypes = "normal,heroic,mythic,challenge"
 
 mod:SetRevision("@file-date-integer@")
+mod:DisableHardcodedOptions()
 mod:SetCreatureID(172408, 172409)
 mod.soloChallenge = true
 

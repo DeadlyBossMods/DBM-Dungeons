@@ -5,6 +5,7 @@ local Ohgan	= DBM:EJ_GetSectionInfo(2615)
 mod.statTypes = "heroic,timewalker"
 
 mod:SetRevision("@file-date-integer@")
+mod:DisableHardcodedOptions()
 mod:SetCreatureID(52151)
 mod:SetEncounterID(1179)
 mod:SetUsedIcons(8)

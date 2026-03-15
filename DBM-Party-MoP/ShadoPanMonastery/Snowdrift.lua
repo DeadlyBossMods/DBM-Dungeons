@@ -6,6 +6,7 @@ if DBM:IsRetail() then
 end
 
 mod:SetRevision("@file-date-integer@")
+mod:DisableHardcodedOptions()
 mod:SetCreatureID(56541)
 mod:SetEncounterID(1304)
 mod:SetHotfixNoticeRev(20240517000000)

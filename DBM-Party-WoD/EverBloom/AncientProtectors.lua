@@ -9,6 +9,7 @@ if (wowToc >= 100200) then
 end
 
 mod:SetRevision("@file-date-integer@")
+mod:DisableHardcodedOptions()
 mod:SetCreatureID(83894, 83892, 83893)--Dulhu 83894, Gola 83892, Telu 83893
 mod:SetEncounterID(1757)
 mod:SetHotfixNoticeRev(20231021000000)

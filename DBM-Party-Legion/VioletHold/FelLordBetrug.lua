@@ -4,6 +4,7 @@ local L		= mod:GetLocalizedStrings()
 mod.statTypes = "normal,heroic,mythic"
 
 mod:SetRevision("@file-date-integer@")
+mod:DisableHardcodedOptions()
 mod:SetCreatureID(102446)
 mod:SetEncounterID(1856)
 mod:SetUsedIcons(1, 2, 3)--3 icons?

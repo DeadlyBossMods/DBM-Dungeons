@@ -2,6 +2,7 @@ local mod	= DBM:NewMod(2503, "DBM-Party-Dragonflight", 7, 1202)
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
+mod:DisableHardcodedOptions()
 mod:SetCreatureID(190484, 190485)
 mod:SetEncounterID(2623)
 mod:SetBossHPInfoToHighest()

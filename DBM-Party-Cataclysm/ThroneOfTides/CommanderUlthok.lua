@@ -11,6 +11,7 @@ else
 end
 
 mod:SetRevision("@file-date-integer@")
+mod:DisableHardcodedOptions()
 mod:SetCreatureID(40765)
 mod:SetEncounterID(1044)
 mod:SetZone(643)

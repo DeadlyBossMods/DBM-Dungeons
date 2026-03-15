@@ -4,6 +4,7 @@ end)
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
+mod:DisableHardcodedOptions()
 mod.noStatistics = true
 
 --mod:RegisterCombat("scenario", 1148)

@@ -3,6 +3,7 @@ local mod	= DBM:NewMod("Kharon", "DBM-Party-Vanilla", 22)
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
+mod:DisableHardcodedOptions()
 mod:SetEncounterID(3143)
 --mod:SetCreatureID()
 mod:SetZone(2875)
