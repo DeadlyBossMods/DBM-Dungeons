@@ -43,8 +43,6 @@ function mod:OnCombatStart(delay)
 --	timerBlackoutBrewCD:Start(7-delay)-- cannot determine what spells will be used.
 end
 
-function mod:OnCombatEnd()
-end
 
 function mod:SPELL_AURA_APPLIED(args)
 	if args.spellId == 106546 then

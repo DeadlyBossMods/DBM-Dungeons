@@ -20,8 +20,6 @@ function mod:OnCombatStart(delay)
 	timerChainedBoltCD:Start(1-delay)
 end
 
-function mod:OnCombatEnd()
-end
 
 function mod:SPELL_CAST_START(args)
 	if args:IsSpell(6254) and args:IsSrcTypeHostile() then

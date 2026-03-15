@@ -72,8 +72,6 @@ function mod:OnCombatStart(delay)
 	timerBombardmentCD:Start(25.5-delay)
 end
 
-function mod:OnCombatEnd()
-end
 
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId

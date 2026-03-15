@@ -72,8 +72,6 @@ function mod:OnCombatStart(delay)
 	timerExpelLightCD:Start(32.5)
 end
 
-function mod:OnCombatEnd()
-end
 
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId

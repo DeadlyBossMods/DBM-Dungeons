@@ -51,8 +51,6 @@ function mod:OnCombatStart(delay)
 	timerEndlessTormentCD:Start(24.2-delay)
 end
 
-function mod:OnCombatEnd()
-end
 
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId

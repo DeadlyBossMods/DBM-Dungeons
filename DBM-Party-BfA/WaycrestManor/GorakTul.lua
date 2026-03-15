@@ -53,8 +53,6 @@ function mod:OnCombatStart(delay)
 	timerDreadEssenceCD:Start(25-delay, 1)--25-27
 end
 
-function mod:OnCombatEnd()
-end
 
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId

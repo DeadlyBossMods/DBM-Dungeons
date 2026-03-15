@@ -30,8 +30,6 @@ local timerDustFlail	= mod:NewBuffActiveTimer(5, 81642, nil, nil, nil, 3)
 function mod:OnCombatStart(delay)
 end
 
-function mod:OnCombatEnd()
-end
 
 function mod:SPELL_AURA_APPLIED(args)
 	local spellId = args.spellId

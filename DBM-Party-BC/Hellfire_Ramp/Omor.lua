@@ -28,8 +28,6 @@ local timerBane     = mod:NewTargetTimer(15, 37566, nil, nil, nil, 3)
 
 mod:AddSetIconOption("SetIconOnBaneTarget", 37566, true, 0, {8})
 
-function mod:OnCombatEnd()
-end
 
 function mod:SPELL_AURA_APPLIED(args)
 	if args.spellId == 37566 then

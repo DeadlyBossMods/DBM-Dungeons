@@ -40,8 +40,6 @@ function mod:OnCombatStart(delay)
 	timerIceBombCD:Start(45-delay)
 end
 
-function mod:OnCombatEnd()
-end
 
 function mod:SPELL_CAST_SUCCESS(args)
 	local spellId = args.spellId

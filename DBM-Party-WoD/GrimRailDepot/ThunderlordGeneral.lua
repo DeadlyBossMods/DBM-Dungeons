@@ -60,8 +60,6 @@ function mod:OnCombatStart(delay)
 	timerSpinningSpearCD:Start(14.3)
 end
 
-function mod:OnCombatEnd()
-end
 
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId

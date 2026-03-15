@@ -103,8 +103,6 @@ function mod:OnCombatStart(delay)
 	timerRainOfFireCD:Start(15-delay)
 end
 
-function mod:OnCombatEnd()
-end
 
 function mod:SPELL_AURA_APPLIED(args)
 	local spellId = args.spellId

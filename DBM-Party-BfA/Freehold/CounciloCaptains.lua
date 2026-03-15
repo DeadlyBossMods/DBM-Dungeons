@@ -147,8 +147,6 @@ function mod:OnCombatStart(delay)
 	self:Schedule(1, scanCaptains, self, true, delay)--1 second delay to give IEEU time to populate boss unitIDs
 end
 
-function mod:OnCombatEnd()
-end
 
 function mod:OnTimerRecovery()
 	scanCaptains(self)

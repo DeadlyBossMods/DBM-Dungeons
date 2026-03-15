@@ -18,8 +18,6 @@ local warningBloodlust				= mod:NewTargetNoFilterAnnounce(6742, 2)
 function mod:OnCombatStart(delay)
 end
 
-function mod:OnCombatEnd()
-end
 
 function mod:SPELL_AURA_APPLIED(args)
 	if args:IsSpell(6742) and args:IsDestTypeHostile() then

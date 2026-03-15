@@ -33,8 +33,6 @@ function mod:OnCombatStart(delay)
 	timerCallSeasCD:Start(20-delay)
 end
 
-function mod:OnCombatEnd()
-end
 
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId

@@ -53,8 +53,6 @@ function mod:OnCombatStart(delay)
 	specWarnClawsOfArgus:ScheduleVoice(27.5-delay, "mobsoon")
 end
 
-function mod:OnCombatEnd()
-end
 
 function mod:SPELL_CAST_SUCCESS(args)
 	if args.spellId == 153396 then--if claws of argus is less than 20 seconds away, don't start CurtainOfFlame timer

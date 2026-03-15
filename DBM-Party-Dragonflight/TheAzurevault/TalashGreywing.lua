@@ -59,8 +59,6 @@ function mod:OnCombatStart(delay)
 	timerAbsoluteZeroCD:Start(21.8-delay)
 end
 
-function mod:OnCombatEnd()
-end
 
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId

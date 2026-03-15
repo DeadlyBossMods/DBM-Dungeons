@@ -34,8 +34,6 @@ function mod:OnCombatStart(delay)
 	table.wipe(crystalTargets)
 end
 
-function mod:OnCombatEnd()
-end
 
 function mod:SPELL_AURA_APPLIED(args)
 	if args.spellId == 86881 and not self:IsTrivial() then

@@ -93,8 +93,6 @@ function mod:OnCombatStart(delay)
 	self:Schedule(1, scanBosses, self, delay)--1 second delay to give IEEU time to populate boss guids
 end
 
-function mod:OnCombatEnd()
-end
 
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId

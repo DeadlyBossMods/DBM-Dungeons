@@ -49,8 +49,6 @@ function mod:OnCombatStart(delay)
 	timerBroodAssassinsCD:Start(15.2-delay)
 end
 
-function mod:OnCombatEnd()
-end
 
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId

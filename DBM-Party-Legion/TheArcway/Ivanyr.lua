@@ -38,8 +38,6 @@ function mod:OnCombatStart(delay)
 	timerOverchargeManaCD:Start(30-delay)
 end
 
-function mod:OnCombatEnd()
-end
 
 function mod:SPELL_CAST_SUCCESS(args)
 	local spellId = args.spellId

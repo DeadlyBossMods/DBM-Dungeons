@@ -23,8 +23,6 @@ local timerQuake			= mod:NewBuffActiveTimer(8, 32686, nil, nil, nil, 2)
 function mod:OnCombatStart(delay)
 end
 
-function mod:OnCombatEnd()
-end
 
 function mod:SPELL_CAST_START(args)
 	if args.spellId == 32637 and self:AntiSpam(10, 1) then
