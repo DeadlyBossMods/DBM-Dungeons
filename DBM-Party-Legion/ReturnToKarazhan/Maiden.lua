@@ -4,6 +4,7 @@ local L		= mod:GetLocalizedStrings()
 mod.statTypes = "heroic,mythic,challenge"
 
 mod:SetRevision("@file-date-integer@")
+mod:DisableHardcodedOptions()
 mod:SetCreatureID(113971)
 mod:SetEncounterID(1954)
 --mod:SetUsedIcons(1)
@@ -37,7 +38,6 @@ local timerHolyWrath				= mod:NewCastTimer(10, 227823, nil, nil, nil, 4, nil, DB
 
 --local berserkTimer				= mod:NewBerserkTimer(300)
 
-mod:AddRangeFrameOption(8, 227809)--TODO, keep looking for a VALID 6 yard item/spell
 mod:AddInfoFrameOption(227817, true)
 
 local sacredGround = DBM:GetSpellName(227789)
@@ -46,15 +46,9 @@ function mod:OnCombatStart(delay)
 	timerSacredGroundCD:Start(10.9)
 	timerHolyShockCD:Start(15.8-delay)
 	timerRepentanceCD:Start(48.5-delay)
-	if self.Options.RangeFrame then
-		DBM.RangeCheck:Show(6)--Will open to 6 when supported, else 8
-	end
 end
 
 function mod:OnCombatEnd()
-	if self.Options.RangeFrame then
-		DBM.RangeCheck:Hide()
-	end
 	if self.Options.InfoFrame then
 		DBM.InfoFrame:Hide()
 	end

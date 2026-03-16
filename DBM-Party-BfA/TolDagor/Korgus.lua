@@ -2,6 +2,7 @@ local mod	= DBM:NewMod(2096, "DBM-Party-BfA", 9, 1002)
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
+mod:DisableHardcodedOptions()
 mod:SetCreatureID(127503)
 mod:SetEncounterID(2104)
 mod:SetUsedIcons(1)
@@ -11,7 +12,7 @@ mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
 	"SPELL_AURA_APPLIED 256038 256105",
-	"SPELL_AURA_REMOVED 256038 256105",
+	"SPELL_AURA_REMOVED 256038",
 	"SPELL_CAST_START 256083 256198 256199 263345",
 	"SPELL_CAST_SUCCESS 256038 256101"
 )
@@ -37,7 +38,6 @@ local timerMassiveBlastCD			= mod:NewCDTimer(21.8, 263345, nil, nil, nil, 3)
 
 mod:AddSetIconOption("SetIconOnDeadeye", 256038, true, 0, {1})
 mod:AddInfoFrameOption(256038)
-mod:AddRangeFrameOption(5, 256105)
 
 mod.vb.crossCount = 0
 mod.vb.burstCount = 0
@@ -57,9 +57,6 @@ function mod:OnCombatStart(delay)
 end
 
 function mod:OnCombatEnd()
-	if self.Options.RangeFrame then
-		DBM.RangeCheck:Hide()
-	end
 	if self.Options.InfoFrame then
 		DBM.InfoFrame:Hide()
 	end
@@ -84,9 +81,6 @@ function mod:SPELL_AURA_APPLIED(args)
 			specWarnExplosiveBurst:Show()
 			specWarnExplosiveBurst:Play("runout")
 			yellExplosiveBurst:Yell()
-			if self.Options.RangeFrame then
-				DBM.RangeCheck:Show(5)
-			end
 		end
 	end
 end
@@ -95,8 +89,6 @@ function mod:SPELL_AURA_REMOVED(args)
 	local spellId = args.spellId
 	if spellId == 256038 and self.Options.SetIconOnDeadeye then
 		self:SetIcon(args.destName, 0)
-	elseif spellId == 256105 and args:IsPlayer() and self.Options.RangeFrame then
-		DBM.RangeCheck:Hide()
 	end
 end
 

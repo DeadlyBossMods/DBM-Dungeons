@@ -2,6 +2,7 @@ local mod	= DBM:NewMod(2408, "DBM-Party-Shadowlands", 7, 1188)
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
+mod:DisableHardcodedOptions()
 mod:SetCreatureID(166473)
 mod:SetEncounterID(2395)
 mod:SetHotfixNoticeRev(20220306000000)
@@ -52,21 +53,9 @@ local timerPiercingBarbCD			= mod:NewCDTimer(8.5, 322736, nil, "Tank|Healer", ni
 --Son of Hakkar:
 --local timerDevotedSacrificeCD		= mod:NewCDTimer(46, 332329, nil, nil, nil, 1)
 
-mod:AddRangeFrameOption(8, 322746)--Spell is 7, but can't do 7 in api
 mod:AddNamePlateOption("NPAuraOnFixate", 328987)
 
 mod.vb.barrierActive = false
---local debuffFilter
---[[
-do
-	debuffFilter = function(uId)
-		if not playerDebuff then return true end
-		if not DBM:UnitDebuff(uId, 322746) then
-			return true
-		end
-	end
-end
---]]
 
 function mod:OnCombatStart(delay)
 	self.vb.barrierActive = false
@@ -74,18 +63,12 @@ function mod:OnCombatStart(delay)
 	timerPiercingBarbCD:Start(10.1-delay)
 	timerBloodBarrierCD:Start(26.5-delay)--SUCCESS
 --	timerBloodBarrageCD:Start(22.5-delay)--It's cast instantly on barrier application, redundant timer
-	if self.Options.RangeFrame then
-		DBM.RangeCheck:Show(8)
-	end
 	if self.Options.NPAuraOnFixate then
 		DBM:FireEvent("BossMod_EnableHostileNameplates")
 	end
 end
 
 function mod:OnCombatEnd()
-	if self.Options.RangeFrame then
-		DBM.RangeCheck:Hide()
-	end
 	if self.Options.NPAuraOnFixate then
 		DBM.Nameplate:Hide(true, nil, nil, nil, true, true)
 	end
@@ -129,8 +112,6 @@ function mod:SPELL_AURA_APPLIED(args)
 			specWarnCorruptedBlood:Show()
 			specWarnCorruptedBlood:Play("scatter")
 			yellCorruptedBlood:Yell()
-			--if self.Options.RangeFrame then
-			--	DBM.RangeCheck:Show(8, debuffFilter)--Show everyone
 			--end
 		else
 			warnCorruptedBlood:CombinedShow(0.5, args.destName)
@@ -166,8 +147,6 @@ function mod:SPELL_AURA_REMOVED(args)
 		end
 	--elseif spellId == 322746 then
 	--	if args:IsPlayer() then
-			--if self.Options.RangeFrame then
-			--	DBM.RangeCheck:Show(8, debuffFilter)--Show only those with debuff
 			--end
 	--	end
 	end

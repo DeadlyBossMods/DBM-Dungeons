@@ -4,6 +4,7 @@ local L		= mod:GetLocalizedStrings()
 mod.statTypes = "normal,heroic,mythic,challenge"--No Follower dungeon
 
 mod:SetRevision("@file-date-integer@")
+mod:DisableHardcodedOptions()
 mod:SetCreatureID(198999)
 mod:SetEncounterID(2671)
 mod:SetUsedIcons(1, 2, 3, 4, 5, 6)

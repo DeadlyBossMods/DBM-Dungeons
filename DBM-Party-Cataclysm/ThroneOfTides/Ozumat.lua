@@ -3,6 +3,7 @@ local L		= mod:GetLocalizedStrings()
 local wowToc = DBM:GetTOC()
 
 mod:SetRevision("@file-date-integer@")
+mod:DisableHardcodedOptions()
 if (wowToc >= 100200) then
 	mod.statTypes = "normal,heroic,challenge,timewalker"
 	mod.upgradedMPlus = true

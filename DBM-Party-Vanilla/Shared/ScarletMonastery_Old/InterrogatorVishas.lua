@@ -2,6 +2,7 @@ local mod	= DBM:NewMod("InterrogatorVishas", "DBM-Party-Vanilla", DBM:IsPostCata
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
+mod:DisableHardcodedOptions()
 mod:SetCreatureID(3983)
 mod:SetEncounterID(444)
 mod:SetZone(189)

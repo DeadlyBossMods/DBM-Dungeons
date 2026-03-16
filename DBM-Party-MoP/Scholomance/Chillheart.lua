@@ -6,6 +6,7 @@ if DBM:IsRetail() then
 end
 
 mod:SetRevision("@file-date-integer@")
+mod:DisableHardcodedOptions()
 mod:SetCreatureID(58633, 58664)--58633 is boss, 58664 is Phylactery. We register BOTH to avoid pre mature combat ending cause boss dies twice.
 mod:SetZone(1007)
 --To re-emphesize again (although it was already spelled out in comments. THE BOSS DIES TWICE, if you only register 58633 then the boss will fire EndCombat at end of phase 1.

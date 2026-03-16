@@ -8,6 +8,7 @@ else
 end
 
 mod:SetRevision("@file-date-integer@")
+mod:DisableHardcodedOptions()
 mod:SetCreatureID(1763)
 mod:SetEncounterID(2969)--Retail Encounter ID
 mod:SetZone(36)

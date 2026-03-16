@@ -10,6 +10,7 @@ if (wowToc >= 100200) then
 end
 
 mod:SetRevision("@file-date-integer@")
+mod:DisableHardcodedOptions()
 mod:SetCreatureID(84550)
 mod:SetEncounterID(1752)
 mod:SetReCombatTime(120, 3)--this boss can quickly re-enter combat if boss reset occurs.

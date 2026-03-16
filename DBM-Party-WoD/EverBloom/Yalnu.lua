@@ -10,6 +10,7 @@ if (wowToc >= 100200) then
 end
 
 mod:SetRevision("@file-date-integer@")
+mod:DisableHardcodedOptions()
 mod:SetCreatureID(83846)
 mod:SetEncounterID(1756)
 mod:SetHotfixNoticeRev(20231021000000)

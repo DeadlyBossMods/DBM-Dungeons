@@ -4,6 +4,7 @@ local L		= mod:GetLocalizedStrings()
 mod.statTypes = "normal,heroic,mythic"
 
 mod:SetRevision("@file-date-integer@")
+mod:DisableHardcodedOptions()
 mod:SetCreatureID(101951)
 mod:SetEncounterID(1845)
 
@@ -11,7 +12,6 @@ mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
 	"SPELL_AURA_APPLIED 202062",
-	"SPELL_AURA_REMOVED 202062",
 	"SPELL_CAST_START 201672 201960",
 	"SPELL_CAST_SUCCESS 202062 201379"
 )
@@ -27,8 +27,6 @@ local timerFrigidWindsCD			= mod:NewNextTimer(61, 202062, nil, nil, nil, 3, nil,
 local timerIceBombCD				= mod:NewNextTimer(61, 201960, nil, nil, nil, 3, nil, DBM_COMMON_L.DEADLY_ICON)
 local timerFrostBreathCD			= mod:NewNextTimer(61, 201379, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 
-mod:AddRangeFrameOption(8, 202062)
-
 mod.vb.stormCount = 0
 mod.vb.breathCount = 0
 
@@ -43,11 +41,6 @@ function mod:OnCombatStart(delay)
 	timerIceBombCD:Start(45-delay)
 end
 
-function mod:OnCombatEnd()
-	if self.Options.RangeFrame then
-		DBM.RangeCheck:Hide()
-	end
-end
 
 function mod:SPELL_CAST_SUCCESS(args)
 	local spellId = args.spellId
@@ -69,16 +62,6 @@ function mod:SPELL_AURA_APPLIED(args)
 	if spellId == 202062 and args:IsPlayer() then
 		specWarnFrigidWinds:Show()
 		specWarnFrigidWinds:Play("scatter")
-		if self.Options.RangeFrame then
-			DBM.RangeCheck:Show(8)
-		end
-	end
-end
-
-function mod:SPELL_AURA_REMOVED(args)
-	local spellId = args.spellId
-	if spellId == 202062 and args:IsPlayer() and self.Options.RangeFrame then
-		DBM.RangeCheck:Hide()
 	end
 end
 

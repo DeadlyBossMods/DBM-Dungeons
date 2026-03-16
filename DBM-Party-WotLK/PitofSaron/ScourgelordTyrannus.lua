@@ -85,7 +85,6 @@ else
 	local timerForcefulSmash		= mod:NewCDTimer(40, 69155, nil, "Tank", 2, 5, nil, DBM_COMMON_L.TANK_ICON)--Highly Variable. 40-50
 
 	mod:AddSetIconOption("SetIconOnHoarfrostTarget", 69246, true, 0, {8})
-	mod:AddRangeFrameOption(8, 69246)
 
 	function mod:OnCombatStart(delay)
 		timerForcefulSmash:Start(9-delay)--Sems like a WTF
@@ -94,9 +93,6 @@ else
 	end
 
 	function mod:OnCombatEnd()
-		if self.Options.RangeFrame then
-			DBM.RangeCheck:Hide()
-		end
 	end
 
 	function mod:SPELL_CAST_START(args)
@@ -158,9 +154,6 @@ else
 				specWarnHoarfrost:Show()
 				specWarnHoarfrost:Play("targetyou")
 				yellHoarfrost:Yell()
-				if self.Options.RangeFrame then
-					DBM.RangeCheck:Show(8, nil, nil, nil, nil, 5)
-				end
 			else
 				warnHoarfrost:Show(target)
 			end

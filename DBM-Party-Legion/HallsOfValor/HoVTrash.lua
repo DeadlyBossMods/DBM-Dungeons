@@ -2,6 +2,7 @@ local mod	= DBM:NewMod("HoVTrash", "DBM-Party-Legion", 4)
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
+mod:DisableHardcodedOptions()
 --mod:SetModelID(47785)
 mod:SetZone(1477)
 
@@ -171,9 +172,6 @@ function mod:SPELL_AURA_APPLIED(args)
 			specWarnThunderstrike:Show()
 			specWarnThunderstrike:Play("scatter")
 			yellThunderstrike:Yell()
-			if self.Options.RangeFrame then
-				DBM.RangeCheck:Show(6)
-			end
 		end
 	end
 end
@@ -181,11 +179,6 @@ end
 
 function mod:SPELL_AURA_REMOVED(args)
 	if not self.Options.Enabled then return end
-	if args.spellId == 215430 and args:IsPlayer() then
-		if self.Options.RangeFrame then
-			DBM.RangeCheck:Hide()
-		end
-	end
 end
 
 function mod:UNIT_DIED(args)

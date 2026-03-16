@@ -2,6 +2,7 @@ local mod	= DBM:NewMod("DoomwalkerEvent", "DBM-WorldEvents", 4)
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
+mod:DisableHardcodedOptions()
 mod:SetCreatureID(167749)
 --mod:SetModelID(21435)
 
@@ -19,19 +20,10 @@ local timerChargeCD			= mod:NewCDTimer(42, 32637, nil, nil, nil, 3)
 local timerQuakeCD			= mod:NewCDTimer(52, 32686, nil, nil, nil, 2)
 local timerQuake			= mod:NewBuffActiveTimer(8, 32686, nil, nil, nil, 2)
 
-mod:AddRangeFrameOption("10")
 
 function mod:OnCombatStart(delay)
-	if self.Options.RangeFrame then
-		DBM.RangeCheck:Show(10)
-	end
 end
 
-function mod:OnCombatEnd()
-	if self.Options.RangeFrame then
-		DBM.RangeCheck:Hide()
-	end
-end
 
 function mod:SPELL_CAST_START(args)
 	if args.spellId == 32637 and self:AntiSpam(10, 1) then

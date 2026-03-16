@@ -3,6 +3,7 @@ local mod	= DBM:NewMod("UnderrotTrash", "DBM-Party-BfA", 8)
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
+mod:DisableHardcodedOptions()
 mod:SetZone(1841)
 --mod:SetModelID(47785)
 

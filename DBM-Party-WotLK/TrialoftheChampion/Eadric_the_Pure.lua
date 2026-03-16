@@ -2,6 +2,7 @@ local mod	= DBM:NewMod(635, "DBM-Party-WotLK", 13, 284)
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
+mod:DisableHardcodedOptions()
 mod:SetCreatureID(35119)
 --mod:SetEncounterID(2023)--DO NOT ENABLE. Confessor and Eadric are both flagged as same encounterid ("Argent Champion")
 --

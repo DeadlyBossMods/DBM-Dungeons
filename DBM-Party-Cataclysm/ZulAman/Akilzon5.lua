@@ -4,6 +4,7 @@ local L		= mod:GetLocalizedStrings()
 mod.statTypes = "heroic,timewalker"
 
 mod:SetRevision("@file-date-integer@")
+mod:DisableHardcodedOptions()
 mod:SetCreatureID(23574)
 mod:SetEncounterID(1189)
 mod:SetUsedIcons(1, 8)
@@ -34,16 +35,8 @@ function mod:OnCombatStart(delay)
 	warnStormSoon:Schedule(43)
 	timerStormCD:Start(48)
 	berserkTimer:Start(-delay)
-	if self.Options.RangeFrame then
-		DBM.RangeCheck:Show(6)
-	end
 end
 
-function mod:OnCombatEnd()
-	if self.Options.RangeFrame then
-		DBM.RangeCheck:Hide()
-	end
-end
 
 function mod:SPELL_AURA_APPLIED(args)
 	if args.spellId == 97318 then
@@ -62,12 +55,6 @@ function mod:SPELL_CAST_SUCCESS(args)
 		timerStorm:Start()
 		warnStormSoon:Schedule(50)
 		timerStormCD:Start()
-		if self.Options.RangeFrame then
-			DBM.RangeCheck:Hide()
-			self:Schedule(10, function()
-				DBM.RangeCheck:Show(6)
-			end)
-		end
 		if self.Options.StormIcon then
 			self:SetIcon(args.destName, 1, 8)
 		end

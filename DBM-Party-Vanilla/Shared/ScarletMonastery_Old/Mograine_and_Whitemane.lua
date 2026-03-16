@@ -2,6 +2,7 @@ local mod	= DBM:NewMod("Mograine_and_Whitemane", "DBM-Party-Vanilla", DBM:IsPost
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
+mod:DisableHardcodedOptions()
 mod:SetCreatureID(3977, 3976, 99999)--Whitemane, Mograine
 mod:SetEncounterID(450)
 mod:SetZone(189)

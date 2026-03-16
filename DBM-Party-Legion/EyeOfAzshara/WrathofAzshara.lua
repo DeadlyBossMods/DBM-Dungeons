@@ -4,6 +4,7 @@ local L		= mod:GetLocalizedStrings()
 mod.statTypes = "normal,heroic,mythic,challenge,timewalker"
 
 mod:SetRevision("@file-date-integer@")
+mod:DisableHardcodedOptions()
 mod:SetCreatureID(96028)
 mod:SetEncounterID(1814)
 
@@ -29,7 +30,6 @@ local timerMassiveDelugeCD			= mod:NewCDTimer(50, 192617, nil, "Tank", nil, 5, n
 local timerArcaneBomb				= mod:NewTargetTimer(15, 192706, nil, "Healer", nil, 5, nil, DBM_COMMON_L.HEALER_ICON)--Magic dispel for healer to dispel at correct time
 local timerArcaneBombCD				= mod:NewCDTimer(23, 192706, nil, nil, nil, 3)--23-37
 
-mod:AddRangeFrameOption(10, 192706)
 
 local serpMod = DBM:GetModByName(1479)
 
@@ -41,9 +41,6 @@ function mod:OnCombatStart(delay)
 end
 
 function mod:OnCombatEnd()
-	if self.Options.RangeFrame then
-		DBM.RangeCheck:Hide()
-	end
 	serpMod:UpdateWinds()--Defeating wrath should terminate all zonewide events
 end
 
@@ -51,9 +48,6 @@ function mod:SPELL_AURA_APPLIED(args)
 	local spellId = args.spellId
 	if spellId == 192706 then
 		timerArcaneBombCD:Start(args.destName)
-		if args:IsPlayer() and self.Options.RangeFrame then
-			DBM.RangeCheck:Show(10)
-		end
 	end
 end
 
@@ -61,9 +55,6 @@ function mod:SPELL_AURA_REMOVED(args)
 	local spellId = args.spellId
 	if spellId == 192706 then
 		timerArcaneBombCD:Cancel(args.destName)
-		if args:IsPlayer() and self.Options.RangeFrame then
-			DBM.RangeCheck:Hide()
-		end
 	end
 end
 

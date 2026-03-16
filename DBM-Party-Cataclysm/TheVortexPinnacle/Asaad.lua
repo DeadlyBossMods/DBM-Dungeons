@@ -10,6 +10,7 @@ else
 end
 
 mod:SetRevision("@file-date-integer@")
+mod:DisableHardcodedOptions()
 mod:SetCreatureID(43875)
 mod:SetEncounterID(1042)
 mod:SetHotfixNoticeRev(20230526000000)

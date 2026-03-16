@@ -2,6 +2,7 @@ local mod	= DBM:NewMod(2423, "DBM-Party-Shadowlands", 2, 1183)
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
+mod:DisableHardcodedOptions()
 mod:SetCreatureID(164266)
 mod:SetEncounterID(2385)
 mod:SetZone(2289)
@@ -42,22 +43,13 @@ local timerAmbushCD					= mod:NewCDTimer(19.4, 325245, nil, nil, nil, 3)--19.4-2
 local timerSolitaryPrey				= mod:NewBuffFadesTimer(6, 336258, nil, nil, nil, 5)
 local timerCytotoxicSlashCD			= mod:NewCDTimer(20.6, 325552, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)--20-23
 
-mod:AddRangeFrameOption(5, 325245)
 
 function mod:OnCombatStart(delay)
 	timerAmbushCD:Start(6.1-delay)--9.1?
 	timerCytotoxicSlashCD:Start(3.1-delay)--START
 	timerBroodAssassinsCD:Start(15.2-delay)
-	if self.Options.RangeFrame then
-		DBM.RangeCheck:Show(5)
-	end
 end
 
-function mod:OnCombatEnd()
-	if self.Options.RangeFrame then
-		DBM.RangeCheck:Hide()
-	end
-end
 
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId

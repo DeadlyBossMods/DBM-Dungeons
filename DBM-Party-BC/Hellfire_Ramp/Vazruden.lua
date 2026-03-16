@@ -2,6 +2,7 @@ local mod	= DBM:NewMod(529, "DBM-Party-BC", 1, 248)
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
+mod:DisableHardcodedOptions()
 mod:SetCreatureID(17537, 17307)
 mod:SetEncounterID(1892)
 mod:SetBossHPInfoToHighest()

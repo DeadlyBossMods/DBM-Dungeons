@@ -10,6 +10,7 @@ else
 end
 
 mod:SetRevision("@file-date-integer@")
+mod:DisableHardcodedOptions()
 mod:SetCreatureID(40825, 40788)
 mod:SetMainBossID(40788)-- 40788 = Mindbender Ghur'sha
 mod:SetEncounterID(1046)
@@ -64,11 +65,6 @@ if (wowToc >= 100200) then
 		timerEarthfuryCD:Start(20.3-delay)
 	end
 
-	--function mod:OnCombatEnd()
-	--	if self.Options.RangeFrame then
-	--		DBM.RangeCheck:Hide()
-	--	end
-	--end
 
 	function mod:SPELL_CAST_START(args)
 		local spellId = args.spellId

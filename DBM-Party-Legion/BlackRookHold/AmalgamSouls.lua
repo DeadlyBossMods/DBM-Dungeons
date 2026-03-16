@@ -4,6 +4,7 @@ local L		= mod:GetLocalizedStrings()
 mod.statTypes = "normal,heroic,mythic,challenge,timewalker"
 
 mod:SetRevision("@file-date-integer@")
+mod:DisableHardcodedOptions()
 mod:SetCreatureID(98542)
 mod:SetEncounterID(1832)
 mod:SetHotfixNoticeRev(20231027000000)
@@ -93,9 +94,7 @@ function mod:OnCombatEnd(wipe, secondRun)
 			BRHTrash:StartFirstRP()
 		end
 	end
---	if self.Options.RangeFrame then
---		DBM.RangeCheck:Hide()
---	end
+
 end
 
 function mod:SPELL_CAST_START(args)

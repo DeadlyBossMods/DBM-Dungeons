@@ -4,6 +4,7 @@ local L		= mod:GetLocalizedStrings()
 mod.statTypes = "normal,heroic,mythic,challenge,timewalker"
 
 mod:SetRevision("@file-date-integer@")
+mod:DisableHardcodedOptions()
 mod:SetCreatureID(126969)
 mod:SetEncounterID(2095)
 mod:SetHotfixNoticeRev(20230505000000)
@@ -48,21 +49,12 @@ local timerRP						= mod:NewRPTimer(68)
 local timerSharknadoCD				= mod:NewCDTimer(26.7, 256405, nil, nil, nil, 3)--Only timer that's really accurate
 local timerRearmCD					= mod:NewCDCountTimer("d19", 256489, nil, nil, nil, 3)--heavily affected by spell queues and may be disabled again if it leads to confusion/complaints
 
-mod:AddRangeFrameOption(8, 256358)
 
 function mod:OnCombatStart(delay)
 	timerSharknadoCD:Start(20.4-delay)
 	timerRearmCD:Start(31.3-delay, 1)
-	if self.Options.RangeFrame then
-		DBM.RangeCheck:Show(8)
-	end
 end
 
-function mod:OnCombatEnd()
-	if self.Options.RangeFrame then
-		DBM.RangeCheck:Hide()
-	end
-end
 
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId

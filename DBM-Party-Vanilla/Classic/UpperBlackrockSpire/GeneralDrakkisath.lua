@@ -2,6 +2,7 @@ local mod	= DBM:NewMod("GeneralDrakkisath", "DBM-Party-Vanilla", DBM:IsCata() an
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
+mod:DisableHardcodedOptions()
 mod:SetCreatureID(10363)
 mod:SetZone(229)
 

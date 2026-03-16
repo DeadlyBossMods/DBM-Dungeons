@@ -2,6 +2,7 @@ local mod	= DBM:NewMod(2472, "DBM-Party-Dragonflight", 1, 1196)
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
+mod:DisableHardcodedOptions()
 mod:SetCreatureID(186116)--194745 for Rotfang Hyena
 mod:SetEncounterID(2567)
 mod:SetHotfixNoticeRev(20230507000000)
@@ -46,7 +47,6 @@ local timerCallHyenasCD							= mod:NewCDTimer(31.6, 384827, nil, nil, nil, 1)
 --local timerMastersCallCD						= mod:NewCDTimer(35, 384638, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--Doesn't seem to have an actual CD?
 local timerGutShotCD							= mod:NewCDTimer(18.2, 384343, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 
-mod:AddRangeFrameOption(4, 384558)
 mod:AddNamePlateOption("NPAuraOnFixate", 384725)
 mod:AddNamePlateOption("NPAuraOnMastersCall", 384638)
 mod:AddNamePlateOption("NPAuraOnEnsnaringTrap", 384148)
@@ -63,15 +63,9 @@ function mod:OnCombatStart(delay)
 	if self.Options.NPAuraOnFixate or self.Options.NPAuraOnMastersCall or self.Options.NPAuraOnEnsnaringTrap or self.Options.NPAuraOnHunterleadersTactics then
 		DBM:FireEvent("BossMod_EnableHostileNameplates")
 	end
-	if self.Options.RangeFrame then
-		DBM.RangeCheck:Show(4)
-	end
 end
 
 function mod:OnCombatEnd()
-	if self.Options.RangeFrame then
-		DBM.RangeCheck:Hide()
-	end
 	if self.Options.NPAuraOnFixate or self.Options.NPAuraOnMastersCall or self.Options.NPAuraOnEnsnaringTrap or self.Options.NPAuraOnHunterleadersTactics then
 		DBM.Nameplate:Hide(true, nil, nil, nil, true, true)
 	end

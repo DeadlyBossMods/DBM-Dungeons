@@ -2,6 +2,7 @@ local mod	= DBM:NewMod("Weaver", "DBM-Party-Vanilla", DBM:IsPostCata() and 12 or
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
+mod:DisableHardcodedOptions()
 mod:SetCreatureID(5720)
 mod:SetEncounterID(487)
 mod:SetZone(109)
