@@ -8,3 +8,17 @@ mod:SetZone(229)
 
 mod:RegisterCombat("combat")
 
+mod:RegisterEventsInCombat(
+	"SPELL_CAST_SUCCESS 27249"
+)
+
+local warnSummonAssassin		= mod:NewSpellAnnounce(27249, 2)
+
+local timerSummonAssassin		= mod:NewAITimer(180, 27249, nil, nil, nil, 1)
+
+function mod:SPELL_CAST_SUCCESS(args)
+	if args:IsSpell(27249) then
+		warnSummonAssassin:Show()
+		timerSummonAssassin:Start()
+    end
+end
