@@ -2,6 +2,7 @@ local mod	= DBM:NewMod("BCEvent", "DBM-WorldEvents", 4)
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
+mod:DisableHardcodedOptions()
 mod:SetCreatureID(17968, 21212, 19622)
 mod:SetEncounterID(2319)
 mod:SetModelID(20939)--Archimond
@@ -31,7 +32,6 @@ local specWarnToxic		= mod:NewSpecialWarningMove(38575, nil, nil, nil, 1, 2)
 local specWarnFear		= mod:NewSpecialWarningSpell(31970, nil, nil, nil, 2, 2)
 local specWarnBurst		= mod:NewSpecialWarningYou(32014, nil, nil, nil, 1, 2)
 
-mod:AddRangeFrameOption(10, 38280)
 
 mod.vb.phase = 0
 local seenAdds = {}
@@ -43,11 +43,6 @@ function mod:OnCombatStart()
 	self.numBoss = 3
 end
 
-function mod:OnCombatEnd()
-	if self.Options.RangeFrame then
-		DBM.RangeCheck:Hide()
-	end
-end
 
 function mod:SPELL_CAST_START(args)
 	if args.spellId == 31970 then
@@ -62,9 +57,6 @@ function mod:SPELL_AURA_APPLIED(args)
 			specWarnCharge:Show()
 			specWarnCharge:Play("runout")
 			yellCharge:Yell()
-			if self.Options.RangeFrame then
-				DBM.RangeCheck:Show(10)
-			end
 		else
 			warnCharge:Show(args.destName)
 		end
@@ -81,11 +73,6 @@ function mod:SPELL_AURA_APPLIED(args)
 end
 
 function mod:SPELL_AURA_REMOVED(args)
-	if args.spellId == 38280 and args:IsPlayer() then
-		if self.Options.RangeFrame then
-			DBM.RangeCheck:Hide()
-		end
-	end
 end
 
 function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
@@ -112,7 +99,4 @@ end
 function mod:ZONE_CHANGED_NEW_AREA()
 	--Cleanup timers and scheduled events
 	if IsEncounterInProgress() then return end
-	if self.Options.RangeFrame then
-		DBM.RangeCheck:Hide()
-	end
 end

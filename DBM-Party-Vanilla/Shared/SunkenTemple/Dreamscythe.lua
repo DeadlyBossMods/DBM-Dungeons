@@ -2,6 +2,7 @@ local mod	= DBM:NewMod("Dreamscythe", "DBM-Party-Vanilla", DBM:IsPostCata() and 
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
+mod:DisableHardcodedOptions()
 mod:SetCreatureID(5721)
 mod:SetEncounterID(486)
 mod:SetZone(109)

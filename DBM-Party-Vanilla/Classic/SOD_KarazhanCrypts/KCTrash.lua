@@ -3,6 +3,7 @@ local mod	= DBM:NewMod("KCTrash", "DBM-Party-Vanilla", 22)
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
+mod:DisableHardcodedOptions()
 mod:SetZone(2875)
 
 mod.isTrashMod = true

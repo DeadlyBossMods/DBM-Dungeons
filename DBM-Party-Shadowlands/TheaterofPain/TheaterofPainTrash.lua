@@ -3,6 +3,7 @@ local mod	= DBM:NewMod("TheaterofPainTrash", "DBM-Party-Shadowlands", 6)
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
+mod:DisableHardcodedOptions()
 mod:SetZone(2293)
 mod:RegisterZoneCombat(2293)
 --mod:SetModelID(47785)

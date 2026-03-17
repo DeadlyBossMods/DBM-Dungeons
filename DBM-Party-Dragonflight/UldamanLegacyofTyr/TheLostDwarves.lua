@@ -2,6 +2,7 @@ local mod	= DBM:NewMod(2475, "DBM-Party-Dragonflight", 2, 1197)
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
+mod:DisableHardcodedOptions()
 mod:SetCreatureID(184580, 184581, 184582)
 mod:SetEncounterID(2555)
 mod:SetBossHPInfoToHighest()
@@ -58,7 +59,6 @@ local timerLongboatRaidCD						= mod:NewCDTimer(27.4, 375924, nil, nil, nil, 6)
 
 local specWarnGTFO								= mod:NewSpecialWarningGTFO(377825, nil, nil, nil, 1, 8)
 
-mod:AddRangeFrameOption(5, 369677)
 
 function mod:ShieldTarget(targetname)
 	if not targetname then return end
@@ -92,16 +92,8 @@ end
 
 function mod:OnCombatStart(delay)
 	self:Schedule(1, scanBosses, self, delay)--1 second delay to give IEEU time to populate boss guids
-	if self.Options.RangeFrame then
-		DBM.RangeCheck:Show(5)
-	end
 end
 
-function mod:OnCombatEnd()
-	if self.Options.RangeFrame then
-		DBM.RangeCheck:Hide()
-	end
-end
 
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId

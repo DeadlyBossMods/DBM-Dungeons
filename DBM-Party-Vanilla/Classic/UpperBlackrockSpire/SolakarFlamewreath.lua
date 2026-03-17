@@ -2,6 +2,7 @@ local mod	= DBM:NewMod("SolakarFlamewreath", "DBM-Party-Vanilla", DBM:IsCata() a
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
+mod:DisableHardcodedOptions()
 mod:SetCreatureID(10264)
 mod:SetZone(229)
 

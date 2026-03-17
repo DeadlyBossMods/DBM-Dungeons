@@ -6,6 +6,7 @@ if mod:IsRetail() then
 end
 
 mod:SetRevision("@file-date-integer@")
+mod:DisableHardcodedOptions()
 mod:SetCreatureID(17796)
 mod:SetEncounterID(1943)
 mod:SetZone(545, 2849)--Steamvault, Duos

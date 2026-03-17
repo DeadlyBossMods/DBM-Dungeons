@@ -2,6 +2,7 @@ local mod = DBM:NewMod(603, "DBM-Party-WotLK", 16, 276)
 local L = mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
+mod:DisableHardcodedOptions()
 --mod:SetEncounterID(1990)--TODO, why was this unreliable?
 
 mod:RegisterEvents(

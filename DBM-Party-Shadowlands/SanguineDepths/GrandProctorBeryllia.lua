@@ -2,6 +2,7 @@ local mod	= DBM:NewMod(2421, "DBM-Party-Shadowlands", 8, 1189)
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
+mod:DisableHardcodedOptions()
 mod:SetCreatureID(162102)
 mod:SetEncounterID(2362)
 mod:SetZone(2284)
@@ -34,7 +35,6 @@ local timerRiteofSupremacyCD		= mod:NewNextCountTimer(34.5, 325360, nil, nil, ni
 local timerRiteofSupremacy			= mod:NewCastTimer(10, 325360, nil, nil, nil, 5, nil, DBM_COMMON_L.DEADLY_ICON)
 local timerEndlessTormentCD			= mod:NewNextTimer(38.8, 326039, nil, nil, nil, 2)
 
-mod:AddRangeFrameOption(6, 325885)
 
 mod.vb.spikesCast = 0
 mod.vb.tormentCast = 0
@@ -50,16 +50,8 @@ function mod:OnCombatStart(delay)
 	timerIronSpikesCD:Start(3.5-delay)
 	timerRiteofSupremacyCD:Start(11-delay, 1)
 	timerEndlessTormentCD:Start(24.2-delay)
-	if self.Options.RangeFrame then
-		DBM.RangeCheck:Show(6)
-	end
 end
 
-function mod:OnCombatEnd()
-	if self.Options.RangeFrame then
-		DBM.RangeCheck:Hide()
-	end
-end
 
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId

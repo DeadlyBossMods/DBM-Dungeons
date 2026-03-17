@@ -4,6 +4,7 @@ local L		= mod:GetLocalizedStrings()
 mod.statTypes = "normal,timewalker"
 
 mod:SetRevision("@file-date-integer@")
+mod:DisableHardcodedOptions()
 mod:SetCreatureID(117933, 117198)--Variss, Kruul
 mod:SetBossHPInfoToHighest()
 mod.soloChallenge = true

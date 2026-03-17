@@ -3,6 +3,7 @@ local mod	= DBM:NewMod("CoSTrash", "DBM-Party-Legion", 7)
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
+mod:DisableHardcodedOptions()
 --mod:SetModelID(47785)
 mod:SetOOCBWComms()
 mod:SetMinSyncRevision(20221228000000)

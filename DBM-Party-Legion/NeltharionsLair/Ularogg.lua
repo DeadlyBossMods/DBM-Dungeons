@@ -4,6 +4,7 @@ local L		= mod:GetLocalizedStrings()
 mod.statTypes = "normal,heroic,mythic,challenge,timewalker"
 
 mod:SetRevision("@file-date-integer@")
+mod:DisableHardcodedOptions()
 mod:SetCreatureID(91004)
 mod:SetEncounterID(1791)
 mod:SetHotfixNoticeRev(20230529000000)

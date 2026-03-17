@@ -4,6 +4,7 @@ local mod	= DBM:NewMod("Echthra", "DBM-Challenges", 1)
 mod.statTypes = "normal,heroic,mythic,challenge"
 
 mod:SetRevision("@file-date-integer@")
+mod:DisableHardcodedOptions()
 mod:SetCreatureID(172177)
 mod.soloChallenge = true
 

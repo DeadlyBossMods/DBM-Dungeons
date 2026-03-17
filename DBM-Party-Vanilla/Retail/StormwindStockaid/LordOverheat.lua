@@ -2,6 +2,7 @@ local mod	= DBM:NewMod(465, "DBM-Party-Vanilla", 11, 238)
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
+mod:DisableHardcodedOptions()
 mod:SetCreatureID(46264)
 mod:SetEncounterID(1145)
 mod:SetZone(34)

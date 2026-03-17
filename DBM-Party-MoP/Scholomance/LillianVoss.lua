@@ -6,6 +6,7 @@ if DBM:IsRetail() then
 end
 
 mod:SetRevision("@file-date-integer@")
+mod:DisableHardcodedOptions()
 mod:SetCreatureID(58722)--58722 is Body, 58791 is soul. Body is engaged first
 mod:SetEncounterID(1429)
 mod:SetReCombatTime(180, 15)

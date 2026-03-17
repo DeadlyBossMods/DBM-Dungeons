@@ -6,6 +6,7 @@ if DBM:IsRetail() then
 end
 
 mod:SetRevision("@file-date-integer@")
+mod:DisableHardcodedOptions()
 mod:SetCreatureID(61634)
 mod:SetEncounterID(1502)
 mod:SetZone(1011)

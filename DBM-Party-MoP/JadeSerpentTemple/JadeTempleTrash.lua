@@ -4,6 +4,7 @@ local mod	= DBM:NewMod("JadeTempleTrash", "DBM-Party-MoP", 1)
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
+mod:DisableHardcodedOptions()
 --mod:SetModelID(47785)
 mod.isTrashMod = true
 mod.isTrashModBossFightAllowed = true

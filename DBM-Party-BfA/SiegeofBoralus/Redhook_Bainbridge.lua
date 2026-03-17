@@ -8,6 +8,7 @@ local mod	= DBM:NewMod(dungeonID, "DBM-Party-BfA", 5, 1023)
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
+mod:DisableHardcodedOptions()
 mod:SetCreatureID(creatureID)
 mod:SetEncounterID(2098, 2097)--Redhook, Bainbridge
 mod:SetHotfixNoticeRev(20240613000000)
@@ -18,7 +19,7 @@ mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 257459 275107 257326 261428 260924 272662",
-	"SPELL_AURA_APPLIED 257459 260954 261428 256709",
+	"SPELL_AURA_APPLIED 257459 260954 261428",
 	"UNIT_SPELLCAST_SUCCEEDED boss1"
 )
 
@@ -98,9 +99,7 @@ function mod:OnCombatStart(delay)
 end
 
 function mod:OnCombatEnd()
---	if self.Options.RangeFrame then
---		DBM.RangeCheck:Hide()
---	end
+
 end
 
 function mod:SPELL_CAST_START(args)
