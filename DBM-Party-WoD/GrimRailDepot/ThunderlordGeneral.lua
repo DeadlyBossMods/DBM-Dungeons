@@ -5,6 +5,7 @@ mod.statTypes = "normal,heroic,mythic,challenge,timewalker"
 mod.upgradedMPlus = true
 
 mod:SetRevision("@file-date-integer@")
+mod:DisableHardcodedOptions()
 mod:SetCreatureID(80005)
 mod:SetEncounterID(1736)
 
@@ -40,15 +41,8 @@ local timerMark					= mod:NewTargetTimer(5, 163447, nil, nil, nil, 5)
 local timerMarkCD				= mod:NewCDTimer(20, 163447, nil, nil, nil, 3)
 local timerThunderousBreathCD	= mod:NewCDTimer(17.4, 171900, nil, nil, nil, 3)
 
-mod:AddRangeFrameOption(8, 163447)
 
 local debuffCheck = DBM:GetSpellName(163447)
-local debuffFilter
-do
-	debuffFilter = function(uId)
-		return DBM:UnitDebuff(uId, debuffCheck)
-	end
-end
 
 function mod:FreezingSnareTarget(targetname, uId)
 	if not targetname then return end
@@ -67,11 +61,6 @@ function mod:OnCombatStart(delay)
 	timerSpinningSpearCD:Start(14.3)
 end
 
-function mod:OnCombatEnd()
-	if self.Options.RangeFrame then
-		DBM.RangeCheck:Hide()
-	end
-end
 
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
@@ -96,13 +85,6 @@ function mod:SPELL_AURA_APPLIED(args)
 		else
 			warnMark:Show(args.destName)
 		end
-		if self.Options.RangeFrame then
-			if DBM:UnitDebuff("player", debuffCheck) then--You have debuff, show everyone
-				DBM.RangeCheck:Show(8, nil)
-			else--You do not have debuff, only show players who do
-				DBM.RangeCheck:Show(8, debuffFilter)
-			end
-		end
 	elseif args.spellId == 161588 and args:IsPlayer() and self:AntiSpam() then
 		specWarnDiffusedEnergy:Show()
 		specWarnDiffusedEnergy:Play("watchfeet")
@@ -117,8 +99,5 @@ mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED
 function mod:SPELL_AURA_REMOVED(args)
 	if args.spellId == 163447 then
 		timerMark:Cancel(args.destName)
-		if self.Options.RangeFrame then
-			DBM.RangeCheck:Hide()
-		end
 	end
 end

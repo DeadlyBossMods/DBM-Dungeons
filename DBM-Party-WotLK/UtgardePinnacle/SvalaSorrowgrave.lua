@@ -6,6 +6,7 @@ if not mod:IsClassic() then
 end
 
 mod:SetRevision("@file-date-integer@")
+mod:DisableHardcodedOptions()
 mod:SetCreatureID(26668)
 mod:SetEncounterID(2030)
 mod:DisableESCombatDetection()--TODO, why is it disabled?

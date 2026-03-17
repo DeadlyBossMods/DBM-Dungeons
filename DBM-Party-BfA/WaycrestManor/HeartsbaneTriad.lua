@@ -4,6 +4,7 @@ local L		= mod:GetLocalizedStrings()
 mod.statTypes = "normal,heroic,mythic,challenge,timewalker"
 
 mod:SetRevision("@file-date-integer@")
+mod:DisableHardcodedOptions()
 mod:SetCreatureID(135358, 135359, 135360, 131823, 131824, 131825)--All versions so we can pull boss
 mod:SetEncounterID(2113)
 mod:DisableESCombatDetection()--ES fires For entryway trash pull sometimes, for some reason.
@@ -44,7 +45,6 @@ local specWarnAuraofDread			= mod:NewSpecialWarningKeepMove(268086, nil, nil, ni
 
 local timerUnstableRunicMarkCD		= mod:NewCDTimer(12.5, 260703, nil, nil, nil, 3, nil, DBM_COMMON_L.CURSE_ICON)
 
-mod:AddRangeFrameOption(6, 260703)
 --Sister Solena
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(17740))
 local specWarnSoulManipulation		= mod:NewSpecialWarningSwitch(260907, nil, nil, nil, 1, 2)
@@ -82,9 +82,6 @@ function mod:OnCombatStart()
 end
 
 function mod:OnCombatEnd()
-	if self.Options.RangeFrame then
-		DBM.RangeCheck:Hide()
-	end
 	if self.Options.InfoFrame then
 		DBM.InfoFrame:Hide()
 	end
@@ -143,9 +140,6 @@ function mod:SPELL_AURA_APPLIED(args)
 			timerJaggedNettlesCD:Start(6.2, args.destGUID)--CAST START (6-9)
 		elseif cid == 135358 or cid == 131823 then--Sister Malady
 			timerUnstableRunicMarkCD:Start(8.6, args.destGUID)--CAST SUCCESS (8-10)
-			if self.Options.RangeFrame then
-				DBM.RangeCheck:Show(6)
-			end
 		elseif cid == 135359 or cid == 131824 then--Sister Solena
 			timerSoulManipulationCD:Start(8, args.destGUID)--CAST START (8-11)
 		end
@@ -178,9 +172,6 @@ function mod:SPELL_AURA_REMOVED(args)
 			timerJaggedNettlesCD:Stop(args.destGUID)
 		elseif cid == 135358 or cid == 131823 then--Sister Malady
 			timerUnstableRunicMarkCD:Stop(args.destGUID)
-			if self.Options.RangeFrame then
-				DBM.RangeCheck:Hide()
-			end
 		elseif cid == 135359 or cid == 131824 then--Sister Solena
 			timerSoulManipulationCD:Stop(args.destGUID)
 		end

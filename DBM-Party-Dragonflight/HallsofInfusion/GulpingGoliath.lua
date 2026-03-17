@@ -2,6 +2,7 @@ local mod	= DBM:NewMod(2507, "DBM-Party-Dragonflight", 8, 1204)
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
+mod:DisableHardcodedOptions()
 mod:SetCreatureID(189722)
 mod:SetEncounterID(2616)
 mod:SetHotfixNoticeRev(20230507000000)
@@ -42,7 +43,6 @@ local timerOverpoweringCroakCD					= mod:NewCDCountTimer(37.7, 385187, nil, nil,
 local timerBellySlamCD							= mod:NewCDTimer(37.7, 385531, nil, nil, nil, 3)
 local timerToxicEffluviaaCD						= mod:NewCDCountTimer(26.7, 385442, nil, nil, nil, 5, nil, DBM_COMMON_L.HEALER_ICON)
 
-mod:AddRangeFrameOption(12, 385531)
 mod:AddInfoFrameOption(374389, "RemovePoison")
 
 local toxinStacks = {}
@@ -75,15 +75,9 @@ function mod:OnCombatStart(delay)
 		DBM.InfoFrame:SetHeader(DBM:GetSpellName(374389))
 		DBM.InfoFrame:Show(5, "table", toxinStacks, 1)
 	end
-	if self.Options.RangeFrame then
-		DBM.RangeCheck:Show(12)
-	end
 end
 
 function mod:OnCombatEnd()
-	if self.Options.RangeFrame then
-		DBM.RangeCheck:Hide()
-	end
 	if self.Options.InfoFrame then
 		DBM.InfoFrame:Hide()
 	end

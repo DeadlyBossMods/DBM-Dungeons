@@ -2,6 +2,7 @@ local mod	= DBM:NewMod("DeviateFaerie", "DBM-Party-Vanilla", DBM:IsPostCata() an
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
+mod:DisableHardcodedOptions()
 mod:SetCreatureID(5912)
 mod:SetZone(43)
 

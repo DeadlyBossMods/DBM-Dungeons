@@ -6,6 +6,7 @@ if mod:IsRetail() then
 end
 
 mod:SetRevision("@file-date-integer@")
+mod:DisableHardcodedOptions()
 mod:SetCreatureID(26532)
 mod:SetEncounterID(2003)
 mod:SetZone(279, 2849)--Culling of Stratholm, Duos

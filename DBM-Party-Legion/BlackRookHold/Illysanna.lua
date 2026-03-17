@@ -4,6 +4,7 @@ local L		= mod:GetLocalizedStrings()
 mod.statTypes = "normal,heroic,mythic,challenge,timewalker"
 
 mod:SetRevision("@file-date-integer@")
+mod:DisableHardcodedOptions()
 mod:SetCreatureID(98696)
 mod:SetEncounterID(1833)
 mod:SetUsedIcons(3, 2, 1)
@@ -67,8 +68,6 @@ local timerEyeBeamCD				= mod:NewCDCountTimer(13.5, 197696, nil, nil, nil, 3)
 local timerBonebreakingStrikeCD		= mod:NewCDNPTimer(21.8, 197974, nil, nil, nil, 3)
 local timerGroundedCD				= mod:NewStageContextTimer(44.8, -12277, nil, nil, nil, 6, 197394)
 
---mod:AddRangeFrameOption(5, 197546)--Range not given for Brutal Glaive
-
 mod.vb.glaiveCount = 0
 mod.vb.shearCount = 0
 mod.vb.rushCount = 0
@@ -100,9 +99,7 @@ function mod:OnCombatStart(delay)
 end
 
 --function mod:OnCombatEnd()
---	if self.Options.RangeFrame then
---		DBM.RangeCheck:Hide()
---	end
+
 --end
 
 function mod:SPELL_CAST_START(args)

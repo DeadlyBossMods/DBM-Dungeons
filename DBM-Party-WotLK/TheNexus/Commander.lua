@@ -6,6 +6,7 @@ if not mod:IsClassic() then
 end
 
 mod:SetRevision("@file-date-integer@")
+mod:DisableHardcodedOptions()
 --mod:SetEncounterID(519)--FIXME in 7.1
 
 if UnitFactionGroup("player") == "Alliance" then

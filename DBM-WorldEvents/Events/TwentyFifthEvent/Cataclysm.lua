@@ -2,6 +2,7 @@ local mod	= DBM:NewMod("CataEvent", "DBM-WorldEvents", 4)
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
+mod:DisableHardcodedOptions()
 mod:SetCreatureID(52409, 41376, 43324)
 mod:SetEncounterID(2320)
 mod:SetBossHPInfoToHighest()
@@ -53,7 +54,6 @@ local yellBlazingHeat			= mod:NewYell(100460)
 local specWarnMoltenSeed		= mod:NewSpecialWarningRun(98495, nil, nil, 2, 3, 2)
 local specWarnEngulfing			= mod:NewSpecialWarningDodge(99171, nil, nil, nil, 2, 2)
 local specWarnMeteor			= mod:NewSpecialWarningDodge(99268, nil, nil, nil, 1, 2)--Spawning on you
-local specWarnMeteorNear		= mod:NewSpecialWarningClose(99268, nil, nil, nil, 1, 2)--Spawning near you
 local yellMeteor				= mod:NewYell(99268)
 local specWarnFixate			= mod:NewSpecialWarningRun(99849, nil, nil, nil, 4, 2)--Chasing you after it spawned
 local yellFixate				= mod:NewYell(99849)
@@ -63,7 +63,6 @@ local timerFlamesCD				= mod:NewNextTimer(40, 99171, nil, nil, nil, 3, nil, nil,
 local timerLivingMeteorCD		= mod:NewNextTimer(45, 99268, nil, nil, nil, 1, nil, nil, nil, 3, 4)
 
 mod:AddInfoFrameOption(99849, true)
-mod:AddRangeFrameOption(6, 98495)
 mod:GroupSpells(99268, 99849)--Living Meteor with Fixate
 
 local meteorWarned = false
@@ -81,16 +80,7 @@ function mod:LivingMeteorTarget(targetname)
 		specWarnMeteor:Play("targetyou")
 		yellMeteor:Yell()
 	else
-		local uId = DBM:GetRaidUnitId(targetname)
-		if uId then
-			local inRange = DBM.RangeCheck:GetDistance("player", uId)
-			if inRange and inRange < 12 then
-				specWarnMeteorNear:Show(targetname)
-				specWarnMeteorNear:Play("runaway")
-			else
-				warnLivingMeteor:Show(targetname)
-			end
-		end
+		warnLivingMeteor:Show(targetname)
 	end
 end
 
@@ -108,9 +98,6 @@ end
 function mod:OnCombatEnd()
 	if self.Options.InfoFrame then
 		DBM.InfoFrame:Hide()
-	end
-	if self.Options.RangeFrame then
-		DBM.RangeCheck:Hide()
 	end
 end
 
@@ -130,9 +117,6 @@ function mod:SPELL_CAST_START(args)
 			warnSplittingBlow:Show(args.spellName, DBM_COMMON_L.MIDDLE)
 		elseif spellId == 98953 then--East
 			warnSplittingBlow:Show(args.spellName, DBM_COMMON_L.EAST)
-		end
-		if self.Options.RangeFrame then
-			DBM.RangeCheck:Hide()
 		end
 	elseif args:IsSpellID(99172, 99235, 99236) then--Another scripted spell with a ton of spellids based on location of room.
 		--North: 99172
@@ -291,9 +275,6 @@ function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
 				--Seems to activate timers as if P2 just started
 				timerMoltenSeedCD:Start(21.5)
 				timerFlamesCD:Start(40)
-				if self.Options.RangeFrame then
-					DBM.RangeCheck:Show(6)
-				end
 			elseif cid == 41376 then--Nefarian
 				self.vb.phase = self.vb.phase + 1
 				self.vb.bossLeft = self.vb.bossLeft - 1
@@ -310,7 +291,4 @@ function mod:ZONE_CHANGED_NEW_AREA()
 	timerMoltenSeedCD:Stop()
 	timerFlamesCD:Stop()
 	timerLivingMeteorCD:Stop()
-	if self.Options.RangeFrame then
-		DBM.RangeCheck:Hide()
-	end
 end

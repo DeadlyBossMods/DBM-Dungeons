@@ -4,6 +4,7 @@ local L		= mod:GetLocalizedStrings()
 mod.statTypes = "heroic,mythic,challenge"
 
 mod:SetRevision("@file-date-integer@")
+mod:DisableHardcodedOptions()
 mod:SetCreatureID(98203)
 mod:SetEncounterID(1827)
 
@@ -11,7 +12,6 @@ mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
 	"SPELL_AURA_APPLIED 196562 196805",
-	"SPELL_AURA_REMOVED 196562",
 	"SPELL_CAST_SUCCESS 196562 196804 196392",
 	"SPELL_PERIODIC_DAMAGE 196824",
 	"SPELL_PERIODIC_MISSED 196824"
@@ -32,8 +32,6 @@ local timerVolatileMagicCD			= mod:NewCDTimer(32, 196562, nil, nil, nil, 3)--Rev
 local timerNetherLinkCD				= mod:NewCDTimer(30, 196805, nil, nil, nil, 3)
 local timerOverchargeManaCD			= mod:NewCDTimer(40, 196392, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 
-mod:AddRangeFrameOption(8, 196562)
-
 function mod:OnCombatStart(delay)
 	--Watch closely, review. He may be able to swap nether link and volatile magic?
 	timerVolatileMagicCD:Start(7.7-delay)--APPLIED
@@ -41,11 +39,6 @@ function mod:OnCombatStart(delay)
 	timerOverchargeManaCD:Start(30-delay)
 end
 
-function mod:OnCombatEnd()
-	if self.Options.RangeFrame then
-		DBM.RangeCheck:Hide()
-	end
-end
 
 function mod:SPELL_CAST_SUCCESS(args)
 	local spellId = args.spellId
@@ -68,9 +61,6 @@ function mod:SPELL_AURA_APPLIED(args)
 			specWarnVolatileMagic:Show()
 			specWarnVolatileMagic:Play("runout")
 			yellVolatileMagic:Yell()
-			if self.Options.RangeFrame then
-				DBM.RangeCheck:Show(8)
-			end
 		end
 	elseif spellId == 196805 then
 		warnNetherLink:CombinedShow(0.5, args.destName)
@@ -78,13 +68,6 @@ function mod:SPELL_AURA_APPLIED(args)
 			specWarnNetherLink:Show()
 			specWarnNetherLink:Play("targetyou")
 		end
-	end
-end
-
-function mod:SPELL_AURA_REMOVED(args)
-	local spellId = args.spellId
-	if spellId == 196562 and args:IsPlayer() and self.Options.RangeFrame then
-		DBM.RangeCheck:Hide()
 	end
 end
 

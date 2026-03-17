@@ -6,6 +6,7 @@ if not mod:IsClassic() then
 end
 
 mod:SetRevision("@file-date-integer@")
+mod:DisableHardcodedOptions()
 mod:SetCreatureID(36497)
 mod:SetEncounterID(2006)
 mod:SetModelID(30226)

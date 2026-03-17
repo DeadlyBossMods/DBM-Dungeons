@@ -8,6 +8,7 @@ else
 end
 
 mod:SetRevision("@file-date-integer@")
+mod:DisableHardcodedOptions()
 mod:SetCreatureID(3586)
 --mod:SetEncounterID(1144)--Doesn't have Encounter ID
 mod:SetZone(36)

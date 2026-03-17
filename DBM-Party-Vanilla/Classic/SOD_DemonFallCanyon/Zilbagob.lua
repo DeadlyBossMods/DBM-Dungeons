@@ -3,6 +3,7 @@ local mod	= DBM:NewMod("Zilbagob", "DBM-Party-Vanilla", 21)
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
+mod:DisableHardcodedOptions()
 mod:SetEncounterID(3029)
 mod:SetCreatureID(226922)
 mod:SetZone(2784)

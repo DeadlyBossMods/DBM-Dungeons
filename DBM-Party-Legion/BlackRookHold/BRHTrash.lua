@@ -3,6 +3,7 @@ local mod	= DBM:NewMod("BRHTrash", "DBM-Party-Legion", 1)
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
+mod:DisableHardcodedOptions()
 --mod:SetModelID(47785)
 mod:SetZone(1501)
 

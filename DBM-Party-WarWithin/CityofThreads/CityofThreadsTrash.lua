@@ -3,6 +3,7 @@ local mod	= DBM:NewMod("CityofThreadsTrash", "DBM-Party-WarWithin", 8)
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
+mod:DisableHardcodedOptions()
 --mod:SetModelID(47785)
 mod.isTrashMod = true
 mod.isTrashModBossFightAllowed = true

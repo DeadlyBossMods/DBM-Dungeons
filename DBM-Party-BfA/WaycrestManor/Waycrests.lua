@@ -4,6 +4,7 @@ local L		= mod:GetLocalizedStrings()
 mod.statTypes = "normal,heroic,mythic,challenge,timewalker"
 
 mod:SetRevision("@file-date-integer@")
+mod:DisableHardcodedOptions()
 mod:SetCreatureID(131527, 131545)
 mod:SetMainBossID(131545)
 mod:SetEncounterID(2116)
@@ -44,7 +45,6 @@ local timerVirulentPathogenCD		= mod:NewCDCountTimer(15.4, 261440, nil, nil, nil
 local timerDiscordantCadenzaCD		= mod:NewCDCountTimer(23.5, 268306, nil, nil, nil, 3)--Casting transfer can delay it further since that triggers a 3 second spell lockout+cast time
 local timerWrackingChordCD			= mod:NewCDCountTimer(7.3, 268278, nil, nil, nil, 4, nil, DBM_COMMON_L.DISEASE_ICON)
 
-mod:AddRangeFrameOption(6, 261440)
 
 mod.vb.wastingCount = 0
 mod.vb.virulentCount = 0
@@ -74,16 +74,8 @@ function mod:OnCombatStart(delay)
 	self.vb.discordCount = 0
 	self.vb.transferCount = 0
 	self:Schedule(1, scanBosses, self, delay)--1 second delay to give IEEU time to populate boss unitIDs
-	if self.Options.RangeFrame then
-		DBM.RangeCheck:Show(6)
-	end
 end
 
-function mod:OnCombatEnd()
-	if self.Options.RangeFrame then
-		DBM.RangeCheck:Hide()
-	end
-end
 
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId

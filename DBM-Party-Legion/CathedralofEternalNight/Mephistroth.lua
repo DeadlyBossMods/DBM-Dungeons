@@ -2,6 +2,7 @@ local mod	= DBM:NewMod(1878, "DBM-Party-Legion", 12, 900)
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
+mod:DisableHardcodedOptions()
 mod:SetCreatureID(120793)
 mod:SetEncounterID(2039)
 
@@ -36,7 +37,6 @@ local timerCarrionSwarmCD			= mod:NewCDTimer(18, 233155, nil, "Tank", nil, 5, ni
 local timerDemonicUpheavalCD		= mod:NewCDTimer(32, 233963, nil, nil, nil, 3)--32-35
 local timerShadowFadeCD				= mod:NewCDTimer(40, 233206, nil, nil, nil, 6)
 
-mod:AddRangeFrameOption(8, 234817)--5 yards probably too small, next lowest range on crap api is 8
 mod:AddInfoFrameOption(234217, true)
 
 local demonicUpheaval, darkSolitude = DBM:GetSpellName(233963), DBM:GetSpellName(234217)
@@ -49,15 +49,9 @@ function mod:OnCombatStart(delay)
 	timerDarkSolitudeCD:Start(8.1-delay)
 	timerCarrionSwarmCD:Start(15-delay)
 	timerShadowFadeCD:Start(40-delay)--Cast Start
-	if self.Options.RangeFrame then
-		DBM.RangeCheck:Show(8)
-	end
 end
 
 function mod:OnCombatEnd()
-	if self.Options.RangeFrame then
-		DBM.RangeCheck:Hide()
-	end
 	if self.Options.InfoFrame then
 		DBM.InfoFrame:Hide()
 	end
@@ -74,9 +68,6 @@ function mod:SPELL_CAST_START(args)
 		timerCarrionSwarmCD:Stop()
 		timerDarkSolitudeCD:Stop()
 		timerDemonicUpheavalCD:Stop()
-		if self.Options.RangeFrame then
-			DBM.RangeCheck:Hide()
-		end
 	elseif spellId == 234817 then
 		warnDarkSolitude:Show()
 		timerDarkSolitudeCD:Start()
@@ -99,9 +90,6 @@ function mod:SPELL_AURA_REMOVED(args)
 		--timerShadowFadeCD:Start(40)
 		if self.Options.InfoFrame then
 			DBM.InfoFrame:Hide()
-		end
-		if self.Options.RangeFrame then
-			DBM.RangeCheck:Show(8)
 		end
 	end
 end

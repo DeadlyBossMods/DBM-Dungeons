@@ -6,6 +6,7 @@ if mod:IsRetail() then
 end
 
 mod:SetRevision("@file-date-integer@")
+mod:DisableHardcodedOptions()
 mod:SetCreatureID(43778)
 mod:SetEncounterID(1063, 2975, 2980)
 mod:SetUsedIcons(8)

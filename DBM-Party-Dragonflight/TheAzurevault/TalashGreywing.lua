@@ -2,6 +2,7 @@ local mod	= DBM:NewMod(2483, "DBM-Party-Dragonflight", 6, 1203)
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
+mod:DisableHardcodedOptions()
 mod:SetCreatureID(186737)
 mod:SetEncounterID(2583)
 mod:SetHotfixNoticeRev(20221027000000)
@@ -40,7 +41,6 @@ local timerFrostBombCD							= mod:NewCDTimer(15.3, 386781, nil, nil, nil, 3)--1
 local timerIcyDevastatorCD						= mod:NewCDTimer(22.6, 387151, nil, nil, nil, 3)
 local timerAbsoluteZeroCD						= mod:NewNextTimer(60, 388008, nil, nil, nil, 2)
 
-mod:AddRangeFrameOption(8, 387151)
 
 
 local vaultRuin = DBM:GetSpellName(388072)
@@ -58,16 +58,8 @@ function mod:OnCombatStart(delay)
 	timerFrostBombCD:Start(3.6-delay)
 	timerIcyDevastatorCD:Start(10-delay)--14.7 now?
 	timerAbsoluteZeroCD:Start(21.8-delay)
-	if self.Options.RangeFrame then
-		DBM.RangeCheck:Show(8)
-	end
 end
 
-function mod:OnCombatEnd()
-	if self.Options.RangeFrame then
-		DBM.RangeCheck:Hide()
-	end
-end
 
 function mod:SPELL_CAST_START(args)
 	local spellId = args.spellId
