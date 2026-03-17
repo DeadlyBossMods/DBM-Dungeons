@@ -30,6 +30,7 @@
 ## Version: @project-version@
 
 localization.en.lua
+localization.kr.lua
 
 WindrunnerSpire\Emberdawn.lua
 WindrunnerSpire\DerelictDuo.lua
