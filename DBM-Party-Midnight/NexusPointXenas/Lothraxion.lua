@@ -34,8 +34,8 @@ mod:AddPrivateAuraSoundOption(1255310, true, 1255310, 1, 2)--Radiant Scar
 function mod:OnLimitedCombatStart()
 	self:EnableAlertOptions(1255503, 109, "scattersoon", 2)--Pre spread
 	self:EnableAlertOptions(1257567, 110, "phasechange", 2)
-	if self:IsTank() then
-		self:EnableAlertOptions(1255335, 111, "defensive", 2)
+	if self:IsMelee() then
+		self:EnableAlertOptions(1255335, 111, "frontal", 15)
 	end
 	self:EnableAlertOptions(1255531, 112, "watchstep", 2)
 
