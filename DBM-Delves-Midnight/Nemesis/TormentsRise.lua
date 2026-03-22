@@ -24,7 +24,7 @@ local specWarnImplodingStrike				= mod:NewSpecialWarningDefensive(1256355, nil, 
 local specWarnEmptinessOfTheVoid			= mod:NewSpecialWarningInterruptCount(1256351, nil, nil, nil, 3, 2)
 
 local timerDevouringEssenceCD				= mod:NewCDCountTimer(20.5, 1256358, DBM_COMMON_L.DEBUFF.." (%s)", nil, nil, 3, nil, DBM_COMMON_L.MAGIC_ICON)
-local timerImplodingStrikeCD				= mod:NewCDCountTimer(20.5, 1256355, nil, nil, nil, 5)
+local timerImplodingStrikeCD				= mod:NewCDCountTimer(20.5, 1256355, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerEmptinessOfTheVoidCD				= mod:NewVarCountTimer("v19.5-23.3", 1256351, DBM_COMMON_L.INTERRUPT.." (%s)", nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerPhase							= mod:NewStageTimer(42)
 
@@ -35,6 +35,7 @@ mod.vb.implodingStrikeCount = 0
 mod.vb.voidCount = 0
 local badStateDetected = false
 local workaroundblizzardincompitence = {}--In case we have to fall back to blizz timers, this will prevent us from trying to use encounter timeline events which are also used by blizz timers and will cause false positives that break timers
+local tankFound = false
 
 local function setFallback(self)
 	--Blizz API fallbacks
@@ -46,13 +47,28 @@ local function setFallback(self)
 	timerEmptinessOfTheVoidCD:SetTimeline({392, 393})
 end
 
+local function isTankInGroup(self)
+	if not IsInGroup() then
+		tankFound = UnitGroupRolesAssigned("player") == "TANK"
+	else
+		local groupType = IsInRaid() and "raid" or "party"
+		for i = 1, GetNumGroupMembers() do
+			if UnitIsGroupLeader(groupType..i) then
+				tankFound = UnitGroupRolesAssigned(groupType..i) == "TANK"
+				return
+			end
+		end
+	end
+end
+
 function mod:OnLimitedCombatStart()
 	self:TLCountReset()
 	self.vb.devouringEssenceCount = 1
 	self.vb.implodingStrikeCount = 1
 	self.vb.voidCount = 1
 	workaroundblizzardincompitence = {}
-	if DBM.Options.HardcodedTimer and not badStateDetected then
+	isTankInGroup(self)
+	if DBM.Options.HardcodedTimer and not badStateDetected and tankFound then
 		self:IgnoreBlizzardAPI()
 		self:RegisterShortTermEvents(
 			"ENCOUNTER_TIMELINE_EVENT_ADDED",
@@ -77,7 +93,7 @@ do
 	---@param self DBMMod
 	---@param timer number
 	---@param eventID number
-	local function timers(self, timer, eventID)
+	local function timersTank(self, timer, eventID)
 		--Void has unique rounded durations (7 opener, 21 recurring)
 		if timer == 7 or timer == 21 then
 			if workaroundblizzardincompitence["void"] then
@@ -128,8 +144,8 @@ do
 		local eventID = eventInfo.id
 		local timerExact = eventInfo.duration
 --		local timer = math.floor(timerExact + 0.5)
-		if not badStateDetected then
-			timers(self, timerExact, eventID)
+		if not badStateDetected and tankFound then
+			timersTank(self, timerExact, eventID)
 		end
 	end
 
