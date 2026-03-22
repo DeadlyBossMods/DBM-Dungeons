@@ -36,6 +36,16 @@ mod.vb.voidCount = 0
 local badStateDetected = false
 local workaroundblizzardincompitence = {}--In case we have to fall back to blizz timers, this will prevent us from trying to use encounter timeline events which are also used by blizz timers and will cause false positives that break timers
 
+local function setFallback(self)
+	--Blizz API fallbacks
+	warnDevouringEssence:SetAlert({390, 395}, "incomingdebuff", 15, 2)
+	timerDevouringEssenceCD:SetTimeline({390, 395})
+	specWarnImplodingStrike:SetAlert({391, 394}, "defensive", 19, 2)
+	timerImplodingStrikeCD:SetTimeline({391, 394})
+	specWarnEmptinessOfTheVoid:SetAlert({392, 393}, "kickcast", 19, 2)
+	timerEmptinessOfTheVoidCD:SetTimeline({392, 393})
+end
+
 function mod:OnLimitedCombatStart()
 	self:TLCountReset()
 	self.vb.devouringEssenceCount = 1
@@ -49,12 +59,7 @@ function mod:OnLimitedCombatStart()
 			"ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED"
 		)
 	else
-		warnDevouringEssence:SetAlert({390, 395}, "incomingdebuff", 15, 2)
-		timerDevouringEssenceCD:SetTimeline({390, 395})
-		specWarnImplodingStrike:SetAlert({391, 394}, "defensive", 19, 2)
-		timerImplodingStrikeCD:SetTimeline({391, 394})
-		specWarnEmptinessOfTheVoid:SetAlert({392, 393}, "kickcast", 19, 2)
-		timerEmptinessOfTheVoidCD:SetTimeline({392, 393})
+		setFallback(self)
 	end
 	--if self:IsMythic() then
 	--	self:SetCreatureID(252892)
@@ -112,6 +117,7 @@ do
 				DBM:FireEvent("DBM_ResumeBlizzAPI")
 			end
 			self:UnregisterShortTermEvents()
+			setFallback(self)
 			DBM:Debug("|cffff0000TormentsRise: Failed to match encounter timeline events to expected timers, falling back to Blizzard API|r", nil, nil, nil, true)
 		end
 	end
