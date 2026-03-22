@@ -56,10 +56,8 @@ function mod:OnLimitedCombatStart()
 		timerImplodingStrikeCD:SetTimeline({391, 394})
 		specWarnEmptinessOfTheVoid:SetAlert({392, 393}, "kickcast", 19, 2)
 		timerEmptinessOfTheVoidCD:SetTimeline({392, 393})
-
-		self:EnablePrivateAuraSound({1287014, 1256045}, "watchfeet", 8)
 	end
-
+	self:EnablePrivateAuraSound({1287014, 1256045}, "watchfeet", 8)
 	--if self:IsMythic() then
 	--	self:SetCreatureID(252892)
 	--else
