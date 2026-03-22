@@ -20,7 +20,7 @@ mod:AddCustomTimerOptions(426860, nil, 3, 0)--Dark Orb
 mod:AddCustomTimerOptions(427001, nil, 5, 0)--Terrifying Slam
 mod:AddCustomTimerOptions(452127, nil, 1, 0)--Animate Shadows
 --Midnight private aura replacements
-mod:AddPrivateAuraSoundOption(426865, true, 426860, 1)--Dark Orb target
+mod:AddPrivateAuraSoundOption({426865, 450855}, true, 426860, 1, "targetyou", 2)--Dark Orb target
 
 function mod:OnLimitedCombatStart()
 	self:EnableAlertOptions(426787, 622, "aesoon", 2)
@@ -35,5 +35,4 @@ function mod:OnLimitedCombatStart()
 	self:EnableTimelineOptions(427001, 624)
 	self:EnableTimelineOptions(452127, 625)
 
-	self:EnablePrivateAuraSound({426865, 450855}, "targetyou", 2)--Dark Orb
 end

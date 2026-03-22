@@ -20,7 +20,7 @@ mod:AddCustomTimerOptions(346286, true, 5, 0)
 mod:AddCustomTimerOptions(346947, true, 5, 0)
 --Midnight private aura replacements
 --There are two other PAs but they are not useful since they are not player actionable PAs
-mod:AddPrivateAuraSoundOption(346962, true, 346962, 1)
+mod:AddPrivateAuraSoundOption(346962, true, 346962, 1, "gathershare", 2)
 
 function mod:OnLimitedCombatStart()
 	self:EnableAlertOptions(346742, 574, "aesoon", 2)
@@ -32,7 +32,6 @@ function mod:OnLimitedCombatStart()
 	self:EnableTimelineOptions(346286, 576)
 	self:EnableTimelineOptions(346947, 577)
 
-	self:EnablePrivateAuraSound(346962, "gathershare", 2)
 end
 
 --[[

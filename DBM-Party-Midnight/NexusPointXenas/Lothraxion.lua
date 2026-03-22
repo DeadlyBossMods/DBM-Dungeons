@@ -26,9 +26,9 @@ mod:AddCustomTimerOptions(1257567, true, 6, 0)--Divine Guile
 mod:AddCustomTimerOptions(1255335, true, 5, 0)--Searing Rend
 mod:AddCustomTimerOptions(1255531, true, 3, 0)--Flicker
 --Private Auras
-mod:AddPrivateAuraSoundOption(1255503, true, 1255503, 1, 1)--Brilliant Dispersion
+mod:AddPrivateAuraSoundOption(1255503, true, 1255503, 1, 1, "poolyou", 18)--Brilliant Dispersion
 --mod:AddPrivateAuraSoundOption(1255335, false, 1255335, 1, 1)--Searing Rend
-mod:AddPrivateAuraSoundOption(1255310, true, 1255310, 1, 2)--Radiant Scar
+mod:AddPrivateAuraSoundOption(1255310, true, 1255310, 1, 2, "watchfeet", 8)--Radiant Scar
 --mod:AddPrivateAuraSoundOption(1271956, false, 1271956, 1, 1)--Mirrored Rend
 
 function mod:OnLimitedCombatStart()
@@ -44,8 +44,6 @@ function mod:OnLimitedCombatStart()
 	self:EnableTimelineOptions(1255335, 111)
 	self:EnableTimelineOptions(1255531, 112)
 
-	self:EnablePrivateAuraSound(1255503, "poolyou", 18)--Run out to place images?
 --	self:EnablePrivateAuraSound(1255335, "poolyou", 18)
-	self:EnablePrivateAuraSound(1255310, "watchfeet", 8)
 --	self:EnablePrivateAuraSound(1271956, "poolyou", 18)
 end

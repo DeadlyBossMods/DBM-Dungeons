@@ -28,8 +28,8 @@ if DBM:IsPostMidnight() then
 	mod:AddCustomTimerOptions(1264287, nil, 5, 0)
 	mod:AddCustomTimerOptions(1264453, nil, 3, 0)--Lumbering Fixation (child of Get 'Em, Ick!)
 	--Midnight private aura replacements
-	mod:AddPrivateAuraSoundOption(1264453, true, 1264363, 1)--Lumbering Fixation
-	mod:AddPrivateAuraSoundOption(1264299, true, 1264299, 2)--Blight (GTFO)
+	mod:AddPrivateAuraSoundOption(1264453, true, 1264363, 1, "justrun", 2)--Lumbering Fixation
+	mod:AddPrivateAuraSoundOption(1264299, true, 1264299, 2, "watchfeet", 8)--Blight (GTFO)
 	function mod:OnLimitedCombatStart()
 		self:DisableSpecialWarningSounds()
 		self:EnableAlertOptions(1264027, 204, "killmob", 2)
@@ -44,8 +44,6 @@ if DBM:IsPostMidnight() then
 		self:EnableTimelineOptions(1264287, 206)
 		self:EnableTimelineOptions(1264453, 561)
 
-		self:EnablePrivateAuraSound(1264453, "justrun", 2)--1280616 also fires but it's redundant
-		self:EnablePrivateAuraSound(1264299, "watchfeet", 8)
 	end
 else
 

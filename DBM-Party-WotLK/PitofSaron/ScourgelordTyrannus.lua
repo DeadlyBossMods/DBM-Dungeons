@@ -33,7 +33,7 @@ if DBM:IsPostMidnight() then
 	mod:AddCustomTimerOptions(1263756, nil, 3, 0)--Death's Grasp
 	mod:AddCustomTimerOptions(1276948, nil, 3, 0)--Icy Barrage
 	--Midnight private aura replacements
-	mod:AddPrivateAuraSoundOption(1262772, true, 1262772, 1)--Rime Blast
+	mod:AddPrivateAuraSoundOption(1262772, true, 1262772, 1, "debuffyou", 17)--Rime Blast
 	function mod:OnLimitedCombatStart()
 		self:DisableSpecialWarningSounds()
 
@@ -51,7 +51,6 @@ if DBM:IsPostMidnight() then
 		self:EnableTimelineOptions(1263756, 168)
 		self:EnableTimelineOptions(1276948, 375)
 
-		self:EnablePrivateAuraSound(1262772, "debuffyou", 17)--Mayb change later when I have access to amy again
 	end
 else
 	mod:RegisterEvents(

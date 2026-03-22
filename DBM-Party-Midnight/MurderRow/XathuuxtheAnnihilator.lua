@@ -24,7 +24,7 @@ mod:AddCustomTimerOptions(473898, true, 5, 0)--Legion Strike
 mod:AddCustomTimerOptions(474197, true, 2, 0)--Demonic Rage
 mod:AddCustomTimerOptions(1214637, true, 3, 0)--Axe Toss
 --Midnight private aura replacements
-mod:AddPrivateAuraSoundOption(474234, true, 474234, 1, 2)--Burning Steps
+mod:AddPrivateAuraSoundOption(474234, true, 474234, 1, 2, "watchfeet", 8)--Burning Steps
 --mod:AddPrivateAuraSoundOption(1218203, true, 1218203, 1, 1)--Fingers of Gul'dan
 
 function mod:OnLimitedCombatStart()
@@ -41,6 +41,5 @@ function mod:OnLimitedCombatStart()
 	self:EnableTimelineOptions(474197, 32)
 	self:EnableTimelineOptions(1214637, {31, 559})
 
-	self:EnablePrivateAuraSound(474234, "watchfeet", 8)
 --	self:EnablePrivateAuraSound(1218203, "runout", 2)
 end

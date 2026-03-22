@@ -19,8 +19,8 @@ if DBM:IsPostMidnight() then
 	mod:AddCustomTimerOptions(245738, true, 3, 0)
 	mod:AddCustomTimerOptions(1263523, true, 2, 0)
 	--Midnight private aura replacements
-	mod:AddPrivateAuraSoundOption(1280064, true, 1280064, 1)--Phase Dash
-	mod:AddPrivateAuraSoundOption(245742, true, 245742, 2)--Shadow Pounce
+	mod:AddPrivateAuraSoundOption(1280064, true, 1280064, 1, "lineyou", 17)--Phase Dash
+	mod:AddPrivateAuraSoundOption(245742, true, 245742, 2, "targetyou", 2)--Shadow Pounce
 
 	function mod:OnLimitedCombatStart()
 		self:DisableSpecialWarningSounds()
@@ -39,8 +39,6 @@ if DBM:IsPostMidnight() then
 		self:EnableTimelineOptions(245738, 237)
 		self:EnableTimelineOptions(1263523, 243)
 
-		self:EnablePrivateAuraSound(1280064, "lineyou", 17)
-		self:EnablePrivateAuraSound(245742, "targetyou", 2)
 	end
 else
 	mod:RegisterEventsInCombat(

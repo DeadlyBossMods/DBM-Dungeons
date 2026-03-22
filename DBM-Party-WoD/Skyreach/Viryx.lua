@@ -21,9 +21,9 @@ if DBM:IsPostMidnight() then
 	mod:AddCustomTimerOptions(154396, true, 4, 0)
 	mod:AddCustomTimerOptions(1253531, true, 3, 0)
 	--Midnight private aura replacements
-	mod:AddPrivateAuraSoundOption(1253541, true, 1253541, 1)--Scorching Ray
-	mod:AddPrivateAuraSoundOption(153954, true, 1253998, 1)--Cast Down
-	mod:AddPrivateAuraSoundOption(1253531, true, 1253531, 1)--Lens Flare
+	mod:AddPrivateAuraSoundOption(1253541, true, 1253541, 1, "debuffyou", 17)--Scorching Ray
+	mod:AddPrivateAuraSoundOption(153954, true, 1253998, 1, "targetyou", 2)--Cast Down
+	mod:AddPrivateAuraSoundOption(1253531, true, 1253531, 1, "laserrun", 2)--Lens Flare
 
 	function mod:OnLimitedCombatStart()
 		self:DisableSpecialWarningSounds()
@@ -35,9 +35,6 @@ if DBM:IsPostMidnight() then
 		self:EnableTimelineOptions(154396, 311)
 		self:EnableTimelineOptions(1253531, 312)
 
-		self:EnablePrivateAuraSound(1253541, "debuffyou", 17)
-		self:EnablePrivateAuraSound(153954, "targetyou", 2)
-		self:EnablePrivateAuraSound(1253531, "laserrun", 2)
 	end
 else
 	mod:RegisterEventsInCombat(

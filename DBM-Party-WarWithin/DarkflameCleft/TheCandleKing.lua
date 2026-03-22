@@ -53,7 +53,7 @@ local timerParanoidMindCD					= mod:NewVarCountTimer("v10.9-15.8", 426145, nil, 
 local timerThrowDarkflameCD					= mod:NewVarCountTimer("v21.9-37.6", 420696, nil, nil, nil, 3)--TODO, refine it with timer correction
 
 mod:AddSetIconOption("SetIconOnAdds", 420659, true, 5, {8, 7, 6, 5, 4})
-mod:AddPrivateAuraSoundOption(420696, true, 420696, 1)--Throw Darkflame
+mod:AddPrivateAuraSoundOption({420696,453278}, true, 420696, 1, "movetostatue", 17)--Throw Darkflame
 
 mod.vb.addIcon = 8
 mod.vb.statueCount = 0
@@ -72,7 +72,6 @@ function mod:OnCombatStart(delay)
 	timerParanoidMindCD:Start(9.4-delay, 1)
 	if self:IsMythic() then
 		timerThrowDarkflameCD:Start(20.7-delay, 1)
-		self:EnablePrivateAuraSound({420696,453278}, "movetostatue", 17)--Throw Darkflame
 	end
 end
 

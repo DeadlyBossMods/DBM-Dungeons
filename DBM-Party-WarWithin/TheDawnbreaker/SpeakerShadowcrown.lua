@@ -25,7 +25,7 @@ mod:AddCustomTimerOptions(426734, nil, 3, 0)--Burning Shadows
 mod:AddCustomTimerOptions(425264, nil, 3, 0)--Obsidian Blast
 mod:AddCustomTimerOptions(453212, nil, 3, 0)--Obsidian Beam
 --Midnight private aura replacements
-mod:AddPrivateAuraSoundOption(426735, true, 426734, 1)--Burning Shadows
+mod:AddPrivateAuraSoundOption(426735, true, 426734, 1, "targetyou", 2)--Burning Shadows
 
 function mod:OnLimitedCombatStart()
 	self:EnableAlertOptions(445996, 617, "watchstep", 2)
@@ -40,5 +40,4 @@ function mod:OnLimitedCombatStart()
 	self:EnableTimelineOptions(425264, 620)
 	self:EnableTimelineOptions(453212, 621)
 
-	self:EnablePrivateAuraSound(426735, "targetyou", 2)
 end

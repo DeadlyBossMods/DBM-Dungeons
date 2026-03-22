@@ -28,17 +28,16 @@ local timerImplodingStrikeCD				= mod:NewCDCountTimer(20.5, 1256355, nil, nil, n
 local timerEmptinessOfTheVoidCD				= mod:NewVarCountTimer("v19.5-23.3", 1256351, DBM_COMMON_L.INTERRUPT.." (%s)", nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerPhase							= mod:NewStageTimer(42)
 
-mod:AddPrivateAuraSoundOption(1287014, true, 1287014, 1, 2)--Null Zone
+mod:AddPrivateAuraSoundOption({1287014, 1256045}, true, 1287014, 1, 2, "watchfeet", 8)--Null Zone
 
 mod.vb.devouringEssenceCount = 0
 mod.vb.implodingStrikeCount = 0
 mod.vb.voidCount = 0
 local badStateDetected = false
-local cachedEventIDs = {}
 local workaroundblizzardincompitence = {}--In case we have to fall back to blizz timers, this will prevent us from trying to use encounter timeline events which are also used by blizz timers and will cause false positives that break timers
 
 function mod:OnLimitedCombatStart()
-	table.wipe(cachedEventIDs)
+	self:TLCountReset()
 	self.vb.devouringEssenceCount = 1
 	self.vb.implodingStrikeCount = 1
 	self.vb.voidCount = 1
@@ -57,7 +56,6 @@ function mod:OnLimitedCombatStart()
 		specWarnEmptinessOfTheVoid:SetAlert({392, 393}, "kickcast", 19, 2)
 		timerEmptinessOfTheVoidCD:SetTimeline({392, 393})
 	end
-	self:EnablePrivateAuraSound({1287014, 1256045}, "watchfeet", 8)
 	--if self:IsMythic() then
 	--	self:SetCreatureID(252892)
 	--else
@@ -66,7 +64,7 @@ function mod:OnLimitedCombatStart()
 end
 
 function mod:OnCombatEnd()
-	table.wipe(cachedEventIDs)
+	self:TLCountReset()
 	self:UnregisterShortTermEvents()
 end
 
@@ -77,8 +75,6 @@ do
 	local function timers(self, timer, eventID)
 		--Void has unique rounded durations (7 opener, 21 recurring)
 		if timer == 7 or timer == 21 then
-			timerEmptinessOfTheVoidCD:TLStart(timer == 21 and "v19.5-23.3" or 7, eventID, self.vb.voidCount)
-			cachedEventIDs[eventID] = "void"
 			if workaroundblizzardincompitence["void"] then
 				specWarnEmptinessOfTheVoid:Show(L.name, self.vb.voidCount)
 				specWarnEmptinessOfTheVoid:Play("kickcast")
@@ -86,10 +82,10 @@ do
 				DBM:Debug("Showing extra emptyness of the void warning", nil, nil, nil, true)
 				workaroundblizzardincompitence["void"] = false
 			end
+			local count = self:TLCountStart(eventID, "void", "voidCount")
+			timerEmptinessOfTheVoidCD:TLStart(timer == 21 and "v19.5-23.3" or 7, eventID, count)
 		--Imploding is opener 12, recurring 15.5 (rounded to 16)
 		elseif timer == 12 or timer == 15.5 then
-			timerImplodingStrikeCD:TLStart(timer, eventID, self.vb.implodingStrikeCount)
-			cachedEventIDs[eventID] = "imploding"
 			if workaroundblizzardincompitence["imploding"] then
 				specWarnImplodingStrike:Show()
 				specWarnImplodingStrike:Play("defensive")
@@ -97,16 +93,18 @@ do
 				DBM:Debug("Showing extra imploding strike warning", nil, nil, nil, true)
 				workaroundblizzardincompitence["imploding"] = false
 			end
+			local count = self:TLCountStart(eventID, "imploding", "implodingStrikeCount")
+			timerImplodingStrikeCD:TLStart(timer, eventID, count)
 		--Devouring is opener 16.0 and recurring 18.5 (rounded to 19)
 		elseif timer == 16 or timer == 18.5 then
-			timerDevouringEssenceCD:TLStart(timer, eventID, self.vb.devouringEssenceCount)
-			cachedEventIDs[eventID] = "devouring"
 			if workaroundblizzardincompitence["devouring"] then
 				warnDevouringEssence:Show(self.vb.devouringEssenceCount)
 				self.vb.devouringEssenceCount = self.vb.devouringEssenceCount + 1
 				DBM:Debug("Showing extra devouring essence warning", nil, nil, nil, true)
 				workaroundblizzardincompitence["devouring"] = false
 			end
+			local count = self:TLCountStart(eventID, "devouring", "devouringEssenceCount")
+			timerDevouringEssenceCD:TLStart(timer, eventID, count)
 		else--Hardcode failed; disable and fall back to Blizzard API
 			badStateDetected = true
 			if DBM.Options.IgnoreBlizzAPI then
@@ -132,29 +130,27 @@ do
 	function mod:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(eventID)
 		local eventState = C_EncounterTimeline.GetEventState(eventID)
 		if not eventID or not eventState then return end
-		local eventType = cachedEventIDs[eventID]
-		if eventState == 1 and eventType == "void" then
-			workaroundblizzardincompitence["void"] = true
-			timerPhase:Start()
-		elseif eventState == 2 then--Finished
-			if eventType == "void" then
-				specWarnEmptinessOfTheVoid:Show(L.name, self.vb.voidCount)
-				specWarnEmptinessOfTheVoid:Play("kickcast")
-				self.vb.voidCount = self.vb.voidCount + 1
-				workaroundblizzardincompitence["void"] = false
-			elseif eventType == "imploding" then
-				specWarnImplodingStrike:Show()
-				specWarnImplodingStrike:Play("defensive")
-				self.vb.implodingStrikeCount = self.vb.implodingStrikeCount + 1
-				workaroundblizzardincompitence["imploding"] = false
-			elseif eventType == "devouring" then
-				warnDevouringEssence:Show(self.vb.devouringEssenceCount)
-				self.vb.devouringEssenceCount = self.vb.devouringEssenceCount + 1
-				workaroundblizzardincompitence["devouring"] = false
+		local eventType, eventCount = self:TLCountFinish(eventID)
+		if eventType and eventCount then
+			if eventState == 1 and eventType == "void" then
+				workaroundblizzardincompitence["void"] = true
+				timerPhase:Start()
+			elseif eventState == 2 then--Finished
+				if eventType == "void" then
+					specWarnEmptinessOfTheVoid:Show(L.name, eventCount)
+					specWarnEmptinessOfTheVoid:Play("kickcast")
+					workaroundblizzardincompitence["void"] = false
+				elseif eventType == "imploding" then
+					specWarnImplodingStrike:Show()
+					specWarnImplodingStrike:Play("defensive")
+					workaroundblizzardincompitence["imploding"] = false
+				elseif eventType == "devouring" then
+					warnDevouringEssence:Show(eventCount)
+					workaroundblizzardincompitence["devouring"] = false
+				end
+			elseif eventState == 3 then--Canceled
+				self:TLCountCancel(eventID)
 			end
-			cachedEventIDs[eventID] = nil
-		elseif eventState == 3 then--Canceled
-			cachedEventIDs[eventID] = nil
 		end
 	end
 end

@@ -27,8 +27,8 @@ mod:AddCustomTimerOptions(1223958, true, 3, 0)--Cosmic Sting
 mod:AddCustomTimerOptions(1223847, true, 5, 0)--Triplicate
 -- Midnights private aura replacements
 --mod:AddPrivateAuraSoundOption(1223958, true, 1223958, 1, 1)--Cosmic Sting
-mod:AddPrivateAuraSoundOption(1224104, true, 1224104, 1, 2)--Void Secretions
-mod:AddPrivateAuraSoundOption(1253709, true, 1253709, 1, 1)--Neural Link
+mod:AddPrivateAuraSoundOption(1224104, true, 1224104, 1, 2, "watchfeet", 8)--Void Secretions
+mod:AddPrivateAuraSoundOption(1253709, true, 1253709, 1, 1, "linegather", 2)--Neural Link
 --mod:AddPrivateAuraSoundOption(1224299, true, 1224299, 1, 1)--Astral Grasp
 
 function mod:OnLimitedCombatStart()
@@ -42,7 +42,5 @@ function mod:OnLimitedCombatStart()
 	self:EnableTimelineOptions(1223847, 635)
 
 --	self:EnablePrivateAuraSound(1223958, "runout", 2)
-	self:EnablePrivateAuraSound(1224104, "watchfeet", 8)
-	self:EnablePrivateAuraSound(1253709, "linegather", 2)
 --	self:EnablePrivateAuraSound(1224299, "pullin", 12)
 end

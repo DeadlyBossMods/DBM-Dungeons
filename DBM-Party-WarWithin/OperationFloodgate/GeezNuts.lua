@@ -23,9 +23,9 @@ mod:AddCustomTimerOptions(468812, true, 3, 0)
 mod:AddCustomTimerOptions(466190, true, 5, 0)
 mod:AddCustomTimerOptions(468841, true, 3, 0)
 --Midnight private aura replacements
-mod:AddPrivateAuraSoundOption(468811, true, 468812, 1)--Gigazap
-mod:AddPrivateAuraSoundOption(468723, true, 468723, 1)
-mod:AddPrivateAuraSoundOption(468616, true, 468616, 1)
+mod:AddPrivateAuraSoundOption(468811, true, 468812, 1, "defensive", 2)--Gigazap
+mod:AddPrivateAuraSoundOption(468723, true, 468723, 1, "watchfeet", 8)
+mod:AddPrivateAuraSoundOption(468616, true, 468616, 1, "sparktowater", 18)
 
 function mod:OnLimitedCombatStart()
 	self:EnableAlertOptions(465463, 515, "farfromline", 2)
@@ -37,7 +37,4 @@ function mod:OnLimitedCombatStart()
 	self:EnableTimelineOptions(466190, 519)
 	self:EnableTimelineOptions(468841, 520)
 
-	self:EnablePrivateAuraSound(468811, "defensive", 2)--Gigazap
-	self:EnablePrivateAuraSound(468723, "watchfeet", 8)--GTFO
-	self:EnablePrivateAuraSound(468616, "sparktowater", 18)--Leaping Spark Fixate
 end

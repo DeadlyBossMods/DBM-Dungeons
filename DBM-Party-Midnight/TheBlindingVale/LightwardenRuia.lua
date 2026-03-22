@@ -30,8 +30,8 @@ mod:AddCustomTimerOptions(1239885, true, 6, 0)--Bear Form
 mod:AddCustomTimerOptions(1239882, true, 6, 0)--Moonkin Form
 mod:AddCustomTimerOptions(1239883, true, 6, 0)--Haranir Form
 --Midnight private aura replacements
-mod:AddPrivateAuraSoundOption(1239825, true, 1239825, 1, 1)--Lightfire
-mod:AddPrivateAuraSoundOption(1240222, true, 1240222, 1, 1)--Pulverizing Strikes
+mod:AddPrivateAuraSoundOption(1239825, true, 1239825, 1, 1, "runout", 2)--Lightfire
+mod:AddPrivateAuraSoundOption(1240222, true, 1240222, 1, 1, "lineyou", 17)--Pulverizing Strikes
 
 function mod:OnLimitedCombatStart()
 	self:EnableAlertOptions(1240098, 182, "watchstep", 2, 3)
@@ -49,6 +49,4 @@ function mod:OnLimitedCombatStart()
 	self:EnableTimelineOptions(1239882, 186)
 	self:EnableTimelineOptions(1239883, 187)
 
-	self:EnablePrivateAuraSound(1239825, "runout", 2)
-	self:EnablePrivateAuraSound(1240222, "lineyou", 17)--Change sound later if incorrect
 end

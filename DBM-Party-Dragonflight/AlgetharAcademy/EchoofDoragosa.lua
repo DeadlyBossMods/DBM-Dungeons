@@ -24,8 +24,8 @@ if DBM:IsPostMidnight() then
 	mod:AddCustomTimerOptions(374341, nil, 3, 0)
 	mod:AddCustomTimerOptions(388820, nil, 2, 0)
 	--Midnight private aura replacements
-	mod:AddPrivateAuraSoundOption(389007, true, 389007, 1)--GTFO
-	mod:AddPrivateAuraSoundOption(389011, true, 389011, 1)--Overwhelming Power (off by default since we can't warn all stacks, just initial)
+	mod:AddPrivateAuraSoundOption(389007, true, 389007, 1, "watchfeet", 8)--GTFO
+	mod:AddPrivateAuraSoundOption(389011, true, 389011, 1, "debuffyou", 17)--Overwhelming Power (off by default since we can't warn all stacks, just initial)
 
 	function mod:OnLimitedCombatStart()
 		self:DisableSpecialWarningSounds()
@@ -41,8 +41,6 @@ if DBM:IsPostMidnight() then
 		self:EnableTimelineOptions(374341, 295)
 		self:EnableTimelineOptions(388820, 296)
 
-		self:EnablePrivateAuraSound(389007, "watchfeet", 8)
-		self:EnablePrivateAuraSound(389011, "debuffyou", 17)
 	end
 else
 	mod:RegisterEventsInCombat(

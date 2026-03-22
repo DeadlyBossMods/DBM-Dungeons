@@ -26,8 +26,8 @@ if DBM:IsPostMidnight() then
 	mod:AddCustomTimerOptions(1261286, nil, 3, 0)--Throw Saronite
 	mod:AddCustomTimerOptions(1262029, nil, 2, 0)
 	--Midnight private aura replacements
-	mod:AddPrivateAuraSoundOption(1261286, true, 1261286, 1)--Throw Saronite
-	mod:AddPrivateAuraSoundOption(1261799, true, 1261799, 1)--Glacial Overload (GTFO)
+	mod:AddPrivateAuraSoundOption(1261286, true, 1261286, 1, "debuffyou", 17)--Throw Saronite
+	mod:AddPrivateAuraSoundOption(1261799, true, 1261799, 1, "watchfeet", 8)--Glacial Overload (GTFO)
 	function mod:OnLimitedCombatStart()
 		self:DisableSpecialWarningSounds()
 
@@ -40,8 +40,6 @@ if DBM:IsPostMidnight() then
 		self:EnableTimelineOptions(1261286, 146)
 		self:EnableTimelineOptions(1262029, 147)
 
-		self:EnablePrivateAuraSound(1261286, "debuffyou", 17)
-		self:EnablePrivateAuraSound(1261799, "watchfeet", 8)
 	end
 
 else

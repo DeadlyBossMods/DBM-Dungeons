@@ -20,7 +20,7 @@ mod:AddCustomTimerOptions(322936, true, 5, 0)
 mod:AddCustomTimerOptions(322943, true, 3, 0)
 mod:AddCustomTimerOptions(322977, true, 3, 0)--Sinlight Visions
 --Midnight private aura replacements
-mod:AddPrivateAuraSoundOption(323001, true, 323001, 1)--GTFO
+mod:AddPrivateAuraSoundOption(323001, true, 323001, 1, "watchfeet", 8)--GTFO
 
 function mod:OnLimitedCombatStart()
 	self:EnableAlertOptions(322711, 477, "watchstep", 2)
@@ -34,7 +34,6 @@ function mod:OnLimitedCombatStart()
 	self:EnableTimelineOptions(322943, 479)
 	self:EnableTimelineOptions(322977, 480)
 
-	self:EnablePrivateAuraSound(323001, "watchfeet", 8)
 end
 
 --[[
