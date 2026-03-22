@@ -23,9 +23,9 @@ mod:AddCustomTimerOptions(448213, nil, 3, 0)--Expel Webs
 mod:AddCustomTimerOptions(434089, nil, 3, 0)--Spinneret's Strands
 mod:AddCustomTimerOptions(434655, nil, 5, 0)--Bomb
 --Midnight private aura replacements
-mod:AddPrivateAuraSoundOption({434406,439790}, true, 434407, 1, "targetyou", 2)--Rolling Acid target
-mod:AddPrivateAuraSoundOption({439783,434090}, true, 434089, 1, "runout", 12)--Spineret's Strands target
-mod:AddPrivateAuraSoundOption(438957, true, 438957, 1, "watchfeet", 8)--GTFO
+mod:AddPrivateAuraSoundOption({434406,439790}, true, 434407, 1, 1, "targetyou", 2)--Rolling Acid target
+mod:AddPrivateAuraSoundOption({439783,434090}, true, 434089, 1, 1, "runout", 12)--Spineret's Strands target
+mod:AddPrivateAuraSoundOption(438957, true, 438957, 1, 2, "watchfeet", 8)--GTFO
 
 function mod:OnLimitedCombatStart()
 	self:EnableAlertOptions(448888, 626, "aesoon", 2)

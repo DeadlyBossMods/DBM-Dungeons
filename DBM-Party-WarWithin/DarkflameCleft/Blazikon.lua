@@ -46,7 +46,7 @@ local timerEnkindlingInfernoCD				= mod:NewNextCountTimer(30.3, 423109, nil, nil
 local timerDousingBreathCD					= mod:NewNextCountTimer(60.3, 425394, nil, nil, nil, 2)
 
 mod:AddSetIconOption("IconOnWick", 421817, true, 0, {1, 2, 3})
-mod:AddPrivateAuraSoundOption(423080, true, 429113, 1, "targetyou", 2)
+mod:AddPrivateAuraSoundOption(423080, true, 429113, 1, 1, "targetyou", 2)
 
 mod.vb.debuffIcon = 1
 mod.vb.wickCount = 0

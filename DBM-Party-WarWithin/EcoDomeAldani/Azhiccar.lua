@@ -20,8 +20,8 @@ mod:AddCustomTimerOptions(1217327, nil, 1, 0)--Invading Shriek
 mod:AddCustomTimerOptions(1227748, nil, 3, 0)--Toxic Regurgitation
 mod:AddCustomTimerOptions(1217232, nil, 2, 0)--Devour
 --Midnight private aura replacements
-mod:AddPrivateAuraSoundOption(1227748, true, 1227748, 1, "runout", 2)--Toxic Regurgitation Target
-mod:AddPrivateAuraSoundOption(1217439, true, 1217446, 1, "watchfeet", 8)--GTFO
+mod:AddPrivateAuraSoundOption(1227748, true, 1227748, 1, 1, "runout", 2)--Toxic Regurgitation Target
+mod:AddPrivateAuraSoundOption(1217439, true, 1217446, 1, 2, "watchfeet", 8)--GTFO
 
 function mod:OnLimitedCombatStart()
 	self:EnableAlertOptions(1217327, 2, "killmob", 1)

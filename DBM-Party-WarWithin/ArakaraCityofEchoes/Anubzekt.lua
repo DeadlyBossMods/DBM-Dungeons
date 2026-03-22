@@ -24,8 +24,8 @@ mod:AddCustomTimerOptions(433740, nil, 3, 0)--Infestation
 mod:AddCustomTimerOptions(1283246, nil, 1, 0)--Summon Web Mage
 mod:AddCustomTimerOptions(433766, nil, 6, 0)--Eye of the Storm
 --Midnight private aura replacements
-mod:AddPrivateAuraSoundOption(433740, true, 433740, 1, "runout", 2)
-mod:AddPrivateAuraSoundOption(450969, true, 450969, 1, "watchfeet", 8)--GTFO
+mod:AddPrivateAuraSoundOption(433740, true, 433740, 1, 1, "runout", 2)
+mod:AddPrivateAuraSoundOption(450969, true, 450969, 1, 2, "watchfeet", 8)--GTFO
 
 function mod:OnLimitedCombatStart()
 	self:EnableAlertOptions(433425, {542,551}, "frontal", 15)

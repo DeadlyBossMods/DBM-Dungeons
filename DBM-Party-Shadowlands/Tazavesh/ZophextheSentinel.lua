@@ -19,9 +19,9 @@ mod:AddCustomTimerOptions(346006, true, 3, 0)--Impound Contraband
 mod:AddCustomTimerOptions(346204, true, 5, 0)--Armed Security
 --Midnight private aura replacements
 --Recheck https://www.wowhead.com/beta/spell=347949/interrogation when this dungeon returns
-mod:AddPrivateAuraSoundOption(348366, true, 348366, 1, "watchfeet", 8)--GTFO
-mod:AddPrivateAuraSoundOption(345990, true, 348350, 1, "debuffyou", 17)--Containment Cell
-mod:AddPrivateAuraSoundOption(345770, true, 346006, 1, "targetyou", 2)--Impound Contraband
+mod:AddPrivateAuraSoundOption(348366, true, 348366, 1, 2, "watchfeet", 8)--GTFO
+mod:AddPrivateAuraSoundOption(345990, true, 348350, 1, 1, "debuffyou", 17)--Containment Cell
+mod:AddPrivateAuraSoundOption(345770, true, 346006, 1, 1, "targetyou", 2)--Impound Contraband
 
 function mod:OnLimitedCombatStart()
 	self:EnableAlertOptions(1236348, 562, "frontal", 15)

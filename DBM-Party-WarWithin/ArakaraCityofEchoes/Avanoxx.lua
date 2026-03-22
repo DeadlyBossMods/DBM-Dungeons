@@ -22,8 +22,8 @@ mod:AddCustomTimerOptions(438471, nil, 5, 0)--Voracious Bite
 mod:AddCustomTimerOptions(438476, nil, 1, 0)--Alerting Shrill
 mod:AddCustomTimerOptions(438473, nil, 2, 0)--Gossamer Onslaught
 --Midnight private aura replacements
-mod:AddPrivateAuraSoundOption(439070, true, 439070, 1, "justrun", 2)
-mod:AddPrivateAuraSoundOption(434830, true, 434830, 1, "watchfeet", 8)--GTFO
+mod:AddPrivateAuraSoundOption(439070, true, 439070, 1, 1, "justrun", 2)
+mod:AddPrivateAuraSoundOption(434830, true, 434830, 1, 2, "watchfeet", 8)--GTFO
 
 function mod:OnLimitedCombatStart()
 	if self:IsTank() then
