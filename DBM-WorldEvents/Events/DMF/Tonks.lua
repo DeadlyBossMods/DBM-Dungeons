@@ -2,7 +2,6 @@ local mod	= DBM:NewMod("Tonks", "DBM-WorldEvents", 3)
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
-mod:DisableHardcodedOptions()
 mod:SetZone(974)
 
 if DBM:IsPostMidnight() then
