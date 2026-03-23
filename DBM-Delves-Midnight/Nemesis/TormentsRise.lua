@@ -35,7 +35,7 @@ mod.vb.implodingStrikeCount = 0
 mod.vb.voidCount = 0
 local badStateDetected = false
 local workaroundblizzardincompitence = {}--In case we have to fall back to blizz timers, this will prevent us from trying to use encounter timeline events which are also used by blizz timers and will cause false positives that break timers
-local tankFound = false
+--local tankFound = false
 
 local function setFallback(self)
 	--Blizz API fallbacks
@@ -47,7 +47,8 @@ local function setFallback(self)
 	timerEmptinessOfTheVoidCD:SetTimeline({392, 393})
 end
 
-local function isTankInGroup(self)
+--[[
+local function isTankInGroup()
 	if not IsInGroup() then
 		tankFound = UnitGroupRolesAssigned("player") == "TANK"
 	else
@@ -60,6 +61,7 @@ local function isTankInGroup(self)
 		end
 	end
 end
+--]]
 
 function mod:OnLimitedCombatStart()
 	self:TLCountReset()
@@ -67,8 +69,8 @@ function mod:OnLimitedCombatStart()
 	self.vb.implodingStrikeCount = 1
 	self.vb.voidCount = 1
 	workaroundblizzardincompitence = {}
-	isTankInGroup(self)
-	if DBM.Options.HardcodedTimer and not badStateDetected and tankFound then
+--	isTankInGroup()
+	if DBM.Options.HardcodedTimer and not badStateDetected then
 		self:IgnoreBlizzardAPI()
 		self:RegisterShortTermEvents(
 			"ENCOUNTER_TIMELINE_EVENT_ADDED",
@@ -90,12 +92,13 @@ function mod:OnCombatEnd()
 end
 
 do
+	--Timers tank verified for both prot and fury warrior
 	---@param self DBMMod
 	---@param timer number
 	---@param eventID number
-	local function timersTank(self, timer, eventID)
+	local function timersAll(self, timer, eventID)
 		--Void has unique rounded durations (7 opener, 21 recurring)
-		if timer == 7 or timer == 21 then
+		if timer == 7 or timer == 21 or timer == 21.3 or timer == 36 then--21.3 if valeera is tank and player spec fury, 36 if evoker
 			if workaroundblizzardincompitence["void"] then
 				specWarnEmptinessOfTheVoid:Show(L.name, self.vb.voidCount)
 				specWarnEmptinessOfTheVoid:Play("kickcast")
@@ -117,7 +120,7 @@ do
 			local count = self:TLCountStart(eventID, "imploding", "implodingStrikeCount")
 			timerImplodingStrikeCD:TLStart(timer, eventID, count)
 		--Devouring is opener 16.0 and recurring 18.5 (rounded to 19)
-		elseif timer == 16 or timer == 18.5 then
+		elseif timer == 16 or timer == 18.5 or timer == 18.75 then--18.75 if valeera is tank and player spec fury
 			if workaroundblizzardincompitence["devouring"] then
 				warnDevouringEssence:Show(self.vb.devouringEssenceCount)
 				self.vb.devouringEssenceCount = self.vb.devouringEssenceCount + 1
@@ -144,8 +147,8 @@ do
 		local eventID = eventInfo.id
 		local timerExact = eventInfo.duration
 --		local timer = math.floor(timerExact + 0.5)
-		if not badStateDetected and tankFound then
-			timersTank(self, timerExact, eventID)
+		if not badStateDetected then
+			timersAll(self, timerExact, eventID)
 		end
 	end
 
