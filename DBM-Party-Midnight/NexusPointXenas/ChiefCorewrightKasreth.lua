@@ -25,8 +25,8 @@ mod:AddCustomTimerOptions(1251785, true, 3, 0)--Reflux Charge
 mod:AddCustomTimerOptions(1251183, true, 3, 0)--Leyline Array
 mod:AddCustomTimerOptions(1264048, true, 3, 0)--Flux Collapse
 --Midnight private aura replacements
-mod:AddPrivateAuraSoundOption(1251785, true, 1251785, 1, 1)--Reflux Charge
-mod:AddPrivateAuraSoundOption(1264042, true, 1264042, 1, 2)--Arcane Spill
+mod:AddPrivateAuraSoundOption(1251785, true, 1251785, 1, 1, "movetobeam", 19)--Reflux Charge
+mod:AddPrivateAuraSoundOption(1264042, true, 1264042, 1, 2, "watchfeet", 8)--Arcane Spill
 
 function mod:OnLimitedCombatStart()
 	self:EnableAlertOptions(1257509, 106, "watchstep", 2, 2)
@@ -38,6 +38,4 @@ function mod:OnLimitedCombatStart()
 	self:EnableTimelineOptions(1251183, 108)
 	self:EnableTimelineOptions(1264048, 172)
 
-	self:EnablePrivateAuraSound(1251785, "movetobeam", 19)
-	self:EnablePrivateAuraSound(1264042, "watchfeet", 8)
 end

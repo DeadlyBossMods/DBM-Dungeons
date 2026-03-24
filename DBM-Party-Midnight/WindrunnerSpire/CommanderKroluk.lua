@@ -28,9 +28,9 @@ mod:AddCustomTimerOptions(1283247, true, 3, 0)--Reckless Leap
 --mod:AddCustomTimerOptions(472043, true, 1, 0)--Rallying Bellow
 mod:AddCustomTimerOptions(470966, true, 2, 0)--Bladestorm
 --Midnight private aura replacements
-mod:AddPrivateAuraSoundOption(470966, true, 470966, 4, 1)--Bladestorm target
-mod:AddPrivateAuraSoundOption(468924, true, 470966, 1, 2)--Bladestorm GTFO
-mod:AddPrivateAuraSoundOption(1283247, true, 1283247, 1, 1)--Reckless Leap target
+mod:AddPrivateAuraSoundOption(470966, true, 470966, 4, 1, "justrun", 2)--Bladestorm target
+mod:AddPrivateAuraSoundOption(468924, true, 470966, 1, 2, "watchfeet", 8)--Bladestorm GTFO
+mod:AddPrivateAuraSoundOption(1283247, true, 1283247, 1, 1, "runout", 2)--Reckless Leap target
 
 function mod:OnLimitedCombatStart()
 	self:FixBlizzardAPI()--Boss fires random 16 minute timers for no reason that aren't valid. we want to scrub them
@@ -46,7 +46,4 @@ function mod:OnLimitedCombatStart()
 --	self:EnableTimelineOptions(472043, 215)--Doesn't seem to have a timer (it's just cast after the gather mechanic)
 	self:EnableTimelineOptions(470966, 216)
 
-	self:EnablePrivateAuraSound(470966, "justrun", 2)
-	self:EnablePrivateAuraSound(468924, "watchfeet", 8)
-	self:EnablePrivateAuraSound(1283247, "runout", 2)
 end

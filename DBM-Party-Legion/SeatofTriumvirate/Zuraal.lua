@@ -22,7 +22,7 @@ if DBM:IsPostMidnight() then
 	mod:AddCustomTimerOptions(1263440, true, 5, 0)
 	mod:AddCustomTimerOptions(1263304, true, 2, 0)
 	--Midnight private aura replacements
-	mod:AddPrivateAuraSoundOption(244588, true, 244588, 2)--Void Sludge (GTFO)
+	mod:AddPrivateAuraSoundOption(244588, true, 244588, 2, 1, "watchfeet", 8)--Void Sludge (GTFO)
 
 	function mod:OnLimitedCombatStart()
 		self:DisableSpecialWarningSounds()
@@ -37,7 +37,6 @@ if DBM:IsPostMidnight() then
 		self:EnableTimelineOptions(1263440, 226)
 		self:EnableTimelineOptions(1263304, 238)
 
-		self:EnablePrivateAuraSound(244588, "watchfeet", 8)
 	end
 else
 	mod:RegisterEventsInCombat(

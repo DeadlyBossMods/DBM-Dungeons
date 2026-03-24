@@ -28,9 +28,9 @@ mod:AddCustomTimerOptions(1260643, true, 3, 0)--Barrage
 mod:AddCustomTimerOptions(1246666, "RemoveDisease", 5, 0)--Infected Pinions
 mod:AddCustomTimerOptions(1249478, true, 3, 0)--Carrion Swoop
 --Midnight private aura replacements
-mod:AddPrivateAuraSoundOption(1243741, true, 1243741, 1, 1)--Freezing Trap Stun
-mod:AddPrivateAuraSoundOption(1260643, true, 1260643, 1, 1)--Barrage
-mod:AddPrivateAuraSoundOption(1249478, true, 1249478, 1, 1)--Carrion Swoop
+mod:AddPrivateAuraSoundOption(1243741, true, 1243741, 1, 1, "stunyou", 19)--Freezing Trap Stun
+mod:AddPrivateAuraSoundOption(1260643, true, 1260643, 1, 1, "frontalyou", 19)--Barrage
+mod:AddPrivateAuraSoundOption(1249478, true, 1249478, 1, 1, "behindice", 19)--Carrion Swoop
 
 function mod:OnLimitedCombatStart()
 	if self:IsTank() then
@@ -47,7 +47,4 @@ function mod:OnLimitedCombatStart()
 	self:EnableTimelineOptions(1246666, 154)
 	self:EnableTimelineOptions(1249478, 155)
 
-	self:EnablePrivateAuraSound(1243741, "stunyou", 19)
-	self:EnablePrivateAuraSound(1260643, "frontalyou", 19)
-	self:EnablePrivateAuraSound(1249478, "behindice", 19)
 end

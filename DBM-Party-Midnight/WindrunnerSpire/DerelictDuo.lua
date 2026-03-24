@@ -26,10 +26,10 @@ mod:AddCustomTimerOptions(472736, true, 2, 0)--Debilitating Shriek
 mod:AddCustomTimerOptions(472777, true, 3, 0)--Splattering Spew
 mod:AddCustomTimerOptions(472795, true, 3, 0)--Heaving Yank
 --Midnight private aura replacements
-mod:AddPrivateAuraSoundOption(1253834, true, 474105, 4, 1)--Curse of Darkness
-mod:AddPrivateAuraSoundOption(472793, true, 472795, 1, 1)--Heaving Yank
-mod:AddPrivateAuraSoundOption(474129, true, 472745, 1, 1)--Splattering Spew
-mod:AddPrivateAuraSoundOption(472777, true, 472777, 4, 2)--Gunk Splatter GTFO
+mod:AddPrivateAuraSoundOption({1253834,1215803}, true, 474105, 4, 1, "justrun", 2)--Curse of Darkness
+mod:AddPrivateAuraSoundOption(472793, true, 472795, 1, 1, "behindboss", 2)--Heaving Yank
+mod:AddPrivateAuraSoundOption(474129, true, 472745, 1, 1, "poolyou", 18)--Splattering Spew
+mod:AddPrivateAuraSoundOption(472777, true, 472777, 4, 2, "watchfeet", 8)--Gunk Splatter GTFO
 
 function mod:OnLimitedCombatStart()
 	if self:IsTank() then
@@ -44,8 +44,4 @@ function mod:OnLimitedCombatStart()
 	self:EnableTimelineOptions(472777, 28)
 	self:EnableTimelineOptions(472795, 29)
 
-	self:EnablePrivateAuraSound({1253834,1215803}, "justrun", 2)
-	self:EnablePrivateAuraSound(472793, "behindboss", 2)
-	self:EnablePrivateAuraSound(474129, "poolyou", 18)
-	self:EnablePrivateAuraSound(472777, "watchfeet", 8)
 end

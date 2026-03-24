@@ -19,7 +19,7 @@ if DBM:IsPostMidnight() then
 	mod:AddCustomTimerOptions(154162, true, 5, 0)
 	mod:AddCustomTimerOptions(154135, true, 2, 0)
 	--Midnight private aura replacements
-	mod:AddPrivateAuraSoundOption(154132, true, 154115, 1)--Failing at smash
+	mod:AddPrivateAuraSoundOption(154132, true, 154115, 1, 3, "screwup", 18)--Failing at smash
 
 	function mod:OnLimitedCombatStart()
 		self:DisableSpecialWarningSounds()
@@ -35,7 +35,6 @@ if DBM:IsPostMidnight() then
 		self:EnableTimelineOptions(154162, 303)
 		self:EnableTimelineOptions(154135, 304)
 
-		self:EnablePrivateAuraSound(154132, "screwup", 18)
 	end
 else
 	mod:RegisterEventsInCombat(

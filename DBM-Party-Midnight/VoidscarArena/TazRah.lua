@@ -25,8 +25,8 @@ mod:AddCustomTimerOptions(1262901, true, 1, 0)--Gather Shadows
 mod:AddCustomTimerOptions(1222274, true, 2, 0)--Dark Rift
 mod:AddCustomTimerOptions(1225011, true, 3, 0)--Ethereal Shards
 --Midnight private aura replacements
-mod:AddPrivateAuraSoundOption(1225011, true, 1225011, 1, 1)--Ethereal Shards
-mod:AddPrivateAuraSoundOption(1222098, true, 1222098, 1, 1)--Nether Dash
+mod:AddPrivateAuraSoundOption(1225011, true, 1225011, 1, 1, "debuffyou", 17)--Ethereal Shards
+mod:AddPrivateAuraSoundOption(1222098, true, 1222098, 1, 1, "chargemove", 2)--Nether Dash
 
 function mod:OnLimitedCombatStart()
 	if self:IsTank() then
@@ -40,6 +40,4 @@ function mod:OnLimitedCombatStart()
 	self:EnableTimelineOptions(1222274, 41)
 	self:EnableTimelineOptions(1225011, 42)
 
-	self:EnablePrivateAuraSound(1225011, "debuffyou", 17)--change to "lineyou" if it uses a line
-	self:EnablePrivateAuraSound(1222098, "chargemove", 2)
 end

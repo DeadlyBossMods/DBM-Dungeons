@@ -22,8 +22,8 @@ mod:AddCustomTimerOptions(460867, true, 5, 0)
 mod:AddCustomTimerOptions(1217653, true, 3, 0)
 mod:AddCustomTimerOptions(473690, true, 3, 0)
 --Midnight private aura replacements
-mod:AddPrivateAuraSoundOption(473713, true, 473690, 1)--Debuff
-mod:AddPrivateAuraSoundOption(470022, true, 459779, 1)--Charge
+mod:AddPrivateAuraSoundOption(473713, true, 473690, 1, 1, "targetyou", 2)--Debuff
+mod:AddPrivateAuraSoundOption(470022, true, 459779, 1, 1, "chargemove", 2)--Charge
 
 function mod:OnLimitedCombatStart()
 	if self:IsTank() then
@@ -37,6 +37,4 @@ function mod:OnLimitedCombatStart()
 	self:EnableTimelineOptions(1217653, 472)
 	self:EnableTimelineOptions(473690, 473)
 
-	self:EnablePrivateAuraSound(473713, "targetyou", 2)
-	self:EnablePrivateAuraSound(470022, "chargemove", 2)
 end

@@ -24,8 +24,8 @@ mod:AddCustomTimerOptions(1251023, true, 5, 0)--Spiritbreaker
 mod:AddCustomTimerOptions(1252675, true, 3, 0)--Crush Souls
 mod:AddCustomTimerOptions(1253788, true, 6, 0)--Soulrending roar
 --Midnight private aura replacements
-mod:AddPrivateAuraSoundOption(1252675, true, 1252675, 1, 1)--Crush Souls
-mod:AddPrivateAuraSoundOption(1253779, true, 1253779, 1, 2)--Spectral Decay
+mod:AddPrivateAuraSoundOption(1252675, true, 1252675, 1, 1, "leapyou", 19)--Crush Souls
+mod:AddPrivateAuraSoundOption(1253779, true, 1253779, 1, 2, "watchfeet", 8)--Spectral Decay
 
 function mod:OnLimitedCombatStart()
 	if self:IsTank() then
@@ -37,6 +37,4 @@ function mod:OnLimitedCombatStart()
 	self:EnableTimelineOptions(1252675, 157)
 	self:EnableTimelineOptions(1253788, 158)
 
-	self:EnablePrivateAuraSound(1252675, "leapyou", 19)
-	self:EnablePrivateAuraSound(1253779, "watchfeet", 8)
 end
