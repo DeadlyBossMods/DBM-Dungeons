@@ -11,10 +11,6 @@ mod.respawnTime = 29
 
 mod:RegisterCombat("combat")
 
---mod:RegisterEventsInCombat(
-
---)
-
 --TODO, does mod need both runic mark private aura IDs? or does it result in a double announce?
 --Custom Sounds on cast/cooldown expiring
 mod:AddCustomAlertSoundOption(1224903, true, 2)--Suppression Zone

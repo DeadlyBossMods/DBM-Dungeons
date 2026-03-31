@@ -11,10 +11,6 @@ mod.respawnTime = 29
 
 mod:RegisterCombat("combat")
 
---mod:RegisterEventsInCombat(
-
---)
-
 --NOTE: Boss encounter events are out of date with journal. Blizzard probably forgot to update boss mod after a redesign
 --Note: Stygian Ichor is missing PA sound for GTFO but should probably have one
 --Custom Sounds on cast/cooldown expiring

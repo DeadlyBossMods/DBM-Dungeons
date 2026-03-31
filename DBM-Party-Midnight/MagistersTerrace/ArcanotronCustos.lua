@@ -11,32 +11,136 @@ mod.respawnTime = 29
 
 mod:RegisterCombat("combat")
 
---mod:RegisterEventsInCombat(
+local warnEtherealShackles				= mod:NewCountAnnounce(1214038, 2)
 
---)
---Custom Sounds on cast/cooldown expiring
-mod:AddCustomAlertSoundOption(474345, true, 2)--Refueling Protocol
-mod:AddCustomAlertSoundOption(474496, true, 1)--Repulsing Slam
-mod:AddCustomAlertSoundOption(1214081, true, 2)--Arcane Expulsion
---Custom timer colors, countdowns, and disables
-mod:AddCustomTimerOptions(474345, true, 6, 0)--Refueling Protocol
-mod:AddCustomTimerOptions(474496, true, 5, 0)--Repulsing Slam
-mod:AddCustomTimerOptions(1214038, true, 3, 0)--Ethereal Shackles
-mod:AddCustomTimerOptions(1214081, true, 2, 0)--Arcane Expulsion
---Midnight private aura replacements
+local specWarnRefuelingProtocol			= mod:NewSpecialWarningCount(474345, nil, nil, nil, 2, 2)
+local specWarnRepulsingSlam				= mod:NewSpecialWarningCount(474496, nil, nil, nil, 1, 2)
+local specWarnArcaneExpulsion			= mod:NewSpecialWarningCount(1214081, nil, nil, nil, 2, 2)
+
+local timerRefuelingProtocolCD			= mod:NewCDCountTimer(20.5, 474345, nil, nil, nil, 6)
+local timerRepulsingSlamCD				= mod:NewCDCountTimer(20.5, 474496, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+local timerEtherealShacklesCD			= mod:NewCDCountTimer(20.5, 1214038, nil, nil, nil, 3)
+local timerArcaneExpulsionCD			= mod:NewCDCountTimer(20.5, 1214081, nil, nil, nil, 2)
+
 mod:AddPrivateAuraSoundOption(1214089, true, 1214089, 1, 2, "watchfeet", 8)--Arcane Residue (GTFO)
 mod:AddPrivateAuraSoundOption(1214038, true, 1214038, 1, 1, "debuffyou", 17)--Ethereal Shackles
 
-function mod:OnLimitedCombatStart()
-	self:EnableAlertOptions(474345, 281, "catchballs", 12, 3)--Doesn't work? but it should?
+mod.vb.protocolCount = 0
+mod.vb.slamCount = 0
+mod.vb.shacklesCount = 0
+mod.vb.expulsionCount = 0
+local badStateDetected = false
+
+---@param self DBMMod
+local function setFallback(self)
+	--Blizz API fallbacks
+	specWarnRefuelingProtocol:SetAlert(281, "catchballs", 12, 3)
 	if self:IsTank() then
-		self:EnableAlertOptions(474496, 286, "carefly", 2, 2)
+		specWarnRepulsingSlam:SetAlert(286, "carefly", 2, 2)
 	end
-	self:EnableAlertOptions(1214081, 288, "carefly", 2, 3)
+	specWarnArcaneExpulsion:SetAlert(288, "carefly", 2, 3)
+	timerRefuelingProtocolCD:SetTimeline(281)
+	timerRepulsingSlamCD:SetTimeline(286)
+	timerEtherealShacklesCD:SetTimeline(287)
+	timerArcaneExpulsionCD:SetTimeline(288)
+end
 
-	self:EnableTimelineOptions(474345, 281)
-	self:EnableTimelineOptions(474496, 286)
-	self:EnableTimelineOptions(1214038, 287)
-	self:EnableTimelineOptions(1214081, 288)
+function mod:OnLimitedCombatStart()
+	self:TLCountReset()
+	self.vb.protocolCount = 1
+	self.vb.slamCount = 1
+	self.vb.shacklesCount = 1
+	self.vb.expulsionCount = 1
+	if self:IsMythicPlus() and DBM.Options.HardcodedTimer and not badStateDetected then
+		self:IgnoreBlizzardAPI()
+		self:RegisterShortTermEvents(
+			"ENCOUNTER_TIMELINE_EVENT_ADDED",
+			"ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED"
+		)
+	else
+		setFallback(self)
+	end
+end
 
+function mod:OnCombatEnd()
+	self:TLCountReset()
+	self:UnregisterShortTermEvents()
+end
+
+do
+	---@param self DBMMod
+	---@param timer number
+	---@param timerExact number
+	---@param eventID number
+	local function timersAll(self, timer, timerExact, eventID)
+		--Logic confirmed against M+ only. Normal, Heroic, and M0 not covered
+		if timer > 900 then--Ignored long placeholder artifacts seen in logged pull
+			return
+		elseif timer == 48 then--Ignored protocol/reset artifact seen in logged pull
+			return
+		elseif timer == 45 then--Refueling Protocol
+			timerRefuelingProtocolCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "protocol", "protocolCount"))
+		elseif timer == 5 or timer == 6 then--Repulsing Slam opener after pull/refuel
+			timerRepulsingSlamCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "slam", "slamCount"))
+		elseif timer == 15 or timer == 16 then--Arcane Expulsion opener after pull/refuel
+			timerArcaneExpulsionCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "expulsion", "expulsionCount"))
+		elseif timer == 22 then--Ethereal Shackles real cast
+			timerEtherealShacklesCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "shackles", "shacklesCount"))
+		elseif timer == 23 then--Repulsing Slam (22.5) or Arcane Expulsion (23.0)
+			if timerExact < 22.75 then
+				timerRepulsingSlamCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "slam", "slamCount"))
+			else
+				timerArcaneExpulsionCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "expulsion", "expulsionCount"))
+			end
+		else--Reached end of chain without finding a valid timer, this means hardcode mod has failed, so we need to disable hardcoded features and fall back to blizz API
+			if not DBM.Options.DebugMode then
+				badStateDetected = true
+				if DBM.Options.IgnoreBlizzAPI then
+					DBM.Options.IgnoreBlizzAPI = false
+					DBM:FireEvent("DBM_ResumeBlizzAPI")
+				end
+				self:UnregisterShortTermEvents()
+				setFallback(self)
+				DBM:Debug("|cffff0000Failed to match encounter timeline events to expected timers, falling back to Blizzard API|r", nil, nil, nil, true)
+			else
+				DBM:Debug("|cffff0000Failed to match encounter timeline events to expected timers|r", nil, nil, nil, true)
+			end
+		end
+	end
+	--Note, bar stage changing and canceling is handled by core
+	function mod:ENCOUNTER_TIMELINE_EVENT_ADDED(eventInfo)
+		if eventInfo.source ~= 0 then return end
+		local eventID = eventInfo.id
+		local timerExact = eventInfo.duration
+		local timer = math.floor(timerExact + 0.5)
+		if not badStateDetected then
+			timersAll(self, timer, timerExact, eventID)
+		end
+	end
+
+	function mod:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(eventID)
+		local eventState = C_EncounterTimeline.GetEventState(eventID)
+		if not eventID or not eventState then return end
+		if eventState == 2 then
+			local eventType, eventCount = self:TLCountFinish(eventID)
+			if eventType and eventCount then
+				if eventType == "protocol" then
+					specWarnRefuelingProtocol:Show(eventCount)
+					specWarnRefuelingProtocol:Play("catchballs")
+				elseif eventType == "slam" then
+					if self:IsTank() then
+						specWarnRepulsingSlam:Show(eventCount)
+						specWarnRepulsingSlam:Play("carefly")
+					end
+				elseif eventType == "shackles" then
+					warnEtherealShackles:Show(eventCount)
+				elseif eventType == "expulsion" then
+					specWarnArcaneExpulsion:Show(eventCount)
+					specWarnArcaneExpulsion:Play("carefly")
+				end
+			end
+		elseif eventState == 3 then
+			self:TLCountCancel(eventID)
+		end
+	end
 end

@@ -11,10 +11,6 @@ mod.respawnTime = 29
 
 mod:RegisterCombat("combat")
 
---mod:RegisterEventsInCombat(
-
---)
-
 --TODO, find out if cosmic sting has a personal alert
 --Custom Sounds on cast/cooldown expiring
 mod:AddCustomAlertSoundOption(1223847, true, 2)
