@@ -11,31 +11,130 @@ mod.respawnTime = 29
 
 mod:RegisterCombat("combat")
 
---mod:RegisterEventsInCombat(
+local warnDevouringEntropy				= mod:NewCountAnnounce(1215897, 3)
 
---)
+local specWarnUnstableVoidEssence		= mod:NewSpecialWarningCount(1215087, nil, nil, nil, 2, 12)
+local specWarnHulkingFragment			= mod:NewSpecialWarningCount(1280113, nil, nil, nil, 1, 2)
 
---NOTE: Boss encounter events are out of date with journal. Blizzard probably forgot to update boss mod after a redesign
---Note: Stygian Ichor is missing PA sound for GTFO but should probably have one
---Custom Sounds on cast/cooldown expiring
---mod:AddCustomAlertSoundOption(1269668, true, 2)--WARNING: This ability is no longer in encounter journal (Umbral Eruption)
-mod:AddCustomAlertSoundOption(1215087, true, 2)--Unstable Void Essence
-mod:AddCustomAlertSoundOption(1280113, true, 1)--Hulking Fragment
---Custom timer colors, countdowns, and disables
-mod:AddCustomTimerOptions(1215897, true, 3, 0)--Devouring Entropy
-mod:AddCustomTimerOptions(1215087, true, 5, 0)--Unstable Void Essence
-mod:AddCustomTimerOptions(1280113, true, 5, 0)--Hulking Fragment
+local timerDevouringEntropyCD			= mod:NewCDCountTimer(20.5, 1215897, nil, nil, nil, 3)
+local timerUnstableVoidEssenceCD		= mod:NewCDCountTimer(20.5, 1215087, nil, nil, nil, 5)
+local timerHulkingFragmentCD			= mod:NewCDCountTimer(20.5, 1280113, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+
 --Midnight private aura replacements
 mod:AddPrivateAuraSoundOption(1215897, true, 1215897, 1, 1, "scatter", 2)--Devouring Entropy
 
-function mod:OnLimitedCombatStart()
-	self:EnableAlertOptions(1215087, 292, "catchballs", 12)
+mod.vb.entropyCount = 0
+mod.vb.essenceCount = 0
+mod.vb.fragmentCount = 0
+local badStateDetected = false
+local recurringTwentyTwoCount = 0
+
+---@param self DBMMod
+local function setFallback(self)
+	--Blizz API fallbacks
+	specWarnUnstableVoidEssence:SetAlert(292, "catchballs", 12, 2)
 	if self:IsTank() then
-		self:EnableAlertOptions(1280113, 420, "defensive", 2)
+		specWarnHulkingFragment:SetAlert(420, "defensive", 2, 1)
+	end
+	timerDevouringEntropyCD:SetTimeline(290)
+	timerUnstableVoidEssenceCD:SetTimeline(292)
+	timerHulkingFragmentCD:SetTimeline(420)
+end
+
+function mod:OnLimitedCombatStart()
+	self:TLCountReset()
+	self.vb.entropyCount = 1
+	self.vb.essenceCount = 1
+	self.vb.fragmentCount = 1
+	recurringTwentyTwoCount = 0
+	if self:IsMythicPlus() and DBM.Options.HardcodedTimer and not badStateDetected then
+		self:IgnoreBlizzardAPI()
+		self:RegisterShortTermEvents(
+			"ENCOUNTER_TIMELINE_EVENT_ADDED",
+			"ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED"
+		)
+	else
+		setFallback(self)
 	end
 
-	self:EnableTimelineOptions(1215897, 290)
-	self:EnableTimelineOptions(1215087, 292)
-	self:EnableTimelineOptions(1280113, 420)
+end
 
+function mod:OnCombatEnd()
+	self:TLCountReset()
+	recurringTwentyTwoCount = 0
+	self:UnregisterShortTermEvents()
+end
+
+do
+	---@param self DBMMod
+	---@param timer number
+	---@param timerExact number
+	---@param eventID number
+	local function timersAll(self, timer, timerExact, eventID)
+		--Logic confirmed against M+ logs. Opener is 3/9/15, then a repeating 22-second Fragment -> Entropy -> Essence loop.
+		if timer > 900 then--Ignored long placeholder artifacts seen in logged pulls
+		elseif timer == 3 then--Hulking Fragment opener
+			timerHulkingFragmentCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "fragment", "fragmentCount"))
+		elseif timer == 9 then--Devouring Entropy opener
+			timerDevouringEntropyCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "entropy", "entropyCount"))
+		elseif timer == 15 then--Unstable Void Essence opener
+			timerUnstableVoidEssenceCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "essence", "essenceCount"))
+		elseif timer == 22 then--Recurring Fragment -> Entropy -> Essence rotation
+			recurringTwentyTwoCount = recurringTwentyTwoCount + 1
+			if recurringTwentyTwoCount % 3 == 1 then
+				timerHulkingFragmentCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "fragment", "fragmentCount"))
+			elseif recurringTwentyTwoCount % 3 == 2 then
+				timerDevouringEntropyCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "entropy", "entropyCount"))
+			else
+				timerUnstableVoidEssenceCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "essence", "essenceCount"))
+			end
+		else--Reached end of chain without finding a valid timer, this means hardcode mod has failed, so we need to disable hardcoded features and fall back to blizz API
+			if not DBM.Options.DebugMode then
+				badStateDetected = true
+				if DBM.Options.IgnoreBlizzAPI then
+					DBM.Options.IgnoreBlizzAPI = false
+					DBM:FireEvent("DBM_ResumeBlizzAPI")
+				end
+				self:UnregisterShortTermEvents()
+				setFallback(self)
+				DBM:Debug("|cffff0000Failed to match encounter timeline events to expected timers, falling back to Blizzard API|r", nil, nil, nil, true)
+			else
+				DBM:Debug("|cffff0000Failed to match encounter timeline events to expected timers|r", nil, nil, nil, true)
+			end
+		end
+	end
+
+	--Note, bar state changing and canceling is handled by core
+	function mod:ENCOUNTER_TIMELINE_EVENT_ADDED(eventInfo)
+		if eventInfo.source ~= 0 then return end
+		local eventID = eventInfo.id
+		local timerExact = eventInfo.duration
+		local timer = math.floor(timerExact + 0.5)
+		if not badStateDetected then
+			timersAll(self, timer, timerExact, eventID)
+		end
+	end
+
+	function mod:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(eventID)
+		local eventState = C_EncounterTimeline.GetEventState(eventID)
+		if not eventID or not eventState then return end
+		if eventState == 2 then
+			local eventType, eventCount = self:TLCountFinish(eventID)
+			if eventType and eventCount then
+				if eventType == "entropy" then
+					warnDevouringEntropy:Show(eventCount)
+				elseif eventType == "essence" then
+					specWarnUnstableVoidEssence:Show(eventCount)
+					specWarnUnstableVoidEssence:Play("catchballs")
+				elseif eventType == "fragment" then
+					if self:IsTank() then
+						specWarnHulkingFragment:Show(eventCount)
+						specWarnHulkingFragment:Play("defensive")
+					end
+				end
+			end
+		elseif eventState == 3 then
+			self:TLCountCancel(eventID)
+		end
+	end
 end

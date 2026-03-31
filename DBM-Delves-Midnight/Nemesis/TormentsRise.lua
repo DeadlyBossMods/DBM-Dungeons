@@ -98,7 +98,7 @@ do
 	---@param eventID number
 	local function timersAll(self, timer, eventID)
 		--Void has unique rounded durations (7 opener, 21 recurring)
-		if timer == 7 or timer == 21 or timer == 21.3 or timer == 36 then--21.3 if valeera is tank and player spec fury, 36 if evoker
+		if timer == 7 or self:IsRoundedTimer(timer, 21) or self:IsRoundedTimer(timer, 36) or self:IsRoundedTimer(timer, 51) then
 			if workaroundblizzardincompitence["void"] then
 				specWarnEmptinessOfTheVoid:Show(L.name, self.vb.voidCount)
 				specWarnEmptinessOfTheVoid:Play("kickcast")
@@ -141,7 +141,7 @@ do
 		end
 	end
 
-	--Note, bar stage changing and canceling is handled by core
+	--Note, bar state changing and canceling is handled by core
 	function mod:ENCOUNTER_TIMELINE_EVENT_ADDED(eventInfo)
 		if eventInfo.source ~= 0 then return end
 		local eventID = eventInfo.id
