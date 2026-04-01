@@ -24,7 +24,6 @@ if DBM:IsPostMidnight() then
 	mod:AddPrivateAuraSoundOption(1263532, true, 1263532, 1, 1, "watchfeet", 8)--Void Storm (GTFO)
 
 	function mod:OnLimitedCombatStart()
-		self:DisableSpecialWarningSounds()
 		self:EnableAlertOptions(1263538, 246, "mobsoon", 1)
 		self:EnableAlertOptions(1263528, 247, "carefly", 2)
 		self:EnableAlertOptions(1277358, 376, "watchwave", 2)

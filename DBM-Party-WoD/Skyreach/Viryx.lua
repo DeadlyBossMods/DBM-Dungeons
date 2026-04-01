@@ -26,7 +26,6 @@ if DBM:IsPostMidnight() then
 	mod:AddPrivateAuraSoundOption(1253531, true, 1253531, 1, 1, "laserrun", 2)--Lens Flare
 
 	function mod:OnLimitedCombatStart()
-		self:DisableSpecialWarningSounds()
 		self:EnableAlertOptions(1253998, 310, "targetchange", 2)
 		self:EnableAlertOptions(154396, 311, "kickcast", 2)
 

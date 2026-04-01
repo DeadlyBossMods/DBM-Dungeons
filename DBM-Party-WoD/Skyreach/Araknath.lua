@@ -22,7 +22,6 @@ if DBM:IsPostMidnight() then
 	mod:AddPrivateAuraSoundOption(154132, true, 154115, 1, 3, "screwup", 18)--Failing at smash
 
 	function mod:OnLimitedCombatStart()
-		self:DisableSpecialWarningSounds()
 		self:EnableAlertOptions(154115, 302, "frontal", 15)
 		if not self:IsTank() then
 			--Tank frontals are cast during soak

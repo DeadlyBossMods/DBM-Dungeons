@@ -20,37 +20,177 @@ mod:RegisterCombat("combat")
 
 --TODO, some actual custom sounds and timer disables when apis added
 if DBM:IsPostMidnight() then
-	--Custom Sounds on cast/cooldown expiring
-	mod:AddCustomAlertSoundOption(1262582, true, 1)
-	mod:AddCustomAlertSoundOption(1263406, true, 1)
-	mod:AddCustomAlertSoundOption(1263756, true, 2)--Death's Grasp
-	mod:AddCustomAlertSoundOption(1276948, true, 2)--Icy Barrage
-	--Custom timer colors, countdowns, and disables
-	mod:AddCustomTimerOptions(1262582, nil, 5, 0)
-	mod:AddCustomTimerOptions(1263406, nil, 1, 0)
-	mod:AddCustomTimerOptions(1262772, nil, 3, 0)--Rime Blast
-	mod:AddCustomTimerOptions(1276648, nil, 3, 0)--Bone Infusion
-	mod:AddCustomTimerOptions(1263756, nil, 3, 0)--Death's Grasp
-	mod:AddCustomTimerOptions(1276948, nil, 3, 0)--Icy Barrage
+	local warnRimeBlast					= mod:NewCountAnnounce(1262772, 3)
+	local warnBoneInfusion				= mod:NewCountAnnounce(1276648, 3)
+
+	local specWarnScourgelordsBrand		= mod:NewSpecialWarningCount(1262582, nil, nil, nil, 1, 2)
+	local specWarnArmyOfTheDead			= mod:NewSpecialWarningCount(1263406, nil, nil, nil, 1, 2)
+	local specWarnDeathsGrasp			= mod:NewSpecialWarningDodgeCount(1263756, nil, nil, nil, 2, 2)
+	local specWarnIcyBarrage			= mod:NewSpecialWarningDodgeCount(1276948, nil, nil, nil, 2, 2)
+
+	local timerScourgelordsBrandCD		= mod:NewCDCountTimer(20.5, 1262582, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+	local timerArmyOfTheDeadCD			= mod:NewCDCountTimer(20.5, 1263406, nil, nil, nil, 1)
+	local timerRimeBlastCD				= mod:NewCDCountTimer(20.5, 1262772, nil, nil, nil, 3)
+	local timerBoneInfusionCD			= mod:NewCDCountTimer(20.5, 1276648, nil, nil, nil, 3)
+	local timerDeathsGraspCD			= mod:NewCDCountTimer(20.5, 1263756, nil, nil, nil, 3)
+	local timerIcyBarrageCD				= mod:NewCDCountTimer(20.5, 1276948, nil, nil, nil, 3)
+
 	--Midnight private aura replacements
 	mod:AddPrivateAuraSoundOption(1262772, true, 1262772, 1, 1, "debuffyou", 17)--Rime Blast
-	function mod:OnLimitedCombatStart()
-		self:DisableSpecialWarningSounds()
 
+	mod.vb.brandCount = 0
+	mod.vb.armyCount = 0
+	mod.vb.rimeCount = 0
+	mod.vb.boneCount = 0
+	mod.vb.graspCount = 0
+	mod.vb.barrageCount = 0
+	local badStateDetected = false
+	local nextTwentyEightType = nil
+
+	---@param self DBMMod
+	local function setFallback(self)
+		--Blizz API fallbacks
 		if self:IsTank() then
-			self:EnableAlertOptions(1262582, 164, "carefly", 2)
+			specWarnScourgelordsBrand:SetAlert(164, "carefly", 2)
 		end
-		self:EnableAlertOptions(1263406, 165, "mobsoon", 2)
-		self:EnableAlertOptions(1263756, 168, "watchstep", 2)
-		self:EnableAlertOptions(1276948, 375, "watchstep", 2)
+		specWarnArmyOfTheDead:SetAlert(165, "mobsoon", 2)
+		specWarnDeathsGrasp:SetAlert(168, "watchstep", 2)
+		specWarnIcyBarrage:SetAlert(375, "watchstep", 2)
+		timerScourgelordsBrandCD:SetTimeline(164)
+		timerArmyOfTheDeadCD:SetTimeline(165)
+		timerRimeBlastCD:SetTimeline(166)
+		timerBoneInfusionCD:SetTimeline(167)
+		timerDeathsGraspCD:SetTimeline(168)
+		timerIcyBarrageCD:SetTimeline(375)
+	end
 
-		self:EnableTimelineOptions(1262582, 164)
-		self:EnableTimelineOptions(1263406, 165)
-		self:EnableTimelineOptions(1262772, 166)
-		self:EnableTimelineOptions(1276648, 167)
-		self:EnableTimelineOptions(1263756, 168)
-		self:EnableTimelineOptions(1276948, 375)
+	function mod:OnLimitedCombatStart()
+		self:TLCountReset()
+		self.vb.brandCount = 1
+		self.vb.armyCount = 1
+		self.vb.rimeCount = 1
+		self.vb.boneCount = 1
+		self.vb.graspCount = 1
+		self.vb.barrageCount = 1
+		nextTwentyEightType = nil
+		if self:IsMythicPlus() and DBM.Options.HardcodedTimer and not badStateDetected then
+			self:IgnoreBlizzardAPI()
+			self:RegisterShortTermEvents(
+				"ENCOUNTER_TIMELINE_EVENT_ADDED",
+				"ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED"
+			)
+		else
+			setFallback(self)
+		end
+	end
 
+	function mod:OnCombatEnd()
+		self:TLCountReset()
+		nextTwentyEightType = nil
+		self:UnregisterShortTermEvents()
+	end
+
+	do
+		---@param self DBMMod
+		---@param timer number
+		---@param timerExact number
+		---@param eventID number
+		local function timersAll(self, timer, timerExact, eventID)
+			--Logic confirmed against M+ logs. Unique durations: Brand(14), Army(52), Grasp(24), Icy Barrage(12), Rime opener(7).
+			--28-second bars are context-dependent: after 7 => Rime, after that => Brand, after 12 => Bone Infusion.
+			if timer == 14 then--Scourgelord's Brand opener
+				timerScourgelordsBrandCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "brand", "brandCount"))
+			elseif timer == 52 then--Army of the Dead
+				timerArmyOfTheDeadCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "army", "armyCount"))
+			elseif timer == 24 then--Death's Grasp
+				timerDeathsGraspCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "grasp", "graspCount"))
+			elseif timer == 12 then--Icy Barrage
+				nextTwentyEightType = "bone"
+				timerIcyBarrageCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "barrage", "barrageCount"))
+			elseif timer == 7 then--Rime Blast opener for a Rime/Brand pair
+				nextTwentyEightType = "rime"
+				timerRimeBlastCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "rime", "rimeCount"))
+			elseif timer == 28 then
+				if nextTwentyEightType == "rime" then
+					nextTwentyEightType = "brand"
+					timerRimeBlastCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "rime", "rimeCount"))
+				elseif nextTwentyEightType == "brand" then
+					nextTwentyEightType = nil
+					timerScourgelordsBrandCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "brand", "brandCount"))
+				elseif nextTwentyEightType == "bone" then
+					nextTwentyEightType = nil
+					timerBoneInfusionCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "bone", "boneCount"))
+				else--Reached end of chain without finding a valid timer, this means hardcode mod has failed, so we need to disable hardcoded features and fall back to blizz API
+					if not DBM.Options.DebugMode then
+						badStateDetected = true
+						if DBM.Options.IgnoreBlizzAPI then
+							DBM.Options.IgnoreBlizzAPI = false
+							DBM:FireEvent("DBM_ResumeBlizzAPI")
+						end
+						self:UnregisterShortTermEvents()
+						setFallback(self)
+						DBM:Debug("|cffff0000Failed to match encounter timeline events to expected timers, falling back to Blizzard API|r", nil, nil, nil, true)
+					else
+						DBM:Debug("|cffff0000Failed to match encounter timeline events to expected timers|r", nil, nil, nil, true)
+					end
+				end
+			else--Reached end of chain without finding a valid timer, this means hardcode mod has failed, so we need to disable hardcoded features and fall back to blizz API
+				if not DBM.Options.DebugMode then
+					badStateDetected = true
+					if DBM.Options.IgnoreBlizzAPI then
+						DBM.Options.IgnoreBlizzAPI = false
+						DBM:FireEvent("DBM_ResumeBlizzAPI")
+					end
+					self:UnregisterShortTermEvents()
+					setFallback(self)
+					DBM:Debug("|cffff0000Failed to match encounter timeline events to expected timers, falling back to Blizzard API|r", nil, nil, nil, true)
+				else
+					DBM:Debug("|cffff0000Failed to match encounter timeline events to expected timers|r", nil, nil, nil, true)
+				end
+			end
+		end
+
+		--Note, bar state changing and canceling is handled by core
+		function mod:ENCOUNTER_TIMELINE_EVENT_ADDED(eventInfo)
+			if eventInfo.source ~= 0 then return end
+			local eventID = eventInfo.id
+			local timerExact = eventInfo.duration
+			local timer = math.floor(timerExact + 0.5)
+			if not badStateDetected then
+				timersAll(self, timer, timerExact, eventID)
+			end
+		end
+
+		function mod:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(eventID)
+			local eventState = C_EncounterTimeline.GetEventState(eventID)
+			if not eventID or not eventState then return end
+			if eventState == 2 then
+				local eventType, eventCount = self:TLCountFinish(eventID)
+				if eventType and eventCount then
+					if eventType == "brand" then
+						if self:IsTank() then
+							specWarnScourgelordsBrand:Show(eventCount)
+							specWarnScourgelordsBrand:Play("carefly")
+						end
+					elseif eventType == "army" then
+						specWarnArmyOfTheDead:Show(eventCount)
+						specWarnArmyOfTheDead:Play("mobsoon")
+					elseif eventType == "grasp" then
+						specWarnDeathsGrasp:Show(eventCount)
+						specWarnDeathsGrasp:Play("watchstep")
+					elseif eventType == "barrage" then
+						specWarnIcyBarrage:Show(eventCount)
+						specWarnIcyBarrage:Play("watchstep")
+					elseif eventType == "rime" then
+						warnRimeBlast:Show(eventCount)
+					elseif eventType == "bone" then
+						warnBoneInfusion:Show(eventCount)
+					end
+				end
+			elseif eventState == 3 then
+				self:TLCountCancel(eventID)
+			end
+		end
 	end
 else
 	mod:RegisterEvents(

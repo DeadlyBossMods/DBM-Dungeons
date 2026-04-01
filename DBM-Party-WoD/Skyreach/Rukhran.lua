@@ -24,7 +24,6 @@ if DBM:IsPostMidnight() then
 	mod:AddPrivateAuraSoundOption(1253511, true, 1253511, 1, 1, "targetyou", 2)--Burning Pursuit
 
 	function mod:OnLimitedCombatStart()
-		self:DisableSpecialWarningSounds()
 		self:EnableAlertOptions(1253510, 305, "mobsoon", 2)
 		if self:IsTank() then
 			self:EnableAlertOptions(1253519, 306, "defensive", 2)

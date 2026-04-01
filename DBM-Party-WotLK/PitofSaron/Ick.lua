@@ -17,33 +17,142 @@ mod:RegisterCombat("combat")
 
 if DBM:IsPostMidnight() then
 	--Note. https://www.wowhead.com/spell=1282138/shade-bomb is ignored on purpose to avoid spam
-	--Custom Sounds on cast/cooldown expiring
-	mod:AddCustomAlertSoundOption(1264027, true, 1)--Shade Shift
-	mod:AddCustomAlertSoundOption(1264336, true, 2)--Plague Expulsion
-	mod:AddCustomAlertSoundOption(1264287, true, 1)--Blight Smawsh
-	--Custom timer colors, countdowns, and disables
-	mod:AddCustomTimerOptions(1264363, nil, 3, 0)--Get 'Em, Ick! (parent of Lumbering Fixation)
-	mod:AddCustomTimerOptions(1264027, nil, 1, 0)
-	mod:AddCustomTimerOptions(1264336, nil, 3, 0)
-	mod:AddCustomTimerOptions(1264287, nil, 5, 0)
-	mod:AddCustomTimerOptions(1264453, nil, 3, 0)--Lumbering Fixation (child of Get 'Em, Ick!)
+	local warnGetEmIck					= mod:NewCountAnnounce(1264363, 3)
+
+	local specWarnShadeShift			= mod:NewSpecialWarningSwitchCount(1264027, nil, nil, nil, 1, 2)
+	local specWarnPlagueExpulsion		= mod:NewSpecialWarningDodgeCount(1264336, nil, nil, nil, 2, 2)
+	local specWarnBlightSmash			= mod:NewSpecialWarningCount(1264287, nil, nil, nil, 1, 18)
+
+	local timerGetEmIckCD				= mod:NewCDCountTimer(20.5, 1264363, nil, nil, nil, 3)--Get 'Em, Ick! (parent of Lumbering Fixation)
+	local timerShadeShiftCD				= mod:NewCDCountTimer(20.5, 1264027, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)
+	local timerPlagueExpulsionCD		= mod:NewCDCountTimer(20.5, 1264336, nil, nil, nil, 3)
+	local timerBlightSmashCD			= mod:NewCDCountTimer(20.5, 1264287, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+	--local timerLumberingFixationCD		= mod:NewCDCountTimer(20.5, 1264453, nil, nil, nil, 3)--Lumbering Fixation (child of Get 'Em, Ick!)
+
 	--Midnight private aura replacements
 	mod:AddPrivateAuraSoundOption(1264453, true, 1264363, 1, 1, "justrun", 2)--Lumbering Fixation
 	mod:AddPrivateAuraSoundOption(1264299, true, 1264299, 2, 2, "watchfeet", 8)--Blight (GTFO)
-	function mod:OnLimitedCombatStart()
-		self:DisableSpecialWarningSounds()
-		self:EnableAlertOptions(1264027, 204, "killmob", 2)
-		self:EnableAlertOptions(1264336, 205, "watchstep", 2)--Might need changing or clarification later
+
+	mod.vb.getEmCount = 0
+	mod.vb.shadeCount = 0
+	mod.vb.plagueCount = 0
+	mod.vb.smashCount = 0
+	local badStateDetected = false
+	local recurringNineteenCount = 0
+
+	---@param self DBMMod
+	local function setFallback(self)
+		--Blizz API fallbacks
+		specWarnShadeShift:SetAlert(204, "killmob", 2)
+		specWarnPlagueExpulsion:SetAlert(205, "watchstep", 2, 2)
 		if self:IsTank() then
-			self:EnableAlertOptions(1264287, 206, "defensive", 1)
+			specWarnBlightSmash:SetAlert(206, "poolyou", 18, 2)
+		end
+		timerGetEmIckCD:SetTimeline(203)
+		timerShadeShiftCD:SetTimeline(204)
+		timerPlagueExpulsionCD:SetTimeline(205)
+		timerBlightSmashCD:SetTimeline(206)
+		--timerLumberingFixationCD:SetTimeline(561)
+	end
+
+	function mod:OnLimitedCombatStart()
+		self:TLCountReset()
+		self.vb.getEmCount = 1
+		self.vb.shadeCount = 1
+		self.vb.plagueCount = 1
+		self.vb.smashCount = 1
+		recurringNineteenCount = 0
+		if self:IsMythicPlus() and DBM.Options.HardcodedTimer and not badStateDetected then
+			self:IgnoreBlizzardAPI()
+			self:RegisterShortTermEvents(
+				"ENCOUNTER_TIMELINE_EVENT_ADDED",
+				"ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED"
+			)
+		else
+			setFallback(self)
+		end
+	end
+
+	function mod:OnCombatEnd()
+		self:TLCountReset()
+		recurringNineteenCount = 0
+		self:UnregisterShortTermEvents()
+	end
+
+	do
+		---@param self DBMMod
+		---@param timer number
+		---@param timerExact number
+		---@param eventID number
+		local function timersAll(self, timer, timerExact, eventID)
+			--Logic confirmed against M+ logs. Cycle: Blight Smash(11/19), Plague Expulsion(21/19), Get 'Em, Ick!(50), Shade Shift(29).
+			if timer == 11 then--Blight Smash opener
+				timerBlightSmashCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "smash", "smashCount"))
+			elseif timer == 21 then--Plague Expulsion opener
+				timerPlagueExpulsionCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "plague", "plagueCount"))
+			elseif timer == 50 then--Get 'Em, Ick!
+				timerGetEmIckCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "getem", "getEmCount"))
+			elseif timer == 29 then--Shade Shift (28.75 rounded)
+				timerShadeShiftCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "shade", "shadeCount"))
+			elseif timer == 19 then--Alternates Blight Smash then Plague Expulsion in verified pulls
+				recurringNineteenCount = recurringNineteenCount + 1
+				if recurringNineteenCount % 2 == 1 then
+					timerBlightSmashCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "smash", "smashCount"))
+				else
+					timerPlagueExpulsionCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "plague", "plagueCount"))
+				end
+			else--Reached end of chain without finding a valid timer, this means hardcode mod has failed, so we need to disable hardcoded features and fall back to blizz API
+				if not DBM.Options.DebugMode then
+					badStateDetected = true
+					if DBM.Options.IgnoreBlizzAPI then
+						DBM.Options.IgnoreBlizzAPI = false
+						DBM:FireEvent("DBM_ResumeBlizzAPI")
+					end
+					self:UnregisterShortTermEvents()
+					setFallback(self)
+					DBM:Debug("|cffff0000Failed to match encounter timeline events to expected timers, falling back to Blizzard API|r", nil, nil, nil, true)
+				else
+					DBM:Debug("|cffff0000Failed to match encounter timeline events to expected timers|r", nil, nil, nil, true)
+				end
+			end
 		end
 
-		self:EnableTimelineOptions(1264363, 203)
-		self:EnableTimelineOptions(1264027, 204)
-		self:EnableTimelineOptions(1264336, 205)
-		self:EnableTimelineOptions(1264287, 206)
-		self:EnableTimelineOptions(1264453, 561)
+		--Note, bar state changing and canceling is handled by core
+		function mod:ENCOUNTER_TIMELINE_EVENT_ADDED(eventInfo)
+			if eventInfo.source ~= 0 then return end
+			local eventID = eventInfo.id
+			local timerExact = eventInfo.duration
+			local timer = math.floor(timerExact + 0.5)
+			if not badStateDetected then
+				timersAll(self, timer, timerExact, eventID)
+			end
+		end
 
+		function mod:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(eventID)
+			local eventState = C_EncounterTimeline.GetEventState(eventID)
+			if not eventID or not eventState then return end
+			if eventState == 2 then
+				local eventType, eventCount = self:TLCountFinish(eventID)
+				if eventType and eventCount then
+					if eventType == "shade" then
+						specWarnShadeShift:Show(eventCount)
+						specWarnShadeShift:Play("killmob")
+					elseif eventType == "plague" then
+						specWarnPlagueExpulsion:Show(eventCount)
+						specWarnPlagueExpulsion:Play("watchstep")
+					elseif eventType == "smash" then
+						if self:IsTank() then
+							specWarnBlightSmash:Show(eventCount)
+							specWarnBlightSmash:Play("poolyou")
+						end
+					elseif eventType == "getem" then
+						warnGetEmIck:Show(eventCount)
+					end
+				end
+			elseif eventState == 3 then
+				self:TLCountCancel(eventID)
+			end
+		end
 	end
 else
 

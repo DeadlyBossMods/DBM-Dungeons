@@ -23,7 +23,6 @@ if DBM:IsPostMidnight() then
 	mod:AddPrivateAuraSoundOption(1252733, true, 1252733, 1, 1, "debuffyou", 17)--Gale Surge
 
 	function mod:OnLimitedCombatStart()
-		self:DisableSpecialWarningSounds()
 		self:EnableAlertOptions(153757, 299, "aesoon", 2)
 		self:EnableAlertOptions(1258148, 300, "frontal", 15)
 		self:EnableAlertOptions(156793, 301, "watchstep", 2)

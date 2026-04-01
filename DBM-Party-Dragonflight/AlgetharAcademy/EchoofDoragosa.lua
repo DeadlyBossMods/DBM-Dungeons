@@ -28,8 +28,6 @@ if DBM:IsPostMidnight() then
 	mod:AddPrivateAuraSoundOption(389011, true, 389011, 1, 1, "debuffyou", 17)--Overwhelming Power (off by default since we can't warn all stacks, just initial)
 
 	function mod:OnLimitedCombatStart()
-		self:DisableSpecialWarningSounds()
-
 		if self:IsTank() then
 			self:EnableAlertOptions(1282251, 294, "defensive", 2)
 		end
