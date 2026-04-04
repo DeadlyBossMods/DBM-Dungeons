@@ -11,30 +11,133 @@ mod:RegisterCombat("combat")
 
 --TODO, some actual custom sounds and timer disables when apis added
 if DBM:IsPostMidnight() then
-	--Custom Sounds on cast/cooldown expiring
-	mod:AddCustomAlertSoundOption(1253510, true, 1)--Sun Break
-	mod:AddCustomAlertSoundOption(1253519, true, 2)--Burning Claws
-	mod:AddCustomAlertSoundOption(1253527, true, 2)--Searing Quills
-	mod:AddCustomAlertSoundOption(1253511, false, 2)--Blaze of Glory (could be spammy with multiple birds so off by default)
-	--Custom timer colors, countdowns, and disables
-	mod:AddCustomTimerOptions(1253510, true, 1, 0)
-	mod:AddCustomTimerOptions(1253519, "Tank|Healer", 5, 0)
-	mod:AddCustomTimerOptions(1253527, true, 2, 0)
+	local specWarnSunbreak			= mod:NewSpecialWarningCount(1253510, nil, nil, nil, 1, 2)
+	local specWarnBurningClaws		= mod:NewSpecialWarningCount(1253519, "Tank", nil, nil, 2, 2)
+	local specWarnSearingQuills		= mod:NewSpecialWarningCount(1253527, nil, nil, nil, 2, 12)
+
+	local timerSunbreakCD			= mod:NewCDCountTimer(20.5, 1253510, nil, nil, nil, 1)
+	local timerBurningClawsCD		= mod:NewCDCountTimer(20.5, 1253519, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+	local timerSearingQuillsCD		= mod:NewCDCountTimer(20.5, 1253527, nil, nil, nil, 2, nil, DBM_COMMON_L.DEADLY_ICON)
+
 	--Midnight private aura replacements
 	mod:AddPrivateAuraSoundOption(1253511, true, 1253511, 1, 1, "targetyou", 2)--Burning Pursuit
+	mod:AddCustomAlertSoundOption(1253511, true, 2)--Using old object because it has no timer thus no hardcode
+
+	mod.vb.sunbreakCount = 0
+	mod.vb.burningClawsCount = 0
+	mod.vb.searingQuillsCount = 0
+	local badStateDetected = false
+
+	---@param self DBMMod
+	local function setFallback(self)
+		specWarnSunbreak:SetAlert(305, "mobsoon", 2, 2)
+		if self:IsTank() then
+			specWarnBurningClaws:SetAlert(306, "defensive", 2, 2)
+		end
+		specWarnSearingQuills:SetAlert(308, "breaklos", 12, 2)
+		self:EnableAlertOptions(1253511, 603, "mobsoon", 2, 2, 0)--Using old object because it has no timer thus no hardcode
+		timerSunbreakCD:SetTimeline(305)
+		timerBurningClawsCD:SetTimeline(306)
+		timerSearingQuillsCD:SetTimeline(308)
+	end
 
 	function mod:OnLimitedCombatStart()
-		self:EnableAlertOptions(1253510, 305, "mobsoon", 2)
-		if self:IsTank() then
-			self:EnableAlertOptions(1253519, 306, "defensive", 2)
+		self:TLCountReset()
+		self.vb.sunbreakCount = 1
+		self.vb.burningClawsCount = 1
+		self.vb.searingQuillsCount = 1
+		if self:IsMythicPlus() and DBM.Options.HardcodedTimer and not badStateDetected then
+			self:IgnoreBlizzardAPI()
+			self:RegisterShortTermEvents(
+				"ENCOUNTER_TIMELINE_EVENT_ADDED",
+				"ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED"
+			)
+		else
+			setFallback(self)
 		end
-		self:EnableAlertOptions(1253527, 308, "breaklos", 12)
-		self:EnableAlertOptions(1253511, 603, "watchstep", 2)
+	end
 
-		self:EnableTimelineOptions(1253510, 305)
-		self:EnableTimelineOptions(1253519, 306)
-		self:EnableTimelineOptions(1253527, 308)
+	function mod:OnCombatEnd()
+		self:TLCountReset()
+		self:UnregisterShortTermEvents()
+	end
 
+	do
+		---@param self DBMMod
+		---@param timer number
+		---@param timerExact number
+		---@param eventID number
+		local function timersAll(self, timer, timerExact, eventID)
+			if timer == 5 then--Burning Claws
+				timerBurningClawsCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "burningClaws", "burningClawsCount"))
+			elseif timer == 21 then--Sunbreak
+				timerSunbreakCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "sunbreak", "sunbreakCount"))
+			elseif timer == 38 then--Searing Quills
+				timerSearingQuillsCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "searingQuills", "searingQuillsCount"))
+			elseif timer == 12 then--Sunbreak(odd counts) or Burning Claws(even counts)
+				local sunbreakExpectsTwelve = self.vb.sunbreakCount % 2 == 1
+				local clawsExpectsTwelve = self.vb.burningClawsCount % 2 == 0
+				if sunbreakExpectsTwelve then
+					timerSunbreakCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "sunbreak", "sunbreakCount"))
+				elseif clawsExpectsTwelve then
+					timerBurningClawsCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "burningClaws", "burningClawsCount"))
+				else
+					if not DBM.Options.DebugMode then
+						badStateDetected = true
+						self:ResumeBlizzardAPI()
+						self:UnregisterShortTermEvents()
+						setFallback(self)
+						DBM:Debug("|cffff0000Failed to match encounter timeline events to expected timers, falling back to Blizzard API|r", nil, nil, nil, true)
+					else
+						DBM:Debug("|cffff0000Failed to match encounter timeline events to expected timers|r", nil, nil, nil, true)
+					end
+				end
+			else
+				if not DBM.Options.DebugMode then
+					badStateDetected = true
+					self:ResumeBlizzardAPI()
+					self:UnregisterShortTermEvents()
+					setFallback(self)
+					DBM:Debug("|cffff0000Failed to match encounter timeline events to expected timers, falling back to Blizzard API|r", nil, nil, nil, true)
+				else
+					DBM:Debug("|cffff0000Failed to match encounter timeline events to expected timers|r", nil, nil, nil, true)
+				end
+			end
+		end
+
+		function mod:ENCOUNTER_TIMELINE_EVENT_ADDED(eventInfo)
+			if eventInfo.source ~= 0 then return end
+			local eventID = eventInfo.id
+			local timerExact = eventInfo.duration
+			local timer = math.floor(timerExact + 0.5)
+			if not badStateDetected then
+				timersAll(self, timer, timerExact, eventID)
+			end
+		end
+
+		function mod:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(eventID)
+			local eventState = C_EncounterTimeline.GetEventState(eventID)
+			if not eventID or not eventState then return end
+			if eventState == 2 then
+				local eventType, eventCount = self:TLCountFinish(eventID)
+				if eventType and eventCount then
+					if eventType == "sunbreak" then
+						specWarnSunbreak:Show(eventCount)
+						specWarnSunbreak:Play("mobsoon")
+					elseif eventType == "burningClaws" then
+						if self:IsTank() then
+							specWarnBurningClaws:Show(eventCount)
+							specWarnBurningClaws:Play("defensive")
+						end
+					elseif eventType == "searingQuills" then
+						specWarnSearingQuills:Show(eventCount)
+						specWarnSearingQuills:Play("breaklos")
+					end
+				end
+			elseif eventState == 3 then
+				self:TLCountCancel(eventID)
+			end
+		end
 	end
 else
 	mod:RegisterEventsInCombat(

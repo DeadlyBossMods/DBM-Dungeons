@@ -12,28 +12,126 @@ mod:RegisterCombat("combat")
 
 --NOTE: Solar Blast alternates between 12 and 27 second cd
 if DBM:IsPostMidnight() then
-	--Custom Sounds on cast/cooldown expiring
-	mod:AddCustomAlertSoundOption(1253998, true, 1)--Cast Down
-	mod:AddCustomAlertSoundOption(154396, "HasInterrupt", 1)--Solar Blast
-	--Custom timer colors, countdowns, and disables
-	mod:AddCustomTimerOptions(1253538, true, 3, 0)
-	mod:AddCustomTimerOptions(1253998, true, 1, 0)
-	mod:AddCustomTimerOptions(154396, true, 4, 0)
-	mod:AddCustomTimerOptions(1253531, true, 3, 0)
+	local warnScorchingRay			= mod:NewCountAnnounce(1253538, 2)
+	local warnLensFlare				= mod:NewCountAnnounce(1253531, 2)
+
+	local specWarnCastDown			= mod:NewSpecialWarningCount(1253998, nil, nil, nil, 1, 2)
+	local specWarnSolarBlast		= mod:NewSpecialWarningInterruptCount(154396, "HasInterrupt", nil, nil, 1, 2)
+
+	local timerScorchingRayCD		= mod:NewCDCountTimer(20.5, 1253538, nil, nil, nil, 3)
+	local timerCastDownCD			= mod:NewCDCountTimer(20.5, 1253998, nil, nil, nil, 1)
+	local timerSolarBlastCD			= mod:NewCDCountTimer(20.5, 154396, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+	local timerLensFlareCD			= mod:NewCDCountTimer(20.5, 1253531, nil, nil, nil, 3)
+
 	--Midnight private aura replacements
 	mod:AddPrivateAuraSoundOption(1253541, true, 1253541, 1, 1, "debuffyou", 17)--Scorching Ray
 	mod:AddPrivateAuraSoundOption(153954, true, 1253998, 1, 1, "targetyou", 2)--Cast Down
 	mod:AddPrivateAuraSoundOption(1253531, true, 1253531, 1, 1, "laserrun", 2)--Lens Flare
 
+	mod.vb.scorchingRayCount = 0
+	mod.vb.castDownCount = 0
+	mod.vb.solarBlastCount = 0
+	mod.vb.lensFlareCount = 0
+	local nextTwelveIsCastDown = true
+	local badStateDetected = false
+
+	---@param self DBMMod
+	local function setFallback(self)
+		specWarnCastDown:SetAlert(310, "targetchange", 2, 2)
+		specWarnSolarBlast:SetAlert(311, "kickcast", 2, 2)
+		timerScorchingRayCD:SetTimeline(309)
+		timerCastDownCD:SetTimeline(310)
+		timerSolarBlastCD:SetTimeline(311)
+		timerLensFlareCD:SetTimeline(312)
+	end
+
 	function mod:OnLimitedCombatStart()
-		self:EnableAlertOptions(1253998, 310, "targetchange", 2)
-		self:EnableAlertOptions(154396, 311, "kickcast", 2)
+		self:TLCountReset()
+		self.vb.scorchingRayCount = 1
+		self.vb.castDownCount = 1
+		self.vb.solarBlastCount = 1
+		self.vb.lensFlareCount = 1
+		nextTwelveIsCastDown = true
+		if self:IsMythicPlus() and DBM.Options.HardcodedTimer and not badStateDetected then
+			self:IgnoreBlizzardAPI()
+			self:RegisterShortTermEvents(
+				"ENCOUNTER_TIMELINE_EVENT_ADDED",
+				"ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED"
+			)
+		else
+			setFallback(self)
+		end
+	end
 
-		self:EnableTimelineOptions(1253538, 309)
-		self:EnableTimelineOptions(1253998, 310)
-		self:EnableTimelineOptions(154396, 311)
-		self:EnableTimelineOptions(1253531, 312)
+	function mod:OnCombatEnd()
+		self:TLCountReset()
+		self:UnregisterShortTermEvents()
+	end
 
+	do
+		---@param self DBMMod
+		---@param timer number
+		---@param timerExact number
+		---@param eventID number
+		local function timersAll(self, timer, timerExact, eventID)
+			if timer == 5 or timer == 10 then--Scorching Ray
+				timerScorchingRayCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "scorchingRay", "scorchingRayCount"))
+			elseif timer == 8 then--Solar Blast
+				timerSolarBlastCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "solarBlast", "solarBlastCount"))
+			elseif timer == 30 then--Lens Flare
+				timerLensFlareCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "lensFlare", "lensFlareCount"))
+			elseif timer == 12 then--Cast Down or Solar Blast
+				if nextTwelveIsCastDown then
+					timerCastDownCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "castDown", "castDownCount"))
+				else
+					timerSolarBlastCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "solarBlast", "solarBlastCount"))
+				end
+				nextTwelveIsCastDown = not nextTwelveIsCastDown
+			else
+				if not DBM.Options.DebugMode then
+					badStateDetected = true
+					self:ResumeBlizzardAPI()
+					self:UnregisterShortTermEvents()
+					setFallback(self)
+					DBM:Debug("|cffff0000Failed to match encounter timeline events to expected timers, falling back to Blizzard API|r", nil, nil, nil, true)
+				else
+					DBM:Debug("|cffff0000Failed to match encounter timeline events to expected timers|r", nil, nil, nil, true)
+				end
+			end
+		end
+
+		function mod:ENCOUNTER_TIMELINE_EVENT_ADDED(eventInfo)
+			if eventInfo.source ~= 0 then return end
+			local eventID = eventInfo.id
+			local timerExact = eventInfo.duration
+			local timer = math.floor(timerExact + 0.5)
+			if not badStateDetected then
+				timersAll(self, timer, timerExact, eventID)
+			end
+		end
+
+		function mod:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(eventID)
+			local eventState = C_EncounterTimeline.GetEventState(eventID)
+			if not eventID or not eventState then return end
+			if eventState == 2 then
+				local eventType, eventCount = self:TLCountFinish(eventID)
+				if eventType and eventCount then
+					if eventType == "scorchingRay" then
+						warnScorchingRay:Show(eventCount)
+					elseif eventType == "castDown" then
+						specWarnCastDown:Show(eventCount)
+						specWarnCastDown:Play("targetchange")
+					elseif eventType == "solarBlast" then
+						specWarnSolarBlast:Show(L.name, eventCount)
+						specWarnSolarBlast:Play("kickcast")
+					elseif eventType == "lensFlare" then
+						warnLensFlare:Show(eventCount)
+					end
+				end
+			elseif eventState == 3 then
+				self:TLCountCancel(eventID)
+			end
+		end
 	end
 else
 	mod:RegisterEventsInCombat(

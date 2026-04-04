@@ -10,28 +10,119 @@ mod:SetEncounterID(1698)
 mod:RegisterCombat("combat")
 
 if DBM:IsPostMidnight() then
-	--Custom Sounds on cast/cooldown expiring
-	mod:AddCustomAlertSoundOption(153757, true, 2)
-	mod:AddCustomAlertSoundOption(1258148, true, 2)--Wind Chakram
-	mod:AddCustomAlertSoundOption(156793, true, 2)--Chakram Vortex
-	--Custom timer colors, countdowns, and disables
-	mod:AddCustomTimerOptions(1252733, true, 3, 0)--Gale Surge
-	mod:AddCustomTimerOptions(153757, true, 2, 0)--Fan of Blades
-	mod:AddCustomTimerOptions(1258148, true, 3, 0)
-	mod:AddCustomTimerOptions(156793, true, 6, 0)
+	local warnGaleSurge				= mod:NewCountAnnounce(1252733, 2)
+
+	local specWarnFanofBlades		= mod:NewSpecialWarningCount(153757, nil, nil, nil, 2, 2)
+	local specWarnWindChakram		= mod:NewSpecialWarningCount(1258148, nil, nil, nil, 2, 15)
+	local specWarnChakramVortex		= mod:NewSpecialWarningCount(156793, nil, nil, nil, 2, 2)
+
+	local timerGaleSurgeCD			= mod:NewCDCountTimer(20.5, 1252733, nil, nil, nil, 3)
+	local timerFanofBladesCD		= mod:NewCDCountTimer(20.5, 153757, nil, nil, nil, 2)
+	local timerWindChakramCD		= mod:NewCDCountTimer(20.5, 1258148, nil, nil, nil, 3)
+	local timerChakramVortexCD		= mod:NewCDCountTimer(20.5, 156793, nil, nil, nil, 6)
+
 	--Midnight private aura replacements
 	mod:AddPrivateAuraSoundOption(1252733, true, 1252733, 1, 1, "debuffyou", 17)--Gale Surge
 
+	mod.vb.galeSurgeCount = 0
+	mod.vb.fanofBladesCount = 0
+	mod.vb.windChakramCount = 0
+	mod.vb.chakramVortexCount = 0
+	local badStateDetected = false
+
+	---@param self DBMMod
+	local function setFallback(self)
+		specWarnFanofBlades:SetAlert(299, "aesoon", 2, 2)
+		specWarnWindChakram:SetAlert(300, "frontal", 15, 2)
+		specWarnChakramVortex:SetAlert(301, "watchstep", 2, 2)
+		timerGaleSurgeCD:SetTimeline(298)
+		timerFanofBladesCD:SetTimeline(299)
+		timerWindChakramCD:SetTimeline(300)
+		timerChakramVortexCD:SetTimeline(301)
+	end
+
 	function mod:OnLimitedCombatStart()
-		self:EnableAlertOptions(153757, 299, "aesoon", 2)
-		self:EnableAlertOptions(1258148, 300, "frontal", 15)
-		self:EnableAlertOptions(156793, 301, "watchstep", 2)
+		self:TLCountReset()
+		self.vb.galeSurgeCount = 1
+		self.vb.fanofBladesCount = 1
+		self.vb.windChakramCount = 1
+		self.vb.chakramVortexCount = 1
+		if self:IsMythicPlus() and DBM.Options.HardcodedTimer and not badStateDetected then
+			self:IgnoreBlizzardAPI()
+			self:RegisterShortTermEvents(
+				"ENCOUNTER_TIMELINE_EVENT_ADDED",
+				"ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED"
+			)
+		else
+			setFallback(self)
+		end
+	end
 
-		self:EnableTimelineOptions(1252733, 298)
-		self:EnableTimelineOptions(153757, 299)
-		self:EnableTimelineOptions(1258148, 300)
-		self:EnableTimelineOptions(156793, 301)
+	function mod:OnCombatEnd()
+		self:TLCountReset()
+		self:UnregisterShortTermEvents()
+	end
 
+	do
+		---@param self DBMMod
+		---@param timer number
+		---@param timerExact number
+		---@param eventID number
+		local function timersAll(self, timer, timerExact, eventID)
+			if timer == 5 then--Gale Surge
+				timerGaleSurgeCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "galeSurge", "galeSurgeCount"))
+			elseif timer == 12 or timer == 20 then--Fan of Blades
+				timerFanofBladesCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "fanofBlades", "fanofBladesCount"))
+			elseif timer == 10 or timer == 18 then--Wind Chakram
+				timerWindChakramCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "windChakram", "windChakramCount"))
+			elseif timer == 35 then--Chakram Vortex
+				timerChakramVortexCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "chakramVortex", "chakramVortexCount"))
+			else
+				if not DBM.Options.DebugMode then
+					badStateDetected = true
+					self:ResumeBlizzardAPI()
+					self:UnregisterShortTermEvents()
+					setFallback(self)
+					DBM:Debug("|cffff0000Failed to match encounter timeline events to expected timers, falling back to Blizzard API|r", nil, nil, nil, true)
+				else
+					DBM:Debug("|cffff0000Failed to match encounter timeline events to expected timers|r", nil, nil, nil, true)
+				end
+			end
+		end
+
+		function mod:ENCOUNTER_TIMELINE_EVENT_ADDED(eventInfo)
+			if eventInfo.source ~= 0 then return end
+			local eventID = eventInfo.id
+			local timerExact = eventInfo.duration
+			local timer = math.floor(timerExact + 0.5)
+			if not badStateDetected then
+				timersAll(self, timer, timerExact, eventID)
+			end
+		end
+
+		function mod:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(eventID)
+			local eventState = C_EncounterTimeline.GetEventState(eventID)
+			if not eventID or not eventState then return end
+			if eventState == 2 then
+				local eventType, eventCount = self:TLCountFinish(eventID)
+				if eventType and eventCount then
+					if eventType == "galeSurge" then
+						warnGaleSurge:Show(eventCount)
+					elseif eventType == "fanofBlades" then
+						specWarnFanofBlades:Show(eventCount)
+						specWarnFanofBlades:Play("aesoon")
+					elseif eventType == "windChakram" then
+						specWarnWindChakram:Show(eventCount)
+						specWarnWindChakram:Play("frontal")
+					elseif eventType == "chakramVortex" then
+						specWarnChakramVortex:Show(eventCount)
+						specWarnChakramVortex:Play("watchstep")
+					end
+				end
+			elseif eventState == 3 then
+				self:TLCountCancel(eventID)
+			end
+		end
 	end
 else
 	mod:RegisterEventsInCombat(
