@@ -17,12 +17,12 @@
 ## X-DBM-Mod-Category: SCENARIO
 ## X-DBM-StatTypes: normal
 ## X-DBM-Mod-SubCategories: Nemesis,Boss Encounters,Zones
-## X-DBM-Mod-SubCategories-koKR: 네메시스,보스,지역
+## X-DBM-Mod-SubCategories-koKR: 숙적,보스 전투,지역
 ## X-DBM-Mod-SubCategories-ruRU: Немезис,Боссы,Зоны
 ## X-DBM-Mod-SubCategories-zhTW: 復仇者,首領,地區
 ## X-DBM-Mod-SubCategories-zhCN: 复仇者,首领,地区
 ## X-DBM-Mod-Name: Delves (Midnight)
-## X-DBM-Mod-Name-koKR: 구렁 (자정)
+## X-DBM-Mod-Name-koKR: 구렁 (한밤)
 ## X-DBM-Mod-Name-ruRU: Вылазки (Полночь)
 ## X-DBM-Mod-Name-zhTW: 探究 (午夜)
 ## X-DBM-Mod-Name-zhCN: 地下堡 (午夜)
