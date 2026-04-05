@@ -28,8 +28,6 @@ if DBM:IsPostMidnight() then
 --	mod:AddPrivateAuraSoundOption(386181, true, 386181, 1)
 
 	function mod:OnLimitedCombatStart()
-		self:DisableSpecialWarningSounds()
-
 		self:EnableAlertOptions(385974, 274, "catchballs", 2)
 		self:EnableAlertOptions(386173, 275, "scattersoon", 2)
 		if self:IsTank() then

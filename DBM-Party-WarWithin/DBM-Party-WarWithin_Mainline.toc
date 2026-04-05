@@ -1,4 +1,4 @@
-## Interface: 120001
+## Interface: 120001, 120005
 ## Category: DBM
 
 ## Title:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Dungeons (WW)|r
@@ -23,7 +23,7 @@
 ## X-DBM-Mod-Name-zhTW: 隊伍首領 (地心之戰)
 ## X-DBM-Mod-Sort: 115
 ## X-DBM-Mod-MapID: 2651, 2649, 2648, 2652, 2662, 2660, 2661, 2669, 2773, 2830
-## X-DBM-Mod-MinCoreRevision: 20230716000000
+## X-DBM-Mod-MinCoreRevision: 20260322092548
 ## X-DBM-Mod-MinExpansion: 10
 ## X-Curse-Project-ID: 314994
 ## X-Wago-ID: xZKxZENk

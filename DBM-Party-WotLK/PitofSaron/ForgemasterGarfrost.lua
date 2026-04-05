@@ -16,32 +16,125 @@ end
 mod:RegisterCombat("combat")
 
 if DBM:IsPostMidnight() then
-	--Custom Sounds on cast/cooldown expiring
-	mod:AddCustomAlertSoundOption(1261546, true, 1)--Orebreaker
-	mod:AddCustomAlertSoundOption(1261847, true, 2)--Cryostomp
-	mod:AddCustomAlertSoundOption(1262029, true, 2)--Glacial overload
-	--Custom timer colors, countdowns, and disables
-	mod:AddCustomTimerOptions(1261546, nil, 5, 0)
-	mod:AddCustomTimerOptions(1261847, nil, 2, 0)
-	mod:AddCustomTimerOptions(1261286, nil, 3, 0)--Throw Saronite
-	mod:AddCustomTimerOptions(1262029, nil, 2, 0)
+	local warnThrowSaronite					= mod:NewCountAnnounce(1261286, 3)
+
+	local specWarnOrebreaker				= mod:NewSpecialWarningDodgeCount(1261546, nil, nil, nil, 2, 2)--The dodge 4-5 seconds after orebreaker debuffs
+	local specWarnCryostomp					= mod:NewSpecialWarningCount(1261847, nil, nil, nil, 2, 2)
+	local specWarnGlacialOverload			= mod:NewSpecialWarningCount(1262029, nil, nil, nil, 2, 12)
+
+	local timerOrebreakerCD					= mod:NewCDCountTimer(20.5, 1261546, nil, nil, nil, 5)
+	local timerCryostompCD					= mod:NewCDCountTimer(20.5, 1261847, nil, nil, nil, 2)
+	local timerThrowSaroniteCD				= mod:NewCDCountTimer(20.5, 1261286, nil, nil, nil, 3)
+	local timerGlacialOverloadCD			= mod:NewCDCountTimer(20.5, 1262029, nil, nil, nil, 2)
+
 	--Midnight private aura replacements
-	mod:AddPrivateAuraSoundOption(1261286, true, 1261286, 1)--Throw Saronite
-	mod:AddPrivateAuraSoundOption(1261799, true, 1261799, 1)--Glacial Overload (GTFO)
+	mod:AddPrivateAuraSoundOption(1261286, true, 1261286, 1, 1, "debuffyou", 17)--Throw Saronite
+	mod:AddPrivateAuraSoundOption(1261540, true, 1261540, 1, 1, "targetyou", 2)--Orebreaker
+	mod:AddPrivateAuraSoundOption(1261799, true, 1261799, 1, 2, "watchfeet", 8)--Glacial Overload (GTFO)
+
+	mod.vb.orebreakerCount = 0
+	mod.vb.cryostompCount = 0
+	mod.vb.saroniteCount = 0
+	mod.vb.glacialCount = 0
+	local badStateDetected = false
+
+	---@param self DBMMod
+	local function setFallback(self)
+		--Blizz API fallbacks
+		--specWarnOrebreaker:SetAlert(144, "targetyou", 2, 3, 0)--backup pif private aura for Orebreaker gets removed
+		specWarnCryostomp:SetAlert(145, "aesoon", 2)
+		specWarnGlacialOverload:SetAlert(147, "breaklos", 12)
+		timerOrebreakerCD:SetTimeline(144)
+		timerCryostompCD:SetTimeline(145)
+		timerThrowSaroniteCD:SetTimeline(146)
+		timerGlacialOverloadCD:SetTimeline(147)
+	end
+
 	function mod:OnLimitedCombatStart()
-		self:DisableSpecialWarningSounds()
+		self:TLCountReset()
+		self.vb.orebreakerCount = 1
+		self.vb.cryostompCount = 1
+		self.vb.saroniteCount = 1
+		self.vb.glacialCount = 1
+		if self:IsMythicPlus() and DBM.Options.HardcodedTimer and not badStateDetected then
+			self:IgnoreBlizzardAPI()
+			self:RegisterShortTermEvents(
+				"ENCOUNTER_TIMELINE_EVENT_ADDED",
+				"ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED"
+			)
+		else
+			setFallback(self)
+		end
+	end
 
-		self:EnableAlertOptions(1261546, 144, "moveboss", 2)
-		self:EnableAlertOptions(1261847, 145, "aesoon", 2)
-		self:EnableAlertOptions(1262029, 147, "breaklos", 12)
+	function mod:OnCombatEnd()
+		self:TLCountReset()
+		self:UnregisterShortTermEvents()
+	end
 
-		self:EnableTimelineOptions(1261546, 144)
-		self:EnableTimelineOptions(1261847, 145)
-		self:EnableTimelineOptions(1261286, 146)
-		self:EnableTimelineOptions(1262029, 147)
+	do
+		---@param self DBMMod
+		---@param timer number
+		---@param timerExact number
+		---@param eventID number
+		local function timersAll(self, timer, timerExact, eventID)
+			--Logic confirmed against M+ logs. Pattern: Glacial Overload(33)/Throw Saronite(7)/Orebreaker(20)/Cryostomp(42 or 0). Bars with duration 0 are placeholders always canceled.
+			if timer == 0 then return end--Placeholder Cryostomp, always canceled
+			if timer == 7 then--Throw Saronite
+				timerThrowSaroniteCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "saronite", "saroniteCount"))
+			elseif timer == 20 then--Orebreaker
+				timerOrebreakerCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "orebreaker", "orebreakerCount"))
+			elseif timer == 33 then--Glacial Overload
+				timerGlacialOverloadCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "glacial", "glacialCount"))
+			elseif timer == 42 then--Cryostomp (real)
+				timerCryostompCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "cryostomp", "cryostompCount"))
+			else--Reached end of chain without finding a valid timer, this means hardcode mod has failed, so we need to disable hardcoded features and fall back to blizz API
+				if not DBM.Options.DebugMode then
+					badStateDetected = true
+					self:ResumeBlizzardAPI()
+					self:UnregisterShortTermEvents()
+					setFallback(self)
+					DBM:Debug("|cffff0000Failed to match encounter timeline events to expected timers, falling back to Blizzard API|r", nil, nil, nil, true)
+				else
+					DBM:Debug("|cffff0000Failed to match encounter timeline events to expected timers|r", nil, nil, nil, true)
+				end
+			end
+		end
 
-		self:EnablePrivateAuraSound(1261286, "debuffyou", 17)
-		self:EnablePrivateAuraSound(1261799, "watchfeet", 8)
+		--Note, bar state changing and canceling is handled by core
+		function mod:ENCOUNTER_TIMELINE_EVENT_ADDED(eventInfo)
+			if eventInfo.source ~= 0 then return end
+			local eventID = eventInfo.id
+			local timerExact = eventInfo.duration
+			local timer = math.floor(timerExact + 0.5)
+			if not badStateDetected then
+				timersAll(self, timer, timerExact, eventID)
+			end
+		end
+
+		function mod:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(eventID)
+			local eventState = C_EncounterTimeline.GetEventState(eventID)
+			if not eventID or not eventState then return end
+			if eventState == 2 then
+				local eventType, eventCount = self:TLCountFinish(eventID)
+				if eventType and eventCount then
+					if eventType == "cryostomp" then
+						specWarnCryostomp:Show(eventCount)
+						specWarnCryostomp:Play("aesoon")
+					elseif eventType == "saronite" then
+						warnThrowSaronite:Show(eventCount)
+					elseif eventType == "glacial" then
+						specWarnGlacialOverload:Show(eventCount)
+						specWarnGlacialOverload:Play("breaklos")
+					elseif eventType == "orebreaker" then
+						specWarnOrebreaker:Schedule(4, eventCount)
+						specWarnOrebreaker:ScheduleVoice(4, "watchstep")
+					end
+				end
+			elseif eventState == 3 then
+				self:TLCountCancel(eventID)
+			end
+		end
 	end
 
 else

@@ -23,10 +23,9 @@ if DBM:IsPostMidnight() then
 	mod:AddCustomTimerOptions(1264196, true, 3, 0)
 	mod:AddCustomTimerOptions(1265689, true, 2, 0)
 	--Midnight private aura replacements
-	mod:AddPrivateAuraSoundOption(1265426, true, 1265426, 2)
+	mod:AddPrivateAuraSoundOption(1265426, true, 1265426, 2, 1, "debuffyou", 17)
 
 	function mod:OnLimitedCombatStart()
-		self:DisableSpecialWarningSounds()
 		self:EnableAlertOptions(1265419, 248, "specialsoon", 2)
 		self:EnableAlertOptions(1265421, 249, "aesoon", 2)
 		self:EnableAlertOptions(1265426, 250, "watchstep", 2)
@@ -40,7 +39,6 @@ if DBM:IsPostMidnight() then
 		self:EnableTimelineOptions(1264196, 251)
 		self:EnableTimelineOptions(1265689, 252)
 
-		self:EnablePrivateAuraSound(1265426, "debuffyou", 17)--FIXME when I find a working british amy
 	end
 else
 	mod:RegisterEventsInCombat(

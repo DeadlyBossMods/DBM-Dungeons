@@ -11,41 +11,126 @@ mod.respawnTime = 29
 
 mod:RegisterCombat("combat")
 
---mod:RegisterEventsInCombat(
+local warnBrilliantRadiance			= mod:NewCountAnnounce(1255503, 2)
 
---)
+local specWarnSearingRend			= mod:NewSpecialWarningCount(1255335, "Melee", nil, nil, 1, 2)
+local specWarnDivineGuile			= mod:NewSpecialWarningCount(1257567, nil, nil, nil, 2, 2)
+local specWarnFlicker				= mod:NewSpecialWarningDodgeCount(1255531, nil, nil, nil, 2, 2)
 
---Custom Sounds on cast/cooldown expiring
-mod:AddCustomAlertSoundOption(1255503, true, 2)--Brilliant Dispersion
-mod:AddCustomAlertSoundOption(1257567, true, 2)--Divine Guile
-mod:AddCustomAlertSoundOption(1255335, true, 1)--Searing Rend
-mod:AddCustomAlertSoundOption(1255531, true, 2)--Flicker
---Custom timer colors, countdowns, and disables
-mod:AddCustomTimerOptions(1255503, true, 3, 0)--Brilliant Dispersion
-mod:AddCustomTimerOptions(1257567, true, 6, 0)--Divine Guile
-mod:AddCustomTimerOptions(1255335, true, 5, 0)--Searing Rend
-mod:AddCustomTimerOptions(1255531, true, 3, 0)--Flicker
+local timerSearingRendCD			= mod:NewCDCountTimer(26, 1255335, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+local timerBrilliantDispersionCD	= mod:NewCDCountTimer(25, 1255503, nil, nil, nil, 3)
+local timerDivineGuileCD			= mod:NewCDCountTimer(52, 1257567, nil, nil, nil, 6)
+local timerFlickerCD				= mod:NewCDCountTimer(10, 1255531, nil, nil, nil, 3)
+
 --Private Auras
-mod:AddPrivateAuraSoundOption(1255503, true, 1255503, 1, 1)--Brilliant Dispersion
+mod:AddPrivateAuraSoundOption(1255503, true, 1255503, 1, 1, "poolyou", 18)--Brilliant Dispersion
 --mod:AddPrivateAuraSoundOption(1255335, false, 1255335, 1, 1)--Searing Rend
-mod:AddPrivateAuraSoundOption(1255310, true, 1255310, 1, 2)--Radiant Scar
+mod:AddPrivateAuraSoundOption(1255310, true, 1255310, 1, 2, "watchfeet", 8)--Radiant Scar
 --mod:AddPrivateAuraSoundOption(1271956, false, 1271956, 1, 1)--Mirrored Rend
 
-function mod:OnLimitedCombatStart()
-	self:EnableAlertOptions(1255503, 109, "scattersoon", 2)--Pre spread
-	self:EnableAlertOptions(1257567, 110, "phasechange", 2)
-	if self:IsTank() then
-		self:EnableAlertOptions(1255335, 111, "defensive", 2)
+mod.vb.searingRendCount = 0
+mod.vb.brilliantDispersionCount = 0
+mod.vb.divineGuileCount = 0
+mod.vb.flickerCount = 0
+
+local badStateDetected = false
+
+---@param self DBMMod
+local function setFallback(self)
+	warnBrilliantRadiance:SetAlert(109, "scattersoon", 2)
+	specWarnDivineGuile:SetAlert(110, "phasechange", 2)
+	if self:IsMelee() then
+		specWarnSearingRend:SetAlert(111, "frontal", 15)
 	end
-	self:EnableAlertOptions(1255531, 112, "watchstep", 2)
+	specWarnFlicker:SetAlert(112, "watchstep", 2)
+	timerBrilliantDispersionCD:SetTimeline(109)
+	timerDivineGuileCD:SetTimeline(110)
+	timerSearingRendCD:SetTimeline(111)
+	timerFlickerCD:SetTimeline(112)
+end
 
-	self:EnableTimelineOptions(1255503, 109)
-	self:EnableTimelineOptions(1257567, 110)
-	self:EnableTimelineOptions(1255335, 111)
-	self:EnableTimelineOptions(1255531, 112)
+function mod:OnLimitedCombatStart()
+	self:TLCountReset()
+	self.vb.searingRendCount = 1
+	self.vb.brilliantDispersionCount = 1
+	self.vb.divineGuileCount = 1
+	self.vb.flickerCount = 1
+	if self:IsMythicPlus() and DBM.Options.HardcodedTimer and not badStateDetected then
+		self:IgnoreBlizzardAPI()
+		self:RegisterShortTermEvents(
+			"ENCOUNTER_TIMELINE_EVENT_ADDED",
+			"ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED"
+		)
+	else
+		setFallback(self)
+	end
+end
 
-	self:EnablePrivateAuraSound(1255503, "poolyou", 18)--Run out to place images?
---	self:EnablePrivateAuraSound(1255335, "poolyou", 18)
-	self:EnablePrivateAuraSound(1255310, "watchfeet", 8)
---	self:EnablePrivateAuraSound(1271956, "poolyou", 18)
+function mod:OnCombatEnd()
+	self:TLCountReset()
+	self:UnregisterShortTermEvents()
+end
+
+do
+	---@param self DBMMod
+	---@param timer number
+	---@param timerExact number
+	---@param eventID number
+	local function timersAll(self, timer, timerExact, eventID)
+		local handled = false
+		if timer == 2 or timer == 26 then--Searing Rend (2=opener/re-opener, 26=post-opener repeat)
+			timerSearingRendCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "searingRend", "searingRendCount"))
+			handled = true
+		elseif timer == 11 or timer == 25 then--Brilliant Dispersion (11=opener/re-opener, 25=post-opener repeat)
+			timerBrilliantDispersionCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "brilliantDispersion", "brilliantDispersionCount"))
+			handled = true
+		elseif timer == 10 or timer == 24 then--Flicker (24=opener/re-opener, 10=post-opener repeat)
+			timerFlickerCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "flicker", "flickerCount"))
+			handled = true
+		elseif timer == 52 then--Divine Guile
+			timerDivineGuileCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "divineGuile", "divineGuileCount"))
+			handled = true
+		end
+		if not handled then
+			badStateDetected = true
+			self:ResumeBlizzardAPI()
+			self:UnregisterShortTermEvents()
+			setFallback(self)
+			DBM:Debug("|cffff0000Failed to match encounter timeline events to expected timers, falling back to Blizzard API|r", nil, nil, nil, true)
+		end
+	end
+
+	function mod:ENCOUNTER_TIMELINE_EVENT_ADDED(eventInfo)
+		if eventInfo.source ~= 0 then return end
+		local eventID = eventInfo.id
+		local timerExact = eventInfo.duration
+		local timer = math.floor(timerExact + 0.5)
+		if not badStateDetected then
+			timersAll(self, timer, timerExact, eventID)
+		end
+	end
+
+	function mod:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(eventID)
+		local eventState = C_EncounterTimeline.GetEventState(eventID)
+		if not eventID or not eventState then return end
+		if eventState == 2 then
+			local eventType, eventCount = self:TLCountFinish(eventID)
+			if eventType and eventCount then
+				if eventType == "searingRend" then
+					specWarnSearingRend:Show(eventCount)
+					specWarnSearingRend:Play("frontal")
+				elseif eventType == "brilliantDispersion" then
+					warnBrilliantRadiance:Show(eventCount)
+				elseif eventType == "divineGuile" then
+					specWarnDivineGuile:Show(eventCount)
+					specWarnDivineGuile:Play("phasechange")
+				elseif eventType == "flicker" then
+					specWarnFlicker:Show(eventCount)
+					specWarnFlicker:Play("watchstep")
+				end
+			end
+		elseif eventState == 3 then
+			self:TLCountCancel(eventID)
+		end
+	end
 end

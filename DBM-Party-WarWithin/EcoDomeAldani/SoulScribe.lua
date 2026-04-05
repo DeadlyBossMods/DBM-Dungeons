@@ -22,8 +22,8 @@ mod:AddCustomTimerOptions(1225174, nil, 3, 0)--Ceremonial Daggers
 mod:AddCustomTimerOptions(1225218, nil, 3, 0)--Dread of the Unknown
 mod:AddCustomTimerOptions(1236703, nil, 6, 0)--Eternal Weave
 --Midnight private aura replacements
-mod:AddPrivateAuraSoundOption(1226444, true, 1226444, 1)
-mod:AddPrivateAuraSoundOption(1225221, true, 1225221, 1)
+mod:AddPrivateAuraSoundOption(1226444, true, 1226444, 1, 1, "targetyou", 2)
+mod:AddPrivateAuraSoundOption(1225221, true, 1225221, 1, 1, "runout", 2)
 
 function mod:OnLimitedCombatStart()
 
@@ -36,6 +36,4 @@ function mod:OnLimitedCombatStart()
 	self:EnableTimelineOptions(1225218, 547)
 	self:EnableTimelineOptions(1236703, 548)
 
-	self:EnablePrivateAuraSound(1226444, "targetyou", 2)
-	self:EnablePrivateAuraSound(1225221, "runout", 2)
 end
