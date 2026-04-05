@@ -14,11 +14,15 @@ mod:RegisterEventsInCombat(
 
 local warnRoar		= mod:NewSpellAnnounce(14100, 2)
 
-local timerRoar		= mod:NewAITimer(180, 14100, nil, nil, nil, 2)
+local timerRoarCD		= mod:NewAITimer(180, 14100, nil, nil, nil, 2)
+
+function mod:OnCombatStart(delay)
+	timerRoarCD:Start(1-delay)
+end
 
 function mod:SPELL_CAST_SUCCESS(args)
 	if args:IsSpell(14100) then
 		warnRoar:Show()
-		timerRoar:Start()
+		timerRoarCD:Start()
     end
 end
