@@ -25,7 +25,6 @@ if DBM:IsPostMidnight() then
 	mod:AddPrivateAuraSoundOption(244588, true, 244588, 2, 1, "watchfeet", 8)--Void Sludge (GTFO)
 
 	function mod:OnLimitedCombatStart()
-		self:DisableSpecialWarningSounds()
 		self:EnableAlertOptions(1268916, 223, "frontal", 15)
 		self:EnableAlertOptions(1263399, 225, "mobsoon", 2)
 		if self:IsTank() then

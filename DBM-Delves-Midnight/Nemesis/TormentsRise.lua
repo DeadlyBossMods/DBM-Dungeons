@@ -98,7 +98,7 @@ do
 	---@param eventID number
 	local function timersAll(self, timer, eventID)
 		--Void has unique rounded durations (7 opener, 21 recurring)
-		if timer == 7 or self:IsRoundedTimer(timer, 21) or self:IsRoundedTimer(timer, 36) or self:IsRoundedTimer(timer, 51) then
+		if timer == 7 or self:IsRoundedTimer(timer, 21.5, 0.5) or self:IsRoundedTimer(timer, 36) or self:IsRoundedTimer(timer, 51) then
 			if workaroundblizzardincompitence["void"] then
 				specWarnEmptinessOfTheVoid:Show(L.name, self.vb.voidCount)
 				specWarnEmptinessOfTheVoid:Play("kickcast")
@@ -108,8 +108,18 @@ do
 			end
 			local count = self:TLCountStart(eventID, "void", "voidCount")
 			timerEmptinessOfTheVoidCD:TLStart(timer == 21 and "v19.5-23.3" or 7, eventID, count)
-		--Imploding is opener 12, recurring 15.5 (rounded to 16)
-		elseif timer == 12 or timer == 15.5 then
+		--Devouring is opener 16.0 and recurring 18.5 (rounded to 19)
+		elseif timer == 16 or self:IsRoundedTimer(timer, 19, 0.5) then--Is rounded covers 18.5-19.5
+			if workaroundblizzardincompitence["devouring"] then
+				warnDevouringEssence:Show(self.vb.devouringEssenceCount)
+				self.vb.devouringEssenceCount = self.vb.devouringEssenceCount + 1
+				DBM:Debug("Showing extra devouring essence warning", nil, nil, nil, true)
+				workaroundblizzardincompitence["devouring"] = false
+			end
+			local count = self:TLCountStart(eventID, "devouring", "devouringEssenceCount")
+			timerDevouringEssenceCD:TLStart(timer, eventID, count)
+		--Imploding is opener 12, recurring 15.4-16.2 (but we let devouring essence claim 16.0 since we haven't seen it here
+		elseif timer == 12 or self:IsRoundedTimer(timer, 15.8, 0.4) then
 			if workaroundblizzardincompitence["imploding"] then
 				specWarnImplodingStrike:Show()
 				specWarnImplodingStrike:Play("defensive")
@@ -119,16 +129,6 @@ do
 			end
 			local count = self:TLCountStart(eventID, "imploding", "implodingStrikeCount")
 			timerImplodingStrikeCD:TLStart(timer, eventID, count)
-		--Devouring is opener 16.0 and recurring 18.5 (rounded to 19)
-		elseif timer == 16 or timer == 18.5 or timer == 18.75 then--18.75 if valeera is tank and player spec fury
-			if workaroundblizzardincompitence["devouring"] then
-				warnDevouringEssence:Show(self.vb.devouringEssenceCount)
-				self.vb.devouringEssenceCount = self.vb.devouringEssenceCount + 1
-				DBM:Debug("Showing extra devouring essence warning", nil, nil, nil, true)
-				workaroundblizzardincompitence["devouring"] = false
-			end
-			local count = self:TLCountStart(eventID, "devouring", "devouringEssenceCount")
-			timerDevouringEssenceCD:TLStart(timer, eventID, count)
 		else--Hardcode failed; disable and fall back to Blizzard API
 			badStateDetected = true
 			if DBM.Options.IgnoreBlizzAPI then

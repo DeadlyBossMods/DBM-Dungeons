@@ -26,7 +26,6 @@ if DBM:IsPostMidnight() then
 	mod:AddPrivateAuraSoundOption(1265426, true, 1265426, 2, 1, "debuffyou", 17)
 
 	function mod:OnLimitedCombatStart()
-		self:DisableSpecialWarningSounds()
 		self:EnableAlertOptions(1265419, 248, "specialsoon", 2)
 		self:EnableAlertOptions(1265421, 249, "aesoon", 2)
 		self:EnableAlertOptions(1265426, 250, "watchstep", 2)

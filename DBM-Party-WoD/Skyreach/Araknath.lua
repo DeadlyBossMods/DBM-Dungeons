@@ -10,31 +10,118 @@ mod:SetEncounterID(1699)
 mod:RegisterCombat("combat")
 
 if DBM:IsPostMidnight() then
-	--Custom Sounds on cast/cooldown expiring
-	mod:AddCustomAlertSoundOption(154115, true, 1)--Fiery Smash
-	mod:AddCustomAlertSoundOption(154162, true, 1)--Energize
-	mod:AddCustomAlertSoundOption(154135, true, 2)--Supernova
-	--Custom timer colors, countdowns, and disables
-	mod:AddCustomTimerOptions(154115, true, 5, 0)
-	mod:AddCustomTimerOptions(154162, true, 5, 0)
-	mod:AddCustomTimerOptions(154135, true, 2, 0)
-	--Midnight private aura replacements
+	local specWarnFierySmash	= mod:NewSpecialWarningCount(154115, nil, nil, nil, 1, 15)
+	local specWarnEnergize		= mod:NewSpecialWarningCount(154162, nil, nil, nil, 1, 17)
+	local specWarnSupernova		= mod:NewSpecialWarningCount(154135, nil, nil, nil, 2, 2)
+
+	local timerSmashCD			= mod:NewCDCountTimer(20.5, 154115, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+	local timerEnergizeCD		= mod:NewCDCountTimer(20.5, 154162, nil, nil, nil, 5)
+	local timerSupernovaCD		= mod:NewCDCountTimer(20.5, 154135, nil, nil, nil, 2, nil, DBM_COMMON_L.HEALER_ICON)
+
 	mod:AddPrivateAuraSoundOption(154132, true, 154115, 1, 3, "screwup", 18)--Failing at smash
 
-	function mod:OnLimitedCombatStart()
-		self:DisableSpecialWarningSounds()
-		self:EnableAlertOptions(154115, 302, "frontal", 15)
+	mod.vb.smashCount = 0
+	mod.vb.energizeCount = 0
+	mod.vb.supernovaCount = 0
+	local badStateDetected = false
+
+	---@param self DBMMod
+	local function setFallback(self)
+		if self:IsTank() then
+			specWarnFierySmash:SetAlert(302, "frontal", 15, 1)
+		end
 		if not self:IsTank() then
 			--Tank frontals are cast during soak
 			--so do NOT tell tank to help with the soaking
-			self:EnableAlertOptions(154162, 303, "soakbeam", 17)
+			specWarnEnergize:SetAlert(303, "soakbeam", 17, 1)
 		end
-		self:EnableAlertOptions(154135, 304, "aesoon", 2)
+		specWarnSupernova:SetAlert(304, "aesoon", 2, 2)
+		timerSmashCD:SetTimeline(302)
+		timerEnergizeCD:SetTimeline(303)
+		timerSupernovaCD:SetTimeline(304)
+	end
 
-		self:EnableTimelineOptions(154115, 302)
-		self:EnableTimelineOptions(154162, 303)
-		self:EnableTimelineOptions(154135, 304)
+	function mod:OnLimitedCombatStart()
+		self:TLCountReset()
+		self.vb.smashCount = 1
+		self.vb.energizeCount = 1
+		self.vb.supernovaCount = 1
+		if self:IsMythicPlus() and DBM.Options.HardcodedTimer and not badStateDetected then
+			self:IgnoreBlizzardAPI()
+			self:RegisterShortTermEvents(
+				"ENCOUNTER_TIMELINE_EVENT_ADDED",
+				"ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED"
+			)
+		else
+			setFallback(self)
+		end
+	end
 
+	function mod:OnCombatEnd()
+		self:TLCountReset()
+		self:UnregisterShortTermEvents()
+	end
+
+	do
+		---@param self DBMMod
+		---@param timer number
+		---@param timerExact number
+		---@param eventID number
+		local function timersAll(self, timer, timerExact, eventID)
+			if timer == 5 or timer == 10 or timer == 15 then--Fiery Smash
+				timerSmashCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "smash", "smashCount"))
+			elseif timer == 6 or timer == 24 then--Energize
+				timerEnergizeCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "energize", "energizeCount"))
+			elseif timer == 50 then--Supernova
+				timerSupernovaCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "supernova", "supernovaCount"))
+			else
+				if not DBM.Options.DebugMode then
+					badStateDetected = true
+					self:ResumeBlizzardAPI()
+					self:UnregisterShortTermEvents()
+					setFallback(self)
+					DBM:Debug("|cffff0000Failed to match encounter timeline events to expected timers, falling back to Blizzard API|r", nil, nil, nil, true)
+				else
+					DBM:Debug("|cffff0000Failed to match encounter timeline events to expected timers|r", nil, nil, nil, true)
+				end
+			end
+		end
+
+		function mod:ENCOUNTER_TIMELINE_EVENT_ADDED(eventInfo)
+			if eventInfo.source ~= 0 then return end
+			local eventID = eventInfo.id
+			local timerExact = eventInfo.duration
+			local timer = math.floor(timerExact + 0.5)
+			if not badStateDetected then
+				timersAll(self, timer, timerExact, eventID)
+			end
+		end
+
+		function mod:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(eventID)
+			local eventState = C_EncounterTimeline.GetEventState(eventID)
+			if not eventID or not eventState then return end
+			if eventState == 2 then
+				local eventType, eventCount = self:TLCountFinish(eventID)
+				if eventType and eventCount then
+					if eventType == "smash" then
+						if self:IsTank() then
+							specWarnFierySmash:Show(eventCount)
+							specWarnFierySmash:Play("frontal")
+						end
+					elseif eventType == "energize" then
+						if not self:IsTank() then
+							specWarnEnergize:Show(eventCount)
+							specWarnEnergize:Play("soakbeam")
+						end
+					elseif eventType == "supernova" then
+						specWarnSupernova:Show(eventCount)
+						specWarnSupernova:Play("aesoon")
+					end
+				end
+			elseif eventState == 3 then
+				self:TLCountCancel(eventID)
+			end
+		end
 	end
 else
 	mod:RegisterEventsInCombat(

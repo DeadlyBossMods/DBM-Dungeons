@@ -10,7 +10,7 @@ mod:RegisterCombat("combat")
 if DBM:IsPostMidnight() then
 	--Custom Sounds on cast/cooldown expiring
 	mod:AddCustomAlertSoundOption(247175, true, 1)--Void Bomb
-	mod:AddCustomAlertSoundOption(248831, true, 2)--Dread Screech
+	mod:AddCustomAlertSoundOption(248831, "HasInterrupt", 2)--Dread Screech
 	mod:AddCustomAlertSoundOption(1263523, true, 2)--Overload
 	--Custom timer colors, countdowns, and disables
 	mod:AddCustomTimerOptions(247175, true, 3, 0)
@@ -23,13 +23,8 @@ if DBM:IsPostMidnight() then
 	mod:AddPrivateAuraSoundOption(245742, true, 245742, 2, 1, "targetyou", 2)--Shadow Pounce
 
 	function mod:OnLimitedCombatStart()
-		self:DisableSpecialWarningSounds()
 		self:EnableAlertOptions(247175, 234, "bombsoon", 2)
-		if self:IsSpellCaster() then
-			self:EnableAlertOptions(248831, 236, "stopcast", 2)
-		else
-			self:EnableAlertOptions(248831, 236, "aesoon", 2)
-		end
+		self:EnableAlertOptions(248831, 236, "kickcast", 2, 2, 0)
 		self:EnableAlertOptions(1263523, 243, "aesoon", 2)
 
 
