@@ -1262,12 +1262,6 @@ L = DBM:GetModLocalization(455)
 L:SetGeneralLocalization{
 	name 		= "吞咽者拉姆斯登"
 }
-L:SetTimerLocalization{
-	TimerGuards	= "哨兵出现"
-}
-L:SetOptionLocalization{
-	TimerGuards	= "击败首领后，为精英护卫的出现显示计时器。"
-}
 
 -----------------------------
 --  Baron Rivendare  --

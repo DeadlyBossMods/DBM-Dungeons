@@ -1256,12 +1256,6 @@ L = DBM:GetModLocalization(455)
 L:SetGeneralLocalization{
 	name 		= "Ramstein el Empachador"
 }
-L:SetTimerLocalization{
-	TimerGuards	= "Aparecen los guardias"
-}
-L:SetOptionLocalization{
-	TimerGuards	= "Después de derrotar al jefe, muestra el temporizador para la llegada de los Avizores Guardia Negra"
-}
 
 -----------------------------
 --  Baron Rivendare  --
