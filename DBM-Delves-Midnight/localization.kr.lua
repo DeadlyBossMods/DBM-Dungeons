@@ -1,3 +1,4 @@
+if GetLocale() ~= "koKR" then return end
 local L
 
 -----------------------
@@ -6,7 +7,7 @@ local L
 L = DBM:GetModLocalization("InfiltratorGulkat")
 
 L:SetGeneralLocalization({
-	name =	"Infiltrator Gulkat"
+	name =	"침투자 굴카트"
 })
 
 -----------------------
@@ -15,7 +16,7 @@ L:SetGeneralLocalization({
 L = DBM:GetModLocalization("BladeMasterDarza")
 
 L:SetGeneralLocalization({
-	name =	"Blademaster Darza"
+	name =	"검귀 다르자"
 })
 
 -----------------------
@@ -24,7 +25,7 @@ L:SetGeneralLocalization({
 L = DBM:GetModLocalization("SpiritflayerJinma")
 
 L:SetGeneralLocalization({
-	name =	"Spiritflayer Jin'ma"
+	name =	"영혼약탈자 진마"
 })
 
 -----------------------
@@ -33,7 +34,7 @@ L:SetGeneralLocalization({
 L = DBM:GetModLocalization("Mycomight")
 
 L:SetGeneralLocalization({
-	name =	"Mycomight"
+	name =	"강성진균"
 })
 
 -----------------------
@@ -42,7 +43,7 @@ L:SetGeneralLocalization({
 L = DBM:GetModLocalization("SpinshroomMid")
 
 L:SetGeneralLocalization({
-	name =	"Spinshroom"
+	name =	"회전버섯"
 })
 
 -----------------------
@@ -51,7 +52,7 @@ L:SetGeneralLocalization({
 L = DBM:GetModLocalization("Brightthorn")
 
 L:SetGeneralLocalization({
-	name =	"Brightthorn"
+	name =	"밝은가시"
 })
 
 -----------------------
@@ -60,7 +61,7 @@ L:SetGeneralLocalization({
 L = DBM:GetModLocalization("MulthAul")
 
 L:SetGeneralLocalization({
-	name =	"Mul'tha'ul"
+	name =	"물타울"
 })
 
 -----------------------
@@ -69,7 +70,7 @@ L:SetGeneralLocalization({
 L = DBM:GetModLocalization("Lumenia")
 
 L:SetGeneralLocalization({
-	name =	"Lumenia"
+	name =	"루메니아"
 })
 
 -----------------------
@@ -78,7 +79,7 @@ L:SetGeneralLocalization({
 L = DBM:GetModLocalization("GladiusSlaurna")
 
 L:SetGeneralLocalization({
-	name =	"Gladius Slaurna"
+	name =	"글라디우스 슬라우르나"
 })
 
 -----------------------
@@ -87,7 +88,7 @@ L:SetGeneralLocalization({
 L = DBM:GetModLocalization("EsuritusParhelion")
 
 L:SetGeneralLocalization({
-	name =	"Esuritus"
+	name =	"에스리투스"
 })
 
 -----------------------
@@ -96,7 +97,7 @@ L:SetGeneralLocalization({
 L = DBM:GetModLocalization("Hydrangea")
 
 L:SetGeneralLocalization({
-	name =	"Hydrangea"
+	name =	"수국"
 })
 
 -----------------------
@@ -105,7 +106,7 @@ L:SetGeneralLocalization({
 L = DBM:GetModLocalization("VoidScornedVagrant")
 
 L:SetGeneralLocalization({
-	name =	"Voidscorned Vagrant"
+	name =	"공허멸시 부랑자"
 })
 
 -----------------------
@@ -114,7 +115,7 @@ L:SetGeneralLocalization({
 L = DBM:GetModLocalization("InfiltratorGarand")
 
 L:SetGeneralLocalization({
-	name =	"Infiltrator Garand"
+	name =	"침투자 가란드"
 })
 
 -----------------------
@@ -123,7 +124,7 @@ L:SetGeneralLocalization({
 L = DBM:GetModLocalization("Antenorian")
 
 L:SetGeneralLocalization({
-	name =	"Antenorian"
+	name =	"안테노리안"
 })
 
 -----------------------
@@ -132,7 +133,7 @@ L:SetGeneralLocalization({
 L = DBM:GetModLocalization("ChiefArcanistPatram")
 
 L:SetGeneralLocalization({
-	name =	"Chief-Arcanist Patram"
+	name =	"수석 비전술사 파트람"
 })
 
 -----------------------
@@ -141,7 +142,7 @@ L:SetGeneralLocalization({
 L = DBM:GetModLocalization("EsuritusSunkiller")
 
 L:SetGeneralLocalization({
-	name =	"Esuritus"
+	name =	"에스리투스"
 })
 
 -----------------------
@@ -150,6 +151,6 @@ L:SetGeneralLocalization({
 L = DBM:GetModLocalization("Nullaeus")
 
 L:SetGeneralLocalization({
-	name =	"Nullaeus"
+	name =	"널레우스"
 })
 
