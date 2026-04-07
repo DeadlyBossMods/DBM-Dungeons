@@ -8,37 +8,147 @@ mod:SetEncounterID(2068)
 mod:RegisterCombat("combat")
 
 if DBM:IsPostMidnight() then
-	--TODO, add any missing timers or events if possible
-	--Custom Sounds on cast/cooldown expiring
-	mod:AddCustomAlertSoundOption(1265419, true, 2)--Notes of Despair
-	mod:AddCustomAlertSoundOption(1265421, true, 2)--Dirge of Despair
-	mod:AddCustomAlertSoundOption(1264196, true, 2)--Disintegrate
-	mod:AddCustomAlertSoundOption(1265689, true, 2)--Grim Chorus
-	mod:AddCustomAlertSoundOption(1265426, true, 3)--Symphony of the Eternal Night
-	mod:AddCustomAlertSoundOption(1266001, true, 2)--Backlash
-	--Custom timer colors, countdowns, and disables
-	mod:AddCustomTimerOptions(1265419, true, 5, 0)
-	mod:AddCustomTimerOptions(1265421, true, 2, 0)
-	mod:AddCustomTimerOptions(1265426, true, 3, 0)
-	mod:AddCustomTimerOptions(1264196, true, 3, 0)
-	mod:AddCustomTimerOptions(1265689, true, 2, 0)
-	--Midnight private aura replacements
-	mod:AddPrivateAuraSoundOption(1265426, true, 1265426, 2, 1, "debuffyou", 17)
+	local warnDiscordantbeam			= mod:NewCountAnnounce(1265426, 2)
+
+	local specWarnDirge					= mod:NewSpecialWarningCount(1265421, nil, nil, nil, 2, 2)
+	local specWarnDisintegrate			= mod:NewSpecialWarningCount(1264151, nil, nil, nil, 2, 2)
+	local specWarnGrimChorus			= mod:NewSpecialWarningCount(1265689, nil, nil, nil, 2, 2)
+	local specWarnSymphony				= mod:NewSpecialWarningCount(1266003, nil, nil, nil, 3, 2)
+	local specWarnBacklash				= mod:NewSpecialWarningCount(1266001, nil, nil, nil, 2, 2)
+
+	local timerDirgeCD					= mod:NewCDCountTimer(20.5, 1265421, nil, nil, nil, 2)
+	local timerDiscordantBeamCD			= mod:NewCDCountTimer(20.5, 1265426, nil, nil, nil, 3)
+	local timerDisintegrateCD			= mod:NewCDCountTimer(20.5, 1264151, nil, nil, nil, 3)
+	local timerGrimChorusCD				= mod:NewCDCountTimer(20.5, 1265689, nil, nil, nil, 2)
+	local timerSymphonyCD				= mod:NewCastTimer(20.5, 1266003, nil, nil, nil, 3, nil, DBM_COMMON_L.DEADLY_ICON)
+	local timerBacklashCD				= mod:NewCastTimer(20.5, 1266001, nil, nil, nil, 2)
+
+	mod:AddPrivateAuraSoundOption(1265426, true, 1265426, 2, 1, "beamyou", 19)
+
+	mod.vb.dirgeCount = 0
+	mod.vb.discordantBeamCount = 0
+	mod.vb.disintegrateCount = 0
+	mod.vb.grimChorusCount = 0
+	mod.vb.symphonyCount = 0
+	mod.vb.backlashCount = 0
+	-- Dirge of Despair and Symphony of the Eternal Night both have exact duration 1.5 (rounds to 2).
+	-- Disambiguate by encounter-order counter: 1st=Dirge, 2nd=Symphony, 3rd+=Dirge resuming phase 2.
+	local dur2Count = 0
+	local badStateDetected = false
+
+	---@param self DBMMod
+	local function setFallback(self)
+		specWarnDirge:SetAlert(249, "aesoon", 2, 2)
+		specWarnDisintegrate:SetAlert(251, "aesoon", 2, 2)
+		specWarnGrimChorus:SetAlert(252, "stilldanger", 2, 2)
+		specWarnSymphony:SetAlert(253, "watchstep", 3, 2)
+		specWarnBacklash:SetAlert(254, "carefly", 2, 2)
+		timerDirgeCD:SetTimeline(249)
+		timerDiscordantBeamCD:SetTimeline(250)
+		timerDisintegrateCD:SetTimeline(251)
+		timerGrimChorusCD:SetTimeline(252)
+		timerSymphonyCD:SetTimeline(253)
+		timerBacklashCD:SetTimeline(254)
+	end
 
 	function mod:OnLimitedCombatStart()
-		self:EnableAlertOptions(1265419, 248, "specialsoon", 2)
-		self:EnableAlertOptions(1265421, 249, "aesoon", 2)
-		self:EnableAlertOptions(1265426, 250, "watchstep", 2)
-		self:EnableAlertOptions(1264196, 251, "aesoon", 2)
-		self:EnableAlertOptions(1265689, 252, "stilldanger", 2)
-		self:EnableAlertOptions(1266001, 254, "carefly", 2, 4, 0)--Check if event actually works
+		self:TLCountReset()
+		dur2Count = 0
+		self.vb.dirgeCount = 1
+		self.vb.discordantBeamCount = 1
+		self.vb.disintegrateCount = 1
+		self.vb.grimChorusCount = 1
+		self.vb.symphonyCount = 1
+		self.vb.backlashCount = 1
+		if self:IsMythicPlus() and DBM.Options.HardcodedTimer and not badStateDetected then
+			self:IgnoreBlizzardAPI()
+			self:RegisterShortTermEvents(
+				"ENCOUNTER_TIMELINE_EVENT_ADDED",
+				"ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED"
+			)
+		else
+			setFallback(self)
+		end
+	end
 
-		self:EnableTimelineOptions(1265419, 248)
-		self:EnableTimelineOptions(1265421, 249)
-		self:EnableTimelineOptions(1265426, 250)
-		self:EnableTimelineOptions(1264196, 251)
-		self:EnableTimelineOptions(1265689, 252)
+	function mod:OnCombatEnd()
+		self:TLCountReset()
+		self:UnregisterShortTermEvents()
+	end
 
+	do
+		---@param self DBMMod
+		---@param timer number
+		---@param timerExact number
+		---@param eventID number
+		local function timersAll(self, timer, timerExact, eventID)
+			if timer == 2 then--Dirge of Despair or Symphony (both exact 1.5s); alternates: odd=Dirge, even=Symphony
+				dur2Count = dur2Count + 1
+				if dur2Count % 2 == 1 then--odd occurrences (1, 3, 5...) = Dirge of Despair
+					timerDirgeCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "dirge", "dirgeCount"))
+				else--even occurrences (2, 4, 6...) = Symphony of the Eternal Night
+					timerSymphonyCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "symphony", "symphonyCount"))
+				end
+			elseif timer == 24 or timer == 17 then--Discordant Beam
+				timerDiscordantBeamCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "discordantbeam", "discordantBeamCount"))
+			elseif timer == 12 or timer == 5 then--Disintegrate
+				timerDisintegrateCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "disintegrate", "disintegrateCount"))
+			elseif timer == 35 or timer == 28 then--Grim Chorus
+				timerGrimChorusCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "grimchorus", "grimChorusCount"))
+			elseif timer == 20 then--Backlash
+				timerBacklashCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "backlash", "backlashCount"))
+			else
+				if not DBM.Options.DebugMode then
+					badStateDetected = true
+					self:ResumeBlizzardAPI()
+					self:UnregisterShortTermEvents()
+					setFallback(self)
+					DBM:Debug("|cffff0000Failed to match encounter timeline events to expected timers, falling back to Blizzard API|r", nil, nil, nil, true)
+				else
+					DBM:Debug("|cffff0000Failed to match encounter timeline events to expected timers|r", nil, nil, nil, true)
+				end
+			end
+		end
+
+		function mod:ENCOUNTER_TIMELINE_EVENT_ADDED(eventInfo)
+			if eventInfo.source ~= 0 then return end
+			local eventID = eventInfo.id
+			local timerExact = eventInfo.duration
+			local timer = math.floor(timerExact + 0.5)
+			if not badStateDetected then
+				timersAll(self, timer, timerExact, eventID)
+			end
+		end
+
+		function mod:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(eventID)
+			local eventState = C_EncounterTimeline.GetEventState(eventID)
+			if not eventID or not eventState then return end
+			if eventState == 2 then
+				local eventType, eventCount = self:TLCountFinish(eventID)
+				if eventType and eventCount then
+					if eventType == "dirge" then
+						specWarnDirge:Show(eventCount)
+						specWarnDirge:Play("aesoon")
+					elseif eventType == "discordantbeam" then
+						warnDiscordantbeam:Show(eventCount)
+					elseif eventType == "disintegrate" then
+						specWarnDisintegrate:Show(eventCount)
+						specWarnDisintegrate:Play("aesoon")
+					elseif eventType == "grimchorus" then
+						specWarnGrimChorus:Show(eventCount)
+						specWarnGrimChorus:Play("stilldanger")
+					elseif eventType == "symphony" then
+						specWarnSymphony:Show(eventCount)
+						specWarnSymphony:Play("watchstep")
+					elseif eventType == "backlash" then
+						specWarnBacklash:Show(eventCount)
+						specWarnBacklash:Play("carefly")
+					end
+				end
+			elseif eventState == 3 then
+				self:TLCountCancel(eventID)
+			end
+		end
 	end
 else
 	mod:RegisterEventsInCombat(
@@ -60,7 +170,7 @@ else
 	local specWarnFragmentOfDespair			= mod:NewSpecialWarningSpell(245164, nil, nil, nil, 1, 2)
 	local specWarnGrandShift				= mod:NewSpecialWarningDodge(249009, nil, nil, nil, 2, 2)
 
-	--local timerCalltoVoidCD					= mod:NewAITimer(12, 247795, nil, nil, nil, 1)
+	--local timerCalltoVoidCD				= mod:NewAITimer(12, 247795, nil, nil, nil, 1)
 	local timerGrandShiftCD					= mod:NewCDTimer(14.6, 249009, nil, nil, nil, 3, nil, DBM_COMMON_L.HEROIC_ICON)
 	local timerUmbralCadenceCD				= mod:NewCDTimer(10.9, 247930, nil, nil, nil, 2, nil, DBM_COMMON_L.HEALER_ICON)
 	local timerBacklash						= mod:NewBuffActiveTimer(12.5, 247816, nil, nil, nil, 6)

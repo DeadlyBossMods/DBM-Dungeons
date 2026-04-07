@@ -15,7 +15,7 @@ if DBM:IsPostMidnight() then
 	local specWarnSupernova		= mod:NewSpecialWarningCount(154135, nil, nil, nil, 2, 2)
 
 	local timerSmashCD			= mod:NewCDCountTimer(20.5, 154115, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
-	local timerEnergizeCD		= mod:NewCDCountTimer(20.5, 154162, nil, nil, nil, 5)
+	local timerEnergizeCD		= mod:NewCDCountTimer(20.5, 154162, nil, nil, nil, 5, nil, DBM_COMMON_L.IMPORTANT_ICON)
 	local timerSupernovaCD		= mod:NewCDCountTimer(20.5, 154135, nil, nil, nil, 2, nil, DBM_COMMON_L.HEALER_ICON)
 
 	mod:AddPrivateAuraSoundOption(154132, true, 154115, 1, 3, "screwup", 18)--Failing at smash

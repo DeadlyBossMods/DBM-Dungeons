@@ -8,36 +8,132 @@ mod:SetUsedIcons(1)
 
 mod:RegisterCombat("combat")
 
-
 if DBM:IsPostMidnight() then
-	--Custom Sounds on cast/cooldown expiring
-	mod:AddCustomAlertSoundOption(1268916, true, 2)
-	mod:AddCustomAlertSoundOption(1263399, true, 2)--oozing slam
-	mod:AddCustomAlertSoundOption(1263440, true, 1)--Void Slash
-	mod:AddCustomAlertSoundOption(1263304, true, 2)--Crashign Void
-	--Custom timer colors, countdowns, and disables
-	mod:AddCustomTimerOptions(1268916, true, 3, 0)
-	mod:AddCustomTimerOptions(1263282, true, 3, 0)--Decimate. Has no cast warning since we can't detect target
-	mod:AddCustomTimerOptions(1263399, true, 1, 0)
-	mod:AddCustomTimerOptions(1263440, true, 5, 0)
-	mod:AddCustomTimerOptions(1263304, true, 2, 0)
-	--Midnight private aura replacements
+	local warnDecimate					= mod:NewCountAnnounce(1263282, 2)
+
+	local specWarnNullPalm				= mod:NewSpecialWarningCount(1268916, nil, nil, nil, 2, 2)
+	local specWarnOozingSlam			= mod:NewSpecialWarningCount(1263399, nil, nil, nil, 2, 2)
+	local specWarnVoidSlash				= mod:NewSpecialWarningCount(1263440, nil, nil, nil, 1, 2)
+	local specWarnCrashingVoid			= mod:NewSpecialWarningCount(1263304, nil, nil, nil, 2, 2)
+
+	local timerNullPalmCD				= mod:NewCDCountTimer(20.5, 1268916, nil, nil, nil, 3)
+	local timerDecimateCD				= mod:NewCDCountTimer(20.5, 1263282, nil, nil, nil, 3)
+	local timerOozingSlamCD				= mod:NewCDCountTimer(20.5, 1263399, nil, nil, nil, 1, nil, DBM_COMMON_L.MYTHIC_ICON)
+	local timerVoidSlashCD				= mod:NewCDCountTimer(20.5, 1263440, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+	local timerCrashingVoidCD			= mod:NewCDCountTimer(20.5, 1263304, nil, nil, nil, 2)
+
 	mod:AddPrivateAuraSoundOption(244588, true, 244588, 2, 1, "watchfeet", 8)--Void Sludge (GTFO)
 
+	mod.vb.nullPalmCount = 0
+	mod.vb.decimateCount = 0
+	mod.vb.oozingSlamCount = 0
+	mod.vb.voidSlashCount = 0
+	mod.vb.crashingVoidCount = 0
+	local badStateDetected = false
+
+	---@param self DBMMod
+	local function setFallback(self)
+		specWarnNullPalm:SetAlert(223, "frontal", 15, 2)
+		specWarnOozingSlam:SetAlert(225, "mobsoon", 2, 2)
+		specWarnVoidSlash:SetAlert(226, "defensive", 2, 2)
+		specWarnCrashingVoid:SetAlert(238, "pullin", 12, 2)
+		timerNullPalmCD:SetTimeline(223)
+		timerDecimateCD:SetTimeline(224)
+		timerOozingSlamCD:SetTimeline(225)
+		timerVoidSlashCD:SetTimeline(226)
+		timerCrashingVoidCD:SetTimeline(238)
+	end
+
 	function mod:OnLimitedCombatStart()
-		self:EnableAlertOptions(1268916, 223, "frontal", 15)
-		self:EnableAlertOptions(1263399, 225, "mobsoon", 2)
-		if self:IsTank() then
-			self:EnableAlertOptions(1263440, 226, "defensive", 2)
+		self:TLCountReset()
+		self.vb.nullPalmCount = 1
+		self.vb.decimateCount = 1
+		self.vb.oozingSlamCount = 1
+		self.vb.voidSlashCount = 1
+		self.vb.crashingVoidCount = 1
+		if self:IsMythicPlus() and DBM.Options.HardcodedTimer and not badStateDetected then
+			self:IgnoreBlizzardAPI()
+			self:RegisterShortTermEvents(
+				"ENCOUNTER_TIMELINE_EVENT_ADDED",
+				"ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED"
+			)
+		else
+			setFallback(self)
 		end
-		self:EnableAlertOptions(1263304, 238, "pullin", 12)
+	end
 
-		self:EnableTimelineOptions(1268916, 223)
-		self:EnableTimelineOptions(1263282, 224)
-		self:EnableTimelineOptions(1263399, 225)
-		self:EnableTimelineOptions(1263440, 226)
-		self:EnableTimelineOptions(1263304, 238)
+	function mod:OnCombatEnd()
+		self:TLCountReset()
+		self:UnregisterShortTermEvents()
+	end
 
+	do
+		---@param self DBMMod
+		---@param timer number
+		---@param timerExact number
+		---@param eventID number
+		local function timersAll(self, timer, timerExact, eventID)
+			if timer == 16 or timer == 103 then--Null Palm
+				timerNullPalmCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "nullpalm", "nullPalmCount"))
+			elseif timer == 7 or timer == 28 then--Decimate
+				timerDecimateCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "decimate", "decimateCount"))
+			elseif timer == 22 or timer == 102 then--Oozing Slam
+				timerOozingSlamCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "oozingslam", "oozingSlamCount"))
+			elseif timer == 4 or timer == 40 then--Void Slash
+				timerVoidSlashCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "voidslash", "voidSlashCount"))
+			elseif timer == 50 then--Crashing Void
+				timerCrashingVoidCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "crashingvoid", "crashingVoidCount"))
+			else
+				if not DBM.Options.DebugMode then
+					badStateDetected = true
+					self:ResumeBlizzardAPI()
+					self:UnregisterShortTermEvents()
+					setFallback(self)
+					DBM:Debug("|cffff0000Failed to match encounter timeline events to expected timers, falling back to Blizzard API|r", nil, nil, nil, true)
+				else
+					DBM:Debug("|cffff0000Failed to match encounter timeline events to expected timers|r", nil, nil, nil, true)
+				end
+			end
+		end
+
+		function mod:ENCOUNTER_TIMELINE_EVENT_ADDED(eventInfo)
+			if eventInfo.source ~= 0 then return end
+			local eventID = eventInfo.id
+			local timerExact = eventInfo.duration
+			local timer = math.floor(timerExact + 0.5)
+			if not badStateDetected then
+				timersAll(self, timer, timerExact, eventID)
+			end
+		end
+
+		function mod:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(eventID)
+			local eventState = C_EncounterTimeline.GetEventState(eventID)
+			if not eventID or not eventState then return end
+			if eventState == 2 then
+				local eventType, eventCount = self:TLCountFinish(eventID)
+				if eventType and eventCount then
+					if eventType == "nullpalm" then
+						specWarnNullPalm:Show(eventCount)
+						specWarnNullPalm:Play("frontal")
+					elseif eventType == "decimate" then
+						warnDecimate:Show(eventCount)
+					elseif eventType == "oozingslam" then
+						specWarnOozingSlam:Show(eventCount)
+						specWarnOozingSlam:Play("mobsoon")
+					elseif eventType == "voidslash" then
+						if self:IsTank() then
+							specWarnVoidSlash:Show(eventCount)
+							specWarnVoidSlash:Play("defensive")
+						end
+					elseif eventType == "crashingvoid" then
+						specWarnCrashingVoid:Show(eventCount)
+						specWarnCrashingVoid:Play("pullin")
+					end
+				end
+			elseif eventState == 3 then
+				self:TLCountCancel(eventID)
+			end
+		end
 	end
 else
 	mod:RegisterEventsInCombat(

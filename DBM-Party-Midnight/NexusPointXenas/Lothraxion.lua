@@ -19,7 +19,7 @@ local specWarnFlicker				= mod:NewSpecialWarningDodgeCount(1255531, nil, nil, ni
 
 local timerSearingRendCD			= mod:NewCDCountTimer(26, 1255335, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerBrilliantDispersionCD	= mod:NewCDCountTimer(25, 1255503, nil, nil, nil, 3)
-local timerDivineGuileCD			= mod:NewCDCountTimer(52, 1257567, nil, nil, nil, 6)
+local timerDivineGuileCD			= mod:NewCDCountTimer(52, 1257567, nil, nil, nil, 6, nil, DBM_COMMON_L.IMPORTANT_ICON)
 local timerFlickerCD				= mod:NewCDCountTimer(10, 1255531, nil, nil, nil, 3)
 
 --Private Auras

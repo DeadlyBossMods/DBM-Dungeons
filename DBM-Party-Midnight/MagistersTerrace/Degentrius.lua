@@ -16,7 +16,7 @@ local warnDevouringEntropy				= mod:NewCountAnnounce(1215897, 3)
 local specWarnUnstableVoidEssence		= mod:NewSpecialWarningCount(1215087, nil, nil, nil, 2, 12)
 local specWarnHulkingFragment			= mod:NewSpecialWarningCount(1280113, nil, nil, nil, 1, 2)
 
-local timerDevouringEntropyCD			= mod:NewCDCountTimer(20.5, 1215897, nil, nil, nil, 3)
+local timerDevouringEntropyCD			= mod:NewCDCountTimer(20.5, 1215897, nil, nil, nil, 3, nil, DBM_COMMON_L.HEALER_ICON)
 local timerUnstableVoidEssenceCD		= mod:NewCDCountTimer(20.5, 1215087, nil, nil, nil, 5)
 local timerHulkingFragmentCD			= mod:NewCDCountTimer(20.5, 1280113, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 

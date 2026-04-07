@@ -15,9 +15,9 @@ local warnCosmicSting					= mod:NewCountAnnounce(1223958, 3)
 local warnNeuralLink					= mod:NewCountAnnounce(1253709, 3)
 
 local timerTriplicateCD					= mod:NewCDCountTimer(20.5, 1223847, nil, nil, nil, 5)
-local timerCosmicStingCD				= mod:NewCDCountTimer(20.5, 1223958, nil, nil, nil, 3)
+local timerCosmicStingCD				= mod:NewCDCountTimer(20.5, 1223958, nil, nil, nil, 3, nil, DBM_COMMON_L.HEALER_ICON)
 local timerAstralGraspCD				= mod:NewCDCountTimer(20.5, 1224299, nil, nil, nil, 3)
-local timerNeuralLinkCD					= mod:NewCDCountTimer(20.5, 1253709, nil, nil, nil, 3)
+local timerNeuralLinkCD					= mod:NewCDCountTimer(20.5, 1253709, nil, nil, nil, 3, nil, DBM_COMMON_L.MYTHIC_ICON)
 local timerVoidSecretionsCD				= mod:NewCDCountTimer(20.5, 1224104, nil, nil, nil, 3)
 
 --Abilities that have unreliable timers so we have to use pure alert APIs for ENCOUNTER_WARNING

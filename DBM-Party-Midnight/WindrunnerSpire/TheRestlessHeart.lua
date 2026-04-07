@@ -19,8 +19,8 @@ local specWarnBullseyeWindblast		= mod:NewSpecialWarningCount(468429, nil, nil, 
 local specWarnArrowRain				= mod:NewSpecialWarningDodgeCount(472556, nil, nil, nil, 2, 2)
 local specWarnTempestSlash			= mod:NewSpecialWarningCount(472662, nil, nil, nil, 3, 2)
 
-local timerBullseyeWindblastCD		= mod:NewCDCountTimer(24, 468429, nil, nil, nil, 3)
-local timerBoltGaleCD				= mod:NewCDCountTimer(39, 474528, nil, nil, nil, 3)
+local timerBullseyeWindblastCD		= mod:NewCDCountTimer(24, 468429, nil, nil, nil, 3, nil, DBM_COMMON_L.IMPORTANT_ICON)
+local timerBoltGaleCD				= mod:NewCDCountTimer(39, 474528, nil, nil, nil, 3, nil, DBM_COMMON_L.HEALER_ICON)
 local timerArrowRainCD				= mod:NewCDCountTimer(9, 472556, nil, nil, nil, 3)
 local timerTempestSlashCD			= mod:NewCDCountTimer(21, 472662, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerGustShotCD				= mod:NewCDCountTimer(23.5, 1253979, nil, nil, nil, 3)

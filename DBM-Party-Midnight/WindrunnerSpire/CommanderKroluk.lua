@@ -19,10 +19,10 @@ local specWarnIntimidatingShout		= mod:NewSpecialWarningCount(1253026, nil, nil,
 local specWarnRallyingBellow		= mod:NewSpecialWarningSwitchCount(472043, nil, nil, nil, 2, 3)
 
 local timerRampageCD				= mod:NewCDCountTimer(30, 467620, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
-local timerIntimidatingShoutCD		= mod:NewCDCountTimer(45, 1253026, nil, nil, nil, 2)
+local timerIntimidatingShoutCD		= mod:NewCDCountTimer(45, 1253026, nil, nil, nil, 2, nil, DBM_COMMON_L.MYTHIC_ICON)
 local timerRecklessLeapCD			= mod:NewCDCountTimer(37, 1283247, nil, nil, nil, 3)
 local timerBladestormCD				= mod:NewCDCountTimer(8, 470966, nil, nil, nil, 2)
---Midnight private aura replacements
+
 mod:AddPrivateAuraSoundOption(470966, true, 470966, 4, 1, "justrun", 2)--Bladestorm target
 mod:AddPrivateAuraSoundOption(468924, true, 470966, 1, 2, "watchfeet", 8)--Bladestorm GTFO
 mod:AddPrivateAuraSoundOption(1283247, true, 1283247, 1, 1, "runout", 2)--Reckless Leap target

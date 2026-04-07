@@ -17,9 +17,9 @@ if DBM:IsPostMidnight() then
 	local specWarnChakramVortex		= mod:NewSpecialWarningCount(156793, nil, nil, nil, 2, 2)
 
 	local timerGaleSurgeCD			= mod:NewCDCountTimer(20.5, 1252733, nil, nil, nil, 3)
-	local timerFanofBladesCD		= mod:NewCDCountTimer(20.5, 153757, nil, nil, nil, 2)
+	local timerFanofBladesCD		= mod:NewCDCountTimer(20.5, 153757, nil, nil, nil, 2, nil, DBM_COMMON_L.BLEED_ICON..DBM_COMMON_L.HEALER_ICON)
 	local timerWindChakramCD		= mod:NewCDCountTimer(20.5, 1258148, nil, nil, nil, 3)
-	local timerChakramVortexCD		= mod:NewCDCountTimer(20.5, 156793, nil, nil, nil, 6)
+	local timerChakramVortexCD		= mod:NewCDCountTimer(20.5, 156793, nil, nil, nil, 6, nil, DBM_COMMON_L.IMPORTANT_ICON)
 
 	--Midnight private aura replacements
 	mod:AddPrivateAuraSoundOption(1252733, true, 1252733, 1, 1, "debuffyou", 17)--Gale Surge

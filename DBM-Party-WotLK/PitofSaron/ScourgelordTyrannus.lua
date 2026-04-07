@@ -29,7 +29,7 @@ if DBM:IsPostMidnight() then
 	local specWarnIcyBarrage			= mod:NewSpecialWarningDodgeCount(1276948, nil, nil, nil, 2, 2)
 
 	local timerScourgelordsBrandCD		= mod:NewCDCountTimer(20.5, 1262582, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
-	local timerArmyOfTheDeadCD			= mod:NewCDCountTimer(20.5, 1263406, nil, nil, nil, 1)
+	local timerArmyOfTheDeadCD			= mod:NewCDCountTimer(20.5, 1263406, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)
 	local timerRimeBlastCD				= mod:NewCDCountTimer(20.5, 1262772, nil, nil, nil, 3)
 	local timerBoneInfusionCD			= mod:NewCDCountTimer(20.5, 1276648, nil, nil, nil, 3)
 	local timerDeathsGraspCD			= mod:NewCDCountTimer(20.5, 1263756, nil, nil, nil, 3)

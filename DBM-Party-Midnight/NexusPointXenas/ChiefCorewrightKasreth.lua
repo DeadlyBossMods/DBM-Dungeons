@@ -17,7 +17,7 @@ local specWarnFluxCollapse			= mod:NewSpecialWarningCount(1264048, nil, nil, nil
 local warnRefluxCharge				= mod:NewCountAnnounce(1251785, 2)
 
 local timerCoresparkDetonationCD	= mod:NewCDCountTimer(38, 1257509, nil, nil, nil, 3)
-local timerRefluxChargeCD			= mod:NewCDCountTimer(12, 1251785, nil, nil, nil, 3)
+local timerRefluxChargeCD			= mod:NewCDCountTimer(12, 1251785, nil, nil, nil, 3, nil, DBM_COMMON_L.IMPORTANT_ICON)
 local timerLeylineArrayCD			= mod:NewCDCountTimer(11, 1251183, nil, nil, nil, 3)
 local timerFluxCollapseCD			= mod:NewCDCountTimer(13, 1264048, nil, nil, nil, 3)
 

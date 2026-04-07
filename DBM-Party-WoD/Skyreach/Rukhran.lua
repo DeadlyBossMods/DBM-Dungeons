@@ -17,7 +17,7 @@ if DBM:IsPostMidnight() then
 
 	local timerSunbreakCD			= mod:NewCDCountTimer(20.5, 1253510, nil, nil, nil, 1)
 	local timerBurningClawsCD		= mod:NewCDCountTimer(20.5, 1253519, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
-	local timerSearingQuillsCD		= mod:NewCDCountTimer(20.5, 1253527, nil, nil, nil, 2, nil, DBM_COMMON_L.DEADLY_ICON)
+	local timerSearingQuillsCD		= mod:NewCDCountTimer(20.5, 1253527, nil, nil, nil, 2, nil, DBM_COMMON_L.IMPORTANT_ICON)
 
 	--Midnight private aura replacements
 	mod:AddPrivateAuraSoundOption(1253511, true, 1253511, 1, 1, "targetyou", 2)--Burning Pursuit
