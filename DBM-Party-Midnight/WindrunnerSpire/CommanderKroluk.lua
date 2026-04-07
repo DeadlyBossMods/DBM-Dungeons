@@ -16,7 +16,7 @@ local warnBladestorm				= mod:NewCountAnnounce(470966, 2, nil, false)
 
 local specWarnRampage				= mod:NewSpecialWarningCount(467620, nil, nil, nil, 1, 2)
 local specWarnIntimidatingShout		= mod:NewSpecialWarningCount(1253026, nil, nil, nil, 2, 2)
-local specWarnRallyingBellow		= mod:NewSpecialWarningSwitchCount(472043, nil, nil, nil, 2, 3)
+local specWarnRallyingBellow		= mod:NewSpecialWarningSwitchCount(472043, nil, nil, DBM_COMMON_L.ADDS, 2, 3)
 
 local timerRampageCD				= mod:NewCDCountTimer(30, 467620, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerIntimidatingShoutCD		= mod:NewCDCountTimer(45, 1253026, nil, nil, nil, 2, nil, DBM_COMMON_L.MYTHIC_ICON)
