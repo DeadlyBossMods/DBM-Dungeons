@@ -79,7 +79,7 @@ do
 			timerDevouringEntropyCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "entropy", "entropyCount"))
 		elseif timer == 15 then--Unstable Void Essence opener
 			timerUnstableVoidEssenceCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "essence", "essenceCount"))
-		elseif timer == 22 then--Recurring Fragment -> Entropy -> Essence rotation
+		elseif timer == 24 then--Recurring Fragment -> Entropy -> Essence rotation
 			recurringTwentyTwoCount = recurringTwentyTwoCount + 1
 			if recurringTwentyTwoCount % 3 == 1 then
 				timerHulkingFragmentCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "fragment", "fragmentCount"))
