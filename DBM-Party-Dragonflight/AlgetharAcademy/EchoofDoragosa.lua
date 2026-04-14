@@ -15,30 +15,133 @@ mod:RegisterCombat("combat")
 --Note: https://www.wowhead.com/spell=374350/energy-bomb is NOT a private aura so we can't do anything with it currently
 if DBM:IsPostMidnight() then
 	--Custom Sounds on cast/cooldown expiring
-	mod:AddCustomAlertSoundOption(1282251, false, 1)--Astral Blast
-	mod:AddCustomAlertSoundOption(374341, true, 2)--Bandaid for now. We can't announce victims just the cast
-	mod:AddCustomAlertSoundOption(388820, true, 2)--Power Vacuum
-	--Custom timer colors, countdowns, and disables
-	mod:AddCustomTimerOptions(373325, nil, 3, 0)
-	mod:AddCustomTimerOptions(1282251, nil, 5, 0)
-	mod:AddCustomTimerOptions(374341, nil, 3, 0)
-	mod:AddCustomTimerOptions(388820, nil, 2, 0)
+	mod:AddCustomAlertSoundOption(374341, true, 2)--Energy Bomb: ENCOUNTER_WARNING provides target name
 	--Midnight private aura replacements
 	mod:AddPrivateAuraSoundOption(389007, true, 389007, 1, 1, "watchfeet", 8)--GTFO
 	mod:AddPrivateAuraSoundOption(389011, true, 389011, 1, 1, "debuffyou", 17)--Overwhelming Power (off by default since we can't warn all stacks, just initial)
 
-	function mod:OnLimitedCombatStart()
+	local specWarnAstralBlast				= mod:NewSpecialWarningCount(1282251, nil, nil, nil, 1, 2)
+	local specWarnEnergyBomb				= mod:NewSpecialWarningCount(374341, nil, nil, nil, 2, 2)
+	local specWarnPowerVacuum				= mod:NewSpecialWarningCount(388820, nil, nil, nil, 2, 2)
+
+	local timerArcaneBarrageCD				= mod:NewCDCountTimer(20.5, 373325, nil, nil, nil, 3)
+	local timerAstralBlastCD				= mod:NewCDCountTimer(20.5, 1282251, nil, nil, nil, 5)
+	local timerEnergyBombCD					= mod:NewCDCountTimer(20.5, 374341, nil, nil, nil, 3)
+	local timerPowerVacuumCD				= mod:NewCDCountTimer(20.5, 388820, nil, nil, nil, 2)
+
+	mod.vb.barrageCount = 0
+	mod.vb.blastCount = 0
+	mod.vb.bombCount = 0
+	mod.vb.vacuumCount = 0
+
+	local badStateDetected = false
+
+	---@param self DBMMod
+	local function setFallback(self)
 		if self:IsTank() then
-			self:EnableAlertOptions(1282251, 294, "defensive", 2)
+			specWarnAstralBlast:SetAlert(294, "defensive", 2)
 		end
-		self:EnableAlertOptions(374341, 295, "scattersoon", 2)
-		self:EnableAlertOptions(388820, 296, "runout", 2)
+		specWarnEnergyBomb:SetAlert(295, "scattersoon", 2)
+		specWarnPowerVacuum:SetAlert(296, "runout", 2)
+		timerArcaneBarrageCD:SetTimeline(293)
+		timerAstralBlastCD:SetTimeline(294)
+		timerEnergyBombCD:SetTimeline(295)
+		timerPowerVacuumCD:SetTimeline(296)
+	end
 
-		self:EnableTimelineOptions(373325, 293)
-		self:EnableTimelineOptions(1282251, 294)
-		self:EnableTimelineOptions(374341, 295)
-		self:EnableTimelineOptions(388820, 296)
+	function mod:OnLimitedCombatStart()
+		self:TLCountReset()
+		self.vb.barrageCount = 1
+		self.vb.blastCount = 1
+		self.vb.bombCount = 1
+		self.vb.vacuumCount = 1
+		badStateDetected = false
+		self:EnableAlertOptions(374341, 295, "bombyou", 12, 2, 0)
+		if self:IsMythicPlus() and DBM.Options.HardcodedTimer and not badStateDetected then
+			self:IgnoreBlizzardAPI()
+			self:RegisterShortTermEvents(
+				"ENCOUNTER_TIMELINE_EVENT_ADDED",
+				"ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED"
+			)
+		else
+			setFallback(self)
+		end
+	end
 
+	function mod:OnCombatEnd()
+		self:TLCountReset()
+		self:UnregisterShortTermEvents()
+	end
+
+	do
+		---@param self DBMMod
+		---@param timer number
+		---@param timerExact number
+		---@param eventID number
+		local function timersAll(self, timer, timerExact, eventID)
+			--Logic confirmed against DoragosaKill1/DoragosaKill2 M+ pulls.
+			if timer == 7 then--Arcane Missiles short segment (exact 7.0) or Astral Blast imminent bar (exact 6.5)
+				if timerExact < 6.75 then--Astral Blast (6.5) — imminent bar, fires very soon
+					timerAstralBlastCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "blast", "blastCount"))
+				else--Arcane Missiles (7.0)
+					timerArcaneBarrageCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "barrage", "barrageCount"))
+				end
+			elseif timer == 9 then--Astral Blast opening/post-vacuum CD
+				timerAstralBlastCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "blast", "blastCount"))
+			elseif timer == 10 then--Arcane Missiles second segment
+				timerArcaneBarrageCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "barrage", "barrageCount"))
+			elseif timer == 12 then--Astral Blast main CD bar
+				timerAstralBlastCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "blast", "blastCount"))
+			elseif timer == 14 then--Energy Bomb
+				timerEnergyBombCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "bomb", "bombCount"))
+			elseif timer == 28 then--Power Vacuum
+				timerPowerVacuumCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "vacuum", "vacuumCount"))
+			else
+				if not DBM.Options.DebugMode then
+					badStateDetected = true
+					self:ResumeBlizzardAPI()
+					self:UnregisterShortTermEvents()
+					setFallback(self)
+					DBM:Debug("|cffff0000Failed to match encounter timeline events to expected timers, falling back to Blizzard API|r", nil, nil, nil, true)
+				else
+					DBM:Debug("|cffff0000Failed to match encounter timeline events to expected timers|r", nil, nil, nil, true)
+				end
+			end
+		end
+
+		function mod:ENCOUNTER_TIMELINE_EVENT_ADDED(eventInfo)
+			if eventInfo.source ~= 0 then return end
+			local eventID = eventInfo.id
+			local timerExact = eventInfo.duration
+			local timer = math.floor(timerExact + 0.5)
+			if not badStateDetected then
+				timersAll(self, timer, timerExact, eventID)
+			end
+		end
+
+		function mod:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(eventID)
+			local eventState = C_EncounterTimeline.GetEventState(eventID)
+			if not eventID or not eventState then return end
+			if eventState == 2 then
+				local eventType, eventCount = self:TLCountFinish(eventID)
+				if eventType and eventCount then
+					if eventType == "blast" then
+						if self:IsTanking("player", "boss1", nil, true) then
+							specWarnAstralBlast:Show(eventCount)
+							specWarnAstralBlast:Play("defensive")
+						end
+					elseif eventType == "bomb" then
+						specWarnEnergyBomb:Show(eventCount)
+						specWarnEnergyBomb:Play("scattersoon")
+					elseif eventType == "vacuum" then
+						specWarnPowerVacuum:Show(eventCount)
+						specWarnPowerVacuum:Play("runout")
+					end
+				end
+			elseif eventState == 3 then
+				self:TLCountCancel(eventID)
+			end
+		end
 	end
 else
 	mod:RegisterEventsInCombat(

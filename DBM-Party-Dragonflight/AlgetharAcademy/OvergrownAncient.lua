@@ -36,33 +36,131 @@ end
 
 if DBM:IsPostMidnight() then
 	--Note, no eventID for healing touch so no timer or alert for it sadly
-	--Custom Sounds on cast/cooldown expiring
-	mod:AddCustomAlertSoundOption(388796, true, 2)--Germinate
-	mod:AddCustomAlertSoundOption(388923, true, 2)--Burst Forth
-	mod:AddCustomAlertSoundOption(388623, true, 1)--Branch Out
---	mod:AddCustomAlertSoundOption(396640, true, 2)--Healing Touch
-	mod:AddCustomAlertSoundOption(388544, true, 1)--Barkbreaker
-	--Custom timer colors, countdowns, and disables
-	mod:AddCustomTimerOptions(388796, nil, 3, 0)
-	mod:AddCustomTimerOptions(388923, nil, 3, 0)
-	mod:AddCustomTimerOptions(388623, nil, 1, 0)
---	mod:AddCustomTimerOptions(396640, nil, 4, 0)
-	mod:AddCustomTimerOptions(388544, nil, 5, 0)
 	--Midnight private aura replacements
---	mod:AddPrivateAuraSoundOption(433740, true, 433740, 1
+--	mod:AddPrivateAuraSoundOption(433740, true, 433740, 1)
+
+	local specWarnGerminate				= mod:NewSpecialWarningCount(388796, nil, nil, nil, 2, 2)
+	local specWarnBurstForth			= mod:NewSpecialWarningCount(388923, nil, nil, nil, 2, 2)
+	local specWarnBranchOut				= mod:NewSpecialWarningCount(388623, nil, nil, nil, 1, 2)
+	local specWarnBarkbreaker			= mod:NewSpecialWarningCount(388544, nil, "Tank|Healer", nil, 1, 2)
+
+	local timerGerminateCD				= mod:NewCDCountTimer(20.5, 388796, nil, nil, nil, 3)
+	local timerBurstForthCD				= mod:NewCDCountTimer(20.5, 388923, nil, nil, nil, 3, nil, DBM_COMMON_L.HEALER_ICON)
+	local timerBranchOutCD				= mod:NewCDCountTimer(20.5, 388623, nil, nil, nil, 1)
+	local timerBarkbreakerCD			= mod:NewCDCountTimer(20.5, 388544, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+
+	mod.vb.germinateCount = 0
+	mod.vb.burstForthCount = 0
+	mod.vb.branchOutCount = 0
+	mod.vb.barkCount = 0
+
+	local badStateDetected = false
+
+	---@param self DBMMod
+	local function setFallback(self)
+		if self:IsTank() then
+			specWarnBarkbreaker:SetAlert(282, "defensive", 2)
+		end
+		specWarnBranchOut:SetAlert(283, "bigmob", 2)
+		specWarnGerminate:SetAlert(284, "watchstep", 2)
+		specWarnBurstForth:SetAlert(285, "aesoon", 2)
+		timerBarkbreakerCD:SetTimeline(282)
+		timerBranchOutCD:SetTimeline(283)
+		timerGerminateCD:SetTimeline(284)
+		timerBurstForthCD:SetTimeline(285)
+	end
 
 	function mod:OnLimitedCombatStart()
-		if self:IsTank() then
-			self:EnableAlertOptions(388544, 282, "defensive", 2)
+		self:TLCountReset()
+		self.vb.germinateCount = 1
+		self.vb.burstForthCount = 1
+		self.vb.branchOutCount = 1
+		self.vb.barkCount = 1
+		badStateDetected = false
+		if self:IsMythicPlus() and DBM.Options.HardcodedTimer and not badStateDetected then
+			self:IgnoreBlizzardAPI()
+			self:RegisterShortTermEvents(
+				"ENCOUNTER_TIMELINE_EVENT_ADDED",
+				"ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED"
+			)
+		else
+			setFallback(self)
 		end
-		self:EnableAlertOptions(388623, 283, "bigmob", 2)
-		self:EnableAlertOptions(388796, 284, "watchstep", 2)
-		self:EnableAlertOptions(388923, 285, "aesoon", 2)
+	end
 
-		self:EnableTimelineOptions(388544, 282)
-		self:EnableTimelineOptions(388623, 283)
-		self:EnableTimelineOptions(388796, 284)
-		self:EnableTimelineOptions(388923, 285)
+	function mod:OnCombatEnd()
+		self:TLCountReset()
+		self:UnregisterShortTermEvents()
+	end
+
+	do
+		---@param self DBMMod
+		---@param timer number
+		---@param timerExact number
+		---@param eventID number
+		local function timersAll(self, timer, timerExact, eventID)
+			--Logic confirmed against OvergrownAncientKill1/OvergrownAncientKill2 M+ pulls.
+			if timer == 9 then--Barkbreaker first of pair (9s)
+				timerBarkbreakerCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "bark", "barkCount"))
+			elseif timer == 18 then--Germinate odd casts (18s)
+				timerGerminateCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "germinate", "germinateCount"))
+			elseif timer == 28 then--Barkbreaker second of pair (28s)
+				timerBarkbreakerCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "bark", "barkCount"))
+			elseif timer == 30 then--Branch Out
+				timerBranchOutCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "branchOut", "branchOutCount"))
+			elseif timer == 33 then--Germinate even casts (33s)
+				timerGerminateCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "germinate", "germinateCount"))
+			elseif timer == 55 then--Burst Forth
+				timerBurstForthCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "burstForth", "burstForthCount"))
+			else
+				if not DBM.Options.DebugMode then
+					badStateDetected = true
+					self:ResumeBlizzardAPI()
+					self:UnregisterShortTermEvents()
+					setFallback(self)
+					DBM:Debug("|cffff0000Failed to match encounter timeline events to expected timers, falling back to Blizzard API|r", nil, nil, nil, true)
+				else
+					DBM:Debug("|cffff0000Failed to match encounter timeline events to expected timers|r", nil, nil, nil, true)
+				end
+			end
+		end
+
+		function mod:ENCOUNTER_TIMELINE_EVENT_ADDED(eventInfo)
+			if eventInfo.source ~= 0 then return end
+			local eventID = eventInfo.id
+			local timerExact = eventInfo.duration
+			local timer = math.floor(timerExact + 0.5)
+			if not badStateDetected then
+				timersAll(self, timer, timerExact, eventID)
+			end
+		end
+
+		function mod:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(eventID)
+			local eventState = C_EncounterTimeline.GetEventState(eventID)
+			if not eventID or not eventState then return end
+			if eventState == 2 then
+				local eventType, eventCount = self:TLCountFinish(eventID)
+				if eventType and eventCount then
+					if eventType == "germinate" then
+						specWarnGerminate:Show(eventCount)
+						specWarnGerminate:Play("watchstep")
+					elseif eventType == "burstForth" then
+						specWarnBurstForth:Show(eventCount)
+						specWarnBurstForth:Play("aesoon")
+					elseif eventType == "branchOut" then
+						specWarnBranchOut:Show(eventCount)
+						specWarnBranchOut:Play("bigmob")
+					elseif eventType == "bark" then
+						if self:IsTank() then
+							specWarnBarkbreaker:Show(eventCount)
+							specWarnBarkbreaker:Play("defensive")
+						end
+					end
+				end
+			elseif eventState == 3 then
+				self:TLCountCancel(eventID)
+			end
+		end
 	end
 else
 	mod:RegisterEventsInCombat(
