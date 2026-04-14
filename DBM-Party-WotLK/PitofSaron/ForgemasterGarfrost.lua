@@ -22,10 +22,10 @@ if DBM:IsPostMidnight() then
 	local specWarnCryostomp					= mod:NewSpecialWarningCount(1261847, nil, nil, nil, 2, 2)
 	local specWarnGlacialOverload			= mod:NewSpecialWarningCount(1262029, nil, nil, nil, 2, 12)
 
-	local timerOrebreakerCD					= mod:NewCDCountTimer(20.5, 1261546, nil, nil, nil, 5)
+	local timerOrebreakerCD					= mod:NewCDCountTimer(20.5, 1261546, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 	local timerCryostompCD					= mod:NewCDCountTimer(20.5, 1261847, nil, nil, nil, 2)
-	local timerThrowSaroniteCD				= mod:NewCDCountTimer(20.5, 1261286, nil, nil, nil, 3)
-	local timerGlacialOverloadCD			= mod:NewCDCountTimer(20.5, 1262029, nil, nil, nil, 2)
+	local timerThrowSaroniteCD				= mod:NewCDCountTimer(20.5, 1261286, nil, nil, nil, 3, nil, DBM_COMMON_L.IMPORTANT_ICON)
+	local timerGlacialOverloadCD			= mod:NewCDCountTimer(20.5, 1262029, nil, nil, nil, 2, nil, DBM_COMMON_L.DEADLY_ICON)
 
 	--Midnight private aura replacements
 	mod:AddPrivateAuraSoundOption(1261286, true, 1261286, 1, 1, "debuffyou", 17)--Throw Saronite

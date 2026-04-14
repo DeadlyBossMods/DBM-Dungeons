@@ -15,12 +15,12 @@ local warnEtherealShackles				= mod:NewCountAnnounce(1214038, 2)
 
 local specWarnRefuelingProtocol			= mod:NewSpecialWarningCount(474345, nil, nil, nil, 2, 2)
 local specWarnRepulsingSlam				= mod:NewSpecialWarningCount(474496, nil, nil, nil, 1, 2)
-local specWarnArcaneExpulsion			= mod:NewSpecialWarningCount(1214081, nil, nil, nil, 2, 2)
+local specWarnArcaneExpulsion			= mod:NewSpecialWarningCount(1214081, nil, 28405, nil, 2, 2)
 
-local timerRefuelingProtocolCD			= mod:NewCDCountTimer(20.5, 474345, nil, nil, nil, 6)
-local timerRepulsingSlamCD				= mod:NewCDCountTimer(20.5, 474496, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
-local timerEtherealShacklesCD			= mod:NewCDCountTimer(20.5, 1214038, nil, nil, nil, 3)
-local timerArcaneExpulsionCD			= mod:NewCDCountTimer(20.5, 1214081, nil, nil, nil, 2)
+local timerRefuelingProtocolCD			= mod:NewCDCountTimer(20.5, 474345, nil, nil, nil, 6, nil, DBM_COMMON_L.IMPORTANT_ICON)
+local timerRepulsingSlamCD				= mod:NewCDCountTimer(20.5, 474496, 182557, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)--Short Text "Slam"
+local timerEtherealShacklesCD			= mod:NewCDCountTimer(20.5, 1214038, DBM_COMMON_L.DISPELS.." (%s)", nil, nil, 3, nil, DBM_COMMON_L.MAGIC_ICON)
+local timerArcaneExpulsionCD			= mod:NewCDCountTimer(20.5, 1214081, 28405, nil, nil, 2)--Short text "Knockback"
 
 mod:AddPrivateAuraSoundOption(1214089, true, 1214089, 1, 2, "watchfeet", 8)--Arcane Residue (GTFO)
 mod:AddPrivateAuraSoundOption(1214038, true, 1214038, 1, 1, "debuffyou", 17)--Ethereal Shackles

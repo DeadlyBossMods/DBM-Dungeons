@@ -19,8 +19,8 @@ local specWarnSearingBeak			= mod:NewSpecialWarningCount(466064, nil, nil, nil, 
 local specWarnBurningGale			= mod:NewSpecialWarningCount(465904, nil, nil, nil, 2, 13)
 
 local timerSearingBeakCD			= mod:NewCDCountTimer(10, 466064, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
-local timerFlamingUpdraftCD			= mod:NewCDCountTimer(6, 466556, nil, nil, nil, 3)
-local timerBurningGaleCD			= mod:NewCDCountTimer(15, 465904, nil, nil, nil, 2)
+local timerFlamingUpdraftCD			= mod:NewCDCountTimer(6, 466556, nil, nil, nil, 3, nil, DBM_COMMON_L.HEALER_ICON)
+local timerBurningGaleCD			= mod:NewCDCountTimer(15, 465904, nil, nil, nil, 2, nil, DBM_COMMON_L.IMPORTANT_ICON)
 
 --TODO, fix private aura GTFO sound defaults if assumption is wrong
 mod:AddPrivateAuraSoundOption(466559, true, 466556, 1, 1, "runout", 2)--Flaming Updraft (Currently disabled by blizzard, so hidden from UI automatically by core)

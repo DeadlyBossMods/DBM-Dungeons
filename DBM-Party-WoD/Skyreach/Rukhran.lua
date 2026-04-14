@@ -11,13 +11,13 @@ mod:RegisterCombat("combat")
 
 --TODO, some actual custom sounds and timer disables when apis added
 if DBM:IsPostMidnight() then
-	local specWarnSunbreak			= mod:NewSpecialWarningCount(1253510, nil, nil, nil, 1, 2)
+	local specWarnSunbreak			= mod:NewSpecialWarningCount(1253510, nil, nil, DBM_COMMON_L.ADD, 1, 2)
 	local specWarnBurningClaws		= mod:NewSpecialWarningCount(1253519, "Tank", nil, nil, 2, 2)
 	local specWarnSearingQuills		= mod:NewSpecialWarningCount(1253527, nil, nil, nil, 2, 12)
 
-	local timerSunbreakCD			= mod:NewCDCountTimer(20.5, 1253510, nil, nil, nil, 1)
+	local timerSunbreakCD			= mod:NewCDCountTimer(20.5, 1253510, DBM_COMMON_L.ADD.." (%s)", nil, nil, 1)
 	local timerBurningClawsCD		= mod:NewCDCountTimer(20.5, 1253519, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
-	local timerSearingQuillsCD		= mod:NewCDCountTimer(20.5, 1253527, nil, nil, nil, 2, nil, DBM_COMMON_L.DEADLY_ICON)
+	local timerSearingQuillsCD		= mod:NewCDCountTimer(20.5, 1253527, nil, nil, nil, 2, nil, DBM_COMMON_L.IMPORTANT_ICON)
 
 	--Midnight private aura replacements
 	mod:AddPrivateAuraSoundOption(1253511, true, 1253511, 1, 1, "targetyou", 2)--Burning Pursuit
@@ -26,6 +26,7 @@ if DBM:IsPostMidnight() then
 	mod.vb.sunbreakCount = 0
 	mod.vb.burningClawsCount = 0
 	mod.vb.searingQuillsCount = 0
+	mod.vb.twelveSecondCount = 0
 	local badStateDetected = false
 
 	---@param self DBMMod
@@ -46,6 +47,7 @@ if DBM:IsPostMidnight() then
 		self.vb.sunbreakCount = 1
 		self.vb.burningClawsCount = 1
 		self.vb.searingQuillsCount = 1
+		self.vb.twelveSecondCount = 0
 		if self:IsMythicPlus() and DBM.Options.HardcodedTimer and not badStateDetected then
 			self:IgnoreBlizzardAPI()
 			self:RegisterShortTermEvents(
@@ -74,23 +76,12 @@ if DBM:IsPostMidnight() then
 				timerSunbreakCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "sunbreak", "sunbreakCount"))
 			elseif timer == 38 then--Searing Quills
 				timerSearingQuillsCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "searingQuills", "searingQuillsCount"))
-			elseif timer == 12 then--Sunbreak(odd counts) or Burning Claws(even counts)
-				local sunbreakExpectsTwelve = self.vb.sunbreakCount % 2 == 1
-				local clawsExpectsTwelve = self.vb.burningClawsCount % 2 == 0
-				if sunbreakExpectsTwelve then
+			elseif timer == 12 then--Alternates: Sunbreak then Burning Claws
+				self.vb.twelveSecondCount = self.vb.twelveSecondCount + 1
+				if self.vb.twelveSecondCount % 2 == 1 then
 					timerSunbreakCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "sunbreak", "sunbreakCount"))
-				elseif clawsExpectsTwelve then
-					timerBurningClawsCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "burningClaws", "burningClawsCount"))
 				else
-					if not DBM.Options.DebugMode then
-						badStateDetected = true
-						self:ResumeBlizzardAPI()
-						self:UnregisterShortTermEvents()
-						setFallback(self)
-						DBM:Debug("|cffff0000Failed to match encounter timeline events to expected timers, falling back to Blizzard API|r", nil, nil, nil, true)
-					else
-						DBM:Debug("|cffff0000Failed to match encounter timeline events to expected timers|r", nil, nil, nil, true)
-					end
+					timerBurningClawsCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "burningClaws", "burningClawsCount"))
 				end
 			else
 				if not DBM.Options.DebugMode then

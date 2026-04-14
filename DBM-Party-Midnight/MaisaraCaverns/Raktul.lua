@@ -17,7 +17,7 @@ local specWarnSpiritbreaker		= mod:NewSpecialWarningCount(1251023, nil, nil, nil
 local specWarnSoulrendingRoar	= mod:NewSpecialWarningCount(1253788, nil, nil, nil, 2, 2)
 
 local timerSpiritbreakerCD		= mod:NewCDCountTimer(26, 1251023, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
-local timerCrushSoulsCD			= mod:NewCDCountTimer(26, 1252676, nil, nil, nil, 3)
+local timerCrushSoulsCD			= mod:NewCDCountTimer(26, 1252676, nil, nil, nil, 3, nil, DBM_COMMON_L.IMPORTANT_ICON)
 local timerSoulrendingRoarCD	= mod:NewCDCountTimer(70, 1253788, nil, nil, nil, 6)
 
 --Midnight private aura replacements
