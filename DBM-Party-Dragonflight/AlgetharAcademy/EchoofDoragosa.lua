@@ -57,7 +57,7 @@ if DBM:IsPostMidnight() then
 		self.vb.vacuumCount = 1
 		badStateDetected = false
 		self:EnableAlertOptions(374341, 295, "bombyou", 12, 2, 0)
-		if self:IsMythicPlus() and DBM.Options.HardcodedTimer and not badStateDetected then
+		if DBM.Options.HardcodedTimer and not badStateDetected then
 			self:IgnoreBlizzardAPI()
 			self:RegisterShortTermEvents(
 				"ENCOUNTER_TIMELINE_EVENT_ADDED",
