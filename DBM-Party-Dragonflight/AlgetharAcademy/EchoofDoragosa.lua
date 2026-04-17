@@ -22,12 +22,12 @@ if DBM:IsPostMidnight() then
 
 	local specWarnAstralBlast				= mod:NewSpecialWarningCount(1282251, nil, nil, nil, 1, 2)
 	local specWarnEnergyBomb				= mod:NewSpecialWarningCount(374341, nil, nil, nil, 2, 2)
-	local specWarnPowerVacuum				= mod:NewSpecialWarningCount(388820, nil, nil, nil, 2, 2)
+	local specWarnPowerVacuum				= mod:NewSpecialWarningCount(388820, nil, 56689, nil, 2, 2)
 
 	local timerArcaneBarrageCD				= mod:NewCDCountTimer(20.5, 373325, nil, nil, nil, 3)
 	local timerAstralBlastCD				= mod:NewCDCountTimer(20.5, 1282251, nil, nil, nil, 5)
 	local timerEnergyBombCD					= mod:NewCDCountTimer(20.5, 374341, nil, nil, nil, 3)
-	local timerPowerVacuumCD				= mod:NewCDCountTimer(20.5, 388820, nil, nil, nil, 2)
+	local timerPowerVacuumCD				= mod:NewCDCountTimer(20.5, 388820, 56689, nil, nil, 2)--Shortname "Grip"
 
 	mod.vb.barrageCount = 0
 	mod.vb.blastCount = 0

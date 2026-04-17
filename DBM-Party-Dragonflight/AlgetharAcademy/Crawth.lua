@@ -19,12 +19,12 @@ if DBM:IsPostMidnight() then
 --	mod:AddPrivateAuraSoundOption(433740, true, 433740, 1)
 
 	local specWarnSavagePeck					= mod:NewSpecialWarningCount(376997, nil, nil, nil, 1, 2)
-	local specWarnDeafeningScreech				= mod:NewSpecialWarningCount(377004, nil, nil, nil, 2, 2)
-	local specWarnOverpoweringGust				= mod:NewSpecialWarningCount(377034, nil, nil, nil, 2, 15)
+	local specWarnDeafeningScreech				= mod:NewSpecialWarningCount(377004, nil, nil, DBM_COMMON_L.AOEDAMAGE, 2, 2)
+	local specWarnOverpoweringGust				= mod:NewSpecialWarningCount(377034, nil, nil, DBM_COMMON_L.FRONTAL, 2, 15)
 
 	local timerSavagePeckCD						= mod:NewCDCountTimer(13.6, 376997, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
-	local timerDeafeningScreechCD				= mod:NewCDCountTimer(22.7, 377004, nil, nil, nil, 2)
-	local timerOverpoweringGustCD				= mod:NewCDCountTimer(28.2, 377034, nil, nil, nil, 3)
+	local timerDeafeningScreechCD				= mod:NewCDCountTimer(22.7, 377004, DBM_COMMON_L.AOEDAMAGE.." (%s)", nil, nil, 2, nil, DBM_COMMON_L.HEALER_ICON)
+	local timerOverpoweringGustCD				= mod:NewCDCountTimer(28.2, 377034, DBM_COMMON_L.FRONTAL.." (%s)", nil, nil, 3)
 
 	mod.vb.peckCount = 0
 	mod.vb.screechCount = 0
