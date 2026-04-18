@@ -1,4 +1,4 @@
-## Interface: 50503, 50504
+## Interface: 20505
 ## Category: DBM
 
 ## Title:|cffffe00a<|r|cffff7d0aDBM|r|cffffe00a>|r |cff69ccf0World Events|r
@@ -23,17 +23,17 @@
 ## X-DBM-Mod-Category: OTHER
 ## X-DBM-StatTypes: normal
 ## X-DBM-Mod-World-Boss: 1
-## X-DBM-Mod-SubCategories: Holidays,Quests,DMF
-## X-DBM-Mod-SubCategories-deDE: Feiertage,Quests,Dunkelmond-Jahrmarkt
-## X-DBM-Mod-SubCategories-ruRU: Праздники,Задания,Ярмарка Новолуния
-## X-DBM-Mod-SubCategories-koKR: 축제,퀘스트,다크문 축제
-## X-DBM-Mod-SubCategories-zhTW: 節慶,任務,DMF
-## X-DBM-Mod-SubCategories-zhCN: 节日,任务,暗月马戏团
-## X-DBM-Mod-SubCategories-esES: Fiestas,Misiones,Feria de la Luna Negra
-## X-DBM-Mod-SubCategories-esMX: Fiestas,Misiones,Feria de la Luna Negra
-## X-DBM-Mod-SubCategories-ptBR: Feriados,Missões,Feira de Negraluna
-## X-DBM-Mod-SubCategories-frFR: Fêtes,Quêtes,Foire de Sombrelune
-## X-DBM-Mod-SubCategories-itIT: Festività,Missioni,DMF
+## X-DBM-Mod-SubCategories: Holidays,Quests
+## X-DBM-Mod-SubCategories-deDE: Feiertage,Quests
+## X-DBM-Mod-SubCategories-ruRU: Праздники,Задания
+## X-DBM-Mod-SubCategories-koKR: 축제,퀘스트
+## X-DBM-Mod-SubCategories-zhTW: 節慶,任務
+## X-DBM-Mod-SubCategories-zhCN: 节日,任务
+## X-DBM-Mod-SubCategories-esES: Fiestas,Misiones
+## X-DBM-Mod-SubCategories-esMX: Fiestas,Misiones
+## X-DBM-Mod-SubCategories-ptBR: Feriados,Missões
+## X-DBM-Mod-SubCategories-frFR: Fêtes,Quêtes
+## X-DBM-Mod-SubCategories-itIT: Festività,Missioni
 ## X-DBM-Mod-Name: World Events
 ## X-DBM-Mod-Name-esES: Eventos del mundo
 ## X-DBM-Mod-Name-esMX: Eventos del mundo
@@ -45,7 +45,7 @@
 ## X-DBM-Mod-Name-ptBR: Eventos Mundiais
 ## X-DBM-Mod-Name-frFR: Évènements Mondiaux
 ## X-DBM-Mod-Name-itIT: Eventi Mondiali
-## X-DBM-Mod-MapID: 230,189,33,547,530,974
+## X-DBM-Mod-MapID: 230,189,547,530
 ## X-DBM-Mod-Sort: 1054
 ## X-DBM-Mod-LoadCID: 20130,18166
 ## X-DBM-Mod-MinCoreRevision: 12473
@@ -60,16 +60,8 @@ localization.cn.lua
 localization.br.lua
 localization.it.lua
 
-Holidays\ApothecaryTrio.lua
 Holidays\Ahune.lua
 Holidays\CorenDirebrew.lua
 Holidays\HeadlessHorseman.lua
 
-Quests\Plants.lua
 Quests\EscortQuests.lua
-
-Events\DMF\Cannon.lua
-Events\DMF\Gnoll.lua
-Events\DMF\Shot.lua
-Events\DMF\Tonks.lua
-Events\DMF\Rings.lua

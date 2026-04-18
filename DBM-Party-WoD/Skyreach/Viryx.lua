@@ -25,7 +25,7 @@ if DBM:IsPostMidnight() then
 
 	--Midnight private aura replacements
 	mod:AddPrivateAuraSoundOption(1253541, true, 1253541, 1, 1, "debuffyou", 17)--Scorching Ray
-	mod:AddPrivateAuraSoundOption(153954, true, 1253998, 1, 1, "targetyou", 2)--Cast Down
+	--mod:AddPrivateAuraSoundOption(153954, true, 1253998, 1, 1, "targetyou", 2)--Cast Down (no longer a private aura post 4-14-26 hotfixes
 	mod:AddPrivateAuraSoundOption(1253531, true, 1253531, 1, 1, "laserrun", 2)--Lens Flare
 
 	mod.vb.scorchingRayCount = 0
