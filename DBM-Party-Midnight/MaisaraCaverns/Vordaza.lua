@@ -18,12 +18,12 @@ mod:RegisterCombat("combat")
 
 local specWarnDrainSoul				= mod:NewSpecialWarningCount(1251554, nil, nil, nil, 1, 2)
 local specWarnUnmake				= mod:NewSpecialWarningDodgeCount(1252054, nil, nil, nil, 2, 2)
-local specWarnWrestPhantoms			= mod:NewSpecialWarningCount(1252130, nil, nil, nil, 2, 2)
+local specWarnWrestPhantoms			= mod:NewSpecialWarningCount(1251204, nil, nil, nil, 2, 2)
 local specWarnNecroticConvergence	= mod:NewSpecialWarningCount(1250708, nil, nil, nil, 1, 2)
 
 local timerDrainSoulCD				= mod:NewCDCountTimer(20.5, 1251554, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerUnmakeCD					= mod:NewCDCountTimer(20.5, 1252054, nil, nil, nil, 3)
-local timerWrestPhantomsCD			= mod:NewCDCountTimer(20.5, 1252130, nil, nil, nil, 1)
+local timerWrestPhantomsCD			= mod:NewCDCountTimer(20.5, 1251204, nil, nil, nil, 1)
 local timerNecroticConvergenceCD	= mod:NewCDCountTimer(70, 1250708, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 
 --Midnight private aura replacements
