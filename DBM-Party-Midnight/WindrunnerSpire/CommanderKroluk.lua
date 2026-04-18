@@ -18,9 +18,9 @@ local specWarnRampage				= mod:NewSpecialWarningCount(467620, nil, nil, nil, 1, 
 local specWarnIntimidatingShout		= mod:NewSpecialWarningCount(1253026, nil, nil, nil, 2, 2)
 local specWarnRallyingBellow		= mod:NewSpecialWarningSwitchCount(472043, nil, nil, DBM_COMMON_L.ADDS, 2, 3)
 
-local timerRampageCD				= mod:NewCDCountTimer(30, 467620, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
-local timerIntimidatingShoutCD		= mod:NewCDCountTimer(45, 1253026, nil, nil, nil, 2, nil, DBM_COMMON_L.MYTHIC_ICON)
-local timerRecklessLeapCD			= mod:NewCDCountTimer(37, 1283247, nil, nil, nil, 3)
+local timerRampageCD				= mod:NewCDCountTimer("d30", 467620, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+local timerIntimidatingShoutCD		= mod:NewCDCountTimer("d45", 1253026, nil, nil, nil, 2, nil, DBM_COMMON_L.MYTHIC_ICON)
+local timerRecklessLeapCD			= mod:NewCDCountTimer("d37", 1283247, nil, nil, nil, 3)
 local timerBladestormCD				= mod:NewCDCountTimer(8, 470966, nil, nil, nil, 2)
 
 mod:AddPrivateAuraSoundOption(470966, true, 470966, 4, 1, "justrun", 2)--Bladestorm target
@@ -99,7 +99,7 @@ do
 		elseif timer == 10 or timer == 37 then
 			activeEventTypes[eventID] = "recklessLeap"
 			timerRecklessLeapCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "recklessLeap", "recklessLeapCount"))
-		elseif timer == 8 then
+		elseif timer == 8 or timer == 5 then
 			activeEventTypes[eventID] = "bladestorm"
 			timerBladestormCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "bladestorm", "bladestormCount"))
 		else

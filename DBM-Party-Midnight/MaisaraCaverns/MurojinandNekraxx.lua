@@ -40,6 +40,13 @@ mod.vb.carrionSwoopCount = 0
 
 local cycleStep = 0
 local badStateDetected = false
+local activeEvents = {}
+local deadBoss = nil--"muro" only; Nekraxx can be resurrected so full cycle remains valid
+local last45EventType = nil
+local cancelWindowStart = 0
+local muroCancelCount = 0
+local pendingResume = {}
+local pendingResumeUntil = 0
 
 ---@param self DBMMod
 local function setFallback(self)
@@ -60,6 +67,14 @@ end
 function mod:OnLimitedCombatStart()
 	self:TLCountReset()
 	cycleStep = 0
+	badStateDetected = false
+	activeEvents = {}
+	deadBoss = nil
+	last45EventType = nil
+	cancelWindowStart = 0
+	muroCancelCount = 0
+	pendingResume = {}
+	pendingResumeUntil = 0
 	self.vb.flankingSpearCount = 1
 	self.vb.fetidQuillstormCount = 1
 	self.vb.freezingTrapCount = 1
@@ -80,51 +95,165 @@ end
 function mod:OnCombatEnd()
 	self:TLCountReset()
 	cycleStep = 0
+	activeEvents = {}
+	deadBoss = nil
+	last45EventType = nil
+	cancelWindowStart = 0
+	muroCancelCount = 0
+	pendingResume = {}
+	pendingResumeUntil = 0
 	self:UnregisterShortTermEvents()
 end
 
 do
+	---@param timerExact number
+	---@return string?
+	local function consumeResumeEventType(timerExact)
+		if #pendingResume == 0 then return nil end
+		if GetTime() > pendingResumeUntil then
+			pendingResume = {}
+			return nil
+		end
+		local bestIndex
+		local bestDiff
+		for i = 1, #pendingResume do
+			local diff = math.abs(pendingResume[i].remaining - timerExact)
+			if not bestDiff or diff < bestDiff then
+				bestDiff = diff
+				bestIndex = i
+			end
+		end
+		if bestIndex and bestDiff and bestDiff <= 1.25 then
+			local eventType = pendingResume[bestIndex].eventType
+			table.remove(pendingResume, bestIndex)
+			return eventType
+		end
+		return nil
+	end
+
+	---@param eventType string
+	---@param remaining number
+	local function queuePendingResume(eventType, remaining)
+		if remaining <= 0.2 then return end
+		table.insert(pendingResume, {
+			eventType = eventType,
+			remaining = remaining
+		})
+		pendingResumeUntil = GetTime() + 20
+	end
+
+	---@param eventType string?
+	---@return boolean
+	local function isMuroAbility(eventType)
+		return eventType == "flankingSpear" or eventType == "freezingTrap" or eventType == "barrage"
+	end
+
+	---@param eventType string?
+	local function detectDeathFromCancels(eventType)
+		if deadBoss or not eventType then return end
+		if not isMuroAbility(eventType) then return end
+		local now = GetTime()
+		if (now - cancelWindowStart) > 2 then
+			cancelWindowStart = now
+			muroCancelCount = 0
+		end
+		muroCancelCount = muroCancelCount + 1
+		if muroCancelCount >= 2 then
+			deadBoss = "muro"
+		end
+	end
+
+	---@param eventType string?
+	---@return string
+	local function getNext45EventType(eventType)
+		if deadBoss == "muro" then
+			if eventType == "infectedPinions" then
+				return "fetidQuillstorm"
+			elseif eventType == "fetidQuillstorm" then
+				return "carrionSwoop"
+			end
+			return "infectedPinions"
+		end
+		cycleStep = cycleStep + 1
+		if cycleStep > 6 then cycleStep = 1 end
+		if cycleStep == 1 then
+			return "flankingSpear"
+		elseif cycleStep == 2 then
+			return "infectedPinions"
+		elseif cycleStep == 3 then
+			return "freezingTrap"
+		elseif cycleStep == 4 then
+			return "fetidQuillstorm"
+		elseif cycleStep == 5 then
+			return "barrage"
+		end
+		return "carrionSwoop"
+	end
+
+	---@param self DBMMod
+	---@param eventType string
+	---@param timerExact number
+	---@param eventID number
+	---@return boolean
+	local function startTimerByEventType(self, eventType, timerExact, eventID)
+		if eventType == "flankingSpear" then
+			activeEvents[eventID] = {eventType = eventType, startTime = GetTime(), duration = timerExact}
+			timerFlankingSpearCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, eventType, "flankingSpearCount"))
+			return true
+		elseif eventType == "infectedPinions" then
+			activeEvents[eventID] = {eventType = eventType, startTime = GetTime(), duration = timerExact}
+			timerInfectedPinionsCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, eventType, "infectedPinionsCount"))
+			return true
+		elseif eventType == "freezingTrap" then
+			activeEvents[eventID] = {eventType = eventType, startTime = GetTime(), duration = timerExact}
+			timerFreezingTrapCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, eventType, "freezingTrapCount"))
+			return true
+		elseif eventType == "fetidQuillstorm" then
+			activeEvents[eventID] = {eventType = eventType, startTime = GetTime(), duration = timerExact}
+			timerFetidQuillstormCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, eventType, "fetidQuillstormCount"))
+			return true
+		elseif eventType == "barrage" then
+			activeEvents[eventID] = {eventType = eventType, startTime = GetTime(), duration = timerExact}
+			timerBarrageCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, eventType, "barrageCount"))
+			return true
+		elseif eventType == "carrionSwoop" then
+			activeEvents[eventID] = {eventType = eventType, startTime = GetTime(), duration = timerExact}
+			timerCarrionSwoopCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, eventType, "carrionSwoopCount"))
+			return true
+		end
+		return false
+	end
+
 	---@param self DBMMod
 	---@param timer number
 	---@param timerExact number
 	---@param eventID number
 	local function timersAll(self, timer, timerExact, eventID)
 		local handled = false
-		if timer == 5 then--Flanking Spear (opener)
-			timerFlankingSpearCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "flankingSpear", "flankingSpearCount"))
-			handled = true
-		elseif timer == 12 then--Infected Pinions (opener)
-			timerInfectedPinionsCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "infectedPinions", "infectedPinionsCount"))
-			handled = true
-		elseif timer == 20 then--Freezing Trap (opener)
-			timerFreezingTrapCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "freezingTrap", "freezingTrapCount"))
-			handled = true
-		elseif timer == 28 then--Fetid Quillstorm (opener)
-			timerFetidQuillstormCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "fetidQuillstorm", "fetidQuillstormCount"))
-			handled = true
-		elseif timer == 35 then--Barrage (opener)
-			timerBarrageCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "barrage", "barrageCount"))
-			handled = true
-		elseif timer == 41 then--Carrion Swoop (opener)
-			timerCarrionSwoopCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "carrionSwoop", "carrionSwoopCount"))
-			handled = true
-		elseif timer == 45 then--Cycling post-opener: Flanking Spear, Infected Pinions, Freezing Trap, Fetid Quillstorm, Barrage, Carrion Swoop
-			cycleStep = cycleStep + 1
-			if cycleStep > 6 then cycleStep = 1 end
-			if cycleStep == 1 then
-				timerFlankingSpearCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "flankingSpear", "flankingSpearCount"))
-			elseif cycleStep == 2 then
-				timerInfectedPinionsCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "infectedPinions", "infectedPinionsCount"))
-			elseif cycleStep == 3 then
-				timerFreezingTrapCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "freezingTrap", "freezingTrapCount"))
-			elseif cycleStep == 4 then
-				timerFetidQuillstormCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "fetidQuillstorm", "fetidQuillstormCount"))
-			elseif cycleStep == 5 then
-				timerBarrageCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "barrage", "barrageCount"))
-			elseif cycleStep == 6 then
-				timerCarrionSwoopCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "carrionSwoop", "carrionSwoopCount"))
+		local resumedEventType = consumeResumeEventType(timerExact)
+		if resumedEventType then
+			handled = startTimerByEventType(self, resumedEventType, timerExact, eventID)
+			if handled and timer == 45 then
+				last45EventType = resumedEventType
 			end
-			handled = true
+		elseif timer == 5 then--Flanking Spear (opener)
+			handled = startTimerByEventType(self, "flankingSpear", timerExact, eventID)
+		elseif timer == 12 then--Infected Pinions (opener)
+			handled = startTimerByEventType(self, "infectedPinions", timerExact, eventID)
+		elseif timer == 20 then--Freezing Trap (opener)
+			handled = startTimerByEventType(self, "freezingTrap", timerExact, eventID)
+		elseif timer == 28 then--Fetid Quillstorm (opener)
+			handled = startTimerByEventType(self, "fetidQuillstorm", timerExact, eventID)
+		elseif timer == 35 then--Barrage (opener)
+			handled = startTimerByEventType(self, "barrage", timerExact, eventID)
+		elseif timer == 41 then--Carrion Swoop (opener)
+			handled = startTimerByEventType(self, "carrionSwoop", timerExact, eventID)
+		elseif timer == 45 then--Cycling post-opener; after one boss dies, route survivor-only sequence
+			local eventType = getNext45EventType(last45EventType)
+			handled = startTimerByEventType(self, eventType, timerExact, eventID)
+			if handled then
+				last45EventType = eventType
+			end
 		end
 		if not handled then
 			badStateDetected = true
@@ -148,7 +277,10 @@ do
 	function mod:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(eventID)
 		local eventState = C_EncounterTimeline.GetEventState(eventID)
 		if not eventID or not eventState then return end
+		local activeInfo = activeEvents[eventID]
+		local activeEventType = activeInfo and activeInfo.eventType
 		if eventState == 2 then
+			activeEvents[eventID] = nil
 			local eventType, eventCount = self:TLCountFinish(eventID)
 			if eventType and eventCount then
 				if eventType == "flankingSpear" then
@@ -173,6 +305,12 @@ do
 				end
 			end
 		elseif eventState == 3 then
+			if activeInfo and activeEventType then
+				local remaining = activeInfo.duration - (GetTime() - activeInfo.startTime)
+				queuePendingResume(activeEventType, remaining)
+			end
+			activeEvents[eventID] = nil
+			detectDeathFromCancels(activeEventType)
 			self:TLCountCancel(eventID)
 		end
 	end
