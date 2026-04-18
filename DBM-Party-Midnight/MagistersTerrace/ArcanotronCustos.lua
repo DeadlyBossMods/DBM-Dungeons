@@ -76,13 +76,13 @@ do
 		--Logic confirmed against M+ only. Normal, Heroic, and M0 not covered
 		if timer > 900 then--Ignored long placeholder artifacts seen in logged pull
 			return
-		elseif timer == 48 then--Ignored protocol/reset artifact seen in logged pull
+		elseif timer == 48 then--Ignored protocol/reset artifact seen in logged pull (always canceled early)
 			return
 		elseif timer == 45 then--Refueling Protocol
 			timerRefuelingProtocolCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "protocol", "protocolCount"))
-		elseif timer == 5 or timer == 6 then--Repulsing Slam opener after pull/refuel
+		elseif timer == 5 or timer == 6 or timer == 7 then--Repulsing Slam opener after pull/refuel (state 1 can round to 7)
 			timerRepulsingSlamCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "slam", "slamCount"))
-		elseif timer == 15 or timer == 16 then--Arcane Expulsion opener after pull/refuel
+		elseif timer == 15 or timer == 16 or timer == 17 then--Arcane Expulsion opener after pull/refuel (state 1 can round to 17)
 			timerArcaneExpulsionCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "expulsion", "expulsionCount"))
 		elseif timer == 22 then--Ethereal Shackles real cast
 			timerEtherealShacklesCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "shackles", "shacklesCount"))
