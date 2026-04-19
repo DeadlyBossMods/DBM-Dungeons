@@ -73,15 +73,21 @@ if DBM:IsPostMidnight() then
 		---@param timerExact number
 		---@param eventID number
 		local function timersAll(self, timer, timerExact, eventID)
-			if timer == 16 or timer == 103 then--Null Palm
+			if timer > 60 then return end--Placeholder timers that get overwritten later (such as 103 null palm, 102 oozing slam)
+			if timer == 16 then--Null Palm
+				timerNullPalmCD:Stop()--Boss does a lot of canceling/restarting of bars to resolve spell queuing
 				timerNullPalmCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "nullpalm", "nullPalmCount"))
 			elseif timer == 7 or timer == 28 then--Decimate
+				timerDecimateCD:Stop()--Boss does a lot of canceling/restarting of bars to resolve spell queuing
 				timerDecimateCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "decimate", "decimateCount"))
-			elseif timer == 22 or timer == 102 then--Oozing Slam
+			elseif timer == 22 then--Oozing Slam
+				timerOozingSlamCD:Stop()--Boss does a lot of canceling/restarting of bars to resolve spell queuing
 				timerOozingSlamCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "oozingslam", "oozingSlamCount"))
 			elseif timer == 4 or timer == 40 then--Void Slash
+				timerVoidSlashCD:Stop()--Boss does a lot of canceling/restarting of bars to resolve spell queuing
 				timerVoidSlashCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "voidslash", "voidSlashCount"))
 			elseif timer == 50 then--Crashing Void
+				timerCrashingVoidCD:Stop()--Boss does a lot of canceling/restarting of bars to resolve spell queuing
 				timerCrashingVoidCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "crashingvoid", "crashingVoidCount"))
 			else
 				if not DBM.Options.DebugMode then
@@ -149,7 +155,7 @@ else
 	--TODO, more timer updates, warning tweaks, countdowns
 	--TODO, personal alternate power and warn when extra action is ready to leave Umbra Shift
 	--Void Brute
-	--local warnNullPalm						= mod:NewSpellAnnounce(246134, 2, nil, "Tank")
+	--local warnNullPalm					= mod:NewSpellAnnounce(246134, 2, nil, "Tank")
 	local warnUmbraShift					= mod:NewTargetAnnounce(244433, 3)
 	local warnFixate						= mod:NewTargetAnnounce(244657, 3)
 	local warnVoidTear						= mod:NewTargetAnnounce(244621, 1)
