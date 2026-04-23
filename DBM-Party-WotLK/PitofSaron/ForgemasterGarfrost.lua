@@ -39,11 +39,14 @@ if DBM:IsPostMidnight() then
 	local badStateDetected = false
 
 	---@param self DBMMod
-	local function setFallback(self)
+	---@param dontSetAlerts boolean? Called when user has disabled DBM bars and is ONLY using timeline, therefor we must enable SetTimeline calls even in hardcodes
+	local function setFallback(self, dontSetAlerts)
 		--Blizz API fallbacks
 		--specWarnOrebreaker:SetAlert(144, "targetyou", 2, 3, 0)--backup pif private aura for Orebreaker gets removed
-		specWarnCryostomp:SetAlert(145, "aesoon", 2)
-		specWarnGlacialOverload:SetAlert(147, "breaklos", 12)
+		if not dontSetAlerts then
+			specWarnCryostomp:SetAlert(145, "aesoon", 2)
+			specWarnGlacialOverload:SetAlert(147, "breaklos", 12)
+		end
 		timerOrebreakerCD:SetTimeline(144)
 		timerCryostompCD:SetTimeline(145)
 		timerThrowSaroniteCD:SetTimeline(146)
@@ -62,6 +65,10 @@ if DBM:IsPostMidnight() then
 				"ENCOUNTER_TIMELINE_EVENT_ADDED",
 				"ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED"
 			)
+			--SetTimeline events since user has disabled DBM Bars (so they can still get countdowns in blizzard timeline API instead)
+			if DBM.Options.HideDBMBars then
+				setFallback(self, true)
+			end
 		else
 			setFallback(self)
 		end

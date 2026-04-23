@@ -57,13 +57,16 @@ if DBM:IsPostMidnight() then
 	local badStateDetected = false
 
 	---@param self DBMMod
-	local function setFallback(self)
-		if self:IsTank() then
-			specWarnBarkbreaker:SetAlert(282, "defensive", 2)
+	---@param dontSetAlerts boolean? Called when user has disabled DBM bars and is ONLY using timeline, therefor we must enable SetTimeline calls even in hardcodes
+	local function setFallback(self, dontSetAlerts)
+		if not dontSetAlerts then
+			if self:IsTank() then
+				specWarnBarkbreaker:SetAlert(282, "defensive", 2)
+			end
+			specWarnBranchOut:SetAlert(283, "bigmob", 2)
+			specWarnGerminate:SetAlert(284, "watchstep", 2)
+			specWarnBurstForth:SetAlert(285, "aesoon", 2)
 		end
-		specWarnBranchOut:SetAlert(283, "bigmob", 2)
-		specWarnGerminate:SetAlert(284, "watchstep", 2)
-		specWarnBurstForth:SetAlert(285, "aesoon", 2)
 		timerBarkbreakerCD:SetTimeline(282)
 		timerBranchOutCD:SetTimeline(283)
 		timerGerminateCD:SetTimeline(284)
@@ -83,6 +86,10 @@ if DBM:IsPostMidnight() then
 				"ENCOUNTER_TIMELINE_EVENT_ADDED",
 				"ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED"
 			)
+			--SetTimeline events since user has disabled DBM Bars (so they can still get countdowns in blizzard timeline API instead)
+			if DBM.Options.HideDBMBars then
+				setFallback(self, true)
+			end
 		else
 			setFallback(self)
 		end

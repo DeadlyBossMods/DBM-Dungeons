@@ -33,11 +33,14 @@ mod.vb.burningGaleCount = 0
 local badStateDetected = false
 
 ---@param self DBMMod
-local function setFallback(self)
-	if self:IsTank() then
-		specWarnSearingBeak:SetAlert(239, "defensive", 2)
+---@param dontSetAlerts boolean? Called when user has disabled DBM bars and is ONLY using timeline, therefor we must enable SetTimeline calls even in hardcodes
+local function setFallback(self, dontSetAlerts)
+	if not dontSetAlerts then
+		if self:IsTank() then
+			specWarnSearingBeak:SetAlert(239, "defensive", 2)
+		end
+		specWarnBurningGale:SetAlert(242, "pushbackincoming", 13)
 	end
-	specWarnBurningGale:SetAlert(242, "pushbackincoming", 13)
 	timerSearingBeakCD:SetTimeline(239)
 	timerFlamingUpdraftCD:SetTimeline(241)
 	timerBurningGaleCD:SetTimeline(242)
@@ -55,6 +58,10 @@ function mod:OnLimitedCombatStart()
 			"ENCOUNTER_TIMELINE_EVENT_ADDED",
 			"ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED"
 		)
+		--SetTimeline events since user has disabled DBM Bars (so they can still get countdowns in blizzard timeline API instead)
+		if DBM.Options.HideDBMBars then
+			setFallback(self, true)
+		end
 	else
 		setFallback(self)
 	end

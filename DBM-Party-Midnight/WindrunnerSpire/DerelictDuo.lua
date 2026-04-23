@@ -38,12 +38,15 @@ local activeEventTypes = {}
 local shriekTiming = {}
 
 ---@param self DBMMod
-local function setFallback(self)
-	if self:IsTank() then
-		specWarnBoneHack:SetAlert(25, "defensive", 2)
+---@param dontSetAlerts boolean? Called when user has disabled DBM bars and is ONLY using timeline, therefor we must enable SetTimeline calls even in hardcodes
+local function setFallback(self, dontSetAlerts)
+	if not dontSetAlerts then
+		if self:IsTank() then
+			specWarnBoneHack:SetAlert(25, "defensive", 2)
+		end
+		specWarnCurseofDarkness:SetAlert(26, "mobsoon", 2)
+		specWarnDebilitatingShriek:SetAlert(27, "aesoon", 2)
 	end
-	specWarnCurseofDarkness:SetAlert(26, "mobsoon", 2)
-	specWarnDebilitatingShriek:SetAlert(27, "aesoon", 2)
 	timerBoneHackCD:SetTimeline(25)
 	timerCurseofDarknessCD:SetTimeline(26)
 	timerDebilitatingShriekCD:SetTimeline(27)
@@ -65,6 +68,10 @@ function mod:OnLimitedCombatStart()
 			"ENCOUNTER_TIMELINE_EVENT_ADDED",
 			"ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED"
 		)
+		--SetTimeline events since user has disabled DBM Bars (so they can still get countdowns in blizzard timeline API instead)
+		if DBM.Options.HideDBMBars then
+			setFallback(self, true)
+		end
 	else
 		setFallback(self)
 	end

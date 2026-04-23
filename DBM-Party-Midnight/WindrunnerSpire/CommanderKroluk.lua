@@ -38,12 +38,15 @@ local activeEventTypes = {}
 local lastRallyingBellow = 0
 
 ---@param self DBMMod
-local function setFallback(self)
-	if self:IsTank() then
-		specWarnRampage:SetAlert({210, 556}, "defensive", 2)
+---@param dontSetAlerts boolean? Called when user has disabled DBM bars and is ONLY using timeline, therefor we must enable SetTimeline calls even in hardcodes
+local function setFallback(self, dontSetAlerts)
+	if not dontSetAlerts then
+		if self:IsTank() then
+			specWarnRampage:SetAlert({210, 556}, "defensive", 2)
+		end
+		specWarnIntimidatingShout:SetAlert({211, 213}, "gathershare", 2)
+		specWarnRallyingBellow:SetAlert(215, "mobsoon", 2, 3, 0)
 	end
-	specWarnIntimidatingShout:SetAlert({211, 213}, "gathershare", 2)
-	specWarnRallyingBellow:SetAlert(215, "mobsoon", 2, 3, 0)
 	timerRampageCD:SetTimeline({210, 556})
 	timerIntimidatingShoutCD:SetTimeline({211, 213})
 	timerRecklessLeapCD:SetTimeline({212, 214})
@@ -66,6 +69,10 @@ function mod:OnLimitedCombatStart()
 			"ENCOUNTER_TIMELINE_EVENT_ADDED",
 			"ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED"
 		)
+		--SetTimeline events since user has disabled DBM Bars (so they can still get countdowns in blizzard timeline API instead)
+		if DBM.Options.HideDBMBars then
+			setFallback(self, true)
+		end
 	else
 		setFallback(self)
 	end

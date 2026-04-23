@@ -26,16 +26,19 @@ if DBM:IsPostMidnight() then
 	local badStateDetected = false
 
 	---@param self DBMMod
-	local function setFallback(self)
-		if self:IsTank() then
-			specWarnFierySmash:SetAlert(302, "frontal", 15, 1)
+	---@param dontSetAlerts boolean? Called when user has disabled DBM bars and is ONLY using timeline, therefor we must enable SetTimeline calls even in hardcodes
+	local function setFallback(self, dontSetAlerts)
+		if not dontSetAlerts then
+			if self:IsTank() then
+				specWarnFierySmash:SetAlert(302, "frontal", 15, 1)
+			end
+			if not self:IsTank() then
+				--Tank frontals are cast during soak
+				--so do NOT tell tank to help with the soaking
+				specWarnEnergize:SetAlert(303, "soakbeam", 17, 1)
+			end
+			specWarnSupernova:SetAlert(304, "aesoon", 2, 2)
 		end
-		if not self:IsTank() then
-			--Tank frontals are cast during soak
-			--so do NOT tell tank to help with the soaking
-			specWarnEnergize:SetAlert(303, "soakbeam", 17, 1)
-		end
-		specWarnSupernova:SetAlert(304, "aesoon", 2, 2)
 		timerSmashCD:SetTimeline(302)
 		timerEnergizeCD:SetTimeline(303)
 		timerSupernovaCD:SetTimeline(304)
@@ -52,6 +55,10 @@ if DBM:IsPostMidnight() then
 				"ENCOUNTER_TIMELINE_EVENT_ADDED",
 				"ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED"
 			)
+			--SetTimeline events since user has disabled DBM Bars (so they can still get countdowns in blizzard timeline API instead)
+			if DBM.Options.HideDBMBars then
+				setFallback(self, true)
+			end
 		else
 			setFallback(self)
 		end

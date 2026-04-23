@@ -36,13 +36,16 @@ mod.vb.flickerCount = 0
 local badStateDetected = false
 
 ---@param self DBMMod
-local function setFallback(self)
-	warnBrilliantRadiance:SetAlert(109, "scattersoon", 2)
-	specWarnDivineGuile:SetAlert(110, "phasechange", 2)
-	if self:IsMelee() then
-		specWarnSearingRend:SetAlert(111, "frontal", 15)
+---@param dontSetAlerts boolean? Called when user has disabled DBM bars and is ONLY using timeline, therefor we must enable SetTimeline calls even in hardcodes
+local function setFallback(self, dontSetAlerts)
+	if not dontSetAlerts then
+		warnBrilliantRadiance:SetAlert(109, "scattersoon", 2)
+		specWarnDivineGuile:SetAlert(110, "phasechange", 2)
+		if self:IsMelee() then
+			specWarnSearingRend:SetAlert(111, "frontal", 15)
+		end
+		specWarnFlicker:SetAlert(112, "watchstep", 2)
 	end
-	specWarnFlicker:SetAlert(112, "watchstep", 2)
 	timerBrilliantDispersionCD:SetTimeline(109)
 	timerDivineGuileCD:SetTimeline(110)
 	timerSearingRendCD:SetTimeline(111)
@@ -61,6 +64,10 @@ function mod:OnLimitedCombatStart()
 			"ENCOUNTER_TIMELINE_EVENT_ADDED",
 			"ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED"
 		)
+		--SetTimeline events since user has disabled DBM Bars (so they can still get countdowns in blizzard timeline API instead)
+		if DBM.Options.HideDBMBars then
+			setFallback(self, true)
+		end
 	else
 		setFallback(self)
 	end
