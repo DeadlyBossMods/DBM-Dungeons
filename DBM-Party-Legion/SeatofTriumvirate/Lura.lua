@@ -11,7 +11,7 @@ if DBM:IsPostMidnight() then
 	local warnDiscordantbeam			= mod:NewCountAnnounce(1265426, 2)
 
 	local specWarnDirge					= mod:NewSpecialWarningCount(1265421, nil, nil, nil, 2, 2)
-	local specWarnDisintegrate			= mod:NewSpecialWarningCount(1264151, nil, nil, nil, 2, 2)
+	local specWarnDisintegrate			= mod:NewSpecialWarningDodgeCount(1264151, nil, nil, nil, 2, 2)
 	local specWarnGrimChorus			= mod:NewSpecialWarningCount(1265689, nil, nil, nil, 2, 2)
 	local specWarnSymphony				= mod:NewSpecialWarningCount(1266003, nil, nil, nil, 3, 2)
 	local specWarnBacklash				= mod:NewSpecialWarningCount(1266001, nil, nil, nil, 2, 2)
@@ -37,12 +37,15 @@ if DBM:IsPostMidnight() then
 	local badStateDetected = false
 
 	---@param self DBMMod
-	local function setFallback(self)
-		specWarnDirge:SetAlert(249, "aesoon", 2, 2)
-		specWarnDisintegrate:SetAlert(251, "aesoon", 2, 2)
-		specWarnGrimChorus:SetAlert(252, "stilldanger", 2, 2)
-		specWarnSymphony:SetAlert(253, "watchstep", 3, 2)
-		specWarnBacklash:SetAlert(254, "carefly", 2, 2)
+	---@param dontSetAlerts boolean? Called when user has disabled DBM bars and is ONLY using timeline, therefor we must enable SetTimeline calls even in hardcodes
+	local function setFallback(self, dontSetAlerts)
+		if not dontSetAlerts then
+			specWarnDirge:SetAlert(249, "aesoon", 2, 2)
+			specWarnDisintegrate:SetAlert(251, "farfromline", 2, 2)
+			specWarnGrimChorus:SetAlert(252, "stilldanger", 2, 2)
+			specWarnSymphony:SetAlert(253, "watchstep", 3, 2)
+			specWarnBacklash:SetAlert(254, "carefly", 2, 2)
+		end
 		timerDirgeCD:SetTimeline(249)
 		timerDiscordantBeamCD:SetTimeline(250)
 		timerDisintegrateCD:SetTimeline(251)
@@ -66,6 +69,10 @@ if DBM:IsPostMidnight() then
 				"ENCOUNTER_TIMELINE_EVENT_ADDED",
 				"ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED"
 			)
+			--SetTimeline events since user has disabled DBM Bars (so they can still get countdowns in blizzard timeline API instead)
+			if DBM.Options.HideDBMBars then
+				setFallback(self, true)
+			end
 		else
 			setFallback(self)
 		end
@@ -133,7 +140,7 @@ if DBM:IsPostMidnight() then
 						warnDiscordantbeam:Show(eventCount)
 					elseif eventType == "disintegrate" then
 						specWarnDisintegrate:Show(eventCount)
-						specWarnDisintegrate:Play("aesoon")
+						specWarnDisintegrate:Play("farfromline")
 					elseif eventType == "grimchorus" then
 						specWarnGrimChorus:Show(eventCount)
 						specWarnGrimChorus:Play("stilldanger")

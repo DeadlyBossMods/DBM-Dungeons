@@ -37,8 +37,11 @@ local badStateDetected = false
 local triplicateUsed = false
 
 ---@param self DBMMod
-local function setFallback(self)
+---@param dontSetAlerts boolean? Called when user has disabled DBM bars and is ONLY using timeline, therefor we must enable SetTimeline calls even in hardcodes
+local function setFallback(self, dontSetAlerts)
 	--Blizz API fallbacks
+	if not dontSetAlerts then
+	end
 	timerTriplicateCD:SetTimeline(635)
 	timerNeuralLinkCD:SetTimeline(97)
 	timerAstralGraspCD:SetTimeline(98)
@@ -61,6 +64,10 @@ function mod:OnLimitedCombatStart()
 			"ENCOUNTER_TIMELINE_EVENT_ADDED",
 			"ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED"
 		)
+		--SetTimeline events since user has disabled DBM Bars (so they can still get countdowns in blizzard timeline API instead)
+		if DBM.Options.HideDBMBars then
+			setFallback(self, true)
+		end
 	else
 		setFallback(self)
 	end

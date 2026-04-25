@@ -36,13 +36,16 @@ if DBM:IsPostMidnight() then
 	local eighteenCount = 1
 
 	---@param self DBMMod
-	local function setFallback(self)
-		specWarnArcaneOrbs:SetAlert(274, "catchballs", 2)
-		specWarnManaBombs:SetAlert(275, "scattersoon", 2)
-		if self:IsTank() then
-			specWarnArcaneExpulsion:SetAlert(276, "defensive", 2)
+	---@param dontSetAlerts boolean? Called when user has disabled DBM bars and is ONLY using timeline, therefor we must enable SetTimeline calls even in hardcodes
+	local function setFallback(self, dontSetAlerts)
+		if not dontSetAlerts then
+			specWarnArcaneOrbs:SetAlert(274, "catchballs", 2)
+			specWarnManaBombs:SetAlert(275, "scattersoon", 2)
+			if self:IsTank() then
+				specWarnArcaneExpulsion:SetAlert(276, "defensive", 2)
+			end
+			specWarnArcaneFissure:SetAlert(277, "aesoon", 2)
 		end
-		specWarnArcaneFissure:SetAlert(277, "aesoon", 2)
 		timerArcaneOrbsCD:SetTimeline(274)
 		timerManaBombsCD:SetTimeline(275)
 		timerArcaneExpulsionCD:SetTimeline(276)
@@ -63,6 +66,10 @@ if DBM:IsPostMidnight() then
 				"ENCOUNTER_TIMELINE_EVENT_ADDED",
 				"ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED"
 			)
+			--SetTimeline events since user has disabled DBM Bars (so they can still get countdowns in blizzard timeline API instead)
+			if DBM.Options.HideDBMBars then
+				setFallback(self, true)
+			end
 		else
 			setFallback(self)
 		end

@@ -30,11 +30,14 @@ local badStateDetected = false
 local recurringTwentyTwoCount = 0
 
 ---@param self DBMMod
-local function setFallback(self)
+---@param dontSetAlerts boolean? Called when user has disabled DBM bars and is ONLY using timeline, therefor we must enable SetTimeline calls even in hardcodes
+local function setFallback(self, dontSetAlerts)
 	--Blizz API fallbacks
-	specWarnUnstableVoidEssence:SetAlert(292, "catchballs", 12, 2)
-	if self:IsTank() then
-		specWarnHulkingFragment:SetAlert(420, "defensive", 2, 1)
+	if not dontSetAlerts then
+		specWarnUnstableVoidEssence:SetAlert(292, "catchballs", 12, 2)
+		if self:IsTank() then
+			specWarnHulkingFragment:SetAlert(420, "defensive", 2, 1)
+		end
 	end
 	timerDevouringEntropyCD:SetTimeline(290)
 	timerUnstableVoidEssenceCD:SetTimeline(292)
@@ -53,6 +56,10 @@ function mod:OnLimitedCombatStart()
 			"ENCOUNTER_TIMELINE_EVENT_ADDED",
 			"ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED"
 		)
+		--SetTimeline events since user has disabled DBM Bars (so they can still get countdowns in blizzard timeline API instead)
+		if DBM.Options.HideDBMBars then
+			setFallback(self, true)
+		end
 	else
 		setFallback(self)
 	end

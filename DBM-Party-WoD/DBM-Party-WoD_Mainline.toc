@@ -1,4 +1,4 @@
-## Interface: 120001, 120005
+## Interface: 120005
 ## X-Min-Interface: 80000
 ## Category: DBM
 

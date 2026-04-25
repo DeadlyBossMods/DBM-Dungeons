@@ -38,10 +38,13 @@ local pendingRebase = {}
 local pendingRebaseUntil = 0
 
 ---@param self DBMMod
-local function setFallback(self)
-	specWarnCoresparkDetonation:SetAlert(106, "watchstep", 2)
-	specWarnLeylineArray:SetAlert(108, "farfromline", 2)
-	specWarnFluxCollapse:SetAlert(172, "watchstep", 2)
+---@param dontSetAlerts boolean? Called when user has disabled DBM bars and is ONLY using timeline, therefor we must enable SetTimeline calls even in hardcodes
+local function setFallback(self, dontSetAlerts)
+	if not dontSetAlerts then
+		specWarnCoresparkDetonation:SetAlert(106, "watchstep", 2)
+		specWarnLeylineArray:SetAlert(108, "farfromline", 2)
+		specWarnFluxCollapse:SetAlert(172, "watchstep", 2)
+	end
 	timerCoresparkDetonationCD:SetTimeline(106)
 	timerRefluxChargeCD:SetTimeline(107)
 	timerLeylineArrayCD:SetTimeline(108)
@@ -66,6 +69,10 @@ function mod:OnLimitedCombatStart()
 			"ENCOUNTER_TIMELINE_EVENT_ADDED",
 			"ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED"
 		)
+		--SetTimeline events since user has disabled DBM Bars (so they can still get countdowns in blizzard timeline API instead)
+		if DBM.Options.HideDBMBars then
+			setFallback(self, true)
+		end
 	else
 		setFallback(self)
 	end

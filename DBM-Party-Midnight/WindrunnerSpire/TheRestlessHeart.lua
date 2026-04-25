@@ -40,11 +40,14 @@ mod.vb.gustShotCount = 0
 local badStateDetected = false
 
 ---@param self DBMMod
-local function setFallback(self)
-	specWarnBullseyeWindblast:SetAlert(21, "getknockedup", 15)
-	specWarnArrowRain:SetAlert(23, "watchstep", 2)
-	if self:IsTank() then
-		specWarnTempestSlash:SetAlert(24, "defensive", 2)
+---@param dontSetAlerts boolean? Called when user has disabled DBM bars and is ONLY using timeline, therefor we must enable SetTimeline calls even in hardcodes
+local function setFallback(self, dontSetAlerts)
+	if not dontSetAlerts then
+		specWarnBullseyeWindblast:SetAlert(21, "getknockedup", 15)
+		specWarnArrowRain:SetAlert(23, "watchstep", 2)
+		if self:IsTank() then
+			specWarnTempestSlash:SetAlert(24, "defensive", 2)
+		end
 	end
 	timerBullseyeWindblastCD:SetTimeline(21)
 	timerBoltGaleCD:SetTimeline(22)
@@ -67,6 +70,10 @@ function mod:OnLimitedCombatStart()
 			"ENCOUNTER_TIMELINE_EVENT_ADDED",
 			"ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED"
 		)
+		--SetTimeline events since user has disabled DBM Bars (so they can still get countdowns in blizzard timeline API instead)
+		if DBM.Options.HideDBMBars then
+			setFallback(self, true)
+		end
 	else
 		setFallback(self)
 	end

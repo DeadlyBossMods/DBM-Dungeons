@@ -32,11 +32,14 @@ mod.vb.waveCount = 0
 local badStateDetected = false
 
 ---@param self DBMMod
-local function setFallback(self)
+---@param dontSetAlerts boolean? Called when user has disabled DBM bars and is ONLY using timeline, therefor we must enable SetTimeline calls even in hardcodes
+local function setFallback(self, dontSetAlerts)
 	--Blizz API fallbacks
-	specWarnSuppressionZone:SetAlert(93, "watchstep", 2)
-	specWarnHasteningWard:SetAlert(94, "dispelboss", 2)
-	specWarnWaveOfSilence:SetAlert(96, "findshield", 15)
+	if not dontSetAlerts then
+		specWarnSuppressionZone:SetAlert(93, "watchstep", 2)
+		specWarnHasteningWard:SetAlert(94, "dispelboss", 2)
+		specWarnWaveOfSilence:SetAlert(96, "findshield", 15)
+	end
 	timerSuppressionZoneCD:SetTimeline(93)
 	timerHasteningWardCD:SetTimeline(94)
 	timerRunicMarkCD:SetTimeline({95, 513})
@@ -55,6 +58,10 @@ function mod:OnLimitedCombatStart()
 			"ENCOUNTER_TIMELINE_EVENT_ADDED",
 			"ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED"
 		)
+		--SetTimeline events since user has disabled DBM Bars (so they can still get countdowns in blizzard timeline API instead)
+		if DBM.Options.HideDBMBars then
+			setFallback(self, true)
+		end
 	else
 		setFallback(self)
 	end
