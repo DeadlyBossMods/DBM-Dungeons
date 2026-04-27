@@ -16,6 +16,11 @@ end
 mod:RegisterCombat("combat")
 
 if DBM:IsPostMidnight() then
+
+	mod:RegisterSafeEventsInCombat(
+		"UNIT_SPELLCAST_START boss2"
+	)
+
 	--Note. https://www.wowhead.com/spell=1282138/shade-bomb is ignored on purpose to avoid spam
 	local warnGetEmIck					= mod:NewCountAnnounce(1264363, 3)
 
@@ -38,6 +43,7 @@ if DBM:IsPostMidnight() then
 	mod.vb.shadeCount = 0
 	mod.vb.plagueCount = 0
 	mod.vb.smashCount = 0
+	mod.vb.fixateCount = 0
 	mod.vb.sickemActive = false
 	local badStateDetected = false
 	local recurringNineteenCount = 0
@@ -52,7 +58,7 @@ if DBM:IsPostMidnight() then
 			if self:IsTank() then
 				specWarnBlightSmash:SetAlert(206, "poolyou", 18, 2)
 			end
-			specWarnLumberingFixation:SetAlert(561, "fixateyou", 19, 2)
+			specWarnLumberingFixation:SetAlert(561, "fixateyou", 19, 2, 0)
 		end
 		timerGetEmIckCD:SetTimeline(203)
 		timerShadeShiftCD:SetTimeline(204)
@@ -73,8 +79,7 @@ if DBM:IsPostMidnight() then
 			self:IgnoreBlizzardAPI()
 			self:RegisterShortTermEvents(
 				"ENCOUNTER_TIMELINE_EVENT_ADDED",
-				"ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED",
-				"UNIT_SPELLCAST_START boss2"
+				"ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED"
 			)
 			--SetTimeline events since user has disabled DBM Bars (so they can still get countdowns in blizzard timeline API instead)
 			if DBM.Options.HideDBMBars then
@@ -94,7 +99,10 @@ if DBM:IsPostMidnight() then
 	function mod:UNIT_SPELLCAST_START()
 		--UNIT_SPELLCAST_START cast by boss2 during Get 'Em, Ick! is always for Lumbering Fixation switching targets
 		--Next event will be ENCOUNTER_WARNING for the victim
-		specWarnLumberingFixation:Show(self.vb.getEmCount, "fixateyou")
+		if self.vb.sickemActive then
+			self.vb.fixateCount = self.vb.fixateCount + 1
+			specWarnLumberingFixation:Show(self.vb.fixateCount, "fixateyou")
+		end
 	end
 
 	do
@@ -165,6 +173,7 @@ if DBM:IsPostMidnight() then
 						warnGetEmIck:Show(eventCount)
 						--Arm scanning for Lumbering Fixation casts
 						self.vb.sickemActive = true
+						self.vb.fixateCount = 0
 					end
 				end
 			elseif eventState == 3 then
