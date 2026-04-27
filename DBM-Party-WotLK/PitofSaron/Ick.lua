@@ -65,7 +65,7 @@ if DBM:IsPostMidnight() then
 		self.vb.plagueCount = 1
 		self.vb.smashCount = 1
 		recurringNineteenCount = 0
-		if self:IsMythicPlus() and DBM.Options.HardcodedTimer and not badStateDetected then
+		if DBM.Options.HardcodedTimer and not badStateDetected then
 			self:IgnoreBlizzardAPI()
 			self:RegisterShortTermEvents(
 				"ENCOUNTER_TIMELINE_EVENT_ADDED",

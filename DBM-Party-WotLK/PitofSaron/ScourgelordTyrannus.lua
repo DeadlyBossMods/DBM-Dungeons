@@ -76,7 +76,7 @@ if DBM:IsPostMidnight() then
 		self.vb.graspCount = 1
 		self.vb.barrageCount = 1
 		nextTwentyEightType = nil
-		if self:IsMythicPlus() and DBM.Options.HardcodedTimer and not badStateDetected then
+		if DBM.Options.HardcodedTimer and not badStateDetected then
 			self:IgnoreBlizzardAPI()
 			self:RegisterShortTermEvents(
 				"ENCOUNTER_TIMELINE_EVENT_ADDED",

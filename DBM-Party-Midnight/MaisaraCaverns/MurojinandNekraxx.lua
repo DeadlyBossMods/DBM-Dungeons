@@ -11,7 +11,7 @@ mod.respawnTime = 29
 
 mod:RegisterCombat("combat")
 
-local warnCarrionSwoop			= mod:NewCountAnnounce(1249478, 2)
+local warnCarrionSwoop			= mod:NewBlizzTargetAnnounce(1249478, 2)
 
 local specWarnFlankingSpear		= mod:NewSpecialWarningCount(1266480, nil, nil, nil, 1, 2)
 local specWarnFetidQuillstorm	= mod:NewSpecialWarningDodgeCount(1243900, nil, nil, nil, 2, 2)
