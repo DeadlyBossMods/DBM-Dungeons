@@ -14,6 +14,7 @@ mod:RegisterCombat("combat")
 if DBM:IsPostMidnight() then
 	local warnScorchingRay			= mod:NewCountAnnounce(1253538, 2)
 	local warnLensFlare				= mod:NewCountAnnounce(1253531, 2)
+	local warnCastDown				= mod:NewBlizzTargetAnnounce(1253998, 4)
 
 	local specWarnCastDown			= mod:NewSpecialWarningCount(1253998, nil, nil, DBM_COMMON_L.ADD, 1, 2)
 	local specWarnSolarBlast		= mod:NewSpecialWarningInterruptCount(154396, "HasInterrupt", nil, nil, 1, 2)
@@ -126,6 +127,7 @@ if DBM:IsPostMidnight() then
 					if eventType == "scorchingRay" then
 						warnScorchingRay:Show(eventCount)
 					elseif eventType == "castDown" then
+						warnCastDown:Show(eventCount)
 						specWarnCastDown:Show(eventCount)
 						specWarnCastDown:Play("targetchange")
 					elseif eventType == "solarBlast" then

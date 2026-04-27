@@ -18,6 +18,7 @@ mod:RegisterCombat("combat")
 if DBM:IsPostMidnight() then
 	local warnThrowSaronite					= mod:NewCountAnnounce(1261286, 3)
 
+	local specWarnOrebreakerYou				= mod:NewSpecialWarningBlizzYou(1261546, nil, nil, nil, 1, 2)--Debuff target
 	local specWarnOrebreaker				= mod:NewSpecialWarningDodgeCount(1261546, nil, nil, nil, 2, 2)--The dodge 4-5 seconds after orebreaker debuffs
 	local specWarnCryostomp					= mod:NewSpecialWarningCount(1261847, nil, nil, nil, 2, 2)
 	local specWarnGlacialOverload			= mod:NewSpecialWarningCount(1262029, nil, nil, nil, 2, 12)
@@ -29,7 +30,7 @@ if DBM:IsPostMidnight() then
 
 	--Midnight private aura replacements
 	mod:AddPrivateAuraSoundOption(1261286, true, 1261286, 1, 1, "debuffyou", 17)--Throw Saronite
-	mod:AddPrivateAuraSoundOption(1261540, true, 1261540, 1, 1, "targetyou", 2)--Orebreaker
+	--mod:AddPrivateAuraSoundOption(1261540, true, 1261540, 1, 1, "targetyou", 2)--Orebreaker (handed by ENCOUNTER_WARNING now for hardcoded text/flash)
 	mod:AddPrivateAuraSoundOption(1261799, true, 1261799, 1, 2, "watchfeet", 8)--Glacial Overload (GTFO)
 
 	mod.vb.orebreakerCount = 0
@@ -42,7 +43,7 @@ if DBM:IsPostMidnight() then
 	---@param dontSetAlerts boolean? Called when user has disabled DBM bars and is ONLY using timeline, therefor we must enable SetTimeline calls even in hardcodes
 	local function setFallback(self, dontSetAlerts)
 		--Blizz API fallbacks
-		--specWarnOrebreaker:SetAlert(144, "targetyou", 2, 3, 0)--backup pif private aura for Orebreaker gets removed
+		specWarnOrebreakerYou:SetAlert(144, "targetyou", 2, 3, 0)
 		if not dontSetAlerts then
 			specWarnCryostomp:SetAlert(145, "aesoon", 2)
 			specWarnGlacialOverload:SetAlert(147, "breaklos", 12)
@@ -134,6 +135,8 @@ if DBM:IsPostMidnight() then
 						specWarnGlacialOverload:Show(eventCount)
 						specWarnGlacialOverload:Play("breaklos")
 					elseif eventType == "orebreaker" then
+						specWarnOrebreakerYou:Show(eventCount)
+						specWarnOrebreakerYou:Play("targetyou")
 						specWarnOrebreaker:Schedule(4, eventCount)
 						specWarnOrebreaker:ScheduleVoice(4, "watchstep")
 					end
@@ -212,7 +215,7 @@ else
 	end
 
 	--per usual, use transcriptor message to get messages from both bigwigs and DBM, all without adding comms to this mod at all
-	function mod:CHAT_MSG_ADDON(prefix, msg, channel, targetName)
+	function mod:CHAT_MSG_ADDON(prefix, msg, _, targetName)
 		if prefix ~= "Transcriptor" then return end
 		--Could maybe drop localized text, but it risks breaking if someone happens to be in party (in a different place and is also sending RBW syncs)
 		if msg == L.SaroniteRockThrow or msg:find(L.SaroniteRockThrow) then
