@@ -60,7 +60,7 @@ if DBM:IsPostMidnight() then
 		self.vb.cryostompCount = 1
 		self.vb.saroniteCount = 1
 		self.vb.glacialCount = 1
-		if self:IsMythicPlus() and DBM.Options.HardcodedTimer and not badStateDetected then
+		if DBM.Options.HardcodedTimer and not badStateDetected then
 			self:IgnoreBlizzardAPI()
 			self:RegisterShortTermEvents(
 				"ENCOUNTER_TIMELINE_EVENT_ADDED",
