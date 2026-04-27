@@ -133,6 +133,7 @@ if DBM:IsPostMidnight() then
 						specWarnCryostomp:Play("aesoon")
 					elseif eventType == "saronite" then
 						warnThrowSaronite:Show(eventCount)
+						specWarnThrowSaronite:Show(eventCount, "debuffyou", 4)--Needs extended duration for 2nd target cast around 3.3
 					elseif eventType == "glacial" then
 						specWarnGlacialOverload:Show(eventCount)
 						specWarnGlacialOverload:Play("breaklos")
