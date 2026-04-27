@@ -141,8 +141,7 @@ if DBM:IsPostMidnight() then
 					elseif eventType == "discordantbeam" then
 						warnDiscordantbeam:Show(eventCount)
 						--Dispatch personal alert to fire on next ENCOUNTER_WARNING
-						specWarnDiscordantbeam:Show(eventCount)
-						specWarnDiscordantbeam:Play("beamyou")
+						specWarnDiscordantbeam:Show(eventCount, "beamyou")
 					elseif eventType == "disintegrate" then
 						specWarnDisintegrate:Show(eventCount)
 						specWarnDisintegrate:Play("farfromline")

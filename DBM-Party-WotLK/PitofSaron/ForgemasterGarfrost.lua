@@ -19,6 +19,7 @@ if DBM:IsPostMidnight() then
 	local warnThrowSaronite					= mod:NewCountAnnounce(1261286, 3)
 
 	local specWarnOrebreakerYou				= mod:NewSpecialWarningBlizzYou(1261546, nil, nil, nil, 1, 2)--Debuff target
+	local specWarnThrowSaronite				= mod:NewSpecialWarningBlizzYou(1261286, nil, nil, nil, 1, 2)
 	local specWarnOrebreaker				= mod:NewSpecialWarningDodgeCount(1261546, nil, nil, nil, 2, 2)--The dodge 4-5 seconds after orebreaker debuffs
 	local specWarnCryostomp					= mod:NewSpecialWarningCount(1261847, nil, nil, nil, 2, 2)
 	local specWarnGlacialOverload			= mod:NewSpecialWarningCount(1262029, nil, nil, nil, 2, 12)
@@ -29,7 +30,7 @@ if DBM:IsPostMidnight() then
 	local timerGlacialOverloadCD			= mod:NewCDCountTimer(20.5, 1262029, nil, nil, nil, 2, nil, DBM_COMMON_L.DEADLY_ICON)
 
 	--Midnight private aura replacements
-	mod:AddPrivateAuraSoundOption(1261286, true, 1261286, 1, 1, "debuffyou", 17)--Throw Saronite
+	--mod:AddPrivateAuraSoundOption(1261286, true, 1261286, 1, 1, "debuffyou", 17)--Throw Saronite (handed by ENCOUNTER_WARNING now for hardcoded text/flash)
 	--mod:AddPrivateAuraSoundOption(1261540, true, 1261540, 1, 1, "targetyou", 2)--Orebreaker (handed by ENCOUNTER_WARNING now for hardcoded text/flash)
 	mod:AddPrivateAuraSoundOption(1261799, true, 1261799, 1, 2, "watchfeet", 8)--Glacial Overload (GTFO)
 
@@ -43,9 +44,10 @@ if DBM:IsPostMidnight() then
 	---@param dontSetAlerts boolean? Called when user has disabled DBM bars and is ONLY using timeline, therefor we must enable SetTimeline calls even in hardcodes
 	local function setFallback(self, dontSetAlerts)
 		--Blizz API fallbacks
-		specWarnOrebreakerYou:SetAlert(144, "targetyou", 2, 3, 0)
 		if not dontSetAlerts then
+			specWarnOrebreakerYou:SetAlert(144, "targetyou", 2, 3, 0)
 			specWarnCryostomp:SetAlert(145, "aesoon", 2)
+			specWarnThrowSaronite:SetAlert(146, "debuffyou", 17, 3, 0)
 			specWarnGlacialOverload:SetAlert(147, "breaklos", 12)
 		end
 		timerOrebreakerCD:SetTimeline(144)
@@ -135,8 +137,7 @@ if DBM:IsPostMidnight() then
 						specWarnGlacialOverload:Show(eventCount)
 						specWarnGlacialOverload:Play("breaklos")
 					elseif eventType == "orebreaker" then
-						specWarnOrebreakerYou:Show(eventCount)
-						specWarnOrebreakerYou:Play("targetyou")
+						specWarnOrebreakerYou:Show(eventCount, "targetyou")
 						specWarnOrebreaker:Schedule(4, eventCount)
 						specWarnOrebreaker:ScheduleVoice(4, "watchstep")
 					end

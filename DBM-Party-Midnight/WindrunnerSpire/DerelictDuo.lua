@@ -166,8 +166,7 @@ do
 					if finishedEventType == "debilitatingShriek" and eventCount then
 						specWarnDebilitatingShriek:Show(eventCount)
 						specWarnDebilitatingShriek:Play("aesoon")
-						specWarnHeavingYank:Show(eventCount)
-						specWarnHeavingYank:Play("behindboss")
+						specWarnHeavingYank:Show(eventCount, "behindboss")
 					end
 				else
 					self:TLCountCancel(eventID)
