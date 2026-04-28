@@ -16,12 +16,18 @@ end
 mod:RegisterCombat("combat")
 
 if DBM:IsPostMidnight() then
+
+	mod:RegisterSafeEventsInCombat(
+		"UNIT_SPELLCAST_START boss2"
+	)
+
 	--Note. https://www.wowhead.com/spell=1282138/shade-bomb is ignored on purpose to avoid spam
 	local warnGetEmIck					= mod:NewCountAnnounce(1264363, 3)
 
 	local specWarnShadeShift			= mod:NewSpecialWarningSwitchCount(1264027, nil, nil, nil, 1, 2)
 	local specWarnPlagueExpulsion		= mod:NewSpecialWarningDodgeCount(1264336, nil, nil, nil, 2, 2)
 	local specWarnBlightSmash			= mod:NewSpecialWarningCount(1264287, nil, nil, nil, 1, 18)
+	local specWarnLumberingFixation		= mod:NewSpecialWarningBlizzYou(1264453, nil, nil, nil, 1, 19)
 
 	local timerGetEmIckCD				= mod:NewCDCountTimer(20.5, 1264363, nil, nil, nil, 3, nil, DBM_COMMON_L.IMPORTANT_ICON)--Get 'Em, Ick! (parent of Lumbering Fixation)
 	local timerShadeShiftCD				= mod:NewCDCountTimer(20.5, 1264027, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)
@@ -30,13 +36,15 @@ if DBM:IsPostMidnight() then
 	--local timerLumberingFixationCD		= mod:NewCDCountTimer(20.5, 1264453, nil, nil, nil, 3)--Lumbering Fixation (child of Get 'Em, Ick!)
 
 	--Midnight private aura replacements
-	mod:AddPrivateAuraSoundOption(1264453, true, 1264363, 1, 1, "justrun", 2)--Lumbering Fixation
+	--mod:AddPrivateAuraSoundOption(1264453, true, 1264363, 1, 1, "fixateyou", 19)--Lumbering Fixation
 	mod:AddPrivateAuraSoundOption(1264299, true, 1264299, 2, 2, "watchfeet", 8)--Blight (GTFO)
 
 	mod.vb.getEmCount = 0
 	mod.vb.shadeCount = 0
 	mod.vb.plagueCount = 0
 	mod.vb.smashCount = 0
+	mod.vb.fixateCount = 0
+	mod.vb.sickemActive = false
 	local badStateDetected = false
 	local recurringNineteenCount = 0
 
@@ -50,6 +58,7 @@ if DBM:IsPostMidnight() then
 			if self:IsTank() then
 				specWarnBlightSmash:SetAlert(206, "poolyou", 18, 2)
 			end
+			specWarnLumberingFixation:SetAlert(561, "fixateyou", 19, 2, 0)
 		end
 		timerGetEmIckCD:SetTimeline(203)
 		timerShadeShiftCD:SetTimeline(204)
@@ -64,6 +73,7 @@ if DBM:IsPostMidnight() then
 		self.vb.shadeCount = 1
 		self.vb.plagueCount = 1
 		self.vb.smashCount = 1
+		self.vb.sickemActive = false
 		recurringNineteenCount = 0
 		if DBM.Options.HardcodedTimer and not badStateDetected then
 			self:IgnoreBlizzardAPI()
@@ -86,6 +96,15 @@ if DBM:IsPostMidnight() then
 		self:UnregisterShortTermEvents()
 	end
 
+	function mod:UNIT_SPELLCAST_START()
+		--UNIT_SPELLCAST_START cast by boss2 during Get 'Em, Ick! is always for Lumbering Fixation switching targets
+		--Next event will be ENCOUNTER_WARNING for the victim
+		if self.vb.sickemActive then
+			self.vb.fixateCount = self.vb.fixateCount + 1
+			specWarnLumberingFixation:Show(self.vb.fixateCount, "fixateyou")
+		end
+	end
+
 	do
 		---@param self DBMMod
 		---@param timer number
@@ -99,6 +118,7 @@ if DBM:IsPostMidnight() then
 				timerPlagueExpulsionCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "plague", "plagueCount"))
 			elseif timer == 50 then--Get 'Em, Ick!
 				timerGetEmIckCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "getem", "getEmCount"))
+				self.vb.sickemActive = false
 			elseif timer == 29 then--Shade Shift (28.75 rounded)
 				timerShadeShiftCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "shade", "shadeCount"))
 			elseif timer == 19 then--Alternates Blight Smash then Plague Expulsion in verified pulls
@@ -151,6 +171,9 @@ if DBM:IsPostMidnight() then
 						end
 					elseif eventType == "getem" then
 						warnGetEmIck:Show(eventCount)
+						--Arm scanning for Lumbering Fixation casts
+						self.vb.sickemActive = true
+						self.vb.fixateCount = 0
 					end
 				end
 			elseif eventState == 3 then
