@@ -120,15 +120,11 @@ if DBM:IsPostMidnight() then
 			elseif timer == 55 then--Burst Forth
 				timerBurstForthCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "burstForth", "burstForthCount"))
 			else
-				if not DBM.Options.DebugMode then
-					badStateDetected = true
-					self:ResumeBlizzardAPI()
-					self:UnregisterShortTermEvents()
-					setFallback(self)
-					DBM:Debug("|cffff0000Failed to match encounter timeline events to expected timers, falling back to Blizzard API|r", nil, nil, nil, true)
-				else
-					DBM:Debug("|cffff0000Failed to match encounter timeline events to expected timers|r", nil, nil, nil, true)
-				end
+				badStateDetected = true
+				self:ResumeBlizzardAPI()
+				self:UnregisterShortTermEvents()
+				setFallback(self)
+				DBM:Debug("|cffff0000Failed to match encounter timeline events to expected timers, falling back to Blizzard API|r", nil, nil, nil, true)
 			end
 		end
 
