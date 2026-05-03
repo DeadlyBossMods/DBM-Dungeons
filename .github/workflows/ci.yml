@@ -24,6 +24,7 @@ jobs:
         uses: BigWigsMods/luacheck@main
         with:
           args: "--no-color -q"
+          config: https://raw.githubusercontent.com/DeadlyBossMods/DBM-Dungeons/refs/heads/master/.luacheckrc
           path:  /workspace
 
       - name: LuaLS check
