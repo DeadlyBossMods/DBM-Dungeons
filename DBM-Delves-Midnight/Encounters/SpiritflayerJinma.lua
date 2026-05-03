@@ -33,7 +33,7 @@ function mod:OnLimitedCombatStart()
 end
 
 --UNIT_SPELLCAST_START is 1.5 seconds sooner, but harder to disambiguate due to it also being used by filler casts
-function mod:UNIT_SPELLCAST_CHANNEL_START(_, _, spellId)
+function mod:UNIT_SPELLCAST_CHANNEL_START()
 	--RS, RS, CS, RS, RS, CS (unknown after that, continued pattern assumed)
 	self.vb.channelCount = self.vb.channelCount + 1
 	if self.vb.channelCount % 3 == 0 then--Claim Spirits
