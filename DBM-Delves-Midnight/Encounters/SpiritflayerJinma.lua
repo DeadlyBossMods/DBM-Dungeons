@@ -24,9 +24,11 @@ local timerRagingSpiritsCD		= mod:NewCDCountTimer(17, 1265958, nil, nil, nil, 5)
 local timerClaimSpiritsCD		= mod:NewCDCountTimer(42.4, 1266337, nil, nil, nil, 1)
 
 mod.vb.channelCount = 0
+mod.vb.ragingCount = 0
 
 function mod:OnLimitedCombatStart()
 	self.vb.channelCount = 0
+	self.vb.ragingCount = 0
 	--Timers sync to initial cast start, not channel start like we have to use for detection
 	timerRagingSpiritsCD:Start(10.6, 1)
 	timerClaimSpiritsCD:Start(33.7, 1)
@@ -39,15 +41,16 @@ function mod:UNIT_SPELLCAST_CHANNEL_START()
 	if self.vb.channelCount % 3 == 0 then--Claim Spirits
 		warnClaimSpirits:Show(self.vb.channelCount/3)
 		--Timers adjusted -4 to account for channel start vs cast start
-		timerClaimSpiritsCD:Start(38.4, self.vb.channelCount/3+1)
+		timerClaimSpiritsCD:Start(38.4, (self.vb.channelCount/3)+1)
 	else--Raging Spirits
-		specWarnRagingSpirits:Show(self.vb.channelCount%3)
+		self.vb.ragingCount = self.vb.ragingCount + 1
+		specWarnRagingSpirits:Show(self.vb.ragingCount)
 		specWarnRagingSpirits:Play("ghostsoon")
 		--Timers adjusted -1.5 to account for channel start vs cast start
-		if self.vb.channelCount%3 == 1 then--First RS of the set, 17 seconds until next one
-			timerRagingSpiritsCD:Start(15.5, self.vb.channelCount%3)
+		if self.vb.ragingCount % 2 == 1 then--First RS of the set, 17 seconds until next one
+			timerRagingSpiritsCD:Start(15.5, self.vb.ragingCount+1)
 		else--Second RS of the set, 25.4 seconds until next one
-			timerRagingSpiritsCD:Start(23.9, self.vb.channelCount%3)
+			timerRagingSpiritsCD:Start(23.9, self.vb.ragingCount+1)
 		end
 	end
 end
