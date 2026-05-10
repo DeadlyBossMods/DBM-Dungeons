@@ -29,7 +29,7 @@ local timerCarrionSwoopCD		= mod:NewCDCountTimer(20.5, 1249478, nil, nil, nil, 3
 --Midnight private aura replacements
 mod:AddPrivateAuraSoundOption(1243741, true, 1243741, 1, 1, "stunyou", 19)--Freezing Trap Stun
 mod:AddPrivateAuraSoundOption(1260643, true, 1260643, 1, 1, "frontalyou", 19)--Barrage
-mod:AddPrivateAuraSoundOption(1249478, true, 1249478, 1, 1, "behindice", 19)--Carrion Swoop
+mod:AddPrivateAuraSoundOption(1249478, true, 1249478, 1, 1, "runtotrap", 19)--Carrion Swoop
 
 mod.vb.flankingSpearCount = 0
 mod.vb.fetidQuillstormCount = 0
