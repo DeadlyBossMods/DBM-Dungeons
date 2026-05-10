@@ -41,7 +41,7 @@ if DBM:IsPostMidnight() then
 		if not dontSetAlerts then
 			specWarnUmbralTentacles:SetAlert(246, "mobsoon", 1, 2)
 			specWarnRepulse:SetAlert(247, "carefly", 2, 2)
-			specWarnGatesOfAbyss:SetAlert(376, "watchwave", 2, 2)
+			specWarnGatesOfAbyss:SetAlert(376, "watchorb", 2, 2)
 		end
 		timerMindBlastCD:SetTimeline(244)
 		timerMassVoidCD:SetTimeline(245)
@@ -146,7 +146,7 @@ if DBM:IsPostMidnight() then
 						specWarnRepulse:Play("carefly")
 					elseif eventType == "gatesofabyss" then
 						specWarnGatesOfAbyss:Show(eventCount)
-						specWarnGatesOfAbyss:Play("watchwave")
+						specWarnGatesOfAbyss:Play("watchorb")
 					end
 				end
 			elseif eventState == 3 then
