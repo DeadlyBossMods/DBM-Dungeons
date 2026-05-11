@@ -15,6 +15,7 @@ mod:RegisterCombat("combat")
 local warnSplatteringSpew			= mod:NewCountAnnounce(472745, 2)
 
 local specWarnHeavingYank			= mod:NewSpecialWarningBlizzYou(472793, nil, nil, nil, 3, 2)
+local specWarnSplatteringSpew		= mod:NewSpecialWarningBlizzYou(472745, nil, nil, nil, 1, 2)
 local specWarnBoneHack				= mod:NewSpecialWarningCount(472888, nil, nil, nil, 1, 2)
 local specWarnDebilitatingShriek	= mod:NewSpecialWarningCount(472736, nil, nil, nil, 2, 2)
 local specWarnCurseofDarkness		= mod:NewSpecialWarningCount(474105, nil, nil, nil, 2, 2)
@@ -26,7 +27,7 @@ local timerSplatteringSpewCD		= mod:NewCDCountTimer(27.3, 472777, nil, nil, nil,
 --Midnight private aura replacements
 mod:AddPrivateAuraSoundOption({1253834,1215803}, true, 474105, 4, 1, "justrun", 2)--Curse of Darkness
 --mod:AddPrivateAuraSoundOption(472793, true, 472795, 1, 1, "behindboss", 2)--Heaving Yank
-mod:AddPrivateAuraSoundOption(474129, true, 472745, 1, 1, "poolyou", 18)--Splattering Spew
+--mod:AddPrivateAuraSoundOption(474129, true, 472745, 1, 1, "poolyou", 18)--Splattering Spew
 mod:AddPrivateAuraSoundOption(472777, true, 472777, 4, 2, "watchfeet", 8)--Gunk Splatter GTFO
 
 mod.vb.boneHackCount = 0
@@ -48,6 +49,7 @@ local function setFallback(self, dontSetAlerts)
 		specWarnCurseofDarkness:SetAlert(26, "mobsoon", 2)
 		specWarnDebilitatingShriek:SetAlert(27, "aesoon", 2)
 		specWarnHeavingYank:SetAlert(29, "behindboss", 2, 4, 0)
+		specWarnSplatteringSpew:SetAlert(28, "poolyou", 18, 2, 0)
 	end
 	timerBoneHackCD:SetTimeline(25)
 	timerCurseofDarknessCD:SetTimeline(26)
@@ -140,6 +142,7 @@ do
 			if finishedEventType and eventCount then
 				if finishedEventType == "splatteringSpew" then
 					warnSplatteringSpew:Show(eventCount)
+					specWarnSplatteringSpew:Show(eventCount, "poolyou")
 				elseif finishedEventType == "boneHack" then
 					if self:IsTank() then
 						specWarnBoneHack:Show(eventCount)

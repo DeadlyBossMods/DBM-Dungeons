@@ -17,6 +17,7 @@ local warnBladestorm				= mod:NewCountAnnounce(470966, 2, nil, false)
 local specWarnRampage				= mod:NewSpecialWarningCount(467620, nil, nil, nil, 1, 2)
 local specWarnIntimidatingShout		= mod:NewSpecialWarningCount(1253026, nil, nil, nil, 2, 2)
 local specWarnRallyingBellow		= mod:NewSpecialWarningSwitchCount(472043, nil, nil, DBM_COMMON_L.ADDS, 2, 3)
+local specWarnRecklessLeap			= mod:NewSpecialWarningBlizzYou(1283247, nil, nil, nil, 1, 2)
 
 local timerRampageCD				= mod:NewCDCountTimer("d30", 467620, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerIntimidatingShoutCD		= mod:NewCDCountTimer("d45", 1253026, nil, nil, nil, 2, nil, DBM_COMMON_L.MYTHIC_ICON)
@@ -25,7 +26,7 @@ local timerBladestormCD				= mod:NewCDCountTimer(8, 470966, nil, nil, nil, 2)
 
 mod:AddPrivateAuraSoundOption(470966, true, 470966, 4, 1, "justrun", 2)--Bladestorm target
 mod:AddPrivateAuraSoundOption(468924, true, 470966, 1, 2, "watchfeet", 8)--Bladestorm GTFO
-mod:AddPrivateAuraSoundOption(1283247, true, 1283247, 1, 1, "runout", 2)--Reckless Leap target
+--mod:AddPrivateAuraSoundOption(1283247, true, 1283247, 1, 1, "runout", 2)--Reckless Leap target
 
 mod.vb.rampageCount = 0
 mod.vb.intimidatingShoutCount = 0
@@ -46,6 +47,7 @@ local function setFallback(self, dontSetAlerts)
 		end
 		specWarnIntimidatingShout:SetAlert({211, 213}, "gathershare", 2)
 		specWarnRallyingBellow:SetAlert(215, "mobsoon", 2, 3, 0)
+		specWarnRecklessLeap:SetAlert({212, 214}, "runout", 2, 2, 0)
 	end
 	timerRampageCD:SetTimeline({210, 556})
 	timerIntimidatingShoutCD:SetTimeline({211, 213})
@@ -155,6 +157,7 @@ do
 					specWarnIntimidatingShout:Play("gathershare")
 				elseif finishedEventType == "recklessLeap" then
 					warnRecklessLeap:Show(eventCount)
+					specWarnRecklessLeap:Show(eventCount, "runout", 5)
 				elseif finishedEventType == "bladestorm" then
 					warnBladestorm:Show(eventCount)
 				end
