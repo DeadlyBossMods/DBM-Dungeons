@@ -7,7 +7,7 @@ mod.soloChallenge = true
 mod:SetRevision("@file-date-integer@")
 mod:DisableHardcodedOptions()
 --mod:SetCreatureID(0)--TODO
-mod:SetEncounterID(3433)
+mod:SetEncounterID(3433, 3434)
 mod:SetZone()
 
 mod:RegisterCombat("combat")
