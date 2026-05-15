@@ -43,5 +43,12 @@ function mod:OnLimitedCombatStart()
 	self:EnableTimelineOptions(1247937, 35)
 	self:EnableTimelineOptions(1252703, 36)
 	self:EnableTimelineOptions(1271684, 37)
-
+	DBM:Debug("Hardcode this mod you Fing idiot")
+	DBM:Debug("Hardcode this mod you Fing idiot")
+	DBM:Debug("Hardcode this mod you Fing idiot")
+	DBM:Debug("Hardcode this mod you Fing idiot")
+	DBM:Debug("Hardcode this mod you Fing idiot")
+	DBM:Debug("Hardcode this mod you Fing idiot")
+	DBM:Debug("Hardcode this mod you Fing idiot")
+	DBM:Debug("Hardcode this mod you Fing idiot")
 end
