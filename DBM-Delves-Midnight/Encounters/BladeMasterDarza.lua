@@ -41,6 +41,7 @@ function mod:UNIT_SPELLCAST_START()
 	--SC, SC, SC, BT, SC, SC, SC, BT (unknown after that, continued pattern assumed)
 	self.vb.channelCount = self.vb.channelCount + 1
 	if self.vb.channelCount % 4 == 0 then--Bask in Twilight
+		self.vb.baskCount = self.vb.baskCount + 1
 		specWarnBaskInTwilight:Show(self.vb.baskCount)
 		specWarnBaskInTwilight:Play("watchstep")
 		timerBaskInTwilightCD:Start(33.8, self.vb.baskCount+1)
