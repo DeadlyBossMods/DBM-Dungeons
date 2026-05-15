@@ -57,7 +57,8 @@ local function setFallback(self, dontSetAlerts)
 		end
 		specWarnFetidQuillstorm:SetAlert(151, "watchstep", 2)
 		specWarnFreezingTrap:SetAlert(152, "trapsincoming", 19)
-		specWarnBarrage:SetAlert(154, "frontal", 15)
+		specWarnBarrage:SetAlert(153, "frontal", 15)
+--		specWarnInfectedPinions:SetAlert(154, "helpdispel", 2)
 	end
 	timerFlankingSpearCD:SetTimeline(150)
 	timerFetidQuillstormCD:SetTimeline(151)
