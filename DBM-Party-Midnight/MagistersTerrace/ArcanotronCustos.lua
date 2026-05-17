@@ -22,8 +22,8 @@ local timerRepulsingSlamCD				= mod:NewCDCountTimer(20.5, 474496, 182557, nil, n
 local timerEtherealShacklesCD			= mod:NewCDCountTimer(20.5, 1214038, DBM_COMMON_L.DISPELS.." (%s)", nil, nil, 3, nil, DBM_COMMON_L.MAGIC_ICON)
 local timerArcaneExpulsionCD			= mod:NewCDCountTimer(20.5, 1214081, 28405, nil, nil, 2)--Short text "Knockback"
 
-mod:AddPrivateAuraSoundOption(1214089, true, 1214089, 1, 2, "watchfeet", 8)--Arcane Residue (GTFO)
-mod:AddPrivateAuraSoundOption(1214038, true, 1214038, 1, 1, "debuffyou", 17)--Ethereal Shackles
+--mod:AddPrivateAuraSoundOption(1214089, true, 1214089, 1, 2, "watchfeet", 8)--Arcane Residue (GTFO)
+--mod:AddPrivateAuraSoundOption(1214038, true, 1214038, 1, 1, "debuffyou", 17)--Ethereal Shackles
 
 mod.vb.protocolCount = 0
 mod.vb.slamCount = 0
@@ -54,7 +54,7 @@ function mod:OnLimitedCombatStart()
 	self.vb.slamCount = 1
 	self.vb.shacklesCount = 1
 	self.vb.expulsionCount = 1
-	if self:IsMythicPlus() and DBM.Options.HardcodedTimer and not badStateDetected then
+	if DBM.Options.HardcodedTimer and not badStateDetected then
 		self:IgnoreBlizzardAPI()
 		self:RegisterShortTermEvents(
 			"ENCOUNTER_TIMELINE_EVENT_ADDED",

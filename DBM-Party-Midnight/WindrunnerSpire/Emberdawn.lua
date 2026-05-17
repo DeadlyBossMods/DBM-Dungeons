@@ -23,8 +23,8 @@ local timerFlamingUpdraftCD			= mod:NewCDCountTimer(6, 466556, nil, nil, nil, 3,
 local timerBurningGaleCD			= mod:NewCDCountTimer(15, 465904, nil, nil, nil, 2, nil, DBM_COMMON_L.IMPORTANT_ICON)
 
 --TODO, fix private aura GTFO sound defaults if assumption is wrong
-mod:AddPrivateAuraSoundOption(466559, true, 466556, 1, 1, "runout", 2)--Flaming Updraft (Currently disabled by blizzard, so hidden from UI automatically by core)
-mod:AddPrivateAuraSoundOption(472118, false, 472118, 1, 2, "watchfeet", 8)--Ignited Embers. GTFO that's off by default because under certain conditions you do not want to avoid it
+--mod:AddPrivateAuraSoundOption(466559, true, 466556, 1, 1, "runout", 2)--Flaming Updraft (Currently disabled by blizzard, so hidden from UI automatically by core)
+--mod:AddPrivateAuraSoundOption(472118, false, 472118, 1, 2, "watchfeet", 8)--Ignited Embers. GTFO that's off by default because under certain conditions you do not want to avoid it
 
 mod.vb.searingBeakCount = 0
 mod.vb.flamingUpdraftCount = 0
@@ -52,7 +52,7 @@ function mod:OnLimitedCombatStart()
 	self.vb.flamingUpdraftCount = 1
 	self.vb.burningGaleCount = 1
 	badStateDetected = false
-	if self:IsMythicPlus() and DBM.Options.HardcodedTimer and not badStateDetected then
+	if DBM.Options.HardcodedTimer and not badStateDetected then
 		self:IgnoreBlizzardAPI()
 		self:RegisterShortTermEvents(
 			"ENCOUNTER_TIMELINE_EVENT_ADDED",

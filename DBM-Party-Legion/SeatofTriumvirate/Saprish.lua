@@ -21,7 +21,7 @@ if DBM:IsPostMidnight() then
 
 	mod:AddCustomAlertSoundOption(248831, "HasInterrupt", 2)--Dread Screech
 	mod:AddPrivateAuraSoundOption(1280064, true, 1280064, 1, 1, "lineyou", 17)--Phase Dash
-	mod:AddPrivateAuraSoundOption(245742, true, 245742, 2, 1, "targetyou", 2)--Shadow Pounce
+	--mod:AddPrivateAuraSoundOption(245742, true, 245742, 2, 1, "targetyou", 2)--Shadow Pounce
 
 	mod.vb.voidBombCount = 0
 	mod.vb.phaseDashCount = 0
@@ -54,7 +54,7 @@ if DBM:IsPostMidnight() then
 		self.vb.phaseDashCount = 1
 		self.vb.shadowPounceCount = 1
 		self.vb.overloadCount = 1
-		if self:IsMythicPlus() and DBM.Options.HardcodedTimer and not badStateDetected then
+		if DBM.Options.HardcodedTimer and not badStateDetected then
 			self:IgnoreBlizzardAPI()
 			self:RegisterShortTermEvents(
 				"ENCOUNTER_TIMELINE_EVENT_ADDED",

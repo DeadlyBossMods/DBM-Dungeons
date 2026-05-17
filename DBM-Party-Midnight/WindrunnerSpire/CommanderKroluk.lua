@@ -25,7 +25,7 @@ local timerRecklessLeapCD			= mod:NewCDCountTimer("d37", 1283247, nil, nil, nil,
 local timerBladestormCD				= mod:NewCDCountTimer(8, 470966, nil, nil, nil, 2)
 
 mod:AddPrivateAuraSoundOption(470966, true, 470966, 4, 1, "justrun", 2)--Bladestorm target
-mod:AddPrivateAuraSoundOption(468924, true, 470966, 1, 2, "watchfeet", 8)--Bladestorm GTFO
+--mod:AddPrivateAuraSoundOption(468924, true, 470966, 1, 2, "watchfeet", 8)--Bladestorm GTFO
 --mod:AddPrivateAuraSoundOption(1283247, true, 1283247, 1, 1, "runout", 2)--Reckless Leap target
 
 mod.vb.rampageCount = 0
@@ -65,7 +65,7 @@ function mod:OnLimitedCombatStart()
 	badStateDetected = false
 	activeEventTypes = {}
 	lastRallyingBellow = 0
-	if self:IsMythicPlus() and DBM.Options.HardcodedTimer and not badStateDetected then
+	if DBM.Options.HardcodedTimer and not badStateDetected then
 		self:IgnoreBlizzardAPI()
 		self:RegisterShortTermEvents(
 			"ENCOUNTER_TIMELINE_EVENT_ADDED",

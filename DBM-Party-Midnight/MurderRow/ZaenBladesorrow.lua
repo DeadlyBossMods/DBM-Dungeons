@@ -28,7 +28,7 @@ mod:AddCustomTimerOptions(474478, true, 2, 0)--Killing Spree
 mod:AddCustomTimerOptions(1222795, true, 5, 0)--Envenom
 ----Midnight private aura replacements
 --mod:AddPrivateAuraSoundOption(474545, true, 474545, 1, 1)--Murder in a Row
-mod:AddPrivateAuraSoundOption(1214352, true, 1214352, 1, 1, "bombyou", 12)--Fire Bomb
+--mod:AddPrivateAuraSoundOption(1214352, true, 1214352, 1, 1, "bombyou", 12)--Fire Bomb
 
 function mod:OnLimitedCombatStart()
 	self:EnableAlertOptions(474765, 124, "watchstep", 2, 2)

@@ -11,16 +11,16 @@ mod:RegisterCombat("combat")
 if DBM:IsPostMidnight() then
 	local warnDecimate					= mod:NewCountAnnounce(1263282, 2)
 
-	local specWarnNullPalm				= mod:NewSpecialWarningCount(1268916, nil, nil, nil, 2, 2)
+	local specWarnNullPalm				= mod:NewSpecialWarningCount(1268916, nil, nil, DBM_COMMON_L.FRONTAL, 2, 2)
 	local specWarnOozingSlam			= mod:NewSpecialWarningCount(1263399, nil, nil, nil, 2, 2)
 	local specWarnVoidSlash				= mod:NewSpecialWarningCount(1263440, nil, nil, nil, 1, 2)
-	local specWarnCrashingVoid			= mod:NewSpecialWarningCount(1263304, nil, nil, nil, 2, 2)
+	local specWarnCrashingVoid			= mod:NewSpecialWarningCount(1263304, nil, nil, DBM_COMMON_L.AOEDAMAGE, 2, 2)
 
-	local timerNullPalmCD				= mod:NewCDCountTimer(20.5, 1268916, nil, nil, nil, 3)
+	local timerNullPalmCD				= mod:NewCDCountTimer(20.5, 1268916, DBM_COMMON_L.FRONTAL, nil, nil, 3)
 	local timerDecimateCD				= mod:NewCDCountTimer(20.5, 1263282, nil, nil, nil, 3)
 	local timerOozingSlamCD				= mod:NewCDCountTimer(20.5, 1263399, nil, nil, nil, 1, nil, DBM_COMMON_L.MYTHIC_ICON)
 	local timerVoidSlashCD				= mod:NewCDCountTimer(20.5, 1263440, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
-	local timerCrashingVoidCD			= mod:NewCDCountTimer(20.5, 1263304, nil, nil, nil, 2)
+	local timerCrashingVoidCD			= mod:NewCDCountTimer(20.5, 1263304, DBM_COMMON_L.AOEDAMAGE, nil, nil, 2)
 
 	mod:AddPrivateAuraSoundOption(244588, true, 244588, 2, 1, "watchfeet", 8)--Void Sludge (GTFO)
 
@@ -54,7 +54,7 @@ if DBM:IsPostMidnight() then
 		self.vb.oozingSlamCount = 1
 		self.vb.voidSlashCount = 1
 		self.vb.crashingVoidCount = 1
-		if self:IsMythicPlus() and DBM.Options.HardcodedTimer and not badStateDetected then
+		if DBM.Options.HardcodedTimer and not badStateDetected then
 			self:IgnoreBlizzardAPI()
 			self:RegisterShortTermEvents(
 				"ENCOUNTER_TIMELINE_EVENT_ADDED",
