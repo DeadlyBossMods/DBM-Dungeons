@@ -58,7 +58,7 @@ function mod:OnLimitedCombatStart()
 	self.vb.brilliantDispersionCount = 1
 	self.vb.divineGuileCount = 1
 	self.vb.flickerCount = 1
-	if self:IsMythicPlus() and DBM.Options.HardcodedTimer and not badStateDetected then
+	if DBM.Options.HardcodedTimer and not badStateDetected then
 		self:IgnoreBlizzardAPI()
 		self:RegisterShortTermEvents(
 			"ENCOUNTER_TIMELINE_EVENT_ADDED",

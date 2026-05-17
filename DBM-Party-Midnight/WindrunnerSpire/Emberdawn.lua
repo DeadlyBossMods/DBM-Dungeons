@@ -52,7 +52,7 @@ function mod:OnLimitedCombatStart()
 	self.vb.flamingUpdraftCount = 1
 	self.vb.burningGaleCount = 1
 	badStateDetected = false
-	if self:IsMythicPlus() and DBM.Options.HardcodedTimer and not badStateDetected then
+	if DBM.Options.HardcodedTimer and not badStateDetected then
 		self:IgnoreBlizzardAPI()
 		self:RegisterShortTermEvents(
 			"ENCOUNTER_TIMELINE_EVENT_ADDED",

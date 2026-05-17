@@ -59,7 +59,7 @@ if DBM:IsPostMidnight() then
 		self.vb.umbralTentaclesCount = 1
 		self.vb.repulseCount = 1
 		self.vb.gatesCount = 1
-		if self:IsMythicPlus() and DBM.Options.HardcodedTimer and not badStateDetected then
+		if DBM.Options.HardcodedTimer and not badStateDetected then
 			self:IgnoreBlizzardAPI()
 			self:RegisterShortTermEvents(
 				"ENCOUNTER_TIMELINE_EVENT_ADDED",

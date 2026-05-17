@@ -58,7 +58,7 @@ function mod:OnLimitedCombatStart()
 	triplicateUsed = false
 	self:EnableAlertOptions(1223847, 635, "specialsoon", 2, 2, 0)
 	self:EnableAlertOptions(1224299, 98, "pullin", 2, 2, 0)
-	if self:IsMythicPlus() and DBM.Options.HardcodedTimer and not badStateDetected then
+	if DBM.Options.HardcodedTimer and not badStateDetected then
 		self:IgnoreBlizzardAPI()
 		self:RegisterShortTermEvents(
 			"ENCOUNTER_TIMELINE_EVENT_ADDED",

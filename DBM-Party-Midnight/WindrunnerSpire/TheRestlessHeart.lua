@@ -64,7 +64,7 @@ function mod:OnLimitedCombatStart()
 	self.vb.tempestSlashCount = 1
 	self.vb.gustShotCount = 1
 	badStateDetected = false
-	if self:IsMythicPlus() and DBM.Options.HardcodedTimer and not badStateDetected then
+	if DBM.Options.HardcodedTimer and not badStateDetected then
 		self:IgnoreBlizzardAPI()
 		self:RegisterShortTermEvents(
 			"ENCOUNTER_TIMELINE_EVENT_ADDED",

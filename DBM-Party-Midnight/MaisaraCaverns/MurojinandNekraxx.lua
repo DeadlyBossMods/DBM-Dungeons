@@ -85,7 +85,7 @@ function mod:OnLimitedCombatStart()
 	self.vb.barrageCount = 1
 	self.vb.infectedPinionsCount = 1
 	self.vb.carrionSwoopCount = 1
-	if self:IsMythicPlus() and DBM.Options.HardcodedTimer and not badStateDetected then
+	if DBM.Options.HardcodedTimer and not badStateDetected then
 		self:IgnoreBlizzardAPI()
 		self:RegisterShortTermEvents(
 			"ENCOUNTER_TIMELINE_EVENT_ADDED",

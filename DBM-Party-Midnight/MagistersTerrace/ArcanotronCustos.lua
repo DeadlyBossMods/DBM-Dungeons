@@ -54,7 +54,7 @@ function mod:OnLimitedCombatStart()
 	self.vb.slamCount = 1
 	self.vb.shacklesCount = 1
 	self.vb.expulsionCount = 1
-	if self:IsMythicPlus() and DBM.Options.HardcodedTimer and not badStateDetected then
+	if DBM.Options.HardcodedTimer and not badStateDetected then
 		self:IgnoreBlizzardAPI()
 		self:RegisterShortTermEvents(
 			"ENCOUNTER_TIMELINE_EVENT_ADDED",

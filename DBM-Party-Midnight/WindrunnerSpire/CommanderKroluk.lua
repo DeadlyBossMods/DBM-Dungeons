@@ -65,7 +65,7 @@ function mod:OnLimitedCombatStart()
 	badStateDetected = false
 	activeEventTypes = {}
 	lastRallyingBellow = 0
-	if self:IsMythicPlus() and DBM.Options.HardcodedTimer and not badStateDetected then
+	if DBM.Options.HardcodedTimer and not badStateDetected then
 		self:IgnoreBlizzardAPI()
 		self:RegisterShortTermEvents(
 			"ENCOUNTER_TIMELINE_EVENT_ADDED",

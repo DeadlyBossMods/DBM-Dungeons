@@ -51,7 +51,7 @@ function mod:OnLimitedCombatStart()
 	self.vb.spiritbreakerCount = 1
 	self.vb.crushSoulsCount = 1
 	self.vb.soulrendingRoarCount = 1
-	if self:IsMythicPlus() and DBM.Options.HardcodedTimer and not badStateDetected then
+	if DBM.Options.HardcodedTimer and not badStateDetected then
 		self:IgnoreBlizzardAPI()
 		self:RegisterShortTermEvents(
 			"ENCOUNTER_TIMELINE_EVENT_ADDED",

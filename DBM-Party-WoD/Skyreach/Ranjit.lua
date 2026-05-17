@@ -50,7 +50,7 @@ if DBM:IsPostMidnight() then
 		self.vb.fanofBladesCount = 1
 		self.vb.windChakramCount = 1
 		self.vb.chakramVortexCount = 1
-		if self:IsMythicPlus() and DBM.Options.HardcodedTimer and not badStateDetected then
+		if DBM.Options.HardcodedTimer and not badStateDetected then
 			self:IgnoreBlizzardAPI()
 			self:RegisterShortTermEvents(
 				"ENCOUNTER_TIMELINE_EVENT_ADDED",

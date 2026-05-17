@@ -51,7 +51,7 @@ if DBM:IsPostMidnight() then
 		self.vb.burningClawsCount = 1
 		self.vb.searingQuillsCount = 1
 		self.vb.twelveSecondCount = 0
-		if self:IsMythicPlus() and DBM.Options.HardcodedTimer and not badStateDetected then
+		if DBM.Options.HardcodedTimer and not badStateDetected then
 			self:IgnoreBlizzardAPI()
 			self:RegisterShortTermEvents(
 				"ENCOUNTER_TIMELINE_EVENT_ADDED",
