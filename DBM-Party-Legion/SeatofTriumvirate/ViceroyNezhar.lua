@@ -9,18 +9,18 @@ mod:RegisterCombat("combat")
 
 if DBM:IsPostMidnight() then
 	--NOTE: Repulse being cast signals a restart of the ability sequence
-	local warnMindBlast					= mod:NewCountAnnounce(244750, 2)
+	local warnMindBlast					= mod:NewCountAnnounce(244750, 2, nil, "HasInterrupt")
 	local warnMassVoidInfusion			= mod:NewCountAnnounce(1263542, 2)
 
 	local specWarnUmbralTentacles		= mod:NewSpecialWarningCount(1263538, nil, nil, nil, 1, 2)
-	local specWarnRepulse				= mod:NewSpecialWarningCount(1263528, nil, nil, nil, 2, 2)
-	local specWarnGatesOfAbyss			= mod:NewSpecialWarningCount(1277358, nil, nil, nil, 2, 2)
+	local specWarnRepulse				= mod:NewSpecialWarningCount(1263528, nil, 28405, nil, 2, 2)
+	local specWarnGatesOfAbyss			= mod:NewSpecialWarningCount(1277358, nil, nil, DBM_COMMON_L.ORBS, 2, 2)
 
 	local timerMindBlastCD				= mod:NewCDCountTimer(20.5, 244750, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON..DBM_COMMON_L.TANK_ICON)
 	local timerMassVoidCD				= mod:NewCDCountTimer(20.5, 1263542, nil, nil, nil, 5, nil, DBM_COMMON_L.HEALER_ICON)
 	local timerUmbralTentaclesCD		= mod:NewCDCountTimer(20.5, 1263538, nil, nil, nil, 1)
-	local timerRepulseCD				= mod:NewCDCountTimer(20.5, 1263528, nil, nil, nil, 2)
-	local timerGatesCD					= mod:NewCDCountTimer(20.5, 1277358, nil, nil, nil, 3)
+	local timerRepulseCD				= mod:NewCDCountTimer(20.5, 1263528, 28405, nil, nil, 2)
+	local timerGatesCD					= mod:NewCDCountTimer(20.5, 1277358, DBM_COMMON_L.ORBS, nil, nil, 3)
 
 	mod:AddPrivateAuraSoundOption(1263542, false, 1263542, 1, 1, "debuffyou", 17)--Mass Void Infusion (just minor rot damage, off by default)
 	mod:AddPrivateAuraSoundOption(1263532, true, 1263532, 1, 1, "watchfeet", 8)--Void Storm (GTFO)
