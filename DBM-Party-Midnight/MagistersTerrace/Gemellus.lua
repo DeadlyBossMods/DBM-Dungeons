@@ -25,7 +25,7 @@ mod:AddCustomAlertSoundOption(1223847, true, 2)--Triplicate
 mod:AddCustomAlertSoundOption(1224299, true, 1)--Astral Grasp
 --Private aura sounds
 --mod:AddPrivateAuraSoundOption(1223958, true, 1223958, 1, 1)--Cosmic Sting
-mod:AddPrivateAuraSoundOption(1224104, true, 1224104, 1, 2, "watchfeet", 8)--Void Secretions
+--mod:AddPrivateAuraSoundOption(1224104, true, 1224104, 1, 2, "watchfeet", 8)--Void Secretions
 mod:AddPrivateAuraSoundOption(1253709, true, 1253709, 1, 1, "linegather", 2)--Neural Link
 --mod:AddPrivateAuraSoundOption(1224299, true, 1224299, 1, 1)--Astral Grasp
 

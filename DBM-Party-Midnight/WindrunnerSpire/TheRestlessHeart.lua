@@ -29,7 +29,7 @@ local timerGustShotCD				= mod:NewCDCountTimer(23.5, 1253979, nil, nil, nil, 3)
 mod:AddPrivateAuraSoundOption(1282911, true, 474528, 1, 1, "lineyou", 17)--Bolt Gale
 mod:AddPrivateAuraSoundOption(1253979, true, 1253979, 1, 1, "movetopool", 15)--Gust Shot
 mod:AddPrivateAuraSoundOption(472662, true, 472662, 1, 1, "movetoarrow", 19)--Tempest Slash
-mod:AddPrivateAuraSoundOption(1216042, true, 1216042, 1, 1, "movetoarrow", 19)--Squall Leap
+--mod:AddPrivateAuraSoundOption(1216042, true, 1216042, 1, 1, "movetoarrow", 19)--Squall Leap
 
 mod.vb.bullseyeWindblastCount = 0
 mod.vb.boltGaleCount = 0

@@ -22,8 +22,8 @@ mod:AddCustomTimerOptions(1236746, true, 2, 0)--Verdant Stomp
 mod:AddCustomTimerOptions(1236709, true, 2, 0)--Thorncaller Roar
 mod:AddCustomTimerOptions(1237091, true, 1, 0)--Bloodthirsty Gaze
 --Midnight private aura replacements
-mod:AddPrivateAuraSoundOption(1237091, true, 1237091, 4, 1, "fixateyou", 19)--Bloodthirsty Gaze
-mod:AddPrivateAuraSoundOption(1272290, true, 1272290, 1, 1, "stunyou", 19)--Crunched
+--mod:AddPrivateAuraSoundOption(1237091, true, 1237091, 4, 1, "fixateyou", 19)--Bloodthirsty Gaze
+--mod:AddPrivateAuraSoundOption(1272290, true, 1272290, 1, 1, "stunyou", 19)--Crunched
 
 function mod:OnLimitedCombatStart()
 	self:EnableAlertOptions(1236746, 178, "carefly", 2, 2)

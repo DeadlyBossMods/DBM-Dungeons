@@ -23,9 +23,9 @@ local timerDivineGuileCD			= mod:NewCDCountTimer(52, 1257567, nil, nil, nil, 6, 
 local timerFlickerCD				= mod:NewCDCountTimer(10, 1255531, nil, nil, nil, 3)
 
 --Private Auras
-mod:AddPrivateAuraSoundOption(1255503, true, 1255503, 1, 1, "poolyou", 18)--Brilliant Dispersion
+--mod:AddPrivateAuraSoundOption(1255503, true, 1255503, 1, 1, "poolyou", 18)--Brilliant Dispersion
 --mod:AddPrivateAuraSoundOption(1255335, false, 1255335, 1, 1)--Searing Rend
-mod:AddPrivateAuraSoundOption(1255310, true, 1255310, 1, 2, "watchfeet", 8)--Radiant Scar
+--mod:AddPrivateAuraSoundOption(1255310, true, 1255310, 1, 2, "watchfeet", 8)--Radiant Scar
 --mod:AddPrivateAuraSoundOption(1271956, false, 1271956, 1, 1)--Mirrored Rend
 
 mod.vb.searingRendCount = 0

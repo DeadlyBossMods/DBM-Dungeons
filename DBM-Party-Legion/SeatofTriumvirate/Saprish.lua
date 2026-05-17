@@ -21,7 +21,7 @@ if DBM:IsPostMidnight() then
 
 	mod:AddCustomAlertSoundOption(248831, "HasInterrupt", 2)--Dread Screech
 	mod:AddPrivateAuraSoundOption(1280064, true, 1280064, 1, 1, "lineyou", 17)--Phase Dash
-	mod:AddPrivateAuraSoundOption(245742, true, 245742, 2, 1, "targetyou", 2)--Shadow Pounce
+	--mod:AddPrivateAuraSoundOption(245742, true, 245742, 2, 1, "targetyou", 2)--Shadow Pounce
 
 	mod.vb.voidBombCount = 0
 	mod.vb.phaseDashCount = 0

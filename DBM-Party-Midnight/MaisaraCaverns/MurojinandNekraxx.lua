@@ -27,7 +27,7 @@ local timerInfectedPinionsCD	= mod:NewCDCountTimer(20.5, 1246666, nil, nil, nil,
 local timerCarrionSwoopCD		= mod:NewCDCountTimer(20.5, 1249478, nil, nil, nil, 3, nil, DBM_COMMON_L.IMPORTANT_ICON)
 
 --Midnight private aura replacements
-mod:AddPrivateAuraSoundOption(1243741, true, 1243741, 1, 1, "stunyou", 19)--Freezing Trap Stun
+--mod:AddPrivateAuraSoundOption(1243741, true, 1243741, 1, 1, "stunyou", 19)--Freezing Trap Stun
 mod:AddPrivateAuraSoundOption(1260643, true, 1260643, 1, 1, "frontalyou", 19)--Barrage
 mod:AddPrivateAuraSoundOption(1249478, true, 1249478, 1, 1, "runtotrap", 19)--Carrion Swoop
 
