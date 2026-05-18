@@ -36,7 +36,7 @@ if DBM:IsPostMidnight() then
 	local eighteenCount = 1
 
 	---@param self DBMMod
-	---@param dontSetAlerts boolean? Called when user has disabled DBM bars and is ONLY using timeline, therefor we must enable SetTimeline calls even in hardcodes
+	---@param dontSetAlerts boolean? Called on engage when we only want to set timeline parameters and not touch encounter alerts
 	local function setFallback(self, dontSetAlerts)
 		if not dontSetAlerts then
 			specWarnArcaneOrbs:SetAlert(274, "catchballs", 2)

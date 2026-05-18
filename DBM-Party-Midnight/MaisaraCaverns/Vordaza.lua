@@ -40,7 +40,7 @@ local badStateDetected = false
 local necroticCDInfo = {}--tracks startTime and duration per eventID to detect on-time state 3 cancels for Necrotic Convergence
 
 ---@param self DBMMod
----@param dontSetAlerts boolean? Called when user has disabled DBM bars and is ONLY using timeline, therefor we must enable SetTimeline calls even in hardcodes
+---@param dontSetAlerts boolean? Called on engage when we only want to set timeline parameters and not touch encounter alerts
 local function setFallback(self, dontSetAlerts)
 	if not dontSetAlerts then
 		if self:IsTank() then
