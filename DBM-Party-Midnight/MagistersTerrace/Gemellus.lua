@@ -42,11 +42,12 @@ local function setFallback(self, dontSetAlerts)
 	--Blizz API fallbacks
 	if not dontSetAlerts then
 	end
-	timerTriplicateCD:SetTimeline(635)
-	timerNeuralLinkCD:SetTimeline(97)
-	timerAstralGraspCD:SetTimeline(98)
-	timerVoidSecretionsCD:SetTimeline(99)
-	timerCosmicStingCD:SetTimeline(100)
+	local onlyColor = not DBM.Options.HideDBMBars
+	timerTriplicateCD:SetTimeline(635, onlyColor)
+	timerNeuralLinkCD:SetTimeline(97, onlyColor)
+	timerAstralGraspCD:SetTimeline(98, onlyColor)
+	timerVoidSecretionsCD:SetTimeline(99, onlyColor)
+	timerCosmicStingCD:SetTimeline(100, onlyColor)
 end
 
 function mod:OnLimitedCombatStart()
@@ -64,10 +65,7 @@ function mod:OnLimitedCombatStart()
 			"ENCOUNTER_TIMELINE_EVENT_ADDED",
 			"ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED"
 		)
-		--SetTimeline events since user has disabled DBM Bars (so they can still get countdowns in blizzard timeline API instead)
-		if DBM.Options.HideDBMBars then
-			setFallback(self, true)
-		end
+		setFallback(self, true)
 	else
 		setFallback(self)
 	end

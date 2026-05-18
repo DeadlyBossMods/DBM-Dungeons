@@ -40,9 +40,10 @@ local function setFallback(self, dontSetAlerts)
 		end
 		specWarnSoulrendingRoar:SetAlert(158, "phasechange", 2)
 	end
-	timerSpiritbreakerCD:SetTimeline(156)
-	timerCrushSoulsCD:SetTimeline(157)
-	timerSoulrendingRoarCD:SetTimeline(158)
+	local onlyColor = not DBM.Options.HideDBMBars
+	timerSpiritbreakerCD:SetTimeline(156, onlyColor)
+	timerCrushSoulsCD:SetTimeline(157, onlyColor)
+	timerSoulrendingRoarCD:SetTimeline(158, onlyColor)
 end
 
 function mod:OnLimitedCombatStart()
@@ -57,10 +58,7 @@ function mod:OnLimitedCombatStart()
 			"ENCOUNTER_TIMELINE_EVENT_ADDED",
 			"ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED"
 		)
-		--SetTimeline events since user has disabled DBM Bars (so they can still get countdowns in blizzard timeline API instead)
-		if DBM.Options.HideDBMBars then
-			setFallback(self, true)
-		end
+		setFallback(self, true)
 	else
 		setFallback(self)
 	end

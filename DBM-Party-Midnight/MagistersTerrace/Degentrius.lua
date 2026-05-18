@@ -39,9 +39,10 @@ local function setFallback(self, dontSetAlerts)
 			specWarnHulkingFragment:SetAlert(420, "defensive", 2, 1)
 		end
 	end
-	timerDevouringEntropyCD:SetTimeline(290)
-	timerUnstableVoidEssenceCD:SetTimeline(292)
-	timerHulkingFragmentCD:SetTimeline(420)
+	local onlyColor = not DBM.Options.HideDBMBars
+	timerDevouringEntropyCD:SetTimeline(290, onlyColor)
+	timerUnstableVoidEssenceCD:SetTimeline(292, onlyColor)
+	timerHulkingFragmentCD:SetTimeline(420, onlyColor)
 end
 
 function mod:OnLimitedCombatStart()
@@ -56,10 +57,7 @@ function mod:OnLimitedCombatStart()
 			"ENCOUNTER_TIMELINE_EVENT_ADDED",
 			"ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED"
 		)
-		--SetTimeline events since user has disabled DBM Bars (so they can still get countdowns in blizzard timeline API instead)
-		if DBM.Options.HideDBMBars then
-			setFallback(self, true)
-		end
+		setFallback(self, true)
 	else
 		setFallback(self)
 	end

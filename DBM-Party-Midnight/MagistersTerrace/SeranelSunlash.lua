@@ -40,10 +40,11 @@ local function setFallback(self, dontSetAlerts)
 		specWarnHasteningWard:SetAlert(94, "dispelboss", 2)
 		specWarnWaveOfSilence:SetAlert(96, "findshield", 15)
 	end
-	timerSuppressionZoneCD:SetTimeline(93)
-	timerHasteningWardCD:SetTimeline(94)
-	timerRunicMarkCD:SetTimeline({95, 513})
-	timerWaveOfSilenceCD:SetTimeline(96)
+	local onlyColor = not DBM.Options.HideDBMBars
+	timerSuppressionZoneCD:SetTimeline(93, onlyColor)
+	timerHasteningWardCD:SetTimeline(94, onlyColor)
+	timerRunicMarkCD:SetTimeline({95, 513}, onlyColor)
+	timerWaveOfSilenceCD:SetTimeline(96, onlyColor)
 end
 
 function mod:OnLimitedCombatStart()
@@ -58,10 +59,7 @@ function mod:OnLimitedCombatStart()
 			"ENCOUNTER_TIMELINE_EVENT_ADDED",
 			"ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED"
 		)
-		--SetTimeline events since user has disabled DBM Bars (so they can still get countdowns in blizzard timeline API instead)
-		if DBM.Options.HideDBMBars then
-			setFallback(self, true)
-		end
+		setFallback(self, true)
 	else
 		setFallback(self)
 	end

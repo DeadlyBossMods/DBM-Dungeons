@@ -42,9 +42,10 @@ if DBM:IsPostMidnight() then
 			specWarnDeafeningScreech:SetAlert(279, self:IsSpellCaster() and "stopcast" or "aesoon", 2)
 			specWarnOverpoweringGust:SetAlert(280, "frontal", 15)
 		end
-		timerSavagePeckCD:SetTimeline(278)
-		timerDeafeningScreechCD:SetTimeline(279)
-		timerOverpoweringGustCD:SetTimeline(280)
+		local onlyColor = not DBM.Options.HideDBMBars
+		timerSavagePeckCD:SetTimeline(278, onlyColor)
+		timerDeafeningScreechCD:SetTimeline(279, onlyColor)
+		timerOverpoweringGustCD:SetTimeline(280, onlyColor)
 	end
 
 	function mod:OnLimitedCombatStart()
@@ -60,10 +61,7 @@ if DBM:IsPostMidnight() then
 				"ENCOUNTER_TIMELINE_EVENT_ADDED",
 				"ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED"
 			)
-			--SetTimeline events since user has disabled DBM Bars (so they can still get countdowns in blizzard timeline API instead)
-			if DBM.Options.HideDBMBars then
-				setFallback(self, true)
-			end
+			setFallback(self, true)
 		else
 			setFallback(self)
 		end

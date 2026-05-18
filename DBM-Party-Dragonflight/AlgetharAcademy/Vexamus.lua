@@ -46,10 +46,11 @@ if DBM:IsPostMidnight() then
 			end
 			specWarnArcaneFissure:SetAlert(277, "aesoon", 2)
 		end
-		timerArcaneOrbsCD:SetTimeline(274)
-		timerManaBombsCD:SetTimeline(275)
-		timerArcaneExpulsionCD:SetTimeline(276)
-		timerArcaneFissureCD:SetTimeline(277)
+		local onlyColor = not DBM.Options.HideDBMBars
+		timerArcaneOrbsCD:SetTimeline(274, onlyColor)
+		timerManaBombsCD:SetTimeline(275, onlyColor)
+		timerArcaneExpulsionCD:SetTimeline(276, onlyColor)
+		timerArcaneFissureCD:SetTimeline(277, onlyColor)
 	end
 
 	function mod:OnLimitedCombatStart()
@@ -66,10 +67,7 @@ if DBM:IsPostMidnight() then
 				"ENCOUNTER_TIMELINE_EVENT_ADDED",
 				"ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED"
 			)
-			--SetTimeline events since user has disabled DBM Bars (so they can still get countdowns in blizzard timeline API instead)
-			if DBM.Options.HideDBMBars then
-				setFallback(self, true)
-			end
+			setFallback(self, true)
 		else
 			setFallback(self)
 		end

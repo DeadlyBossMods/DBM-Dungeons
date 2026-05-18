@@ -50,10 +50,11 @@ if DBM:IsPostMidnight() then
 			end
 			specWarnPowerVacuum:SetAlert(296, "runout", 2)
 		end
-		timerArcaneBarrageCD:SetTimeline(293)
-		timerAstralBlastCD:SetTimeline(294)
-		timerEnergyBombCD:SetTimeline(295)
-		timerPowerVacuumCD:SetTimeline(296)
+		local onlyColor = not DBM.Options.HideDBMBars
+		timerArcaneBarrageCD:SetTimeline(293, onlyColor)
+		timerAstralBlastCD:SetTimeline(294, onlyColor)
+		timerEnergyBombCD:SetTimeline(295, onlyColor)
+		timerPowerVacuumCD:SetTimeline(296, onlyColor)
 	end
 
 	function mod:OnLimitedCombatStart()
@@ -70,10 +71,7 @@ if DBM:IsPostMidnight() then
 				"ENCOUNTER_TIMELINE_EVENT_ADDED",
 				"ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED"
 			)
-			--SetTimeline events since user has disabled DBM Bars (so they can still get countdowns in blizzard timeline API instead)
-			if DBM.Options.HideDBMBars then
-				setFallback(self, true)
-			end
+			setFallback(self, true)
 		else
 			setFallback(self)
 		end

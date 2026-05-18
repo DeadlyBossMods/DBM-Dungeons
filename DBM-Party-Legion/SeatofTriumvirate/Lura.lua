@@ -48,12 +48,13 @@ if DBM:IsPostMidnight() then
 			specWarnSymphony:SetAlert(253, "watchstep", 3, 2)
 			specWarnBacklash:SetAlert(254, "carefly", 2, 2)
 		end
-		timerDirgeCD:SetTimeline(249)
-		timerDiscordantBeamCD:SetTimeline(250)
-		timerDisintegrateCD:SetTimeline(251)
-		timerGrimChorusCD:SetTimeline(252)
-		timerSymphonyCD:SetTimeline(253)
-		timerBacklashCD:SetTimeline(254)
+		local onlyColor = not DBM.Options.HideDBMBars
+		timerDirgeCD:SetTimeline(249, onlyColor)
+		timerDiscordantBeamCD:SetTimeline(250, onlyColor)
+		timerDisintegrateCD:SetTimeline(251, onlyColor)
+		timerGrimChorusCD:SetTimeline(252, onlyColor)
+		timerSymphonyCD:SetTimeline(253, onlyColor)
+		timerBacklashCD:SetTimeline(254, onlyColor)
 	end
 
 	function mod:OnLimitedCombatStart()
@@ -71,10 +72,7 @@ if DBM:IsPostMidnight() then
 				"ENCOUNTER_TIMELINE_EVENT_ADDED",
 				"ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED"
 			)
-			--SetTimeline events since user has disabled DBM Bars (so they can still get countdowns in blizzard timeline API instead)
-			if DBM.Options.HideDBMBars then
-				setFallback(self, true)
-			end
+			setFallback(self, true)
 		else
 			setFallback(self)
 		end
