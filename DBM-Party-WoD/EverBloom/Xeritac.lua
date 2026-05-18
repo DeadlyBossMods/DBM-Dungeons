@@ -35,7 +35,7 @@ mod:RegisterEventsInCombat(
 --TODO, rework it with 10.2 version and get some working add timers, if boss is even doable on M+ that is
 --TODO, add other abilities too, but agai only if this is actually M+ mod, if it's not, not worth the time
 local warnToxicSpiderling			= mod:NewAddsLeftAnnounce(-10492, 2, "136113")
---local warnVenomCrazedPaleOne		= mod:NewSpellAnnounce("ej10502", 3)--I can't find a way to detect these, at least not without flat out scanning all DAMAGE events but that's too much work.
+--local warnVenomCrazedPaleOne		= mod:NewSpellAnnounce(-10502, 3)--I can't find a way to detect these, at least not without flat out scanning all DAMAGE events but that's too much work.
 local warnInhale					= mod:NewSpellAnnounce(169233, 3)
 local warnPhase2					= mod:NewPhaseAnnounce(2, 2, nil, nil, nil, nil, nil, 2)
 

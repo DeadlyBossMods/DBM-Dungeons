@@ -32,7 +32,7 @@ local cycle26Count = 0--NOTE: dur=26 is shared by Spiritbreaker and Crush Souls;
 local badStateDetected = false
 
 ---@param self DBMMod
----@param dontSetAlerts boolean? Called when user has disabled DBM bars and is ONLY using timeline, therefor we must enable SetTimeline calls even in hardcodes
+---@param dontSetAlerts boolean? Called on engage when we only want to set timeline parameters and not touch encounter alerts
 local function setFallback(self, dontSetAlerts)
 	if not dontSetAlerts then
 		if self:IsTank() then
@@ -40,9 +40,10 @@ local function setFallback(self, dontSetAlerts)
 		end
 		specWarnSoulrendingRoar:SetAlert(158, "phasechange", 2)
 	end
-	timerSpiritbreakerCD:SetTimeline(156)
-	timerCrushSoulsCD:SetTimeline(157)
-	timerSoulrendingRoarCD:SetTimeline(158)
+	local onlyColor = not DBM.Options.HideDBMBars
+	timerSpiritbreakerCD:SetTimeline(156, onlyColor)
+	timerCrushSoulsCD:SetTimeline(157, onlyColor)
+	timerSoulrendingRoarCD:SetTimeline(158, onlyColor)
 end
 
 function mod:OnLimitedCombatStart()
@@ -57,10 +58,7 @@ function mod:OnLimitedCombatStart()
 			"ENCOUNTER_TIMELINE_EVENT_ADDED",
 			"ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED"
 		)
-		--SetTimeline events since user has disabled DBM Bars (so they can still get countdowns in blizzard timeline API instead)
-		if DBM.Options.HideDBMBars then
-			setFallback(self, true)
-		end
+		setFallback(self, true)
 	else
 		setFallback(self)
 	end

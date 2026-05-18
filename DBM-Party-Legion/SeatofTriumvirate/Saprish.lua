@@ -32,16 +32,17 @@ if DBM:IsPostMidnight() then
 	local badStateDetected = false
 
 	---@param self DBMMod
-	---@param dontSetAlerts boolean? Called when user has disabled DBM bars and is ONLY using timeline, therefor we must enable SetTimeline calls even in hardcodes
+	---@param dontSetAlerts boolean? Called on engage when we only want to set timeline parameters and not touch encounter alerts
 	local function setFallback(self, dontSetAlerts)
 		if not dontSetAlerts then
 			specWarnVoidBomb:SetAlert(234, "bombsoon", 1, 2)
 			specWarnOverload:SetAlert(243, "aesoon", 2, 2)
 		end
-		timerVoidBombCD:SetTimeline(234)
-		timerPhaseDashCD:SetTimeline(235)
-		timerShadowPounceCD:SetTimeline(237)
-		timerOverloadCD:SetTimeline(243)
+		local onlyColor = not DBM.Options.HideDBMBars
+		timerVoidBombCD:SetTimeline(234, onlyColor)
+		timerPhaseDashCD:SetTimeline(235, onlyColor)
+		timerShadowPounceCD:SetTimeline(237, onlyColor)
+		timerOverloadCD:SetTimeline(243, onlyColor)
 	end
 
 	function mod:OnLimitedCombatStart()
@@ -60,10 +61,7 @@ if DBM:IsPostMidnight() then
 				"ENCOUNTER_TIMELINE_EVENT_ADDED",
 				"ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED"
 			)
-			--SetTimeline events since user has disabled DBM Bars (so they can still get countdowns in blizzard timeline API instead)
-			if DBM.Options.HideDBMBars then
-				setFallback(self, true)
-			end
+			setFallback(self, true)
 		else
 			setFallback(self)
 		end
