@@ -30,7 +30,7 @@ mod:RegisterEventsInCombat(
 local warnLeylineSprouts						= mod:NewCountAnnounce(374364, 3)
 local warnExplosiveEruption						= mod:NewTargetNoFilterAnnounce(374567, 4)
 
-local specWarnExplosiveEruption					= mod:NewSpecialWarningYouPos(374567, nil, nil, nil, 1, 2, nil, nil, "mm")
+local specWarnExplosiveEruption					= mod:NewSpecialWarningYouPos(374567, nil, nil, nil, 1, 2, nil, nil, "mm1")
 local yellExplosiveEruption						= mod:NewShortPosYell(374567)
 local yellExplosiveEruptionFades				= mod:NewIconFadesYell(374567)
 local specWarnConsumingStomp					= mod:NewSpecialWarningCount(374720, nil, nil, nil, 2, 2, nil, nil, "aesoon")
