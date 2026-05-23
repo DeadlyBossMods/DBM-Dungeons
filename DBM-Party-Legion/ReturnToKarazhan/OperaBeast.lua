@@ -31,17 +31,17 @@ local warnSevereDusting				= mod:NewTargetAnnounce(228221, 3)
 local warnKaraKazham				= mod:NewSpellAnnounce(232153, 2)
 
 --Luminore
-local specWarnBurningBlaze			= mod:NewSpecialWarningMove(228193, nil, nil, nil, 1, 2)
-local specWarnHeatWave				= mod:NewSpecialWarningInterrupt(228025, "HasInterrupt", nil, nil, 1, 2)
+local specWarnBurningBlaze			= mod:NewSpecialWarningMove(228193, nil, nil, nil, 1, 2, nil, nil, "runaway")
+local specWarnHeatWave				= mod:NewSpecialWarningInterrupt(228025, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
 --Mrs.Cauldrons
 local specWarnDrenched				= mod:NewSpecialWarningMoveTo(228013, nil, nil, nil, 1)--Voice?
-local specWarnLeftovers				= mod:NewSpecialWarningInterrupt(228019, "HasInterrupt", nil, nil, 1, 2)
+local specWarnLeftovers				= mod:NewSpecialWarningInterrupt(228019, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
 --Babblet
-local specWarnSevereDusting			= mod:NewSpecialWarningRun(228221, nil, nil, nil, 4, 2)
-local specWarnSultryheat			= mod:NewSpecialWarningDispel(228225, "MagicDispeller", nil, nil, 1, 2)
+local specWarnSevereDusting			= mod:NewSpecialWarningRun(228221, nil, nil, nil, 4, 2, nil, nil, "justrun")
+local specWarnSultryheat			= mod:NewSpecialWarningDispel(228225, "MagicDispeller", nil, nil, 1, 2, nil, nil, "dispelnow")
 --Coggleston
-local specWarnDentArmor				= mod:NewSpecialWarningDefensive(227985, nil, nil, nil, 1, 2)
-local specWarnDinnerBell			= mod:NewSpecialWarningInterrupt(227987, "HasInterrupt", nil, nil, 1, 2)
+local specWarnDentArmor				= mod:NewSpecialWarningDefensive(227985, nil, nil, nil, 1, 2, nil, nil, "defensive")
+local specWarnDinnerBell			= mod:NewSpecialWarningInterrupt(227987, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
 
 --Luminore
 local timerHeatWaveCD				= mod:NewCDTimer(26, 228025, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)

@@ -40,10 +40,10 @@ local warnFamiliarFaces								= mod:NewCountAnnounce(405279, 3)
 local warnFixate									= mod:NewYouAnnounce(401200, 4)
 local warnTimeStasis								= mod:NewTargetNoFilterAnnounce(401667, 4)
 
-local specWarnSandBlast								= mod:NewSpecialWarningCount(404916, nil, nil, nil, 2, 2)
-local specWarnDragonBreath							= mod:NewSpecialWarningDodge(404364, nil, nil, nil, 2, 2)
-local specWarnTimeTraps								= mod:NewSpecialWarningDodgeCount(406481, nil, nil, nil, 2, 2)
-local specWarnGTFO									= mod:NewSpecialWarningGTFO(412769, nil, nil, nil, 1, 8)
+local specWarnSandBlast								= mod:NewSpecialWarningCount(404916, nil, nil, nil, 2, 2, nil, nil, "shockwave")
+local specWarnDragonBreath							= mod:NewSpecialWarningDodge(404364, nil, nil, nil, 2, 2, nil, nil, "breathsoon")
+local specWarnTimeTraps								= mod:NewSpecialWarningDodgeCount(406481, nil, nil, nil, 2, 2, nil, nil, "watchstep")
+local specWarnGTFO									= mod:NewSpecialWarningGTFO(412769, nil, nil, nil, 1, 8, nil, nil, "watchfeet")
 
 local timerSandBlastCD								= mod:NewCDCountTimer(21.8, 404916, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)--21.8-38.8
 local timerMoreProblemsCD							= mod:NewCDCountTimer(39.7, 403891, nil, nil, nil, 6)--40-52

@@ -19,7 +19,7 @@ else
 end
 mod.noStatistics = true
 
-local specWarnMarked			= mod:NewSpecialWarningRun(102341, nil, nil, 2, 4, 2)
+local specWarnMarked			= mod:NewSpecialWarningRun(102341, nil, nil, 2, 4, 2, nil, nil, "justrun")
 
 local timerGame					= mod:NewBuffActiveTimer(60, 102178, nil, nil, nil, 5, nil, nil, nil, 1, 5)
 

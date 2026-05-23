@@ -29,14 +29,14 @@ mod:RegisterEventsInCombat(
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(21582))
 local warnMortalStrike					= mod:NewTargetNoFilterAnnounce(320069, 3, nil, "Tank|Healer")
 
-local specWarnMightySmash				= mod:NewSpecialWarningCount(1215741, nil, nil, nil, 2, 2)
+local specWarnMightySmash				= mod:NewSpecialWarningCount(1215741, nil, nil, nil, 2, 2, nil, nil, "aesoon")
 
 local timerMightySmashCD				= mod:NewCDCountTimer(15.8, 1215741, nil, nil, nil, 2, nil)--Ultimate
 local timerMortalStrikeCD				= mod:NewCDCountTimer(17, 320069, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)--17-21.8--delays happen from specials only
 --Paceran the Virulent
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(21581))
-local specWarnDecayingBreath			= mod:NewSpecialWarningDodgeCount(1215738, nil, nil, nil, 2, 2)
-local specWarnGTFO						= mod:NewSpecialWarningGTFO(320180, nil, nil, nil, 1, 8)
+local specWarnDecayingBreath			= mod:NewSpecialWarningDodgeCount(1215738, nil, nil, nil, 2, 2, nil, nil, "breathsoon")
+local specWarnGTFO						= mod:NewSpecialWarningGTFO(320180, nil, nil, nil, 1, 8, nil, nil, "watchfeet")
 
 local timerNoxiousSporeCD				= mod:NewCDCountTimer(15.8, 320180, nil, nil, nil, 3)--Ultimate
 local timerDecayingBreathCD				= mod:NewCDCountTimer(14.6, 1215738, nil, nil, nil, 3)--14.6 or 29.9 when casts are skipped due to specials
@@ -44,9 +44,9 @@ local timerDecayingBreathCD				= mod:NewCDCountTimer(14.6, 1215738, nil, nil, ni
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(21591))
 local warnSearingDeath					= mod:NewTargetAnnounce(333231, 3)
 
-local specWarnSearingDeath				= mod:NewSpecialWarningMoveAway(333231, nil, nil, nil, 1, 2)
+local specWarnSearingDeath				= mod:NewSpecialWarningMoveAway(333231, nil, nil, nil, 1, 2, nil, nil, "runout")
 local yellSearingDeath					= mod:NewYell(333231)
-local specWarnWitheringTouch			= mod:NewSpecialWarningDispel(1215600, "RemoveMagic", nil, nil, 1, 2)
+local specWarnWitheringTouch			= mod:NewSpecialWarningDispel(1215600, "RemoveMagic", nil, nil, 1, 2, nil, nil, "helpdispel")
 
 local timerSearingDeathCD				= mod:NewCDCountTimer(42.5, 333231, nil, nil, nil, 3)--Ultimate
 local timerWitheringTouchCD				= mod:NewVarCountTimer("v17-25.3", 1215600, nil, nil, nil, 5, nil, DBM_COMMON_L.MAGIC_ICON)--No clean way to correct so we'll use variance timer

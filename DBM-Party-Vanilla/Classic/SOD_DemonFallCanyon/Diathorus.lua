@@ -15,8 +15,8 @@ mod:RegisterEventsInCombat(
 	"SPELL_AURA_APPLIED 460759"
 )
 
-local specWarnGTFO 			= mod:NewSpecialWarningGTFO(460759, nil, nil, nil, 1, 8)
-local specWarnVeilOfShadow	= mod:NewSpecialWarningInterrupt(460755, "HasInterrupt", nil, nil, 1, 2)
+local specWarnGTFO 			= mod:NewSpecialWarningGTFO(460759, nil, nil, nil, 1, 8, nil, nil, "watchfeet")
+local specWarnVeilOfShadow	= mod:NewSpecialWarningInterrupt(460755, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
 
 -- Shadow Bolts can be kicked, but they are cast a lot, warnings would be very spammy
 -- "Shadow Bolt-460749-npc:227019-000012D5C6 = pull:42.6, 1.7, 2.0, 3.2, 11.3, 7.0, 2.7, 1.6, 1.6, 9.7, 1.6, 4.8, 1.6, 1.6, 1.7",

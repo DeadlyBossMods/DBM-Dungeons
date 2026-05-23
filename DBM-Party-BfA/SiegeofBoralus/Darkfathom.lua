@@ -19,9 +19,9 @@ mod:RegisterEventsInCombat(
 (ability.id = 257882 or ability.id = 276068 or ability.id = 257862) and type = "begincast"
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
 --]]
-local specWarnCrashingTide			= mod:NewSpecialWarningDodgeCount(261563, nil, nil, 2, 1, 15)
-local specWarnBreakWater			= mod:NewSpecialWarningDodgeCount(257882, nil, nil, nil, 2, 2)
-local specWarnTidalSurge			= mod:NewSpecialWarningMoveTo(276068, nil, nil, nil, 3, 2)
+local specWarnCrashingTide			= mod:NewSpecialWarningDodgeCount(261563, nil, nil, 2, 1, 15, nil, nil, "frontal")
+local specWarnBreakWater			= mod:NewSpecialWarningDodgeCount(257882, nil, nil, nil, 2, 2, nil, nil, "watchstep")
+local specWarnTidalSurge			= mod:NewSpecialWarningMoveTo(276068, nil, nil, nil, 3, 2, nil, nil, "findshelter")
 
 local timerCrashingTideCD			= mod:NewCDCountTimer(23, 261563, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)--15.8 before
 local timerBreakWaterCD				= mod:NewCDCountTimer(20.6, 257882, nil, nil, nil, 3)--30 before

@@ -22,7 +22,7 @@ mod:RegisterEventsInCombat(
 
 local warnBane      = mod:NewTargetAnnounce(37566)
 
-local specwarnBane  = mod:NewSpecialWarningMoveAway(37566, nil, nil, nil, 1, 2)
+local specwarnBane  = mod:NewSpecialWarningMoveAway(37566, nil, nil, nil, 1, 2, nil, nil, "runout")
 local yellBane		= mod:NewYell(37566)
 
 local timerBane     = mod:NewTargetTimer(15, 37566, nil, nil, nil, 3)

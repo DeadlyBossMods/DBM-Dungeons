@@ -29,15 +29,15 @@ mod:RegisterEventsInCombat(
  or (ability.id = 322493 or ability.id = 320170 or ability.id = 328667) and type = "begincast"
 --]]
 --TODO, analyze more data and use corrective timers that account for shadow school lockout from interupts?
-local specWarnLandoftheDead			= mod:NewSpecialWarningSwitchCount(321226, "-Healer", nil, nil, 1, 2)
-local specWarnFinalHarvest			= mod:NewSpecialWarningDodgeCount(321247, nil, nil, nil, 2, 2)
-local specWarnNecroticBreath		= mod:NewSpecialWarningDodgeCount(333493, nil, nil, nil, 2, 2)
+local specWarnLandoftheDead			= mod:NewSpecialWarningSwitchCount(321226, "-Healer", nil, nil, 1, 2, nil, nil, "killmob")
+local specWarnFinalHarvest			= mod:NewSpecialWarningDodgeCount(321247, nil, nil, nil, 2, 2, nil, nil, "watchstep")
+local specWarnNecroticBreath		= mod:NewSpecialWarningDodgeCount(333493, nil, nil, nil, 2, 2, nil, nil, "breathsoon")
 --local yellNecroticBreath			= mod:NewYell(333493)
-local specWarnNecroticBolt			= mod:NewSpecialWarningInterrupt(320170, false, nil, 2, 1, 2)--Every 5 seconds, so off by default
-local specWarnUnholyFrenzy			= mod:NewSpecialWarningDispel(320012, "RemoveEnrage", nil, nil, 1, 2)
-local specWarnUnholyFrenzyTank		= mod:NewSpecialWarningDefensive(320012, nil, nil, nil, 1, 2)
+local specWarnNecroticBolt			= mod:NewSpecialWarningInterrupt(320170, false, nil, 2, 1, 2, nil, nil, "kickcast")--Every 5 seconds, so off by default
+local specWarnUnholyFrenzy			= mod:NewSpecialWarningDispel(320012, "RemoveEnrage", nil, nil, 1, 2, nil, nil, "enrage")
+local specWarnUnholyFrenzyTank		= mod:NewSpecialWarningDefensive(320012, nil, nil, nil, 1, 2, nil, nil, "defensive")
 --Reanimated Mage
-local specWarnFrostboltVolley		= mod:NewSpecialWarningInterruptCount(322493, "HasInterrupt", nil, nil, 1, 2)--Mythic and above, normal/heroic uses regular frostbolts
+local specWarnFrostboltVolley		= mod:NewSpecialWarningInterruptCount(322493, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")--Mythic and above, normal/heroic uses regular frostbolts
 --local specWarnGTFO				= mod:NewSpecialWarningGTFO(257274, nil, nil, nil, 1, 8)
 
 --All bosses timers are 40 but often spell queued behind other spells. You'll often see them be in median of 40-48.4 range (so 44)

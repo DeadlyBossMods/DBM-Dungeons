@@ -18,7 +18,7 @@ mod:RegisterEventsInCombat(
 local warningNaralexsNightmare		= mod:NewTargetNoFilterAnnounce(7967, 2)
 local warningTerrify				= mod:NewTargetNoFilterAnnounce(7399, 2)
 
-local specWarnNaralexsNightmare		= mod:NewSpecialWarningInterrupt(7967, "HasInterrupt", nil, nil, 1, 2)
+local specWarnNaralexsNightmare		= mod:NewSpecialWarningInterrupt(7967, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
 
 local timerNaralexsNightmareCD		= mod:NewAITimer(180, 7967, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON..DBM_COMMON_L.MAGIC_ICON)
 local timerTerrifyCD				= mod:NewAITimer(180, 7399, nil, nil, nil, 3, nil, DBM_COMMON_L.MAGIC_ICON)

@@ -27,7 +27,7 @@ local warnHeathenGuard			= mod:NewAnnounce("warnHeathen", 2, 134170)--(-5927)
 local warnReaverGuard			= mod:NewAnnounce("warnReaver", 2, 134170)--(-5930)
 local warnSharpShooterGuard		= mod:NewAnnounce("warnSharpShooter", 2, 134170)--(-5934)
 
-local specWarnBladeDance		= mod:NewSpecialWarningSpell(30739, nil, nil, nil, 2, 2)
+local specWarnBladeDance		= mod:NewSpecialWarningSpell(30739, nil, nil, nil, 2, 2, nil, nil, "aesoon")
 
 local timerHeathenCD			= mod:NewTimer(21, "timerHeathen", 134170, nil, nil, 1)--(-5927)
 local timerReaverCD				= mod:NewTimer(21, "timerReaver", 134170, nil, nil, 1)--(-5930)

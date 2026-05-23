@@ -28,14 +28,14 @@ mod:RegisterEventsInCombat(
 local warnBlazinAegis							= mod:NewTargetNoFilterAnnounce(374842, 3)
 local warnHeatedSwings							= mod:NewTargetNoFilterAnnounce(374534, 3)
 
-local specWarnMightoftheForge					= mod:NewSpecialWarningCount(374635, nil, nil, nil, 2, 2)
-local specWarnBlazinAegis						= mod:NewSpecialWarningMoveAway(374842, nil, nil, nil, 1, 2)
+local specWarnMightoftheForge					= mod:NewSpecialWarningCount(374635, nil, nil, nil, 2, 2, nil, nil, "aesoon")
+local specWarnBlazinAegis						= mod:NewSpecialWarningMoveAway(374842, nil, nil, nil, 1, 2, nil, nil, "scatter")
 local yellBlazinAegis							= mod:NewYell(374842)
 local yellBlazinAegisFades						= mod:NewShortFadesYell(374842)
-local specWarnHeatedSwings						= mod:NewSpecialWarningMoveAwayCount(374534, nil, nil, nil, 1, 2)
+local specWarnHeatedSwings						= mod:NewSpecialWarningMoveAwayCount(374534, nil, nil, nil, 1, 2, nil, nil, "specialsoon")
 local yellHeatedSwings							= mod:NewYell(374534)
 local yellHeatedSwingsFades						= mod:NewShortFadesYell(374534)
-local specWarnForgestorm						= mod:NewSpecialWarningDodgeCount(374969, nil, nil, nil, 2, 2)
+local specWarnForgestorm						= mod:NewSpecialWarningDodgeCount(374969, nil, nil, nil, 2, 2, nil, nil, "watchstep")
 
 --All timers are 30-31 ish
 local timerMightoftheForgeCD					= mod:NewNextCountTimer(30.3, 374635, nil, nil, nil, 6, nil, DBM_COMMON_L.HEALER_ICON)--Technically Blazing Hammer is healer icon, but it's passive of this stage

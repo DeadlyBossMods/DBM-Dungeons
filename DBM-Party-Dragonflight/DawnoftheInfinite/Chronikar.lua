@@ -31,11 +31,11 @@ mod:RegisterEventsInCombat(
 local warnEonShatter						= mod:NewCountAnnounce(413142, 3, nil, nil, 47482)--Second and Third Jump
 local warnChronoShear						= mod:NewFadesAnnounce(413013, 1, nil, "Healer|Tank")
 
-local specWarnEonShatter					= mod:NewSpecialWarningDodgeCount(413142, nil, 47482, nil, 2, 2)--Warn on initial casts
+local specWarnEonShatter					= mod:NewSpecialWarningDodgeCount(413142, nil, 47482, nil, 2, 2, nil, nil, "watchstep")--Warn on initial casts
 local yellEonShatter						= mod:NewYell(413142, 47482)
 local yellEonShatterFades					= mod:NewShortFadesYell(413142)
-local specWarnChronoShear					= mod:NewSpecialWarningDefensive(413013, nil, nil, nil, 1, 2)
-local specWarnSandStomp						= mod:NewSpecialWarningMoveAwayCount(401421, nil, nil, nil, 2, 2)
+local specWarnChronoShear					= mod:NewSpecialWarningDefensive(413013, nil, nil, nil, 1, 2, nil, nil, "defensive")
+local specWarnSandStomp						= mod:NewSpecialWarningMoveAwayCount(401421, nil, nil, nil, 2, 2, nil, nil, "scatter")
 --local specWarnGTFO							= mod:NewSpecialWarningGTFO(407147, nil, nil, nil, 1, 8)
 
 local timerEonShatterCD						= mod:NewCDTimer(19.4, 413142, 47482, nil, nil, 3, nil, DBM_COMMON_L.DEADLY_ICON)--"Leap" shorttext

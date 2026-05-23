@@ -32,19 +32,19 @@ local warnAquaBomb			= mod:NewTargetAnnounce(145206, 3)
 local warnBurrow			= mod:NewTargetAnnounce(145260, 2)
 
 --Tank
-local specWarnPyroBlast		= mod:NewSpecialWarningInterrupt(147601, false, nil, nil, 1, 2)
-local specWarnInvokeLava	= mod:NewSpecialWarningSpell(144374, nil, nil, nil, 2, 2)
-local specWarnInvokeLavaSIS	= mod:NewSpecialWarningMove(144383, nil, nil, nil, 1, 2)
-local specWarnWindBlast		= mod:NewSpecialWarningSpell(144106, nil, nil, nil, 2, 2)
-local specWarnAmbusher		= mod:NewSpecialWarningSwitch(144086, nil, nil, nil, 1, 2)
-local specWarnPowerfulSlam	= mod:NewSpecialWarningMove(144401, nil, nil, nil, 1, 2)
+local specWarnPyroBlast		= mod:NewSpecialWarningInterrupt(147601, false, nil, nil, 1, 2, nil, nil, "kickcast")
+local specWarnInvokeLava	= mod:NewSpecialWarningSpell(144374, nil, nil, nil, 2, 2, nil, nil, "watchstep")
+local specWarnInvokeLavaSIS	= mod:NewSpecialWarningMove(144383, nil, nil, nil, 1, 2, nil, nil, "runaway")
+local specWarnWindBlast		= mod:NewSpecialWarningSpell(144106, nil, nil, nil, 2, 2, nil, nil, "carefly")
+local specWarnAmbusher		= mod:NewSpecialWarningSwitch(144086, nil, nil, nil, 1, 2, nil, nil, "targetchange")
+local specWarnPowerfulSlam	= mod:NewSpecialWarningMove(144401, nil, nil, nil, 1, 2, nil, nil, "shockwave")
 --Damager
-local specWarnAmberGlob		= mod:NewSpecialWarningSpell(142189, nil, nil, nil, 1, 2)
-local specWarnHealIllusion	= mod:NewSpecialWarningInterrupt(142238, nil, nil, nil, 1, 2)
-local specWarnBanshee		= mod:NewSpecialWarningSwitch(142838, nil, nil, nil, 1, 2)
+local specWarnAmberGlob		= mod:NewSpecialWarningSpell(142189, nil, nil, nil, 1, 2, nil, nil, "watchorb")
+local specWarnHealIllusion	= mod:NewSpecialWarningInterrupt(142238, nil, nil, nil, 1, 2, nil, nil, "kickcast")
+local specWarnBanshee		= mod:NewSpecialWarningSwitch(142838, nil, nil, nil, 1, 2, nil, nil, "targetchange")
 --Healer
-local specWarnStinger		= mod:NewSpecialWarningSwitch(145198, false, nil, nil, 1, 2)
-local specWarnSonicBlast	= mod:NewSpecialWarningInterrupt(145200, false, nil, nil, 1, 2)--have to be pretty damn fast to interrupt this, off by default and for the very skilled mainly
+local specWarnStinger		= mod:NewSpecialWarningSwitch(145198, false, nil, nil, 1, 2, nil, nil, "targetchange")
+local specWarnSonicBlast	= mod:NewSpecialWarningInterrupt(145200, false, nil, nil, 1, 2, nil, nil, "kickcast")--have to be pretty damn fast to interrupt this, off by default and for the very skilled mainly
 local specWarnAquaBomb		= mod:NewSpecialWarningTarget(145206, nil, nil, nil, 1, 2)--It's cast too often to dispel them off, so it's better as a target warning.
 
 --Tank

@@ -31,7 +31,7 @@ local warnBeckonSlime				= mod:NewCastAnnounce(327608, 2, 9)
 
 --local specWarnPlaguestomp			= mod:NewSpecialWarningDodge(324527, nil, nil, nil, 2, 2)
 local specWarnDebilitatingPlague	= mod:NewSpecialWarningDispel(324652, "RemoveDisease", nil, nil, 1, 2)
-local specWarnBeckonSlime			= mod:NewSpecialWarningSwitch(327608, "-Healer", nil, nil, 1, 2)
+local specWarnBeckonSlime			= mod:NewSpecialWarningSwitch(327608, "-Healer", nil, nil, 1, 2, nil, nil, "killmob")
 --local yellBlackPowder				= mod:NewYell(257314)
 --local specWarnHealingBalm			= mod:NewSpecialWarningInterrupt(257397, "HasInterrupt", nil, nil, 1, 2)
 --local specWarnGTFO					= mod:NewSpecialWarningGTFO(257274, nil, nil, nil, 1, 8)

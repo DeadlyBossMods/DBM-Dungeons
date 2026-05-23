@@ -32,12 +32,12 @@ local warnBubbleBurst				= mod:NewCastAnnounce(106612, 3)
 local warnAddsLeft					= mod:NewAddsLeftAnnounce(-5616, 2, 106526)
 
 local specWarnLivingWater			= mod:NewSpecialWarningSwitch(-5616, "-Healer", nil, nil, 1, 2)
-local specWarnWashAway				= mod:NewSpecialWarningDodge(397783, nil, nil, nil, 2, 2)
-local specWarnCorruptedVortex		= mod:NewSpecialWarningMoveAway(397797, nil, nil, nil, 1, 2)
+local specWarnWashAway				= mod:NewSpecialWarningDodge(397783, nil, nil, nil, 2, 2, nil, nil, "watchstep")
+local specWarnCorruptedVortex		= mod:NewSpecialWarningMoveAway(397797, nil, nil, nil, 1, 2, nil, nil, "runout")
 local yellCorruptedVortex			= mod:NewYell(397797)
 local yellCorruptedVortexFades		= mod:NewShortFadesYell(397797)
-local specWarnHydrolance			= mod:NewSpecialWarningInterrupt(397801, "HasInterrupt", nil, nil, 1, 2)
-local specWarnGTFO					= mod:NewSpecialWarningGTFO(397799, nil, nil, nil, 1, 8)
+local specWarnHydrolance			= mod:NewSpecialWarningInterrupt(397801, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
+local specWarnGTFO					= mod:NewSpecialWarningGTFO(397799, nil, nil, nil, 1, 8, nil, nil, "watchfeet")
 
 local timerWashAwayCD				= mod:NewCDTimer(41.3, 397783, nil, nil, nil, 2, nil, DBM_COMMON_L.DEADLY_ICON)--41-44
 local timerCorruptedVortexCD		= mod:NewCDTimer(13, 397797, nil, nil, nil, 3, nil, DBM_COMMON_L.HEALER_ICON)

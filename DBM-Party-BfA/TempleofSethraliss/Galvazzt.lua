@@ -21,8 +21,8 @@ mod:RegisterEventsInCombat(
 --TODO, chaotic Spark fixate?
 local warnCapacitance				= mod:NewCountAnnounce(266511, 2)
 
-local specWarnConsumeCharge			= mod:NewSpecialWarningSpell(266512, nil, nil, nil, 2, 2)
-local specWarnGalvanize				= mod:NewSpecialWarningStack(266923, nil, 5, nil, nil, 1, 6)
+local specWarnConsumeCharge			= mod:NewSpecialWarningSpell(266512, nil, nil, nil, 2, 2, nil, nil, "aesoon")
+local specWarnGalvanize				= mod:NewSpecialWarningStack(266923, nil, 5, nil, nil, 1, 6, nil, nil, "stackhigh")
 
 --local timerReapSoulCD				= mod:NewNextTimer(13, 194956, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON..DBM_COMMON_L.DEADLY_ICON)
 

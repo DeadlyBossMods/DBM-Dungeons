@@ -23,7 +23,7 @@
 ## X-DBM-Mod-Name-zhTW: 隊伍首領 (至暗之夜)
 ## X-DBM-Mod-Sort: 105
 ## X-DBM-Mod-MapID: 2805, 2813, 2811, 2859, 2825, 2923, 2874, 2915
-## X-DBM-Mod-MinCoreRevision: 20230716000000
+## X-DBM-Mod-MinCoreRevision: 20260522000000
 ## X-DBM-Mod-MinExpansion: 11
 ## X-Curse-Project-ID: 314994
 ## X-Wago-ID: xZKxZENk

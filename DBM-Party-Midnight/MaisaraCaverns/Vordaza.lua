@@ -16,10 +16,10 @@ mod:RegisterCombat("combat")
 --NOTE: https://www.wowhead.com/spell=1251813/lingering-dread has a private aura but it doesn't need an alert, just anchor tracking
 --NOTE: Wrest Phantoms timeline spellID is 1251204; 1252130 is the damage aura tracked by AddPrivateAuraSoundOption below
 
-local specWarnDrainSoul				= mod:NewSpecialWarningCount(1251554, nil, nil, nil, 1, 2)
-local specWarnUnmake				= mod:NewSpecialWarningDodgeCount(1252054, nil, nil, DBM_COMMON_L.FRONTAL, 2, 2)
-local specWarnWrestPhantoms			= mod:NewSpecialWarningCount(1251204, nil, nil, nil, 2, 2)
-local specWarnNecroticConvergence	= mod:NewSpecialWarningCount(1250708, nil, nil, nil, 1, 2)
+local specWarnDrainSoul				= mod:NewSpecialWarningCount(1251554, nil, nil, nil, 1, 2, nil, nil, "defensive")
+local specWarnUnmake				= mod:NewSpecialWarningDodgeCount(1252054, nil, nil, DBM_COMMON_L.FRONTAL, 2, 2, nil, nil, "frontal")
+local specWarnWrestPhantoms			= mod:NewSpecialWarningCount(1251204, nil, nil, nil, 2, 2, nil, nil, "mobsoon")
+local specWarnNecroticConvergence	= mod:NewSpecialWarningCount(1250708, nil, nil, nil, 1, 2, nil, nil, "attackshield")
 
 local timerDrainSoulCD				= mod:NewCDCountTimer(20.5, 1251554, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerUnmakeCD					= mod:NewCDCountTimer(20.5, 1252054, DBM_COMMON_L.FRONTAL.." (%s)", nil, nil, 3)

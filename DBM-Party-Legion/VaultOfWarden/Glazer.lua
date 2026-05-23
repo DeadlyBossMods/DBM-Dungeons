@@ -19,8 +19,8 @@ mod:RegisterEventsInCombat(
 --TODO, maybe voice for mirrors to bounce beam back into boss? But how do you say this short
 local warnGaze						= mod:NewSpellAnnounce(194942, 2)
 
-local specWarnFocused				= mod:NewSpecialWarningSpell(194289, nil, nil, nil, 2, 2)
-local specWarnGazeGTFO				= mod:NewSpecialWarningGTFO(194945, nil, nil, nil, 1, 8)
+local specWarnFocused				= mod:NewSpecialWarningSpell(194289, nil, nil, nil, 2, 2, nil, nil, "specialsoon")
+local specWarnGazeGTFO				= mod:NewSpecialWarningGTFO(194945, nil, nil, nil, 1, 8, nil, nil, "watchfeet")
 
 local timerGazeCD					= mod:NewCDTimer(15.8, 194942, nil, nil, nil, 3)
 

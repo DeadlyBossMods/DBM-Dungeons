@@ -29,9 +29,9 @@ ability.id = 260333 and type = "cast"
  or (ability.id = 260793 or ability.id = 260292) and type = "begincast"
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
 --]]
-local specWarnIndigestion			= mod:NewSpecialWarningSpell(260793, "Tank", nil, nil, 1, 2)
-local specWarnCharge				= mod:NewSpecialWarningDodgeCount(260292, nil, nil, nil, 3, 2)
-local specWarnTantrum				= mod:NewSpecialWarningCount(260333, nil, nil, nil, 2, 2)
+local specWarnIndigestion			= mod:NewSpecialWarningSpell(260793, "Tank", nil, nil, 1, 2, nil, nil, "breathsoon")
+local specWarnCharge				= mod:NewSpecialWarningDodgeCount(260292, nil, nil, nil, 3, 2, nil, nil, "chargemove")
+local specWarnTantrum				= mod:NewSpecialWarningCount(260333, nil, nil, nil, 2, 2, nil, nil, "aesoon")
 --local specWarnGTFO				= mod:NewSpecialWarningGTFO(238028, nil, nil, nil, 1, 8)
 
 local timerIndigestionCD			= mod:NewCDTimer(49.7, 260793, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)

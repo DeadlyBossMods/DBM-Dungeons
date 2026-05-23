@@ -29,13 +29,13 @@ mod:RegisterEventsInCombat(
 --local warnStaggeringBarrage					= mod:NewSpellAnnounce(361018, 3)
 
 --local specWarnInfusedStrikes					= mod:NewSpecialWarningStack(361966, nil, 8, nil, nil, 1, 6)
-local specWarnFrostBomb							= mod:NewSpecialWarningMoveAway(386781, nil, nil, nil, 1, 2)
+local specWarnFrostBomb							= mod:NewSpecialWarningMoveAway(386781, nil, nil, nil, 1, 2, nil, nil, "runout")
 local yellFrostBomb								= mod:NewYell(386781)
 local yellFrostBombFades						= mod:NewShortFadesYell(386781)
-local specWarnIcyDevastator						= mod:NewSpecialWarningMoveAway(387151, nil, nil, nil, 1, 2)
+local specWarnIcyDevastator						= mod:NewSpecialWarningMoveAway(387151, nil, nil, nil, 1, 2, nil, nil, "runout")
 local yellIcyDevastator							= mod:NewYell(387151)
-local specWarAbsoluteZero						= mod:NewSpecialWarningMoveTo(388008, nil, nil, nil, 3, 2)
-local specWarnGTFO								= mod:NewSpecialWarningGTFO(387150, nil, nil, nil, 1, 8)
+local specWarAbsoluteZero						= mod:NewSpecialWarningMoveTo(388008, nil, nil, nil, 3, 2, nil, nil, "findshelter")
+local specWarnGTFO								= mod:NewSpecialWarningGTFO(387150, nil, nil, nil, 1, 8, nil, nil, "watchfeet")
 
 local timerFrostBombCD							= mod:NewCDTimer(15.3, 386781, nil, nil, nil, 3)--15-24 (mod should account for two  mechanics that cause these delays)
 local timerIcyDevastatorCD						= mod:NewCDTimer(22.6, 387151, nil, nil, nil, 3)

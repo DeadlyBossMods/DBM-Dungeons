@@ -39,9 +39,9 @@ mod:RegisterEventsInCombat(
 local warnFlamingFixate	 		= mod:NewTargetNoFilterAnnounce(82850, 4)
 
 local specWarnAdds				= mod:NewSpecialWarningSwitchCount(DBM:IsRetail() and 448013 or 75218, "Dps", nil, nil, 1, 2)
-local specWarnFlamingFixate		= mod:NewSpecialWarningRun(82850, nil, nil, nil, 4, 2)
-local specWarnDevouring 		= mod:NewSpecialWarningDodgeCount(DBM:IsRetail() and 448105 or 90950, nil, nil, nil, 2, 2)
-local specWarnSeepingTwilight	= mod:NewSpecialWarningGTFO(75317, nil, nil, nil, 2, 8)
+local specWarnFlamingFixate		= mod:NewSpecialWarningRun(82850, nil, nil, nil, 4, 2, nil, nil, "justrun")
+local specWarnDevouring 		= mod:NewSpecialWarningDodgeCount(DBM:IsRetail() and 448105 or 90950, nil, nil, nil, 2, 2, nil, nil, "breathsoon")
+local specWarnSeepingTwilight	= mod:NewSpecialWarningGTFO(75317, nil, nil, nil, 2, 8, nil, nil, "watchfeet")
 
 local timerAddCD				= mod:NewCDCountTimer(20.6, DBM:IsRetail() and 448013 or 75218, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)--20.6-27. 24 is the average
 local timerDevouringCD			= mod:NewCDCountTimer(40, DBM:IsRetail() and 448105 or 90950, nil, nil, nil, 3)

@@ -13,7 +13,7 @@ mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 119300"
 )
 
-local specWarnTwistedElements			= mod:NewSpecialWarningInterrupt(119300, "HasInterrupt", nil, nil, 1, 2)
+local specWarnTwistedElements			= mod:NewSpecialWarningInterrupt(119300, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
 
 function mod:SPELL_CAST_START(args)
 	if args.spellId == 119300 and self:CheckInterruptFilter(args.sourceGUID, false, true) then

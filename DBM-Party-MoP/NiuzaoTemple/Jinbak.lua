@@ -19,9 +19,9 @@ mod:RegisterEventsInCombat(
 	"UNIT_SPELLCAST_SUCCEEDED boss1"
 )
 
-local specWarnSapResidue	= mod:NewSpecialWarningStack(119941, nil, 6, nil, nil, 1, 8)
-local specWarnDetonate		= mod:NewSpecialWarningSpell(120001, nil, nil, nil, 2, 2)
-local specWarnGlob			= mod:NewSpecialWarningSwitch(-6494, "-Healer", nil, nil, 2, 2)
+local specWarnSapResidue	= mod:NewSpecialWarningStack(119941, nil, 6, nil, nil, 1, 8, nil, nil, "stackhigh")
+local specWarnDetonate		= mod:NewSpecialWarningSpell(120001, nil, nil, nil, 2, 2, nil, nil, "aesoon")
+local specWarnGlob			= mod:NewSpecialWarningSwitch(-6494, "-Healer", nil, nil, 2, 2, nil, nil, "killmob")
 
 local timerDetonateCD		= mod:NewNextTimer(45.5, 120001, nil, nil, nil, 2)
 local timerDetonate			= mod:NewCastTimer(5, 120001, nil, nil, nil, 5)

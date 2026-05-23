@@ -25,7 +25,7 @@ mod:RegisterEvents(
 local warnWitheringSoul				= mod:NewSpellAnnounce(208165, 2)
 local warnBurningIntensity			= mod:NewSpellAnnounce(207906, 3)
 
-local specWarnInfernalEruption		= mod:NewSpecialWarningDodge(207881, nil, nil, nil, 2, 2)
+local specWarnInfernalEruption		= mod:NewSpecialWarningDodge(207881, nil, nil, nil, 2, 2, nil, nil, "watchstep")
 
 local timerWitheringSoulCD			= mod:NewCDTimer(14.5, 208165, nil, nil, nil, 3, nil, DBM_COMMON_L.MAGIC_ICON)
 local timerInfernalEruptionCD		= mod:NewCDTimer(20.1, 207881, nil, nil, nil, 2)

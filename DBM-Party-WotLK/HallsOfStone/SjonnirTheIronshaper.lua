@@ -15,7 +15,7 @@ mod:RegisterEventsInCombat(
 local warningCharge		= mod:NewTargetAnnounce(50834, 2)
 local warningRing		= mod:NewSpellAnnounce(50840, 3)
 
-local specWarnCharge	= mod:NewSpecialWarningMoveAway(50834, nil, nil, nil, 1, 2)
+local specWarnCharge	= mod:NewSpecialWarningMoveAway(50834, nil, nil, nil, 1, 2, nil, nil, "runout")
 local yellCharge		= mod:NewYell(50834)
 
 local timerChargeCD		= mod:NewCDTimer(25, 50834, nil, nil, nil, 3)

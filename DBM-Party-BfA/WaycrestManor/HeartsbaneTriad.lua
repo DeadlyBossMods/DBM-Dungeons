@@ -31,7 +31,7 @@ mod:RegisterEventsInCombat(
 --TODO, outlier timer for killing solena last and actually seeing a second soul manipulation before iris ends
 --Sister Briar
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(17738))
-local specWarnJaggedNettles			= mod:NewSpecialWarningTarget(260741, nil, nil, 2, 1, 2)
+local specWarnJaggedNettles			= mod:NewSpecialWarningTarget(260741, nil, nil, 2, 1, 2, nil, nil, "healfull")
 
 local timerJaggedNettlesCD			= mod:NewCDTimer(12.5, 260741, nil, nil, nil, 5, nil, DBM_COMMON_L.HEALER_ICON)
 --Sister Malady
@@ -39,22 +39,22 @@ mod:AddTimerLine(DBM:EJ_GetSectionInfo(17739))
 local warnUnstableMark				= mod:NewTargetAnnounce(260703, 2)
 local warnAuraofDreadOver			= mod:NewEndAnnounce(268086, 1)
 
-local specWarnUnstableMark			= mod:NewSpecialWarningMoveAway(260703, nil, nil, nil, 1, 2)
+local specWarnUnstableMark			= mod:NewSpecialWarningMoveAway(260703, nil, nil, nil, 1, 2, nil, nil, "scatter")
 local yellUnstableMark				= mod:NewYell(260703)
-local specWarnAuraofDread			= mod:NewSpecialWarningKeepMove(268086, nil, nil, nil, 1, 2)
+local specWarnAuraofDread			= mod:NewSpecialWarningKeepMove(268086, nil, nil, nil, 1, 2, nil, nil, "keepmove")
 
 local timerUnstableRunicMarkCD		= mod:NewCDTimer(12.5, 260703, nil, nil, nil, 3, nil, DBM_COMMON_L.CURSE_ICON)
 
 --Sister Solena
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(17740))
-local specWarnSoulManipulation		= mod:NewSpecialWarningSwitch(260907, nil, nil, nil, 1, 2)
+local specWarnSoulManipulation		= mod:NewSpecialWarningSwitch(260907, nil, nil, nil, 1, 2, nil, nil, "findmc")
 
 local timerSoulManipulationCD		= mod:NewCDTimer(12.5, 260907, nil, nil, nil, 3, nil, DBM_COMMON_L.TANK_ICON)--Always tank? if not, remove tank icon
 --Focusing Iris
 mod:AddTimerLine(DBM:GetSpellName(260805))
 local warnActiveTriad				= mod:NewTargetNoFilterAnnounce(260805, 2)
 
-local specWarnRitual				= mod:NewSpecialWarningSpell(260773, nil, nil, nil, 3, 2)
+local specWarnRitual				= mod:NewSpecialWarningSpell(260773, nil, nil, nil, 3, 2, nil, nil, "aesoon")
 
 local timerRitualCD					= mod:NewCDTimer(12.5, 260773, nil, nil, nil, 2, nil, DBM_COMMON_L.DEADLY_ICON)
 

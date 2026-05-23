@@ -29,12 +29,12 @@ mod:RegisterEventsInCombat(
 --]]
 local warnSomeChaoticCorruption				= mod:NewTargetNoFilterAnnounce(424737, 3)
 
-local specWarnChaoticCorruption				= mod:NewSpecialWarningYou(424737, nil, nil, nil, 1, 2)
+local specWarnChaoticCorruption				= mod:NewSpecialWarningYou(424737, nil, nil, nil, 1, 2, nil, nil, "targetyou")
 local yellChaoticCorruption					= mod:NewYell(424737)
 local yellChaoticCorruptionFades			= mod:NewShortFadesYell(424737, nil, false)
-local specWarnDarkGravity					= mod:NewSpecialWarningRunCount(425048, nil, nil, nil, 4, 13)
-local specWarnCrushReality					= mod:NewSpecialWarningDodgeCount(424958, nil, nil, nil, 2, 2)
-local specWarnGTFO							= mod:NewSpecialWarningGTFO(424966, nil, nil, nil, 1, 8)
+local specWarnDarkGravity					= mod:NewSpecialWarningRunCount(425048, nil, nil, nil, 4, 13, nil, nil, "pullin")
+local specWarnCrushReality					= mod:NewSpecialWarningDodgeCount(424958, nil, nil, nil, 2, 2, nil, nil, "watchwave")
+local specWarnGTFO							= mod:NewSpecialWarningGTFO(424966, nil, nil, nil, 1, 8, nil, nil, "watchfeet")
 
 local timerChaoticCorruptionCD				= mod:NewCDCountTimer(32, 424737, nil, nil, nil, 3)
 local timerDarkGravityCD					= mod:NewCDCountTimer(32, 425048, nil, nil, nil, 2)

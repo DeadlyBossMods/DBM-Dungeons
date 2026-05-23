@@ -34,11 +34,11 @@ local warnNetherAberration		= mod:NewSpellAnnounce(235110, 2)
 local warnInfernal				= mod:NewSpellAnnounce(235112, 2)
 
 --Tank
-local specWarnDecay				= mod:NewSpecialWarningStack(234422, nil, 5, nil, nil, 1, 6)
-local specWarnDrainLife			= mod:NewSpecialWarningInterrupt(234423, nil, nil, 2, 3, 2)
-local specWarnSmash				= mod:NewSpecialWarningDodge(234631, nil, nil, nil, 1, 2)
-local specWarnAnnihilate		= mod:NewSpecialWarningDefensive(236572, nil, nil, nil, 1, 2)
-local specWarnTwistedReflection	= mod:NewSpecialWarningInterrupt(234676, nil, nil, nil, 3, 2)
+local specWarnDecay				= mod:NewSpecialWarningStack(234422, nil, 5, nil, nil, 1, 6, nil, nil, "stackhigh")
+local specWarnDrainLife			= mod:NewSpecialWarningInterrupt(234423, nil, nil, 2, 3, 2, nil, nil, "kickcast")
+local specWarnSmash				= mod:NewSpecialWarningDodge(234631, nil, nil, nil, 1, 2, nil, nil, "shockwave")
+local specWarnAnnihilate		= mod:NewSpecialWarningDefensive(236572, nil, nil, nil, 1, 2, nil, nil, "defensive")
+local specWarnTwistedReflection	= mod:NewSpecialWarningInterrupt(234676, nil, nil, nil, 3, 2, nil, nil, "kickcast")
 
 --Tank
 local timerDrainLifeCD			= mod:NewCDTimer(24.3, 234423, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON, nil, 2, 4)

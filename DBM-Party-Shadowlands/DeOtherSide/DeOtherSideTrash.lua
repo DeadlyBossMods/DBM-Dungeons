@@ -25,25 +25,25 @@ local warnEnragedMask					= mod:NewSpellAnnounce(342869, 2)
 --General
 --local specWarnGTFO					= mod:NewSpecialWarningGTFO(257274, nil, nil, nil, 1, 8)
 --Notable Ring Trash
-local specWarnEruptingDarkness			= mod:NewSpecialWarningDodge(334051, nil, nil, nil, 2, 2)
-local specWarnRage						= mod:NewSpecialWarningSpell(333787, "Healer", nil, nil, 2, 2)
-local specWarnUndyingRage				= mod:NewSpecialWarningDispel(333227, "RemoveEnrage", nil, nil, 1, 2)
+local specWarnEruptingDarkness			= mod:NewSpecialWarningDodge(334051, nil, nil, nil, 2, 2, nil, nil, "shockwave")
+local specWarnRage						= mod:NewSpecialWarningSpell(333787, "Healer", nil, nil, 2, 2, nil, nil, "aesoon")
+local specWarnUndyingRage				= mod:NewSpecialWarningDispel(333227, "RemoveEnrage", nil, nil, 1, 2, nil, nil, "enrage")
 --Notable Hakkar Trash
-local specWarnBladestorm				= mod:NewSpecialWarningRun(332671, "Melee", nil, nil, 2, 2)
-local specWarnRenew						= mod:NewSpecialWarningInterrupt(332666, "HasInterrupt", nil, nil, 1, 2)
-local specWarnRenewDispel				= mod:NewSpecialWarningDispel(332666, "MagicDispeller", nil, nil, 1, 2)
-local specWarnHeal						= mod:NewSpecialWarningInterrupt(332706, "HasInterrupt", nil, nil, 1, 2)
-local specWarnHealingwave				= mod:NewSpecialWarningInterrupt(332612, "HasInterrupt", nil, nil, 1, 2)
+local specWarnBladestorm				= mod:NewSpecialWarningRun(332671, "Melee", nil, nil, 2, 2, nil, nil, "justrun")
+local specWarnRenew						= mod:NewSpecialWarningInterrupt(332666, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
+local specWarnRenewDispel				= mod:NewSpecialWarningDispel(332666, "MagicDispeller", nil, nil, 1, 2, nil, nil, "helpdispel")
+local specWarnHeal						= mod:NewSpecialWarningInterrupt(332706, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
+local specWarnHealingwave				= mod:NewSpecialWarningInterrupt(332612, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
 --Notable The Manastorms Trash
-local specWarnHaywire					= mod:NewSpecialWarningMoveTo(331927, nil, nil, nil, 2, 2)
-local specWarnSpinningUp				= mod:NewSpecialWarningRun(332156, "Melee", nil, nil, 2, 2)
-local specWarnSelfCleaningCycle			= mod:NewSpecialWarningInterrupt(332084, "HasInterrupt", nil, nil, 1, 2)
+local specWarnHaywire					= mod:NewSpecialWarningMoveTo(331927, nil, nil, nil, 2, 2, nil, nil, "findshelter")
+local specWarnSpinningUp				= mod:NewSpecialWarningRun(332156, "Melee", nil, nil, 2, 2, nil, nil, "justrun")
+local specWarnSelfCleaningCycle			= mod:NewSpecialWarningInterrupt(332084, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
 --Notable Dealer Xy'exa Trash
-local specWarnSporificShimmerdust		= mod:NewSpecialWarningJump(334493, nil, nil, nil, 1, 6)
-local specWarnWailingGrief				= mod:NewSpecialWarningSpell(340026, nil, nil, nil, 2, 2)
+local specWarnSporificShimmerdust		= mod:NewSpecialWarningJump(334493, nil, nil, nil, 1, 6, nil, nil, "keepjump")
+local specWarnWailingGrief				= mod:NewSpecialWarningSpell(340026, nil, nil, nil, 2, 2, nil, nil, "fearsoon")
 --Unknown
-local specWarnDarkLotus					= mod:NewSpecialWarningDodge(328740, nil, nil, nil, 2, 2)
-local specWarnGTFO						= mod:NewSpecialWarningGTFO(333250, nil, nil, nil, 1, 8)
+local specWarnDarkLotus					= mod:NewSpecialWarningDodge(328740, nil, nil, nil, 2, 2, nil, nil, "watchstep")
+local specWarnGTFO						= mod:NewSpecialWarningGTFO(333250, nil, nil, nil, 1, 8, nil, nil, "watchfeet")
 
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 generalized, 7 GTFO
 

@@ -20,7 +20,7 @@ mod:RegisterEventsInCombat(
 local warnDeflection	= mod:NewSpellAnnounce(92614, 3)
 local warnDeadlyBlades	= mod:NewSpellAnnounce(92622, 3)
 
-local specWarnDeflection	= mod:NewSpecialWarningReflect(92614, "SpellCaster", nil, nil, 1, 2)
+local specWarnDeflection	= mod:NewSpecialWarningReflect(92614, "SpellCaster", nil, nil, 1, 2, nil, nil, "stopattack")
 
 local timerDeflection	= mod:NewBuffActiveTimer(10, 92614, nil, nil, nil, 5, nil, DBM_COMMON_L.DAMAGE_ICON)
 local timerDeadlyBlades	= mod:NewBuffActiveTimer(5, 92622, nil, nil, nil, 3)

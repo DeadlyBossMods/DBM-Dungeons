@@ -27,7 +27,7 @@ mod:RegisterEventsInCombat(
 
 
 local warnShadow    = mod:NewCastAnnounce(470457, 3)
-local specWarnSlash = mod:NewSpecialWarningSoak(470280, nil, nil, nil, 2, 2)
+local specWarnSlash = mod:NewSpecialWarningSoak(470280, nil, nil, nil, 2, 2, nil, nil, "frontal")
 local timerSlash    = mod:NewCastTimer(470280)
 
 

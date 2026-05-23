@@ -64,12 +64,12 @@ local warnVaultPurifier				= mod:NewSpellAnnounce(-23004, 2, "136116")
 local warnPurifyingBurst			= mod:NewCountAnnounce(353312, 2)
 local warnTitanicInsight			= mod:NewTargetNoFilterAnnounce(346427, 2)
 
-local specWarnPurgedByFire			= mod:NewSpecialWarningYou(346959, nil, nil, nil, 1, 2)
+local specWarnPurgedByFire			= mod:NewSpecialWarningYou(346959, nil, nil, nil, 1, 2, nil, nil, "targetyou")
 local yellPurgedByFire				= mod:NewYell(346959)
-local specWarnShearingSwings		= mod:NewSpecialWarningDefensive(346116, nil, nil, nil, 1, 2)
-local specWarnTitanicCrash			= mod:NewSpecialWarningDodge(347094, nil, nil, nil, 2, 2)
-local specWarnSanitizingCycle		= mod:NewSpecialWarningCount(346766, nil, nil, nil, 2, 2)
-local specWarnLigtningNova			= mod:NewSpecialWarningInterrupt(358131, "HasInterrupt", nil, nil, 1, 2)--Hard Mode
+local specWarnShearingSwings		= mod:NewSpecialWarningDefensive(346116, nil, nil, nil, 1, 2, nil, nil, "defensive")
+local specWarnTitanicCrash			= mod:NewSpecialWarningDodge(347094, nil, nil, nil, 2, 2, nil, nil, "shockwave")
+local specWarnSanitizingCycle		= mod:NewSpecialWarningCount(346766, nil, nil, nil, 2, 2, nil, nil, "specialsoon")
+local specWarnLigtningNova			= mod:NewSpecialWarningInterrupt(358131, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")--Hard Mode
 --local specWarnGTFO				= mod:NewSpecialWarningGTFO(320366, nil, nil, nil, 1, 8)
 
 local timerShearingSwingsCD			= mod:NewCDCountTimer(10.1, 346116, nil, nil, nil, 5, nil, DBM_COMMON_L.HEALER_ICON)

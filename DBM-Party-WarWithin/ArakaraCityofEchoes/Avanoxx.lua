@@ -56,10 +56,10 @@ local warnInsatiable						= mod:NewStackAnnounce(446794, 4)
 local warnVileWebbing						= mod:NewCountAnnounce(434830, 3, nil, nil, DBM_CORE_L.AUTO_ANNOUNCE_OPTIONS.stack:format(434830))--Player
 local warnWebWrap							= mod:NewTargetNoFilterAnnounce(436614, 2, nil, "RemoveMagic")
 
-local specWarnAlertingShrill				= mod:NewSpecialWarningCount(438476, nil, nil, nil, 2, 2)
-local specWarnGossamerOnslaught				= mod:NewSpecialWarningDodgeCount(438473, nil, nil, nil, 2, 2)
-local specWarnVoraciousBite					= mod:NewSpecialWarningDefensive(438471, nil, nil, nil, 1, 2)
-local specWarnHunger						= mod:NewSpecialWarningRun(439070, nil, nil, nil, 1, 2)
+local specWarnAlertingShrill				= mod:NewSpecialWarningCount(438476, nil, nil, nil, 2, 2, nil, nil, "aesoon")
+local specWarnGossamerOnslaught				= mod:NewSpecialWarningDodgeCount(438473, nil, nil, nil, 2, 2, nil, nil, "watchstep")
+local specWarnVoraciousBite					= mod:NewSpecialWarningDefensive(438471, nil, nil, nil, 1, 2, nil, nil, "defensive")
+local specWarnHunger						= mod:NewSpecialWarningRun(439070, nil, nil, nil, 1, 2, nil, nil, "justrun")
 
 local timerVoraciousBiteCD					= mod:NewCDCountTimer(14.1, 438471, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerAlertingShrillCD					= mod:NewVarCountTimer("v38.7-40.9", 438476, nil, nil, nil, 1)--38.7-40.9

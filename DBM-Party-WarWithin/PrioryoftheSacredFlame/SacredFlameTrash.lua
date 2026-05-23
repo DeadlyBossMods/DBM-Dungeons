@@ -50,17 +50,17 @@ local warnImpale							= mod:NewTargetNoFilterAnnounce(427621, 3, nil, "Healer|R
 local warnPurification						= mod:NewTargetNoFilterAnnounce(448787, 4, nil, "Healer")
 local warnReflectiveShield					= mod:NewTargetNoFilterAnnounce(464240, 3)
 
-local specWarnDisruptingShout				= mod:NewSpecialWarningCast(427609, "SpellCaster", nil, nil, 1, 2)
-local specWarnCaltrops						= mod:NewSpecialWarningDodge(453458, nil, nil, nil, 2, 2)
-local specWarnFlamestrike					= mod:NewSpecialWarningDodge(427484, nil, nil, nil, 2, 2)
-local specWarnPurification					= mod:NewSpecialWarningYou(448787, nil, nil, nil, 1, 2)
-local specWarnShieldSlam					= mod:NewSpecialWarningDefensive(448485, nil, nil, nil, 1, 2)
+local specWarnDisruptingShout				= mod:NewSpecialWarningCast(427609, "SpellCaster", nil, nil, 1, 2, nil, nil, "stopcast")
+local specWarnCaltrops						= mod:NewSpecialWarningDodge(453458, nil, nil, nil, 2, 2, nil, nil, "watchstep")
+local specWarnFlamestrike					= mod:NewSpecialWarningDodge(427484, nil, nil, nil, 2, 2, nil, nil, "watchstep")
+local specWarnPurification					= mod:NewSpecialWarningYou(448787, nil, nil, nil, 1, 2, nil, nil, "targetyou")
+local specWarnShieldSlam					= mod:NewSpecialWarningDefensive(448485, nil, nil, nil, 1, 2, nil, nil, "carefly")
 --local yellChainLightning					= mod:NewYell(387127)
-local specWarnGreaterHeal					= mod:NewSpecialWarningInterrupt(427356, nil, nil, nil, 1, 2)
-local specWarnHolySmite						= mod:NewSpecialWarningInterrupt(427357, false, nil, 2, 1, 2)--Off by default so as not to interfere with greater heal
-local specWarnFireballVolley				= mod:NewSpecialWarningInterrupt(444743, nil, nil, nil, 1, 2)
-local specWarnTemplarsWrath					= mod:NewSpecialWarningDispel(444728, "MagicDispeller", nil, nil, 1, 2)
-local specWarnGTFO							= mod:NewSpecialWarningGTFO(424430, nil, nil, nil, 1, 8)
+local specWarnGreaterHeal					= mod:NewSpecialWarningInterrupt(427356, nil, nil, nil, 1, 2, nil, nil, "kickcast")
+local specWarnHolySmite						= mod:NewSpecialWarningInterrupt(427357, false, nil, 2, 1, 2, nil, nil, "kickcast")--Off by default so as not to interfere with greater heal
+local specWarnFireballVolley				= mod:NewSpecialWarningInterrupt(444743, nil, nil, nil, 1, 2, nil, nil, "kickcast")
+local specWarnTemplarsWrath					= mod:NewSpecialWarningDispel(444728, "MagicDispeller", nil, nil, 1, 2, nil, nil, "dispelboss")
+local specWarnGTFO							= mod:NewSpecialWarningGTFO(424430, nil, nil, nil, 1, 8, nil, nil, "watchfeet")
 
 local timerCaltropsCD						= mod:NewCDNPTimer(26.6, 453458, nil, nil, nil, 3)--S3 updated
 local timerFlamestrikeCD					= mod:NewCDNPTimer(22.6, 427484, nil, nil, nil, 3)
@@ -87,23 +87,23 @@ local timerBlazingStrikeCD					= mod:NewCDNPTimer(13.4, 435165, nil, nil, nil, 5
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(27840))
 --Sergeant Shaynemail
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(27825))
-local specWarnBrutalSmash					= mod:NewSpecialWarningDodge(424621, nil, nil, nil, 2, 2)
-local specWarnLungingStrike					= mod:NewSpecialWarningMoveAway(424423, nil, nil, nil, 1, 2)
+local specWarnBrutalSmash					= mod:NewSpecialWarningDodge(424621, nil, nil, nil, 2, 2, nil, nil, "watchstep")
+local specWarnLungingStrike					= mod:NewSpecialWarningMoveAway(424423, nil, nil, nil, 1, 2, nil, nil, "scatter")
 
 local timerBrutalSmashCD					= mod:NewCDTimer(29.2, 424621, nil, nil, nil, 3)--Using full timer instead of nameplate only so we can cleaner update it
 local timerLungingStrikeCD					= mod:NewCDTimer(14.5, 424423, nil, nil, nil, 3)
 --Elaena Emberlanz
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(27828))
-local specWarnHolyRadiance					= mod:NewSpecialWarningSpell(424431, nil, nil, nil, 2, 2)
-local specWarnDivineJudgement				= mod:NewSpecialWarningDefensive(448515, nil, nil, nil, 2, 2)
+local specWarnHolyRadiance					= mod:NewSpecialWarningSpell(424431, nil, nil, nil, 2, 2, nil, nil, "aesoon")
+local specWarnDivineJudgement				= mod:NewSpecialWarningDefensive(448515, nil, nil, nil, 2, 2, nil, nil, "defensive")
 
 local timerHolyRadianceCD					= mod:NewCDTimer(25.5, 424431, nil, nil, nil, 2, nil, DBM_COMMON_L.HEALER_ICON)
 local timerDivineJudgementCD				= mod:NewCDTimer(14.6, 448515, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 
 --Taener Duelmal
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(27831))
-local specWarnEmberStorm					= mod:NewSpecialWarningDodge(424462, nil, nil, nil, 2, 2)
-local specWarnCinderblast					= mod:NewSpecialWarningInterrupt(424420, "HasInterrupt", nil, nil, 1, 2)--No longer cast in 11.2? nothing on WCL
+local specWarnEmberStorm					= mod:NewSpecialWarningDodge(424462, nil, nil, nil, 2, 2, nil, nil, "watchstep")
+local specWarnCinderblast					= mod:NewSpecialWarningInterrupt(424420, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")--No longer cast in 11.2? nothing on WCL
 
 local timerEmberStormCD						= mod:NewCDTimer(24.3, 424462, nil, nil, nil, 3)--24.3-40
 local timerCinderblastCD					= mod:NewCDTimer(15.6, 424420, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--Can be MASSIVE delayed by cinderstorm or just rng

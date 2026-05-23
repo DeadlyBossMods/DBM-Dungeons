@@ -22,14 +22,14 @@ mod:RegisterEventsInCombat(
 --(ability.id = 265923 or ability.id = 265773 or ability.id = 265781 or ability.id = 265910) and type = "begincast"
 local warnSpitGold					= mod:NewTargetAnnounce(265773, 2)
 
-local specWarnTailThrash			= mod:NewSpecialWarningDefensive(265910, nil, nil, nil, 1, 2)
-local specWarnSpitGold				= mod:NewSpecialWarningMoveAway(265773, nil, nil, nil, 1, 2)
+local specWarnTailThrash			= mod:NewSpecialWarningDefensive(265910, nil, nil, nil, 1, 2, nil, nil, "defensive")
+local specWarnSpitGold				= mod:NewSpecialWarningMoveAway(265773, nil, nil, nil, 1, 2, nil, nil, "runout")
 local yellSpitGold					= mod:NewYell(265773)
 local yellSpitGoldFades				= mod:NewShortFadesYell(265773)
-local specWarnLucreCall				= mod:NewSpecialWarningSwitch(265923, nil, nil, nil, 1, 2)--Only non Tank
-local specWarnLucreCallTank			= mod:NewSpecialWarningMove(265923, nil, nil, nil, 1, 2)--Only Tank
-local specWarnSerpentine			= mod:NewSpecialWarningRun(265781, nil, nil, nil, 4, 2)
-local specWarnGTFO					= mod:NewSpecialWarningGTFO(265914, nil, nil, nil, 1, 8)
+local specWarnLucreCall				= mod:NewSpecialWarningSwitch(265923, nil, nil, nil, 1, 2, nil, nil, "killmob")--Only non Tank
+local specWarnLucreCallTank			= mod:NewSpecialWarningMove(265923, nil, nil, nil, 1, 2, nil, nil, "moveboss")--Only Tank
+local specWarnSerpentine			= mod:NewSpecialWarningRun(265781, nil, nil, nil, 4, 2, nil, nil, "justrun")
+local specWarnGTFO					= mod:NewSpecialWarningGTFO(265914, nil, nil, nil, 1, 8, nil, nil, "watchfeet")
 
 local timerTailThrashCD				= mod:NewCDTimer(16.6, 265910, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON..DBM_COMMON_L.DEADLY_ICON)
 local timerSpitGoldCD				= mod:NewCDTimer(10.9, 265773, nil, nil, nil, 3)

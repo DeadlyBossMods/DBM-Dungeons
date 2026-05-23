@@ -23,8 +23,8 @@ local warnBulwark			= mod:NewSpellAnnounce(78939, 3)
 local warnEnrage			= mod:NewSpellAnnounce(80467, 3, nil, "Tank")
 local warnEnrageSoon		= mod:NewSoonAnnounce(80467, 2, nil, "Tank")
 
-local specWarnGroundSlam	= mod:NewSpecialWarningDodge(78903, "Tank", nil, nil, 1, 2)
-local specWarnShatter		= mod:NewSpecialWarningRun(78807, "Melee", nil, 2, 4, 2)
+local specWarnGroundSlam	= mod:NewSpecialWarningDodge(78903, "Tank", nil, nil, 1, 2, nil, nil, "shockwave")
+local specWarnShatter		= mod:NewSpecialWarningRun(78807, "Melee", nil, 2, 4, 2, nil, nil, "justrun")
 
 --local timerShatterCD		= mod:NewCDTimer(19, 78807)
 local timerBulwark			= mod:NewBuffActiveTimer(10, 78939, nil, nil, nil, 5, nil, DBM_COMMON_L.MAGIC_ICON)

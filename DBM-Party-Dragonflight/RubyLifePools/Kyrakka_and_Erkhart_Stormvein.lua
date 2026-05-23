@@ -31,8 +31,8 @@ local warnFlamespit								= mod:NewTargetNoFilterAnnounce(381605, 3)
 local warnInfernoCore							= mod:NewYouAnnounce(381862, 4)
 
 local yellFlamespit								= mod:NewYell(381605)
-local specWarnInfernoCore						= mod:NewSpecialWarningMoveAway(381862, nil, nil, nil, 1, 2)
-local specWarnRoaringFirebreath					= mod:NewSpecialWarningDodge(381525, nil, nil, nil, 2, 2)
+local specWarnInfernoCore						= mod:NewSpecialWarningMoveAway(381862, nil, nil, nil, 1, 2, nil, nil, "runout")
+local specWarnRoaringFirebreath					= mod:NewSpecialWarningDodge(381525, nil, nil, nil, 2, 2, nil, nil, "breathsoon")
 
 local timerFlamespitCD							= mod:NewCDTimer(15.7, 381605, nil, nil, nil, 3)
 local timerRoaringFirebreathCD					= mod:NewCDTimer(18, 381525, nil, nil, nil, 3)
@@ -41,9 +41,9 @@ mod:AddTimerLine(DBM:EJ_GetSectionInfo(25369))
 local warnWindsofChange							= mod:NewCountAnnounce(381517, 3, nil, nil, 227878)--Not actually a count timer, but has best localized text
 local warnCloudburst							= mod:NewSpellAnnounce(385558, 3)
 
-local specWarnStormslam							= mod:NewSpecialWarningDefensive(381512, nil, nil, nil, 1, 2)
-local specWarnStormslamDispel					= mod:NewSpecialWarningDispel(381512, "RemoveMagic", nil, nil, 1, 2)
-local specWarnInterruptingCloudburst			= mod:NewSpecialWarningCast(381516, "SpellCaster", nil, nil, 2, 2, 4)
+local specWarnStormslam							= mod:NewSpecialWarningDefensive(381512, nil, nil, nil, 1, 2, nil, nil, "defensive")
+local specWarnStormslamDispel					= mod:NewSpecialWarningDispel(381512, "RemoveMagic", nil, nil, 1, 2, nil, nil, "helpdispel")
+local specWarnInterruptingCloudburst			= mod:NewSpecialWarningCast(381516, "SpellCaster", nil, nil, 2, 2, 4, nil, "stopcast")
 
 local timerWindsofChangeCD						= mod:NewCDCountTimer(15.8, 381517, 227878, nil, nil, 3)--Not actually a count timer, but has best localized text
 local timerStormslamCD							= mod:NewCDTimer(17, 381512, nil, "Tank|RemoveMagic", nil, 5, nil, DBM_COMMON_L.TANK_ICON..DBM_COMMON_L.MAGIC_ICON)
@@ -118,6 +118,7 @@ function mod:SPELL_CAST_START(args)
 		specWarnRoaringFirebreath:Play("breathsoon")
 		timerRoaringFirebreathCD:Start(18, args.sourceGUID)--18-27
 	elseif spellId == 381517 then
+		---@diagnostic disable-next-line: param-type-mismatch
 		warnWindsofChange:Show(directions[self.vb.windDirection])
 	elseif spellId == 381512 then
 		if self:IsTanking("player", nil, nil, true, args.sourceGUID) then--Using GUID check because might be boss1 or boss2

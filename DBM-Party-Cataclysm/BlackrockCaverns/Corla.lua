@@ -21,9 +21,9 @@ mod:RegisterEventsInCombat(
 local warnDarkCommand		= mod:NewTargetNoFilterAnnounce(75823, 4)
 local warnAdd				= mod:NewAnnounce("WarnAdd", 4)
 
-local specWarnShadowStrike	= mod:NewSpecialWarningInterrupt(82362, nil, nil, nil, 1, 2)
-local specWarnDarkCommand	= mod:NewSpecialWarningInterrupt(75823, nil, nil, nil, 1, 2)
-local specWarnEvolution		= mod:NewSpecialWarningStack(75697, true, 80, nil, nil, 1, 6)
+local specWarnShadowStrike	= mod:NewSpecialWarningInterrupt(82362, nil, nil, nil, 1, 2, nil, nil, "kickcast")
+local specWarnDarkCommand	= mod:NewSpecialWarningInterrupt(75823, nil, nil, nil, 1, 2, nil, nil, "kickcast")
+local specWarnEvolution		= mod:NewSpecialWarningStack(75697, true, 80, nil, nil, 1, 6, nil, nil, "stackhigh")
 
 local timerDarkCommand		= mod:NewTargetTimer(4, 75823, nil, nil, nil, 5, nil, DBM_COMMON_L.HEALER_ICON..DBM_COMMON_L.MAGIC_ICON)
 local timerDarkCommandCD	= mod:NewCDTimer(23, 75823, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)

@@ -14,11 +14,11 @@ mod:RegisterCombat("combat")
 --NOTE: Heaving Yank happens at same time as Shriek and doesn't need it's own timer/warnings
 local warnSplatteringSpew			= mod:NewCountAnnounce(472745, 2)
 
-local specWarnHeavingYank			= mod:NewSpecialWarningBlizzYou(472793, nil, nil, nil, 3, 2)
-local specWarnSplatteringSpew		= mod:NewSpecialWarningBlizzYou(472745, nil, nil, nil, 1, 2)
-local specWarnBoneHack				= mod:NewSpecialWarningCount(472888, nil, nil, nil, 1, 2)
-local specWarnDebilitatingShriek	= mod:NewSpecialWarningCount(472736, nil, nil, nil, 2, 2)
-local specWarnCurseofDarkness		= mod:NewSpecialWarningCount(474105, nil, nil, nil, 2, 2)
+local specWarnHeavingYank			= mod:NewSpecialWarningBlizzYou(472793, nil, nil, nil, 3, 2, nil, nil, "behindboss")
+local specWarnSplatteringSpew		= mod:NewSpecialWarningBlizzYou(472745, nil, nil, nil, 1, 2, nil, nil, "poolyou")
+local specWarnBoneHack				= mod:NewSpecialWarningCount(472888, nil, nil, nil, 1, 2, nil, nil, "defensive")
+local specWarnDebilitatingShriek	= mod:NewSpecialWarningCount(472736, nil, nil, nil, 2, 2, nil, nil, "aesoon")
+local specWarnCurseofDarkness		= mod:NewSpecialWarningCount(474105, nil, nil, nil, 2, 2, nil, nil, "mobsoon")
 
 local timerBoneHackCD				= mod:NewCDCountTimer(17.3, 472888, nil, "Tank", nil, 2, nil, DBM_COMMON_L.TANK_ICON)
 local timerCurseofDarknessCD		= mod:NewCDCountTimer(22.7, 474105, nil, nil, 2, 3, nil, DBM_COMMON_L.CURSE_ICON)

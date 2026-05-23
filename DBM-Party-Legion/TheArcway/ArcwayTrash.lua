@@ -15,12 +15,12 @@ mod:RegisterEvents(
 )
 
 --TODO, for time being, not registering high cpu spell damage events for GTFOs. One warning should be enough. Will re-evalulate if it is a problem
-local specWarnArgusPortal			= mod:NewSpecialWarningInterrupt(211757, "HasInterrupt", nil, nil, 1, 2)
-local specWarnArcaneReconstitution	= mod:NewSpecialWarningInterrupt(226206, "HasInterrupt", nil, nil, 1, 2)
+local specWarnArgusPortal			= mod:NewSpecialWarningInterrupt(211757, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
+local specWarnArcaneReconstitution	= mod:NewSpecialWarningInterrupt(226206, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
 
-local specWarnOozePuddle			= mod:NewSpecialWarningMove(194006, nil, nil, nil, 1, 2)
-local specWarnColapsingRift			= mod:NewSpecialWarningMove(210750, nil, nil, nil, 1, 2)
-local specWarnFelStrike				= mod:NewSpecialWarningMove(211745, nil, nil, nil, 1, 2)
+local specWarnOozePuddle			= mod:NewSpecialWarningMove(194006, nil, nil, nil, 1, 2, nil, nil, "runaway")
+local specWarnColapsingRift			= mod:NewSpecialWarningMove(210750, nil, nil, nil, 1, 2, nil, nil, "runaway")
+local specWarnFelStrike				= mod:NewSpecialWarningMove(211745, nil, nil, nil, 1, 2, nil, nil, "runaway")
 
 function mod:SPELL_CAST_START(args)
 	if not self.Options.Enabled then return end

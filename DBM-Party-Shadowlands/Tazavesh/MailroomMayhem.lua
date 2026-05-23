@@ -46,12 +46,12 @@ local warnHazardousLiquids			= mod:NewSpellAnnounce(346286, 2)
 local warnAlchemicalResidue			= mod:NewTargetNoFilterAnnounce(346844, 2, nil, false, 2)
 local warnUnstableGoods				= mod:NewTargetNoFilterAnnounce(369133, 2)--Holding package
 
-local specWarnUnstableGoods			= mod:NewSpecialWarningCount(346947, nil, nil, nil, 1, 2)
-local specWarnFanMail				= mod:NewSpecialWarningCount(346293, nil, nil, nil, 2, 2)
-local specWarnMoneyOrder			= mod:NewSpecialWarningMoveTo(346962, nil, nil, nil, 1, 2)
+local specWarnUnstableGoods			= mod:NewSpecialWarningCount(346947, nil, nil, nil, 1, 2, nil, nil, "specialsoon")
+local specWarnFanMail				= mod:NewSpecialWarningCount(346293, nil, nil, nil, 2, 2, nil, nil, "aesoon")
+local specWarnMoneyOrder			= mod:NewSpecialWarningMoveTo(346962, nil, nil, nil, 1, 2, nil, nil, "gathershare")
 local yellMoneyOrder				= mod:NewYell(346962, nil, nil, nil, "YELL")
 local yellMoneyOrderFades			= mod:NewShortFadesYell(346962, nil, nil, nil, "YELL")
-local specWarnGTFO					= mod:NewSpecialWarningGTFO(346329, nil, nil, nil, 1, 8)
+local specWarnGTFO					= mod:NewSpecialWarningGTFO(346329, nil, nil, nil, 1, 8, nil, nil, "watchfeet")
 
 local timerUnstableGoodsCD			= mod:NewCDCountTimer(42.5, 346947, nil, nil, nil, 5)
 local timerHazardousLiquidsCD		= mod:NewCDCountTimer(42.5, 346286, nil, nil, nil, 3)

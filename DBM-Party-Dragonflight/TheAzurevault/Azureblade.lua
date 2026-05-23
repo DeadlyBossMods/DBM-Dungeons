@@ -27,11 +27,11 @@ mod:RegisterEventsInCombat(
 --https://www.warcraftlogs.com/reports/1fvXGDK69nmq3MA7#fight=1&pins=2%24Off%24%23244F4B%24expression%24(ability.id%20%3D%20372222%20or%20ability.id%20%3D%20385578%20or%20ability.id%20%3D%20384223%20or%20ability.id%20%3D%20384132)%20and%20type%20%3D%20%22begincast%22%0A%20or%20ability.id%20%3D%20384132%20and%20type%20%3D%20%22removebuff%22%0A%20or%20type%20%3D%20%22dungeonencounterstart%22%20or%20type%20%3D%20%22dungeonencounterend%22&view=events
 local warnSummonDraconicImage					= mod:NewSpellAnnounce(384223, 3)
 
-local specWarnArcaneCleave						= mod:NewSpecialWarningSpell(372222, nil, nil, nil, 1, 2)
-local specWarnAncientOrb						= mod:NewSpecialWarningDodge(385578, nil, nil, nil, 2, 2)
+local specWarnArcaneCleave						= mod:NewSpecialWarningSpell(372222, nil, nil, nil, 1, 2, nil, nil, "shockwave")
+local specWarnAncientOrb						= mod:NewSpecialWarningDodge(385578, nil, nil, nil, 2, 2, nil, nil, "watchorb")
 local yellAncientOrb							= mod:NewYell(385578)
-local specWarnIllusionaryBolt					= mod:NewSpecialWarningInterrupt(373932, "HasInterrupt", nil, nil, 1, 2)
-local specWarnOverwhelmingEnergy				= mod:NewSpecialWarningSpell(384132, nil, nil, nil, 2, 2)
+local specWarnIllusionaryBolt					= mod:NewSpecialWarningInterrupt(373932, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
+local specWarnOverwhelmingEnergy				= mod:NewSpecialWarningSpell(384132, nil, nil, nil, 2, 2, nil, nil, "phasechange")
 
 local timerArcaneCleaveCD						= mod:NewCDTimer(13.3, 372222, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON)--13.3-15
 local timerAncientOrbCD							= mod:NewCDTimer(15.7, 385578, nil, nil, nil, 3)

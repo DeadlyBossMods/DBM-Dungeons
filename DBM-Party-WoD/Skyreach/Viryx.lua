@@ -16,8 +16,8 @@ if DBM:IsPostMidnight() then
 	local warnLensFlare				= mod:NewCountAnnounce(1253531, 2)
 	local warnCastDown				= mod:NewBlizzTargetAnnounce(1253998, 4)
 
-	local specWarnCastDown			= mod:NewSpecialWarningCount(1253998, nil, nil, DBM_COMMON_L.ADD, 1, 2)
-	local specWarnSolarBlast		= mod:NewSpecialWarningInterruptCount(154396, "HasInterrupt", nil, nil, 1, 2)
+	local specWarnCastDown			= mod:NewSpecialWarningCount(1253998, nil, nil, DBM_COMMON_L.ADD, 1, 2, nil, nil, "targetchange")
+	local specWarnSolarBlast		= mod:NewSpecialWarningInterruptCount(154396, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
 
 	local timerScorchingRayCD		= mod:NewCDCountTimer(20.5, 1253538, nil, nil, nil, 3)
 	local timerCastDownCD			= mod:NewCDCountTimer(20.5, 1253998, DBM_COMMON_L.ADD.." (%s)", nil, nil, 1, nil, DBM_COMMON_L.IMPORTANT_ICON..DBM_COMMON_L.DAMAGE_ICON)
@@ -150,12 +150,12 @@ else
 	local warnCastDown			= mod:NewTargetNoFilterAnnounce(153954, 4)
 	local warnShielding			= mod:NewTargetNoFilterAnnounce(154055, 2)
 
-	local specWarnCastDownSoon	= mod:NewSpecialWarningSoon(153954, nil, nil, nil, 1, 2)--Everyone, becaus it can grab healer too, which affects healer/tank
-	local specWarnCastDown		= mod:NewSpecialWarningSwitch(153954, "Dps", nil, nil, 3, 2)--Only dps, because it's their job to stop it.
-	local specWarnLensFlareCast	= mod:NewSpecialWarningSpell(154043, nil, nil, nil, 2, 2)--If there is any way to find actual target, like maybe target scanning, this will be changed.
-	local specWarnLensFlare		= mod:NewSpecialWarningGTFO(154043, nil, nil, nil, 1, 8)
-	local specWarnAdd			= mod:NewSpecialWarning("specWarnAdd", "Dps", nil, nil, 1, 2)
-	local specWarnShielding		= mod:NewSpecialWarningInterrupt(154055, "HasInterrupt", nil, 2, 1, 2)
+	local specWarnCastDownSoon	= mod:NewSpecialWarningSoon(153954, nil, nil, nil, 1, 2, nil, nil, "mobsoon")--Everyone, becaus it can grab healer too, which affects healer/tank
+	local specWarnCastDown		= mod:NewSpecialWarningSwitch(153954, "Dps", nil, nil, 3, 2, nil, nil, "helpme")--Only dps, because it's their job to stop it.
+	local specWarnLensFlareCast	= mod:NewSpecialWarningSpell(154043, nil, nil, nil, 2, 2, nil, nil, "watchstep")--If there is any way to find actual target, like maybe target scanning, this will be changed.
+	local specWarnLensFlare		= mod:NewSpecialWarningGTFO(154043, nil, nil, nil, 1, 8, nil, nil, "watchfeet")
+	local specWarnAdd			= mod:NewSpecialWarning("specWarnAdd", "Dps", nil, nil, 1, 2, nil, nil, nil, nil, "killmob")
+	local specWarnShielding		= mod:NewSpecialWarningInterrupt(154055, "HasInterrupt", nil, 2, 1, 2, nil, nil, "kickcast")
 
 	local timerLenseFlareCD		= mod:NewCDTimer(38, 154043, nil, nil, nil, 3)
 	local timerCastDownCD		= mod:NewCDTimer(28, 153954, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)

@@ -32,10 +32,10 @@ ability.id = 255577 and type = "begincast"
 local warnTransfusion				= mod:NewCountAnnounce(255577, 1)
 local warnMoltenGold				= mod:NewCountAnnounce(255582, 3)
 
-local specWarnTransfusion			= mod:NewSpecialWarningMoveTo(255577, nil, nil, nil, 3, 2)
-local specWarnClaws					= mod:NewSpecialWarningDefensive(255579, "Tank", nil, nil, 1, 2)
-local specWarnClawsDispel			= mod:NewSpecialWarningDispel(255579, "MagicDispeller", nil, nil, 1, 2)
-local specWarnSpiritofGold			= mod:NewSpecialWarningSwitchCount(259205, "Dps", nil, nil, 1, 2, 3)
+local specWarnTransfusion			= mod:NewSpecialWarningMoveTo(255577, nil, nil, nil, 3, 2, nil, nil, "takedamage")
+local specWarnClaws					= mod:NewSpecialWarningDefensive(255579, "Tank", nil, nil, 1, 2, nil, nil, "defensive")
+local specWarnClawsDispel			= mod:NewSpecialWarningDispel(255579, "MagicDispeller", nil, nil, 1, 2, nil, nil, "dispelboss")
+local specWarnSpiritofGold			= mod:NewSpecialWarningSwitchCount(259205, "Dps", nil, nil, 1, 2, 3, nil, "killmob")
 --local specWarnGTFO					= mod:NewSpecialWarningGTFO(277072, nil, nil, nil, 1, 8)--Unclear, it seems from logs once you step in it, you don't lose debuff moving out of it
 
 local timerTransfusionCD			= mod:NewCDCountTimer(34, 255577, nil, nil, nil, 5)

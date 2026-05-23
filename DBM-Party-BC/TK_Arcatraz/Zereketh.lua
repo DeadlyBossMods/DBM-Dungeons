@@ -27,9 +27,9 @@ mod:RegisterEventsInCombat(
 
 local warnVoid      = mod:NewSpellAnnounce(36119, 3)
 
-local specwarnNova	= mod:NewSpecialWarningSpell(39005, nil, nil, nil, 2, 2)
-local specwarnSoC	= mod:NewSpecialWarningDispel(39367, "RemoveMagic", nil, 2, 1, 2)
-local specWarnGTFO	= mod:NewSpecialWarningGTFO(36121, nil, nil, nil, 1, 8)
+local specwarnNova	= mod:NewSpecialWarningSpell(39005, nil, nil, nil, 2, 2, nil, nil, "aesoon")
+local specwarnSoC	= mod:NewSpecialWarningDispel(39367, "RemoveMagic", nil, 2, 1, 2, nil, nil, "dispelnow")
+local specWarnGTFO	= mod:NewSpecialWarningGTFO(36121, nil, nil, nil, 1, 8, nil, nil, "watchfeet")
 
 local timerSoC      = mod:NewTargetTimer(18, 39367, nil, "Healer", 2, 3, nil, DBM_COMMON_L.MAGIC_ICON)
 

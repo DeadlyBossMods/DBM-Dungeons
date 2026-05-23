@@ -10,12 +10,12 @@ mod:RegisterCombat("combat")
 if DBM:IsPostMidnight() then
 	local warnDiscordantbeam			= mod:NewCountAnnounce(1265426, 2)
 
-	local specWarnDiscordantbeam		= mod:NewSpecialWarningBlizzYou(1265426, nil, nil, nil, 1, 19)
-	local specWarnDirge					= mod:NewSpecialWarningCount(1265421, nil, nil, nil, 2, 2)
-	local specWarnDisintegrate			= mod:NewSpecialWarningDodgeCount(1264151, nil, nil, nil, 2, 2)
-	local specWarnGrimChorus			= mod:NewSpecialWarningCount(1265689, nil, nil, nil, 2, 2)
-	local specWarnSymphony				= mod:NewSpecialWarningCount(1266003, nil, nil, nil, 3, 2)
-	local specWarnBacklash				= mod:NewSpecialWarningCount(1266001, nil, nil, nil, 2, 2)
+	local specWarnDiscordantbeam		= mod:NewSpecialWarningBlizzYou(1265426, nil, nil, nil, 1, 19, nil, nil, "beamyou")
+	local specWarnDirge					= mod:NewSpecialWarningCount(1265421, nil, nil, nil, 2, 2, nil, nil, "aesoon")
+	local specWarnDisintegrate			= mod:NewSpecialWarningDodgeCount(1264151, nil, nil, nil, 2, 2, nil, nil, "farfromline")
+	local specWarnGrimChorus			= mod:NewSpecialWarningCount(1265689, nil, nil, nil, 2, 2, nil, nil, "stilldanger")
+	local specWarnSymphony				= mod:NewSpecialWarningCount(1266003, nil, nil, nil, 3, 2, nil, nil, "watchstep")
+	local specWarnBacklash				= mod:NewSpecialWarningCount(1266001, nil, nil, nil, 2, 2, nil, nil, "carefly")
 
 	local timerDirgeCD					= mod:NewCDCountTimer(20.5, 1265421, nil, nil, nil, 2)
 	local timerDiscordantBeamCD			= mod:NewCDCountTimer(20.5, 1265426, nil, nil, nil, 3)
@@ -171,9 +171,9 @@ else
 	local warnBacklash						= mod:NewTargetAnnounce(247816, 1)
 	local warnNaarusLamen					= mod:NewTargetAnnounce(248535, 2)
 
-	local specWarnCalltoVoid				= mod:NewSpecialWarningSwitch(247795, nil, nil, nil, 1, 2)
-	local specWarnFragmentOfDespair			= mod:NewSpecialWarningSpell(245164, nil, nil, nil, 1, 2)
-	local specWarnGrandShift				= mod:NewSpecialWarningDodge(249009, nil, nil, nil, 2, 2)
+	local specWarnCalltoVoid				= mod:NewSpecialWarningSwitch(247795, nil, nil, nil, 1, 2, nil, nil, "killmob")
+	local specWarnFragmentOfDespair			= mod:NewSpecialWarningSpell(245164, nil, nil, nil, 1, 2, nil, nil, "helpsoak")
+	local specWarnGrandShift				= mod:NewSpecialWarningDodge(249009, nil, nil, nil, 2, 2, nil, nil, "watchstep")
 
 	--local timerCalltoVoidCD				= mod:NewAITimer(12, 247795, nil, nil, nil, 1)
 	local timerGrandShiftCD					= mod:NewCDTimer(14.6, 249009, nil, nil, nil, 3, nil, DBM_COMMON_L.HEROIC_ICON)

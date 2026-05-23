@@ -34,28 +34,28 @@ mod:AddTimerLine(DBM:EJ_GetSectionInfo(18484))
 ----Lighting
 local warnConduction				= mod:NewTargetAnnounce(263371, 2)
 
-local specWarnJolt					= mod:NewSpecialWarningInterrupt(263318, "HasInterrupt", nil, nil, 1, 2)
-local specWarnConduction			= mod:NewSpecialWarningMoveAway(263371, nil, nil, nil, 3, 2)
+local specWarnJolt					= mod:NewSpecialWarningInterrupt(263318, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
+local specWarnConduction			= mod:NewSpecialWarningMoveAway(263371, nil, nil, nil, 3, 2, nil, nil, "runout")
 local yellConduction				= mod:NewYell(263371)
 local yellConductionFades			= mod:NewShortFadesYell(263371)
-local specWarnStaticShock			= mod:NewSpecialWarningSpell(263257, nil, nil, nil, 2, 2)
+local specWarnStaticShock			= mod:NewSpecialWarningSpell(263257, nil, nil, nil, 2, 2, nil, nil, "aesoon")
 
 local timerConductionCD				= mod:NewCDTimer(13, 263371, nil, nil, nil, 3)--NYI
 local timerStaticShockCD			= mod:NewCDTimer(13, 263257, nil, nil, nil, 2, nil, DBM_COMMON_L.HEALER_ICON)
 ----Wind
-local specWarnGust					= mod:NewSpecialWarningInterrupt(263775, "HasInterrupt", nil, nil, 1, 2)
-local specWarnGaleForce				= mod:NewSpecialWarningSpell(263776, nil, nil, nil, 2, 2)
+local specWarnGust					= mod:NewSpecialWarningInterrupt(263775, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
+local specWarnGaleForce				= mod:NewSpecialWarningSpell(263776, nil, nil, nil, 2, 2, nil, nil, "specialsoon")
 
 local timerGaleForceCD				= mod:NewCDTimer(14.5, 263776, nil, nil, nil, 3, nil, DBM_COMMON_L.HEROIC_ICON)
 --Adderis
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(18485))
 ----Lightning
-local specWarnPearlofThunder		= mod:NewSpecialWarningRun(263365, nil, nil, nil, 4, 2)
+local specWarnPearlofThunder		= mod:NewSpecialWarningRun(263365, nil, nil, nil, 4, 2, nil, nil, "justrun")
 
 local timerArcDashCD				= mod:NewCDTimer(23, 263424, nil, nil, nil, 3)
 ----Wind
-local specWarnCycloneStrike			= mod:NewSpecialWarningYou(263573, nil, nil, nil, 3, 2)
-local specWarnCycloneStrikeOther	= mod:NewSpecialWarningDodge(263573, nil, nil, nil, 3, 2)
+local specWarnCycloneStrike			= mod:NewSpecialWarningYou(263573, nil, nil, nil, 3, 2, nil, nil, "targetyou")
+local specWarnCycloneStrikeOther	= mod:NewSpecialWarningDodge(263573, nil, nil, nil, 3, 2, nil, nil, "shockwave")
 local yellCycloneStrike				= mod:NewYell(263573)
 
 local timerArcingBladeCD			= mod:NewCDTimer(13.4, 263234, nil, nil, nil, 5, nil, DBM_COMMON_L.HEROIC_ICON)

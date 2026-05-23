@@ -33,8 +33,8 @@ local warnDisplacedBlastwave		= mod:NewSpellAnnounce(320326, 2)
 local warnLocalizedExplosive		= mod:NewTargetNoFilterAnnounce(321948, 4)
 local warnArcaneLightning			= mod:NewTargetNoFilterAnnounce(323687, 2)
 
-local specWarnExplosiveContrivance	= mod:NewSpecialWarningMoveTo(320230, nil, 201291, nil, 3, 2)--"Explosion" shortname
-local specWarnLocalizedExplosive	= mod:NewSpecialWarningMoveTo(321948, nil, 188104, nil, 3, 2)--"Localized Explosion" shortname
+local specWarnExplosiveContrivance	= mod:NewSpecialWarningMoveTo(320230, nil, 201291, nil, 3, 2, nil, nil, "findshelter")--"Explosion" shortname
+local specWarnLocalizedExplosive	= mod:NewSpecialWarningMoveTo(321948, nil, 188104, nil, 3, 2, nil, nil, "targetyou")--"Localized Explosion" shortname
 local yellLocalizedExplosive		= mod:NewYell(321948)
 local yellLocalizedExplosiveFades	= mod:NewShortFadesYell(321948)
 local yellArcaneLightning			= mod:NewYell(323687)

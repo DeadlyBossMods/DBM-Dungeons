@@ -12,9 +12,9 @@ mod:RegisterCombat("combat")
 if DBM:IsPostMidnight() then
 	local warnGaleSurge				= mod:NewCountAnnounce(1252733, 2)
 
-	local specWarnFanofBlades		= mod:NewSpecialWarningCount(153757, nil, nil, DBM_COMMON_L.AOEDAMAGE, 2, 2)
-	local specWarnWindChakram		= mod:NewSpecialWarningCount(1258148, nil, nil, DBM_COMMON_L.FRONTAL, 2, 15)
-	local specWarnChakramVortex		= mod:NewSpecialWarningCount(156793, nil, nil, nil, 2, 2)
+	local specWarnFanofBlades		= mod:NewSpecialWarningCount(153757, nil, nil, DBM_COMMON_L.AOEDAMAGE, 2, 2, nil, nil, "aesoon")
+	local specWarnWindChakram		= mod:NewSpecialWarningCount(1258148, nil, nil, DBM_COMMON_L.FRONTAL, 2, 15, nil, nil, "frontal")
+	local specWarnChakramVortex		= mod:NewSpecialWarningCount(156793, nil, nil, nil, 2, 2, nil, nil, "watchstep")
 
 	local timerGaleSurgeCD			= mod:NewCDCountTimer(20.5, 1252733, 28405, nil, nil, 3)
 	local timerFanofBladesCD		= mod:NewCDCountTimer(20.5, 153757, DBM_COMMON_L.AOEDAMAGE.." (%s)", nil, nil, 2, nil, DBM_COMMON_L.BLEED_ICON..DBM_COMMON_L.HEALER_ICON)
@@ -139,10 +139,10 @@ else
 	local warnPiercingRush		= mod:NewTargetNoFilterAnnounce(165731, 2)--EJ shows tank warning but in my encounter it could target anyone. If this changes I'll tweak the default to tank/healer
 	local warnLensFlare			= mod:NewSpellAnnounce(154043, 3)
 
-	local specWarnFourWinds		= mod:NewSpecialWarningSpell(156793, nil, nil, nil, 2, 2)
-	local specWarnWindFallMove	= mod:NewSpecialWarningMove(153315, nil, nil, nil, 1, 8)
+	local specWarnFourWinds		= mod:NewSpecialWarningSpell(156793, nil, nil, nil, 2, 2, nil, nil, "wwsoon")
+	local specWarnWindFallMove	= mod:NewSpecialWarningMove(153315, nil, nil, nil, 1, 8, nil, nil, "watchfeet")
 	local specWarnLensFlare		= mod:NewSpecialWarningSpell(154043, nil, nil, nil, 2)
-	local specWarnLensFlareMove	= mod:NewSpecialWarningMove(154043, nil, nil, nil, 1, 8)
+	local specWarnLensFlareMove	= mod:NewSpecialWarningMove(154043, nil, nil, nil, 1, 8, nil, nil, "watchfeet")
 
 	local timerFourWinds		= mod:NewBuffActiveTimer(18, 156793)
 	local timerFourWindsCD		= mod:NewCDTimer(30, 156793)

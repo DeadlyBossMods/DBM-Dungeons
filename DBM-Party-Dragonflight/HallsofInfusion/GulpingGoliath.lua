@@ -31,11 +31,11 @@ local warnHangry								= mod:NewSpellAnnounce(385743, 2, nil, "Tank|Healer")
 local warnBodySlam								= mod:NewTargetNoFilterAnnounce(385531, 3)
 local warnToxicEff								= mod:NewCountAnnounce(385442, 3)
 
-local specWarnGulpSwogToxin						= mod:NewSpecialWarningStack(374389, nil, 8, nil, nil, 1, 6)
-local specWarnGulp								= mod:NewSpecialWarningRunCount(385551, nil, nil, nil, 4, 2)
-local specWarnHangry							= mod:NewSpecialWarningDispel(385743, "RemoveEnrage", nil, nil, 1, 2)
-local specWarnOverpoweringCroak					= mod:NewSpecialWarningDodgeCount(385187, nil, nil, nil, 2, 2)--385181 is cast but lacks tooltip, so damage Id used for tooltip/option
-local specWarnBodySlam							= mod:NewSpecialWarningMoveAway(385531, nil, nil, nil, 1, 2)
+local specWarnGulpSwogToxin						= mod:NewSpecialWarningStack(374389, nil, 8, nil, nil, 1, 6, nil, nil, "stackhigh")
+local specWarnGulp								= mod:NewSpecialWarningRunCount(385551, nil, nil, nil, 4, 2, nil, nil, "justrun")
+local specWarnHangry							= mod:NewSpecialWarningDispel(385743, "RemoveEnrage", nil, nil, 1, 2, nil, nil, "enrage")
+local specWarnOverpoweringCroak					= mod:NewSpecialWarningDodgeCount(385187, nil, nil, nil, 2, 2, nil, nil, "aesoon")--385181 is cast but lacks tooltip, so damage Id used for tooltip/option
+local specWarnBodySlam							= mod:NewSpecialWarningMoveAway(385531, nil, nil, nil, 1, 2, nil, nil, "runout")
 local yellBodySlam								= mod:NewYell(385531)
 
 local timerGulpCD								= mod:NewCDCountTimer(38.8, 385551, nil, nil, nil, 3)

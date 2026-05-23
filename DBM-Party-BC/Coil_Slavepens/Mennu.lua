@@ -26,7 +26,7 @@ mod:RegisterEventsInCombat(
 local WarnStoneskinTotem		= mod:NewSpellAnnounce(31985, 2)
 local WarnHealingWard			= mod:NewSpellAnnounce(34980, 3)
 
-local specWarnCorruptedNova		= mod:NewSpecialWarningMove(31991, false, nil, nil, 1, 2)
+local specWarnCorruptedNova		= mod:NewSpecialWarningMove(31991, false, nil, nil, 1, 2, nil, nil, "runaway")
 
 function mod:SPELL_SUMMON(args)
 	if args.spellId == 31991 then

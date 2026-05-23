@@ -18,9 +18,9 @@ if DBM:IsPostMidnight() then
 	--Midnight private aura replacements
 --	mod:AddPrivateAuraSoundOption(433740, true, 433740, 1)
 
-	local specWarnSavagePeck					= mod:NewSpecialWarningCount(376997, nil, nil, nil, 1, 2)
-	local specWarnDeafeningScreech				= mod:NewSpecialWarningCount(377004, nil, nil, DBM_COMMON_L.AOEDAMAGE, 2, 2)
-	local specWarnOverpoweringGust				= mod:NewSpecialWarningCount(377034, nil, nil, DBM_COMMON_L.FRONTAL, 2, 15)
+	local specWarnSavagePeck					= mod:NewSpecialWarningCount(376997, nil, nil, nil, 1, 2, nil, nil, "defensive")
+	local specWarnDeafeningScreech				= mod:NewSpecialWarningCount(377004, nil, nil, DBM_COMMON_L.AOEDAMAGE, 2, 2, nil, nil, "scatter")
+	local specWarnOverpoweringGust				= mod:NewSpecialWarningCount(377034, nil, nil, DBM_COMMON_L.FRONTAL, 2, 15, nil, nil, "frontal")
 
 	local timerSavagePeckCD						= mod:NewCDCountTimer(13.6, 376997, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 	local timerDeafeningScreechCD				= mod:NewCDCountTimer(22.7, 377004, DBM_COMMON_L.AOEDAMAGE.." (%s)", nil, nil, 2, nil, DBM_COMMON_L.HEALER_ICON)
@@ -151,11 +151,11 @@ else
 	--]]
 	local warnPlayBall								= mod:NewSpellAnnounce(377182, 2, nil, nil, nil, nil, nil, 2)
 
-	local specWarnFirestorm							= mod:NewSpecialWarningDodge(376448, nil, nil, nil, 2, 2)
-	local specWarnOverpoweringGust					= mod:NewSpecialWarningDodge(377034, nil, nil, nil, 2, 2)
+	local specWarnFirestorm							= mod:NewSpecialWarningDodge(376448, nil, nil, nil, 2, 2, nil, nil, "watchstep")
+	local specWarnOverpoweringGust					= mod:NewSpecialWarningDodge(377034, nil, nil, nil, 2, 2, nil, nil, "shockwave")
 	local yellOverpoweringGust						= mod:NewYell(377034)
-	local specWarnDeafeningScreech					= mod:NewSpecialWarningMoveAwayCount(377004, nil, nil, nil, 2, 2)
-	local specWarnSavagePeck						= mod:NewSpecialWarningDefensive(376997, nil, nil, nil, 1, 2)
+	local specWarnDeafeningScreech					= mod:NewSpecialWarningMoveAwayCount(377004, nil, nil, nil, 2, 2, nil, nil, "scatter")
+	local specWarnSavagePeck						= mod:NewSpecialWarningDefensive(376997, nil, nil, nil, 1, 2, nil, nil, "defensive")
 
 	local timerFirestorm							= mod:NewBuffActiveTimer(12, 376448, nil, nil, nil, 1)
 	local timerOverpoweringGustCD					= mod:NewCDTimer(28.2, 377034, nil, nil, nil, 3)

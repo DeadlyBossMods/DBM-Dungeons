@@ -27,13 +27,13 @@ mod:RegisterEventsInCombat(
 local warnHatch						= mod:NewCastAnnounce(264239, 3)
 local warnBurrow					= mod:NewSpellAnnounce(264206, 2, nil, nil, nil, nil, nil, nil, true)
 
-local specWarnHadotoxinOther		= mod:NewSpecialWarningDispel(263957, "RemovePoison", nil, nil, 1, 2)
-local specWarnNoxiousBreath			= mod:NewSpecialWarningDodge(272657, nil, nil, nil, 2, 2)
-local specWarnBlindingSand			= mod:NewSpecialWarningLookAway(263914, nil, nil, nil, 2, 2)
-local specWarnKnotofSnakes			= mod:NewSpecialWarningSwitch(263958, "-Healer", nil, nil, 1, 2)
-local specWarnKnotofSnakesYou		= mod:NewSpecialWarningYou(263958, nil, nil, nil, 1, 2)
+local specWarnHadotoxinOther		= mod:NewSpecialWarningDispel(263957, "RemovePoison", nil, nil, 1, 2, nil, nil, "helpdispel")
+local specWarnNoxiousBreath			= mod:NewSpecialWarningDodge(272657, nil, nil, nil, 2, 2, nil, nil, "watchstep")
+local specWarnBlindingSand			= mod:NewSpecialWarningLookAway(263914, nil, nil, nil, 2, 2, nil, nil, "turnaway")
+local specWarnKnotofSnakes			= mod:NewSpecialWarningSwitch(263958, "-Healer", nil, nil, 1, 2, nil, nil, "killmob")
+local specWarnKnotofSnakesYou		= mod:NewSpecialWarningYou(263958, nil, nil, nil, 1, 2, nil, nil, "targetyou")
 local yellKnotofSnakes				= mod:NewYell(263958)
-local specWarnGTFO					= mod:NewSpecialWarningGTFO(263927, nil, nil, nil, 1, 8)
+local specWarnGTFO					= mod:NewSpecialWarningGTFO(263927, nil, nil, nil, 1, 8, nil, nil, "watchfeet")
 
 local timerNoxiousBreathCD			= mod:NewCDTimer(89.3, 272657, nil, nil, nil, 3)
 local timerHatch					= mod:NewCastTimer(35, 264239, nil, nil, nil, 1)--even need a CD bar or just cast bar?

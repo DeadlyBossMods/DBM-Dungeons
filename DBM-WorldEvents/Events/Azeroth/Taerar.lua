@@ -19,7 +19,7 @@ mod:RegisterEventsInCombat(
 local warnNoxiousBreath			= mod:NewStackAnnounce(243401, 2, nil, "Tank")
 local warningBellowingRoar		= mod:NewSpellAnnounce(243661, 3)
 
-local specWarnSleepingFog		= mod:NewSpecialWarningDodge(243399, nil, nil, nil, 2, 2)
+local specWarnSleepingFog		= mod:NewSpecialWarningDodge(243399, nil, nil, nil, 2, 2, nil, nil, "watchstep")
 
 local timerNoxiousBreathCD		= mod:NewCDTimer(19.4, 243401, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON)--Iffy
 local timerSleepingFogCD		= mod:NewCDTimer(17, 243399, nil, nil, nil, 3)

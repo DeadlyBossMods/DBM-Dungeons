@@ -16,7 +16,7 @@ mod:RegisterEventsInCombat(
 
 local warningWitheredTouch			= mod:NewTargetNoFilterAnnounce(11442, 2, nil, "RemoveDisease")
 
-local specWarnPutridStench			= mod:NewSpecialWarningDispel(12946, "RemoveDisease", nil, nil, 1, 2)
+local specWarnPutridStench			= mod:NewSpecialWarningDispel(12946, "RemoveDisease", nil, nil, 1, 2, nil, nil, "helpdispel")
 
 local timerPutridStenchCD			= mod:NewAITimer(180, 12946, nil, nil, nil, 5, nil, DBM_COMMON_L.DISEASE_ICON)
 

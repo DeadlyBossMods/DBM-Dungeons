@@ -27,8 +27,8 @@ local warnDiscomBomb				= mod:NewCountAnnounce(285454, 2)
 local warnSelfTrimmingHedge			= mod:NewCountAnnounce(294954, 2)
 local warnPlant						= mod:NewCountAnnounce(294853, 2)
 
-local specWarnFlameCannon			= mod:NewSpecialWarningCount(285440, nil, nil, nil, 2, 2)
-local specWarnDiscomBomb			= mod:NewSpecialWarningDispel(285454, "RemoveMagic", nil, nil, 2, 2)
+local specWarnFlameCannon			= mod:NewSpecialWarningCount(285440, nil, nil, nil, 2, 2, nil, nil, "aesoon")
+local specWarnDiscomBomb			= mod:NewSpecialWarningDispel(285454, "RemoveMagic", nil, nil, 2, 2, nil, nil, "helpdispel")
 --local specWarnGTFO				= mod:NewSpecialWarningGTFO(238028, nil, nil, nil, 1, 8)
 
 local timerDiscomBombCD				= mod:NewNextCountTimer(20.6, 285454, nil, nil, nil, 3)

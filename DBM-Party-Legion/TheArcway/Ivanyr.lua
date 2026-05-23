@@ -22,11 +22,11 @@ mod:RegisterEventsInCombat(
 local warnVolatileMagic				= mod:NewTargetAnnounce(196562, 3)
 local warnNetherLink				= mod:NewTargetAnnounce(196805, 4)
 
-local specWarnVolatileMagic			= mod:NewSpecialWarningMoveAway(196562, nil, nil, nil, 1, 2)
+local specWarnVolatileMagic			= mod:NewSpecialWarningMoveAway(196562, nil, nil, nil, 1, 2, nil, nil, "runout")
 local yellVolatileMagic				= mod:NewYell(196562)
-local specWarnNetherLink			= mod:NewSpecialWarningYou(196805, nil, nil, nil, 1, 2)
-local specWarnNetherLinkGTFO		= mod:NewSpecialWarningMove(196805, nil, nil, nil, 1, 2)
-local specWarnOverchargeMana		= mod:NewSpecialWarningInterrupt(196392, "HasInterrupt", nil, nil, 1, 2)
+local specWarnNetherLink			= mod:NewSpecialWarningYou(196805, nil, nil, nil, 1, 2, nil, nil, "targetyou")
+local specWarnNetherLinkGTFO		= mod:NewSpecialWarningMove(196805, nil, nil, nil, 1, 2, nil, nil, "runaway")
+local specWarnOverchargeMana		= mod:NewSpecialWarningInterrupt(196392, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
 
 local timerVolatileMagicCD			= mod:NewCDTimer(32, 196562, nil, nil, nil, 3)--Review, Might be health based? or just really variable
 local timerNetherLinkCD				= mod:NewCDTimer(30, 196805, nil, nil, nil, 3)

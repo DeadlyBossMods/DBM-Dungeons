@@ -20,7 +20,7 @@ mod:RegisterEventsInCombat(
 local warnDragonsReach			= mod:NewSpellAnnounce(111217, 2)
 local warnCallReinforcements	= mod:NewSpellAnnounce(-5378, 3)--triggers only found in emote
 
-local specWarnBladesofLight		= mod:NewSpecialWarningSpell(111216, nil, nil, nil, 4, 2)
+local specWarnBladesofLight		= mod:NewSpecialWarningSpell(111216, nil, nil, nil, 4, 2, nil, nil, "justrun")
 
 local timerDragonsReachCD		= mod:NewCDTimer(7, 111217, nil, nil, nil, 3)--12 on normal, 7 on heroic, OR, 7 in both and it was buffed on normal since i've run it. For time being i'll make it 7 but change it from next to CD
 local timerCallReinforcementsCD	= mod:NewCDTimer(20, -5378, nil, nil, nil, 1)--adjusted in build 15799?

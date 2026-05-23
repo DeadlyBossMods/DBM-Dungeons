@@ -36,7 +36,7 @@ local warnShieldEnd			= mod:NewEndAnnounce(86267, 1)
 local warnSummonTempest		= mod:NewCountAnnounce(86340, 2)
 local warnLethalCurrent		= mod:NewCastAnnounce(413151, 4)
 
-local specWarnGTFO			= mod:NewSpecialWarningGTFO(86292, nil, nil, nil, 1, 8)
+local specWarnGTFO			= mod:NewSpecialWarningGTFO(86292, nil, nil, nil, 1, 8, nil, nil, "watchfeet")
 
 local timerSummonTempest	= mod:NewCDCountTimer(16.8, 86340, nil, nil, nil, 1)--16.8 old
 local timerShield			= mod:NewNextCountTimer(30.5, 86292, nil, nil, nil, 6)

@@ -13,9 +13,9 @@ mod:RegisterCombat("combat")
 
 local warnRunicMark						= mod:NewCountAnnounce(1225787, 3)
 
-local specWarnSuppressionZone			= mod:NewSpecialWarningCount(1224903, nil, nil, nil, 2, 2)
-local specWarnHasteningWard				= mod:NewSpecialWarningCount(1248689, "MagicDispeller", nil, nil, 1, 2)
-local specWarnWaveOfSilence				= mod:NewSpecialWarningCount(1225193, nil, nil, nil, 2, 15)
+local specWarnSuppressionZone			= mod:NewSpecialWarningCount(1224903, nil, nil, nil, 2, 2, nil, nil, "watchstep")
+local specWarnHasteningWard				= mod:NewSpecialWarningCount(1248689, "MagicDispeller", nil, nil, 1, 2, nil, nil, "dispelboss")
+local specWarnWaveOfSilence				= mod:NewSpecialWarningCount(1225193, nil, nil, nil, 2, 15, nil, nil, "findshield")
 
 local timerSuppressionZoneCD			= mod:NewCDCountTimer(20.5, 1224903, nil, nil, nil, 3)
 local timerHasteningWardCD				= mod:NewCDCountTimer(20.5, 1248689, nil, nil, nil, 5, nil, DBM_COMMON_L.MAGIC_ICON..DBM_COMMON_L.TANK_ICON)

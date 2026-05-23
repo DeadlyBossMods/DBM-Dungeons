@@ -21,10 +21,10 @@ mod:RegisterEventsInCombat(
 --This mod needs an overhaul, but dungeon not likely to re-enter rotation any time soon so problem for another day
 local warnVX18B					= mod:NewCountAnnounce(162500, 2)--Cast twice, 3rd cast is X2101, then repeats
 
-local specWarnX2101AMissile		= mod:NewSpecialWarningSpell(162407, nil, nil, nil, 2, 2)--Large AOE damage
-local specWarnMadDash			= mod:NewSpecialWarningSpell(161090, nil, nil, nil, 2, 2)--DPS version of this warning
-local specWarnMadDashInterrupt	= mod:NewSpecialWarningMoveTo(161090, nil, nil, nil, 3, 1)--It's actually an interrupt warning for OTHER boss, not caster of this spell
-local specWarnSlam				= mod:NewSpecialWarningCast(162617, "SpellCaster", nil, nil, 1, 2)
+local specWarnX2101AMissile		= mod:NewSpecialWarningSpell(162407, nil, nil, nil, 2, 2, nil, nil, "aesoon")--Large AOE damage
+local specWarnMadDash			= mod:NewSpecialWarningSpell(161090, nil, nil, nil, 2, 2, nil, nil, "farfromline")--DPS version of this warning
+local specWarnMadDashInterrupt	= mod:NewSpecialWarningMoveTo(161090, nil, nil, nil, 3, 1, nil, nil, "targetyou")--It's actually an interrupt warning for OTHER boss, not caster of this spell
+local specWarnSlam				= mod:NewSpecialWarningCast(162617, "SpellCaster", nil, nil, 1, 2, nil, nil, "stopcast")
 
 --local timerVX18BCD				= mod:NewCDTimer(33, 162500, nil, nil, nil, 3)
 --local timerX2101AMissileCD		= mod:NewCDTimer(40, 162407, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON..DBM_COMMON_L.TANK_ICON)

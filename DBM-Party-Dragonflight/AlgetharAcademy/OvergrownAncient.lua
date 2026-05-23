@@ -39,10 +39,10 @@ if DBM:IsPostMidnight() then
 	--Midnight private aura replacements
 --	mod:AddPrivateAuraSoundOption(433740, true, 433740, 1)
 
-	local specWarnGerminate				= mod:NewSpecialWarningCount(388796, nil, nil, DBM_COMMON_L.SWIRLS, 2, 2)
-	local specWarnBurstForth			= mod:NewSpecialWarningCount(388923, nil, nil, DBM_COMMON_L.ADDS, 2, 2)
-	local specWarnBranchOut				= mod:NewSpecialWarningCount(388623, nil, nil, DBM_COMMON_L.BIG_ADD, 1, 2)
-	local specWarnBarkbreaker			= mod:NewSpecialWarningCount(388544, nil, "Tank|Healer", nil, 1, 2)
+	local specWarnGerminate				= mod:NewSpecialWarningCount(388796, nil, nil, DBM_COMMON_L.SWIRLS, 2, 2, nil, nil, "watchstep")
+	local specWarnBurstForth			= mod:NewSpecialWarningCount(388923, nil, nil, DBM_COMMON_L.ADDS, 2, 2, nil, nil, "aesoon")
+	local specWarnBranchOut				= mod:NewSpecialWarningCount(388623, nil, nil, DBM_COMMON_L.BIG_ADD, 1, 2, nil, nil, "bigmob")
+	local specWarnBarkbreaker			= mod:NewSpecialWarningCount(388544, nil, "Tank|Healer", nil, 1, 2, nil, nil, "defensive")
 
 	local timerGerminateCD				= mod:NewCDCountTimer(20.5, 388796, DBM_COMMON_L.SWIRLS.." (%s)", nil, nil, 3)
 	local timerBurstForthCD				= mod:NewCDCountTimer(20.5, 388923, DBM_COMMON_L.ADDS.." (%s)", nil, nil, 3, nil, DBM_COMMON_L.HEALER_ICON)
@@ -183,12 +183,12 @@ else
 	local warnHealingTouch							= mod:NewCastAnnounce(396640, 3)
 	local warnLasherToxin							= mod:NewStackAnnounce(389033, 2, nil, "Tank|Healer|RemoveDisease")
 
-	local specWarnGerminate							= mod:NewSpecialWarningDodge(388796, nil, nil, nil, 2, 2)
-	local specWarnLasherToxin						= mod:NewSpecialWarningStack(389033, nil, 12, nil, nil, 1, 6)
-	local specWarnBurstForth						= mod:NewSpecialWarningSpell(388923, nil, nil, nil, 2, 2)
-	local specWarnBranchOut							= mod:NewSpecialWarningDodge(388623, nil, nil, nil, 2, 2)
-	local specWarnHealingTouch						= mod:NewSpecialWarningInterrupt(396640, "HasInterrupt", nil, nil, 1, 2)
-	local specWarnBarkbreaker						= mod:NewSpecialWarningDefensive(388544, nil, nil, nil, 1, 2)
+	local specWarnGerminate							= mod:NewSpecialWarningDodge(388796, nil, nil, nil, 2, 2, nil, nil, "watchstep")
+	local specWarnLasherToxin						= mod:NewSpecialWarningStack(389033, nil, 12, nil, nil, 1, 6, nil, nil, "stackhigh")
+	local specWarnBurstForth						= mod:NewSpecialWarningSpell(388923, nil, nil, nil, 2, 2, nil, nil, "aesoon")
+	local specWarnBranchOut							= mod:NewSpecialWarningDodge(388623, nil, nil, nil, 2, 2, nil, nil, "watchstep")
+	local specWarnHealingTouch						= mod:NewSpecialWarningInterrupt(396640, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
+	local specWarnBarkbreaker						= mod:NewSpecialWarningDefensive(388544, nil, nil, nil, 1, 2, nil, nil, "defensive")
 
 	local timerGerminateCD							= mod:NewCDCountTimer(29.1, 388796, nil, nil, nil, 3)
 	local timerBurstForthCD							= mod:NewCDTimer(58.2, 388923, nil, nil, nil, 2, nil, DBM_COMMON_L.HEALER_ICON)--Assumed it's on same cycle as branch out, CD not confirmed

@@ -31,11 +31,11 @@ ability.id = 163054 and type = "begincast"
 local warnTimeToFeed			= mod:NewTargetNoFilterAnnounce(162415, 3)
 local warnBreakout				= mod:NewTargetNoFilterAnnounce(178124, 2)
 
-local specWarnRendingSlashes	= mod:NewSpecialWarningDodge(161239, nil, nil, nil, 3, 2)
-local specWarnRoar				= mod:NewSpecialWarningSpell(163054, nil, nil, nil, 2, 2)--Did they delete this?
-local specWarnTimeToFeed		= mod:NewSpecialWarningYou(162415, nil, nil, nil, 1, 2)--Can still move and attack during it, a personal warning lets a person immediately hit self heals/damage reduction abilities.
-local specWarnTimeToFeedOther	= mod:NewSpecialWarningTarget(162415, "Healer", nil, nil, 1, 2)
-local specWarnAcidSplash		= mod:NewSpecialWarningMove(178156, nil, nil, nil, 1, 8)
+local specWarnRendingSlashes	= mod:NewSpecialWarningDodge(161239, nil, nil, nil, 3, 2, nil, nil, "chargemove")
+local specWarnRoar				= mod:NewSpecialWarningSpell(163054, nil, nil, nil, 2, 2, nil, nil, "aesoon")--Did they delete this?
+local specWarnTimeToFeed		= mod:NewSpecialWarningYou(162415, nil, nil, nil, 1, 2, nil, nil, "defensive")--Can still move and attack during it, a personal warning lets a person immediately hit self heals/damage reduction abilities.
+local specWarnTimeToFeedOther	= mod:NewSpecialWarningTarget(162415, "Healer", nil, nil, 1, 2, nil, nil, "healfull")
+local specWarnAcidSplash		= mod:NewSpecialWarningMove(178156, nil, nil, nil, 1, 8, nil, nil, "watchfeet")
 
 --Rending Slashes still too varaible, like 26-40
 local timerTimeToFeedCD			= mod:NewCDTimer(38.1, 162415, nil, nil, nil, 3)--38-50.2 (mostly 38-42 unless delayed by doubble rending slashhes

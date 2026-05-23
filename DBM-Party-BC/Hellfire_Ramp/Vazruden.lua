@@ -22,7 +22,7 @@ mod:RegisterEventsInCombat(
 
 local warnMark      = mod:NewTargetNoFilterAnnounce(30689)
 
-local specwarnMark  = mod:NewSpecialWarningYou(30689, nil, nil, nil, 1, 2)
+local specwarnMark  = mod:NewSpecialWarningYou(30689, nil, nil, nil, 1, 2, nil, nil, "targetyou")
 local yellMark		= mod:NewYell(30689)
 
 local timerMark     = mod:NewTargetTimer(6, 30689, nil, nil, nil, 3)

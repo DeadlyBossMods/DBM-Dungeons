@@ -37,25 +37,25 @@ local warnEngulfingFlame		= mod:NewAnnounce("warnEngulfingFlame", 4, 99171)
 local warnLivingMeteor			= mod:NewTargetNoFilterAnnounce(99268, 4)--Phase 3 only ability
 
 --Chogal
-local specWarnFury				= mod:NewSpecialWarningStack(82524, nil, 2, nil, nil, 1, 6)
-local specWarnFuryTaunt			= mod:NewSpecialWarningTaunt(82524, nil, nil, nil, 1, 2)
-local specWarnAdherent			= mod:NewSpecialWarningSwitch(81628, "-Healer", nil, nil, 1, 2)
-local specWarnDepravity			= mod:NewSpecialWarningInterrupt(81713, "HasInterrupt", nil, nil, 1, 2)
-local specWarnSickness			= mod:NewSpecialWarningMoveAway(82235, nil, nil, nil, 1, 2)
+local specWarnFury				= mod:NewSpecialWarningStack(82524, nil, 2, nil, nil, 1, 6, nil, nil, "stackhigh")
+local specWarnFuryTaunt			= mod:NewSpecialWarningTaunt(82524, nil, nil, nil, 1, 2, nil, nil, "tauntboss")
+local specWarnAdherent			= mod:NewSpecialWarningSwitch(81628, "-Healer", nil, nil, 1, 2, nil, nil, "killmob")
+local specWarnDepravity			= mod:NewSpecialWarningInterrupt(81713, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
+local specWarnSickness			= mod:NewSpecialWarningMoveAway(82235, nil, nil, nil, 1, 2, nil, nil, "scatter")
 local yellSickness				= mod:NewYell(82235, nil, false)
 --Nef
-local specWarnBlastsNova		= mod:NewSpecialWarningInterrupt(80734, "HasInterrupt", nil, nil, 1, 2)
+local specWarnBlastsNova		= mod:NewSpecialWarningInterrupt(80734, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
 --Ragnaros
-local specWarnBurningWound		= mod:NewSpecialWarningStack(99399, nil, 4, nil, nil, 1, 6)
-local specWarnBurningWoundTaunt	= mod:NewSpecialWarningTaunt(99399, nil, nil, nil, 1, 2)
-local specWarnSplittingBlow		= mod:NewSpecialWarningSpell(98951, nil, nil, nil, 1, 2)
-local specWarnBlazingHeat		= mod:NewSpecialWarningYou(100460)--Debuff on you
+local specWarnBurningWound		= mod:NewSpecialWarningStack(99399, nil, 4, nil, nil, 1, 6, nil, nil, "stackhigh")
+local specWarnBurningWoundTaunt	= mod:NewSpecialWarningTaunt(99399, nil, nil, nil, 1, 2, nil, nil, "tauntboss")
+local specWarnSplittingBlow		= mod:NewSpecialWarningSpell(98951, nil, nil, nil, 1, 2, nil, nil, "phasechange")
+local specWarnBlazingHeat		= mod:NewSpecialWarningYou(100460, nil, nil, nil, nil, nil, nil, nil, "targetyou")--Debuff on you
 local yellBlazingHeat			= mod:NewYell(100460)
-local specWarnMoltenSeed		= mod:NewSpecialWarningRun(98495, nil, nil, 2, 3, 2)
-local specWarnEngulfing			= mod:NewSpecialWarningDodge(99171, nil, nil, nil, 2, 2)
-local specWarnMeteor			= mod:NewSpecialWarningDodge(99268, nil, nil, nil, 1, 2)--Spawning on you
+local specWarnMoltenSeed		= mod:NewSpecialWarningRun(98495, nil, nil, 2, 3, 2, nil, nil, "justrun")
+local specWarnEngulfing			= mod:NewSpecialWarningDodge(99171, nil, nil, nil, 2, 2, nil, nil, "watchstep")
+local specWarnMeteor			= mod:NewSpecialWarningDodge(99268, nil, nil, nil, 1, 2, nil, nil, "targetyou")--Spawning on you
 local yellMeteor				= mod:NewYell(99268)
-local specWarnFixate			= mod:NewSpecialWarningRun(99849, nil, nil, nil, 4, 2)--Chasing you after it spawned
+local specWarnFixate			= mod:NewSpecialWarningRun(99849, nil, nil, nil, 4, 2, nil, nil, "justrun")--Chasing you after it spawned
 local yellFixate				= mod:NewYell(99849)
 
 local timerMoltenSeedCD			= mod:NewCDTimer(60, 98495, nil, nil, nil, 3, nil, DBM_COMMON_L.DEADLY_ICON, nil, 1, 5)--60-63

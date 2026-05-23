@@ -13,9 +13,9 @@ mod:RegisterCombat("combat")
 
 local warnEtherealShackles				= mod:NewCountAnnounce(1214038, 2)
 
-local specWarnRefuelingProtocol			= mod:NewSpecialWarningCount(474345, nil, nil, nil, 2, 2)
-local specWarnRepulsingSlam				= mod:NewSpecialWarningCount(474496, nil, nil, nil, 1, 2)
-local specWarnArcaneExpulsion			= mod:NewSpecialWarningCount(1214081, nil, 28405, nil, 2, 2)
+local specWarnRefuelingProtocol			= mod:NewSpecialWarningCount(474345, nil, nil, nil, 2, 2, nil, nil, "catchballs")
+local specWarnRepulsingSlam				= mod:NewSpecialWarningCount(474496, nil, nil, nil, 1, 2, nil, nil, "carefly")
+local specWarnArcaneExpulsion			= mod:NewSpecialWarningCount(1214081, nil, 28405, nil, 2, 2, nil, nil, "carefly")
 
 local timerRefuelingProtocolCD			= mod:NewCDCountTimer(20.5, 474345, nil, nil, nil, 6, nil, DBM_COMMON_L.IMPORTANT_ICON)
 local timerRepulsingSlamCD				= mod:NewCDCountTimer(20.5, 474496, 182557, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)--Short Text "Slam"

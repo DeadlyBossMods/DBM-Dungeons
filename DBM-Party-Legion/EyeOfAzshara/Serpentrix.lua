@@ -28,12 +28,12 @@ mod:RegisterEventsInCombat(
 local warnToxicWound				= mod:NewTargetAnnounce(191855, 2)
 local warnWinds						= mod:NewSpellAnnounce(191798, 2)
 
-local specWarnToxicWound			= mod:NewSpecialWarningRun(191855, nil, nil, nil, 1, 2)
-local specWarnSubmerge				= mod:NewSpecialWarningSpell(191873, nil, nil, nil, 2, 2)
-local specWarnToxicPool				= mod:NewSpecialWarningMove(191858, nil, nil, nil, 1, 2)
-local specWarnBlazingNova			= mod:NewSpecialWarningInterrupt(192003, false, nil, nil, 1, 2)
-local specWarnArcaneBlast			= mod:NewSpecialWarningInterrupt(192005, false, nil, nil, 1, 2)
-local specWarnRampage				= mod:NewSpecialWarningInterrupt(191848, "HasInterrupt", nil, nil, 1, 2)
+local specWarnToxicWound			= mod:NewSpecialWarningRun(191855, nil, nil, nil, 1, 2, nil, nil, "justrun")
+local specWarnSubmerge				= mod:NewSpecialWarningSpell(191873, nil, nil, nil, 2, 2, nil, nil, "phasechange")
+local specWarnToxicPool				= mod:NewSpecialWarningMove(191858, nil, nil, nil, 1, 2, nil, nil, "runaway")
+local specWarnBlazingNova			= mod:NewSpecialWarningInterrupt(192003, false, nil, nil, 1, 2, nil, nil, "kickcast")
+local specWarnArcaneBlast			= mod:NewSpecialWarningInterrupt(192005, false, nil, nil, 1, 2, nil, nil, "kickcast")
+local specWarnRampage				= mod:NewSpecialWarningInterrupt(191848, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
 
 --Next timers always, unless rampage is not interrupted (Boss will not cast anything else during rampages)
 local timerToxicWoundCD				= mod:NewCDTimer(15, 191855, nil, nil, nil, 3)

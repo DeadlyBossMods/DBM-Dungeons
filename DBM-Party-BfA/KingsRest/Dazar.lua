@@ -24,14 +24,14 @@ mod:RegisterEventsInCombat(
 local warnGaleSlash					= mod:NewSpellAnnounce(268403, 2)
 local warnQuakingLeap				= mod:NewTargetAnnounce(268932, 2)
 
-local specWarnQuakingLeap			= mod:NewSpecialWarningYou(268932, nil, nil, nil, 1, 2)
+local specWarnQuakingLeap			= mod:NewSpecialWarningYou(268932, nil, nil, nil, 1, 2, nil, nil, "targetyou")
 local yellQuakingLeap				= mod:NewYell(268932)
-local specWarnBladeCombo			= mod:NewSpecialWarningDefensive(268586, nil, nil, nil, 1, 2)
-local specWarnImpalingSpear			= mod:NewSpecialWarningDodge(268796, nil, nil, nil, 2, 2)
+local specWarnBladeCombo			= mod:NewSpecialWarningDefensive(268586, nil, nil, nil, 1, 2, nil, nil, "defensive")
+local specWarnImpalingSpear			= mod:NewSpecialWarningDodge(268796, nil, nil, nil, 2, 2, nil, nil, "watchstep")
 ----ADDS
-local specWarnHuntingLeap			= mod:NewSpecialWarningYou(269231, nil, nil, nil, 1, 2)
+local specWarnHuntingLeap			= mod:NewSpecialWarningYou(269231, nil, nil, nil, 1, 2, nil, nil, "runaway")
 local yellHuntingLeap				= mod:NewYell(269231)
-local specWarnDeadlyRoar			= mod:NewSpecialWarningSpell(269369, nil, nil, nil, 2, 2)
+local specWarnDeadlyRoar			= mod:NewSpecialWarningSpell(269369, nil, nil, nil, 2, 2, nil, nil, "fearsoon")
 --local specWarnGTFO				= mod:NewSpecialWarningGTFO(238028, nil, nil, nil, 1, 8)
 
 local timerGaleSlashCD				= mod:NewCDTimer(13, 268403, nil, nil, nil, 3)

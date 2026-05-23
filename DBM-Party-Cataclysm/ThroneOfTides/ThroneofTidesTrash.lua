@@ -37,17 +37,17 @@ local warnPsionicPulse				= mod:NewCastAnnounce(426905, 4, nil, nil, nil, nil, n
 local warnAcidBarrage				= mod:NewSpellAnnounce(426645, 4)--, nil, nil, nil, nil, nil, 15
 local warnRazorJaws					= mod:NewStackAnnounce(426659, 2, nil, "Tank|Healer")
 
-local specWarnShadowSmash			= mod:NewSpecialWarningRun(76590, nil, nil, nil, 4, 2)
-local specWarnVolatileBolt			= mod:NewSpecialWarningDodge(426684, nil, nil, nil, 2, 2)
-local specWarnShellbreaker			= mod:NewSpecialWarningDefensive(426741, nil, nil, nil, 1, 2)
-local specWarnCrush					= mod:NewSpecialWarningDefensive(429021, nil, nil, nil, 1, 2)
+local specWarnShadowSmash			= mod:NewSpecialWarningRun(76590, nil, nil, nil, 4, 2, nil, nil, "justrun")
+local specWarnVolatileBolt			= mod:NewSpecialWarningDodge(426684, nil, nil, nil, 2, 2, nil, nil, "watchstep")
+local specWarnShellbreaker			= mod:NewSpecialWarningDefensive(426741, nil, nil, nil, 1, 2, nil, nil, "defensive")
+local specWarnCrush					= mod:NewSpecialWarningDefensive(429021, nil, nil, nil, 1, 2, nil, nil, "defensive")
 --local yellnViciousAmbush			= mod:NewYell(388984)
-local specWarnHealingWave			= mod:NewSpecialWarningInterrupt(76813, "HasInterrupt", nil, nil, 1, 2)
-local specWarnWrath					= mod:NewSpecialWarningInterrupt(76815, false, nil, nil, 1, 2)--TODO, Is this even used in 10.2 version? no log of it
-local specWarnMindFlay				= mod:NewSpecialWarningInterrupt(426783, "HasInterrupt", nil, nil, 1, 2)
-local specWarnAquablast				= mod:NewSpecialWarningInterrupt(429176, "HasInterrupt", nil, nil, 1, 2)
-local specWarnHex					= mod:NewSpecialWarningDispel(76820, "RemoveMagic", nil, nil, 1, 2)
-local specWarnGTFO					= mod:NewSpecialWarningGTFO(426688, nil, nil, nil, 1, 8)
+local specWarnHealingWave			= mod:NewSpecialWarningInterrupt(76813, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
+local specWarnWrath					= mod:NewSpecialWarningInterrupt(76815, false, nil, nil, 1, 2, nil, nil, "kickcast")--TODO, Is this even used in 10.2 version? no log of it
+local specWarnMindFlay				= mod:NewSpecialWarningInterrupt(426783, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
+local specWarnAquablast				= mod:NewSpecialWarningInterrupt(429176, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
+local specWarnHex					= mod:NewSpecialWarningDispel(76820, "RemoveMagic", nil, nil, 1, 2, nil, nil, "helpdispel")
+local specWarnGTFO					= mod:NewSpecialWarningGTFO(426688, nil, nil, nil, 1, 8, nil, nil, "watchfeet")
 
 local timerHealingWaveCD			= mod:NewCDNPTimer(17, 76813, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--17-18.2
 local timerHexCD					= mod:NewCDNPTimer(20.4, 76820, nil, nil, nil, 5, nil, DBM_COMMON_L.MAGIC_ICON)--Weak sample size, could be wrong

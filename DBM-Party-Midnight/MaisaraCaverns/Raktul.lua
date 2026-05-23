@@ -13,8 +13,8 @@ mod:RegisterCombat("combat")
 
 local warnCrushSouls			= mod:NewCountAnnounce(1252676, 2)
 
-local specWarnSpiritbreaker		= mod:NewSpecialWarningCount(1251023, nil, nil, nil, 1, 2)
-local specWarnSoulrendingRoar	= mod:NewSpecialWarningCount(1253788, nil, nil, nil, 2, 2)
+local specWarnSpiritbreaker		= mod:NewSpecialWarningCount(1251023, nil, nil, nil, 1, 2, nil, nil, "defensive")
+local specWarnSoulrendingRoar	= mod:NewSpecialWarningCount(1253788, nil, nil, nil, 2, 2, nil, nil, "phasechange")
 
 local timerSpiritbreakerCD		= mod:NewCDCountTimer(26, 1251023, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerCrushSoulsCD			= mod:NewCDCountTimer(26, 1252676, nil, nil, nil, 3, nil, DBM_COMMON_L.IMPORTANT_ICON)

@@ -37,12 +37,12 @@ mod:RegisterEventsInCombat(
 local warnSnackTime							= mod:NewCountAnnounce(438025, 3)
 local warnHoneymarinade						= mod:NewTargetAnnounce(440134, 2)
 
-local specWarnHoneyMarinade					= mod:NewSpecialWarningMoveAway(440134, nil, nil, nil, 1, 2)
-local specWarnHoneyGorged					= mod:NewSpecialWarningMove(443983, nil, nil, nil, 1, 2, 4)
+local specWarnHoneyMarinade					= mod:NewSpecialWarningMoveAway(440134, nil, nil, nil, 1, 2, nil, nil, "scatter")
+local specWarnHoneyGorged					= mod:NewSpecialWarningMove(443983, nil, nil, nil, 1, 2, 4, nil, "moveboss")
 local yellHoneyMarinade						= mod:NewShortYell(440134)
 local yellHoneyMarinadeFades				= mod:NewShortFadesYell(440134)
-local specWarnFlutteringWing				= mod:NewSpecialWarningCount(439524, nil, nil, nil, 1, 13)
-local specWarnGTFO							= mod:NewSpecialWarningGTFO(440141, nil, nil, nil, 1, 8)
+local specWarnFlutteringWing				= mod:NewSpecialWarningCount(439524, nil, nil, nil, 1, 13, nil, nil, "pushbackincoming")
+local specWarnGTFO							= mod:NewSpecialWarningGTFO(440141, nil, nil, nil, 1, 8, nil, nil, "watchfeet")
 
 local timerSnackTimeCD						= mod:NewNextCountTimer(33, 438025, nil, nil, nil, 3)--33
 --local timerShreddingStingCD				= mod:NewCDNPTimer(6, 438971, nil, nil, nil, 3, nil, DBM_COMMON_L.BLEED_ICON)--6-7.2 confirmed on normal

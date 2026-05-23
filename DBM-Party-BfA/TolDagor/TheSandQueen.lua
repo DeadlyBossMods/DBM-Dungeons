@@ -18,10 +18,10 @@ mod:RegisterEventsInCombat(
 local warnUpheavel					= mod:NewTargetNoFilterAnnounce(257617, 2)
 local warnUpheavelCast				= mod:NewCastAnnounce(257617, 2, 5)--Cast time until we have a target
 
-local specWarnSandTrap				= mod:NewSpecialWarningDodge(257092, nil, nil, nil, 2, 2)
-local specWarnUpheavel				= mod:NewSpecialWarningYou(257617, nil, nil, nil, 2, 2)
+local specWarnSandTrap				= mod:NewSpecialWarningDodge(257092, nil, nil, nil, 2, 2, nil, nil, "watchstep")
+local specWarnUpheavel				= mod:NewSpecialWarningYou(257617, nil, nil, nil, 2, 2, nil, nil, "targetyou")
 local yellUpheavel					= mod:NewYell(257617)
-local specWarnSandstorm				= mod:NewSpecialWarningSpell(257495, nil, nil, nil, 2, 2)
+local specWarnSandstorm				= mod:NewSpecialWarningSpell(257495, nil, nil, nil, 2, 2, nil, nil, "aesoon")
 
 --local timerReapSoulCD				= mod:NewNextTimer(13, 194956, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON..DBM_COMMON_L.DEADLY_ICON)
 local timerSandTrapCD				= mod:NewCDTimer(13.2, 257092, nil, nil, nil, 3)--14.2-18.6

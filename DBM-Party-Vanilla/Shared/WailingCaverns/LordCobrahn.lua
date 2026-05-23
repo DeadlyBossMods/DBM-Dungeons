@@ -19,7 +19,7 @@ local warningDruidSlumber			= mod:NewTargetNoFilterAnnounce(8040, 2)
 local warningHealingTouch			= mod:NewCastAnnounce(23381, 2)
 local warningPoison					= mod:NewTargetNoFilterAnnounce(17330, 2, nil, "RemovePoison")
 
-local specWarnDruidsSlumber			= mod:NewSpecialWarningInterrupt(8040, "HasInterrupt", nil, nil, 1, 2)
+local specWarnDruidsSlumber			= mod:NewSpecialWarningInterrupt(8040, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
 
 local timerDruidsSlumberCD			= mod:NewAITimer(180, 8040, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON..DBM_COMMON_L.MAGIC_ICON)
 local timerHealingTouchCD			= mod:NewAITimer(180, 23381, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)

@@ -23,10 +23,10 @@ if DBM:IsPostMidnight() then
 	local warnRimeBlast					= mod:NewCountAnnounce(1262772, 3)
 	local warnBoneInfusion				= mod:NewCountAnnounce(1276648, 3)
 
-	local specWarnScourgelordsBrand		= mod:NewSpecialWarningCount(1262582, nil, nil, nil, 1, 2)
-	local specWarnArmyOfTheDead			= mod:NewSpecialWarningCount(1263406, nil, nil, nil, 1, 2)
-	local specWarnDeathsGrasp			= mod:NewSpecialWarningDodgeCount(1263756, nil, nil, nil, 2, 2)
-	local specWarnIcyBarrage			= mod:NewSpecialWarningDodgeCount(1276948, nil, nil, nil, 2, 2)
+	local specWarnScourgelordsBrand		= mod:NewSpecialWarningCount(1262582, nil, nil, nil, 1, 2, nil, nil, "carefly")
+	local specWarnArmyOfTheDead			= mod:NewSpecialWarningCount(1263406, nil, nil, nil, 1, 2, nil, nil, "mobsoon")
+	local specWarnDeathsGrasp			= mod:NewSpecialWarningDodgeCount(1263756, nil, nil, nil, 2, 2, nil, nil, "watchstep")
+	local specWarnIcyBarrage			= mod:NewSpecialWarningDodgeCount(1276948, nil, nil, nil, 2, 2, nil, nil, "watchstep")
 
 	local timerScourgelordsBrandCD		= mod:NewCDCountTimer(20.5, 1262582, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 	local timerArmyOfTheDeadCD			= mod:NewCDCountTimer(20.5, 1263406, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)
@@ -203,11 +203,11 @@ else
 	local warnOverlordsBrand		= mod:NewTargetAnnounce(69172, 4)
 	local warnHoarfrost				= mod:NewTargetAnnounce(69246, 2)
 
-	local specWarnHoarfrost			= mod:NewSpecialWarningMoveAway(69246, nil, nil, nil, 1, 2)
+	local specWarnHoarfrost			= mod:NewSpecialWarningMoveAway(69246, nil, nil, nil, 1, 2, nil, nil, "targetyou")
 	local yellHoarfrost				= mod:NewYell(69246)
-	local specWarnIcyBlast			= mod:NewSpecialWarningMove(69238, nil, nil, nil, 1, 2)
-	local specWarnOverlordsBrand	= mod:NewSpecialWarningReflect(69172, nil, nil, nil, 3, 2)
-	local specWarnUnholyPower		= mod:NewSpecialWarningSpell(69167, nil, nil, nil, 1, 2)--Spell for now. may change to run away if damage is too high for defensive
+	local specWarnIcyBlast			= mod:NewSpecialWarningMove(69238, nil, nil, nil, 1, 2, nil, nil, "runaway")
+	local specWarnOverlordsBrand	= mod:NewSpecialWarningReflect(69172, nil, nil, nil, 3, 2, nil, nil, "stopattack")
+	local specWarnUnholyPower		= mod:NewSpecialWarningSpell(69167, nil, nil, nil, 1, 2, nil, nil, "justrun")--Spell for now. may change to run away if damage is too high for defensive
 
 	local timerCombatStart			= mod:NewCombatTimer(31)
 	local timerOverlordsBrandCD		= mod:NewCDTimer(12, 69172, nil, nil, nil, 3, nil, DBM_COMMON_L.DEADLY_ICON)

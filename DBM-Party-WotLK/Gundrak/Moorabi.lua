@@ -17,7 +17,7 @@ mod:RegisterEventsInCombat(
 	"UNIT_HEALTH boss1"
 )
 
-local specWarnTransform		= mod:NewSpecialWarningInterruptCount(55098, nil, nil, nil, 1, 2)
+local specWarnTransform		= mod:NewSpecialWarningInterruptCount(55098, nil, nil, nil, 1, 2, nil, nil, "kickcast")
 
 local timerTransform		= mod:NewCDTimer(10, 55098, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--experimental
 

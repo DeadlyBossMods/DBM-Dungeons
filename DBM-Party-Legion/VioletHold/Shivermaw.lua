@@ -18,9 +18,9 @@ mod:RegisterEventsInCombat(
 
 local warnBreath					= mod:NewSpellAnnounce(201379, 2, nil, "Tank")
 
-local specWarnRelentlessStorm		= mod:NewSpecialWarningDodge(201672, nil, nil, nil, 2, 2)
-local specWarnFrigidWinds			= mod:NewSpecialWarningMoveAway(201672, nil, nil, nil, 1, 2)
-local specWarnIceBomb				= mod:NewSpecialWarningDodge(201960, nil, nil, nil, 3, 2)
+local specWarnRelentlessStorm		= mod:NewSpecialWarningDodge(201672, nil, nil, nil, 2, 2, nil, nil, "watchstep")
+local specWarnFrigidWinds			= mod:NewSpecialWarningMoveAway(201672, nil, nil, nil, 1, 2, nil, nil, "scatter")
+local specWarnIceBomb				= mod:NewSpecialWarningDodge(201960, nil, nil, nil, 3, 2, nil, nil, "findshelter")
 
 local timerRelentlessStormCD		= mod:NewNextTimer(14, 201672, nil, nil, nil, 3)--14, 47 alternating
 local timerFrigidWindsCD			= mod:NewNextTimer(61, 202062, nil, nil, nil, 3, nil, DBM_COMMON_L.HEROIC_ICON)

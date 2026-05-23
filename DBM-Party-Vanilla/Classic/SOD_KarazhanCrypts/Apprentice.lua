@@ -37,7 +37,7 @@ local warnFreezingField		= mod:NewCastAnnounce(1220882)
 local timerFreezingField	= mod:NewCDTimer(50, 1220882, nil, nil, nil, 2)
 local timerBlizzard			= mod:NewCDTimer(22.2, 1220862, nil, nil, nil, 3)
 
-local specWarnGTFO	= mod:NewSpecialWarningGTFO(1220862, nil, nil, nil, 1, 8)
+local specWarnGTFO	= mod:NewSpecialWarningGTFO(1220862, nil, nil, nil, 1, 8, nil, nil, "watchfeet")
 
 
 mod.vb.boulderCount = 0

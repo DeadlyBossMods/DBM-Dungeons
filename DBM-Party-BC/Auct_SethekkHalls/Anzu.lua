@@ -31,7 +31,7 @@ local warnStoned            = mod:NewAnnounce("warnStoned", 1, 32810, false)
 local warnCyclone           = mod:NewTargetAnnounce(40321, 2)
 local warnSpellBomb         = mod:NewTargetAnnounce(40303, 2)
 
-local specWarnScreech		= mod:NewSpecialWarningSpell(40184, nil, nil, nil, 2, 2)
+local specWarnScreech		= mod:NewSpecialWarningSpell(40184, nil, nil, nil, 2, 2, nil, nil, "aesoon")
 
 local timerScreech          = mod:NewCastTimer(5, 40184, nil, nil, nil, 2)
 local timerScreechDebuff    = mod:NewBuffActiveTimer(6, 40184, nil, nil, nil, 3)

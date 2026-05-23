@@ -23,10 +23,10 @@ mod:RegisterEventsInCombat(
 local warnRecklessInspiration	= mod:NewStackAnnounce(118988, 3)
 local warnIronProtector			= mod:NewTargetNoFilterAnnounce(118958, 2)
 
-local specWarnShank				= mod:NewSpecialWarningInterrupt(118963, false, nil, nil, 1, 2)--specWarns can be spam. Default value is off. Use this manually.
-local specWarnCleansingFlame	= mod:NewSpecialWarningInterrupt(118940, "HasInterrupt", nil, nil, 1, 2)
-local specWarnHexInterrupt		= mod:NewSpecialWarningInterrupt(118903, "HasInterrupt", nil, nil, 1, 2)
-local specWarnHexDispel			= mod:NewSpecialWarningDispel(118903, "RemoveMagic", nil, nil, 1, 2)
+local specWarnShank				= mod:NewSpecialWarningInterrupt(118963, false, nil, nil, 1, 2, nil, nil, "kickcast")--specWarns can be spam. Default value is off. Use this manually.
+local specWarnCleansingFlame	= mod:NewSpecialWarningInterrupt(118940, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
+local specWarnHexInterrupt		= mod:NewSpecialWarningInterrupt(118903, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
+local specWarnHexDispel			= mod:NewSpecialWarningDispel(118903, "RemoveMagic", nil, nil, 1, 2, nil, nil, "helpdispel")
 
 local timerInspiriation			= mod:NewTargetTimer(20, 118988, nil, nil, nil, 5)
 local timerIronProtector		= mod:NewTargetTimer(15, 118958, nil, nil, nil, 5)

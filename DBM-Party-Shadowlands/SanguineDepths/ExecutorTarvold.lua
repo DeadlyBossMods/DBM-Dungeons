@@ -25,10 +25,10 @@ ability.id = 322554 and type = "begincast"
 --]]
 local warnCastigate					= mod:NewTargetNoFilterAnnounce(322554, 4)
 
-local specWarnCastigate				= mod:NewSpecialWarningMoveAway(322554, nil, nil, nil, 1, 2)
+local specWarnCastigate				= mod:NewSpecialWarningMoveAway(322554, nil, nil, nil, 1, 2, nil, nil, "targetyou")
 local yellCastigate					= mod:NewYell(322554)
-local specWarnCoalesceManifestation	= mod:NewSpecialWarningSwitch(322574, "-Healer", nil, nil, 1, 2)
-local specWarnSintouchedAnima		= mod:NewSpecialWarningDispel(328494, "RemoveCurse", nil, nil, 1, 2)
+local specWarnCoalesceManifestation	= mod:NewSpecialWarningSwitch(322574, "-Healer", nil, nil, 1, 2, nil, nil, "killmob")
+local specWarnSintouchedAnima		= mod:NewSpecialWarningDispel(328494, "RemoveCurse", nil, nil, 1, 2, nil, nil, "helpdispel")
 --local specWarnGTFO				= mod:NewSpecialWarningGTFO(257274, nil, nil, nil, 1, 8)
 
 local timerCastigateCD				= mod:NewNextTimer(20.5, 322554, nil, nil, nil, 3)

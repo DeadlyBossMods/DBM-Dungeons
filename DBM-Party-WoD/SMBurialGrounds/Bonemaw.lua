@@ -35,9 +35,9 @@ local warnCorpseBreath			= mod:NewSpellAnnounce(165578, 2)
 local warnSubmerge				= mod:NewSpellAnnounce(177694, 1)
 local warnInhaleEnd				= mod:NewEndAnnounce(153804, 1)
 
-local specWarnBodySlam			= mod:NewSpecialWarningDodge(154175, nil, nil, nil, 2, 2)
-local specWarnInhale			= mod:NewSpecialWarningRun(153804, nil, nil, 2, 4, 12)
-local specWarnNecroticPitch		= mod:NewSpecialWarningMove(153692, nil, nil, nil, 1, 8)
+local specWarnBodySlam			= mod:NewSpecialWarningDodge(154175, nil, nil, nil, 2, 2, nil, nil, "watchstep")
+local specWarnInhale			= mod:NewSpecialWarningRun(153804, nil, nil, 2, 4, 12, nil, nil, "inhalegetinpuddle")
+local specWarnNecroticPitch		= mod:NewSpecialWarningMove(153692, nil, nil, nil, 1, 8, nil, nil, "watchfeet")
 
 local timerBodySlamCD			= mod:NewCDSourceTimer(23, 154175, nil, nil, nil, 3)--34
 local timerInhaleCD				= mod:NewCDTimer(22.1, 153804, nil, nil, nil, 6, nil, DBM_COMMON_L.DEADLY_ICON)

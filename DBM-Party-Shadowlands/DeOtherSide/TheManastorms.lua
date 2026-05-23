@@ -42,10 +42,10 @@ local warnSummonPowerCrystal			= mod:NewSpellAnnounce(320787, 3)
 local warnThrowBuzzSaw					= mod:NewSpellAnnounce(320168, 3, nil, false)
 local warnBleeding						= mod:NewStackAnnounce(320147, 2, nil, "Tank|Healer")
 
-local specWarnDoom						= mod:NewSpecialWarningSpell(320141, nil, 226243, nil, 2, 2, 4)--Mythic only
-local specWarnFrostbolt					= mod:NewSpecialWarningInterruptCount(320008, "HasInterrupt", nil, nil, 1, 2)
-local specWarnBleeding					= mod:NewSpecialWarningStack(320147, nil, 12, nil, nil, 1, 6)
-local specWarnLaser						= mod:NewSpecialWarningMoveTo(323877, nil, 182908, nil, 2, 8, 4)--Mythic only
+local specWarnDoom						= mod:NewSpecialWarningSpell(320141, nil, 226243, nil, 2, 2, 4, nil, "aesoon")--Mythic only
+local specWarnFrostbolt					= mod:NewSpecialWarningInterruptCount(320008, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kick2r")
+local specWarnBleeding					= mod:NewSpecialWarningStack(320147, nil, 12, nil, nil, 1, 6, nil, nil, "stackhigh")
+local specWarnLaser						= mod:NewSpecialWarningMoveTo(323877, nil, 182908, nil, 2, 8, 4, nil, "behindboss")--Mythic only
 local yellLaser							= mod:NewYell(323877)
 
 local timerSummonPowerCrystalCD			= mod:NewCDTimer(7.4, 320787, nil, nil, nil, 5)--Usually 8 (sometimes a cast is skipped if it perfectly lines up with a laser, do to this variation
@@ -57,8 +57,8 @@ mod:AddInfoFrameOption(320786, true)
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(21798))
 --local warnMechanicalBombSquirrel		= mod:NewSpellAnnounce(320825, 3)--Spammed
 
-local specWarnAerialRocketChicken		= mod:NewSpecialWarningDefensive(321061, nil, 45255, nil, 2, 2, 4)--Mythic only
-local specWarnShadowfury				= mod:NewSpecialWarningMoveTo(320132, nil, nil, nil, 2, 8, 4)--Mythic only
+local specWarnAerialRocketChicken		= mod:NewSpecialWarningDefensive(321061, nil, 45255, nil, 2, 2, 4, nil, "defensive")--Mythic only
+local specWarnShadowfury				= mod:NewSpecialWarningMoveTo(320132, nil, nil, nil, 2, 8, 4, nil, "behindboss")--Mythic only
 
 --local timerMechanicalBombSquirrelCD	= mod:NewCDTimer(13, 320825, nil, nil, nil, 3)
 local timerExperimentalSquirrelBombCD	= mod:NewCDTimer(7.9, 320823, nil, nil, nil, 5)

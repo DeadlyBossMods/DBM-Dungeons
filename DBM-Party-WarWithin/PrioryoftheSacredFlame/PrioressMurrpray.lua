@@ -62,14 +62,14 @@ local warnBarrierofLight					= mod:NewCountAnnounce(423588, 3)
 local warnPurifyingLight					= mod:NewCountAnnounce(444546, 2)--Precast
 local warnPurifyingLightTargets				= mod:NewTargetNoFilterAnnounce(444546, 2)--target like 6 seconds later
 
-local specWarnEmbracetheLight				= mod:NewSpecialWarningInterruptCount(423664, "HasInterrupt", nil, nil, 1, 2)
-local specWarnPurifyingLight				= mod:NewSpecialWarningYou(444546, nil, nil, nil, 1, 2)
+local specWarnEmbracetheLight				= mod:NewSpecialWarningInterruptCount(423664, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
+local specWarnPurifyingLight				= mod:NewSpecialWarningYou(444546, nil, nil, nil, 1, 2, nil, nil, "laserrun")
 local yellPurifyingLight					= mod:NewYell(444546)
-local specWarnInnerFire						= mod:NewSpecialWarningCount(423539, nil, nil, nil, 2, 2)
-local specWarnHolyFlame						= mod:NewSpecialWarningDodgeCount(451606, nil, nil, nil, 2, 2)--451605 has no tooltip, debuff ID used for option key
-local specWarnHolySmite						= mod:NewSpecialWarningInterruptCount(423536, false, nil, nil, 1, 2)--Very short cooldown
-local specWarnBlindingLight					= mod:NewSpecialWarningLookAway(428169, nil, nil, nil, 2, 2, 4)
-local specWarnGTFO							= mod:NewSpecialWarningGTFO(425556, nil, nil, nil, 1, 8)
+local specWarnInnerFire						= mod:NewSpecialWarningCount(423539, nil, nil, nil, 2, 2, nil, nil, "aesoon")
+local specWarnHolyFlame						= mod:NewSpecialWarningDodgeCount(451606, nil, nil, nil, 2, 2, nil, nil, "watchstep")--451605 has no tooltip, debuff ID used for option key
+local specWarnHolySmite						= mod:NewSpecialWarningInterruptCount(423536, false, nil, nil, 1, 2, nil, nil, "kickcast")--Very short cooldown
+local specWarnBlindingLight					= mod:NewSpecialWarningLookAway(428169, nil, nil, nil, 2, 2, 4, nil, "turnaway")
+local specWarnGTFO							= mod:NewSpecialWarningGTFO(425556, nil, nil, nil, 1, 8, nil, nil, "watchfeet")
 
 local timerPurifyingLightCD					= mod:NewVarCountTimer("v28.2-35.2", 444546, nil, nil, nil, 3)
 local timerInnerFireCD						= mod:NewVarCountTimer("v21.8-25.5", 423539, nil, nil, nil, 2)

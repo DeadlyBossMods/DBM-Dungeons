@@ -19,11 +19,11 @@ mod:RegisterEventsInCombat(
 
 local warnRejuvSerumCast			= mod:NewCastAnnounce(161203, 3)
 
-local specWarnDebilitatingFixation	= mod:NewSpecialWarningInterrupt(161199, "HasInterrupt", nil, 3, 3, 2)
-local specWarnEruption				= mod:NewSpecialWarningDodge(155037, "Tank", nil, nil, 1, 2)
-local specWarnRejuvSerum			= mod:NewSpecialWarningDispel(161203, "MagicDispeller", nil, nil, 1, 2)
-local specWarnToxicFumes			= mod:NewSpecialWarningDispel(162600, "RemovePoison", nil, 2, 1, 2)
-local specWarnVilebloodSerum		= mod:NewSpecialWarningMove(161288, nil, nil, nil, 1, 8)
+local specWarnDebilitatingFixation	= mod:NewSpecialWarningInterrupt(161199, "HasInterrupt", nil, 3, 3, 2, nil, nil, "kickcast")
+local specWarnEruption				= mod:NewSpecialWarningDodge(155037, "Tank", nil, nil, 1, 2, nil, nil, "watchstep")
+local specWarnRejuvSerum			= mod:NewSpecialWarningDispel(161203, "MagicDispeller", nil, nil, 1, 2, nil, nil, "dispelboss")
+local specWarnToxicFumes			= mod:NewSpecialWarningDispel(162600, "RemovePoison", nil, 2, 1, 2, nil, nil, "dispelnow")
+local specWarnVilebloodSerum		= mod:NewSpecialWarningMove(161288, nil, nil, nil, 1, 8, nil, nil, "watchfeet")
 
 local timerDebilitatingCD			= mod:NewNextTimer(20, 161199, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON, nil, mod:IsTank() and 2 or nil, 4)--Every 20 seconds exactly, at least in challenge mode.
 local timerEruptionCD				= mod:NewCDTimer(10, 155037, nil, false, nil, 5)--10-15 sec variation. May be distracting or spammy since two of them

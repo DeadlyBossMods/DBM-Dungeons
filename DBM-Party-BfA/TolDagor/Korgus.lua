@@ -22,12 +22,12 @@ local warnAZIncendiary				= mod:NewSpellAnnounce(256198, 2)
 local warnDeadeye					= mod:NewTargetNoFilterAnnounce(256038, 4)
 local warnExplosiveBurst			= mod:NewTargetAnnounce(256105, 2)
 
-local specWarnCrossIgnition			= mod:NewSpecialWarningSpell(256083, nil, nil, nil, 2, 2)--If the lines have better visuals later maybe i'll say farfromline/dodge, but for now, treating as unavoidable aoe
-local specWarnDeadeye				= mod:NewSpecialWarningDefensive(256038, nil, nil, nil, 1, 2)
+local specWarnCrossIgnition			= mod:NewSpecialWarningSpell(256083, nil, nil, nil, 2, 2, nil, nil, "aesoon")--If the lines have better visuals later maybe i'll say farfromline/dodge, but for now, treating as unavoidable aoe
+local specWarnDeadeye				= mod:NewSpecialWarningDefensive(256038, nil, nil, nil, 1, 2, nil, nil, "targetyou")
 local yellDeadeye					= mod:NewYell(256038)
-local specWarnExplosiveBurst		= mod:NewSpecialWarningMoveAway(256105, nil, nil, nil, 1, 2)
+local specWarnExplosiveBurst		= mod:NewSpecialWarningMoveAway(256105, nil, nil, nil, 1, 2, nil, nil, "runout")
 local yellExplosiveBurst			= mod:NewYell(256105)
-local specWarnMassiveBlast			= mod:NewSpecialWarningDodge(263345, nil, nil, nil, 2, 2)
+local specWarnMassiveBlast			= mod:NewSpecialWarningDodge(263345, nil, nil, nil, 2, 2, nil, nil, "shockwave")
 
 local timerARBlastCD				= mod:NewCDTimer(44.8, 256199, nil, nil, nil, 3)
 local timerARICD					= mod:NewCDTimer(44.8, 256198, nil, nil, nil, 3)

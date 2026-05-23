@@ -22,9 +22,9 @@ mod:RegisterEventsInCombat(
 --]]
 local warnDaggerFall			= mod:NewSpellAnnounce(153240, 3)
 
-local specWarnDarkCommunion		= mod:NewSpecialWarningSwitch(153153, nil, nil, 2, 1, 2)--On Test, even tank and healer needed to dps to kill it. I'm going to assume it's an overtuning and at least excempt healer.
-local specWarnWhispers			= mod:NewSpecialWarningSpell(153094, nil, nil, nil, 2, 2)
-local specWarnDarkEclipse		= mod:NewSpecialWarningSpell(164974, nil, nil, nil, 3, 12)
+local specWarnDarkCommunion		= mod:NewSpecialWarningSwitch(153153, nil, nil, 2, 1, 2, nil, nil, "killmob")--On Test, even tank and healer needed to dps to kill it. I'm going to assume it's an overtuning and at least excempt healer.
+local specWarnWhispers			= mod:NewSpecialWarningSpell(153094, nil, nil, nil, 2, 2, nil, nil, "aesoon")
+local specWarnDarkEclipse		= mod:NewSpecialWarningSpell(164974, nil, nil, nil, 3, 12, nil, nil, "touchwhiteshrooms")
 
 local timerDaggerfallCD			= mod:NewCDTimer(15.7, 153240, nil, nil, nil, 3)--15-20, or 57
 local timerDarkCommunionCD		= mod:NewCDTimer(45.7, 153153, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)--Can get delayed by a lot

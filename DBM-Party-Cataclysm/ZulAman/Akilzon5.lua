@@ -20,7 +20,7 @@ mod:RegisterEventsInCombat(
 local warnStormSoon		= mod:NewSoonAnnounce(43648, 5, 3)
 local warnPlucked		= mod:NewTargetNoFilterAnnounce(97318, 3)
 
-local specWarnStorm		= mod:NewSpecialWarningMoveTo(43648, nil, nil, nil, 2, 1)
+local specWarnStorm		= mod:NewSpecialWarningMoveTo(43648, nil, nil, nil, 2, 1, nil, nil, "gather")
 
 local timerStorm		= mod:NewCastTimer(8, 43648, nil, nil, nil, 2)
 local timerStormCD		= mod:NewCDTimer(55, 43648, nil, nil, nil, 3)

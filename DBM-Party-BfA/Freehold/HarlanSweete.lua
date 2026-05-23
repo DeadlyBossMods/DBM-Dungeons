@@ -31,10 +31,10 @@ local warnBlackPowder				= mod:NewTargetAnnounce(257314, 4)
 local warnCannonBarrage				= mod:NewTargetAnnounce(257305, 3)
 local warnWhirlingDagger			= mod:NewCountAnnounce(413131, 3)
 
-local specWarnBlackPowder			= mod:NewSpecialWarningRun(257314, nil, nil, nil, 4, 2)
+local specWarnBlackPowder			= mod:NewSpecialWarningRun(257314, nil, nil, nil, 4, 2, nil, nil, "justrun")
 local yellBlackPowder				= mod:NewYell(257314)
-local specWarnSwiftwindSaber		= mod:NewSpecialWarningDodge(257278, nil, nil, nil, 2, 2)
-local specWarnCannonBarrage			= mod:NewSpecialWarningDodge(257305, nil, nil, nil, 3, 2)
+local specWarnSwiftwindSaber		= mod:NewSpecialWarningDodge(257278, nil, nil, nil, 2, 2, nil, nil, "watchwave")
+local specWarnCannonBarrage			= mod:NewSpecialWarningDodge(257305, nil, nil, nil, 3, 2, nil, nil, "watchstep")
 local yellCannonBarrage				= mod:NewYell(257305)
 
 local timerAvastyeCD				= mod:NewCDTimer(13, 257316, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)

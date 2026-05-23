@@ -31,7 +31,7 @@
 ## X-DBM-Mod-Name-ruRU: Испытания
 ## X-DBM-Mod-Sort: 216
 ## X-DBM-Mod-MapID: 1148, 1698, 1710, 1703, 1702, 1684, 1673, 1616, 2212, 2213, 2215, 2162, 1911, 2375, 2828, 2827
-## X-DBM-Mod-MinCoreRevision: 20211207000000
+## X-DBM-Mod-MinCoreRevision: 20260522000000
 ## X-DBM-Mod-MinExpansion: 4
 ## X-Curse-Project-ID: 61621
 ## X-Wago-ID: Rn6VLLGd

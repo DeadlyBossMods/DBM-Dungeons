@@ -31,10 +31,10 @@ mod:RegisterEventsInCombat(
 --]]
 local warnDarkPulsePreCast					= mod:NewCastAnnounce(441395, 3)
 
-local specWarnOozingSmash					= mod:NewSpecialWarningDefensive(461842, nil, nil, nil, 1, 2)
-local specWarnViscousDarkness				= mod:NewSpecialWarningCount(441216, nil, nil, nil, 2, 2)
-local specWarnBloodSurge					= mod:NewSpecialWarningDodgeCount(445435, nil, nil, nil, 2, 2)
-local specWarnDarkPulse						= mod:NewSpecialWarningCount(441395, nil, nil, nil, 2, 2)
+local specWarnOozingSmash					= mod:NewSpecialWarningDefensive(461842, nil, nil, nil, 1, 2, nil, nil, "defensive")
+local specWarnViscousDarkness				= mod:NewSpecialWarningCount(441216, nil, nil, nil, 2, 2, nil, nil, "helpsoak")
+local specWarnBloodSurge					= mod:NewSpecialWarningDodgeCount(445435, nil, nil, nil, 2, 2, nil, nil, "watchstep")
+local specWarnDarkPulse						= mod:NewSpecialWarningCount(441395, nil, nil, nil, 2, 2, nil, nil, "aesoon")
 --local specWarnGTFO						= mod:NewSpecialWarningGTFO(372820, nil, nil, nil, 1, 8)
 
 --All attacks are energy based and energy based timers are always subject to a swing due to blizzards energy code being shitty

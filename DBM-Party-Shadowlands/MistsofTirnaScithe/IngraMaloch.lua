@@ -35,14 +35,14 @@ local warnSoulShackle					= mod:NewTargetNoFilterAnnounce(321005, 3)
 local warnDromansWrath					= mod:NewTargetNoFilterAnnounce(323059, 1)
 
 --Boss
-local specWarnSpiritBolt				= mod:NewSpecialWarningInterrupt(323057, "HasInterrupt", nil, nil, 1, 2)
-local specWarnEmbraceDarkness			= mod:NewSpecialWarningSpell(323149, nil, nil, nil, 2, 2)
-local specWarnRepulsiveVisage			= mod:NewSpecialWarningSpell(328756, nil, nil, nil, 2, 2)
+local specWarnSpiritBolt				= mod:NewSpecialWarningInterrupt(323057, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
+local specWarnEmbraceDarkness			= mod:NewSpecialWarningSpell(323149, nil, nil, nil, 2, 2, nil, nil, "aesoon")
+local specWarnRepulsiveVisage			= mod:NewSpecialWarningSpell(328756, nil, nil, nil, 2, 2, nil, nil, "fearsoon")
 --Droman Oulfarran
-local specWarnBewilderingPollen			= mod:NewSpecialWarningDodgeCount(323137, "Tank", nil, nil, 1, 15)
+local specWarnBewilderingPollen			= mod:NewSpecialWarningDodgeCount(323137, "Tank", nil, nil, 1, 15, nil, nil, "frontal")
 local specWarnBewilderingPollenDispel	= mod:NewSpecialWarningDispel(323137, false, nil, 2, 1, 2)--Off by default
 local specWarnTearsoftheForrest			= mod:NewSpecialWarningDodge(323177, nil, nil, nil, 2, 2)
-local specWarnGTFO						= mod:NewSpecialWarningGTFO(323250, nil, nil, nil, 1, 8)
+local specWarnGTFO						= mod:NewSpecialWarningGTFO(323250, nil, nil, nil, 1, 8, nil, nil, "watchfeet")
 
 --Phases
 --local timerEmbraceDarknessCD			= mod:NewCDTimer(66.7, 323149, nil, nil, nil, 2, nil, DBM_COMMON_L.HEALER_ICON)

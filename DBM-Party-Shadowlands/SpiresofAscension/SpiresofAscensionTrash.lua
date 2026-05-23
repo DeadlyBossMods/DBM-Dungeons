@@ -21,22 +21,22 @@ mod:RegisterEvents(
 --General
 --local specWarnGTFO						= mod:NewSpecialWarningGTFO(257274, nil, nil, nil, 1, 8)
 --Notable Kin-Tara Trash
-local specWarnForswornDoctrine				= mod:NewSpecialWarningInterrupt(317936, "HasInterrupt", nil, nil, 1, 2)
-local specWarnForswornDoctrineDispel		= mod:NewSpecialWarningDispel(317936, "MagicDispeller", nil, nil, 1, 2)
-local specWarnBurdenofKnowledge				= mod:NewSpecialWarningInterrupt(317963, "HasInterrupt", nil, nil, 1, 2)
-local specWarnBurdenofKnowledgeDispel		= mod:NewSpecialWarningDispel(317963, "RemoveMagic", nil, nil, 1, 2)
-local specWarnRebelliousFist				= mod:NewSpecialWarningInterrupt(327413, "HasInterrupt", nil, nil, 1, 2)
+local specWarnForswornDoctrine				= mod:NewSpecialWarningInterrupt(317936, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
+local specWarnForswornDoctrineDispel		= mod:NewSpecialWarningDispel(317936, "MagicDispeller", nil, nil, 1, 2, nil, nil, "helpdispel")
+local specWarnBurdenofKnowledge				= mod:NewSpecialWarningInterrupt(317963, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
+local specWarnBurdenofKnowledgeDispel		= mod:NewSpecialWarningDispel(317963, "RemoveMagic", nil, nil, 1, 2, nil, nil, "helpdispel")
+local specWarnRebelliousFist				= mod:NewSpecialWarningInterrupt(327413, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
 --Notable Ventunax Trash
-local specWarnInsidiousVenomDispel			= mod:NewSpecialWarningDispel(317661, "RemoveMagic", nil, nil, 1, 2)
+local specWarnInsidiousVenomDispel			= mod:NewSpecialWarningDispel(317661, "RemoveMagic", nil, nil, 1, 2, nil, nil, "helpdispel")
 --Notable Oryphrion Trash
-local specWarnGreaterMending				= mod:NewSpecialWarningInterrupt(328295, "HasInterrupt", nil, nil, 1, 2)
-local specWarnDarkPulse						= mod:NewSpecialWarningInterrupt(328137, "HasInterrupt", nil, nil, 1, 2)
-local specWarnForcedConfession				= mod:NewSpecialWarningInterrupt(328331, "HasInterrupt", nil, nil, 1, 2)
-local specWarnForcedConfessionDispel		= mod:NewSpecialWarningDispel(328331, "RemoveMagic", nil, nil, 1, 2)
-local specWarnForcedConfessionYou			= mod:NewSpecialWarningMoveAway(328331, nil, nil, nil, 1, 2)
+local specWarnGreaterMending				= mod:NewSpecialWarningInterrupt(328295, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
+local specWarnDarkPulse						= mod:NewSpecialWarningInterrupt(328137, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
+local specWarnForcedConfession				= mod:NewSpecialWarningInterrupt(328331, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
+local specWarnForcedConfessionDispel		= mod:NewSpecialWarningDispel(328331, "RemoveMagic", nil, nil, 1, 2, nil, nil, "helpdispel")
+local specWarnForcedConfessionYou			= mod:NewSpecialWarningMoveAway(328331, nil, nil, nil, 1, 2, nil, nil, "runout")
 local yellForcedConfession					= mod:NewYell(328331)
 --Unknown Location
-local specCrashingStrike					= mod:NewSpecialWarningDodge(317985, nil, nil, nil, 2, 2)--Forsworn Squad-Leader
+local specCrashingStrike					= mod:NewSpecialWarningDodge(317985, nil, nil, nil, 2, 2, nil, nil, "watchstep")--Forsworn Squad-Leader
 
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role
 

@@ -16,7 +16,7 @@ mod:RegisterEventsInCombat(
 
 local warningEnchantingLullaby		= mod:NewTargetNoFilterAnnounce(16798, 2)
 
-local specWarnEnchantingLullaby		= mod:NewSpecialWarningInterrupt(16798, "HasInterrupt", nil, nil, 1, 2)
+local specWarnEnchantingLullaby		= mod:NewSpecialWarningInterrupt(16798, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
 
 local timerEnchantingLullabyCD		= mod:NewAITimer(180, 16798, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON..DBM_COMMON_L.MAGIC_ICON)
 

@@ -31,9 +31,9 @@ local warnCrimsonSwipe				= mod:NewSpellAnnounce(268230, 2, nil, false, 2)--Can'
 local warnUnstableOrdnance			= mod:NewSpellAnnounce(268995, 1)
 local warnFieryRicochet				= mod:NewCountAnnounce(463182, 3)
 
-local specWarnMassBombardment		= mod:NewSpecialWarningDodgeCount(463185, nil, nil, nil, 2, 2)
-local specWarnCleartheDeck			= mod:NewSpecialWarningDodgeCount(269029, "Tank", nil, nil, 3, 15)
-local specWarnBroadside				= mod:NewSpecialWarningDodgeCount(268260, "Tank", nil, nil, 1, 2)
+local specWarnMassBombardment		= mod:NewSpecialWarningDodgeCount(463185, nil, nil, nil, 2, 2, nil, nil, "watchstep")
+local specWarnCleartheDeck			= mod:NewSpecialWarningDodgeCount(269029, "Tank", nil, nil, 3, 15, nil, nil, "frontal")
+local specWarnBroadside				= mod:NewSpecialWarningDodgeCount(268260, "Tank", nil, nil, 1, 2, nil, nil, "watchstep")
 
 local timerMassBombardmentCD		= mod:NewCDCountTimer(25, 463185, nil, nil, nil, 3)
 local timerRicochetCD				= mod:NewCDCountTimer(17.9, 463182, nil, nil, nil, 3)

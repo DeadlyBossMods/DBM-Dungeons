@@ -17,9 +17,9 @@ mod:RegisterEventsInCombat(
 local warnReflectiveShield	= mod:NewTargetNoFilterAnnounce(66515, 2)
 local warnOldWounds			= mod:NewTargetNoFilterAnnounce(66620, 3, nil, "Tank|Healer")
 
-local specwarnRenew			= mod:NewSpecialWarningDispel(66537, "MagicDispeller", nil, nil, 1, 2)
-local specwarnHolyFire		= mod:NewSpecialWarningDispel(66538, "RemoveMagic", nil, nil, 1, 2)
-local specwarnShadows		= mod:NewSpecialWarningDispel(66619, "RemoveMagic", nil, nil, 1, 2)
+local specwarnRenew			= mod:NewSpecialWarningDispel(66537, "MagicDispeller", nil, nil, 1, 2, nil, nil, "dispelboss")
+local specwarnHolyFire		= mod:NewSpecialWarningDispel(66538, "RemoveMagic", nil, nil, 1, 2, nil, nil, "helpdispel")
+local specwarnShadows		= mod:NewSpecialWarningDispel(66619, "RemoveMagic", nil, nil, 1, 2, nil, nil, "helpdispel")
 
 local timerHolyFire			= mod:NewTargetTimer(8, 66538, nil, "RemoveMagic", 2, 5, nil, DBM_COMMON_L.MAGIC_ICON)
 local timerShadows          = mod:NewTargetTimer(5, 66619, nil, "RemoveMagic", 2, 5, nil, DBM_COMMON_L.MAGIC_ICON)

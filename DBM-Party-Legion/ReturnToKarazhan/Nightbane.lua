@@ -32,11 +32,11 @@ local warnBreath					= mod:NewSpellAnnounce(228785, 3)
 local warnPhase2					= mod:NewPhaseAnnounce(2, 2)
 local warnPhase3					= mod:NewPhaseAnnounce(3, 2)
 
-local specWarnReverbShadows			= mod:NewSpecialWarningInterruptCount(229307, "HasInterrupt", nil, nil, 1, 3)
-local specWarnCharredEarth			= mod:NewSpecialWarningGTFO(228808, nil, nil, nil, 1, 8)
-local specWarnIgniteSoul			= mod:NewSpecialWarningMoveTo(228796, nil, nil, nil, 3, 2)
+local specWarnReverbShadows			= mod:NewSpecialWarningInterruptCount(229307, "HasInterrupt", nil, nil, 1, 3, nil, nil, "kick2r")
+local specWarnCharredEarth			= mod:NewSpecialWarningGTFO(228808, nil, nil, nil, 1, 8, nil, nil, "watchfeet")
+local specWarnIgniteSoul			= mod:NewSpecialWarningMoveTo(228796, nil, nil, nil, 3, 2, nil, nil, "targetyou")
 local yellIgniteSoul				= mod:NewShortFadesYell(228796)
-local specWarnFear					= mod:NewSpecialWarningSpell(228837, nil, nil, nil, 2, 2)
+local specWarnFear					= mod:NewSpecialWarningSpell(228837, nil, nil, nil, 2, 2, nil, nil, "fearsoon")
 
 local timerReverbShadowsCD			= mod:NewCDTimer(12, 229307, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--12-16
 local timerBreathCD					= mod:NewCDTimer(23, 228785, nil, "Tank", nil, 5)--23-35

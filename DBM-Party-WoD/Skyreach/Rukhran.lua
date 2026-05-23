@@ -11,9 +11,9 @@ mod:RegisterCombat("combat")
 
 --TODO, some actual custom sounds and timer disables when apis added
 if DBM:IsPostMidnight() then
-	local specWarnSunbreak			= mod:NewSpecialWarningCount(1253510, nil, nil, DBM_COMMON_L.ADD, 1, 2)
-	local specWarnBurningClaws		= mod:NewSpecialWarningCount(1253519, "Tank", nil, nil, 2, 2)
-	local specWarnSearingQuills		= mod:NewSpecialWarningCount(1253527, nil, nil, nil, 2, 12)
+	local specWarnSunbreak			= mod:NewSpecialWarningCount(1253510, nil, nil, DBM_COMMON_L.ADD, 1, 2, nil, nil, "mobsoon")
+	local specWarnBurningClaws		= mod:NewSpecialWarningCount(1253519, "Tank", nil, nil, 2, 2, nil, nil, "defensive")
+	local specWarnSearingQuills		= mod:NewSpecialWarningCount(1253527, nil, nil, nil, 2, 12, nil, nil, "breaklos")
 
 	local timerSunbreakCD			= mod:NewCDCountTimer(20.5, 1253510, DBM_COMMON_L.ADD.." (%s)", nil, nil, 1)
 	local timerBurningClawsCD		= mod:NewCDCountTimer(20.5, 1253519, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
@@ -140,10 +140,10 @@ else
 
 	local warnSolarFlare			= mod:NewSpellAnnounce(153810, 3)
 
-	local specWarnPierceArmor		= mod:NewSpecialWarningDefensive(153794, nil, nil, nil, 1, 2)
-	local specWarnFixate			= mod:NewSpecialWarningYou(176544, nil, nil, nil, 1, 2)
-	local specWarnQuills			= mod:NewSpecialWarningMoveTo(159382, nil, nil, nil, 2, 13)
-	local specWarnQuillsEnd			= mod:NewSpecialWarningEnd(159382, nil, nil, nil, 1, 2)
+	local specWarnPierceArmor		= mod:NewSpecialWarningDefensive(153794, nil, nil, nil, 1, 2, nil, nil, "defensive")
+	local specWarnFixate			= mod:NewSpecialWarningYou(176544, nil, nil, nil, 1, 2, nil, nil, "targetyou")
+	local specWarnQuills			= mod:NewSpecialWarningMoveTo(159382, nil, nil, nil, 2, 13, nil, nil, "breaklos")
+	local specWarnQuillsEnd			= mod:NewSpecialWarningEnd(159382, nil, nil, nil, 1, 2, nil, nil, "safenow")
 
 	local timerSolarFlareCD			= mod:NewCDTimer(17, 153810, nil, nil, nil, 3)
 	local timerQuills				= mod:NewBuffActiveTimer(17, 159382, nil, nil, nil, 2, nil, DBM_COMMON_L.HEALER_ICON)

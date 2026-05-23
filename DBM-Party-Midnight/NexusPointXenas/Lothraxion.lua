@@ -13,9 +13,9 @@ mod:RegisterCombat("combat")
 
 local warnBrilliantRadiance			= mod:NewCountAnnounce(1255503, 2)
 
-local specWarnSearingRend			= mod:NewSpecialWarningCount(1255335, "Melee", nil, nil, 1, 2)
-local specWarnDivineGuile			= mod:NewSpecialWarningCount(1257567, nil, nil, nil, 2, 2)
-local specWarnFlicker				= mod:NewSpecialWarningDodgeCount(1255531, nil, nil, nil, 2, 2)
+local specWarnSearingRend			= mod:NewSpecialWarningCount(1255335, "Melee", nil, nil, 1, 2, nil, nil, "frontal")
+local specWarnDivineGuile			= mod:NewSpecialWarningCount(1257567, nil, nil, nil, 2, 2, nil, nil, "phasechange")
+local specWarnFlicker				= mod:NewSpecialWarningDodgeCount(1255531, nil, nil, nil, 2, 2, nil, nil, "watchstep")
 
 local timerSearingRendCD			= mod:NewCDCountTimer(26, 1255335, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerBrilliantDispersionCD	= mod:NewCDCountTimer(25, 1255503, nil, nil, nil, 3)

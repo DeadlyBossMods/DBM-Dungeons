@@ -34,12 +34,12 @@ or type = "dungeonencounterstart" or type = "dungeonencounterend"
 --General
 local warnSilencedSpeaker					= mod:NewTargetNoFilterAnnounce(439577, 4)
 
-local specWarnGTFO							= mod:NewSpecialWarningGTFO(429999, nil, nil, nil, 1, 8)
+local specWarnGTFO							= mod:NewSpecialWarningGTFO(429999, nil, nil, nil, 1, 8, nil, nil, "watchfeet")
 --Speaker Brokk
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(28459))
-local specWarnExhaustVents					= mod:NewSpecialWarningMoveTo(445541, nil, nil, nil, 2, 17)
-local specWarnMoltenMetal					= mod:NewSpecialWarningInterruptCount(430097, "HasInterrupt", nil, nil, 1, 2)
-local specWarnScrapSong						= mod:NewSpecialWarningDodgeCount(428202, nil, nil, nil, 2, 2)
+local specWarnExhaustVents					= mod:NewSpecialWarningMoveTo(445541, nil, nil, nil, 2, 17, nil, nil, "findclearvent")
+local specWarnMoltenMetal					= mod:NewSpecialWarningInterruptCount(430097, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kick2r")
+local specWarnScrapSong						= mod:NewSpecialWarningDodgeCount(428202, nil, nil, nil, 2, 2, nil, nil, "runtoedge")
 --local yellSomeAbility						= mod:NewYell(372107)
 
 --Pretty much all of his timers can be delayed by up to 6 seconds by spell lockouts from interrupts
@@ -50,9 +50,9 @@ local timerScrapSongCD						= mod:NewCDCountTimer(49.7, 428202, nil, nil, nil, 3
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(28461))
 local warnBlazingCrescendo					= mod:NewPreWarnAnnounce(428508, 7, 4)
 
-local specWarnBlazingCrescendo				= mod:NewSpecialWarningDodgeCount(428508, nil, nil, nil, 4, 2)
-local specWarnIgneousHammer					= mod:NewSpecialWarningDefensive(428711, nil, nil, nil, 1, 2)
-local specWarnLavaCannon					= mod:NewSpecialWarningDodgeCount(428120, nil, nil, nil, 2, 2)
+local specWarnBlazingCrescendo				= mod:NewSpecialWarningDodgeCount(428508, nil, nil, nil, 4, 2, nil, nil, "watchwave")
+local specWarnIgneousHammer					= mod:NewSpecialWarningDefensive(428711, nil, nil, nil, 1, 2, nil, nil, "defensive")
+local specWarnLavaCannon					= mod:NewSpecialWarningDodgeCount(428120, nil, nil, nil, 2, 2, nil, nil, "watchorb")
 
 local timerBlazingCrescendoCD				= mod:NewCDCountTimer(52.2, 428508, nil, nil, nil, 2)
 local timerBlazingCrescendo					= mod:NewCastTimer(7, 428508, nil, nil, nil, 2, nil, DBM_COMMON_L.HEALER_ICON..DBM_COMMON_L.DEADLY_ICON)
