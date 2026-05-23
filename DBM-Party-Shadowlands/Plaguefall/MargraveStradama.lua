@@ -27,9 +27,9 @@ mod:RegisterEventsInCombat(
 --]]
 --local warnPlagueCrash				= mod:NewCountAnnounce(322473, 4)--Announces each cast of the sequence in regular warning
 
-local specWarnMalignantGrowth		= mod:NewSpecialWarningSwitch(322304, "-Healer", nil, nil, 1, 7)
-local specWarnTouchofSlime			= mod:NewSpecialWarningSoak(322236, "Tank", nil, nil, 1, 7)
-local specWarnPlagueCrash			= mod:NewSpecialWarningDodge(322473, nil, nil, nil, 2, 2)--Announces beginning of sequence in special warning
+local specWarnMalignantGrowth		= mod:NewSpecialWarningSwitch(322304, "-Healer", nil, nil, 1, 7, nil, nil, "killmob")
+local specWarnTouchofSlime			= mod:NewSpecialWarningSoak(322236, "Tank", nil, nil, 1, 7, nil, nil, "helpsoak")
+local specWarnPlagueCrash			= mod:NewSpecialWarningDodge(322473, nil, nil, nil, 2, 2, nil, nil, "watchstep")--Announces beginning of sequence in special warning
 --local specWarnGTFO				= mod:NewSpecialWarningGTFO(257274, nil, nil, nil, 1, 8)
 
 local timerMalignantGrowthCD		= mod:NewCDTimer(20.6, 322304, nil, nil, nil, 1, nil, DBM_COMMON_L.TANK_ICON .. DBM_COMMON_L.DAMAGE_ICON)

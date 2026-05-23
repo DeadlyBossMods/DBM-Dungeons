@@ -14,7 +14,7 @@ mod:RegisterEventsInCombat(
 	"SPELL_AURA_APPLIED 462272"
 )
 
-local specWarnGTFO = mod:NewSpecialWarningGTFO(462272, nil, nil, nil, 1, 8)
+local specWarnGTFO = mod:NewSpecialWarningGTFO(462272, nil, nil, nil, 1, 8, nil, nil, "watchfeet")
 
 function mod:SPELL_AURA_APPLIED(args)
 	if args:IsSpell(462272) and args:IsPlayer() and self:AntiSpam(2.5, 1) then

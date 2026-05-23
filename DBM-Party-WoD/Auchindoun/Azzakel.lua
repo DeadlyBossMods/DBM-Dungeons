@@ -25,16 +25,16 @@ local warnCurtainOfFlame			= mod:NewTargetAnnounce(153396, 4)
 local warnFelLash					= mod:NewTargetAnnounce(153234, 3, nil, "Tank|Healer", 2)
 local warnFelPool					= mod:NewSpellAnnounce(153616, 1)
 
-local specWarnCurtainOfFlame		= mod:NewSpecialWarningMoveAway(153396, nil, nil, nil, 1, 2)
+local specWarnCurtainOfFlame		= mod:NewSpecialWarningMoveAway(153396, nil, nil, nil, 1, 2, nil, nil, "runout")
 local yellWarnCurtainOfFlame		= mod:NewYell(153396)
-local specWarnFelLash				= mod:NewSpecialWarningYou(153234, nil, nil, 2, 1, 2)
-local specWarnFelStomp				= mod:NewSpecialWarningDodge(157173, "Melee", nil, 2, 1, 2)
-local specWarnClawsOfArgus			= mod:NewSpecialWarningSpell(153764, nil, nil, nil, 1, 2)
-local specWarnClawsOfArgusEnd		= mod:NewSpecialWarningEnd(153764, nil, nil, nil, 1, 2)
-local specWarnSummonFelguard		= mod:NewSpecialWarningSwitch(164081, "Tank", nil, nil, 1, 2)
-local specWarnFelblast				= mod:NewSpecialWarningInterrupt(154221, "HasInterrupt", nil, 2, 1, 2)--Very spammy
-local specWarnFelPool				= mod:NewSpecialWarningMove(153616, nil, nil, nil, 1, 8)
-local specWarnFelSpark				= mod:NewSpecialWarningMove(153726, nil, nil, nil, 1, 8)
+local specWarnFelLash				= mod:NewSpecialWarningYou(153234, nil, nil, 2, 1, 2, nil, nil, "targetyou")
+local specWarnFelStomp				= mod:NewSpecialWarningDodge(157173, "Melee", nil, 2, 1, 2, nil, nil, "shockwave")
+local specWarnClawsOfArgus			= mod:NewSpecialWarningSpell(153764, nil, nil, nil, 1, 2, nil, nil, "killmob")
+local specWarnClawsOfArgusEnd		= mod:NewSpecialWarningEnd(153764, nil, nil, nil, 1, 2, nil, nil, "phasechange")
+local specWarnSummonFelguard		= mod:NewSpecialWarningSwitch(164081, "Tank", nil, nil, 1, 2, nil, nil, "bigmob")
+local specWarnFelblast				= mod:NewSpecialWarningInterrupt(154221, "HasInterrupt", nil, 2, 1, 2, nil, nil, "helpkick")--Very spammy
+local specWarnFelPool				= mod:NewSpecialWarningMove(153616, nil, nil, nil, 1, 8, nil, nil, "watchfeet")
+local specWarnFelSpark				= mod:NewSpecialWarningMove(153726, nil, nil, nil, 1, 8, nil, nil, "watchfeet")
 
 local timerCurtainOfFlameCD			= mod:NewNextTimer(20, 153396, nil, nil, nil, 3, nil, nil, nil, 2, 4)--20sec cd but can be massively delayed by adds phases
 local timerFelLash					= mod:NewTargetTimer(7.5, 153234, nil, "Tank|Healer", 2, 5)

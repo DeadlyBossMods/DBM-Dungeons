@@ -22,11 +22,11 @@ mod:RegisterEvents(
 local warnLavaWreath					= mod:NewTargetNoFilterAnnounce(176025, 4)
 local warnThunderousBreath				= mod:NewSpellAnnounce(171900, 3)
 
-local specWarnActivating				= mod:NewSpecialWarningInterrupt(163966, false, nil, 2, 1, 8)
-local specWarnLavaWreath				= mod:NewSpecialWarningMoveAway(176025, nil, nil, nil, 1, 2)
-local specWarnFlametongueGround			= mod:NewSpecialWarningMove(176033, nil, nil, nil, 1, 8)--Ground aoe, may add an earlier personal warning if target scanning works.
-local specWarnShrapnelblast				= mod:NewSpecialWarningDodge(166675, nil, nil, 2, 3, 2)--160943 boss version, 166675 trash version.
-local specWarnThunderzone				= mod:NewSpecialWarningMove(166340, nil, nil, nil, 1, 8)
+local specWarnActivating				= mod:NewSpecialWarningInterrupt(163966, false, nil, 2, 1, 8, nil, nil, "crowdcontrol")
+local specWarnLavaWreath				= mod:NewSpecialWarningMoveAway(176025, nil, nil, nil, 1, 2, nil, nil, "runout")
+local specWarnFlametongueGround			= mod:NewSpecialWarningMove(176033, nil, nil, nil, 1, 8, nil, nil, "watchfeet")--Ground aoe, may add an earlier personal warning if target scanning works.
+local specWarnShrapnelblast				= mod:NewSpecialWarningDodge(166675, nil, nil, 2, 3, 2, nil, nil, "shockwave")--160943 boss version, 166675 trash version.
+local specWarnThunderzone				= mod:NewSpecialWarningMove(166340, nil, nil, nil, 1, 8, nil, nil, "watchfeet")
 
 --Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc, 7 off interrupt, 8 gtfo
 

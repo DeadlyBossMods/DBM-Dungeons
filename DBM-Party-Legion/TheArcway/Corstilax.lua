@@ -21,11 +21,11 @@ mod:RegisterEventsInCombat(
 local warnSupression				= mod:NewTargetAnnounce(196070, 4)
 local warnQuarantine				= mod:NewTargetAnnounce(195804, 3)
 
-local specWarnSupression			= mod:NewSpecialWarningRun(196070, nil, nil, nil, 4, 2)
+local specWarnSupression			= mod:NewSpecialWarningRun(196070, nil, nil, nil, 4, 2, nil, nil, "runout")
 local yellSupression				= mod:NewYell(196070)
-local specWarnQuarantine			= mod:NewSpecialWarningTarget(195804, false, nil, nil, 1, 2)
+local specWarnQuarantine			= mod:NewSpecialWarningTarget(195804, false, nil, nil, 1, 2, nil, nil, "readyrescue")
 local yellQuarantine				= mod:NewYell(195804)
-local specWarnCleansing				= mod:NewSpecialWarningSpell(196115, nil, nil, nil, 2, 2)
+local specWarnCleansing				= mod:NewSpecialWarningSpell(196115, nil, nil, nil, 2, 2, nil, nil, "aesoon")
 
 local timerSupressionCD				= mod:NewNextTimer(46, 196070, nil, nil, nil, 3)
 local timerQuarantineCD				= mod:NewNextTimer(46, 195804, nil, nil, nil, 3)

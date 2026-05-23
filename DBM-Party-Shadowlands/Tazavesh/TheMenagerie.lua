@@ -68,11 +68,11 @@ mod:RegisterEventsInCombat(
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(23159))
 local warnGluttony					= mod:NewTargetNoFilterAnnounce(349627, 2)
 
-local specWarnGluttony				= mod:NewSpecialWarningYou(349627, nil, nil, nil, 1, 2)
+local specWarnGluttony				= mod:NewSpecialWarningYou(349627, nil, nil, nil, 1, 2, nil, nil, "targetyou")
 local yellGluttony					= mod:NewYell(349627)
 local yellGluttonyFades				= mod:NewShortFadesYell(349627)
-local specWarnGripofHunger			= mod:NewSpecialWarningRun(349663, nil, nil, nil, 4, 2)
-local specWarnGrandConsumption		= mod:NewSpecialWarningDodge(349797, nil, nil, nil, 2, 2)
+local specWarnGripofHunger			= mod:NewSpecialWarningRun(349663, nil, nil, nil, 4, 2, nil, nil, "justrun")
+local specWarnGrandConsumption		= mod:NewSpecialWarningDodge(349797, nil, nil, nil, 2, 2, nil, nil, "watchorb")
 
 local timerGripofHungerCD			= mod:NewCDTimer(23, 349663, nil, nil, nil, 2)--23-30
 local timerGrandconsumptionCD		= mod:NewCDTimer(30, 349797, nil, nil, nil, 3)
@@ -80,7 +80,7 @@ local timerGrandconsumptionCD		= mod:NewCDTimer(30, 349797, nil, nil, nil, 3)
 mod:AddSetIconOption("SetIconOnGluttony", 349627, true, 0, {1})
 --Achillite
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(23231))
-local specWarnVentingProtocol		= mod:NewSpecialWarningDodge(349987, nil, nil, nil, 2, 2)
+local specWarnVentingProtocol		= mod:NewSpecialWarningDodge(349987, nil, nil, nil, 2, 2, nil, nil, "watchorb")
 local specWarnPurificationProtocol	= mod:NewSpecialWarningDispel(349954, "RemoveMagic", nil, nil, 1, 2)
 
 local timerAchilliteCD				= mod:NewNextTimer(23, -23231, nil, nil, nil, 1, "132349")
@@ -91,8 +91,8 @@ local timerPurificationProtocolCD	= mod:NewCDTimer(18.2, 349954, nil, nil, nil, 
 mod:AddInfoFrameOption(349934, true)
 --Venza Goldfuse
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(23241))
-local specWarnWhirlingAnnihilation	= mod:NewSpecialWarningRun(350086, nil, nil, nil, 4, 2)
-local specWarnChainsofDamnation		= mod:NewSpecialWarningSwitch(350101, "-Healer", nil, nil, 1, 2)
+local specWarnWhirlingAnnihilation	= mod:NewSpecialWarningRun(350086, nil, nil, nil, 4, 2, nil, nil, "justrun")
+local specWarnChainsofDamnation		= mod:NewSpecialWarningSwitch(350101, "-Healer", nil, nil, 1, 2, nil, nil, "targetchange")
 local yellChainsofDamnation			= mod:NewYell(350101, nil, nil, nil, "YELL")
 
 local timerVenzaCD					= mod:NewNextTimer(23, -23241, nil, nil, nil, 1, "132349")

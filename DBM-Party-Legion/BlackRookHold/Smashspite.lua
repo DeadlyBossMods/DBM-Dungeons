@@ -33,12 +33,12 @@ mod:RegisterEventsInCombat(
 --]]
 local warnHatefulGaze				= mod:NewTargetNoFilterAnnounce(198079, 4)
 
-local specWarnStomp					= mod:NewSpecialWarningCount(198073, nil, nil, nil, 2, 2)
-local specWarnHatefulGaze			= mod:NewSpecialWarningDefensive(198079, nil, nil, nil, 1, 2)
+local specWarnStomp					= mod:NewSpecialWarningCount(198073, nil, nil, nil, 2, 2, nil, nil, "carefly")
+local specWarnHatefulGaze			= mod:NewSpecialWarningDefensive(198079, nil, nil, nil, 1, 2, nil, nil, "targetyou")
 local yellHatefulGaze				= mod:NewYell(198079)
-local specWarnBrutalHaymakerSoon	= mod:NewSpecialWarningSoon(198245, "Tank|Healer", nil, nil, 1, 2)--Face fuck soon
-local specWarnBrutalHaymaker		= mod:NewSpecialWarningDefensive(198245, nil, nil, nil, 3, 2)--Incoming face fuck
-local specWarnFelVomit				= mod:NewSpecialWarningMoveAway(198446, nil, nil, nil, 1, 2)
+local specWarnBrutalHaymakerSoon	= mod:NewSpecialWarningSoon(198245, "Tank|Healer", nil, nil, 1, 2, nil, nil, "energyhigh")--Face fuck soon
+local specWarnBrutalHaymaker		= mod:NewSpecialWarningDefensive(198245, nil, nil, nil, 3, 2, nil, nil, "defensive")--Incoming face fuck
+local specWarnFelVomit				= mod:NewSpecialWarningMoveAway(198446, nil, nil, nil, 1, 2, nil, nil, "scatter")
 local yellFelVomit					= mod:NewYell(198446)
 
 local timerStompCD					= mod:NewCDCountTimer(21.8, 198073, nil, nil, nil, 2)--Next timers but delayed by other casts (changed from 17 to 23 in DF)

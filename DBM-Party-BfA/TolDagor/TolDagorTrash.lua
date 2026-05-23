@@ -18,20 +18,20 @@ mod:RegisterEvents(
 --local warnRiotShield				= mod:NewSpellAnnounce(258317, 4)
 
 --local yellArrowBarrage				= mod:NewYell(200343)
-local specWarnLockdown				= mod:NewSpecialWarningDodge(259711, nil, nil, nil, 2, 2)
-local specWarnRighteousFlames		= mod:NewSpecialWarningDodge(258917, nil, nil, nil, 2, 2)
-local specWarnRiotShieldMove		= mod:NewSpecialWarningMove(258317, nil, nil, nil, 1, 2)--Because it has a hard tank check, option default on for all
-local specWarnHeavilyArmed			= mod:NewSpecialWarningRun(259188, "Tank", nil, nil, 4, 2)
-local specWarnDebilitatingShout		= mod:NewSpecialWarningInterrupt(258128, "HasInterrupt", nil, nil, 1, 2)
-local specWarnWateryDomeKick		= mod:NewSpecialWarningInterrupt(258153, "HasInterrupt", nil, nil, 1, 2)
-local specWarnHandcuff				= mod:NewSpecialWarningInterrupt(258313, "HasInterrupt", nil, nil, 1, 2)
-local specWarnBlaze					= mod:NewSpecialWarningInterrupt(258869, "Tank", nil, nil, 1, 2)--Tank should hit this one
-local specWarnFuselighter			= mod:NewSpecialWarningInterrupt(258634, "HasInterrupt", nil, nil, 1, 2)--Everyone else hit this one
-local specWarnInnerFlames			= mod:NewSpecialWarningInterrupt(258935, "HasInterrupt", nil, nil, 1, 2)
-local specWarnWateryDome			= mod:NewSpecialWarningDispel(258153, "MagicDispeller", nil, nil, 1, 2)
-local specWarnDarkStep				= mod:NewSpecialWarningDispel(258133, "MagicDispeller", nil, nil, 1, 2)
-local specWarnTorchStrike			= mod:NewSpecialWarningDispel(265889, "RemoveMagic", nil, 2, 1, 2)
-local specWarnRiotShield			= mod:NewSpecialWarningReflect(258317, "CasterDps", nil, nil, 1, 2)
+local specWarnLockdown				= mod:NewSpecialWarningDodge(259711, nil, nil, nil, 2, 2, nil, nil, "watchstep")
+local specWarnRighteousFlames		= mod:NewSpecialWarningDodge(258917, nil, nil, nil, 2, 2, nil, nil, "watchstep")
+local specWarnRiotShieldMove		= mod:NewSpecialWarningMove(258317, nil, nil, nil, 1, 2, nil, nil, "moveboss")--Because it has a hard tank check, option default on for all
+local specWarnHeavilyArmed			= mod:NewSpecialWarningRun(259188, "Tank", nil, nil, 4, 2, nil, nil, "justrun")
+local specWarnDebilitatingShout		= mod:NewSpecialWarningInterrupt(258128, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
+local specWarnWateryDomeKick		= mod:NewSpecialWarningInterrupt(258153, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
+local specWarnHandcuff				= mod:NewSpecialWarningInterrupt(258313, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
+local specWarnBlaze					= mod:NewSpecialWarningInterrupt(258869, "Tank", nil, nil, 1, 2, nil, nil, "kickcast")--Tank should hit this one
+local specWarnFuselighter			= mod:NewSpecialWarningInterrupt(258634, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")--Everyone else hit this one
+local specWarnInnerFlames			= mod:NewSpecialWarningInterrupt(258935, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
+local specWarnWateryDome			= mod:NewSpecialWarningDispel(258153, "MagicDispeller", nil, nil, 1, 2, nil, nil, "helpdispel")
+local specWarnDarkStep				= mod:NewSpecialWarningDispel(258133, "MagicDispeller", nil, nil, 1, 2, nil, nil, "helpdispel")
+local specWarnTorchStrike			= mod:NewSpecialWarningDispel(265889, "RemoveMagic", nil, 2, 1, 2, nil, nil, "helpdispel")
+local specWarnRiotShield			= mod:NewSpecialWarningReflect(258317, "CasterDps", nil, nil, 1, 2, nil, nil, "stopattack")
 
 function mod:SPELL_CAST_START(args)
 	if not self.Options.Enabled then return end

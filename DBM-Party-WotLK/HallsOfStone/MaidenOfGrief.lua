@@ -18,7 +18,7 @@ mod:RegisterEventsInCombat(
 local warningWoe		= mod:NewTargetNoFilterAnnounce(50761, 2, nil, "Healer", 2)
 local warningStorm		= mod:NewSpellAnnounce(50752, 2)
 
-local specWarnSorrow	= mod:NewSpecialWarningMoveTo(50760, nil, nil, nil, 2, 2)
+local specWarnSorrow	= mod:NewSpecialWarningMoveTo(50760, nil, nil, nil, 2, 2, nil, nil, "takedamage")
 
 local timerWoe			= mod:NewTargetTimer(10, 50761, nil, "Healer", nil, 5, nil, DBM_COMMON_L.HEALER_ICON..DBM_COMMON_L.MAGIC_ICON)
 local timerStormCD		= mod:NewCDTimer(20, 50752, nil, nil, nil, 3)

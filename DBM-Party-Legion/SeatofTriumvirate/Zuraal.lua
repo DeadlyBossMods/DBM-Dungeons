@@ -11,10 +11,10 @@ mod:RegisterCombat("combat")
 if DBM:IsPostMidnight() then
 	local warnDecimate					= mod:NewCountAnnounce(1263282, 2)
 
-	local specWarnNullPalm				= mod:NewSpecialWarningCount(1268916, nil, nil, DBM_COMMON_L.FRONTAL, 2, 2)
-	local specWarnOozingSlam			= mod:NewSpecialWarningCount(1263399, nil, nil, nil, 2, 2)
-	local specWarnVoidSlash				= mod:NewSpecialWarningCount(1263440, nil, nil, nil, 1, 2)
-	local specWarnCrashingVoid			= mod:NewSpecialWarningCount(1263304, nil, nil, DBM_COMMON_L.AOEDAMAGE, 2, 2)
+	local specWarnNullPalm				= mod:NewSpecialWarningCount(1268916, nil, nil, DBM_COMMON_L.FRONTAL, 2, 2, nil, nil, "frontal")
+	local specWarnOozingSlam			= mod:NewSpecialWarningCount(1263399, nil, nil, nil, 2, 2, nil, nil, "mobsoon")
+	local specWarnVoidSlash				= mod:NewSpecialWarningCount(1263440, nil, nil, nil, 1, 2, nil, nil, "defensive")
+	local specWarnCrashingVoid			= mod:NewSpecialWarningCount(1263304, nil, nil, DBM_COMMON_L.AOEDAMAGE, 2, 2, nil, nil, "pullin")
 
 	local timerNullPalmCD				= mod:NewCDCountTimer(20.5, 1268916, DBM_COMMON_L.FRONTAL, nil, nil, 3)
 	local timerDecimateCD				= mod:NewCDCountTimer(20.5, 1263282, nil, nil, nil, 3)
@@ -161,10 +161,10 @@ else
 	local warnFixate						= mod:NewTargetAnnounce(244657, 3)
 	local warnVoidTear						= mod:NewTargetAnnounce(244621, 1)
 
-	local specWarnNullPalm					= mod:NewSpecialWarningDodge(246134, nil, nil, 2, 2, 2)
-	local specWarnCoalescedVoid				= mod:NewSpecialWarningSwitch(244602, "Dps", nil, nil, 1, 2)
-	local specWarnUmbraShift				= mod:NewSpecialWarningYou(244433, nil, nil, nil, 1, 5)
-	local specWarnFixate					= mod:NewSpecialWarningRun(244657, nil, nil, nil, 4, 2)
+	local specWarnNullPalm					= mod:NewSpecialWarningDodge(246134, nil, nil, 2, 2, 2, nil, nil, "shockwave")
+	local specWarnCoalescedVoid				= mod:NewSpecialWarningSwitch(244602, "Dps", nil, nil, 1, 2, nil, nil, "killmob")
+	local specWarnUmbraShift				= mod:NewSpecialWarningYou(244433, nil, nil, nil, 1, 5, nil, nil, "teleyou")
+	local specWarnFixate					= mod:NewSpecialWarningRun(244657, nil, nil, nil, 4, 2, nil, nil, "justrun")
 
 	local timerNullPalmCD					= mod:NewCDTimer(10.9, 246134, nil, nil, nil, 3)
 	local timerDeciminateCD					= mod:NewCDTimer(12.1, 244579, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)

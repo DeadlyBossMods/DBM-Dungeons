@@ -32,11 +32,11 @@ mod:RegisterEvents(
 --TODO, does boss still have old random tempest timers system from legion or are 10.0.2 changes universal?
 local warnSpear						= mod:NewSpellAnnounce(198072, 2)--Target not available so no target warning.
 
-local specWarnTempest				= mod:NewSpecialWarningRunCount(198263, nil, nil, nil, 4, 2)
-local specWarnShatterSpears			= mod:NewSpecialWarningDodge(198077, nil, nil, nil, 2, 2)
-local specWarnRunicBrand			= mod:NewSpecialWarningMoveTo(197961, nil, nil, nil, 2, 6)
-local specWarnAdd					= mod:NewSpecialWarningSwitch(201221, "-Healer", nil, nil, 1, 2)
-local specWarnSurge					= mod:NewSpecialWarningInterrupt(198750, "HasInterrupt", nil, nil, 1, 2)
+local specWarnTempest				= mod:NewSpecialWarningRunCount(198263, nil, nil, nil, 4, 2, nil, nil, "runout")
+local specWarnShatterSpears			= mod:NewSpecialWarningDodge(198077, nil, nil, nil, 2, 2, nil, nil, "watchorb")
+local specWarnRunicBrand			= mod:NewSpecialWarningMoveTo(197961, nil, nil, nil, 2, 6, nil, nil, "mm3")
+local specWarnAdd					= mod:NewSpecialWarningSwitch(201221, "-Healer", nil, nil, 1, 2, nil, nil, "killmob")
+local specWarnSurge					= mod:NewSpecialWarningInterrupt(198750, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
 
 local timerRP						= mod:NewRPTimer(28.5)--Timer for when dialog option appears. when triggered, he still has 3 seconds til entering combat
 --local timerSpearCD				= mod:NewCDTimer(8, 198077, nil, nil, nil, 3)--More data needed

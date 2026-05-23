@@ -24,11 +24,11 @@ mod:RegisterEventsInCombat(
 --]]
 local warnFetidGas					= mod:NewCountAnnounce(320637, 2)
 
-local specWarnHeavingRetchYou		= mod:NewSpecialWarningMoveAway(320596, nil, nil, nil, 1, 2)
-local specWarnHeavingRetch			= mod:NewSpecialWarningDodgeLoc(320596, nil, nil, nil, 2, 15)
+local specWarnHeavingRetchYou		= mod:NewSpecialWarningMoveAway(320596, nil, nil, nil, 1, 2, nil, nil, "runout")
+local specWarnHeavingRetch			= mod:NewSpecialWarningDodgeLoc(320596, nil, nil, nil, 2, 15, nil, nil, "frontal")
 local yellHeavingRetch				= mod:NewYell(320596)
-local specWarnCrunch				= mod:NewSpecialWarningDefensive(320655, nil, nil, nil, 1, 2)
-local specWarnGTFO					= mod:NewSpecialWarningGTFO(320646, nil, nil, nil, 1, 8)
+local specWarnCrunch				= mod:NewSpecialWarningDefensive(320655, nil, nil, nil, 1, 2, nil, nil, "defensive")
+local specWarnGTFO					= mod:NewSpecialWarningGTFO(320646, nil, nil, nil, 1, 8, nil, nil, "watchfeet")
 
 local timerHeavingRetchCD			= mod:NewCDCountTimer(32.5, 320596, nil, nil, nil, 3)--32.7-42
 local timerFetidGasCD				= mod:NewCDCountTimer(25.4, 320637, nil, nil, nil, 3)

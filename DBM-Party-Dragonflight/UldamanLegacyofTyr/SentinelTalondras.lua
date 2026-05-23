@@ -33,11 +33,11 @@ local warnInexorableOver						= mod:NewFadesAnnounce(372600, 1)
 local warnResonatingOrb							= mod:NewTargetNoFilterAnnounce(382071, 3)
 local warnEarthenShards							= mod:NewTargetNoFilterAnnounce(372718, 3, nil, "Healer")
 
-local specWarnTitanicEmpowerment				= mod:NewSpecialWarningSpell(372719, nil, nil, nil, 3, 2)
-local specWarnResonatingOrb						= mod:NewSpecialWarningYouPos(382071, nil, nil, nil, 1, 2)
+local specWarnTitanicEmpowerment				= mod:NewSpecialWarningSpell(372719, nil, nil, nil, 3, 2, nil, nil, "specialsoon")
+local specWarnResonatingOrb						= mod:NewSpecialWarningYouPos(382071, nil, nil, nil, 1, 2, nil, nil, "mm")
 local yellResonatingOrb							= mod:NewShortPosYell(382071)
 local yellResonatingOrbFades					= mod:NewIconFadesYell(382071)
-local specWarnCrushingStomp						= mod:NewSpecialWarningCount(372701, nil, nil, nil, 2, 2)
+local specWarnCrushingStomp						= mod:NewSpecialWarningCount(372701, nil, nil, nil, 2, 2, nil, nil, "carefly")
 
 local timerTitanicEmpowermentCD					= mod:NewCDTimer(35, 372719, nil, nil, nil, 2, nil, DBM_COMMON_L.DEADLY_ICON)
 local timerResonatingOrbCD						= mod:NewCDTimer(25.6, 382071, nil, nil, nil, 3, nil, nil, true)--25-30ish

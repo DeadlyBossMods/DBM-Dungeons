@@ -24,7 +24,7 @@ local warnMindControlled			= mod:NewTargetAnnounce(202804, 4)
 local warnCallBlood					= mod:NewSpellAnnounce(203381, 2)
 
 local specWarnEssenceoftheBloodQueen= mod:NewSpecialWarningYou(202779)
-local specWarnBloodthirst			= mod:NewSpecialWarningYou(202792, nil, nil, nil, 3, 12)
+local specWarnBloodthirst			= mod:NewSpecialWarningYou(202792, nil, nil, nil, 3, 12, nil, nil, "bitenow")
 local yellBloodThirst				= mod:NewShortFadesYell(202792)
 
 local timerHunger					= mod:NewBuffFadesTimer(20, 202792, nil, nil, nil, 5, nil, DBM_COMMON_L.DEADLY_ICON)

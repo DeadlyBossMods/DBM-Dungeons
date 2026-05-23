@@ -24,12 +24,12 @@ mod:RegisterEventsInCombat(
 local warnDeepeningShadows			= mod:NewSpellAnnounce(213583, 4)
 local warnVengeance					= mod:NewSpellAnnounce(205004, 4)
 
-local specWarnKick					= mod:NewSpecialWarningSpell(197251, "Tank", nil, nil, 3, 2)
-local specWarnDeepeningShadows		= mod:NewSpecialWarningMoveTo(213583, nil, nil, nil, 3, 12)
-local specWarnHiddenStarted			= mod:NewSpecialWarningSpell(192750, nil, nil, nil, 2, 2)
-local specWarnHiddenOver			= mod:NewSpecialWarningEnd(192750, nil, nil, nil, 1, 2)
-local specWarnCreepingDoom			= mod:NewSpecialWarningDodge(197422, nil, nil, nil, 2, 2)
-local specWarnVengeance				= mod:NewSpecialWarningMoveTo(205004, nil, nil, nil, 3, 12)
+local specWarnKick					= mod:NewSpecialWarningSpell(197251, "Tank", nil, nil, 3, 2, nil, nil, "carefly")
+local specWarnDeepeningShadows		= mod:NewSpecialWarningMoveTo(213583, nil, nil, nil, 3, 12, nil, nil, "bringlighttoshadow")
+local specWarnHiddenStarted			= mod:NewSpecialWarningSpell(192750, nil, nil, nil, 2, 2, nil, nil, "phasechange")
+local specWarnHiddenOver			= mod:NewSpecialWarningEnd(192750, nil, nil, nil, 1, 2, nil, nil, "phasechange")
+local specWarnCreepingDoom			= mod:NewSpecialWarningDodge(197422, nil, nil, nil, 2, 2, nil, nil, "stilldanger")
+local specWarnVengeance				= mod:NewSpecialWarningMoveTo(205004, nil, nil, nil, 3, 12, nil, nil, "bringlighttomob")
 
 local timerKickCD					= mod:NewCDTimer(16, 197251, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON)--16-42
 local timerDeepeningShadowsCD		= mod:NewCDTimer(30.5, 213583, nil, nil, nil, 3)

@@ -15,8 +15,8 @@ mod:RegisterEvents(
 
 local warningCurseOfImpotence	= mod:NewTargetNoFilterAnnounce(34925, 2)
 
-local specWarnHeal				= mod:NewSpecialWarningInterrupt(34945, "HasInterrupt", nil, nil, 1, 2)
-local specWarnManaBurn			= mod:NewSpecialWarningInterrupt(15785, "HasInterrupt", nil, nil, 1, 2)
+local specWarnHeal				= mod:NewSpecialWarningInterrupt(34945, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
+local specWarnManaBurn			= mod:NewSpecialWarningInterrupt(15785, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
 
 function mod:SPELL_AURA_APPLIED(args)
 	if args.spellId == 34925 then

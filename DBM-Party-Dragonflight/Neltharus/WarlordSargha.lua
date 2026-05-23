@@ -39,10 +39,10 @@ local warnMoltenGold							= mod:NewTargetNoFilterAnnounce(377018, 2, nil, "Heal
 local warnHardenedGold							= mod:NewYouAnnounce(377022, 2)--So inconsiquential it doesn't even deserve a special announcement
 local warnBurningPursuit						= mod:NewTargetNoFilterAnnounce(377522, 3)
 
-local specWarnDragonsKiln						= mod:NewSpecialWarningDodge(377204, nil, nil, nil, 2, 2)
-local specWarnBurningEmber						= mod:NewSpecialWarningDodge(377477, nil, nil, nil, 2, 2)
-local specWarnBurningPursuit					= mod:NewSpecialWarningYou(377522, nil, nil, nil, 1, 2)
-local specWarnGTFO								= mod:NewSpecialWarningGTFO(377542, nil, nil, nil, 1, 8)
+local specWarnDragonsKiln						= mod:NewSpecialWarningDodge(377204, nil, nil, nil, 2, 2, nil, nil, "shockwave")
+local specWarnBurningEmber						= mod:NewSpecialWarningDodge(377477, nil, nil, nil, 2, 2, nil, nil, "watchstep")
+local specWarnBurningPursuit					= mod:NewSpecialWarningYou(377522, nil, nil, nil, 1, 2, nil, nil, "targetyou")
+local specWarnGTFO								= mod:NewSpecialWarningGTFO(377542, nil, nil, nil, 1, 8, nil, nil, "watchfeet")
 
 local timerMagmaShieldCD						= mod:NewCDCountTimer(33.4, 376780, nil, nil, nil, 5, nil, DBM_COMMON_L.DAMAGE_ICON)
 local timerMoltenGoldCD							= mod:NewCDTimer(26.7, 377018, nil, nil, nil, 3)

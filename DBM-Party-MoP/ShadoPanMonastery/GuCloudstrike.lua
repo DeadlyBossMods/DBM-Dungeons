@@ -26,9 +26,9 @@ local warnChargingSoul			= mod:NewSpellAnnounce(110945, 3)--Phase 2
 local warnLightningBreath		= mod:NewSpellAnnounce(102573, 3)
 local warnOverchargedSoul		= mod:NewSpellAnnounce(110852, 3)--Phase 3
 
-local specWarnStaticField		= mod:NewSpecialWarningMoveAway(106923, nil, nil, nil, 1, 2)
+local specWarnStaticField		= mod:NewSpecialWarningMoveAway(106923, nil, nil, nil, 1, 2, nil, nil, "runout")
 local yellStaticField			= mod:NewYell(106923)
-local specWarnMagneticShroud	= mod:NewSpecialWarningSpell(107140, nil, nil, nil, 2, 2)
+local specWarnMagneticShroud	= mod:NewSpecialWarningSpell(107140, nil, nil, nil, 2, 2, nil, nil, "healall")
 
 local timerInvokeLightningCD	= mod:NewNextTimer(6, 106984)--Phase 1 ability
 local timerStaticFieldCD		= mod:NewNextTimer(8, 106923, nil, nil, nil, 3)--^^

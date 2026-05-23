@@ -58,10 +58,10 @@ local warnInfiniteBreath			= mod:NewTargetCountAnnounce(347149, 4, nil, nil, nil
 local warnHookd						= mod:NewTargetNoFilterAnnounce(354334, 2, nil, "Healer")
 --local warnDoubleTime				= mod:NewCastAnnounce(350517, 3)
 
-local specWarnInfiniteBreath		= mod:NewSpecialWarningCount(347149, nil, nil, nil, 1, 2)
-local specWarnInfiniteBreathDodge	= mod:NewSpecialWarningDodgeCount(347149, nil, nil, nil, 3, 2)
-local specWarnAnchorShot			= mod:NewSpecialWarningYou(352345, nil, nil, nil, 1, 2)
-local specWarnGTFO					= mod:NewSpecialWarningGTFO(358947, nil, nil, nil, 1, 8)
+local specWarnInfiniteBreath		= mod:NewSpecialWarningCount(347149, nil, nil, nil, 1, 2, nil, nil, "bait")
+local specWarnInfiniteBreathDodge	= mod:NewSpecialWarningDodgeCount(347149, nil, nil, nil, 3, 2, nil, nil, "breathsoon")
+local specWarnAnchorShot			= mod:NewSpecialWarningYou(352345, nil, nil, nil, 1, 2, nil, nil, "targetyou")
+local specWarnGTFO					= mod:NewSpecialWarningGTFO(358947, nil, nil, nil, 1, 8, nil, nil, "watchfeet")
 
 local timerInfiniteBreathCD			= mod:NewCDTimer(15, 347149, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 --local timerHookSwipeCD				= mod:NewCDTimer(12, 347151, nil, nil, nil, 3, nil, DBM_COMMON_L.HEALER_ICON)

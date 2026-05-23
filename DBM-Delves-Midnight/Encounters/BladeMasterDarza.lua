@@ -18,8 +18,8 @@ mod:RegisterSafeEventsInCombat(
 --NOTE: This boss doesn't have boss1 unit ID so it will break if either condition is true:
 --1. You have a target that isn't the boss
 --2. You do not target the boss during any cast
-local specWarnShadeCleave		= mod:NewSpecialWarningDodgeCount(1267227, nil, nil, nil, 2, 15)
-local specWarnBaskInTwilight	= mod:NewSpecialWarningDodgeCount(1268950, nil, nil, nil, 2, 2)
+local specWarnShadeCleave		= mod:NewSpecialWarningDodgeCount(1267227, nil, nil, nil, 2, 15, nil, nil, "frontal")
+local specWarnBaskInTwilight	= mod:NewSpecialWarningDodgeCount(1268950, nil, nil, nil, 2, 2, nil, nil, "watchstep")
 
 local timerShadeCleaveCD		= mod:NewCDCountTimer(17, 1267227, nil, nil, nil, 3)
 local timerBaskInTwilightCD		= mod:NewCDCountTimer(42.4, 1268950, nil, nil, nil, 1)

@@ -17,7 +17,7 @@ mod:RegisterEventsInCombat(
 local warnChestBomb			= mod:NewTargetNoFilterAnnounce(88352, 4)
 local warnSpiritStrike		= mod:NewSpellAnnounce(59304, 3)
 
-local specWarnChestBomb		= mod:NewSpecialWarningMoveAway(88352, nil, nil, nil, 1, 2)
+local specWarnChestBomb		= mod:NewSpecialWarningMoveAway(88352, nil, nil, nil, 1, 2, nil, nil, "runout")
 
 local timerChestBomb		= mod:NewTargetTimer(10, 88352, nil, nil, nil, 3)
 

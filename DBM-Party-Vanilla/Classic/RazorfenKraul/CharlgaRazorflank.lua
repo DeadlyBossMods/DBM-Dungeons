@@ -18,7 +18,7 @@ mod:RegisterEventsInCombat(
 local warningPurity				= mod:NewTargetNoFilterAnnounce(8361, 2)
 local warningManaSpike			= mod:NewSpellAnnounce(8358, 2)
 
-local specWarnChainBolt			= mod:NewSpecialWarningInterrupt(8292, "HasInterrupt", nil, nil, 1, 2)--Spammy if CheckInterruptFilter is disabled or isn't working
+local specWarnChainBolt			= mod:NewSpecialWarningInterrupt(8292, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")--Spammy if CheckInterruptFilter is disabled or isn't working
 
 function mod:SPELL_CAST_START(args)
 	if args:IsSpell(8292) and args:IsSrcTypeHostile() then

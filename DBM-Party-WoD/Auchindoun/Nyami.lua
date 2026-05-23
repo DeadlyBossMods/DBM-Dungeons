@@ -18,10 +18,10 @@ mod:RegisterEventsInCombat(
 --TODO, soul vessel is probably wrong now.
 --Even on CM, fights too short to get a good soulvessel timer. Still need better logs
 
-local specWarnSWP				= mod:NewSpecialWarningDispel(154477, "RemoveMagic", nil, 2, 1, 2)
-local specWarnSoulVessel		= mod:NewSpecialWarningSpell(155327, nil, nil, nil, 2, 2)
+local specWarnSWP				= mod:NewSpecialWarningDispel(154477, "RemoveMagic", nil, 2, 1, 2, nil, nil, "dispelnow")
+local specWarnSoulVessel		= mod:NewSpecialWarningSpell(155327, nil, nil, nil, 2, 2, nil, nil, "findshadow")
 local specWarnSoulVesselEnd		= mod:NewSpecialWarningEnd(155327, nil, nil, nil, 1, 2)
-local specWarnTornSpirits		= mod:NewSpecialWarningSwitch(153991, "-Healer", nil, nil, 1, 2)
+local specWarnTornSpirits		= mod:NewSpecialWarningSwitch(153991, "-Healer", nil, nil, 1, 2, nil, nil, "mobsoon")
 
 local timerSoulVessel			= mod:NewBuffActiveTimer(11.5, 155327, nil, nil, nil, 2, nil, DBM_COMMON_L.DEADLY_ICON)
 local timerSoulVesselCD			= mod:NewCDTimer(51.5, 155327, nil, nil, nil, 6)

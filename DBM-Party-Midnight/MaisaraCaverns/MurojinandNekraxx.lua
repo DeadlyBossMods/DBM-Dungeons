@@ -13,11 +13,11 @@ mod:RegisterCombat("combat")
 
 local warnCarrionSwoop			= mod:NewBlizzTargetAnnounce(1249478, 2)
 
-local specWarnFlankingSpear		= mod:NewSpecialWarningCount(1266480, nil, nil, nil, 1, 2)
-local specWarnFetidQuillstorm	= mod:NewSpecialWarningDodgeCount(1243900, nil, nil, nil, 2, 2)
-local specWarnFreezingTrap		= mod:NewSpecialWarningDodgeCount(1243741, nil, nil, nil, 2, 19)
-local specWarnBarrage			= mod:NewSpecialWarningDodgeCount(1260643, nil, nil, nil, 2, 2)
-local specWarnInfectedPinions	= mod:NewSpecialWarningCount(1246666, "RemoveDisease", nil, nil, 1, 2)
+local specWarnFlankingSpear		= mod:NewSpecialWarningCount(1266480, nil, nil, nil, 1, 2, nil, nil, "defensive")
+local specWarnFetidQuillstorm	= mod:NewSpecialWarningDodgeCount(1243900, nil, nil, nil, 2, 2, nil, nil, "watchstep")
+local specWarnFreezingTrap		= mod:NewSpecialWarningDodgeCount(1243741, nil, nil, nil, 2, 19, nil, nil, "trapsincoming")
+local specWarnBarrage			= mod:NewSpecialWarningDodgeCount(1260643, nil, nil, nil, 2, 2, nil, nil, "frontal")
+local specWarnInfectedPinions	= mod:NewSpecialWarningCount(1246666, "RemoveDisease", nil, nil, 1, 2, nil, nil, "helpdispel")
 
 local timerFlankingSpearCD		= mod:NewCDCountTimer(20.5, 1266480, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerFetidQuillstormCD	= mod:NewCDCountTimer(20.5, 1243900, nil, nil, nil, 3)

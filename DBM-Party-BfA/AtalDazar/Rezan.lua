@@ -34,11 +34,11 @@ mod:RegisterEventsInCombat(
 --TODO, no two pulls are same timer wise. pursuit kinda fucks timers to hell. makes it hard to learn ACTUAL cds since spells get delayed by ICDs and spell queues
 local warnPursuit				= mod:NewTargetAnnounce(257407, 2)
 
-local specWarnTeeth				= mod:NewSpecialWarningDefensive(255434, nil, nil, nil, 1, 2)
-local specWarnFear				= mod:NewSpecialWarningMoveTo(255371, nil, nil, nil, 3, 13)
+local specWarnTeeth				= mod:NewSpecialWarningDefensive(255434, nil, nil, nil, 1, 2, nil, nil, "defensive")
+local specWarnFear				= mod:NewSpecialWarningMoveTo(255371, nil, nil, nil, 3, 13, nil, nil, "breaklos")
 local yellPursuit				= mod:NewYell(257407)
-local specWarnPursuit			= mod:NewSpecialWarningRun(257407, nil, nil, nil, 4, 2)
-local specWarnBoneQuake			= mod:NewSpecialWarningSpell(260683, nil, nil, nil, 2, 2)
+local specWarnPursuit			= mod:NewSpecialWarningRun(257407, nil, nil, nil, 4, 2, nil, nil, "justrun")
+local specWarnBoneQuake			= mod:NewSpecialWarningSpell(260683, nil, nil, nil, 2, 2, nil, nil, "mobsoon")
 
 local timerTeethCD				= mod:NewCDCountTimer(25, 255434, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)--actual minimum timer not known
 local timerFearCD				= mod:NewCDCountTimer(35.1, 255371, nil, nil, nil, 2)--actual minimum timer not known

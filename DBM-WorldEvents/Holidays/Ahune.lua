@@ -25,7 +25,7 @@ local warnEmerged				= mod:NewAnnounce("Emerged", 2, "Interface\\AddOns\\DBM-Cor
 
 local specWarnAttack
 if not mod:IsRetail() then
-	specWarnAttack = mod:NewSpecialWarning("specWarnAttack", nil, nil, nil, 1, 2)
+	specWarnAttack = mod:NewSpecialWarning("specWarnAttack", nil, nil, nil, 1, 2, nil, nil, nil, nil, "changetarget")
 end
 
 local timerEmerge				= mod:NewTimer(33.5, "EmergeTimer", "Interface\\AddOns\\DBM-Core\\textures\\CryptFiendUnBurrow.blp", nil, nil, 6)

@@ -32,8 +32,8 @@ mod:AddTimerLine(DBM:EJ_GetSectionInfo(25552))
 local warnRepel									= mod:NewCountAnnounce(386547, 3, nil, nil, nil, nil, nil, 2)
 local warnSpiritLeap							= mod:NewSpellAnnounce(385434, 3)
 
-local specWarnGaleArrow							= mod:NewSpecialWarningDodgeCount(382670, nil, nil, nil, 2, 2)
-local specWarnGuardianWind						= mod:NewSpecialWarningInterrupt(384808, "HasInterrupt", nil, nil, 1, 2)
+local specWarnGaleArrow							= mod:NewSpecialWarningDodgeCount(382670, nil, nil, nil, 2, 2, nil, nil, "watchstep")
+local specWarnGuardianWind						= mod:NewSpecialWarningInterrupt(384808, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
 
 local timerGaleArrowCD							= mod:NewCDCountTimer(57.4, 382670, nil, nil, nil, 3)
 local timerRepelCD								= mod:NewCDCountTimer(57.4, 386547, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
@@ -43,9 +43,9 @@ local timerSpiritLeapCD							= mod:NewCDCountTimer(20.4, 385434, nil, nil, nil,
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(25546))
 local warnFrightfulRoar							= mod:NewCastAnnounce(386063, 3, nil, nil, nil, nil, nil, 2)--Not a special warning, since I don't want to layer 2 special warings for same pair
 
-local specWarnEarthsplitter						= mod:NewSpecialWarningDodgeCount(385339, nil, nil, nil, 2, 2)
-local specWarnFrightfulRoar						= mod:NewSpecialWarningRun(386063, nil, nil, nil, 4, 2)
-local specWarnBrutalize							= mod:NewSpecialWarningDefensive(382836, nil, nil, nil, 1, 2)
+local specWarnEarthsplitter						= mod:NewSpecialWarningDodgeCount(385339, nil, nil, nil, 2, 2, nil, nil, "watchstep")
+local specWarnFrightfulRoar						= mod:NewSpecialWarningRun(386063, nil, nil, nil, 4, 2, nil, nil, "justrun")
+local specWarnBrutalize							= mod:NewSpecialWarningDefensive(382836, nil, nil, nil, 1, 2, nil, nil, "defensive")
 
 local timerEarthSplitterCD						= mod:NewCDCountTimer(57.4, 385339, nil, false, nil, 3, nil, DBM_COMMON_L.DEADLY_ICON)--Off by default since it should always be cast immediately after Repel)
 local timerFrightfulRoarCD						= mod:NewCDCountTimer(30.4, 386063, nil, nil, nil, 2, nil, DBM_COMMON_L.MAGIC_ICON)--New timer unknown

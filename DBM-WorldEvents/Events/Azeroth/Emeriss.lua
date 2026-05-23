@@ -18,8 +18,8 @@ mod:RegisterEventsInCombat(
 --TODO, maybe taunt special warnings for classic version when it matters more.
 local warnNoxiousBreath			= mod:NewStackAnnounce(243401, 2, nil, "Tank")
 
-local specWarnSleepingFog		= mod:NewSpecialWarningDodge(243399, nil, nil, nil, 2, 2)
-local specWarnMushroom			= mod:NewSpecialWarningYou(243451, nil, nil, nil, 1, 2)
+local specWarnSleepingFog		= mod:NewSpecialWarningDodge(243399, nil, nil, nil, 2, 2, nil, nil, "watchstep")
+local specWarnMushroom			= mod:NewSpecialWarningYou(243451, nil, nil, nil, 1, 2, nil, nil, "targetyou")
 
 local timerNoxiousBreathCD		= mod:NewCDTimer(18.3, 243401, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON)--Iffy
 local timerSleepingFogCD		= mod:NewCDTimer(12.8, 243399, nil, nil, nil, 3)

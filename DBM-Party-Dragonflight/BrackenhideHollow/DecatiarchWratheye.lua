@@ -31,9 +31,9 @@ mod:RegisterEventsInCombat(
 --TODO, longer pulls for decaying strength timer (needs more data, single pull with 3 casts but still all over the place)
 local warnDecayigStrength						= mod:NewSpellAnnounce(373960, 3)
 
-local specWarnRotburstTotem						= mod:NewSpecialWarningSwitch(373944, "-Healer", nil, 2, 1, 2)
-local specWarnChokingRotcloud					= mod:NewSpecialWarningDodge(376170, nil, nil, nil, 2, 2, 4)
-local specWarnDecaystrike						= mod:NewSpecialWarningDefensive(373917, nil, nil, nil, 1, 2)
+local specWarnRotburstTotem						= mod:NewSpecialWarningSwitch(373944, "-Healer", nil, 2, 1, 2, nil, nil, "attacktotem")
+local specWarnChokingRotcloud					= mod:NewSpecialWarningDodge(376170, nil, nil, nil, 2, 2, 4, nil, "watchstep")
+local specWarnDecaystrike						= mod:NewSpecialWarningDefensive(373917, nil, nil, nil, 1, 2, nil, nil, "defensive")
 
 local timerDecayingStrengthCD					= mod:NewCDTimer(40.5, 373960, nil, nil, nil, 2)
 local timerRotburstTotemCD						= mod:NewCDTimer(17, 373944, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)--18-21

@@ -37,9 +37,9 @@ local KinTara = DBM:EJ_GetSectionInfo(21637)
 mod:AddTimerLine(KinTara)
 local warnChargedSpear				= mod:NewTargetNoFilterAnnounce(321009, 4)
 
-local specWarnOverheadSlash			= mod:NewSpecialWarningDefensive(320966, nil, nil, nil, 1, 2)
-local specWarnDarkLance				= mod:NewSpecialWarningInterrupt(327481, "HasInterrupt", nil, nil, 1, 2)
-local specWarnChargedSpear			= mod:NewSpecialWarningMoveAway(321009, nil, nil, nil, 1, 2)
+local specWarnOverheadSlash			= mod:NewSpecialWarningDefensive(320966, nil, nil, nil, 1, 2, nil, nil, "defensive")
+local specWarnDarkLance				= mod:NewSpecialWarningInterrupt(327481, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
+local specWarnChargedSpear			= mod:NewSpecialWarningMoveAway(321009, nil, nil, nil, 1, 2, nil, nil, "runout")
 local yellChargedSpear				= mod:NewYell(321009)
 
 local timerOverheadSlashCD			= mod:NewCDTimer(6.3, 320966, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)--6.3-11
@@ -47,8 +47,8 @@ local timerFlightCD					= mod:NewCDTimer(145, 313606, nil, nil, nil, 6)
 local timerChargedSpearCD			= mod:NewCDTimer(15.8, 321009, nil, nil, nil, 3, nil, DBM_COMMON_L.DEADLY_ICON)
 --Azules
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(21639))
-local specBarrage					= mod:NewSpecialWarningDodge(324368, nil, nil, nil, 2, 6)
-local specWarnGTFO					= mod:NewSpecialWarningGTFO(317626, nil, nil, nil, 1, 8)
+local specBarrage					= mod:NewSpecialWarningDodge(324368, nil, nil, nil, 2, 6, nil, nil, "watchorb")
+local specWarnGTFO					= mod:NewSpecialWarningGTFO(317626, nil, nil, nil, 1, 8, nil, nil, "watchfeet")
 
 local timerInsidiousVenomCD			= mod:NewCDTimer(11.4, 317661, nil, nil, nil, 2)
 local timerMawTouchedVenomCD		= mod:NewCDTimer(15.8, 317655, nil, nil, nil, 3)

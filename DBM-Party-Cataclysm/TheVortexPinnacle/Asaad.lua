@@ -41,9 +41,9 @@ local warnStaticCling			= mod:NewCastAnnounce(87618, 4)
 local warnChainLightning		= mod:NewTargetAnnounce(87622, 3)
 
 local specWarnStaticCling		= mod:NewSpecialWarningJump(87618, nil, nil, nil, 1, 2)
-local specWarnNova				= mod:NewSpecialWarningSwitchCount(isRetail and 413263 or 96260, "-Healer", nil, nil, 1, 2)
-local specWarnGroundingField	= mod:NewSpecialWarningMoveTo(86911, nil, DBM_CORE_L.AUTO_SPEC_WARN_OPTIONS.run:format(86911), nil, nil, 3)
-local specWarnChainLit			= mod:NewSpecialWarningMoveAway(87622, nil, nil, nil, 1, 2)
+local specWarnNova				= mod:NewSpecialWarningSwitchCount(isRetail and 413263 or 96260, "-Healer", nil, nil, 1, 2, nil, nil, "killmob")
+local specWarnGroundingField	= mod:NewSpecialWarningMoveTo(86911, nil, DBM_CORE_L.AUTO_SPEC_WARN_OPTIONS.run:format(86911), nil, nil, 3, nil, nil, "findshelter")
+local specWarnChainLit			= mod:NewSpecialWarningMoveAway(87622, nil, nil, nil, 1, 2, nil, nil, "runout")
 local yellChainLit				= mod:NewYell(87622)
 
 local timerChainLightningCD		= mod:NewCDTimer(13.4, 87622, nil, nil, nil, 3)

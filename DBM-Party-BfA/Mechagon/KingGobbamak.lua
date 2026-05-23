@@ -24,11 +24,11 @@ ability.id = 297254 and type = "cast"
 local warnElectricalCharge			= mod:NewTargetAnnounce(297257, 2)
 --local warnGetEm						= mod:NewSpellAnnounce(297465, 2)
 
-local specWarnChargedSmash			= mod:NewSpecialWarningCount(297254, nil, nil, nil, 2, 2)
+local specWarnChargedSmash			= mod:NewSpecialWarningCount(297254, nil, nil, nil, 2, 2, nil, nil, "helpsoak")
 --local specWarnHowlingFear			= mod:NewSpecialWarningInterrupt(257791, "HasInterrupt", nil, nil, 1, 2)
-local specWarnElectricalCharge		= mod:NewSpecialWarningYou(297257, nil, nil, nil, 1, 2)
+local specWarnElectricalCharge		= mod:NewSpecialWarningYou(297257, nil, nil, nil, 1, 2, nil, nil, "targetyou")
 local yellElectricalCharge			= mod:NewYell(297257, nil, false)
-local specWarnRumble				= mod:NewSpecialWarningCount(297261, nil, nil, nil, 2, 2)
+local specWarnRumble				= mod:NewSpecialWarningCount(297261, nil, nil, nil, 2, 2, nil, nil, "aesoon")
 --local specWarnGTFO				= mod:NewSpecialWarningGTFO(238028, nil, nil, nil, 1, 8)
 
 --local timerHowlingFearCD			= mod:NewCDTimer(13.4, 257791, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)

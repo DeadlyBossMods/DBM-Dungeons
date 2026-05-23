@@ -11,9 +11,9 @@ mod.respawnTime = 29
 
 mod:RegisterCombat("combat")
 
-local specWarnCoresparkDetonation	= mod:NewSpecialWarningCount(1257509, nil, nil, nil, 2, 2)
-local specWarnLeylineArray			= mod:NewSpecialWarningCount(1251183, nil, nil, nil, 2, 3)
-local specWarnFluxCollapse			= mod:NewSpecialWarningCount(1264048, nil, nil, nil, 2, 2)
+local specWarnCoresparkDetonation	= mod:NewSpecialWarningCount(1257509, nil, nil, nil, 2, 2, nil, nil, "watchstep")
+local specWarnLeylineArray			= mod:NewSpecialWarningCount(1251183, nil, nil, nil, 2, 3, nil, nil, "farfromline")
+local specWarnFluxCollapse			= mod:NewSpecialWarningCount(1264048, nil, nil, nil, 2, 2, nil, nil, "watchstep")
 local warnRefluxCharge				= mod:NewCountAnnounce(1251785, 2)
 
 local timerCoresparkDetonationCD	= mod:NewCDCountTimer(38, 1257509, nil, nil, nil, 3)

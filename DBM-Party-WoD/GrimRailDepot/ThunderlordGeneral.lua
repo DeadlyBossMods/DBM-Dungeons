@@ -27,13 +27,13 @@ mod:RegisterEventsInCombat(
 local warnFreezingSnare			= mod:NewTargetAnnounce(162066, 3)
 local warnMark					= mod:NewTargetNoFilterAnnounce(163447, 3)
 
-local specWarnFreezingSnare		= mod:NewSpecialWarningYou(162066, nil, nil, nil, 1, 2)
+local specWarnFreezingSnare		= mod:NewSpecialWarningYou(162066, nil, nil, nil, 1, 2, nil, nil, "runaway")
 local yellFreezingSnare			= mod:NewYell(162066)
-local specWarnDiffusedEnergy	= mod:NewSpecialWarningMove(161588, nil, nil, nil, 1, 8)
-local specWarnSpinningSpear		= mod:NewSpecialWarningDodge(162058, nil, nil, 3, 2, 2)
-local specWarnMark				= mod:NewSpecialWarningMoveAway(163447, nil, nil, nil, 1, 2)
+local specWarnDiffusedEnergy	= mod:NewSpecialWarningMove(161588, nil, nil, nil, 1, 8, nil, nil, "watchfeet")
+local specWarnSpinningSpear		= mod:NewSpecialWarningDodge(162058, nil, nil, 3, 2, 2, nil, nil, "shockwave")
+local specWarnMark				= mod:NewSpecialWarningMoveAway(163447, nil, nil, nil, 1, 2, nil, nil, "runout")
 local yellMark					= mod:NewYell(163447)
-local specWarnThunderousBreath	= mod:NewSpecialWarningDodge(171900, nil, nil, nil, 2, 2)
+local specWarnThunderousBreath	= mod:NewSpecialWarningDodge(171900, nil, nil, nil, 2, 2, nil, nil, "breathsoon")
 
 local timerFreezingSnareCD		= mod:NewCDTimer(16.6, 162066, nil, nil, nil, 3)
 local timerSpinningSpearCD		= mod:NewCDTimer(17, 162058, nil, "Tank", 2, 5, nil, DBM_COMMON_L.TANK_ICON)

@@ -18,7 +18,7 @@ mod:RegisterEventsInCombat(
 
 local warningNova	= mod:NewSpellAnnounce(52960, 3)
 
-local specWarnNova	= mod:NewSpecialWarningRun(52960, false, nil, nil, 4, 2)
+local specWarnNova	= mod:NewSpecialWarningRun(52960, false, nil, nil, 4, 2, nil, nil, "justrun")
 
 --local timerNovaCD	= mod:NewCDTimer(30, 52960, nil, nil, nil, 2)
 local timerAchieve	= mod:NewAchievementTimer(120, 1867)

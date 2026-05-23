@@ -18,9 +18,9 @@ mod:RegisterEventsInCombat(
 local warnHammerofRighteous		= mod:NewSpellAnnounce(66867, 3)
 local warnVengeance             = mod:NewTargetNoFilterAnnounce(66889, 3)
 
-local specwarnRadiance			= mod:NewSpecialWarningLookAway(66935, nil, nil, nil, 2, 2)
-local specwarnHammerofJustice	= mod:NewSpecialWarningDispel(66940, "RemoveMagic", nil, 2, 1, 2)
-local specwarnHammerofRighteous	= mod:NewSpecialWarningYou(66905, nil, nil, nil, 1, 8)
+local specwarnRadiance			= mod:NewSpecialWarningLookAway(66935, nil, nil, nil, 2, 2, nil, nil, "turnaway")
+local specwarnHammerofJustice	= mod:NewSpecialWarningDispel(66940, "RemoveMagic", nil, 2, 1, 2, nil, nil, "helpdispel")
+local specwarnHammerofRighteous	= mod:NewSpecialWarningYou(66905, nil, nil, nil, 1, 8, nil, nil, "useitem")
 
 function mod:SPELL_CAST_START(args)
 	if args.spellId == 66935 then

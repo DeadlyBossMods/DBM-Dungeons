@@ -15,9 +15,9 @@ mod:RegisterCombat("combat")
 local warnBoltGale					= mod:NewCountAnnounce(474528, 3)
 local warnGustShot					= mod:NewCountAnnounce(1253979, 3)
 
-local specWarnBullseyeWindblast		= mod:NewSpecialWarningCount(468429, nil, nil, nil, 1, 15)
-local specWarnArrowRain				= mod:NewSpecialWarningDodgeCount(472556, nil, nil, nil, 2, 2)
-local specWarnTempestSlash			= mod:NewSpecialWarningCount(472662, nil, nil, nil, 3, 2)
+local specWarnBullseyeWindblast		= mod:NewSpecialWarningCount(468429, nil, nil, nil, 1, 15, nil, nil, "getknockedup")
+local specWarnArrowRain				= mod:NewSpecialWarningDodgeCount(472556, nil, nil, nil, 2, 2, nil, nil, "watchstep")
+local specWarnTempestSlash			= mod:NewSpecialWarningCount(472662, nil, nil, nil, 3, 2, nil, nil, "defensive")
 
 local timerBullseyeWindblastCD		= mod:NewCDCountTimer(24, 468429, nil, nil, nil, 3, nil, DBM_COMMON_L.IMPORTANT_ICON)
 local timerBoltGaleCD				= mod:NewCDCountTimer(39, 474528, nil, nil, nil, 3, nil, DBM_COMMON_L.HEALER_ICON)

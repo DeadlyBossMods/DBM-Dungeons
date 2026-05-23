@@ -24,9 +24,9 @@ local warnTharbek			= mod:NewSpellAnnounce(-10276, 3, "134170")
 local warnIronReaver		= mod:NewTargetNoFilterAnnounce(161989, 3)
 local warnImbuedIronAxe		= mod:NewTargetAnnounce(162090, 4)
 
-local specWarnImbuedIronAxe	= mod:NewSpecialWarningYou(162090, nil, nil, nil, 1, 2)
+local specWarnImbuedIronAxe	= mod:NewSpecialWarningYou(162090, nil, nil, nil, 1, 2, nil, nil, "targetyou")
 local yellImbuedIronAxe		= mod:NewYell(162090)
-local specWarnNoxiousSpit	= mod:NewSpecialWarningMove(161833, nil, nil, nil, 1, 8)
+local specWarnNoxiousSpit	= mod:NewSpecialWarningMove(161833, nil, nil, nil, 1, 8, nil, nil, "watchfeet")
 
 local timerIronReaverCD		= mod:NewCDTimer(20.5, 161989, nil, nil, nil, 3)--Not enough data to really verify this
 local timerImbuedIronAxeCD	= mod:NewCDTimer(29, 162090, nil, nil, nil, 3)--29-37sec variation

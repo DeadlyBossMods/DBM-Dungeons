@@ -27,7 +27,7 @@ local warnTouchGrave	= mod:NewSpellAnnounce(111606, 4)
 local warnFrigidGrasp	= mod:NewSpellAnnounce(111209, 3)
 local warnPhase2		= mod:NewPhaseAnnounce(2)
 
-local specWarnIceWave	= mod:NewSpecialWarningGTFO(120037, nil, nil, nil, 1, 6)--The wave slowly approaches group from back wall, if you choose a bad place to stand, this will tell you to move your ass to a better spot before you die
+local specWarnIceWave	= mod:NewSpecialWarningGTFO(120037, nil, nil, nil, 1, 6, nil, nil, "watchfeet")--The wave slowly approaches group from back wall, if you choose a bad place to stand, this will tell you to move your ass to a better spot before you die
 
 local timerFrigidGrasp	= mod:NewNextTimer(10.5, 111209, nil, nil, nil, 3)
 local timerBerserk		= mod:NewBerserkTimer(134)--not a physical berserk but rathor how long until icewall consumes entire room.

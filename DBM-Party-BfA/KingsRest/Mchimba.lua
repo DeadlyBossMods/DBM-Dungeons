@@ -21,14 +21,14 @@ mod:RegisterEventsInCombat(
 	"CHAT_MSG_RAID_BOSS_EMOTE"
 )
 
-local specWarnBurnCorruption		= mod:NewSpecialWarningRun(267639, "Melee", nil, nil, 4, 2)
-local specWarnDrainFluids			= mod:NewSpecialWarningYou(267618, nil, nil, 2, 1, 2)
-local specWarnDrainFluidsTarget		= mod:NewSpecialWarningTarget(267618, "Healer", nil, nil, 1, 2)
-local specWarnEntomb				= mod:NewSpecialWarningYou(267702, nil, nil, nil, 1, 2)
+local specWarnBurnCorruption		= mod:NewSpecialWarningRun(267639, "Melee", nil, nil, 4, 2, nil, nil, "justrun")
+local specWarnDrainFluids			= mod:NewSpecialWarningYou(267618, nil, nil, 2, 1, 2, nil, nil, "targetyou")
+local specWarnDrainFluidsTarget		= mod:NewSpecialWarningTarget(267618, "Healer", nil, nil, 1, 2, nil, nil, "healfull")
+local specWarnEntomb				= mod:NewSpecialWarningYou(267702, nil, nil, nil, 1, 2, nil, nil, "targetyou")
 local yellEntomb					= mod:NewYell(267702)
-local specWarnEntombOther			= mod:NewSpecialWarningSwitch(267702, nil, nil, nil, 1, 2)
-local specWarnWretchedDischarge		= mod:NewSpecialWarningInterrupt(267763, "HasInterrupt", nil, nil, 1, 2)
-local specWarnGTFO					= mod:NewSpecialWarningGTFO(267874, nil, nil, nil, 1, 8)
+local specWarnEntombOther			= mod:NewSpecialWarningSwitch(267702, nil, nil, nil, 1, 2, nil, nil, "targetchange")
+local specWarnWretchedDischarge		= mod:NewSpecialWarningInterrupt(267763, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
+local specWarnGTFO					= mod:NewSpecialWarningGTFO(267874, nil, nil, nil, 1, 8, nil, nil, "watchfeet")
 
 local timerBurnCorruptionCD			= mod:NewCDTimer(15.5, 267639, nil, "Melee", nil, 2, nil, DBM_COMMON_L.TANK_ICON..DBM_COMMON_L.DEADLY_ICON)
 local timerDrainFluidsCD			= mod:NewCDTimer(16.8, 267618, nil, nil, nil, 3)

@@ -44,8 +44,8 @@ if (wowToc >= 100200) then
 	mod:AddTimerLine(DBM:EJ_GetSectionInfo(10409))
 	local warnTorrentialFury							= mod:NewCountAnnounce(427498, 4)
 
-	local specWarnRevitalize							= mod:NewSpecialWarningInterruptCount(168082, "HasInterrupt", nil, nil, 1, 2)
-	local specWarnRevitalizeDispel						= mod:NewSpecialWarningDispel(168082, "MagicDispeller", nil, nil, 1, 2)
+	local specWarnRevitalize							= mod:NewSpecialWarningInterruptCount(168082, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kick2r")
+	local specWarnRevitalizeDispel						= mod:NewSpecialWarningDispel(168082, "MagicDispeller", nil, nil, 1, 2, nil, nil, "dispelboss")
 
 	local timerRevitalizeCD								= mod:NewCDCountTimer(17, 168082, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 	local timerTorrentialFuryCD							= mod:NewCDCountTimer(50.9, 427498, nil, nil, nil, 2)
@@ -53,7 +53,7 @@ if (wowToc >= 100200) then
 	mod:AddTimerLine(DBM:EJ_GetSectionInfo(10413))
 	local warnTerrestrialFury							= mod:NewCountAnnounce(427509, 4)
 
-	local specWarnToxicBloom							= mod:NewSpecialWarningInterruptCount(427459, "HasInterrupt", nil, nil, 1, 2)
+	local specWarnToxicBloom							= mod:NewSpecialWarningInterruptCount(427459, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kick2r")
 
 	local timerToxicBloomCD								= mod:NewCDCountTimer(17, 427459, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 	local timerTerrestrialFuryCD						= mod:NewCDCountTimer(50.9, 427509, nil, nil, nil, 2)
@@ -61,7 +61,7 @@ if (wowToc >= 100200) then
 	mod:AddTimerLine(DBM:EJ_GetSectionInfo(10417))
 	local warnNoxiousCharge								= mod:NewTargetNoFilterAnnounce(427510, 3)
 
-	local specWarnNoxiousCharge							= mod:NewSpecialWarningYou(427510, nil, nil, nil, 3, 2)
+	local specWarnNoxiousCharge							= mod:NewSpecialWarningYou(427510, nil, nil, nil, 3, 2, nil, nil, "targetyou")
 	local yellNoxiousCharge								= mod:NewShortYell(427510)
 
 	local timerNoxiousChargeCD							= mod:NewCDCountTimer(16.2, 427510, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
@@ -294,19 +294,19 @@ else
 	mod:AddNamePlateOption("NPAuraOnFort", 168520)
 	--Life Warden Gola
 	mod:AddTimerLine(DBM:EJ_GetSectionInfo(10409))
-	local specWarnRevitalizingWaters	= mod:NewSpecialWarningInterrupt(168082, "HasInterrupt", nil, 2, 1, 2)
-	local specWarnRapidTidesDispel		= mod:NewSpecialWarningDispel(168105, "MagicDispeller", nil, nil, 3, 2)
+	local specWarnRevitalizingWaters	= mod:NewSpecialWarningInterrupt(168082, "HasInterrupt", nil, 2, 1, 2, nil, nil, "kickcast")
+	local specWarnRapidTidesDispel		= mod:NewSpecialWarningDispel(168105, "MagicDispeller", nil, nil, 3, 2, nil, nil, "dispelboss")
 	--Earthshaper Telu
 	mod:AddTimerLine(DBM:EJ_GetSectionInfo(10413))
-	local specWarnBramble				= mod:NewSpecialWarningGTFO(167977, nil, nil, nil, 1, 8)
-	local specWarnBriarskin				= mod:NewSpecialWarningInterrupt(168041, false, nil, nil, 1, 2)--if you have more than one interruptor, great. but off by default because we can't assume you can interrupt every bosses abilities. and heal takes priority
-	local specWarnBriarskinDispel		= mod:NewSpecialWarningDispel(168041, false, nil, nil, 1, 2)--Not as important as rapid Tides and to assume you have at least two dispellers is big assumption
+	local specWarnBramble				= mod:NewSpecialWarningGTFO(167977, nil, nil, nil, 1, 8, nil, nil, "watchfeet")
+	local specWarnBriarskin				= mod:NewSpecialWarningInterrupt(168041, false, nil, nil, 1, 2, nil, nil, "kickcast")--if you have more than one interruptor, great. but off by default because we can't assume you can interrupt every bosses abilities. and heal takes priority
+	local specWarnBriarskinDispel		= mod:NewSpecialWarningDispel(168041, false, nil, nil, 1, 2, nil, nil, "dispelboss")--Not as important as rapid Tides and to assume you have at least two dispellers is big assumption
 	--Dulhu
 	mod:AddTimerLine(DBM:EJ_GetSectionInfo(10417))
 	local warnGraspingVine				= mod:NewTargetNoFilterAnnounce(168375, 2)
 
-	local specWarnNoxious				= mod:NewSpecialWarningRun(175997, nil, nil, 2, 4, 2)
-	local specWarnSlash					= mod:NewSpecialWarningDodge(168383, nil, nil, nil, 2, 2)
+	local specWarnNoxious				= mod:NewSpecialWarningRun(175997, nil, nil, 2, 4, 2, nil, nil, "justrun")
+	local specWarnSlash					= mod:NewSpecialWarningDodge(168383, nil, nil, nil, 2, 2, nil, nil, "watchstep")
 	local yellSlash						= mod:NewYell(168383)
 
 	local timerNoxiousCD				= mod:NewCDTimer(16, 175997, nil, "Melee", nil, 2)

@@ -33,11 +33,11 @@ local warnPhase2					= mod:NewPhaseAnnounce(2, 2)
 local warnPhase3					= mod:NewPhaseAnnounce(3, 2)
 
 --ALL
-local specWarnChaoticShadows		= mod:NewSpecialWarningYou(229159, nil, nil, nil, 1, 2)
+local specWarnChaoticShadows		= mod:NewSpecialWarningYou(229159, nil, nil, nil, 1, 2, nil, nil, "runout")
 local yellChaoticShadows			= mod:NewShortPosYell(229159)
-local specWarnBurningBlast			= mod:NewSpecialWarningInterruptCount(229083, "HasInterrupt", nil, nil, 1, 2)
+local specWarnBurningBlast			= mod:NewSpecialWarningInterruptCount(229083, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kick2r")
 --Phase 1
-local specWarnFelBeam				= mod:NewSpecialWarningRun(229242, nil, nil, 2, 4, 2)
+local specWarnFelBeam				= mod:NewSpecialWarningRun(229242, nil, nil, 2, 4, 2, nil, nil, "justrun")
 local yellFelBeam					= mod:NewYell(229242)
 
 --ALL

@@ -26,10 +26,10 @@ local warnTaint						= mod:NewSpellAnnounce(273677, 2)
 local warnPulse						= mod:NewSpellAnnounce(268024, 3)
 local warnLifeForce					= mod:NewSpellAnnounce(274149, 1)
 
-local specWarnChainLightning		= mod:NewSpecialWarningInterrupt(268061, nil, nil, nil, 1, 2)
-local specWarnRainofToads			= mod:NewSpecialWarningSpell(269688, nil, nil, nil, 2, 2)
-local specWarnPlague				= mod:NewSpecialWarningDispel(269686, "RemoveDisease", nil, nil, 1, 2)
-local specWarnSnakeCharm			= mod:NewSpecialWarningDispel(268008, "RemoveMagic", nil, 2, 1, 2)
+local specWarnChainLightning		= mod:NewSpecialWarningInterrupt(268061, nil, nil, nil, 1, 2, nil, nil, "kickcast")
+local specWarnRainofToads			= mod:NewSpecialWarningSpell(269688, nil, nil, nil, 2, 2, nil, nil, "mobsoon")
+local specWarnPlague				= mod:NewSpecialWarningDispel(269686, "RemoveDisease", nil, nil, 1, 2, nil, nil, "helpdispel")
+local specWarnSnakeCharm			= mod:NewSpecialWarningDispel(268008, "RemoveMagic", nil, 2, 1, 2, nil, nil, "helpdispel")
 
 --local timerRainofToadsCD			= mod:NewCDTimer(20, 269688, nil, nil, nil, 1)--More work needed
 local timerPlague					= mod:NewTargetTimer(10, 269686, nil, "RemoveDisease", nil, 5, nil, DBM_COMMON_L.DISEASE_ICON)

@@ -28,21 +28,21 @@ local warnViolentDetonation				= mod:NewCastAnnounce(328986, 3)
 local warnEnvelopingWebbing				= mod:NewCastAnnounce(328475, 3)
 
 --General
-local specWarnGTFO						= mod:NewSpecialWarningGTFO(320072, nil, nil, nil, 1, 8)
+local specWarnGTFO						= mod:NewSpecialWarningGTFO(320072, nil, nil, nil, 1, 8, nil, nil, "watchfeet")
 --Notable Globgrog Trash
-local specWarnWingBuffet				= mod:NewSpecialWarningDodge(330403, "Tank", nil, nil, 1, 8)
-local specWarnBelchPlague				= mod:NewSpecialWarningDodge(327233, nil, nil, nil, 1, 2)
+local specWarnWingBuffet				= mod:NewSpecialWarningDodge(330403, "Tank", nil, nil, 1, 8, nil, nil, "shockwave")
+local specWarnBelchPlague				= mod:NewSpecialWarningDodge(327233, nil, nil, nil, 1, 2, nil, nil, "shockwave")
 --Notable Doctor Ickus Trash
-local specWarnFesteringBelch			= mod:NewSpecialWarningDodge(318949, "Tank", nil, nil, 1, 2)
-local specWarCorrosiveGunk				= mod:NewSpecialWarningInterrupt(319070, false, nil, nil, 1, 2)--Spam cast. Even with Cd filter this may annoy users, off by default
+local specWarnFesteringBelch			= mod:NewSpecialWarningDodge(318949, "Tank", nil, nil, 1, 2, nil, nil, "shockwave")
+local specWarCorrosiveGunk				= mod:NewSpecialWarningInterrupt(319070, false, nil, nil, 1, 2, nil, nil, "kickcast")--Spam cast. Even with Cd filter this may annoy users, off by default
 --Notable Domina Venomblade
-local specWarnBulwarkofMaldraxxus		= mod:NewSpecialWarningMove(336451, "Tank", nil, nil, 1, 10)
+local specWarnBulwarkofMaldraxxus		= mod:NewSpecialWarningMove(336451, "Tank", nil, nil, 1, 10, nil, nil, "mobout")
 --Notable Margrave Stradama Trash
-local specWarnCallVenomfang				= mod:NewSpecialWarningInterrupt(328338, "HasInterrupt", nil, nil, 1, 2)
+local specWarnCallVenomfang				= mod:NewSpecialWarningInterrupt(328338, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
 --Unknown
-local specWarnWonderGrow				= mod:NewSpecialWarningInterrupt(328016, "HasInterrupt", nil, nil, 1, 2)
+local specWarnWonderGrow				= mod:NewSpecialWarningInterrupt(328016, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
 local specWarnWonderGrowDispel			= mod:NewSpecialWarningDispel(328015, "MagicDispeller", nil, nil, 1, 2)
-local specWarnJaggedSpines				= mod:NewSpecialWarningDodge(320517, nil, nil, nil, 2, 2)
+local specWarnJaggedSpines				= mod:NewSpecialWarningDodge(320517, nil, nil, nil, 2, 2, nil, nil, "watchstep")
 
 local timerMetamorphosis				= mod:NewCastTimer(10, 322232, nil, nil, nil, 1)
 

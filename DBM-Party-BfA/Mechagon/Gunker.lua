@@ -23,11 +23,11 @@ mod:RegisterEventsInCombat(
 local warnGooped					= mod:NewTargetNoFilterAnnounce(298259, 2)
 local warnSplatter					= mod:NewCountAnnounce(297985, 2)
 
-local specWarnToxicWave				= mod:NewSpecialWarningCount(297834, nil, nil, nil, 2, 2)
-local specWarnGooped				= mod:NewSpecialWarningYou(298259, nil, nil, nil, 1, 2)
-local specWarnGoopedDispel			= mod:NewSpecialWarningDispel(298259, "RemoveDisease", nil, nil, 1, 2)
-local specWarnToxicGoopDispel		= mod:NewSpecialWarningDispel(297913, false, nil, nil, 1, 2)
-local specWarnCoalesce				= mod:NewSpecialWarningDodgeCount(297835, nil, nil, nil, 2, 2)
+local specWarnToxicWave				= mod:NewSpecialWarningCount(297834, nil, nil, nil, 2, 2, nil, nil, "specialsoon")
+local specWarnGooped				= mod:NewSpecialWarningYou(298259, nil, nil, nil, 1, 2, nil, nil, "targetyou")
+local specWarnGoopedDispel			= mod:NewSpecialWarningDispel(298259, "RemoveDisease", nil, nil, 1, 2, nil, nil, "helpdispel")
+local specWarnToxicGoopDispel		= mod:NewSpecialWarningDispel(297913, false, nil, nil, 1, 2, nil, nil, "helpdispel")
+local specWarnCoalesce				= mod:NewSpecialWarningDodgeCount(297835, nil, nil, nil, 2, 2, nil, nil, "watchstep")
 
 local timerToxicWaveCD				= mod:NewCDCountTimer(49.8, 297834, nil, nil, nil, 2)
 local timerSplatterCD				= mod:NewCDCountTimer(24.2, 297985, nil, nil, nil, 3)

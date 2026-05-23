@@ -22,10 +22,10 @@ local warnFelSlash				= mod:NewTargetAnnounce(203641, 4)
 local warnSeedofDestruction		= mod:NewTargetAnnounce(210879, 3)
 local warnExecute				= mod:NewTargetAnnounce(205233, 4)
 
-local specWarnFelSlash			= mod:NewSpecialWarningDodge(203641, nil, nil, nil, 1, 2)--warn Everyone since cone is so wide
+local specWarnFelSlash			= mod:NewSpecialWarningDodge(203641, nil, nil, nil, 1, 2, nil, nil, "shockwave")--warn Everyone since cone is so wide
 local yellFelSlash				= mod:NewYell(203641)
-local specWarnMightySmash		= mod:NewSpecialWarningSpell(202328, nil, nil, nil, 2, 2)
-local specWarnSeedofDestruction	= mod:NewSpecialWarningYou(210879, nil, nil, nil, 1, 2)
+local specWarnMightySmash		= mod:NewSpecialWarningSpell(202328, nil, nil, nil, 2, 2, nil, nil, "carefly")
+local specWarnSeedofDestruction	= mod:NewSpecialWarningYou(210879, nil, nil, nil, 1, 2, nil, nil, "runout")
 local yellSeedsofDestruction	= mod:NewYell(210879)
 
 --local timerFelSlashCD			= mod:NewCDTimer(18, 203641, nil, nil, nil, 3)--Too unreliable do to smash/executions

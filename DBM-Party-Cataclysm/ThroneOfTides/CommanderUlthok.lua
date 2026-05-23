@@ -32,10 +32,10 @@ if (wowToc >= 100200) then
 	--TODO, more timer data needed (longer pulls)
 	local warnAwakenOoze								= mod:NewCountAnnounce(427456, 3)
 
-	local specWarnBubblingFissure						= mod:NewSpecialWarningDodge(427672, nil, nil, nil, 2, 2)
-	local specWarnFesteringShockwave					= mod:NewSpecialWarningCount(427668, nil, nil, nil, 2, 2)
-	local specWarnCrushingClaw							= mod:NewSpecialWarningDefensive(427670, nil, nil, nil, 1, 2)
-	local specWarnGTFO									= mod:NewSpecialWarningGTFO(427559, nil, nil, nil, 1, 8)
+	local specWarnBubblingFissure						= mod:NewSpecialWarningDodge(427672, nil, nil, nil, 2, 2, nil, nil, "watchstep")
+	local specWarnFesteringShockwave					= mod:NewSpecialWarningCount(427668, nil, nil, nil, 2, 2, nil, nil, "carefly")
+	local specWarnCrushingClaw							= mod:NewSpecialWarningDefensive(427670, nil, nil, nil, 1, 2, nil, nil, "defensive")
+	local specWarnGTFO									= mod:NewSpecialWarningGTFO(427559, nil, nil, nil, 1, 8, nil, nil, "watchfeet")
 
 	local timerBubblingFissureCD						= mod:NewCDTimer(32.3, 427672, nil, nil, nil, 3)--32-34
 	local timerAwakenOozeCD								= mod:NewCDCountTimer(48.5, 427456, nil, nil, nil, 1)
@@ -105,8 +105,8 @@ else
 	local warnSqueeze			= mod:NewTargetNoFilterAnnounce(76026, 3)
 	local warnEnrage			= mod:NewSpellAnnounce(76100, 2, nil, "Tank")
 
-	local specWarnCurse			= mod:NewSpecialWarningDispel(76094, "RemoveCurse", nil, 2, 1, 2)
-	local specWarnFissure		= mod:NewSpecialWarningDodge(76047, "Tank", nil, nil, 1, 2)
+	local specWarnCurse			= mod:NewSpecialWarningDispel(76094, "RemoveCurse", nil, 2, 1, 2, nil, nil, "helpdispel")
+	local specWarnFissure		= mod:NewSpecialWarningDodge(76047, "Tank", nil, nil, 1, 2, nil, nil, "shockwave")
 
 	local timerDarkFissureCD	= mod:NewCDTimer(18.4, 76047, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 	local timerSqueeze			= mod:NewTargetTimer(6, 76026, nil, nil, nil, 5, nil, DBM_COMMON_L.DAMAGE_ICON)

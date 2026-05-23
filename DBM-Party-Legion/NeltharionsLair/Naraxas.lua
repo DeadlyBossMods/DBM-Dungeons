@@ -28,10 +28,10 @@ mod:RegisterEventsInCombat(
 local warnFixate					= mod:NewTargetAnnounce(209906, 2, nil, false)--Could be spammy, optional
 local warnSpikedTongueOver			= mod:NewEndAnnounce(199176, 1)
 
-local specWarnAdds					= mod:NewSpecialWarningSwitchCount(199817, "-Healer", nil, 2, 1, 2)
-local specWarnFixate				= mod:NewSpecialWarningYou(209906, nil, nil, nil, 1, 2)
-local specWarnSpikedTongue			= mod:NewSpecialWarningRunCount(199176, nil, nil, nil, 4, 2)
-local specWarnRancidMaw				= mod:NewSpecialWarningGTFO(188494, nil, nil, nil, 1, 8)
+local specWarnAdds					= mod:NewSpecialWarningSwitchCount(199817, "-Healer", nil, 2, 1, 2, nil, nil, "mobsoon")
+local specWarnFixate				= mod:NewSpecialWarningYou(209906, nil, nil, nil, 1, 2, nil, nil, "targetyou")
+local specWarnSpikedTongue			= mod:NewSpecialWarningRunCount(199176, nil, nil, nil, 4, 2, nil, nil, "runout")
+local specWarnRancidMaw				= mod:NewSpecialWarningGTFO(188494, nil, nil, nil, 1, 8, nil, nil, "watchfeet")
 
 local timerSpikedTongueCD			= mod:NewNextCountTimer(55, 199176, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.DEADLY_ICON..DBM_COMMON_L.TANK_ICON)
 local timerAddsCD					= mod:NewCDCountTimer(65, 199817, nil, nil, nil, 1, 226361)

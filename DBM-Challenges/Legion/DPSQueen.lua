@@ -30,15 +30,15 @@ local warnHurlAxe				= mod:NewSpellAnnounce(237870, 2, nil, false)
 local warnAdvance				= mod:NewSpellAnnounce(237849, 2)
 
 --Sigryn
-local specWarnThrowSpear		= mod:NewSpecialWarningDodge(238694, nil, nil, nil, 1, 2)
-local specWarnBloodFather		= mod:NewSpecialWarningTarget(237945, nil, nil, nil, 3, 7)
-local specWarnDarkWings			= mod:NewSpecialWarningDodge(237772, nil, nil, nil, 2, 2)
+local specWarnThrowSpear		= mod:NewSpecialWarningDodge(238694, nil, nil, nil, 1, 2, nil, nil, "watchstep")
+local specWarnBloodFather		= mod:NewSpecialWarningTarget(237945, nil, nil, nil, 3, 7, nil, nil, "crowdcontrol")
+local specWarnDarkWings			= mod:NewSpecialWarningDodge(237772, nil, nil, nil, 2, 2, nil, nil, "stilldanger")
 --Jarl Velbrand
-local specWarnBerserkersRage	= mod:NewSpecialWarningRun(237947, nil, nil, nil, 4, 2)
-local specWarnBladeStorm		= mod:NewSpecialWarningRun(237857, nil, nil, nil, 4, 2)
+local specWarnBerserkersRage	= mod:NewSpecialWarningRun(237947, nil, nil, nil, 4, 2, nil, nil, "justrun")
+local specWarnBladeStorm		= mod:NewSpecialWarningRun(237857, nil, nil, nil, 4, 2, nil, nil, "justrun")
 --
-local specWarnRunicDetonation	= mod:NewSpecialWarningMoveTo(237914, nil, nil, nil, 1, 12)
-local specWarnKnowledge			= mod:NewSpecialWarningSwitch(237952, nil, nil, nil, 1, 2)
+local specWarnRunicDetonation	= mod:NewSpecialWarningMoveTo(237914, nil, nil, nil, 1, 12, nil, nil, "getinyellowrunes")
+local specWarnKnowledge			= mod:NewSpecialWarningSwitch(237952, nil, nil, nil, 1, 2, nil, nil, "targetchange")
 
 --Sigryn
 --Timers obviously affected by CC usage

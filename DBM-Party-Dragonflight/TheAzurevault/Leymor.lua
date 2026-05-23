@@ -30,13 +30,13 @@ mod:RegisterEventsInCombat(
 local warnLeylineSprouts						= mod:NewCountAnnounce(374364, 3)
 local warnExplosiveEruption						= mod:NewTargetNoFilterAnnounce(374567, 4)
 
-local specWarnExplosiveEruption					= mod:NewSpecialWarningYouPos(374567, nil, nil, nil, 1, 2)
+local specWarnExplosiveEruption					= mod:NewSpecialWarningYouPos(374567, nil, nil, nil, 1, 2, nil, nil, "mm")
 local yellExplosiveEruption						= mod:NewShortPosYell(374567)
 local yellExplosiveEruptionFades				= mod:NewIconFadesYell(374567)
-local specWarnConsumingStomp					= mod:NewSpecialWarningCount(374720, nil, nil, nil, 2, 2)
-local specWarnEruptingFissure					= mod:NewSpecialWarningDodgeCount(386660, nil, nil, nil, 2, 2)
+local specWarnConsumingStomp					= mod:NewSpecialWarningCount(374720, nil, nil, nil, 2, 2, nil, nil, "aesoon")
+local specWarnEruptingFissure					= mod:NewSpecialWarningDodgeCount(386660, nil, nil, nil, 2, 2, nil, nil, "shockwave")
 local yellEruptingFissure						= mod:NewYell(386660)
-local specWarnInfusedStrike						= mod:NewSpecialWarningDefensive(374789, nil, nil, nil, 1, 2)
+local specWarnInfusedStrike						= mod:NewSpecialWarningDefensive(374789, nil, nil, nil, 1, 2, nil, nil, "defensive")
 
 local timerLeylineSproutsCD						= mod:NewCDCountTimer(47.4, 374364, nil, nil, nil, 3)
 local timerExplosiveEruptionCD					= mod:NewCDCountTimer(47.4, 374567, nil, nil, nil, 3)

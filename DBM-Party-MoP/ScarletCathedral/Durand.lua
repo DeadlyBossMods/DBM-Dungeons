@@ -20,9 +20,9 @@ local warnFlashofSteel			= mod:NewSpellAnnounce(115627, 3)
 local warnDashingStrike			= mod:NewSpellAnnounce(115676, 3)
 local warnDeepSleep				= mod:NewSpellAnnounce(9256, 2)
 
-local specWarnMassRes			= mod:NewSpecialWarningInterrupt(113134, "HasInterrupt", nil, nil, 1, 2)
-local specWarnHeal				= mod:NewSpecialWarningInterrupt(12039, "HasInterrupt", nil, nil, 1, 2)
-local specWarnMC				= mod:NewSpecialWarningInterrupt(130857, "HasInterrupt", nil, nil, 1, 2)
+local specWarnMassRes			= mod:NewSpecialWarningInterrupt(113134, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
+local specWarnHeal				= mod:NewSpecialWarningInterrupt(12039, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
+local specWarnMC				= mod:NewSpecialWarningInterrupt(130857, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
 
 local timerFlashofSteel			= mod:NewCDTimer(26, 115627, nil, nil, nil, 3)--not confirmed.
 local timerDashingStrike		= mod:NewCDTimer(26, 115676, nil, nil, nil, 3)--not confirmed.

@@ -41,10 +41,10 @@ or (ability.id = 1217667 or ability.id = 1214052) and type = "removebuff"
 local warnBombs							= mod:NewCountAnnounce(1214147, 2, nil, nil, nil, nil, nil, 2)
 local warnMoltenCannon					= mod:NewSpellAnnounce(1214043, 2, nil, false, nil, nil, nil, 2)--Utterly spammed, so warning off by default
 
-local specWarnShield					= mod:NewSpecialWarningCount(1214052, nil, nil, nil, 1, 2)
-local specWarnCrush						= mod:NewSpecialWarningDodgeCount(1213852, nil, nil, nil, 2, 2)
-local specWarnFlamethrower				= mod:NewSpecialWarningDodgeCount(1217371, nil, nil, nil, 2, 15)
-local specWarnCronies					= mod:NewSpecialWarningSwitchCount(1215521, nil, nil, nil, 1, 2)
+local specWarnShield					= mod:NewSpecialWarningCount(1214052, nil, nil, nil, 1, 2, nil, nil, "attackshield")
+local specWarnCrush						= mod:NewSpecialWarningDodgeCount(1213852, nil, nil, nil, 2, 2, nil, nil, "shockwave")
+local specWarnFlamethrower				= mod:NewSpecialWarningDodgeCount(1217371, nil, nil, nil, 2, 15, nil, nil, "frontal")
+local specWarnCronies					= mod:NewSpecialWarningSwitchCount(1215521, nil, nil, nil, 1, 2, nil, nil, "killmob")
 
 local timerShieldCD						= mod:NewVarCountTimer("v45-58.5", 1214052, nil, nil, nil, 5)--45 seconds til full power, but boss is a dicksucker and doesn't cast it right away
 local timerRechargeCast					= mod:NewCastTimer(15, 1214053, nil, nil, nil, 5)

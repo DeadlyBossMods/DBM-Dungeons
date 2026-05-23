@@ -24,8 +24,8 @@ mod:RegisterEventsInCombat(
 
 local warnFansCasts					= mod:NewCountAnnounce(341868, 2)
 
-local specWarnFansofDesolation		= mod:NewSpecialWarningDodgeCount(341868, nil, nil, nil, 2, 2)
-local specWarnConsume				= mod:NewSpecialWarningSwitch(337924, nil, nil, nil, 1, 2)
+local specWarnFansofDesolation		= mod:NewSpecialWarningDodgeCount(341868, nil, nil, nil, 2, 2, nil, nil, "watchstep")
+local specWarnConsume				= mod:NewSpecialWarningSwitch(337924, nil, nil, nil, 1, 2, nil, nil, "targetchange")
 
 local timerFansofDesolationCD		= mod:NewCDTimer(55.8, 341868, nil, nil, nil, 3)
 local timerConsumeCD				= mod:NewCDTimer(55.8, 337924, nil, nil, nil, 1)

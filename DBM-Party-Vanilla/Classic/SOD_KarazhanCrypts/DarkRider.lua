@@ -37,7 +37,7 @@ local enrageTimer	= mod:NewBerserkTimer(300)
 
 local warnPhase2Soon = mod:NewPrePhaseAnnounce(2)
 
-local specWarnIllusion	= mod:NewSpecialWarningTargetChange(1220912, nil, nil, nil, 1, 2)
+local specWarnIllusion	= mod:NewSpecialWarningTargetChange(1220912, nil, nil, nil, 1, 2, nil, nil, "targetchange")
 
 mod:AddSetIconOption("SetIconOnIllusion", 1220912, true, 0, {1, 2, 3, 4, 5})
 mod:AddBoolOption("EnableMinorNameplates", true, "misc")

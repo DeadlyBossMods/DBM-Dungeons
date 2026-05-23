@@ -16,8 +16,8 @@ mod:RegisterEventsInCombat(
 
 local warningShock				= mod:NewSpellAnnounce(11084, 2, nil, "Tank|Healer")
 
-local specWarnMegavolt			= mod:NewSpecialWarningInterrupt(11082, "HasInterrupt", nil, nil, 1, 2)
-local specWarnChainBolt			= mod:NewSpecialWarningInterrupt(11085, "HasInterrupt", nil, nil, 1, 2)
+local specWarnMegavolt			= mod:NewSpecialWarningInterrupt(11082, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
+local specWarnChainBolt			= mod:NewSpecialWarningInterrupt(11085, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
 
 local timerMegavoltCD			= mod:NewAITimer(180, 11082, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerChainBoltCD			= mod:NewAITimer(180, 11085, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)

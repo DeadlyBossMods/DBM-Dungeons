@@ -33,7 +33,7 @@ local warnBombard				= mod:NewSpellAnnounce(120200, 3)
 local warnDashingStrike			= mod:NewSpellAnnounce(120789, 3)
 local warnThousandBlades		= mod:NewSpellAnnounce(120759, 4)
 
-local specWarnThousandBlades	= mod:NewSpecialWarningRun(120759, "Melee", nil, 2, 4, 2)
+local specWarnThousandBlades	= mod:NewSpecialWarningRun(120759, "Melee", nil, 2, 4, 2, nil, nil, "justrun")
 
 --local timerWaveCD				= mod:NewTimer(12, "TimerWave", 69076)--Not wave timers in traditional sense. They are non stop, this is for when he activates certain mob types.
 local timerBombard				= mod:NewBuffActiveTimer(15, 120200, nil, nil, 6)

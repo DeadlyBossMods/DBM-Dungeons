@@ -22,7 +22,7 @@ mod:RegisterEventsInCombat(
 local warnShot				= mod:NewTargetNoFilterAnnounce(33792)
 local warningMortalStrike	= mod:NewTargetNoFilterAnnounce(31911, 1, nil, "Tank|Healer")
 
-local specWarnWhirlwind		= mod:NewSpecialWarningRun(31909, nil, nil, nil, 4, 2)
+local specWarnWhirlwind		= mod:NewSpecialWarningRun(31909, nil, nil, nil, 4, 2, nil, nil, "justrun")
 
 local timerShot				= mod:NewTargetTimer(6, 33792, nil, nil, nil, 3)
 

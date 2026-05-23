@@ -15,8 +15,8 @@ mod:RegisterCombat("combat")
 --https://www.wowhead.com/beta/spell=470212/flaming-twisters is a private aura but it's impractical to add a sound for
 local warnFlamingUpdraft			= mod:NewCountAnnounce(466556, 3)
 
-local specWarnSearingBeak			= mod:NewSpecialWarningCount(466064, nil, nil, nil, 1, 2)
-local specWarnBurningGale			= mod:NewSpecialWarningCount(465904, nil, nil, nil, 2, 13)
+local specWarnSearingBeak			= mod:NewSpecialWarningCount(466064, nil, nil, nil, 1, 2, nil, nil, "defensive")
+local specWarnBurningGale			= mod:NewSpecialWarningCount(465904, nil, nil, nil, 2, 13, nil, nil, "pushbackincoming")
 
 local timerSearingBeakCD			= mod:NewCDCountTimer(10, 466064, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerFlamingUpdraftCD			= mod:NewCDCountTimer(6, 466556, nil, nil, nil, 3, nil, DBM_COMMON_L.HEALER_ICON)

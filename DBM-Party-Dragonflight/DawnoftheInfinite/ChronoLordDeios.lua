@@ -40,9 +40,9 @@ local warnSummonInfiniteKeeper						= mod:NewCountAnnounce(416152, 3)
 local warnInfinityOrb								= mod:NewCountAnnounce(410904, 3)
 local warnAddsLeft									= mod:NewAddsLeftAnnounce(-27151, 2, 416152)
 
-local specWarnChronalBurn							= mod:NewSpecialWarningDispel(412027, "RemoveMagic", nil, nil, 1, 2)
-local specWarnInfiniteBlast							= mod:NewSpecialWarningInterrupt(411763, "HasInterrupt", nil, nil, 1, 2)
-local specWarnTemporalbreath						= mod:NewSpecialWarningCount(416139, nil, nil, nil, 2, 2)
+local specWarnChronalBurn							= mod:NewSpecialWarningDispel(412027, "RemoveMagic", nil, nil, 1, 2, nil, nil, "helpdispel")
+local specWarnInfiniteBlast							= mod:NewSpecialWarningInterrupt(411763, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
+local specWarnTemporalbreath						= mod:NewSpecialWarningCount(416139, nil, nil, nil, 2, 2, nil, nil, "breathsoon")
 
 local timerSummonInfiniteKeeperCD					= mod:NewCDCountTimer(24.2, 416152, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)
 local timerInfinityOrbCD							= mod:NewCDCountTimer(14.5, 410904, nil, nil, nil, 3)
@@ -51,8 +51,8 @@ local timerChronalBurnCD							= mod:NewCDNPTimer(13.3, 412027, nil, nil, nil, 5
 
 --Stage 2: Lord of the Infinite
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(26757))
-local specWarnInfiniteCorruption					= mod:NewSpecialWarningDodgeCount(416264, nil, nil, nil, 2, 2)
-local specWarnGTFO									= mod:NewSpecialWarningGTFO(417413, nil, nil, nil, 1, 8)
+local specWarnInfiniteCorruption					= mod:NewSpecialWarningDodgeCount(416264, nil, nil, nil, 2, 2, nil, nil, "watchstep")
+local specWarnGTFO									= mod:NewSpecialWarningGTFO(417413, nil, nil, nil, 1, 8, nil, nil, "watchfeet")
 
 local timerInfiniteCorruptionCD						= mod:NewCDCountTimer(24.2, 416264, nil, nil, nil, 3)
 

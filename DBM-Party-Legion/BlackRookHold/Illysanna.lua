@@ -44,10 +44,10 @@ mod:AddTimerLine(DBM:EJ_GetSectionInfo(12277))
 local warnBrutalGlaive				= mod:NewTargetAnnounce(197546, 2)
 local warnDarkRush					= mod:NewTargetAnnounce(197478, 3)
 
-local specWarnBrutalGlaive			= mod:NewSpecialWarningMoveAway(197546, nil, nil, nil, 1, 2)
+local specWarnBrutalGlaive			= mod:NewSpecialWarningMoveAway(197546, nil, nil, nil, 1, 2, nil, nil, "runout")
 local yellBrutalGlaive				= mod:NewYell(197546)
-local specWarnVengefulShear			= mod:NewSpecialWarningDefensive(197418, nil, nil, nil, 3, 2)
-local specWarnDarkRush				= mod:NewSpecialWarningYou(197478, nil, nil, nil, 1, 2)
+local specWarnVengefulShear			= mod:NewSpecialWarningDefensive(197418, nil, nil, nil, 3, 2, nil, nil, "defensive")
+local specWarnDarkRush				= mod:NewSpecialWarningYou(197478, nil, nil, nil, 1, 2, nil, nil, "targetyou")
 
 local timerBrutalGlaiveCD			= mod:NewCDCountTimer(15.7, 197546, nil, nil, nil, 3)--15 before
 local timerVengefulShearCD			= mod:NewCDCountTimer(11, 197418, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON)--11-16, delayed by dark rush
@@ -59,10 +59,10 @@ mod:AddSetIconOption("SetIconOnDarkRush", 197478, true, 6, {1, 2, 3})
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(12281))
 local warnEyeBeam					= mod:NewTargetNoFilterAnnounce(197696, 2)
 
-local specWarnEyeBeam				= mod:NewSpecialWarningRunCount(197696, nil, nil, nil, 4, 2)
+local specWarnEyeBeam				= mod:NewSpecialWarningRunCount(197696, nil, nil, nil, 4, 2, nil, nil, "laserrun")
 local yellEyeBeam					= mod:NewYell(197696)
-local specWarnBonebreakingStrike	= mod:NewSpecialWarningDodge(197974, "Tank", nil, nil, 1, 2)
-local specWarnArcaneBlitz			= mod:NewSpecialWarningInterrupt(197797, "HasInterrupt", nil, nil, 1, 2)
+local specWarnBonebreakingStrike	= mod:NewSpecialWarningDodge(197974, "Tank", nil, nil, 1, 2, nil, nil, "shockwave")
+local specWarnArcaneBlitz			= mod:NewSpecialWarningInterrupt(197797, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
 
 local timerEyeBeamCD				= mod:NewCDCountTimer(13.5, 197696, nil, nil, nil, 3)
 local timerBonebreakingStrikeCD		= mod:NewCDNPTimer(21.8, 197974, nil, nil, nil, 3)

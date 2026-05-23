@@ -24,10 +24,10 @@ local warnBeam						= mod:NewSpellAnnounce(462892, 3)
 local warnPurifyingFlames			= mod:NewSpellAnnounce(462802, 3)
 local warnSelfDestruct				= mod:NewSpellAnnounce(63801, 4)--Bomb spawns
 
-local specWarnAdds					= mod:NewSpecialWarningAdds(433320, nil, nil, nil, 1, 2)
-local specWarnBellowingSlam			= mod:NewSpecialWarningDodge(463052, nil, nil, nil, 2, 2)
-local specWarnEarthshakingCharge	= mod:NewSpecialWarningDodge(463081, nil, nil, nil, 2, 2)
-local specWarnVolatileMagma			= mod:NewSpecialWarningMove(462983, nil, nil, nil, 1, 2)
+local specWarnAdds					= mod:NewSpecialWarningAdds(433320, nil, nil, nil, 1, 2, nil, nil, "killmob")
+local specWarnBellowingSlam			= mod:NewSpecialWarningDodge(463052, nil, nil, nil, 2, 2, nil, nil, "watchstep")
+local specWarnEarthshakingCharge	= mod:NewSpecialWarningDodge(463081, nil, nil, nil, 2, 2, nil, nil, "shockwave")
+local specWarnVolatileMagma			= mod:NewSpecialWarningMove(462983, nil, nil, nil, 1, 2, nil, nil, "turnaway")
 
 --local timerAdds					= mod:NewAddsTimer(9.8, 433320)--Initial wave only
 local timerBellowingSlamCD			= mod:NewCDNPTimer(20.6, 463052, nil, nil, nil, 3)

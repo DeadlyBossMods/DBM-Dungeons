@@ -21,15 +21,15 @@ mod:RegisterEventsInCombat(
 local warnDancingFlames			= mod:NewTargetNoFilterAnnounce(149975, 3, nil, "Healer")
 local warnMoltenImpact			= mod:NewSpellAnnounce(150038, 3)
 
-local specWarnMagmaBarrage		= mod:NewSpecialWarningGTFO(150011, nil, nil, nil, 1, 8)
-local specWarnRoughSmash		= mod:NewSpecialWarningDodge(149941, "Melee", nil, nil, 4, 2)
-local specWarnRuination			= mod:NewSpecialWarningSwitch(-8622, "-Healer", nil, nil, 1, 2)
-local specWarnCalamity			= mod:NewSpecialWarningSwitch(-8626, "-Healer", nil, nil, 1, 2)
-local specWarnFirestorm			= mod:NewSpecialWarningInterrupt(149997, "HasInterrupt", nil, 2, 1, 2)
+local specWarnMagmaBarrage		= mod:NewSpecialWarningGTFO(150011, nil, nil, nil, 1, 8, nil, nil, "watchfeet")
+local specWarnRoughSmash		= mod:NewSpecialWarningDodge(149941, "Melee", nil, nil, 4, 2, nil, nil, "justrun")
+local specWarnRuination			= mod:NewSpecialWarningSwitch(-8622, "-Healer", nil, nil, 1, 2, nil, nil, "mobsoon")
+local specWarnCalamity			= mod:NewSpecialWarningSwitch(-8626, "-Healer", nil, nil, 1, 2, nil, nil, "mobsoon")
+local specWarnFirestorm			= mod:NewSpecialWarningInterrupt(149997, "HasInterrupt", nil, 2, 1, 2, nil, nil, "helpkick")
 local specWarnDancingFlames		= mod:NewSpecialWarningDispel(149975, "RemoveMagic", nil, nil, 1, 2)
-local specWarnMagmolatus		= mod:NewSpecialWarningSwitch(-8621, nil, nil, 2, 1, 2)--Dps can turn this on too I suppose but 5 seconds after boss spawns they are switching to add anyways, so this is mainly for tank to pick it up
-local specWarnSlagSmash			= mod:NewSpecialWarningDodge(150023, "Melee", nil, nil, 4, 2)
-local specWarnWitheringFlames	= mod:NewSpecialWarningDispel(150032, "RemoveMagic", nil, nil, 1, 2)
+local specWarnMagmolatus		= mod:NewSpecialWarningSwitch(-8621, nil, nil, 2, 1, 2, nil, nil, "bigmob")--Dps can turn this on too I suppose but 5 seconds after boss spawns they are switching to add anyways, so this is mainly for tank to pick it up
+local specWarnSlagSmash			= mod:NewSpecialWarningDodge(150023, "Melee", nil, nil, 4, 2, nil, nil, "justrun")
+local specWarnWitheringFlames	= mod:NewSpecialWarningDispel(150032, "RemoveMagic", nil, nil, 1, 2, nil, nil, "dispelnow")
 
 local timerMoltenImpactCD		= mod:NewNextTimer(21.5, 150038, nil, nil, nil, 1)
 

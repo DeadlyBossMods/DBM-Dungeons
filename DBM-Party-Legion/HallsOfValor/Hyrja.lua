@@ -31,10 +31,10 @@ mod:RegisterEventsInCombat(
 local warnExpelLight				= mod:NewTargetAnnounce(192048, 3)
 local warnPhase2					= mod:NewPhaseAnnounce(2, 2, nil, nil, nil, nil, nil, 2)
 
-local specWarnShieldOfLight			= mod:NewSpecialWarningDefensive(192018, nil, nil, nil, 3, 2)--Journal lies, this is NOT dodgable
-local specWarnSanctify				= mod:NewSpecialWarningDodge(192307, nil, nil, nil, 2, 5)
-local specWarnEyeofStorm			= mod:NewSpecialWarningMoveTo(200901, nil, nil, nil, 2, 2)
-local specWarnExpelLight			= mod:NewSpecialWarningMoveAway(192048, nil, nil, nil, 2, 2)
+local specWarnShieldOfLight			= mod:NewSpecialWarningDefensive(192018, nil, nil, nil, 3, 2, nil, nil, "defensive")--Journal lies, this is NOT dodgable
+local specWarnSanctify				= mod:NewSpecialWarningDodge(192307, nil, nil, nil, 2, 5, nil, nil, "watchorb")
+local specWarnEyeofStorm			= mod:NewSpecialWarningMoveTo(200901, nil, nil, nil, 2, 2, nil, nil, "findshelter")
+local specWarnExpelLight			= mod:NewSpecialWarningMoveAway(192048, nil, nil, nil, 2, 2, nil, nil, "runout")
 local yellExpelLight				= mod:NewYell(192048)
 
 local timerShieldOfLightCD			= mod:NewCDTimer(26.6, 192018, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON, nil, mod:IsTank() and 2 or nil, 4)--26.6-34

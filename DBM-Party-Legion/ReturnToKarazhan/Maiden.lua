@@ -27,9 +27,9 @@ local warnHolyWrath					= mod:NewCastAnnounce(227823, 4)
 
 local specWarnSacredGround			= mod:NewSpecialWarningYou(227789, nil, nil, nil, 1, 2)
 local yellSacredGround				= mod:NewYell(227789)
-local specWarnHolyShock				= mod:NewSpecialWarningInterrupt(227800, "HasInterrupt", nil, nil, 1, 2)
+local specWarnHolyShock				= mod:NewSpecialWarningInterrupt(227800, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
 local specWarnRepentance			= mod:NewSpecialWarningMoveTo(227508, nil, nil, nil, 1, 2)
-local specWarnHolyWrath				= mod:NewSpecialWarningInterrupt(227823, "HasInterrupt", nil, nil, 1, 2)
+local specWarnHolyWrath				= mod:NewSpecialWarningInterrupt(227823, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
 
 local timerSacredGroundCD			= mod:NewCDTimer(19, 227789, nil, nil, nil, 3)--19-35 (delayed by bulwarks and what nots)
 local timerHolyShockCD				= mod:NewCDTimer(13.3, 227800, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)

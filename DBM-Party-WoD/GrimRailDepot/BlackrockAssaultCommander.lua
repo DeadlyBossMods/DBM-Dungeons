@@ -29,10 +29,10 @@ local warnSupressiveFire		= mod:NewTargetNoFilterAnnounce(160681, 2)--In a repea
 --local warnMortarDown			= mod:NewAnnounce("warnMortarDown", 4, -9712, nil, DBM_CORE_L.AUTO_ANNOUNCE_OPTIONS.spell:format(-9712))--So warn when adds that drop them die
 local warnPhase3				= mod:NewPhaseAnnounce(3, 2, nil, nil, nil, nil, nil, 2)
 
-local specWarnSupressiveFire	= mod:NewSpecialWarningYou(160681, nil, nil, nil, 1, 2)
+local specWarnSupressiveFire	= mod:NewSpecialWarningYou(160681, nil, nil, nil, 1, 2, nil, nil, "findshelter")
 local yellSupressiveFire		= mod:NewYell(160681)
-local specWarnShrapnelblast		= mod:NewSpecialWarningDodge(160943, nil, nil, 2, 3, 2)--160943 boss version, 166675 trash version.
-local specWarnSlagBlast			= mod:NewSpecialWarningMove(166570, nil, nil, nil, 1, 8)
+local specWarnShrapnelblast		= mod:NewSpecialWarningDodge(160943, nil, nil, 2, 3, 2, nil, nil, "shockwave")--160943 boss version, 166675 trash version.
+local specWarnSlagBlast			= mod:NewSpecialWarningMove(166570, nil, nil, nil, 1, 8, nil, nil, "watchfeet")
 
 local timerSupressiveFire		= mod:NewTargetTimer(10, 160681, nil, nil, nil, 5)
 

@@ -37,9 +37,9 @@ local warnFreezeTag					= mod:NewCountAnnounce(321873, 3)
 local warnFixate					= mod:NewTargetNoFilterAnnounce(321891, 2)
 local warnPattyCake					= mod:NewTargetNoFilterAnnounce(321828, 3)
 
-local specWarnDodgeBall				= mod:NewSpecialWarningDodgeCount(321834, nil, nil, nil, 2, 2)
-local specWarnFixate				= mod:NewSpecialWarningRun(321891, nil, nil, nil, 4, 2)
-local specWarnPattyCake				= mod:NewSpecialWarningInterrupt(321828, nil, nil, nil, 3, 2)
+local specWarnDodgeBall				= mod:NewSpecialWarningDodgeCount(321834, nil, nil, nil, 2, 2, nil, nil, "farfromline")
+local specWarnFixate				= mod:NewSpecialWarningRun(321891, nil, nil, nil, 4, 2, nil, nil, "runout")
+local specWarnPattyCake				= mod:NewSpecialWarningInterrupt(321828, nil, nil, nil, 3, 2, nil, nil, "kickcast")
 --local specWarnGTFO					= mod:NewSpecialWarningGTFO(257274, nil, nil, nil, 1, 8)
 
 local timerDodgeBallCD				= mod:NewVarCountTimer("v12.1-18", 321834, nil, nil, nil, 3)--12.1-18

@@ -11,8 +11,8 @@ if DBM:IsPostMidnight() then
 	local warnPhaseDash					= mod:NewCountAnnounce(1280064, 2)
 	local warnShadowPounce				= mod:NewCountAnnounce(245738, 2)
 
-	local specWarnVoidBomb				= mod:NewSpecialWarningCount(247175, nil, nil, nil, 1, 2)
-	local specWarnOverload				= mod:NewSpecialWarningCount(1263523, nil, nil, nil, 2, 2)
+	local specWarnVoidBomb				= mod:NewSpecialWarningCount(247175, nil, nil, nil, 1, 2, nil, nil, "bombsoon")
+	local specWarnOverload				= mod:NewSpecialWarningCount(1263523, nil, nil, nil, 2, 2, nil, nil, "aesoon")
 
 	local timerVoidBombCD				= mod:NewCDCountTimer(20.5, 247175, nil, nil, nil, 3, nil, DBM_COMMON_L.IMPORTANT_ICON)
 	local timerPhaseDashCD				= mod:NewCDCountTimer(20.5, 1280064, nil, nil, nil, 3)
@@ -158,11 +158,11 @@ else
 	--local warnDreadScreech					= mod:NewCastAnnounce(248831, 2)
 
 	--local specWarnHuntersRush				= mod:NewSpecialWarningDefensive(247145, nil, nil, nil, 1, 2)
-	local specWarnOverloadTrap				= mod:NewSpecialWarningDodge(247206, nil, nil, nil, 2, 2)
-	local specWarnUmbralFlanking			= mod:NewSpecialWarningMoveAway(247245, nil, nil, nil, 1, 2)
+	local specWarnOverloadTrap				= mod:NewSpecialWarningDodge(247206, nil, nil, nil, 2, 2, nil, nil, "watchstep")
+	local specWarnUmbralFlanking			= mod:NewSpecialWarningMoveAway(247245, nil, nil, nil, 1, 2, nil, nil, "scatter")
 	local yellUmbralFlanking				= mod:NewYell(247245)
-	local specWarnRavagingDarkness			= mod:NewSpecialWarningDodge(245802, nil, nil, nil, 2, 2)
-	local specWarnDreadScreech				= mod:NewSpecialWarningInterrupt(248831, "HasInterrupt", nil, nil, 1, 2)
+	local specWarnRavagingDarkness			= mod:NewSpecialWarningDodge(245802, nil, nil, nil, 2, 2, nil, nil, "watchstep")
+	local specWarnDreadScreech				= mod:NewSpecialWarningInterrupt(248831, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
 
 	local timerVoidTrapCD					= mod:NewCDTimer(15.8, 246026, nil, nil, nil, 3)
 	local timerOverloadTrapCD				= mod:NewCDTimer(20.6, 247206, nil, nil, nil, 3)

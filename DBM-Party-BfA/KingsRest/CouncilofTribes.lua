@@ -34,8 +34,8 @@ mod:RegisterEventsInCombat(
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(18261))
 local warnSeveringAxe				= mod:NewTargetNoFilterAnnounce(266231, 3, nil, "Healer")
 
-local specWarnWhirlingAxes			= mod:NewSpecialWarningDodge(266206, nil, nil, nil, 2, 2)
-local specWarnSeveringAxe			= mod:NewSpecialWarningDefensive(266231, nil, nil, nil, 1, 2)
+local specWarnWhirlingAxes			= mod:NewSpecialWarningDodge(266206, nil, nil, nil, 2, 2, nil, nil, "watchstep")
+local specWarnSeveringAxe			= mod:NewSpecialWarningDefensive(266231, nil, nil, nil, 1, 2, nil, nil, "defensive")
 
 local timerWhirlingAxesCD			= mod:NewCDTimer(10.8, 266206, nil, nil, nil, 3)--Used inactive
 local timerSeveringAxeCD			= mod:NewCDTimer(21.8, 266231, nil, nil, nil, 3)
@@ -43,11 +43,11 @@ local timerSeveringAxeCD			= mod:NewCDTimer(21.8, 266231, nil, nil, nil, 3)
 mod:AddSetIconOption("SetIconOnAxe", 266231, false, 0, {2})
 --Aka'ali the Conqueror
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(18264))
-local specWarnBarrelThrough			= mod:NewSpecialWarningYou(266951, nil, nil, nil, 1, 2)
+local specWarnBarrelThrough			= mod:NewSpecialWarningYou(266951, nil, nil, nil, 1, 2, nil, nil, "targetyou")
 local yellBarrelThrough				= mod:NewYell(266951)
 local yellBarrelThroughFades		= mod:NewShortFadesYell(266951)
-local specWarnBarrelThroughSoak		= mod:NewSpecialWarningMoveTo(266951, nil, nil, nil, 1, 2)
-local specWarnDebilitatingBackhand	= mod:NewSpecialWarningRun(266237, nil, nil, nil, 4, 2)
+local specWarnBarrelThroughSoak		= mod:NewSpecialWarningMoveTo(266951, nil, nil, nil, 1, 2, nil, nil, "gathershare")
+local specWarnDebilitatingBackhand	= mod:NewSpecialWarningRun(266237, nil, nil, nil, 4, 2, nil, nil, "justrun")
 
 local timerBarrelThroughCD			= mod:NewCDTimer(23, 266951, nil, nil, nil, 3)--Used inactive
 local timerDebilitatingBackhandCD	= mod:NewCDTimer(22.8, 266237, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON..DBM_COMMON_L.DEADLY_ICON)
@@ -55,9 +55,9 @@ local timerDebilitatingBackhandCD	= mod:NewCDTimer(22.8, 266237, nil, nil, nil, 
 mod:AddSetIconOption("SetIconOnBarrel", 266951, true, 0, {1})
 --Zanazal the Wise
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(18267))
-local specWarnPoisonNova			= mod:NewSpecialWarningInterrupt(267273, "HasInterrupt", nil, nil, 1, 2)
-local specWarnTotems				= mod:NewSpecialWarningSwitch(267060, nil, nil, nil, 1, 2)
-local specWarnEarthwall				= mod:NewSpecialWarningDispel(267256, "MagicDispeller", nil, nil, 1, 2)
+local specWarnPoisonNova			= mod:NewSpecialWarningInterrupt(267273, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
+local specWarnTotems				= mod:NewSpecialWarningSwitch(267060, nil, nil, nil, 1, 2, nil, nil, "changetarget")
+local specWarnEarthwall				= mod:NewSpecialWarningDispel(267256, "MagicDispeller", nil, nil, 1, 2, nil, nil, "dispelboss")
 
 local timerPoisonNovaCD				= mod:NewCDTimer(26.7, 267273, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--Used inactive
 local timerTotemsCD					= mod:NewCDTimer(53.5, 267060, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)--Actual timer needs doing

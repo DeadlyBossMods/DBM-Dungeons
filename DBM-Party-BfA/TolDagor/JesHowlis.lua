@@ -21,9 +21,9 @@ local warnMotivatingCry				= mod:NewTargetNoFilterAnnounce(257827, 2)
 local warnViciousMauling			= mod:NewTargetNoFilterAnnounce(260067, 4)
 local warnPhase2					= mod:NewPhaseAnnounce(2, 2)
 
-local specWarnCripShiv				= mod:NewSpecialWarningDispel(257777, "RemovePoison", nil, nil, 1, 2)
-local specWarnHowlingFear			= mod:NewSpecialWarningInterrupt(257791, "HasInterrupt", nil, nil, 1, 2)
-local specWarnFlashingDagger		= mod:NewSpecialWarningMoveTo(257785, nil, nil, nil, 3, 2)
+local specWarnCripShiv				= mod:NewSpecialWarningDispel(257777, "RemovePoison", nil, nil, 1, 2, nil, nil, "helpdispel")
+local specWarnHowlingFear			= mod:NewSpecialWarningInterrupt(257791, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
+local specWarnFlashingDagger		= mod:NewSpecialWarningMoveTo(257785, nil, nil, nil, 3, 2, nil, nil, "findshelter")
 
 local timerCripShivCD				= mod:NewCDTimer(16.1, 257777, nil, "Healer|RemovePoison", nil, 5, nil, DBM_COMMON_L.HEALER_ICON..DBM_COMMON_L.POISON_ICON)
 local timerHowlingFearCD			= mod:NewCDTimer(13.4, 257791, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)

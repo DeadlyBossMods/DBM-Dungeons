@@ -25,12 +25,12 @@ local warnShadowBomb				= mod:NewTargetAnnounce(204962, 3)
 local warningPortalSoon				= mod:NewAnnounce("WarningPortalSoon", 1, 57687)
 --local warningBossNow				= mod:NewAnnounce("WarningBossNow", 4, 33341)
 
-local specWarnShadowBomb			= mod:NewSpecialWarningMoveAway(204962, nil, nil, nil, 1, 2)--Malgath bomb debuff.
-local specWarnShadowBoltVolley		= mod:NewSpecialWarningInterrupt(204963, "HasInterrupt", nil, nil, 1, 2)--Malgath interruptable aoe
-local specWarnHellfire				= mod:NewSpecialWarningInterrupt(205088, "HasInterrupt", nil, nil, 1, 2)--Infernal AOE
-local specWarnFelSlam				= mod:NewSpecialWarningSpell(205090, "Tank", nil, nil, 2, 2)--Infernal frontal fel line/shockwave thingy
-local specWarnFelEnergy				= mod:NewSpecialWarningMove(204762, nil, nil, nil, 2, 2)--Felguard Axe damage
-local specWarnFelPrison				= mod:NewSpecialWarningSwitch(204608, "Dps", nil, nil, 1, 2)
+local specWarnShadowBomb			= mod:NewSpecialWarningMoveAway(204962, nil, nil, nil, 1, 2, nil, nil, "runout")--Malgath bomb debuff.
+local specWarnShadowBoltVolley		= mod:NewSpecialWarningInterrupt(204963, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")--Malgath interruptable aoe
+local specWarnHellfire				= mod:NewSpecialWarningInterrupt(205088, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")--Infernal AOE
+local specWarnFelSlam				= mod:NewSpecialWarningSpell(205090, "Tank", nil, nil, 2, 2, nil, nil, "shockwave")--Infernal frontal fel line/shockwave thingy
+local specWarnFelEnergy				= mod:NewSpecialWarningMove(204762, nil, nil, nil, 2, 2, nil, nil, "runaway")--Felguard Axe damage
+local specWarnFelPrison				= mod:NewSpecialWarningSwitch(204608, "Dps", nil, nil, 1, 2, nil, nil, "helpme")
 local yellFelPrison					= mod:NewYell(204608)
 
 local timerPortal					= mod:NewTimer(122, "TimerPortal", 57687, nil, nil, 6)

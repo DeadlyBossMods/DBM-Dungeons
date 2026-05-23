@@ -15,7 +15,7 @@ mod:RegisterEventsInCombat(
 
 local warningDruidSlumber			= mod:NewTargetNoFilterAnnounce(8040, 2)
 
-local specWarnDruidsSlumber			= mod:NewSpecialWarningInterrupt(8040, "HasInterrupt", nil, nil, 1, 2)
+local specWarnDruidsSlumber			= mod:NewSpecialWarningInterrupt(8040, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
 
 function mod:SPELL_CAST_START(args)
 	if args:IsSpell(8040) and args:IsSrcTypeHostile() then

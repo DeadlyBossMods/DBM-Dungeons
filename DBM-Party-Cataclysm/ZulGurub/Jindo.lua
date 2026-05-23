@@ -27,9 +27,9 @@ local warnPhase2				= mod:NewPhaseAnnounce(2)
 local warnBarrierDown			= mod:NewAnnounce("WarnBarrierDown", 2)
 local warnBodySlam				= mod:NewTargetNoFilterAnnounce(97198, 2)
 
-local specWarnShadow			= mod:NewSpecialWarningMoveTo(97172, nil, nil, nil, 2, 2)
-local specWarnBodySlam			= mod:NewSpecialWarningYou(97198, nil, nil, nil, 1, 2)
-local specWarnSunderRift		= mod:NewSpecialWarningMove(97320, nil, nil, nil, 1, 2)
+local specWarnShadow			= mod:NewSpecialWarningMoveTo(97172, nil, nil, nil, 2, 2, nil, nil, "findshelter")
+local specWarnBodySlam			= mod:NewSpecialWarningYou(97198, nil, nil, nil, 1, 2, nil, nil, "targetyou")
+local specWarnSunderRift		= mod:NewSpecialWarningMove(97320, nil, nil, nil, 1, 2, nil, nil, "watchfeet")
 
 local timerDeadzone				= mod:NewNextTimer(21, 97170, nil, nil, nil, 3)
 local timerShadowsOfHakkar		= mod:NewBuffActiveTimer(10, 97172, nil, nil, nil, 2)

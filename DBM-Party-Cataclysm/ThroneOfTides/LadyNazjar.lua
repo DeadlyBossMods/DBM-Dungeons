@@ -40,13 +40,13 @@ if (wowToc >= 100200) then
 	local warnGeyser									= mod:NewSpellAnnounce(427771, 2)
 	local warnFocusedTempest							= mod:NewTargetNoFilterAnnounce(428374, 3)
 
-	local specWarnShockBlast							= mod:NewSpecialWarningMoveAway(428054, nil, nil, nil, 1, 2)
+	local specWarnShockBlast							= mod:NewSpecialWarningMoveAway(428054, nil, nil, nil, 1, 2, nil, nil, "runout")
 	local yellShockBlast								= mod:NewShortYell(428054)
-	local specWarnFocusedTempest						= mod:NewSpecialWarningCount(428374, nil, nil, nil, 2, 2)
-	local specWarnWaterbolt								= mod:NewSpecialWarningInterrupt(428263, "HasInterrupt", nil, nil, 1, 2)
-	local specWarnTridentFlurry							= mod:NewSpecialWarningDodge(428293, nil, nil, nil, 2, 2)
-	local specWarnFrostbolt								= mod:NewSpecialWarningInterrupt(428103, "HasInterrupt", nil, nil, 1, 2)
-	local specWarnIcyVeins								= mod:NewSpecialWarningDispel(428329, "MagicDispeller", nil, nil, 1, 2)
+	local specWarnFocusedTempest						= mod:NewSpecialWarningCount(428374, nil, nil, nil, 2, 2, nil, nil, "aesoon")
+	local specWarnWaterbolt								= mod:NewSpecialWarningInterrupt(428263, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
+	local specWarnTridentFlurry							= mod:NewSpecialWarningDodge(428293, nil, nil, nil, 2, 2, nil, nil, "shockwave")
+	local specWarnFrostbolt								= mod:NewSpecialWarningInterrupt(428103, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
+	local specWarnIcyVeins								= mod:NewSpecialWarningDispel(428329, "MagicDispeller", nil, nil, 1, 2, nil, nil, "helpdispel")
 	--local specWarnGTFO								= mod:NewSpecialWarningGTFO(409058, nil, nil, nil, 1, 8)
 
 	local timerShockBlastCD								= mod:NewCDTimer(49, 428054, nil, nil, nil, 3)
@@ -152,7 +152,7 @@ else
 	local warnGeyser			= mod:NewSpellAnnounce(75722, 3)
 	local warnFungalSpores		= mod:NewTargetNoFilterAnnounce(80564, 3, nil, "RemoveDisease", 2)
 
-	local specWarnShockBlast	= mod:NewSpecialWarningInterrupt(76008, nil, nil, nil, 1, 2)
+	local specWarnShockBlast	= mod:NewSpecialWarningInterrupt(76008, nil, nil, nil, 1, 2, nil, nil, "kickcast")
 
 	local timerWaterspout		= mod:NewBuffActiveTimer(60, 75863, nil, nil, nil, 6)
 	local timerShockBlastCD		= mod:NewCDTimer(13, 76008, nil, "HasInterrupt", 2, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)

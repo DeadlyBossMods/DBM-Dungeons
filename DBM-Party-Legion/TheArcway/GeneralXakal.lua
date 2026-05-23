@@ -15,10 +15,10 @@ mod:RegisterEventsInCombat(
 )
 
 --TODO, evalulate normal mode tmers more for slash and fissure, seem longer cded there.
-local specWarnBat					= mod:NewSpecialWarningSwitch(-12489, "Tank", nil, nil, 1, 2)
-local specWarnFissure				= mod:NewSpecialWarningDodge(197776, nil, nil, nil, 2, 2)
-local specWarnSlash					= mod:NewSpecialWarningSpell(212030, nil, nil, nil, 2, 2)
-local specWarnSlam					= mod:NewSpecialWarningSpell(197810, nil, nil, nil, 3, 2)
+local specWarnBat					= mod:NewSpecialWarningSwitch(-12489, "Tank", nil, nil, 1, 2, nil, nil, "mobsoon")
+local specWarnFissure				= mod:NewSpecialWarningDodge(197776, nil, nil, nil, 2, 2, nil, nil, "watchstep")
+local specWarnSlash					= mod:NewSpecialWarningSpell(212030, nil, nil, nil, 2, 2, nil, nil, "watchwave")
+local specWarnSlam					= mod:NewSpecialWarningSpell(197810, nil, nil, nil, 3, 2, nil, nil, "carefly")
 
 local timerBatCD					= mod:NewNextTimer(31, -12489, nil, nil, nil, 1, 183219)--31.1 i saw for lowest time but might be some variation
 --Both 13 unless delayed by other interactions. Seems similar to archimondes timer code with a hard ICD mechanic.

@@ -55,7 +55,7 @@ mod:RegisterEventsInCombat(
 
 local warnChainReaction			= mod:NewCastAnnounce(68821, 3, nil, nil, "Melee", 2)
 
-local specWarnGTFO				= mod:NewSpecialWarningGTFO(68927, nil, nil, nil, 1, 8)
+local specWarnGTFO				= mod:NewSpecialWarningGTFO(68927, nil, nil, nil, 1, 8, nil, nil, "watchfeet")
 
 function mod:SPELL_CAST_START(args)
 	if args.spellId == 68821 and self:AntiSpam(3, 1) then

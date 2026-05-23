@@ -10,9 +10,9 @@ mod:SetEncounterID(1699)
 mod:RegisterCombat("combat")
 
 if DBM:IsPostMidnight() then
-	local specWarnFierySmash	= mod:NewSpecialWarningCount(154115, nil, nil, nil, 1, 15)
-	local specWarnEnergize		= mod:NewSpecialWarningCount(154162, nil, nil, DBM_COMMON_L.GROUPSOAKS, 1, 17)
-	local specWarnSupernova		= mod:NewSpecialWarningCount(154135, nil, nil, nil, 2, 2)
+	local specWarnFierySmash	= mod:NewSpecialWarningCount(154115, nil, nil, nil, 1, 15, nil, nil, "frontal")
+	local specWarnEnergize		= mod:NewSpecialWarningCount(154162, nil, nil, DBM_COMMON_L.GROUPSOAKS, 1, 17, nil, nil, "soakbeam")
+	local specWarnSupernova		= mod:NewSpecialWarningCount(154135, nil, nil, nil, 2, 2, nil, nil, "aesoon")
 
 	local timerSmashCD			= mod:NewCDCountTimer(20.5, 154115, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 	local timerEnergizeCD		= mod:NewCDCountTimer(20.5, 154162, DBM_COMMON_L.GROUPSOAKS.." (%s)", nil, nil, 5, nil, DBM_COMMON_L.IMPORTANT_ICON)
@@ -134,8 +134,8 @@ else
 	--Add smash? it's a 1 sec cast, can it be dodged?
 	local warnEnergize		= mod:NewSpellAnnounce(154159, 3)
 
-	local specWarnBurst		= mod:NewSpecialWarningCount(154135, nil, nil, nil, 2, 2)
-	local specWarnSmash		= mod:NewSpecialWarningDodge(154110, "Tank", nil, 2, 1, 2)
+	local specWarnBurst		= mod:NewSpecialWarningCount(154135, nil, nil, nil, 2, 2, nil, nil, "aesoon")
+	local specWarnSmash		= mod:NewSpecialWarningDodge(154110, "Tank", nil, 2, 1, 2, nil, nil, "watchstep")
 
 	local timerEnergozeCD	= mod:NewNextTimer(20, 154159, nil, nil, nil, 5)
 	local timerBurstCD		= mod:NewCDCountTimer(23, 154135, nil, nil, nil, 2, nil, DBM_COMMON_L.HEALER_ICON)

@@ -18,7 +18,7 @@ mod:RegisterEventsInCombat(
 
 local warningWhirlwind		= mod:NewSpellAnnounce(52027, 3)
 
-local specWarnWhirlwind		= mod:NewSpecialWarningRun(52027, "Melee", nil, nil, 4, 2)
+local specWarnWhirlwind		= mod:NewSpecialWarningRun(52027, "Melee", nil, nil, 4, 2, nil, nil, "runout")
 
 function mod:SPELL_CAST_START(args)
 	if args:IsSpellID(52027, 52028) then

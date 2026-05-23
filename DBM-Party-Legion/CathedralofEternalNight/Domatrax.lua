@@ -21,9 +21,9 @@ mod:RegisterEventsInCombat(
 --TODO, announce portal guardians, they fire UNIT_TARGETABLE_CHANGED (maybe other things?)
 local warnApproachingDoom			= mod:NewCastAnnounce(241622, 2)
 
-local specWarnFelsoulCleave			= mod:NewSpecialWarningDodge(236543, "Tank", nil, nil, 1, 2)
-local specWarnChaoticEnergy			= mod:NewSpecialWarningMoveTo(234107, nil, nil, nil, 2, 2)
-local specWarnAdds					= mod:NewSpecialWarningAdds(200597, "-Healer", nil, nil, 1, 2)
+local specWarnFelsoulCleave			= mod:NewSpecialWarningDodge(236543, "Tank", nil, nil, 1, 2, nil, nil, "shockwave")
+local specWarnChaoticEnergy			= mod:NewSpecialWarningMoveTo(234107, nil, nil, nil, 2, 2, nil, nil, "findshield")
+local specWarnAdds					= mod:NewSpecialWarningAdds(200597, "-Healer", nil, nil, 1, 2, nil, nil, "killmob")
 
 local timerFelsoulCleaveCD			= mod:NewCDTimer(20, 236543, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerChaoticEnergyCD			= mod:NewCDTimer(30, 234107, nil, nil, nil, 2, nil, nil, nil, 1, 4)

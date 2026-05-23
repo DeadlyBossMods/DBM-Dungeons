@@ -12,9 +12,9 @@ if DBM:IsPostMidnight() then
 	local warnMindBlast					= mod:NewCountAnnounce(244750, 2, nil, "HasInterrupt")
 	local warnMassVoidInfusion			= mod:NewCountAnnounce(1263542, 2)
 
-	local specWarnUmbralTentacles		= mod:NewSpecialWarningCount(1263538, nil, nil, nil, 1, 2)
-	local specWarnRepulse				= mod:NewSpecialWarningCount(1263528, nil, 28405, nil, 2, 2)
-	local specWarnGatesOfAbyss			= mod:NewSpecialWarningCount(1277358, nil, nil, DBM_COMMON_L.ORBS, 2, 2)
+	local specWarnUmbralTentacles		= mod:NewSpecialWarningCount(1263538, nil, nil, nil, 1, 2, nil, nil, "mobsoon")
+	local specWarnRepulse				= mod:NewSpecialWarningCount(1263528, nil, 28405, nil, 2, 2, nil, nil, "carefly")
+	local specWarnGatesOfAbyss			= mod:NewSpecialWarningCount(1277358, nil, nil, DBM_COMMON_L.ORBS, 2, 2, nil, nil, "watchorb")
 
 	local timerMindBlastCD				= mod:NewCDCountTimer(20.5, 244750, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON..DBM_COMMON_L.TANK_ICON)
 	local timerMassVoidCD				= mod:NewCDCountTimer(20.5, 1263542, nil, nil, nil, 5, nil, DBM_COMMON_L.HEALER_ICON)
@@ -168,9 +168,9 @@ else
 	local warnAddsLeft						= mod:NewAddsLeftAnnounce(-16424, 2)
 	local warnTentacles						= mod:NewSpellAnnounce(244769, 2)
 
-	local specWarnHowlingDark				= mod:NewSpecialWarningInterrupt(244751, "HasInterrupt", nil, nil, 1, 2)
-	local specWarnEntropicForce				= mod:NewSpecialWarningSpell(246324, nil, nil, nil, 1, 2)
-	local specWarnAdds						= mod:NewSpecialWarningAdds(249336, "-Healer", nil, nil, 1, 2)
+	local specWarnHowlingDark				= mod:NewSpecialWarningInterrupt(244751, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
+	local specWarnEntropicForce				= mod:NewSpecialWarningSpell(246324, nil, nil, nil, 1, 2, nil, nil, "keepmove")
+	local specWarnAdds						= mod:NewSpecialWarningAdds(249336, "-Healer", nil, nil, 1, 2, nil, nil, "killmob")
 
 	local timerUmbralTentaclesCD			= mod:NewCDTimer(30.4, 244769, nil, nil, nil, 1)
 	local timerHowlingDarkCD				= mod:NewCDTimer(28.0, 244751, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)

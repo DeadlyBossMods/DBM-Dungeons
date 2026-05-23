@@ -17,7 +17,7 @@ mod:RegisterSafeEventsInCombat(
 
 local warnClaimSpirits			= mod:NewCountAnnounce(1266337, 3)
 
-local specWarnRagingSpirits		= mod:NewSpecialWarningCount(1265958, nil, nil, nil, 2, 2)
+local specWarnRagingSpirits		= mod:NewSpecialWarningCount(1265958, nil, nil, nil, 2, 2, nil, nil, "ghostsoon")
 
 local timerRagingSpiritsCD		= mod:NewCDCountTimer(17, 1265958, nil, nil, nil, 5)
 local timerClaimSpiritsCD		= mod:NewCDCountTimer(42.4, 1266337, nil, nil, nil, 1)

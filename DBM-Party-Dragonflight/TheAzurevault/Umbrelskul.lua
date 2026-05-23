@@ -29,10 +29,10 @@ mod:RegisterEventsInCombat(
 --]]
 local warnArcaneEruption						= mod:NewCountAnnounce(385075, 3)
 
-local specWarnDragonStrike						= mod:NewSpecialWarningDefensive(384978, nil, nil, nil, 1, 2)
-local specWarnDragonStrikeDebuff				= mod:NewSpecialWarningDispel(384978, "RemoveMagic", nil, nil, 1, 2)
-local specWarnCrystallineRoar					= mod:NewSpecialWarningDodgeCount(384699, nil, nil, nil, 3, 2)
-local specWarnUnleashedDestruction				= mod:NewSpecialWarningCount(385399, nil, nil, nil, 2, 2)
+local specWarnDragonStrike						= mod:NewSpecialWarningDefensive(384978, nil, nil, nil, 1, 2, nil, nil, "defensive")
+local specWarnDragonStrikeDebuff				= mod:NewSpecialWarningDispel(384978, "RemoveMagic", nil, nil, 1, 2, nil, nil, "helpdispel")
+local specWarnCrystallineRoar					= mod:NewSpecialWarningDodgeCount(384699, nil, nil, nil, 3, 2, nil, nil, "shockwave")
+local specWarnUnleashedDestruction				= mod:NewSpecialWarningCount(385399, nil, nil, nil, 2, 2, nil, nil, "carefly")
 
 local timerDragonStrikeCD						= mod:NewCDTimer(7.3, 384978, nil, "Tank|Healer|RemoveMagic", nil, 5, nil, DBM_COMMON_L.TANK_ICON..DBM_COMMON_L.MAGIC_ICON)--7.3-24, probably delayed by CLEU events I couldn't see
 local timerCrystallineRoarCD					= mod:NewCDCountTimer(111.6, 384699, nil, nil, nil, 3, nil, DBM_COMMON_L.DEADLY_ICON)

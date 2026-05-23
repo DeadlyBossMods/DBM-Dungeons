@@ -24,12 +24,12 @@ mod:RegisterEventsInCombat(
 local warnTimeLock					= mod:NewTargetAnnounce(203957, 4)
 local warnUnstableMana				= mod:NewTargetAnnounce(203176, 2)
 
-local specWarnTimeSplit				= mod:NewSpecialWarningMove(203833, nil, nil, nil, 1, 2)
-local specWarnForceBomb				= mod:NewSpecialWarningSpell(202974, nil, nil, nil, 2, 12)
-local specWarnBlast					= mod:NewSpecialWarningInterruptCount(203176, "HasInterrupt", nil, 2, 1, 2)
-local specWarnBlastStacks			= mod:NewSpecialWarningDispel(203176, "MagicDispeller")
-local specWarnTimeLock				= mod:NewSpecialWarningInterrupt(203957, "HasInterrupt", nil, 2, 1, 2)
-local specWarnUnstableMana			= mod:NewSpecialWarningMove(203176, nil, nil, nil, 1, 2)
+local specWarnTimeSplit				= mod:NewSpecialWarningMove(203833, nil, nil, nil, 1, 2, nil, nil, "runaway")
+local specWarnForceBomb				= mod:NewSpecialWarningSpell(202974, nil, nil, nil, 2, 12, nil, nil, "forcenovacoming")
+local specWarnBlast					= mod:NewSpecialWarningInterruptCount(203176, "HasInterrupt", nil, 2, 1, 2, nil, nil, "kick2r")
+local specWarnBlastStacks			= mod:NewSpecialWarningDispel(203176, "MagicDispeller", nil, nil, nil, nil, nil, nil, "dispelboss")
+local specWarnTimeLock				= mod:NewSpecialWarningInterrupt(203957, "HasInterrupt", nil, 2, 1, 2, nil, nil, "kickcast")
+local specWarnUnstableMana			= mod:NewSpecialWarningMove(203176, nil, nil, nil, 1, 2, nil, nil, "runout")
 
 local timerForceBombD				= mod:NewCDTimer(31.8, 202974, nil, nil, nil, 2)
 local timerEvent					= mod:NewBuffFadesTimer(124, 203914, nil, nil, nil, 6, nil, nil, nil, 1, 10)

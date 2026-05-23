@@ -23,12 +23,12 @@ mod:RegisterEventsInCombat(
 --TODO: phase detection
 --TODO: Timers
 --Stage One: Defias Brotherhood
-local specWarnLegSweep				= mod:NewSpecialWarningRun(227568, "Melee", nil, nil, 4, 2)
+local specWarnLegSweep				= mod:NewSpecialWarningRun(227568, "Melee", nil, nil, 4, 2, nil, nil, "runout")
 --Stage Two: The Fins
-local specWarnThunderRitual			= mod:NewSpecialWarningMoveAway(227777, nil, nil, nil, 1, 2)
+local specWarnThunderRitual			= mod:NewSpecialWarningMoveAway(227777, nil, nil, nil, 1, 2, nil, nil, "range5")
 local yellThunderRitual				= mod:NewYell(227777)
-local specWarnBubbleBlast			= mod:NewSpecialWarningInterrupt(227420, "HasInterrupt", nil, nil, 1, 2)
-local specWarnWashAway				= mod:NewSpecialWarningDodge(227783, nil, nil, 2, 2, 2)
+local specWarnBubbleBlast			= mod:NewSpecialWarningInterrupt(227420, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
+local specWarnWashAway				= mod:NewSpecialWarningDodge(227783, nil, nil, 2, 2, 2, nil, nil, "watchwave")
 
 --Stage One: Defias Brotherhood
 local timerLegSweepCD				= mod:NewAITimer(40, 227568, nil, "Melee", nil, 2)

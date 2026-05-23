@@ -22,8 +22,8 @@ local warnMaleficStrike		= mod:NewSpellAnnounce(93685, 2, nil, false)
 local warnShield			= mod:NewSpellAnnounce(93693, 4)
 local warnWordShame			= mod:NewTargetAnnounce(93852, 3)
 
-local specWarnDesecration	= mod:NewSpecialWarningMove(93691, nil, nil, nil, 1, 8)
-local specWarnEmpowerment	= mod:NewSpecialWarningInterrupt(93844, "HasInterrupt", nil, nil, 1, 2)
+local specWarnDesecration	= mod:NewSpecialWarningMove(93691, nil, nil, nil, 1, 8, nil, nil, "watchfeet")
+local specWarnEmpowerment	= mod:NewSpecialWarningInterrupt(93844, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
 
 local timerAdds				= mod:NewTimer(40, "TimerAdds", "136116", nil, nil, 1)
 local timerMaleficStrike	= mod:NewNextTimer(6, 93685, nil, false, nil, 5, nil, DBM_COMMON_L.TANK_ICON)

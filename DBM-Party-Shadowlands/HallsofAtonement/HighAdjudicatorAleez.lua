@@ -55,13 +55,13 @@ mod:RegisterEventsInCombat(
 local warnFixate					= mod:NewTargetNoFilterAnnounce(323650, 4)
 --local warnUnstableAnima			= mod:NewTargetNoFilterAnnounce(1236512, 3, nil, "RemoveMagic")
 
-local specWarnFixate				= mod:NewSpecialWarningYou(323650, nil, nil, nil, 3, 2)
+local specWarnFixate				= mod:NewSpecialWarningYou(323650, nil, nil, nil, 3, 2, nil, nil, "targetyou")
 local yellFixate					= mod:NewShortYell(323650, nil, false)
-local specWarnUnstableAnima			= mod:NewSpecialWarningMoveAway(1236512, nil, nil, nil, 2, 2)
+local specWarnUnstableAnima			= mod:NewSpecialWarningMoveAway(1236512, nil, nil, nil, 2, 2, nil, nil, "scatter")
 local yellUnstableAnima				= mod:NewShortYell(1236512)
-local specWarnAnimaBolt				= mod:NewSpecialWarningInterrupt(323538, false, nil, nil, 1, 2)
+local specWarnAnimaBolt				= mod:NewSpecialWarningInterrupt(323538, false, nil, nil, 1, 2, nil, nil, "kickcast")
 --local specWarnVolleyofPower		= mod:NewSpecialWarningInterrupt(323552, "HasInterrupt", nil, nil, 1, 2)--Disabled in 11.2
-local specWarnAnimaFountain			= mod:NewSpecialWarningDodgeCount(329340, nil, nil, nil, 2, 2)
+local specWarnAnimaFountain			= mod:NewSpecialWarningDodgeCount(329340, nil, nil, nil, 2, 2, nil, nil, "watchstep")
 
 --local timerVolleyofPowerCD		= mod:NewCDTimer(10.9, 323552, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--12-20
 local timerSpectralProcessionCD		= mod:NewCDCountTimer(20.4, 323597, nil, nil, nil, 1)

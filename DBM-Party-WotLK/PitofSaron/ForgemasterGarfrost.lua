@@ -18,11 +18,11 @@ mod:RegisterCombat("combat")
 if DBM:IsPostMidnight() then
 	local warnThrowSaronite					= mod:NewCountAnnounce(1261286, 3)
 
-	local specWarnOrebreakerYou				= mod:NewSpecialWarningBlizzYou(1261546, nil, nil, nil, 1, 2)--Debuff target
-	local specWarnThrowSaronite				= mod:NewSpecialWarningBlizzYou(1261286, nil, nil, nil, 1, 2)
+	local specWarnOrebreakerYou				= mod:NewSpecialWarningBlizzYou(1261546, nil, nil, nil, 1, 2, nil, nil, "targetyou")--Debuff target
+	local specWarnThrowSaronite				= mod:NewSpecialWarningBlizzYou(1261286, nil, nil, nil, 1, 2, nil, nil, "debuffyou")
 	local specWarnOrebreaker				= mod:NewSpecialWarningDodgeCount(1261546, nil, nil, nil, 2, 2)--The dodge 4-5 seconds after orebreaker debuffs
-	local specWarnCryostomp					= mod:NewSpecialWarningCount(1261847, nil, nil, nil, 2, 2)
-	local specWarnGlacialOverload			= mod:NewSpecialWarningCount(1262029, nil, nil, nil, 2, 12)
+	local specWarnCryostomp					= mod:NewSpecialWarningCount(1261847, nil, nil, nil, 2, 2, nil, nil, "aesoon")
+	local specWarnGlacialOverload			= mod:NewSpecialWarningCount(1262029, nil, nil, nil, 2, 12, nil, nil, "breaklos")
 
 	local timerOrebreakerCD					= mod:NewCDCountTimer(20.5, 1261546, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 	local timerCryostompCD					= mod:NewCDCountTimer(20.5, 1261847, nil, nil, nil, 2)
@@ -157,9 +157,9 @@ else
 	local warnDeepFreeze			= mod:NewTargetNoFilterAnnounce(70381, 2)
 	local warnSaroniteRock			= mod:NewTargetAnnounce(68789, 3)
 
-	local specWarnSaroniteRock		= mod:NewSpecialWarningYou(68789, nil, nil, nil, 1, 2)
+	local specWarnSaroniteRock		= mod:NewSpecialWarningYou(68789, nil, nil, nil, 1, 2, nil, nil, "watchstep")
 	local yellRock					= mod:NewYell(68789)
-	local specWarnPermafrost		= mod:NewSpecialWarningStack(68786, nil, 9, nil, nil, 1, 2)
+	local specWarnPermafrost		= mod:NewSpecialWarningStack(68786, nil, 9, nil, nil, 1, 2, nil, nil, "stackhigh")
 
 	local timerSaroniteRockCD		= mod:NewCDTimer(15.5, 68789, nil, nil, nil, 3)--15.5-20
 	local timerDeepFreezeCD			= mod:NewCDTimer(19, 70381, nil, "Healer", 2, 5, nil, DBM_COMMON_L.HEALER_ICON)

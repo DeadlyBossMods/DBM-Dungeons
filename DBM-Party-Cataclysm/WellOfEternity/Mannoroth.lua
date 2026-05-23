@@ -18,7 +18,7 @@ mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 103888"
 )
 
-local specWarnFelStorm		= mod:NewSpecialWarningRun(103888, nil, nil, nil, 4, 2)
+local specWarnFelStorm		= mod:NewSpecialWarningRun(103888, nil, nil, nil, 4, 2, nil, nil, "justrun")
 
 local timerFelStorm			= mod:NewBuffActiveTimer(15, 103888, nil, nil, nil, 2)
 local timerFelStormCD		= mod:NewCDTimer(29, 103888, nil, nil, nil, 2)

@@ -16,8 +16,8 @@ mod:RegisterEventsInCombat(
 --TODO, maybe add yells for classic version, for timewalking version, it just doens't matter if marks don't run out
 local warningFrostBreath		= mod:NewSpellAnnounce(243789, 3)
 
-local specWarnArcaneVacuum		= mod:NewSpecialWarningSpell(243784, nil, nil, nil, 2, 5)
-local specWarnReflection		= mod:NewSpecialWarningSpell(243835, "SpellCaster", nil, nil, 1, 2)--Change to CasterDps after next core release
+local specWarnArcaneVacuum		= mod:NewSpecialWarningSpell(243784, nil, nil, nil, 2, 5, nil, nil, "teleyou")
+local specWarnReflection		= mod:NewSpecialWarningSpell(243835, "SpellCaster", nil, nil, 1, 2, nil, nil, "stilldanger")--Change to CasterDps after next core release
 
 local timerReflectionCD			= mod:NewCDTimer(15.7, 243835, nil, "SpellCaster", nil, 5, nil, DBM_COMMON_L.DAMAGE_ICON)--15.7-30
 local timerFrostBreathCD		= mod:NewCDTimer(5, 243789, nil, nil, nil, 3)--8.5-20.1

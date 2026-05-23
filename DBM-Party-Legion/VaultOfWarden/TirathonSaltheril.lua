@@ -26,10 +26,10 @@ mod:RegisterEventsInCombat(
 				["204151-Darkstrikes"] = "pull:47.0, 23.2",
 			},
 --]]
-local specWarnDarkStrikes			= mod:NewSpecialWarningDefensive(204151, nil, nil, nil, 3, 2)
-local specWarnFuriousBlast			= mod:NewSpecialWarningInterrupt(191823, "HasInterrupt", nil, nil, 1, 2)
-local specWarnFelMortar				= mod:NewSpecialWarningDodge(202913, nil, nil, nil, 2, 2)
-local specWarnFelMortarGTFO			= mod:NewSpecialWarningGTFO(202919, nil, nil, nil, 1, 8)
+local specWarnDarkStrikes			= mod:NewSpecialWarningDefensive(204151, nil, nil, nil, 3, 2, nil, nil, "defensive")
+local specWarnFuriousBlast			= mod:NewSpecialWarningInterrupt(191823, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
+local specWarnFelMortar				= mod:NewSpecialWarningDodge(202913, nil, nil, nil, 2, 2, nil, nil, "watchstep")
+local specWarnFelMortarGTFO			= mod:NewSpecialWarningGTFO(202919, nil, nil, nil, 1, 8, nil, nil, "watchfeet")
 
 local timerDarkStrikes				= mod:NewBuffActiveTimer(11, 191941, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON)--tooltip says 15 but every log was 10-11
 

@@ -34,15 +34,15 @@ local warnFrostPhase				= mod:NewSpellAnnounce(242394, 2)
 local warnArcanePhase				= mod:NewSpellAnnounce(242386, 2)
 
 --Frost Phase
-local specWarnRazorIce				= mod:NewSpecialWarningDodge(232661, nil, nil, nil, 1, 2)
+local specWarnRazorIce				= mod:NewSpecialWarningDodge(232661, nil, nil, nil, 1, 2, nil, nil, "watchstep")
 --Transition
-local specWarnArcaneAnnihilation	= mod:NewSpecialWarningInterrupt(234728, nil, nil, nil, 1, 2)
+local specWarnArcaneAnnihilation	= mod:NewSpecialWarningInterrupt(234728, nil, nil, nil, 1, 2, nil, nil, "kickcast")
 --Arcane Phase
-local specWarnShadowBarrage			= mod:NewSpecialWarningDodge(231443, nil, nil, nil, 2, 2)
-local specWarnDrawPower				= mod:NewSpecialWarningInterrupt(231522, nil, nil, nil, 1, 2)
+local specWarnShadowBarrage			= mod:NewSpecialWarningDodge(231443, nil, nil, nil, 2, 2, nil, nil, "watchorb")
+local specWarnDrawPower				= mod:NewSpecialWarningInterrupt(231522, nil, nil, nil, 1, 2, nil, nil, "kickcast")
 --Phase 2
-local specWarnSeeds					= mod:NewSpecialWarningRun(233248, nil, nil, nil, 4, 2)
-local specWarnGTFO					= mod:NewSpecialWarningGTFO(232672, nil, nil, nil, 1, 8)
+local specWarnSeeds					= mod:NewSpecialWarningRun(233248, nil, nil, nil, 4, 2, nil, nil, "runout")
+local specWarnGTFO					= mod:NewSpecialWarningGTFO(232672, nil, nil, nil, 1, 8, nil, nil, "watchfeet")
 
 --Frost Phase
 local timerRazorIceCD				= mod:NewCDTimer(25.5, 232661, nil, nil, nil, 3)--25.5-38.9 (other casts can delay it a lot)

@@ -24,10 +24,10 @@ if DBM:IsPostMidnight() then
 	--Note. https://www.wowhead.com/spell=1282138/shade-bomb is ignored on purpose to avoid spam
 	local warnGetEmIck					= mod:NewCountAnnounce(1264363, 3)
 
-	local specWarnShadeShift			= mod:NewSpecialWarningSwitchCount(1264027, nil, nil, nil, 1, 2)
-	local specWarnPlagueExpulsion		= mod:NewSpecialWarningDodgeCount(1264336, nil, nil, nil, 2, 2)
-	local specWarnBlightSmash			= mod:NewSpecialWarningCount(1264287, nil, nil, nil, 1, 18)
-	local specWarnLumberingFixation		= mod:NewSpecialWarningBlizzYou(1264453, nil, nil, nil, 1, 19)
+	local specWarnShadeShift			= mod:NewSpecialWarningSwitchCount(1264027, nil, nil, nil, 1, 2, nil, nil, "killmob")
+	local specWarnPlagueExpulsion		= mod:NewSpecialWarningDodgeCount(1264336, nil, nil, nil, 2, 2, nil, nil, "watchstep")
+	local specWarnBlightSmash			= mod:NewSpecialWarningCount(1264287, nil, nil, nil, 1, 18, nil, nil, "poolyou")
+	local specWarnLumberingFixation		= mod:NewSpecialWarningBlizzYou(1264453, nil, nil, nil, 1, 19, nil, nil, "fixateyou")
 
 	local timerGetEmIckCD				= mod:NewCDCountTimer(20.5, 1264363, nil, nil, nil, 3, nil, DBM_COMMON_L.IMPORTANT_ICON)--Get 'Em, Ick! (parent of Lumbering Fixation)
 	local timerShadeShiftCD				= mod:NewCDCountTimer(20.5, 1264027, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)
@@ -189,10 +189,10 @@ else
 	local warnPursuitCast			= mod:NewCastAnnounce(68987, 3)
 	local warnPursuit				= mod:NewTargetNoFilterAnnounce(68987, 4)
 
-	local specWarnToxic				= mod:NewSpecialWarningMove(69024, nil, nil, nil, 1, 2)
-	local specWarnMines				= mod:NewSpecialWarningSpell(69015, nil, nil, nil, 2, 2)
-	local specWarnPursuit			= mod:NewSpecialWarningRun(68987, nil, nil, 2, 4, 2)
-	local specWarnPoisonNova		= mod:NewSpecialWarningRun(68989, "Melee", nil, 2, 4, 2)
+	local specWarnToxic				= mod:NewSpecialWarningMove(69024, nil, nil, nil, 1, 2, nil, nil, "runaway")
+	local specWarnMines				= mod:NewSpecialWarningSpell(69015, nil, nil, nil, 2, 2, nil, nil, "watchstep")
+	local specWarnPursuit			= mod:NewSpecialWarningRun(68987, nil, nil, 2, 4, 2, nil, nil, "justrun")
+	local specWarnPoisonNova		= mod:NewSpecialWarningRun(68989, "Melee", nil, 2, 4, 2, nil, nil, "runout")
 
 	local timerSpecialCD			= mod:NewCDSpecialTimer(20)--Every 20-22 seconds. In rare cases he skips a special though and goes 40 seconds. unsure of cause
 	local timerPursuitCast			= mod:NewCastTimer(5, 68987, nil, nil, nil, 3)

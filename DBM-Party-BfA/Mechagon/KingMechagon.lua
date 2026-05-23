@@ -38,12 +38,12 @@ local warnMagnetoArmSoon			= mod:NewSoonAnnounce(283143, 2)
 
 --Stage One: Aerial Unit R-21/X
 --local specWarnRecalibrate			= mod:NewSpecialWarningDodge(291865, nil, nil, nil, 2, 2)
-local specWarnMegaZap				= mod:NewSpecialWarningYouCount(291928, nil, nil, nil, 2, 2)
+local specWarnMegaZap				= mod:NewSpecialWarningYouCount(291928, nil, nil, nil, 2, 2, nil, nil, "watchstep")
 local yellMegaZap					= mod:NewCountYell(291928)
-local specWarnTakeOff				= mod:NewSpecialWarningRunCount(291613, nil, nil, nil, 4, 2)
+local specWarnTakeOff				= mod:NewSpecialWarningRunCount(291613, nil, nil, nil, 4, 2, nil, nil, "justrun")
 --Stage Two: Omega Buster
-local specWarnMagnetoArm			= mod:NewSpecialWarningRunCount(283143, nil, nil, nil, 4, 2)
-local specWarnHardMode				= mod:NewSpecialWarningCount(292750, nil, nil, nil, 3, 2)
+local specWarnMagnetoArm			= mod:NewSpecialWarningRunCount(283143, nil, nil, nil, 4, 2, nil, nil, "justrun")
+local specWarnHardMode				= mod:NewSpecialWarningCount(292750, nil, nil, nil, 3, 2, nil, nil, "stilldanger")
 --local specWarnGTFO				= mod:NewSpecialWarningGTFO(238028, nil, nil, nil, 1, 8)
 
 --Stage One: Aerial Unit R-21/X

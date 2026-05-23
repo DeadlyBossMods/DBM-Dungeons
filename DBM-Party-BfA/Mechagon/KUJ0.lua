@@ -27,9 +27,9 @@ local warnAirDrop					= mod:NewCountAnnounce(291930, 2)
 local warnExplosiveLeap				= mod:NewTargetNoFilterAnnounce(291972, 3)
 local warnBlazingChomp				= mod:NewStackAnnounce(294929, 2, nil, "Tank|Healer")
 
-local specWarnExplosiveLeap			= mod:NewSpecialWarningMoveAway(291972, nil, nil, nil, 1, 2)
+local specWarnExplosiveLeap			= mod:NewSpecialWarningMoveAway(291972, nil, nil, nil, 1, 2, nil, nil, "runout")
 local yellExplosiveLeap				= mod:NewYell(291972)
-local specWarnVentingFlames			= mod:NewSpecialWarningMoveTo(291946, nil, nil, nil, 3, 2)
+local specWarnVentingFlames			= mod:NewSpecialWarningMoveTo(291946, nil, nil, nil, 3, 2, nil, nil, "findshelter")
 --local specWarnGTFO				= mod:NewSpecialWarningGTFO(238028, nil, nil, nil, 1, 8)
 
 local timerAurDropCD				= mod:NewNextCountTimer(32.7, 291930, nil, nil, nil, 3)

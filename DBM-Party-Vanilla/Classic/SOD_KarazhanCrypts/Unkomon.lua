@@ -33,7 +33,7 @@ mod:RegisterEventsInCombat(
 local warnFrenzy	= mod:NewStackAnnounce(1221576, 2, nil, "Tank|Healer|RemoveEnrage")
 local warnDoom		= mod:NewAnnounce("WarnDoom", 1, 1221577, "RemoveCurse|Healer")
 
-local specWarnInterrupt = mod:NewSpecialWarningInterrupt(1220515, "HasInterrupt", nil, nil, 1, 2)
+local specWarnInterrupt = mod:NewSpecialWarningInterrupt(1220515, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
 
 function mod:SPELL_AURA_APPLIED(args)
 	if args:IsSpell(1221576) then

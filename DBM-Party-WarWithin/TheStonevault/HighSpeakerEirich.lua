@@ -32,9 +32,9 @@ mod:RegisterEventsInCombat(
 --]]
 local warnVoidCorruption					= mod:NewFadesAnnounce(427329, 1, nil, nil, nil, nil, nil, 2)
 
-local specWarnVoidCorruption				= mod:NewSpecialWarning("specWarnVoidCorruption", nil, nil, nil, 1, 15, nil, nil, 427329)
-local specWarnEntropicReckoning				= mod:NewSpecialWarningMoveAwayCount(427852, nil, nil, nil, 1, 15)
-local specWarnUnbridledVoid					= mod:NewSpecialWarningDodgeCount(427869, nil, nil, nil, 1, 15)
+local specWarnVoidCorruption				= mod:NewSpecialWarning("specWarnVoidCorruption", nil, nil, nil, 1, 15, nil, nil, 427329, nil, "riftdispel")
+local specWarnEntropicReckoning				= mod:NewSpecialWarningMoveAwayCount(427852, nil, nil, nil, 1, 15, nil, nil, "scatter")
+local specWarnUnbridledVoid					= mod:NewSpecialWarningDodgeCount(427869, nil, nil, nil, 1, 15, nil, nil, "frontal")
 --local yellSomeAbility						= mod:NewYell(372107)
 --local specWarnGTFO						= mod:NewSpecialWarningGTFO(372820, nil, nil, nil, 1, 8)
 

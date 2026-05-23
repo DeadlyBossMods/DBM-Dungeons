@@ -16,8 +16,8 @@ mod:RegisterEventsInCombat(
 
 local warningWardZumrah				= mod:NewSpellAnnounce(11086, 2)
 
-local specWarnHealingWave			= mod:NewSpecialWarningInterrupt(12491, "HasInterrupt", nil, nil, 1, 2)
-local specWarnShadowBoltVolley		= mod:NewSpecialWarningInterrupt(15245, "HasInterrupt", nil, nil, 1, 2)
+local specWarnHealingWave			= mod:NewSpecialWarningInterrupt(12491, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
+local specWarnShadowBoltVolley		= mod:NewSpecialWarningInterrupt(15245, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
 
 local timerWardZumrahCD				= mod:NewAITimer(180, 11086, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)
 local timerHealingWaveCD			= mod:NewAITimer(180, 12491, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)

@@ -16,10 +16,10 @@ mod:RegisterEventsInCombat(
 )
 
 --TODO: Info frame that shows all player name and sheild remaining for Gaseous Bubbles
-local specWarnQuake					= mod:NewSpecialWarningSpell(193152, nil, nil, nil, 2, 2)
-local specWarnCallSeas				= mod:NewSpecialWarningDodge(193051, nil, nil, nil, 2, 2)
-local specWarnGroundSlam			= mod:NewSpecialWarningDodge(193093, "Tank", nil, nil, 3, 2)
-local specWarnBubbles				= mod:NewSpecialWarningSpell(193018, "-Tank", nil, nil, 1, 6)
+local specWarnQuake					= mod:NewSpecialWarningSpell(193152, nil, nil, nil, 2, 2, nil, nil, "range5")
+local specWarnCallSeas				= mod:NewSpecialWarningDodge(193051, nil, nil, nil, 2, 2, nil, nil, "watchstep")
+local specWarnGroundSlam			= mod:NewSpecialWarningDodge(193093, "Tank", nil, nil, 3, 2, nil, nil, "shockwave")
+local specWarnBubbles				= mod:NewSpecialWarningSpell(193018, "-Tank", nil, nil, 1, 6, nil, nil, "takedamage")
 
 local timerQuakeCD					= mod:NewCDTimer(21.8, 193152, nil, nil, nil, 2)--21-25
 local timerCallSeasCD				= mod:NewNextTimer(30, 193051, nil, nil, nil, 2)

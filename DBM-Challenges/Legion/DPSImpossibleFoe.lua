@@ -21,9 +21,9 @@ mod:RegisterEventsInCombat(
 --Notes:
 --NEW VOICE: attackshield
 --TODO, fix shield absorb, auto calculation doesn't work do to scaling tech. UnitAura detects invalid absorb amount
-local specWarnImpServants		= mod:NewSpecialWarningSwitch(235140, nil, nil, nil, 1, 2)--Agatha's Vengeance spellId used for now
-local specWarnDarkFury			= mod:NewSpecialWarningSwitch(243111, nil, nil, nil, 1, 7)
-local specWarnDarkFuryKick		= mod:NewSpecialWarningInterrupt(243111, nil, nil, nil, 1, 2)
+local specWarnImpServants		= mod:NewSpecialWarningSwitch(235140, nil, nil, nil, 1, 2, nil, nil, "bigmob")--Agatha's Vengeance spellId used for now
+local specWarnDarkFury			= mod:NewSpecialWarningSwitch(243111, nil, nil, nil, 1, 7, nil, nil, "attackshield")
+local specWarnDarkFuryKick		= mod:NewSpecialWarningInterrupt(243111, nil, nil, nil, 1, 2, nil, nil, "kickcast")
 
 local timerImpServantsCD		= mod:NewCDTimer(45, 235140, nil, nil, nil, 1)
 local timerDarkFuryCD			= mod:NewCDTimer(51.1, 243111, nil, nil, nil, 5, nil, nil, nil, 1, 4)

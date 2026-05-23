@@ -28,11 +28,11 @@ mod:RegisterEventsInCombat(
 --]]
 --local warnShiftingAnomalies				= mod:NewCountAnnounce(439401, 3)--For movements
 
-local specWarnShiftingAnomalies				= mod:NewSpecialWarningDodgeCount(439401, nil, nil, nil, 2, 2)--Only on Spawn
-local specWarnSplice						= mod:NewSpecialWarningCount(439341, nil, nil, nil, 2, 2)
-local specWarnTremorSlam					= mod:NewSpecialWarningRunCount(437700, nil, nil, nil, 2, 2)
-local specWarnUmbralWeave					= mod:NewSpecialWarningCount(438860, nil, nil, nil, 2, 2)
-local specWarnProcessofElimination			= mod:NewSpecialWarningDefensive(439646, nil, nil, nil, 1, 2)
+local specWarnShiftingAnomalies				= mod:NewSpecialWarningDodgeCount(439401, nil, nil, nil, 2, 2, nil, nil, "watchorb")--Only on Spawn
+local specWarnSplice						= mod:NewSpecialWarningCount(439341, nil, nil, nil, 2, 2, nil, nil, "aesoon")
+local specWarnTremorSlam					= mod:NewSpecialWarningRunCount(437700, nil, nil, nil, 2, 2, nil, nil, "runout")
+local specWarnUmbralWeave					= mod:NewSpecialWarningCount(438860, nil, nil, nil, 2, 2, nil, nil, "gather")
+local specWarnProcessofElimination			= mod:NewSpecialWarningDefensive(439646, nil, nil, nil, 1, 2, nil, nil, "defensive")
 local yellProcessofElimination				= mod:NewYell(439646)
 --local specWarnGTFO						= mod:NewSpecialWarningGTFO(372820, nil, nil, nil, 1, 8)
 

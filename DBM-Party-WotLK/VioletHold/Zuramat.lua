@@ -15,8 +15,8 @@ mod:RegisterEventsInCombat(
 local warningVoidShift			= mod:NewTargetNoFilterAnnounce(59743, 2)
 local warningShroudofDarkness	= mod:NewTargetNoFilterAnnounce(59745, 3)
 
-local specWarnVoidShifted		= mod:NewSpecialWarningYou(54343, nil, nil, nil, 1, 2)
-local specWarnShroud			= mod:NewSpecialWarningDispel(59745, "MagicDispeller", nil, nil, 1, 2)
+local specWarnVoidShifted		= mod:NewSpecialWarningYou(54343, nil, nil, nil, 1, 2, nil, nil, "targetyou")
+local specWarnShroud			= mod:NewSpecialWarningDispel(59745, "MagicDispeller", nil, nil, 1, 2, nil, nil, "dispelboss")
 
 local timerVoidShifted			= mod:NewTargetTimer(15, 54343, nil, nil, nil, 5)
 

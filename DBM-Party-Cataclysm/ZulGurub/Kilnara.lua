@@ -23,7 +23,7 @@ local warnWaveAgony		= mod:NewSpellAnnounce(96457, 3)
 local warnRavage		= mod:NewTargetNoFilterAnnounce(96592, 3)
 local warnPhase2		= mod:NewPhaseAnnounce(2)
 
-local specWarnTears		= mod:NewSpecialWarningInterrupt(96435, "HasInterrupt", nil, 2, 1, 2)
+local specWarnTears		= mod:NewSpecialWarningInterrupt(96435, "HasInterrupt", nil, 2, 1, 2, nil, nil, "kickcast")
 
 local timerTears		= mod:NewCastTimer(6, 96435, nil, nil, nil, 2)
 local timerLash			= mod:NewTargetTimer(10, 96423, nil, "Healer", 2, 5, nil, DBM_COMMON_L.HEALER_ICON..DBM_COMMON_L.MAGIC_ICON)

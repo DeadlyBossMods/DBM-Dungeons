@@ -36,11 +36,11 @@ local warnShatterReality			= mod:NewCastAnnounce(326171, 4)
 --local warnAddsRemaining				= mod:NewAddsLeftAnnounce(-22186, 2, 264049)--A nice shackle icon
 
 --Stage 1: The Master of Death
-local specWarnMasterofDeath			= mod:NewSpecialWarningDodge(325258, nil, nil, nil, 2, 2)
-local specWarnCosmicArtifice		= mod:NewSpecialWarningMoveAway(325725, nil, nil, nil, 1, 2)
+local specWarnMasterofDeath			= mod:NewSpecialWarningDodge(325258, nil, nil, nil, 2, 2, nil, nil, "shockwave")
+local specWarnCosmicArtifice		= mod:NewSpecialWarningMoveAway(325725, nil, nil, nil, 1, 2, nil, nil, "runout")
 local yellCosmicArtifice			= mod:NewYell(325725)
 local yellCosmicArtificeFades		= mod:NewShortFadesYell(325725)
-local specWarnSoulcrusher			= mod:NewSpecialWarningDefensive(327646, nil, nil, nil, 2, 2)
+local specWarnSoulcrusher			= mod:NewSpecialWarningDefensive(327646, nil, nil, nil, 2, 2, nil, nil, "defensive")
 local specWarnShatterReality		= mod:NewSpecialWarningMoveTo(326171, nil, nil, nil, 3, 2)
 --local specWarnGTFO					= mod:NewSpecialWarningGTFO(257274, nil, nil, nil, 1, 8)
 --Stage 2: Shattered Reality
