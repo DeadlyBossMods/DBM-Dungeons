@@ -46,7 +46,7 @@
 ## X-DBM-Mod-Name-frFR: Évènements Mondiaux
 ## X-DBM-Mod-Name-itIT: Eventi Mondiali
 ## X-DBM-Mod-Sort: 1054
-## X-DBM-Mod-MinCoreRevision: 12473
+## X-DBM-Mod-MinCoreRevision: 20260522000000
 localization.en.lua
 localization.ru.lua
 localization.fr.lua
