@@ -118,6 +118,7 @@ function mod:SPELL_CAST_START(args)
 		specWarnRoaringFirebreath:Play("breathsoon")
 		timerRoaringFirebreathCD:Start(18, args.sourceGUID)--18-27
 	elseif spellId == 381517 then
+		---@diagnostic disable-next-line: param-type-mismatch
 		warnWindsofChange:Show(directions[self.vb.windDirection])
 	elseif spellId == 381512 then
 		if self:IsTanking("player", nil, nil, true, args.sourceGUID) then--Using GUID check because might be boss1 or boss2
