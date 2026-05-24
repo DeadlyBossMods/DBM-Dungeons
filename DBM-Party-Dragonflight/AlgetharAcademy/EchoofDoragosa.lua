@@ -14,6 +14,7 @@ mod:RegisterCombat("combat")
 
 --Note: https://www.wowhead.com/spell=374350/energy-bomb is NOT a private aura so we can't do anything with it currently
 if DBM:IsPostMidnight() then
+	DBM:RegisterAltSpellName(388820, 56689)--Power Vacuum -> Grip
 	--Custom Sounds on cast/cooldown expiring
 	mod:AddCustomAlertSoundOption(374341, true, 2)--Energy Bomb: ENCOUNTER_WARNING provides target name
 	--Midnight private aura replacements
@@ -23,12 +24,12 @@ if DBM:IsPostMidnight() then
 	local warnEnergyBomb					= mod:NewCountAnnounce(374341, 3)--Blizzard alert will handle personal bomb alert
 
 	local specWarnAstralBlast				= mod:NewSpecialWarningCount(1282251, nil, nil, nil, 1, 2, nil, nil, "defensive")
-	local specWarnPowerVacuum				= mod:NewSpecialWarningCount(388820, nil, 56689, nil, 2, 2, nil, nil, "runout")
+	local specWarnPowerVacuum				= mod:NewSpecialWarningCount(388820, nil, nil, nil, 2, 2, nil, nil, "runout")
 
 	local timerArcaneBarrageCD				= mod:NewCDCountTimer(20.5, 373325, nil, nil, nil, 3)
 	local timerAstralBlastCD				= mod:NewCDCountTimer(20.5, 1282251, nil, nil, nil, 5)
 	local timerEnergyBombCD					= mod:NewCDCountTimer(20.5, 374341, nil, nil, nil, 3)
-	local timerPowerVacuumCD				= mod:NewCDCountTimer(20.5, 388820, 56689, nil, nil, 2)--Shortname "Grip"
+	local timerPowerVacuumCD				= mod:NewCDCountTimer(20.5, 388820, nil, nil, nil, 2)
 
 	mod.vb.barrageCount = 0
 	mod.vb.blastCount = 0

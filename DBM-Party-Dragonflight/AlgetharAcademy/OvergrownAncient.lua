@@ -35,18 +35,22 @@ do
 end
 
 if DBM:IsPostMidnight() then
+	DBM:RegisterAltSpellName(388796, DBM_COMMON_L.SWIRLS)--Germinate -> Swirls
+	DBM:RegisterAltSpellName(388923, DBM_COMMON_L.ADDS)--Burst Forth -> Adds
+	DBM:RegisterAltSpellName(388623, DBM_COMMON_L.BIG_ADD)--Branch Out -> Big Add
+
 	--Note, no eventID for healing touch so no timer or alert for it sadly
 	--Midnight private aura replacements
 --	mod:AddPrivateAuraSoundOption(433740, true, 433740, 1)
 
-	local specWarnGerminate				= mod:NewSpecialWarningCount(388796, nil, nil, DBM_COMMON_L.SWIRLS, 2, 2, nil, nil, "watchstep")
-	local specWarnBurstForth			= mod:NewSpecialWarningCount(388923, nil, nil, DBM_COMMON_L.ADDS, 2, 2, nil, nil, "aesoon")
-	local specWarnBranchOut				= mod:NewSpecialWarningCount(388623, nil, nil, DBM_COMMON_L.BIG_ADD, 1, 2, nil, nil, "bigmob")
+	local specWarnGerminate				= mod:NewSpecialWarningCount(388796, nil, nil, nil, 2, 2, nil, nil, "watchstep")
+	local specWarnBurstForth			= mod:NewSpecialWarningCount(388923, nil, nil, nil, 2, 2, nil, nil, "aesoon")
+	local specWarnBranchOut				= mod:NewSpecialWarningCount(388623, nil, nil, nil, 1, 2, nil, nil, "bigmob")
 	local specWarnBarkbreaker			= mod:NewSpecialWarningCount(388544, nil, "Tank|Healer", nil, 1, 2, nil, nil, "defensive")
 
-	local timerGerminateCD				= mod:NewCDCountTimer(20.5, 388796, DBM_COMMON_L.SWIRLS.." (%s)", nil, nil, 3)
-	local timerBurstForthCD				= mod:NewCDCountTimer(20.5, 388923, DBM_COMMON_L.ADDS.." (%s)", nil, nil, 3, nil, DBM_COMMON_L.HEALER_ICON)
-	local timerBranchOutCD				= mod:NewCDCountTimer(20.5, 388623, DBM_COMMON_L.BIG_ADD.." (%s)", nil, nil, 1)
+	local timerGerminateCD				= mod:NewCDCountTimer(20.5, 388796, nil, nil, nil, 3)
+	local timerBurstForthCD				= mod:NewCDCountTimer(20.5, 388923, nil, nil, nil, 3, nil, DBM_COMMON_L.HEALER_ICON)
+	local timerBranchOutCD				= mod:NewCDCountTimer(20.5, 388623, nil, nil, nil, 1)
 	local timerBarkbreakerCD			= mod:NewCDCountTimer(20.5, 388544, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 
 	mod.vb.germinateCount = 0

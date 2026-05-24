@@ -16,13 +16,15 @@ mod:RegisterCombat("combat")
 --NOTE: https://www.wowhead.com/spell=1251813/lingering-dread has a private aura but it doesn't need an alert, just anchor tracking
 --NOTE: Wrest Phantoms timeline spellID is 1251204; 1252130 is the damage aura tracked by AddPrivateAuraSoundOption below
 
+DBM:RegisterAltSpellName(1252054, DBM_COMMON_L.FRONTAL)--Unmake -> Frontal
+
 local specWarnDrainSoul				= mod:NewSpecialWarningCount(1251554, nil, nil, nil, 1, 2, nil, nil, "defensive")
-local specWarnUnmake				= mod:NewSpecialWarningDodgeCount(1252054, nil, nil, DBM_COMMON_L.FRONTAL, 2, 2, nil, nil, "frontal")
+local specWarnUnmake				= mod:NewSpecialWarningDodgeCount(1252054, nil, nil, nil, 2, 2, nil, nil, "frontal")
 local specWarnWrestPhantoms			= mod:NewSpecialWarningCount(1251204, nil, nil, nil, 2, 2, nil, nil, "mobsoon")
 local specWarnNecroticConvergence	= mod:NewSpecialWarningCount(1250708, nil, nil, nil, 1, 2, nil, nil, "attackshield")
 
 local timerDrainSoulCD				= mod:NewCDCountTimer(20.5, 1251554, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
-local timerUnmakeCD					= mod:NewCDCountTimer(20.5, 1252054, DBM_COMMON_L.FRONTAL.." (%s)", nil, nil, 3)
+local timerUnmakeCD					= mod:NewCDCountTimer(20.5, 1252054, nil, nil, nil, 3)
 local timerWrestPhantomsCD			= mod:NewCDCountTimer(20.5, 1251204, nil, nil, nil, 1)
 local timerNecroticConvergenceCD	= mod:NewCDCountTimer(70, 1250708, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 

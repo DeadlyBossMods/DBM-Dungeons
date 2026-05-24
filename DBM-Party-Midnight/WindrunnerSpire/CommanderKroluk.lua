@@ -11,12 +11,14 @@ mod.respawnTime = 29
 
 mod:RegisterCombat("combat")
 
+DBM:RegisterAltSpellName(472043, DBM_COMMON_L.ADDS)--Rallying Bellow -> Adds
+
 local warnRecklessLeap				= mod:NewCountAnnounce(1283247, 2)
 local warnBladestorm				= mod:NewCountAnnounce(470966, 2, nil, false)
 
 local specWarnRampage				= mod:NewSpecialWarningCount(467620, nil, nil, nil, 1, 2, nil, nil, "defensive")
 local specWarnIntimidatingShout		= mod:NewSpecialWarningCount(1253026, nil, nil, nil, 2, 2, nil, nil, "gathershare")
-local specWarnRallyingBellow		= mod:NewSpecialWarningSwitchCount(472043, nil, nil, DBM_COMMON_L.ADDS, 2, 3, nil, nil, "mobsoon")
+local specWarnRallyingBellow		= mod:NewSpecialWarningSwitchCount(472043, nil, nil, nil, 2, 3, nil, nil, "mobsoon")
 local specWarnRecklessLeap			= mod:NewSpecialWarningBlizzYou(1283247, nil, nil, nil, 1, 2, nil, nil, "runout")
 
 local timerRampageCD				= mod:NewCDCountTimer("d30", 467620, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON)

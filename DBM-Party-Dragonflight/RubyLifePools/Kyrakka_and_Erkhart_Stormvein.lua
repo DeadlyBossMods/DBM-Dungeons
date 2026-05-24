@@ -25,6 +25,7 @@ mod:RegisterEventsInCombat(
  or ability.id = 181089
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
 --]]
+DBM:RegisterAltSpellName(381517, 227878)--Winds of Change -> Winds
 --Kyrakka
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(25365))
 local warnFlamespit								= mod:NewTargetNoFilterAnnounce(381605, 3)
@@ -45,7 +46,7 @@ local specWarnStormslam							= mod:NewSpecialWarningDefensive(381512, nil, nil,
 local specWarnStormslamDispel					= mod:NewSpecialWarningDispel(381512, "RemoveMagic", nil, nil, 1, 2, nil, nil, "helpdispel")
 local specWarnInterruptingCloudburst			= mod:NewSpecialWarningCast(381516, "SpellCaster", nil, nil, 2, 2, 4, nil, "stopcast")
 
-local timerWindsofChangeCD						= mod:NewCDCountTimer(15.8, 381517, 227878, nil, nil, 3)--Not actually a count timer, but has best localized text
+local timerWindsofChangeCD						= mod:NewCDCountTimer(15.8, 381517, nil, nil, nil, 3)
 local timerStormslamCD							= mod:NewCDTimer(17, 381512, nil, "Tank|RemoveMagic", nil, 5, nil, DBM_COMMON_L.TANK_ICON..DBM_COMMON_L.MAGIC_ICON)
 local timerCloudburstCD							= mod:NewCDTimer(18.8, 385558, nil, nil, nil, 2)--Used for both mythic and non mythic versions of spell
 

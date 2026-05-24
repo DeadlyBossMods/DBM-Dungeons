@@ -12,15 +12,17 @@ mod:RegisterCombat("combat")
 
 --NOTE: Solar Blast alternates between 12 and 27 second cd
 if DBM:IsPostMidnight() then
+	DBM:RegisterAltSpellName(1253998, DBM_COMMON_L.ADD)--Cast Down -> Add
+
 	local warnScorchingRay			= mod:NewCountAnnounce(1253538, 2)
 	local warnLensFlare				= mod:NewCountAnnounce(1253531, 2)
 	local warnCastDown				= mod:NewBlizzTargetAnnounce(1253998, 4)
 
-	local specWarnCastDown			= mod:NewSpecialWarningCount(1253998, nil, nil, DBM_COMMON_L.ADD, 1, 2, nil, nil, "targetchange")
+	local specWarnCastDown			= mod:NewSpecialWarningCount(1253998, nil, nil, nil, 1, 2, nil, nil, "targetchange")
 	local specWarnSolarBlast		= mod:NewSpecialWarningInterruptCount(154396, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
 
 	local timerScorchingRayCD		= mod:NewCDCountTimer(20.5, 1253538, nil, nil, nil, 3)
-	local timerCastDownCD			= mod:NewCDCountTimer(20.5, 1253998, DBM_COMMON_L.ADD.." (%s)", nil, nil, 1, nil, DBM_COMMON_L.IMPORTANT_ICON..DBM_COMMON_L.DAMAGE_ICON)
+	local timerCastDownCD			= mod:NewCDCountTimer(20.5, 1253998, nil, nil, nil, 1, nil, DBM_COMMON_L.IMPORTANT_ICON..DBM_COMMON_L.DAMAGE_ICON)
 	local timerSolarBlastCD			= mod:NewCDCountTimer(20.5, 154396, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 	local timerLensFlareCD			= mod:NewCDCountTimer(20.5, 1253531, nil, nil, nil, 3)
 

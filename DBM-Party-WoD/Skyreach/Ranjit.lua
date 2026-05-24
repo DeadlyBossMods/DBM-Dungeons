@@ -9,16 +9,20 @@ mod:SetEncounterID(1698)
 
 mod:RegisterCombat("combat")
 
+DBM:RegisterAltSpellName(1252733, 28405)--Gale Surge -> Knockback
+DBM:RegisterAltSpellName(153757, DBM_COMMON_L.AOEDAMAGE)--Fan of Blades -> AOE Damage
+DBM:RegisterAltSpellName(1258148, DBM_COMMON_L.FRONTAL)--Wind Chakram -> Frontal
+
 if DBM:IsPostMidnight() then
 	local warnGaleSurge				= mod:NewCountAnnounce(1252733, 2)
 
-	local specWarnFanofBlades		= mod:NewSpecialWarningCount(153757, nil, nil, DBM_COMMON_L.AOEDAMAGE, 2, 2, nil, nil, "aesoon")
-	local specWarnWindChakram		= mod:NewSpecialWarningCount(1258148, nil, nil, DBM_COMMON_L.FRONTAL, 2, 15, nil, nil, "frontal")
+	local specWarnFanofBlades		= mod:NewSpecialWarningCount(153757, nil, nil, nil, 2, 2, nil, nil, "aesoon")
+	local specWarnWindChakram		= mod:NewSpecialWarningCount(1258148, nil, nil, nil, 2, 15, nil, nil, "frontal")
 	local specWarnChakramVortex		= mod:NewSpecialWarningCount(156793, nil, nil, nil, 2, 2, nil, nil, "watchstep")
 
-	local timerGaleSurgeCD			= mod:NewCDCountTimer(20.5, 1252733, 28405, nil, nil, 3)
-	local timerFanofBladesCD		= mod:NewCDCountTimer(20.5, 153757, DBM_COMMON_L.AOEDAMAGE.." (%s)", nil, nil, 2, nil, DBM_COMMON_L.BLEED_ICON..DBM_COMMON_L.HEALER_ICON)
-	local timerWindChakramCD		= mod:NewCDCountTimer(20.5, 1258148, DBM_COMMON_L.FRONTAL.." (%s)", nil, nil, 3)
+	local timerGaleSurgeCD			= mod:NewCDCountTimer(20.5, 1252733, nil, nil, nil, 3)
+	local timerFanofBladesCD		= mod:NewCDCountTimer(20.5, 153757, nil, nil, nil, 2, nil, DBM_COMMON_L.BLEED_ICON..DBM_COMMON_L.HEALER_ICON)
+	local timerWindChakramCD		= mod:NewCDCountTimer(20.5, 1258148, nil, nil, nil, 3)
 	local timerChakramVortexCD		= mod:NewCDCountTimer(20.5, 156793, nil, nil, nil, 6, nil, DBM_COMMON_L.IMPORTANT_ICON)
 
 	--Midnight private aura replacements

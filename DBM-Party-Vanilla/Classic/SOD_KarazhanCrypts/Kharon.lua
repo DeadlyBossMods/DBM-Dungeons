@@ -46,6 +46,7 @@ mod:SetUsedIcons(7, 8)
 -- "Dreadful Visage-1217952-npc:237439-00001D2AAA = pull:30.7, 63.6, 67.6",
 -- "Dreadful Visage-1217952-npc:237439-00001E153E = pull:30.7, 64.7, 72.9",
 
+DBM:RegisterAltSpellName(1217952, 5782)--Dreadful Visage -> Fear
 
 local enrageTimer		= mod:NewBerserkTimer(300)
 
@@ -57,7 +58,7 @@ local timerRedDeath		= mod:NewNextTimer(30.7, 1217694, nil, nil, nil, 3)
 local timerWrap			= mod:NewVarTimer("v64.8-73.3", 1218038, nil, nil, nil, 3)
 local timerNextStack	= mod:NewTargetCountTimer(5, 1217844, nil, nil, nil, 5)
 local timerMc			= mod:NewVarTimer("v77.5-86.2", 1218089, nil, nil, nil, 3)
-local timerFear			= mod:NewVarTimer("v63.6-76.0", 1217952, 5782, nil, nil, 2)
+local timerFear			= mod:NewVarTimer("v63.6-76.0", 1217952, nil, nil, nil, 2)
 
 -- Enabled even for ranged because everyone is stacking near to the torch bearer
 local specWarnRedDeath	= mod:NewSpecialWarningMove(1217694, nil, nil, nil, 1, 2, nil, nil, "watchstep")

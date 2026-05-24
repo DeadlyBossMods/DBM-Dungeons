@@ -28,13 +28,15 @@ mod:RegisterEventsInCombat(
  or (ability.id = 324090 or ability.id = 323687) and type = "cast"
  or ability.id = 321948 and type = "applydebuff"
 --]]
+DBM:RegisterAltSpellName(320230, 201291)--Explosive Contrivance -> Explosion
+DBM:RegisterAltSpellName(321948, 188104)--Localized Explosive Contrivance -> Localized Explosion
 local warnDisplacementTrap			= mod:NewSpellAnnounce(319619, 2)
 local warnDisplacedBlastwave		= mod:NewSpellAnnounce(320326, 2)
 local warnLocalizedExplosive		= mod:NewTargetNoFilterAnnounce(321948, 4)
 local warnArcaneLightning			= mod:NewTargetNoFilterAnnounce(323687, 2)
 
-local specWarnExplosiveContrivance	= mod:NewSpecialWarningMoveTo(320230, nil, 201291, nil, 3, 2, nil, nil, "findshelter")--"Explosion" shortname
-local specWarnLocalizedExplosive	= mod:NewSpecialWarningMoveTo(321948, nil, 188104, nil, 3, 2, nil, nil, "targetyou")--"Localized Explosion" shortname
+local specWarnExplosiveContrivance	= mod:NewSpecialWarningMoveTo(320230, nil, nil, nil, 3, 2, nil, nil, "findshelter")--"Explosion" shortname
+local specWarnLocalizedExplosive	= mod:NewSpecialWarningMoveTo(321948, nil, nil, nil, 3, 2, nil, nil, "targetyou")--"Localized Explosion" shortname
 local yellLocalizedExplosive		= mod:NewYell(321948)
 local yellLocalizedExplosiveFades	= mod:NewShortFadesYell(321948)
 local yellArcaneLightning			= mod:NewYell(323687)
@@ -42,8 +44,8 @@ local yellArcaneLightning			= mod:NewYell(323687)
 
 local timerDisplacementTrapCD		= mod:NewCDTimer(16.1, 319619, nil, nil, nil, 3)--16.1-19.4
 local timerDisplacedBlastwaveCD		= mod:NewCDTimer(17, 320326, nil, nil, nil, 3)--17-19.4
-local timerExplosiveContrivanceCD	= mod:NewCDTimer(35.1, 320230, 201291, nil, nil, 2, nil, DBM_COMMON_L.DEADLY_ICON)--"Explosion" shortname
-local timerLocalizedExplosiveCD		= mod:NewCDTimer(35.1, 321948, 188104, nil, nil, 3, nil, DBM_COMMON_L.DEADLY_ICON)--"Localized Explosion" shortname
+local timerExplosiveContrivanceCD	= mod:NewCDTimer(35.1, 320230, nil, nil, nil, 2, nil, DBM_COMMON_L.DEADLY_ICON)
+local timerLocalizedExplosiveCD		= mod:NewCDTimer(35.1, 321948, nil, nil, nil, 3, nil, DBM_COMMON_L.DEADLY_ICON)
 local timerArcaneLightningCD		= mod:NewCDTimer(9, 323687, nil, nil, nil, 3, nil, DBM_COMMON_L.MYTHIC_ICON)--Only cast once, then just bounces every 9 seconds
 
 local trapName = DBM:GetSpellName(319619)

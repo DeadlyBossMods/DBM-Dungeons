@@ -9,18 +9,21 @@ mod:SetUsedIcons(1)
 mod:RegisterCombat("combat")
 
 if DBM:IsPostMidnight() then
+	DBM:RegisterAltSpellName(1268916, DBM_COMMON_L.FRONTAL)--Null Palm -> Frontal
+	DBM:RegisterAltSpellName(1263304, DBM_COMMON_L.AOEDAMAGE)--Crashing Void -> AOE Damage
+
 	local warnDecimate					= mod:NewCountAnnounce(1263282, 2)
 
-	local specWarnNullPalm				= mod:NewSpecialWarningCount(1268916, nil, nil, DBM_COMMON_L.FRONTAL, 2, 2, nil, nil, "frontal")
+	local specWarnNullPalm				= mod:NewSpecialWarningCount(1268916, nil, nil, nil, 2, 2, nil, nil, "frontal")
 	local specWarnOozingSlam			= mod:NewSpecialWarningCount(1263399, nil, nil, nil, 2, 2, nil, nil, "mobsoon")
 	local specWarnVoidSlash				= mod:NewSpecialWarningCount(1263440, nil, nil, nil, 1, 2, nil, nil, "defensive")
-	local specWarnCrashingVoid			= mod:NewSpecialWarningCount(1263304, nil, nil, DBM_COMMON_L.AOEDAMAGE, 2, 2, nil, nil, "pullin")
+	local specWarnCrashingVoid			= mod:NewSpecialWarningCount(1263304, nil, nil, nil, 2, 2, nil, nil, "pullin")
 
-	local timerNullPalmCD				= mod:NewCDCountTimer(20.5, 1268916, DBM_COMMON_L.FRONTAL, nil, nil, 3)
+	local timerNullPalmCD				= mod:NewCDCountTimer(20.5, 1268916, nil, nil, nil, 3)
 	local timerDecimateCD				= mod:NewCDCountTimer(20.5, 1263282, nil, nil, nil, 3)
 	local timerOozingSlamCD				= mod:NewCDCountTimer(20.5, 1263399, nil, nil, nil, 1, nil, DBM_COMMON_L.MYTHIC_ICON)
 	local timerVoidSlashCD				= mod:NewCDCountTimer(20.5, 1263440, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
-	local timerCrashingVoidCD			= mod:NewCDCountTimer(20.5, 1263304, DBM_COMMON_L.AOEDAMAGE, nil, nil, 2)
+	local timerCrashingVoidCD			= mod:NewCDCountTimer(20.5, 1263304, nil, nil, nil, 2)
 
 	mod:AddPrivateAuraSoundOption(244588, true, 244588, 2, 1, "watchfeet", 8)--Void Sludge (GTFO)
 

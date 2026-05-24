@@ -25,6 +25,8 @@ mod:RegisterEventsInCombat(
 
 --TODO: Burning Blast Interrupt helper. Figure out CD, then what to do with it
 --TODO: figure out what to do with Felguard Sentry (115730)
+DBM:RegisterAltSpellName(229242, 219084)--Fel Beam -> Beam
+DBM:RegisterAltSpellName(229284, 229287)--Bombardment -> Bombardment
 --ALL
 local warnChaoticShadows			= mod:NewTargetAnnounce(229159, 3)
 local warnFelBeam					= mod:NewTargetAnnounce(229242, 4)
@@ -44,8 +46,8 @@ local yellFelBeam					= mod:NewYell(229242)
 local timerChaoticShadowsCD			= mod:NewCDTimer(30, 229159, nil, nil, nil, 3)
 local timerDisintegrateCD			= mod:NewCDTimer(10.8, 229151, nil, nil, nil, 3)
 --Phase 1
-local timerFelBeamCD				= mod:NewCDTimer(40, 229242, 219084, nil, nil, 3)
-local timerBombardmentCD			= mod:NewCDTimer(25, 229284, 229287, nil, nil, 3)
+local timerFelBeamCD				= mod:NewCDTimer(40, 229242, nil, nil, nil, 3)
+local timerBombardmentCD			= mod:NewCDTimer(25, 229284, nil, nil, nil, 3)
 
 --local berserkTimer					= mod:NewBerserkTimer(300)
 

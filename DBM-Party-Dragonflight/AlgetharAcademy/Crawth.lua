@@ -13,18 +13,21 @@ mod.sendMainBossGUID = true
 mod:RegisterCombat("combat")
 
 if DBM:IsPostMidnight() then
+	DBM:RegisterAltSpellName(377004, DBM_COMMON_L.AOEDAMAGE)--Deafening Screech -> AOE Damage
+	DBM:RegisterAltSpellName(377034, DBM_COMMON_L.FRONTAL)--Overpowering Gust -> Frontal
+
 	--Play Ball uses ENCOUNTER_WARNING with no stable timeline event in tested pulls
 	mod:AddCustomAlertSoundOption(377182, true, 2)--Play Ball
 	--Midnight private aura replacements
 --	mod:AddPrivateAuraSoundOption(433740, true, 433740, 1)
 
 	local specWarnSavagePeck					= mod:NewSpecialWarningCount(376997, nil, nil, nil, 1, 2, nil, nil, "defensive")
-	local specWarnDeafeningScreech				= mod:NewSpecialWarningCount(377004, nil, nil, DBM_COMMON_L.AOEDAMAGE, 2, 2, nil, nil, "scatter")
-	local specWarnOverpoweringGust				= mod:NewSpecialWarningCount(377034, nil, nil, DBM_COMMON_L.FRONTAL, 2, 15, nil, nil, "frontal")
+	local specWarnDeafeningScreech				= mod:NewSpecialWarningCount(377004, nil, nil, nil, 2, 2, nil, nil, "scatter")
+	local specWarnOverpoweringGust				= mod:NewSpecialWarningCount(377034, nil, nil, nil, 2, 15, nil, nil, "frontal")
 
 	local timerSavagePeckCD						= mod:NewCDCountTimer(13.6, 376997, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
-	local timerDeafeningScreechCD				= mod:NewCDCountTimer(22.7, 377004, DBM_COMMON_L.AOEDAMAGE.." (%s)", nil, nil, 2, nil, DBM_COMMON_L.HEALER_ICON)
-	local timerOverpoweringGustCD				= mod:NewCDCountTimer(28.2, 377034, DBM_COMMON_L.FRONTAL.." (%s)", nil, nil, 3)
+	local timerDeafeningScreechCD				= mod:NewCDCountTimer(22.7, 377004, nil, nil, nil, 2, nil, DBM_COMMON_L.HEALER_ICON)
+	local timerOverpoweringGustCD				= mod:NewCDCountTimer(28.2, 377034, nil, nil, nil, 3)
 
 	mod.vb.peckCount = 0
 	mod.vb.screechCount = 0
