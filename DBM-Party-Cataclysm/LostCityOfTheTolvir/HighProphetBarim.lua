@@ -27,7 +27,7 @@ local warnSoulSever				= mod:NewTargetAnnounce(82255, 4)
 local specWarnHeavenFury		= mod:NewSpecialWarningMove(81942, nil, nil, nil, 1, 2, nil, nil, "runaway")
 local specWarnHallowedGround 	= mod:NewSpecialWarningMove(88814, nil, nil, nil, 1, 2, nil, nil, "runaway")
 local specWarnSoulSever			= mod:NewSpecialWarningYou(82255, nil, nil, nil, 3, 2, nil, nil, "targetyou")
-local specWarnSoulSeverDps		= mod:NewSpecialWarningSwitch(82255, "Dps", nil, nil, 1, 2)
+local specWarnSoulSeverDps		= mod:NewSpecialWarningSwitch(82255, "Dps", nil, nil, 1, 2, nil, nil, "killmob")
 
 local timerPlagueAges			= mod:NewTargetTimer(9, 82622, nil, "Healer", 2, 5)
 local timerLashings				= mod:NewTargetTimer(20, 82506, nil, "Tank|Healer", 2, 5)

@@ -53,7 +53,7 @@ mod:RegisterEventsInCombat(
 local warnStoneShatteringLeap		= mod:NewTargetNoFilterAnnounce(319941, 3)
 local warnStonesCall				= mod:NewCountAnnounce(319733, 2)
 
-local specWarnCurseofStoneDispel	= mod:NewSpecialWarningDispel(328206, "RemoveCurse", nil, nil, 1, 2)
+local specWarnCurseofStoneDispel	= mod:NewSpecialWarningDispel(328206, "RemoveCurse", nil, nil, 1, 2, nil, nil, "helpdispel")
 local specWarnCurseofStone			= mod:NewSpecialWarningYou(328206, nil, nil, nil, 1, 2, nil, nil, "targetyou")
 local specWarnBloodTorrent			= mod:NewSpecialWarningCount(326389, nil, nil, nil, 2, 2, nil, nil, "aesoon")
 local specWarnStoneShatteringLeap	= mod:NewSpecialWarningYou(319941, nil, 47482, nil, 1, 2, nil, nil, "targetyou")

@@ -46,7 +46,7 @@ local specWarnConsumingVoid			= mod:NewSpecialWarningDispel(276767, "MagicDispel
 local specWarnTouchofDrowned		= mod:NewSpecialWarningDispel(268322, "RemoveMagic", nil, 2, 1, 2, nil, nil, "helpdispel")
 local specWarnConsumingVoidStop		= mod:NewSpecialWarningReflect(276767, "CasterDps", nil, nil, 1, 2, nil, nil, "stopattack")
 local specWarnCarveFlesh			= mod:NewSpecialWarningMoveTo(268214, nil, nil, nil, 3, 2, nil, nil, "targetyou")
-local specWarnVoidSeed				= mod:NewSpecialWarningMoveAway(276297, nil, nil, nil, 1, 2)
+local specWarnVoidSeed				= mod:NewSpecialWarningMoveAway(276297, nil, nil, nil, 1, 2, nil, nil, "runout")
 local yellVoidSeed					= mod:NewShortFadesYell(276297)
 
 local MinorReinforcement = DBM:GetSpellName(268211)

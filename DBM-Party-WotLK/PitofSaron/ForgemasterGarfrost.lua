@@ -20,7 +20,7 @@ if DBM:IsPostMidnight() then
 
 	local specWarnOrebreakerYou				= mod:NewSpecialWarningBlizzYou(1261546, nil, nil, nil, 1, 2, nil, nil, "targetyou")--Debuff target
 	local specWarnThrowSaronite				= mod:NewSpecialWarningBlizzYou(1261286, nil, nil, nil, 1, 2, nil, nil, "debuffyou")
-	local specWarnOrebreaker				= mod:NewSpecialWarningDodgeCount(1261546, nil, nil, nil, 2, 2)--The dodge 4-5 seconds after orebreaker debuffs
+	local specWarnOrebreaker				= mod:NewSpecialWarningDodgeCount(1261546, nil, nil, nil, 2, 2, nil, nil, "watchstep")--The dodge 4-5 seconds after orebreaker debuffs
 	local specWarnCryostomp					= mod:NewSpecialWarningCount(1261847, nil, nil, nil, 2, 2, nil, nil, "aesoon")
 	local specWarnGlacialOverload			= mod:NewSpecialWarningCount(1262029, nil, nil, nil, 2, 12, nil, nil, "breaklos")
 

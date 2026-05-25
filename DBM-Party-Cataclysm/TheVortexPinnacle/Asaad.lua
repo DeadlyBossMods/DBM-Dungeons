@@ -40,7 +40,7 @@ mod:RegisterEventsInCombat(
 local warnStaticCling			= mod:NewCastAnnounce(87618, 4)
 local warnChainLightning		= mod:NewTargetAnnounce(87622, 3)
 
-local specWarnStaticCling		= mod:NewSpecialWarningJump(87618, nil, nil, nil, 1, 2)
+local specWarnStaticCling		= mod:NewSpecialWarningJump(87618, nil, nil, nil, 1, 2, nil, nil, "jumpnow")
 local specWarnNova				= mod:NewSpecialWarningSwitchCount(isRetail and 413263 or 96260, "-Healer", nil, nil, 1, 2, nil, nil, "killmob")
 local specWarnGroundingField	= mod:NewSpecialWarningMoveTo(86911, nil, DBM_CORE_L.AUTO_SPEC_WARN_OPTIONS.run:format(86911), nil, nil, 3, nil, nil, "findshelter")
 local specWarnChainLit			= mod:NewSpecialWarningMoveAway(87622, nil, nil, nil, 1, 2, nil, nil, "runout")

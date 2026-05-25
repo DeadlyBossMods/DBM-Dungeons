@@ -38,7 +38,7 @@ if (wowToc >= 100200) then
 	mod:AddTimerLine(DBM:EJ_GetSectionInfo(2194))
 	local warnFlameShock								= mod:NewTargetNoFilterAnnounce(429048, 3)
 
-	local specWarnEarthfury								= mod:NewSpecialWarningDodge(429051, nil, nil, nil, 2, 2)
+	local specWarnEarthfury								= mod:NewSpecialWarningDodge(429051, nil, nil, nil, 2, 2, nil, nil, "keepmove")
 	local specWarnStormflurryTotem						= mod:NewSpecialWarningSwitchCount(429037, "-Healer", nil, nil, 1, 2, nil, nil, "attacktotem")
 
 	--local specWarnGTFO								= mod:NewSpecialWarningGTFO(409058, nil, nil, nil, 1, 8)

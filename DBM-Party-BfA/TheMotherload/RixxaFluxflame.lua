@@ -21,7 +21,7 @@ mod:RegisterEventsInCombat(
 local warnAxeriteCatalyst			= mod:NewCountAnnounce(259022, 2)--Cast often, so general warning not special
 local warnPoropellantBlast			= mod:NewTargetNoFilterAnnounce(259940, 2)
 
-local specWarnChemBurn				= mod:NewSpecialWarningDispel(259853, "RemoveMagic", nil, 2, 1, 2)
+local specWarnChemBurn				= mod:NewSpecialWarningDispel(259853, "RemoveMagic", nil, 2, 1, 2, nil, nil, "dispelnow")
 local specWarnPoropellantBlast		= mod:NewSpecialWarningYou(259940, nil, nil, nil, 1, 2, nil, nil, "targetyou")
 local yellPoropellantBlast			= mod:NewYell(259940)
 

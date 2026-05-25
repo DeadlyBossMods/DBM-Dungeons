@@ -40,8 +40,8 @@ local specWarnEmbraceDarkness			= mod:NewSpecialWarningSpell(323149, nil, nil, n
 local specWarnRepulsiveVisage			= mod:NewSpecialWarningSpell(328756, nil, nil, nil, 2, 2, nil, nil, "fearsoon")
 --Droman Oulfarran
 local specWarnBewilderingPollen			= mod:NewSpecialWarningDodgeCount(323137, "Tank", nil, nil, 1, 15, nil, nil, "frontal")
-local specWarnBewilderingPollenDispel	= mod:NewSpecialWarningDispel(323137, false, nil, 2, 1, 2)--Off by default
-local specWarnTearsoftheForrest			= mod:NewSpecialWarningDodge(323177, nil, nil, nil, 2, 2)
+local specWarnBewilderingPollenDispel	= mod:NewSpecialWarningDispel(323137, false, nil, 2, 1, 2, nil, nil, "helpdispel")--Off by default
+local specWarnTearsoftheForrest			= mod:NewSpecialWarningDodge(323177, nil, nil, nil, 2, 2, nil, nil, "watchstep")
 local specWarnGTFO						= mod:NewSpecialWarningGTFO(323250, nil, nil, nil, 1, 8, nil, nil, "watchfeet")
 
 --Phases
