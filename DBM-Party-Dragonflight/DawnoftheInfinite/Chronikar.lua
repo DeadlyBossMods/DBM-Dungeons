@@ -29,7 +29,7 @@ mod:RegisterEventsInCombat(
 DBM:RegisterAltSpellName(413142, 47482)--Eon Shatter -> Leap
 DBM:RegisterAltSpellName(403486, DBM_COMMON_L.GROUPSOAKS)--Eon Residue -> Group Soaks
 DBM:RegisterAltSpellName(401421, DBM_COMMON_L.POOLS)--Sand Stomp -> Pools
-local warnEonShatter						= mod:NewCountAnnounce(413142, 3, nil, nil, 47482)--Second and Third Jump
+local warnEonShatter						= mod:NewCountAnnounce(413142, 3)--Second and Third Jump
 local warnChronoShear						= mod:NewFadesAnnounce(413013, 1, nil, "Healer|Tank")
 
 local specWarnEonShatter					= mod:NewSpecialWarningDodgeCount(413142, nil, nil, nil, 2, 2, nil, nil, "watchstep")--Warn on initial casts

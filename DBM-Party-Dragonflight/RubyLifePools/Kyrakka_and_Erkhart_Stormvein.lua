@@ -39,7 +39,7 @@ local timerFlamespitCD							= mod:NewCDTimer(15.7, 381605, nil, nil, nil, 3)
 local timerRoaringFirebreathCD					= mod:NewCDTimer(18, 381525, nil, nil, nil, 3)
 --Erkhart Stormvein
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(25369))
-local warnWindsofChange							= mod:NewCountAnnounce(381517, 3, nil, nil, 227878)--Not actually a count timer, but has best localized text
+local warnWindsofChange							= mod:NewCountAnnounce(381517, 3)--Not actually a count timer, but has best localized text
 local warnCloudburst							= mod:NewSpellAnnounce(385558, 3)
 
 local specWarnStormslam							= mod:NewSpecialWarningDefensive(381512, nil, nil, nil, 1, 2, nil, nil, "defensive")
