@@ -5,6 +5,7 @@ mod:SetRevision("@file-date-integer@")
 mod:DisableHardcodedOptions()
 mod:SetCreatureID(188252)
 mod:SetEncounterID(2609)
+mod:SetZone(2521)
 mod:SetHotfixNoticeRev(20221126000000)
 --mod:SetMinSyncRevision(20211203000000)
 --mod.respawnTime = 29
@@ -33,7 +34,7 @@ local warnFrozenSolid							= mod:NewTargetNoFilterAnnounce(373022, 4, nil, "Hea
 local warnChillstorm							= mod:NewTargetNoFilterAnnounce(372851, 3)
 local warnIceBulwark							= mod:NewSpellAnnounce(372988, 4)
 
-local specWarnPrimalChill						= mod:NewSpecialWarningStack(372682, nil, 8, nil, nil, 1, 6)
+local specWarnPrimalChill						= mod:NewSpecialWarningStack(372682, nil, 8, nil, nil, 1, 6, nil, nil, "stackhigh")
 local specWarnHailbombs							= mod:NewSpecialWarningDodge(396044, nil, nil, nil, 2, 2, nil, nil, "watchstep")
 local specWarnChillStorm						= mod:NewSpecialWarningMoveAway(372851, nil, nil, nil, 1, 2, nil, nil, "runout")
 local yellChillstorm							= mod:NewYell(372851)

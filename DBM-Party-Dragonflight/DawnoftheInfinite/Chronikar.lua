@@ -19,8 +19,6 @@ mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 413105 413013 401421",
 	"SPELL_AURA_APPLIED 413142",
 	"SPELL_AURA_REMOVED 413013 413142"
---	"SPELL_PERIODIC_DAMAGE",
---	"SPELL_PERIODIC_MISSED"
 )
 
 --[[
@@ -28,20 +26,23 @@ mod:RegisterEventsInCombat(
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
  or ability.id = 413142 and type = "applydebuff"
 --]]
-local warnEonShatter						= mod:NewCountAnnounce(413142, 3, nil, nil, 47482)--Second and Third Jump
+DBM:RegisterAltSpellName(413142, 47482)--Eon Shatter -> Leap
+DBM:RegisterAltSpellName(403486, DBM_COMMON_L.GROUPSOAKS)--Eon Residue -> Group Soaks
+DBM:RegisterAltSpellName(401421, DBM_COMMON_L.POOLS)--Sand Stomp -> Pools
+local warnEonShatter						= mod:NewCountAnnounce(413142, 3)--Second and Third Jump
 local warnChronoShear						= mod:NewFadesAnnounce(413013, 1, nil, "Healer|Tank")
 
-local specWarnEonShatter					= mod:NewSpecialWarningDodgeCount(413142, nil, 47482, nil, 2, 2, nil, nil, "watchstep")--Warn on initial casts
+local specWarnEonShatter					= mod:NewSpecialWarningDodgeCount(413142, nil, nil, nil, 2, 2, nil, nil, "watchstep")--Warn on initial casts
 local yellEonShatter						= mod:NewYell(413142, 47482)
 local yellEonShatterFades					= mod:NewShortFadesYell(413142)
 local specWarnChronoShear					= mod:NewSpecialWarningDefensive(413013, nil, nil, nil, 1, 2, nil, nil, "defensive")
 local specWarnSandStomp						= mod:NewSpecialWarningMoveAwayCount(401421, nil, nil, nil, 2, 2, nil, nil, "scatter")
 --local specWarnGTFO							= mod:NewSpecialWarningGTFO(407147, nil, nil, nil, 1, 8)
 
-local timerEonShatterCD						= mod:NewCDTimer(19.4, 413142, 47482, nil, nil, 3, nil, DBM_COMMON_L.DEADLY_ICON)--"Leap" shorttext
-local timerEonResidue						= mod:NewCastCountTimer("d7.5", 403486, DBM_COMMON_L.GROUPSOAKS.." (%s)", nil, nil, 5, nil, DBM_COMMON_L.MYTHIC_ICON)
+local timerEonShatterCD						= mod:NewCDTimer(19.4, 413142, nil, nil, nil, 3, nil, DBM_COMMON_L.DEADLY_ICON)
+local timerEonResidue						= mod:NewCastCountTimer("d7.5", 403486, nil, nil, nil, 5, nil, DBM_COMMON_L.MYTHIC_ICON)
 local timerChronoShearCD					= mod:NewCDCountTimer(47, 413013, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
-local timerSandStompCD						= mod:NewCDCountTimer(19.4, 401421, DBM_COMMON_L.POOLS.." (%s)", nil, nil, 3)
+local timerSandStompCD						= mod:NewCDCountTimer(19.4, 401421, nil, nil, nil, 3)
 
 mod.vb.shatterCount = 0
 mod.vb.shatterSet = 0

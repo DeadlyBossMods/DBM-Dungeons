@@ -20,7 +20,7 @@ mod:RegisterEventsInCombat(
 
 local specWarnSWP				= mod:NewSpecialWarningDispel(154477, "RemoveMagic", nil, 2, 1, 2, nil, nil, "dispelnow")
 local specWarnSoulVessel		= mod:NewSpecialWarningSpell(155327, nil, nil, nil, 2, 2, nil, nil, "findshadow")
-local specWarnSoulVesselEnd		= mod:NewSpecialWarningEnd(155327, nil, nil, nil, 1, 2)
+local specWarnSoulVesselEnd		= mod:NewSpecialWarningEnd(155327, nil, nil, nil, 1, 2, nil, nil, "safenow")
 local specWarnTornSpirits		= mod:NewSpecialWarningSwitch(153991, "-Healer", nil, nil, 1, 2, nil, nil, "mobsoon")
 
 local timerSoulVessel			= mod:NewBuffActiveTimer(11.5, 155327, nil, nil, nil, 2, nil, DBM_COMMON_L.DEADLY_ICON)

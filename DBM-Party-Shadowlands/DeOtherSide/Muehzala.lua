@@ -41,7 +41,7 @@ local specWarnCosmicArtifice		= mod:NewSpecialWarningMoveAway(325725, nil, nil, 
 local yellCosmicArtifice			= mod:NewYell(325725)
 local yellCosmicArtificeFades		= mod:NewShortFadesYell(325725)
 local specWarnSoulcrusher			= mod:NewSpecialWarningDefensive(327646, nil, nil, nil, 2, 2, nil, nil, "defensive")
-local specWarnShatterReality		= mod:NewSpecialWarningMoveTo(326171, nil, nil, nil, 3, 2)
+local specWarnShatterReality		= mod:NewSpecialWarningMoveTo(326171, nil, nil, nil, 3, 2, nil, nil, "findshelter")
 --local specWarnGTFO					= mod:NewSpecialWarningGTFO(257274, nil, nil, nil, 1, 8)
 --Stage 2: Shattered Reality
 
