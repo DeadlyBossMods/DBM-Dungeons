@@ -114,7 +114,7 @@ L:SetGeneralLocalization({
 L = DBM:GetModLocalization("InfiltratorGarand")
 
 L:SetGeneralLocalization({
-	name =	Лазутчик Гаранд"
+	name =	"Лазутчик Гаранд"
 })
 
 -----------------------
