@@ -6,7 +6,7 @@ local L
 L = DBM:GetModLocalization("InfiltratorGulkat")
 
 L:SetGeneralLocalization({
-	name =	"Infiltrator Gulkat"
+	name =	"Лазутчик Гулкат"
 })
 
 -----------------------
@@ -15,7 +15,7 @@ L:SetGeneralLocalization({
 L = DBM:GetModLocalization("BladeMasterDarza")
 
 L:SetGeneralLocalization({
-	name =	"Blademaster Darza"
+	name =	"Мастер клинка Дарза"
 })
 
 -----------------------
@@ -24,7 +24,7 @@ L:SetGeneralLocalization({
 L = DBM:GetModLocalization("SpiritflayerJinma")
 
 L:SetGeneralLocalization({
-	name =	"Spiritflayer Jin'ma"
+	name =	"Свежеватель духов Джин'Ма"
 })
 
 -----------------------
@@ -33,7 +33,7 @@ L:SetGeneralLocalization({
 L = DBM:GetModLocalization("Mycomight")
 
 L:SetGeneralLocalization({
-	name =	"Mycomight"
+	name =	"Могуцелий"
 })
 
 -----------------------
@@ -42,7 +42,7 @@ L:SetGeneralLocalization({
 L = DBM:GetModLocalization("SpinshroomMid")
 
 L:SetGeneralLocalization({
-	name =	"Spinshroom"
+	name =	"Кругогриб"
 })
 
 -----------------------
@@ -51,7 +51,7 @@ L:SetGeneralLocalization({
 L = DBM:GetModLocalization("Brightthorn")
 
 L:SetGeneralLocalization({
-	name =	"Brightthorn"
+	name =	"Яркий Шип"
 })
 
 -----------------------
@@ -60,7 +60,7 @@ L:SetGeneralLocalization({
 L = DBM:GetModLocalization("MulthAul")
 
 L:SetGeneralLocalization({
-	name =	"Mul'tha'ul"
+	name =	"Мул'та'уль"
 })
 
 -----------------------
@@ -69,7 +69,7 @@ L:SetGeneralLocalization({
 L = DBM:GetModLocalization("Lumenia")
 
 L:SetGeneralLocalization({
-	name =	"Lumenia"
+	name =	"Люмения"
 })
 
 -----------------------
@@ -78,7 +78,7 @@ L:SetGeneralLocalization({
 L = DBM:GetModLocalization("GladiusSlaurna")
 
 L:SetGeneralLocalization({
-	name =	"Gladius Slaurna"
+	name =	"Гладий Слаурна"
 })
 
 -----------------------
@@ -87,7 +87,7 @@ L:SetGeneralLocalization({
 L = DBM:GetModLocalization("EsuritusParhelion")
 
 L:SetGeneralLocalization({
-	name =	"Esuritus"
+	name =	"Эзурит"
 })
 
 -----------------------
@@ -96,7 +96,7 @@ L:SetGeneralLocalization({
 L = DBM:GetModLocalization("Hydrangea")
 
 L:SetGeneralLocalization({
-	name =	"Hydrangea"
+	name =	"Гидрангея"
 })
 
 -----------------------
@@ -105,7 +105,7 @@ L:SetGeneralLocalization({
 L = DBM:GetModLocalization("VoidScornedVagrant")
 
 L:SetGeneralLocalization({
-	name =	"Voidscorned Vagrant"
+	name =	"Обожженный Бездной бродяга"
 })
 
 -----------------------
@@ -114,7 +114,7 @@ L:SetGeneralLocalization({
 L = DBM:GetModLocalization("InfiltratorGarand")
 
 L:SetGeneralLocalization({
-	name =	"Infiltrator Garand"
+	name =	Лазутчик Гаранд"
 })
 
 -----------------------
@@ -123,7 +123,7 @@ L:SetGeneralLocalization({
 L = DBM:GetModLocalization("Antenorian")
 
 L:SetGeneralLocalization({
-	name =	"Antenorian"
+	name =	"Лорд Антенориан"
 })
 
 -----------------------
@@ -132,7 +132,7 @@ L:SetGeneralLocalization({
 L = DBM:GetModLocalization("ChiefArcanistPatram")
 
 L:SetGeneralLocalization({
-	name =	"Chief-Arcanist Patram"
+	name =	"Главный чародей Патрам"
 })
 
 -----------------------
@@ -141,7 +141,7 @@ L:SetGeneralLocalization({
 L = DBM:GetModLocalization("EsuritusSunkiller")
 
 L:SetGeneralLocalization({
-	name =	"Esuritus"
+	name =	"Эзурит"
 })
 
 -----------------------
@@ -150,6 +150,14 @@ L:SetGeneralLocalization({
 L = DBM:GetModLocalization("Nullaeus")
 
 L:SetGeneralLocalization({
-	name =	"Nullaeus"
+	name =	"Нуллэй"
 })
 
+-----------------------
+-- <<< Azta'rec >>> --
+-----------------------
+L = DBM:GetModLocalization("Aztarec")
+
+L:SetGeneralLocalization({
+	name =	"Азта'рек"
+})
