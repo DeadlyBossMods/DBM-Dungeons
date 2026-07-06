@@ -11,10 +11,12 @@ mod.respawnTime = 29
 
 mod:RegisterCombat("combat")
 
+local warnRefluxCharge				= mod:NewCountAnnounce(1251785, 2)
+
 local specWarnCoresparkDetonation	= mod:NewSpecialWarningCount(1257509, nil, nil, nil, 2, 2, nil, nil, "watchstep")
 local specWarnLeylineArray			= mod:NewSpecialWarningCount(1251183, nil, nil, nil, 2, 3, nil, nil, "farfromline")
 local specWarnFluxCollapse			= mod:NewSpecialWarningCount(1264048, nil, nil, nil, 2, 2, nil, nil, "watchstep")
-local warnRefluxCharge				= mod:NewCountAnnounce(1251785, 2)
+local specWarnRefluxCharge			= mod:NewSpecialWarningBlizzYou(1251785, nil, nil, nil, 1, 2, nil, nil, "movetobeam")
 
 local timerCoresparkDetonationCD	= mod:NewCDCountTimer(38, 1257509, nil, nil, nil, 3)
 local timerRefluxChargeCD			= mod:NewCDCountTimer(12, 1251785, nil, nil, nil, 3, nil, DBM_COMMON_L.IMPORTANT_ICON)
@@ -22,7 +24,7 @@ local timerLeylineArrayCD			= mod:NewCDCountTimer(11, 1251183, nil, nil, nil, 3)
 local timerFluxCollapseCD			= mod:NewCDCountTimer(13, 1264048, nil, nil, nil, 3)
 
 --Midnight private aura replacements
-mod:AddPrivateAuraSoundOption(1251785, true, 1251785, 1, 1, "movetobeam", 19)--Reflux Charge
+--mod:AddPrivateAuraSoundOption(1251785, true, 1251785, 1, 1, "movetobeam", 19)--Reflux Charge
 --mod:AddPrivateAuraSoundOption(1264042, true, 1264042, 1, 2, "watchfeet", 8)--Arcane Spill
 
 mod.vb.coresparkDetonationCount = 0
@@ -196,6 +198,7 @@ do
 					specWarnLeylineArray:Play("farfromline")
 				elseif eventType == "refluxCharge" then
 					warnRefluxCharge:Show(eventCount)
+					specWarnRefluxCharge:Show(eventCount, "movetobeam")
 				elseif eventType == "fluxCollapse" then
 					specWarnFluxCollapse:Show(eventCount)
 					specWarnFluxCollapse:Play("watchstep")
