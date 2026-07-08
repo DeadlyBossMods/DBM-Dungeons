@@ -45,7 +45,9 @@ if DBM:IsPostMidnight() then
 			specWarnDeafeningScreech:SetAlert(279, self:IsSpellCaster() and "stopcast" or "aesoon", 2)
 			specWarnOverpoweringGust:SetAlert(280, "frontal", 15)
 		end
-		local onlyColor = not DBM.Options.HideDBMBars
+		--If user has DBM bars enabled, we only want to register colors to the blizz api so that the blizz bars are also colorized.
+	--If user has bars disabled, or we are in a bad state, onlyColor is false and we register countdowns as well.
+	local onlyColor = not DBM.Options.HideDBMBars and not badStateDetected
 		timerSavagePeckCD:SetTimeline(278, onlyColor)
 		timerDeafeningScreechCD:SetTimeline(279, onlyColor)
 		timerOverpoweringGustCD:SetTimeline(280, onlyColor)

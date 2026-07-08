@@ -42,7 +42,9 @@ local function setFallback(self, dontSetAlerts)
 	--Blizz API fallbacks
 	if not dontSetAlerts then
 	end
-	local onlyColor = not DBM.Options.HideDBMBars
+	--If user has DBM bars enabled, we only want to register colors to the blizz api so that the blizz bars are also colorized.
+	--If user has bars disabled, or we are in a bad state, onlyColor is false and we register countdowns as well.
+	local onlyColor = not DBM.Options.HideDBMBars and not badStateDetected
 	timerTriplicateCD:SetTimeline(635, onlyColor)
 	timerNeuralLinkCD:SetTimeline(97, onlyColor)
 	timerAstralGraspCD:SetTimeline(98, onlyColor)

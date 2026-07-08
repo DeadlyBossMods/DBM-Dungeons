@@ -46,7 +46,9 @@ local function setFallback(self, dontSetAlerts)
 		end
 		specWarnArcaneExpulsion:SetAlert(288, "carefly", 2, 3)
 	end
-	local onlyColor = not DBM.Options.HideDBMBars
+	--If user has DBM bars enabled, we only want to register colors to the blizz api so that the blizz bars are also colorized.
+	--If user has bars disabled, or we are in a bad state, onlyColor is false and we register countdowns as well.
+	local onlyColor = not DBM.Options.HideDBMBars and not badStateDetected
 	timerRefuelingProtocolCD:SetTimeline(281, onlyColor)
 	timerRepulsingSlamCD:SetTimeline(286, onlyColor)
 	timerEtherealShacklesCD:SetTimeline(287, onlyColor)

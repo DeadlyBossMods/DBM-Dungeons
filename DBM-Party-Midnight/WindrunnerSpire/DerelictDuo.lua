@@ -51,7 +51,9 @@ local function setFallback(self, dontSetAlerts)
 		specWarnHeavingYank:SetAlert(29, "behindboss", 2, 4, 0)
 		specWarnSplatteringSpew:SetAlert(28, "poolyou", 18, 2, 0)
 	end
-	local onlyColor = not DBM.Options.HideDBMBars
+	--If user has DBM bars enabled, we only want to register colors to the blizz api so that the blizz bars are also colorized.
+	--If user has bars disabled, or we are in a bad state, onlyColor is false and we register countdowns as well.
+	local onlyColor = not DBM.Options.HideDBMBars and not badStateDetected
 	timerBoneHackCD:SetTimeline(25, onlyColor)
 	timerCurseofDarknessCD:SetTimeline(26, onlyColor)
 	timerDebilitatingShriekCD:SetTimeline(27, onlyColor)

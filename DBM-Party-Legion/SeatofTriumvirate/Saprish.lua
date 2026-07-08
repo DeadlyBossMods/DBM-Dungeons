@@ -39,7 +39,9 @@ if DBM:IsPostMidnight() then
 			specWarnVoidBomb:SetAlert(234, "bombsoon", 1, 2)
 			specWarnOverload:SetAlert(243, "aesoon", 2, 2)
 		end
-		local onlyColor = not DBM.Options.HideDBMBars
+		--If user has DBM bars enabled, we only want to register colors to the blizz api so that the blizz bars are also colorized.
+	--If user has bars disabled, or we are in a bad state, onlyColor is false and we register countdowns as well.
+	local onlyColor = not DBM.Options.HideDBMBars and not badStateDetected
 		timerVoidBombCD:SetTimeline(234, onlyColor)
 		timerPhaseDashCD:SetTimeline(235, onlyColor)
 		timerShadowPounceCD:SetTimeline(237, onlyColor)
