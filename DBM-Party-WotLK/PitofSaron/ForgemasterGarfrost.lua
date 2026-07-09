@@ -219,7 +219,7 @@ else
 		if msg == L.SaroniteRockThrow or msg:find(L.SaroniteRockThrow) then
 			targetName = Ambiguate(targetName, "none")
 			if self:AntiSpam(5, targetName) then--Antispam sync by target name, since this doesn't use dbms built in onsync handler.
-				local uId = DBM:GetRaidUnitId(targetName)
+				local uId = DBM:GetRaidUnitId(targetName, true)
 				if uId and not UnitIsUnit(uId, "player") then
 					warnSaroniteRock:Show(targetName)
 				end
