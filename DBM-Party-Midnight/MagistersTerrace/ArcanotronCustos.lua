@@ -26,8 +26,8 @@ local timerRepulsingSlamCD				= mod:NewCDCountTimer(20.5, 474496, nil, nil, nil,
 local timerEtherealShacklesCD			= mod:NewCDCountTimer(20.5, 1214038, nil, nil, nil, 3, nil, DBM_COMMON_L.MAGIC_ICON)
 local timerArcaneExpulsionCD			= mod:NewCDCountTimer(20.5, 1214081, nil, nil, nil, 2)
 
---mod:AddPrivateAuraSoundOption(1214089, true, 1214089, 1, 2, "watchfeet", 8)--Arcane Residue (GTFO)
---mod:AddPrivateAuraSoundOption(1214038, true, 1214038, 1, 1, "debuffyou", 17)--Ethereal Shackles
+--mod:AddAuraSoundOption(1214089, true, 1214089, 1, 2, "watchfeet", 8)--Arcane Residue (GTFO)
+--mod:AddAuraSoundOption(1214038, true, 1214038, 1, 1, "debuffyou", 17)--Ethereal Shackles
 
 mod.vb.protocolCount = 0
 mod.vb.slamCount = 0

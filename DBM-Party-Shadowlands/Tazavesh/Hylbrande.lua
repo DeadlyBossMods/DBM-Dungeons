@@ -20,8 +20,8 @@ mod:AddCustomTimerOptions(346957, true, 3, 0)
 mod:AddCustomTimerOptions(347094, true, 3, 0)
 mod:AddCustomTimerOptions(346116, true, 5, 0)
 mod:AddCustomTimerOptions(346766, true, 6, 0)
---Midnight private aura replacements
-mod:AddPrivateAuraSoundOption(358131, true, 358131, 1, 1, "debuffyou", 17)
+--Custom Aura Sounds
+mod:AddAuraSoundOption(358131, true, 358131, 1, 1, "debuffyou", 17)
 
 function mod:OnLimitedCombatStart()
 	self:EnableAlertOptions(346957, 586, "watchstep", 2)

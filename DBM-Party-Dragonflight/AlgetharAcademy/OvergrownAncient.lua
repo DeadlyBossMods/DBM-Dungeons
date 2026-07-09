@@ -40,8 +40,8 @@ if DBM:IsPostMidnight() then
 	DBM:RegisterAltSpellName(388623, DBM_COMMON_L.BIG_ADD)--Branch Out -> Big Add
 
 	--Note, no eventID for healing touch so no timer or alert for it sadly
-	--Midnight private aura replacements
---	mod:AddPrivateAuraSoundOption(433740, true, 433740, 1)
+	--Custom Aura Sounds
+--	mod:AddAuraSoundOption(433740, true, 433740, 1)
 
 	local specWarnGerminate				= mod:NewSpecialWarningCount(388796, nil, nil, nil, 2, 2, nil, nil, "watchstep")
 	local specWarnBurstForth			= mod:NewSpecialWarningCount(388923, nil, nil, nil, 2, 2, nil, nil, "aesoon")

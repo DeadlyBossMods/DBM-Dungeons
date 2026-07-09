@@ -26,7 +26,7 @@ if DBM:IsPostMidnight() then
 	local timerVoidSlashCD				= mod:NewCDCountTimer(20.5, 1263440, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 	local timerCrashingVoidCD			= mod:NewCDCountTimer(20.5, 1263304, nil, nil, nil, 2)
 
-	mod:AddPrivateAuraSoundOption(244588, true, 244588, 2, 1, "watchfeet", 8)--Void Sludge (GTFO)
+	mod:AddAuraSoundOption(244588, true, 244588, 2, 1, "watchfeet", 8)--Void Sludge (GTFO)
 
 	mod.vb.nullPalmCount = 0
 	mod.vb.decimateCount = 0

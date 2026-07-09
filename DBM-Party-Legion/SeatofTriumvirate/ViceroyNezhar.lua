@@ -26,8 +26,8 @@ if DBM:IsPostMidnight() then
 	local timerRepulseCD				= mod:NewCDCountTimer(20.5, 1263528, nil, nil, nil, 2)
 	local timerGatesCD					= mod:NewCDCountTimer(20.5, 1277358, nil, nil, nil, 3)
 
-	mod:AddPrivateAuraSoundOption(1263542, false, 1263542, 1, 1, "debuffyou", 17)--Mass Void Infusion (just minor rot damage, off by default)
-	mod:AddPrivateAuraSoundOption(1263532, true, 1263532, 1, 1, "watchfeet", 8)--Void Storm (GTFO)
+	mod:AddAuraSoundOption(1263542, false, 1263542, 1, 1, "debuffyou", 17)--Mass Void Infusion (just minor rot damage, off by default)
+	mod:AddAuraSoundOption(1263532, true, 1263532, 1, 1, "watchfeet", 8)--Void Storm (GTFO)
 
 	mod.vb.mindBlastCount = 0
 	mod.vb.massVoidCount = 0

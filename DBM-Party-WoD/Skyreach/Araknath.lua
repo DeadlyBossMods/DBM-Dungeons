@@ -21,7 +21,7 @@ if DBM:IsPostMidnight() then
 	local timerEnergizeCD		= mod:NewCDCountTimer(20.5, 154162, nil, nil, nil, 5, nil, DBM_COMMON_L.IMPORTANT_ICON)
 	local timerSupernovaCD		= mod:NewCDCountTimer(20.5, 154135, nil, nil, nil, 2, nil, DBM_COMMON_L.HEALER_ICON)
 
-	mod:AddPrivateAuraSoundOption(154132, true, 154115, 1, 3, "screwup", 18)--Failing at smash
+	mod:AddAuraSoundOption(154132, true, 154115, 1, 3, "screwup", 18)--Failing at smash
 
 	mod.vb.smashCount = 0
 	mod.vb.energizeCount = 0

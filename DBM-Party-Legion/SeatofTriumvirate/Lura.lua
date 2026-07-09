@@ -25,7 +25,7 @@ if DBM:IsPostMidnight() then
 	local timerSymphonyCD				= mod:NewCastTimer(20.5, 1266003, nil, nil, nil, 3, nil, DBM_COMMON_L.DEADLY_ICON)
 	local timerBacklashCD				= mod:NewCastTimer(20.5, 1266001, nil, nil, nil, 2)
 
-	--mod:AddPrivateAuraSoundOption(1265426, true, 1265426, 2, 1, "beamyou", 19)
+	--mod:AddAuraSoundOption(1265426, true, 1265426, 2, 1, "beamyou", 19)
 
 	mod.vb.dirgeCount = 0
 	mod.vb.discordantBeamCount = 0

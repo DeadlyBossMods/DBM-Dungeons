@@ -35,8 +35,8 @@ if DBM:IsPostMidnight() then
 	local timerDeathsGraspCD			= mod:NewCDCountTimer(20.5, 1263756, nil, nil, nil, 3)
 	local timerIcyBarrageCD				= mod:NewCDCountTimer(20.5, 1276948, nil, nil, nil, 3)
 
-	--Midnight private aura replacements
-	mod:AddPrivateAuraSoundOption(1262772, true, 1262772, 1, 1, "debuffyou", 17)--Rime Blast
+	--Custom Aura Sounds
+	mod:AddAuraSoundOption(1262772, true, 1262772, 1, 1, "debuffyou", 17)--Rime Blast
 
 	mod.vb.brandCount = 0
 	mod.vb.armyCount = 0

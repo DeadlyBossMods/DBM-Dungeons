@@ -25,11 +25,11 @@ local timerArrowRainCD				= mod:NewCDCountTimer(9, 472556, nil, nil, nil, 3)
 local timerTempestSlashCD			= mod:NewCDCountTimer(21, 472662, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerGustShotCD				= mod:NewCDCountTimer(23.5, 1253979, nil, nil, nil, 3)
 
---Midnight private aura replacements
-mod:AddPrivateAuraSoundOption(1282911, true, 474528, 1, 1, "lineyou", 17)--Bolt Gale
-mod:AddPrivateAuraSoundOption(1253979, true, 1253979, 1, 1, "movetopool", 15)--Gust Shot
-mod:AddPrivateAuraSoundOption(472662, true, 472662, 1, 1, "movetoarrow", 19)--Tempest Slash
---mod:AddPrivateAuraSoundOption(1216042, true, 1216042, 1, 1, "movetoarrow", 19)--Squall Leap
+--Custom Aura Sounds
+mod:AddAuraSoundOption(1282911, true, 474528, 1, 1, "lineyou", 17)--Bolt Gale
+mod:AddAuraSoundOption(1253979, true, 1253979, 1, 1, "movetopool", 15)--Gust Shot
+mod:AddAuraSoundOption(472662, true, 472662, 1, 1, "movetoarrow", 19)--Tempest Slash
+--mod:AddAuraSoundOption(1216042, true, 1216042, 1, 1, "movetoarrow", 19)--Squall Leap
 
 mod.vb.bullseyeWindblastCount = 0
 mod.vb.boltGaleCount = 0

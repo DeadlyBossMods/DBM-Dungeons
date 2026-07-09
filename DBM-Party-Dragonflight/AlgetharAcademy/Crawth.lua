@@ -18,8 +18,8 @@ if DBM:IsPostMidnight() then
 
 	--Play Ball uses ENCOUNTER_WARNING with no stable timeline event in tested pulls
 	mod:AddCustomAlertSoundOption(377182, true, 2)--Play Ball
-	--Midnight private aura replacements
---	mod:AddPrivateAuraSoundOption(433740, true, 433740, 1)
+	--Custom Aura Sounds
+--	mod:AddAuraSoundOption(433740, true, 433740, 1)
 
 	local specWarnSavagePeck					= mod:NewSpecialWarningCount(376997, nil, nil, nil, 1, 2, nil, nil, "defensive")
 	local specWarnDeafeningScreech				= mod:NewSpecialWarningCount(377004, nil, nil, nil, 2, 2, nil, nil, "scatter")

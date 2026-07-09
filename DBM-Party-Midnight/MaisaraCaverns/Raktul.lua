@@ -20,9 +20,9 @@ local timerSpiritbreakerCD		= mod:NewCDCountTimer(26, 1251023, nil, "Tank|Healer
 local timerCrushSoulsCD			= mod:NewCDCountTimer(26, 1252676, nil, nil, nil, 3, nil, DBM_COMMON_L.IMPORTANT_ICON)
 local timerSoulrendingRoarCD	= mod:NewCDCountTimer(70, 1253788, nil, nil, nil, 6)
 
---Midnight private aura replacements
-mod:AddPrivateAuraSoundOption(1252675, true, 1252675, 1, 1, "leapyou", 19)--Crush Souls
---mod:AddPrivateAuraSoundOption(1253779, true, 1253779, 1, 2, "watchfeet", 8)--Spectral Decay
+--Custom Aura Sounds
+mod:AddAuraSoundOption(1252675, true, 1252675, 1, 1, "leapyou", 19)--Crush Souls
+--mod:AddAuraSoundOption(1253779, true, 1253779, 1, 2, "watchfeet", 8)--Spectral Decay
 
 mod.vb.spiritbreakerCount = 0
 mod.vb.crushSoulsCount = 0

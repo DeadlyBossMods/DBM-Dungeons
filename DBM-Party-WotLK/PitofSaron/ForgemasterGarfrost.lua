@@ -29,10 +29,10 @@ if DBM:IsPostMidnight() then
 	local timerThrowSaroniteCD				= mod:NewCDCountTimer(20.5, 1261286, nil, nil, nil, 3, nil, DBM_COMMON_L.IMPORTANT_ICON)
 	local timerGlacialOverloadCD			= mod:NewCDCountTimer(20.5, 1262029, nil, nil, nil, 2, nil, DBM_COMMON_L.DEADLY_ICON)
 
-	--Midnight private aura replacements
-	--mod:AddPrivateAuraSoundOption(1261286, true, 1261286, 1, 1, "debuffyou", 17)--Throw Saronite (handed by ENCOUNTER_WARNING now for hardcoded text/flash)
-	--mod:AddPrivateAuraSoundOption(1261540, true, 1261540, 1, 1, "targetyou", 2)--Orebreaker (handed by ENCOUNTER_WARNING now for hardcoded text/flash)
-	mod:AddPrivateAuraSoundOption(1261799, true, 1261799, 1, 2, "watchfeet", 8)--Glacial Overload (GTFO)
+	--Custom Aura Sounds
+	--mod:AddAuraSoundOption(1261286, true, 1261286, 1, 1, "debuffyou", 17)--Throw Saronite (handed by ENCOUNTER_WARNING now for hardcoded text/flash)
+	--mod:AddAuraSoundOption(1261540, true, 1261540, 1, 1, "targetyou", 2)--Orebreaker (handed by ENCOUNTER_WARNING now for hardcoded text/flash)
+	mod:AddAuraSoundOption(1261799, true, 1261799, 1, 2, "watchfeet", 8)--Glacial Overload (GTFO)
 
 	mod.vb.orebreakerCount = 0
 	mod.vb.cryostompCount = 0

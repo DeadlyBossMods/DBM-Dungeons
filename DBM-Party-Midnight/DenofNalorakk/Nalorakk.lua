@@ -27,9 +27,9 @@ mod:AddCustomTimerOptions(1242869, true, 3, 0)--Echoing Maul
 mod:AddCustomTimerOptions(1243011, true, 5, 0)--Fury of the War God
 mod:AddCustomTimerOptions(1243569, "Tank|Healer", 5, 0)--Overwhelming Onslaught
 mod:AddCustomTimerOptions(1262846, true, 5, 0)--Spirit Thrash (probably not used anymore)
---Midnight private aura replacements
---mod:AddPrivateAuraSoundOption(1242869, true, 1242869, 1, 1, "scatter", 2)--Echoing Maul
---mod:AddPrivateAuraSoundOption(1261781, true, 1261781, 1, 1, "safenow", 2)--Defensive Stance
+--Custom Aura Sounds
+--mod:AddAuraSoundOption(1242869, true, 1242869, 1, 1, "scatter", 2)--Echoing Maul
+--mod:AddAuraSoundOption(1261781, true, 1261781, 1, 1, "safenow", 2)--Defensive Stance
 
 function mod:OnLimitedCombatStart()
 	self:EnableAlertOptions(1255385, 89, "pushbackincoming", 13, 2)

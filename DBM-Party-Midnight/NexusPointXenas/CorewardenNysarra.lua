@@ -25,9 +25,9 @@ local timerUmbralLashCD				= mod:NewCDCountTimer(17, 1247937, nil, nil, nil, 5, 
 local timerNullVanguardCD			= mod:NewCDCountTimer(61, 1252703, nil, nil, nil, 1, nil, DBM_COMMON_L.IMPORTANT_ICON)
 local timerDevourTheUnworthyCD		= mod:NewCDCountTimer(15, 1271684, nil, nil, nil, 2)
 
---Private Auras
---mod:AddPrivateAuraSoundOption(1249020, true, 1249020, 1, 1, "scatter", 2)--Eclipsing Step
-mod:AddPrivateAuraSoundOption(1282678, true, 1282678, 1, 1, "justrun", 2)--Flailstorm
+--Auras
+--mod:AddAuraSoundOption(1249020, true, 1249020, 1, 1, "scatter", 2)--Eclipsing Step
+mod:AddAuraSoundOption(1282678, true, 1282678, 1, 1, "justrun", 2)--Flailstorm
 
 mod.vb.eclipsingStepCount = 0
 mod.vb.lightscareFlareCount = 0

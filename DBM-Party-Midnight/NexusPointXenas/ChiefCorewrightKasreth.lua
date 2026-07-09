@@ -23,9 +23,9 @@ local timerRefluxChargeCD			= mod:NewCDCountTimer(12, 1251785, nil, nil, nil, 3,
 local timerLeylineArrayCD			= mod:NewCDCountTimer(11, 1251183, nil, nil, nil, 3)
 local timerFluxCollapseCD			= mod:NewCDCountTimer(13, 1264048, nil, nil, nil, 3)
 
---Midnight private aura replacements
---mod:AddPrivateAuraSoundOption(1251785, true, 1251785, 1, 1, "movetobeam", 19)--Reflux Charge
---mod:AddPrivateAuraSoundOption(1264042, true, 1264042, 1, 2, "watchfeet", 8)--Arcane Spill
+--Custom Aura Sounds
+--mod:AddAuraSoundOption(1251785, true, 1251785, 1, 1, "movetobeam", 19)--Reflux Charge
+--mod:AddAuraSoundOption(1264042, true, 1264042, 1, 2, "watchfeet", 8)--Arcane Spill
 
 mod.vb.coresparkDetonationCount = 0
 mod.vb.refluxChargeCount = 0

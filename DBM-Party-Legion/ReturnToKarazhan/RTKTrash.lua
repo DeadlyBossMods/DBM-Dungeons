@@ -96,7 +96,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		specWarnCurseofDoom:Show(args.destName)
 		specWarnCurseofDoom:Play("dispelnow")
 	elseif spellId == 229074 and self:AntiSpam(3, 8) then
-		local uId = DBM:GetRaidUnitId(args.destName)
+		local uId = DBM:GetRaidUnitId(args.destName, true)
 		local _, _, _, _, _, expires = DBM:UnitBuff(uId, args.spellName)
 		if expires then
 			local debuffTime = expires - GetTime()

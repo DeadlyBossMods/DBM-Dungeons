@@ -17,9 +17,9 @@ if DBM:IsPostMidnight() then
 	DBM:RegisterAltSpellName(388820, 56689)--Power Vacuum -> Grip
 	--Custom Sounds on cast/cooldown expiring
 	mod:AddCustomAlertSoundOption(374341, true, 2)--Energy Bomb: ENCOUNTER_WARNING provides target name
-	--Midnight private aura replacements
-	mod:AddPrivateAuraSoundOption(389007, true, 389007, 1, 1, "watchfeet", 8)--GTFO
-	mod:AddPrivateAuraSoundOption(389011, true, 389011, 1, 1, "debuffyou", 17)--Overwhelming Power (off by default since we can't warn all stacks, just initial)
+	--Custom Aura Sounds
+	mod:AddAuraSoundOption(389007, true, 389007, 1, 1, "watchfeet", 8)--GTFO
+	mod:AddAuraSoundOption(389011, true, 389011, 1, 1, "debuffyou", 17)--Overwhelming Power (off by default since we can't warn all stacks, just initial)
 
 	local warnEnergyBomb					= mod:NewCountAnnounce(374341, 3)--Blizzard alert will handle personal bomb alert
 

@@ -23,8 +23,8 @@ local timerHasteningWardCD				= mod:NewCDCountTimer(20.5, 1248689, nil, nil, nil
 local timerRunicMarkCD					= mod:NewCDCountTimer(20.5, 1225787, nil, nil, nil, 3)
 local timerWaveOfSilenceCD				= mod:NewCDCountTimer(20.5, 1225193, nil, nil, nil, 2, nil, DBM_COMMON_L.IMPORTANT_ICON)
 
---Midnight private aura replacements
---mod:AddPrivateAuraSoundOption({1225787,1225792}, true, 1225787, 1, 1, "scatter", 2)--Runic Mark
+--Custom Aura Sounds
+--mod:AddAuraSoundOption({1225787,1225792}, true, 1225787, 1, 1, "scatter", 2)--Runic Mark
 
 mod.vb.zoneCount = 0
 mod.vb.wardCount = 0

@@ -191,7 +191,7 @@ function mod:SPELL_AURA_APPLIED(args)
 			warnBurningWound:Show(args.destName, amount)
 		end
 	elseif args.spellId == 82518 then
-		local uId = DBM:GetRaidUnitId(args.destName)
+		local uId = DBM:GetRaidUnitId(args.destName, true)
 		if self:IsTanking(uId) then
 			local amount = args.amount or 1
 			if amount >= 2 then

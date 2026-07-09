@@ -24,9 +24,9 @@ mod:AddCustomTimerOptions(1222085, true, 5, 0)--Cosmic Spike
 mod:AddCustomTimerOptions(1262901, true, 1, 0)--Gather Shadows
 mod:AddCustomTimerOptions(1222274, true, 2, 0)--Dark Rift
 mod:AddCustomTimerOptions(1225011, true, 3, 0)--Ethereal Shards
---Midnight private aura replacements
---mod:AddPrivateAuraSoundOption(1225011, true, 1225011, 1, 1, "debuffyou", 17)--Ethereal Shards
---mod:AddPrivateAuraSoundOption(1222098, true, 1222098, 1, 1, "chargemove", 2)--Nether Dash
+--Custom Aura Sounds
+--mod:AddAuraSoundOption(1225011, true, 1225011, 1, 1, "debuffyou", 17)--Ethereal Shards
+--mod:AddAuraSoundOption(1222098, true, 1222098, 1, 1, "chargemove", 2)--Nether Dash
 
 function mod:OnLimitedCombatStart()
 	if self:IsTank() then

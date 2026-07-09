@@ -26,9 +26,9 @@ mod:AddCustomTimerOptions(1222642, true, 5, 0)--Hulking Claw
 mod:AddCustomTimerOptions(1263977, true, 3, 0)--Noxious Breath
 mod:AddCustomTimerOptions(1226120, true, 3, 0)--Poison Splash
 mod:AddCustomTimerOptions(1262497, true, 2, 0)--Monstrous Stomp
---Midnight private aura replacements
---mod:AddPrivateAuraSoundOption(1283506, true, 1283506, 4, 1, "fixateyou", 19)--Fixate
---mod:AddPrivateAuraSoundOption(1222484, true, 1222484, 1, 2, "watchfeet", 8)--Poison Pool
+--Custom Aura Sounds
+--mod:AddAuraSoundOption(1283506, true, 1283506, 4, 1, "fixateyou", 19)--Fixate
+--mod:AddAuraSoundOption(1222484, true, 1222484, 1, 2, "watchfeet", 8)--Poison Pool
 
 function mod:OnLimitedCombatStart()
 	self:EnableAlertOptions(1222371, 46, "bigmob", 2, 2)

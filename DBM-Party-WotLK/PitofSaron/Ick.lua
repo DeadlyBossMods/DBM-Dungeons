@@ -35,9 +35,9 @@ if DBM:IsPostMidnight() then
 	local timerBlightSmashCD			= mod:NewCDCountTimer(20.5, 1264287, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 	--local timerLumberingFixationCD		= mod:NewCDCountTimer(20.5, 1264453, nil, nil, nil, 3)--Lumbering Fixation (child of Get 'Em, Ick!)
 
-	--Midnight private aura replacements
-	--mod:AddPrivateAuraSoundOption(1264453, true, 1264363, 1, 1, "fixateyou", 19)--Lumbering Fixation
-	mod:AddPrivateAuraSoundOption(1264299, true, 1264299, 2, 2, "watchfeet", 8)--Blight (GTFO)
+	--Custom Aura Sounds
+	--mod:AddAuraSoundOption(1264453, true, 1264363, 1, 1, "fixateyou", 19)--Lumbering Fixation
+	mod:AddAuraSoundOption(1264299, true, 1264299, 2, 2, "watchfeet", 8)--Blight (GTFO)
 
 	mod.vb.getEmCount = 0
 	mod.vb.shadeCount = 0

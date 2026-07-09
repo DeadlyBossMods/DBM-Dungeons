@@ -18,8 +18,8 @@ if DBM:IsPostMidnight() then
 	DBM:RegisterAltSpellName(388537, DBM_COMMON_L.AOEDAMAGE)--Arcane Fissure -> AOE Damage
 
 	--NOTE: Once again no private auras to hook up for Mana Bombs
-	--Midnight private aura replacements
---	mod:AddPrivateAuraSoundOption(386181, true, 386181, 1)
+	--Custom Aura Sounds
+--	mod:AddAuraSoundOption(386181, true, 386181, 1)
 
 	local specWarnArcaneOrbs			= mod:NewSpecialWarningCount(385974, nil, nil, nil, 2, 2, nil, nil, "catchballs")
 	local specWarnManaBombs				= mod:NewSpecialWarningCount(386173, nil, nil, nil, 2, 2, nil, nil, "scattersoon")

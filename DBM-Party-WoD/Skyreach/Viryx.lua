@@ -27,10 +27,10 @@ if DBM:IsPostMidnight() then
 	local timerSolarBlastCD			= mod:NewCDCountTimer(20.5, 154396, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 	local timerLensFlareCD			= mod:NewCDCountTimer(20.5, 1253531, nil, nil, nil, 3)
 
-	--Midnight private aura replacements
-	mod:AddPrivateAuraSoundOption(1253541, true, 1253541, 1, 1, "debuffyou", 17)--Scorching Ray
-	--mod:AddPrivateAuraSoundOption(153954, true, 1253998, 1, 1, "targetyou", 2)--Cast Down (no longer a private aura post 4-14-26 hotfixes
-	mod:AddPrivateAuraSoundOption(1253531, true, 1253531, 1, 1, "laserrun", 2)--Lens Flare
+	--Custom Aura Sounds
+	mod:AddAuraSoundOption(1253541, true, 1253541, 1, 1, "debuffyou", 17)--Scorching Ray
+	--mod:AddAuraSoundOption(153954, true, 1253998, 1, 1, "targetyou", 2)--Cast Down (no longer a private aura post 4-14-26 hotfixes
+	mod:AddAuraSoundOption(1253531, true, 1253531, 1, 1, "laserrun", 2)--Lens Flare
 
 	mod.vb.scorchingRayCount = 0
 	mod.vb.castDownCount = 0
