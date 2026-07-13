@@ -25,9 +25,9 @@ mod:AddCustomTimerOptions(1227264, true, 2, 0)--Cosmic Blast
 mod:AddCustomTimerOptions(1263982, true, 3, 0)--Gravity Orbs
 mod:AddCustomTimerOptions(1222758, true, 3, 0)--Void Cascade
 --Custom Aura Sounds
---mod:AddAuraSoundOption(1263983, true, 1263982, 4, 1, "orbrun", 2)--Condensed Mass
---mod:AddAuraSoundOption(1282770, true, 1282770, 1, 1, "runout", 2)--Unstable Singularity Pre debuff
---mod:AddAuraSoundOption(1248130, true, 1282770, 1, 2, "watchfeet", 8)--GTFO
+mod:AddAuraSoundOption(1263983, true, 1263982, 4, 1, "orbrun", 2)--Condensed Mass
+mod:AddAuraSoundOption(1282770, true, 1282770, 1, 1, "runout", 2)--Unstable Singularity Pre debuff
+mod:AddAuraSoundOption(1248130, true, 1282770, 1, 2, "watchfeet", 8)--GTFO
 
 function mod:OnLimitedCombatStart()
 	self:EnableAlertOptions(1227264, 57, "carefly", 2, 2)

@@ -26,7 +26,7 @@ mod:AddCustomTimerOptions(1234233, true, 5, 0)--Spoiled Supplies
 mod:AddCustomTimerOptions(1253268, true, 3, 0)--Earthshatter Slam
 mod:AddCustomTimerOptions(1235118, true, 2, 0)--Ravenous Bellow
 --Custom Aura Sounds
---mod:AddAuraSoundOption(1235405, true, 1235405, 1, 2, "watchfeet", 8)--Bonespiked
+mod:AddAuraSoundOption(1235405, true, 1235405, 1, 2, "watchfeet", 8)--Bonespiked
 --mod:AddAuraSoundOption(1234846, false, 1234846, 1, 1, "toxic", 2)--Toxic Spores (off by default, i don't think it needs a sound, since we can't alert stacks, the PA anchor will handle it
 
 function mod:OnLimitedCombatStart()

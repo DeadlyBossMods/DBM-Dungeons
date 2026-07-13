@@ -30,7 +30,7 @@ mod:AddAuraSoundOption(1261276, true, 1261276, 1, 1, "defensive", 2)--Thornblade
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(32520))
 mod:AddCustomAlertSoundOption(1235564, true, 1)--Lightblossom Beam
 mod:AddCustomTimerOptions(1235564, true, 5, 0)--Lightblossom Beam
---mod:AddAuraSoundOption(1235828, true, 1235828, 1, 2, "watchfeet", 8)--Light-Scorched Earth
+mod:AddAuraSoundOption(1235828, true, 1235828, 1, 2, "watchfeet", 8)--Light-Scorched Earth
 
 function mod:OnLimitedCombatStart()
 	if self:IsTank() then

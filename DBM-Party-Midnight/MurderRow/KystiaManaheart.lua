@@ -26,7 +26,7 @@ mod:AddCustomTimerOptions(1253813, true, 3, 0)--Fel Spray
 mod:AddCustomTimerOptions(474240, true, 3, 0)--Fel Nova
 mod:AddCustomTimerOptions(1230304, true, 5, 0)--Light Infusion
 --Custom Aura Sounds
---mod:AddAuraSoundOption(1253813, true, 1253813, 1, 2, "watchfeet", 8)--Fel Spray
+mod:AddAuraSoundOption(1253813, true, 1253813, 1, 2, "watchfeet", 8)--Fel Spray
 
 function mod:OnLimitedCombatStart()
 	self:EnableAlertOptions(1264095, 120, "crowdcontrol", 3, 2)--Change when I can access AWS again

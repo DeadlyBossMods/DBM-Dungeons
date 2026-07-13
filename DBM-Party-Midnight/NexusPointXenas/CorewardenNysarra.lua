@@ -26,7 +26,7 @@ local timerNullVanguardCD			= mod:NewCDCountTimer(61, 1252703, nil, nil, nil, 1,
 local timerDevourTheUnworthyCD		= mod:NewCDCountTimer(15, 1271684, nil, nil, nil, 2)
 
 --Auras
---mod:AddAuraSoundOption(1249020, true, 1249020, 1, 1, "scatter", 2)--Eclipsing Step
+--mod:AddAuraSoundOption(1249020, true, 1249020, 1, 1, "scatter", 2)--Eclipsing Step (handled by ENCOUNTER_WARNING intercept)
 mod:AddAuraSoundOption(1282678, true, 1282678, 1, 1, "justrun", 2)--Flailstorm
 
 mod.vb.eclipsingStepCount = 0

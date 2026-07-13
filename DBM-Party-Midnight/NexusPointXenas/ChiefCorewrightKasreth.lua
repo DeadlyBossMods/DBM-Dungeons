@@ -24,8 +24,8 @@ local timerLeylineArrayCD			= mod:NewCDCountTimer(11, 1251183, nil, nil, nil, 3)
 local timerFluxCollapseCD			= mod:NewCDCountTimer(13, 1264048, nil, nil, nil, 3)
 
 --Custom Aura Sounds
---mod:AddAuraSoundOption(1251785, true, 1251785, 1, 1, "movetobeam", 19)--Reflux Charge
---mod:AddAuraSoundOption(1264042, true, 1264042, 1, 2, "watchfeet", 8)--Arcane Spill
+--mod:AddAuraSoundOption(1251785, true, 1251785, 1, 1, "movetobeam", 19)--Reflux Charge (Handled by ENCOUNTER_WARNING intercept)
+mod:AddAuraSoundOption(1264042, true, 1264042, 1, 2, "watchfeet", 8)--Arcane Spill
 
 mod.vb.coresparkDetonationCount = 0
 mod.vb.refluxChargeCount = 0

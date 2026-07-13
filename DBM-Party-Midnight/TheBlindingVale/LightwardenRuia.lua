@@ -14,6 +14,7 @@ mod:RegisterCombat("combat")
 --mod:RegisterEventsInCombat(
 
 --)
+--NOTE https://www.wowhead.com/ptr/spell=1296871/power-surge has an ID of 780 but is not in the journal
 --Custom Sounds on cast/cooldown expiring
 mod:AddCustomAlertSoundOption(1240098, true, 2)--Lightfall
 mod:AddCustomAlertSoundOption(1241058, "Healer", 2)--Grievous Thrash
