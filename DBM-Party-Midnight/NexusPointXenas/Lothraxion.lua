@@ -96,6 +96,7 @@ do
 			timerFlickerCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "flicker", "flickerCount"))
 			handled = true
 		elseif timer == 52 then--Divine Guile
+			timerDivineGuileCD:Stop()--Boss randomly resends this timer, leanest way to silence annoying debug
 			timerDivineGuileCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "divineGuile", "divineGuileCount"))
 			handled = true
 		end

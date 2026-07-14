@@ -42,6 +42,23 @@ local pendingStage2Devour = false
 local cancelBurstStart = 0
 local cancelBurstCount = 0
 local cancelBurstExpected = 0
+local suppressStage1RestartBatch = false
+local suppressStage1RestartBatchStartedAt = 0
+local suppressStage1RestartBatchTimers = {}
+local ignoredStage1RestartEvents = {}
+local restartBatchTimerFilter = {
+	[3] = true,
+	[5] = true,
+	[15] = true,
+	[28] = true,
+}
+
+local function resetRestartBatchFilterState()
+	suppressStage1RestartBatch = false
+	suppressStage1RestartBatchStartedAt = 0
+	suppressStage1RestartBatchTimers = {}
+	ignoredStage1RestartEvents = {}
+end
 
 ---@param self DBMMod
 ---@param dontSetAlerts boolean? Called on engage when we only want to set timeline parameters and not touch encounter alerts
@@ -78,6 +95,7 @@ function mod:OnLimitedCombatStart()
 	cancelBurstStart = 0
 	cancelBurstCount = 0
 	cancelBurstExpected = 0
+	resetRestartBatchFilterState()
 	if DBM.Options.HardcodedTimer and not badStateDetected then
 		self:IgnoreBlizzardAPI()
 		self:RegisterShortTermEvents(
@@ -97,6 +115,7 @@ function mod:OnCombatEnd()
 	cancelBurstStart = 0
 	cancelBurstCount = 0
 	cancelBurstExpected = 0
+	resetRestartBatchFilterState()
 	self:UnregisterShortTermEvents()
 end
 
@@ -144,6 +163,9 @@ do
 			if pendingStage2Devour then
 				timerDevourTheUnworthyCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "devourTheUnworthy", "devourTheUnworthyCount"))
 				activeEventTypes[eventID] = "devourTheUnworthy"
+				suppressStage1RestartBatch = true--After devour starts, next stage-1 restart can emit a canceled duplicate batch
+				suppressStage1RestartBatchStartedAt = GetTime()
+				suppressStage1RestartBatchTimers = {}
 				pendingStage2Devour = false
 			else
 				timerNullVanguardCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "nullVanguard", "nullVanguardCount"))
@@ -166,6 +188,22 @@ do
 		if C_EncounterTimeline.GetEventState(eventID) == 1 then return end--Paused bars are transient and canceled later
 		local timerExact = eventInfo.duration
 		local timer = math.floor(timerExact + 0.5)
+		if suppressStage1RestartBatch and (GetTime() - suppressStage1RestartBatchStartedAt) > 1.5 then
+			suppressStage1RestartBatch = false
+			suppressStage1RestartBatchTimers = {}
+		end
+		if suppressStage1RestartBatch and restartBatchTimerFilter[timer] then
+			if suppressStage1RestartBatchTimers[timer] then
+				suppressStage1RestartBatchTimers[timer] = nil--Second copy in the same restart burst is the real one
+				if not next(suppressStage1RestartBatchTimers) then
+					suppressStage1RestartBatch = false
+				end
+			else
+				suppressStage1RestartBatchTimers[timer] = eventID--Ignore first copy, it cancels immediately
+				ignoredStage1RestartEvents[eventID] = true
+				return
+			end
+		end
 		if not badStateDetected then
 			timersAll(self, timer, timerExact, eventID)
 		end
@@ -174,6 +212,11 @@ do
 	function mod:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(eventID)
 		local eventState = C_EncounterTimeline.GetEventState(eventID)
 		if not eventID or not eventState then return end
+		if ignoredStage1RestartEvents[eventID] then
+			ignoredStage1RestartEvents[eventID] = nil
+			self:TLCountCancel(eventID)
+			return
+		end
 		if eventState == 2 then
 			local eventType, eventCount = self:TLCountFinish(eventID)
 			activeEventTypes[eventID] = nil
@@ -201,6 +244,19 @@ do
 				end
 			end
 		elseif eventState == 3 then
+			local eventType = activeEventTypes[eventID]
+			if eventType == "devourTheUnworthy" then
+				self:TLCountCancel(eventID)
+				activeEventTypes[eventID] = nil
+				if self:GetStage(2) then
+					self:SetStage(1)
+				end
+				return
+			end
+			if not eventType then
+				self:TLCountCancel(eventID)
+				return
+			end
 			local now = GetTime()
 			if (now - cancelBurstStart) <= 0.35 then
 				cancelBurstCount = cancelBurstCount + 1
