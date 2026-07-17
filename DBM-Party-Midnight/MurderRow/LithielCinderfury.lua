@@ -26,7 +26,7 @@ mod:AddCustomAlertSoundOption(1224478, true, 2)--Malefic Wave
 mod:AddCustomTimerOptions(1218203, true, 1, 0)--Fingers off Guldan
 mod:AddCustomTimerOptions(474408, true, 1, 0)--Summon Vilefiend
 mod:AddCustomTimerOptions(1224478, true, 2, 0)--Malefic Wave
---Midnight private aura replacements
+--Custom Aura Sounds
 
 function mod:OnLimitedCombatStart()
 	self:EnableAlertOptions(1218203, 37, "range5", 2, 2)--Or change to mobssoon?

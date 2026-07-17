@@ -18,8 +18,8 @@ if DBM:IsPostMidnight() then
 	DBM:RegisterAltSpellName(388537, DBM_COMMON_L.AOEDAMAGE)--Arcane Fissure -> AOE Damage
 
 	--NOTE: Once again no private auras to hook up for Mana Bombs
-	--Midnight private aura replacements
---	mod:AddPrivateAuraSoundOption(386181, true, 386181, 1)
+	--Custom Aura Sounds
+--	mod:AddAuraSoundOption(386181, true, 386181, 1)
 
 	local specWarnArcaneOrbs			= mod:NewSpecialWarningCount(385974, nil, nil, nil, 2, 2, nil, nil, "catchballs")
 	local specWarnManaBombs				= mod:NewSpecialWarningCount(386173, nil, nil, nil, 2, 2, nil, nil, "scattersoon")
@@ -50,7 +50,9 @@ if DBM:IsPostMidnight() then
 			end
 			specWarnArcaneFissure:SetAlert(277, "aesoon", 2)
 		end
-		local onlyColor = not DBM.Options.HideDBMBars
+		--If user has DBM bars enabled, we only want to register colors to the blizz api so that the blizz bars are also colorized.
+	--If user has bars disabled, or we are in a bad state, onlyColor is false and we register countdowns as well.
+	local onlyColor = not DBM.Options.HideDBMBars and not badStateDetected
 		timerArcaneOrbsCD:SetTimeline(274, onlyColor)
 		timerManaBombsCD:SetTimeline(275, onlyColor)
 		timerArcaneExpulsionCD:SetTimeline(276, onlyColor)

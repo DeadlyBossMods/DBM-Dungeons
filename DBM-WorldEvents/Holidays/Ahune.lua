@@ -79,7 +79,8 @@ function mod:UNIT_TARGETABLE_CHANGED(uId)
 end
 
 function mod:GOSSIP_SHOW()
-	if self.Options.AutoGossipEncounter then
-		self:SelectMatchingGossip(true, self:IsRetail() and 135555 or 36888)
+	local gossipOptionID = self:GetGossipID()
+	if self.Options.AutoGossipEncounter and (gossipOptionID == 135555 or gossipOptionID == 36888) then
+		self:SelectGossip(gossipOptionID)
 	end
 end

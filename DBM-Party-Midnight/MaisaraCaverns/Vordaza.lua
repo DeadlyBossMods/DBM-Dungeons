@@ -14,7 +14,7 @@ mod:RegisterCombat("combat")
 --NOTE: Final Pursuit has TWO eventIDs even though it's an add fixate. maybe it has a timer?
 --NOTE: Whispering Miasma has no event ID, but might be a persistent effect entire encounter and not need one
 --NOTE: https://www.wowhead.com/spell=1251813/lingering-dread has a private aura but it doesn't need an alert, just anchor tracking
---NOTE: Wrest Phantoms timeline spellID is 1251204; 1252130 is the damage aura tracked by AddPrivateAuraSoundOption below
+--NOTE: Wrest Phantoms timeline spellID is 1251204; 1252130 is the damage aura tracked by AddAuraSoundOption below
 
 DBM:RegisterAltSpellName(1252054, DBM_COMMON_L.FRONTAL)--Unmake -> Frontal
 
@@ -28,9 +28,9 @@ local timerUnmakeCD					= mod:NewCDCountTimer(20.5, 1252054, nil, nil, nil, 3)
 local timerWrestPhantomsCD			= mod:NewCDCountTimer(20.5, 1251204, nil, nil, nil, 1)
 local timerNecroticConvergenceCD	= mod:NewCDCountTimer(70, 1250708, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 
---Midnight private aura replacements
---mod:AddPrivateAuraSoundOption(1252130, true, 1252130, 1, 2, "watchfeet", 8)--Unmake damage (Wrest Phantoms cast is 1251204)
-mod:AddPrivateAuraSoundOption(1251775, true, 1251775, 1, 2, "fixateyou", 19)--Final Pursuit (also encounterevent ID 688 which was hotfixed in recently. Indicating this private aura might zap soon)
+--Custom Aura Sounds
+mod:AddAuraSoundOption(1252130, true, 1252130, 1, 2, "watchfeet", 8)--Unmake damage (Wrest Phantoms cast is 1251204)
+mod:AddAuraSoundOption(1251775, true, 1251775, 1, 2, "fixateyou", 19)--Final Pursuit (also encounterevent ID 688 which was hotfixed in recently. Indicating this private aura might zap soon)
 
 mod.vb.drainSoulCount = 0
 mod.vb.unmakeCount = 0
@@ -52,7 +52,9 @@ local function setFallback(self, dontSetAlerts)
 		specWarnWrestPhantoms:SetAlert(19, "mobsoon", 2)
 		specWarnNecroticConvergence:SetAlert(20, "attackshield", 2)
 	end
-	local onlyColor = not DBM.Options.HideDBMBars
+	--If user has DBM bars enabled, we only want to register colors to the blizz api so that the blizz bars are also colorized.
+	--If user has bars disabled, or we are in a bad state, onlyColor is false and we register countdowns as well.
+	local onlyColor = not DBM.Options.HideDBMBars and not badStateDetected
 	timerDrainSoulCD:SetTimeline(16, onlyColor)
 	timerUnmakeCD:SetTimeline(17, onlyColor)
 	timerWrestPhantomsCD:SetTimeline(19, onlyColor)

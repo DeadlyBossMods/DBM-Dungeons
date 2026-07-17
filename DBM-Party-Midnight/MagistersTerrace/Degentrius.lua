@@ -20,8 +20,8 @@ local timerDevouringEntropyCD			= mod:NewCDCountTimer(20.5, 1215897, nil, nil, n
 local timerUnstableVoidEssenceCD		= mod:NewCDCountTimer(20.5, 1215087, nil, nil, nil, 5)
 local timerHulkingFragmentCD			= mod:NewCDCountTimer(20.5, 1280113, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 
---Midnight private aura replacements
---mod:AddPrivateAuraSoundOption(1215897, true, 1215897, 1, 1, "scatter", 2)--Devouring Entropy
+--Custom Aura Sounds
+mod:AddAuraSoundOption(1215897, true, 1215897, 1, 1, "scatter", 2)--Devouring Entropy
 
 mod.vb.entropyCount = 0
 mod.vb.essenceCount = 0
@@ -39,7 +39,9 @@ local function setFallback(self, dontSetAlerts)
 			specWarnHulkingFragment:SetAlert(420, "defensive", 2, 1)
 		end
 	end
-	local onlyColor = not DBM.Options.HideDBMBars
+	--If user has DBM bars enabled, we only want to register colors to the blizz api so that the blizz bars are also colorized.
+	--If user has bars disabled, or we are in a bad state, onlyColor is false and we register countdowns as well.
+	local onlyColor = not DBM.Options.HideDBMBars and not badStateDetected
 	timerDevouringEntropyCD:SetTimeline(290, onlyColor)
 	timerUnstableVoidEssenceCD:SetTimeline(292, onlyColor)
 	timerHulkingFragmentCD:SetTimeline(420, onlyColor)

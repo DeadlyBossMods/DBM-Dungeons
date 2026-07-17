@@ -25,7 +25,7 @@ if DBM:IsPostMidnight() then
 	local timerSymphonyCD				= mod:NewCastTimer(20.5, 1266003, nil, nil, nil, 3, nil, DBM_COMMON_L.DEADLY_ICON)
 	local timerBacklashCD				= mod:NewCastTimer(20.5, 1266001, nil, nil, nil, 2)
 
-	--mod:AddPrivateAuraSoundOption(1265426, true, 1265426, 2, 1, "beamyou", 19)
+	--mod:AddAuraSoundOption(1265426, true, 1265426, 2, 1, "beamyou", 19)
 
 	mod.vb.dirgeCount = 0
 	mod.vb.discordantBeamCount = 0
@@ -49,7 +49,9 @@ if DBM:IsPostMidnight() then
 			specWarnSymphony:SetAlert(253, "watchstep", 3, 2)
 			specWarnBacklash:SetAlert(254, "carefly", 2, 2)
 		end
-		local onlyColor = not DBM.Options.HideDBMBars
+		--If user has DBM bars enabled, we only want to register colors to the blizz api so that the blizz bars are also colorized.
+	--If user has bars disabled, or we are in a bad state, onlyColor is false and we register countdowns as well.
+	local onlyColor = not DBM.Options.HideDBMBars and not badStateDetected
 		timerDirgeCD:SetTimeline(249, onlyColor)
 		timerDiscordantBeamCD:SetTimeline(250, onlyColor)
 		timerDisintegrateCD:SetTimeline(251, onlyColor)

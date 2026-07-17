@@ -16,17 +16,18 @@ local warnBrilliantRadiance			= mod:NewCountAnnounce(1255503, 2)
 local specWarnSearingRend			= mod:NewSpecialWarningCount(1255335, "Melee", nil, nil, 1, 2, nil, nil, "frontal")
 local specWarnDivineGuile			= mod:NewSpecialWarningCount(1257567, nil, nil, nil, 2, 2, nil, nil, "phasechange")
 local specWarnFlicker				= mod:NewSpecialWarningDodgeCount(1255531, nil, nil, nil, 2, 2, nil, nil, "watchstep")
+local specWarnBrilliantDispersion	= mod:NewSpecialWarningBlizzYou(1255503, nil, nil, nil, 1, 18, nil, nil, "poolyou")
 
 local timerSearingRendCD			= mod:NewCDCountTimer(26, 1255335, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerBrilliantDispersionCD	= mod:NewCDCountTimer(25, 1255503, nil, nil, nil, 3)
 local timerDivineGuileCD			= mod:NewCDCountTimer(52, 1257567, nil, nil, nil, 6, nil, DBM_COMMON_L.IMPORTANT_ICON)
 local timerFlickerCD				= mod:NewCDCountTimer(10, 1255531, nil, nil, nil, 3)
 
---Private Auras
---mod:AddPrivateAuraSoundOption(1255503, true, 1255503, 1, 1, "poolyou", 18)--Brilliant Dispersion
---mod:AddPrivateAuraSoundOption(1255335, false, 1255335, 1, 1)--Searing Rend
---mod:AddPrivateAuraSoundOption(1255310, true, 1255310, 1, 2, "watchfeet", 8)--Radiant Scar
---mod:AddPrivateAuraSoundOption(1271956, false, 1271956, 1, 1)--Mirrored Rend
+--Auras
+--mod:AddAuraSoundOption(1255503, true, 1255503, 1, 1, "poolyou", 18)--Brilliant Dispersion (handled by ENCOUNTER_WARNING intercept)
+--mod:AddAuraSoundOption(1255335, false, 1255335, 1, 1)--Searing Rend
+mod:AddAuraSoundOption(1255310, true, 1255310, 1, 2, "watchfeet", 8)--Radiant Scar
+--mod:AddAuraSoundOption(1271956, false, 1271956, 1, 1)--Mirrored Rend
 
 mod.vb.searingRendCount = 0
 mod.vb.brilliantDispersionCount = 0
@@ -46,7 +47,9 @@ local function setFallback(self, dontSetAlerts)
 		end
 		specWarnFlicker:SetAlert(112, "watchstep", 2)
 	end
-	local onlyColor = not DBM.Options.HideDBMBars
+	--If user has DBM bars enabled, we only want to register colors to the blizz api so that the blizz bars are also colorized.
+	--If user has bars disabled, or we are in a bad state, onlyColor is false and we register countdowns as well.
+	local onlyColor = not DBM.Options.HideDBMBars and not badStateDetected
 	timerBrilliantDispersionCD:SetTimeline(109, onlyColor)
 	timerDivineGuileCD:SetTimeline(110, onlyColor)
 	timerSearingRendCD:SetTimeline(111, onlyColor)
@@ -93,6 +96,7 @@ do
 			timerFlickerCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "flicker", "flickerCount"))
 			handled = true
 		elseif timer == 52 then--Divine Guile
+			timerDivineGuileCD:Stop()--Boss randomly resends this timer, leanest way to silence annoying debug
 			timerDivineGuileCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "divineGuile", "divineGuileCount"))
 			handled = true
 		end
@@ -126,6 +130,7 @@ do
 					specWarnSearingRend:Play("frontal")
 				elseif eventType == "brilliantDispersion" then
 					warnBrilliantRadiance:Show(eventCount)
+					specWarnBrilliantDispersion:Show(eventCount, "poolyou")
 				elseif eventType == "divineGuile" then
 					specWarnDivineGuile:Show(eventCount)
 					specWarnDivineGuile:Play("phasechange")

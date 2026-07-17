@@ -29,10 +29,10 @@ if DBM:IsPostMidnight() then
 	local timerThrowSaroniteCD				= mod:NewCDCountTimer(20.5, 1261286, nil, nil, nil, 3, nil, DBM_COMMON_L.IMPORTANT_ICON)
 	local timerGlacialOverloadCD			= mod:NewCDCountTimer(20.5, 1262029, nil, nil, nil, 2, nil, DBM_COMMON_L.DEADLY_ICON)
 
-	--Midnight private aura replacements
-	--mod:AddPrivateAuraSoundOption(1261286, true, 1261286, 1, 1, "debuffyou", 17)--Throw Saronite (handed by ENCOUNTER_WARNING now for hardcoded text/flash)
-	--mod:AddPrivateAuraSoundOption(1261540, true, 1261540, 1, 1, "targetyou", 2)--Orebreaker (handed by ENCOUNTER_WARNING now for hardcoded text/flash)
-	mod:AddPrivateAuraSoundOption(1261799, true, 1261799, 1, 2, "watchfeet", 8)--Glacial Overload (GTFO)
+	--Custom Aura Sounds
+	--mod:AddAuraSoundOption(1261286, true, 1261286, 1, 1, "debuffyou", 17)--Throw Saronite (handed by ENCOUNTER_WARNING now for hardcoded text/flash)
+	--mod:AddAuraSoundOption(1261540, true, 1261540, 1, 1, "targetyou", 2)--Orebreaker (handed by ENCOUNTER_WARNING now for hardcoded text/flash)
+	mod:AddAuraSoundOption(1261799, true, 1261799, 1, 2, "watchfeet", 8)--Glacial Overload (GTFO)
 
 	mod.vb.orebreakerCount = 0
 	mod.vb.cryostompCount = 0
@@ -43,7 +43,9 @@ if DBM:IsPostMidnight() then
 	---@param self DBMMod
 	---@param dontSetAlerts boolean? Called on engage when we only want to set timeline parameters and not touch encounter alerts
 	local function setFallback(self, dontSetAlerts)
-		local onlyColor = not DBM.Options.HideDBMBars
+		--If user has DBM bars enabled, we only want to register colors to the blizz api so that the blizz bars are also colorized.
+	--If user has bars disabled, or we are in a bad state, onlyColor is false and we register countdowns as well.
+	local onlyColor = not DBM.Options.HideDBMBars and not badStateDetected
 		--Blizz API fallbacks
 		if not dontSetAlerts then
 			specWarnOrebreakerYou:SetAlert(144, "targetyou", 2, 3, 0)
@@ -217,7 +219,7 @@ else
 		if msg == L.SaroniteRockThrow or msg:find(L.SaroniteRockThrow) then
 			targetName = Ambiguate(targetName, "none")
 			if self:AntiSpam(5, targetName) then--Antispam sync by target name, since this doesn't use dbms built in onsync handler.
-				local uId = DBM:GetRaidUnitId(targetName)
+				local uId = DBM:GetRaidUnitId(targetName, true)
 				if uId and not UnitIsUnit(uId, "player") then
 					warnSaroniteRock:Show(targetName)
 				end

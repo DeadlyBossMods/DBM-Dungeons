@@ -26,8 +26,8 @@ if DBM:IsPostMidnight() then
 	local timerWindChakramCD		= mod:NewCDCountTimer(20.5, 1258148, nil, nil, nil, 3)
 	local timerChakramVortexCD		= mod:NewCDCountTimer(20.5, 156793, nil, nil, nil, 6, nil, DBM_COMMON_L.IMPORTANT_ICON)
 
-	--Midnight private aura replacements
-	mod:AddPrivateAuraSoundOption(1252733, true, 1252733, 1, 1, "debuffyou", 17)--Gale Surge
+	--Custom Aura Sounds
+	mod:AddAuraSoundOption(1252733, true, 1252733, 1, 1, "debuffyou", 17)--Gale Surge
 
 	mod.vb.galeSurgeCount = 0
 	mod.vb.fanofBladesCount = 0
@@ -38,7 +38,9 @@ if DBM:IsPostMidnight() then
 	---@param self DBMMod
 	---@param dontSetAlerts boolean? Called on engage when we only want to set timeline parameters and not touch encounter alerts
 	local function setFallback(self, dontSetAlerts)
-		local onlyColor = not DBM.Options.HideDBMBars
+		--If user has DBM bars enabled, we only want to register colors to the blizz api so that the blizz bars are also colorized.
+	--If user has bars disabled, or we are in a bad state, onlyColor is false and we register countdowns as well.
+	local onlyColor = not DBM.Options.HideDBMBars and not badStateDetected
 		if not dontSetAlerts then
 			specWarnFanofBlades:SetAlert(299, "aesoon", 2, 2)
 			specWarnWindChakram:SetAlert(300, "frontal", 15, 2)

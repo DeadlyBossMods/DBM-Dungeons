@@ -26,8 +26,8 @@ local timerRepulsingSlamCD				= mod:NewCDCountTimer(20.5, 474496, nil, nil, nil,
 local timerEtherealShacklesCD			= mod:NewCDCountTimer(20.5, 1214038, nil, nil, nil, 3, nil, DBM_COMMON_L.MAGIC_ICON)
 local timerArcaneExpulsionCD			= mod:NewCDCountTimer(20.5, 1214081, nil, nil, nil, 2)
 
---mod:AddPrivateAuraSoundOption(1214089, true, 1214089, 1, 2, "watchfeet", 8)--Arcane Residue (GTFO)
---mod:AddPrivateAuraSoundOption(1214038, true, 1214038, 1, 1, "debuffyou", 17)--Ethereal Shackles
+mod:AddAuraSoundOption(1214089, true, 1214089, 1, 2, "watchfeet", 8)--Arcane Residue (GTFO)
+mod:AddAuraSoundOption(1214038, true, 1214038, 1, 1, "debuffyou", 17)--Ethereal Shackles
 
 mod.vb.protocolCount = 0
 mod.vb.slamCount = 0
@@ -46,7 +46,9 @@ local function setFallback(self, dontSetAlerts)
 		end
 		specWarnArcaneExpulsion:SetAlert(288, "carefly", 2, 3)
 	end
-	local onlyColor = not DBM.Options.HideDBMBars
+	--If user has DBM bars enabled, we only want to register colors to the blizz api so that the blizz bars are also colorized.
+	--If user has bars disabled, or we are in a bad state, onlyColor is false and we register countdowns as well.
+	local onlyColor = not DBM.Options.HideDBMBars and not badStateDetected
 	timerRefuelingProtocolCD:SetTimeline(281, onlyColor)
 	timerRepulsingSlamCD:SetTimeline(286, onlyColor)
 	timerEtherealShacklesCD:SetTimeline(287, onlyColor)
@@ -87,7 +89,7 @@ do
 			return
 		elseif timer == 48 then--Ignored protocol/reset artifact seen in logged pull (always canceled early)
 			return
-		elseif timer == 45 then--Refueling Protocol
+		elseif timerExact == 45 then--Refueling Protocol (45 exact, an artifact such as 44.994 is not a real timer, but a resend that just happens to round to 45)
 			timerRefuelingProtocolCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "protocol", "protocolCount"))
 		elseif timer == 5 or timer == 6 or timer == 7 then--Repulsing Slam opener after pull/refuel (state 1 can round to 7)
 			timerRepulsingSlamCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "slam", "slamCount"))
@@ -113,6 +115,10 @@ do
 	function mod:ENCOUNTER_TIMELINE_EVENT_ADDED(eventInfo)
 		if eventInfo.source ~= 0 then return end
 		local eventID = eventInfo.id
+		local eventState = C_EncounterTimeline.GetEventState(eventID)
+		--Ignore erratic garbage sent when boss bugs out and sends state 1 2 or 3 timers on start
+		--Note. This is a known issue with this boss specifically and state filters on ENCOUNTER_TIMELINE_EVENT_ADDED aren't typically needed
+		if eventState ~= 0 then return end
 		local timerExact = eventInfo.duration
 		local timer = math.floor(timerExact + 0.5)
 		if not badStateDetected then

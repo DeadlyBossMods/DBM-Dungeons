@@ -20,9 +20,9 @@ mod:AddCustomTimerOptions(1219482, nil, 5, 0)--Rift Claws
 mod:AddCustomTimerOptions(1236126, nil, 3, 0)--Binding Javelin
 mod:AddCustomTimerOptions(1220427, nil, 3, 0)--Warp Strike
 mod:AddCustomTimerOptions(1219700, nil, 6, 0)--Arcane Blitz
---Midnight private aura replacements
-mod:AddPrivateAuraSoundOption({1220427,1227142}, true, 1220427, 1, 1, "lineyou", 17)--Warp Strike
-mod:AddPrivateAuraSoundOption(1236126, true, 1236126, 1, 1, "targetyou", 2)--Binding Javelin
+--Custom Aura Sounds
+mod:AddAuraSoundOption({1220427,1227142}, true, 1220427, 1, 1, "lineyou", 17)--Warp Strike
+mod:AddAuraSoundOption(1236126, true, 1236126, 1, 1, "targetyou", 2)--Binding Javelin
 
 function mod:OnLimitedCombatStart()
 	if self:IsTank() then

@@ -26,10 +26,10 @@ local timerBarrageCD			= mod:NewCDCountTimer(20.5, 1260643, nil, nil, nil, 3)
 local timerInfectedPinionsCD	= mod:NewCDCountTimer(20.5, 1246666, nil, nil, nil, 5, nil, DBM_COMMON_L.DISEASE_ICON)
 local timerCarrionSwoopCD		= mod:NewCDCountTimer(20.5, 1249478, nil, nil, nil, 3, nil, DBM_COMMON_L.IMPORTANT_ICON)
 
---Midnight private aura replacements
---mod:AddPrivateAuraSoundOption(1243741, true, 1243741, 1, 1, "stunyou", 19)--Freezing Trap Stun
-mod:AddPrivateAuraSoundOption(1260643, true, 1260643, 1, 1, "frontalyou", 19)--Barrage
-mod:AddPrivateAuraSoundOption(1249478, true, 1249478, 1, 1, "runtotrap", 19)--Carrion Swoop
+--Custom Aura Sounds
+--mod:AddAuraSoundOption(1243741, true, 1243741, 1, 1, "stunyou", 19)--Freezing Trap Stun
+mod:AddAuraSoundOption(1260643, true, 1260643, 1, 1, "frontalyou", 19)--Barrage
+mod:AddAuraSoundOption(1249478, true, 1249478, 1, 1, "runtotrap", 19)--Carrion Swoop
 
 mod.vb.flankingSpearCount = 0
 mod.vb.fetidQuillstormCount = 0
@@ -60,7 +60,9 @@ local function setFallback(self, dontSetAlerts)
 		specWarnBarrage:SetAlert(153, "frontal", 15)
 --		specWarnInfectedPinions:SetAlert(154, "helpdispel", 2)
 	end
-	local onlyColor = not DBM.Options.HideDBMBars
+	--If user has DBM bars enabled, we only want to register colors to the blizz api so that the blizz bars are also colorized.
+	--If user has bars disabled, or we are in a bad state, onlyColor is false and we register countdowns as well.
+	local onlyColor = not DBM.Options.HideDBMBars and not badStateDetected
 	timerFlankingSpearCD:SetTimeline(150, onlyColor)
 	timerFetidQuillstormCD:SetTimeline(151, onlyColor)
 	timerFreezingTrapCD:SetTimeline(152, onlyColor)

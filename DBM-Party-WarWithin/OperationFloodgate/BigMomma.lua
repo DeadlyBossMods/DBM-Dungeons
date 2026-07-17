@@ -21,9 +21,9 @@ mod:AddCustomAlertSoundOption(460156, true, 1)
 mod:AddCustomTimerOptions(473351, "Tank|Healer", 5, 0)
 mod:AddCustomTimerOptions(473220, true, 3, 0)
 mod:AddCustomTimerOptions(1214780, true, 4, 0)--I highly doubt it actually has a timer event, but just in case lets color it anyways
---Midnight private aura replacements
-mod:AddPrivateAuraSoundOption(473354, true, 473220, 1, 1, "runout", 2)--Sonic Boom
-mod:AddPrivateAuraSoundOption(473287, true, 473287, 1, 2, "watchfeet", 8)--GTFO
+--Custom Aura Sounds
+mod:AddAuraSoundOption(473354, true, 473220, 1, 1, "runout", 2)--Sonic Boom
+mod:AddAuraSoundOption(473287, true, 473287, 1, 2, "watchfeet", 8)--GTFO
 
 function mod:OnLimitedCombatStart()
 	if self:IsTank() then

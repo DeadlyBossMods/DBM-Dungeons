@@ -14,6 +14,7 @@ mod:RegisterCombat("combat")
 --mod:RegisterEventsInCombat(
 
 --)
+--NOTE https://www.wowhead.com/ptr/spell=1296871/power-surge has an ID of 780 but is not in the journal
 --Custom Sounds on cast/cooldown expiring
 mod:AddCustomAlertSoundOption(1240098, true, 2)--Lightfall
 mod:AddCustomAlertSoundOption(1241058, "Healer", 2)--Grievous Thrash
@@ -29,9 +30,9 @@ mod:AddCustomTimerOptions(1241058, true, 5, 0)--Grievous Thrash
 mod:AddCustomTimerOptions(1239885, true, 6, 0)--Bear Form
 mod:AddCustomTimerOptions(1239882, true, 6, 0)--Moonkin Form
 mod:AddCustomTimerOptions(1239883, true, 6, 0)--Haranir Form
---Midnight private aura replacements
---mod:AddPrivateAuraSoundOption(1239825, true, 1239825, 1, 1, "runout", 2)--Lightfire
---mod:AddPrivateAuraSoundOption(1240222, true, 1240222, 1, 1, "lineyou", 17)--Pulverizing Strikes
+--Custom Aura Sounds
+--mod:AddAuraSoundOption(1239825, true, 1239825, 1, 1, "runout", 2)--Lightfire
+--mod:AddAuraSoundOption(1240222, true, 1240222, 1, 1, "lineyou", 17)--Pulverizing Strikes
 
 function mod:OnLimitedCombatStart()
 	self:EnableAlertOptions(1240098, 182, "watchstep", 2, 3)

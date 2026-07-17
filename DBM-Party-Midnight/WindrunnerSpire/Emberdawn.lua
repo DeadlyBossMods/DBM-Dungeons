@@ -23,8 +23,8 @@ local timerFlamingUpdraftCD			= mod:NewCDCountTimer(6, 466556, nil, nil, nil, 3,
 local timerBurningGaleCD			= mod:NewCDCountTimer(15, 465904, nil, nil, nil, 2, nil, DBM_COMMON_L.IMPORTANT_ICON)
 
 --TODO, fix private aura GTFO sound defaults if assumption is wrong
---mod:AddPrivateAuraSoundOption(466559, true, 466556, 1, 1, "runout", 2)--Flaming Updraft (Currently disabled by blizzard, so hidden from UI automatically by core)
---mod:AddPrivateAuraSoundOption(472118, false, 472118, 1, 2, "watchfeet", 8)--Ignited Embers. GTFO that's off by default because under certain conditions you do not want to avoid it
+mod:AddAuraSoundOption(466559, true, 466556, 1, 1, "runout", 2)--Flaming Updraft (Currently disabled by blizzard, so hidden from UI automatically by core)
+mod:AddAuraSoundOption(472118, false, 472118, 1, 2, "watchfeet", 8)--Ignited Embers. GTFO that's off by default because under certain conditions you do not want to avoid it
 
 mod.vb.searingBeakCount = 0
 mod.vb.flamingUpdraftCount = 0
@@ -41,7 +41,9 @@ local function setFallback(self, dontSetAlerts)
 		end
 		specWarnBurningGale:SetAlert(242, "pushbackincoming", 13)
 	end
-	local onlyColor = not DBM.Options.HideDBMBars
+	--If user has DBM bars enabled, we only want to register colors to the blizz api so that the blizz bars are also colorized.
+	--If user has bars disabled, or we are in a bad state, onlyColor is false and we register countdowns as well.
+	local onlyColor = not DBM.Options.HideDBMBars and not badStateDetected
 	timerSearingBeakCD:SetTimeline(239, onlyColor)
 	timerFlamingUpdraftCD:SetTimeline(241, onlyColor)
 	timerBurningGaleCD:SetTimeline(242, onlyColor)

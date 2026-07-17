@@ -31,7 +31,7 @@ local timerImplodingStrikeCD				= mod:NewCDCountTimer(20.5, 1256355, nil, nil, n
 local timerEmptinessOfTheVoidCD				= mod:NewVarCountTimer("v19.5-23.3", 1256351, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerPhase							= mod:NewStageTimer(42)
 
-mod:AddPrivateAuraSoundOption({1287014, 1256045}, true, 1287014, 1, 2, "watchfeet", 8)--Null Zone
+mod:AddAuraSoundOption({1287014, 1256045}, true, 1287014, 1, 2, "watchfeet", 8)--Null Zone
 
 mod.vb.devouringEssenceCount = 0
 mod.vb.implodingStrikeCount = 0

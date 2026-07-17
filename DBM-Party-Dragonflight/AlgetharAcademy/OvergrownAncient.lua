@@ -40,8 +40,8 @@ if DBM:IsPostMidnight() then
 	DBM:RegisterAltSpellName(388623, DBM_COMMON_L.BIG_ADD)--Branch Out -> Big Add
 
 	--Note, no eventID for healing touch so no timer or alert for it sadly
-	--Midnight private aura replacements
---	mod:AddPrivateAuraSoundOption(433740, true, 433740, 1)
+	--Custom Aura Sounds
+--	mod:AddAuraSoundOption(433740, true, 433740, 1)
 
 	local specWarnGerminate				= mod:NewSpecialWarningCount(388796, nil, nil, nil, 2, 2, nil, nil, "watchstep")
 	local specWarnBurstForth			= mod:NewSpecialWarningCount(388923, nil, nil, nil, 2, 2, nil, nil, "aesoon")
@@ -71,7 +71,9 @@ if DBM:IsPostMidnight() then
 			specWarnGerminate:SetAlert(284, "watchstep", 2)
 			specWarnBurstForth:SetAlert(285, "aesoon", 2)
 		end
-		local onlyColor = not DBM.Options.HideDBMBars
+		--If user has DBM bars enabled, we only want to register colors to the blizz api so that the blizz bars are also colorized.
+	--If user has bars disabled, or we are in a bad state, onlyColor is false and we register countdowns as well.
+	local onlyColor = not DBM.Options.HideDBMBars and not badStateDetected
 		timerBarkbreakerCD:SetTimeline(282, onlyColor)
 		timerBranchOutCD:SetTimeline(283, onlyColor)
 		timerGerminateCD:SetTimeline(284, onlyColor)

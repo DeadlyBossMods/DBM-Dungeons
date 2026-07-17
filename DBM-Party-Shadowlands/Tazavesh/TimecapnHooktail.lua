@@ -16,11 +16,11 @@ mod:AddCustomTimerOptions(350134, true, 5, 0)--Infinite Breath
 mod:AddCustomTimerOptions(347371, true, 3, 0)--Grapeshot
 mod:AddCustomTimerOptions(1240097, true, 4, 0)--Time Bomb
 mod:AddCustomTimerOptions(352345, true, 3, 0)--Anchor Shot
---Midnight private aura replacements
+--Custom Aura Sounds
 --No private aura for https://www.wowhead.com/beta/spell=350134/infinite-breath yet. Check it if dungeon returns
-mod:AddPrivateAuraSoundOption(1240097, true, 1240097, 1, 1, "debuffyou", 17)--Time Bomb
-mod:AddPrivateAuraSoundOption(352345, true, 352345, 1, 1, "targetyou", 2)--Anchor Shot
-mod:AddPrivateAuraSoundOption(358947, true, 358947, 1, 2, "watchfeet", 8)--GTFO
+mod:AddAuraSoundOption(1240097, true, 1240097, 1, 1, "debuffyou", 17)--Time Bomb
+mod:AddAuraSoundOption(352345, true, 352345, 1, 1, "targetyou", 2)--Anchor Shot
+mod:AddAuraSoundOption(358947, true, 358947, 1, 2, "watchfeet", 8)--GTFO
 
 function mod:OnLimitedCombatStart()
 	self:EnableAlertOptions(350134, 591, "breathsoon", 2)

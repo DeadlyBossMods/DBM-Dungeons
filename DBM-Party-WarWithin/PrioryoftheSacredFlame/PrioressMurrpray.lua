@@ -23,9 +23,9 @@ mod:AddCustomTimerOptions(444608, true, 2, 0)
 mod:AddCustomTimerOptions(428169, true, 2, 0)
 mod:AddCustomTimerOptions(451605, true, 3, 0)
 mod:AddCustomTimerOptions(444546, true, 3, 0)
---Midnight private aura replacements
+--Custom Aura Sounds
 --Could not find a private aura for Purifying Light
-mod:AddPrivateAuraSoundOption(425556, true, 425556, 1, 2, "watchfeet", 8)--GTFO
+mod:AddAuraSoundOption(425556, true, 425556, 1, 2, "watchfeet", 8)--GTFO
 
 function mod:OnLimitedCombatStart()
 	self:EnableAlertOptions(444608, 534, "aesoon", 2)

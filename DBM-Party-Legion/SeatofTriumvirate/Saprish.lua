@@ -21,8 +21,8 @@ if DBM:IsPostMidnight() then
 	local timerOverloadCD				= mod:NewCDCountTimer(20.5, 1263523, nil, nil, nil, 2)
 
 	mod:AddCustomAlertSoundOption(248831, "HasInterrupt", 2)--Dread Screech
-	mod:AddPrivateAuraSoundOption(1280064, true, 1280064, 1, 1, "lineyou", 17)--Phase Dash
-	--mod:AddPrivateAuraSoundOption(245742, true, 245742, 2, 1, "targetyou", 2)--Shadow Pounce
+	mod:AddAuraSoundOption(1280064, true, 1280064, 1, 1, "lineyou", 17)--Phase Dash
+	--mod:AddAuraSoundOption(245742, true, 245742, 2, 1, "targetyou", 2)--Shadow Pounce
 
 	mod.vb.voidBombCount = 0
 	mod.vb.phaseDashCount = 0
@@ -39,7 +39,9 @@ if DBM:IsPostMidnight() then
 			specWarnVoidBomb:SetAlert(234, "bombsoon", 1, 2)
 			specWarnOverload:SetAlert(243, "aesoon", 2, 2)
 		end
-		local onlyColor = not DBM.Options.HideDBMBars
+		--If user has DBM bars enabled, we only want to register colors to the blizz api so that the blizz bars are also colorized.
+	--If user has bars disabled, or we are in a bad state, onlyColor is false and we register countdowns as well.
+	local onlyColor = not DBM.Options.HideDBMBars and not badStateDetected
 		timerVoidBombCD:SetTimeline(234, onlyColor)
 		timerPhaseDashCD:SetTimeline(235, onlyColor)
 		timerShadowPounceCD:SetTimeline(237, onlyColor)

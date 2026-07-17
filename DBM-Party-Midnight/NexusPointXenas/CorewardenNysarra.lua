@@ -11,44 +11,268 @@ mod.respawnTime = 29
 
 mod:RegisterCombat("combat")
 
---mod:RegisterEventsInCombat(
+local warnEclipsingStep				= mod:NewCountAnnounce(1249020, 2)
 
---)
+local specWarnLightscareFlare		= mod:NewSpecialWarningCount(1264439, nil, nil, nil, 2, 2, nil, nil, "watchstep")
+local specWarnUmbralLash			= mod:NewSpecialWarningCount(1247937, "Tank", nil, nil, 1, 2, nil, nil, "carefly")
+local specWarnNullVanguard			= mod:NewSpecialWarningCount(1252703, nil, nil, nil, 1, 2, nil, nil, "mobsoon")
+local specWarnDevourTheUnworthy		= mod:NewSpecialWarningCount(1271684, nil, nil, nil, 2, 2, nil, nil, "aesoon")
+local specWarnEclipsingStep			= mod:NewSpecialWarningBlizzYou(1249020, nil, nil, nil, 1, 2, nil, nil, "scatter")
 
---Custom Sounds on cast/cooldown expiring
-mod:AddCustomAlertSoundOption(1264439, true, 2)--Lightscare Flare
-mod:AddCustomAlertSoundOption(1247937, true, 1)--Umbral Lash
-mod:AddCustomAlertSoundOption(1252703, true, 1)--Null Vanguard
-mod:AddCustomAlertSoundOption(1271684, true, 2)--Devour the Unworthy
---Custom timer colors, countdowns, and disables
-mod:AddCustomTimerOptions(1249020, true, 3, 0)--Eclipsing Step
-mod:AddCustomTimerOptions(1264439, true, 5, 0)--Lightscare Flare
-mod:AddCustomTimerOptions(1247937, true, 5, 0)--Umbral Lash
-mod:AddCustomTimerOptions(1252703, true, 1, 0)--Null Vanguard
-mod:AddCustomTimerOptions(1271684, true, 2, 0)--Devour the Unworthy
---Private Auras
-mod:AddPrivateAuraSoundOption(1249020, true, 1249020, 1, 1, "scatter", 2)--Eclipsing Step
-mod:AddPrivateAuraSoundOption(1282678, true, 1282678, 1, 1, "justrun", 2)--Flailstorm
+local timerEclipsingStepCD			= mod:NewCDCountTimer(18, 1249020, nil, nil, nil, 3)
+local timerLightscareFlareCD		= mod:NewCDCountTimer(61, 1264439, nil, nil, nil, 5)
+local timerUmbralLashCD				= mod:NewCDCountTimer(17, 1247937, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+local timerNullVanguardCD			= mod:NewCDCountTimer(61, 1252703, nil, nil, nil, 1, nil, DBM_COMMON_L.IMPORTANT_ICON)
+local timerDevourTheUnworthyCD		= mod:NewCDCountTimer(15, 1271684, nil, nil, nil, 2)
+
+--Auras
+--mod:AddAuraSoundOption(1249020, true, 1249020, 1, 1, "scatter", 2)--Eclipsing Step (handled by ENCOUNTER_WARNING intercept)
+mod:AddAuraSoundOption(1282678, true, 1282678, 1, 1, "justrun", 2)--Flailstorm
+
+mod.vb.eclipsingStepCount = 0
+mod.vb.lightscareFlareCount = 0
+mod.vb.umbralLashCount = 0
+mod.vb.nullVanguardCount = 0
+mod.vb.devourTheUnworthyCount = 0
+
+local badStateDetected = false
+local sixtyOneTimerCount = 0
+local activeEventTypes = {}
+local pendingStage2Devour = false
+local cancelBurstStart = 0
+local cancelBurstCount = 0
+local cancelBurstExpected = 0
+local suppressStage1RestartBatch = false
+local suppressStage1RestartBatchStartedAt = 0
+local suppressStage1RestartBatchTimers = {}
+local ignoredStage1RestartEvents = {}
+local restartBatchTimerFilter = {
+	[3] = true,
+	[5] = true,
+	[15] = true,
+	[28] = true,
+}
+
+local function resetRestartBatchFilterState()
+	suppressStage1RestartBatch = false
+	suppressStage1RestartBatchStartedAt = 0
+	suppressStage1RestartBatchTimers = {}
+	ignoredStage1RestartEvents = {}
+end
+
+---@param self DBMMod
+---@param dontSetAlerts boolean? Called on engage when we only want to set timeline parameters and not touch encounter alerts
+local function setFallback(self, dontSetAlerts)
+	if not dontSetAlerts then
+		specWarnLightscareFlare:SetAlert(34, "watchstep", 2)
+		if self:IsTank() then
+			specWarnUmbralLash:SetAlert(35, "carefly", 2)
+		end
+		specWarnNullVanguard:SetAlert(36, "mobsoon", 2)
+		specWarnDevourTheUnworthy:SetAlert(37, "aesoon", 2)
+	end
+	--If user has DBM bars enabled, we only want to register colors to the blizz api so that the blizz bars are also colorized.
+	--If user has bars disabled, or we are in a bad state, onlyColor is false and we register countdowns as well.
+	local onlyColor = not DBM.Options.HideDBMBars and not badStateDetected
+	timerEclipsingStepCD:SetTimeline(33, onlyColor)
+	timerLightscareFlareCD:SetTimeline(34, onlyColor)
+	timerUmbralLashCD:SetTimeline(35, onlyColor)
+	timerNullVanguardCD:SetTimeline(36, onlyColor)
+	timerDevourTheUnworthyCD:SetTimeline(37, onlyColor)
+end
 
 function mod:OnLimitedCombatStart()
-	self:EnableAlertOptions(1264439, 34, "watchstep", 2)
-	if self:IsTank() then
-		self:EnableAlertOptions(1247937, 35, "carefly", 2)
+	self:TLCountReset()
+	self:SetStage(1)
+	self.vb.eclipsingStepCount = 1
+	self.vb.lightscareFlareCount = 1
+	self.vb.umbralLashCount = 1
+	self.vb.nullVanguardCount = 1
+	self.vb.devourTheUnworthyCount = 1
+	sixtyOneTimerCount = 0
+	activeEventTypes = {}
+	pendingStage2Devour = false
+	cancelBurstStart = 0
+	cancelBurstCount = 0
+	cancelBurstExpected = 0
+	resetRestartBatchFilterState()
+	if DBM.Options.HardcodedTimer and not badStateDetected then
+		self:IgnoreBlizzardAPI()
+		self:RegisterShortTermEvents(
+			"ENCOUNTER_TIMELINE_EVENT_ADDED",
+			"ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED"
+		)
+		setFallback(self, true)
+	else
+		setFallback(self)
 	end
-	self:EnableAlertOptions(1252703, 36, "mobsoon", 2)
-	self:EnableAlertOptions(1271684, 37, "aesoon", 2)
+end
 
-	self:EnableTimelineOptions(1249020, 33)
-	self:EnableTimelineOptions(1264439, 34)
-	self:EnableTimelineOptions(1247937, 35)
-	self:EnableTimelineOptions(1252703, 36)
-	self:EnableTimelineOptions(1271684, 37)
-	DBM:Debug("Hardcode this mod you Fing idiot")
-	DBM:Debug("Hardcode this mod you Fing idiot")
-	DBM:Debug("Hardcode this mod you Fing idiot")
-	DBM:Debug("Hardcode this mod you Fing idiot")
-	DBM:Debug("Hardcode this mod you Fing idiot")
-	DBM:Debug("Hardcode this mod you Fing idiot")
-	DBM:Debug("Hardcode this mod you Fing idiot")
-	DBM:Debug("Hardcode this mod you Fing idiot")
+function mod:OnCombatEnd()
+	self:TLCountReset()
+	activeEventTypes = {}
+	pendingStage2Devour = false
+	cancelBurstStart = 0
+	cancelBurstCount = 0
+	cancelBurstExpected = 0
+	resetRestartBatchFilterState()
+	self:UnregisterShortTermEvents()
+end
+
+do
+	---@return number
+	local function getActiveEventCount()
+		local count = 0
+		for _ in pairs(activeEventTypes) do
+			count = count + 1
+		end
+		return count
+	end
+
+	---@param self DBMMod
+	---@param timer number
+	---@param timerExact number
+	---@param eventID number
+	local function timersAll(self, timer, timerExact, eventID)
+		local handled = false
+		if timer > 80 then
+			return
+		elseif timer == 3 or timer == 17 then--Umbral Lash
+			timerUmbralLashCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "umbralLash", "umbralLashCount"))
+			activeEventTypes[eventID] = "umbralLash"
+			handled = true
+		elseif timer == 5 or timer == 18 then--Eclipsing Step
+			timerEclipsingStepCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "eclipsingStep", "eclipsingStepCount"))
+			activeEventTypes[eventID] = "eclipsingStep"
+			handled = true
+		elseif timer == 28 then--Lightscare Flare opener
+			timerLightscareFlareCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "lightscareFlare", "lightscareFlareCount"))
+			activeEventTypes[eventID] = "lightscareFlare"
+			handled = true
+		elseif timer == 61 then--Null Vanguard and Lightscare Flare share 61s slots, observed alternating by occurrence
+			sixtyOneTimerCount = sixtyOneTimerCount + 1
+			if sixtyOneTimerCount % 2 == 1 then
+				timerNullVanguardCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "nullVanguard", "nullVanguardCount"))
+				activeEventTypes[eventID] = "nullVanguard"
+			else
+				timerLightscareFlareCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "lightscareFlare", "lightscareFlareCount"))
+				activeEventTypes[eventID] = "lightscareFlare"
+			end
+			handled = true
+		elseif timer == 15 then--Stage-change marker: after a full cancel burst, next 15s becomes Devour the Unworthy
+			if pendingStage2Devour then
+				timerDevourTheUnworthyCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "devourTheUnworthy", "devourTheUnworthyCount"))
+				activeEventTypes[eventID] = "devourTheUnworthy"
+				suppressStage1RestartBatch = true--After devour starts, next stage-1 restart can emit a canceled duplicate batch
+				suppressStage1RestartBatchStartedAt = GetTime()
+				suppressStage1RestartBatchTimers = {}
+				pendingStage2Devour = false
+			else
+				timerNullVanguardCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "nullVanguard", "nullVanguardCount"))
+				activeEventTypes[eventID] = "nullVanguard"
+			end
+			handled = true
+		end
+		if not handled then
+			badStateDetected = true
+			self:ResumeBlizzardAPI()
+			self:UnregisterShortTermEvents()
+			setFallback(self)
+			DBM:Debug("|cffff0000Failed to match encounter timeline events to expected timers, falling back to Blizzard API|r", nil, nil, nil, true)
+		end
+	end
+
+	function mod:ENCOUNTER_TIMELINE_EVENT_ADDED(eventInfo)
+		if eventInfo.source ~= 0 then return end
+		local eventID = eventInfo.id
+		if C_EncounterTimeline.GetEventState(eventID) == 1 then return end--Paused bars are transient and canceled later
+		local timerExact = eventInfo.duration
+		local timer = math.floor(timerExact + 0.5)
+		if suppressStage1RestartBatch and (GetTime() - suppressStage1RestartBatchStartedAt) > 1.5 then
+			suppressStage1RestartBatch = false
+			suppressStage1RestartBatchTimers = {}
+		end
+		if suppressStage1RestartBatch and restartBatchTimerFilter[timer] then
+			if suppressStage1RestartBatchTimers[timer] then
+				suppressStage1RestartBatchTimers[timer] = nil--Second copy in the same restart burst is the real one
+				if not next(suppressStage1RestartBatchTimers) then
+					suppressStage1RestartBatch = false
+				end
+			else
+				suppressStage1RestartBatchTimers[timer] = eventID--Ignore first copy, it cancels immediately
+				ignoredStage1RestartEvents[eventID] = true
+				return
+			end
+		end
+		if not badStateDetected then
+			timersAll(self, timer, timerExact, eventID)
+		end
+	end
+
+	function mod:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(eventID)
+		local eventState = C_EncounterTimeline.GetEventState(eventID)
+		if not eventID or not eventState then return end
+		if ignoredStage1RestartEvents[eventID] then
+			ignoredStage1RestartEvents[eventID] = nil
+			self:TLCountCancel(eventID)
+			return
+		end
+		if eventState == 2 then
+			local eventType, eventCount = self:TLCountFinish(eventID)
+			activeEventTypes[eventID] = nil
+			if eventType and eventCount then
+				if eventType == "eclipsingStep" then
+					warnEclipsingStep:Show(eventCount)
+					specWarnEclipsingStep:Show(eventCount, "scatter")
+				elseif eventType == "lightscareFlare" then
+					specWarnLightscareFlare:Show(eventCount)
+					specWarnLightscareFlare:Play("watchstep")
+				elseif eventType == "umbralLash" then
+					if self:IsTank() then
+						specWarnUmbralLash:Show(eventCount)
+						specWarnUmbralLash:Play("carefly")
+					end
+				elseif eventType == "nullVanguard" then
+					specWarnNullVanguard:Show(eventCount)
+					specWarnNullVanguard:Play("mobsoon")
+				elseif eventType == "devourTheUnworthy" then
+					specWarnDevourTheUnworthy:Show(eventCount)
+					specWarnDevourTheUnworthy:Play("aesoon")
+					if self:GetStage(2) then
+						self:SetStage(1)
+					end
+				end
+			end
+		elseif eventState == 3 then
+			local eventType = activeEventTypes[eventID]
+			if eventType == "devourTheUnworthy" then
+				self:TLCountCancel(eventID)
+				activeEventTypes[eventID] = nil
+				if self:GetStage(2) then
+					self:SetStage(1)
+				end
+				return
+			end
+			if not eventType then
+				self:TLCountCancel(eventID)
+				return
+			end
+			local now = GetTime()
+			if (now - cancelBurstStart) <= 0.35 then
+				cancelBurstCount = cancelBurstCount + 1
+			else
+				cancelBurstStart = now
+				cancelBurstCount = 1
+				cancelBurstExpected = getActiveEventCount()
+			end
+			self:TLCountCancel(eventID)
+			activeEventTypes[eventID] = nil
+			if cancelBurstExpected >= 4 and cancelBurstCount >= cancelBurstExpected then
+				pendingStage2Devour = true
+				if not self:GetStage(2) then
+					self:SetStage(2)
+				end
+			end
+		end
+	end
 end

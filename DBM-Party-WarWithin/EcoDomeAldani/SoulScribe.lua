@@ -21,9 +21,9 @@ mod:AddCustomTimerOptions(1224793, nil, 5, 0)--Whispers of Fate
 mod:AddCustomTimerOptions(1225174, nil, 3, 0)--Ceremonial Daggers
 mod:AddCustomTimerOptions(1225218, nil, 3, 0)--Dread of the Unknown
 mod:AddCustomTimerOptions(1236703, nil, 6, 0)--Eternal Weave
---Midnight private aura replacements
-mod:AddPrivateAuraSoundOption(1226444, true, 1226444, 1, 1, "targetyou", 2)
-mod:AddPrivateAuraSoundOption(1225221, true, 1225221, 1, 1, "runout", 2)
+--Custom Aura Sounds
+mod:AddAuraSoundOption(1226444, true, 1226444, 1, 1, "targetyou", 2)
+mod:AddAuraSoundOption(1225221, true, 1225221, 1, 1, "runout", 2)
 
 function mod:OnLimitedCombatStart()
 

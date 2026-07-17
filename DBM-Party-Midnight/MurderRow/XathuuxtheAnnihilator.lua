@@ -15,6 +15,7 @@ mod:RegisterCombat("combat")
 
 --)
 
+--NOTE, https://www.wowhead.com/ptr/spell=1295452/infernal-crush has an ID of 752 for the targeted circles
 --Custom Sounds on cast/cooldown expiring
 mod:AddCustomAlertSoundOption(473898, true, 1)--Legion Strike
 mod:AddCustomAlertSoundOption(474197, true, 2)--Demonic Rage
@@ -23,9 +24,9 @@ mod:AddCustomAlertSoundOption(1214637, true, 1)--Axe Toss
 mod:AddCustomTimerOptions(473898, true, 5, 0)--Legion Strike
 mod:AddCustomTimerOptions(474197, true, 2, 0)--Demonic Rage
 mod:AddCustomTimerOptions(1214637, true, 3, 0)--Axe Toss
---Midnight private aura replacements
---mod:AddPrivateAuraSoundOption(474234, true, 474234, 1, 2, "watchfeet", 8)--Burning Steps
---mod:AddPrivateAuraSoundOption(1218203, true, 1218203, 1, 1)--Fingers of Gul'dan
+--Custom Aura Sounds
+mod:AddAuraSoundOption(474234, true, 474234, 1, 2, "watchfeet", 8)--Burning Steps
+mod:AddAuraSoundOption(1218203, true, 1218203, 1, 1, "runout", 2)--Fingers of Gul'dan
 
 function mod:OnLimitedCombatStart()
 	self:FixBlizzardAPI()--This boss also uses 16 minute timers to show paused abilities on track (it's like blizz forgot bars exist though)
@@ -40,6 +41,4 @@ function mod:OnLimitedCombatStart()
 	self:EnableTimelineOptions(473898, 30)
 	self:EnableTimelineOptions(474197, 32)
 	self:EnableTimelineOptions(1214637, {31, 559})
-
---	self:EnablePrivateAuraSound(1218203, "runout", 2)
 end

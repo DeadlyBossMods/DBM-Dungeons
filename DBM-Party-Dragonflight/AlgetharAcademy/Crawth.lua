@@ -18,8 +18,8 @@ if DBM:IsPostMidnight() then
 
 	--Play Ball uses ENCOUNTER_WARNING with no stable timeline event in tested pulls
 	mod:AddCustomAlertSoundOption(377182, true, 2)--Play Ball
-	--Midnight private aura replacements
---	mod:AddPrivateAuraSoundOption(433740, true, 433740, 1)
+	--Custom Aura Sounds
+--	mod:AddAuraSoundOption(433740, true, 433740, 1)
 
 	local specWarnSavagePeck					= mod:NewSpecialWarningCount(376997, nil, nil, nil, 1, 2, nil, nil, "defensive")
 	local specWarnDeafeningScreech				= mod:NewSpecialWarningCount(377004, nil, nil, nil, 2, 2, nil, nil, "scatter")
@@ -45,7 +45,9 @@ if DBM:IsPostMidnight() then
 			specWarnDeafeningScreech:SetAlert(279, self:IsSpellCaster() and "stopcast" or "aesoon", 2)
 			specWarnOverpoweringGust:SetAlert(280, "frontal", 15)
 		end
-		local onlyColor = not DBM.Options.HideDBMBars
+		--If user has DBM bars enabled, we only want to register colors to the blizz api so that the blizz bars are also colorized.
+	--If user has bars disabled, or we are in a bad state, onlyColor is false and we register countdowns as well.
+	local onlyColor = not DBM.Options.HideDBMBars and not badStateDetected
 		timerSavagePeckCD:SetTimeline(278, onlyColor)
 		timerDeafeningScreechCD:SetTimeline(279, onlyColor)
 		timerOverpoweringGustCD:SetTimeline(280, onlyColor)

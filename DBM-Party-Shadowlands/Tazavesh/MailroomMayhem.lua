@@ -18,9 +18,9 @@ mod:AddCustomTimerOptions(346742, true, 2, 0)
 mod:AddCustomTimerOptions(346962, true, 3, 0)--Money Order
 mod:AddCustomTimerOptions(346286, true, 5, 0)
 mod:AddCustomTimerOptions(346947, true, 5, 0)
---Midnight private aura replacements
+--Custom Aura Sounds
 --There are two other PAs but they are not useful since they are not player actionable PAs
-mod:AddPrivateAuraSoundOption(346962, true, 346962, 1, 1, "gathershare", 2)
+mod:AddAuraSoundOption(346962, true, 346962, 1, 1, "gathershare", 2)
 
 function mod:OnLimitedCombatStart()
 	self:EnableAlertOptions(346742, 574, "aesoon", 2)

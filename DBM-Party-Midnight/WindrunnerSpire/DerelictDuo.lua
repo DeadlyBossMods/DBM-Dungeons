@@ -24,11 +24,11 @@ local timerBoneHackCD				= mod:NewCDCountTimer(17.3, 472888, nil, "Tank", nil, 2
 local timerCurseofDarknessCD		= mod:NewCDCountTimer(22.7, 474105, nil, nil, 2, 3, nil, DBM_COMMON_L.CURSE_ICON)
 local timerDebilitatingShriekCD		= mod:NewCDCountTimer(48, 472736, nil, nil, nil, 2, nil, DBM_COMMON_L.IMPORTANT_ICON)
 local timerSplatteringSpewCD		= mod:NewCDCountTimer(27.3, 472777, nil, nil, nil, 3, nil, DBM_COMMON_L.HEALER_ICON)
---Midnight private aura replacements
---mod:AddPrivateAuraSoundOption({1253834,1215803}, true, 474105, 4, 1, "justrun", 2)--Curse of Darkness
---mod:AddPrivateAuraSoundOption(472793, true, 472795, 1, 1, "behindboss", 2)--Heaving Yank
---mod:AddPrivateAuraSoundOption(474129, true, 472745, 1, 1, "poolyou", 18)--Splattering Spew
---mod:AddPrivateAuraSoundOption(472777, true, 472777, 4, 2, "watchfeet", 8)--Gunk Splatter GTFO
+--Custom Aura Sounds
+mod:AddAuraSoundOption({1253834,1215803}, true, 474105, 4, 1, "fixateyou", 19)--Curse of Darkness
+--mod:AddAuraSoundOption(472793, true, 472795, 1, 1, "behindboss", 2)--Heaving Yank (handled by ENCOUNTER_WARNING intercept)
+--mod:AddAuraSoundOption(474129, true, 472745, 1, 1, "poolyou", 18)--Splattering Spew (handled by ENCOUNTER_WARNING intercept)
+mod:AddAuraSoundOption(472777, true, 472777, 4, 2, "watchfeet", 8)--Gunk Splatter GTFO
 
 mod.vb.boneHackCount = 0
 mod.vb.curseofDarknessCount = 0
@@ -51,7 +51,9 @@ local function setFallback(self, dontSetAlerts)
 		specWarnHeavingYank:SetAlert(29, "behindboss", 2, 4, 0)
 		specWarnSplatteringSpew:SetAlert(28, "poolyou", 18, 2, 0)
 	end
-	local onlyColor = not DBM.Options.HideDBMBars
+	--If user has DBM bars enabled, we only want to register colors to the blizz api so that the blizz bars are also colorized.
+	--If user has bars disabled, or we are in a bad state, onlyColor is false and we register countdowns as well.
+	local onlyColor = not DBM.Options.HideDBMBars and not badStateDetected
 	timerBoneHackCD:SetTimeline(25, onlyColor)
 	timerCurseofDarknessCD:SetTimeline(26, onlyColor)
 	timerDebilitatingShriekCD:SetTimeline(27, onlyColor)

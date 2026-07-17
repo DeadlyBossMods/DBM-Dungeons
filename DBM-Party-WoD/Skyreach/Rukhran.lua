@@ -22,8 +22,8 @@ if DBM:IsPostMidnight() then
 	local timerBurningClawsCD		= mod:NewCDCountTimer(20.5, 1253519, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 	local timerSearingQuillsCD		= mod:NewCDCountTimer(20.5, 1253527, nil, nil, nil, 2, nil, DBM_COMMON_L.IMPORTANT_ICON)
 
-	--Midnight private aura replacements
-	mod:AddPrivateAuraSoundOption(1253511, true, 1253511, 1, 1, "targetyou", 2)--Burning Pursuit
+	--Custom Aura Sounds
+	mod:AddAuraSoundOption(1253511, true, 1253511, 1, 1, "targetyou", 2)--Burning Pursuit
 	mod:AddCustomAlertSoundOption(1253511, true, 2)--Using old object because it has no timer thus no hardcode
 
 	mod.vb.sunbreakCount = 0
@@ -35,7 +35,9 @@ if DBM:IsPostMidnight() then
 	---@param self DBMMod
 	---@param dontSetAlerts boolean? Called on engage when we only want to set timeline parameters and not touch encounter alerts
 	local function setFallback(self, dontSetAlerts)
-		local onlyColor = not DBM.Options.HideDBMBars
+		--If user has DBM bars enabled, we only want to register colors to the blizz api so that the blizz bars are also colorized.
+	--If user has bars disabled, or we are in a bad state, onlyColor is false and we register countdowns as well.
+	local onlyColor = not DBM.Options.HideDBMBars and not badStateDetected
 		if not dontSetAlerts then
 			specWarnSunbreak:SetAlert(305, "mobsoon", 2, 2)
 			if self:IsTank() then
