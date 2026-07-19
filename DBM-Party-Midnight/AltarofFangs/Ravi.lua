@@ -18,7 +18,7 @@ mod:RegisterCombat("combat")
 
 local specWarnSsscavenging			= mod:NewSpecialWarningCount(1309522, nil, nil, nil, 1, 2, nil, nil, "attackshield")
 local specWarnFeedingFrenzy			= mod:NewSpecialWarningCount(1307765, nil, nil, nil, 3, 2, nil, nil, "attackshield")--Empowered version of Ssscavenging (from fresh meat)
-local specWarnFetidRoar				= mod:NewSpecialWarningCount(1296219, nil, nil, nil, 2, 2, nil, nil, "aesoon")--Possibly not needed
+--local specWarnFetidRoar				= mod:NewSpecialWarningCount(1296219, nil, nil, nil, 2, 2, nil, nil, "aesoon")--Possibly not needed
 local specWarnRegurgitate			= mod:NewSpecialWarningCount(1296050, nil, nil, nil, 2, 2, nil, nil, "watchwave")
 local specWarnRavenousStomp			= mod:NewSpecialWarningCount(1307894, nil, nil, nil, 2, 2, nil, nil, "watchstep")
 local specWarnTripleShot			= mod:NewSpecialWarningBlizzYou(1296220, nil, nil, nil, 1, 17, nil, nil, "debuffyou")
@@ -27,8 +27,6 @@ local timerSsscavengingCD			= mod:NewCDCountTimer(8, 1309522, nil, nil, nil, 5, 
 local timerTripleShotCD				= mod:NewCDCountTimer(8, 1296220, nil, nil, nil, 3)
 local timerRegurgitateCD			= mod:NewCDCountTimer(8, 1296050, nil, nil, nil, 3)
 local timerRavenousStompCD			= mod:NewCDCountTimer(8, 1307894, nil, nil, nil, 3)
-
-mod:AddCustomAlertSoundOption(1296219, true, 2)--Fetid Roar
 
 --mod:AddAuraSoundOption(470966, true, 470966, 4, 1, "justrun", 2)
 
@@ -42,12 +40,12 @@ mod.vb.RavenousStompCount = 0
 ---@param self DBMMod
 ---@param dontSetAlerts boolean? Called on engage when we only want to set timeline parameters and not touch encounter alerts
 local function setFallback(self, dontSetAlerts)
+	--specWarnFetidRoar:SetAlert(796, "aesoon", 2, 2, 0)
 	if not dontSetAlerts then
 --		if self:IsTank() then
 --			specWarnRampage:SetAlert({210, 556}, "defensive", 2)
 --		end
 		specWarnSsscavenging:SetAlert(795, "attackshield", 2, 3)
-		specWarnFetidRoar:SetAlert(796, "aesoon", 2, 2, 0)
 		specWarnTripleShot:SetAlert(797, "incomingdebuff", 17, 2, 0)
 		specWarnRegurgitate:SetAlert(798, "watchwave", 2, 2, 0)
 		specWarnRavenousStomp:SetAlert(899, "watchstep", 2, 2, 0)
@@ -70,7 +68,6 @@ function mod:OnLimitedCombatStart()
 	self.vb.RegurgitateCount = 1
 	self.vb.RavenousStompCount = 1
 	nextTwentyFourIsStomp = false
-	self:EnableAlertOptions(1296219, 796, "aesoon", 2, 2, 0)
 	if DBM.Options.HardcodedTimer and not badStateDetected then
 		self:IgnoreBlizzardAPI()
 		self:RegisterShortTermEvents(
