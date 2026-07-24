@@ -8,7 +8,6 @@ mod:SetZone(2813)
 mod.isTrashMod = true
 mod.isTrashModBossFightAllowed = true
 
-
 mod:RegisterEvents(
 	"GOSSIP_SHOW"
 )
@@ -21,6 +20,7 @@ if DBM:GetTOC() >= 120100 then
 	mod:AddAuraSoundOption(1218467, true, 1218467, 1, 1, "entertainer", 19)--Entertainer
 	mod:AddAuraSoundOption(1218466, true, 1218466, 1, 1, "cleaner", 19)--Cleaner
 	mod:AddAuraSoundOption(1218465, true, 1218465, 1, 1, "server", 19)--Server
+	mod:AddAuraSoundOption(1216590, "Tank", 1216590, 1, 1, "kite", 19)--Heartstop Poison
 else
 	mod:AddCustomAlertSoundOption(1218465, true, 1)--Server
 	mod:EnableAlertOptions(1218465, 615, "server", 19, 2, 0)
