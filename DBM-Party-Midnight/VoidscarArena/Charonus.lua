@@ -11,33 +11,47 @@ mod.respawnTime = 29
 
 mod:RegisterCombat("combat")
 
+local is121 = DBM:GetTOC() == 120100
+
 --mod:RegisterEventsInCombat(
 
 --)
 --TODO, void cascade has two private auras, but neitehr appear to be pre target aura and rather ones you just get if in beam
 --Custom Sounds on cast/cooldown expiring
+mod:AddCustomAlertSoundOption(1282770, true, 2)--Unstable Singularity
 mod:AddCustomAlertSoundOption(1227264, true, 2)--Cosmic Blast
 mod:AddCustomAlertSoundOption(1222758, true, 2)--Void Cascade
 mod:AddCustomAlertSoundOption(1263982, true, 2)--Gravity Orbs
+if is121 then
+	mod:AddCustomAlertSoundOption(1311923, true, 2)--Dark Waves
+end
 --Custom timer colors, countdowns, and disables
 mod:AddCustomTimerOptions(1282770, true, 3, 0)--Unstable Singularity
 mod:AddCustomTimerOptions(1227264, true, 2, 0)--Cosmic Blast
 mod:AddCustomTimerOptions(1263982, true, 3, 0)--Gravity Orbs
 mod:AddCustomTimerOptions(1222758, true, 3, 0)--Void Cascade
+if is121 then
+	mod:AddCustomTimerOptions(1311923, true, 5, 0)--Dark Waves
+end
 --Custom Aura Sounds
 mod:AddAuraSoundOption(1263983, true, 1263982, 4, 1, "orbrun", 2)--Condensed Mass
 mod:AddAuraSoundOption(1282770, true, 1282770, 1, 1, "runout", 2)--Unstable Singularity Pre debuff
 mod:AddAuraSoundOption(1248130, true, 1282770, 1, 2, "watchfeet", 8)--GTFO
 
 function mod:OnLimitedCombatStart()
+	self:EnableAlertOptions(1282770, 56, "watchstep", 2, 2)
 	self:EnableAlertOptions(1227264, 57, "carefly", 2, 2)
 	self:EnableAlertOptions(1263982, 58, "specialsoon", 2, 2, 0)
 	self:EnableAlertOptions(1222758, 171, "watchstep", 2, 2)--Review
+	self:EnableAlertOptions(1311923, 961, "specialsoon", 2, 2, 0)
 
 	self:EnableTimelineOptions(1282770, 56)
 	self:EnableTimelineOptions(1227264, 57)
 	self:EnableTimelineOptions(1263982, 58)
 	self:EnableTimelineOptions(1222758, 171)
+	if is121 then
+		self:EnableTimelineOptions(1311923, 961)
+	end
 
-	DBM:Debug("check void cascade private aura")
+	DBM:Debug("check void cascade aura")
 end

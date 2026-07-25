@@ -24,9 +24,11 @@ mod:AddCustomAlertSoundOption(1214637, true, 1)--Axe Toss
 mod:AddCustomTimerOptions(473898, true, 5, 0)--Legion Strike
 mod:AddCustomTimerOptions(474197, true, 2, 0)--Demonic Rage
 mod:AddCustomTimerOptions(1214637, true, 3, 0)--Axe Toss
+mod:AddCustomTimerOptions(1295452, true, 3, 0)--Infernal Crush
 --Custom Aura Sounds
 mod:AddAuraSoundOption(474234, true, 474234, 1, 2, "watchfeet", 8)--Burning Steps
 mod:AddAuraSoundOption(1218203, true, 1218203, 1, 1, "runout", 2)--Fingers of Gul'dan
+mod:AddAuraSoundOption(1295452, true, 1295452, 1, 1, "runout", 2)--Infernal Crush (Check for ENCOUNTER_WARNING intercept instead)
 
 function mod:OnLimitedCombatStart()
 	self:FixBlizzardAPI()--This boss also uses 16 minute timers to show paused abilities on track (it's like blizz forgot bars exist though)
@@ -41,4 +43,5 @@ function mod:OnLimitedCombatStart()
 	self:EnableTimelineOptions(473898, 30)
 	self:EnableTimelineOptions(474197, 32)
 	self:EnableTimelineOptions(1214637, {31, 559})
+	self:EnableTimelineOptions(1295452, 752)
 end
