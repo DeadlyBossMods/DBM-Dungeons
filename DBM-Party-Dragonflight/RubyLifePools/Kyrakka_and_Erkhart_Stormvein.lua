@@ -27,6 +27,8 @@ if DBM:IsPostMidnight() then
 	local timerStormslamCD							= mod:NewCDCountTimer(0, 381512, nil, "Tank|RemoveMagic|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON..DBM_COMMON_L.MAGIC_ICON)
 	local timerCloudburstCD							= mod:NewCDCountTimer(0, 381516, nil, nil, nil, 2, nil, DBM_COMMON_L.MYTHIC_ICON)
 
+	mod:AddAuraSoundOption(381862, true, 381602, 1, 1, "poolyou", 18, 0)--Infernospit Debuff
+
 	local badStateDetected = false
 	---@param self DBMMod
 	---@param dontSetAlerts boolean? Called on engage when we only want to set timeline parameters and not touch encounter alerts
