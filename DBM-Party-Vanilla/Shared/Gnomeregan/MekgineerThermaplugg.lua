@@ -50,7 +50,7 @@ end
 --Only vanilla and tbc have this
 local warningActivateBomb
 if isClassic or isBCC then
-	warningActivateBomb			= mod:NewSpellAnnounce(11518, 2)
+	warningActivateBomb			= mod:NewSpellAnnounce(11518, 2, "133709")
 end
 
 function mod:OnCombatStart(delay)
