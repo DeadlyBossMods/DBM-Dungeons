@@ -13,39 +13,35 @@ mod.sendMainBossGUID = true
 mod:RegisterCombat("combat")
 
 if DBM:IsPostMidnight() then
-	--local warnFrozenSolid							= mod:NewTargetNoFilterAnnounce(373022, 4, nil, "Healer")
-	--local warnChillstorm							= mod:NewTargetNoFilterAnnounce(372851, 3)
-	--local warnIceBulwark							= mod:NewSpellAnnounce(372988, 4)
+	local specWarnHailburst							= mod:NewSpecialWarningDodge(1307297, nil, nil, nil, 2, 2, nil, nil, "watchstep")
+	local specWarnChillStorm						= mod:NewSpecialWarningMoveAway(1307308, nil, nil, nil, 1, 2, nil, nil, "runout")
+	local specWarnFrostOverload						= mod:NewSpecialWarningSwitch(373686, nil, nil, nil, 1, 2, 4, nil, "attackshield")
+	local specWarnAwakenWhelps						= mod:NewSpecialWarningSwitch(373046, "-Healer", nil, nil, 1, 2, nil, nil, "killmob")
+	--local specWarnGTFO							= mod:NewSpecialWarningGTFO(372851, nil, nil, nil, 1, 8, nil, nil, "watchfeet")
 
-	--local specWarnPrimalChill						= mod:NewSpecialWarningStack(372682, nil, 8, nil, nil, 1, 6, nil, nil, "stackhigh")
-	--local specWarnHailbombs							= mod:NewSpecialWarningDodge(396044, nil, nil, nil, 2, 2, nil, nil, "watchstep")
-	--local specWarnChillStorm						= mod:NewSpecialWarningMoveAway(372851, nil, nil, nil, 1, 2, nil, nil, "runout")
-	--local specWarnFrostOverload						= mod:NewSpecialWarningInterrupt(373680, "HasInterrupt", nil, 2, 1, 2, 4, nil, "kickcast")
-	--local specWarnAwakenWhelps						= mod:NewSpecialWarningSwitch(373046, "-Healer", nil, nil, 1, 2, nil, nil, "killmob")
-	--local specWarnGTFO								= mod:NewSpecialWarningGTFO(372851, nil, nil, nil, 1, 8, nil, nil, "watchfeet")
+	local timerChillstormCD							= mod:NewCDCountTimer(30, 1307308, nil, nil, nil, 3)
+	local timerHailburstCD							= mod:NewCDCountTimer(30, 1307297, nil, nil, nil, 3)
+	--local timerFrostOverloadCD					= mod:NewCDTimer(8.5, 373686, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--Cast after each whelps, which is health based
 
-	--local timerChillstormCD							= mod:NewCDCountTimer(0, 372851, nil, nil, nil, 3)
-	--local timerHailbombsCD							= mod:NewCDCountTimer(0, 396044, nil, nil, nil, 3)
-	--local timerFrostOverloadCD						= mod:NewCDCountTimer(0, 373680, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)--Cast after each whelps, which is health based
+	mod:AddAuraSoundOption(372963, true, 1307308, 1, 2, "watchfeet", 8, 0)--Storm's Eye
 
 	local badStateDetected = false
 	local function setFallback(self, dontSetAlerts)
 		if not dontSetAlerts then
-			--specWarnPrimalChill:SetAlert(0, "stackhigh", 2)
-			--specWarnHailbombs:SetAlert(0, "watchstep", 2)
-			--specWarnChillStorm:SetAlert(0, "runout", 2)
-			--specWarnFrostOverload:SetAlert(0, "kickcast", 2)
-			--specWarnAwakenWhelps:SetAlert(0, "killmob", 2)
+			specWarnHailburst:SetAlert(866, "watchstep", 2)
+			specWarnChillStorm:SetAlert(867, "runout", 2)
+			specWarnFrostOverload:SetAlert(868, "attackshield", 2)
+			specWarnAwakenWhelps:SetAlert(869, "killmob", 2)
 		end
 		local onlyColor = not DBM.Options.HideDBMBars and not badStateDetected
-		--timerChillstormCD:SetTimeline(0, onlyColor)
-		--timerHailbombsCD:SetTimeline(0, onlyColor)
+		timerChillstormCD:SetTimeline(867, onlyColor)
+		timerHailburstCD:SetTimeline(866, onlyColor)
 		--timerFrostOverloadCD:SetTimeline(0, onlyColor)
 	end
 
 	function mod:OnLimitedCombatStart()
 		self:TLCountReset()
-		badStateDetected = false
+		badStateDetected = true
 		if DBM.Options.HardcodedTimer and not badStateDetected then
 			self:IgnoreBlizzardAPI()
 			self:RegisterShortTermEvents("ENCOUNTER_TIMELINE_EVENT_ADDED", "ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED")
