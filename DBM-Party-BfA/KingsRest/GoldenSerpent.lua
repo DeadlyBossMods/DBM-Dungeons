@@ -26,6 +26,8 @@ if DBM:IsPostMidnight() then
 	--local timerSerpentineCD			= mod:NewCDCountTimer(0, 265781, nil, nil, nil, 2)
 
 	local badStateDetected = false
+	---@param self DBMMod
+	---@param dontSetAlerts boolean? Called on engage when we only want to set timeline parameters and not touch encounter alerts
 	local function setFallback(self, dontSetAlerts)
 		if not dontSetAlerts then
 			--specWarnTailThrash:SetAlert(0, "defensive", 2)

@@ -26,6 +26,8 @@ if DBM:IsPostMidnight() then
 	mod:AddAuraSoundOption(372963, true, 1307308, 1, 2, "watchfeet", 8, 0)--Storm's Eye
 
 	local badStateDetected = false
+	---@param self DBMMod
+	---@param dontSetAlerts boolean? Called on engage when we only want to set timeline parameters and not touch encounter alerts
 	local function setFallback(self, dontSetAlerts)
 		if not dontSetAlerts then
 			specWarnHailburst:SetAlert(866, "watchstep", 2)

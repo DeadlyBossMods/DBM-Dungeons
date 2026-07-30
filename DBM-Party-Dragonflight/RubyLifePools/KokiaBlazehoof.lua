@@ -3,7 +3,7 @@ local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(189232)
-mod:SetEncounterID(2609)
+mod:SetEncounterID(2606)
 mod:SetZone(2521)
 --mod:SetHotfixNoticeRev(20220322000000)
 --mod:SetMinSyncRevision(20211203000000)
@@ -13,35 +13,35 @@ mod.sendMainBossGUID = true
 mod:RegisterCombat("combat")
 
 if DBM:IsPostMidnight() then
-	--local warnBurnout								= mod:NewCastAnnounce(373087, 4)
-	--local warnInferno								= mod:NewCastAnnounce(384823, 3)
-	--local warnBaitBoulder							= mod:NewBaitAnnounce(372107, 3, nil, nil, nil, nil, 8)
-	--local warnBaitAdd								= mod:NewBaitAnnounce(372863, 3, nil, false, 2, nil, 8)
+	--local warnBaitBoulder							= mod:NewBaitAnnounce(372107, 3, nil, nil, nil, nil, 8)--Hardcode later
+	--local warnBaitAdd								= mod:NewBaitAnnounce(372863, 3, nil, false, 2, nil, 8)--Hardcode later
 
-	--local specWarnSearingBlows						= mod:NewSpecialWarningDefensive(372858, nil, nil, nil, 1, 2, nil, nil, "defensive")
-	--local specWarnMoltenBoulder						= mod:NewSpecialWarningDodgeCount(372107, nil, nil, nil, 1, 2, nil, nil, "shockwave")
-	--local specWarnRitualofBlazebinding				= mod:NewSpecialWarningSwitchCount(372863, nil, nil, nil, 1, 2, nil, nil, "killmob")
-	--local specWarnRoaringBlaze						= mod:NewSpecialWarningInterruptCount(373017, "HasInterrupt", nil, 2, 1, 2, nil, nil, "kick2r")
+	local specWarnSearingBlows						= mod:NewSpecialWarningDefensive(372858, nil, nil, nil, 1, 2, nil, nil, "defensive")
+	local specWarnMoltenBoulder						= mod:NewSpecialWarningDodgeCount(372110, nil, nil, nil, 1, 15, nil, nil, "frontal")
+	local specWarnRitualofBlazebinding				= mod:NewSpecialWarningSwitchCount(372864, nil, nil, nil, 1, 2, nil, nil, "killmob")
 	--local specWarnBurnout							= mod:NewSpecialWarningRun(373087, "Melee", nil, nil, 4, 2, nil, nil, "justrun")
 	--local specWarnGTFO								= mod:NewSpecialWarningGTFO(372820, nil, nil, nil, 1, 8, nil, nil, "watchfeet")
 
-	--local timerSearingBlowsCD						= mod:NewCDCountTimer(0, 372858, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON..DBM_COMMON_L.HEALER_ICON)
-	--local timerMoltenBoulderCD						= mod:NewCDCountTimer(0, 372107, nil, nil, nil, 3)
-	--local timerRitualofBlazebindingCD				= mod:NewCDCountTimer(0, 372863, nil, nil, nil, 1)
+	local timerSearingBlowsCD						= mod:NewCDCountTimer(30, 372858, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON..DBM_COMMON_L.HEALER_ICON)
+	local timerMoltenBoulderCD						= mod:NewCDCountTimer(30, 372110, nil, nil, nil, 3)
+	local timerRitualofBlazebindingCD				= mod:NewCDCountTimer(30, 372864, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)
 
 	local badStateDetected = false
+	---@param self DBMMod
+	---@param dontSetAlerts boolean? Called on engage when we only want to set timeline parameters and not touch encounter alerts
 	local function setFallback(self, dontSetAlerts)
 		if not dontSetAlerts then
-			--specWarnSearingBlows:SetAlert(0, "defensive", 2)
-			--specWarnMoltenBoulder:SetAlert(0, "shockwave", 2)
-			--specWarnRitualofBlazebinding:SetAlert(0, "killmob", 2)
-			--specWarnRoaringBlaze:SetAlert(0, "kick2r", 2)
+			if self:IsTank() then
+				specWarnSearingBlows:SetAlert(884, "defensive", 2)
+			end
+			specWarnMoltenBoulder:SetAlert(883, "frontal", 15)
+			specWarnRitualofBlazebinding:SetAlert(882, "killmob", 2)
 			--specWarnBurnout:SetAlert(0, "justrun", 2)
 		end
 		local onlyColor = not DBM.Options.HideDBMBars and not badStateDetected
-		--timerSearingBlowsCD:SetTimeline(0, onlyColor)
-		--timerMoltenBoulderCD:SetTimeline(0, onlyColor)
-		--timerRitualofBlazebindingCD:SetTimeline(0, onlyColor)
+		timerSearingBlowsCD:SetTimeline(884, onlyColor)
+		timerMoltenBoulderCD:SetTimeline(883, onlyColor)
+		timerRitualofBlazebindingCD:SetTimeline(882, onlyColor)
 	end
 
 	function mod:OnLimitedCombatStart()

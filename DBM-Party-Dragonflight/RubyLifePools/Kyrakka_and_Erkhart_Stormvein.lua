@@ -13,38 +13,40 @@ mod:SetHotfixNoticeRev(20230109000000)
 mod:RegisterCombat("combat")
 
 if DBM:IsPostMidnight() then
-	--local warnFlamespit								= mod:NewTargetNoFilterAnnounce(381605, 3)
-	--local warnInfernoCore							= mod:NewYouAnnounce(381862, 4)
-	--local warnWindsofChange							= mod:NewCountAnnounce(381517, 3)--Not actually a count timer, but has best localized text
-	--local warnCloudburst								= mod:NewSpellAnnounce(385558, 3)
+	--TODO, infernospit has two IDs, 381602 and 381605 and one is debuff alert an one is cast alert (889 vs 894). need to idenitfy which is which
+	--local warnWindsofChange						= mod:NewCountAnnounce(381517, 3)--Not actually a count timer, but has best localized text (disabled until hardcode)
 
-	--local specWarnInfernoCore						= mod:NewSpecialWarningMoveAway(381862, nil, nil, nil, 1, 2, nil, nil, "runout")
-	--local specWarnRoaringFirebreath					= mod:NewSpecialWarningDodge(381525, nil, nil, nil, 2, 2, nil, nil, "breathsoon")
-	--local specWarnStormslam							= mod:NewSpecialWarningDefensive(381512, nil, nil, nil, 1, 2, nil, nil, "defensive")
-	--local specWarnStormslamDispel					= mod:NewSpecialWarningDispel(381512, "RemoveMagic", nil, nil, 1, 2, nil, nil, "helpdispel")
-	--local specWarnInterruptingCloudburst				= mod:NewSpecialWarningCast(381516, "SpellCaster", nil, nil, 2, 2, 4, nil, "stopcast")
+	local specWarnInfernoSpit						= mod:NewSpecialWarningCount(381602, nil, nil, nil, 2, 2, nil, nil, "aesoon")--381605
+	local specWarnRoaringFirebreath					= mod:NewSpecialWarningDodge(381525, nil, nil, nil, 2, 2, nil, nil, "breathsoon")
+	local specWarnStormslam							= mod:NewSpecialWarningDefensive(381512, nil, nil, nil, 1, 2, nil, nil, "defensive")
+	local specWarnInterruptingCloudburst			= mod:NewSpecialWarningCast(381516, "SpellCaster", nil, nil, 2, 2, 4, nil, "stopcast")
 
-	--local timerFlamespitCD							= mod:NewCDCountTimer(0, 381605, nil, nil, nil, 3)
-	--local timerRoaringFirebreathCD					= mod:NewCDCountTimer(0, 381525, nil, nil, nil, 3)
-	--local timerWindsofChangeCD						= mod:NewCDCountTimer(0, 381517, nil, nil, nil, 3)
-	--local timerStormslamCD							= mod:NewCDCountTimer(0, 381512, nil, "Tank|RemoveMagic", nil, 5, nil, DBM_COMMON_L.TANK_ICON..DBM_COMMON_L.MAGIC_ICON)
-	--local timerCloudburstCD							= mod:NewCDCountTimer(0, 385558, nil, nil, nil, 2)--Used for both mythic and non mythic versions of spell
+	local timerInfernoSpitCD						= mod:NewCDCountTimer(0, 381602, nil, nil, nil, 2)
+	local timerRoaringFirebreathCD					= mod:NewCDCountTimer(0, 381525, nil, nil, nil, 3)
+	local timerWindsofChangeCD						= mod:NewCDCountTimer(0, 381517, nil, nil, nil, 3)
+	local timerStormslamCD							= mod:NewCDCountTimer(0, 381512, nil, "Tank|RemoveMagic|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON..DBM_COMMON_L.MAGIC_ICON)
+	local timerCloudburstCD							= mod:NewCDCountTimer(0, 381516, nil, nil, nil, 2, nil, DBM_COMMON_L.MYTHIC_ICON)
 
 	local badStateDetected = false
+	---@param self DBMMod
+	---@param dontSetAlerts boolean? Called on engage when we only want to set timeline parameters and not touch encounter alerts
 	local function setFallback(self, dontSetAlerts)
 		if not dontSetAlerts then
-			--specWarnInfernoCore:SetAlert(0, "runout", 2)
-			--specWarnRoaringFirebreath:SetAlert(0, "breathsoon", 2)
-			--specWarnStormslam:SetAlert(0, "defensive", 2)
-			--specWarnStormslamDispel:SetAlert(0, "helpdispel", 2)
-			--specWarnInterruptingCloudburst:SetAlert(0, "stopcast", 2)
+			specWarnInfernoSpit:SetAlert(889, "aesoon", 2)--894
+			specWarnRoaringFirebreath:SetAlert(890, "breathsoon", 2)
+			if self:IsTank() then
+				specWarnStormslam:SetAlert(888, "defensive", 2)
+			end
+			if self:IsSpellCaster() then
+				specWarnInterruptingCloudburst:SetAlert(885, "stopcast", 2)
+			end
 		end
 		local onlyColor = not DBM.Options.HideDBMBars and not badStateDetected
-		--timerFlamespitCD:SetTimeline(0, onlyColor)
-		--timerRoaringFirebreathCD:SetTimeline(0, onlyColor)
-		--timerWindsofChangeCD:SetTimeline(0, onlyColor)
-		--timerStormslamCD:SetTimeline(0, onlyColor)
-		--timerCloudburstCD:SetTimeline(0, onlyColor)
+		timerInfernoSpitCD:SetTimeline(889, onlyColor)--894
+		timerRoaringFirebreathCD:SetTimeline(890, onlyColor)
+		timerWindsofChangeCD:SetTimeline(887, onlyColor)
+		timerStormslamCD:SetTimeline(888, onlyColor)
+		timerCloudburstCD:SetTimeline(885, onlyColor)
 	end
 
 	function mod:OnLimitedCombatStart()

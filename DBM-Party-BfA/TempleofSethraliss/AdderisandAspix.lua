@@ -28,6 +28,8 @@ if DBM:IsPostMidnight() then
 	--local timerArcingBladeCD = mod:NewCDCountTimer(0, 263234, nil, nil, nil, 5, nil, DBM_COMMON_L.HEROIC_ICON)
 	--local timerCycloneStrikeCD = mod:NewCDCountTimer(0, 263573, nil, nil, nil, 3, nil, DBM_COMMON_L.DEADLY_ICON)
 	local badStateDetected = false
+	---@param self DBMMod
+	---@param dontSetAlerts boolean? Called on engage when we only want to set timeline parameters and not touch encounter alerts
 	local function setFallback(self, dontSetAlerts)
 		if not dontSetAlerts then
 			--specWarnJolt:SetAlert(0, "kickcast", 2)

@@ -20,6 +20,8 @@ if DBM:IsPostMidnight() then
 	--local timerNoxiousBreathCD = mod:NewCDCountTimer(0, 272657, nil, nil, nil, 3)
 	--local timerHatch = mod:NewCDCountTimer(0, 264239, nil, nil, nil, 1)
 	local badStateDetected = false
+	---@param self DBMMod
+	---@param dontSetAlerts boolean? Called on engage when we only want to set timeline parameters and not touch encounter alerts
 	local function setFallback(self, dontSetAlerts)
 		if not dontSetAlerts then
 			--specWarnHadotoxinOther:SetAlert(0, "helpdispel", 2)

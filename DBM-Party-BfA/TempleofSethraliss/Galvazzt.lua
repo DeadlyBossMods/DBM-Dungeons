@@ -16,6 +16,8 @@ if DBM:IsPostMidnight() then
 	--local specWarnConsumeCharge = mod:NewSpecialWarningSpell(266512, nil, nil, nil, 2, 2, nil, nil, "aesoon")
 	--local specWarnGalvanize = mod:NewSpecialWarningStack(266923, nil, 5, nil, nil, 1, 6, nil, nil, "stackhigh")
 	local badStateDetected = false
+	---@param self DBMMod
+	---@param dontSetAlerts boolean? Called on engage when we only want to set timeline parameters and not touch encounter alerts
 	local function setFallback(self, dontSetAlerts)
 		if not dontSetAlerts then
 			--specWarnConsumeCharge:SetAlert(0, "aesoon", 2)

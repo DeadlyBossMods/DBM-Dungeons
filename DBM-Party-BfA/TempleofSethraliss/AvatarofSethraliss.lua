@@ -21,6 +21,8 @@ if DBM:IsPostMidnight() then
 	--local timerPlague = mod:NewCDCountTimer(0, 269686, nil, "RemoveDisease", nil, 5, nil, DBM_COMMON_L.DISEASE_ICON)
 	--local timerPulseCD = mod:NewCDCountTimer(0, 268024, nil, "Healer", nil, 5, nil, DBM_COMMON_L.HEALER_ICON)
 	local badStateDetected = false
+	---@param self DBMMod
+	---@param dontSetAlerts boolean? Called on engage when we only want to set timeline parameters and not touch encounter alerts
 	local function setFallback(self, dontSetAlerts)
 		if not dontSetAlerts then
 			--specWarnChainLightning:SetAlert(0, "kickcast", 2)
