@@ -4,7 +4,6 @@ local L		= mod:GetLocalizedStrings()
 mod.statTypes = "normal,heroic,mythic,challenge,timewalker"
 
 mod:SetRevision("@file-date-integer@")
-mod:DisableHardcodedOptions()
 mod:SetCreatureID(133392)
 mod:SetEncounterID(2127)
 mod.onlyHighest = true--Instructs DBM health tracking to literally only store highest value seen during fight, even if it drops below that
@@ -13,100 +12,134 @@ mod:SetZone(1877)
 
 mod:RegisterCombat("combat")
 
-mod:RegisterEventsInCombat(
-	"SPELL_AURA_APPLIED 268008 269686 268024 268008",
-	"SPELL_AURA_REMOVED 268008 269686 274149",
-	"SPELL_CAST_START 268061",
-	"SPELL_CAST_SUCCESS 273677 274149",
-	"CHAT_MSG_RAID_BOSS_EMOTE"
-)
+if DBM:IsPostMidnight() then
+	--local specWarnChainLightning = mod:NewSpecialWarningInterrupt(268061, nil, nil, nil, 1, 2, nil, nil, "kickcast")
+	--local specWarnRainofToads = mod:NewSpecialWarningSpell(269688, nil, nil, nil, 2, 2, nil, nil, "mobsoon")
+	--local specWarnPlague = mod:NewSpecialWarningDispel(269686, "RemoveDisease", nil, nil, 1, 2, nil, nil, "helpdispel")
+	--local specWarnSnakeCharm = mod:NewSpecialWarningDispel(268008, "RemoveMagic", nil, 2, 1, 2, nil, nil, "helpdispel")
 
---TODO, work on Cds if adds long enough for more than 1 cast each wave
-local warnTaint						= mod:NewSpellAnnounce(273677, 2)
-local warnPulse						= mod:NewSpellAnnounce(268024, 3)
-local warnLifeForce					= mod:NewSpellAnnounce(274149, 1)
-
-local specWarnChainLightning		= mod:NewSpecialWarningInterrupt(268061, nil, nil, nil, 1, 2, nil, nil, "kickcast")
-local specWarnRainofToads			= mod:NewSpecialWarningSpell(269688, nil, nil, nil, 2, 2, nil, nil, "mobsoon")
-local specWarnPlague				= mod:NewSpecialWarningDispel(269686, "RemoveDisease", nil, nil, 1, 2, nil, nil, "helpdispel")
-local specWarnSnakeCharm			= mod:NewSpecialWarningDispel(268008, "RemoveMagic", nil, 2, 1, 2, nil, nil, "helpdispel")
-
---local timerRainofToadsCD			= mod:NewCDTimer(20, 269688, nil, nil, nil, 1)--More work needed
-local timerPlague					= mod:NewTargetTimer(10, 269686, nil, "RemoveDisease", nil, 5, nil, DBM_COMMON_L.DISEASE_ICON)
-local timerPulseCD					= mod:NewCDTimer(15, 268024, nil, "Healer", nil, 5, nil, DBM_COMMON_L.HEALER_ICON)
---local timerLifeForce				= mod:NewBuffActiveTimer(20, 274149, nil, nil, nil, 6, nil, DBM_COMMON_L.HEALER_ICON)
-
-mod:AddNamePlateOption("NPAuraOnSnakeCharm", 268008)
-
-function mod:OnCombatStart(delay)
-	timerPulseCD:Start(10-delay)
-	--timerRainofToadsCD:Start(1-delay)
-	if self.Options.NPAuraOnSnakeCharm then
-		DBM:FireEvent("BossMod_EnableHostileNameplates")
-	end
-end
-
-function mod:OnCombatEnd()
-	if self.Options.NPAuraOnSnakeCharm then
-		DBM.Nameplate:Hide(true, nil, nil, nil, true, true)
-	end
-end
-
-function mod:SPELL_AURA_APPLIED(args)
-	local spellId = args.spellId
-	if spellId == 268008 then
-		if self.Options.NPAuraOnSnakeCharm then
-			DBM.Nameplate:Show(true, args.destGUID, spellId, nil, 15)
+	--local timerPlague = mod:NewCDCountTimer(0, 269686, nil, "RemoveDisease", nil, 5, nil, DBM_COMMON_L.DISEASE_ICON)
+	--local timerPulseCD = mod:NewCDCountTimer(0, 268024, nil, "Healer", nil, 5, nil, DBM_COMMON_L.HEALER_ICON)
+	local badStateDetected = false
+	local function setFallback(self, dontSetAlerts)
+		if not dontSetAlerts then
+			--specWarnChainLightning:SetAlert(0, "kickcast", 2)
+			--specWarnRainofToads:SetAlert(0, "mobsoon", 2)
+			--specWarnPlague:SetAlert(0, "helpdispel", 2)
+			--specWarnSnakeCharm:SetAlert(0, "helpdispel", 2)
 		end
-	elseif spellId == 269686 and self:CheckDispelFilter("disease") then
-		specWarnPlague:Show(args.destName)
-		specWarnPlague:Play("helpdispel")
-		timerPlague:Start(args.destName)
-	elseif spellId == 268024 and self:AntiSpam(3, 1) then
-		warnPulse:Show()
-		timerPulseCD:Start()
-	elseif spellId == 268008 and self:AntiSpam(3, 3) and self:CheckDispelFilter("magic") then
-		specWarnSnakeCharm:Show(args.destName)
-		specWarnSnakeCharm:Play("helpdispel")
+		local onlyColor = not DBM.Options.HideDBMBars and not badStateDetected
+		--timerPlague:SetTimeline(0, onlyColor)
+		--timerPulseCD:SetTimeline(0, onlyColor)
 	end
-end
+	function mod:OnLimitedCombatStart()
+		self:TLCountReset()
+		badStateDetected = false
+		if DBM.Options.HardcodedTimer and not badStateDetected then
+			self:IgnoreBlizzardAPI()
+			self:RegisterShortTermEvents("ENCOUNTER_TIMELINE_EVENT_ADDED", "ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED")
+			setFallback(self, true)
+		else setFallback(self) end
+	end
+	function mod:OnCombatEnd() self:TLCountReset() self:UnregisterShortTermEvents() end
+	function mod:ENCOUNTER_TIMELINE_EVENT_ADDED(eventInfo) end
+	function mod:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(eventID) end
+else
+	mod:RegisterEventsInCombat(
+		"SPELL_AURA_APPLIED 268008 269686 268024 268008",
+		"SPELL_AURA_REMOVED 268008 269686 274149",
+		"SPELL_CAST_START 268061",
+		"SPELL_CAST_SUCCESS 273677 274149",
+		"CHAT_MSG_RAID_BOSS_EMOTE"
+	)
 
-function mod:SPELL_AURA_REMOVED(args)
-	local spellId = args.spellId
-	if spellId == 268008 then
+	--TODO, work on Cds if adds long enough for more than 1 cast each wave
+	local warnTaint						= mod:NewSpellAnnounce(273677, 2)
+	local warnPulse						= mod:NewSpellAnnounce(268024, 3)
+	local warnLifeForce					= mod:NewSpellAnnounce(274149, 1)
+
+	local specWarnChainLightning		= mod:NewSpecialWarningInterrupt(268061, nil, nil, nil, 1, 2, nil, nil, "kickcast")
+	local specWarnRainofToads			= mod:NewSpecialWarningSpell(269688, nil, nil, nil, 2, 2, nil, nil, "mobsoon")
+	local specWarnPlague				= mod:NewSpecialWarningDispel(269686, "RemoveDisease", nil, nil, 1, 2, nil, nil, "helpdispel")
+	local specWarnSnakeCharm			= mod:NewSpecialWarningDispel(268008, "RemoveMagic", nil, 2, 1, 2, nil, nil, "helpdispel")
+
+	--local timerRainofToadsCD			= mod:NewCDTimer(20, 269688, nil, nil, nil, 1)--More work needed
+	local timerPlague					= mod:NewTargetTimer(10, 269686, nil, "RemoveDisease", nil, 5, nil, DBM_COMMON_L.DISEASE_ICON)
+	local timerPulseCD					= mod:NewCDTimer(15, 268024, nil, "Healer", nil, 5, nil, DBM_COMMON_L.HEALER_ICON)
+	--local timerLifeForce				= mod:NewBuffActiveTimer(20, 274149, nil, nil, nil, 6, nil, DBM_COMMON_L.HEALER_ICON)
+
+	mod:AddNamePlateOption("NPAuraOnSnakeCharm", 268008)
+
+	function mod:OnCombatStart(delay)
+		timerPulseCD:Start(10-delay)
+		--timerRainofToadsCD:Start(1-delay)
 		if self.Options.NPAuraOnSnakeCharm then
-			DBM.Nameplate:Hide(true, args.destGUID, spellId)
+			DBM:FireEvent("BossMod_EnableHostileNameplates")
 		end
-	elseif spellId == 269686 then
-		timerPlague:Stop(args.destName)
-	elseif spellId == 274149 then--Life Force Ending
-		timerPulseCD:Start(9.4)
 	end
-end
 
-function mod:SPELL_CAST_START(args)
-	local spellId = args.spellId
-	if spellId == 268061 and self:CheckInterruptFilter(args.sourceGUID, false, true) then
-		specWarnChainLightning:Show(args.sourceName)
-		specWarnChainLightning:Play("kickcast")
+	function mod:OnCombatEnd()
+		if self.Options.NPAuraOnSnakeCharm then
+			DBM.Nameplate:Hide(true, nil, nil, nil, true, true)
+		end
 	end
-end
 
-function mod:SPELL_CAST_SUCCESS(args)
-	local spellId = args.spellId
-	if spellId == 273677 and self:AntiSpam(3, 2) then
-		warnTaint:Show()
-	elseif spellId == 274149 then
-		timerPulseCD:Stop()
-		warnLifeForce:Show()
-		--timerLifeForce:Start()
+	function mod:SPELL_AURA_APPLIED(args)
+		local spellId = args.spellId
+		if spellId == 268008 then
+			if self.Options.NPAuraOnSnakeCharm then
+				DBM.Nameplate:Show(true, args.destGUID, spellId, nil, 15)
+			end
+		elseif spellId == 269686 and self:CheckDispelFilter("disease") then
+			specWarnPlague:Show(args.destName)
+			specWarnPlague:Play("helpdispel")
+			timerPlague:Start(args.destName)
+		elseif spellId == 268024 and self:AntiSpam(3, 1) then
+			warnPulse:Show()
+			timerPulseCD:Start()
+		elseif spellId == 268008 and self:AntiSpam(3, 3) and self:CheckDispelFilter("magic") then
+			specWarnSnakeCharm:Show(args.destName)
+			specWarnSnakeCharm:Play("helpdispel")
+		end
 	end
-end
 
-function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
-	if msg:find("spell:269688") and self:AntiSpam(5, 4) then
-		specWarnRainofToads:Show()
-		specWarnRainofToads:Play("mobsoon")
-		--timerRainofToadsCD:Start()
+	function mod:SPELL_AURA_REMOVED(args)
+		local spellId = args.spellId
+		if spellId == 268008 then
+			if self.Options.NPAuraOnSnakeCharm then
+				DBM.Nameplate:Hide(true, args.destGUID, spellId)
+			end
+		elseif spellId == 269686 then
+			timerPlague:Stop(args.destName)
+		elseif spellId == 274149 then--Life Force Ending
+			timerPulseCD:Start(9.4)
+		end
+	end
+
+	function mod:SPELL_CAST_START(args)
+		local spellId = args.spellId
+		if spellId == 268061 and self:CheckInterruptFilter(args.sourceGUID, false, true) then
+			specWarnChainLightning:Show(args.sourceName)
+			specWarnChainLightning:Play("kickcast")
+		end
+	end
+
+	function mod:SPELL_CAST_SUCCESS(args)
+		local spellId = args.spellId
+		if spellId == 273677 and self:AntiSpam(3, 2) then
+			warnTaint:Show()
+		elseif spellId == 274149 then
+			timerPulseCD:Stop()
+			warnLifeForce:Show()
+			--timerLifeForce:Start()
+		end
+	end
+
+	function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
+		if msg:find("spell:269688") and self:AntiSpam(5, 4) then
+			specWarnRainofToads:Show()
+			specWarnRainofToads:Play("mobsoon")
+			--timerRainofToadsCD:Start()
+		end
 	end
 end
