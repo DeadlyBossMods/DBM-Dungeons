@@ -13,11 +13,6 @@ mod:SetWipeTime(600)--This mod lets you leave combat for as long as you want, so
 mod:SetReCombatTime(20, 5)--Basically killing of recombat restriction. mage tower lets you spam retry, we want the mod to let you
 mod:SetZone(1220, 1710)--doesn't need fully disabled zone detection, can only be queued from broken shore
 
-mod:RegisterEvents(
-	"ZONE_CHANGED_NEW_AREA",
-	"LOADING_SCREEN_DISABLED"
-)
-
 if DBM:IsPostMidnight() then
 	--NOTE: boss mod api only supports 2 spells, the rest were not added so they can't be supported here either
 	--TODO, FelStomp alert?.
@@ -61,6 +56,11 @@ if DBM:IsPostMidnight() then
 		--Timeline completion handling will be added with the event routing.
 	end
 else
+	mod:RegisterEvents(
+		"ZONE_CHANGED_NEW_AREA",
+		"LOADING_SCREEN_DISABLED"
+	)
+
 	mod:RegisterEventsInCombat(
 		"SPELL_CAST_START 235823",
 		"SPELL_AURA_APPLIED 235984 237188",
