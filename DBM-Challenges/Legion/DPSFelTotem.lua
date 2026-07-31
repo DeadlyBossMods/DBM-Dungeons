@@ -5,6 +5,7 @@ mod.statTypes = "normal,timewalker"
 
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(117230, 117484)--Tugar, Jormog
+mod:SetEncounterID(3599)
 mod:SetBossHPInfoToHighest()
 mod.soloChallenge = true
 

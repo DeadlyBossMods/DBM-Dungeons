@@ -5,12 +5,13 @@ mod.statTypes = "normal,timewalker"
 
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(118488)--Lord Erdris Thorn
+mod:SetEncounterID(3598)--Iffy, this id could belong to queen if designers forgot she aleady had one
 mod.soloChallenge = true
 
 mod:RegisterCombat("combat")
 mod:SetWipeTime(600)--This mod lets you leave combat for as long as you want, so basically have to hard disable auto wipe detection
 mod:SetReCombatTime(20, 5)--Basically killing of recombat restriction. mage tower lets you spam retry, we want the mod to let you
-mod:SetZone(1220, 1710)--doesn't need fully disabled zone detection, can only be queuedd from broken shore
+mod:SetZone(1220, 1710)--doesn't need fully disabled zone detection, can only be queued from broken shore
 
 mod:RegisterEvents(
 	"ZONE_CHANGED_NEW_AREA",
@@ -18,24 +19,21 @@ mod:RegisterEvents(
 )
 
 if DBM:IsPostMidnight() then
-	--local warnArcaneBlitz = mod:NewStackAnnounce(235833, 2)
+	--NOTE: boss mod api only supports 2 spells, the rest were not added so they can't be supported here either
+	--TODO, FelStomp alert?.
+	local specWarnIgniteSoul		= mod:NewSpecialWarningYou(237188, nil, nil, nil, 3, 17, nil, nil, "debuffyou")
 
-	--local specWarnManaSting = mod:NewSpecialWarningMoveTo(235984, nil, nil, nil, 1, 2, nil, nil, "findshelter")
-	--local specWarnArcaneBlitz = mod:NewSpecialWarningStack(235833, nil, 4, nil, nil, 1, 6, nil, nil, "stackhigh")
-	--local specWarnIgniteSoul = mod:NewSpecialWarningYou(237188, nil, nil, nil, 3, 2, nil, nil, "targetyou")
-	--local specWarnKnifeDance = mod:NewSpecialWarningInterrupt(235823, nil, nil, nil, 1, 2, nil, nil, "kickcast")
+	local timerIgniteSoulCD			= mod:NewCDCountTimer(30, 237188, nil, nil, nil, 3, nil, DBM_COMMON_L.DEADLY_ICON)
+	local timerFelStompCD			= mod:NewCDCountTimer(30, 237190, nil, nil, nil, 3)
 
-	--local timerIgniteSoulCD = mod:NewCDCountTimer(0, 237188, nil, nil, nil, 3, nil, DBM_COMMON_L.DEADLY_ICON)
 	local badStateDetected = false
 	local function setFallback(self, dontSetAlerts)
 		if not dontSetAlerts then
-			--specWarnManaSting:SetAlert(0, "findshelter", 2)
-			--specWarnArcaneBlitz:SetAlert(0, "stackhigh", 2)
-			--specWarnIgniteSoul:SetAlert(0, "targetyou", 2)
-			--specWarnKnifeDance:SetAlert(0, "kickcast", 2)
+			specWarnIgniteSoul:SetAlert(940, "targetyou", 2)
 		end
 		local onlyColor = not DBM.Options.HideDBMBars and not badStateDetected
-		--timerIgniteSoulCD:SetTimeline(0, onlyColor)
+		timerIgniteSoulCD:SetTimeline(940, onlyColor)
+		timerFelStompCD:SetTimeline(941, onlyColor)
 	end
 
 	function mod:OnLimitedCombatStart()

@@ -5,6 +5,7 @@ mod.statTypes = "normal,timewalker"
 
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(115244, 116839)
+mod:SetEncounterID(3611)
 mod:SetBossHPInfoToHighest()
 mod.soloChallenge = true
 

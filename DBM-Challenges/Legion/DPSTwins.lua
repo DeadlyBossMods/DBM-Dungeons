@@ -5,6 +5,7 @@ mod.statTypes = "normal,timewalker"
 
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(116409, 116410)--Raest Magespear, Karam Magespear
+mod:SetEncounterID(3614)
 mod:SetBossHPInfoToHighest()
 mod.soloChallenge = true
 
