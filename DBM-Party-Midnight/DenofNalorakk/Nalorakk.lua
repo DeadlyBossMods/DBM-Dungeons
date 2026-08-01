@@ -26,11 +26,6 @@ local timerEchoingMaulCD					= mod:NewCDCountTimer(20.5, 1242860, nil, nil, nil,
 local timerFuryoftheWarGodCD				= mod:NewCDCountTimer(20.5, 1243011, nil, nil, nil, 5)
 local timerOverwhelmingOnslaughtCD			= mod:NewCDCountTimer(20.5, 1243569, nil, nil, nil, 5)
 
---Forceful Roar and Spirit Thrash have no routeable timeline events.
---mod:AddCustomAlertSoundOption(1255385, true, 2)--Forceful Roar
---mod:AddCustomAlertSoundOption(1262846, true, 2)--Spirit Thrash (probably not used anymore)
---mod:AddCustomTimerOptions(1255385, true, 2, 0)--Forceful Roar
---mod:AddCustomTimerOptions(1262846, true, 5, 0)--Spirit Thrash (probably not used anymore)
 --Custom Aura Sounds
 mod:AddAuraSoundOption(1242869, true, 1242869, 1, 1, "scatter", 2)--Echoing Maul
 mod:AddAuraSoundOption(1261781, true, 1261781, 1, 1, "safenow", 2)--Defensive Stance
@@ -64,10 +59,6 @@ function mod:OnLimitedCombatStart()
 	self.vb.onslaughtCount = 1
 	next25IsMaul = true
 	timerTypeByEventID = {}
-	--self:EnableAlertOptions(1255385, 89, "pushbackincoming", 13, 2)
-	--self:EnableAlertOptions(1262846, 163, "specialsoon", 2, 3)
-	--self:EnableTimelineOptions(1255385, 89)
-	--self:EnableTimelineOptions(1262846, 163)
 	if DBM.Options.HardcodedTimer and not badStateDetected then
 		self:IgnoreBlizzardAPI()
 		self:RegisterShortTermEvents(
