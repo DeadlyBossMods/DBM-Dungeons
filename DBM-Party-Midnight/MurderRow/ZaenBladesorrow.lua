@@ -48,6 +48,7 @@ local function setFallback(self, dontSetAlerts)
 			specWarnEnvenom:SetAlert(193, "defensive", 2, 3)
 		end
 		specWarnMurderinaRow:SetAlert(125, "breaklos", 2, 4)
+		specWarnFireBomb:SetAlert(123, "bombyou", 12, 2, 0)
 	end
 	local onlyColor = not DBM.Options.HideDBMBars and not badStateDetected
 	timerFireBombCD:SetTimeline(123, onlyColor)
