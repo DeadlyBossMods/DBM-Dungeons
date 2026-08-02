@@ -30,7 +30,7 @@ L= DBM:GetModLocalization(1672)
 L = DBM:GetModLocalization("BRHTrash")
 
 L:SetGeneralLocalization({
-	name =	"Трэш мобы Крепость Чёрной Ладьи"
+	name =	"Трэш: Крепость Чёрной Ладьи"
 })
 
 -----------------------
@@ -62,7 +62,7 @@ L= DBM:GetModLocalization(1657)
 L = DBM:GetModLocalization("DHTTrash")
 
 L:SetGeneralLocalization({
-	name =	"Трэш мобы Чаща Тёмного Сердца"
+	name =	"Трэш: Чаща Тёмного Сердца"
 })
 
 L:SetMiscLocalization({
@@ -109,7 +109,7 @@ L= DBM:GetModLocalization(1492)
 L = DBM:GetModLocalization("EoATrash")
 
 L:SetGeneralLocalization({
-	name =	"Трэш мобы Око Азшары"
+	name =	"Трэш: Око Азшары"
 })
 
 -----------------------
@@ -164,7 +164,7 @@ L:SetMiscLocalization({
 L = DBM:GetModLocalization("HoVTrash")
 
 L:SetGeneralLocalization({
-	name =	"Трэш мобы Чертоги Доблести"
+	name =	"Трэш: Чертоги Доблести"
 })
 
 -----------------------
@@ -196,7 +196,7 @@ L= DBM:GetModLocalization(1687)
 L = DBM:GetModLocalization("NLTrash")
 
 L:SetGeneralLocalization({
-	name =	"Трэш мобы Логово Нелтариона"
+	name =	"Трэш: Логово Нелтариона"
 })
 
 -----------------------
@@ -237,7 +237,7 @@ L= DBM:GetModLocalization(1501)
 L = DBM:GetModLocalization("ArcwayTrash")
 
 L:SetGeneralLocalization({
-	name =	"Трэш мобы Катакомбы Сурамара"
+	name =	"Трэш: Катакомбы Сурамара"
 })
 
 -----------------------
@@ -268,7 +268,7 @@ L:SetMiscLocalization({
 L = DBM:GetModLocalization("CoSTrash")
 
 L:SetGeneralLocalization({
-	name =	"Трэш мобы Квартал Звёзд"
+	name =	"Трэш: Квартал Звёзд"
 })
 
 L:SetWarningLocalization({
@@ -344,7 +344,7 @@ L= DBM:GetModLocalization(1663)
 L = DBM:GetModLocalization("MawTrash")
 
 L:SetGeneralLocalization({
-	name =	"Трэш мобы Утроба Душ"
+	name =	"Трэш: Утроба Душ"
 })
 
 -----------------------
@@ -396,7 +396,7 @@ L= DBM:GetModLocalization(1711)
 L = DBM:GetModLocalization("AVHTrash")
 
 L:SetGeneralLocalization({
-	name =	"Трэш мобы Аметистовая Крепость"
+	name =	"Трэш: Аметистовая Крепость"
 })
 
 L:SetWarningLocalization({
@@ -458,7 +458,7 @@ L:SetMiscLocalization{
 L = DBM:GetModLocalization("VoWTrash")
 
 L:SetGeneralLocalization({
-	name =	"Трэш мобы Казематы Стражей"
+	name =	"Трэш: Казематы Стражей"
 })
 
 -----------------------
@@ -529,7 +529,7 @@ L:SetGeneralLocalization({
 L = DBM:GetModLocalization("RTKTrash")
 
 L:SetGeneralLocalization({
-	name =	"Трэш мобы Возвращение в Каражан"
+	name =	"Трэш: Возвращение в Каражан"
 })
 
 L:SetMiscLocalization({
@@ -569,7 +569,7 @@ L= DBM:GetModLocalization(1878)
 L = DBM:GetModLocalization("CoENTrash")
 
 L:SetGeneralLocalization({
-	name =	"Трэш мобы Собор Вечной Ночи"
+	name =	"Трэш: Собор Вечной Ночи"
 })
 
 -----------------------
@@ -601,5 +601,5 @@ L= DBM:GetModLocalization(1982)
 L = DBM:GetModLocalization("SoTTrash")
 
 L:SetGeneralLocalization({
-	name =	"Трэш мобы Престол Триумвирата"
+	name =	"Трэш: Престол Триумвирата"
 })

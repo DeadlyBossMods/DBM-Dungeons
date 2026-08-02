@@ -7,7 +7,7 @@ local L
 L = DBM:GetModLocalization("MurderRowTrash")
 
 L:SetGeneralLocalization({
-	name =	"Трэш мобы Закоулок душегубов"
+	name =	"Трэш: Закоулок душегубов"
 })
 
 -----------------------
@@ -16,7 +16,7 @@ L:SetGeneralLocalization({
 L = DBM:GetModLocalization("TheBlindingValeTrash")
 
 L:SetGeneralLocalization({
-	name =	"Трэш мобы Слепой долины"
+	name =	"Трэш: Слепящая долина"
 })
 
 -----------------------
@@ -25,7 +25,7 @@ L:SetGeneralLocalization({
 L = DBM:GetModLocalization("VoidscarArenaTrash")
 
 L:SetGeneralLocalization({
-	name =	"Трэш мобы Арены шрамов Бездны"
+	name =	"Трэш: Арена Шрама Бездны"
 })
 
 -----------------------
@@ -34,7 +34,7 @@ L:SetGeneralLocalization({
 L = DBM:GetModLocalization("AltarofFangsTrash")
 
 L:SetGeneralLocalization({
-	name =	"Трэш мобы Алтаря Клыков"
+	name =	"Трэш: Алтарь Клыков"
 })
 
 -----------------------
@@ -43,5 +43,5 @@ L:SetGeneralLocalization({
 L = DBM:GetModLocalization("DenofNalorakkTrash")
 
 L:SetGeneralLocalization({
-	name =	"Трэш мобы Логова Налоракка"
+	name =	"Трэш: Берлога Налоракка"
 })

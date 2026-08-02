@@ -50,7 +50,7 @@ L= DBM:GetModLocalization(109)
 L = DBM:GetModLocalization("BlackrockCavernsTrash")
 
 L:SetGeneralLocalization({
-	name =	"Трэш мобы Пещеры Черной горы"
+	name =	"Трэш: Пещеры Черной горы"
 })
 
 ---------------------
@@ -117,7 +117,7 @@ L= DBM:GetModLocalization(134)
 
 L = DBM:GetModLocalization("GrimBatolTrash")
 L:SetGeneralLocalization({
-	name =	"Трэш мобы Грим Батол"
+	name =	"Трэш: Грим Батол"
 })
 
 ---------
@@ -126,7 +126,7 @@ L:SetGeneralLocalization({
 L = DBM:GetModLocalization("BoralusTrash")
 
 L:SetGeneralLocalization({
-	name =	"Трэш мобы Боралус"
+	name =	"Трэш: Боралус"
 })
 
 ----------------------------
@@ -342,7 +342,7 @@ L= DBM:GetModLocalization(113)
 L = DBM:GetModLocalization("StonecoreTrash")
 
 L:SetGeneralLocalization({
-	name =	"Трэш мобы Каменные Недра"
+	name =	"Трэш: Каменные Недра"
 })
 
 ---------------------------
@@ -372,7 +372,7 @@ L= DBM:GetModLocalization(116)
 L = DBM:GetModLocalization("VortexPinnacleTrash")
 
 L:SetGeneralLocalization({
-	name =	"Трэш мобы Вершина Смерча"
+	name =	"Трэш: Вершина Смерча"
 })
 
 ---------------------------
@@ -415,7 +415,7 @@ L:SetMiscLocalization{
 L = DBM:GetModLocalization("ThroneofTidesTrash")
 
 L:SetGeneralLocalization({
-	name =	"Трэш мобы Трон Приливов"
+	name =	"Трэш: Трон Приливов"
 })
 
 ----------------
