@@ -13,63 +13,97 @@ mod:SetZone(1762)
 mod:RegisterCombat("combat")
 
 if DBM:IsPostMidnight() then
+	mod:RegisterSafeEventsInCombat("CHAT_MSG_MONSTER_YELL")
+	--Overview:
+	--The battle will begin with Kula the Butcher. When a councilor is defeated, they will return to their urn and the next will join the encounter.
+	--However, the defeated councilor will periodically rejoin the battle to use a single ability, and then return to their urn.
+	--When all three councilors are defeated, the encounter ends.
+	--Important signals for routing.
+	--1. Previous bosses timeline events canceling and next bosses starting should signal advance to next boss
+	--2. Defeated boss now expected to use one special ability with less frequency going forward but they don't fire timeline events
+	--3. Boss order is Kula, Aka'ali, Zanazal.
+	--4. Barrel Through continues to fire ENCOUNTER_WARNING when Aka'ali is defeated, but the timeline event no longer exists, so NewSpecialWarningBlizzTarget is broken. Therefore, when Aka'ali is defeated specWarnBarrelThrough fires its SetFallback
+	--5. Objects are sorted by boss for clear identification of ability ownership.
+
 	--Kula the Butcher
-	--mod:AddTimerLine(DBM:EJ_GetSectionInfo(18261))
-	--local warnSeveringAxe				= mod:NewTargetNoFilterAnnounce(266231, 3, nil, "Healer")
+	mod:AddTimerLine(DBM:EJ_GetSectionInfo(18261))
+	--local warnSeveringAxe				= mod:NewCountAnnounce(266231, 3, nil, "Healer")
 
-	--local specWarnWhirlingAxes			= mod:NewSpecialWarningDodge(266206, nil, nil, nil, 2, 2, nil, nil, "watchstep")
-	--local specWarnSeveringAxe			= mod:NewSpecialWarningDefensive(266231, nil, nil, nil, 1, 2, nil, nil, "defensive")
+	local specWarnWhirlingAxes			= mod:NewSpecialWarningDodgeCount(266206, nil, nil, nil, 2, 2, nil, nil, "watchstep")
 
-	--local timerWhirlingAxesCD			= mod:NewCDCountTimer(0, 266206, nil, nil, nil, 3)
-	--local timerSeveringAxeCD			= mod:NewCDCountTimer(0, 266231, nil, nil, nil, 3)
+	local timerWhirlingAxesCD			= mod:NewCDCountTimer(30, 266206, nil, nil, nil, 3)
+	local timerSeveringAxeCD			= mod:NewCDCountTimer(30, 266231, nil, nil, nil, 3)
+
+	mod:AddAuraSoundOption(266231, true, 266231, 1, 3, "bleedyou", 19, 0)--Severing Axe
 
 	--Aka'ali the Conqueror
-	--mod:AddTimerLine(DBM:EJ_GetSectionInfo(18264))
-	--local specWarnBarrelThrough			= mod:NewSpecialWarningYou(266951, nil, nil, nil, 1, 2, nil, nil, "targetyou")
-	--local specWarnBarrelThroughSoak		= mod:NewSpecialWarningMoveTo(266951, nil, nil, nil, 1, 2, nil, nil, "gathershare")
-	--local specWarnDebilitatingBackhand	= mod:NewSpecialWarningRun(266237, nil, nil, nil, 4, 2, nil, nil, "justrun")
+	mod:AddTimerLine(DBM:EJ_GetSectionInfo(18264))
+	local specWarnBarrelThrough			= mod:NewSpecialWarningBlizzTarget(267494, nil, nil, nil, 1, 2, nil, nil, "helpsoak")--Caveat, target will get double alerts
+	local specWarnDebilitatingBackhand	= mod:NewSpecialWarningRunCount(266237, nil, nil, nil, 4, 2, nil, nil, "justrun")
 
-	--local timerBarrelThroughCD			= mod:NewCDCountTimer(0, 266951, nil, nil, nil, 3)
-	--local timerDebilitatingBackhandCD	= mod:NewCDCountTimer(0, 266237, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON..DBM_COMMON_L.DEADLY_ICON)
+	local timerBarrelThroughCD			= mod:NewCDCountTimer(30, 267494, nil, nil, nil, 3)
+	local timerDebilitatingBackhandCD	= mod:NewCDCountTimer(30, 266237, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON..DBM_COMMON_L.DEADLY_ICON)
+
+	mod:AddAuraSoundOption(267494, true, 267494, 1, 1, "lineyou", 17, 0)--Barrel Through
 
 	--Zanazal the Wise
-	--mod:AddTimerLine(DBM:EJ_GetSectionInfo(18267))
-	--local specWarnPoisonNova				= mod:NewSpecialWarningInterrupt(267273, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
-	--local specWarnTotems					= mod:NewSpecialWarningSwitch(267060, nil, nil, nil, 1, 2, nil, nil, "changetarget")
-	--local specWarnEarthwall				= mod:NewSpecialWarningDispel(267256, "MagicDispeller", nil, nil, 1, 2, nil, nil, "dispelboss")
+	local Zanazal = DBM:EJ_GetSectionInfo(18267)--Also used for Interrupt warning source name
+	mod:AddTimerLine(Zanazal)
+	local specWarnPoisonNova				= mod:NewSpecialWarningInterrupt(267273, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
+	local specWarnTotems					= mod:NewSpecialWarningSwitchCount(267060, nil, nil, nil, 1, 2, nil, nil, "changetarget")
 
-	--local timerPoisonNovaCD				= mod:NewCDCountTimer(0, 267273, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
-	--local timerTotemsCD					= mod:NewCDCountTimer(0, 267060, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)
+	local timerArcLightningCD				= mod:NewCDCountTimer(30, 1305810, nil, nil, nil, 3)
+	local timerPoisonNovaCD					= mod:NewCDCountTimer(30, 267273, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+	local timerTotemsCD						= mod:NewCDCountTimer(30, 267060, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)
+
+	mod.vb.whirlingAxesCount = 1
+	mod.vb.severingAxeCount = 1
+	mod.vb.barrelThroughCount = 1
+	mod.vb.debilitatingBackhandCount = 1
+	mod.vb.arcLightningCount = 1
+	mod.vb.poisonNovaCount = 1
+	mod.vb.totemsCount = 1
 
 	local badStateDetected = false
+	local stage3BarrelYellArmed = false
+	local lastStage3YellTime = 0
 
 	---@param self DBMMod
 	---@param dontSetAlerts boolean? Called on engage when we only want to set timeline parameters and not touch encounter alerts
 	local function setFallback(self, dontSetAlerts)
 		if not dontSetAlerts then
-			--specWarnWhirlingAxes:SetAlert(0, "watchstep", 2)
-			--specWarnSeveringAxe:SetAlert(0, "defensive", 2)
-			--specWarnBarrelThrough:SetAlert(0, "targetyou", 2)
-			--specWarnBarrelThroughSoak:SetAlert(0, "gathershare", 2)
-			--specWarnDebilitatingBackhand:SetAlert(0, "justrun", 2)
-			--specWarnPoisonNova:SetAlert(0, "kickcast", 2)
-			--specWarnTotems:SetAlert(0, "changetarget", 2)
-			--specWarnEarthwall:SetAlert(0, "dispelboss", 2)
+			specWarnWhirlingAxes:SetAlert(870, "watchstep", 2)
+			specWarnBarrelThrough:SetAlert(872, "helpsoak", 2, 2, 0)
+			if self:IsTank() then
+				specWarnDebilitatingBackhand:SetAlert(873, "carefly", 2)
+			end
+			specWarnPoisonNova:SetAlert(875, "kickcast", 2)
+			specWarnTotems:SetAlert(876, "changetarget", 2)
 		end
 		--If user has DBM bars enabled, only register colors with the Blizzard API.
 		--If bars are disabled, or the timeline is in a bad state, also register countdowns.
 		local onlyColor = not DBM.Options.HideDBMBars and not badStateDetected
-		--timerWhirlingAxesCD:SetTimeline(0, onlyColor)
-		--timerSeveringAxeCD:SetTimeline(0, onlyColor)
-		--timerBarrelThroughCD:SetTimeline(0, onlyColor)
-		--timerDebilitatingBackhandCD:SetTimeline(0, onlyColor)
-		--timerPoisonNovaCD:SetTimeline(0, onlyColor)
-		--timerTotemsCD:SetTimeline(0, onlyColor)
+		timerWhirlingAxesCD:SetTimeline(870, onlyColor)
+		timerSeveringAxeCD:SetTimeline(871, onlyColor)
+		timerBarrelThroughCD:SetTimeline(872, onlyColor)
+		timerDebilitatingBackhandCD:SetTimeline(873, onlyColor)
+		timerArcLightningCD:SetTimeline(874, onlyColor)
+		timerPoisonNovaCD:SetTimeline(875, onlyColor)
+		timerTotemsCD:SetTimeline(876, onlyColor)
 	end
 
 	function mod:OnLimitedCombatStart()
 		self:TLCountReset()
-		badStateDetected = true
+		self:SetStage(1)
+		self.vb.whirlingAxesCount = 1
+		self.vb.severingAxeCount = 1
+		self.vb.barrelThroughCount = 1
+		self.vb.debilitatingBackhandCount = 1
+		self.vb.arcLightningCount = 1
+		self.vb.poisonNovaCount = 1
+		self.vb.totemsCount = 1
+		stage3BarrelYellArmed = false
+		lastStage3YellTime = 0
 		if DBM.Options.HardcodedTimer and not badStateDetected then
 			self:IgnoreBlizzardAPI()
 			self:RegisterShortTermEvents(
@@ -84,15 +118,116 @@ if DBM:IsPostMidnight() then
 
 	function mod:OnCombatEnd()
 		self:TLCountReset()
+		stage3BarrelYellArmed = false
+		lastStage3YellTime = 0
 		self:UnregisterShortTermEvents()
 	end
 
-	function mod:ENCOUNTER_TIMELINE_EVENT_ADDED(eventInfo)
-		--Timeline routing will be added after event durations are verified.
-	end
+	do
+		---@param self DBMMod
+		---@param timer number
+		---@param timerExact number
+		---@param eventID number
+		local function timersAll(self, timer, timerExact, eventID)
+			local handled = false
+			if timer == 8 or (timer == 15 and timerExact ~= 15) then--Whirling Axes opener and repeat (repeat is 14.75)
+				timerWhirlingAxesCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "whirlingAxes", "whirlingAxesCount"))
+				handled = true
+			elseif timerExact == 15 or timer == 17 then--Severing Axe opener and repeat
+				timerSeveringAxeCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "severingAxe", "severingAxeCount"))
+				handled = true
+			elseif self:GetStage(2) then
+				if timer == 5 or timer == 20 then--Barrel Through opener and repeat
+					timerBarrelThroughCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "barrelThrough", "barrelThroughCount"))
+					handled = true
+				elseif timer == 14 or timer == 22 then--Debilitating Backhand opener and repeat
+					timerDebilitatingBackhandCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "debilitatingBackhand", "debilitatingBackhandCount"))
+					handled = true
+				end
+			elseif self:GetStage(3) then
+				if timer == 2 or timer == 7 then--Arc Lightning opener and repeat
+					timerArcLightningCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "arcLightning", "arcLightningCount"))
+					handled = true
+				elseif timer == 10 or timer == 24 then--Poison Nova opener and repeat
+					timerPoisonNovaCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "poisonNova", "poisonNovaCount"))
+					handled = true
+				elseif timer == 20 or timer == 53 then--Call of the Elements opener and repeat
+					timerTotemsCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "totems", "totemsCount"))
+					handled = true
+				end
+			end
+			if not handled then
+				badStateDetected = true
+				self:ResumeBlizzardAPI()
+				self:UnregisterShortTermEvents()
+				setFallback(self)
+				DBM:Debug("|cffff0000Failed to match encounter timeline events to expected timers, falling back to Blizzard API|r", nil, nil, nil, true)
+			end
+		end
 
-	function mod:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(eventID)
-		--Timeline completion handling will be added with the event routing.
+		function mod:ENCOUNTER_TIMELINE_EVENT_ADDED(eventInfo)
+			if eventInfo.source ~= 0 then return end
+			local eventID = eventInfo.id
+			local timerExact = eventInfo.duration
+			local timer = math.floor(timerExact + 0.5)
+			if not badStateDetected then
+				timersAll(self, timer, timerExact, eventID)
+			end
+		end
+
+		function mod:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(eventID)
+			local eventState = C_EncounterTimeline.GetEventState(eventID)
+			if not eventID or not eventState then return end
+			if eventState == 2 then
+				local eventType, eventCount = self:TLCountFinish(eventID)
+				if eventType and eventCount then
+					if eventType == "whirlingAxes" then
+						specWarnWhirlingAxes:Show(eventCount)
+						specWarnWhirlingAxes:Play("watchstep")
+					elseif eventType == "barrelThrough" then
+						specWarnBarrelThrough:Show(eventCount, "helpsoak")
+					elseif eventType == "debilitatingBackhand" then
+						if self:IsTank() then--can't disambiguate which boss is which at this time
+							specWarnDebilitatingBackhand:Show(eventCount)
+							specWarnDebilitatingBackhand:Play("justrun")
+						end
+					elseif eventType == "poisonNova" then
+						specWarnPoisonNova:Show(Zanazal)
+						specWarnPoisonNova:Play("kickcast")
+					elseif eventType == "totems" then
+						specWarnTotems:Show(eventCount)
+						specWarnTotems:Play("changetarget")
+					end
+				end
+			elseif eventState == 3 then
+				local eventType = self:TLCountCancel(eventID)
+				if self:GetStage(1) and (eventType == "whirlingAxes" or eventType == "severingAxe") then
+					self:SetStage(2)
+				elseif self:GetStage(2) and (eventType == "barrelThrough" or eventType == "debilitatingBackhand") then
+					self:SetStage(3)
+					--The yell-to-warning timing is the only non-secret stage-3 Barrel Through signal.
+					stage3BarrelYellArmed = true
+					self:RegisterShortTermEvents("ENCOUNTER_WARNING")
+				end
+			end
+		end
+
+		function mod:CHAT_MSG_MONSTER_YELL()
+			if stage3BarrelYellArmed then
+				lastStage3YellTime = GetTime()
+				--BlizzTarget expires after strict 0.5 seconds unless the next event is an ENCOUNTER_WARNING.
+				specWarnBarrelThrough:Show(self.vb.barrelThroughCount, "helpsoak", 0.5)
+			end
+		end
+
+		function mod:ENCOUNTER_WARNING()
+			if not stage3BarrelYellArmed or lastStage3YellTime == 0 then return end
+			local elapsed = GetTime() - lastStage3YellTime
+			lastStage3YellTime = 0
+			if elapsed <= 0.5 then
+				self.vb.barrelThroughCount = self.vb.barrelThroughCount + 1
+			end
+		end
 	end
 else
 	mod:RegisterEventsInCombat(
@@ -223,7 +358,7 @@ else
 				timerBarrelThroughCD:Start()
 			end
 		elseif spellId == 266237 then
-			if self:IsTanking("player", "boss1", nil, true) then
+			if self:IsTank() then
 				specWarnDebilitatingBackhand:Show()
 				specWarnDebilitatingBackhand:Play("justrun")
 				--specWarnDebilitatingBackhand:ScheduleVoice(3.5, "justrun")
