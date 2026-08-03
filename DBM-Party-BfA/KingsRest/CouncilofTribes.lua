@@ -192,7 +192,7 @@ if DBM:IsPostMidnight() then
 							specWarnDebilitatingBackhand:Play("justrun")
 						end
 					elseif eventType == "poisonNova" then
-						specWarnPoisonNova:Show(Zanazal)
+						specWarnPoisonNova:Show(Zanazal or DBM_COMMON_L.UNKNOWN)
 						specWarnPoisonNova:Play("kickcast")
 					elseif eventType == "totems" then
 						specWarnTotems:Show(eventCount)
