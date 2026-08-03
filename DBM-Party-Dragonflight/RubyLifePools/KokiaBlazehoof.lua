@@ -27,6 +27,7 @@ if DBM:IsPostMidnight() then
 	local timerRitualofBlazebindingCD				= mod:NewCDCountTimer(30, 372864, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)
 
 	local badStateDetected = false
+	local nextFortyIsRitual = true
 	---@param self DBMMod
 	---@param dontSetAlerts boolean? Called on engage when we only want to set timeline parameters and not touch encounter alerts
 	local function setFallback(self, dontSetAlerts)
@@ -46,7 +47,10 @@ if DBM:IsPostMidnight() then
 
 	function mod:OnLimitedCombatStart()
 		self:TLCountReset()
-		badStateDetected = true
+		self.vb.searingCount = 1
+		self.vb.boulderCount = 1
+		self.vb.ritualCount = 1
+		nextFortyIsRitual = true
 		if DBM.Options.HardcodedTimer and not badStateDetected then
 			self:IgnoreBlizzardAPI()
 			self:RegisterShortTermEvents("ENCOUNTER_TIMELINE_EVENT_ADDED", "ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED")
@@ -62,11 +66,52 @@ if DBM:IsPostMidnight() then
 	end
 
 	function mod:ENCOUNTER_TIMELINE_EVENT_ADDED(eventInfo)
-		--Timeline routing will be added after event durations are verified.
+		if eventInfo.source ~= 0 or badStateDetected then return end
+		local eventID = eventInfo.id
+		local timerExact = eventInfo.duration
+		local timer = math.floor(timerExact + 0.5)
+		if timer == 8 then
+			timerRitualofBlazebindingCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "ritual", "ritualCount"))
+		elseif timer == 19 or timer == 20 then
+			timerMoltenBoulderCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "boulder", "boulderCount"))
+		elseif timer == 28 then
+			timerSearingBlowsCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "searing", "searingCount"))
+		elseif timer == 40 then
+			if nextFortyIsRitual then
+				timerRitualofBlazebindingCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "ritual", "ritualCount"))
+			else
+				timerSearingBlowsCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "searing", "searingCount"))
+			end
+			nextFortyIsRitual = not nextFortyIsRitual
+		else
+			badStateDetected = true
+			self:ResumeBlizzardAPI()
+			self:UnregisterShortTermEvents()
+			setFallback(self)
+			DBM:Debug("|cffff0000Failed to match encounter timeline events to expected timers, falling back to Blizzard API|r", nil, nil, nil, true)
+		end
 	end
 
 	function mod:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(eventID)
-		--Timeline completion handling will be added with the event routing.
+		local eventState = C_EncounterTimeline.GetEventState(eventID)
+		if not eventState then return end
+		if eventState == 2 then
+			local eventType, eventCount = self:TLCountFinish(eventID)
+			if eventType == "searing" and eventCount then
+				if self:IsTanking("player", "boss1", nil, true) then
+					specWarnSearingBlows:Show()
+					specWarnSearingBlows:Play("defensive")
+				end
+			elseif eventType == "boulder" and eventCount then
+				specWarnMoltenBoulder:Show(eventCount)
+				specWarnMoltenBoulder:Play("frontal")
+			elseif eventType == "ritual" and eventCount then
+				specWarnRitualofBlazebinding:Show(eventCount)
+				specWarnRitualofBlazebinding:Play("killmob")
+			end
+		elseif eventState == 3 then
+			self:TLCountCancel(eventID)
+		end
 	end
 else
 	mod:RegisterEventsInCombat(

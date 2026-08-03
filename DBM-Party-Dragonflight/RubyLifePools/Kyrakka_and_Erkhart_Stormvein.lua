@@ -13,10 +13,10 @@ mod:SetHotfixNoticeRev(20230109000000)
 mod:RegisterCombat("combat")
 
 if DBM:IsPostMidnight() then
-	--TODO, infernospit has two IDs, 381602 and 381605 and one is debuff alert an one is cast alert (889 vs 894). need to idenitfy which is which
+	--TODO, infernospit has two IDs, 381602 for timer and 381605 for debuff alert an one is cast alert (889 vs 894).
 	--local warnWindsofChange						= mod:NewCountAnnounce(381517, 3)--Not actually a count timer, but has best localized text (disabled until hardcode)
 
-	local specWarnInfernoSpit						= mod:NewSpecialWarningCount(381602, nil, nil, nil, 2, 2, nil, nil, "aesoon")--381605
+	local specWarnInfernoSpit						= mod:NewSpecialWarningBlizzYou(381602, nil, nil, nil, 2, 18, nil, nil, "poolyou")--381605
 	local specWarnRoaringFirebreath					= mod:NewSpecialWarningDodge(381525, nil, nil, nil, 2, 2, nil, nil, "breathsoon")
 	local specWarnStormslam							= mod:NewSpecialWarningDefensive(381512, nil, nil, nil, 1, 2, nil, nil, "defensive")
 	local specWarnInterruptingCloudburst			= mod:NewSpecialWarningCast(381516, "SpellCaster", nil, nil, 2, 2, 4, nil, "stopcast")
@@ -25,16 +25,19 @@ if DBM:IsPostMidnight() then
 	local timerRoaringFirebreathCD					= mod:NewCDCountTimer(0, 381525, nil, nil, nil, 3)
 	local timerWindsofChangeCD						= mod:NewCDCountTimer(0, 381517, nil, nil, nil, 3)
 	local timerStormslamCD							= mod:NewCDCountTimer(0, 381512, nil, "Tank|RemoveMagic|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON..DBM_COMMON_L.MAGIC_ICON)
-	local timerCloudburstCD							= mod:NewCDCountTimer(0, 381516, nil, nil, nil, 2, nil, DBM_COMMON_L.MYTHIC_ICON)
+	local timerInterruptingCloudburstCD				= mod:NewCDCountTimer(0, 381516, nil, nil, nil, 2, nil, DBM_COMMON_L.MYTHIC_ICON)
 
-	mod:AddAuraSoundOption(381862, true, 381602, 1, 1, "poolyou", 18, 0)--Infernospit Debuff
+--	mod:AddAuraSoundOption(381862, true, 381602, 1, 1, "poolyou", 18, 0)--Infernospit Debuff (ENCOUNTER_WARNING intercept is used)
+	mod:AddAuraSoundOption(384773, true, 384773, 1, 2, "watchfeet", 8, 0)--Flaming Embers
 
 	local badStateDetected = false
+	local nextTwentyIsFirebreath = true
+	local nextSixteenIsFirebreath = true
 	---@param self DBMMod
 	---@param dontSetAlerts boolean? Called on engage when we only want to set timeline parameters and not touch encounter alerts
 	local function setFallback(self, dontSetAlerts)
 		if not dontSetAlerts then
-			specWarnInfernoSpit:SetAlert(889, "aesoon", 2)--894
+			specWarnInfernoSpit:SetAlert({889, 894}, "poolyou", 18, 2, 0)
 			specWarnRoaringFirebreath:SetAlert(890, "breathsoon", 2)
 			if self:IsTank() then
 				specWarnStormslam:SetAlert(888, "defensive", 2)
@@ -44,16 +47,23 @@ if DBM:IsPostMidnight() then
 			end
 		end
 		local onlyColor = not DBM.Options.HideDBMBars and not badStateDetected
-		timerInfernoSpitCD:SetTimeline(889, onlyColor)--894
+		timerInfernoSpitCD:SetTimeline({889, 894}, onlyColor)
 		timerRoaringFirebreathCD:SetTimeline(890, onlyColor)
 		timerWindsofChangeCD:SetTimeline(887, onlyColor)
 		timerStormslamCD:SetTimeline(888, onlyColor)
-		timerCloudburstCD:SetTimeline(885, onlyColor)
+		timerInterruptingCloudburstCD:SetTimeline(885, onlyColor)
 	end
 
 	function mod:OnLimitedCombatStart()
 		self:TLCountReset()
-		badStateDetected = true
+		self:SetStage(1)
+		self.vb.infernospitCount = 1
+		self.vb.firebreathCount = 1
+		self.vb.stormslamCount = 1
+		self.vb.windsCount = 1
+		self.vb.cloudburstCount = 1
+		nextTwentyIsFirebreath = true
+		nextSixteenIsFirebreath = true
 		if DBM.Options.HardcodedTimer and not badStateDetected then
 			self:IgnoreBlizzardAPI()
 			self:RegisterShortTermEvents("ENCOUNTER_TIMELINE_EVENT_ADDED", "ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED")
@@ -69,11 +79,65 @@ if DBM:IsPostMidnight() then
 	end
 
 	function mod:ENCOUNTER_TIMELINE_EVENT_ADDED(eventInfo)
-		--Timeline routing will be added after event durations are verified.
+		if eventInfo.source ~= 0 or badStateDetected then return end
+		local eventID = eventInfo.id
+		local timerExact = eventInfo.duration
+		local timer = math.floor(timerExact + 0.5)
+		if timer == 1 or (timer == 16 and nextSixteenIsFirebreath) or (timer == 20 and nextTwentyIsFirebreath) then
+			if timer == 16 then
+				if not self:GetStage(2) then--First mounted-stage Firebreath; phase-one timing cannot affect this alternation
+					self:SetStage(2)
+				end
+				nextSixteenIsFirebreath = false
+			elseif timer == 20 then
+				nextTwentyIsFirebreath = false
+			end
+			timerRoaringFirebreathCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "firebreath", "firebreathCount"))
+		elseif timer == 5 or timer == 23 then
+			timerStormslamCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "stormslam", "stormslamCount"))
+		elseif timer == 10 or timer == 22 then
+			timerWindsofChangeCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "winds", "windsCount"))
+		elseif timer == 21 or timer == 25 then
+			timerInterruptingCloudburstCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "cloudburst", "cloudburstCount"))
+		elseif timer == 9 or timer == 12 or timer == 16 or timer == 20 then
+			if timer == 16 then
+				nextSixteenIsFirebreath = true
+			elseif timer == 20 then
+				nextTwentyIsFirebreath = true
+			end
+			timerInfernoSpitCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "infernospit", "infernospitCount"))
+		else
+			badStateDetected = true
+			self:ResumeBlizzardAPI()
+			self:UnregisterShortTermEvents()
+			setFallback(self)
+			DBM:Debug("|cffff0000Failed to match encounter timeline events to expected timers, falling back to Blizzard API|r", nil, nil, nil, true)
+		end
 	end
 
 	function mod:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(eventID)
-		--Timeline completion handling will be added with the event routing.
+		local eventState = C_EncounterTimeline.GetEventState(eventID)
+		if not eventState then return end
+		if eventState == 2 then
+			local eventType, eventCount = self:TLCountFinish(eventID)
+			if eventType == "infernospit" and eventCount then
+				specWarnInfernoSpit:Show(eventCount, "poolyou")
+				specWarnInfernoSpit:Play("poolyou")
+			elseif eventType == "firebreath" and eventCount then
+				specWarnRoaringFirebreath:Show()
+				specWarnRoaringFirebreath:Play("breathsoon")
+			elseif eventType == "stormslam" and eventCount then
+				if self:IsTank() then
+					specWarnStormslam:Show()
+					specWarnStormslam:Play("defensive")
+				end
+			elseif eventType == "cloudburst" and eventCount and self:IsSpellCaster() then
+				specWarnInterruptingCloudburst:Show()
+				specWarnInterruptingCloudburst:Play("stopcast")
+			end
+		elseif eventState == 3 then
+			self:TLCountCancel(eventID)
+		end
 	end
 else
 	mod:RegisterEventsInCombat(
