@@ -102,7 +102,7 @@ do
 		elseif timer == 25 or timer == 45 then--Ssscavenging opener and repeat
 			timerSsscavengingCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "ssscavenging", "SsscavengingCount"))
 			handled = true
-		elseif timer == 24 then--Ssscavenging completion starts the ordered Stomp -> Triple Shot 24s pair
+		elseif timer == 23 or timer == 24 then--Ssscavenging completion starts the ordered Stomp -> Triple Shot pair; either event can vary between 23 and 24 seconds
 			if nextTwentyFourIsStomp then
 				nextTwentyFourIsStomp = false
 				timerRavenousStompCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "ravenousStomp", "RavenousStompCount"))

@@ -14,7 +14,7 @@ mod:RegisterCombat("combat")
 --local warnRecklessLeap			= mod:NewCountAnnounce(1283247, 2)
 
 local specWarnBoneslicer			= mod:NewSpecialWarningCount(1301413, nil, nil, nil, 2, 2, nil, nil, "watchstep")
-local specWrnRitualoftheFang		= mod:NewSpecialWarningSoakCount(1300876, nil, nil, nil, 2, 17, nil, nil, "soakbeam")
+local specWarnRitualoftheFang		= mod:NewSpecialWarningSoakCount(1300876, nil, nil, nil, 2, 17, nil, nil, "soakbeam")
 local specWarnAxegrinder			= mod:NewSpecialWarningCount(1301111, nil, nil, nil, 2, 3, nil, nil, "watchstep")
 local specWarnChopDown				= mod:NewSpecialWarningDefensive(1301350, nil, nil, nil, 1, 3, nil, nil, "defensive")
 
@@ -26,6 +26,7 @@ local timerChopDownCD				= mod:NewCDCountTimer(8, 1301350, nil, "Tank|Healer", n
 --mod:AddAuraSoundOption(470966, true, 470966, 4, 1, "justrun", 2)
 
 local badStateDetected = false
+local nextFourteenIsAxegrinder = true
 mod.vb.BoneslicerCount = 0
 mod.vb.RitualoftheFangCount = 0
 mod.vb.AxegrinderCount = 0
@@ -39,7 +40,7 @@ local function setFallback(self, dontSetAlerts)
 			specWarnChopDown:SetAlert(824, "defensive", 2)
 		end
 		specWarnBoneslicer:SetAlert(821, "watchstep", 2, 3)
-		specWrnRitualoftheFang:SetAlert(822, "soakbeam", 17, 3)
+		specWarnRitualoftheFang:SetAlert(822, "soakbeam", 17, 3)
 		specWarnAxegrinder:SetAlert(823, "watchstep", 2, 3)
 	end
 	--If user has DBM bars enabled, we only want to register colors to the blizz api so that the blizz bars are also colorized.
@@ -58,33 +59,59 @@ function mod:OnLimitedCombatStart()
 	self.vb.RitualoftheFangCount = 1
 	self.vb.AxegrinderCount = 1
 	self.vb.ChopDownCount = 1
-	--if DBM.Options.HardcodedTimer and not badStateDetected then
-	--	self:IgnoreBlizzardAPI()
-	--	self:RegisterShortTermEvents(
-	--		"ENCOUNTER_TIMELINE_EVENT_ADDED",
-	--		"ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED"
-	--	)
-	--	setFallback(self, true)
-	--else
+	nextFourteenIsAxegrinder = true
+	if DBM.Options.HardcodedTimer and not badStateDetected then
+		self:IgnoreBlizzardAPI()
+		self:RegisterShortTermEvents(
+			"ENCOUNTER_TIMELINE_EVENT_ADDED",
+			"ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED"
+		)
+		setFallback(self, true)
+	else
 		setFallback(self)
-	--end
+	end
 end
 
 function mod:OnCombatEnd()
 	self:TLCountReset()
+	nextFourteenIsAxegrinder = true
 	self:UnregisterShortTermEvents()
 end
 
---[[
 do
 	---@param self DBMMod
 	---@param timer number
 	---@param timerExact number
 	---@param eventID number
 	local function timersAll(self, timer, timerExact, eventID)
-		if timer == 3 or timer == 30 then
-	--		timerRampageCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "rampage", "rampageCount"))
+		--Confirmed against M+ PTR log. Each 64-second cycle has Axegrinder followed by Boneslicer at duration 14.
+		if timer == 14 then
+			if nextFourteenIsAxegrinder then
+				nextFourteenIsAxegrinder = false
+				timerAxegrinderCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "axegrinder", "AxegrinderCount"))
+			else
+				nextFourteenIsAxegrinder = true
+				timerBoneslicerCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "boneslicer", "BoneslicerCount"))
+			end
+		elseif timer == 26 or timer == 30 then
+			timerChopDownCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "chopDown", "ChopDownCount"))
+		elseif timer == 32 then
+			timerBoneslicerCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "boneslicer", "BoneslicerCount"))
+		elseif timer == 64 then
+			timerRitualoftheFangCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "ritualoftheFang", "RitualoftheFangCount"))
 		else
+			return
+		end
+		return true
+	end
+
+	function mod:ENCOUNTER_TIMELINE_EVENT_ADDED(eventInfo)
+		if eventInfo.source ~= 0 then return end
+		local eventID = eventInfo.id
+		if C_EncounterTimeline.GetEventState(eventID) ~= 0 then return end
+		local timerExact = eventInfo.duration
+		local handled = timersAll(self, math.floor(timerExact + 0.5), timerExact, eventID)
+		if not handled and not badStateDetected then
 			badStateDetected = true
 			self:ResumeBlizzardAPI()
 			self:UnregisterShortTermEvents()
@@ -93,27 +120,24 @@ do
 		end
 	end
 
-	function mod:ENCOUNTER_TIMELINE_EVENT_ADDED(eventInfo)
-		if eventInfo.source ~= 0 then return end
-		local eventID = eventInfo.id
-		local timerExact = eventInfo.duration
-		local timer = math.floor(timerExact + 0.5)
-		if not badStateDetected then
-			timersAll(self, timer, timerExact, eventID)
-		end
-	end
-
 	function mod:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(eventID)
 		local eventState = C_EncounterTimeline.GetEventState(eventID)
 		if not eventID or not eventState then return end
 		if eventState == 2 then
-			local finishedEventType, eventCount = self:TLCountFinish(eventID)
-			if finishedEventType and eventCount then
-				if finishedEventType == "rampage" then
-					if self:IsTank() then
---						specWarnRampage:Show(eventCount)
---						specWarnRampage:Play("defensive")
-					end
+			local eventType, eventCount = self:TLCountFinish(eventID)
+			if eventType and eventCount then
+				if eventType == "boneslicer" then
+					specWarnBoneslicer:Show(eventCount)
+					specWarnBoneslicer:Play("watchstep")
+				elseif eventType == "ritualoftheFang" then
+					specWarnRitualoftheFang:Show(eventCount)
+					specWarnRitualoftheFang:Play("soakbeam")
+				elseif eventType == "axegrinder" then
+					specWarnAxegrinder:Show(eventCount)
+					specWarnAxegrinder:Play("watchstep")
+				elseif eventType == "chopDown" and self:IsTanking("player", "boss1", nil, true) then
+					specWarnChopDown:Show()
+					specWarnChopDown:Play("defensive")
 				end
 			end
 		elseif eventState == 3 then
@@ -121,4 +145,3 @@ do
 		end
 	end
 end
---]]
