@@ -126,7 +126,7 @@ do
 			local eventType, eventCount = self:TLCountFinish(eventID)
 			if eventType and eventCount then
 				if eventType == "legionStrike" then
-					if self:IsTank() then
+					if self:IsTanking("player", "boss1", nil, true) then
 						specWarnLegionStrike:Show(eventCount)
 						specWarnLegionStrike:Play("defensive")
 					end

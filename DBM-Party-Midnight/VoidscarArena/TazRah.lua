@@ -112,7 +112,7 @@ do
 			local eventType, eventCount = self:TLCountFinish(eventID)
 			if eventType and eventCount then
 				if eventType == "voidBlast" then
-					if self:IsTank() then
+					if self:IsTanking("player", "boss1", nil, true) then
 						specWarnVoidBlast:Show(eventCount)
 						specWarnVoidBlast:Play("defensive")
 					end

@@ -127,7 +127,7 @@ do
 					specWarnSameDayDelivery:Show(eventCount)
 					specWarnSameDayDelivery:Play("watchstep")
 				elseif eventType == "envenom" then
-					if self:IsTank() then
+					if self:IsTanking("player", "boss1", nil, true) then
 						specWarnEnvenom:Show(eventCount)
 						specWarnEnvenom:Play("defensive")
 					end

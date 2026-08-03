@@ -123,7 +123,7 @@ do
 			local eventType, eventCount = self:TLCountFinish(eventID)
 			if eventType and eventCount then
 				if eventType == "hulkingClaw" then
-					if self:IsTank() then
+					if self:IsTanking("player", "boss1", nil, true) then
 						specWarnHulkingClaw:Show(eventCount)
 						specWarnHulkingClaw:Play("defensive")
 					end

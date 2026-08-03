@@ -133,7 +133,7 @@ do
 					specWarnAwakenLightbloom:Show(eventCount)
 					specWarnAwakenLightbloom:Play("mobsoon")
 				elseif eventType == "thornspike" then
-					if self:IsTank() then
+					if self:IsTanking("player", "boss1", nil, true) then
 						specWarnThornspike:Show(eventCount)
 						specWarnThornspike:Play("defensive")
 					end

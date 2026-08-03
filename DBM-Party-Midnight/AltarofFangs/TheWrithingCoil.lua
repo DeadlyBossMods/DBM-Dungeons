@@ -147,7 +147,7 @@ do
 			if eventType and eventCount then
 				if eventType == "synchonizedVenom" then
 					warnSynchonizedVenom:Show(eventCount)
-				elseif eventType == "tailScythe" and self:IsTank() then
+				elseif eventType == "tailScythe" and self:IsTanking("player", "boss1", nil, true) then
 					specWarnTailScythe:Show()
 					specWarnTailScythe:Play("defensive")
 				elseif eventType == "vindictiveOnslaught" then
