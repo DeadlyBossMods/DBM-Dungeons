@@ -9,6 +9,7 @@ mod.isTrashMod = true
 mod.isTrashModBossFightAllowed = true
 
 if DBM:IsPostMidnight() then
+	mod:AddAuraSoundOption(1291468, "Tank", 1291468, 1, 1, "defensive", 2, 0)--Sunder Slam
 else
 	mod:RegisterEvents(
 		"SPELL_CAST_START 265968 272657 264574 258908 272655 261635 273995 272700 268061",

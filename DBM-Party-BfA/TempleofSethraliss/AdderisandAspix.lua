@@ -12,54 +12,217 @@ mod:SetZone(1877)
 mod:RegisterCombat("combat")
 
 if DBM:IsPostMidnight() then
-	--local specWarnJolt = mod:NewSpecialWarningInterrupt(263318, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
-	--local specWarnConduction = mod:NewSpecialWarningMoveAway(263371, nil, nil, nil, 3, 2, nil, nil, "runout")
-	--local specWarnStaticShock = mod:NewSpecialWarningSpell(263257, nil, nil, nil, 2, 2, nil, nil, "aesoon")
-	--local specWarnGust = mod:NewSpecialWarningInterrupt(263775, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
-	--local specWarnGaleForce = mod:NewSpecialWarningSpell(263776, nil, nil, nil, 2, 2, nil, nil, "specialsoon")
-	--local specWarnPearlofThunder = mod:NewSpecialWarningRun(263365, nil, nil, nil, 4, 2, nil, nil, "justrun")
-	--local specWarnCycloneStrike = mod:NewSpecialWarningYou(263573, nil, nil, nil, 3, 2, nil, nil, "targetyou")
-	--local specWarnCycloneStrikeOther = mod:NewSpecialWarningDodge(263573, nil, nil, nil, 3, 2, nil, nil, "shockwave")
+	--Aspix
+	mod:AddTimerLine(DBM:EJ_GetSectionInfo(18484))
 
-	--local timerConductionCD = mod:NewCDCountTimer(0, 263371, nil, nil, nil, 3)
-	--local timerStaticShockCD = mod:NewCDCountTimer(0, 263257, nil, nil, nil, 2, nil, DBM_COMMON_L.HEALER_ICON)
-	--local timerGaleForceCD = mod:NewCDCountTimer(0, 263776, nil, nil, nil, 3, nil, DBM_COMMON_L.HEROIC_ICON)
-	--local timerArcDashCD = mod:NewCDCountTimer(0, 263424, nil, nil, nil, 3)
-	--local timerArcingBladeCD = mod:NewCDCountTimer(0, 263234, nil, nil, nil, 5, nil, DBM_COMMON_L.HEROIC_ICON)
-	--local timerCycloneStrikeCD = mod:NewCDCountTimer(0, 263573, nil, nil, nil, 3, nil, DBM_COMMON_L.DEADLY_ICON)
+	local specWarnThunderandLightning	= mod:NewSpecialWarningBlizzTarget(1288049, nil, nil, nil, 1, 2, nil, nil, "helpsoak")
+	local specWarnOverload				= mod:NewSpecialWarningDefensive(1311804, nil, nil, nil, 1, 2, nil, nil, "defensive")
+
+	local timerThunderandLightningCD	= mod:NewCDCountTimer(30, 1288049, nil, nil, nil, 3)
+	local timerOverloadCD				= mod:NewCDCountTimer(30, 1311804, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+
+	mod:AddAuraSoundOption(1288074, true, 1288049, 1, 1, "gathershare", 2, 0)--Thunder and Lightning
+
+	--Adderis
+	mod:AddTimerLine(DBM:EJ_GetSectionInfo(18485))
+
+	local specWarnTempestWinds				= mod:NewSpecialWarningBlizzYou(1311805, nil, nil, nil, 2, 18, nil, nil, "poolyou")
+	local specWarnGaleForce					= mod:NewSpecialWarningBlizzYou(1289059, nil, nil, nil, 1, 13, nil, nil, "pushbackincoming")
+
+	local timerTempestWindsCD				= mod:NewCDCountTimer(30, 1311805, nil, nil, nil, 3)
+	local timerGaleForceCD					= mod:NewCDCountTimer(30, 1289059, nil, nil, nil, 3)
+
+	--mod:AddAuraSoundOption(1289754, true, 1311805, 1, 1, "poolyou", 18, 0)--Tempest Winds (iffy, wasn't combat logged)
+
+	mod.vb.thunderAndLightningCount = 0
+	mod.vb.overloadCount = 0
+	mod.vb.tempestWindsCount = 0
+	mod.vb.galeForceCount = 0
 	local badStateDetected = false
+	local nextFortyTwoTimer = 1
+	local nextNineteenTimer = 1
+	local adderisDead = false
+	local aspixDead = false
+	local activeEventByType = {}
+	local batchTimerValues = {
+		[1] = true,
+		[4] = true,
+		[21] = true,
+		[31] = true,
+	}
+
 	---@param self DBMMod
 	---@param dontSetAlerts boolean? Called on engage when we only want to set timeline parameters and not touch encounter alerts
 	local function setFallback(self, dontSetAlerts)
 		if not dontSetAlerts then
-			--specWarnJolt:SetAlert(0, "kickcast", 2)
-			--specWarnConduction:SetAlert(0, "runout", 2)
-			--specWarnStaticShock:SetAlert(0, "aesoon", 2)
-			--specWarnGust:SetAlert(0, "kickcast", 2)
-			--specWarnGaleForce:SetAlert(0, "specialsoon", 2)
-			--specWarnPearlofThunder:SetAlert(0, "justrun", 2)
-			--specWarnCycloneStrike:SetAlert(0, "targetyou", 2)
+			specWarnThunderandLightning:SetAlert({689,720}, "helpsoak", 2, 2)--Group notifier?
+			--specWarnThunderandLightning:SetAlert(720, "gathershare", 2, 4, 0)--Personal notifier?
+			if self:IsTank() then
+				specWarnOverload:SetAlert(690, "defensive", 2, 2)
+			end
+			specWarnTempestWinds:SetAlert({691,713}, "watchstep", 2, 2, 0)
+			specWarnGaleForce:SetAlert({692,718}, "pushbackincoming", 2, 3, 0)
 		end
 		local onlyColor = not DBM.Options.HideDBMBars and not badStateDetected
-		--timerConductionCD:SetTimeline(0, onlyColor)
-		--timerStaticShockCD:SetTimeline(0, onlyColor)
-		--timerGaleForceCD:SetTimeline(0, onlyColor)
-		--timerArcDashCD:SetTimeline(0, onlyColor)
-		--timerArcingBladeCD:SetTimeline(0, onlyColor)
-		--timerCycloneStrikeCD:SetTimeline(0, onlyColor)
+		timerThunderandLightningCD:SetTimeline({689,720}, onlyColor)
+		timerOverloadCD:SetTimeline(690, onlyColor)
+		timerTempestWindsCD:SetTimeline({691,713}, onlyColor)
+		timerGaleForceCD:SetTimeline({692,718}, onlyColor)
 	end
+
 	function mod:OnLimitedCombatStart()
 		self:TLCountReset()
-		badStateDetected = true
+		self:TLBatchReset()
+		self.vb.thunderAndLightningCount = 1
+		self.vb.overloadCount = 1
+		self.vb.tempestWindsCount = 1
+		self.vb.galeForceCount = 1
+		nextFortyTwoTimer = 1
+		nextNineteenTimer = 1
+		adderisDead = false
+		aspixDead = false
+		activeEventByType = {}
 		if DBM.Options.HardcodedTimer and not badStateDetected then
 			self:IgnoreBlizzardAPI()
 			self:RegisterShortTermEvents("ENCOUNTER_TIMELINE_EVENT_ADDED", "ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED")
 			setFallback(self, true)
-		else setFallback(self) end
+		else
+			setFallback(self)
+		end
 	end
-	function mod:OnCombatEnd() self:TLCountReset() self:UnregisterShortTermEvents() end
-	function mod:ENCOUNTER_TIMELINE_EVENT_ADDED(eventInfo) end
-	function mod:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(eventID) end
+
+	function mod:OnCombatEnd()
+		self:TLCountReset()
+		self:TLBatchReset()
+		activeEventByType = {}
+		self:UnregisterShortTermEvents()
+	end
+
+	do
+		local fortyTwoTimers = {
+			"galeForce",
+			"thunderAndLightning",
+			"tempestWinds",
+			"overload",
+		}
+
+		local function startTimer(self, timerObject, timerExact, eventID, eventType, countKey)
+			activeEventByType[eventType] = eventID
+			timerObject:TLStart(timerExact, eventID, self:TLCountStart(eventID, eventType, countKey))
+		end
+
+		local function timersAll(self, timer, timerExact, eventID)
+			if timer == 42 then
+				--Every transition resumes this four-event batch in this fixed order.
+				local eventType = fortyTwoTimers[nextFortyTwoTimer]
+				nextFortyTwoTimer = nextFortyTwoTimer % #fortyTwoTimers + 1
+				if eventType == "galeForce" then
+					startTimer(self, timerGaleForceCD, timerExact, eventID, eventType, "galeForceCount")
+				elseif eventType == "thunderAndLightning" then
+					startTimer(self, timerThunderandLightningCD, timerExact, eventID, eventType, "thunderAndLightningCount")
+				elseif eventType == "tempestWinds" then
+					startTimer(self, timerTempestWindsCD, timerExact, eventID, eventType, "tempestWindsCount")
+				else
+					startTimer(self, timerOverloadCD, timerExact, eventID, eventType, "overloadCount")
+				end
+			elseif timer == 9 or timer == 4 then
+				self:TLBatchTrackLatest(timer, eventID, batchTimerValues)
+				adderisDead = false
+				startTimer(self, timerThunderandLightningCD, timerExact, eventID, "thunderAndLightning", "thunderAndLightningCount")
+			elseif timer == 36 then
+				adderisDead = false
+				startTimer(self, timerOverloadCD, timerExact, eventID, "overload", "overloadCount")
+			elseif timer == 31 then
+				self:TLBatchTrackLatest(timer, eventID, batchTimerValues)
+				--Overload is exactly 31; Gale Force is 31.082 in the final transition batch.
+				if timerExact > 31.05 then
+					aspixDead = false
+					startTimer(self, timerGaleForceCD, timerExact, eventID, "galeForce", "galeForceCount")
+				else
+					adderisDead = false
+					startTimer(self, timerOverloadCD, timerExact, eventID, "overload", "overloadCount")
+				end
+			elseif timer == 26 or timer == 21 or timer == 12 then
+				self:TLBatchTrackLatest(timer, eventID, batchTimerValues)
+				aspixDead = false
+				startTimer(self, timerTempestWindsCD, timerExact, eventID, "tempestWinds", "tempestWindsCount")
+			elseif timer == 5 or timer == 1 then
+				self:TLBatchTrackLatest(timer, eventID, batchTimerValues)
+				aspixDead = false
+				startTimer(self, timerGaleForceCD, timerExact, eventID, "galeForce", "galeForceCount")
+			elseif timer == 19 then
+				if not aspixDead then
+					--Adderis died: Gale Force then Tempest Winds.
+					if nextNineteenTimer == 1 then
+						startTimer(self, timerGaleForceCD, timerExact, eventID, "galeForce", "galeForceCount")
+					else
+						startTimer(self, timerTempestWindsCD, timerExact, eventID, "tempestWinds", "tempestWindsCount")
+					end
+				elseif not adderisDead then
+					--Aspix died: Thunder and Lightning then Overload.
+					if nextNineteenTimer == 1 then
+						startTimer(self, timerThunderandLightningCD, timerExact, eventID, "thunderAndLightning", "thunderAndLightningCount")
+					else
+						startTimer(self, timerOverloadCD, timerExact, eventID, "overload", "overloadCount")
+					end
+				end
+				nextNineteenTimer = nextNineteenTimer % 2 + 1
+			else
+				return
+			end
+			return true
+		end
+
+		function mod:ENCOUNTER_TIMELINE_EVENT_ADDED(eventInfo)
+			if eventInfo.source ~= 0 then return end
+			local eventID = eventInfo.id
+			if C_EncounterTimeline.GetEventState(eventID) ~= 0 then return end
+			local timerExact = eventInfo.duration
+			if not timersAll(self, math.floor(timerExact + 0.5), timerExact, eventID) and not badStateDetected then
+				badStateDetected = true
+				self:ResumeBlizzardAPI()
+				self:UnregisterShortTermEvents()
+				setFallback(self)
+				DBM:Debug("|cffff0000Failed to match encounter timeline events to expected timers, falling back to Blizzard API|r", nil, nil, nil, true)
+			end
+		end
+
+		function mod:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(eventID)
+			if not eventID then return end
+			local eventState = C_EncounterTimeline.GetEventState(eventID)
+			self:TLBatchUntrack(eventID)
+			if eventState == 2 then
+				local eventType, eventCount = self:TLCountFinish(eventID)
+				if eventType and eventCount then
+					if activeEventByType[eventType] == eventID then
+						activeEventByType[eventType] = nil
+					end
+					if eventType == "thunderAndLightning" then
+						specWarnThunderandLightning:Show(eventCount, "helpsoak")
+					elseif eventType == "overload" and self:IsTank() then
+						specWarnOverload:Show()
+						specWarnOverload:Play("defensive")
+					elseif eventType == "tempestWinds" then
+						specWarnTempestWinds:Show(eventCount, "poolyou")
+						specWarnTempestWinds:Play("poolyou")
+					elseif eventType == "galeForce" then
+						specWarnGaleForce:Show(eventCount, "pushbackincoming")
+						specWarnGaleForce:Play("pushbackincoming")
+					end
+				end
+			elseif eventState == 3 then
+				local eventType = self:TLCountCancel(eventID)
+				if eventType and activeEventByType[eventType] == eventID then
+					activeEventByType[eventType] = nil
+					if eventType == "thunderAndLightning" or eventType == "overload" then
+						adderisDead = true
+					elseif eventType == "tempestWinds" or eventType == "galeForce" then
+						aspixDead = true
+					end
+				end
+			end
+		end
+	end
 else
 	mod:RegisterEventsInCombat(
 		"SPELL_AURA_APPLIED 263246 263371",
