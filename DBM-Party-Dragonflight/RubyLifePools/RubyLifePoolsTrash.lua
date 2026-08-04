@@ -1,248 +1,253 @@
-if DBM:IsPostMidnight() then return end
 local mod	= DBM:NewMod("RubyLifePoolsTrash", "DBM-Party-Dragonflight", 7)
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
-mod:DisableHardcodedOptions()
 --mod:SetModelID(47785)
 mod:SetZone(2521)
 mod.isTrashMod = true
 mod.isTrashModBossFightAllowed = true
 
-mod:RegisterEvents(
-	"SPELL_CAST_START 372087 391726 391723 373614 392395 372696 384194 392486 392394 392640 392451 372047 372735 373692",
-	"SPELL_CAST_SUCCESS 385536 372743",
-	"SPELL_AURA_APPLIED 373693 392641 373972 391050",
---	"SPELL_AURA_APPLIED_DOSE",
-	"SPELL_AURA_REMOVED 373693 391050",
-	"UNIT_DIED"
-)
+if DBM:IsPostMidnight() then
+	mod:AddAuraSoundOption(373693, true, 373693, 1, 1, "bombyou", 12, 0)--Living Bomb
+	mod:AddAuraSoundOption(1307372, true, 1307372, 1, 2, "watchfeet", 8, 0)--Fiery Demise
+	mod:AddAuraSoundOption(1306366, false, 1306366, 1, 1, "defensive", 8, 0)--Lightning Torrent
+	mod:AddAuraSoundOption(1305225, "Tank", 1305225, 1, 1, "defensive", 2, 0)--Tectonic Strike
+else
+	mod:RegisterEvents(
+		"SPELL_CAST_START 372087 391726 391723 373614 392395 372696 384194 392486 392394 392640 392451 372047 372735 373692",
+		"SPELL_CAST_SUCCESS 385536 372743",
+		"SPELL_AURA_APPLIED 373693 392641 373972 391050",
+	--	"SPELL_AURA_APPLIED_DOSE",
+		"SPELL_AURA_REMOVED 373693 391050",
+		"UNIT_DIED"
+	)
 
---TODO, can Blazing Rush be target scanned? upgrade to special announce?
---[[
-(ability.id = 372087 or ability.id = 391726 or ability.id = 391723 or ability.id = 373614 or ability.id = 372696 or ability.id = 372735 or ability.id = 392395 or ability.id = 392486 or ability.id = 392394 or ability.id = 392640 or ability.id = 392451 or ability.id = 372047) and type = "begincast"
- or ability.id = 391050 and (type = "applybuff" or type = "removebuff")
---]]
-local warnLivingBomb						= mod:NewTargetAnnounce(373693, 3)
-local warnBurnout							= mod:NewCastAnnounce(373614, 4)
-local warnRollingThunder					= mod:NewTargetNoFilterAnnounce(392641, 3)
-local warnFireMaw							= mod:NewCastAnnounce(392394, 3, nil, nil, "Tank|Healer")
-local warnSteelBarrage						= mod:NewCastAnnounce(372047, 3, nil, nil, "Tank|Healer")
-local warnFlashfire							= mod:NewCastAnnounce(392451, 4)
-local warnFlameDance						= mod:NewCastAnnounce(385536, 4, 6, nil, nil, nil, nil, 3)
-local warnTectonicSlam						= mod:NewCastAnnounce(372735, 4, nil, nil, nil, nil, nil, 3)
+	--TODO, can Blazing Rush be target scanned? upgrade to special announce?
+	--[[
+	(ability.id = 372087 or ability.id = 391726 or ability.id = 391723 or ability.id = 373614 or ability.id = 372696 or ability.id = 372735 or ability.id = 392395 or ability.id = 392486 or ability.id = 392394 or ability.id = 392640 or ability.id = 392451 or ability.id = 372047) and type = "begincast"
+	 or ability.id = 391050 and (type = "applybuff" or type = "removebuff")
+	--]]
+	local warnLivingBomb						= mod:NewTargetAnnounce(373693, 3)
+	local warnBurnout							= mod:NewCastAnnounce(373614, 4)
+	local warnRollingThunder					= mod:NewTargetNoFilterAnnounce(392641, 3)
+	local warnFireMaw							= mod:NewCastAnnounce(392394, 3, nil, nil, "Tank|Healer")
+	local warnSteelBarrage						= mod:NewCastAnnounce(372047, 3, nil, nil, "Tank|Healer")
+	local warnFlashfire							= mod:NewCastAnnounce(392451, 4)
+	local warnFlameDance						= mod:NewCastAnnounce(385536, 4, 6, nil, nil, nil, nil, 3)
+	local warnTectonicSlam						= mod:NewCastAnnounce(372735, 4, nil, nil, nil, nil, nil, 3)
 
-local specWarnInferno						= mod:NewSpecialWarningSpell(373692, nil, nil, nil, 2, 2, nil, nil, "aesoon")
-local specWarnLightningStorm				= mod:NewSpecialWarningSpell(392486, nil, nil, nil, 2, 2, nil, nil, "aesoon")
-local specWarnBlazeofGlory					= mod:NewSpecialWarningSpell(373972, nil, nil, nil, 2, 2, nil, nil, "aesoon")
-local specWarnTempestStormshield			= mod:NewSpecialWarningSwitch(391050, nil, nil, nil, 1, 2, nil, nil, "attackshield")
-local specWarnLivingBomb					= mod:NewSpecialWarningMoveTo(373693, nil, nil, nil, 1, 2, nil, nil, "targetyou")
-local yellLivingBomb						= mod:NewShortYell(373693)
-local yellLivingBombFades					= mod:NewShortFadesYell(373693)
-local specWarnBlazingRush					= mod:NewSpecialWarningDodge(372087, nil, nil, nil, 2, 2, nil, nil, "chargemove")
-local specWarnStormBreath					= mod:NewSpecialWarningDodge(391726, nil, nil, nil, 2, 2, nil, nil, "breathsoon")
-local yellStormBreath						= mod:NewShortYell(391726)
-local specWarnFlameBreath					= mod:NewSpecialWarningDodge(391723, nil, nil, nil, 2, 2, nil, nil, "breathsoon")
-local yellFlameBreath						= mod:NewShortYell(391723)
-local specWarnExcavatingBlast				= mod:NewSpecialWarningDodge(372696, nil, nil, nil, 2, 2, nil, nil, "watchstep")
-local specWarnBurnout						= mod:NewSpecialWarningRun(373614, "Melee", nil, nil, 4, 2, nil, nil, "justrun")
-local specWarnThunderJaw					= mod:NewSpecialWarningDefensive(392395, nil, nil, nil, 1, 2, nil, nil, "carefly")
---local specWarnSharedSuffering				= mod:NewSpecialWarningYou(339607, nil, nil, nil, 1, 2)
-local specWarnCinderbolt					= mod:NewSpecialWarningInterrupt(384194, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
-local specWarnFlashfire						= mod:NewSpecialWarningInterrupt(392451, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
+	local specWarnInferno						= mod:NewSpecialWarningSpell(373692, nil, nil, nil, 2, 2, nil, nil, "aesoon")
+	local specWarnLightningStorm				= mod:NewSpecialWarningSpell(392486, nil, nil, nil, 2, 2, nil, nil, "aesoon")
+	local specWarnBlazeofGlory					= mod:NewSpecialWarningSpell(373972, nil, nil, nil, 2, 2, nil, nil, "aesoon")
+	local specWarnTempestStormshield			= mod:NewSpecialWarningSwitch(391050, nil, nil, nil, 1, 2, nil, nil, "attackshield")
+	local specWarnLivingBomb					= mod:NewSpecialWarningMoveTo(373693, nil, nil, nil, 1, 2, nil, nil, "targetyou")
+	local yellLivingBomb						= mod:NewShortYell(373693)
+	local yellLivingBombFades					= mod:NewShortFadesYell(373693)
+	local specWarnBlazingRush					= mod:NewSpecialWarningDodge(372087, nil, nil, nil, 2, 2, nil, nil, "chargemove")
+	local specWarnStormBreath					= mod:NewSpecialWarningDodge(391726, nil, nil, nil, 2, 2, nil, nil, "breathsoon")
+	local yellStormBreath						= mod:NewShortYell(391726)
+	local specWarnFlameBreath					= mod:NewSpecialWarningDodge(391723, nil, nil, nil, 2, 2, nil, nil, "breathsoon")
+	local yellFlameBreath						= mod:NewShortYell(391723)
+	local specWarnExcavatingBlast				= mod:NewSpecialWarningDodge(372696, nil, nil, nil, 2, 2, nil, nil, "watchstep")
+	local specWarnBurnout						= mod:NewSpecialWarningRun(373614, "Melee", nil, nil, 4, 2, nil, nil, "justrun")
+	local specWarnThunderJaw					= mod:NewSpecialWarningDefensive(392395, nil, nil, nil, 1, 2, nil, nil, "carefly")
+	--local specWarnSharedSuffering				= mod:NewSpecialWarningYou(339607, nil, nil, nil, 1, 2)
+	local specWarnCinderbolt					= mod:NewSpecialWarningInterrupt(384194, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
+	local specWarnFlashfire						= mod:NewSpecialWarningInterrupt(392451, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
 
-local timerExcavatingBlastCD				= mod:NewCDNPTimer(16.5, 372696, nil, nil, nil, 3)
-local timerSteelBarrageCD					= mod:NewCDNPTimer(17, 372047, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
-local timerBlazingRushCD					= mod:NewCDNPTimer(17, 372087, nil, nil, nil, 3)
-local timerStormBreathCD					= mod:NewCDNPTimer(15.7, 391726, nil, nil, nil, 3)
-local timerRollingThunderCD					= mod:NewCDNPTimer(21.8, 392641, nil, nil, nil, 3)
-local timerThunderjawCD						= mod:NewCDNPTimer(19, 392395, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
-local timerLightningStormCD					= mod:NewCDNPTimer(20.6, 392486, nil, nil, nil, 2, nil, DBM_COMMON_L.HEALER_ICON)
-local timerFlashfireCD						= mod:NewCDNPTimer(12.1, 392451, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
-local timerFlameDanceCD						= mod:NewCDNPTimer(26.6, 385536, nil, nil, nil, 5)
-local timerTectonicSlamCD					= mod:NewCDNPTimer(17, 372735, nil, nil, nil, 5)--17-21
-local timerTempestStormshieldCD				= mod:NewCDNPTimer(18.2, 391050, nil, nil, nil, 5, nil, DBM_COMMON_L.DAMAGE_ICON)
-local timerIcyShieldCD						= mod:NewCDNPTimer(21.9, 372743, nil, nil, nil, 5)--17-21
-local timerInfernoCD						= mod:NewCDNPTimer(19.4, 372743, nil, nil, nil, 2)
+	local timerExcavatingBlastCD				= mod:NewCDNPTimer(16.5, 372696, nil, nil, nil, 3)
+	local timerSteelBarrageCD					= mod:NewCDNPTimer(17, 372047, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+	local timerBlazingRushCD					= mod:NewCDNPTimer(17, 372087, nil, nil, nil, 3)
+	local timerStormBreathCD					= mod:NewCDNPTimer(15.7, 391726, nil, nil, nil, 3)
+	local timerRollingThunderCD					= mod:NewCDNPTimer(21.8, 392641, nil, nil, nil, 3)
+	local timerThunderjawCD						= mod:NewCDNPTimer(19, 392395, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+	local timerLightningStormCD					= mod:NewCDNPTimer(20.6, 392486, nil, nil, nil, 2, nil, DBM_COMMON_L.HEALER_ICON)
+	local timerFlashfireCD						= mod:NewCDNPTimer(12.1, 392451, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+	local timerFlameDanceCD						= mod:NewCDNPTimer(26.6, 385536, nil, nil, nil, 5)
+	local timerTectonicSlamCD					= mod:NewCDNPTimer(17, 372735, nil, nil, nil, 5)--17-21
+	local timerTempestStormshieldCD				= mod:NewCDNPTimer(18.2, 391050, nil, nil, nil, 5, nil, DBM_COMMON_L.DAMAGE_ICON)
+	local timerIcyShieldCD						= mod:NewCDNPTimer(21.9, 372743, nil, nil, nil, 5)--17-21
+	local timerInfernoCD						= mod:NewCDNPTimer(19.4, 372743, nil, nil, nil, 2)
 
---local playerName = UnitName("player")
+	--local playerName = UnitName("player")
 
---Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc
+	--Antispam IDs for this mod: 1 run away, 2 dodge, 3 dispel, 4 incoming damage, 5 you/role, 6 misc
 
-function mod:StormBreathTarget(targetname)
-	if not targetname then return end
-	if targetname == UnitName("player") then
-		yellStormBreath:Yell()
-	end
-end
-
-function mod:FlameBreathTarget(targetname)
-	if not targetname then return end
-	if targetname == UnitName("player") then
-		yellFlameBreath:Yell()
-	end
-end
-
-function mod:SPELL_CAST_START(args)
-	local spellId = args.spellId
-	if not self:IsValidWarning(args.sourceGUID) then return end
-	if spellId == 372087 then
-		if self:AntiSpam(3, 2) then
-			specWarnBlazingRush:Show()
-			specWarnBlazingRush:Play("chargemove")
-		end
-		timerBlazingRushCD:Start(17, args.sourceGUID)
-	elseif spellId == 391726 then
-		timerStormBreathCD:Start(15.7, args.sourceGUID)
-		if self:AntiSpam(3, 2) then
-			specWarnStormBreath:Show()
-			specWarnStormBreath:Play("breathsoon")
-		end
-		self:ScheduleMethod(0.1, "BossTargetScanner", args.sourceGUID, "StormBreathTarget", 0.1, 8)
-	elseif spellId == 391723 then
-		if self:AntiSpam(3, 2) then
-			specWarnFlameBreath:Show()
-			specWarnFlameBreath:Play("breathsoon")
-		end
-		self:ScheduleMethod(0.1, "BossTargetScanner", args.sourceGUID, "FlameBreathTarget", 0.1, 8)
-	elseif spellId == 373614 and self:AntiSpam(3, 1) then
-		if self.Options.SpecWarn373614run then
-			specWarnBurnout:Show()
-			specWarnBurnout:Play("justrun")
-		else
-			warnBurnout:Show()
-		end
-	elseif spellId == 372696 then
-		timerExcavatingBlastCD:Start(17, args.sourceGUID)
-		if self:AntiSpam(3, 2) then
-			specWarnExcavatingBlast:Show()
-			specWarnExcavatingBlast:Play("watchstep")
-		end
-	elseif spellId == 372735 then
-		timerTectonicSlamCD:Start(nil, args.sourceGUID)
-		if self:AntiSpam(3, 6) then
-			warnTectonicSlam:Show()
-			warnTectonicSlam:Play("crowdcontrol")
-		end
-	elseif spellId == 392395 then
-		timerThunderjawCD:Start(nil, args.sourceGUID)
-		if self:IsTanking("player", nil, nil, true, args.sourceGUID) then
-			specWarnThunderJaw:Show()
-			specWarnThunderJaw:Play("carefly")
-		end
-	elseif spellId == 384194 and self:CheckInterruptFilter(args.sourceGUID, false, true) then
-		specWarnCinderbolt:Show(args.sourceName)
-		specWarnCinderbolt:Play("kickcast")
-	elseif spellId == 392486 then
-		local cid = self:GetCIDFromGUID(args.sourceGUID)
-		if cid == 197535 then
-			timerLightningStormCD:Start(21.8, args.sourceGUID)
-		else
-			timerLightningStormCD:Start(20.6, args.sourceGUID)
-		end
-		if self:AntiSpam(3, 4) then
-			specWarnLightningStorm:Show()
-			specWarnLightningStorm:Play("aesoon")
-		end
-	elseif spellId == 392394 then
-		if self:AntiSpam(3, 5) then
-			warnFireMaw:Show()
-		end
-	elseif spellId == 392640 then--Rolling Thunder
-		timerRollingThunderCD:Start(nil, args.sourceGUID)
-	elseif spellId == 392451 then
-		timerFlashfireCD:Start(12.1, args.sourceGUID)
-		if self.Options.SpecWarn392451interrupt and self:CheckInterruptFilter(args.sourceGUID, false, true) then
-			specWarnFlashfire:Show(args.sourceName)
-			specWarnFlashfire:Play("kickcast")
-		elseif self:AntiSpam(3, 5) then
-			warnFlashfire:Show()
-		end
-	elseif spellId == 372047 then
-		timerSteelBarrageCD:Start(17, args.sourceGUID)
-		if self:AntiSpam(3, 5) then
-			warnSteelBarrage:Show()
-		end
-	elseif spellId == 373692 then
-		timerInfernoCD:Start(nil, args.sourceGUID)
-		if self:AntiSpam(3, 4) then
-			specWarnInferno:Show()
-			specWarnInferno:Play("aesoon")
+	function mod:StormBreathTarget(targetname)
+		if not targetname then return end
+		if targetname == UnitName("player") then
+			yellStormBreath:Yell()
 		end
 	end
-end
 
-function mod:SPELL_CAST_SUCCESS(args)
-	local spellId = args.spellId
-	if not self:IsValidWarning(args.sourceGUID) then return end
-	if spellId == 385536 then
-		timerFlameDanceCD:Start(nil, args.sourceGUID)
-		if self:AntiSpam(3, 6) then
-			warnFlameDance:Show()
-			warnFlameDance:Play("crowdcontrol")
+	function mod:FlameBreathTarget(targetname)
+		if not targetname then return end
+		if targetname == UnitName("player") then
+			yellFlameBreath:Yell()
 		end
-	elseif spellId == 372743 then
-		timerIcyShieldCD:Start(nil, args.sourceGUID)
 	end
-end
 
-function mod:SPELL_AURA_APPLIED(args)
-	if not self.Options.Enabled then return end
-	local spellId = args.spellId
-	if spellId == 373693 then
-		warnLivingBomb:CombinedShow(0.3, args.destName)
-		if args:IsPlayer() then
-			specWarnLivingBomb:Show(DBM_COMMON_L.ADDS)
-			specWarnLivingBomb:Play("targetyou")
-			yellLivingBomb:Yell()
-			yellLivingBombFades:Countdown(spellId)
+	function mod:SPELL_CAST_START(args)
+		local spellId = args.spellId
+		if not self:IsValidWarning(args.sourceGUID) then return end
+		if spellId == 372087 then
+			if self:AntiSpam(3, 2) then
+				specWarnBlazingRush:Show()
+				specWarnBlazingRush:Play("chargemove")
+			end
+			timerBlazingRushCD:Start(17, args.sourceGUID)
+		elseif spellId == 391726 then
+			timerStormBreathCD:Start(15.7, args.sourceGUID)
+			if self:AntiSpam(3, 2) then
+				specWarnStormBreath:Show()
+				specWarnStormBreath:Play("breathsoon")
+			end
+			self:ScheduleMethod(0.1, "BossTargetScanner", args.sourceGUID, "StormBreathTarget", 0.1, 8)
+		elseif spellId == 391723 then
+			if self:AntiSpam(3, 2) then
+				specWarnFlameBreath:Show()
+				specWarnFlameBreath:Play("breathsoon")
+			end
+			self:ScheduleMethod(0.1, "BossTargetScanner", args.sourceGUID, "FlameBreathTarget", 0.1, 8)
+		elseif spellId == 373614 and self:AntiSpam(3, 1) then
+			if self.Options.SpecWarn373614run then
+				specWarnBurnout:Show()
+				specWarnBurnout:Play("justrun")
+			else
+				warnBurnout:Show()
+			end
+		elseif spellId == 372696 then
+			timerExcavatingBlastCD:Start(17, args.sourceGUID)
+			if self:AntiSpam(3, 2) then
+				specWarnExcavatingBlast:Show()
+				specWarnExcavatingBlast:Play("watchstep")
+			end
+		elseif spellId == 372735 then
+			timerTectonicSlamCD:Start(nil, args.sourceGUID)
+			if self:AntiSpam(3, 6) then
+				warnTectonicSlam:Show()
+				warnTectonicSlam:Play("crowdcontrol")
+			end
+		elseif spellId == 392395 then
+			timerThunderjawCD:Start(nil, args.sourceGUID)
+			if self:IsTanking("player", nil, nil, true, args.sourceGUID) then
+				specWarnThunderJaw:Show()
+				specWarnThunderJaw:Play("carefly")
+			end
+		elseif spellId == 384194 and self:CheckInterruptFilter(args.sourceGUID, false, true) then
+			specWarnCinderbolt:Show(args.sourceName)
+			specWarnCinderbolt:Play("kickcast")
+		elseif spellId == 392486 then
+			local cid = self:GetCIDFromGUID(args.sourceGUID)
+			if cid == 197535 then
+				timerLightningStormCD:Start(21.8, args.sourceGUID)
+			else
+				timerLightningStormCD:Start(20.6, args.sourceGUID)
+			end
+			if self:AntiSpam(3, 4) then
+				specWarnLightningStorm:Show()
+				specWarnLightningStorm:Play("aesoon")
+			end
+		elseif spellId == 392394 then
+			if self:AntiSpam(3, 5) then
+				warnFireMaw:Show()
+			end
+		elseif spellId == 392640 then--Rolling Thunder
+			timerRollingThunderCD:Start(nil, args.sourceGUID)
+		elseif spellId == 392451 then
+			timerFlashfireCD:Start(12.1, args.sourceGUID)
+			if self.Options.SpecWarn392451interrupt and self:CheckInterruptFilter(args.sourceGUID, false, true) then
+				specWarnFlashfire:Show(args.sourceName)
+				specWarnFlashfire:Play("kickcast")
+			elseif self:AntiSpam(3, 5) then
+				warnFlashfire:Show()
+			end
+		elseif spellId == 372047 then
+			timerSteelBarrageCD:Start(17, args.sourceGUID)
+			if self:AntiSpam(3, 5) then
+				warnSteelBarrage:Show()
+			end
+		elseif spellId == 373692 then
+			timerInfernoCD:Start(nil, args.sourceGUID)
+			if self:AntiSpam(3, 4) then
+				specWarnInferno:Show()
+				specWarnInferno:Play("aesoon")
+			end
 		end
-	elseif spellId == 392641 then
-		warnRollingThunder:CombinedShow(0.3, args.destName)
-	elseif spellId == 373972 and self:AntiSpam(3, 4) then
-		specWarnBlazeofGlory:Show()
-		specWarnBlazeofGlory:Play("aesoon")
-	elseif spellId == 391050 then
-		specWarnTempestStormshield:Show()
-		specWarnTempestStormshield:Play("attackshield")
 	end
-end
---mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED
 
-function mod:SPELL_AURA_REMOVED(args)
-	local spellId = args.spellId
-	if spellId == 373693 and args:IsPlayer() then
-		yellLivingBombFades:Cancel()
-	elseif spellId == 391050 then
-		timerTempestStormshieldCD:Start(nil, args.destGUID)
+	function mod:SPELL_CAST_SUCCESS(args)
+		local spellId = args.spellId
+		if not self:IsValidWarning(args.sourceGUID) then return end
+		if spellId == 385536 then
+			timerFlameDanceCD:Start(nil, args.sourceGUID)
+			if self:AntiSpam(3, 6) then
+				warnFlameDance:Show()
+				warnFlameDance:Play("crowdcontrol")
+			end
+		elseif spellId == 372743 then
+			timerIcyShieldCD:Start(nil, args.sourceGUID)
+		end
 	end
-end
 
-function mod:UNIT_DIED(args)
-	local cid = self:GetCIDFromGUID(args.destGUID)
-	if cid == 188244 then--Primal Juggernaut
-		timerExcavatingBlastCD:Stop(args.destGUID)
-	elseif cid == 187897 then--Defier Draghar
-		timerSteelBarrageCD:Stop(args.destGUID)
-		timerBlazingRushCD:Stop(args.destGUID)
-	elseif cid == 197698 then--Thunderhead
-		timerStormBreathCD:Stop(args.destGUID)
-		timerRollingThunderCD:Stop(args.destGUID)
-		timerThunderjawCD:Stop(args.destGUID)
-	elseif cid == 198047 then--Tempest Channeler
-		timerLightningStormCD:Stop(args.destGUID)
-	elseif cid == 197985 then--Flame Channeler
-		timerFlashfireCD:Stop(args.destGUID)
-	elseif cid == 197535 then--High Channeler Ryvati
-		timerLightningStormCD:Stop(args.destGUID)
-		timerTempestStormshieldCD:Stop(args.destGUID)
-	elseif cid == 190206 then--Primalist Flamedancer
-		timerFlameDanceCD:Stop(args.destGUID)
-	elseif cid == 187969 then--Flashfrost Earthshaper
-		timerTectonicSlamCD:Stop(args.destGUID)
-	elseif cid == 188067 then--Flashfrost Chillweaver
-		timerIcyShieldCD:Stop(args.destGUID)
-	elseif cid == 190034 then--Blazebound Destroyer
-		timerInfernoCD:Stop(args.destGUID)
+	function mod:SPELL_AURA_APPLIED(args)
+		if not self.Options.Enabled then return end
+		local spellId = args.spellId
+		if spellId == 373693 then
+			warnLivingBomb:CombinedShow(0.3, args.destName)
+			if args:IsPlayer() then
+				specWarnLivingBomb:Show(DBM_COMMON_L.ADDS)
+				specWarnLivingBomb:Play("targetyou")
+				yellLivingBomb:Yell()
+				yellLivingBombFades:Countdown(spellId)
+			end
+		elseif spellId == 392641 then
+			warnRollingThunder:CombinedShow(0.3, args.destName)
+		elseif spellId == 373972 and self:AntiSpam(3, 4) then
+			specWarnBlazeofGlory:Show()
+			specWarnBlazeofGlory:Play("aesoon")
+		elseif spellId == 391050 then
+			specWarnTempestStormshield:Show()
+			specWarnTempestStormshield:Play("attackshield")
+		end
+	end
+	--mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED
+
+	function mod:SPELL_AURA_REMOVED(args)
+		local spellId = args.spellId
+		if spellId == 373693 and args:IsPlayer() then
+			yellLivingBombFades:Cancel()
+		elseif spellId == 391050 then
+			timerTempestStormshieldCD:Start(nil, args.destGUID)
+		end
+	end
+
+	function mod:UNIT_DIED(args)
+		local cid = self:GetCIDFromGUID(args.destGUID)
+		if cid == 188244 then--Primal Juggernaut
+			timerExcavatingBlastCD:Stop(args.destGUID)
+		elseif cid == 187897 then--Defier Draghar
+			timerSteelBarrageCD:Stop(args.destGUID)
+			timerBlazingRushCD:Stop(args.destGUID)
+		elseif cid == 197698 then--Thunderhead
+			timerStormBreathCD:Stop(args.destGUID)
+			timerRollingThunderCD:Stop(args.destGUID)
+			timerThunderjawCD:Stop(args.destGUID)
+		elseif cid == 198047 then--Tempest Channeler
+			timerLightningStormCD:Stop(args.destGUID)
+		elseif cid == 197985 then--Flame Channeler
+			timerFlashfireCD:Stop(args.destGUID)
+		elseif cid == 197535 then--High Channeler Ryvati
+			timerLightningStormCD:Stop(args.destGUID)
+			timerTempestStormshieldCD:Stop(args.destGUID)
+		elseif cid == 190206 then--Primalist Flamedancer
+			timerFlameDanceCD:Stop(args.destGUID)
+		elseif cid == 187969 then--Flashfrost Earthshaper
+			timerTectonicSlamCD:Stop(args.destGUID)
+		elseif cid == 188067 then--Flashfrost Chillweaver
+			timerIcyShieldCD:Stop(args.destGUID)
+		elseif cid == 190034 then--Blazebound Destroyer
+			timerInfernoCD:Stop(args.destGUID)
+		end
 	end
 end

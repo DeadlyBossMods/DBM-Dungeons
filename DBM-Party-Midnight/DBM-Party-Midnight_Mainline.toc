@@ -54,14 +54,17 @@ TheBlindingVale\LightblossomTrinity.lua
 TheBlindingVale\IkuzztheLightHunter.lua
 TheBlindingVale\LightwardenRuia.lua
 TheBlindingVale\Ziekket.lua
+TheBlindingVale\TheBlindingValeTrash.lua
 
 DenofNalorakk\TheHoardmonger.lua
 DenofNalorakk\SentinelofWinter.lua
 DenofNalorakk\Nalorakk.lua
+DenofNalorakk\DenofNalorakkTrash.lua
 
 VoidscarArena\TazRah.lua
 VoidscarArena\Atroxus.lua
 VoidscarArena\Charonus.lua
+VoidscarArena\VoidscarArenaTrash.lua
 
 MaisaraCaverns\MurojinandNekraxx.lua
 MaisaraCaverns\Vordaza.lua
@@ -74,3 +77,4 @@ NexusPointXenas\ChiefCorewrightKasreth.lua
 AltarofFangs\Ravi.lua
 AltarofFangs\TheWrithingCoil.lua
 AltarofFangs\Zuljan.lua
+AltarofFangs\AltarofFangsTrash.lua
