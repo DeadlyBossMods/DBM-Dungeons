@@ -30,7 +30,7 @@ L= DBM:GetModLocalization(1225)
 L = DBM:GetModLocalization("AuchTrash")
 
 L:SetGeneralLocalization({
-	name =	"Трэш мобы Аукиндон"
+	name =	"Трэш: Аукиндон"
 })
 
 -----------------------
@@ -62,7 +62,7 @@ L= DBM:GetModLocalization(889)
 L = DBM:GetModLocalization("BSMTrash")
 
 L:SetGeneralLocalization({
-	name =	"Трэш мобы Шлаковые шахты Кровавого Молота"
+	name =	"Трэш: Шлаковые шахты Кровавого Молота"
 })
 
 -----------------------
@@ -98,7 +98,7 @@ L:SetMiscLocalization({
 L = DBM:GetModLocalization("GRDTrash")
 
 L:SetGeneralLocalization({
-	name =	"Трэш мобы Депо Мрачных Путей"
+	name =	"Трэш: Депо Мрачных Путей"
 })
 
 -----------------------
@@ -166,7 +166,7 @@ L:SetMiscLocalization({
 L = DBM:GetModLocalization("EverBloomTrash")
 
 L:SetGeneralLocalization({
-	name =	"Трэш мобы Вечное Цветение"
+	name =	"Трэш: Вечное Цветение"
 })
 
 -----------------------
@@ -198,7 +198,7 @@ L= DBM:GetModLocalization(1160)
 L = DBM:GetModLocalization("SMBGTrash")
 
 L:SetGeneralLocalization({
-	name =	"Трэш мобы Некрополь Призрачной Луны"
+	name =	"Трэш: Некрополь Призрачной Луны"
 })
 
 -----------------------
@@ -240,7 +240,7 @@ L:SetOptionLocalization({
 L = DBM:GetModLocalization("SkyreachTrash")
 
 L:SetGeneralLocalization({
-	name =	"Трэш мобы Небесный путь"
+	name =	"Трэш: Небесный путь"
 })
 
 -----------------------
@@ -285,5 +285,5 @@ L:SetOptionLocalization({
 L = DBM:GetModLocalization("UBRSTrash")
 
 L:SetGeneralLocalization({
-	name =	"Трэш мобы Верхняя часть пика Черной горы"
+	name =	"Трэш: Верхняя часть пика Черной горы"
 })

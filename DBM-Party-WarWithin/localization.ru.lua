@@ -29,7 +29,7 @@ local L
 L = DBM:GetModLocalization("DarkflameCleftTrash")
 
 L:SetGeneralLocalization({
-	name =	"Трэш мобы Расселина Темного Пламени"
+	name =	"Трэш: Расселина Темного Пламени"
 })
 
 -------------------------
@@ -55,7 +55,7 @@ L:SetGeneralLocalization({
 L = DBM:GetModLocalization("SacredFlameTrash")
 
 L:SetGeneralLocalization({
-	name =	"Трэш мобы Приорат Священного Пламени"
+	name =	"Трэш: Приорат Священного Пламени"
 })
 
 -------------------------
@@ -81,7 +81,7 @@ L:SetGeneralLocalization({
 L = DBM:GetModLocalization("TheRookeryTrash")
 
 L:SetGeneralLocalization({
-	name =	"Трэш мобы Гнездовье"
+	name =	"Трэш: Гнездовье"
 })
 
 -------------------------
@@ -124,7 +124,7 @@ L:SetOptionLocalization({
 L = DBM:GetModLocalization("TheStonevaultTrash")
 
 L:SetGeneralLocalization({
-	name =	"Трэш мобы Каменный Свод"
+	name =	"Трэш: Каменный Свод"
 })
 
 -------------------------
@@ -150,7 +150,7 @@ L:SetGeneralLocalization({
 L = DBM:GetModLocalization("TheDawnbreakerTrash")
 
 L:SetGeneralLocalization({
-	name =	"Трэш мобы Сияющий Рассвет"
+	name =	"Трэш: Сияющий Рассвет"
 })
 
 -------------------------
@@ -176,7 +176,7 @@ L:SetGeneralLocalization({
 L = DBM:GetModLocalization("AraKaraTrash")
 
 L:SetGeneralLocalization({
-	name =	"Трэш мобы Ара-Кара, Город Отголосков"
+	name =	"Трэш: Ара-Кара, Город Отголосков"
 })
 
 -------------------------
@@ -211,7 +211,7 @@ L:SetMiscLocalization{
 L = DBM:GetModLocalization("CinderbrewMeaderyTrash")
 
 L:SetGeneralLocalization({
-	name =	"Трэш мобы Искроварня"
+	name =	"Трэш: Искроварня"
 })
 
 L:SetOptionLocalization({
@@ -250,7 +250,7 @@ L:SetMiscLocalization{
 L = DBM:GetModLocalization("CityofThreadsTrash")
 
 L:SetGeneralLocalization({
-	name =	"Трэш мобы Город Нитей"
+	name =	"Трэш: Город Нитей"
 })
 
 -----------------------------
@@ -279,7 +279,7 @@ L:SetGeneralLocalization({
 L = DBM:GetModLocalization("OperationFloodgateTrash")
 
 L:SetGeneralLocalization({
-	name =	"Трэш мобы Операция: Шлюз"
+	name =	"Трэш: Операция: Шлюз"
 })
 
 -----------------------------
@@ -303,5 +303,5 @@ L:SetGeneralLocalization({
 L = DBM:GetModLocalization("EcoDomeAldaniTrash")
 
 L:SetGeneralLocalization({
-	name =	"Трэш мобы Заповедник Аль'дани"
+	name =	"Трэш: Заповедник Аль'дани"
 })
