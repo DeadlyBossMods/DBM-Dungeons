@@ -108,7 +108,8 @@ if DBM:IsPostMidnight() then
 			self:IgnoreBlizzardAPI()
 			self:RegisterShortTermEvents(
 				"ENCOUNTER_TIMELINE_EVENT_ADDED",
-				"ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED"
+				"ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED",
+				"ENCOUNTER_WARNING"
 			)
 			setFallback(self, true)
 		else
@@ -207,7 +208,6 @@ if DBM:IsPostMidnight() then
 					self:SetStage(3)
 					--The yell-to-warning timing is the only non-secret stage-3 Barrel Through signal.
 					stage3BarrelYellArmed = true
-					self:RegisterShortTermEvents("ENCOUNTER_WARNING")
 				end
 			end
 		end
