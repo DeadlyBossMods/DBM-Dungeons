@@ -11,18 +11,16 @@ mod.respawnTime = 29
 
 mod:RegisterCombat("combat")
 
-local is121 = DBM:GetTOC() == 120100
-
 --mod:RegisterEventsInCombat(
 
 --)
-local specWarnVoidBlast						= mod:NewSpecialWarningCount(is121 and 1297017 or 1222085, "Tank", nil, nil, 1, 2, nil, nil, "defensive")
-local specWarnBlackHole						= mod:NewSpecialWarningCount(is121 and 1300259 or 1222274, nil, nil, nil, 2, 2, nil, nil, "pullin")
+local specWarnVoidBlast						= mod:NewSpecialWarningCount(1297017, "Tank", nil, nil, 1, 2, nil, nil, "defensive")
+local specWarnBlackHole						= mod:NewSpecialWarningCount(1300259, nil, nil, nil, 2, 2, nil, nil, "pullin")
 local specWarnUmbralRupture					= mod:NewSpecialWarningCount(1296963, nil, nil, nil, 2, 2, nil, nil, "watchstep")
 local specWarnNetherDash					= mod:NewSpecialWarningBlizzYou(1222098, nil, nil, nil, 2, 2, nil, nil, "chargemove")
 
-local timerVoidBlastCD						= mod:NewCDCountTimer(20.5, is121 and 1297017 or 1222085, nil, nil, nil, 5)
-local timerBlackHoleCD						= mod:NewCDCountTimer(20.5, is121 and 1300259 or 1222274, nil, nil, nil, 2)
+local timerVoidBlastCD						= mod:NewCDCountTimer(20.5, 1297017, nil, nil, nil, 5)
+local timerBlackHoleCD						= mod:NewCDCountTimer(20.5, 1300259, nil, nil, nil, 2)
 local timerUmbralRuptureCD					= mod:NewCDCountTimer(20.5, 1296963, nil, nil, nil, 3)
 local timerNetherDashCD						= mod:NewCDCountTimer(20.5, 1222098, nil, nil, nil, 3)
 --Custom Aura Sounds
@@ -39,17 +37,13 @@ local function setFallback(self, dontSetAlerts)
 		if self:IsTank() then specWarnVoidBlast:SetAlert(39, "defensive", 2, 2) end
 		specWarnNetherDash:SetAlert(558, "chargemove", 2, 2, 0)
 		specWarnBlackHole:SetAlert(41, "pullin", 12, 2)
-		if is121 then
-			specWarnUmbralRupture:SetAlert(782, "watchstep", 2, 2)
-		end
+		specWarnUmbralRupture:SetAlert(782, "watchstep", 2, 2)
 	end
 	local onlyColor = not DBM.Options.HideDBMBars and not badStateDetected
 	timerVoidBlastCD:SetTimeline(39, onlyColor)
 	timerBlackHoleCD:SetTimeline(41, onlyColor)
-	if is121 then
-		timerNetherDashCD:SetTimeline(558, onlyColor)
-		timerUmbralRuptureCD:SetTimeline(782, onlyColor)
-	end
+	timerNetherDashCD:SetTimeline(558, onlyColor)
+	timerUmbralRuptureCD:SetTimeline(782, onlyColor)
 end
 
 function mod:OnLimitedCombatStart()
@@ -58,7 +52,7 @@ function mod:OnLimitedCombatStart()
 	self.vb.blackHoleCount = 1
 	self.vb.umbralRuptureCount = 1
 	self.vb.netherDashCount = 1
-	if is121 and DBM.Options.HardcodedTimer and not badStateDetected then
+	if DBM.Options.HardcodedTimer and not badStateDetected then
 		self:IgnoreBlizzardAPI()
 		self:RegisterShortTermEvents(
 			"ENCOUNTER_TIMELINE_EVENT_ADDED",

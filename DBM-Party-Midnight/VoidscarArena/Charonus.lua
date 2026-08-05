@@ -11,8 +11,6 @@ mod.respawnTime = 29
 
 mod:RegisterCombat("combat")
 
-local is121 = DBM:GetTOC() == 120100
-
 --mod:RegisterEventsInCombat(
 
 --)
@@ -48,18 +46,14 @@ local function setFallback(self, dontSetAlerts)
 		specWarnCosmicCrash:SetAlert(57, "carefly", 2, 2)
 		specWarnGraviticOrbs:SetAlert(58, "specialsoon", 2, 2, 0)
 		specWarnVoidCascade:SetAlert(171, "watchstep", 2, 2)
-		if is121 then
-			specWarnDarkWaves:SetAlert(961, "specialsoon", 2, 2, 0)
-		end
+		specWarnDarkWaves:SetAlert(961, "specialsoon", 2, 2, 0)
 	end
 	local onlyColor = not DBM.Options.HideDBMBars and not badStateDetected
 	timerUnstableSingularityCD:SetTimeline(56, onlyColor)
 	timerCosmicCrashCD:SetTimeline(57, onlyColor)
 	timerGraviticOrbsCD:SetTimeline(58, onlyColor)
 	timerVoidCascadeCD:SetTimeline(171, onlyColor)
-	if is121 then
-		timerDarkWavesCD:SetTimeline(961, onlyColor)
-	end
+	timerDarkWavesCD:SetTimeline(961, onlyColor)
 end
 
 function mod:OnLimitedCombatStart()
@@ -69,7 +63,7 @@ function mod:OnLimitedCombatStart()
 	self.vb.orbsCount = 1
 	self.vb.cascadeCount = 1
 	self.vb.wavesCount = 1
-	if is121 and DBM.Options.HardcodedTimer and not badStateDetected then
+	if DBM.Options.HardcodedTimer and not badStateDetected then
 		self:IgnoreBlizzardAPI()
 		self:RegisterShortTermEvents("ENCOUNTER_TIMELINE_EVENT_ADDED", "ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED")
 		setFallback(self, true)
