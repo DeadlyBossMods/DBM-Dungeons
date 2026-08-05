@@ -107,11 +107,12 @@ function mod:OnLimitedCombatStart()
 	else
 		setFallback(self)
 	end
-	if self:IsMythic() then
-		self:SetCreatureID(252892)
-	else
-		self:SetCreatureID(244752)
-	end
+	--Not known yet
+	--if self:IsMythic() then
+	--	self:SetCreatureID(252892)
+	--else
+	--	self:SetCreatureID(244752)
+	--end
 end
 
 function mod:OnCombatEnd()
