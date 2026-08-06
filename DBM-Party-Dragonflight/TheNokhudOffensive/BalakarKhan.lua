@@ -35,11 +35,11 @@ mod:AddTimerLine(DBM:EJ_GetSectionInfo(25185))
 local warnSavageStrike							= mod:NewSpellAnnounce(375929, 4, nil, "Tank|Healer")
 local warnIronSpear								= mod:NewTargetAnnounce(376634, 2)
 
-local specWarnIronSpear							= mod:NewSpecialWarningMoveAway(376634, nil, nil, nil, 1, 2)
+local specWarnIronSpear							= mod:NewSpecialWarningMoveAway(376634, nil, nil, nil, 1, 2, nil, nil, "runout")
 local yellIronSpear								= mod:NewYell(376634)
 local yellIronSpearFades						= mod:NewShortFadesYell(376634)
-local specWarnUpheaval							= mod:NewSpecialWarningDodge(375943, nil, nil, nil, 2, 2)
-local specWarnRendingStrike						= mod:NewSpecialWarningDefensive(375937, nil, nil, nil, 1, 2)
+local specWarnUpheaval							= mod:NewSpecialWarningDodge(375943, nil, nil, nil, 2, 2, nil, nil, "watchstep")
+local specWarnRendingStrike						= mod:NewSpecialWarningDefensive(375937, nil, nil, nil, 1, 2, nil, nil, "defensive")
 
 local timerIronSpearCD							= mod:NewCDTimer(37, 376634, nil, nil, nil, 3)--Need more data
 local timerUpheavalCD							= mod:NewCDTimer(37, 375943, nil, nil, nil, 3)--Need data at all
@@ -49,7 +49,7 @@ local timerRendingStrikeCD						= mod:NewCDCountTimer(21.9, 375937, nil, nil, ni
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(25192))
 local warnStormwinds							= mod:NewSpellAnnounce(376730, 2)
 
-local specWarnStormBolt							= mod:NewSpecialWarningInterrupt(376725, "HasInterrupt", nil, nil, 1, 2)
+local specWarnStormBolt							= mod:NewSpecialWarningInterrupt(376725, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
 
 --Stage Two: The Storm Unleashed
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(25187))
@@ -57,13 +57,13 @@ local warnPhase2								= mod:NewPhaseAnnounce(2, 2)
 local warnStaticSpear							= mod:NewTargetAnnounce(376864, 2)
 local warnThunderStrike							= mod:NewSpellAnnounce(376829, 4, nil, "Tank|Healer")
 
-local specWarnStaticSpear						= mod:NewSpecialWarningMoveAway(376864, nil, nil, nil, 1, 2)
+local specWarnStaticSpear						= mod:NewSpecialWarningMoveAway(376864, nil, nil, nil, 1, 2, nil, nil, "runout")
 local yellStaticSpear							= mod:NewYell(376864)
 local yellStaticSpearFades						= mod:NewShortFadesYell(376864)
-local specWarnCracklingUpheaval					= mod:NewSpecialWarningDodge(376892, nil, nil, nil, 2, 2)
-local specWarnConductiveStrike					= mod:NewSpecialWarningDefensive(376827, nil, nil, nil, 1, 2)
-local specWarnConductiveStrikeDispel			= mod:NewSpecialWarningDispel(376827, "RemoveMagic", nil, nil, 1, 2)
-local specWarnGTFO								= mod:NewSpecialWarningGTFO(376899, nil, nil, nil, 1, 8)
+local specWarnCracklingUpheaval					= mod:NewSpecialWarningDodge(376892, nil, nil, nil, 2, 2, nil, nil, "watchstep")
+local specWarnConductiveStrike					= mod:NewSpecialWarningDefensive(376827, nil, nil, nil, 1, 2, nil, nil, "defensive")
+local specWarnConductiveStrikeDispel			= mod:NewSpecialWarningDispel(376827, "RemoveMagic", nil, nil, 1, 2, nil, nil, "helpdispel")
+local specWarnGTFO								= mod:NewSpecialWarningGTFO(376899, nil, nil, nil, 1, 8, nil, nil, "watchfeet")
 
 local timerStaticSpearCD						= mod:NewCDTimer(38.3, 376864, nil, nil, nil, 3)
 local timerCracklingUpheavalCD					= mod:NewCDTimer(38.3, 376892, nil, nil, nil, 3)

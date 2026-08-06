@@ -38,11 +38,11 @@ local warnSharkToss					= mod:NewTargetNoFilterAnnounce(256358, 4)
 local warnGreasy					= mod:NewCountAnnounce(257829, 2)
 local warnRearm						= mod:NewSpellAnnounce(256489, 4)
 
-local specWarnSharkToss				= mod:NewSpecialWarningYou(256358, nil, nil, nil, 1, 2)
+local specWarnSharkToss				= mod:NewSpecialWarningYou(256358, nil, nil, nil, 1, 2, nil, nil, "runaway")
 local yellSharkToss					= mod:NewYell(256358)
-local specWarnSharknado				= mod:NewSpecialWarningRun(256405, nil, nil, nil, 4, 2)
+local specWarnSharknado				= mod:NewSpecialWarningRun(256405, nil, nil, nil, 4, 2, nil, nil, "justrun")
 --local specWarnRearm					= mod:NewSpecialWarningDodge(256489, nil, nil, nil, 2, 2)
-local specWarnGTFO					= mod:NewSpecialWarningGTFO(256552, nil, nil, nil, 1, 8)
+local specWarnGTFO					= mod:NewSpecialWarningGTFO(256552, nil, nil, nil, 1, 8, nil, nil, "watchfeet")
 
 local timerRP						= mod:NewRPTimer(68)
 --local timerSharkTossCD			= mod:NewCDTimer(31.5, 194956, nil, nil, nil, 3)--Disabled until more data, seems highly variable, even pull to pull

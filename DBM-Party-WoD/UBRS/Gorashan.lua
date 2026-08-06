@@ -20,9 +20,9 @@ mod:RegisterEventsInCombat(
 
 local warnPowerConduitLeft			= mod:NewAddsLeftAnnounce(166168, 2)
 
-local specWarnPowerConduit			= mod:NewSpecialWarningSpell(166168, nil, nil, nil, 2, 2)
-local specWarnPowerConduitEnded		= mod:NewSpecialWarningEnd(166168, nil, nil, nil, 1, 2)
-local specWarnShrapnelNova			= mod:NewSpecialWarningRun(154448, "-Tank", nil, nil, 1, 2)
+local specWarnPowerConduit			= mod:NewSpecialWarningSpell(166168, nil, nil, nil, 2, 2, nil, nil, "phasechange")
+local specWarnPowerConduitEnded		= mod:NewSpecialWarningEnd(166168, nil, nil, nil, 1, 2, nil, nil, "phasechange")
+local specWarnShrapnelNova			= mod:NewSpecialWarningRun(154448, "-Tank", nil, nil, 1, 2, nil, nil, "justrun")
 
 function mod:SPELL_CAST_START(args)
 	if args.spellId == 154448 then

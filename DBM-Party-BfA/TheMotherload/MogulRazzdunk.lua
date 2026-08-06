@@ -27,15 +27,15 @@ local warnDrillSmash				= mod:NewTargetNoFilterAnnounce(271456, 2)
 local warnSummonBooma				= mod:NewSpellAnnounce(276212, 2)
 
 --Stage One: Big Guns
-local specWarnGatlingGun			= mod:NewSpecialWarningDodgeCount(260280, nil, nil, nil, 3, 8)
-local specWarnHomingMissile			= mod:NewSpecialWarningMoveAway(260811, nil, nil, nil, 1, 2)
+local specWarnGatlingGun			= mod:NewSpecialWarningDodgeCount(260280, nil, nil, nil, 3, 8, nil, nil, "behindboss")
+local specWarnHomingMissile			= mod:NewSpecialWarningMoveAway(260811, nil, nil, nil, 1, 2, nil, nil, "runout")
 local yellHomingMissile				= mod:NewShortYell(260811)
 --Stage Two: Drill
-local specWarnDrillSmash			= mod:NewSpecialWarningMoveTo(271456, nil, nil, nil, 1, 2)
+local specWarnDrillSmash			= mod:NewSpecialWarningMoveTo(271456, nil, nil, nil, 1, 2, nil, nil, "targetyou")
 local yellDrillSmash				= mod:NewShortYell(271456)
 local yellDrillSmashFades			= mod:NewShortFadesYell(271456)
-local specWarnHeartseeker			= mod:NewSpecialWarningYou(262515, nil, nil, nil, 1, 2)
-local specWarnHeartseekerOther		= mod:NewSpecialWarningTarget(262515, "Tank", nil, nil, 1, 2)
+local specWarnHeartseeker			= mod:NewSpecialWarningYou(262515, nil, nil, nil, 1, 2, nil, nil, "targetyou")
+local specWarnHeartseekerOther		= mod:NewSpecialWarningTarget(262515, "Tank", nil, nil, 1, 2, nil, nil, "gathershare")
 local yellHeartseeker				= mod:NewYell(262515)
 --local specWarnGTFO				= mod:NewSpecialWarningGTFO(238028, nil, nil, nil, 1, 8)
 

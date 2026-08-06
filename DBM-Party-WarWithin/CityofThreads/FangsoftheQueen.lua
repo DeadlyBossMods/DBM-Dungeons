@@ -45,8 +45,8 @@ local timerNextSwapCD						= mod:NewCDCountTimer(44.9, 439989, nil, nil, nil, 6)
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(28876))
 local warnIceSickles						= mod:NewTargetNoFilterAnnounce(440238, 3, nil, "RemoveMagic")
 
-local specWarnShadeSlash					= mod:NewSpecialWarningDodgeCount(439621, nil, nil, nil, 1, 15)
-local specWarnDuskbringer					= mod:NewSpecialWarningDodgeCount(439692, nil, nil, nil, 2, 15)
+local specWarnShadeSlash					= mod:NewSpecialWarningDodgeCount(439621, nil, nil, nil, 1, 15, nil, nil, "frontal")
+local specWarnDuskbringer					= mod:NewSpecialWarningDodgeCount(439692, nil, nil, nil, 2, 15, nil, nil, "aesoon")
 --local specWarnGTFO						= mod:NewSpecialWarningGTFO(372820, nil, nil, nil, 1, 8)
 
 local timerShadeSlashCD						= mod:NewCDCountTimer(7.8, 439621, nil, "Tank|Healer", nil, 5)
@@ -56,7 +56,7 @@ local timerIceSicklesCD						= mod:NewCDCountTimer(33.9, 440218, nil, nil, nil, 
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(28875))
 local warnFrozenSolid						= mod:NewTargetNoFilterAnnounce(458741, 4)--Failing freezing blood
 
-local specWarnRimeDagger					= mod:NewSpecialWarningDefensive(440468, nil, nil, nil, 1, 2)
+local specWarnRimeDagger					= mod:NewSpecialWarningDefensive(440468, nil, nil, nil, 1, 2, nil, nil, "frontal")
 local yellFreezingBlood						= mod:NewYell(441298, nil, nil, nil, "YELL")
 
 local timerRimeDaggerCD						= mod:NewCDCountTimer(13.3, 440468, nil, nil, nil, 5)

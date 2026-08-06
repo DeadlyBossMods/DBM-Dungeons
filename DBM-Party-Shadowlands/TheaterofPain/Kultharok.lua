@@ -25,13 +25,13 @@ mod:RegisterEventsInCombat(
 --]]
 local warnWellofDarkness			= mod:NewTargetNoFilterAnnounce(473540, 3, nil, "Healer|RemoveMagic")
 
-local specWarnDrawSoul				= mod:NewSpecialWarningMoveTo(474298, nil, nil, nil, 1, 2)--Want to run away from boss to spawn it further away
+local specWarnDrawSoul				= mod:NewSpecialWarningMoveTo(474298, nil, nil, nil, 1, 2, nil, nil, "gather")--Want to run away from boss to spawn it further away
 local yellDrawSoul					= mod:NewYell(474298)
-local specWarnWellofDarkness		= mod:NewSpecialWarningMoveAway(473540, nil, nil, nil, 1, 2)
+local specWarnWellofDarkness		= mod:NewSpecialWarningMoveAway(473540, nil, nil, nil, 1, 2, nil, nil, "scatter")
 local yellWellofDarkness			= mod:NewYell(473540)
-local specWarnDeathSpiral			= mod:NewSpecialWarningDodgeCount(1216474, nil, nil, nil, 2, 2, 4)
-local specWarnNecroticEruption		= mod:NewSpecialWarningCount(474087, nil, nil, nil, 1, 15)
-local specWarnFeastoftheDamned		= mod:NewSpecialWarningCount(473513, nil, nil, nil, 2, 2)
+local specWarnDeathSpiral			= mod:NewSpecialWarningDodgeCount(1216474, nil, nil, nil, 2, 2, 4, nil, "watchstep")
+local specWarnNecroticEruption		= mod:NewSpecialWarningCount(474087, nil, nil, nil, 1, 15, nil, nil, "frontal")
+local specWarnFeastoftheDamned		= mod:NewSpecialWarningCount(473513, nil, nil, nil, 2, 2, nil, nil, "aesoon")
 --local specWarnGTFO				= mod:NewSpecialWarningGTFO(257274, nil, nil, nil, 1, 8)
 
 local timerDrawSoulCD				= mod:NewVarCountTimer("v53.4-57.1", 474298, nil, nil, nil, 3, nil, DBM_COMMON_L.DAMAGE_ICON, nil, 1, 5)

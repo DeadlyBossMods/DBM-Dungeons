@@ -29,9 +29,9 @@ if mod:IsRetail() then
 	(ability.id = 448847 or ability.id = 448877 or ability.id = 447261) and type = "begincast"
 	or type = "dungeonencounterstart" or type = "dungeonencounterend"
 	--]]
-	local specWarnCommandingRoar	= mod:NewSpecialWarningCount(448847, nil, nil, nil, 2, 2)
-	local specWarnRockSpike			= mod:NewSpecialWarningCount(448877, nil, nil, nil, 2, 2)
-	local specWarnSkullsplitter		= mod:NewSpecialWarningDefensive(447261, nil, nil, nil, 1, 2)
+	local specWarnCommandingRoar	= mod:NewSpecialWarningCount(448847, nil, nil, nil, 2, 2, nil, nil, "aesoon")
+	local specWarnRockSpike			= mod:NewSpecialWarningCount(448877, nil, nil, nil, 2, 2, nil, nil, "bait")
+	local specWarnSkullsplitter		= mod:NewSpecialWarningDefensive(447261, nil, nil, nil, 1, 2, nil, nil, "defensive")
 
 	local timerCommandingRoarCD		= mod:NewNextCountTimer(25, 448847, nil, nil, nil, 3)
 	local timerRockSpikeCD			= mod:NewNextCountTimer(25, 448877, nil, nil, nil, 3)
@@ -107,12 +107,12 @@ else
 	local warnFrenzy			= mod:NewSpellAnnounce(74853, 3, nil, "Tank|Healer")
 	local warnBlitz				= mod:NewTargetNoFilterAnnounce(74670, 3)
 
-	local specWarnMalice		= mod:NewSpecialWarningDefensive(90170, nil, nil, nil, 1, 2)
-	local specWarnGroundSiege	= mod:NewSpecialWarningDodge(74634, "Melee", nil, nil, 2, 2)
-	local specWarnBlitz			= mod:NewSpecialWarningYou(74670, nil, nil, nil, 1, 2)
+	local specWarnMalice		= mod:NewSpecialWarningDefensive(90170, nil, nil, nil, 1, 2, nil, nil, "defensive")
+	local specWarnGroundSiege	= mod:NewSpecialWarningDodge(74634, "Melee", nil, nil, 2, 2, nil, nil, "watchstep")
+	local specWarnBlitz			= mod:NewSpecialWarningYou(74670, nil, nil, nil, 1, 2, nil, nil, "targetyou")
 	local yellBlitz				= mod:NewYell(74670)
 
-	local specWarnSummonSkardyn	= mod:NewSpecialWarningAdds(74859, "Dps", nil, nil, 1, 2)--Seems health based, pull,and 50%?
+	local specWarnSummonSkardyn	= mod:NewSpecialWarningAdds(74859, "Dps", nil, nil, 1, 2, nil, nil, "killmob")--Seems health based, pull,and 50%?
 
 	local timerBleedingWoundCD	= mod:NewCDCountTimer(20.5, 74846, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 	local timerBlitz			= mod:NewCDCountTimer(21.8, 74670, nil, nil, nil, 3)

@@ -27,12 +27,12 @@ mod:RegisterEventsInCombat(
 local warnWickedRush				= mod:NewTargetAnnounce(323845, 3)
 local warnShiningRadiance			= mod:NewTargetNoFilterAnnounce(324086, 1)
 
-local specWarnWickedRush			= mod:NewSpecialWarningMoveAway(323845, nil, nil, nil, 1, 2)
+local specWarnWickedRush			= mod:NewSpecialWarningMoveAway(323845, nil, nil, nil, 1, 2, nil, nil, "runout")
 local yellWickedRush				= mod:NewYell(323845)
 local yellWickedRushFades			= mod:NewShortFadesYell(323845)
 local yellShiningRadiance			= mod:NewYell(324086, nil, nil, nil, "YELL")
-local specWarnPiercingBlur			= mod:NewSpecialWarningDodge(323810, nil, nil, nil, 2, 2)
-local specWarnGloomSquall			= mod:NewSpecialWarningMoveTo(322903, nil, nil, nil, 3, 2)--Trash version, boss version is 324103
+local specWarnPiercingBlur			= mod:NewSpecialWarningDodge(323810, nil, nil, nil, 2, 2, nil, nil, "watchstep")
+local specWarnGloomSquall			= mod:NewSpecialWarningMoveTo(322903, nil, nil, nil, 3, 2, nil, nil, "findshelter")--Trash version, boss version is 324103
 --local specWarnGTFO					= mod:NewSpecialWarningGTFO(257274, nil, nil, nil, 1, 8)
 
 local timerWickedRushCD				= mod:NewCDTimer(15.8, 323845, nil, nil, nil, 3)--5.7, 15.8, 20.7, 15.8

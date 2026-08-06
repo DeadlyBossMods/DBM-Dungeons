@@ -19,8 +19,8 @@ local warnMortalWound			= mod:NewStackAnnounce(93675, 2, nil, "Tank|Healer")
 local warnGhouls				= mod:NewSpellAnnounce(93707, 4)
 local warnPistolBarrage			= mod:NewSpellAnnounce(93520, 4)
 
-local specWarnMortalWound		= mod:NewSpecialWarningStack(93675, nil, 5, nil, nil, 1, 6)
-local specWarnCursedBullets		= mod:NewSpecialWarningDispel(93629, "RemoveCurse", nil, 2, 1, 2)
+local specWarnMortalWound		= mod:NewSpecialWarningStack(93675, nil, 5, nil, nil, 1, 6, nil, nil, "stackhigh")
+local specWarnCursedBullets		= mod:NewSpecialWarningDispel(93629, "RemoveCurse", nil, 2, 1, 2, nil, nil, "helpdispel")
 
 local timerGhouls				= mod:NewNextTimer(30, 93707, nil, nil, nil, 1)
 local timerPistolBarrage		= mod:NewBuffActiveTimer(6, 93520, nil, nil, nil, 3)

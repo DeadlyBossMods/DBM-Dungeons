@@ -16,9 +16,9 @@ mod:RegisterEventsInCombat(
 
 --local warnScorchedEarth		= mod:NewCountAnnounce(114460, 3)--only aoe warn will be enough.
 
-local specWarnFlyingKick	= mod:NewSpecialWarningDodge(113764, nil, nil, nil, 2, 2)--This is always followed instantly by Firestorm kick, so no reason to warn both.
-local specWarnScorchedEarth	= mod:NewSpecialWarningGTFO(114460, nil, nil, nil, 1, 8)
-local specWarnBlazingFists	= mod:NewSpecialWarningDodge(114807, "Tank", nil, nil, 1, 2) -- Everything is dangerous in challenge mode, entry level heriocs will also be dangerous when they aren't overtuning your gear with an ilvl buff.if its avoidable, you should avoid it, in good practice, to create good habit for challenge modes.
+local specWarnFlyingKick	= mod:NewSpecialWarningDodge(113764, nil, nil, nil, 2, 2, nil, nil, "watchstep")--This is always followed instantly by Firestorm kick, so no reason to warn both.
+local specWarnScorchedEarth	= mod:NewSpecialWarningGTFO(114460, nil, nil, nil, 1, 8, nil, nil, "watchfeet")
+local specWarnBlazingFists	= mod:NewSpecialWarningDodge(114807, "Tank", nil, nil, 1, 2, nil, nil, "shockwave") -- Everything is dangerous in challenge mode, entry level heriocs will also be dangerous when they aren't overtuning your gear with an ilvl buff.if its avoidable, you should avoid it, in good practice, to create good habit for challenge modes.
 
 local timerFlyingKickCD		= mod:NewCDTimer(25, 113764, nil, nil, nil, 3)--25-30 second variation
 local timerFirestormKick	= mod:NewBuffActiveTimer(6, 113764, nil, nil, nil, 2)

@@ -38,14 +38,14 @@ local warnCursedWax							= mod:NewTargetNoFilterAnnounce(421653, 4)
 local warnDarkflamePickaxe					= mod:NewTargetNoFilterAnnounce(420659, 3)
 --local warnThrowDarkflame					= mod:NewTargetNoFilterAnnounce(420696, 3)--Private Aura
 
-local specWarnDarkflamePickaxe				= mod:NewSpecialWarningMoveTo(420659, nil, nil, nil, 1, 17)
+local specWarnDarkflamePickaxe				= mod:NewSpecialWarningMoveTo(420659, nil, nil, nil, 1, 17, nil, nil, "movetostatue")
 local yellDarkflamePickaxe					= mod:NewShortYell(422648)
 local yellDarkflamePickaxeFades				= mod:NewShortFadesYell(422648)
 --local specWarnThrowDarkflame				= mod:NewSpecialWarningMoveTo(420696, nil, nil, nil, 1, 2)--Private Aura
 --local yellThrowDarkflame					= mod:NewShortYell(420696)--Private Aura
 --local yellThrowDarkflameFades				= mod:NewShortFadesYell(420696)--Private Aura
-local specWarnParanoidMind					= mod:NewSpecialWarningInterruptCount(426145, "HasInterrupt", nil, nil, 1, 2)
-local specWarnGTFO							= mod:NewSpecialWarningGTFO(421067, nil, nil, nil, 1, 8)
+local specWarnParanoidMind					= mod:NewSpecialWarningInterruptCount(426145, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
+local specWarnGTFO							= mod:NewSpecialWarningGTFO(421067, nil, nil, nil, 1, 8, nil, nil, "watchfeet")
 
 local timerEarieMoldsCD						= mod:NewVarCountTimer("v21.8-27.9", 420659, nil, nil, nil, 1)
 local timerDarkflamePickaxeCD				= mod:NewVarCountTimer("v23.1-27.9", 422648, nil, nil, nil, 3)
@@ -53,7 +53,7 @@ local timerParanoidMindCD					= mod:NewVarCountTimer("v10.9-15.8", 426145, nil, 
 local timerThrowDarkflameCD					= mod:NewVarCountTimer("v21.9-37.6", 420696, nil, nil, nil, 3)--TODO, refine it with timer correction
 
 mod:AddSetIconOption("SetIconOnAdds", 420659, true, 5, {8, 7, 6, 5, 4})
-mod:AddPrivateAuraSoundOption({420696,453278}, true, 420696, 1, 1, "movetostatue", 17)--Throw Darkflame
+mod:AddAuraSoundOption({420696,453278}, true, 420696, 1, 1, "movetostatue", 17)--Throw Darkflame
 
 mod.vb.addIcon = 8
 mod.vb.statueCount = 0

@@ -15,7 +15,7 @@ mod:RegisterEventsInCombat(
 	"SPELL_MISSED 460249"
 )
 
-local specWarnGTFO = mod:NewSpecialWarningGTFO(460249, nil, nil, nil, 1, 8)
+local specWarnGTFO = mod:NewSpecialWarningGTFO(460249, nil, nil, nil, 1, 8, nil, nil, "watchfeet")
 
 
 local playerGuid = UnitGUID("player")

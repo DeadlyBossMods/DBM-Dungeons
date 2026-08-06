@@ -28,8 +28,8 @@ local warnShadowFadeEnded			= mod:NewEndAnnounce(233206, 2)
 local warnDemonicUpheaval			= mod:NewTargetAnnounce(233963, 3)
 local warnShadowAdd					= mod:NewSpellAnnounce(-14965, 2, 233206)
 
-local specWarnCarrionSwarm			= mod:NewSpecialWarningSpell(233155, "Tank", nil, nil, 1, 2)
-local specWarnDemonicUpheaval		= mod:NewSpecialWarningMoveAway(233963, nil, nil, nil, 1, 2)
+local specWarnCarrionSwarm			= mod:NewSpecialWarningSpell(233155, "Tank", nil, nil, 1, 2, nil, nil, "shockwave")
+local specWarnDemonicUpheaval		= mod:NewSpecialWarningMoveAway(233963, nil, nil, nil, 1, 2, nil, nil, "runout")
 local yellDemonicUpheaval			= mod:NewYell(233963)
 
 local timerDarkSolitudeCD			= mod:NewCDTimer(8.5, 234817, nil, nil, nil, 3)

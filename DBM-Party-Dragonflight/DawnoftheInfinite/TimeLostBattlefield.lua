@@ -70,9 +70,9 @@ local warnRally										= mod:NewCountAnnounce(rallySpellId, 2)
 local warnCry										= mod:NewCountAnnounce(crySpellId, 2)
 local warnShockwave									= mod:NewCountAnnounce(shockwaveSpellId, 3)--2nd and 3rd cast
 
-local specWarnBladestorm							= mod:NewSpecialWarningDodgeCount(410235, "Melee", nil, nil, 2, 2)
-local specWarnTankBuster							= mod:NewSpecialWarningDefensive(tankSpellId, nil, nil, nil, 1, 2)
-local specWarnShockwave								= mod:NewSpecialWarningDodgeCount(shockwaveSpellId, nil, nil, nil, 2, 2)--First cast in set
+local specWarnBladestorm							= mod:NewSpecialWarningDodgeCount(410235, "Melee", nil, nil, 2, 2, nil, nil, "whirlwind")
+local specWarnTankBuster							= mod:NewSpecialWarningDefensive(tankSpellId, nil, nil, nil, 1, 2, nil, nil, "defensive")
+local specWarnShockwave								= mod:NewSpecialWarningDodgeCount(shockwaveSpellId, nil, nil, nil, 2, 2, nil, nil, "shockwave")--First cast in set
 
 local timerRP										= mod:NewRPTimer(8)
 local timerBladestormCD								= mod:NewCDCountTimer(35.1, 410235, nil, nil, nil, 3)

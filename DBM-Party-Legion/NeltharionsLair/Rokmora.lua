@@ -20,8 +20,8 @@ mod:RegisterEventsInCombat(
 --TODO, is razorshards 29 seconds now?
 local warnShatter					= mod:NewCountAnnounce(188114, 2)
 
-local specWarnRazorShards			= mod:NewSpecialWarningSpell(188169, "Tank", nil, nil, 1, 2)
-local specWarnGas					= mod:NewSpecialWarningGTFO(192800, nil, nil, nil, 1, 8)
+local specWarnRazorShards			= mod:NewSpecialWarningSpell(188169, "Tank", nil, nil, 1, 2, nil, nil, "shockwave")
+local specWarnGas					= mod:NewSpecialWarningGTFO(192800, nil, nil, nil, 1, 8, nil, nil, "watchfeet")
 
 local timerShatterCD				= mod:NewCDTimer(24.2, 188114, nil, nil, nil, 2)
 local timerRazorShardsCD			= mod:NewCDTimer(29, 188169, nil, "Tank", nil, 5)

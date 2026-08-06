@@ -16,7 +16,7 @@ mod:RegisterEventsInCombat(
 local warningEnrage					= mod:NewTargetNoFilterAnnounce(8269, 2)
 local warningWhirlwind				= mod:NewSpellAnnounce(8989, 2)
 
-local specWarnWhirlwind				= mod:NewSpecialWarningRun(8989, false, nil, 2, 4, 2)
+local specWarnWhirlwind				= mod:NewSpecialWarningRun(8989, false, nil, 2, 4, 2, nil, nil, "justrun")
 
 local timerWhirlwindCD				= mod:NewCDTimer(18, 8989, nil, nil, nil, 4, nil, DBM_COMMON_L.DEADLY_ICON)
 

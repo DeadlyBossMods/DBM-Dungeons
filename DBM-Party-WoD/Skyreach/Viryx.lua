@@ -7,26 +7,30 @@ mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(76266)
 mod:SetEncounterID(1701)
 mod:SetUsedIcons(1)
+mod:SetZone(1209)
 
 mod:RegisterCombat("combat")
 
 --NOTE: Solar Blast alternates between 12 and 27 second cd
 if DBM:IsPostMidnight() then
+	DBM:RegisterAltSpellName(1253998, DBM_COMMON_L.ADD)--Cast Down -> Add
+
 	local warnScorchingRay			= mod:NewCountAnnounce(1253538, 2)
 	local warnLensFlare				= mod:NewCountAnnounce(1253531, 2)
+	local warnCastDown				= mod:NewBlizzTargetAnnounce(1253998, 4)
 
-	local specWarnCastDown			= mod:NewSpecialWarningCount(1253998, nil, nil, nil, 1, 2)
-	local specWarnSolarBlast		= mod:NewSpecialWarningInterruptCount(154396, "HasInterrupt", nil, nil, 1, 2)
+	local specWarnCastDown			= mod:NewSpecialWarningCount(1253998, nil, nil, nil, 1, 2, nil, nil, "targetchange")
+	local specWarnSolarBlast		= mod:NewSpecialWarningInterruptCount(154396, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
 
 	local timerScorchingRayCD		= mod:NewCDCountTimer(20.5, 1253538, nil, nil, nil, 3)
-	local timerCastDownCD			= mod:NewCDCountTimer(20.5, 1253998, nil, nil, nil, 1)
+	local timerCastDownCD			= mod:NewCDCountTimer(20.5, 1253998, nil, nil, nil, 1, nil, DBM_COMMON_L.IMPORTANT_ICON..DBM_COMMON_L.DAMAGE_ICON)
 	local timerSolarBlastCD			= mod:NewCDCountTimer(20.5, 154396, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 	local timerLensFlareCD			= mod:NewCDCountTimer(20.5, 1253531, nil, nil, nil, 3)
 
-	--Midnight private aura replacements
-	mod:AddPrivateAuraSoundOption(1253541, true, 1253541, 1, 1, "debuffyou", 17)--Scorching Ray
-	mod:AddPrivateAuraSoundOption(153954, true, 1253998, 1, 1, "targetyou", 2)--Cast Down
-	mod:AddPrivateAuraSoundOption(1253531, true, 1253531, 1, 1, "laserrun", 2)--Lens Flare
+	--Custom Aura Sounds
+	mod:AddAuraSoundOption(1253541, true, 1253541, 1, 1, "debuffyou", 17)--Scorching Ray
+	--mod:AddAuraSoundOption(153954, true, 1253998, 1, 1, "targetyou", 2)--Cast Down (no longer a private aura post 4-14-26 hotfixes
+	mod:AddAuraSoundOption(1253531, true, 1253531, 1, 1, "laserrun", 2)--Lens Flare
 
 	mod.vb.scorchingRayCount = 0
 	mod.vb.castDownCount = 0
@@ -36,13 +40,19 @@ if DBM:IsPostMidnight() then
 	local badStateDetected = false
 
 	---@param self DBMMod
-	local function setFallback(self)
-		specWarnCastDown:SetAlert(310, "targetchange", 2, 2)
-		specWarnSolarBlast:SetAlert(311, "kickcast", 2, 2)
-		timerScorchingRayCD:SetTimeline(309)
-		timerCastDownCD:SetTimeline(310)
-		timerSolarBlastCD:SetTimeline(311)
-		timerLensFlareCD:SetTimeline(312)
+	---@param dontSetAlerts boolean? Called on engage when we only want to set timeline parameters and not touch encounter alerts
+	local function setFallback(self, dontSetAlerts)
+		--If user has DBM bars enabled, we only want to register colors to the blizz api so that the blizz bars are also colorized.
+	--If user has bars disabled, or we are in a bad state, onlyColor is false and we register countdowns as well.
+	local onlyColor = not DBM.Options.HideDBMBars and not badStateDetected
+		if not dontSetAlerts then
+			specWarnCastDown:SetAlert(310, "targetchange", 2, 2)
+			specWarnSolarBlast:SetAlert(311, "kickcast", 2, 2)
+		end
+		timerScorchingRayCD:SetTimeline(309, onlyColor)
+		timerCastDownCD:SetTimeline(310, onlyColor)
+		timerSolarBlastCD:SetTimeline(311, onlyColor)
+		timerLensFlareCD:SetTimeline(312, onlyColor)
 	end
 
 	function mod:OnLimitedCombatStart()
@@ -52,12 +62,13 @@ if DBM:IsPostMidnight() then
 		self.vb.solarBlastCount = 1
 		self.vb.lensFlareCount = 1
 		nextTwelveIsCastDown = true
-		if self:IsMythicPlus() and DBM.Options.HardcodedTimer and not badStateDetected then
+		if DBM.Options.HardcodedTimer and not badStateDetected then
 			self:IgnoreBlizzardAPI()
 			self:RegisterShortTermEvents(
 				"ENCOUNTER_TIMELINE_EVENT_ADDED",
 				"ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED"
 			)
+			setFallback(self, true)
 		else
 			setFallback(self)
 		end
@@ -88,15 +99,11 @@ if DBM:IsPostMidnight() then
 				end
 				nextTwelveIsCastDown = not nextTwelveIsCastDown
 			else
-				if not DBM.Options.DebugMode then
-					badStateDetected = true
-					self:ResumeBlizzardAPI()
-					self:UnregisterShortTermEvents()
-					setFallback(self)
-					DBM:Debug("|cffff0000Failed to match encounter timeline events to expected timers, falling back to Blizzard API|r", nil, nil, nil, true)
-				else
-					DBM:Debug("|cffff0000Failed to match encounter timeline events to expected timers|r", nil, nil, nil, true)
-				end
+				badStateDetected = true
+				self:ResumeBlizzardAPI()
+				self:UnregisterShortTermEvents()
+				setFallback(self)
+				DBM:Debug("|cffff0000Failed to match encounter timeline events to expected timers, falling back to Blizzard API|r", nil, nil, nil, true)
 			end
 		end
 
@@ -119,6 +126,7 @@ if DBM:IsPostMidnight() then
 					if eventType == "scorchingRay" then
 						warnScorchingRay:Show(eventCount)
 					elseif eventType == "castDown" then
+						warnCastDown:Show(eventCount)
 						specWarnCastDown:Show(eventCount)
 						specWarnCastDown:Play("targetchange")
 					elseif eventType == "solarBlast" then
@@ -147,12 +155,12 @@ else
 	local warnCastDown			= mod:NewTargetNoFilterAnnounce(153954, 4)
 	local warnShielding			= mod:NewTargetNoFilterAnnounce(154055, 2)
 
-	local specWarnCastDownSoon	= mod:NewSpecialWarningSoon(153954, nil, nil, nil, 1, 2)--Everyone, becaus it can grab healer too, which affects healer/tank
-	local specWarnCastDown		= mod:NewSpecialWarningSwitch(153954, "Dps", nil, nil, 3, 2)--Only dps, because it's their job to stop it.
-	local specWarnLensFlareCast	= mod:NewSpecialWarningSpell(154043, nil, nil, nil, 2, 2)--If there is any way to find actual target, like maybe target scanning, this will be changed.
-	local specWarnLensFlare		= mod:NewSpecialWarningGTFO(154043, nil, nil, nil, 1, 8)
-	local specWarnAdd			= mod:NewSpecialWarning("specWarnAdd", "Dps", nil, nil, 1, 2)
-	local specWarnShielding		= mod:NewSpecialWarningInterrupt(154055, "HasInterrupt", nil, 2, 1, 2)
+	local specWarnCastDownSoon	= mod:NewSpecialWarningSoon(153954, nil, nil, nil, 1, 2, nil, nil, "mobsoon")--Everyone, becaus it can grab healer too, which affects healer/tank
+	local specWarnCastDown		= mod:NewSpecialWarningSwitch(153954, "Dps", nil, nil, 3, 2, nil, nil, "helpme")--Only dps, because it's their job to stop it.
+	local specWarnLensFlareCast	= mod:NewSpecialWarningSpell(154043, nil, nil, nil, 2, 2, nil, nil, "watchstep")--If there is any way to find actual target, like maybe target scanning, this will be changed.
+	local specWarnLensFlare		= mod:NewSpecialWarningGTFO(154043, nil, nil, nil, 1, 8, nil, nil, "watchfeet")
+	local specWarnAdd			= mod:NewSpecialWarning("specWarnAdd", "Dps", nil, nil, 1, 2, nil, nil, nil, nil, "killmob")
+	local specWarnShielding		= mod:NewSpecialWarningInterrupt(154055, "HasInterrupt", nil, 2, 1, 2, nil, nil, "kickcast")
 
 	local timerLenseFlareCD		= mod:NewCDTimer(38, 154043, nil, nil, nil, 3)
 	local timerCastDownCD		= mod:NewCDTimer(28, 153954, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)

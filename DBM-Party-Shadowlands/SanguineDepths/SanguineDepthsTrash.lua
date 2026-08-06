@@ -28,20 +28,20 @@ local warnDreadBindings						= mod:NewFadesAnnounce(326827, 1)
 --General
 --local specWarnGTFO						= mod:NewSpecialWarningGTFO(257274, nil, nil, nil, 1, 8)
 --Notable Kryxis Trash
-local specWarnSanctifiedMists				= mod:NewSpecialWarningMove(334673, "Tank", nil, nil, 1, 10)
-local specWarnEchoingThrust					= mod:NewSpecialWarningDodge(320991, "Tank", nil, nil, 1, 2)
+local specWarnSanctifiedMists				= mod:NewSpecialWarningMove(334673, "Tank", nil, nil, 1, 10, nil, nil, "mobout")
+local specWarnEchoingThrust					= mod:NewSpecialWarningDodge(320991, "Tank", nil, nil, 1, 2, nil, nil, "shockwave")
 --Notable Grand Proctor Berylli
-local specWarnCurseofSuppression			= mod:NewSpecialWarningInterrupt(326836, "HasInterrupt", nil, nil, 1, 2)
-local specWarnCurseofSuppressionDispel		= mod:NewSpecialWarningDispel(326836, "RemoveCurse", nil, nil, 1, 2)
-local specWarnWrackSoul						= mod:NewSpecialWarningInterrupt(321038, false, nil, 2, 1, 2)
-local specWarnWrackSoulDispel				= mod:NewSpecialWarningDispel(321038, "RemoveMagic", nil, nil, 1, 2)
+local specWarnCurseofSuppression			= mod:NewSpecialWarningInterrupt(326836, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
+local specWarnCurseofSuppressionDispel		= mod:NewSpecialWarningDispel(326836, "RemoveCurse", nil, nil, 1, 2, nil, nil, "helpdispel")
+local specWarnWrackSoul						= mod:NewSpecialWarningInterrupt(321038, false, nil, 2, 1, 2, nil, nil, "kickcast")
+local specWarnWrackSoulDispel				= mod:NewSpecialWarningDispel(321038, "RemoveMagic", nil, nil, 1, 2, nil, nil, "helpdispel")
 --Notable General Kaal Trash
-local specWarnGloomSquall					= mod:NewSpecialWarningMoveTo(324103, nil, nil, nil, 3, 2)--Boss version, trash version is 322903
+local specWarnGloomSquall					= mod:NewSpecialWarningMoveTo(324103, nil, nil, nil, 3, 2, nil, nil, "findshelter")--Boss version, trash version is 322903
 local yellShiningRadiance					= mod:NewYell(324086, nil, nil, nil, "YELL")
 --Unknown, user request
-local specWarnDreadBindings					= mod:NewSpecialWarningRun(326827, nil, nil, nil, 4, 2)
-local specWarnCraggyFracture				= mod:NewSpecialWarningDodge(328170, nil, nil, nil, 2, 2)
-local specWarnVolatileTrap					= mod:NewSpecialWarningDodge(334558, nil, nil, nil, 2, 2)
+local specWarnDreadBindings					= mod:NewSpecialWarningRun(326827, nil, nil, nil, 4, 2, nil, nil, "justrun")
+local specWarnCraggyFracture				= mod:NewSpecialWarningDodge(328170, nil, nil, nil, 2, 2, nil, nil, "watchstep")
+local specWarnVolatileTrap					= mod:NewSpecialWarningDodge(334558, nil, nil, nil, 2, 2, nil, nil, "watchstep")
 
 --local timerShiningRadiance					= mod:NewCDTimer(35, 324086, nil, nil, nil, 5)
 

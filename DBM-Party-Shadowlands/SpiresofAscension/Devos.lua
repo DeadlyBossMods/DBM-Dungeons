@@ -34,10 +34,10 @@ local warnBackdraft					= mod:NewSpellAnnounce(322908, 4)
 local warnSpear						= mod:NewSpellAnnounce(322921, 1)
 
 --Stage 1
-local specWarnAbyssalDetonation		= mod:NewSpecialWarningMoveTo(334625, nil, nil, nil, 3, 2)
-local specWarnLostConfidence		= mod:NewSpecialWarningMoveAway(322818, nil, nil, nil, 1, 2)
+local specWarnAbyssalDetonation		= mod:NewSpecialWarningMoveTo(334625, nil, nil, nil, 3, 2, nil, nil, "findshelter")
+local specWarnLostConfidence		= mod:NewSpecialWarningMoveAway(322818, nil, nil, nil, 1, 2, nil, nil, "scatter")
 local yellLostConfidence			= mod:NewYell(322818)
-local specWarnRunThrough			= mod:NewSpecialWarningMoveAway(323943, nil, nil, nil, 1, 2)
+local specWarnRunThrough			= mod:NewSpecialWarningMoveAway(323943, nil, nil, nil, 1, 2, nil, nil, "targetyou")
 local yellRunThrough				= mod:NewYell(323943)
 --local specWarnGTFO					= mod:NewSpecialWarningGTFO(322817, nil, nil, nil, 1, 8)
 

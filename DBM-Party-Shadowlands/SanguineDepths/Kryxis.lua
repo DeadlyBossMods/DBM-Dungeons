@@ -27,13 +27,13 @@ mod:RegisterEventsInCombat(
  --]]
 --local warnBlackPowder				= mod:NewTargetAnnounce(257314, 4)
 
-local specWarnViciousHeadbutt		= mod:NewSpecialWarningDefensive(319650, nil, nil, nil, 1, 2)
-local specWarnHungeringDrain		= mod:NewSpecialWarningInterruptCount(319654, "HasInterrupt", nil, nil, 1, 2)
-local specWarnSeveringSmash			= mod:NewSpecialWarningSpell(319685, nil, nil, nil, 2, 2)
-local specWarnJuggernautRush		= mod:NewSpecialWarningYou(319713, nil, nil, nil, 1, 2)
+local specWarnViciousHeadbutt		= mod:NewSpecialWarningDefensive(319650, nil, nil, nil, 1, 2, nil, nil, "defensive")
+local specWarnHungeringDrain		= mod:NewSpecialWarningInterruptCount(319654, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kick2r")
+local specWarnSeveringSmash			= mod:NewSpecialWarningSpell(319685, nil, nil, nil, 2, 2, nil, nil, "specialsoon")
+local specWarnJuggernautRush		= mod:NewSpecialWarningYou(319713, nil, nil, nil, 1, 2, nil, nil, "targetyou")
 local yellJuggernautRush			= mod:NewYell(319713)
 local yellJuggernautRushFades		= mod:NewShortFadesYell(319713)
-local specWarnJuggernautRushSoak	= mod:NewSpecialWarningMoveTo(319713, nil, nil, nil, 1, 2)
+local specWarnJuggernautRushSoak	= mod:NewSpecialWarningMoveTo(319713, nil, nil, nil, 1, 2, nil, nil, "gathershare")
 --local specWarnGTFO					= mod:NewSpecialWarningGTFO(257274, nil, nil, nil, 1, 8)
 
 local timerViciousHeadbuttCD		= mod:NewCDTimer(18.2, 319650, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)--18.2 unless delayed by other abilities

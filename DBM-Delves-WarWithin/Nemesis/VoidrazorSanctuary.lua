@@ -49,10 +49,10 @@ mod:RegisterEventsInCombat(
 
 local warnInvokeTheShadows				= mod:NewCountAnnounce(1244462, 3)
 
-local specWarnDarkMassacre				= mod:NewSpecialWarningCount(1245203, nil, nil, nil, 2, 2)
-local specWarnNetherRift				= mod:NewSpecialWarningCount(1245582, nil, nil, nil, 2, 12)
-local specWarnNexusDaggers				= mod:NewSpecialWarningDodgeCount(1245240, nil, nil, nil, 2, 2)
-local specWarnShadowEruption			= mod:NewSpecialWarningSpell(1244600, nil, nil, nil, 2, 2)
+local specWarnDarkMassacre				= mod:NewSpecialWarningCount(1245203, nil, nil, nil, 2, 2, nil, nil, "ghostsoon")
+local specWarnNetherRift				= mod:NewSpecialWarningCount(1245582, nil, nil, nil, 2, 12, nil, nil, "pullin")
+local specWarnNexusDaggers				= mod:NewSpecialWarningDodgeCount(1245240, nil, nil, nil, 2, 2, nil, nil, "farfromline")
+local specWarnShadowEruption			= mod:NewSpecialWarningSpell(1244600, nil, nil, nil, 2, 2, nil, nil, "aesoon")
 
 local timerDarkMassacreCD				= mod:NewCDCountTimer(27.9, 1245203, nil, nil, nil, 5)
 local timerInvokeTheShadowsCD			= mod:NewCDCountTimer(20.0, 1244462, nil, nil, nil, 1)

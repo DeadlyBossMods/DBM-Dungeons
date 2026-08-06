@@ -39,11 +39,11 @@ local warnEarthsurge							= mod:NewCountAnnounce(409456, 3)
 local warnEarthsurgeOver						= mod:NewEndAnnounce(409456, 1)
 local warnCataclysmicObliteration				= mod:NewSpellAnnounce(414184, 4)
 
-local specWarnExtinctionBlast					= mod:NewSpecialWarningMoveTo(409261, nil, nil, nil, 2, 2)--Warn everyone
+local specWarnExtinctionBlast					= mod:NewSpecialWarningMoveTo(409261, nil, nil, nil, 2, 2, nil, nil, "findshelter")--Warn everyone
 local yellExtinctionBlast						= mod:NewYell(409261)--But have target of it do yell
-local specWarnStonecrackerBarrage				= mod:NewSpecialWarningSoakCount(414535, nil, nil, nil, 2, 2)
-local specWarnPulvBreath						= mod:NewSpecialWarningDodgeCount(409635, nil, nil, nil, 2, 2)
-local specWarnGTFO								= mod:NewSpecialWarningGTFO(414376, nil, nil, nil, 1, 8)
+local specWarnStonecrackerBarrage				= mod:NewSpecialWarningSoakCount(414535, nil, nil, nil, 2, 2, nil, nil, "helpsoak")
+local specWarnPulvBreath						= mod:NewSpecialWarningDodgeCount(409635, nil, nil, nil, 2, 2, nil, nil, "breathsoon")
+local specWarnGTFO								= mod:NewSpecialWarningGTFO(414376, nil, nil, nil, 1, 8, nil, nil, "watchfeet")
 
 local timerRP									= mod:NewRPTimer(19.8)
 local timerExtinctionBlastCD					= mod:NewCDCountTimer(19.4, 409261, nil, nil, nil, 3, nil, DBM_COMMON_L.DEADLY_ICON)

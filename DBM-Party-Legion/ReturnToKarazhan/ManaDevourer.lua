@@ -22,8 +22,8 @@ mod:RegisterEventsInCombat(
 local warnEnergyVoid				= mod:NewSpellAnnounce(227523, 1)
 local warnArcaneBomb				= mod:NewSpellAnnounce(227618, 3)
 
-local specWarnDecimatingEssence		= mod:NewSpecialWarningSpell(227507, nil, nil, nil, 3, 2)
-local specWarnCoalescePower			= mod:NewSpecialWarningMoveTo(227297, nil, nil, nil, 1, 2)
+local specWarnDecimatingEssence		= mod:NewSpecialWarningSpell(227507, nil, nil, nil, 3, 2, nil, nil, "aesoon")
+local specWarnCoalescePower			= mod:NewSpecialWarningMoveTo(227297, nil, nil, nil, 1, 2, nil, nil, "helpsoak")
 
 local timerEnergyVoidCD				= mod:NewCDTimer(20.6, 227523, nil, nil, nil, 3)
 local timerCoalescePowerCD			= mod:NewNextTimer(30, 227297, nil, nil, nil, 1, nil, nil, nil, 1, 4)

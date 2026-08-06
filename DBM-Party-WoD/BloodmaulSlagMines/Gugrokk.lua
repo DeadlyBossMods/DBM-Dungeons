@@ -20,11 +20,11 @@ mod:RegisterEventsInCombat(
 --TODO, Add heroic ability "Flame Buffet"? Seems to just stack up over time and not really need warnings.
 local warnMoltenCore			= mod:NewTargetAnnounce(150678, 2)
 
-local specWarnMoltenBlast		= mod:NewSpecialWarningInterrupt(150677, "HasInterrupt", nil, 3, 1, 2)
-local specWarnUnstableSlag		= mod:NewSpecialWarningSwitch(150755, "Dps", nil, 2, 1, 2)
-local specWarnMagmaEruptionCast	= mod:NewSpecialWarningSpell(150784, nil, nil, nil, 2, 2)
-local specWarnMagmaEruption		= mod:NewSpecialWarningMove(150784, nil, nil, nil, 1, 8)
-local specWarnMoltenCore		= mod:NewSpecialWarningDispel(150678, "MagicDispeller", nil, nil, 1, 2)
+local specWarnMoltenBlast		= mod:NewSpecialWarningInterrupt(150677, "HasInterrupt", nil, 3, 1, 2, nil, nil, "helpkick")
+local specWarnUnstableSlag		= mod:NewSpecialWarningSwitch(150755, "Dps", nil, 2, 1, 2, nil, nil, "mobkill")
+local specWarnMagmaEruptionCast	= mod:NewSpecialWarningSpell(150784, nil, nil, nil, 2, 2, nil, nil, "watchstep")
+local specWarnMagmaEruption		= mod:NewSpecialWarningMove(150784, nil, nil, nil, 1, 8, nil, nil, "watchfeet")
+local specWarnMoltenCore		= mod:NewSpecialWarningDispel(150678, "MagicDispeller", nil, nil, 1, 2, nil, nil, "dispelboss")
 
 local timerMagmaEruptionCD		= mod:NewCDTimer(20, 150784)
 local timerUnstableSlagCD		= mod:NewCDTimer(20, 150755, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON, nil, 1, 4)

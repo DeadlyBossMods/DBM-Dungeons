@@ -26,8 +26,8 @@ mod:RegisterEventsInCombat(
 --TODO, more timer data verification
 local warnRiteofSupremacy			= mod:NewCastAnnounce(325360, 4)
 
-local specWarnIronSpikes			= mod:NewSpecialWarningDefensive(325254, nil, nil, 2, 1, 2)
-local specWarnEndlessTorment		= mod:NewSpecialWarningMoveAway(326039, nil, nil, nil, 2, 2)
+local specWarnIronSpikes			= mod:NewSpecialWarningDefensive(325254, nil, nil, 2, 1, 2, nil, nil, "defensive")
+local specWarnEndlessTorment		= mod:NewSpecialWarningMoveAway(326039, nil, nil, nil, 2, 2, nil, nil, "range5")
 --local specWarnGTFO					= mod:NewSpecialWarningGTFO(257274, nil, nil, nil, 1, 8)
 
 local timerIronSpikesCD				= mod:NewCDTimer(31.6, 325254, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)--Change to next if the custom rule for 2nd cast works out good

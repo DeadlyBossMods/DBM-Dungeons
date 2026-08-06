@@ -4,36 +4,146 @@ local L		= mod:GetLocalizedStrings()
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(124872)
 mod:SetEncounterID(2066)
+mod:SetZone(1753)
 
 mod:RegisterCombat("combat")
 
 if DBM:IsPostMidnight() then
-	--Custom Sounds on cast/cooldown expiring
-	mod:AddCustomAlertSoundOption(247175, true, 1)--Void Bomb
+	local warnPhaseDash					= mod:NewCountAnnounce(1280064, 2)
+	local warnShadowPounce				= mod:NewCountAnnounce(245738, 2)
+
+	local specWarnVoidBomb				= mod:NewSpecialWarningCount(247175, nil, nil, nil, 1, 2, nil, nil, "bombsoon")
+	local specWarnOverload				= mod:NewSpecialWarningCount(1263523, nil, nil, nil, 2, 2, nil, nil, "aesoon")
+
+	local timerVoidBombCD				= mod:NewCDCountTimer(20.5, 247175, nil, nil, nil, 3, nil, DBM_COMMON_L.IMPORTANT_ICON)
+	local timerPhaseDashCD				= mod:NewCDCountTimer(20.5, 1280064, nil, nil, nil, 3)
+	local timerShadowPounceCD			= mod:NewCDCountTimer(20.5, 245738, nil, nil, nil, 3)
+	local timerOverloadCD				= mod:NewCDCountTimer(20.5, 1263523, nil, nil, nil, 2)
+
 	mod:AddCustomAlertSoundOption(248831, "HasInterrupt", 2)--Dread Screech
-	mod:AddCustomAlertSoundOption(1263523, true, 2)--Overload
-	--Custom timer colors, countdowns, and disables
-	mod:AddCustomTimerOptions(247175, true, 3, 0)
-	mod:AddCustomTimerOptions(1280064, true, 3, 0)
-	mod:AddCustomTimerOptions(248831, true, 2, 0)
-	mod:AddCustomTimerOptions(245738, true, 3, 0)
-	mod:AddCustomTimerOptions(1263523, true, 2, 0)
-	--Midnight private aura replacements
-	mod:AddPrivateAuraSoundOption(1280064, true, 1280064, 1, 1, "lineyou", 17)--Phase Dash
-	mod:AddPrivateAuraSoundOption(245742, true, 245742, 2, 1, "targetyou", 2)--Shadow Pounce
+	mod:AddAuraSoundOption(1280064, true, 1280064, 1, 1, "lineyou", 17)--Phase Dash
+	--mod:AddAuraSoundOption(245742, true, 245742, 2, 1, "targetyou", 2)--Shadow Pounce
+
+	mod.vb.voidBombCount = 0
+	mod.vb.phaseDashCount = 0
+	mod.vb.shadowPounceCount = 0
+	mod.vb.overloadCount = 0
+	local overloadBuggedEventIDs = {}
+	local state3FinishTolerance = 2
+	local badStateDetected = false
+
+	---@param self DBMMod
+	---@param dontSetAlerts boolean? Called on engage when we only want to set timeline parameters and not touch encounter alerts
+	local function setFallback(self, dontSetAlerts)
+		if not dontSetAlerts then
+			specWarnVoidBomb:SetAlert(234, "bombsoon", 1, 2)
+			specWarnOverload:SetAlert(243, "aesoon", 2, 2)
+		end
+		--If user has DBM bars enabled, we only want to register colors to the blizz api so that the blizz bars are also colorized.
+	--If user has bars disabled, or we are in a bad state, onlyColor is false and we register countdowns as well.
+	local onlyColor = not DBM.Options.HideDBMBars and not badStateDetected
+		timerVoidBombCD:SetTimeline(234, onlyColor)
+		timerPhaseDashCD:SetTimeline(235, onlyColor)
+		timerShadowPounceCD:SetTimeline(237, onlyColor)
+		timerOverloadCD:SetTimeline(243, onlyColor)
+	end
 
 	function mod:OnLimitedCombatStart()
-		self:EnableAlertOptions(247175, 234, "bombsoon", 2)
+		-- No timeline event exists for Dread Screech; keep legacy warning object
 		self:EnableAlertOptions(248831, 236, "kickcast", 2, 2, 0)
-		self:EnableAlertOptions(1263523, 243, "aesoon", 2)
 
+		self:TLCountReset()
+		overloadBuggedEventIDs = {}
+		self.vb.voidBombCount = 1
+		self.vb.phaseDashCount = 1
+		self.vb.shadowPounceCount = 1
+		self.vb.overloadCount = 1
+		if DBM.Options.HardcodedTimer and not badStateDetected then
+			self:IgnoreBlizzardAPI()
+			self:RegisterShortTermEvents(
+				"ENCOUNTER_TIMELINE_EVENT_ADDED",
+				"ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED"
+			)
+			setFallback(self, true)
+		else
+			setFallback(self)
+		end
+	end
 
-		self:EnableTimelineOptions(247175, 234)
-		self:EnableTimelineOptions(1280064, 235)
-		self:EnableTimelineOptions(248831, 236)
-		self:EnableTimelineOptions(245738, 237)
-		self:EnableTimelineOptions(1263523, 243)
+	function mod:OnCombatEnd()
+		self:TLCountReset()
+		overloadBuggedEventIDs = {}
+		self:UnregisterShortTermEvents()
+	end
 
+	do
+		---@param self DBMMod
+		---@param timer number
+		---@param timerExact number
+		---@param eventID number
+		local function timersAll(self, timer, timerExact, eventID)
+			--Logic confirmed against M+ only
+			if timer == 4 or timer == 12 then--Shadow Pounce (opener 4s, regular 12s)
+				timerShadowPounceCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "shadowpounce", "shadowPounceCount"))
+			elseif timer == 6 or timer == 10 then--Void Bomb (short 6s, long 10s)
+				timerVoidBombCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "voidbomb", "voidBombCount"))
+			elseif timer == 20 then--Phase Dash
+				timerPhaseDashCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "phasedash", "phaseDashCount"))
+			elseif timer == 32 then--Overload
+				overloadBuggedEventIDs[eventID] = GetTime() + timerExact
+				timerOverloadCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "overload", "overloadCount"))
+			else
+				badStateDetected = true
+				self:ResumeBlizzardAPI()
+				self:UnregisterShortTermEvents()
+				setFallback(self)
+				DBM:Debug("|cffff0000Failed to match encounter timeline events to expected timers, falling back to Blizzard API|r", nil, nil, nil, true)
+			end
+		end
+
+		function mod:ENCOUNTER_TIMELINE_EVENT_ADDED(eventInfo)
+			if eventInfo.source ~= 0 then return end
+			local eventID = eventInfo.id
+			local timerExact = eventInfo.duration
+			local timer = math.floor(timerExact + 0.5)
+			if not badStateDetected then
+				timersAll(self, timer, timerExact, eventID)
+			end
+		end
+
+		function mod:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(eventID)
+			local eventState = C_EncounterTimeline.GetEventState(eventID)
+			if not eventID or not eventState then return end
+			if eventState == 2 then
+				overloadBuggedEventIDs[eventID] = nil
+				local eventType, eventCount = self:TLCountFinish(eventID)
+				if eventType and eventCount then
+					if eventType == "voidbomb" then
+						specWarnVoidBomb:Show(eventCount)
+						specWarnVoidBomb:Play("bombsoon")
+					elseif eventType == "phasedash" then
+						warnPhaseDash:Show(eventCount)
+					elseif eventType == "shadowpounce" then
+						warnShadowPounce:Show(eventCount)
+					elseif eventType == "overload" then
+						specWarnOverload:Show(eventCount)
+						specWarnOverload:Play("aesoon")
+					end
+				end
+			elseif eventState == 3 then
+				local expectedOverloadEnd = overloadBuggedEventIDs[eventID]
+				if expectedOverloadEnd and math.abs(GetTime() - expectedOverloadEnd) <= state3FinishTolerance then
+					overloadBuggedEventIDs[eventID] = nil
+					local eventType, eventCount = self:TLCountFinish(eventID)
+					if eventType == "overload" and eventCount then
+						specWarnOverload:Show(eventCount)
+						specWarnOverload:Play("aesoon")
+					end
+				else
+					self:TLCountCancel(eventID)
+				end
+			end
+		end
 	end
 else
 	mod:RegisterEventsInCombat(
@@ -51,11 +161,11 @@ else
 	--local warnDreadScreech					= mod:NewCastAnnounce(248831, 2)
 
 	--local specWarnHuntersRush				= mod:NewSpecialWarningDefensive(247145, nil, nil, nil, 1, 2)
-	local specWarnOverloadTrap				= mod:NewSpecialWarningDodge(247206, nil, nil, nil, 2, 2)
-	local specWarnUmbralFlanking			= mod:NewSpecialWarningMoveAway(247245, nil, nil, nil, 1, 2)
+	local specWarnOverloadTrap				= mod:NewSpecialWarningDodge(247206, nil, nil, nil, 2, 2, nil, nil, "watchstep")
+	local specWarnUmbralFlanking			= mod:NewSpecialWarningMoveAway(247245, nil, nil, nil, 1, 2, nil, nil, "scatter")
 	local yellUmbralFlanking				= mod:NewYell(247245)
-	local specWarnRavagingDarkness			= mod:NewSpecialWarningDodge(245802, nil, nil, nil, 2, 2)
-	local specWarnDreadScreech				= mod:NewSpecialWarningInterrupt(248831, "HasInterrupt", nil, nil, 1, 2)
+	local specWarnRavagingDarkness			= mod:NewSpecialWarningDodge(245802, nil, nil, nil, 2, 2, nil, nil, "watchstep")
+	local specWarnDreadScreech				= mod:NewSpecialWarningInterrupt(248831, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
 
 	local timerVoidTrapCD					= mod:NewCDTimer(15.8, 246026, nil, nil, nil, 3)
 	local timerOverloadTrapCD				= mod:NewCDTimer(20.6, 247206, nil, nil, nil, 3)

@@ -32,13 +32,13 @@ mod:RegisterEventsInCombat(
 --]]
 local warnDeathGrasp				= mod:NewTargetNoFilterAnnounce(323831, 4)
 
-local specWarnReapingScythe			= mod:NewSpecialWarningDefensive(324079, nil, nil, nil, 1, 2)
-local specWarnDarkDevastation		= mod:NewSpecialWarningDodgeCount(323608, nil, nil, nil, 2, 15)
-local specWarnManifestDeath			= mod:NewSpecialWarningMoveAway(324449, nil, nil, nil, 1, 2)
+local specWarnReapingScythe			= mod:NewSpecialWarningDefensive(324079, nil, nil, nil, 1, 2, nil, nil, "defensive")
+local specWarnDarkDevastation		= mod:NewSpecialWarningDodgeCount(323608, nil, nil, nil, 2, 15, nil, nil, "frontal")
+local specWarnManifestDeath			= mod:NewSpecialWarningMoveAway(324449, nil, nil, nil, 1, 2, nil, nil, "scatter")
 local yellManifestDeath				= mod:NewShortYell(324449)--Everyone gets, so short yell (no player names)
 local yellManifestDeathFades		= mod:NewShortFadesYell(324449)
-local specWarnDeathBolt				= mod:NewSpecialWarningInterrupt(324589, "HasInterrupt", nil, nil, 1, 2)
-local specWarnGraspingRift			= mod:NewSpecialWarningRunCount(323685, nil, nil, nil, 4, 2)
+local specWarnDeathBolt				= mod:NewSpecialWarningInterrupt(324589, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
+local specWarnGraspingRift			= mod:NewSpecialWarningRunCount(323685, nil, nil, nil, 4, 2, nil, nil, "justrun")
 --local specWarnGTFO				= mod:NewSpecialWarningGTFO(257274, nil, nil, nil, 1, 8)
 
 local timerReapingScytheCD			= mod:NewCDCountTimer(17, 324079, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)--17-24.3

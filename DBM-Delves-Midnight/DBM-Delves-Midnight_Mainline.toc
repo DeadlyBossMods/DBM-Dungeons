@@ -1,8 +1,8 @@
-## Interface: 120001, 120005
+## Interface: 120007, 120100
 ## X-Min-Interface: 110002
 ## Category: DBM
 ## Title:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cff4565ffDelves (Midnight)|r
-## Title-koKR:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cff4565ff구렁 (자정)|r
+## Title-koKR:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cff4565ff구렁 (한밤)|r
 ## Title-ruRU:|cffffe00a<|r|cffff7d0aDBM Мод|r|cffffe00a>|r |cff4565ffВылазки (Полночь)|r
 ## Title-zhTW:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cff4565ff探究 (午夜)|r
 ## Title-zhCN:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cff4565ff地下堡 (午夜)|r
@@ -17,18 +17,18 @@
 ## X-DBM-Mod-Category: SCENARIO
 ## X-DBM-StatTypes: normal
 ## X-DBM-Mod-SubCategories: Nemesis,Boss Encounters,Zones
-## X-DBM-Mod-SubCategories-koKR: 네메시스,보스,지역
+## X-DBM-Mod-SubCategories-koKR: 숙적,보스 전투,지역
 ## X-DBM-Mod-SubCategories-ruRU: Немезис,Боссы,Зоны
 ## X-DBM-Mod-SubCategories-zhTW: 復仇者,首領,地區
 ## X-DBM-Mod-SubCategories-zhCN: 复仇者,首领,地区
 ## X-DBM-Mod-Name: Delves (Midnight)
-## X-DBM-Mod-Name-koKR: 구렁 (자정)
+## X-DBM-Mod-Name-koKR: 구렁 (한밤)
 ## X-DBM-Mod-Name-ruRU: Вылазки (Полночь)
 ## X-DBM-Mod-Name-zhTW: 探究 (午夜)
 ## X-DBM-Mod-Name-zhCN: 地下堡 (午夜)
 ## X-DBM-Mod-Sort: 115
-## X-DBM-Mod-MapID: 3003, 2961, 2962, 2963, 2964, 2953, 2933, 2952, 2979, 2965, 2966
-## X-DBM-Mod-MinCoreRevision: 20260322092548
+## X-DBM-Mod-MapID: 3003, 2961, 2962, 2963, 2964, 2953, 2933, 2952, 2979, 2965, 2966, 3079
+## X-DBM-Mod-MinCoreRevision: 20260522000000
 ## X-DBM-Mod-MinExpansion: 11
 ## Version: @project-version@
 
@@ -37,6 +37,7 @@ localization.kr.lua
 localization.ru.lua
 localization.cn.lua
 
+Nemesis\Aztarec.lua
 Nemesis\TormentsRise.lua
 
 Encounters\InfiltratorGulkat.lua

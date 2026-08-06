@@ -13,15 +13,15 @@ mod:RegisterCombat("combat")
 
 local warnDevouringEntropy				= mod:NewCountAnnounce(1215897, 3)
 
-local specWarnUnstableVoidEssence		= mod:NewSpecialWarningCount(1215087, nil, nil, nil, 2, 12)
-local specWarnHulkingFragment			= mod:NewSpecialWarningCount(1280113, nil, nil, nil, 1, 2)
+local specWarnUnstableVoidEssence		= mod:NewSpecialWarningCount(1215087, nil, nil, nil, 2, 12, nil, nil, "catchballs")
+local specWarnHulkingFragment			= mod:NewSpecialWarningCount(1280113, nil, nil, nil, 1, 2, nil, nil, "defensive")
 
-local timerDevouringEntropyCD			= mod:NewCDCountTimer(20.5, 1215897, nil, nil, nil, 3)
+local timerDevouringEntropyCD			= mod:NewCDCountTimer(20.5, 1215897, nil, nil, nil, 3, nil, DBM_COMMON_L.HEALER_ICON)
 local timerUnstableVoidEssenceCD		= mod:NewCDCountTimer(20.5, 1215087, nil, nil, nil, 5)
 local timerHulkingFragmentCD			= mod:NewCDCountTimer(20.5, 1280113, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 
---Midnight private aura replacements
-mod:AddPrivateAuraSoundOption(1215897, true, 1215897, 1, 1, "scatter", 2)--Devouring Entropy
+--Custom Aura Sounds
+mod:AddAuraSoundOption(1215897, true, 1215897, 1, 1, "scatter", 2)--Devouring Entropy
 
 mod.vb.entropyCount = 0
 mod.vb.essenceCount = 0
@@ -30,15 +30,21 @@ local badStateDetected = false
 local recurringTwentyTwoCount = 0
 
 ---@param self DBMMod
-local function setFallback(self)
+---@param dontSetAlerts boolean? Called on engage when we only want to set timeline parameters and not touch encounter alerts
+local function setFallback(self, dontSetAlerts)
 	--Blizz API fallbacks
-	specWarnUnstableVoidEssence:SetAlert(292, "catchballs", 12, 2)
-	if self:IsTank() then
-		specWarnHulkingFragment:SetAlert(420, "defensive", 2, 1)
+	if not dontSetAlerts then
+		specWarnUnstableVoidEssence:SetAlert(292, "catchballs", 12, 2)
+		if self:IsTank() then
+			specWarnHulkingFragment:SetAlert(420, "defensive", 2, 1)
+		end
 	end
-	timerDevouringEntropyCD:SetTimeline(290)
-	timerUnstableVoidEssenceCD:SetTimeline(292)
-	timerHulkingFragmentCD:SetTimeline(420)
+	--If user has DBM bars enabled, we only want to register colors to the blizz api so that the blizz bars are also colorized.
+	--If user has bars disabled, or we are in a bad state, onlyColor is false and we register countdowns as well.
+	local onlyColor = not DBM.Options.HideDBMBars and not badStateDetected
+	timerDevouringEntropyCD:SetTimeline(290, onlyColor)
+	timerUnstableVoidEssenceCD:SetTimeline(292, onlyColor)
+	timerHulkingFragmentCD:SetTimeline(420, onlyColor)
 end
 
 function mod:OnLimitedCombatStart()
@@ -47,12 +53,13 @@ function mod:OnLimitedCombatStart()
 	self.vb.essenceCount = 1
 	self.vb.fragmentCount = 1
 	recurringTwentyTwoCount = 0
-	if self:IsMythicPlus() and DBM.Options.HardcodedTimer and not badStateDetected then
+	if DBM.Options.HardcodedTimer and not badStateDetected then
 		self:IgnoreBlizzardAPI()
 		self:RegisterShortTermEvents(
 			"ENCOUNTER_TIMELINE_EVENT_ADDED",
 			"ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED"
 		)
+		setFallback(self, true)
 	else
 		setFallback(self)
 	end
@@ -79,7 +86,7 @@ do
 			timerDevouringEntropyCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "entropy", "entropyCount"))
 		elseif timer == 15 then--Unstable Void Essence opener
 			timerUnstableVoidEssenceCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "essence", "essenceCount"))
-		elseif timer == 22 then--Recurring Fragment -> Entropy -> Essence rotation
+		elseif timer == 24 then--Recurring Fragment -> Entropy -> Essence rotation
 			recurringTwentyTwoCount = recurringTwentyTwoCount + 1
 			if recurringTwentyTwoCount % 3 == 1 then
 				timerHulkingFragmentCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "fragment", "fragmentCount"))
@@ -89,15 +96,11 @@ do
 				timerUnstableVoidEssenceCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "essence", "essenceCount"))
 			end
 		else--Reached end of chain without finding a valid timer, this means hardcode mod has failed, so we need to disable hardcoded features and fall back to blizz API
-			if not DBM.Options.DebugMode then
-				badStateDetected = true
-				self:ResumeBlizzardAPI()
-				self:UnregisterShortTermEvents()
-				setFallback(self)
-				DBM:Debug("|cffff0000Failed to match encounter timeline events to expected timers, falling back to Blizzard API|r", nil, nil, nil, true)
-			else
-				DBM:Debug("|cffff0000Failed to match encounter timeline events to expected timers|r", nil, nil, nil, true)
-			end
+			badStateDetected = true
+			self:ResumeBlizzardAPI()
+			self:UnregisterShortTermEvents()
+			setFallback(self)
+			DBM:Debug("|cffff0000Failed to match encounter timeline events to expected timers, falling back to Blizzard API|r", nil, nil, nil, true)
 		end
 	end
 

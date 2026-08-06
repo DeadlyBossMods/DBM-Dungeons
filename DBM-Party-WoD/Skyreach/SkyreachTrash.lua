@@ -5,6 +5,7 @@ local L		= mod:GetLocalizedStrings()
 mod:SetRevision("@file-date-integer@")
 mod:DisableHardcodedOptions()
 --mod:SetModelID(47785)
+mod:SetZone(1209)
 
 mod.isTrashMod = true
 mod.isTrashModBossFightAllowed = true
@@ -13,7 +14,7 @@ mod:RegisterEvents(
 	"SPELL_AURA_APPLIED 160303 160288"
 )
 
-local specWarnSolarDetonation		= mod:NewSpecialWarningMoveAway(160288, nil, nil, nil, 1, 2)
+local specWarnSolarDetonation		= mod:NewSpecialWarningMoveAway(160288, nil, nil, nil, 1, 2, nil, nil, "runout")
 
 function mod:SPELL_AURA_APPLIED(args)
 	if not self.Options.Enabled or self:IsDifficulty("normal5") or self:IsTrivial() then return end

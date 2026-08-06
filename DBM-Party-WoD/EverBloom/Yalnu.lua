@@ -40,11 +40,11 @@ if (wowToc >= 100200) then
 	 --NOTE: This mod was made from old log, people apparently suck at everbloom and aren't getting to last boss this most recent test weekend
 	local warnBrushfire									= mod:NewTargetNoFilterAnnounce(428746, 1)
 
-	local specWarnColossalBlow							= mod:NewSpecialWarningDodge(169179, nil, nil, nil, 2, 2)--Still random direction or now only toward tank?
-	local specWarnVerdantEruption						= mod:NewSpecialWarningSwitchCount(428823, "-Healer", nil, nil, 1, 2)
-	local specWarnLumberingSwipe						= mod:NewSpecialWarningDodge(169929, nil, nil, nil, 2, 2)
-	local specWarnGenesis								= mod:NewSpecialWarningCount(169613, nil, nil, nil, 1, 12)
-	local specWarnLasherVenom							= mod:NewSpecialWarningInterrupt(173563, "HasInterrupt", nil, nil, 1, 2)
+	local specWarnColossalBlow							= mod:NewSpecialWarningDodge(169179, nil, nil, nil, 2, 2, nil, nil, "shockwave")--Still random direction or now only toward tank?
+	local specWarnVerdantEruption						= mod:NewSpecialWarningSwitchCount(428823, "-Healer", nil, nil, 1, 2, nil, nil, "killmob")
+	local specWarnLumberingSwipe						= mod:NewSpecialWarningDodge(169929, nil, nil, nil, 2, 2, nil, nil, "shockwave")
+	local specWarnGenesis								= mod:NewSpecialWarningCount(169613, nil, nil, nil, 1, 12, nil, nil, "runoverflowers")
+	local specWarnLasherVenom							= mod:NewSpecialWarningInterrupt(173563, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
 	--local specWarnGTFO								= mod:NewSpecialWarningGTFO(409058, nil, nil, nil, 1, 8)
 
 	local timerCombatStart								= mod:NewCombatTimer(7.9)
@@ -155,9 +155,9 @@ if (wowToc >= 100200) then
 
 	local warnFontofLife			= mod:NewSpellAnnounce(169120, 3)--Does this need a switch warning too?
 
-	local specWarnColossalBlow		= mod:NewSpecialWarningDodge(169179, nil, nil, nil, 2, 2)
-	local specWarnEntanglement		= mod:NewSpecialWarningSwitch(169251, "Dps", nil, nil, 1, 2)
-	local specWarnGenesis			= mod:NewSpecialWarningSpell(169613, nil, nil, nil, 1, 12)--Everyone. "Switch" is closest generic to "run around stomping flowers"
+	local specWarnColossalBlow		= mod:NewSpecialWarningDodge(169179, nil, nil, nil, 2, 2, nil, nil, "shockwave")
+	local specWarnEntanglement		= mod:NewSpecialWarningSwitch(169251, "Dps", nil, nil, 1, 2, nil, nil, "targetchange")
+	local specWarnGenesis			= mod:NewSpecialWarningSpell(169613, nil, nil, nil, 1, 12, nil, nil, "runoverflowers")--Everyone. "Switch" is closest generic to "run around stomping flowers"
 
 	--Only timers that were consistent, others are all over the place.
 	local timerFontOfLife			= mod:NewNextTimer(15, 169120, nil, nil, nil, 1)

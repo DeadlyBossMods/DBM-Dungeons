@@ -29,11 +29,11 @@ local warnPutridWaters				= mod:NewTargetAnnounce(275014, 2)
 local warnRepair					= mod:NewCastAnnounce(269366, 1)
 local warnEradication				= mod:NewCastAnnounce(269456, 4)
 
-local specWarnCalloftheDeep			= mod:NewSpecialWarningDodge(270185, nil, nil, nil, 2, 2)
+local specWarnCalloftheDeep			= mod:NewSpecialWarningDodge(270185, nil, nil, nil, 2, 2, nil, nil, "watchstep")
 local yellCrushingEmbrace			= mod:NewYell(270624)
-local specWarnPutridWaters			= mod:NewSpecialWarningMoveAway(275014, nil, nil, nil, 1, 2)
+local specWarnPutridWaters			= mod:NewSpecialWarningMoveAway(275014, nil, nil, nil, 1, 2, nil, nil, "range5")
 local yellPutridWaters				= mod:NewYell(275014)
-local specWarnSlam					= mod:NewSpecialWarningSpell(269266, nil, nil, 2, 2, 2)
+local specWarnSlam					= mod:NewSpecialWarningSpell(269266, nil, nil, 2, 2, 2, nil, nil, "aesoon")
 
 local timerCalloftheDeepCD			= mod:NewCDTimer(13, 270185, nil, nil, nil, 3)--6.4, 15.1, 19.0, 11.9, 12.1, 12.3, 15.6, 12.1, 12.9, 7.0, 8.6, 7.5, 7.2, 7.4, 7.0, 7.0, 7.3, 7.2
 local timerPutridWatersCD			= mod:NewCDCountTimer(19.9, 275014, nil, nil, nil, 5, nil, DBM_COMMON_L.MAGIC_ICON)

@@ -19,9 +19,9 @@ mod:RegisterEventsInCombat(
 local warningEarthgrabTotem			= mod:NewSpellAnnounce(8376, 2)
 local warningHealingWard			= mod:NewSpellAnnounce(4971, 4)
 
-local specWarnHealingWaveSelf			= mod:NewSpecialWarningInterrupt(11895, "HasInterrupt", nil, nil, 1, 2)
-local specWarnHealingWaveAlly			= mod:NewSpecialWarningInterrupt(15982, "HasInterrupt", nil, nil, 1, 2)
-local specWarnMinions					= mod:NewSpecialWarningSwitch(11894, "Dps", nil, nil, 1, 2)
+local specWarnHealingWaveSelf			= mod:NewSpecialWarningInterrupt(11895, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
+local specWarnHealingWaveAlly			= mod:NewSpecialWarningInterrupt(15982, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
+local specWarnMinions					= mod:NewSpecialWarningSwitch(11894, "Dps", nil, nil, 1, 2, nil, nil, "killmob")
 
 local timerHealingWaveSelfCD			= mod:NewAITimer(180, 11895, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerHealingWaveAllyCD			= mod:NewAITimer(180, 15982, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)

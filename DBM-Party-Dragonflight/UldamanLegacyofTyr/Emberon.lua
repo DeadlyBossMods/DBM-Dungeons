@@ -35,11 +35,11 @@ local warnKeepersRemaining						= mod:NewAddsLeftAnnounce(369033, 3)
 local warnUnstableEmbers						= mod:NewTargetNoFilterAnnounce(369110, 3)
 local warnSeekingFlame							= mod:NewYouAnnounce(369049, 3, nil, false)--In case you want to know, but not totally practical to enable by default
 
-local specWarnPurgingFlames						= mod:NewSpecialWarningDodgeCount(368990, nil, nil, nil, 2, 2)
-local specWarnUnstableEmbers					= mod:NewSpecialWarningMoveAway(369110, nil, nil, nil, 1, 2)
+local specWarnPurgingFlames						= mod:NewSpecialWarningDodgeCount(368990, nil, nil, nil, 2, 2, nil, nil, "laserrun")
+local specWarnUnstableEmbers					= mod:NewSpecialWarningMoveAway(369110, nil, nil, nil, 1, 2, nil, nil, "scatter")
 local yellUnstableEmbers						= mod:NewYell(369110)
 local yellUnstableEmbersFades					= mod:NewShortFadesYell(369110)
-local specWarnSearingClap						= mod:NewSpecialWarningDefensive(369061, nil, nil, nil, 1, 2)
+local specWarnSearingClap						= mod:NewSpecialWarningDefensive(369061, nil, nil, nil, 1, 2, nil, nil, "defensive")
 
 local timerPurgingFlamesCD						= mod:NewCDCountTimer(35, 368990, nil, nil, nil, 6)--Maybe swap for activate keepers instead
 local timerUnstableEmbersCD						= mod:NewCDCountTimer(12, 369110, nil, nil, nil, 3)

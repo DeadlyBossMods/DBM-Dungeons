@@ -24,7 +24,7 @@ mod:RegisterEventsInCombat(
 
 local WarnFrenzy	= mod:NewTargetNoFilterAnnounce(34970)
 
-local specWarnWound	= mod:NewSpecialWarningTarget(38801, "Healer", nil, nil, 1, 7)
+local specWarnWound	= mod:NewSpecialWarningTarget(38801, "Healer", nil, nil, 1, 7, nil, nil, "healfull")
 
 function mod:SPELL_AURA_APPLIED(args)
 	if args:IsSpellID(31956, 38801) then

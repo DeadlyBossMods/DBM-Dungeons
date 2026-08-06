@@ -13,34 +13,43 @@ mod:RegisterCombat("combat")
 
 local warnRunicMark						= mod:NewCountAnnounce(1225787, 3)
 
-local specWarnSuppressionZone			= mod:NewSpecialWarningCount(1224903, nil, nil, nil, 2, 2)
-local specWarnHasteningWard				= mod:NewSpecialWarningCount(1248689, "MagicDispeller", nil, nil, 1, 2)
-local specWarnWaveOfSilence				= mod:NewSpecialWarningCount(1225193, nil, nil, nil, 2, 15)
+local specWarnSuppressionZone			= mod:NewSpecialWarningCount(1224903, nil, nil, nil, 2, 2, nil, nil, "watchstep")
+local specWarnHasteningWard				= mod:NewSpecialWarningCount(1248689, "MagicDispeller", nil, nil, 1, 2, nil, nil, "dispelboss")
+local specWarnWaveOfSilence				= mod:NewSpecialWarningCount(1225193, nil, nil, nil, 2, 15, nil, nil, "findshield")
+local specWarnRunicMark					= mod:NewSpecialWarningBlizzYou(1225787, nil, nil, nil, 1, 17, nil, nil, "debuffyou")
 
 local timerSuppressionZoneCD			= mod:NewCDCountTimer(20.5, 1224903, nil, nil, nil, 3)
-local timerHasteningWardCD				= mod:NewCDCountTimer(20.5, 1248689, nil, nil, nil, 5)
+local timerHasteningWardCD				= mod:NewCDCountTimer(20.5, 1248689, nil, nil, nil, 5, nil, DBM_COMMON_L.MAGIC_ICON..DBM_COMMON_L.TANK_ICON)
 local timerRunicMarkCD					= mod:NewCDCountTimer(20.5, 1225787, nil, nil, nil, 3)
-local timerWaveOfSilenceCD				= mod:NewCDCountTimer(20.5, 1225193, nil, nil, nil, 2)
+local timerWaveOfSilenceCD				= mod:NewCDCountTimer(20.5, 1225193, nil, nil, nil, 2, nil, DBM_COMMON_L.IMPORTANT_ICON)
 
---Midnight private aura replacements
-mod:AddPrivateAuraSoundOption({1225787,1225792}, true, 1225787, 1, 1, "scatter", 2)--Runic Mark
+--Custom Aura Sounds
+--mod:AddAuraSoundOption({1225787,1225792}, true, 1225787, 1, 1, "scatter", 2)--Runic Mark (handled by ENCOUNTER_WARNING intercept)
 
 mod.vb.zoneCount = 0
 mod.vb.wardCount = 0
 mod.vb.markCount = 0
 mod.vb.waveCount = 0
 local badStateDetected = false
+local lastRunicMarkDuration = 0
 
 ---@param self DBMMod
-local function setFallback(self)
+---@param dontSetAlerts boolean? Called on engage when we only want to set timeline parameters and not touch encounter alerts
+local function setFallback(self, dontSetAlerts)
 	--Blizz API fallbacks
-	specWarnSuppressionZone:SetAlert(93, "watchstep", 2)
-	specWarnHasteningWard:SetAlert(94, "dispelboss", 2)
-	specWarnWaveOfSilence:SetAlert(96, "findshield", 15)
-	timerSuppressionZoneCD:SetTimeline(93)
-	timerHasteningWardCD:SetTimeline(94)
-	timerRunicMarkCD:SetTimeline({95, 513})
-	timerWaveOfSilenceCD:SetTimeline(96)
+	if not dontSetAlerts then
+		specWarnSuppressionZone:SetAlert(93, "watchstep", 2)
+		specWarnHasteningWard:SetAlert(94, "dispelboss", 2)
+		specWarnWaveOfSilence:SetAlert(96, "findshield", 15)
+		specWarnRunicMark:SetAlert(95, "debuffyou", 17, 2, 0)
+	end
+	--If user has DBM bars enabled, we only want to register colors to the blizz api so that the blizz bars are also colorized.
+	--If user has bars disabled, or we are in a bad state, onlyColor is false and we register countdowns as well.
+	local onlyColor = not DBM.Options.HideDBMBars and not badStateDetected
+	timerSuppressionZoneCD:SetTimeline(93, onlyColor)
+	timerHasteningWardCD:SetTimeline(94, onlyColor)
+	timerRunicMarkCD:SetTimeline({95, 513}, onlyColor)
+	timerWaveOfSilenceCD:SetTimeline(96, onlyColor)
 end
 
 function mod:OnLimitedCombatStart()
@@ -49,12 +58,14 @@ function mod:OnLimitedCombatStart()
 	self.vb.wardCount = 1
 	self.vb.markCount = 1
 	self.vb.waveCount = 1
-	if self:IsMythicPlus() and DBM.Options.HardcodedTimer and not badStateDetected then
+	lastRunicMarkDuration = 0
+	if DBM.Options.HardcodedTimer and not badStateDetected then
 		self:IgnoreBlizzardAPI()
 		self:RegisterShortTermEvents(
 			"ENCOUNTER_TIMELINE_EVENT_ADDED",
 			"ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED"
 		)
+		setFallback(self, true)
 	else
 		setFallback(self)
 	end
@@ -62,6 +73,7 @@ end
 
 function mod:OnCombatEnd()
 	self:TLCountReset()
+	lastRunicMarkDuration = 0
 	self:UnregisterShortTermEvents()
 end
 
@@ -73,7 +85,11 @@ do
 	local function timersAll(self, timer, timerExact, eventID)
 		--Logic confirmed against M+ logs. Cycle opener: Runic Mark(7)/Suppression Zone(17)/Hastening Ward(26)/Wave of Silence(51), then recurring Runic Mark(29). Bars >60 are placeholders always canceled.
 		if timer > 80 then return end--Placeholder bars, always canceled
-		if timer == 7 or timer == 29 then--Runic Mark (7 = cycle opener, 29 = recurring)
+		if timer == 7 or timer == 29 then--Runic Mark (7 = cycle opener, 29 = second cast. Repeating)
+			if timer == lastRunicMarkDuration then
+				return -- It alternates 7/29; duplicate duration (the second 29) is bad timeline data.
+			end
+			lastRunicMarkDuration = timer
 			timerRunicMarkCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "mark", "markCount"))
 		elseif timer == 17 then--Suppression Zone
 			timerSuppressionZoneCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "zone", "zoneCount"))
@@ -82,15 +98,11 @@ do
 		elseif timer == 51 then--Wave of Silence
 			timerWaveOfSilenceCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "wave", "waveCount"))
 		else--Reached end of chain without finding a valid timer, this means hardcode mod has failed, so we need to disable hardcoded features and fall back to blizz API
-			if not DBM.Options.DebugMode then
-				badStateDetected = true
-				self:ResumeBlizzardAPI()
-				self:UnregisterShortTermEvents()
-				setFallback(self)
-				DBM:Debug("|cffff0000Failed to match encounter timeline events to expected timers, falling back to Blizzard API|r", nil, nil, nil, true)
-			else
-				DBM:Debug("|cffff0000Failed to match encounter timeline events to expected timers|r", nil, nil, nil, true)
-			end
+			badStateDetected = true
+			self:ResumeBlizzardAPI()
+			self:UnregisterShortTermEvents()
+			setFallback(self)
+			DBM:Debug("|cffff0000Failed to match encounter timeline events to expected timers, falling back to Blizzard API|r", nil, nil, nil, true)
 		end
 	end
 
@@ -113,6 +125,7 @@ do
 			if eventType and eventCount then
 				if eventType == "mark" then
 					warnRunicMark:Show(eventCount)
+					specWarnRunicMark:Show(eventCount, "debuffyou")
 				elseif eventType == "zone" then
 					specWarnSuppressionZone:Show(eventCount)
 					specWarnSuppressionZone:Play("watchstep")

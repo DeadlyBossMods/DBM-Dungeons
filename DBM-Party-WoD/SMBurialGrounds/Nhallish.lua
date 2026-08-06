@@ -24,10 +24,10 @@ mod:RegisterEventsInCombat(
  or ability.id = 152979 and type = "applydebuff"
  or type = "dungeonencounterstart" or type = "dungeonencounterend"
 --]]
-local specWarnVoidVortex		= mod:NewSpecialWarningRun(152801, nil, nil, 2, 4, 2)
-local specWarnSoulShred			= mod:NewSpecialWarningSpell(152979, nil, nil, nil, 1, 2)
-local specWarnVoidDevastation	= mod:NewSpecialWarningSpell(153067, nil, nil, nil, 2, 2)
-local specWarnVoidDevastationM	= mod:NewSpecialWarningGTFO(153070, nil, nil, nil, 1, 8)
+local specWarnVoidVortex		= mod:NewSpecialWarningRun(152801, nil, nil, 2, 4, 2, nil, nil, "runaway")
+local specWarnSoulShred			= mod:NewSpecialWarningSpell(152979, nil, nil, nil, 1, 2, nil, nil, "killspirit")
+local specWarnVoidDevastation	= mod:NewSpecialWarningSpell(153067, nil, nil, nil, 2, 2, nil, nil, "aesoon")
+local specWarnVoidDevastationM	= mod:NewSpecialWarningGTFO(153070, nil, nil, nil, 1, 8, nil, nil, "watchfeet")
 
 local timerVoidVortexCD			= mod:NewCDTimer(77, 152801, nil, nil, nil, 2)
 local timerSoulShredCD			= mod:NewNextTimer(77, 152979, nil, nil, nil, 6)

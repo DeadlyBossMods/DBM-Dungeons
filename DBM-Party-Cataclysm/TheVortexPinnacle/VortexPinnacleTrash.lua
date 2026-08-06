@@ -43,13 +43,13 @@ local warnHealingWell							= mod:NewCastAnnounce(88201, 2)
 local warnWindblast								= mod:NewSpellAnnounce(87923, 2, nil, "RemoveMagic|Tank")
 local warnLightningLash							= mod:NewTargetAnnounce(87762, 3)
 
-local specWarnStormSurge						= mod:NewSpecialWarningRun(88055, nil, nil, nil, 4, 2)--Mob is immune to displacements and interrupts, this is an 8 yard range run out
+local specWarnStormSurge						= mod:NewSpecialWarningRun(88055, nil, nil, nil, 4, 2, nil, nil, "justrun")--Mob is immune to displacements and interrupts, this is an 8 yard range run out
 
-local specWarnLightningLash						= mod:NewSpecialWarningMoveTo(87762, nil, nil, nil, 1, 2)
-local specWarnCyclone							= mod:NewSpecialWarningInterrupt(88010, "HasInterrupt", nil, nil, 1, 2)
-local specWarnGreaterHeal						= mod:NewSpecialWarningInterrupt(87779, "HasInterrupt", nil, nil, 1, 2)
-local specWarnVaporForm							= mod:NewSpecialWarningDispel(88186, "MagicDispeller", nil, nil, 1, 2)
-local specWarnGTFO								= mod:NewSpecialWarningGTFO(88171, nil, nil, nil, 1, 8)
+local specWarnLightningLash						= mod:NewSpecialWarningMoveTo(87762, nil, nil, nil, 1, 2, nil, nil, "findshelter")
+local specWarnCyclone							= mod:NewSpecialWarningInterrupt(88010, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
+local specWarnGreaterHeal						= mod:NewSpecialWarningInterrupt(87779, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
+local specWarnVaporForm							= mod:NewSpecialWarningDispel(88186, "MagicDispeller", nil, nil, 1, 2, nil, nil, "helpdispel")
+local specWarnGTFO								= mod:NewSpecialWarningGTFO(88171, nil, nil, nil, 1, 8, nil, nil, "watchfeet")
 
 local timerCycloneCD							= mod:NewCDNPTimer(19.4, 88010, nil, nil, nil, 3)--19.4-21
 local timerStormSurgeCD							= mod:NewCDNPTimer(16.1, 88055, nil, nil, nil, 2)
@@ -74,9 +74,9 @@ if mod:IsRetail() then
 	warnLethalCurrent							= mod:NewCastAnnounce(411001, 4)
 	warnOverloadGroundingField					= mod:NewCastAnnounce(413385, 4)
 
-	specWarnTurbulence							= mod:NewSpecialWarningSpell(411002, nil, nil, nil, 2, 2)
-	specWarnChillingBreath						= mod:NewSpecialWarningDodge(411012, nil, nil, nil, 2, 2)
-	specWarnOverloadGroundingField				= mod:NewSpecialWarningRun(413385, nil, nil, nil, 4, 2)
+	specWarnTurbulence							= mod:NewSpecialWarningSpell(411002, nil, nil, nil, 2, 2, nil, nil, "aesoon")
+	specWarnChillingBreath						= mod:NewSpecialWarningDodge(411012, nil, nil, nil, 2, 2, nil, nil, "breathsoon")
+	specWarnOverloadGroundingField				= mod:NewSpecialWarningRun(413385, nil, nil, nil, 4, 2, nil, nil, "justrun")
 
 	timerCloudGuardCD							= mod:NewCDNPTimer(19.1, 411000, nil, nil, nil, 5)
 	timerPressurizedBlastCD						= mod:NewCDNPTimer(21.8, 410999, nil, nil, nil, 2)

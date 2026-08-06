@@ -20,10 +20,10 @@ local warnTaintofSea					= mod:NewTargetAnnounce(197262, 2, nil, false)
 local warnSubmerged						= mod:NewTargetAnnounce(196947, 2)
 
 local specWarnDestructorTentacle		= mod:NewSpecialWarningSwitch(-12364, "Tank")
-local specWarnBrackwaterBarrage			= mod:NewSpecialWarningDodge(202088, "-Tank", nil, nil, 2, 2)--Tank stays with destructor tentacle no matter what
+local specWarnBrackwaterBarrage			= mod:NewSpecialWarningDodge(202088, "-Tank", nil, nil, 2, 2, nil, nil, "breathsoon")--Tank stays with destructor tentacle no matter what
 local specWarnSubmergedOver				= mod:NewSpecialWarningEnd(196947)
-local specWarnBreath					= mod:NewSpecialWarningDodge(227233, nil, nil, nil, 2, 2)
-local specWarnTorrent					= mod:NewSpecialWarningInterrupt(198495, "HasInterrupt", nil, nil, 1, 2)
+local specWarnBreath					= mod:NewSpecialWarningDodge(227233, nil, nil, nil, 2, 2, nil, nil, "breathsoon")
+local specWarnTorrent					= mod:NewSpecialWarningInterrupt(198495, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
 
 local timerTaintofSeaCD					= mod:NewCDTimer(12, 197262, nil, false, nil, 3)
 local timerPiercingTentacleCD			= mod:NewNextTimer(9, 197596, nil, nil, nil, 3)

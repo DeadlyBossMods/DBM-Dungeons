@@ -53,9 +53,9 @@ mod:RegisterEventsInCombat(
 local warnDivide					= mod:NewCountAnnounce(347249, 3)
 local warnQuickblade				= mod:NewSpellAnnounce(347623, 3)
 
-local specWarnShurl					= mod:NewSpecialWarningMoveTo(347481, nil, nil, nil, 4, 2)
-local specWarnDoubleTechnique		= mod:NewSpecialWarningInterruptCount(357188, "HasInterrupt", nil, nil, 1, 3)
-local specWarnTripleTechnique		= mod:NewSpecialWarningInterruptCount(347150, "HasInterrupt", nil, nil, 1, 3)
+local specWarnShurl					= mod:NewSpecialWarningMoveTo(347481, nil, nil, nil, 4, 2, nil, nil, "justrun")
+local specWarnDoubleTechnique		= mod:NewSpecialWarningInterruptCount(357188, "HasInterrupt", nil, nil, 1, 3, nil, nil, "kick2r")
+local specWarnTripleTechnique		= mod:NewSpecialWarningInterruptCount(347150, "HasInterrupt", nil, nil, 1, 3, nil, nil, "kick2r")
 
 --Both timers are 15 but boss spell queuing is a nightmare. quickblade delays shurl and shurl delays quickblade and they can come in any order
 --Double and triple technique also delay both even more

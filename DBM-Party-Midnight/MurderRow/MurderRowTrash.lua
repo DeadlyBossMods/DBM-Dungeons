@@ -8,18 +8,17 @@ mod:SetZone(2813)
 mod.isTrashMod = true
 mod.isTrashModBossFightAllowed = true
 
-
 mod:RegisterEvents(
 	"GOSSIP_SHOW"
 )
 
---NOTE, bounce appears to be missing or misflagged in EncounterEvent but we know it exists so it's one of misflagged abilities (maybe the wierd escape one?
---NOTE, Entertainer is also missing from EncounterEvent, but we know it exists, so also one of misflagged abilities
 --NOTE, because these files aren't cleared on combat end, or updated when a user changes sound, user sound settings will actually be ignored until reloadui
-mod:AddCustomAlertSoundOption(1218465, true, 1)--Server
-mod:EnableAlertOptions(1218465, 615, "server", 19, 2, 0)
-mod:AddCustomAlertSoundOption(1218466, true, 1)--Cleaner
-mod:EnableAlertOptions(1218466, 616, "cleaner", 19, 2, 0)
+mod:AddAuraSoundOption(1218468, true, 1218468, 1, 1, "bouncer", 19)--Bouncer
+mod:AddAuraSoundOption(1218467, true, 1218467, 1, 1, "entertainer", 19)--Entertainer
+mod:AddAuraSoundOption(1218466, true, 1218466, 1, 1, "cleaner", 19)--Cleaner
+mod:AddAuraSoundOption(1218465, true, 1218465, 1, 1, "server", 19)--Server
+mod:AddAuraSoundOption(1216590, "Tank", 1216590, 1, 1, "kite", 19)--Heartstop Poison
+mod:AddAuraSoundOption(1217973, true, 1217973, 1, 1, "curseyou", 19)--Curse of Doom
 
 mod:AddGossipOption(true, "Action")
 

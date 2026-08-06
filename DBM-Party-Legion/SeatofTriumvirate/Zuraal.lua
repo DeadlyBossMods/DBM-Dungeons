@@ -5,39 +5,148 @@ mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(124871)
 mod:SetEncounterID(2065)
 mod:SetUsedIcons(1)
+mod:SetZone(1753)
 
 mod:RegisterCombat("combat")
 
-
 if DBM:IsPostMidnight() then
-	--Custom Sounds on cast/cooldown expiring
-	mod:AddCustomAlertSoundOption(1268916, true, 2)
-	mod:AddCustomAlertSoundOption(1263399, true, 2)--oozing slam
-	mod:AddCustomAlertSoundOption(1263440, true, 1)--Void Slash
-	mod:AddCustomAlertSoundOption(1263304, true, 2)--Crashign Void
-	--Custom timer colors, countdowns, and disables
-	mod:AddCustomTimerOptions(1268916, true, 3, 0)
-	mod:AddCustomTimerOptions(1263282, true, 3, 0)--Decimate. Has no cast warning since we can't detect target
-	mod:AddCustomTimerOptions(1263399, true, 1, 0)
-	mod:AddCustomTimerOptions(1263440, true, 5, 0)
-	mod:AddCustomTimerOptions(1263304, true, 2, 0)
-	--Midnight private aura replacements
-	mod:AddPrivateAuraSoundOption(244588, true, 244588, 2, 1, "watchfeet", 8)--Void Sludge (GTFO)
+	DBM:RegisterAltSpellName(1268916, DBM_COMMON_L.FRONTAL)--Null Palm -> Frontal
+	DBM:RegisterAltSpellName(1263304, DBM_COMMON_L.AOEDAMAGE)--Crashing Void -> AOE Damage
+
+	local warnDecimate					= mod:NewCountAnnounce(1263282, 2)
+
+	local specWarnNullPalm				= mod:NewSpecialWarningCount(1268916, nil, nil, nil, 2, 2, nil, nil, "frontal")
+	local specWarnOozingSlam			= mod:NewSpecialWarningCount(1263399, nil, nil, nil, 2, 2, nil, nil, "mobsoon")
+	local specWarnVoidSlash				= mod:NewSpecialWarningCount(1263440, nil, nil, nil, 1, 2, nil, nil, "defensive")
+	local specWarnCrashingVoid			= mod:NewSpecialWarningCount(1263304, nil, nil, nil, 2, 2, nil, nil, "pullin")
+
+	local timerNullPalmCD				= mod:NewCDCountTimer(20.5, 1268916, nil, nil, nil, 3)
+	local timerDecimateCD				= mod:NewCDCountTimer(20.5, 1263282, nil, nil, nil, 3)
+	local timerOozingSlamCD				= mod:NewCDCountTimer(20.5, 1263399, nil, nil, nil, 1, nil, DBM_COMMON_L.MYTHIC_ICON)
+	local timerVoidSlashCD				= mod:NewCDCountTimer(20.5, 1263440, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+	local timerCrashingVoidCD			= mod:NewCDCountTimer(20.5, 1263304, nil, nil, nil, 2)
+
+	mod:AddAuraSoundOption(244588, true, 244588, 2, 1, "watchfeet", 8)--Void Sludge (GTFO)
+
+	mod.vb.nullPalmCount = 0
+	mod.vb.decimateCount = 0
+	mod.vb.oozingSlamCount = 0
+	mod.vb.voidSlashCount = 0
+	mod.vb.crashingVoidCount = 0
+	local badStateDetected = false
+
+	---@param self DBMMod
+	---@param dontSetAlerts boolean? Called on engage when we only want to set timeline parameters and not touch encounter alerts
+	local function setFallback(self, dontSetAlerts)
+		if not dontSetAlerts then
+			specWarnNullPalm:SetAlert(223, "frontal", 15, 2)
+			specWarnOozingSlam:SetAlert(225, "mobsoon", 2, 2)
+			specWarnVoidSlash:SetAlert(226, "defensive", 2, 2)
+			specWarnCrashingVoid:SetAlert(238, "pullin", 12, 2)
+		end
+		--If user has DBM bars enabled, we only want to register colors to the blizz api so that the blizz bars are also colorized.
+	--If user has bars disabled, or we are in a bad state, onlyColor is false and we register countdowns as well.
+	local onlyColor = not DBM.Options.HideDBMBars and not badStateDetected
+		timerNullPalmCD:SetTimeline(223, onlyColor)
+		timerDecimateCD:SetTimeline(224, onlyColor)
+		timerOozingSlamCD:SetTimeline(225, onlyColor)
+		timerVoidSlashCD:SetTimeline(226, onlyColor)
+		timerCrashingVoidCD:SetTimeline(238, onlyColor)
+	end
 
 	function mod:OnLimitedCombatStart()
-		self:EnableAlertOptions(1268916, 223, "frontal", 15)
-		self:EnableAlertOptions(1263399, 225, "mobsoon", 2)
-		if self:IsTank() then
-			self:EnableAlertOptions(1263440, 226, "defensive", 2)
+		self:TLCountReset()
+		self.vb.nullPalmCount = 1
+		self.vb.decimateCount = 1
+		self.vb.oozingSlamCount = 1
+		self.vb.voidSlashCount = 1
+		self.vb.crashingVoidCount = 1
+		if DBM.Options.HardcodedTimer and not badStateDetected then
+			self:IgnoreBlizzardAPI()
+			self:RegisterShortTermEvents(
+				"ENCOUNTER_TIMELINE_EVENT_ADDED",
+				"ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED"
+			)
+			setFallback(self, true)
+		else
+			setFallback(self)
 		end
-		self:EnableAlertOptions(1263304, 238, "pullin", 12)
+	end
 
-		self:EnableTimelineOptions(1268916, 223)
-		self:EnableTimelineOptions(1263282, 224)
-		self:EnableTimelineOptions(1263399, 225)
-		self:EnableTimelineOptions(1263440, 226)
-		self:EnableTimelineOptions(1263304, 238)
+	function mod:OnCombatEnd()
+		self:TLCountReset()
+		self:UnregisterShortTermEvents()
+	end
 
+	do
+		---@param self DBMMod
+		---@param timer number
+		---@param timerExact number
+		---@param eventID number
+		local function timersAll(self, timer, timerExact, eventID)
+			if timer > 60 then return end--Placeholder timers that get overwritten later (such as 103 null palm, 102 oozing slam)
+			if timer == 16 then--Null Palm
+				timerNullPalmCD:Stop()--Boss does a lot of canceling/restarting of bars to resolve spell queuing
+				timerNullPalmCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "nullpalm", "nullPalmCount"))
+			elseif timer == 7 or timer == 28 then--Decimate
+				timerDecimateCD:Stop()--Boss does a lot of canceling/restarting of bars to resolve spell queuing
+				timerDecimateCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "decimate", "decimateCount"))
+			elseif timer == 22 then--Oozing Slam
+				timerOozingSlamCD:Stop()--Boss does a lot of canceling/restarting of bars to resolve spell queuing
+				timerOozingSlamCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "oozingslam", "oozingSlamCount"))
+			elseif timer == 4 or timer == 40 then--Void Slash
+				timerVoidSlashCD:Stop()--Boss does a lot of canceling/restarting of bars to resolve spell queuing
+				timerVoidSlashCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "voidslash", "voidSlashCount"))
+			elseif timer == 50 then--Crashing Void
+				timerCrashingVoidCD:Stop()--Boss does a lot of canceling/restarting of bars to resolve spell queuing
+				timerCrashingVoidCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "crashingvoid", "crashingVoidCount"))
+			else
+				badStateDetected = true
+				self:ResumeBlizzardAPI()
+				self:UnregisterShortTermEvents()
+				setFallback(self)
+				DBM:Debug("|cffff0000Failed to match encounter timeline events to expected timers, falling back to Blizzard API|r", nil, nil, nil, true)
+			end
+		end
+
+		function mod:ENCOUNTER_TIMELINE_EVENT_ADDED(eventInfo)
+			if eventInfo.source ~= 0 then return end
+			local eventID = eventInfo.id
+			local timerExact = eventInfo.duration
+			local timer = math.floor(timerExact + 0.5)
+			if not badStateDetected then
+				timersAll(self, timer, timerExact, eventID)
+			end
+		end
+
+		function mod:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(eventID)
+			local eventState = C_EncounterTimeline.GetEventState(eventID)
+			if not eventID or not eventState then return end
+			if eventState == 2 then
+				local eventType, eventCount = self:TLCountFinish(eventID)
+				if eventType and eventCount then
+					if eventType == "nullpalm" then
+						specWarnNullPalm:Show(eventCount)
+						specWarnNullPalm:Play("frontal")
+					elseif eventType == "decimate" then
+						warnDecimate:Show(eventCount)
+					elseif eventType == "oozingslam" then
+						specWarnOozingSlam:Show(eventCount)
+						specWarnOozingSlam:Play("mobsoon")
+					elseif eventType == "voidslash" then
+						if self:IsTank() then
+							specWarnVoidSlash:Show(eventCount)
+							specWarnVoidSlash:Play("defensive")
+						end
+					elseif eventType == "crashingvoid" then
+						specWarnCrashingVoid:Show(eventCount)
+						specWarnCrashingVoid:Play("pullin")
+					end
+				end
+			elseif eventState == 3 then
+				self:TLCountCancel(eventID)
+			end
+		end
 	end
 else
 	mod:RegisterEventsInCombat(
@@ -53,15 +162,15 @@ else
 	--TODO, more timer updates, warning tweaks, countdowns
 	--TODO, personal alternate power and warn when extra action is ready to leave Umbra Shift
 	--Void Brute
-	--local warnNullPalm						= mod:NewSpellAnnounce(246134, 2, nil, "Tank")
+	--local warnNullPalm					= mod:NewSpellAnnounce(246134, 2, nil, "Tank")
 	local warnUmbraShift					= mod:NewTargetAnnounce(244433, 3)
 	local warnFixate						= mod:NewTargetAnnounce(244657, 3)
 	local warnVoidTear						= mod:NewTargetAnnounce(244621, 1)
 
-	local specWarnNullPalm					= mod:NewSpecialWarningDodge(246134, nil, nil, 2, 2, 2)
-	local specWarnCoalescedVoid				= mod:NewSpecialWarningSwitch(244602, "Dps", nil, nil, 1, 2)
-	local specWarnUmbraShift				= mod:NewSpecialWarningYou(244433, nil, nil, nil, 1, 5)
-	local specWarnFixate					= mod:NewSpecialWarningRun(244657, nil, nil, nil, 4, 2)
+	local specWarnNullPalm					= mod:NewSpecialWarningDodge(246134, nil, nil, 2, 2, 2, nil, nil, "shockwave")
+	local specWarnCoalescedVoid				= mod:NewSpecialWarningSwitch(244602, "Dps", nil, nil, 1, 2, nil, nil, "killmob")
+	local specWarnUmbraShift				= mod:NewSpecialWarningYou(244433, nil, nil, nil, 1, 5, nil, nil, "teleyou")
+	local specWarnFixate					= mod:NewSpecialWarningRun(244657, nil, nil, nil, 4, 2, nil, nil, "justrun")
 
 	local timerNullPalmCD					= mod:NewCDTimer(10.9, 246134, nil, nil, nil, 3)
 	local timerDeciminateCD					= mod:NewCDTimer(12.1, 244579, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)

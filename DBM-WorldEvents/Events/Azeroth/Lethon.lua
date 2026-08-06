@@ -18,8 +18,8 @@ mod:RegisterEventsInCombat(
 --TODO, maybe taunt special warnings for classic version when it matters more.
 local warnNoxiousBreath			= mod:NewStackAnnounce(243401, 2, nil, "Tank")
 
-local specWarnSleepingFog		= mod:NewSpecialWarningDodge(243399, nil, nil, nil, 2, 2)
-local specWarnShadowBoltWhirl	= mod:NewSpecialWarningDodge(243468, nil, nil, nil, 2, 2)
+local specWarnSleepingFog		= mod:NewSpecialWarningDodge(243399, nil, nil, nil, 2, 2, nil, nil, "watchstep")
+local specWarnShadowBoltWhirl	= mod:NewSpecialWarningDodge(243468, nil, nil, nil, 2, 2, nil, nil, "watchorb")
 
 local timerNoxiousBreathCD		= mod:NewCDTimer(18.3, 243401, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON)--Iffy
 local timerSleepingFogCD		= mod:NewCDTimer(16.8, 243399, nil, nil, nil, 3)
@@ -54,7 +54,7 @@ end
 
 function mod:SPELL_AURA_APPLIED(args)
 	if args.spellId == 243401 then
-		local uId = DBM:GetRaidUnitId(args.destName)
+		local uId = DBM:GetRaidUnitId(args.destName, true)
 		if self:IsTanking(uId) then
 			local amount = args.amount or 1
 			warnNoxiousBreath:Show(args.destName, amount)

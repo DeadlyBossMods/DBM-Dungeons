@@ -20,8 +20,8 @@ mod:AddCustomAlertSoundOption(432130, true, 2)--Erupting Webs
 mod:AddCustomTimerOptions(432117, nil, 5, 0)--Cosmic Singularity
 mod:AddCustomTimerOptions(432130, nil, 3, 0)--Erupting Webs
 mod:AddCustomTimerOptions(461487, nil, 5, 0)--Cultivated Poisons (might also be used for volley?)
---Midnight private aura replacements
-mod:AddPrivateAuraSoundOption(432119, true, 432119, 1, 1, "defensive", 2)--Screwing up Cosmic Singularity (Faded)
+--Custom Aura Sounds
+mod:AddAuraSoundOption(432119, true, 432119, 1, 1, "defensive", 2)--Screwing up Cosmic Singularity (Faded)
 
 function mod:OnLimitedCombatStart()
 	self:EnableAlertOptions(432117, 552, "movetopool", 15)

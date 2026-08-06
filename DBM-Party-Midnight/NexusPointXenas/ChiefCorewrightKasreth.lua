@@ -11,19 +11,21 @@ mod.respawnTime = 29
 
 mod:RegisterCombat("combat")
 
-local specWarnCoresparkDetonation	= mod:NewSpecialWarningCount(1257509, nil, nil, nil, 2, 2)
-local specWarnLeylineArray			= mod:NewSpecialWarningCount(1251183, nil, nil, nil, 2, 3)
-local specWarnFluxCollapse			= mod:NewSpecialWarningCount(1264048, nil, nil, nil, 2, 2)
 local warnRefluxCharge				= mod:NewCountAnnounce(1251785, 2)
 
+local specWarnCoresparkDetonation	= mod:NewSpecialWarningCount(1257509, nil, nil, nil, 2, 2, nil, nil, "watchstep")
+local specWarnLeylineArray			= mod:NewSpecialWarningCount(1251183, nil, nil, nil, 2, 3, nil, nil, "farfromline")
+local specWarnFluxCollapse			= mod:NewSpecialWarningCount(1264048, nil, nil, nil, 2, 2, nil, nil, "watchstep")
+local specWarnRefluxCharge			= mod:NewSpecialWarningBlizzYou(1251785, nil, nil, nil, 1, 2, nil, nil, "movetobeam")
+
 local timerCoresparkDetonationCD	= mod:NewCDCountTimer(38, 1257509, nil, nil, nil, 3)
-local timerRefluxChargeCD			= mod:NewCDCountTimer(12, 1251785, nil, nil, nil, 3)
+local timerRefluxChargeCD			= mod:NewCDCountTimer(12, 1251785, nil, nil, nil, 3, nil, DBM_COMMON_L.IMPORTANT_ICON)
 local timerLeylineArrayCD			= mod:NewCDCountTimer(11, 1251183, nil, nil, nil, 3)
 local timerFluxCollapseCD			= mod:NewCDCountTimer(13, 1264048, nil, nil, nil, 3)
 
---Midnight private aura replacements
-mod:AddPrivateAuraSoundOption(1251785, true, 1251785, 1, 1, "movetobeam", 19)--Reflux Charge
-mod:AddPrivateAuraSoundOption(1264042, true, 1264042, 1, 2, "watchfeet", 8)--Arcane Spill
+--Custom Aura Sounds
+--mod:AddAuraSoundOption(1251785, true, 1251785, 1, 1, "movetobeam", 19)--Reflux Charge (Handled by ENCOUNTER_WARNING intercept)
+mod:AddAuraSoundOption(1264042, true, 1264042, 1, 2, "watchfeet", 8)--Arcane Spill
 
 mod.vb.coresparkDetonationCount = 0
 mod.vb.refluxChargeCount = 0
@@ -38,14 +40,20 @@ local pendingRebase = {}
 local pendingRebaseUntil = 0
 
 ---@param self DBMMod
-local function setFallback(self)
-	specWarnCoresparkDetonation:SetAlert(106, "watchstep", 2)
-	specWarnLeylineArray:SetAlert(108, "farfromline", 2)
-	specWarnFluxCollapse:SetAlert(172, "watchstep", 2)
-	timerCoresparkDetonationCD:SetTimeline(106)
-	timerRefluxChargeCD:SetTimeline(107)
-	timerLeylineArrayCD:SetTimeline(108)
-	timerFluxCollapseCD:SetTimeline(172)
+---@param dontSetAlerts boolean? Called on engage when we only want to set timeline parameters and not touch encounter alerts
+local function setFallback(self, dontSetAlerts)
+	if not dontSetAlerts then
+		specWarnCoresparkDetonation:SetAlert(106, "watchstep", 2)
+		specWarnLeylineArray:SetAlert(108, "farfromline", 2)
+		specWarnFluxCollapse:SetAlert(172, "watchstep", 2)
+	end
+	--If user has DBM bars enabled, we only want to register colors to the blizz api so that the blizz bars are also colorized.
+	--If user has bars disabled, or we are in a bad state, onlyColor is false and we register countdowns as well.
+	local onlyColor = not DBM.Options.HideDBMBars and not badStateDetected
+	timerCoresparkDetonationCD:SetTimeline(106, onlyColor)
+	timerRefluxChargeCD:SetTimeline(107, onlyColor)
+	timerLeylineArrayCD:SetTimeline(108, onlyColor)
+	timerFluxCollapseCD:SetTimeline(172, onlyColor)
 end
 
 function mod:OnLimitedCombatStart()
@@ -60,12 +68,13 @@ function mod:OnLimitedCombatStart()
 	activeOtherEvents = {}
 	pendingRebase = {}
 	pendingRebaseUntil = 0
-	if self:IsMythicPlus() and DBM.Options.HardcodedTimer and not badStateDetected then
+	if DBM.Options.HardcodedTimer and not badStateDetected then
 		self:IgnoreBlizzardAPI()
 		self:RegisterShortTermEvents(
 			"ENCOUNTER_TIMELINE_EVENT_ADDED",
 			"ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED"
 		)
+		setFallback(self, true)
 	else
 		setFallback(self)
 	end
@@ -191,6 +200,7 @@ do
 					specWarnLeylineArray:Play("farfromline")
 				elseif eventType == "refluxCharge" then
 					warnRefluxCharge:Show(eventCount)
+					specWarnRefluxCharge:Show(eventCount, "movetobeam")
 				elseif eventType == "fluxCollapse" then
 					specWarnFluxCollapse:Show(eventCount)
 					specWarnFluxCollapse:Play("watchstep")

@@ -16,11 +16,11 @@ mod:AddCustomTimerOptions(350134, true, 5, 0)--Infinite Breath
 mod:AddCustomTimerOptions(347371, true, 3, 0)--Grapeshot
 mod:AddCustomTimerOptions(1240097, true, 4, 0)--Time Bomb
 mod:AddCustomTimerOptions(352345, true, 3, 0)--Anchor Shot
---Midnight private aura replacements
+--Custom Aura Sounds
 --No private aura for https://www.wowhead.com/beta/spell=350134/infinite-breath yet. Check it if dungeon returns
-mod:AddPrivateAuraSoundOption(1240097, true, 1240097, 1, 1, "debuffyou", 17)--Time Bomb
-mod:AddPrivateAuraSoundOption(352345, true, 352345, 1, 1, "targetyou", 2)--Anchor Shot
-mod:AddPrivateAuraSoundOption(358947, true, 358947, 1, 2, "watchfeet", 8)--GTFO
+mod:AddAuraSoundOption(1240097, true, 1240097, 1, 1, "debuffyou", 17)--Time Bomb
+mod:AddAuraSoundOption(352345, true, 352345, 1, 1, "targetyou", 2)--Anchor Shot
+mod:AddAuraSoundOption(358947, true, 358947, 1, 2, "watchfeet", 8)--GTFO
 
 function mod:OnLimitedCombatStart()
 	self:EnableAlertOptions(350134, 591, "breathsoon", 2)
@@ -58,10 +58,10 @@ local warnInfiniteBreath			= mod:NewTargetCountAnnounce(347149, 4, nil, nil, nil
 local warnHookd						= mod:NewTargetNoFilterAnnounce(354334, 2, nil, "Healer")
 --local warnDoubleTime				= mod:NewCastAnnounce(350517, 3)
 
-local specWarnInfiniteBreath		= mod:NewSpecialWarningCount(347149, nil, nil, nil, 1, 2)
-local specWarnInfiniteBreathDodge	= mod:NewSpecialWarningDodgeCount(347149, nil, nil, nil, 3, 2)
-local specWarnAnchorShot			= mod:NewSpecialWarningYou(352345, nil, nil, nil, 1, 2)
-local specWarnGTFO					= mod:NewSpecialWarningGTFO(358947, nil, nil, nil, 1, 8)
+local specWarnInfiniteBreath		= mod:NewSpecialWarningCount(347149, nil, nil, nil, 1, 2, nil, nil, "bait")
+local specWarnInfiniteBreathDodge	= mod:NewSpecialWarningDodgeCount(347149, nil, nil, nil, 3, 2, nil, nil, "breathsoon")
+local specWarnAnchorShot			= mod:NewSpecialWarningYou(352345, nil, nil, nil, 1, 2, nil, nil, "targetyou")
+local specWarnGTFO					= mod:NewSpecialWarningGTFO(358947, nil, nil, nil, 1, 8, nil, nil, "watchfeet")
 
 local timerInfiniteBreathCD			= mod:NewCDTimer(15, 347149, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 --local timerHookSwipeCD				= mod:NewCDTimer(12, 347151, nil, nil, nil, 3, nil, DBM_COMMON_L.HEALER_ICON)
@@ -75,7 +75,7 @@ local warnAnchorShot				= mod:NewTargetNoFilterAnnounce(352345, 3)
 local timerAnchorShotCD				= mod:NewCDTimer(20, 352345, nil, nil, nil, 3)
 --11.2
 local warnTimeBomb 					= mod:NewTargetNoFilterAnnounce(1240097, 2, nil, "-Tank")--On by default for all but the tank
-local specWarnTimeBombDispel		= mod:NewSpecialWarningDispel(1240097, false, nil, nil, 1, 2)--Off by default, because if it's on by default people will dispel it right away like on auto pilot, and it's a huge dps loss to not sit on it for a while
+local specWarnTimeBombDispel		= mod:NewSpecialWarningDispel(1240097, false, nil, nil, 1, 2, nil, nil, "helpdispel")--Off by default, because if it's on by default people will dispel it right away like on auto pilot, and it's a huge dps loss to not sit on it for a while
 
 mod.vb.breathCount = 0
 mod.vb.anchorCount = 0

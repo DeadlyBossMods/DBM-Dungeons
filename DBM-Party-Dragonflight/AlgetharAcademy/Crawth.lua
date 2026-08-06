@@ -13,29 +13,130 @@ mod.sendMainBossGUID = true
 mod:RegisterCombat("combat")
 
 if DBM:IsPostMidnight() then
-	--Custom Sounds on cast/cooldown expiring
-	mod:AddCustomAlertSoundOption(376997, true, 1)--Savage Peck
-	mod:AddCustomAlertSoundOption(377004, true, 2)--Deafening Screech
-	mod:AddCustomAlertSoundOption(377034, true, 2)--Overpowering Gust
-	mod:AddCustomAlertSoundOption(377182, true, 2)--Play Ball (we cannot announce which specific playball it is)
-	--Custom timer colors, countdowns, and disables
-	mod:AddCustomTimerOptions(376997, nil, 5, 0)
-	mod:AddCustomTimerOptions(377004, nil, 2, 0)
-	mod:AddCustomTimerOptions(377034, nil, 3, 0)
-	--Midnight private aura replacements
---	mod:AddPrivateAuraSoundOption(433740, true, 433740, 1)
+	DBM:RegisterAltSpellName(377004, DBM_COMMON_L.AOEDAMAGE)--Deafening Screech -> AOE Damage
+	DBM:RegisterAltSpellName(377034, DBM_COMMON_L.FRONTAL)--Overpowering Gust -> Frontal
+
+	--Play Ball uses ENCOUNTER_WARNING with no stable timeline event in tested pulls
+	mod:AddCustomAlertSoundOption(377182, true, 2)--Play Ball
+	--Custom Aura Sounds
+--	mod:AddAuraSoundOption(433740, true, 433740, 1)
+
+	local specWarnSavagePeck					= mod:NewSpecialWarningCount(376997, nil, nil, nil, 1, 2, nil, nil, "defensive")
+	local specWarnDeafeningScreech				= mod:NewSpecialWarningCount(377004, nil, nil, nil, 2, 2, nil, nil, "scatter")
+	local specWarnOverpoweringGust				= mod:NewSpecialWarningCount(377034, nil, nil, nil, 2, 15, nil, nil, "frontal")
+
+	local timerSavagePeckCD						= mod:NewCDCountTimer(13.6, 376997, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+	local timerDeafeningScreechCD				= mod:NewCDCountTimer(22.7, 377004, nil, nil, nil, 2, nil, DBM_COMMON_L.HEALER_ICON)
+	local timerOverpoweringGustCD				= mod:NewCDCountTimer(28.2, 377034, nil, nil, nil, 3)
+
+	mod.vb.peckCount = 0
+	mod.vb.screechCount = 0
+	mod.vb.gustCount = 0
+
+	local badStateDetected = false
+
+	---@param self DBMMod
+	---@param dontSetAlerts boolean? Called on engage when we only want to set timeline parameters and not touch encounter alerts
+	local function setFallback(self, dontSetAlerts)
+		if not dontSetAlerts then
+			if self:IsTank() then
+				specWarnSavagePeck:SetAlert(278, "defensive", 2)
+			end
+			specWarnDeafeningScreech:SetAlert(279, self:IsSpellCaster() and "stopcast" or "aesoon", 2)
+			specWarnOverpoweringGust:SetAlert(280, "frontal", 15)
+		end
+		--If user has DBM bars enabled, we only want to register colors to the blizz api so that the blizz bars are also colorized.
+	--If user has bars disabled, or we are in a bad state, onlyColor is false and we register countdowns as well.
+	local onlyColor = not DBM.Options.HideDBMBars and not badStateDetected
+		timerSavagePeckCD:SetTimeline(278, onlyColor)
+		timerDeafeningScreechCD:SetTimeline(279, onlyColor)
+		timerOverpoweringGustCD:SetTimeline(280, onlyColor)
+	end
 
 	function mod:OnLimitedCombatStart()
-		if self:IsTank() then
-			self:EnableAlertOptions(376997, 278, "defensive", 2)
+		self:TLCountReset()
+		self.vb.peckCount = 1
+		self.vb.screechCount = 1
+		self.vb.gustCount = 1
+		badStateDetected = false
+		self:EnableAlertOptions(377182, 397, "phasechange", 2, 2, 0)
+		if DBM.Options.HardcodedTimer and not badStateDetected then
+			self:IgnoreBlizzardAPI()
+			self:RegisterShortTermEvents(
+				"ENCOUNTER_TIMELINE_EVENT_ADDED",
+				"ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED"
+			)
+			setFallback(self, true)
+		else
+			setFallback(self)
 		end
-		self:EnableAlertOptions(377004, 279, self:IsSpellCaster() and "stopcast" or "aesoon", 2)
-		self:EnableAlertOptions(377034, 280, "frontal", 15)
-		self:EnableAlertOptions(377182, 397, "phasechange", 2)
+	end
 
-		self:EnableTimelineOptions(376997, 278)
-		self:EnableTimelineOptions(377004, 279)
-		self:EnableTimelineOptions(377034, 280)
+	function mod:OnCombatEnd()
+		self:TLCountReset()
+		self:UnregisterShortTermEvents()
+	end
+
+	do
+		---@param self DBMMod
+		---@param timer number
+		---@param timerExact number
+		---@param eventID number
+		local function timersAll(self, timer, timerExact, eventID)
+			--Logic confirmed against CrawthKill1/CrawthKill2 M+ pulls.
+			if timer == 5 then--Savage Peck
+				timerSavagePeckCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "peck", "peckCount"))
+			elseif timer == 14 then--Deafening Screech
+				timerDeafeningScreechCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "screech", "screechCount"))
+			elseif timer == 20 then--Overpowering Gust
+				timerOverpoweringGustCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "gust", "gustCount"))
+			else
+				badStateDetected = true
+				self:ResumeBlizzardAPI()
+				self:UnregisterShortTermEvents()
+				setFallback(self)
+				DBM:Debug("|cffff0000Failed to match encounter timeline events to expected timers, falling back to Blizzard API|r", nil, nil, nil, true)
+			end
+		end
+
+		function mod:ENCOUNTER_TIMELINE_EVENT_ADDED(eventInfo)
+			if eventInfo.source ~= 0 then return end
+			local eventID = eventInfo.id
+			local timerExact = eventInfo.duration
+			local timer = math.floor(timerExact + 0.5)
+			if not badStateDetected then
+				timersAll(self, timer, timerExact, eventID)
+			end
+		end
+
+		function mod:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(eventID)
+			local eventState = C_EncounterTimeline.GetEventState(eventID)
+			if not eventID or not eventState then return end
+			if eventState == 2 then
+				local eventType, eventCount = self:TLCountFinish(eventID)
+				if eventType and eventCount then
+					if eventType == "peck" then
+						if self:IsTanking("player", "boss1", nil, true) then
+							specWarnSavagePeck:Show(eventCount)
+							specWarnSavagePeck:Play("defensive")
+						end
+					elseif eventType == "screech" then
+						specWarnDeafeningScreech:Show(eventCount)
+						if self:IsSpellCaster() then
+							specWarnDeafeningScreech:Play("stopcast")
+							specWarnDeafeningScreech:ScheduleVoice(1, "scatter")
+						else
+							specWarnDeafeningScreech:Play("scatter")
+						end
+					elseif eventType == "gust" then
+						specWarnOverpoweringGust:Show(eventCount)
+						specWarnOverpoweringGust:Play("frontal")
+					end
+				end
+			elseif eventState == 3 then
+				self:TLCountCancel(eventID)
+			end
+		end
 	end
 else
 	mod:RegisterEventsInCombat(
@@ -55,11 +156,11 @@ else
 	--]]
 	local warnPlayBall								= mod:NewSpellAnnounce(377182, 2, nil, nil, nil, nil, nil, 2)
 
-	local specWarnFirestorm							= mod:NewSpecialWarningDodge(376448, nil, nil, nil, 2, 2)
-	local specWarnOverpoweringGust					= mod:NewSpecialWarningDodge(377034, nil, nil, nil, 2, 2)
+	local specWarnFirestorm							= mod:NewSpecialWarningDodge(376448, nil, nil, nil, 2, 2, nil, nil, "watchstep")
+	local specWarnOverpoweringGust					= mod:NewSpecialWarningDodge(377034, nil, nil, nil, 2, 2, nil, nil, "shockwave")
 	local yellOverpoweringGust						= mod:NewYell(377034)
-	local specWarnDeafeningScreech					= mod:NewSpecialWarningMoveAwayCount(377004, nil, nil, nil, 2, 2)
-	local specWarnSavagePeck						= mod:NewSpecialWarningDefensive(376997, nil, nil, nil, 1, 2)
+	local specWarnDeafeningScreech					= mod:NewSpecialWarningMoveAwayCount(377004, nil, nil, nil, 2, 2, nil, nil, "scatter")
+	local specWarnSavagePeck						= mod:NewSpecialWarningDefensive(376997, nil, nil, nil, 1, 2, nil, nil, "defensive")
 
 	local timerFirestorm							= mod:NewBuffActiveTimer(12, 376448, nil, nil, nil, 1)
 	local timerOverpoweringGustCD					= mod:NewCDTimer(28.2, 377034, nil, nil, nil, 3)

@@ -22,10 +22,10 @@ local warnUndertow					= mod:NewTargetAnnounce(264144, 2)
 local warnChokingBrine				= mod:NewTargetNoFilterAnnounce(264560, 2, nil, "Healer")
 local warnEruptingWaters			= mod:NewSpellAnnounce(264903, 2, nil, nil, nil, nil, nil, 2)
 
-local specWarnSurgingRush			= mod:NewSpecialWarningDodge(264101, nil, nil, nil, 1, 2)
-local specWarnChokingBrine			= mod:NewSpecialWarningDodge(264560, nil, nil, nil, 1, 2)
+local specWarnSurgingRush			= mod:NewSpecialWarningDodge(264101, nil, nil, nil, 1, 2, nil, nil, "chargemove")
+local specWarnChokingBrine			= mod:NewSpecialWarningDodge(264560, nil, nil, nil, 1, 2, nil, nil, "watchstep")
 local yellChokingBrine				= mod:NewFadesYell(264560, DBM_CORE_L.AUTO_YELL_CUSTOM_FADE)
-local specWarnUndertow				= mod:NewSpecialWarningYou(264144, nil, nil, nil, 3, 2)
+local specWarnUndertow				= mod:NewSpecialWarningYou(264144, nil, nil, nil, 3, 2, nil, nil, "targetyou")
 
 local timerSurgingRushCD			= mod:NewCDTimer(13, 264101, nil, nil, nil, 3)
 local timerChokingBrineCD			= mod:NewCDTimer(13, 264560, nil, nil, nil, 5, nil, DBM_COMMON_L.HEALER_ICON..DBM_COMMON_L.MAGIC_ICON)

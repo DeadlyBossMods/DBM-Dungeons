@@ -29,9 +29,9 @@ mod:RegisterEventsInCombat(
 local warnFootbombLauncher			= mod:NewCountAnnounce(269493, 2)
 local warnCoinMagnet				= mod:NewCountAnnounce(271903, 2)
 
-local specWarnStaticPulse			= mod:NewSpecialWarningCount(262347, nil, nil, nil, 2, 2)
-local specWarnShockingClaw			= mod:NewSpecialWarningDodgeCount(257337, nil, nil, nil, 2, 15)
-local specWarnThrowCoins			= mod:NewSpecialWarningMove(271784, "Tank", nil, nil, 1, 2)
+local specWarnStaticPulse			= mod:NewSpecialWarningCount(262347, nil, nil, nil, 2, 2, nil, nil, "carefly")
+local specWarnShockingClaw			= mod:NewSpecialWarningDodgeCount(257337, nil, nil, nil, 2, 15, nil, nil, "frontal")
+local specWarnThrowCoins			= mod:NewSpecialWarningMove(271784, "Tank", nil, nil, 1, 2, nil, nil, "moveboss")
 --local specWarnGTFO				= mod:NewSpecialWarningGTFO(238028, nil, nil, nil, 1, 8)
 
 local timerStaticPulseCD			= mod:NewVarCountTimer("v43.7-48.5", 262347, nil, nil, nil, 2)

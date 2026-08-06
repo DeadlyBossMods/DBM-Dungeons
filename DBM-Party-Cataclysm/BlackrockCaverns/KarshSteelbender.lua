@@ -19,7 +19,7 @@ mod:RegisterEventsInCombat(
 local warnObsidianArmor		= mod:NewSpellAnnounce(75842, 2)
 local warnSuperheated		= mod:NewCountAnnounce(75846, 3)
 
-local specWarnSuperheated	= mod:NewSpecialWarningStack(75846, "Tank", 5, nil, nil, 1, 6)
+local specWarnSuperheated	= mod:NewSpecialWarningStack(75846, "Tank", 5, nil, nil, 1, 6, nil, nil, "stackhigh")
 
 local timerSuperheated		= mod:NewTimer(17, "TimerSuperheated", 75846, nil, nil, 5)
 

@@ -32,11 +32,11 @@ ability.id = 260508 and type = "begincast"
 --TODO, maybe readd stack counting instead of relying on blizzards emote for moving boss into fire
 local warnBurningBush				= mod:NewSpellAnnounce(260541, 4)
 
-local specWarnCrush					= mod:NewSpecialWarningDefensive(260508, nil, nil, nil, 1, 2)
-local specWarnThorns				= mod:NewSpecialWarningSwitchCount(267907, "Dps", nil, nil, 1, 2)
+local specWarnCrush					= mod:NewSpecialWarningDefensive(260508, nil, nil, nil, 1, 2, nil, nil, "defensive")
+local specWarnThorns				= mod:NewSpecialWarningSwitchCount(267907, "Dps", nil, nil, 1, 2, nil, nil, "targetchange")
 local yellThorns					= mod:NewYell(267907)
-local specWarnSoulHarvest			= mod:NewSpecialWarningMoveTo(260512, "Tank", nil, nil, 3, 2)
-local specWarnGTFO					= mod:NewSpecialWarningGTFO(260569, nil, nil, nil, 1, 8)
+local specWarnSoulHarvest			= mod:NewSpecialWarningMoveTo(260512, "Tank", nil, nil, 3, 2, nil, nil, "moveboss")
+local specWarnGTFO					= mod:NewSpecialWarningGTFO(260569, nil, nil, nil, 1, 8, nil, nil, "watchfeet")
 
 --Timers subject to delays if boss gets stunned by fire
 local timerCrushCD					= mod:NewCDCountTimer(15, 260508, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON)--15 after last cast FINISHES

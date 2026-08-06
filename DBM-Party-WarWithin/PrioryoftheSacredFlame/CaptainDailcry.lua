@@ -20,8 +20,8 @@ mod:AddCustomAlertSoundOption(424419, "HasInterrupt", 1)
 mod:AddCustomTimerOptions(424414, true, 5, 0)
 mod:AddCustomTimerOptions(424419, true, 4, 0)
 mod:AddCustomTimerOptions(447439, true, 3, 0)
---Private Auras
-mod:AddPrivateAuraSoundOption(447439, true, 447439, 1, 1, "defensive", 2)
+--Auras
+mod:AddAuraSoundOption(447439, true, 447439, 1, 1, "defensive", 2)
 
 function mod:OnLimitedCombatStart()
 

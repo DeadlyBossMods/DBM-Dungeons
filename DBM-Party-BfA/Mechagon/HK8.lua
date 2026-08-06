@@ -32,9 +32,9 @@ mod:RegisterEventsInCombat(
 local warnReinforcementRelay		= mod:NewCountAnnounce(301351, 2)
 local warnFulminatingZap			= mod:NewTargetNoFilterAnnounce(302274, 2, nil, "Healer")
 
-local specWarnCannonBlast			= mod:NewSpecialWarningDodge(295536, nil, nil, nil, 2, 2)
-local specWarnWreck					= mod:NewSpecialWarningDefensive(302279, nil, nil, nil, 1, 2)
-local specWarnFulminatingBurst		= mod:NewSpecialWarningMoveTo(303885, nil, nil, nil, 1, 2)
+local specWarnCannonBlast			= mod:NewSpecialWarningDodge(295536, nil, nil, nil, 2, 2, nil, nil, "farfromline")
+local specWarnWreck					= mod:NewSpecialWarningDefensive(302279, nil, nil, nil, 1, 2, nil, nil, "defensive")
+local specWarnFulminatingBurst		= mod:NewSpecialWarningMoveTo(303885, nil, nil, nil, 1, 2, nil, nil, "gathershare")
 local yellFulminatingBurst			= mod:NewYell(303885, nil, nil, nil, "YELL")
 local yellFulminatingBurstFades		= mod:NewShortFadesYell(303885, nil, nil, nil, "YELL")
 
@@ -47,8 +47,8 @@ local timerFulminatingBurstCD		= mod:NewCDCountTimer(17.0, 303885, nil, nil, nil
  mod:AddTimerLine(DBM:EJ_GetSectionInfo(20039))
 local warnHaywire					= mod:NewTargetNoFilterAnnounce(296080, 1)
 
-local specWarnAnnihilationRay		= mod:NewSpecialWarningSpell(295939, nil, nil, nil, 2, 2)
-local specWarnAntiTresField			= mod:NewSpecialWarningMoveTo(303252, nil, nil, nil, 1, 2)
+local specWarnAnnihilationRay		= mod:NewSpecialWarningSpell(295939, nil, nil, nil, 2, 2, nil, nil, "phasechange")
+local specWarnAntiTresField			= mod:NewSpecialWarningMoveTo(303252, nil, nil, nil, 1, 2, nil, nil, "gathershare")
 local yellAntiTresField				= mod:NewYell(303252)
 
 local timerHaywire					= mod:NewBuffActiveTimer(30, 296080, nil, nil, nil, 6)

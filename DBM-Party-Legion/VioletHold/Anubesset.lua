@@ -23,8 +23,8 @@ local warnImpale					= mod:NewTargetAnnounce(202341, 4)
 local warnSwarm						= mod:NewSpellAnnounce(201863, 2)
 local warnFixate					= mod:NewTargetAnnounce(202480, 3)
 
-local specWarnMandibleStrike		= mod:NewSpecialWarningDefensive(202217, nil, nil, nil, 1, 2)
-local specWarnImpale				= mod:NewSpecialWarningMoveAway(202341, nil, nil, nil, 1, 2)
+local specWarnMandibleStrike		= mod:NewSpecialWarningDefensive(202217, nil, nil, nil, 1, 2, nil, nil, "runaway")
+local specWarnImpale				= mod:NewSpecialWarningMoveAway(202341, nil, nil, nil, 1, 2, nil, nil, "runout")
 local yellImpale					= mod:NewYell(202341)
 local specWarnOozeGTFO				= mod:NewSpecialWarningMove(202485, nil, nil, nil, 1, 2)
 

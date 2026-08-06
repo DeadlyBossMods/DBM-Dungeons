@@ -23,7 +23,7 @@ mod:RegisterEventsInCombat(
 )
 local warnTetheringSpear					= mod:NewSpellAnnounce(332985, 4)
 
-local specWarnAscendantBarrage				= mod:NewSpecialWarningDodge(333244, nil, nil, nil, 2, 2)
+local specWarnAscendantBarrage				= mod:NewSpecialWarningDodge(333244, nil, nil, nil, 2, 2, nil, nil, "watchstep")
 
 local timerAscendantBarrageCD				= mod:NewAITimer(23.1, 333244, nil, nil, nil, 3)
 --local berserkTimer								= mod:NewBerserkTimer(480)

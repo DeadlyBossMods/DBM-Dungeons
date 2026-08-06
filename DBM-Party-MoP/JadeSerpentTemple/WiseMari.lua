@@ -31,20 +31,20 @@ local warnCorruptedGeyser			= mod:NewCountAnnounce(397793, 3)
 local warnBubbleBurst				= mod:NewCastAnnounce(106612, 3)
 local warnAddsLeft					= mod:NewAddsLeftAnnounce(-5616, 2, 106526)
 
-local specWarnLivingWater			= mod:NewSpecialWarningSwitch(-5616, "-Healer", nil, nil, 1, 2)
-local specWarnWashAway				= mod:NewSpecialWarningDodge(397783, nil, nil, nil, 2, 2)
-local specWarnCorruptedVortex		= mod:NewSpecialWarningMoveAway(397797, nil, nil, nil, 1, 2)
+local specWarnLivingWater			= mod:NewSpecialWarningSwitch(-5616, "-Healer", nil, nil, 1, 2, nil, nil, "killmob")
+local specWarnWashAway				= mod:NewSpecialWarningDodge(397783, nil, nil, nil, 2, 2, nil, nil, "watchstep")
+local specWarnCorruptedVortex		= mod:NewSpecialWarningMoveAway(397797, nil, nil, nil, 1, 2, nil, nil, "runout")
 local yellCorruptedVortex			= mod:NewYell(397797)
 local yellCorruptedVortexFades		= mod:NewShortFadesYell(397797)
-local specWarnHydrolance			= mod:NewSpecialWarningInterrupt(397801, "HasInterrupt", nil, nil, 1, 2)
-local specWarnGTFO					= mod:NewSpecialWarningGTFO(397799, nil, nil, nil, 1, 8)
+local specWarnHydrolance			= mod:NewSpecialWarningInterrupt(397801, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
+local specWarnGTFO					= mod:NewSpecialWarningGTFO(397799, nil, nil, nil, 1, 8, nil, nil, "watchfeet")
 
 local timerWashAwayCD				= mod:NewCDTimer(41.3, 397783, nil, nil, nil, 2, nil, DBM_COMMON_L.DEADLY_ICON)--41-44
 local timerCorruptedVortexCD		= mod:NewCDTimer(13, 397797, nil, nil, nil, 3, nil, DBM_COMMON_L.HEALER_ICON)
 local timerCorruptedGeyserCD		= mod:NewCDCountTimer("d5", 397793, nil, nil, nil, 3)
 local timerLivingWater				= mod:NewCastTimer(5.5, 106526, nil, nil, nil, 1)
 
---mod:AddSetIconOption("SetIconOnAdds", "ej5616", false, true, {8})--FIXME, where the fuck did scanner go?
+--mod:AddSetIconOption("SetIconOnAdds", -5616, false, true, {8})--FIXME, where the fuck did scanner go?
 
 mod.vb.addsRemaining = 4--Also 4 on heroic?
 mod.vb.firstAdd = false

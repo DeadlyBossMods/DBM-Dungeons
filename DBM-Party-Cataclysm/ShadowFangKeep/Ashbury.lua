@@ -19,7 +19,7 @@ local warnPain				= mod:NewTargetAnnounce(93581, 3)
 local warnWracking			= mod:NewSpellAnnounce(93720, 2)
 local warnArchangel			= mod:NewSpellAnnounce(93757, 4)
 
-local specWarnStayExec		= mod:NewSpecialWarningInterrupt(93468, "HasInterrupt", nil, nil, 1, 2)
+local specWarnStayExec		= mod:NewSpecialWarningInterrupt(93468, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
 
 local timerAsphyxiate		= mod:NewCDTimer(45, 93423, nil, nil, nil, 2)
 

@@ -16,8 +16,8 @@ mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 112992 112944"
 )
 
-local specWarnFurlwind		= mod:NewSpecialWarningRun(112992, "Melee", nil, nil, 4, 2)
-local specWarnCarrotBreath	= mod:NewSpecialWarningDodge(112944, nil, nil, nil, 2, 2)--Evaluate, my memory fuzzy
+local specWarnFurlwind		= mod:NewSpecialWarningRun(112992, "Melee", nil, nil, 4, 2, nil, nil, "justrun")
+local specWarnCarrotBreath	= mod:NewSpecialWarningDodge(112944, nil, nil, nil, 2, 2, nil, nil, "shockwave")--Evaluate, my memory fuzzy
 
 local timerFurlwind			= mod:NewBuffActiveTimer(9.5, 112992, nil, nil, nil, 5)
 local timerFurlwindCD		= mod:NewNextTimer(25, 112992, nil, nil, nil, 2)--True CD, 43 seconds, but triggering off alternating abilities reduces timer spam.

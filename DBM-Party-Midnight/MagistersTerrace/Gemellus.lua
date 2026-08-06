@@ -15,19 +15,19 @@ local warnCosmicSting					= mod:NewCountAnnounce(1223958, 3)
 local warnNeuralLink					= mod:NewCountAnnounce(1253709, 3)
 
 local timerTriplicateCD					= mod:NewCDCountTimer(20.5, 1223847, nil, nil, nil, 5)
-local timerCosmicStingCD				= mod:NewCDCountTimer(20.5, 1223958, nil, nil, nil, 3)
+local timerCosmicStingCD				= mod:NewCDCountTimer(20.5, 1223958, nil, nil, nil, 3, nil, DBM_COMMON_L.HEALER_ICON)
 local timerAstralGraspCD				= mod:NewCDCountTimer(20.5, 1224299, nil, nil, nil, 3)
-local timerNeuralLinkCD					= mod:NewCDCountTimer(20.5, 1253709, nil, nil, nil, 3)
+local timerNeuralLinkCD					= mod:NewCDCountTimer(20.5, 1253709, nil, nil, nil, 3, nil, DBM_COMMON_L.MYTHIC_ICON)
 local timerVoidSecretionsCD				= mod:NewCDCountTimer(20.5, 1224104, nil, nil, nil, 3)
 
 --Abilities that have unreliable timers so we have to use pure alert APIs for ENCOUNTER_WARNING
 mod:AddCustomAlertSoundOption(1223847, true, 2)--Triplicate
 mod:AddCustomAlertSoundOption(1224299, true, 1)--Astral Grasp
 --Private aura sounds
---mod:AddPrivateAuraSoundOption(1223958, true, 1223958, 1, 1)--Cosmic Sting
-mod:AddPrivateAuraSoundOption(1224104, true, 1224104, 1, 2, "watchfeet", 8)--Void Secretions
-mod:AddPrivateAuraSoundOption(1253709, true, 1253709, 1, 1, "linegather", 2)--Neural Link
---mod:AddPrivateAuraSoundOption(1224299, true, 1224299, 1, 1)--Astral Grasp
+mod:AddAuraSoundOption(1223958, true, 1223958, 1, 1, "poolyou", 18)--Cosmic Sting
+mod:AddAuraSoundOption(1224104, true, 1224104, 1, 2, "watchfeet", 8)--Void Secretions
+mod:AddAuraSoundOption(1253709, true, 1253709, 1, 1, "linegather", 2)--Neural Link
+--mod:AddAuraSoundOption(1224299, true, 1224299, 1, 1)--Astral Grasp
 
 mod.vb.triplicateCount = 0
 mod.vb.stingCount = 0
@@ -37,13 +37,19 @@ local badStateDetected = false
 local triplicateUsed = false
 
 ---@param self DBMMod
-local function setFallback(self)
+---@param dontSetAlerts boolean? Called on engage when we only want to set timeline parameters and not touch encounter alerts
+local function setFallback(self, dontSetAlerts)
 	--Blizz API fallbacks
-	timerTriplicateCD:SetTimeline(635)
-	timerNeuralLinkCD:SetTimeline(97)
-	timerAstralGraspCD:SetTimeline(98)
-	timerVoidSecretionsCD:SetTimeline(99)
-	timerCosmicStingCD:SetTimeline(100)
+	if not dontSetAlerts then
+	end
+	--If user has DBM bars enabled, we only want to register colors to the blizz api so that the blizz bars are also colorized.
+	--If user has bars disabled, or we are in a bad state, onlyColor is false and we register countdowns as well.
+	local onlyColor = not DBM.Options.HideDBMBars and not badStateDetected
+	timerTriplicateCD:SetTimeline(635, onlyColor)
+	timerNeuralLinkCD:SetTimeline(97, onlyColor)
+	timerAstralGraspCD:SetTimeline(98, onlyColor)
+	timerVoidSecretionsCD:SetTimeline(99, onlyColor)
+	timerCosmicStingCD:SetTimeline(100, onlyColor)
 end
 
 function mod:OnLimitedCombatStart()
@@ -55,12 +61,13 @@ function mod:OnLimitedCombatStart()
 	triplicateUsed = false
 	self:EnableAlertOptions(1223847, 635, "specialsoon", 2, 2, 0)
 	self:EnableAlertOptions(1224299, 98, "pullin", 2, 2, 0)
-	if self:IsMythicPlus() and DBM.Options.HardcodedTimer and not badStateDetected then
+	if DBM.Options.HardcodedTimer and not badStateDetected then
 		self:IgnoreBlizzardAPI()
 		self:RegisterShortTermEvents(
 			"ENCOUNTER_TIMELINE_EVENT_ADDED",
 			"ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED"
 		)
+		setFallback(self, true)
 	else
 		setFallback(self)
 	end
@@ -92,15 +99,11 @@ do
 		elseif timer == 29 then--Astral Grasp
 			timerAstralGraspCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "grasp", "graspCount"))
 		else--Reached end of chain without finding a valid timer, this means hardcode mod has failed, so we need to disable hardcoded features and fall back to blizz API
-			if not DBM.Options.DebugMode then
-				badStateDetected = true
-				self:ResumeBlizzardAPI()
-				self:UnregisterShortTermEvents()
-				setFallback(self)
-				DBM:Debug("|cffff0000Failed to match encounter timeline events to expected timers, falling back to Blizzard API|r", nil, nil, nil, true)
-			else
-				DBM:Debug("|cffff0000Failed to match encounter timeline events to expected timers|r", nil, nil, nil, true)
-			end
+			badStateDetected = true
+			self:ResumeBlizzardAPI()
+			self:UnregisterShortTermEvents()
+			setFallback(self)
+			DBM:Debug("|cffff0000Failed to match encounter timeline events to expected timers, falling back to Blizzard API|r", nil, nil, nil, true)
 		end
 	end
 

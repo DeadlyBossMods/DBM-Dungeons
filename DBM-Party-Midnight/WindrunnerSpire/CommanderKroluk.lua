@@ -11,21 +11,24 @@ mod.respawnTime = 29
 
 mod:RegisterCombat("combat")
 
+DBM:RegisterAltSpellName(472043, DBM_COMMON_L.ADDS)--Rallying Bellow -> Adds
+
 local warnRecklessLeap				= mod:NewCountAnnounce(1283247, 2)
 local warnBladestorm				= mod:NewCountAnnounce(470966, 2, nil, false)
 
-local specWarnRampage				= mod:NewSpecialWarningCount(467620, nil, nil, nil, 1, 2)
-local specWarnIntimidatingShout		= mod:NewSpecialWarningCount(1253026, nil, nil, nil, 2, 2)
-local specWarnRallyingBellow		= mod:NewSpecialWarningSwitchCount(472043, nil, nil, nil, 2, 3)
+local specWarnRampage				= mod:NewSpecialWarningCount(467620, nil, nil, nil, 1, 2, nil, nil, "defensive")
+local specWarnIntimidatingShout		= mod:NewSpecialWarningCount(1253026, nil, nil, nil, 2, 2, nil, nil, "gathershare")
+local specWarnRallyingBellow		= mod:NewSpecialWarningSwitchCount(472043, nil, nil, nil, 2, 3, nil, nil, "mobsoon")
+local specWarnRecklessLeap			= mod:NewSpecialWarningBlizzYou(1283247, nil, nil, nil, 1, 2, nil, nil, "runout")
 
-local timerRampageCD				= mod:NewCDCountTimer(30, 467620, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
-local timerIntimidatingShoutCD		= mod:NewCDCountTimer(45, 1253026, nil, nil, nil, 2)
-local timerRecklessLeapCD			= mod:NewCDCountTimer(37, 1283247, nil, nil, nil, 3)
+local timerRampageCD				= mod:NewCDCountTimer("d30", 467620, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+local timerIntimidatingShoutCD		= mod:NewCDCountTimer("d45", 1253026, nil, nil, nil, 2, nil, DBM_COMMON_L.MYTHIC_ICON)
+local timerRecklessLeapCD			= mod:NewCDCountTimer("d37", 1283247, nil, nil, nil, 3)
 local timerBladestormCD				= mod:NewCDCountTimer(8, 470966, nil, nil, nil, 2)
---Midnight private aura replacements
-mod:AddPrivateAuraSoundOption(470966, true, 470966, 4, 1, "justrun", 2)--Bladestorm target
-mod:AddPrivateAuraSoundOption(468924, true, 470966, 1, 2, "watchfeet", 8)--Bladestorm GTFO
-mod:AddPrivateAuraSoundOption(1283247, true, 1283247, 1, 1, "runout", 2)--Reckless Leap target
+
+mod:AddAuraSoundOption(470966, true, 470966, 4, 1, "justrun", 2)--Bladestorm target
+mod:AddAuraSoundOption(468924, true, 470966, 1, 2, "watchfeet", 8)--Bladestorm GTFO
+--mod:AddAuraSoundOption(1283247, true, 1283247, 1, 1, "runout", 2)--Reckless Leap target (handled by ENCOUNTER_WARNING intercept)
 
 mod.vb.rampageCount = 0
 mod.vb.intimidatingShoutCount = 0
@@ -38,16 +41,23 @@ local activeEventTypes = {}
 local lastRallyingBellow = 0
 
 ---@param self DBMMod
-local function setFallback(self)
-	if self:IsTank() then
-		specWarnRampage:SetAlert({210, 556}, "defensive", 2)
+---@param dontSetAlerts boolean? Called on engage when we only want to set timeline parameters and not touch encounter alerts
+local function setFallback(self, dontSetAlerts)
+	if not dontSetAlerts then
+		if self:IsTank() then
+			specWarnRampage:SetAlert({210, 556}, "defensive", 2)
+		end
+		specWarnIntimidatingShout:SetAlert({211, 213}, "gathershare", 2)
+		specWarnRallyingBellow:SetAlert(215, "mobsoon", 2, 3, 0)
+		specWarnRecklessLeap:SetAlert({212, 214}, "runout", 2, 2, 0)
 	end
-	specWarnIntimidatingShout:SetAlert({211, 213}, "gathershare", 2)
-	specWarnRallyingBellow:SetAlert(215, "mobsoon", 2, 3, 0)
-	timerRampageCD:SetTimeline({210, 556})
-	timerIntimidatingShoutCD:SetTimeline({211, 213})
-	timerRecklessLeapCD:SetTimeline({212, 214})
-	timerBladestormCD:SetTimeline(216)
+	--If user has DBM bars enabled, we only want to register colors to the blizz api so that the blizz bars are also colorized.
+	--If user has bars disabled, or we are in a bad state, onlyColor is false and we register countdowns as well.
+	local onlyColor = not DBM.Options.HideDBMBars and not badStateDetected
+	timerRampageCD:SetTimeline({210, 556}, onlyColor)
+	timerIntimidatingShoutCD:SetTimeline({211, 213}, onlyColor)
+	timerRecklessLeapCD:SetTimeline({212, 214}, onlyColor)
+	timerBladestormCD:SetTimeline(216, onlyColor)
 end
 
 function mod:OnLimitedCombatStart()
@@ -60,12 +70,13 @@ function mod:OnLimitedCombatStart()
 	badStateDetected = false
 	activeEventTypes = {}
 	lastRallyingBellow = 0
-	if self:IsMythicPlus() and DBM.Options.HardcodedTimer and not badStateDetected then
+	if DBM.Options.HardcodedTimer and not badStateDetected then
 		self:IgnoreBlizzardAPI()
 		self:RegisterShortTermEvents(
 			"ENCOUNTER_TIMELINE_EVENT_ADDED",
 			"ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED"
 		)
+		setFallback(self, true)
 	else
 		setFallback(self)
 	end
@@ -99,7 +110,7 @@ do
 		elseif timer == 10 or timer == 37 then
 			activeEventTypes[eventID] = "recklessLeap"
 			timerRecklessLeapCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "recklessLeap", "recklessLeapCount"))
-		elseif timer == 8 then
+		elseif timer == 8 or timer == 5 then
 			activeEventTypes[eventID] = "bladestorm"
 			timerBladestormCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "bladestorm", "bladestormCount"))
 		else
@@ -148,6 +159,7 @@ do
 					specWarnIntimidatingShout:Play("gathershare")
 				elseif finishedEventType == "recklessLeap" then
 					warnRecklessLeap:Show(eventCount)
+					specWarnRecklessLeap:Show(eventCount, "runout", 5)
 				elseif finishedEventType == "bladestorm" then
 					warnBladestorm:Show(eventCount)
 				end

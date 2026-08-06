@@ -39,12 +39,12 @@ local warnSparkofTyr								= mod:NewTargetNoFilterAnnounce(400681, 3, nil, "Rem
 local warnSiphonOath								= mod:NewCountAnnounce(400642, 3)
 local warnSiphonOathOver							= mod:NewEndAnnounce(400642, 1)
 
-local specWarnTitanicBlow							= mod:NewSpecialWarningDefensive(401248, nil, nil, nil, 1, 2)
-local specWarnInfiniteAnnihilation					= mod:NewSpecialWarningDodgeCount(401482, nil, nil, nil, 2, 2)
-local specWarnDividingStrike						= mod:NewSpecialWarningSoakCount(400641, nil, nil, nil, 2, 2)
-local specWarnSparkofTyr							= mod:NewSpecialWarningMoveAway(400681, nil, nil, nil, 1, 2)
+local specWarnTitanicBlow							= mod:NewSpecialWarningDefensive(401248, nil, nil, nil, 1, 2, nil, nil, "carefly")
+local specWarnInfiniteAnnihilation					= mod:NewSpecialWarningDodgeCount(401482, nil, nil, nil, 2, 2, nil, nil, "shockwave")
+local specWarnDividingStrike						= mod:NewSpecialWarningSoakCount(400641, nil, nil, nil, 2, 2, nil, nil, "helpsoak")
+local specWarnSparkofTyr							= mod:NewSpecialWarningMoveAway(400681, nil, nil, nil, 1, 2, nil, nil, "scatter")
 local yellSparkofTyr								= mod:NewShortPosYell(400681)
-local specWarnGTFO									= mod:NewSpecialWarningGTFO(403724, nil, nil, nil, 1, 8)
+local specWarnGTFO									= mod:NewSpecialWarningGTFO(403724, nil, nil, nil, 1, 8, nil, nil, "watchfeet")
 
 --These 3 are shared timers tied to Infinite Hand Technique
 local timerTitanicBlowCD							= mod:NewCDCountTimer(8, 401248, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)

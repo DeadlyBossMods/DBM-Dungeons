@@ -24,8 +24,8 @@ mod:RegisterEventsInCombat(
 --TODO, info frame tracking players who do not have gravity when aoe cast starts?
 local warnSummonAdds				= mod:NewSpellAnnounce(227477, 2)
 
-local specWarnMagicMagnificent		= mod:NewSpecialWarningMoveTo(227776, nil, nil, nil, 3, 2)
-local specWarnWondrousRadiance		= mod:NewSpecialWarningMove(227416, nil, nil, nil, 1, 2)
+local specWarnMagicMagnificent		= mod:NewSpecialWarningMoveTo(227776, nil, nil, nil, 3, 2, nil, nil, "findshelter")
+local specWarnWondrousRadiance		= mod:NewSpecialWarningMove(227416, nil, nil, nil, 1, 2, nil, nil, "runaway")
 
 local timerSummonAddsCD				= mod:NewCDTimer(32.7, 227477, nil, nil, nil, 1)
 local timerMagicMagnificentCD		= mod:NewCDTimer(46.1, 198006, nil, nil, nil, 2, nil, DBM_COMMON_L.DEADLY_ICON, nil, 1, 4)

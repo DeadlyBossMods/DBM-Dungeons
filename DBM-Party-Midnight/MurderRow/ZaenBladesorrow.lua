@@ -15,34 +15,131 @@ mod:RegisterCombat("combat")
 
 --)
 
---Custon Sounds on cast/cooldown expiring
-mod:AddCustomAlertSoundOption(474765, true, 2)--Same Day Delivery
-mod:AddCustomAlertSoundOption(474478, true, 2)--Killing Spree
-mod:AddCustomAlertSoundOption(1222795, true, 2)--Envenom
-mod:AddCustomAlertSoundOption(474545, true, 2)--Murder in a Row
---Custom timer colors, countdowns, and disables
-mod:AddCustomTimerOptions(1214352, true, 3, 0)--Fire Bomb
-mod:AddCustomTimerOptions(474765, true, 3, 0)--Same Day Delivery
-mod:AddCustomTimerOptions(474545, true, 2, 0)--Murder in a Row
-mod:AddCustomTimerOptions(474478, true, 2, 0)--Killing Spree
-mod:AddCustomTimerOptions(1222795, true, 5, 0)--Envenom
-----Midnight private aura replacements
---mod:AddPrivateAuraSoundOption(474545, true, 474545, 1, 1)--Murder in a Row
-mod:AddPrivateAuraSoundOption(1214352, true, 1214352, 1, 1, "bombyou", 12)--Fire Bomb
+local specWarnSameDayDelivery				= mod:NewSpecialWarningCount(474765, nil, nil, nil, 2, 2, nil, nil, "watchstep")
+local specWarnKillingSpree					= mod:NewSpecialWarningCount(474478, nil, nil, nil, 2, 2, nil, nil, "aesoon")
+local specWarnEnvenom						= mod:NewSpecialWarningCount(1222795, "Tank", nil, nil, 2, 3, nil, nil, "defensive")
+local specWarnMurderinaRow					= mod:NewSpecialWarningCount(1218347, nil, nil, nil, 2, 4, nil, nil, "breaklos")
+local specWarnFireBomb						= mod:NewSpecialWarningBlizzYou(1214357, nil, nil, nil, 2, 12, nil, nil, "bombyou")
+
+local timerFireBombCD						= mod:NewCDCountTimer(20.5, 1214357, nil, nil, nil, 3)
+local timerSameDayDeliveryCD				= mod:NewCDCountTimer(20.5, 474765, nil, nil, nil, 3)
+local timerMurderinaRowCD					= mod:NewCDCountTimer(20.5, 1218347, nil, nil, nil, 2)
+local timerKillingSpreeCD					= mod:NewCDCountTimer(20.5, 474478, nil, nil, nil, 2)
+local timerEnvenomCD						= mod:NewCDCountTimer(20.5, 1222795, nil, nil, nil, 5)
+
+----Custom Aura Sounds
+mod:AddAuraSoundOption(474545, true, 474545, 1, 1)--Murder in a Row
+--mod:AddAuraSoundOption(1214352, true, 1214352, 1, 1, "bombyou", 12)--Fire Bomb (ENCOUNTER_WARNING intercept is used instead)
+
+mod.vb.sameDayDeliveryCount = 0
+mod.vb.killingSpreeCount = 0
+mod.vb.envenomCount = 0
+mod.vb.murderinaRowCount = 0
+mod.vb.fireBombCount = 0
+local badStateDetected = false
+
+---@param self DBMMod
+---@param dontSetAlerts boolean? Called on engage when we only want to set timeline parameters and not touch encounter alerts
+local function setFallback(self, dontSetAlerts)
+	if not dontSetAlerts then
+		specWarnSameDayDelivery:SetAlert(124, "watchstep", 2, 2)
+		specWarnKillingSpree:SetAlert(127, "aesoon", 2, 2)
+		if self:IsTank() then
+			specWarnEnvenom:SetAlert(193, "defensive", 2, 3)
+		end
+		specWarnMurderinaRow:SetAlert(125, "breaklos", 2, 4)
+		specWarnFireBomb:SetAlert(123, "bombyou", 12, 2, 0)
+	end
+	local onlyColor = not DBM.Options.HideDBMBars and not badStateDetected
+	timerFireBombCD:SetTimeline(123, onlyColor)
+	timerSameDayDeliveryCD:SetTimeline(124, onlyColor)
+	timerMurderinaRowCD:SetTimeline(125, onlyColor)
+	timerKillingSpreeCD:SetTimeline(127, onlyColor)
+	timerEnvenomCD:SetTimeline(193, onlyColor)
+end
 
 function mod:OnLimitedCombatStart()
-	self:EnableAlertOptions(474765, 124, "watchstep", 2, 2)
-	self:EnableAlertOptions(474478, 127, "aesoon", 2, 2)
-	if self:IsTank() then
-		self:EnableAlertOptions(1222795, 193, "defensive", 2, 3)
+	self:TLCountReset()
+	self.vb.sameDayDeliveryCount = 1
+	self.vb.killingSpreeCount = 1
+	self.vb.envenomCount = 1
+	self.vb.murderinaRowCount = 1
+	self.vb.fireBombCount = 1
+	if DBM.Options.HardcodedTimer and not badStateDetected then
+		self:IgnoreBlizzardAPI()
+		self:RegisterShortTermEvents(
+			"ENCOUNTER_TIMELINE_EVENT_ADDED",
+			"ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED"
+		)
+		setFallback(self, true)
+	else
+		setFallback(self)
 	end
-	self:EnableAlertOptions(474545, 125, "breaklos", 2, 4)
+end
 
-	self:EnableTimelineOptions(1214352, 123)
-	self:EnableTimelineOptions(474765, 124)
-	self:EnableTimelineOptions(474545, 125)
-	self:EnableTimelineOptions(474478, 127)
-	self:EnableTimelineOptions(1222795, 193)
+function mod:OnCombatEnd()
+	self:TLCountReset()
+	self:UnregisterShortTermEvents()
+end
 
---	self:EnablePrivateAuraSound(474545, "breaklos", 12)
+do
+	local function timersAll(self, timer, timerExact, eventID)
+		if timer == 8 then
+			timerKillingSpreeCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "killingSpree", "killingSpreeCount"))
+		elseif timer == 12 or timer == 16 then
+			timerSameDayDeliveryCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "sameDayDelivery", "sameDayDeliveryCount"))
+		elseif timer == 18 then
+			timerFireBombCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "fireBomb", "fireBombCount"))
+		elseif timer == 26 then
+			timerEnvenomCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "envenom", "envenomCount"))
+		elseif timer == 36 then
+			timerMurderinaRowCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "murderinaRow", "murderinaRowCount"))
+		else
+			return
+		end
+		return true
+	end
+
+	function mod:ENCOUNTER_TIMELINE_EVENT_ADDED(eventInfo)
+		if eventInfo.source ~= 0 then return end
+		local eventID = eventInfo.id
+		if C_EncounterTimeline.GetEventState(eventID) ~= 0 then return end
+		local timerExact = eventInfo.duration
+		if not timersAll(self, math.floor(timerExact + 0.5), timerExact, eventID) and not badStateDetected then
+			badStateDetected = true
+			self:ResumeBlizzardAPI()
+			self:UnregisterShortTermEvents()
+			setFallback(self)
+			DBM:Debug("|cffff0000Failed to match encounter timeline events to expected timers, falling back to Blizzard API|r", nil, nil, nil, true)
+		end
+	end
+
+	function mod:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(eventID)
+		if not eventID then return end
+		local eventState = C_EncounterTimeline.GetEventState(eventID)
+		if eventState == 2 then
+			local eventType, eventCount = self:TLCountFinish(eventID)
+			if eventType and eventCount then
+				if eventType == "killingSpree" then
+					specWarnKillingSpree:Show(eventCount)
+					specWarnKillingSpree:Play("aesoon")
+				elseif eventType == "sameDayDelivery" then
+					specWarnSameDayDelivery:Show(eventCount)
+					specWarnSameDayDelivery:Play("watchstep")
+				elseif eventType == "envenom" then
+					if self:IsTanking("player", "boss1", nil, true) then
+						specWarnEnvenom:Show(eventCount)
+						specWarnEnvenom:Play("defensive")
+					end
+				elseif eventType == "murderinaRow" then
+					specWarnMurderinaRow:Show(eventCount)
+					specWarnMurderinaRow:Play("breaklos")
+				elseif eventType == "fireBomb" then
+					specWarnFireBomb:Show(eventCount, "bombyou")
+				end
+			end
+		elseif eventState == 3 then
+			self:TLCountCancel(eventID)
+		end
+	end
 end

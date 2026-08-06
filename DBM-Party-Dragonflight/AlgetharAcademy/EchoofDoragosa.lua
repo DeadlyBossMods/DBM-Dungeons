@@ -14,31 +14,142 @@ mod:RegisterCombat("combat")
 
 --Note: https://www.wowhead.com/spell=374350/energy-bomb is NOT a private aura so we can't do anything with it currently
 if DBM:IsPostMidnight() then
+	DBM:RegisterAltSpellName(388820, 56689)--Power Vacuum -> Grip
 	--Custom Sounds on cast/cooldown expiring
-	mod:AddCustomAlertSoundOption(1282251, false, 1)--Astral Blast
-	mod:AddCustomAlertSoundOption(374341, true, 2)--Bandaid for now. We can't announce victims just the cast
-	mod:AddCustomAlertSoundOption(388820, true, 2)--Power Vacuum
-	--Custom timer colors, countdowns, and disables
-	mod:AddCustomTimerOptions(373325, nil, 3, 0)
-	mod:AddCustomTimerOptions(1282251, nil, 5, 0)
-	mod:AddCustomTimerOptions(374341, nil, 3, 0)
-	mod:AddCustomTimerOptions(388820, nil, 2, 0)
-	--Midnight private aura replacements
-	mod:AddPrivateAuraSoundOption(389007, true, 389007, 1, 1, "watchfeet", 8)--GTFO
-	mod:AddPrivateAuraSoundOption(389011, true, 389011, 1, 1, "debuffyou", 17)--Overwhelming Power (off by default since we can't warn all stacks, just initial)
+	mod:AddCustomAlertSoundOption(374341, true, 2)--Energy Bomb: ENCOUNTER_WARNING provides target name
+	--Custom Aura Sounds
+	mod:AddAuraSoundOption(389007, true, 389007, 1, 1, "watchfeet", 8)--GTFO
+	mod:AddAuraSoundOption(389011, true, 389011, 1, 1, "debuffyou", 17)--Overwhelming Power (off by default since we can't warn all stacks, just initial)
+
+	local warnEnergyBomb					= mod:NewCountAnnounce(374341, 3)--Blizzard alert will handle personal bomb alert
+
+	local specWarnAstralBlast				= mod:NewSpecialWarningCount(1282251, nil, nil, nil, 1, 2, nil, nil, "defensive")
+	local specWarnPowerVacuum				= mod:NewSpecialWarningCount(388820, nil, nil, nil, 2, 2, nil, nil, "runout")
+
+	local timerArcaneBarrageCD				= mod:NewCDCountTimer(20.5, 373325, nil, nil, nil, 3)
+	local timerAstralBlastCD				= mod:NewCDCountTimer(20.5, 1282251, nil, nil, nil, 5)
+	local timerEnergyBombCD					= mod:NewCDCountTimer(20.5, 374341, nil, nil, nil, 3)
+	local timerPowerVacuumCD				= mod:NewCDCountTimer(20.5, 388820, nil, nil, nil, 2)
+
+	mod.vb.barrageCount = 0
+	mod.vb.blastCount = 0
+	mod.vb.bombCount = 0
+	mod.vb.vacuumCount = 0
+
+	local badStateDetected = false
+
+	local function functionSetAllowedWarning(self)
+		DBM.Options.BlizzAPIAllowOnce = true
+	end
+
+	---@param self DBMMod
+	---@param dontSetAlerts boolean? Called on engage when we only want to set timeline parameters and not touch encounter alerts
+	local function setFallback(self, dontSetAlerts)
+		if not dontSetAlerts then
+			if self:IsTank() then
+				specWarnAstralBlast:SetAlert(294, "defensive", 2)
+			end
+			specWarnPowerVacuum:SetAlert(296, "runout", 2)
+		end
+		--If user has DBM bars enabled, we only want to register colors to the blizz api so that the blizz bars are also colorized.
+	--If user has bars disabled, or we are in a bad state, onlyColor is false and we register countdowns as well.
+	local onlyColor = not DBM.Options.HideDBMBars and not badStateDetected
+		timerArcaneBarrageCD:SetTimeline(293, onlyColor)
+		timerAstralBlastCD:SetTimeline(294, onlyColor)
+		timerEnergyBombCD:SetTimeline(295, onlyColor)
+		timerPowerVacuumCD:SetTimeline(296, onlyColor)
+	end
 
 	function mod:OnLimitedCombatStart()
-		if self:IsTank() then
-			self:EnableAlertOptions(1282251, 294, "defensive", 2)
+		self:TLCountReset()
+		self.vb.barrageCount = 1
+		self.vb.blastCount = 1
+		self.vb.bombCount = 1
+		self.vb.vacuumCount = 1
+		badStateDetected = false
+		self:EnableAlertOptions(374341, 295, "bombyou", 12, 2, 0)
+		if DBM.Options.HardcodedTimer and not badStateDetected then
+			self:IgnoreBlizzardAPI()
+			self:RegisterShortTermEvents(
+				"ENCOUNTER_TIMELINE_EVENT_ADDED",
+				"ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED"
+			)
+			setFallback(self, true)
+		else
+			setFallback(self)
 		end
-		self:EnableAlertOptions(374341, 295, "scattersoon", 2)
-		self:EnableAlertOptions(388820, 296, "runout", 2)
+	end
 
-		self:EnableTimelineOptions(373325, 293)
-		self:EnableTimelineOptions(1282251, 294)
-		self:EnableTimelineOptions(374341, 295)
-		self:EnableTimelineOptions(388820, 296)
+	function mod:OnCombatEnd()
+		self:TLCountReset()
+		self:UnregisterShortTermEvents()
+	end
 
+	do
+		---@param self DBMMod
+		---@param timer number
+		---@param timerExact number
+		---@param eventID number
+		local function timersAll(self, timer, timerExact, eventID)
+			--Logic confirmed against DoragosaKill1/DoragosaKill2 M+ pulls.
+			if timer == 7 then--Arcane Missiles short segment (exact 7.0) or Astral Blast imminent bar (exact 6.5)
+				if timerExact < 6.75 then--Astral Blast (6.5) — imminent bar, fires very soon
+					timerAstralBlastCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "blast", "blastCount"))
+				else--Arcane Missiles (7.0)
+					timerArcaneBarrageCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "barrage", "barrageCount"))
+				end
+			elseif timer == 9 then--Astral Blast opening/post-vacuum CD
+				timerAstralBlastCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "blast", "blastCount"))
+			elseif timer == 10 then--Arcane Missiles second segment
+				timerArcaneBarrageCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "barrage", "barrageCount"))
+			elseif timer == 12 then--Astral Blast main CD bar
+				timerAstralBlastCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "blast", "blastCount"))
+			elseif timer == 14 then--Energy Bomb
+				timerEnergyBombCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "bomb", "bombCount"))
+				self:Schedule(timerExact-1.5, functionSetAllowedWarning, self)
+			elseif timer == 28 then--Power Vacuum
+				timerPowerVacuumCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "vacuum", "vacuumCount"))
+			else
+				badStateDetected = true
+				self:ResumeBlizzardAPI()
+				self:UnregisterShortTermEvents()
+				setFallback(self)
+				DBM:Debug("|cffff0000Failed to match encounter timeline events to expected timers, falling back to Blizzard API|r", nil, nil, nil, true)
+			end
+		end
+
+		function mod:ENCOUNTER_TIMELINE_EVENT_ADDED(eventInfo)
+			if eventInfo.source ~= 0 then return end
+			local eventID = eventInfo.id
+			local timerExact = eventInfo.duration
+			local timer = math.floor(timerExact + 0.5)
+			if not badStateDetected then
+				timersAll(self, timer, timerExact, eventID)
+			end
+		end
+
+		function mod:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(eventID)
+			local eventState = C_EncounterTimeline.GetEventState(eventID)
+			if not eventID or not eventState then return end
+			if eventState == 2 then
+				local eventType, eventCount = self:TLCountFinish(eventID)
+				if eventType and eventCount then
+					if eventType == "blast" then
+						if self:IsTanking("player", "boss1", nil, true) then
+							specWarnAstralBlast:Show(eventCount)
+							specWarnAstralBlast:Play("defensive")
+						end
+					elseif eventType == "bomb" then
+						warnEnergyBomb:Show(eventCount)
+					elseif eventType == "vacuum" then
+						specWarnPowerVacuum:Show(eventCount)
+						specWarnPowerVacuum:Play("runout")
+					end
+				end
+			elseif eventState == 3 then
+				self:TLCountCancel(eventID)
+			end
+		end
 	end
 else
 	mod:RegisterEventsInCombat(
@@ -59,12 +170,12 @@ else
 	local warnOverwhelmingPoweer					= mod:NewCountAnnounce(389011, 3, nil, nil, DBM_CORE_L.AUTO_ANNOUNCE_OPTIONS.stack:format(389011))--Typical stack warnings have amount and playername, but since used as personal, using count object to just display amount then injecting option text for stack
 	local warnEnergyBomb							= mod:NewTargetAnnounce(374352, 3)
 
-	local specWarnAstralBreath						= mod:NewSpecialWarningDodge(374361, nil, nil, nil, 2, 2)
-	local specWarnPowerVacuum						= mod:NewSpecialWarningRun(388822, nil, nil, nil, 4, 2)
-	local specWarnEnergyBomb						= mod:NewSpecialWarningMoveAway(374352, nil, nil, nil, 1, 2)
+	local specWarnAstralBreath						= mod:NewSpecialWarningDodge(374361, nil, nil, nil, 2, 2, nil, nil, "breathsoon")
+	local specWarnPowerVacuum						= mod:NewSpecialWarningRun(388822, nil, nil, nil, 4, 2, nil, nil, "justrun")
+	local specWarnEnergyBomb						= mod:NewSpecialWarningMoveAway(374352, nil, nil, nil, 1, 2, nil, nil, "scatter")
 	local yellEnergyBomb							= mod:NewYell(374352)
 	local yellEnergyBombFades						= mod:NewShortFadesYell(374352)
-	local specWarnGTFO								= mod:NewSpecialWarningGTFO(389007, nil, nil, nil, 1, 8)
+	local specWarnGTFO								= mod:NewSpecialWarningGTFO(389007, nil, nil, nil, 1, 8, nil, nil, "watchfeet")
 
 	local timerAstralBreathCD						= mod:NewCDTimer(26.3, 374361, nil, nil, nil, 3)--26-32
 	local timerPowerVacuumCD						= mod:NewCDTimer(21, 388822, nil, nil, nil, 2)--22-29

@@ -35,7 +35,7 @@ mod:RegisterEventsInCombat(
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(12502))
 local warnWhirlingBlade				= mod:NewCountAnnounce(198641, 2)
 
-local specWarnDarkblast				= mod:NewSpecialWarningDodgeCount(198820, nil, nil, nil, 2, 2)
+local specWarnDarkblast				= mod:NewSpecialWarningDodgeCount(198820, nil, nil, nil, 2, 2, nil, nil, "watchstep")
 
 local timerDarkBlastCD				= mod:NewCDCountTimer(18.1, 198820, nil, nil, nil, 3)
 local timerWhirlingBladeCD			= mod:NewCDCountTimer(23, 198641, nil, nil, nil, 3)
@@ -45,10 +45,10 @@ mod:AddTimerLine(DBM:EJ_GetSectionInfo(12509))
 local warnCloud						= mod:NewCountAnnounce(199143, 2)
 local warnSwarm						= mod:NewTargetNoFilterAnnounce(201733, 2)
 
-local specWarnGuile					= mod:NewSpecialWarningDodgeCount(199193, nil, nil, nil, 2, 2)
-local specWarnGuileEnded			= mod:NewSpecialWarningEnd(199193, nil, nil, nil, 1, 2)
-local specWarnSwarm					= mod:NewSpecialWarningYou(201733, nil, nil, nil, 1, 2)
-local specWarnShadowBoltVolley		= mod:NewSpecialWarningSpell(202019, nil, nil, nil, 2, 2)
+local specWarnGuile					= mod:NewSpecialWarningDodgeCount(199193, nil, nil, nil, 2, 2, nil, nil, "watchstep")
+local specWarnGuileEnded			= mod:NewSpecialWarningEnd(199193, nil, nil, nil, 1, 2, nil, nil, "safenow")
+local specWarnSwarm					= mod:NewSpecialWarningYou(201733, nil, nil, nil, 1, 2, nil, nil, "targetyou")
+local specWarnShadowBoltVolley		= mod:NewSpecialWarningSpell(202019, nil, nil, nil, 2, 2, nil, nil, "aesoon")
 
 local timerGuileCD					= mod:NewCDCountTimer(39, 199193, nil, nil, nil, 6)
 local timerGuile					= mod:NewBuffFadesTimer(20, 199193, nil, nil, nil, 6)

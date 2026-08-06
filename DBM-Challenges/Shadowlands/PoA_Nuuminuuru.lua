@@ -19,8 +19,8 @@ mod:RegisterEventsInCombat(
 	"CRITERIA_COMPLETE"
 )
 
-local specWarnSymbioticShield			= mod:NewSpecialWarningSwitch(345441, nil, nil, nil, 1, 2)
-local specWarnVolatileBurst				= mod:NewSpecialWarningSwitch(345680, nil, nil, nil, 1, 2)
+local specWarnSymbioticShield			= mod:NewSpecialWarningSwitch(345441, nil, nil, nil, 1, 2, nil, nil, "killmob")
+local specWarnVolatileBurst				= mod:NewSpecialWarningSwitch(345680, nil, nil, nil, 1, 2, nil, nil, "killmob")
 
 local timerSymbioticShieldCD			= mod:NewCDTimer(41.4, 345441, nil, nil, nil, 1)
 local timerNewFaerieCD					= mod:NewCDTimer(30.3, 345685, nil, nil, nil, 1)--Bursting Faerie, basically volatile burst CD

@@ -38,7 +38,7 @@ local warnGoodBrew					= mod:NewAnnounce("warnGoodBrew", 1, 265088, nil, nil, ni
 local warnCausticBrew				= mod:NewCastAnnounce(265168, 4)
 local warnCausticBrewOnBoss			= mod:NewTargetNoFilterAnnounce(278467, 1)
 
-local specWarnBrewOnBoss			= mod:NewSpecialWarning("specWarnBrewOnBoss", "Tank", nil, nil, 1, 2)
+local specWarnBrewOnBoss			= mod:NewSpecialWarning("specWarnBrewOnBoss", "Tank", nil, nil, 1, 2, nil, nil, nil, nil, "moveboss")
 
 local timerTendingBarCD				= mod:NewNextTimer(8, 264605, nil, nil, nil, 3)
 
@@ -47,9 +47,9 @@ local timerTendingBarCD				= mod:NewNextTimer(8, 264605, nil, nil, nil, 3)
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(17025))
 local warnLuckySevens				= mod:NewSpellAnnounce(257117, 1)
 
-local specWarnCuttingSurge			= mod:NewSpecialWarningDodge(267522, nil, nil, nil, 2, 2)
-local specWarnWhirlpoolofBlades		= mod:NewSpecialWarningDodge(267533, nil, nil, nil, 2, 2)
-local specWarnGTFO					= mod:NewSpecialWarningGTFO(272397, nil, nil, nil, 1, 8)
+local specWarnCuttingSurge			= mod:NewSpecialWarningDodge(267522, nil, nil, nil, 2, 2, nil, nil, "chargemove")
+local specWarnWhirlpoolofBlades		= mod:NewSpecialWarningDodge(267533, nil, nil, nil, 2, 2, nil, nil, "watchstep")
+local specWarnGTFO					= mod:NewSpecialWarningGTFO(272397, nil, nil, nil, 1, 8, nil, nil, "watchfeet")
 
 ----Hostile
 local timerCuttingSurgeCD			= mod:NewCDTimer(22.7, 267522, nil, nil, nil, 3)
@@ -62,8 +62,8 @@ local timerTradeWindsVigorCD		= mod:NewNextTimer(26.7, 281329, nil, nil, nil, 5)
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(17023))
 local warnTappedKeg					= mod:NewSpellAnnounce(272884, 1)
 
-local specWarnBarrelSmash			= mod:NewSpecialWarningRun(256589, "Melee", nil, nil, 4, 2)
-local specWarnBlackoutBarrel		= mod:NewSpecialWarningSwitch(258338, "-Healer", nil, 2, 1, 2)
+local specWarnBarrelSmash			= mod:NewSpecialWarningRun(256589, "Melee", nil, nil, 4, 2, nil, nil, "justrun")
+local specWarnBlackoutBarrel		= mod:NewSpecialWarningSwitch(258338, "-Healer", nil, 2, 1, 2, nil, nil, "changetarget")
 
 ----Hostile
 local timerBarrelSmashCD			= mod:NewCDTimer(22.9, 256589, nil, "Melee", nil, 3)--22.9-24.5
@@ -75,8 +75,8 @@ mod:AddTimerLine(DBM:EJ_GetSectionInfo(17024))
 local warnChainShot					= mod:NewSpellAnnounce(272902, 1)
 local warnPowderShot				= mod:NewTargetNoFilterAnnounce(256979, 3)
 
-local specWarnGrapeShot				= mod:NewSpecialWarningDodge(258381, nil, nil, nil, 3, 2)
-local specWarnPowderShot			= mod:NewSpecialWarningYou(256979, nil, nil, nil, 1, 2)
+local specWarnGrapeShot				= mod:NewSpecialWarningDodge(258381, nil, nil, nil, 3, 2, nil, nil, "stilldanger")
+local specWarnPowderShot			= mod:NewSpecialWarningYou(256979, nil, nil, nil, 1, 2, nil, nil, "targetyou")
 
 ----Hostile
 local timerGrapeShotCD				= mod:NewNextTimer(30.2, 258381, nil, nil, nil, 3, nil, DBM_COMMON_L.DEADLY_ICON)

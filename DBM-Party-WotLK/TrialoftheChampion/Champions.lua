@@ -21,9 +21,9 @@ mod:RegisterEventsInCombat(
 local warnHealingWave		= mod:NewSpellAnnounce(67528, 2)
 local warnPolymorph			= mod:NewTargetNoFilterAnnounce(66043, 2)
 
-local specWarnPoison		= mod:NewSpecialWarningMove(67594, nil, nil, nil, 1, 8)
-local specWarnHaste			= mod:NewSpecialWarningDispel(66045, "MagicDispeller", nil, nil, 1, 2)
-local specWarnHex			= mod:NewSpecialWarningDispel(67534, "RemoveCurse", nil, nil, 1, 2)
+local specWarnPoison		= mod:NewSpecialWarningMove(67594, nil, nil, nil, 1, 8, nil, nil, "watchfeet")
+local specWarnHaste			= mod:NewSpecialWarningDispel(66045, "MagicDispeller", nil, nil, 1, 2, nil, nil, "dispelboss")
+local specWarnHex			= mod:NewSpecialWarningDispel(67534, "RemoveCurse", nil, nil, 1, 2, nil, nil, "helpdispel")
 
 function mod:SPELL_CAST_START(args)
 	if args.spellId == 67528 then								-- Healing Wave

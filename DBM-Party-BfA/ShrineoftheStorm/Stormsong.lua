@@ -21,11 +21,11 @@ mod:RegisterEvents(
 	"CHAT_MSG_MONSTER_SAY"
 )
 
-local specWarnVoidBolt				= mod:NewSpecialWarningInterruptCount(268347, "HasInterrupt", nil, nil, 1, 2)
-local specWarnMindRend				= mod:NewSpecialWarningDispel(268896, "RemoveMagic", nil, 2, 1, 2)
-local specWarnWakentheVoid			= mod:NewSpecialWarningDodge(269097, nil, nil, nil, 2, 2)
-local specWarnAncientMindbender		= mod:NewSpecialWarningSwitch(269131, nil, nil, nil, 1, 2)
-local specWarnAncientMindbenderYou	= mod:NewSpecialWarningMoveTo(269131, nil, nil, nil, 1, 2)
+local specWarnVoidBolt				= mod:NewSpecialWarningInterruptCount(268347, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kick2r")
+local specWarnMindRend				= mod:NewSpecialWarningDispel(268896, "RemoveMagic", nil, 2, 1, 2, nil, nil, "helpdispel")
+local specWarnWakentheVoid			= mod:NewSpecialWarningDodge(269097, nil, nil, nil, 2, 2, nil, nil, "watchorb")
+local specWarnAncientMindbender		= mod:NewSpecialWarningSwitch(269131, nil, nil, nil, 1, 2, nil, nil, "findmc")
+local specWarnAncientMindbenderYou	= mod:NewSpecialWarningMoveTo(269131, nil, nil, nil, 1, 2, nil, nil, "takedamage")
 local yellAncientMindbender			= mod:NewYell(269131)
 
 local timerRP						= mod:NewRPTimer(68)

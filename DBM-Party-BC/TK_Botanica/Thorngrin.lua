@@ -25,7 +25,7 @@ mod:RegisterEventsInCombat(
 local warnSacrifice		= mod:NewTargetNoFilterAnnounce(34661, 2)
 local warnEnrage		= mod:NewTargetNoFilterAnnounce(34670, 2, nil, "Healer|Tank")
 
-local specWarnGTFO		= mod:NewSpecialWarningGTFO(34660, nil, nil, nil, 1, 8)
+local specWarnGTFO		= mod:NewSpecialWarningGTFO(34660, nil, nil, nil, 1, 8, nil, nil, "watchfeet")
 
 local timerSacrifice	= mod:NewTargetTimer(8, 34661, nil, nil, nil, 3)
 local timerFrenzy		= mod:NewBuffActiveTimer(10, 34670, nil, "Healer|Tank")

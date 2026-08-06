@@ -23,8 +23,8 @@ mod:RegisterEventsInCombat(
 
 local warnHammer                = mod:NewTargetNoFilterAnnounce(13005, 2)
 
-local specWarnHeal				= mod:NewSpecialWarningInterrupt(29427, "HasInterrupt", nil, nil, 1, 2)
-local specWarnConsecration		= mod:NewSpecialWarningMove(38385, nil, nil, nil, 1, 2)
+local specWarnHeal				= mod:NewSpecialWarningInterrupt(29427, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
+local specWarnConsecration		= mod:NewSpecialWarningMove(38385, nil, nil, nil, 1, 2, nil, nil, "runaway")
 
 local timerHammer               = mod:NewTargetTimer(6, 13005, nil, nil, nil, 3)
 

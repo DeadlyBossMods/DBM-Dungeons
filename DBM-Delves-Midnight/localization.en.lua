@@ -153,3 +153,11 @@ L:SetGeneralLocalization({
 	name =	"Nullaeus"
 })
 
+-----------------------
+-- <<< Azta'rec >>> --
+-----------------------
+L = DBM:GetModLocalization("Aztarec")
+
+L:SetGeneralLocalization({
+	name =	"Azta'rec"
+})

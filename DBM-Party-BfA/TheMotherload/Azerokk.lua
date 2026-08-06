@@ -22,13 +22,13 @@ mod:RegisterEventsInCombat(
 local warnRagingGaze				= mod:NewTargetAnnounce(257582, 2)
 local warnPulse						= mod:NewCastAnnounce(258622, 3)
 
-local specWarnCallEarthRager		= mod:NewSpecialWarningCount(257593, nil, nil, nil, 1, 2)
-local specWarnRagingGaze			= mod:NewSpecialWarningRun(257582, nil, nil, nil, 4, 2)
+local specWarnCallEarthRager		= mod:NewSpecialWarningCount(257593, nil, nil, nil, 1, 2, nil, nil, "bigmob")
+local specWarnRagingGaze			= mod:NewSpecialWarningRun(257582, nil, nil, nil, 4, 2, nil, nil, "justrun")
 local yellRagingGaze				= mod:NewYell(257582)
-local specWarnInfusion				= mod:NewSpecialWarningSwitchCount(271698, "-Healer", nil, nil, 1, 2)
+local specWarnInfusion				= mod:NewSpecialWarningSwitchCount(271698, "-Healer", nil, nil, 1, 2, nil, nil, "killmob")
 --local specWarnResonantPulse		= mod:NewSpecialWarningDodge(258622, nil, nil, nil, 2, 2)
-local specWarnTectonicSmash			= mod:NewSpecialWarningDodgeCount(275907, nil, nil, 2, 1, 15)
-local specWarnQuake					= mod:NewSpecialWarningDodge(258627, nil, nil, nil, 2, 2)
+local specWarnTectonicSmash			= mod:NewSpecialWarningDodgeCount(275907, nil, nil, 2, 1, 15, nil, nil, "frontal")
+local specWarnQuake					= mod:NewSpecialWarningDodge(258627, nil, nil, nil, 2, 2, nil, nil, "watchstep")
 
 local timerCallEarthragerCD			= mod:NewVarCountTimer("v42.5-44.9", 257593, nil, nil, nil, 1)
 local timerInfusionCD				= mod:NewVarCountTimer("v40.9-45", 271698, nil, nil, nil, 3, nil, DBM_COMMON_L.DAMAGE_ICON)--Health based?

@@ -20,9 +20,9 @@ mod:RegisterEventsInCombat(
 --TODO, verify/fix SPELL_ENERGIZE 267310
 local warnTentacleSlam				= mod:NewCastAnnounce(267385, 2)
 
-local specWarnYawningGate			= mod:NewSpecialWarningRun(269399, "Melee", nil, nil, 4, 2)
-local specWarnCalltheAbyss			= mod:NewSpecialWarningMove(267299, "Tank", nil, nil, 1, 2)
-local specWarnGrasp					= mod:NewSpecialWarningSpell(267360, nil, nil, nil, 2, 2)
+local specWarnYawningGate			= mod:NewSpecialWarningRun(269399, "Melee", nil, nil, 4, 2, nil, nil, "justrun")
+local specWarnCalltheAbyss			= mod:NewSpecialWarningMove(267299, "Tank", nil, nil, 1, 2, nil, nil, "moveboss")
+local specWarnGrasp					= mod:NewSpecialWarningSpell(267360, nil, nil, nil, 2, 2, nil, nil, "phasechange")
 --local specWarnGTFO				= mod:NewSpecialWarningGTFO(238028, nil, nil, nil, 1, 8)
 
 local timerYawningGateCD			= mod:NewCDTimer(21, 269399, nil, nil, nil, 3)

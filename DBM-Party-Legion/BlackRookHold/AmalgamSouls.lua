@@ -32,11 +32,11 @@ local warnSoulEchoes				= mod:NewTargetAnnounce(194966, 2)
 local warnCallSouls					= mod:NewSpellAnnounce(196078, 2)--Change to important warning if it becomes more relevant.
 local warnSoulgorge					= mod:NewStackAnnounce(196930, 4)
 
-local specWarnReapSoul				= mod:NewSpecialWarningDodgeCount(194956, "Tank", nil, nil, 3, 2)
-local specWarnSoulEchos				= mod:NewSpecialWarningRun(194966, nil, nil, nil, 1, 2)
-local specWarnSwirlingScythe		= mod:NewSpecialWarningDodge(195254, nil, nil, nil, 1, 2)
+local specWarnReapSoul				= mod:NewSpecialWarningDodgeCount(194956, "Tank", nil, nil, 3, 2, nil, nil, "shockwave")
+local specWarnSoulEchos				= mod:NewSpecialWarningRun(194966, nil, nil, nil, 1, 2, nil, nil, "runaway")
+local specWarnSwirlingScythe		= mod:NewSpecialWarningDodge(195254, nil, nil, nil, 1, 2, nil, nil, "runaway")
 local yellSwirlingScythe			= mod:NewYell(195254)
-local specWarnSoulBurst				= mod:NewSpecialWarningCount(196587, nil, nil, nil, 2, 2)
+local specWarnSoulBurst				= mod:NewSpecialWarningCount(196587, nil, nil, nil, 2, 2, nil, nil, "aesoon")
 
 local timerSwirlingScytheCD			= mod:NewCDTimer(20.5, 195254, nil, nil, nil, 3)--20-27
 local timerSoulEchoesCD				= mod:NewNextTimer(27.5, 194966, nil, nil, nil, 3)

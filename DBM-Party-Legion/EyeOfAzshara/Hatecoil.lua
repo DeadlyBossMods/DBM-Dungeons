@@ -27,9 +27,9 @@ mod:RegisterEventsInCombat(
 --]]
 local warnCurseofWitch				= mod:NewTargetNoFilterAnnounce(193698, 3)
 
-local specWarnStaticNova			= mod:NewSpecialWarning("specWarnStaticNova", nil, DBM_CORE_L.AUTO_SPEC_WARN_OPTIONS.dodge:format(193597), nil, 3, 2)
+local specWarnStaticNova			= mod:NewSpecialWarning("specWarnStaticNova", nil, DBM_CORE_L.AUTO_SPEC_WARN_OPTIONS.dodge:format(193597), nil, 3, 2, nil, nil, nil, nil, "findshelter")
 local specWarnFocusedLightning		= mod:NewSpecialWarning("specWarnFocusedLightning", nil, DBM_CORE_L.AUTO_SPEC_WARN_OPTIONS.soon:format(193611), nil, 1)
-local specWarnAdds					= mod:NewSpecialWarningSwitch(193682, "Tank", nil, nil, 1, 2)
+local specWarnAdds					= mod:NewSpecialWarningSwitch(193682, "Tank", nil, nil, 1, 2, nil, nil, "mobsoon")
 local yellCurseofWitch				= mod:NewShortFadesYell(193698)
 
 local timerAddsCD					= mod:NewCDTimer(47, 193682, nil, nil, nil, 1)--47-51

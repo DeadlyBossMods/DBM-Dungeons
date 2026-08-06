@@ -31,23 +31,23 @@ local warnChaosWave				= mod:NewTargetAnnounce(157001, 3)
 local warnDoom					= mod:NewTargetNoFilterAnnounce(156965, 3, nil, "Healer")
 
 --Basic Abilities
-local specWarnDrainLife			= mod:NewSpecialWarningInterrupt(156854, "HasInterrupt", nil, nil, 1, 2)
-local specWarnCorruption		= mod:NewSpecialWarningDispel(156842, "RemoveMagic", nil, 2, 1, 2)
-local specWarnRainOfFire		= mod:NewSpecialWarningSpell(156857, nil, nil, nil, 2, 2)--156856 fires SUCCESS but do not use, it fires for any player walking in or out of it
-local specWarnRainOfFireMove	= mod:NewSpecialWarningGTFO(156857, nil, nil, nil, 1, 8)
+local specWarnDrainLife			= mod:NewSpecialWarningInterrupt(156854, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
+local specWarnCorruption		= mod:NewSpecialWarningDispel(156842, "RemoveMagic", nil, 2, 1, 2, nil, nil, "dispelnow")
+local specWarnRainOfFire		= mod:NewSpecialWarningSpell(156857, nil, nil, nil, 2, 2, nil, nil, "watchstep")--156856 fires SUCCESS but do not use, it fires for any player walking in or out of it
+local specWarnRainOfFireMove	= mod:NewSpecialWarningGTFO(156857, nil, nil, nil, 1, 8, nil, nil, "watchfeet")
 --Unknown Abilities
-local specWarnFixate			= mod:NewSpecialWarningRun(157168, nil, nil, 2, 4, 2)
+local specWarnFixate			= mod:NewSpecialWarningRun(157168, nil, nil, 2, 4, 2, nil, nil, "justrun")
 --Affliction Abilities
 --TODO : Maybe need shit warning.
-local specWarnSeedOfMelevolence	= mod:NewSpecialWarningMoveAway(156921, nil, nil, nil, 1, 2)
-local specWarnExhaustion		= mod:NewSpecialWarningDispel(164841, "RemoveCurse", nil, 2, 1, 2)
+local specWarnSeedOfMelevolence	= mod:NewSpecialWarningMoveAway(156921, nil, nil, nil, 1, 2, nil, nil, "runout")
+local specWarnExhaustion		= mod:NewSpecialWarningDispel(164841, "RemoveCurse", nil, 2, 1, 2, nil, nil, "dispelnow")
 --Destruction Abilities
-local specWarnChaosBolt			= mod:NewSpecialWarningInterrupt(156975, "HasInterrupt", nil, nil, 3, 2)
-local specWarnImmolate			= mod:NewSpecialWarningDispel(156964, "RemoveMagic", nil, 2, 1, 2)
+local specWarnChaosBolt			= mod:NewSpecialWarningInterrupt(156975, "HasInterrupt", nil, nil, 3, 2, nil, nil, "helpkick")
+local specWarnImmolate			= mod:NewSpecialWarningDispel(156964, "RemoveMagic", nil, 2, 1, 2, nil, nil, "dispelnow")
 --Demonic Abilities
-local specWarnDemonicLeap		= mod:NewSpecialWarningYou(157039, nil, nil, nil, 1, 2)
+local specWarnDemonicLeap		= mod:NewSpecialWarningYou(157039, nil, nil, nil, 1, 2, nil, nil, "targetyou")
 local yellDemonicLeap			= mod:NewYell(157039)
-local specWarnChaosWave			= mod:NewSpecialWarningYou(157001, nil, nil, nil, 1, 2)
+local specWarnChaosWave			= mod:NewSpecialWarningYou(157001, nil, nil, nil, 1, 2, nil, nil, "runaway")
 local yellWarnChaosWave			= mod:NewYell(157001)
 
 --Basic Abilities

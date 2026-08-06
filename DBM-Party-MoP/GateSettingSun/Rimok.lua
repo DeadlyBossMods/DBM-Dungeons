@@ -19,8 +19,8 @@ mod:RegisterEventsInCombat(
 )
 
 --This mod needs more stuff involving adds later.
-local specWarnFrenziedAssault	= mod:NewSpecialWarningDodge(107120, "Tank", nil, nil, 1, 2)
-local specWarnViscousFluid		= mod:NewSpecialWarningGTFO(107122, nil, nil, nil, 1, 8)
+local specWarnFrenziedAssault	= mod:NewSpecialWarningDodge(107120, "Tank", nil, nil, 1, 2, nil, nil, "shockwave")
+local specWarnViscousFluid		= mod:NewSpecialWarningGTFO(107122, nil, nil, nil, 1, 8, nil, nil, "watchfeet")
 
 local timerFrenziedAssault		= mod:NewBuffActiveTimer(6, 107120)
 local timerFrenziedAssaultCD	= mod:NewNextTimer(17, 107120, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)

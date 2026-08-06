@@ -31,11 +31,11 @@ local warnEternalOrb							= mod:NewCountAnnounce(376292, 3, nil, false)
 local warnRewindTimeflow						= mod:NewCountAnnounce(376208, 1)
 local warnTimeSink								= mod:NewTargetAnnounce(377405, 1)
 
-local specWarnWingBuffet						= mod:NewSpecialWarningCount(376049, nil, nil, nil, 2, 2)
-local specWarnTimeSink							= mod:NewSpecialWarningMoveAway(377405, nil, nil, nil, 1, 2)
+local specWarnWingBuffet						= mod:NewSpecialWarningCount(376049, nil, nil, nil, 2, 2, nil, nil, "carefly")
+local specWarnTimeSink							= mod:NewSpecialWarningMoveAway(377405, nil, nil, nil, 1, 2, nil, nil, "range5")
 local yellTimeSink								= mod:NewYell(377405)
-local specWarnGTFO								= mod:NewSpecialWarningGTFO(376325, nil, nil, nil, 1, 8)
-local specWarnSandBreath						= mod:NewSpecialWarningDefensive(375727, nil, nil, nil, 1, 2)
+local specWarnGTFO								= mod:NewSpecialWarningGTFO(376325, nil, nil, nil, 1, 8, nil, nil, "watchfeet")
+local specWarnSandBreath						= mod:NewSpecialWarningDefensive(375727, nil, nil, nil, 1, 2, nil, nil, "defensive")
 
 local timerEternalOrbCD							= mod:NewCDCountTimer(6.8, 376292, nil, false, 2, 3)--3-9
 local timerRewindTimeflowCD						= mod:NewCDCountTimer(42.3, 376208, nil, nil, nil, 6)

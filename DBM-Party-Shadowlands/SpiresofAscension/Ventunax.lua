@@ -26,8 +26,8 @@ ability.id = 324205 and type = "begincast"
 --local warnBlackPowder				= mod:NewTargetAnnounce(257314, 4)
 
 --local specWarnDarkStride			= mod:NewSpecialWarningTaunt(324148, nil, nil, nil, 1, 2)
-local specWarnBlindingFlash			= mod:NewSpecialWarningDodge(324205, nil, nil, nil, 2, 2)
-local specWarnRecharge				= mod:NewSpecialWarningDodge(334485, nil, nil, nil, 2, 2)
+local specWarnBlindingFlash			= mod:NewSpecialWarningDodge(324205, nil, nil, nil, 2, 2, nil, nil, "shockwave")
+local specWarnRecharge				= mod:NewSpecialWarningDodge(334485, nil, nil, nil, 2, 2, nil, nil, "watchstep")
 --local specWarnGTFO					= mod:NewSpecialWarningGTFO(257274, nil, nil, nil, 1, 8)
 
 local timerDarkStrideCD				= mod:NewCDTimer(17, 324148, nil, nil, nil, 3, nil, DBM_COMMON_L.TANK_ICON)

@@ -28,10 +28,10 @@ mod:RegisterEventsInCombat(
 
 local warnBoneSpike		= mod:NewTargetNoFilterAnnounce(113999, 3)
 
-local specWarnGetBoned	= mod:NewSpecialWarning("SpecWarnGetBoned", nil, nil, nil, 1, 2)
-local specWarnSoulFlame	= mod:NewSpecialWarningGTFO(114009, nil, nil, nil, 1, 6)--Not really sure what the point of this is yet. It's stupid easy to avoid and seems to serve no fight purpose yet, besides maybe cover some of the bone's you need for buff.
-local specWarnRusting	= mod:NewSpecialWarningStack(113765, "Tank", 5, nil, nil, 1, 6)
-local SpecWarnDoctor	= mod:NewSpecialWarning("SpecWarnDoctor", nil, nil, nil, 1, 2)
+local specWarnGetBoned	= mod:NewSpecialWarning("SpecWarnGetBoned", nil, nil, nil, 1, 2, nil, nil, nil, nil, "getboned")
+local specWarnSoulFlame	= mod:NewSpecialWarningGTFO(114009, nil, nil, nil, 1, 6, nil, nil, "watchfeet")--Not really sure what the point of this is yet. It's stupid easy to avoid and seems to serve no fight purpose yet, besides maybe cover some of the bone's you need for buff.
+local specWarnRusting	= mod:NewSpecialWarningStack(113765, "Tank", 5, nil, nil, 1, 6, nil, nil, "stackhigh")
+local SpecWarnDoctor	= mod:NewSpecialWarning("SpecWarnDoctor", nil, nil, nil, 1, 2, nil, nil, nil, nil, "bigmob")
 
 local timerBoneSpikeCD	= mod:NewCDTimer(8, 113999)
 local timerRusting		= mod:NewBuffActiveTimer(15, 113765, nil, "Tank")

@@ -24,8 +24,8 @@ mod:RegisterEventsInCombat(
 
 local warnTouch         = mod:NewTargetAnnounce(33711, 3)
 
-local specWarnBoom		= mod:NewSpecialWarningRun(33923, nil, nil, nil, 4, 2)
-local specWarnTouch		= mod:NewSpecialWarningMoveAway(33711, nil, nil, nil, 1, 2)
+local specWarnBoom		= mod:NewSpecialWarningRun(33923, nil, nil, nil, 4, 2, nil, nil, "justrun")
+local specWarnTouch		= mod:NewSpecialWarningMoveAway(33711, nil, nil, nil, 1, 2, nil, nil, "runout")
 
 local timerBoomCast     = mod:NewCastTimer(5, 33923, nil, nil, nil, 2)
 local timerTouch        = mod:NewTargetTimer(14, 33711, nil, nil, nil, 3)

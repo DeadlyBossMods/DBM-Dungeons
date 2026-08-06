@@ -6,39 +6,49 @@ mod.statTypes = "normal,heroic,mythic,challenge,timewalker"
 mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(76143)
 mod:SetEncounterID(1700)
+mod:SetZone(1209)
 
 mod:RegisterCombat("combat")
 
 --TODO, some actual custom sounds and timer disables when apis added
 if DBM:IsPostMidnight() then
-	local specWarnSunbreak			= mod:NewSpecialWarningCount(1253510, nil, nil, nil, 1, 2)
-	local specWarnBurningClaws		= mod:NewSpecialWarningCount(1253519, "Tank", nil, nil, 2, 2)
-	local specWarnSearingQuills		= mod:NewSpecialWarningCount(1253527, nil, nil, nil, 2, 12)
+	DBM:RegisterAltSpellName(1253510, DBM_COMMON_L.ADD)--Sunbreak -> Add
+
+	local specWarnSunbreak			= mod:NewSpecialWarningCount(1253510, nil, nil, nil, 1, 2, nil, nil, "mobsoon")
+	local specWarnBurningClaws		= mod:NewSpecialWarningCount(1253519, "Tank", nil, nil, 2, 2, nil, nil, "defensive")
+	local specWarnSearingQuills		= mod:NewSpecialWarningCount(1253527, nil, nil, nil, 2, 12, nil, nil, "breaklos")
 
 	local timerSunbreakCD			= mod:NewCDCountTimer(20.5, 1253510, nil, nil, nil, 1)
 	local timerBurningClawsCD		= mod:NewCDCountTimer(20.5, 1253519, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
-	local timerSearingQuillsCD		= mod:NewCDCountTimer(20.5, 1253527, nil, nil, nil, 2, nil, DBM_COMMON_L.DEADLY_ICON)
+	local timerSearingQuillsCD		= mod:NewCDCountTimer(20.5, 1253527, nil, nil, nil, 2, nil, DBM_COMMON_L.IMPORTANT_ICON)
 
-	--Midnight private aura replacements
-	mod:AddPrivateAuraSoundOption(1253511, true, 1253511, 1, 1, "targetyou", 2)--Burning Pursuit
+	--Custom Aura Sounds
+	mod:AddAuraSoundOption(1253511, true, 1253511, 1, 1, "targetyou", 2)--Burning Pursuit
 	mod:AddCustomAlertSoundOption(1253511, true, 2)--Using old object because it has no timer thus no hardcode
 
 	mod.vb.sunbreakCount = 0
 	mod.vb.burningClawsCount = 0
 	mod.vb.searingQuillsCount = 0
+	mod.vb.twelveSecondCount = 0
 	local badStateDetected = false
 
 	---@param self DBMMod
-	local function setFallback(self)
-		specWarnSunbreak:SetAlert(305, "mobsoon", 2, 2)
-		if self:IsTank() then
-			specWarnBurningClaws:SetAlert(306, "defensive", 2, 2)
+	---@param dontSetAlerts boolean? Called on engage when we only want to set timeline parameters and not touch encounter alerts
+	local function setFallback(self, dontSetAlerts)
+		--If user has DBM bars enabled, we only want to register colors to the blizz api so that the blizz bars are also colorized.
+	--If user has bars disabled, or we are in a bad state, onlyColor is false and we register countdowns as well.
+	local onlyColor = not DBM.Options.HideDBMBars and not badStateDetected
+		if not dontSetAlerts then
+			specWarnSunbreak:SetAlert(305, "mobsoon", 2, 2)
+			if self:IsTank() then
+				specWarnBurningClaws:SetAlert(306, "defensive", 2, 2)
+			end
+			specWarnSearingQuills:SetAlert(308, "breaklos", 12, 2)
+			self:EnableAlertOptions(1253511, 603, "mobsoon", 2, 2, 0)--Using old object because it has no timer thus no hardcode
 		end
-		specWarnSearingQuills:SetAlert(308, "breaklos", 12, 2)
-		self:EnableAlertOptions(1253511, 603, "mobsoon", 2, 2, 0)--Using old object because it has no timer thus no hardcode
-		timerSunbreakCD:SetTimeline(305)
-		timerBurningClawsCD:SetTimeline(306)
-		timerSearingQuillsCD:SetTimeline(308)
+		timerSunbreakCD:SetTimeline(305, onlyColor)
+		timerBurningClawsCD:SetTimeline(306, onlyColor)
+		timerSearingQuillsCD:SetTimeline(308, onlyColor)
 	end
 
 	function mod:OnLimitedCombatStart()
@@ -46,12 +56,14 @@ if DBM:IsPostMidnight() then
 		self.vb.sunbreakCount = 1
 		self.vb.burningClawsCount = 1
 		self.vb.searingQuillsCount = 1
-		if self:IsMythicPlus() and DBM.Options.HardcodedTimer and not badStateDetected then
+		self.vb.twelveSecondCount = 0
+		if DBM.Options.HardcodedTimer and not badStateDetected then
 			self:IgnoreBlizzardAPI()
 			self:RegisterShortTermEvents(
 				"ENCOUNTER_TIMELINE_EVENT_ADDED",
 				"ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED"
 			)
+			setFallback(self, true)
 		else
 			setFallback(self)
 		end
@@ -74,34 +86,19 @@ if DBM:IsPostMidnight() then
 				timerSunbreakCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "sunbreak", "sunbreakCount"))
 			elseif timer == 38 then--Searing Quills
 				timerSearingQuillsCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "searingQuills", "searingQuillsCount"))
-			elseif timer == 12 then--Sunbreak(odd counts) or Burning Claws(even counts)
-				local sunbreakExpectsTwelve = self.vb.sunbreakCount % 2 == 1
-				local clawsExpectsTwelve = self.vb.burningClawsCount % 2 == 0
-				if sunbreakExpectsTwelve then
+			elseif timer == 12 then--Alternates: Sunbreak then Burning Claws
+				self.vb.twelveSecondCount = self.vb.twelveSecondCount + 1
+				if self.vb.twelveSecondCount % 2 == 1 then
 					timerSunbreakCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "sunbreak", "sunbreakCount"))
-				elseif clawsExpectsTwelve then
-					timerBurningClawsCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "burningClaws", "burningClawsCount"))
 				else
-					if not DBM.Options.DebugMode then
-						badStateDetected = true
-						self:ResumeBlizzardAPI()
-						self:UnregisterShortTermEvents()
-						setFallback(self)
-						DBM:Debug("|cffff0000Failed to match encounter timeline events to expected timers, falling back to Blizzard API|r", nil, nil, nil, true)
-					else
-						DBM:Debug("|cffff0000Failed to match encounter timeline events to expected timers|r", nil, nil, nil, true)
-					end
+					timerBurningClawsCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "burningClaws", "burningClawsCount"))
 				end
 			else
-				if not DBM.Options.DebugMode then
-					badStateDetected = true
-					self:ResumeBlizzardAPI()
-					self:UnregisterShortTermEvents()
-					setFallback(self)
-					DBM:Debug("|cffff0000Failed to match encounter timeline events to expected timers, falling back to Blizzard API|r", nil, nil, nil, true)
-				else
-					DBM:Debug("|cffff0000Failed to match encounter timeline events to expected timers|r", nil, nil, nil, true)
-				end
+				badStateDetected = true
+				self:ResumeBlizzardAPI()
+				self:UnregisterShortTermEvents()
+				setFallback(self)
+				DBM:Debug("|cffff0000Failed to match encounter timeline events to expected timers, falling back to Blizzard API|r", nil, nil, nil, true)
 			end
 		end
 
@@ -148,10 +145,10 @@ else
 
 	local warnSolarFlare			= mod:NewSpellAnnounce(153810, 3)
 
-	local specWarnPierceArmor		= mod:NewSpecialWarningDefensive(153794, nil, nil, nil, 1, 2)
-	local specWarnFixate			= mod:NewSpecialWarningYou(176544, nil, nil, nil, 1, 2)
-	local specWarnQuills			= mod:NewSpecialWarningMoveTo(159382, nil, nil, nil, 2, 13)
-	local specWarnQuillsEnd			= mod:NewSpecialWarningEnd(159382, nil, nil, nil, 1, 2)
+	local specWarnPierceArmor		= mod:NewSpecialWarningDefensive(153794, nil, nil, nil, 1, 2, nil, nil, "defensive")
+	local specWarnFixate			= mod:NewSpecialWarningYou(176544, nil, nil, nil, 1, 2, nil, nil, "targetyou")
+	local specWarnQuills			= mod:NewSpecialWarningMoveTo(159382, nil, nil, nil, 2, 13, nil, nil, "breaklos")
+	local specWarnQuillsEnd			= mod:NewSpecialWarningEnd(159382, nil, nil, nil, 1, 2, nil, nil, "safenow")
 
 	local timerSolarFlareCD			= mod:NewCDTimer(17, 153810, nil, nil, nil, 3)
 	local timerQuills				= mod:NewBuffActiveTimer(17, 159382, nil, nil, nil, 2, nil, DBM_COMMON_L.HEALER_ICON)

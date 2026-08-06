@@ -30,13 +30,13 @@ mod:RegisterEventsInCombat(
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(25745))
 local warnPowerLoverload						= mod:NewTargetAnnounce(389179, 3)
 
-local specWarnPowerOverload						= mod:NewSpecialWarningMoveAway(389179, nil, nil, nil, 1, 2)
+local specWarnPowerOverload						= mod:NewSpecialWarningMoveAway(389179, nil, nil, nil, 1, 2, nil, nil, "runout")
 local yellPowerOverload							= mod:NewYell(389179)
 local yellPowerOverloadFades					= mod:NewShortFadesYell(389179)
-local specWarnSparkVolley						= mod:NewSpecialWarningDodge(384351, nil, nil, nil, 2, 2)
-local specWarnStaticSurge						= mod:NewSpecialWarningCount(384014, nil, nil, nil, 2, 2)
-local specWarnGTFO								= mod:NewSpecialWarningGTFO(389181, nil, nil, nil, 1, 8)
-local specWarnTitanticFist						= mod:NewSpecialWarningDodge(384524, nil, nil, nil, 1, 2)
+local specWarnSparkVolley						= mod:NewSpecialWarningDodge(384351, nil, nil, nil, 2, 2, nil, nil, "watchstep")
+local specWarnStaticSurge						= mod:NewSpecialWarningCount(384014, nil, nil, nil, 2, 2, nil, nil, "aesoon")
+local specWarnGTFO								= mod:NewSpecialWarningGTFO(389181, nil, nil, nil, 1, 8, nil, nil, "watchfeet")
+local specWarnTitanticFist						= mod:NewSpecialWarningDodge(384524, nil, nil, nil, 1, 2, nil, nil, "shockwave")
 
 local timerPowerOverloadCD						= mod:NewCDTimer(27.5, 389179, nil, nil, nil, 3, nil, DBM_COMMON_L.MAGIC_ICON)
 local timerSparkVolleyCD						= mod:NewCDTimer(31.6, 384351, nil, nil, nil, 3, nil, DBM_COMMON_L.MAGIC_ICON)

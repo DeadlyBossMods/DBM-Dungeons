@@ -1,4 +1,4 @@
-## Interface: 120001, 120005
+## Interface: 120007, 120100
 ## X-Min-Interface: 110002
 ## Category: DBM
 ## Title:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cff4565ffDelves (TWW)|r
@@ -17,7 +17,7 @@
 ## X-DBM-Mod-Category: SCENARIO
 ## X-DBM-StatTypes: normal
 ## X-DBM-Mod-SubCategories: Nemesis,Boss Encounters,Zones
-## X-DBM-Mod-SubCategories-koKR: 네메시스,보스
+## X-DBM-Mod-SubCategories-koKR: 숙적,보스 전투,지역
 ## X-DBM-Mod-SubCategories-ruRU: Немезис,Боссы,Зоны
 ## X-DBM-Mod-SubCategories-zhTW: 復仇者,首領,地區
 ## X-DBM-Mod-SubCategories-zhCN: 复仇者,首领,地区
@@ -28,7 +28,7 @@
 ## X-DBM-Mod-Name-zhCN: 地下堡 (地心之战)
 ## X-DBM-Mod-Sort: 120
 ## X-DBM-Mod-MapID: 2664, 2679, 2680, 2681, 2682, 2683, 2684, 2685, 2686, 2687, 2688, 2689, 2690, 2767, 2768, 2831, 2815, 2826, 2803, 2951
-## X-DBM-Mod-MinCoreRevision: 20200524142133
+## X-DBM-Mod-MinCoreRevision: 20260522000000
 ## X-DBM-Mod-MinExpansion: 10
 ## Version: @project-version@
 

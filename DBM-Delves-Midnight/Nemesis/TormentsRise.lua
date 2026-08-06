@@ -17,18 +17,21 @@ mod:RegisterCombat("combat")
 --https://www.wowhead.com/beta/spell=1255886/oblivion-shell is a private aura for a boss ability. Seems iffy to use as a PA sound though
 --Despite adding 3 abilities, it's unclear what any of them actually do. Sounds will likely need tweaking.
 --Custom Sounds on cast/cooldown expiring
+DBM:RegisterAltSpellName(1256358, DBM_COMMON_L.DEBUFF)--Devouring Essence -> Debuff
+DBM:RegisterAltSpellName(1256351, DBM_COMMON_L.INTERRUPT)--Emptiness of the Void -> Interrupt
+DBM:RegisterAltSpellName(1256355, DBM_COMMON_L.TANKBUSTER)--Imploding Strike -> Tank Buster
 
 local warnDevouringEssence					= mod:NewCountAnnounce(1256358, 2)
 
-local specWarnImplodingStrike				= mod:NewSpecialWarningDefensive(1256355, nil, nil, nil, 1, 2)
-local specWarnEmptinessOfTheVoid			= mod:NewSpecialWarningInterruptCount(1256351, nil, nil, nil, 3, 2)
+local specWarnImplodingStrike				= mod:NewSpecialWarningDefensive(1256355, nil, nil, nil, 1, 2, nil, nil, "defensive")
+local specWarnEmptinessOfTheVoid			= mod:NewSpecialWarningInterruptCount(1256351, nil, nil, nil, 3, 2, nil, nil, "kickcast")
 
-local timerDevouringEssenceCD				= mod:NewCDCountTimer(20.5, 1256358, DBM_COMMON_L.DEBUFF.." (%s)", nil, nil, 3, nil, DBM_COMMON_L.MAGIC_ICON)
+local timerDevouringEssenceCD				= mod:NewCDCountTimer(20.5, 1256358, nil, nil, nil, 3, nil, DBM_COMMON_L.MAGIC_ICON)
 local timerImplodingStrikeCD				= mod:NewCDCountTimer(20.5, 1256355, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
-local timerEmptinessOfTheVoidCD				= mod:NewVarCountTimer("v19.5-23.3", 1256351, DBM_COMMON_L.INTERRUPT.." (%s)", nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerEmptinessOfTheVoidCD				= mod:NewVarCountTimer("v19.5-23.3", 1256351, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerPhase							= mod:NewStageTimer(42)
 
-mod:AddPrivateAuraSoundOption({1287014, 1256045}, true, 1287014, 1, 2, "watchfeet", 8)--Null Zone
+mod:AddAuraSoundOption({1287014, 1256045}, true, 1287014, 1, 2, "watchfeet", 8)--Null Zone
 
 mod.vb.devouringEssenceCount = 0
 mod.vb.implodingStrikeCount = 0
@@ -37,14 +40,19 @@ local badStateDetected = false
 local workaroundblizzardincompitence = {}--In case we have to fall back to blizz timers, this will prevent us from trying to use encounter timeline events which are also used by blizz timers and will cause false positives that break timers
 --local tankFound = false
 
-local function setFallback(self)
+---@param self DBMMod
+---@param dontSetAlerts boolean? Called on engage when we only want to set timeline parameters and not touch encounter alerts
+local function setFallback(self, dontSetAlerts)
 	--Blizz API fallbacks
-	warnDevouringEssence:SetAlert({390, 395}, "incomingdebuff", 15, 2)
-	timerDevouringEssenceCD:SetTimeline({390, 395})
-	specWarnImplodingStrike:SetAlert({391, 394}, "defensive", 19, 2)
-	timerImplodingStrikeCD:SetTimeline({391, 394})
-	specWarnEmptinessOfTheVoid:SetAlert({392, 393}, "kickcast", 19, 2)
-	timerEmptinessOfTheVoidCD:SetTimeline({392, 393})
+	if not dontSetAlerts then
+		warnDevouringEssence:SetAlert({390, 395}, "incomingdebuff", 15, 2)
+		specWarnImplodingStrike:SetAlert({391, 394}, "defensive", 19, 2)
+		specWarnEmptinessOfTheVoid:SetAlert({392, 393}, "kickcast", 19, 2)
+	end
+	local onlyColor = not DBM.Options.HideDBMBars and not badStateDetected
+	timerDevouringEssenceCD:SetTimeline({390, 395}, onlyColor)
+	timerImplodingStrikeCD:SetTimeline({391, 394}, onlyColor)
+	timerEmptinessOfTheVoidCD:SetTimeline({392, 393}, onlyColor)
 end
 
 --[[
@@ -76,6 +84,7 @@ function mod:OnLimitedCombatStart()
 			"ENCOUNTER_TIMELINE_EVENT_ADDED",
 			"ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED"
 		)
+		setFallback(self, true)
 	else
 		setFallback(self)
 	end

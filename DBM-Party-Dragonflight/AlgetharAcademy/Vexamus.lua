@@ -13,32 +13,150 @@ mod.sendMainBossGUID = true
 mod:RegisterCombat("combat")
 
 if DBM:IsPostMidnight() then
+	DBM:RegisterAltSpellName(385974, DBM_COMMON_L.ORBS)--Arcane Orbs -> Orbs
+	DBM:RegisterAltSpellName(386173, DBM_COMMON_L.POOLS)--Mana Bombs -> Pools
+	DBM:RegisterAltSpellName(388537, DBM_COMMON_L.AOEDAMAGE)--Arcane Fissure -> AOE Damage
+
 	--NOTE: Once again no private auras to hook up for Mana Bombs
-	--Custom Sounds on cast/cooldown expiring
-	mod:AddCustomAlertSoundOption(385974, true, 2)--Arcane Orbs
-	mod:AddCustomAlertSoundOption(386173, true, 2)--Mana Bombs
-	mod:AddCustomAlertSoundOption(385958, true, 1)--Arcane Expulsion
-	mod:AddCustomAlertSoundOption(388537, true, 2)--Arcane Fissure
-	--Custom timer colors, countdowns, and disables
-	mod:AddCustomTimerOptions(385974, nil, 5, 0)
-	mod:AddCustomTimerOptions(386173, nil, 3, 0)
-	mod:AddCustomTimerOptions(385958, nil, 5, 0)
-	mod:AddCustomTimerOptions(388537, nil, 2, 0)
-	--Midnight private aura replacements
---	mod:AddPrivateAuraSoundOption(386181, true, 386181, 1)
+	--Custom Aura Sounds
+--	mod:AddAuraSoundOption(386181, true, 386181, 1)
+
+	local specWarnArcaneOrbs			= mod:NewSpecialWarningCount(385974, nil, nil, nil, 2, 2, nil, nil, "catchballs")
+	local specWarnManaBombs				= mod:NewSpecialWarningCount(386173, nil, nil, nil, 2, 2, nil, nil, "scattersoon")
+	local specWarnArcaneExpulsion		= mod:NewSpecialWarningCount(385958, nil, "Tank|Healer", nil, 1, 2, nil, nil, "defensive")
+	local specWarnArcaneFissure			= mod:NewSpecialWarningCount(388537, nil, nil, nil, 2, 2, nil, nil, "aesoon")
+
+	local timerArcaneOrbsCD				= mod:NewCDCountTimer(20.5, 385974, nil, nil, nil, 5)
+	local timerManaBombsCD				= mod:NewCDCountTimer(20.5, 386173, nil, nil, nil, 3)
+	local timerArcaneExpulsionCD		= mod:NewCDCountTimer(20.5, 385958, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+	local timerArcaneFissureCD			= mod:NewCDCountTimer(20.5, 388537, nil, nil, nil, 2)
+
+	mod.vb.orbCount = 0
+	mod.vb.bombCount = 0
+	mod.vb.expulsionCount = 0
+	mod.vb.fissureCount = 0
+
+	local badStateDetected = false
+	local eighteenCount = 1
+
+	---@param self DBMMod
+	---@param dontSetAlerts boolean? Called on engage when we only want to set timeline parameters and not touch encounter alerts
+	local function setFallback(self, dontSetAlerts)
+		if not dontSetAlerts then
+			specWarnArcaneOrbs:SetAlert(274, "catchballs", 2)
+			specWarnManaBombs:SetAlert(275, "scattersoon", 2)
+			if self:IsTank() then
+				specWarnArcaneExpulsion:SetAlert(276, "defensive", 2)
+			end
+			specWarnArcaneFissure:SetAlert(277, "aesoon", 2)
+		end
+		--If user has DBM bars enabled, we only want to register colors to the blizz api so that the blizz bars are also colorized.
+	--If user has bars disabled, or we are in a bad state, onlyColor is false and we register countdowns as well.
+	local onlyColor = not DBM.Options.HideDBMBars and not badStateDetected
+		timerArcaneOrbsCD:SetTimeline(274, onlyColor)
+		timerManaBombsCD:SetTimeline(275, onlyColor)
+		timerArcaneExpulsionCD:SetTimeline(276, onlyColor)
+		timerArcaneFissureCD:SetTimeline(277, onlyColor)
+	end
 
 	function mod:OnLimitedCombatStart()
-		self:EnableAlertOptions(385974, 274, "catchballs", 2)
-		self:EnableAlertOptions(386173, 275, "scattersoon", 2)
-		if self:IsTank() then
-			self:EnableAlertOptions(385958, 276, "defensive", 2)
+		self:TLCountReset()
+		self.vb.orbCount = 1
+		self.vb.bombCount = 1
+		self.vb.expulsionCount = 1
+		self.vb.fissureCount = 1
+		badStateDetected = false
+		eighteenCount = 1
+		if DBM.Options.HardcodedTimer and not badStateDetected then
+			self:IgnoreBlizzardAPI()
+			self:RegisterShortTermEvents(
+				"ENCOUNTER_TIMELINE_EVENT_ADDED",
+				"ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED"
+			)
+			setFallback(self, true)
+		else
+			setFallback(self)
 		end
-		self:EnableAlertOptions(388537, 277, "aesoon", 2)
+	end
 
-		self:EnableTimelineOptions(385974, 274)
-		self:EnableTimelineOptions(386173, 275)
-		self:EnableTimelineOptions(385958, 276)
-		self:EnableTimelineOptions(388537, 277)
+	function mod:OnCombatEnd()
+		self:TLCountReset()
+		self:UnregisterShortTermEvents()
+		eighteenCount = 1
+	end
+
+	do
+		---@param self DBMMod
+		---@param timer number
+		---@param timerExact number
+		---@param eventID number
+		local function timersAll(self, timer, timerExact, eventID)
+			--Logic confirmed against VexamusKill1/VexamusKill2 M+ pulls.
+			--Each ~44s cycle batch-adds: Expulsion (5s), Fissure (40s), Orbs (2s), Mana Bombs (15s)
+			--After each first-of-pair fires, a second cast is added with duration 18s in order: Orbs 2nd, Expulsion 2nd, Mana Bombs 2nd
+			--eighteenCount is a global modulo-3 counter (starts at 1, incremented after branch)
+			if timer == 2 then--Arcane Orbs first of pair
+				timerArcaneOrbsCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "orbs", "orbCount"))
+			elseif timer == 5 then--Arcane Expulsion first of pair
+				timerArcaneExpulsionCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "expulsion", "expulsionCount"))
+			elseif timer == 15 then--Mana Bombs first of pair
+				timerManaBombsCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "bombs", "bombCount"))
+			elseif timer == 18 then--Second cast: Orbs (% 3 == 1), Expulsion (% 3 == 2), Mana Bombs (% 3 == 0)
+				if eighteenCount % 3 == 1 then--Arcane Orbs second of pair
+					timerArcaneOrbsCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "orbs", "orbCount"))
+				elseif eighteenCount % 3 == 2 then--Arcane Expulsion second of pair
+					timerArcaneExpulsionCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "expulsion", "expulsionCount"))
+				elseif eighteenCount % 3 == 0 then--Mana Bombs second of pair
+					timerManaBombsCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "bombs", "bombCount"))
+				end
+				eighteenCount = eighteenCount + 1
+			elseif timer == 40 then--Arcane Fissure
+				timerArcaneFissureCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "fissure", "fissureCount"))
+			else
+				badStateDetected = true
+				self:ResumeBlizzardAPI()
+				self:UnregisterShortTermEvents()
+				setFallback(self)
+				DBM:Debug("|cffff0000Failed to match encounter timeline events to expected timers, falling back to Blizzard API|r", nil, nil, nil, true)
+			end
+		end
+
+		function mod:ENCOUNTER_TIMELINE_EVENT_ADDED(eventInfo)
+			if eventInfo.source ~= 0 then return end
+			local eventID = eventInfo.id
+			local timerExact = eventInfo.duration
+			local timer = math.floor(timerExact + 0.5)
+			if not badStateDetected then
+				timersAll(self, timer, timerExact, eventID)
+			end
+		end
+
+		function mod:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(eventID)
+			local eventState = C_EncounterTimeline.GetEventState(eventID)
+			if not eventID or not eventState then return end
+			if eventState == 2 then
+				local eventType, eventCount = self:TLCountFinish(eventID)
+				if eventType and eventCount then
+					if eventType == "orbs" then
+						specWarnArcaneOrbs:Show(eventCount)
+						specWarnArcaneOrbs:Play("catchballs")
+					elseif eventType == "bombs" then
+						specWarnManaBombs:Show(eventCount)
+						specWarnManaBombs:Play("scattersoon")
+					elseif eventType == "expulsion" then
+						if self:IsTank() then
+							specWarnArcaneExpulsion:Show(eventCount)
+							specWarnArcaneExpulsion:Play("defensive")
+						end
+					elseif eventType == "fissure" then
+						specWarnArcaneFissure:Show(eventCount)
+						specWarnArcaneFissure:Play("aesoon")
+					end
+				end
+			elseif eventState == 3 then
+				self:TLCountCancel(eventID)
+			end
+		end
 	end
 else
 	mod:RegisterEventsInCombat(
@@ -66,12 +184,12 @@ else
 	local warnArcaneOrbs							= mod:NewCountAnnounce(385974, 3)
 	local warnManaBombs								= mod:NewTargetNoFilterAnnounce(386173, 3)
 
-	local specWarnArcaneFissure						= mod:NewSpecialWarningDodgeCount(388537, nil, nil, nil, 1, 2)
-	local specWarnManaBomb							= mod:NewSpecialWarningMoveAway(386181, nil, nil, nil, 1, 2)
+	local specWarnArcaneFissure						= mod:NewSpecialWarningDodgeCount(388537, nil, nil, nil, 1, 2, nil, nil, "aesoon")
+	local specWarnManaBomb							= mod:NewSpecialWarningMoveAway(386181, nil, nil, nil, 1, 2, nil, nil, "runout")
 	local yellManaBomb								= mod:NewYell(386181)
 	local yellManaBombFades							= mod:NewShortFadesYell(386181)
-	local specWarnArcaneExpulsion					= mod:NewSpecialWarningDefensive(385958, nil, nil, nil, 1, 2)
-	local specWarnGTFO								= mod:NewSpecialWarningGTFO(386201, nil, nil, nil, 1, 8)
+	local specWarnArcaneExpulsion					= mod:NewSpecialWarningDefensive(385958, nil, nil, nil, 1, 2, nil, nil, "defensive")
+	local specWarnGTFO								= mod:NewSpecialWarningGTFO(386201, nil, nil, nil, 1, 8, nil, nil, "watchfeet")
 
 	local timerRP									= mod:NewRPTimer(19.8)
 	local timerArcaneOrbsCD							= mod:NewCDCountTimer(16.8, 385974, nil, nil, nil, 5)

@@ -34,8 +34,8 @@ local warnChaseDown			= mod:NewTargetAnnounce(118961, 3)--Targeting spell for To
 -- phase3 ability not found yet.
 local warnPhase3			= mod:NewPhaseAnnounce(3)
 
-local specWarnFists			= mod:NewSpecialWarningDodge(106853, "Tank", nil, nil, 1, 2)
-local specWarnChaseDown		= mod:NewSpecialWarningYou(118961, nil, nil, nil, 4, 2)
+local specWarnFists			= mod:NewSpecialWarningDodge(106853, "Tank", nil, nil, 1, 2, nil, nil, "shockwave")
+local specWarnChaseDown		= mod:NewSpecialWarningYou(118961, nil, nil, nil, 4, 2, nil, nil, "justrun")
 
 local timerFistsOfFuryCD	= mod:NewCDTimer(23, 106853, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)--Not enough data to really verify this
 local timerTornadoKickCD	= mod:NewCDTimer(32, 106434, nil, nil, nil, 2)--Or this

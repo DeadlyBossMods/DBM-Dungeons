@@ -31,8 +31,8 @@ local warnSurge				= mod:NewTargetNoFilterAnnounce(42402, 3)--Bear Form
 local warnClawRage			= mod:NewTargetNoFilterAnnounce(43150, 3)--Lynx Form
 local warnLightningTotem	= mod:NewSpellAnnounce(97930, 4)--Eagle Form
 
-local specWarnFlameBreath	= mod:NewSpecialWarningMove(97497, nil, nil, nil, 1, 2)
-local specWarnBurn			= mod:NewSpecialWarningMove(43217, nil, nil, nil, 1, 2)
+local specWarnFlameBreath	= mod:NewSpecialWarningMove(97497, nil, nil, nil, 1, 2, nil, nil, "watchfeet")
+local specWarnBurn			= mod:NewSpecialWarningMove(43217, nil, nil, nil, 1, 2, nil, nil, "watchfeet")
 
 local timerThrow			= mod:NewNextTimer(15, 43093, nil, nil, nil, 5, nil, DBM_COMMON_L.HEALER_ICON)
 local timerParalysisCD		= mod:NewNextTimer(27, 43095, nil, nil, nil, 5, nil, DBM_COMMON_L.HEALER_ICON..DBM_COMMON_L.MAGIC_ICON)

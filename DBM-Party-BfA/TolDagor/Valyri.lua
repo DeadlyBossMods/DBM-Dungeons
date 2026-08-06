@@ -15,11 +15,11 @@ mod:RegisterEventsInCombat(
 	"SPELL_CAST_SUCCESS 257028"
 )
 
-local specWarnCinderflame			= mod:NewSpecialWarningDodge(256955, nil, nil, nil, 2, 2)
-local specWarnFuselighter			= mod:NewSpecialWarningYou(257028, nil, nil, nil, 1, 2)
+local specWarnCinderflame			= mod:NewSpecialWarningDodge(256955, nil, nil, nil, 2, 2, nil, nil, "shockwave")
+local specWarnFuselighter			= mod:NewSpecialWarningYou(257028, nil, nil, nil, 1, 2, nil, nil, "targetyou")
 local yellFuselighter				= mod:NewYell(257028, nil, false)
-local specWarnFuselighterOther		= mod:NewSpecialWarningDispel(257028, "RemoveMagic", nil, 2, 1, 2)
-local specWarnIgnition				= mod:NewSpecialWarningSpell(256970, nil, nil, nil, 1, 2)
+local specWarnFuselighterOther		= mod:NewSpecialWarningDispel(257028, "RemoveMagic", nil, 2, 1, 2, nil, nil, "helpdispel")
+local specWarnIgnition				= mod:NewSpecialWarningSpell(256970, nil, nil, nil, 1, 2, nil, nil, "firecircle")
 --local specWarnGTFO				= mod:NewSpecialWarningGTFO(238028, nil, nil, nil, 1, 8)
 
 local timerCinderflameCD			= mod:NewCDTimer(20.5, 256955, nil, nil, nil, 3)

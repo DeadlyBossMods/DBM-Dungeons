@@ -13,7 +13,7 @@ mod:RegisterEventsInCombat(
 	"SPELL_CAST_SUCCESS 10887 8374"
 )
 
-local specWarnCrowdPummel			= mod:NewSpecialWarningSpell(10887, "Melee", nil, nil, 2, 2)
+local specWarnCrowdPummel			= mod:NewSpecialWarningSpell(10887, "Melee", nil, nil, 2, 2, nil, nil, "carefly")
 
 local timerCrowdPummelCD			= mod:NewAITimer(180, 10887, nil, nil, nil, 2)
 

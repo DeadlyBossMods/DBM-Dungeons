@@ -27,8 +27,8 @@ mod:RegisterEventsInCombat(
 --LOG THIS, needs whirlwind CD timer
 local warnGift			= mod:NewTargetNoFilterAnnounce(39009, 3)
 
-local specwarnWhirlwind	= mod:NewSpecialWarningRun(36175, "Melee", nil, nil, 4, 6)
-local specwarnHeal		= mod:NewSpecialWarningInterrupt(39013, "HasInterrupt", nil, 2, 1, 2)
+local specwarnWhirlwind	= mod:NewSpecialWarningRun(36175, "Melee", nil, nil, 4, 6, nil, nil, "whirlwind")
+local specwarnHeal		= mod:NewSpecialWarningInterrupt(39013, "HasInterrupt", nil, 2, 1, 2, nil, nil, "kickcast")
 
 local timerGift			= mod:NewTargetTimer(10, 39009, nil, nil, 3, 5, nil, DBM_COMMON_L.HEALER_ICON)
 

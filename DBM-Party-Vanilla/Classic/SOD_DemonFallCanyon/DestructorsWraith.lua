@@ -14,8 +14,8 @@ mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 462222 460401"
 )
 
-local specWarnNova		= mod:NewSpecialWarningDodge(460401, nil, nil, nil, 2, 2)
-local specWarnShockwave	= mod:NewSpecialWarningDodge(462222, nil, nil, nil, 2, 2)
+local specWarnNova		= mod:NewSpecialWarningDodge(460401, nil, nil, nil, 2, 2, nil, nil, "justrun")
+local specWarnShockwave	= mod:NewSpecialWarningDodge(462222, nil, nil, nil, 2, 2, nil, nil, "shockwave")
 
 local timerShockwave	= mod:NewCastCountTimer(2, 462222, nil, nil, nil, 5)
 local timerShockwaveCD	= mod:NewCDTimer(28, 462222, nil, nil, nil, 3)

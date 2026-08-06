@@ -36,8 +36,8 @@ local warnLanced								= mod:NewTargetNoFilterAnnounce(387155, 1)
 local warnReload								= mod:NewCastAnnounce(386921, 2)
 local warnAdd									= mod:NewCountAnnounce(386320, 3)
 
-local specWarnEruption							= mod:NewSpecialWarningCount(388283, nil, nil, nil, 1, 2)
-local specWarnTectonicStomp						= mod:NewSpecialWarningRun(385916, "Melee", nil, nil, 4, 2)
+local specWarnEruption							= mod:NewSpecialWarningCount(388283, nil, nil, nil, 1, 2, nil, nil, "interruptsoon")
+local specWarnTectonicStomp						= mod:NewSpecialWarningRun(385916, "Melee", nil, nil, 4, 2, nil, nil, "justrun")
 
 local timerEruptionCD							= mod:NewCDTimer(35, 388283, nil, nil, nil, 2)
 local timerShardsofStoneCD						= mod:NewCDTimer(13.3, 388817, nil, nil, nil, 2)

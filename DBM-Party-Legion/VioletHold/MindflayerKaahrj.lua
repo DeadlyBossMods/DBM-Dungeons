@@ -19,9 +19,9 @@ mod:RegisterEventsInCombat(
 --NOTE: Even more data, i'm confident everything he does is based on health, no timers.
 local warnShadowCrash				= mod:NewSpellAnnounce(201920, 3)
 
-local specWarnDoom					= mod:NewSpecialWarningDefensive(201148, nil, nil, nil, 1, 2)
+local specWarnDoom					= mod:NewSpecialWarningDefensive(201148, nil, nil, nil, 1, 2, nil, nil, "defensive")
 --local specWarnHysteria				= mod:NewSpecialWarningDispel(201146, "Healer", nil, nil, 1, 2)
-local specWarnEternalDarkness		= mod:NewSpecialWarningSwitch(201153, "-Healer", nil, nil, 3, 2)
+local specWarnEternalDarkness		= mod:NewSpecialWarningSwitch(201153, "-Healer", nil, nil, 3, 2, nil, nil, "mobkill")
 
 --local timerShadowCrashCD			= mod:NewCDTimer(8.7, 201920, nil, nil, nil, 3)--8-23 second variation, no thank you.
 --local timerEternalDarknessCD		= mod:NewCDTimer(37.5, 201153, nil, nil, nil, 1)

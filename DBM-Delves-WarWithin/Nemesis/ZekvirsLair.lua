@@ -36,16 +36,16 @@ local warnWebBlast							= mod:NewCastAnnounce(450597, 4)
 local warnBlackBlood						= mod:NewSpellAnnounce(451003, 2)
 local warnBlackBloodEnd						= mod:NewEndAnnounce(451003, 2)
 
-local specWarnCallWebTerror					= mod:NewSpecialWarningSwitchCount(450568, nil, nil, nil, 1, 2)
-local specWarnAnglersWeb					= mod:NewSpecialWarningDodgeCount(450519, nil, nil, nil, 2, 15)
-local specWarnClawSmash						= mod:NewSpecialWarningDodgeCount(450451, nil, nil, nil, 3, 15)
-local specWarnUnendingSpines				= mod:NewSpecialWarningDodgeCount(450872, nil, nil, nil, 2, 2)
-local specWarnEnfeeblingSpittleInterrupt	= mod:NewSpecialWarningInterruptCount(450505, false, nil, nil, 1, 2)
-local specWarnRegeneratingCarapace			= mod:NewSpecialWarningInterruptCount(450449, nil, nil, nil, 1, 2, 4)--Stage 1
-local specWarnBloodInfusedCarapace			= mod:NewSpecialWarningInterruptCount(450914, nil, nil, nil, 1, 2, 4)--Stage 2
-local specWarnEnfeeblingSpittleDispel		= mod:NewSpecialWarningDispel(450505, "RemoveMagic", nil, nil, 1, 2)
-local specWarnHorrendousRoar				= mod:NewSpecialWarningRunCount(450492, nil, nil, nil, 4, 2)
-local specWarnInfiniteHorror				= mod:NewSpecialWarningRunCount(451782, nil, nil, nil, 4, 2, 4)--Stage 2 version of Roar on mythic
+local specWarnCallWebTerror					= mod:NewSpecialWarningSwitchCount(450568, nil, nil, nil, 1, 2, nil, nil, "killmob")
+local specWarnAnglersWeb					= mod:NewSpecialWarningDodgeCount(450519, nil, nil, nil, 2, 15, nil, nil, "frontal")
+local specWarnClawSmash						= mod:NewSpecialWarningDodgeCount(450451, nil, nil, nil, 3, 15, nil, nil, "frontal")
+local specWarnUnendingSpines				= mod:NewSpecialWarningDodgeCount(450872, nil, nil, nil, 2, 2, nil, nil, "watchstep")
+local specWarnEnfeeblingSpittleInterrupt	= mod:NewSpecialWarningInterruptCount(450505, false, nil, nil, 1, 2, nil, nil, "kickcast")
+local specWarnRegeneratingCarapace			= mod:NewSpecialWarningInterruptCount(450449, nil, nil, nil, 1, 2, 4, nil, "kickcast")--Stage 1
+local specWarnBloodInfusedCarapace			= mod:NewSpecialWarningInterruptCount(450914, nil, nil, nil, 1, 2, 4, nil, "kickcast")--Stage 2
+local specWarnEnfeeblingSpittleDispel		= mod:NewSpecialWarningDispel(450505, "RemoveMagic", nil, nil, 1, 2, nil, nil, "helpdispel")
+local specWarnHorrendousRoar				= mod:NewSpecialWarningRunCount(450492, nil, nil, nil, 4, 2, nil, nil, "fearsoon")
+local specWarnInfiniteHorror				= mod:NewSpecialWarningRunCount(451782, nil, nil, nil, 4, 2, 4, nil, "fearsoon")--Stage 2 version of Roar on mythic
 
 local timerAnglersWebCD						= mod:NewCDCountTimer(21.8, 450519, nil, nil, nil, 5)
 local timerCallWebTerrorCD					= mod:NewCDCountTimer(38.9, 450568, nil, nil, nil, 1)

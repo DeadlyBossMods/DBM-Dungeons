@@ -35,11 +35,11 @@ local warnPhase2					= mod:NewPhaseAnnounce(2, 2, nil, nil, nil, nil, nil, 2)
 local warnVilebombardment			= mod:NewSpellAnnounce(256005, 2, nil, false)--Every 6 seconds so off by default
 local warnPowderShot				= mod:NewSpellAnnounce(256106, 2)
 
-local specWarnCharge				= mod:NewSpecialWarningDodge(255952, nil, nil, nil, 2, 2)
-local specWarnDiveBomb				= mod:NewSpecialWarningDodge(272046, nil, nil, nil, 2, 2)
+local specWarnCharge				= mod:NewSpecialWarningDodge(255952, nil, nil, nil, 2, 2, nil, nil, "chargemove")
+local specWarnDiveBomb				= mod:NewSpecialWarningDodge(272046, nil, nil, nil, 2, 2, nil, nil, "watchstep")
 --local specWarnPowderShot			= mod:NewSpecialWarningSpell(256106, nil, nil, nil, 2, 2)--Dodge?
-local specWarnBrew					= mod:NewSpecialWarningInterrupt(256060, "HasInterrupt", nil, nil, 1, 2)
-local specWarnGTFO					= mod:NewSpecialWarningGTFO(256016, nil, nil, nil, 1, 8)
+local specWarnBrew					= mod:NewSpecialWarningInterrupt(256060, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
+local specWarnGTFO					= mod:NewSpecialWarningGTFO(256016, nil, nil, nil, 1, 8, nil, nil, "watchfeet")
 
 local timerChargeCD					= mod:NewCDTimer(8.4, 255952, nil, nil, nil, 3)--8.4-11
 local timerDiveBombCD				= mod:NewCDTimer(13.1, 272046, nil, nil, nil, 3)

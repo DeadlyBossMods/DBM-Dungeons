@@ -21,9 +21,9 @@ mod:RegisterEventsInCombat(
 local warnRingofMalice		= mod:NewSpellAnnounce(131521, 3)
 local warnHazeofHate		= mod:NewTargetAnnounce(107087, 4)
 
-local specWarnGrippingHatred= mod:NewSpecialWarningSwitch(-5817, nil, nil, nil, 1, 2)
-local specWarnHazeofHate	= mod:NewSpecialWarningYou(107087, nil, nil, nil, 1, 2)
-local specWarnRisingHate	= mod:NewSpecialWarningInterrupt(107356, "-Healer", nil, nil, 1, 2)
+local specWarnGrippingHatred= mod:NewSpecialWarningSwitch(-5817, nil, nil, nil, 1, 2, nil, nil, "killmob")
+local specWarnHazeofHate	= mod:NewSpecialWarningYou(107087, nil, nil, nil, 1, 2, nil, nil, "targetyou")
+local specWarnRisingHate	= mod:NewSpecialWarningInterrupt(107356, "-Healer", nil, nil, 1, 2, nil, nil, "kickcast")
 
 local timerRingofMalice		= mod:NewBuffActiveTimer(15, 131521, nil, nil, nil, 2)
 local timerGrippingHatredCD	= mod:NewNextTimer(45.5, 115002, nil, nil, nil, 1)

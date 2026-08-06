@@ -15,16 +15,16 @@ mod:RegisterCombat("combat")
 --https://www.wowhead.com/beta/spell=470212/flaming-twisters is a private aura but it's impractical to add a sound for
 local warnFlamingUpdraft			= mod:NewCountAnnounce(466556, 3)
 
-local specWarnSearingBeak			= mod:NewSpecialWarningCount(466064, nil, nil, nil, 1, 2)
-local specWarnBurningGale			= mod:NewSpecialWarningCount(465904, nil, nil, nil, 2, 13)
+local specWarnSearingBeak			= mod:NewSpecialWarningCount(466064, nil, nil, nil, 1, 2, nil, nil, "defensive")
+local specWarnBurningGale			= mod:NewSpecialWarningCount(465904, nil, nil, nil, 2, 13, nil, nil, "pushbackincoming")
 
 local timerSearingBeakCD			= mod:NewCDCountTimer(10, 466064, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
-local timerFlamingUpdraftCD			= mod:NewCDCountTimer(6, 466556, nil, nil, nil, 3)
-local timerBurningGaleCD			= mod:NewCDCountTimer(15, 465904, nil, nil, nil, 2)
+local timerFlamingUpdraftCD			= mod:NewCDCountTimer(6, 466556, nil, nil, nil, 3, nil, DBM_COMMON_L.HEALER_ICON)
+local timerBurningGaleCD			= mod:NewCDCountTimer(15, 465904, nil, nil, nil, 2, nil, DBM_COMMON_L.IMPORTANT_ICON)
 
 --TODO, fix private aura GTFO sound defaults if assumption is wrong
-mod:AddPrivateAuraSoundOption(466559, true, 466556, 1, 1, "runout", 2)--Flaming Updraft (Currently disabled by blizzard, so hidden from UI automatically by core)
-mod:AddPrivateAuraSoundOption(472118, false, 472118, 1, 2, "watchfeet", 8)--Ignited Embers. GTFO that's off by default because under certain conditions you do not want to avoid it
+mod:AddAuraSoundOption(466559, true, 466556, 1, 1, "runout", 2)--Flaming Updraft (Currently disabled by blizzard, so hidden from UI automatically by core)
+mod:AddAuraSoundOption(472118, false, 472118, 1, 2, "watchfeet", 8)--Ignited Embers. GTFO that's off by default because under certain conditions you do not want to avoid it
 
 mod.vb.searingBeakCount = 0
 mod.vb.flamingUpdraftCount = 0
@@ -33,14 +33,20 @@ mod.vb.burningGaleCount = 0
 local badStateDetected = false
 
 ---@param self DBMMod
-local function setFallback(self)
-	if self:IsTank() then
-		specWarnSearingBeak:SetAlert(239, "defensive", 2)
+---@param dontSetAlerts boolean? Called on engage when we only want to set timeline parameters and not touch encounter alerts
+local function setFallback(self, dontSetAlerts)
+	if not dontSetAlerts then
+		if self:IsTank() then
+			specWarnSearingBeak:SetAlert(239, "defensive", 2)
+		end
+		specWarnBurningGale:SetAlert(242, "pushbackincoming", 13)
 	end
-	specWarnBurningGale:SetAlert(242, "pushbackincoming", 13)
-	timerSearingBeakCD:SetTimeline(239)
-	timerFlamingUpdraftCD:SetTimeline(241)
-	timerBurningGaleCD:SetTimeline(242)
+	--If user has DBM bars enabled, we only want to register colors to the blizz api so that the blizz bars are also colorized.
+	--If user has bars disabled, or we are in a bad state, onlyColor is false and we register countdowns as well.
+	local onlyColor = not DBM.Options.HideDBMBars and not badStateDetected
+	timerSearingBeakCD:SetTimeline(239, onlyColor)
+	timerFlamingUpdraftCD:SetTimeline(241, onlyColor)
+	timerBurningGaleCD:SetTimeline(242, onlyColor)
 end
 
 function mod:OnLimitedCombatStart()
@@ -49,12 +55,13 @@ function mod:OnLimitedCombatStart()
 	self.vb.flamingUpdraftCount = 1
 	self.vb.burningGaleCount = 1
 	badStateDetected = false
-	if self:IsMythicPlus() and DBM.Options.HardcodedTimer and not badStateDetected then
+	if DBM.Options.HardcodedTimer and not badStateDetected then
 		self:IgnoreBlizzardAPI()
 		self:RegisterShortTermEvents(
 			"ENCOUNTER_TIMELINE_EVENT_ADDED",
 			"ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED"
 		)
+		setFallback(self, true)
 	else
 		setFallback(self)
 	end
@@ -88,15 +95,11 @@ do
 			timerBurningGaleCD:Stop()--Prevent refreshed before finished debug spam due to blizzard bugs
 			timerBurningGaleCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "gale", "burningGaleCount"))
 		else
-			if not DBM.Options.DebugMode then
-				badStateDetected = true
-				self:ResumeBlizzardAPI()
-				self:UnregisterShortTermEvents()
-				setFallback(self)
-				DBM:Debug("|cffff0000Failed to match encounter timeline events to expected timers, falling back to Blizzard API|r", nil, nil, nil, true)
-			else
-				DBM:Debug("|cffff0000Failed to match encounter timeline events to expected timers|r", nil, nil, nil, true)
-			end
+			badStateDetected = true
+			self:ResumeBlizzardAPI()
+			self:UnregisterShortTermEvents()
+			setFallback(self)
+			DBM:Debug("|cffff0000Failed to match encounter timeline events to expected timers, falling back to Blizzard API|r", nil, nil, nil, true)
 		end
 	end
 

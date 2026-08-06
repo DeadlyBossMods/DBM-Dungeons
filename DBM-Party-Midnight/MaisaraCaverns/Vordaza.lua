@@ -14,21 +14,23 @@ mod:RegisterCombat("combat")
 --NOTE: Final Pursuit has TWO eventIDs even though it's an add fixate. maybe it has a timer?
 --NOTE: Whispering Miasma has no event ID, but might be a persistent effect entire encounter and not need one
 --NOTE: https://www.wowhead.com/spell=1251813/lingering-dread has a private aura but it doesn't need an alert, just anchor tracking
---NOTE: Wrest Phantoms timeline spellID is 1251204; 1252130 is the damage aura tracked by AddPrivateAuraSoundOption below
+--NOTE: Wrest Phantoms timeline spellID is 1251204; 1252130 is the damage aura tracked by AddAuraSoundOption below
 
-local specWarnDrainSoul				= mod:NewSpecialWarningCount(1251554, nil, nil, nil, 1, 2)
-local specWarnUnmake				= mod:NewSpecialWarningDodgeCount(1252054, nil, nil, nil, 2, 2)
-local specWarnWrestPhantoms			= mod:NewSpecialWarningCount(1252130, nil, nil, nil, 2, 2)
-local specWarnNecroticConvergence	= mod:NewSpecialWarningCount(1250708, nil, nil, nil, 1, 2)
+DBM:RegisterAltSpellName(1252054, DBM_COMMON_L.FRONTAL)--Unmake -> Frontal
+
+local specWarnDrainSoul				= mod:NewSpecialWarningCount(1251554, nil, nil, nil, 1, 2, nil, nil, "defensive")
+local specWarnUnmake				= mod:NewSpecialWarningDodgeCount(1252054, nil, nil, nil, 2, 2, nil, nil, "frontal")
+local specWarnWrestPhantoms			= mod:NewSpecialWarningCount(1251204, nil, nil, nil, 2, 2, nil, nil, "mobsoon")
+local specWarnNecroticConvergence	= mod:NewSpecialWarningCount(1250708, nil, nil, nil, 1, 2, nil, nil, "attackshield")
 
 local timerDrainSoulCD				= mod:NewCDCountTimer(20.5, 1251554, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerUnmakeCD					= mod:NewCDCountTimer(20.5, 1252054, nil, nil, nil, 3)
-local timerWrestPhantomsCD			= mod:NewCDCountTimer(20.5, 1252130, nil, nil, nil, 1)
+local timerWrestPhantomsCD			= mod:NewCDCountTimer(20.5, 1251204, nil, nil, nil, 1)
 local timerNecroticConvergenceCD	= mod:NewCDCountTimer(70, 1250708, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 
---Midnight private aura replacements
-mod:AddPrivateAuraSoundOption(1252130, true, 1252130, 1, 2, "watchfeet", 8)--Unmake damage (Wrest Phantoms cast is 1251204)
-mod:AddPrivateAuraSoundOption(1251775, true, 1251775, 1, 2, "fixateyou", 19)--Final Pursuit (also encounterevent ID 688 which was hotfixed in recently. Indicating this private aura might zap soon)
+--Custom Aura Sounds
+mod:AddAuraSoundOption(1252130, true, 1252130, 1, 2, "watchfeet", 8)--Unmake damage (Wrest Phantoms cast is 1251204)
+mod:AddAuraSoundOption(1251775, true, 1251775, 1, 2, "fixateyou", 19)--Final Pursuit (also encounterevent ID 688 which was hotfixed in recently. Indicating this private aura might zap soon)
 
 mod.vb.drainSoulCount = 0
 mod.vb.unmakeCount = 0
@@ -40,17 +42,23 @@ local badStateDetected = false
 local necroticCDInfo = {}--tracks startTime and duration per eventID to detect on-time state 3 cancels for Necrotic Convergence
 
 ---@param self DBMMod
-local function setFallback(self)
-	if self:IsTank() then
-		specWarnDrainSoul:SetAlert(16, "defensive", 2)
+---@param dontSetAlerts boolean? Called on engage when we only want to set timeline parameters and not touch encounter alerts
+local function setFallback(self, dontSetAlerts)
+	if not dontSetAlerts then
+		if self:IsTank() then
+			specWarnDrainSoul:SetAlert(16, "defensive", 2)
+		end
+		specWarnUnmake:SetAlert(17, "frontal", 15)
+		specWarnWrestPhantoms:SetAlert(19, "mobsoon", 2)
+		specWarnNecroticConvergence:SetAlert(20, "attackshield", 2)
 	end
-	specWarnUnmake:SetAlert(17, "frontal", 15)
-	specWarnWrestPhantoms:SetAlert(19, "mobsoon", 2)
-	specWarnNecroticConvergence:SetAlert(20, "attackshield", 2)
-	timerDrainSoulCD:SetTimeline(16)
-	timerUnmakeCD:SetTimeline(17)
-	timerWrestPhantomsCD:SetTimeline(19)
-	timerNecroticConvergenceCD:SetTimeline(20)
+	--If user has DBM bars enabled, we only want to register colors to the blizz api so that the blizz bars are also colorized.
+	--If user has bars disabled, or we are in a bad state, onlyColor is false and we register countdowns as well.
+	local onlyColor = not DBM.Options.HideDBMBars and not badStateDetected
+	timerDrainSoulCD:SetTimeline(16, onlyColor)
+	timerUnmakeCD:SetTimeline(17, onlyColor)
+	timerWrestPhantomsCD:SetTimeline(19, onlyColor)
+	timerNecroticConvergenceCD:SetTimeline(20, onlyColor)
 end
 
 function mod:OnLimitedCombatStart()
@@ -60,12 +68,13 @@ function mod:OnLimitedCombatStart()
 	self.vb.unmakeCount = 1
 	self.vb.wrestPhantomsCount = 1
 	self.vb.necroticConvergenceCount = 1
-	if self:IsMythicPlus() and DBM.Options.HardcodedTimer and not badStateDetected then
+	if DBM.Options.HardcodedTimer and not badStateDetected then
 		self:IgnoreBlizzardAPI()
 		self:RegisterShortTermEvents(
 			"ENCOUNTER_TIMELINE_EVENT_ADDED",
 			"ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED"
 		)
+		setFallback(self, true)
 	else
 		setFallback(self)
 	end

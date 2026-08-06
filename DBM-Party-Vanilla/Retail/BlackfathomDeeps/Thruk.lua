@@ -13,7 +13,7 @@ mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 149913"
 )
 
-local specWarnFillet			= mod:NewSpecialWarningRun(149955, "Melee", nil, nil, 4, 2)
+local specWarnFillet			= mod:NewSpecialWarningRun(149955, "Melee", nil, nil, 4, 2, nil, nil, "justrun")
 
 local timerFilletCD				= mod:NewAITimer(180, 149955, nil, nil, nil, 2)
 

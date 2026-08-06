@@ -50,9 +50,9 @@ mod:RegisterEventsInCombat(
 	"SPELL_AURA_REMOVED 460703"
 )
 
-local specWarnGTFO		= mod:NewSpecialWarningGTFO(460512, nil, nil, nil, 1, 8)
-local specWarnGloom		= mod:NewSpecialWarningInterrupt(460727, "HasInterrupt", nil, nil, 1, 2)
-local specWarnFrenzy	= mod:NewSpecialWarningDispel(460703, "RemoveEnrage", nil, nil, 1, 2)
+local specWarnGTFO		= mod:NewSpecialWarningGTFO(460512, nil, nil, nil, 1, 8, nil, nil, "watchfeet")
+local specWarnGloom		= mod:NewSpecialWarningInterrupt(460727, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
+local specWarnFrenzy	= mod:NewSpecialWarningDispel(460703, "RemoveEnrage", nil, nil, 1, 2, nil, nil, "trannow")
 
 local yellTears			= mod:NewIconRepeatYell(460512)
 

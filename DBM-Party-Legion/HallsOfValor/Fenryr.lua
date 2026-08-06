@@ -30,11 +30,11 @@ local warnFixate						= mod:NewTargetAnnounce(196838, 2)
 local warnFixateEnded					= mod:NewEndAnnounce(196838, 1)
 local warnClawFrenzy					= mod:NewCountAnnounce(196512, 3, nil, nil, 2)
 
-local specWarnLeap						= mod:NewSpecialWarningMoveAway(197556, nil, nil, nil, 1, 2)
+local specWarnLeap						= mod:NewSpecialWarningMoveAway(197556, nil, nil, nil, 1, 2, nil, nil, "runout")
 local yellLeap							= mod:NewYell(197556)
-local specWarnHowl						= mod:NewSpecialWarningCast(196543, "SpellCaster", nil, nil, 1, 2)
-local specWarnFixate					= mod:NewSpecialWarningRun(196838, nil, nil, nil, 4, 2)
-local specWarnWolves					= mod:NewSpecialWarningSwitch(-12600, "Tank", nil, nil, 1, 2)
+local specWarnHowl						= mod:NewSpecialWarningCast(196543, "SpellCaster", nil, nil, 1, 2, nil, nil, "stopcast")
+local specWarnFixate					= mod:NewSpecialWarningRun(196838, nil, nil, nil, 4, 2, nil, nil, "runaway")
+local specWarnWolves					= mod:NewSpecialWarningSwitch(-12600, "Tank", nil, nil, 1, 2, nil, nil, "killmob")
 
 local timerLeapCD						= mod:NewCDTimer(31, 197556, nil, nil, nil, 3)--31-36
 local timerClawFrenzyCD					= mod:NewCDCountTimer(9.7, 196512, nil, nil, nil, 2, nil, DBM_COMMON_L.HEALER_ICON)--it is 10 sec, but is spell queued half the time

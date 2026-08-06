@@ -19,8 +19,8 @@ mod:AddCustomTimerOptions(322711, true, 3, 0)
 mod:AddCustomTimerOptions(322936, true, 5, 0)
 mod:AddCustomTimerOptions(322943, true, 3, 0)
 mod:AddCustomTimerOptions(322977, true, 3, 0)--Sinlight Visions
---Midnight private aura replacements
-mod:AddPrivateAuraSoundOption(323001, true, 323001, 1, 2, "watchfeet", 8)--GTFO
+--Custom Aura Sounds
+mod:AddAuraSoundOption(323001, true, 323001, 1, 2, "watchfeet", 8)--GTFO
 
 function mod:OnLimitedCombatStart()
 	self:EnableAlertOptions(322711, 477, "watchstep", 2)
@@ -58,10 +58,10 @@ mod:RegisterEventsInCombat(
 --[[
 local warnHeaveDebris				= mod:NewCountAnnounce(322943, 3)
 
-local specWarnCrumblingSlam			= mod:NewSpecialWarningMove(322936, "Tank", nil, nil, 1, 2)
-local specWarnRefractedSinlight		= mod:NewSpecialWarningDodgeCount(322711, nil, nil, nil, 3, 2)
-local specWarnSinlightVisions		= mod:NewSpecialWarningDispel(322977, "RemoveMagic", nil, nil, 1, 2)
-local specWarnGTFO					= mod:NewSpecialWarningGTFO(323001, nil, nil, nil, 1, 8)
+local specWarnCrumblingSlam			= mod:NewSpecialWarningMove(322936, "Tank", nil, nil, 1, 2, nil, nil, "moveboss")
+local specWarnRefractedSinlight		= mod:NewSpecialWarningDodgeCount(322711, nil, nil, nil, 3, 2, nil, nil, "watchstep")
+local specWarnSinlightVisions		= mod:NewSpecialWarningDispel(322977, "RemoveMagic", nil, nil, 1, 2, nil, nil, "helpdispel")
+local specWarnGTFO					= mod:NewSpecialWarningGTFO(323001, nil, nil, nil, 1, 8, nil, nil, "watchfeet")
 
 local timerCrumblingSlamCD			= mod:NewCDCountTimer(12.1, 322936, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)--12.1 except after refracted sinlight
 local timerHeaveDebrisCD			= mod:NewCDCountTimer(12.1, 322943, nil, nil, nil, 3)--12.1 except after refracted sinlight

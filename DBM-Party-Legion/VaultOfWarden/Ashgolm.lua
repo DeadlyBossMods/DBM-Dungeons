@@ -16,8 +16,8 @@ mod:RegisterEventsInCombat(
 
 local warnVolcano					= mod:NewSpellAnnounce(192621, 3, nil, nil, nil, nil, nil, 2)
 
-local specWarnLavaWreath			= mod:NewSpecialWarningDodge(192631, nil, nil, nil, 2, 2)
-local specWarnFissure				= mod:NewSpecialWarningSpell(192522, "Tank", nil, nil, 1, 2)--Not dogable, just so we aim it correctly
+local specWarnLavaWreath			= mod:NewSpecialWarningDodge(192631, nil, nil, nil, 2, 2, nil, nil, "watchstep")
+local specWarnFissure				= mod:NewSpecialWarningSpell(192522, "Tank", nil, nil, 1, 2, nil, nil, "shockwave")--Not dogable, just so we aim it correctly
 
 local timerVolcanoCD				= mod:NewCDTimer(20, 192621, nil, nil, nil, 1)--20-22 unless delayed by brittle
 local timerLavaWreathCD				= mod:NewCDTimer(42.5, 192631, nil, nil, nil, 3)--42 unless delayed by brittle

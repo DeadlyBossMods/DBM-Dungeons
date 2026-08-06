@@ -34,15 +34,15 @@ local warnPhase2				= mod:NewPhaseAnnounce(2)
 local warnJadeDragonStrike		= mod:NewSpellAnnounce(106841, 3)
 local warnPhase3				= mod:NewPhaseAnnounce(3)
 
-local specWarnDragonStrike		= mod:NewSpecialWarningDefensive(106823, nil, nil, nil, 1, 2)
-local specWarnDragonKick		= mod:NewSpecialWarningDodge(106856, nil, nil, nil, 2, 2)
-local specWarnJadeDragonStrike	= mod:NewSpecialWarningDefensive(106841, nil, nil, nil, 1, 2)
-local specWarnJadeDragonKick	= mod:NewSpecialWarningDodge(106864, nil, nil, nil, 2, 2)
+local specWarnDragonStrike		= mod:NewSpecialWarningDefensive(106823, nil, nil, nil, 1, 2, nil, nil, "defensive")
+local specWarnDragonKick		= mod:NewSpecialWarningDodge(106856, nil, nil, nil, 2, 2, nil, nil, "runout")
+local specWarnJadeDragonStrike	= mod:NewSpecialWarningDefensive(106841, nil, nil, nil, 1, 2, nil, nil, "defensive")
+local specWarnJadeDragonKick	= mod:NewSpecialWarningDodge(106864, nil, nil, nil, 2, 2, nil, nil, "runout")
 local specWarnJadeBreath
 if mod:IsRetail() then
-	specWarnJadeBreath			= mod:NewSpecialWarningDodge(396907, nil, nil, nil, 2, 2)--Retail only
+	specWarnJadeBreath			= mod:NewSpecialWarningDodge(396907, nil, nil, nil, 2, 2, nil, nil, "breathsoon")--Retail only
 end
-local specWarnGTFO				= mod:NewSpecialWarningGTFO(118540, nil, nil, nil, 1, 8)
+local specWarnGTFO				= mod:NewSpecialWarningGTFO(118540, nil, nil, nil, 1, 8, nil, nil, "watchfeet")
 
 local timerDragonStrikeCD		= mod:NewNextTimer(15.7, 106823, nil, nil, 2, 5, nil, DBM_COMMON_L.TANK_ICON..DBM_COMMON_L.HEALER_ICON)--Kicks affect entire group as well (which are part of tank combo)
 local timerJadeDragonStrikeCD	= mod:NewNextTimer(15.7, 106841, nil, nil, 2, 5, nil, DBM_COMMON_L.TANK_ICON..DBM_COMMON_L.HEALER_ICON)--Kicks affect entire group as well (which are part of tank combo)

@@ -14,19 +14,21 @@ mod:RegisterCombat("combat")
 --NOTE: Heaving Yank happens at same time as Shriek and doesn't need it's own timer/warnings
 local warnSplatteringSpew			= mod:NewCountAnnounce(472745, 2)
 
-local specWarnBoneHack				= mod:NewSpecialWarningCount(472888, nil, nil, nil, 1, 2)
-local specWarnDebilitatingShriek	= mod:NewSpecialWarningCount(472736, nil, nil, nil, 2, 2)
-local specWarnCurseofDarkness		= mod:NewSpecialWarningCount(474105, nil, nil, nil, 2, 2)
+local specWarnHeavingYank			= mod:NewSpecialWarningBlizzYou(472793, nil, nil, nil, 3, 2, nil, nil, "behindboss")
+local specWarnSplatteringSpew		= mod:NewSpecialWarningBlizzYou(472745, nil, nil, nil, 1, 2, nil, nil, "poolyou")
+local specWarnBoneHack				= mod:NewSpecialWarningCount(472888, nil, nil, nil, 1, 2, nil, nil, "defensive")
+local specWarnDebilitatingShriek	= mod:NewSpecialWarningCount(472736, nil, nil, nil, 2, 2, nil, nil, "aesoon")
+local specWarnCurseofDarkness		= mod:NewSpecialWarningCount(474105, nil, nil, nil, 2, 2, nil, nil, "mobsoon")
 
 local timerBoneHackCD				= mod:NewCDCountTimer(17.3, 472888, nil, "Tank", nil, 2, nil, DBM_COMMON_L.TANK_ICON)
-local timerCurseofDarknessCD		= mod:NewCDCountTimer(22.7, 474105, nil, nil, nil, 1)
-local timerDebilitatingShriekCD		= mod:NewCDCountTimer(48, 472736, nil, nil, nil, 2)
-local timerSplatteringSpewCD		= mod:NewCDCountTimer(27.3, 472777, nil, nil, nil, 3)
---Midnight private aura replacements
-mod:AddPrivateAuraSoundOption({1253834,1215803}, true, 474105, 4, 1, "justrun", 2)--Curse of Darkness
-mod:AddPrivateAuraSoundOption(472793, true, 472795, 1, 1, "behindboss", 2)--Heaving Yank
-mod:AddPrivateAuraSoundOption(474129, true, 472745, 1, 1, "poolyou", 18)--Splattering Spew
-mod:AddPrivateAuraSoundOption(472777, true, 472777, 4, 2, "watchfeet", 8)--Gunk Splatter GTFO
+local timerCurseofDarknessCD		= mod:NewCDCountTimer(22.7, 474105, nil, nil, 2, 3, nil, DBM_COMMON_L.CURSE_ICON)
+local timerDebilitatingShriekCD		= mod:NewCDCountTimer(48, 472736, nil, nil, nil, 2, nil, DBM_COMMON_L.IMPORTANT_ICON)
+local timerSplatteringSpewCD		= mod:NewCDCountTimer(27.3, 472777, nil, nil, nil, 3, nil, DBM_COMMON_L.HEALER_ICON)
+--Custom Aura Sounds
+mod:AddAuraSoundOption({1253834,1215803}, true, 474105, 4, 1, "fixateyou", 19)--Curse of Darkness
+--mod:AddAuraSoundOption(472793, true, 472795, 1, 1, "behindboss", 2)--Heaving Yank (handled by ENCOUNTER_WARNING intercept)
+--mod:AddAuraSoundOption(474129, true, 472745, 1, 1, "poolyou", 18)--Splattering Spew (handled by ENCOUNTER_WARNING intercept)
+mod:AddAuraSoundOption(472777, true, 472777, 4, 2, "watchfeet", 8)--Gunk Splatter GTFO
 
 mod.vb.boneHackCount = 0
 mod.vb.curseofDarknessCount = 0
@@ -38,16 +40,24 @@ local activeEventTypes = {}
 local shriekTiming = {}
 
 ---@param self DBMMod
-local function setFallback(self)
-	if self:IsTank() then
-		specWarnBoneHack:SetAlert(25, "defensive", 2)
+---@param dontSetAlerts boolean? Called on engage when we only want to set timeline parameters and not touch encounter alerts
+local function setFallback(self, dontSetAlerts)
+	if not dontSetAlerts then
+		if self:IsTank() then
+			specWarnBoneHack:SetAlert(25, "defensive", 2)
+		end
+		specWarnCurseofDarkness:SetAlert(26, "mobsoon", 2)
+		specWarnDebilitatingShriek:SetAlert(27, "aesoon", 2)
+		specWarnHeavingYank:SetAlert(29, "behindboss", 2, 4, 0)
+		specWarnSplatteringSpew:SetAlert(28, "poolyou", 18, 2, 0)
 	end
-	specWarnCurseofDarkness:SetAlert(26, "mobsoon", 2)
-	specWarnDebilitatingShriek:SetAlert(27, "aesoon", 2)
-	timerBoneHackCD:SetTimeline(25)
-	timerCurseofDarknessCD:SetTimeline(26)
-	timerDebilitatingShriekCD:SetTimeline(27)
-	timerSplatteringSpewCD:SetTimeline(28)
+	--If user has DBM bars enabled, we only want to register colors to the blizz api so that the blizz bars are also colorized.
+	--If user has bars disabled, or we are in a bad state, onlyColor is false and we register countdowns as well.
+	local onlyColor = not DBM.Options.HideDBMBars and not badStateDetected
+	timerBoneHackCD:SetTimeline(25, onlyColor)
+	timerCurseofDarknessCD:SetTimeline(26, onlyColor)
+	timerDebilitatingShriekCD:SetTimeline(27, onlyColor)
+	timerSplatteringSpewCD:SetTimeline(28, onlyColor)
 end
 
 function mod:OnLimitedCombatStart()
@@ -59,12 +69,13 @@ function mod:OnLimitedCombatStart()
 	badStateDetected = false
 	activeEventTypes = {}
 	shriekTiming = {}
-	if self:IsMythicPlus() and DBM.Options.HardcodedTimer and not badStateDetected then
+	if DBM.Options.HardcodedTimer and not badStateDetected then
 		self:IgnoreBlizzardAPI()
 		self:RegisterShortTermEvents(
 			"ENCOUNTER_TIMELINE_EVENT_ADDED",
 			"ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED"
 		)
+		setFallback(self, true)
 	else
 		setFallback(self)
 	end
@@ -102,15 +113,11 @@ do
 				duration = timerExact
 			}
 		else
-			if not DBM.Options.DebugMode then
-				badStateDetected = true
-				self:ResumeBlizzardAPI()
-				self:UnregisterShortTermEvents()
-				setFallback(self)
-				DBM:Debug("|cffff0000Failed to match encounter timeline events to expected timers, falling back to Blizzard API|r", nil, nil, nil, true)
-			else
-				DBM:Debug("|cffff0000Failed to match encounter timeline events to expected timers|r", nil, nil, nil, true)
-			end
+			badStateDetected = true
+			self:ResumeBlizzardAPI()
+			self:UnregisterShortTermEvents()
+			setFallback(self)
+			DBM:Debug("|cffff0000Failed to match encounter timeline events to expected timers, falling back to Blizzard API|r", nil, nil, nil, true)
 		end
 	end
 
@@ -135,6 +142,7 @@ do
 			if finishedEventType and eventCount then
 				if finishedEventType == "splatteringSpew" then
 					warnSplatteringSpew:Show(eventCount)
+					specWarnSplatteringSpew:Show(eventCount, "poolyou")
 				elseif finishedEventType == "boneHack" then
 					if self:IsTank() then
 						specWarnBoneHack:Show(eventCount)
@@ -157,6 +165,7 @@ do
 					if finishedEventType == "debilitatingShriek" and eventCount then
 						specWarnDebilitatingShriek:Show(eventCount)
 						specWarnDebilitatingShriek:Play("aesoon")
+						specWarnHeavingYank:Show(eventCount, "behindboss")
 					end
 				else
 					self:TLCountCancel(eventID)

@@ -39,9 +39,9 @@ local warnCrystallineEruption				= mod:NewCountAnnounce(443494, 3)
 local warnFortifiedShell					= mod:NewCountAnnounce(423200, 2)
 local warnShatteredShell					= mod:NewTargetNoFilterAnnounce(423246, 1)
 
-local specWarnCrystallineSmash				= mod:NewSpecialWarningDefensive(422233, nil, nil, nil, 1, 2)
-local specWarnCrystallineShard				= mod:NewSpecialWarningSwitchCount(422261, "-Healer", nil, nil, 1, 2)
-local specWarnUnstableCrash					= mod:NewSpecialWarningDodgeCount(423538, "-Healer", nil, nil, 1, 2)
+local specWarnCrystallineSmash				= mod:NewSpecialWarningDefensive(422233, nil, nil, nil, 1, 2, nil, nil, "defensive")
+local specWarnCrystallineShard				= mod:NewSpecialWarningSwitchCount(422261, "-Healer", nil, nil, 1, 2, nil, nil, "targetchange")
+local specWarnUnstableCrash					= mod:NewSpecialWarningDodgeCount(423538, "-Healer", nil, nil, 1, 2, nil, nil, "watchstep")
 --local yellSomeAbility						= mod:NewYell(372107)
 --local specWarnGTFO						= mod:NewSpecialWarningGTFO(372820, nil, nil, nil, 1, 8)
 

@@ -13,8 +13,8 @@ mod:RegisterEvents(
 	"SPELL_CAST_START 198405 195031"
 )
 
-local specWarnScream			= mod:NewSpecialWarningInterrupt(198405, "HasInterrupt", nil, nil, 1, 2)
-local specWarnDefiantStrike		= mod:NewSpecialWarningDodge(195031, nil, nil, nil, 1, 2)
+local specWarnScream			= mod:NewSpecialWarningInterrupt(198405, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
+local specWarnDefiantStrike		= mod:NewSpecialWarningDodge(195031, nil, nil, nil, 1, 2, nil, nil, "chargemove")
 
 function mod:SPELL_CAST_START(args)
 	if not self.Options.Enabled then return end

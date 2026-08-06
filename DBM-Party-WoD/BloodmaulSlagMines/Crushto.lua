@@ -17,10 +17,10 @@ mod:RegisterEventsInCombat(
 
 local warnCrushingLeap			= mod:NewTargetNoFilterAnnounce(150751, 3)
 
-local specWarnFerociousYell		= mod:NewSpecialWarningInterrupt(150759, "HasInterrupt", nil, 2, 1, 2)
-local specWarnRaiseMiners		= mod:NewSpecialWarningSwitch(150801, "Tank", nil, nil, 1, 2)
-local specWarnEarthCrush		= mod:NewSpecialWarningSpell(153679, nil, nil, 2, 2, 2)--avoidable.
-local specWarnWildSlam			= mod:NewSpecialWarningSpell(150753, nil, nil, nil, 2, 2)--not avoidable. large aoe damage and knockback
+local specWarnFerociousYell		= mod:NewSpecialWarningInterrupt(150759, "HasInterrupt", nil, 2, 1, 2, nil, nil, "kickcast")
+local specWarnRaiseMiners		= mod:NewSpecialWarningSwitch(150801, "Tank", nil, nil, 1, 2, nil, nil, "mobsoon")
+local specWarnEarthCrush		= mod:NewSpecialWarningSpell(153679, nil, nil, 2, 2, 2, nil, nil, "shockwave")--avoidable.
+local specWarnWildSlam			= mod:NewSpecialWarningSpell(150753, nil, nil, nil, 2, 2, nil, nil, "carefly")--not avoidable. large aoe damage and knockback
 
 --local timerFerociousYellCD--12~18. large variable?
 --local timerRaiseMinersCD--14~26. large variable. useless.

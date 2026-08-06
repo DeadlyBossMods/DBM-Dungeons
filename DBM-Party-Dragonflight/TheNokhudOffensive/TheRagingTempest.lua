@@ -29,10 +29,10 @@ mod:RegisterEventsInCombat(
 local warnEnergySurge							= mod:NewSpellAnnounce(384686, 3, nil, "Tank|Healer")
 local warnSurgeBoss								= mod:NewStackAnnounce(394875, 4)
 
-local specWarnElectricalStorm					= mod:NewSpecialWarningCount(384620, nil, nil, nil, 2, 2)
-local specWarnLightingStrike					= mod:NewSpecialWarningMoveAway(384316, nil, nil, nil, 2, 2)
-local specWarnEnergySurge						= mod:NewSpecialWarningDispel(384686, "MagicDispeller", nil, nil, 1, 2)
-local specWarnGTFO								= mod:NewSpecialWarningGTFO(386916, nil, nil, nil, 1, 8)
+local specWarnElectricalStorm					= mod:NewSpecialWarningCount(384620, nil, nil, nil, 2, 2, nil, nil, "aesoon")
+local specWarnLightingStrike					= mod:NewSpecialWarningMoveAway(384316, nil, nil, nil, 2, 2, nil, nil, "scatter")
+local specWarnEnergySurge						= mod:NewSpecialWarningDispel(384686, "MagicDispeller", nil, nil, 1, 2, nil, nil, "dispelboss")
+local specWarnGTFO								= mod:NewSpecialWarningGTFO(386916, nil, nil, nil, 1, 8, nil, nil, "watchfeet")
 
 local timerLightingStrikeCD						= mod:NewCDTimer(20.2, 384316, nil, nil, nil, 3)
 local timerElectricStormCD						= mod:NewCDCountTimer(78.8, 384620, nil, nil, nil, 2, nil, DBM_COMMON_L.HEALER_ICON)--75+3 second cast

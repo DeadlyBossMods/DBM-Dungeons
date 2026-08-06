@@ -26,10 +26,10 @@ ability.id = 154442 and type = "begincast"
 --TODO, 154350 is not firing spell summmon anymore in 10.0.2 M+ version, Omen of Death moved to USCS but target scan needs to be rechecked as well
 local warnOmenOfDeath			= mod:NewTargetNoFilterAnnounce(154350, 3)
 
-local specWarnRitualOfBones		= mod:NewSpecialWarningSpell(154671, nil, nil, nil, 2, 2)
-local specWarnOmenOfDeath		= mod:NewSpecialWarningMove(154350, nil, nil, nil, 1, 2)
+local specWarnRitualOfBones		= mod:NewSpecialWarningSpell(154671, nil, nil, nil, 2, 2, nil, nil, "specialsoon")
+local specWarnOmenOfDeath		= mod:NewSpecialWarningMove(154350, nil, nil, nil, 1, 2, nil, nil, "runaway")
 local yellOmenOfDeath			= mod:NewYell(154350)
-local specWarnMalevolence		= mod:NewSpecialWarningDodge(154442, nil, nil, nil, 2, 2)
+local specWarnMalevolence		= mod:NewSpecialWarningDodge(154442, nil, nil, nil, 2, 2, nil, nil, "shockwave")
 
 local timerRitualOfBonesCD		= mod:NewCDTimer(50.5, 154671, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)
 local timerOmenOfDeathCD		= mod:NewCDTimer(10.5, 154350, nil, nil, nil, 3)

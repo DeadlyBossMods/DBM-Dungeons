@@ -21,8 +21,8 @@ mod:AddCustomTimerOptions(470039, true, 3, 0)
 mod:AddCustomTimerOptions(469478, true, 5, 0)
 mod:AddCustomTimerOptions(473114, true, 3, 0)
 mod:AddCustomTimerOptions(473070, true, 3, 0)
---Midnight private aura replacements
-mod:AddPrivateAuraSoundOption(470038, true, 470038, 1, 1, "linegather", 2)
+--Custom Aura Sounds
+mod:AddAuraSoundOption(470038, true, 470038, 1, 1, "linegather", 2)
 
 function mod:OnLimitedCombatStart()
 	self:EnableAlertOptions(469478, 508, "defensive", 2)

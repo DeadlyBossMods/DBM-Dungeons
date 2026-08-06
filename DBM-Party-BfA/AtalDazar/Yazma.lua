@@ -32,13 +32,13 @@ mod:RegisterEventsInCombat(
 local warnSoulRend					= mod:NewTargetAnnounce(259187, 4)
 local warnWrackingPain				= mod:NewTargetNoFilterAnnounce(250096, 4, nil, "Healer")
 
-local specWarnSoulRend				= mod:NewSpecialWarningRun(259187, nil, nil, nil, 4, 2)
+local specWarnSoulRend				= mod:NewSpecialWarningRun(259187, nil, nil, nil, 4, 2, nil, nil, "runout")
 local yellSoulRend					= mod:NewYell(259187)
-local specWarnWrackingPain			= mod:NewSpecialWarningInterruptCount(250096, "HasInterrupt", nil, nil, 1, 2)
-local specWarnWrackingPainYou		= mod:NewSpecialWarningYou(250096, nil, nil, nil, 1, 2)
-local specWarnSkewer				= mod:NewSpecialWarningDefensive(249919, nil, nil, nil, 1, 2)
-local specWarnEchoes				= mod:NewSpecialWarningDodgeCount(250050, nil, nil, nil, 2, 2)
-local specWarnGTFO					= mod:NewSpecialWarningGTFO(250036, nil, nil, nil, 1, 8)
+local specWarnWrackingPain			= mod:NewSpecialWarningInterruptCount(250096, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
+local specWarnWrackingPainYou		= mod:NewSpecialWarningYou(250096, nil, nil, nil, 1, 2, nil, nil, "targetyou")
+local specWarnSkewer				= mod:NewSpecialWarningDefensive(249919, nil, nil, nil, 1, 2, nil, nil, "defensive")
+local specWarnEchoes				= mod:NewSpecialWarningDodgeCount(250050, nil, nil, nil, 2, 2, nil, nil, "watchstep")
+local specWarnGTFO					= mod:NewSpecialWarningGTFO(250036, nil, nil, nil, 1, 8, nil, nil, "watchfeet")
 
 local timerSoulrendCD				= mod:NewCDCountTimer(38.4, 259187, nil, nil, nil, 3, nil, DBM_COMMON_L.DAMAGE_ICON)
 local timerWrackingPainCD			= mod:NewCDCountTimer(16.7, 250096, nil, nil, nil, 3)--17-23

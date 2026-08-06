@@ -21,8 +21,8 @@ local warnHeatWave				= mod:NewSpellAnnounce(152940, 3, nil, nil, nil, nil, nil,
 local warnBurningSlag			= mod:NewSpellAnnounce(152939, 3)
 local warnFieryBoulder			= mod:NewCountAnnounce(153247, 4)
 
-local specWarnFieryBoulder		= mod:NewSpecialWarningCount(153247, nil, nil, 2, 2, 12)--Important to everyone
-local specWarnBurningSlagFire	= mod:NewSpecialWarningMove(152939, nil, nil, 2, 1, 8)
+local specWarnFieryBoulder		= mod:NewSpecialWarningCount(153247, nil, nil, 2, 2, 12, nil, nil, "meteorrun")--Important to everyone
+local specWarnBurningSlagFire	= mod:NewSpecialWarningMove(152939, nil, nil, 2, 1, 8, nil, nil, "watchfeet")
 
 local timerFieryBoulderCD		= mod:NewNextTimer(13.3, 153247, nil, nil, nil, 3)--13.3-13.4 Observed
 local timerHeatWave				= mod:NewBuffActiveTimer(9.5, 152940, nil, nil, nil, 2)

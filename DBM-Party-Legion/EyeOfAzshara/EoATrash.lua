@@ -17,11 +17,11 @@ mod:RegisterEvents(
 --TODO, still missing some GTFOs for this. Possibly other important spells.
 local warnArcaneBomb			= mod:NewTargetAnnounce(192706, 4)
 
-local specWarnStorm				= mod:NewSpecialWarningInterrupt(196870, "HasInterrupt", nil, nil, 1, 2)
-local specWarnRejuvWaters		= mod:NewSpecialWarningInterrupt(195046, "HasInterrupt", nil, nil, 1, 2)
-local specWarnUndertow			= mod:NewSpecialWarningInterrupt(195284, "HasInterrupt", nil, nil, 1, 2)--Might only be interruptable by stuns, if so change option default?
-local specWarnSpraySand			= mod:NewSpecialWarningDodge(196127, "Tank", nil, nil, 1, 2)
-local specWarnArcaneBomb		= mod:NewSpecialWarningMoveAway(192706, nil, nil, nil, 3, 2)
+local specWarnStorm				= mod:NewSpecialWarningInterrupt(196870, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
+local specWarnRejuvWaters		= mod:NewSpecialWarningInterrupt(195046, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
+local specWarnUndertow			= mod:NewSpecialWarningInterrupt(195284, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")--Might only be interruptable by stuns, if so change option default?
+local specWarnSpraySand			= mod:NewSpecialWarningDodge(196127, "Tank", nil, nil, 1, 2, nil, nil, "shockwave")
+local specWarnArcaneBomb		= mod:NewSpecialWarningMoveAway(192706, nil, nil, nil, 3, 2, nil, nil, "runout")
 local yellArcaneBomb			= mod:NewYell(192706)
 
 function mod:SPELL_CAST_START(args)

@@ -29,12 +29,12 @@ mod:RegisterEventsInCombat(
 --]]
 local warnShadowsofDoubt				= mod:NewTargetNoFilterAnnounce(448560, 3)
 
-local specWarnSubjugate					= mod:NewSpecialWarningDefensive(434722, nil, nil, nil, 1, 2)
-local specWarnTerrorize					= mod:NewSpecialWarningDodgeCount(434779, nil, nil, nil, 2, 15)
-local specWarnShadowsofDoubt			= mod:NewSpecialWarningMoveAway(448560, nil, nil, nil, 1, 2)
+local specWarnSubjugate					= mod:NewSpecialWarningDefensive(434722, nil, nil, nil, 1, 2, nil, nil, "defensive")
+local specWarnTerrorize					= mod:NewSpecialWarningDodgeCount(434779, nil, nil, nil, 2, 15, nil, nil, "frontal")
+local specWarnShadowsofDoubt			= mod:NewSpecialWarningMoveAway(448560, nil, nil, nil, 1, 2, nil, nil, "runout")
 local yellShadowsofDoubt				= mod:NewYell(448560)
 local yellShadowsofDoubtFades			= mod:NewShortFadesYell(448560)
-local specWarnGTFO						= mod:NewSpecialWarningGTFO(434926, nil, nil, nil, 1, 8)
+local specWarnGTFO						= mod:NewSpecialWarningGTFO(434926, nil, nil, nil, 1, 8, nil, nil, "watchfeet")
 
 local timerSubjugateCD					= mod:NewVarCountTimer(13.5, 434722, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerTerrorizeCD					= mod:NewVarCountTimer(8.4, 434779, nil, nil, nil, 3)

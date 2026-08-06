@@ -37,7 +37,7 @@ local warningKnockAway, timerKnockAwayCD
 if isRetail or isCata then
 	warningPound				= mod:NewTargetNoFilterAnnounce(32346, 2)
 
-	specWarnSteamBlast			= mod:NewSpecialWarningInterrupt(93655, "HasInterrupt", nil, nil, 1, 2)
+	specWarnSteamBlast			= mod:NewSpecialWarningInterrupt(93655, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
 
 	timerSteamBlastCD			= mod:NewAITimer(180, 93655, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 	timerPoundCD				= mod:NewAITimer(180, 74720, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
@@ -50,7 +50,7 @@ end
 --Only vanilla and tbc have this
 local warningActivateBomb
 if isClassic or isBCC then
-	warningActivateBomb			= mod:NewSpellAnnounce(11518, 2)
+	warningActivateBomb			= mod:NewSpellAnnounce(11518, 2, "133709")
 end
 
 function mod:OnCombatStart(delay)

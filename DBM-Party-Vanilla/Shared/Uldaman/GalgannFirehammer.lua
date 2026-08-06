@@ -15,8 +15,8 @@ mod:RegisterEventsInCombat(
 
 local warningFireNova				= mod:NewSpellAnnounce(11969, 2)
 
-local specWarnFlameSpike			= mod:NewSpecialWarningInterrupt(6725, "HasInterrupt", nil, nil, 1, 2)
-local specWarnFlameLash				= mod:NewSpecialWarningInterrupt(3356, "HasInterrupt", nil, nil, 1, 2)
+local specWarnFlameSpike			= mod:NewSpecialWarningInterrupt(6725, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
+local specWarnFlameLash				= mod:NewSpecialWarningInterrupt(3356, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
 
 local timerFireNovaCD				= mod:NewAITimer(180, 11969, nil, nil, nil, 2)
 

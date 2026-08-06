@@ -33,23 +33,23 @@ mod:RegisterEventsInCombat(
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(24740))
 local warnWildCleave							= mod:NewSpellAnnounce(369563, 3, nil, "Tank")
 
-local specWarnHeavyArrow						= mod:NewSpecialWarningDodge(369573, nil, nil, nil, 2, 2)
+local specWarnHeavyArrow						= mod:NewSpecialWarningDodge(369573, nil, nil, nil, 2, 2, nil, nil, "shockwave")
 
 local timerHeavyArrowCD							= mod:NewCDTimer(20.6, 369573, nil, nil, nil, 3)
 local timerWildCleaveCD							= mod:NewCDTimer(17, 369563, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)--Council fights can be messy, on for everyone for now
 
 --Eric "The Swift"
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(24781))
-local specWarnSkullcracker						= mod:NewSpecialWarningDodge(369791, nil, nil, nil, 2, 2)
+local specWarnSkullcracker						= mod:NewSpecialWarningDodge(369791, nil, nil, nil, 2, 2, nil, nil, "chargemove")
 
 local timerSkullcrackerCD						= mod:NewCDTimer(25.5, 369791, nil, nil, nil, 3)
 --Olaf
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(24782))
 local warnRicochetingShield						= mod:NewTargetNoFilterAnnounce(369677, 3)
 
-local specWarnRicochetingShield					= mod:NewSpecialWarningYou(369677, nil, nil, nil, 1, 2)
+local specWarnRicochetingShield					= mod:NewSpecialWarningYou(369677, nil, nil, nil, 1, 2, nil, nil, "targetyou")
 local yellRicochetingShield						= mod:NewYell(369677)
-local specWarnDefensiveBulwark					= mod:NewSpecialWarningInterrupt(369602, "HasInterrupt", nil, nil, 1, 2)
+local specWarnDefensiveBulwark					= mod:NewSpecialWarningInterrupt(369602, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
 
 local timerRicochetingShieldCD					= mod:NewCDTimer(16.9, 369677, nil, nil, nil, 3)
 local timerDefensiveBulwarkCD					= mod:NewCDTimer(32.4, 369602, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
@@ -57,7 +57,7 @@ local timerDefensiveBulwarkCD					= mod:NewCDTimer(32.4, 369602, nil, nil, nil, 
 mod:AddTimerLine(DBM:EJ_GetSectionInfo(24783))
 local timerLongboatRaidCD						= mod:NewCDTimer(27.4, 375924, nil, nil, nil, 6)
 
-local specWarnGTFO								= mod:NewSpecialWarningGTFO(377825, nil, nil, nil, 1, 8)
+local specWarnGTFO								= mod:NewSpecialWarningGTFO(377825, nil, nil, nil, 1, 8, nil, nil, "watchfeet")
 
 
 function mod:ShieldTarget(targetname)

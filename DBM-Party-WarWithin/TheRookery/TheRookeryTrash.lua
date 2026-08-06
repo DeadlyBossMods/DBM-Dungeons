@@ -36,21 +36,21 @@ local warnEnergizedBarrage 					= mod:NewCastAnnounce(427616, 3, nil, nil, "Tank
 local warnAttractingShadows					= mod:NewCastAnnounce(430812, 3, nil, nil, nil, nil, nil, 12)
 local warnVoidExtraction					= mod:NewCastAnnounce(472764, 3)
 
-local specWarnLocalizedStorm				= mod:NewSpecialWarningSpell(427404, nil, nil, nil, 2, 2)--Maybe change to Break LOS alert, needs more testing
-local specWarnBoundingVoid					= mod:NewSpecialWarningDodge(426893, nil, nil, nil, 2, 2)
+local specWarnLocalizedStorm				= mod:NewSpecialWarningSpell(427404, nil, nil, nil, 2, 2, nil, nil, "aesoon")--Maybe change to Break LOS alert, needs more testing
+local specWarnBoundingVoid					= mod:NewSpecialWarningDodge(426893, nil, nil, nil, 2, 2, nil, nil, "watchorb")
 --local specWarnThunderstrike					= mod:NewSpecialWarningDodge(430013, nil, nil, nil, 2, 2)
-local specWarnWildLightning					= mod:NewSpecialWarningDodge(474018, nil, nil, nil, 2, 15)
-local specWarnUmbralWave					= mod:NewSpecialWarningDodge(1214546, nil, nil, nil, 2, 2)
-local specWarnUnleashedDarkness				= mod:NewSpecialWarningDodge(1214628, nil, nil, nil, 2, 2)
-local specWarnSeepingCorruption				= mod:NewSpecialWarningMoveAway(430179, nil, nil, nil, 1, 2)
+local specWarnWildLightning					= mod:NewSpecialWarningDodge(474018, nil, nil, nil, 2, 15, nil, nil, "frontal")
+local specWarnUmbralWave					= mod:NewSpecialWarningDodge(1214546, nil, nil, nil, 2, 2, nil, nil, "watchorb")
+local specWarnUnleashedDarkness				= mod:NewSpecialWarningDodge(1214628, nil, nil, nil, 2, 2, nil, nil, "aesoon")
+local specWarnSeepingCorruption				= mod:NewSpecialWarningMoveAway(430179, nil, nil, nil, 1, 2, nil, nil, "runout")
 local yellSeepingCorruption					= mod:NewShortYell(430179)
-local specWarnVoidCrush						= mod:NewSpecialWarningMoveAway(474031, nil, nil, nil, 1, 2)
+local specWarnVoidCrush						= mod:NewSpecialWarningMoveAway(474031, nil, nil, nil, 1, 2, nil, nil, "scatter")
 local yellVoidCrush							= mod:NewShortYell(474031)
-local specWarnSeepingCorruptionDispel		= mod:NewSpecialWarningDispel(430179, "RemoveCurse", nil, nil, 1, 2)
-local specWarnLightingSurgeDispel			= mod:NewSpecialWarningDispel(427260, "RemoveEnrage", nil, nil, 1, 2)
-local specWarnFeastingVoid					= mod:NewSpecialWarningDispel(1214523, "RemoveMagic", nil, 2, 1, 2)
-local specWarnLightingSurge					= mod:NewSpecialWarningInterrupt(427260, "HasInterrupt", nil, nil, 1, 2)
-local specWarnArcingVoid					= mod:NewSpecialWarningInterrupt(430805, "HasInterrupt", nil, nil, 1, 2)
+local specWarnSeepingCorruptionDispel		= mod:NewSpecialWarningDispel(430179, "RemoveCurse", nil, nil, 1, 2, nil, nil, "helpdispel")
+local specWarnLightingSurgeDispel			= mod:NewSpecialWarningDispel(427260, "RemoveEnrage", nil, nil, 1, 2, nil, nil, "enrage")
+local specWarnFeastingVoid					= mod:NewSpecialWarningDispel(1214523, "RemoveMagic", nil, 2, 1, 2, nil, nil, "dispelnow")
+local specWarnLightingSurge					= mod:NewSpecialWarningInterrupt(427260, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
+local specWarnArcingVoid					= mod:NewSpecialWarningInterrupt(430805, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
 
 --Almost all timers probably wrong now, but can't use public WCL to fix this since all logs short
 --Also, all of them were moved to success preemtively but if stops actually DO put any of these on CD, then the preemtive move actually broke timer

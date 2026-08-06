@@ -16,7 +16,7 @@ mod:RegisterEventsInCombat(
 local warnWellCorruption		= mod:NewSpellAnnounce(72362, 3)
 local warnCorruptedFlesh		= mod:NewSpellAnnounce(72363, 3)
 
-local specWarnWellCorruption	= mod:NewSpecialWarningMove(72362, nil, nil, nil, 1, 8)
+local specWarnWellCorruption	= mod:NewSpecialWarningMove(72362, nil, nil, nil, 1, 8, nil, nil, "watchfeet")
 
 local timerWellCorruptionCD		= mod:NewCDTimer(13, 72362, nil, nil, nil, 3)
 local timerCorruptedFlesh		= mod:NewBuffActiveTimer(8, 72363, nil, nil, nil, 5)

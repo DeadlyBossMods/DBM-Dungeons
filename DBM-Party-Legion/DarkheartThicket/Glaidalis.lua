@@ -36,11 +36,11 @@ ability.id = 198379 and type = "begincast"
 local warnLeap					= mod:NewCountAnnounce(196354, 2)
 local warnNightFall				= mod:NewCountAnnounce(212464, 2)
 
-local specWarnNightfall			= mod:NewSpecialWarningMove(212464, nil, nil, nil, 1, 2)
+local specWarnNightfall			= mod:NewSpecialWarningMove(212464, nil, nil, nil, 1, 2, nil, nil, "runaway")
 --local specWarnLeap			= mod:NewSpecialWarningDodge(196354, nil, nil, nil, 1)
 local yellLeap					= mod:NewYell(196354)
-local specWarnRampage			= mod:NewSpecialWarningDefensive(198379, nil, nil, nil, 1, 2)
-local specWarnFixate			= mod:NewSpecialWarningYou(198477, nil, nil, nil, 1, 2)
+local specWarnRampage			= mod:NewSpecialWarningDefensive(198379, nil, nil, nil, 1, 2, nil, nil, "defensive")
+local specWarnFixate			= mod:NewSpecialWarningYou(198477, nil, nil, nil, 1, 2, nil, nil, "targetyou")
 
 local timerLeapCD				= mod:NewCDCountTimer(11.9, 196354, nil, nil, nil, 3)--11.9-17 depending on travel time and spell queuing (timer could be even shorter, small sample)
 local timerRampageCD			= mod:NewCDCountTimer(26.7, 198379, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON)--26.7-32.7

@@ -20,10 +20,10 @@ mod:RegisterEventsInCombat(
 --TODO, voice file "face eye" or "face orb" (212564)
 local warnTeleport				= mod:NewSpellAnnounce(200898, 2)
 
-local specWarnSapSoul			= mod:NewSpecialWarningInterrupt(200905, "HasInterrupt", nil, nil, 1, 2)
-local specWarnSapSoulHard		= mod:NewSpecialWarningCast(200905, nil, nil, nil, 1, 2)
-local specWarnFear				= mod:NewSpecialWarningSpell(201488, nil, nil, nil, 2, 2)
-local specWarnStare				= mod:NewSpecialWarningYou(212564, nil, nil, nil, 1, 2)--Disable by default if spammy
+local specWarnSapSoul			= mod:NewSpecialWarningInterrupt(200905, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
+local specWarnSapSoulHard		= mod:NewSpecialWarningCast(200905, nil, nil, nil, 1, 2, nil, nil, "stopcast")
+local specWarnFear				= mod:NewSpecialWarningSpell(201488, nil, nil, nil, 2, 2, nil, nil, "fearsoon")
+local specWarnStare				= mod:NewSpecialWarningYou(212564, nil, nil, nil, 1, 2, nil, nil, "targetyou")--Disable by default if spammy
 
 local timerSapSoulCD			= mod:NewCDTimer(21.5, 200905, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON, nil, 1, 4)
 local timerTormOrbCD			= mod:NewNextTimer(15, 212567, nil, nil, nil, 1)

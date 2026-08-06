@@ -43,10 +43,10 @@ local warnBrittleBarkOver			= mod:NewEndAnnounce(164275, 2)
 local warnUncheckedGrowth			= mod:NewTargetAnnounce(164294, 2)
 local warnUncheckedGrowthSpawn		= mod:NewSpellAnnounce(164556, 3)--Add Spawn
 
-local specWarnUncheckedGrowthYou	= mod:NewSpecialWarningYou(164294, nil, nil, nil, 1, 2)--The add fixate is on you
-local specWarnUncheckedGrowth		= mod:NewSpecialWarningGTFO(164294, nil, nil, nil, 1, 8)--GTFO
-local specWarnUncheckedGrowthAdd	= mod:NewSpecialWarningSwitch(164556, false, nil, nil, 1, 2)--Spawn
-local specWarnParchedGrasp			= mod:NewSpecialWarningSpell(164357, "Tank", nil, nil, 1, 2)
+local specWarnUncheckedGrowthYou	= mod:NewSpecialWarningYou(164294, nil, nil, nil, 1, 2, nil, nil, "targetyou")--The add fixate is on you
+local specWarnUncheckedGrowth		= mod:NewSpecialWarningGTFO(164294, nil, nil, nil, 1, 8, nil, nil, "watchfeet")--GTFO
+local specWarnUncheckedGrowthAdd	= mod:NewSpecialWarningSwitch(164556, false, nil, nil, 1, 2, nil, nil, "killmob")--Spawn
+local specWarnParchedGrasp			= mod:NewSpecialWarningSpell(164357, "Tank", nil, nil, 1, 2, nil, nil, "breathsoon")
 
 local timerParchedGrasp				= mod:NewCDTimer(16, 164357, nil, "Tank", 2, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerBrittleBarkCD			= mod:NewCDTimer(40, 164275, nil, nil, nil, 6)--30 seconds pre 10.2 https://www.warcraftlogs.com/reports/y2cYmZVWKqGkAHbn#fight=last&pins=2%24Off%24%23244F4B%24expression%24ability.id%20%3D%20164275%20or%20ability.id%20%3D%20164556&view=events&translate=true

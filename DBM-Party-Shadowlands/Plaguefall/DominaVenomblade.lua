@@ -29,12 +29,12 @@ mod:RegisterEventsInCombat(
 local warnAmbush					= mod:NewTargetNoFilterAnnounce(325245, 4)
 local warnSolitaryPrey				= mod:NewYouAnnounce(336258, 4)
 
-local specWarnAmbush				= mod:NewSpecialWarningYou(325245, nil, nil, nil, 1, 2)
+local specWarnAmbush				= mod:NewSpecialWarningYou(325245, nil, nil, nil, 1, 2, nil, nil, "targetyou")
 local yellAmbush					= mod:NewYell(325245)
 local yellAmbushFades				= mod:NewShortFadesYell(325245)
-local specWarnSolitaryPrey			= mod:NewSpecialWarningYou(336258, false, nil, nil, 1, 2)--Off by default since it may feel excessively spammy if they move a lot
-local specWarnCytotoxicSlash		= mod:NewSpecialWarningDispel(325552, "RemovePoison", nil, nil, 1, 2)
-local specWarnCytotoxicSlashTank	= mod:NewSpecialWarningDefensive(325552, nil, nil, nil, 1, 2)
+local specWarnSolitaryPrey			= mod:NewSpecialWarningYou(336258, false, nil, nil, 1, 2, nil, nil, "targetyou")--Off by default since it may feel excessively spammy if they move a lot
+local specWarnCytotoxicSlash		= mod:NewSpecialWarningDispel(325552, "RemovePoison", nil, nil, 1, 2, nil, nil, "helpdispel")
+local specWarnCytotoxicSlashTank	= mod:NewSpecialWarningDefensive(325552, nil, nil, nil, 1, 2, nil, nil, "defensive")
 --local specWarnGTFO				= mod:NewSpecialWarningGTFO(257274, nil, nil, nil, 1, 8)
 
 --local timerShadowcloneCD			= mod:NewCDTimer(13, 325457, nil, nil, nil, 6)

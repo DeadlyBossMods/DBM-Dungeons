@@ -39,10 +39,10 @@ if (wowToc >= 100200) then
 	--]]
 	local warnCinderboltStorm							= mod:NewSpellAnnounce(427899, 4)
 
-	local specWarnGlacialFusion							= mod:NewSpecialWarningDodge(428082, nil, nil, nil, 2, 2)
-	local specWarnSpetialCompression					= mod:NewSpecialWarningCount(428139, nil, nil, nil, 2, 13)
-	local specWarnFrostbolt								= mod:NewSpecialWarningInterrupt(427863, "HasInterrupt", nil, nil, 1, 2)--Prio frostbolt interrupts over other two, because of slow
-	local specWarnGTFO									= mod:NewSpecialWarningGTFO(426991, nil, nil, nil, 1, 8)
+	local specWarnGlacialFusion							= mod:NewSpecialWarningDodge(428082, nil, nil, nil, 2, 2, nil, nil, "watchorb")
+	local specWarnSpetialCompression					= mod:NewSpecialWarningCount(428139, nil, nil, nil, 2, 13, nil, nil, "pullin")
+	local specWarnFrostbolt								= mod:NewSpecialWarningInterrupt(427863, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")--Prio frostbolt interrupts over other two, because of slow
+	local specWarnGTFO									= mod:NewSpecialWarningGTFO(426991, nil, nil, nil, 1, 8, nil, nil, "watchfeet")
 
 	local timerCinderboltStormCD						= mod:NewCDTimer(60, 427899, nil, nil, nil, 2)
 	local timerGlacialFusionCD							= mod:NewCDTimer(60, 428082, nil, nil, nil, 3)
@@ -184,7 +184,7 @@ else
 
 	local specWarnParasiticGrowth	= mod:NewSpecialWarningCount(168885, "Tank")--No voice ideas for this
 	--local specWarnFireBloom			= mod:NewSpecialWarningSpell(166492, nil, nil, nil, 2)
-	local specWarnFrozenRainMove	= mod:NewSpecialWarningMove(166726, nil, nil, nil, 1, 8)
+	local specWarnFrozenRainMove	= mod:NewSpecialWarningMove(166726, nil, nil, nil, 1, 8, nil, nil, "watchfeet")
 
 	local timerParasiticGrowthCD	= mod:NewCDCountTimer(11.5, 168885, nil, "Tank|Healer", 2, 5, nil, DBM_COMMON_L.TANK_ICON)--Every 12 seconds unless comes off cd during fireball/frostbolt, then cast immediately after.
 

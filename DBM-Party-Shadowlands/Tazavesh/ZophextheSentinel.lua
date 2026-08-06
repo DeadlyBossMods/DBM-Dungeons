@@ -17,11 +17,11 @@ mod:AddCustomTimerOptions(1236348, true, 3, 0)
 mod:AddCustomTimerOptions(348350, true, 3, 0)--Interrogation
 mod:AddCustomTimerOptions(346006, true, 3, 0)--Impound Contraband
 mod:AddCustomTimerOptions(346204, true, 5, 0)--Armed Security
---Midnight private aura replacements
+--Custom Aura Sounds
 --Recheck https://www.wowhead.com/beta/spell=347949/interrogation when this dungeon returns
-mod:AddPrivateAuraSoundOption(348366, true, 348366, 1, 2, "watchfeet", 8)--GTFO
-mod:AddPrivateAuraSoundOption(345990, true, 348350, 1, 1, "debuffyou", 17)--Containment Cell
-mod:AddPrivateAuraSoundOption(345770, true, 346006, 1, 1, "targetyou", 2)--Impound Contraband
+mod:AddAuraSoundOption(348366, true, 348366, 1, 2, "watchfeet", 8)--GTFO
+mod:AddAuraSoundOption(345990, true, 348350, 1, 1, "debuffyou", 17)--Containment Cell
+mod:AddAuraSoundOption(345770, true, 346006, 1, 1, "targetyou", 2)--Impound Contraband
 
 function mod:OnLimitedCombatStart()
 	self:EnableAlertOptions(1236348, 562, "frontal", 15)
@@ -59,13 +59,13 @@ local warnContainmentCell			= mod:NewTargetNoFilterAnnounce(345990)--When cell f
 local warnInpoundContraband			= mod:NewTargetNoFilterAnnounce(345770, 2)--Not filtered, because if it's on a tank or healer its kinda important
 local warnInpoundContrabandEnded	= mod:NewEndAnnounce(345770, 1)
 
-local specWarnInterrogation			= mod:NewSpecialWarningRun(348350, nil, nil, nil, 4, 2)
+local specWarnInterrogation			= mod:NewSpecialWarningRun(348350, nil, nil, nil, 4, 2, nil, nil, "targetyou")
 local yellInterrogation				= mod:NewYell(348350)
-local specWarnInterrogationOther	= mod:NewSpecialWarningSwitchCustom(348350, "Dps", nil, nil, 1, 2)
-local specWarnContainmentCell		= mod:NewSpecialWarningYou(345990, false, nil, nil, 1, 2)--Optional, but probably don't need, you already know it's you from targetting debuff
-local specWarnInpoundContraband		= mod:NewSpecialWarningYou(345770, nil, nil, nil, 1, 2)
-local specWarnChargedSlash			= mod:NewSpecialWarningDodge(1236348, nil, nil, nil, 2, 15)
-local specWarnGTFO					= mod:NewSpecialWarningGTFO(348366, nil, nil, nil, 1, 8)
+local specWarnInterrogationOther	= mod:NewSpecialWarningSwitchCustom(348350, "Dps", nil, nil, 1, 2, nil, nil, "targetchange")
+local specWarnContainmentCell		= mod:NewSpecialWarningYou(345990, false, nil, nil, 1, 2, nil, nil, "targetyou")--Optional, but probably don't need, you already know it's you from targetting debuff
+local specWarnInpoundContraband		= mod:NewSpecialWarningYou(345770, nil, nil, nil, 1, 2, nil, nil, "targetyou")
+local specWarnChargedSlash			= mod:NewSpecialWarningDodge(1236348, nil, nil, nil, 2, 15, nil, nil, "frontal")
+local specWarnGTFO					= mod:NewSpecialWarningGTFO(348366, nil, nil, nil, 1, 8, nil, nil, "watchfeet")
 
 local timerInterrogationCD			= mod:NewCDTimer(40.1, 348350, nil, nil, nil, 3)
 local timerArmedSecurityCD			= mod:NewVarTimer("v34.4-53", 346204, nil, nil, nil, 6)

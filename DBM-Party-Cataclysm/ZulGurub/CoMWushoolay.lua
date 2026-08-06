@@ -18,8 +18,8 @@ mod:RegisterEventsInCombat(
 local warnRush			= mod:NewTargetNoFilterAnnounce(96697, 3)
 local warnRod			= mod:NewCastAnnounce(96698, 4)
 
-local specWarnRush		= mod:NewSpecialWarningYou(96697, nil, nil, nil, 1, 2)--Assumed target scanning even works here, if it doesn't mod will be broken.
-local specWarnCloud		= mod:NewSpecialWarningMove(96710, nil, nil, nil, 1, 8)
+local specWarnRush		= mod:NewSpecialWarningYou(96697, nil, nil, nil, 1, 2, nil, nil, "targetyou")--Assumed target scanning even works here, if it doesn't mod will be broken.
+local specWarnCloud		= mod:NewSpecialWarningMove(96710, nil, nil, nil, 1, 8, nil, nil, "watchfeet")
 
 local timerRushCD		= mod:NewNextTimer(25, 96697, nil, nil, nil, 3)
 

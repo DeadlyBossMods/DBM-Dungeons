@@ -42,17 +42,17 @@ local warnIronHook					= mod:NewSpellAnnounce(272662, 4, nil, nil, nil, nil, nil
 local warnIronGaze					= mod:NewTargetNoFilterAnnounce(260954, 2)
 
 --Chopper Redhook
-local specWarnOntheHook				= mod:NewSpecialWarningRun(257459, nil, nil, nil, 4, 2)
+local specWarnOntheHook				= mod:NewSpecialWarningRun(257459, nil, nil, nil, 4, 2, nil, nil, "justrun")
 local yellOntheHook					= mod:NewYell(257459)
-local specWarnGoreCrash				= mod:NewSpecialWarningDodge(257326, nil, nil, nil, 2, 2)
+local specWarnGoreCrash				= mod:NewSpecialWarningDodge(257326, nil, nil, nil, 2, 2, nil, nil, "watchstep")
 --Sergeant Bainbridge
-local specWarnIronGaze				= mod:NewSpecialWarningRun(260954, nil, nil, nil, 4, 2)
+local specWarnIronGaze				= mod:NewSpecialWarningRun(260954, nil, nil, nil, 4, 2, nil, nil, "justrun")
 local yellIronGaze					= mod:NewYell(260954)
-local specWarnHangmansNoose			= mod:NewSpecialWarningRun(261428, nil, nil, nil, 4, 2)
-local specWarnSteelTempest			= mod:NewSpecialWarningDodge(260924, nil, nil, nil, 2, 2)
+local specWarnHangmansNoose			= mod:NewSpecialWarningRun(261428, nil, nil, nil, 4, 2, nil, nil, "justrun")
+local specWarnSteelTempest			= mod:NewSpecialWarningDodge(260924, nil, nil, nil, 2, 2, nil, nil, "watchstep")
 --local specWarnGTFO				= mod:NewSpecialWarningGTFO(238028, nil, nil, nil, 1, 8)
 --BOTH
-local specWarnCannonBarrage			= mod:NewSpecialWarningDodgeCount(257540, nil, nil, nil, 2, 2)
+local specWarnCannonBarrage			= mod:NewSpecialWarningDodgeCount(257540, nil, nil, nil, 2, 2, nil, nil, "watchstep")
 --local specWarnAdds					= mod:NewSpecialWarningAdds(257649, "-Healer", nil, nil, 1, 2)
 
 --Chopper Redhook

@@ -24,8 +24,8 @@ mod:RegisterEventsInCombat(
 local warnImpalingStrike	= mod:NewTargetAnnounce(107047, 3)
 local warnPreyTime			= mod:NewTargetAnnounce(106933, 3, nil, "Healer")
 
-local specWarnStafingRun	= mod:NewSpecialWarningDodge(-5660, nil, nil, nil, 2, 2)
-local specWarnGTFO			= mod:NewSpecialWarningGTFO(116297, nil, nil, nil, 1, 8)
+local specWarnStafingRun	= mod:NewSpecialWarningDodge(-5660, nil, nil, nil, 2, 2, nil, nil, "watchstep")
+local specWarnGTFO			= mod:NewSpecialWarningGTFO(116297, nil, nil, nil, 1, 8, nil, nil, "watchfeet")
 
 local timerImpalingStrikeCD	= mod:NewCDTimer(25.5, 107047, nil, "Tank|Healer", nil, 5)
 local timerPreyTime			= mod:NewTargetTimer(5, 106933, nil, "Healer", nil, 5, nil, DBM_COMMON_L.HEALER_ICON)

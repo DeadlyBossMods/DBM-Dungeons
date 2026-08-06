@@ -17,7 +17,7 @@ mod:RegisterEventsInCombat(
 
 local warnDeepSleep				= mod:NewSpellAnnounce(9256, 2)
 
-local specWarnHeal				= mod:NewSpecialWarningInterrupt(12039, "HasInterrupt", nil, nil, 1, 2)
+local specWarnHeal				= mod:NewSpecialWarningInterrupt(12039, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
 
 local timerDeepSleep			= mod:NewBuffFadesTimer(10, 9256, nil, nil, nil, 6)
 

@@ -16,42 +16,57 @@ end
 mod:RegisterCombat("combat")
 
 if DBM:IsPostMidnight() then
+
+	mod:RegisterSafeEventsInCombat(
+		"UNIT_SPELLCAST_START boss2"
+	)
+
 	--Note. https://www.wowhead.com/spell=1282138/shade-bomb is ignored on purpose to avoid spam
 	local warnGetEmIck					= mod:NewCountAnnounce(1264363, 3)
 
-	local specWarnShadeShift			= mod:NewSpecialWarningSwitchCount(1264027, nil, nil, nil, 1, 2)
-	local specWarnPlagueExpulsion		= mod:NewSpecialWarningDodgeCount(1264336, nil, nil, nil, 2, 2)
-	local specWarnBlightSmash			= mod:NewSpecialWarningCount(1264287, nil, nil, nil, 1, 18)
+	local specWarnShadeShift			= mod:NewSpecialWarningSwitchCount(1264027, nil, nil, nil, 1, 2, nil, nil, "killmob")
+	local specWarnPlagueExpulsion		= mod:NewSpecialWarningDodgeCount(1264336, nil, nil, nil, 2, 2, nil, nil, "watchstep")
+	local specWarnBlightSmash			= mod:NewSpecialWarningCount(1264287, nil, nil, nil, 1, 18, nil, nil, "poolyou")
+	local specWarnLumberingFixation		= mod:NewSpecialWarningBlizzYou(1264453, nil, nil, nil, 1, 19, nil, nil, "fixateyou")
 
-	local timerGetEmIckCD				= mod:NewCDCountTimer(20.5, 1264363, nil, nil, nil, 3)--Get 'Em, Ick! (parent of Lumbering Fixation)
+	local timerGetEmIckCD				= mod:NewCDCountTimer(20.5, 1264363, nil, nil, nil, 3, nil, DBM_COMMON_L.IMPORTANT_ICON)--Get 'Em, Ick! (parent of Lumbering Fixation)
 	local timerShadeShiftCD				= mod:NewCDCountTimer(20.5, 1264027, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)
 	local timerPlagueExpulsionCD		= mod:NewCDCountTimer(20.5, 1264336, nil, nil, nil, 3)
 	local timerBlightSmashCD			= mod:NewCDCountTimer(20.5, 1264287, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 	--local timerLumberingFixationCD		= mod:NewCDCountTimer(20.5, 1264453, nil, nil, nil, 3)--Lumbering Fixation (child of Get 'Em, Ick!)
 
-	--Midnight private aura replacements
-	mod:AddPrivateAuraSoundOption(1264453, true, 1264363, 1, 1, "justrun", 2)--Lumbering Fixation
-	mod:AddPrivateAuraSoundOption(1264299, true, 1264299, 2, 2, "watchfeet", 8)--Blight (GTFO)
+	--Custom Aura Sounds
+	--mod:AddAuraSoundOption(1264453, true, 1264363, 1, 1, "fixateyou", 19)--Lumbering Fixation
+	mod:AddAuraSoundOption(1264299, true, 1264299, 2, 2, "watchfeet", 8)--Blight (GTFO)
 
 	mod.vb.getEmCount = 0
 	mod.vb.shadeCount = 0
 	mod.vb.plagueCount = 0
 	mod.vb.smashCount = 0
+	mod.vb.fixateCount = 0
+	mod.vb.sickemActive = false
 	local badStateDetected = false
 	local recurringNineteenCount = 0
 
 	---@param self DBMMod
-	local function setFallback(self)
+	---@param dontSetAlerts boolean? Called on engage when we only want to set timeline parameters and not touch encounter alerts
+	local function setFallback(self, dontSetAlerts)
+		--If user has DBM bars enabled, we only want to register colors to the blizz api so that the blizz bars are also colorized.
+	--If user has bars disabled, or we are in a bad state, onlyColor is false and we register countdowns as well.
+	local onlyColor = not DBM.Options.HideDBMBars and not badStateDetected
 		--Blizz API fallbacks
-		specWarnShadeShift:SetAlert(204, "killmob", 2)
-		specWarnPlagueExpulsion:SetAlert(205, "watchstep", 2, 2)
-		if self:IsTank() then
-			specWarnBlightSmash:SetAlert(206, "poolyou", 18, 2)
+		if not dontSetAlerts then
+			specWarnShadeShift:SetAlert(204, "killmob", 2)
+			specWarnPlagueExpulsion:SetAlert(205, "watchstep", 2, 2)
+			if self:IsTank() then
+				specWarnBlightSmash:SetAlert(206, "poolyou", 18, 2)
+			end
+			specWarnLumberingFixation:SetAlert(561, "fixateyou", 19, 2, 0)
 		end
-		timerGetEmIckCD:SetTimeline(203)
-		timerShadeShiftCD:SetTimeline(204)
-		timerPlagueExpulsionCD:SetTimeline(205)
-		timerBlightSmashCD:SetTimeline(206)
+		timerGetEmIckCD:SetTimeline(203, onlyColor)
+		timerShadeShiftCD:SetTimeline(204, onlyColor)
+		timerPlagueExpulsionCD:SetTimeline(205, onlyColor)
+		timerBlightSmashCD:SetTimeline(206, onlyColor)
 		--timerLumberingFixationCD:SetTimeline(561)
 	end
 
@@ -61,13 +76,15 @@ if DBM:IsPostMidnight() then
 		self.vb.shadeCount = 1
 		self.vb.plagueCount = 1
 		self.vb.smashCount = 1
+		self.vb.sickemActive = false
 		recurringNineteenCount = 0
-		if self:IsMythicPlus() and DBM.Options.HardcodedTimer and not badStateDetected then
+		if DBM.Options.HardcodedTimer and not badStateDetected then
 			self:IgnoreBlizzardAPI()
 			self:RegisterShortTermEvents(
 				"ENCOUNTER_TIMELINE_EVENT_ADDED",
 				"ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED"
 			)
+			setFallback(self, true)
 		else
 			setFallback(self)
 		end
@@ -77,6 +94,15 @@ if DBM:IsPostMidnight() then
 		self:TLCountReset()
 		recurringNineteenCount = 0
 		self:UnregisterShortTermEvents()
+	end
+
+	function mod:UNIT_SPELLCAST_START()
+		--UNIT_SPELLCAST_START cast by boss2 during Get 'Em, Ick! is always for Lumbering Fixation switching targets
+		--Next event will be ENCOUNTER_WARNING for the victim
+		if self.vb.sickemActive then
+			self.vb.fixateCount = self.vb.fixateCount + 1
+			specWarnLumberingFixation:Show(self.vb.fixateCount, "fixateyou")
+		end
 	end
 
 	do
@@ -92,6 +118,7 @@ if DBM:IsPostMidnight() then
 				timerPlagueExpulsionCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "plague", "plagueCount"))
 			elseif timer == 50 then--Get 'Em, Ick!
 				timerGetEmIckCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "getem", "getEmCount"))
+				self.vb.sickemActive = false
 			elseif timer == 29 then--Shade Shift (28.75 rounded)
 				timerShadeShiftCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "shade", "shadeCount"))
 			elseif timer == 19 then--Alternates Blight Smash then Plague Expulsion in verified pulls
@@ -102,15 +129,11 @@ if DBM:IsPostMidnight() then
 					timerPlagueExpulsionCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "plague", "plagueCount"))
 				end
 			else--Reached end of chain without finding a valid timer, this means hardcode mod has failed, so we need to disable hardcoded features and fall back to blizz API
-				if not DBM.Options.DebugMode then
-					badStateDetected = true
-					self:ResumeBlizzardAPI()
-					self:UnregisterShortTermEvents()
-					setFallback(self)
-					DBM:Debug("|cffff0000Failed to match encounter timeline events to expected timers, falling back to Blizzard API|r", nil, nil, nil, true)
-				else
-					DBM:Debug("|cffff0000Failed to match encounter timeline events to expected timers|r", nil, nil, nil, true)
-				end
+				badStateDetected = true
+				self:ResumeBlizzardAPI()
+				self:UnregisterShortTermEvents()
+				setFallback(self)
+				DBM:Debug("|cffff0000Failed to match encounter timeline events to expected timers, falling back to Blizzard API|r", nil, nil, nil, true)
 			end
 		end
 
@@ -144,6 +167,9 @@ if DBM:IsPostMidnight() then
 						end
 					elseif eventType == "getem" then
 						warnGetEmIck:Show(eventCount)
+						--Arm scanning for Lumbering Fixation casts
+						self.vb.sickemActive = true
+						self.vb.fixateCount = 0
 					end
 				end
 			elseif eventState == 3 then
@@ -165,10 +191,10 @@ else
 	local warnPursuitCast			= mod:NewCastAnnounce(68987, 3)
 	local warnPursuit				= mod:NewTargetNoFilterAnnounce(68987, 4)
 
-	local specWarnToxic				= mod:NewSpecialWarningMove(69024, nil, nil, nil, 1, 2)
-	local specWarnMines				= mod:NewSpecialWarningSpell(69015, nil, nil, nil, 2, 2)
-	local specWarnPursuit			= mod:NewSpecialWarningRun(68987, nil, nil, 2, 4, 2)
-	local specWarnPoisonNova		= mod:NewSpecialWarningRun(68989, "Melee", nil, 2, 4, 2)
+	local specWarnToxic				= mod:NewSpecialWarningMove(69024, nil, nil, nil, 1, 2, nil, nil, "runaway")
+	local specWarnMines				= mod:NewSpecialWarningSpell(69015, nil, nil, nil, 2, 2, nil, nil, "watchstep")
+	local specWarnPursuit			= mod:NewSpecialWarningRun(68987, nil, nil, 2, 4, 2, nil, nil, "justrun")
+	local specWarnPoisonNova		= mod:NewSpecialWarningRun(68989, "Melee", nil, 2, 4, 2, nil, nil, "runout")
 
 	local timerSpecialCD			= mod:NewCDSpecialTimer(20)--Every 20-22 seconds. In rare cases he skips a special though and goes 40 seconds. unsure of cause
 	local timerPursuitCast			= mod:NewCastTimer(5, 68987, nil, nil, nil, 3)

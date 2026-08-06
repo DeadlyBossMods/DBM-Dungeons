@@ -25,7 +25,7 @@ mod:RegisterEventsInCombat(
 
 local WarnChannel		= mod:NewSpellAnnounce(channelId, 2, 31543)
 
-local specWarnReflect	= mod:NewSpecialWarningReflect(31534, "-Melee", nil, nil, 1, 2)--CasterDps after new core
+local specWarnReflect	= mod:NewSpecialWarningReflect(31534, "-Melee", nil, nil, 1, 2, nil, nil, "stopattack")--CasterDps after new core
 
 local timerReflect		= mod:NewBuffActiveTimer(8, 31534, nil, nil, nil, 5)
 

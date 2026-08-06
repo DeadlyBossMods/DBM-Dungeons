@@ -32,9 +32,9 @@ local warnEnkindlingInferno					= mod:NewCountAnnounce(423109, 3)
 local warnDousingBreath						= mod:NewCountAnnounce(425394, 3)
 local warnBlazingStorms						= mod:NewSpellAnnounce(443835, 3)
 
-local specWarnWicklighterBarrage			= mod:NewSpecialWarningYou(421817, nil, nil, nil, 1, 2)
+local specWarnWicklighterBarrage			= mod:NewSpecialWarningYou(421817, nil, nil, nil, 1, 2, nil, nil, "targetyou")
 local yellWicklighterBarrage				= mod:NewShortPosYell(421817)
-local specWarnInciteFlames					= mod:NewSpecialWarningCount(424212, nil, nil, nil, 2, 2)
+local specWarnInciteFlames					= mod:NewSpecialWarningCount(424212, nil, nil, nil, 2, 2, nil, nil, "aesoon")
 --local specWarnExtinguishingGust			= mod:NewSpecialWarningYou(429113, nil, nil, nil, 1, 2)
 --local yellExtinguishingGust				= mod:NewShortYell(429113)
 --local specWarnGTFO						= mod:NewSpecialWarningGTFO(372820, nil, nil, nil, 1, 8)
@@ -46,7 +46,7 @@ local timerEnkindlingInfernoCD				= mod:NewNextCountTimer(30.3, 423109, nil, nil
 local timerDousingBreathCD					= mod:NewNextCountTimer(60.3, 425394, nil, nil, nil, 2)
 
 mod:AddSetIconOption("IconOnWick", 421817, true, 0, {1, 2, 3})
-mod:AddPrivateAuraSoundOption(423080, true, 429113, 1, 1, "targetyou", 2)
+mod:AddAuraSoundOption(423080, true, 429113, 1, 1, "targetyou", 2)
 
 mod.vb.debuffIcon = 1
 mod.vb.wickCount = 0

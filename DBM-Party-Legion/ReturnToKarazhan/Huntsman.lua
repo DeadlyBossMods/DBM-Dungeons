@@ -20,12 +20,12 @@ mod:RegisterEventsInCombat(
 )
 
 --Most of midnights timers are too short to really be worth including. he either spams charge or spams spectral chargers.
-local specWarnMightyStomp			= mod:NewSpecialWarningCast(227363, "SpellCaster", nil, nil, 1, 2)
-local specWarnSpectralCharge		= mod:NewSpecialWarningDodge(227365, nil, nil, nil, 2, 2)
+local specWarnMightyStomp			= mod:NewSpecialWarningCast(227363, "SpellCaster", nil, nil, 1, 2, nil, nil, "stopcast")
+local specWarnSpectralCharge		= mod:NewSpecialWarningDodge(227365, nil, nil, nil, 2, 2, nil, nil, "watchstep")
 --On Foot
-local specWarnMezair				= mod:NewSpecialWarningDodge(227339, nil, nil, nil, 1, 2)
-local specWarnMortalStrike			= mod:NewSpecialWarningDefensive(227493, nil, nil, 2, 1, 2)
-local specWarnSharedSuffering		= mod:NewSpecialWarningMoveTo(228852, nil, nil, nil, 3, 2)
+local specWarnMezair				= mod:NewSpecialWarningDodge(227339, nil, nil, nil, 1, 2, nil, nil, "chargemove")
+local specWarnMortalStrike			= mod:NewSpecialWarningDefensive(227493, nil, nil, 2, 1, 2, nil, nil, "defensive")
+local specWarnSharedSuffering		= mod:NewSpecialWarningMoveTo(228852, nil, nil, nil, 3, 2, nil, nil, "gathershare")
 local yellSharedSuffering			= mod:NewYell(228852)
 
 local timerMortalStrikeCD			= mod:NewNextTimer(11, 227493, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON)

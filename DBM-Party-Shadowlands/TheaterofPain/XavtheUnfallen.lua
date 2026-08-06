@@ -29,11 +29,11 @@ local warnMassiveCleave				= mod:NewCountAnnounce(320729, 4)
 local warnDeafeningCrash			= mod:NewCountAnnounce(339415, 4)
 local warnBloodandGlory				= mod:NewTargetNoFilterAnnounce(320102, 2)
 
-local specWarnBrutalCombo			= mod:NewSpecialWarningDefensive(320644, nil, nil, nil, 2, 2)
-local specWarnMightofMaldraxxus		= mod:NewSpecialWarningDodge(320050, nil, nil, nil, 3, 2)
-local specWarnDeafeningCrash		= mod:NewSpecialWarningCast(339415, false, nil, nil, 1, 2, 4)
-local specWarnBloodandGlory			= mod:NewSpecialWarningYou(320102, nil, nil, nil, 1, 2)
-local specWarnOppressiveBanner		= mod:NewSpecialWarningSwitch(331618, nil, nil, nil, 1, 2)
+local specWarnBrutalCombo			= mod:NewSpecialWarningDefensive(320644, nil, nil, nil, 2, 2, nil, nil, "defensive")
+local specWarnMightofMaldraxxus		= mod:NewSpecialWarningDodge(320050, nil, nil, nil, 3, 2, nil, nil, "watchstep")
+local specWarnDeafeningCrash		= mod:NewSpecialWarningCast(339415, false, nil, nil, 1, 2, 4, nil, "stopcast")
+local specWarnBloodandGlory			= mod:NewSpecialWarningYou(320102, nil, nil, nil, 1, 2, nil, nil, "targetyou")
+local specWarnOppressiveBanner		= mod:NewSpecialWarningSwitch(331618, nil, nil, nil, 1, 2, nil, nil, "attacktotem")
 --local specWarnGTFO					= mod:NewSpecialWarningGTFO(257274, nil, nil, nil, 1, 8)
 
 local timerBrutalComboCD			= mod:NewVarCountTimer(15.8, 320644, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)--Sequenced timer

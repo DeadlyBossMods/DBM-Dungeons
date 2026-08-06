@@ -19,11 +19,11 @@ mod:RegisterEventsInCombat(
 local warnQuickenedMind			= mod:NewSpellAnnounce(113682, 3)--This is Magic dispelable, you can't interrupt anything if you don't dispel this.
 local warnBookBurner			= mod:NewSpellAnnounce(113364, 3)
 
-local specWarnFireballVolley	= mod:NewSpecialWarningInterrupt(113691, "HasInterrupt", nil, nil, 1, 2)
-local specWarnPyroblast			= mod:NewSpecialWarningInterrupt(113690, false, nil, nil, 1, 2)
-local specWarnQuickenedMind		= mod:NewSpecialWarningDispel(113682, "MagicDispeller", nil, nil, 1, 2)
+local specWarnFireballVolley	= mod:NewSpecialWarningInterrupt(113691, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
+local specWarnPyroblast			= mod:NewSpecialWarningInterrupt(113690, false, nil, nil, 1, 2, nil, nil, "kickcast")
+local specWarnQuickenedMind		= mod:NewSpecialWarningDispel(113682, "MagicDispeller", nil, nil, 1, 2, nil, nil, "dispelboss")
 --local specWarnDragonsBreathDispel		= mod:NewSpecialWarningDispel(113641, "MagicDispeller", nil, nil, 1, 2)
-local specWarnDragonsBreath		= mod:NewSpecialWarningDodge(113641, nil, nil, nil, 2, 8)
+local specWarnDragonsBreath		= mod:NewSpecialWarningDodge(113641, nil, nil, nil, 2, 8, nil, nil, "behindboss")
 
 local timerPyroblastCD			= mod:NewCDTimer(6, 113690, nil, "HasInterrupt", nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 --local timerQuickenedMindCD	= mod:NewCDTimer(30, 113682)--Needs more data. I see both 30 sec and 1 min cds, so I just need larger sample size.

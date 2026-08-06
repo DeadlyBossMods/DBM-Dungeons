@@ -18,9 +18,9 @@ mod:AddCustomTimerOptions(359028, true, 5, 0)
 mod:AddCustomTimerOptions(350919, true, 3, 0)
 mod:AddCustomTimerOptions(350922, true, 4, 0)
 mod:AddCustomTimerOptions(353835, true, 3, 0)--Suppression Spark
---Midnight private aura replacements
-mod:AddPrivateAuraSoundOption(353835, true, 353835, 1, 1, "debuffyou", 17)
-mod:AddPrivateAuraSoundOption(355439, true, 355439, 1, 1, "range5", 2)
+--Custom Aura Sounds
+mod:AddAuraSoundOption(353835, true, 353835, 1, 1, "debuffyou", 17)
+mod:AddAuraSoundOption(355439, true, 355439, 1, 1, "range5", 2)
 
 function mod:OnLimitedCombatStart()
 	if self:IsTank() then
@@ -65,15 +65,15 @@ local warnDrumroll					= mod:NewSpellAnnounce(357513, 2)
 local warnRipChord					= mod:NewSpellAnnounce(357542, 2)
 
 --Stage One: Unruly Patrons
-local specWarnSecuritySlam			= mod:NewSpecialWarningDefensive(350916, nil, nil, nil, 1, 2)--Reused for boss too
-local specWarnMenacingShout			= mod:NewSpecialWarningInterrupt(350922, "HasInterrupt", nil, nil, 1, 2)
+local specWarnSecuritySlam			= mod:NewSpecialWarningDefensive(350916, nil, nil, nil, 1, 2, nil, nil, "defensive")--Reused for boss too
+local specWarnMenacingShout			= mod:NewSpecialWarningInterrupt(350922, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
 --local specWarnGTFO				= mod:NewSpecialWarningGTFO(320366, nil, nil, nil, 1, 8)
 --Stage Two: Closing Time
-local specWarnSupressionSpark		= mod:NewSpecialWarningMoveAway(350916, nil, nil, nil, 2, 2)
-local specWarnCrowdControl			= mod:NewSpecialWarningDodge(350919, nil, nil, nil, 2, 2)
+local specWarnSupressionSpark		= mod:NewSpecialWarningMoveAway(350916, nil, nil, nil, 2, 2, nil, nil, "scatter")
+local specWarnCrowdControl			= mod:NewSpecialWarningDodge(350919, nil, nil, nil, 2, 2, nil, nil, "shockwave")
 --Hard Mode Mechanics
-local specWarnDischordantSong		= mod:NewSpecialWarningInterrupt(357404, "HasInterrupt", nil, nil, 1, 2)
-local specWarnInfectiousSolo		= mod:NewSpecialWarningRun(357436, nil, nil, nil, 4, 2)
+local specWarnDischordantSong		= mod:NewSpecialWarningInterrupt(357404, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
+local specWarnInfectiousSolo		= mod:NewSpecialWarningRun(357436, nil, nil, nil, 4, 2, nil, nil, "justrun")
 
 --Stage One: Unruly Patrons
 --Oasis Security

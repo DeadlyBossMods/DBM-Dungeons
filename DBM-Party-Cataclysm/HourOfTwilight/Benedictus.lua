@@ -29,10 +29,10 @@ local prewarnPhase2				= mod:NewPrePhaseAnnounce(2, 2)
 local warnTwilightShear			= mod:NewTargetNoFilterAnnounce(103363, 2, nil, "Healer", 2)
 local warnCorruptingTwilight	= mod:NewSpellAnnounce(103767, 3)
 
-local specwarnPurified			= mod:NewSpecialWarningMove(103653, nil, nil, nil, 1, 8)
-local specwarnWaveVirtue		= mod:NewSpecialWarningMoveTo(103678, nil, nil, nil, 2)
-local specwarnTwilight			= mod:NewSpecialWarningMove(103775, nil, nil, nil, 1, 8)
-local specwarnWaveTwilight		= mod:NewSpecialWarningMoveTo(103780, nil, nil, nil, 2, 2)
+local specwarnPurified			= mod:NewSpecialWarningMove(103653, nil, nil, nil, 1, 8, nil, nil, "watchfeet")
+local specwarnWaveVirtue		= mod:NewSpecialWarningMoveTo(103678, nil, nil, nil, 2, nil, nil, nil, "findshelter")
+local specwarnTwilight			= mod:NewSpecialWarningMove(103775, nil, nil, nil, 1, 8, nil, nil, "watchfeet")
+local specwarnWaveTwilight		= mod:NewSpecialWarningMoveTo(103780, nil, nil, nil, 2, 2, nil, nil, "findshelter")
 
 local timerCombatStart			= mod:NewCombatTimer(51.5)
 local timerWaveVirtueCD			= mod:NewNextTimer(30, 103678, nil, nil, nil, 2)--Will he do it more then once? if you are terrible and take > 30 sec to push him?

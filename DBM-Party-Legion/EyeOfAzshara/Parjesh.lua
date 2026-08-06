@@ -19,11 +19,11 @@ mod:RegisterEventsInCombat(
 --TODO, interrupt warnings for adds maybe.
 local warnImpalingSpear				= mod:NewTargetNoFilterAnnounce(192094, 4)
 
-local specWarnReinforcements		= mod:NewSpecialWarningSwitch(192072, "Tank", nil, nil, 1, 2)
-local specWarnCrashingwave			= mod:NewSpecialWarningDodge(191900, nil, nil, nil, 2, 2)
-local specWarnImpalingSpear			= mod:NewSpecialWarningMoveTo(192094, nil, nil, nil, 3, 8)
+local specWarnReinforcements		= mod:NewSpecialWarningSwitch(192072, "Tank", nil, nil, 1, 2, nil, nil, "bigmobsoon")
+local specWarnCrashingwave			= mod:NewSpecialWarningDodge(191900, nil, nil, nil, 2, 2, nil, nil, "chargemove")
+local specWarnImpalingSpear			= mod:NewSpecialWarningMoveTo(192094, nil, nil, nil, 3, 8, nil, nil, "behindmob")
 local yellImpalingSpear				= mod:NewYell(192094)
-local specWarnRestoration			= mod:NewSpecialWarningInterrupt(197502, "HasInterrupt", nil, nil, 1, 2)
+local specWarnRestoration			= mod:NewSpecialWarningInterrupt(197502, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
 
 local timerHatecoilCD				= mod:NewCDTimer(28, 192072, nil, nil, nil, 1)--Review more for sequence
 local timerSpearCD					= mod:NewCDTimer(28, 192094, nil, nil, nil, 3)

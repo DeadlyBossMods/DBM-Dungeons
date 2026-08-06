@@ -22,8 +22,8 @@ mod:RegisterEventsInCombat(
 local warnSoulstormSoon		= mod:NewSoonAnnounce(68872, 2)
 local warnCorruptSoul		= mod:NewTargetNoFilterAnnounce(68839, 4)
 
-local specwarnSoulstorm		= mod:NewSpecialWarningSpell(68872, nil, nil, nil, 2, 2)
-local specwarnCorruptedSoul	= mod:NewSpecialWarningMoveTo(68839, nil, nil, nil, 1, 7)
+local specwarnSoulstorm		= mod:NewSpecialWarningSpell(68872, nil, nil, nil, 2, 2, nil, nil, "aesoon")
+local specwarnCorruptedSoul	= mod:NewSpecialWarningMoveTo(68839, nil, nil, nil, 1, 7, nil, nil, "runtoedge")
 
 local timerSoulstormCast	= mod:NewCastTimer(4, 68872, nil, nil, nil, 2)
 

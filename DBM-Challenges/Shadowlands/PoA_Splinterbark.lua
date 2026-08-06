@@ -22,7 +22,7 @@ mod:RegisterEventsInCombat(
 	"CRITERIA_COMPLETE"
 )
 
-local specWarnRage				= mod:NewSpecialWarningRun(337419, nil, nil, nil, 4, 2)
+local specWarnRage				= mod:NewSpecialWarningRun(337419, nil, nil, nil, 4, 2, nil, nil, "justrun")
 
 --local berserkTimer								= mod:NewBerserkTimer(480)
 
