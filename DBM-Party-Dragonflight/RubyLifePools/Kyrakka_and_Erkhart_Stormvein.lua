@@ -121,8 +121,7 @@ if DBM:IsPostMidnight() then
 		if eventState == 2 then
 			local eventType, eventCount = self:TLCountFinish(eventID)
 			if eventType == "infernospit" and eventCount then
-				specWarnInfernoSpit:Show(eventCount, "poolyou")
-				specWarnInfernoSpit:Play("poolyou")
+				specWarnInfernoSpit:Show(eventCount, "poolyou", 3)
 			elseif eventType == "firebreath" and eventCount then
 				specWarnRoaringFirebreath:Show()
 				specWarnRoaringFirebreath:Play("breathsoon")
