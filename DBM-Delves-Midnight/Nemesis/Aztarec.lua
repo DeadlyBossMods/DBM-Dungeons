@@ -178,19 +178,18 @@ do
 	---@param timerExact number
 	---@param eventID number
 	local function timersAll(self, timerExact, eventID)
-		--These intentionally narrow buckets cover Shadow Priest + healer NPC Normal and Mythic pulls.
-		--Nemesis timers vary by player role/spec, so new duration variants should fall back until verified.
-		if timerExact == 6
-			or self:IsRoundedTimer(timerExact, 20.75, 0.3)
-			or self:IsRoundedTimer(timerExact, 21.3, 0.14) then
+		--Use generous buckets when no other ability can claim the timer.
+		--The Noxious/Void overlap is deliberately routed by expected prior cooldown instead.
+		if self:IsRoundedTimer(timerExact, 6, 0.5)
+			or self:IsRoundedTimer(timerExact, 20.75, 0.6) then
 			local count = self:TLCountStart(eventID, "noxiousBile", "noxiousBileCount")
 			timerNoxiousBileCD:TLStart(timerExact, eventID, count)
 			timelineEvents[eventID] = {eventType = "noxiousBile", timer = timerExact, startedAt = GetTime()}
-		elseif timerExact == 10 then
+		elseif self:IsRoundedTimer(timerExact, 10, 0.5) then
 			local count = self:TLCountStart(eventID, "voidToxin", "voidToxinCount")
 			timerVoidToxinCD:TLStart(timerExact, eventID, count)
 			timelineEvents[eventID] = {eventType = "voidToxin", timer = timerExact, startedAt = GetTime()}
-		elseif self:IsRoundedTimer(timerExact, 21.65, 0.2) then
+		elseif self:IsRoundedTimer(timerExact, 21.725, 0.375) then
 			local noxiousDifference = expectedTimer("noxiousBile")
 			local voidDifference = expectedTimer("voidToxin")
 			if noxiousDifference and (not voidDifference or noxiousDifference < voidDifference) then
@@ -204,11 +203,11 @@ do
 			else
 				failHardcode(self)
 			end
-		elseif timerExact == 18 or self:IsRoundedTimer(timerExact, 35.5, 0.55) then
+		elseif self:IsRoundedTimer(timerExact, 18, 0.5) or self:IsRoundedTimer(timerExact, 35.5, 0.75) then
 			local count = self:TLCountStart(eventID, "soulExtinction", "soulExtinctionCount")
 			timerSoulExtinctionCD:TLStart(timerExact, eventID, count)
 			timelineEvents[eventID] = {eventType = "soulExtinction", timer = timerExact, startedAt = GetTime()}
-		elseif timerExact == 23 or self:IsRoundedTimer(timerExact, 25.65, 0.2) or self:IsRoundedTimer(timerExact, 28.5, 0.1) then
+		elseif self:IsRoundedTimer(timerExact, 23, 0.5) or self:IsRoundedTimer(timerExact, 25.65, 0.5) or self:IsRoundedTimer(timerExact, 28.575, 0.5) then
 			local count = self:TLCountStart(eventID, "venomStorm", "venomStormCount")
 			timerVenomStormCD:TLStart(timerExact, eventID, count)
 			timelineEvents[eventID] = {eventType = "venomStorm", timer = timerExact, startedAt = GetTime()}
