@@ -43,6 +43,7 @@ mod.vb.echoFinished = true
 mod.vb.echoCount = 1
 mod.vb.noxiousBileCount = 0
 mod.vb.voidToxinCount = 0
+mod.vb.serpentsStrikeCount = 0
 mod.vb.soulExtinctionCount = 0
 mod.vb.venomStormCount = 0
 
@@ -65,22 +66,6 @@ local function setFallback(self, dontSetAlerts)
 	timerVenomStormCD:SetTimeline({982, 987}, onlyColor)
 end
 
---[[
-local function isTankInGroup()
-	if not IsInGroup() then
-		tankFound = UnitGroupRolesAssigned("player") == "TANK"
-	else
-		local groupType = IsInRaid() and "raid" or "party"
-		for i = 1, GetNumGroupMembers() do
-			if UnitIsGroupLeader(groupType..i) then
-				tankFound = UnitGroupRolesAssigned(groupType..i) == "TANK"
-				return
-			end
-		end
-	end
-end
---]]
-
 function mod:OnLimitedCombatStart()
 	self:TLCountReset()
 	timelineEvents = {}
@@ -89,6 +74,7 @@ function mod:OnLimitedCombatStart()
 	self.vb.sermonCount = 1
 	self.vb.noxiousBileCount = 1
 	self.vb.voidToxinCount = 1
+	self.vb.serpentsStrikeCount = 1
 	self.vb.soulExtinctionCount = 1
 	self.vb.venomStormCount = 1
 	--UNIT events always used even in non hardcode, no ambiguity to them
@@ -178,11 +164,20 @@ do
 	---@param timerExact number
 	---@param eventID number
 	local function timersAll(self, timerExact, eventID)
-		--These uckets cover Shadow Priest + healer NPC combo (normal and mythic)
+		--These buckets cover the observed Monk and Shadow Priest role variants.
 		--Use generous buckets when no other ability can claim the timer.
-		--The Noxious/Void overlap is deliberately routed by expected prior cooldown instead.
-		if self:IsRoundedTimer(timerExact, 6, 0.5)
-			or self:IsRoundedTimer(timerExact, 20.75, 0.6) then
+		--The Soul/Noxious and Noxious/Void overlaps are deliberately routed by expected prior cooldown.
+		if self:IsRoundedTimer(timerExact, 15, 0.6)
+			or self:IsRoundedTimer(timerExact, 17.5, 0.24) then
+			local count = self:TLCountStart(eventID, "serpentsStrike", "serpentsStrikeCount")
+			timerSerpentsStrikeCD:TLStart(timerExact, eventID, count)
+			timelineEvents[eventID] = {eventType = "serpentsStrike", timer = timerExact, startedAt = GetTime()}
+		elseif self:IsRoundedTimer(timerExact, 18, 0.24)
+			or self:IsRoundedTimer(timerExact, 35.5, 0.75) then
+			local count = self:TLCountStart(eventID, "soulExtinction", "soulExtinctionCount")
+			timerSoulExtinctionCD:TLStart(timerExact, eventID, count)
+			timelineEvents[eventID] = {eventType = "soulExtinction", timer = timerExact, startedAt = GetTime()}
+		elseif self:IsRoundedTimer(timerExact, 6, 0.5) then
 			local count = self:TLCountStart(eventID, "noxiousBile", "noxiousBileCount")
 			timerNoxiousBileCD:TLStart(timerExact, eventID, count)
 			timelineEvents[eventID] = {eventType = "noxiousBile", timer = timerExact, startedAt = GetTime()}
@@ -204,11 +199,24 @@ do
 			else
 				failHardcode(self)
 			end
-		elseif self:IsRoundedTimer(timerExact, 18, 0.5) or self:IsRoundedTimer(timerExact, 35.5, 0.75) then
-			local count = self:TLCountStart(eventID, "soulExtinction", "soulExtinctionCount")
-			timerSoulExtinctionCD:TLStart(timerExact, eventID, count)
-			timelineEvents[eventID] = {eventType = "soulExtinction", timer = timerExact, startedAt = GetTime()}
-		elseif self:IsRoundedTimer(timerExact, 23, 0.5) or self:IsRoundedTimer(timerExact, 25.65, 0.5) or self:IsRoundedTimer(timerExact, 28.575, 0.5) then
+		elseif self:IsRoundedTimer(timerExact, 20.5, 0.85) then
+			local noxiousDifference = expectedTimer("noxiousBile")
+			local soulDifference = expectedTimer("soulExtinction")
+			if noxiousDifference and (not soulDifference or noxiousDifference < soulDifference) then
+				local count = self:TLCountStart(eventID, "noxiousBile", "noxiousBileCount")
+				timerNoxiousBileCD:TLStart(timerExact, eventID, count)
+				timelineEvents[eventID] = {eventType = "noxiousBile", timer = timerExact, startedAt = GetTime()}
+			elseif soulDifference then
+				local count = self:TLCountStart(eventID, "soulExtinction", "soulExtinctionCount")
+				timerSoulExtinctionCD:TLStart(timerExact, eventID, count)
+				timelineEvents[eventID] = {eventType = "soulExtinction", timer = timerExact, startedAt = GetTime()}
+			else
+				failHardcode(self)
+			end
+		elseif self:IsRoundedTimer(timerExact, 23, 0.5)
+			or self:IsRoundedTimer(timerExact, 25.65, 0.5)
+			or self:IsRoundedTimer(timerExact, 28.575, 0.5)
+			or self:IsRoundedTimer(timerExact, 31.5, 0.6) then
 			local count = self:TLCountStart(eventID, "venomStorm", "venomStormCount")
 			timerVenomStormCD:TLStart(timerExact, eventID, count)
 			timelineEvents[eventID] = {eventType = "venomStorm", timer = timerExact, startedAt = GetTime()}
@@ -246,6 +254,9 @@ do
 					specWarnNoxiousBile:Play("frontal")
 				elseif eventType == "voidToxin" then
 					warnVoidToxin:Show(eventCount)
+				elseif eventType == "serpentsStrike" then
+					specWarnSerpentsStrike:Show()
+					specWarnSerpentsStrike:Play("defensive")
 				elseif eventType == "soulExtinction" then
 					specWarnSoulExtinction:Show(L.name, eventCount)
 					specWarnSoulExtinction:Play("kickcast")
