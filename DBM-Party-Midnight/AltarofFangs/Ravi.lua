@@ -142,7 +142,7 @@ do
 			end
 			if eventType and eventCount then
 				if eventType == "tripleShot" then
-					specWarnTripleShot:Show(eventCount, "debuffyou")
+					specWarnTripleShot:Show(eventCount, "debuffyou", 3)
 				elseif eventType == "ssscavenging" then
 					specWarnSsscavenging:Show(eventCount)
 					specWarnSsscavenging:Play("attackshield")

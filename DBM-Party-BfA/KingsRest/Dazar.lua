@@ -11,46 +11,72 @@ mod:SetZone(1762)
 mod:RegisterCombat("combat")
 
 if DBM:IsPostMidnight() then
-	--local warnGaleSlash					= mod:NewSpellAnnounce(268403, 2)
-	--local warnQuakingLeap				= mod:NewTargetAnnounce(268932, 2)
+	--Hardcode Note. Boss phases at 80% health and changes attack pattern. Signal for this is hunting leap being canceled (replaced by quaking leap in stage 2)
+	local warnAerialSmash				= mod:NewCountAnnounce(1303115, 3)--Upgrade to generic special warning if aura sound doesn't work
+	local warnHuntingLeap				= mod:NewCountAnnounce(269230, 3)--Upgrade to generic special warning if aura sound doesn't work
+	local warnSavageMaul				= mod:NewCountAnnounce(1303488, 3)--Upgrade to generic special warning if aura sound doesn't work
 
-	--local specWarnQuakingLeap			= mod:NewSpecialWarningYou(268932, nil, nil, nil, 1, 2, nil, nil, "targetyou")
-	--local specWarnBladeCombo			= mod:NewSpecialWarningDefensive(268586, nil, nil, nil, 1, 2, nil, nil, "defensive")
-	--local specWarnImpalingSpear			= mod:NewSpecialWarningDodge(268796, nil, nil, nil, 2, 2, nil, nil, "watchstep")
-	--local specWarnHuntingLeap			= mod:NewSpecialWarningYou(269231, nil, nil, nil, 1, 2, nil, nil, "runaway")
-	--local specWarnDeadlyRoar			= mod:NewSpecialWarningSpell(269369, nil, nil, nil, 2, 2, nil, nil, "fearsoon")
+	local specWarnBladeCombo			= mod:NewSpecialWarningDefensive(268586, nil, nil, nil, 1, 2, nil, nil, "defensive")
+	local specWarnGildedDestruction		= mod:NewSpecialWarningCount(1303101, nil, nil, nil, 2, 2, nil, nil, "aesoon")
+	local specWarnDeadlyRoar			= mod:NewSpecialWarningCount(269369, nil, nil, nil, 2, 2, nil, nil, "fearsoon")
+	local specWarnQuakingLeap			= mod:NewSpecialWarningCount(1303327, nil, nil, nil, 2, 2, nil, nil, "scatter")
 
-	--local timerGaleSlashCD				= mod:NewCDCountTimer(0, 268403, nil, nil, nil, 3)
-	--local timerQuakingLeapCD			= mod:NewCDCountTimer(0, 268932, nil, nil, nil, 3)
-	--local timerBladeComboCD				= mod:NewCDCountTimer(0, 268586, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
-	--local timerHuntingLeapCD			= mod:NewCDCountTimer(0, 269231, nil, nil, nil, 3)
-	--local timerDeathlyRoarCD			= mod:NewCDCountTimer(0, 269369, nil, nil, nil, 2)
+	local timerAerialSmashCD			= mod:NewCDCountTimer(0, 1303115, nil, nil, nil, 3)
+	local timerBladeComboCD				= mod:NewCDCountTimer(0, 268586, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+	local timerGildedDestructionCD		= mod:NewCDCountTimer(0, 1303101, nil, nil, nil, 2)
+	local timerHuntingLeapCD			= mod:NewCDCountTimer(0, 269230, nil, nil, nil, 3)
+	local timerDeadlyRoarCD				= mod:NewCDCountTimer(0, 269369, nil, nil, nil, 2)
+	local timerQuakingLeapCD			= mod:NewCDCountTimer(0, 1303327, nil, nil, nil, 3)
+	local timerSavageMaulCD				= mod:NewCDCountTimer(0, 1303488, nil, nil, nil, 3)
 
+	mod:AddAuraSoundOption(1303101, nil, 1303115, 1, 1, "runout", 2, 0)--Aerial Smash (iffy, it wasn't in combat log)
+	mod:AddAuraSoundOption(1303039, nil, 269230, 1, 3, "bleedyou", 19, 0)--Hunting Leap
+
+	mod.vb.aerialSmashCount = 0
+	mod.vb.bladeComboCount = 0
+	mod.vb.gildedDestructionCount = 0
+	mod.vb.huntingLeapCount = 0
+	mod.vb.deadlyRoarCount = 0
+	mod.vb.quakingLeapCount = 0
+	mod.vb.savageMaulCount = 0
 	local badStateDetected = false
 	---@param self DBMMod
 	---@param dontSetAlerts boolean? Called on engage when we only want to set timeline parameters and not touch encounter alerts
 	local function setFallback(self, dontSetAlerts)
 		if not dontSetAlerts then
-			--specWarnQuakingLeap:SetAlert(0, "targetyou", 2)
-			--specWarnBladeCombo:SetAlert(0, "defensive", 2)
-			--specWarnImpalingSpear:SetAlert(0, "watchstep", 2)
-			--specWarnHuntingLeap:SetAlert(0, "runaway", 2)
-			--specWarnDeadlyRoar:SetAlert(0, "fearsoon", 2)
+			if self:IsTank() then
+				specWarnBladeCombo:SetAlert(832, "defensive", 2, 2)
+			end
+			specWarnGildedDestruction:SetAlert(833, "aesoon", 2, 2)
+			specWarnDeadlyRoar:SetAlert(835, "fearsoon", 2, 2)
+			specWarnQuakingLeap:SetAlert(836, "scatter", 2, 2)
 		end
 		local onlyColor = not DBM.Options.HideDBMBars and not badStateDetected
-		--timerGaleSlashCD:SetTimeline(0, onlyColor)
-		--timerQuakingLeapCD:SetTimeline(0, onlyColor)
-		--timerBladeComboCD:SetTimeline(0, onlyColor)
-		--timerHuntingLeapCD:SetTimeline(0, onlyColor)
-		--timerDeathlyRoarCD:SetTimeline(0, onlyColor)
+		timerAerialSmashCD:SetTimeline(831, onlyColor)
+		timerBladeComboCD:SetTimeline(832, onlyColor)
+		timerGildedDestructionCD:SetTimeline(833, onlyColor)
+		timerHuntingLeapCD:SetTimeline(834, onlyColor)
+		timerDeadlyRoarCD:SetTimeline(835, onlyColor)
+		timerQuakingLeapCD:SetTimeline(836, onlyColor)
+		timerSavageMaulCD:SetTimeline(837, onlyColor)
 	end
 
 	function mod:OnLimitedCombatStart()
 		self:TLCountReset()
-		badStateDetected = true
+		self:SetStage(1)
+		self.vb.aerialSmashCount = 1
+		self.vb.bladeComboCount = 1
+		self.vb.gildedDestructionCount = 1
+		self.vb.huntingLeapCount = 1
+		self.vb.deadlyRoarCount = 1
+		self.vb.quakingLeapCount = 1
+		self.vb.savageMaulCount = 1
 		if DBM.Options.HardcodedTimer and not badStateDetected then
 			self:IgnoreBlizzardAPI()
-			self:RegisterShortTermEvents("ENCOUNTER_TIMELINE_EVENT_ADDED", "ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED")
+			self:RegisterShortTermEvents(
+				"ENCOUNTER_TIMELINE_EVENT_ADDED",
+				"ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED"
+			)
 			setFallback(self, true)
 		else
 			setFallback(self)
@@ -62,12 +88,88 @@ if DBM:IsPostMidnight() then
 		self:UnregisterShortTermEvents()
 	end
 
-	function mod:ENCOUNTER_TIMELINE_EVENT_ADDED(eventInfo)
-		--Timeline routing will be added after event durations are verified.
-	end
+	do
+		---@param self DBMMod
+		---@param timer number
+		---@param timerExact number
+		---@param eventID number
+		local function timersAll(self, timer, timerExact, eventID)
+			--Confirmed against the 12.1 M+ PTR pull.
+			if timer == 15 then
+				timerAerialSmashCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "aerialSmash", "aerialSmashCount"))
+			elseif timer == 23 or timer == 38 then
+				timerBladeComboCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "bladeCombo", "bladeComboCount"))
+			elseif (timer == 30 and self:GetStage(1)) or timer == 24 then
+				timerGildedDestructionCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "gildedDestruction", "gildedDestructionCount"))
+			elseif timer == 8 then
+				timerHuntingLeapCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "huntingLeap", "huntingLeapCount"))
+			elseif timer == 10 then
+				if self:GetStage(1) then
+					timerHuntingLeapCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "huntingLeap", "huntingLeapCount"))
+				elseif self:GetStage(2) then
+					timerDeadlyRoarCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "deadlyRoar", "deadlyRoarCount"))
+				else
+					return
+				end
+			elseif timer == 14 then
+				timerDeadlyRoarCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "deadlyRoar", "deadlyRoarCount"))
+			elseif timer == 9 then
+				timerQuakingLeapCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "quakingLeap", "quakingLeapCount"))
+			elseif timer == 36 then
+				timerSavageMaulCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "savageMaul", "savageMaulCount"))
+			else
+				return
+			end
+			return true
+		end
 
-	function mod:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(eventID)
-		--Timeline completion handling will be added with the event routing.
+		function mod:ENCOUNTER_TIMELINE_EVENT_ADDED(eventInfo)
+			if eventInfo.source ~= 0 then return end
+			local eventID = eventInfo.id
+			if C_EncounterTimeline.GetEventState(eventID) ~= 0 then return end
+			local timerExact = eventInfo.duration
+			if not timersAll(self, math.floor(timerExact + 0.5), timerExact, eventID) and not badStateDetected then
+				badStateDetected = true
+				self:ResumeBlizzardAPI()
+				self:UnregisterShortTermEvents()
+				setFallback(self)
+				DBM:Debug("|cffff0000Failed to match encounter timeline events to expected timers, falling back to Blizzard API|r", nil, nil, nil, true)
+			end
+		end
+
+		function mod:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(eventID)
+			local eventState = C_EncounterTimeline.GetEventState(eventID)
+			if not eventState then return end
+			if eventState == 2 then
+				local eventType, eventCount = self:TLCountFinish(eventID)
+				if eventType == "aerialSmash" and eventCount then
+					warnAerialSmash:Show(eventCount)
+				elseif eventType == "bladeCombo" then
+					if self:IsTanking("player", "boss1", nil, true) then
+						specWarnBladeCombo:Show()
+						specWarnBladeCombo:Play("defensive")
+					end
+				elseif eventType == "gildedDestruction" and eventCount then
+					specWarnGildedDestruction:Show(eventCount)
+					specWarnGildedDestruction:Play("aesoon")
+				elseif eventType == "huntingLeap" and eventCount then
+					warnHuntingLeap:Show(eventCount)
+				elseif eventType == "deadlyRoar" and eventCount then
+					specWarnDeadlyRoar:Show(eventCount)
+					specWarnDeadlyRoar:Play("fearsoon")
+				elseif eventType == "quakingLeap" and eventCount then
+					specWarnQuakingLeap:Show(eventCount)
+					specWarnQuakingLeap:Play("scatter")
+				elseif eventType == "savageMaul" and eventCount then
+					warnSavageMaul:Show(eventCount)
+				end
+			elseif eventState == 3 then
+				local eventType = self:TLCountCancel(eventID)
+				if eventType == "huntingLeap" and not self:GetStage(2) then
+					self:SetStage(2)
+				end
+			end
+		end
 	end
 else
 	mod:RegisterEventsInCombat(

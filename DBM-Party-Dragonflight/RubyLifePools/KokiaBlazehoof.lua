@@ -18,7 +18,7 @@ if DBM:IsPostMidnight() then
 
 	local specWarnSearingBlows						= mod:NewSpecialWarningDefensive(372858, nil, nil, nil, 1, 2, nil, nil, "defensive")
 	local specWarnMoltenBoulder						= mod:NewSpecialWarningDodgeCount(372110, nil, nil, nil, 1, 15, nil, nil, "frontal")
-	local specWarnRitualofBlazebinding				= mod:NewSpecialWarningSwitchCount(372864, nil, nil, nil, 1, 2, nil, nil, "killmob")
+	local specWarnRitualofBlazebinding				= mod:NewSpecialWarningBlizzTarget(372864, nil, nil, nil, 1, 2, nil, nil, "killmob")
 	--local specWarnBurnout							= mod:NewSpecialWarningRun(373087, "Melee", nil, nil, 4, 2, nil, nil, "justrun")
 	--local specWarnGTFO								= mod:NewSpecialWarningGTFO(372820, nil, nil, nil, 1, 8, nil, nil, "watchfeet")
 
@@ -106,8 +106,7 @@ if DBM:IsPostMidnight() then
 				specWarnMoltenBoulder:Show(eventCount)
 				specWarnMoltenBoulder:Play("frontal")
 			elseif eventType == "ritual" and eventCount then
-				specWarnRitualofBlazebinding:Show(eventCount)
-				specWarnRitualofBlazebinding:Play("killmob")
+				specWarnRitualofBlazebinding:Show(eventCount, "killmob")
 			end
 		elseif eventState == 3 then
 			self:TLCountCancel(eventID)

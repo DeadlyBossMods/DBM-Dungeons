@@ -40,14 +40,19 @@ local badStateDetected = false
 local workaroundblizzardincompitence = {}--In case we have to fall back to blizz timers, this will prevent us from trying to use encounter timeline events which are also used by blizz timers and will cause false positives that break timers
 --local tankFound = false
 
-local function setFallback(self)
+---@param self DBMMod
+---@param dontSetAlerts boolean? Called on engage when we only want to set timeline parameters and not touch encounter alerts
+local function setFallback(self, dontSetAlerts)
 	--Blizz API fallbacks
-	warnDevouringEssence:SetAlert({390, 395}, "incomingdebuff", 15, 2)
-	timerDevouringEssenceCD:SetTimeline({390, 395})
-	specWarnImplodingStrike:SetAlert({391, 394}, "defensive", 19, 2)
-	timerImplodingStrikeCD:SetTimeline({391, 394})
-	specWarnEmptinessOfTheVoid:SetAlert({392, 393}, "kickcast", 19, 2)
-	timerEmptinessOfTheVoidCD:SetTimeline({392, 393})
+	if not dontSetAlerts then
+		warnDevouringEssence:SetAlert({390, 395}, "incomingdebuff", 15, 2)
+		specWarnImplodingStrike:SetAlert({391, 394}, "defensive", 19, 2)
+		specWarnEmptinessOfTheVoid:SetAlert({392, 393}, "kickcast", 19, 2)
+	end
+	local onlyColor = not DBM.Options.HideDBMBars and not badStateDetected
+	timerDevouringEssenceCD:SetTimeline({390, 395}, onlyColor)
+	timerImplodingStrikeCD:SetTimeline({391, 394}, onlyColor)
+	timerEmptinessOfTheVoidCD:SetTimeline({392, 393}, onlyColor)
 end
 
 --[[
@@ -79,6 +84,7 @@ function mod:OnLimitedCombatStart()
 			"ENCOUNTER_TIMELINE_EVENT_ADDED",
 			"ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED"
 		)
+		setFallback(self, true)
 	else
 		setFallback(self)
 	end

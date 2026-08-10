@@ -9,6 +9,8 @@ mod.isTrashMod = true
 mod.isTrashModBossFightAllowed = true
 
 if DBM:IsPostMidnight() then
+	mod:AddAuraSoundOption(269936, nil, 269936, 1, 1, "fixateyou", 19, 0)--Fixate
+	mod:AddAuraSoundOption(1302028, "Tank", 1302028, 1, 1, "defensive", 2, 0)--Soul Crush
 else
 	mod:RegisterEvents(
 		"SPELL_CAST_START 270003 269973 270923 270889 270901 270084 270872 270293 270284 270492 270482 270514 270507",
