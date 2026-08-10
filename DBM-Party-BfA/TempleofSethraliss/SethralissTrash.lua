@@ -10,6 +10,10 @@ mod.isTrashModBossFightAllowed = true
 
 if DBM:IsPostMidnight() then
 	mod:AddAuraSoundOption(1291468, "Tank", 1291468, 1, 1, "defensive", 2, 0)--Sunder Slam
+	mod:AddAuraSoundOption(1291399, "RemoveBleed", 1291399, 1, 3, "bleedyou", 19, 0)--Serrated Charge
+	mod:AddAuraSoundOption(1303486, false, 1303486, 1, 3, "aesoon", 2, 0)--Caustic Stomp
+	mod:AddAuraSoundOption(1296052, "RemoveMagic", 1296052, 1, 1, "helpdispel", 2, 0)--Imbued Conduction (stuns if not dispelled)
+	mod:AddAuraSoundOption(1293307, true, 1293307, 1, 3, "stunyou", 19, 0)--Addle Mind
 else
 	mod:RegisterEvents(
 		"SPELL_CAST_START 265968 272657 264574 258908 272655 261635 273995 272700 268061",
