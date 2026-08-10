@@ -28,7 +28,7 @@ local specWarnEmptinessOfTheVoid			= mod:NewSpecialWarningInterruptCount(1256351
 
 local timerDevouringEssenceCD				= mod:NewCDCountTimer(20.5, 1256358, nil, nil, nil, 3, nil, DBM_COMMON_L.MAGIC_ICON)
 local timerImplodingStrikeCD				= mod:NewCDCountTimer(20.5, 1256355, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
-local timerEmptinessOfTheVoidCD				= mod:NewVarCountTimer("v19.5-23.3", 1256351, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerEmptinessOfTheVoidCD				= mod:NewVarCountTimer("v18.2-23.3", 1256351, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerPhase							= mod:NewStageTimer(42)
 
 mod:AddAuraSoundOption({1287014, 1256045}, true, 1287014, 1, 2, "watchfeet", 8)--Null Zone
@@ -98,7 +98,7 @@ do
 				workaroundblizzardincompitence["void"] = false
 			end
 			local count = self:TLCountStart(eventID, "void", "voidCount")
-			timerEmptinessOfTheVoidCD:TLStart(timer == 21 and "v19.5-23.3" or 7, eventID, count)
+			timerEmptinessOfTheVoidCD:TLStart(timer == 21 and "v18.3-23.3" or 7, eventID, count)
 		--Devouring is opener 16.0 and recurring 18.5 (rounded to 19)
 		elseif timer == 16 or self:IsRoundedTimer(timer, 19, 0.5) then--Is rounded covers 18.5-19.5
 			if workaroundblizzardincompitence["devouring"] then
