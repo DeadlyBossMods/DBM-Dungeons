@@ -38,7 +38,6 @@ mod.vb.implodingStrikeCount = 0
 mod.vb.voidCount = 0
 local badStateDetected = false
 local workaroundblizzardincompitence = {}--In case we have to fall back to blizz timers, this will prevent us from trying to use encounter timeline events which are also used by blizz timers and will cause false positives that break timers
---local tankFound = false
 
 ---@param self DBMMod
 ---@param dontSetAlerts boolean? Called on engage when we only want to set timeline parameters and not touch encounter alerts
@@ -55,29 +54,12 @@ local function setFallback(self, dontSetAlerts)
 	timerEmptinessOfTheVoidCD:SetTimeline({392, 393}, onlyColor)
 end
 
---[[
-local function isTankInGroup()
-	if not IsInGroup() then
-		tankFound = UnitGroupRolesAssigned("player") == "TANK"
-	else
-		local groupType = IsInRaid() and "raid" or "party"
-		for i = 1, GetNumGroupMembers() do
-			if UnitIsGroupLeader(groupType..i) then
-				tankFound = UnitGroupRolesAssigned(groupType..i) == "TANK"
-				return
-			end
-		end
-	end
-end
---]]
-
 function mod:OnLimitedCombatStart()
 	self:TLCountReset()
 	self.vb.devouringEssenceCount = 1
 	self.vb.implodingStrikeCount = 1
 	self.vb.voidCount = 1
 	workaroundblizzardincompitence = {}
---	isTankInGroup()
 	if DBM.Options.HardcodedTimer and not badStateDetected then
 		self:IgnoreBlizzardAPI()
 		self:RegisterShortTermEvents(
@@ -88,11 +70,11 @@ function mod:OnLimitedCombatStart()
 	else
 		setFallback(self)
 	end
-	--if self:IsMythic() then
-	--	self:SetCreatureID(252892)
-	--else
-	--	self:SetCreatureID(244752)
-	--end
+	if self:IsMythic() then
+		self:SetCreatureID(252892)
+	else
+		self:SetCreatureID(244752)
+	end
 end
 
 function mod:OnCombatEnd()
