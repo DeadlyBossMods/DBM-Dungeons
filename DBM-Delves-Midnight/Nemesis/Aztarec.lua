@@ -178,6 +178,7 @@ do
 	---@param timerExact number
 	---@param eventID number
 	local function timersAll(self, timerExact, eventID)
+		--These uckets cover Shadow Priest + healer NPC combo (normal and mythic)
 		--Use generous buckets when no other ability can claim the timer.
 		--The Noxious/Void overlap is deliberately routed by expected prior cooldown instead.
 		if self:IsRoundedTimer(timerExact, 6, 0.5)
