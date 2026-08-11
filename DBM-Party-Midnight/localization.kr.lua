@@ -16,7 +16,7 @@ L:SetGeneralLocalization({
 L = DBM:GetModLocalization("TheBlindingValeTrash")
 
 L:SetGeneralLocalization({
-	name =	"눈먼 골짜기 일반몹"
+	name =	"눈부신 골짜기 일반몹"
 })
 
 -----------------------
@@ -34,7 +34,7 @@ L:SetGeneralLocalization({
 L = DBM:GetModLocalization("AltarofFangsTrash")
 
 L:SetGeneralLocalization({
-	name =	"송곳니 제단 일반몹"
+	name =	"송곳니의 제단 일반몹"
 })
 
 -----------------------
