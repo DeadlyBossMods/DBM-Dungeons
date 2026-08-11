@@ -1685,5 +1685,5 @@ L:SetOptionLocalization{
 L = DBM:GetModLocalization("KCTrash")
 
 L:SetGeneralLocalization{
-	name = "Трэш мобы Склепы Каражана"
+	name = "Трэш: Склепы Каражана"
 }

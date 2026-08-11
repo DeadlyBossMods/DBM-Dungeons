@@ -752,7 +752,7 @@ L:SetMiscLocalization({
 L = DBM:GetModLocalization("PitOfSaronTrash")
 
 L:SetGeneralLocalization({
-	name = "Трэш мобы Яма Сарона"
+	name = "Трэш: Яма Сарона"
 })
 
 ----------------------

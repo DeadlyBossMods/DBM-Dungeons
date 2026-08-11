@@ -30,7 +30,7 @@ local L
 L = DBM:GetModLocalization("NecroticWakeTrash")
 
 L:SetGeneralLocalization({
-	name =	"Трэш мобы Смертельная Тризна"
+	name =	"Трэш: Смертельная Тризна"
 })
 
 -----------------------
@@ -62,7 +62,7 @@ L:SetGeneralLocalization({
 L = DBM:GetModLocalization("PlaguefallTrash")
 
 L:SetGeneralLocalization({
-	name =	"Трэш мобы Чумные Каскады"
+	name =	"Трэш: Чумные Каскады"
 })
 
 -----------------------
@@ -109,7 +109,7 @@ L:SetMiscLocalization({
 L = DBM:GetModLocalization("TirnaScitheTrash")
 
 L:SetGeneralLocalization({
-	name =	"Трэш мобы Туманы Тирна Скитта"
+	name =	"Трэш: Туманы Тирна Скитта"
 })
 
 -----------------------
@@ -141,7 +141,7 @@ L:SetGeneralLocalization({
 L = DBM:GetModLocalization("AtonementTrash")
 
 L:SetGeneralLocalization({
-	name =	"Трэш мобы Чертоги Покаяния"
+	name =	"Трэш: Чертоги Покаяния"
 })
 
 -----------------------
@@ -182,7 +182,7 @@ L:SetMiscLocalization({
 L = DBM:GetModLocalization("SpiresofAscensionTrash")
 
 L:SetGeneralLocalization({
-	name =	"Трэш мобы Шпили Перерождения"
+	name =	"Трэш: Шпили Перерождения"
 })
 
 -----------------------
@@ -223,7 +223,7 @@ L:SetMiscLocalization{
 L = DBM:GetModLocalization("TheaterofPainTrash")
 
 L:SetGeneralLocalization({
-	name =	"Трэш мобы Театр Боли"
+	name =	"Трэш: Театр Боли"
 })
 
 -----------------------
@@ -255,7 +255,7 @@ L:SetGeneralLocalization({
 L = DBM:GetModLocalization("DeOtherSideTrash")
 
 L:SetGeneralLocalization({
-	name =	"Трэш мобы Та Сторона"
+	name =	"Трэш: Та Сторона"
 })
 
 -----------------------
@@ -287,7 +287,7 @@ L:SetGeneralLocalization({
 L = DBM:GetModLocalization("SanguineDepthsTrash")
 
 L:SetGeneralLocalization({
-	name =	"Трэш мобы Кровавые катакомбы"
+	name =	"Трэш: Кровавые катакомбы"
 })
 
 -----------------------
@@ -348,5 +348,5 @@ L:SetMiscLocalization({
 L = DBM:GetModLocalization("TazaveshTrash")
 
 L:SetGeneralLocalization({
-	name =	"Трэш мобы Тайный рынок Тазавеш"
+	name =	"Трэш: Тайный рынок Тазавеш"
 })

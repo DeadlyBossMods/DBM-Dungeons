@@ -30,7 +30,7 @@ local L
 L = DBM:GetModLocalization("BrackenhideHollowTrash")
 
 L:SetGeneralLocalization({
-	name =	"Трэш мобы Пещера Бурошкуров"
+	name =	"Трэш: Лощина Бурошкуров"
 })
 
 -----------------------
@@ -67,7 +67,7 @@ L:SetGeneralLocalization({
 L = DBM:GetModLocalization("UldamanLegacyofTyrTrash")
 
 L:SetGeneralLocalization({
-	name =	"Трэш мобы Ульдаман: наследие Тира"
+	name =	"Трэш: Ульдаман: наследие Тира"
 })
 
 -----------------------
@@ -100,7 +100,7 @@ L:SetGeneralLocalization({
 L = DBM:GetModLocalization("TheNokhudOffensiveTrash")
 
 L:SetGeneralLocalization({
-	name =	"Трэш мобы Наступление клана Нокхуд"
+	name =	"Трэш: Наступление клана Нокхуд"
 })
 
 L:SetMiscLocalization({
@@ -136,7 +136,7 @@ L:SetMiscLocalization({
 L = DBM:GetModLocalization("NeltharusTrash")
 
 L:SetGeneralLocalization({
-	name =	"Трэш мобы Нелтарий"
+	name =	"Трэш: Нелтарий"
 })
 
 -----------------------
@@ -176,7 +176,7 @@ L:SetMiscLocalization({
 L = DBM:GetModLocalization("AlgetharAcademyTrash")
 
 L:SetGeneralLocalization({
-	name =	"Трэш мобы Академия Алгет'ар"
+	name =	"Трэш: Академия Алгет'ар"
 })
 
 -----------------------
@@ -208,7 +208,7 @@ L:SetGeneralLocalization({
 L = DBM:GetModLocalization("TheAzurevaultTrash")
 
 L:SetGeneralLocalization({
-	name =	"Трэш мобы Лазурное хранилище"
+	name =	"Трэш: Лазурное хранилище"
 })
 
 -----------------------
@@ -242,7 +242,7 @@ L:SetMiscLocalization({
 L = DBM:GetModLocalization("RubyLifePoolsTrash")
 
 L:SetGeneralLocalization({
-	name =	"Трэш мобы Рубиновые Омуты Жизни"
+	name =	"Трэш: Рубиновые Омуты Жизни"
 })
 
 -----------------------
@@ -274,7 +274,7 @@ L:SetGeneralLocalization({
 L = DBM:GetModLocalization("HallsofInfusionTrash")
 
 L:SetGeneralLocalization({
-	name =	"Трэш мобы Чертоги Насыщения"
+	name =	"Трэш: Чертоги Насыщения"
 })
 
 -----------------------
@@ -339,7 +339,7 @@ L:SetMiscLocalization({
 L = DBM:GetModLocalization("DawnoftheInfiniteTrash")
 
 L:SetGeneralLocalization({
-	name =	"Трэш мобы Рассвет Бесконечности"
+	name =	"Трэш: Рассвет Бесконечности"
 })
 
 L:SetOptionLocalization({
