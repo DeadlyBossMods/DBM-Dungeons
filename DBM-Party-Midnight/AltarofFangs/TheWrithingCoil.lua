@@ -14,7 +14,7 @@ mod:RegisterCombat("combat")
 local warnSynchonizedVenom			= mod:NewCountAnnounce(1299154, 3)
 
 local specWarnTailScythe			= mod:NewSpecialWarningDefensive(1298949, nil, nil, nil, 1, 2, nil, nil, "defensive")
-local specWarnVindictiveOnslaught	= mod:NewSpecialWarningCount(1299940, nil, nil, nil, 2, 2, nil, nil, "watchstep")
+local specWarnVindictiveOnslaught	= mod:NewSpecialWarningCount(1299940, nil, nil, nil, 2, 15, nil, nil, "frontal")
 local specWarnDeathRattle			= mod:NewSpecialWarningCount(1299053, nil, nil, nil, 2, 14, nil, nil, "breakvine")--Verify audio
 local specWarnSpitefulHunt			= mod:NewSpecialWarningYou(1300503, nil, nil, nil, 2, 19, nil, nil, "fixateyou")--Change to blizzyou?
 local specWarnAssimilation			= mod:NewSpecialWarningSwitchCount(1300686, nil, nil, nil, 1, 2, nil, nil, "targetchange")
@@ -46,7 +46,7 @@ local function setFallback(self, dontSetAlerts)
 			specWarnTailScythe:SetAlert(814, "defensive", 2)
 		end
 		warnSynchonizedVenom:SetAlert(813, "aesoon", 2, 3)
-		specWarnVindictiveOnslaught:SetAlert(815, "watchstep", 2, 2)
+		specWarnVindictiveOnslaught:SetAlert(815, "frontal", 15, 2)
 		specWarnDeathRattle:SetAlert(816, "breakvine", 14, 2)
 		specWarnSpitefulHunt:SetAlert(817, "fixateyou", 19, 2, 0)
 		specWarnAssimilation:SetAlert(818, "targetchange", 2, 2, 0)
@@ -152,7 +152,7 @@ do
 					specWarnTailScythe:Play("defensive")
 				elseif eventType == "vindictiveOnslaught" then
 					specWarnVindictiveOnslaught:Show(eventCount)
-					specWarnVindictiveOnslaught:Play("watchstep")
+					specWarnVindictiveOnslaught:Play("frontal")
 				elseif eventType == "deathRattle" then
 					specWarnDeathRattle:Show(eventCount)
 					specWarnDeathRattle:Play("breakvine")
