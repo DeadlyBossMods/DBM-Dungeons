@@ -255,7 +255,7 @@ L:SetGeneralLocalization{
 L = DBM:GetModLocalization("AuctTombsTrash")
 
 L:SetGeneralLocalization{
-	name 		= "Трэш мобы Гробницы маны"
+	name 		= "Трэш: Гробница маны"
 }
 
 -------------------

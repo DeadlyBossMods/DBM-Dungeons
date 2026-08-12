@@ -9,8 +9,12 @@ mod.isTrashMod = true
 mod.isTrashModBossFightAllowed = true
 
 if DBM:IsPostMidnight() then
-	mod:AddAuraSoundOption(269936, nil, 269936, 1, 1, "fixateyou", 19, 0)--Fixate
+	mod:AddAuraSoundOption(269936, true, 269936, 1, 1, "fixateyou", 19, 0)--Fixate
 	mod:AddAuraSoundOption(1302028, "Tank", 1302028, 1, 1, "defensive", 2, 0)--Soul Crush
+	mod:AddAuraSoundOption(271555, true, 271555, 1, 1, "stunyou", 19, 0)--Entomb
+	mod:AddAuraSoundOption(270492, true, 270492, 1, 1, "stunyou", 19, 0)--Hex
+	mod:AddAuraSoundOption(267763, "RemoveDisease", 267763, 1, 3, "helpdispel", 2, 0)--Wretched Discharge (applies to everyone, so warning it wasn't kicked important)
+	mod:AddAuraSoundOption(269972, "RemoveCurse", 269972, 1, 3, "helpdispel", 2, 0)--Hex Volley (same as above)
 else
 	mod:RegisterEvents(
 		"SPELL_CAST_START 270003 269973 270923 270889 270901 270084 270872 270293 270284 270492 270482 270514 270507",

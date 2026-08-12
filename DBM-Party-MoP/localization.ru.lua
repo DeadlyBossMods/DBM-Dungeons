@@ -44,7 +44,7 @@ L= DBM:GetModLocalization(335)
 L = DBM:GetModLocalization("JadeTempleTrash")
 
 L:SetGeneralLocalization({
-	name =	"Трэш мобы Храма Нефритовой Змеи"
+	name =	"Трэш: Храм Нефритовой Змеи"
 })
 
 -----------------------

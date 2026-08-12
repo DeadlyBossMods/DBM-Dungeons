@@ -12,6 +12,9 @@ if DBM:IsPostMidnight() then
 	mod:AddAuraSoundOption(1307372, true, 1307372, 1, 2, "watchfeet", 8, 0)--Fiery Demise
 	mod:AddAuraSoundOption(1306366, false, 1306366, 1, 1, "defensive", 8, 0)--Lightning Torrent
 	mod:AddAuraSoundOption(1305225, "Tank", 1305225, 1, 1, "defensive", 2, 0)--Tectonic Strike
+	mod:AddAuraSoundOption(372047, "Tank", 372047, 1, 1, "watchstep", 2, 0)--Stel Barrage
+	mod:AddAuraSoundOption(385536, true, 385536, 1, 1, "crowdcontrol", 3, 0)--Blaming Barrage
+	mod:AddAuraSoundOption(385313, true, 385313, 1, 1, "debuffyou", 17, 0)--Lighting Rod
 else
 	mod:RegisterEvents(
 		"SPELL_CAST_START 372087 391726 391723 373614 392395 372696 384194 392486 392394 392640 392451 372047 372735 373692",

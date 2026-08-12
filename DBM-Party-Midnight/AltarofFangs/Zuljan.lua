@@ -13,7 +13,7 @@ mod:RegisterCombat("combat")
 
 --local warnRecklessLeap			= mod:NewCountAnnounce(1283247, 2)
 
-local specWarnBoneslicer			= mod:NewSpecialWarningCount(1301413, nil, nil, nil, 2, 2, nil, nil, "watchstep")
+local specWarnBoneslicer			= mod:NewSpecialWarningCount(1301413, nil, nil, nil, 2, 2, nil, nil, "farfromline")
 local specWarnRitualoftheFang		= mod:NewSpecialWarningSoakCount(1300876, nil, nil, nil, 2, 17, nil, nil, "soakbeam")
 local specWarnAxegrinder			= mod:NewSpecialWarningCount(1301111, nil, nil, nil, 2, 3, nil, nil, "watchstep")
 local specWarnChopDown				= mod:NewSpecialWarningDefensive(1301350, nil, nil, nil, 1, 3, nil, nil, "defensive")
@@ -39,7 +39,7 @@ local function setFallback(self, dontSetAlerts)
 		if self:IsTank() then
 			specWarnChopDown:SetAlert(824, "defensive", 2)
 		end
-		specWarnBoneslicer:SetAlert(821, "watchstep", 2, 3)
+		specWarnBoneslicer:SetAlert(821, "farfromline", 2, 3)
 		specWarnRitualoftheFang:SetAlert(822, "soakbeam", 17, 3)
 		specWarnAxegrinder:SetAlert(823, "watchstep", 2, 3)
 	end
@@ -128,7 +128,7 @@ do
 			if eventType and eventCount then
 				if eventType == "boneslicer" then
 					specWarnBoneslicer:Show(eventCount)
-					specWarnBoneslicer:Play("watchstep")
+					specWarnBoneslicer:Play("farfromline")
 				elseif eventType == "ritualoftheFang" then
 					specWarnRitualoftheFang:Show(eventCount)
 					specWarnRitualoftheFang:Play("soakbeam")
