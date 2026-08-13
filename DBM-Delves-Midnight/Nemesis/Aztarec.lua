@@ -17,7 +17,7 @@ mod:RegisterCombat("combat")
 --DBM:RegisterAltSpellName(1256358, DBM_COMMON_L.DEBUFF)
 
 local warnVoidToxin							= mod:NewCountAnnounce(1293824, 2)--Hardcode Only
-local warnEchoCast							= mod:NewCountAnnounce(1288125, 3)
+--local warnEchoCast						= mod:NewCountAnnounce(1288125, 3)
 
 --Memory Game/intermission
 local specWarnSermonofUlatek				= mod:NewSpecialWarningCount(1309375, nil, nil, nil, 2, 2, nil, nil, "phasechange")
@@ -80,8 +80,8 @@ function mod:OnLimitedCombatStart()
 	--UNIT events always used even in non hardcode, no ambiguity to them
 	self:RegisterShortTermEvents(
 		"UNIT_SPELLCAST_CHANNEL_START boss1",
-		"UNIT_SPELLCAST_CHANNEL_STOP boss1",
-		"UNIT_SPELLCAST_START boss1"
+		"UNIT_SPELLCAST_CHANNEL_STOP boss1"
+--		"UNIT_SPELLCAST_START boss1"
 	)
 	if DBM.Options.HardcodedTimer and not badStateDetected then
 		self:IgnoreBlizzardAPI()
@@ -120,6 +120,8 @@ function mod:UNIT_SPELLCAST_CHANNEL_STOP()
 	specWarnEchoofUlatek:Play("stilldanger")
 end
 
+--[[
+--Needs more work, it's not a fixed count
 function mod:UNIT_SPELLCAST_START()
 	if not self.vb.echoFinished then
 		---@diagnostic disable-next-line: param-type-mismatch
@@ -130,8 +132,13 @@ function mod:UNIT_SPELLCAST_START()
 		end
 	end
 end
+--]]
 
 do
+	--The actual replacement event has always arrived within one second of its predecessor.
+	--Do not let a canceled or paused stale timer claim an otherwise ambiguous replacement.
+	local expectedTimerMaxDifference = 2
+
 	---@param eventType string
 	---@return number?
 	local function expectedTimer(eventType)
@@ -202,11 +209,11 @@ do
 		elseif self:IsRoundedTimer(timerExact, 20.5, 0.85) then
 			local noxiousDifference = expectedTimer("noxiousBile")
 			local soulDifference = expectedTimer("soulExtinction")
-			if noxiousDifference and (not soulDifference or noxiousDifference < soulDifference) then
+			if noxiousDifference and noxiousDifference <= expectedTimerMaxDifference and (not soulDifference or noxiousDifference < soulDifference) then
 				local count = self:TLCountStart(eventID, "noxiousBile", "noxiousBileCount")
 				timerNoxiousBileCD:TLStart(timerExact, eventID, count)
 				timelineEvents[eventID] = {eventType = "noxiousBile", timer = timerExact, startedAt = GetTime()}
-			elseif soulDifference then
+			elseif soulDifference and soulDifference <= expectedTimerMaxDifference then
 				local count = self:TLCountStart(eventID, "soulExtinction", "soulExtinctionCount")
 				timerSoulExtinctionCD:TLStart(timerExact, eventID, count)
 				timelineEvents[eventID] = {eventType = "soulExtinction", timer = timerExact, startedAt = GetTime()}
