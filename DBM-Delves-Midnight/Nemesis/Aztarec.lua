@@ -17,7 +17,7 @@ mod:RegisterCombat("combat")
 --DBM:RegisterAltSpellName(1256358, DBM_COMMON_L.DEBUFF)
 
 local warnVoidToxin							= mod:NewCountAnnounce(1293824, 2)--Hardcode Only
---local warnEchoCast						= mod:NewCountAnnounce(1288125, 3)
+local warnEchoCast							= mod:NewCountAnnounce(1288125, 3)
 
 --Memory Game/intermission
 local specWarnSermonofUlatek				= mod:NewSpecialWarningCount(1309375, nil, nil, nil, 2, 2, nil, nil, "phasechange")
@@ -46,6 +46,7 @@ mod.vb.voidToxinCount = 0
 mod.vb.serpentsStrikeCount = 0
 mod.vb.soulExtinctionCount = 0
 mod.vb.venomStormCount = 0
+mod.vb.expectedWaves = 5
 
 ---@param self DBMMod
 ---@param dontSetAlerts boolean? Called on engage when we only want to set timeline parameters and not touch encounter alerts
@@ -77,11 +78,12 @@ function mod:OnLimitedCombatStart()
 	self.vb.serpentsStrikeCount = 1
 	self.vb.soulExtinctionCount = 1
 	self.vb.venomStormCount = 1
+	self.vb.expectedWaves = 5
 	--UNIT events always used even in non hardcode, no ambiguity to them
 	self:RegisterShortTermEvents(
 		"UNIT_SPELLCAST_CHANNEL_START boss1",
-		"UNIT_SPELLCAST_CHANNEL_STOP boss1"
---		"UNIT_SPELLCAST_START boss1"
+		"UNIT_SPELLCAST_CHANNEL_STOP boss1",
+		"UNIT_SPELLCAST_START boss1"
 	)
 	if DBM.Options.HardcodedTimer and not badStateDetected then
 		self:IgnoreBlizzardAPI()
@@ -113,6 +115,13 @@ function mod:UNIT_SPELLCAST_CHANNEL_START()
 	self.vb.sermonCount = self.vb.sermonCount + 1
 	self.vb.echoFinished = false
 	self.vb.echoCount = 1
+	if self.vb.sermonCount == 1 then
+		self.vb.expectedWaves = self:IsMythic() and 5 or 3
+	elseif self.vb.sermonCount == 3 then
+		self.vb.expectedWaves = self:IsMythic() and 6 or 4
+	else
+		self.vb.expectedWaves = self:IsMythic() and 7 or 5
+	end
 end
 
 function mod:UNIT_SPELLCAST_CHANNEL_STOP()
@@ -120,19 +129,17 @@ function mod:UNIT_SPELLCAST_CHANNEL_STOP()
 	specWarnEchoofUlatek:Play("stilldanger")
 end
 
---[[
 --Needs more work, it's not a fixed count
 function mod:UNIT_SPELLCAST_START()
 	if not self.vb.echoFinished then
 		---@diagnostic disable-next-line: param-type-mismatch
 		warnEchoCast:Show(self.vb.echoCount .. "/4")
 		self.vb.echoCount = self.vb.echoCount + 1
-		if self.vb.echoCount == 4 then
+		if self.vb.echoCount == self.vb.expectedWaves then
 			self.vb.echoFinished = true
 		end
 	end
 end
---]]
 
 do
 	--The actual replacement event has always arrived within one second of its predecessor.
