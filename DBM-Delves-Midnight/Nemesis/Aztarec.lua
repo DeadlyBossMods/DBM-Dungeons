@@ -14,7 +14,9 @@ mod:SetZone(3079)
 mod:RegisterCombat("combat")
 
 --NOTES:
---DBM:RegisterAltSpellName(1256358, DBM_COMMON_L.DEBUFF)
+DBM:RegisterAltSpellName(1294963, DBM_COMMON_L.INTERRUPT)--Soul Extinction
+DBM:RegisterAltSpellName(1293825, DBM_COMMON_L.TANKBUSTER)
+DBM:RegisterAltSpellName(1293824, DBM_COMMON_L.DEBUFF)
 
 local warnVoidToxin							= mod:NewCountAnnounce(1293824, 2)--Hardcode Only
 local warnEchoCast							= mod:NewCountAnnounce(1288125, 3)
@@ -34,6 +36,8 @@ local timerVoidToxinCD						= mod:NewCDCountTimer(20.5, 1293824, nil, nil, nil, 
 local timerSerpentsStrikeCD					= mod:NewCDCountTimer(20.5, 1293825, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerSoulExtinctionCD					= mod:NewCDCountTimer(20.5, 1294963, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 local timerVenomStormCD						= mod:NewCDCountTimer(20.5, 1309418, nil, nil, nil, 3)
+
+mod:AddAuraSoundOption(1298887, true, 1298887, 1, 2, "watchfeet", 8, 0)
 
 local badStateDetected = false
 local timelineEvents = {}
