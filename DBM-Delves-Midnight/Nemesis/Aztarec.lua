@@ -37,11 +37,12 @@ local specWarnSerpentsStrike				= mod:NewSpecialWarningDefensive(1293825, nil, n
 local specWarnSoulExtinction				= mod:NewSpecialWarningInterruptCount(1294963, nil, nil, nil, 3, 2, nil, nil, "kickcast")
 local specWarnVenomStorm					= mod:NewSpecialWarningDodgeCount(1309418, nil, nil, nil, 2, 2, nil, nil, "watchwave")
 
-local timerNoxiousBileCD					= mod:NewCDCountTimer(20.5, 1291555, nil, nil, nil, 3)
-local timerVoidToxinCD						= mod:NewCDCountTimer(20.5, 1293824, nil, nil, nil, 3, nil, DBM_COMMON_L.MAGIC_ICON)
-local timerSerpentsStrikeCD					= mod:NewCDCountTimer(20.5, 1293825, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
-local timerSoulExtinctionCD					= mod:NewCDCountTimer(20.5, 1294963, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
-local timerVenomStormCD						= mod:NewCDCountTimer(20.5, 1309418, nil, nil, nil, 3)
+--All bars need allow double because on mythic difficulty boss clones itself and abilities for clone AND boss both have own bars
+local timerNoxiousBileCD					= mod:NewCDCountTimer("d20.5", 1291555, nil, nil, nil, 3)
+local timerVoidToxinCD						= mod:NewCDCountTimer("d20.5", 1293824, nil, nil, nil, 3, nil, DBM_COMMON_L.MAGIC_ICON)
+local timerSerpentsStrikeCD					= mod:NewCDCountTimer("d20.5", 1293825, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+local timerSoulExtinctionCD					= mod:NewCDCountTimer("d20.5", 1294963, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerVenomStormCD						= mod:NewCDCountTimer("d20.5", 1309418, nil, nil, nil, 3)
 
 mod:AddAuraSoundOption(1298887, true, 1298887, 1, 2, "watchfeet", 8, 0)
 
@@ -57,8 +58,6 @@ mod.vb.serpentsStrikeCount = 0
 mod.vb.soulExtinctionCount = 0
 mod.vb.venomStormCount = 0
 mod.vb.expectedWaves = 5
-mod.vb.postSermonUntil = 0
-mod.vb.sermonDelayingTimeline = false
 
 ---@param self DBMMod
 ---@param dontSetAlerts boolean? Called on engage when we only want to set timeline parameters and not touch encounter alerts
@@ -91,8 +90,6 @@ function mod:OnLimitedCombatStart()
 	self.vb.soulExtinctionCount = 1
 	self.vb.venomStormCount = 1
 	self.vb.expectedWaves = 5
-	self.vb.postSermonUntil = 0
-	self.vb.sermonDelayingTimeline = false
 	if DBM.Options.HardcodedTimer and not badStateDetected then
 		self:IgnoreBlizzardAPI()
 		self:RegisterShortTermEvents(
@@ -119,7 +116,6 @@ end
 
 function mod:UNIT_SPELLCAST_CHANNEL_START()
 	self.vb.sermonCount = self.vb.sermonCount + 1
-	self.vb.sermonDelayingTimeline = true
 	specWarnSermonofUlatek:Show(self.vb.sermonCount)
 	specWarnSermonofUlatek:Play("phasechange")
 	if self.vb.sermonCount == 1 then
@@ -151,36 +147,6 @@ function mod:UNIT_SPELLCAST_START()
 end
 
 do
-	--The actual Noxious/Void replacement event has always arrived within one second of its predecessor.
-	--Sermon pauses can delay the first replacement after resume by over three seconds.
-	local expectedTimerMaxDifference = 2
-	local postSermonTimerMaxDifference = 4
-
-	---@param self DBMMod
-	---@return number
-	local function getExpectedTimerMaxDifference(self)
-		if GetTime() < self.vb.postSermonUntil then
-			return postSermonTimerMaxDifference
-		end
-		return expectedTimerMaxDifference
-	end
-
-	---@param eventType string
-	---@return number?
-	local function expectedTimer(eventType)
-		local now = GetTime()
-		local closest
-		for _, eventInfo in pairs(timelineEvents) do
-			if eventInfo.eventType == eventType and not eventInfo.pausedAt then
-				local difference = math.abs(now - (eventInfo.startedAt + eventInfo.timer))
-				if not closest or difference < closest then
-					closest = difference
-				end
-			end
-		end
-		return closest
-	end
-
 	---@param self DBMMod
 	local function failHardcode(self)
 		badStateDetected = true
@@ -198,7 +164,7 @@ do
 	---@param eventID number
 	local function timersAll(self, timerExact, eventID)
 		--These buckets cover the observed Monk and Shadow Priest role variants.
-		--Soul/Noxious timings are role-specific but non-overlapping; only late Noxious/Void needs prior cooldown routing.
+		--Timings are role-specific; Mythic clones can create parallel same-ability bars, so route solely by duration.
 		if self:IsRoundedTimer(timerExact, 15, 0.6)
 			or self:IsRoundedTimer(timerExact, 17.5, 0.24) then
 			local count = self:TLCountStart(eventID, "serpentsStrike", "serpentsStrikeCount")
@@ -231,21 +197,14 @@ do
 			local count = self:TLCountStart(eventID, "voidToxin", "voidToxinCount")
 			timerVoidToxinCD:TLStart(timerExact, eventID, count)
 			timelineEvents[eventID] = {eventType = "voidToxin", timer = timerExact, startedAt = GetTime()}
-		elseif self:IsRoundedTimer(timerExact, 21.725, 0.375) then
-			local noxiousDifference = expectedTimer("noxiousBile")
-			local voidDifference = expectedTimer("voidToxin")
-			local maxDifference = getExpectedTimerMaxDifference(self)
-			if noxiousDifference and noxiousDifference <= maxDifference and (not voidDifference or noxiousDifference < voidDifference) then
-				local count = self:TLCountStart(eventID, "noxiousBile", "noxiousBileCount")
-				timerNoxiousBileCD:TLStart(timerExact, eventID, count)
-				timelineEvents[eventID] = {eventType = "noxiousBile", timer = timerExact, startedAt = GetTime()}
-			elseif voidDifference and voidDifference <= maxDifference then
-				local count = self:TLCountStart(eventID, "voidToxin", "voidToxinCount")
-				timerVoidToxinCD:TLStart(timerExact, eventID, count)
-				timelineEvents[eventID] = {eventType = "voidToxin", timer = timerExact, startedAt = GetTime()}
-			else
-				failHardcode(self)
-			end
+		elseif self:IsRoundedTimer(timerExact, 21.63, 0.01) then
+			local count = self:TLCountStart(eventID, "noxiousBile", "noxiousBileCount")
+			timerNoxiousBileCD:TLStart(timerExact, eventID, count)
+			timelineEvents[eventID] = {eventType = "noxiousBile", timer = timerExact, startedAt = GetTime()}
+		elseif self:IsRoundedTimer(timerExact, 21.65, 0.2) then
+			local count = self:TLCountStart(eventID, "voidToxin", "voidToxinCount")
+			timerVoidToxinCD:TLStart(timerExact, eventID, count)
+			timelineEvents[eventID] = {eventType = "voidToxin", timer = timerExact, startedAt = GetTime()}
 		elseif self:IsRoundedTimer(timerExact, 23, 0.5)
 			or self:IsRoundedTimer(timerExact, 25.65, 0.5)
 			or self:IsRoundedTimer(timerExact, 28.575, 0.5)
@@ -278,10 +237,6 @@ do
 		elseif eventState == 0 and eventInfo and eventInfo.pausedAt then
 			eventInfo.startedAt = eventInfo.startedAt + GetTime() - eventInfo.pausedAt
 			eventInfo.pausedAt = nil
-			if self.vb.sermonDelayingTimeline then
-				self.vb.postSermonUntil = GetTime() + 15
-				self.vb.sermonDelayingTimeline = false
-			end
 		elseif eventState == 2 then--Finished
 			timelineEvents[eventID] = nil
 			local eventType, eventCount = self:TLCountFinish(eventID)
