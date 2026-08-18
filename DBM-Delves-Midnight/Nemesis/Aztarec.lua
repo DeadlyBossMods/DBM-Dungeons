@@ -124,7 +124,7 @@ function mod:UNIT_SPELLCAST_CHANNEL_START()
 	specWarnSermonofUlatek:Play("phasechange")
 	if self.vb.sermonCount == 1 then
 		self.vb.expectedWaves = self:IsMythic() and 5 or 3
-	elseif self.vb.sermonCount == 3 then
+	elseif self.vb.sermonCount == 2 then
 		self.vb.expectedWaves = self:IsMythic() and 6 or 4
 	else
 		self.vb.expectedWaves = self:IsMythic() and 7 or 5
