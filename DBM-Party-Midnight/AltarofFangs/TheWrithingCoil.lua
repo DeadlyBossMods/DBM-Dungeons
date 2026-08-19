@@ -111,7 +111,7 @@ do
 				timerSynchonizedVenomCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "synchonizedVenom", "SynchonizedVenomCount"))
 			end
 		elseif timer == 14 or timer == 23 then
-			timerToxicBarrageCD:TLStart(timerExact, eventID)
+			timerToxicBarrageCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "toxicBarrage", "ToxicBarrageCount"))
 		elseif timer == 25 then
 			self:TLCountStart(eventID, "assimilation", "AssimilationCount")
 		elseif timer == 30 or timer == 39 then
