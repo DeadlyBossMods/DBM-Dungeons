@@ -32,6 +32,7 @@ mod.vb.blackHoleCount = 0
 mod.vb.umbralRuptureCount = 0
 mod.vb.netherDashCount = 0
 local badStateDetected = false
+local netherDashFinishTimes = {}
 local function setFallback(self, dontSetAlerts)
 	if not dontSetAlerts then
 		if self:IsTank() then specWarnVoidBlast:SetAlert(39, "defensive", 2, 2) end
@@ -48,6 +49,7 @@ end
 
 function mod:OnLimitedCombatStart()
 	self:TLCountReset()
+	netherDashFinishTimes = {}
 	self.vb.voidBlastCount = 1
 	self.vb.blackHoleCount = 1
 	self.vb.umbralRuptureCount = 1
@@ -66,10 +68,16 @@ end
 
 function mod:OnCombatEnd()
 	self:TLCountReset()
+	netherDashFinishTimes = {}
 	self:UnregisterShortTermEvents()
 end
 
 do
+
+	local function DashCheck(self, count)
+		specWarnNetherDash:Show(count, "chargemove", 3)
+	end
+
 	local function timersAll(self, timer, timerExact, eventID)
 		if timer == 31 then
 			timerBlackHoleCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "blackHole", "blackHoleCount"))
@@ -79,6 +87,8 @@ do
 			timerVoidBlastCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "voidBlast", "voidBlastCount"))
 		elseif timer == 6 then
 			timerNetherDashCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "netherDash", "netherDashCount"))
+			netherDashFinishTimes[eventID] = GetTime() + timerExact
+			self:Schedule(timerExact, DashCheck, self, self.vb.netherDashCount)
 		else
 			return
 		end
@@ -103,6 +113,7 @@ do
 		if not eventID then return end
 		local eventState = C_EncounterTimeline.GetEventState(eventID)
 		if eventState == 2 then
+			netherDashFinishTimes[eventID] = nil
 			local eventType, eventCount = self:TLCountFinish(eventID)
 			if eventType and eventCount then
 				if eventType == "voidBlast" then
@@ -116,12 +127,20 @@ do
 				elseif eventType == "umbralRupture" then
 					specWarnUmbralRupture:Show(eventCount)
 					specWarnUmbralRupture:Play("watchstep")
-				elseif eventType == "netherDash" then
-					specWarnNetherDash:Show(eventCount, "chargemove")
+--				elseif eventType == "netherDash" then
+					--Intercept has to be scheduled becuse ENCOUNETR_WARNING fires BEFORE bugged timer finished fires
+--					specWarnNetherDash:Show(eventCount, "chargemove")
 				end
 			end
 		elseif eventState == 3 then
-			self:TLCountCancel(eventID)
+			local expectedFinishTime = netherDashFinishTimes[eventID]
+			netherDashFinishTimes[eventID] = nil
+			if expectedFinishTime and GetTime() >= expectedFinishTime then
+				--Blizzard reports completed Netherdash timers as state 3 after their expected expiry.
+				self:TLCountFinish(eventID)
+			else
+				self:TLCountCancel(eventID)
+			end
 		end
 	end
 end
