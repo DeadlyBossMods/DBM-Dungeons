@@ -33,6 +33,7 @@ if DBM:IsPostMidnight() then
 	local badStateDetected = false
 	local nextTwentyIsFirebreath = true
 	local nextSixteenIsFirebreath = true
+	local windsEventIDs = {}
 	---@param self DBMMod
 	---@param dontSetAlerts boolean? Called on engage when we only want to set timeline parameters and not touch encounter alerts
 	local function setFallback(self, dontSetAlerts)
@@ -56,6 +57,7 @@ if DBM:IsPostMidnight() then
 
 	function mod:OnLimitedCombatStart()
 		self:TLCountReset()
+		self:TLBatchReset()
 		self:SetStage(1)
 		self.vb.infernospitCount = 1
 		self.vb.firebreathCount = 1
@@ -64,6 +66,7 @@ if DBM:IsPostMidnight() then
 		self.vb.cloudburstCount = 1
 		nextTwentyIsFirebreath = true
 		nextSixteenIsFirebreath = true
+		windsEventIDs = {}
 		if DBM.Options.HardcodedTimer and not badStateDetected then
 			self:IgnoreBlizzardAPI()
 			self:RegisterShortTermEvents("ENCOUNTER_TIMELINE_EVENT_ADDED", "ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED")
@@ -75,38 +78,71 @@ if DBM:IsPostMidnight() then
 
 	function mod:OnCombatEnd()
 		self:TLCountReset()
+		self:TLBatchReset()
+		windsEventIDs = {}
 		self:UnregisterShortTermEvents()
 	end
 
 	function mod:ENCOUNTER_TIMELINE_EVENT_ADDED(eventInfo)
-		if eventInfo.source ~= 0 or badStateDetected then return end
+		if eventInfo.source ~= 0 or eventInfo.duration == 0 or badStateDetected then return end
 		local eventID = eventInfo.id
+		local eventState = C_EncounterTimeline.GetEventState(eventID)
+		if eventState ~= 0 then return end
+		--Transition batches can resend an active event ID with a new positive duration.
+		if self:TLBatchTrackLatest(eventID, eventID) == eventID then return end
 		local timerExact = eventInfo.duration
 		local timer = math.floor(timerExact + 0.5)
-		if timer == 1 or (timer == 16 and nextSixteenIsFirebreath) or (timer == 20 and nextTwentyIsFirebreath) then
-			if timer == 16 then
-				if not self:GetStage(2) then--First mounted-stage Firebreath; phase-one timing cannot affect this alternation
-					self:SetStage(2)
+		local handled = false
+		if self:GetStage(1) then
+			if timer == 1 or (timer == 20 and nextTwentyIsFirebreath) then
+				if timer == 20 then
+					nextTwentyIsFirebreath = false
 				end
-				nextSixteenIsFirebreath = false
-			elseif timer == 20 then
-				nextTwentyIsFirebreath = false
+				timerRoaringFirebreathCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "firebreath", "firebreathCount"))
+				handled = true
+			elseif timer == 5 or timer == 23 then
+				timerStormslamCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "stormslam", "stormslamCount"))
+				handled = true
+			elseif timer == 10 or timer == 22 then
+				windsEventIDs[eventID] = true
+				timerWindsofChangeCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "winds", "windsCount"))
+				handled = true
+			elseif timer == 12 or (timer == 20 and not nextTwentyIsFirebreath) then
+				if timer == 20 then
+					nextTwentyIsFirebreath = true
+				end
+				timerInfernoSpitCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "infernospit", "infernospitCount"))
+				handled = true
+			elseif timer == 21 or timer == 25 then
+				timerInterruptingCloudburstCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "cloudburst", "cloudburstCount"))
+				handled = true
 			end
-			timerRoaringFirebreathCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "firebreath", "firebreathCount"))
-		elseif timer == 5 or timer == 23 then
-			timerStormslamCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "stormslam", "stormslamCount"))
-		elseif timer == 10 or timer == 22 then
-			timerWindsofChangeCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "winds", "windsCount"))
-		elseif timer == 21 or timer == 25 then
-			timerInterruptingCloudburstCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "cloudburst", "cloudburstCount"))
-		elseif timer == 9 or timer == 12 or timer == 16 or timer == 20 then
-			if timer == 16 then
-				nextSixteenIsFirebreath = true
-			elseif timer == 20 then
-				nextTwentyIsFirebreath = true
-			end
-			timerInfernoSpitCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "infernospit", "infernospitCount"))
 		else
+			if timer == 5 or (timer == 16 and nextSixteenIsFirebreath) then
+				if timer == 16 then
+					nextSixteenIsFirebreath = false
+				end
+				timerRoaringFirebreathCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "firebreath", "firebreathCount"))
+				handled = true
+			elseif timer == 13 or (timer == 16 and not nextSixteenIsFirebreath) then
+				if timer == 16 then
+					nextSixteenIsFirebreath = true
+				end
+				timerInfernoSpitCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "infernospit", "infernospitCount"))
+				handled = true
+			elseif timer == 22 then
+				windsEventIDs[eventID] = true
+				timerWindsofChangeCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "winds", "windsCount"))
+				handled = true
+			elseif timer == 23 then
+				timerStormslamCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "stormslam", "stormslamCount"))
+				handled = true
+			elseif timer == 25 then
+				timerInterruptingCloudburstCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "cloudburst", "cloudburstCount"))
+				handled = true
+			end
+		end
+		if not handled then
 			badStateDetected = true
 			self:ResumeBlizzardAPI()
 			self:UnregisterShortTermEvents()
@@ -118,10 +154,11 @@ if DBM:IsPostMidnight() then
 	function mod:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(eventID)
 		local eventState = C_EncounterTimeline.GetEventState(eventID)
 		if not eventState then return end
+		self:TLBatchUntrack(eventID)
 		if eventState == 2 then
 			local eventType, eventCount = self:TLCountFinish(eventID)
 			if eventType == "infernospit" and eventCount then
-				specWarnInfernoSpit:Show(eventCount, "poolyou", 3)
+				specWarnInfernoSpit:Show(eventCount, "poolyou", 5)
 			elseif eventType == "firebreath" and eventCount then
 				specWarnRoaringFirebreath:Show()
 				specWarnRoaringFirebreath:Play("breathsoon")
@@ -135,8 +172,12 @@ if DBM:IsPostMidnight() then
 				specWarnInterruptingCloudburst:Play("stopcast")
 			end
 		elseif eventState == 3 then
+			if windsEventIDs[eventID] and self:GetStage(1) then
+				self:SetStage(2)
+			end
 			self:TLCountCancel(eventID)
 		end
+		windsEventIDs[eventID] = nil
 	end
 else
 	mod:RegisterEventsInCombat(

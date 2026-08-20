@@ -20,11 +20,13 @@ if DBM:IsPostMidnight() then
 	local specWarnMoltenBoulder						= mod:NewSpecialWarningDodgeCount(372110, nil, nil, nil, 1, 15, nil, nil, "frontal")
 	local specWarnRitualofBlazebinding				= mod:NewSpecialWarningBlizzTarget(372864, nil, nil, nil, 1, 2, nil, nil, "killmob")
 	--local specWarnBurnout							= mod:NewSpecialWarningRun(373087, "Melee", nil, nil, 4, 2, nil, nil, "justrun")
-	--local specWarnGTFO								= mod:NewSpecialWarningGTFO(372820, nil, nil, nil, 1, 8, nil, nil, "watchfeet")
 
 	local timerSearingBlowsCD						= mod:NewCDCountTimer(30, 372858, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON..DBM_COMMON_L.HEALER_ICON)
 	local timerMoltenBoulderCD						= mod:NewCDCountTimer(30, 372110, nil, nil, nil, 3)
 	local timerRitualofBlazebindingCD				= mod:NewCDCountTimer(30, 372864, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)
+
+	mod:AddAuraSoundOption(372865, true, 372864, 1, 1, "targetyou", 2, 0)--Ritual of Blazebinding
+	mod:AddAuraSoundOption(372820, true, 372820, 1, 2, "watchfeet", 8, 0)--Scorched Earth
 
 	local badStateDetected = false
 	local nextFortyIsRitual = true

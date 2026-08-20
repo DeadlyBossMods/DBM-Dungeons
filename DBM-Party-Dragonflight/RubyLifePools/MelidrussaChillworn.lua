@@ -25,7 +25,10 @@ if DBM:IsPostMidnight() then
 	mod:AddAuraSoundOption(372963, true, 1307308, 1, 2, "watchfeet", 8, 0)--Storm's Eye
 
 	local badStateDetected = false
-	local nextTwentySevenIsHailburst = true
+	local nextTwentyFourIsHailburst = true
+	local batchTimerValues = {
+		[5] = true,
+	}
 	---@param self DBMMod
 	---@param dontSetAlerts boolean? Called on engage when we only want to set timeline parameters and not touch encounter alerts
 	local function setFallback(self, dontSetAlerts)
@@ -43,9 +46,10 @@ if DBM:IsPostMidnight() then
 
 	function mod:OnLimitedCombatStart()
 		self:TLCountReset()
+		self:TLBatchReset()
 		self.vb.hailburstCount = 1
 		self.vb.chillstormCount = 1
-		nextTwentySevenIsHailburst = true
+		nextTwentyFourIsHailburst = true
 		if DBM.Options.HardcodedTimer and not badStateDetected then
 			self:IgnoreBlizzardAPI()
 			self:RegisterShortTermEvents("ENCOUNTER_TIMELINE_EVENT_ADDED", "ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED")
@@ -57,28 +61,32 @@ if DBM:IsPostMidnight() then
 
 	function mod:OnCombatEnd()
 		self:TLCountReset()
+		self:TLBatchReset()
 		self:UnregisterShortTermEvents()
 	end
 
 	function mod:ENCOUNTER_TIMELINE_EVENT_ADDED(eventInfo)
-		if eventInfo.source ~= 0 or badStateDetected then return end
+		if eventInfo.source ~= 0 or eventInfo.duration == 0 or badStateDetected then return end
 		local eventID = eventInfo.id
+		local eventState = C_EncounterTimeline.GetEventState(eventID)
+		if eventState ~= 0 then return end
 		local timerExact = eventInfo.duration
 		local timer = math.floor(timerExact + 0.5)
-		if timer == 6 then
+		if self:TLBatchTrackLatest(timer, eventID, batchTimerValues) == eventID then return end
+		if timer == 5 then
 			timerHailburstCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "hailburst", "hailburstCount"))
-		elseif timer == 16 then
+		elseif timer == 15 then
 			timerChillstormCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "chillstorm", "chillstormCount"))
-		elseif timer == 27 then
-			if nextTwentySevenIsHailburst then
+		elseif timer == 24 then
+			if nextTwentyFourIsHailburst then
 				timerHailburstCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "hailburst", "hailburstCount"))
 			else
 				timerChillstormCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "chillstorm", "chillstormCount"))
 			end
-			nextTwentySevenIsHailburst = not nextTwentySevenIsHailburst
+			nextTwentyFourIsHailburst = not nextTwentyFourIsHailburst
 		elseif timer == 12 then--Frost Overload cancels the unfinished Hailburst/Chillstorm batch
 			self:TLCountReset()
-			nextTwentySevenIsHailburst = true
+			nextTwentyFourIsHailburst = true
 		else
 			badStateDetected = true
 			self:ResumeBlizzardAPI()
@@ -91,6 +99,7 @@ if DBM:IsPostMidnight() then
 	function mod:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(eventID)
 		local eventState = C_EncounterTimeline.GetEventState(eventID)
 		if not eventState then return end
+		self:TLBatchUntrack(eventID)
 		if eventState == 2 then
 			local eventType, eventCount = self:TLCountFinish(eventID)
 			if eventType == "hailburst" and eventCount then
