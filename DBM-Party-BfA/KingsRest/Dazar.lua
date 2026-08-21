@@ -19,7 +19,7 @@ if DBM:IsPostMidnight() then
 	local specWarnBladeCombo			= mod:NewSpecialWarningDefensive(268586, nil, nil, nil, 1, 2, nil, nil, "defensive")
 	local specWarnGildedDestruction		= mod:NewSpecialWarningCount(1303101, nil, nil, nil, 2, 2, nil, nil, "aesoon")
 	local specWarnDeadlyRoar			= mod:NewSpecialWarningCount(269369, nil, nil, nil, 2, 2, nil, nil, "fearsoon")
-	local specWarnQuakingLeap			= mod:NewSpecialWarningCount(1303327, nil, nil, nil, 2, 2, nil, nil, "scatter")
+	local specWarnQuakingLeap			= mod:NewSpecialWarningBlizzYou(1303327, nil, nil, nil, 1, 2, nil, nil, "scatter")
 
 	local timerAerialSmashCD			= mod:NewCDCountTimer(0, 1303115, nil, nil, nil, 3)
 	local timerBladeComboCD				= mod:NewCDCountTimer(0, 268586, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
@@ -89,6 +89,10 @@ if DBM:IsPostMidnight() then
 	end
 
 	do
+		local function QuakingLeapCheck(self, eventCount)
+			specWarnQuakingLeap:Show(eventCount, "scatter", 3)
+		end
+
 		---@param self DBMMod
 		---@param timer number
 		---@param timerExact number
@@ -114,7 +118,10 @@ if DBM:IsPostMidnight() then
 			elseif timer == 14 then
 				timerDeadlyRoarCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "deadlyRoar", "deadlyRoarCount"))
 			elseif timer == 9 then
-				timerQuakingLeapCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "quakingLeap", "quakingLeapCount"))
+				local eventCount = self:TLCountStart(eventID, "quakingLeap", "quakingLeapCount")
+				timerQuakingLeapCD:TLStart(timerExact, eventID, eventCount)
+				--The bar is correct, but state 2 is about 4.5 seconds late; arm the ENCOUNTER_WARNING intercept one second before expiry.
+				self:Schedule(timerExact - 1, QuakingLeapCheck, self, eventCount)
 			elseif timer == 36 then
 				timerSavageMaulCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "savageMaul", "savageMaulCount"))
 			else
@@ -157,15 +164,14 @@ if DBM:IsPostMidnight() then
 				elseif eventType == "deadlyRoar" and eventCount then
 					specWarnDeadlyRoar:Show(eventCount)
 					specWarnDeadlyRoar:Play("fearsoon")
-				elseif eventType == "quakingLeap" and eventCount then
-					specWarnQuakingLeap:Show(eventCount)
-					specWarnQuakingLeap:Play("scatter")
 				elseif eventType == "savageMaul" and eventCount then
 					warnSavageMaul:Show(eventCount)
 				end
 			elseif eventState == 3 then
 				local eventType = self:TLCountCancel(eventID)
-				if eventType == "huntingLeap" and not self:GetStage(2) then
+				if eventType == "quakingLeap" then
+					self:Unschedule(QuakingLeapCheck)
+				elseif eventType == "huntingLeap" and not self:GetStage(2) then
 					self:SetStage(2)
 				end
 			end

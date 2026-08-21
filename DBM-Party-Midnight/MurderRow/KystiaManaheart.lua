@@ -83,14 +83,11 @@ end
 do
 	local function timersAll(self, timer, timerExact, eventID)
 		if timer == 8 or timer == 28 then
-			self:TLBatchTrackLatest(timer, eventID, batchTimerValues)
-			timerFelSprayCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "felSpray", "felSprayCount"))
+			self:TLBatchStart(timer, timerFelSprayCD, timerExact, eventID, "felSpray", "felSprayCount", batchTimerValues)
 		elseif timer == 15 or timer == 30 then
-			self:TLBatchTrackLatest(timer, eventID, batchTimerValues)
-			timerMirrorImagesCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "mirrorImages", "mirrorImagesCount"))
+			self:TLBatchStart(timer, timerMirrorImagesCD, timerExact, eventID, "mirrorImages", "mirrorImagesCount", batchTimerValues)
 		elseif timer == 12 then
-			self:TLBatchTrackLatest(timer, eventID, batchTimerValues)
-			timerFelNovaCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "felNova", "felNovaCount"))
+			self:TLBatchStart(timer, timerFelNovaCD, timerExact, eventID, "felNova", "felNovaCount", batchTimerValues)
 		else
 			return
 		end

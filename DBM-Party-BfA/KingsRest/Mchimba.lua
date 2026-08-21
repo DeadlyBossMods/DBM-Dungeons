@@ -31,6 +31,12 @@ if DBM:IsPostMidnight() then
 	mod.vb.entombCount = 0
 	mod.vb.awakeningSlamCount = 0
 	local badStateDetected = false
+	local thirtyTimerCycle = {
+		"awakeningSlam",
+		"burnCorruption",
+		"burnCorruption",
+	}
+	local nextThirtyTimer = 1
 	local batchTimerValues = {
 		[5] = true,
 		[20] = true,
@@ -61,6 +67,7 @@ if DBM:IsPostMidnight() then
 		self.vb.drainFluidsCount = 1
 		self.vb.entombCount = 1
 		self.vb.awakeningSlamCount = 1
+		nextThirtyTimer = 1
 		if DBM.Options.HardcodedTimer and not badStateDetected then
 			self:IgnoreBlizzardAPI()
 			self:RegisterShortTermEvents(
@@ -80,6 +87,15 @@ if DBM:IsPostMidnight() then
 	end
 
 	do
+		local function resolveThirtyTimer()
+			local eventType = thirtyTimerCycle[nextThirtyTimer]
+			nextThirtyTimer = nextThirtyTimer % #thirtyTimerCycle + 1
+			if eventType == "awakeningSlam" then
+				return timerAwakeningSlamCD, eventType, "awakeningSlamCount"
+			end
+			return timerBurnCorruptionCD, eventType, "burnCorruptionCount"
+		end
+
 		---@param self DBMMod
 		---@param timer number
 		---@param timerExact number
@@ -90,20 +106,16 @@ if DBM:IsPostMidnight() then
 			if timer == 102 or timer == 63 then
 				return true
 			end
-			self:TLBatchTrackLatest(timer, eventID, batchTimerValues)
 			if timer == 20 then
-				timerBurnCorruptionCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "burnCorruption", "burnCorruptionCount"))
+				self:TLBatchStart(timer, timerBurnCorruptionCD, timerExact, eventID, "burnCorruption", "burnCorruptionCount", batchTimerValues)
 			elseif timer == 5 or timer == 32 then
-				timerDrainFluidsCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "drainFluids", "drainFluidsCount"))
+				self:TLBatchStart(timer, timerDrainFluidsCD, timerExact, eventID, "drainFluids", "drainFluidsCount", batchTimerValues)
 			elseif timer == 60 then
-				timerEntombCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "entomb", "entombCount"))
+				self:TLBatchStart(timer, timerEntombCD, timerExact, eventID, "entomb", "entombCount", batchTimerValues)
 			elseif timer == 30 then
-				--Only the opening 30-second event is Awakening Slam; all later 30-second events are Burn Corruption.
-				if self.vb.awakeningSlamCount == 1 then
-					timerAwakeningSlamCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "awakeningSlam", "awakeningSlamCount"))
-				else
-					timerBurnCorruptionCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "burnCorruption", "burnCorruptionCount"))
-				end
+				--The live 30-second sequence is Awakening Slam, Burn Corruption, Burn Corruption.
+				--Resolve after the batch window so canceled duplicates do not advance this cycle.
+				self:TLBatchStart(timer, resolveThirtyTimer, timerExact, eventID, "deferred", nil, batchTimerValues)
 			else
 				return
 			end

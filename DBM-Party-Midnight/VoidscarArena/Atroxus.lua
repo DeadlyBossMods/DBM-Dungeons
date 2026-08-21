@@ -26,7 +26,7 @@ local timerNoxiousBreathCD					= mod:NewCDCountTimer(20.5, 1263977, nil, nil, ni
 local timerPoisonSplashCD					= mod:NewCDCountTimer(20.5, 1226120, nil, nil, nil, 3)
 local timerMonstrousRoarCD					= mod:NewCDCountTimer(20.5, 1262497, nil, nil, nil, 2)
 --Custom Aura Sounds
-mod:AddAuraSoundOption(1283506, true, 1283506, 4, 1, "fixateyou", 19)--Fixate
+mod:AddAuraSoundOption(1283506, true, 1283506, 4, 1, "kite", 19)--Fixate (currently broken, doesn't work on blizzards end)
 mod:AddAuraSoundOption(1222484, true, 1222484, 1, 2, "watchfeet", 8)--Poison Pool
 
 mod.vb.provokeCreeperCount = 0

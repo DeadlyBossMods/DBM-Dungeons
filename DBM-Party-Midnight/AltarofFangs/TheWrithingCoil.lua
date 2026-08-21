@@ -37,6 +37,7 @@ mod.vb.VindictiveOnslaughtCount = 0
 mod.vb.DeathRattleCount = 0
 mod.vb.AssimilationCount = 0
 mod.vb.ToxicAtrophyCount = 0
+mod.vb.ToxicBarrageCount = 0
 
 ---@param self DBMMod
 ---@param dontSetAlerts boolean? Called on engage when we only want to set timeline parameters and not touch encounter alerts
@@ -72,6 +73,7 @@ function mod:OnLimitedCombatStart()
 	self.vb.DeathRattleCount = 1
 	self.vb.AssimilationCount = 1
 	self.vb.ToxicAtrophyCount = 1
+	self.vb.ToxicBarrageCount = 1
 	nextTenIsToxicAtrophy = true
 	if DBM.Options.HardcodedTimer and not badStateDetected then
 		self:IgnoreBlizzardAPI()

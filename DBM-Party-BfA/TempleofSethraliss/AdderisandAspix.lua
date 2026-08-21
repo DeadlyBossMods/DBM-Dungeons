@@ -111,6 +111,12 @@ if DBM:IsPostMidnight() then
 			timerObject:TLStart(timerExact, eventID, self:TLCountStart(eventID, eventType, countKey))
 		end
 
+		local function startBatchTimer(self, timer, timerObject, timerExact, eventID, eventType, countKey)
+			if self:TLBatchStart(timer, timerObject, timerExact, eventID, eventType, countKey, batchTimerValues) then
+				activeEventByType[eventType] = eventID
+			end
+		end
+
 		local function timersAll(self, timer, timerExact, eventID)
 			if timer == 42 then
 				--Every transition resumes this four-event batch in this fixed order.
@@ -126,30 +132,26 @@ if DBM:IsPostMidnight() then
 					startTimer(self, timerOverloadCD, timerExact, eventID, eventType, "overloadCount")
 				end
 			elseif timer == 9 or timer == 4 then
-				self:TLBatchTrackLatest(timer, eventID, batchTimerValues)
 				adderisDead = false
-				startTimer(self, timerThunderandLightningCD, timerExact, eventID, "thunderAndLightning", "thunderAndLightningCount")
+				startBatchTimer(self, timer, timerThunderandLightningCD, timerExact, eventID, "thunderAndLightning", "thunderAndLightningCount")
 			elseif timer == 36 then
 				adderisDead = false
 				startTimer(self, timerOverloadCD, timerExact, eventID, "overload", "overloadCount")
 			elseif timer == 31 then
-				self:TLBatchTrackLatest(timer, eventID, batchTimerValues)
 				--Overload is exactly 31; Gale Force is 31.082 in the final transition batch.
 				if timerExact > 31.05 then
 					aspixDead = false
-					startTimer(self, timerGaleForceCD, timerExact, eventID, "galeForce", "galeForceCount")
+					startBatchTimer(self, timer, timerGaleForceCD, timerExact, eventID, "galeForce", "galeForceCount")
 				else
 					adderisDead = false
-					startTimer(self, timerOverloadCD, timerExact, eventID, "overload", "overloadCount")
+					startBatchTimer(self, timer, timerOverloadCD, timerExact, eventID, "overload", "overloadCount")
 				end
 			elseif timer == 26 or timer == 21 or timer == 12 then
-				self:TLBatchTrackLatest(timer, eventID, batchTimerValues)
 				aspixDead = false
-				startTimer(self, timerTempestWindsCD, timerExact, eventID, "tempestWinds", "tempestWindsCount")
+				startBatchTimer(self, timer, timerTempestWindsCD, timerExact, eventID, "tempestWinds", "tempestWindsCount")
 			elseif timer == 5 or timer == 1 then
-				self:TLBatchTrackLatest(timer, eventID, batchTimerValues)
 				aspixDead = false
-				startTimer(self, timerGaleForceCD, timerExact, eventID, "galeForce", "galeForceCount")
+				startBatchTimer(self, timer, timerGaleForceCD, timerExact, eventID, "galeForce", "galeForceCount")
 			elseif timer == 19 then
 				if not aspixDead then
 					--Adderis died: Gale Force then Tempest Winds.

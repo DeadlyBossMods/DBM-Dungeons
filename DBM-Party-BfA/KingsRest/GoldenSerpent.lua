@@ -14,7 +14,7 @@ if DBM:IsPostMidnight() then
 	local warnSpitGold					= mod:NewCountAnnounce(265773, 2)--Cast count for use in hardode only
 
 	local specWarnTailThrash			= mod:NewSpecialWarningDefensive(265910, nil, nil, nil, 1, 2, nil, nil, "defensive")
-	--local specWarnSpitGold			= mod:NewSpecialWarningBlizzYou(265773, nil, nil, nil, 1, 2, nil, nil, "runout")--Use only after confirming. commented for now
+	local specWarnSpitGold				= mod:NewSpecialWarningBlizzYou(265773, nil, nil, nil, 1, 2, nil, nil, "runout")
 	local specWarnLucreCall				= mod:NewSpecialWarningCount(265923, nil, nil, nil, 1, 2, nil, nil, "killmob")
 	local specWarnSerpentine			= mod:NewSpecialWarningCount(1311987, nil, nil, nil, 2, 13, nil, nil, "pushbackincoming")
 
@@ -23,7 +23,7 @@ if DBM:IsPostMidnight() then
 	local timerLucreCallCD				= mod:NewCDCountTimer(0, 265923, nil, nil, nil, 3)
 	local timerSerpentineCD				= mod:NewCDCountTimer(0, 1311987, nil, nil, nil, 2)
 
-	mod:AddAuraSoundOption(1306736, true, 1306736, 1, 1, "poolyou", 18, 0)--Spit Gold (switch to ENCOUNTER_WARNING intercept if confirmed to have one)
+	--mod:AddAuraSoundOption(1306736, true, 1306736, 1, 1, "poolyou", 18, 0)--Spit Gold (uses ENCOUNTER_WARNING intercept)
 	mod:AddAuraSoundOption(265914, true, 1306736, 1, 2, "watchfeet", 8, 0)--Molten Gold
 
 	mod.vb.tailThrashCount = 0
@@ -132,6 +132,7 @@ if DBM:IsPostMidnight() then
 					end
 				elseif eventType == "spitGold" and eventCount then
 					warnSpitGold:Show(eventCount)
+					specWarnSpitGold:Show(eventCount, "runout")
 				elseif eventType == "lucreCall" and eventCount then
 					specWarnLucreCall:Show(eventCount)
 					if self:IsTank() then
