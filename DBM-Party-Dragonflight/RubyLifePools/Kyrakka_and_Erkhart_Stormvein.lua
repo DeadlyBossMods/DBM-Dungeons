@@ -31,7 +31,7 @@ if DBM:IsPostMidnight() then
 
 	local timerInfernoSpitCD						= mod:NewCDCountTimer(0, 381602, nil, nil, nil, 2)
 	local timerRoaringFirebreathCD					= mod:NewCDCountTimer(0, 381525, nil, nil, nil, 3)
-	local timerWindsofChangeCD						= mod:NewCDCountTimer(0, 381517, DBM:GetSpellName(381517)..": %s (%s)", nil, nil, 3)
+	local timerWindsofChangeCD						= mod:NewCDCountTimer(0, 381517, nil, nil, nil, 3)
 	local timerStormslamCD							= mod:NewCDCountTimer(0, 381512, nil, "Tank|RemoveMagic|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON..DBM_COMMON_L.MAGIC_ICON)
 	local timerInterruptingCloudburstCD				= mod:NewCDCountTimer(0, 381516, nil, nil, nil, 2, nil, DBM_COMMON_L.MYTHIC_ICON)
 
