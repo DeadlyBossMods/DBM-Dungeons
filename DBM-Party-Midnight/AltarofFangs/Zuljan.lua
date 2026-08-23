@@ -26,7 +26,6 @@ local timerChopDownCD				= mod:NewCDCountTimer(8, 1301350, nil, "Tank|Healer", n
 --mod:AddAuraSoundOption(470966, true, 470966, 4, 1, "justrun", 2)
 
 local badStateDetected = false
-local nextFourteenIsAxegrinder = true
 mod.vb.BoneslicerCount = 0
 mod.vb.RitualoftheFangCount = 0
 mod.vb.AxegrinderCount = 0
@@ -59,7 +58,6 @@ function mod:OnLimitedCombatStart()
 	self.vb.RitualoftheFangCount = 1
 	self.vb.AxegrinderCount = 1
 	self.vb.ChopDownCount = 1
-	nextFourteenIsAxegrinder = true
 	if DBM.Options.HardcodedTimer and not badStateDetected then
 		self:IgnoreBlizzardAPI()
 		self:RegisterShortTermEvents(
@@ -74,7 +72,6 @@ end
 
 function mod:OnCombatEnd()
 	self:TLCountReset()
-	nextFourteenIsAxegrinder = true
 	self:UnregisterShortTermEvents()
 end
 
@@ -84,20 +81,16 @@ do
 	---@param timerExact number
 	---@param eventID number
 	local function timersAll(self, timer, timerExact, eventID)
-		--Confirmed against M+ PTR log. Each 64-second cycle has Axegrinder followed by Boneslicer at duration 14.
-		if timer == 14 then
-			if nextFourteenIsAxegrinder then
-				nextFourteenIsAxegrinder = false
-				timerAxegrinderCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "axegrinder", "AxegrinderCount"))
-			else
-				nextFourteenIsAxegrinder = true
-				timerBoneslicerCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "boneslicer", "BoneslicerCount"))
-			end
-		elseif timer == 26 or timer == 30 then
-			timerChopDownCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "chopDown", "ChopDownCount"))
-		elseif timer == 32 then
+		--Confirmed against the M+ Week 1 log after Blizzard's 12.1 timer redesign.
+		if timer == 16 or timer == 36 then
 			timerBoneslicerCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "boneslicer", "BoneslicerCount"))
-		elseif timer == 64 then
+		elseif timer == 18 then
+			timerAxegrinderCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "axegrinder", "AxegrinderCount"))
+		elseif timer == 30 then
+			timerChopDownCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "chopDown", "ChopDownCount"))
+		elseif timer == 3 then
+			--Blizzard emits this transient timer before the real 65-second Ritual timer; it must not increment the count.
+		elseif timer == 65 then
 			timerRitualoftheFangCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "ritualoftheFang", "RitualoftheFangCount"))
 		else
 			return

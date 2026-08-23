@@ -11,17 +11,20 @@ mod.respawnTime = 29
 
 mod:RegisterCombat("combat")
 
+mod:RegisterSafeEventsInCombat(
+	"ENCOUNTER_WARNING"
+)
+
 --https://www.wowhead.com/ptr/spell=1296219/fetid-roar isn't in journal but has encounter event
---use https://www.wowhead.com/ptr/spell=1297876/triple-shot for spread debuff/aura sound?
---901 is used for "Fresh Meat" but not sure for what. Announcing it's spawn?
---local warnTripleShot				= mod:NewIncomingAnnounce(1296220, 2)
+local warnTripleShot				= mod:NewCountAnnounce(1296220, 2)
 
 local specWarnSsscavenging			= mod:NewSpecialWarningCount(1309522, nil, nil, nil, 1, 2, nil, nil, "attackshield")
 local specWarnFeedingFrenzy			= mod:NewSpecialWarningCount(1307765, nil, nil, nil, 3, 2, nil, nil, "attackshield")--Empowered version of Ssscavenging (from fresh meat)
 --local specWarnFetidRoar				= mod:NewSpecialWarningCount(1296219, nil, nil, nil, 2, 2, nil, nil, "aesoon")--Possibly not needed
 local specWarnRegurgitate			= mod:NewSpecialWarningCount(1296050, nil, nil, nil, 2, 2, nil, nil, "watchwave")
 local specWarnRavenousStomp			= mod:NewSpecialWarningCount(1307894, nil, nil, nil, 2, 2, nil, nil, "watchstep")
-local specWarnTripleShot			= mod:NewSpecialWarningBlizzYou(1296220, nil, nil, nil, 1, 17, nil, nil, "debuffyou")
+local specWarnTripleShot			= mod:NewSpecialWarningYou(1296220, nil, nil, nil, 1, 17, nil, nil, "debuffyou")
+local specWarnFreshMeat				= mod:NewSpecialWarningMove(1307921, "Tank", nil, nil, 1, 2, nil, nil, "moveboss")
 
 local timerSsscavengingCD			= mod:NewCDCountTimer(8, 1309522, nil, nil, nil, 5, nil, DBM_COMMON_L.DAMAGE_ICON)
 local timerTripleShotCD				= mod:NewCDCountTimer(8, 1296220, nil, nil, nil, 3)
@@ -42,9 +45,9 @@ mod.vb.RavenousStompCount = 0
 local function setFallback(self, dontSetAlerts)
 	--specWarnFetidRoar:SetAlert(796, "aesoon", 2, 2, 0)
 	if not dontSetAlerts then
---		if self:IsTank() then
---			specWarnRampage:SetAlert({210, 556}, "defensive", 2)
---		end
+		if self:IsTank() then
+			specWarnFreshMeat:SetAlert(901, "moveboss", 2, 2, 0)
+		end
 		specWarnSsscavenging:SetAlert(795, "attackshield", 2, 3)
 		specWarnTripleShot:SetAlert(797, "incomingdebuff", 17, 2, 0)
 		specWarnRegurgitate:SetAlert(798, "watchwave", 2, 2, 0)
@@ -142,7 +145,7 @@ do
 			end
 			if eventType and eventCount then
 				if eventType == "tripleShot" then
-					specWarnTripleShot:Show(eventCount, "debuffyou", 3)
+					warnTripleShot:Show(eventCount)
 				elseif eventType == "ssscavenging" then
 					specWarnSsscavenging:Show(eventCount)
 					specWarnSsscavenging:Play("attackshield")
@@ -158,4 +161,16 @@ do
 			self:TLCountCancel(eventID)
 		end
 	end
+end
+
+--This module has to hardcode ENCOUNTER_WARNING instead of using our auto capture methods like BlizzYou and BlizzTarget
+--This is because Fresh meat and triple shot can fire at same time. However we can disambiguate the two using non secret "severity" field
+function mod:ENCOUNTER_WARNING(eventInfo)
+    if eventInfo.severity == 0 then -- Triple Shot (LOW) (Always personal)
+		specWarnTripleShot:Show()
+		specWarnTripleShot:Play("debuffyou")
+    elseif eventInfo.severity == 1 then -- Fresh Meat (MEDIUM)
+		specWarnFreshMeat:Show()
+		specWarnFreshMeat:Play("moveboss")
+    end
 end
