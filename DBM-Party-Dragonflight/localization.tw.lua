@@ -224,20 +224,7 @@ L:SetGeneralLocalization({
 -----------------------
 --L= DBM:GetModLocalization(2485)
 
------------------------
--- Kyrakka and Erkhart Stormvein --
------------------------
-L= DBM:GetModLocalization(2503)
 
-L:SetMiscLocalization({
-	North	= "往北吹",
-	West	= "往西吹",
-	South	= "往南吹",
-	East	= "往東吹"
-})
-
----------
---Trash--
 ---------
 L = DBM:GetModLocalization("RubyLifePoolsTrash")
 
