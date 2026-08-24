@@ -94,6 +94,7 @@ if DBM:IsPostMidnight() then
 
 	function mod:OnLimitedCombatStart()
 		self:TLCountReset()
+		self:TLActiveEventReset()
 		self:SetStage(1)
 		self.vb.whirlingAxesCount = 1
 		self.vb.severingAxeCount = 1
@@ -119,6 +120,7 @@ if DBM:IsPostMidnight() then
 
 	function mod:OnCombatEnd()
 		self:TLCountReset()
+		self:TLActiveEventReset()
 		stage3BarrelYellArmed = false
 		lastStage3YellTime = 0
 		self:UnregisterShortTermEvents()
@@ -170,6 +172,10 @@ if DBM:IsPostMidnight() then
 		function mod:ENCOUNTER_TIMELINE_EVENT_ADDED(eventInfo)
 			if eventInfo.source ~= 0 then return end
 			local eventID = eventInfo.id
+			if C_EncounterTimeline.GetEventState(eventID) ~= 0 then return end--Ignore garbage resends
+			--Blizzard can resend a still-active event ID with its remaining duration.
+			--Keep the original routing until its state transition releases this ID.
+			if not self:TLTrackActiveEvent(eventID) then return end
 			local timerExact = eventInfo.duration
 			local timer = math.floor(timerExact + 0.5)
 			if not badStateDetected then
@@ -178,8 +184,12 @@ if DBM:IsPostMidnight() then
 		end
 
 		function mod:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(eventID)
+			if not eventID then return end
 			local eventState = C_EncounterTimeline.GetEventState(eventID)
-			if not eventID or not eventState then return end
+			if not eventState then return end
+			if eventState >= 2 then
+				self:TLReleaseActiveEvent(eventID)
+			end
 			if eventState == 2 then
 				local eventType, eventCount = self:TLCountFinish(eventID)
 				if eventType and eventCount then

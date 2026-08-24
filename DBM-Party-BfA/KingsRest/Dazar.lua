@@ -63,6 +63,7 @@ if DBM:IsPostMidnight() then
 
 	function mod:OnLimitedCombatStart()
 		self:TLCountReset()
+		self:TLActiveEventReset()
 		self:SetStage(1)
 		self.vb.aerialSmashCount = 1
 		self.vb.bladeComboCount = 1
@@ -85,6 +86,7 @@ if DBM:IsPostMidnight() then
 
 	function mod:OnCombatEnd()
 		self:TLCountReset()
+		self:TLActiveEventReset()
 		self:UnregisterShortTermEvents()
 	end
 
@@ -103,7 +105,7 @@ if DBM:IsPostMidnight() then
 				timerAerialSmashCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "aerialSmash", "aerialSmashCount"))
 			elseif timer == 23 or timer == 38 then
 				timerBladeComboCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "bladeCombo", "bladeComboCount"))
-			elseif (timer == 30 and self:GetStage(1)) or timer == 24 then
+			elseif timer == 30 or timer == 24 then
 				timerGildedDestructionCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "gildedDestruction", "gildedDestructionCount"))
 			elseif timer == 8 then
 				timerHuntingLeapCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "huntingLeap", "huntingLeapCount"))
@@ -134,6 +136,9 @@ if DBM:IsPostMidnight() then
 			if eventInfo.source ~= 0 then return end
 			local eventID = eventInfo.id
 			if C_EncounterTimeline.GetEventState(eventID) ~= 0 then return end
+			--Blizzard can resend a still-active event ID with its remaining duration.
+			--Keep the original routing until its state transition releases this ID.
+			if not self:TLTrackActiveEvent(eventID) then return end
 			local timerExact = eventInfo.duration
 			if not timersAll(self, math.floor(timerExact + 0.5), timerExact, eventID) and not badStateDetected then
 				badStateDetected = true
@@ -145,8 +150,12 @@ if DBM:IsPostMidnight() then
 		end
 
 		function mod:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(eventID)
+			if not eventID then return end
 			local eventState = C_EncounterTimeline.GetEventState(eventID)
 			if not eventState then return end
+			if eventState >= 2 then
+				self:TLReleaseActiveEvent(eventID)
+			end
 			if eventState == 2 then
 				local eventType, eventCount = self:TLCountFinish(eventID)
 				if eventType == "aerialSmash" and eventCount then
