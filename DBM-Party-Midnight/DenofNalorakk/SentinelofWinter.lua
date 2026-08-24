@@ -33,6 +33,12 @@ mod.vb.squallCount = 0
 mod.vb.frostspikeCount = 0
 mod.vb.tempestCount = 0
 local badStateDetected = false
+local batchTimerValues = {
+	[7] = true,
+	[13] = true,
+	[25] = true,
+	[50] = true,
+}
 
 ---@param self DBMMod
 ---@param dontSetAlerts boolean? Called on engage when we only want to set timeline parameters and not touch encounter alerts
@@ -54,6 +60,7 @@ end
 
 function mod:OnLimitedCombatStart()
 	self:TLCountReset()
+	self:TLBatchReset()
 	self.vb.tormentCount = 1
 	self.vb.squallCount = 1
 	self.vb.frostspikeCount = 1
@@ -72,6 +79,7 @@ end
 
 function mod:OnCombatEnd()
 	self:TLCountReset()
+	self:TLBatchReset()
 	self:UnregisterShortTermEvents()
 end
 
@@ -84,16 +92,16 @@ do
 		if timer == 61 or timer == 63 then--Long placeholder bars are canceled during the recurring reset
 			return true
 		elseif timer == 7 then
-			timerGlacialTormentCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "torment", "tormentCount"))
+			self:TLBatchStart(timer, timerGlacialTormentCD, timerExact, eventID, "torment", "tormentCount", batchTimerValues)
 			return true
 		elseif timer == 13 then
-			timerRagingSquallCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "squall", "squallCount"))
+			self:TLBatchStart(timer, timerRagingSquallCD, timerExact, eventID, "squall", "squallCount", batchTimerValues)
 			return true
 		elseif timer == 25 then
-			timerShatteringFrostspikeCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "frostspike", "frostspikeCount"))
+			self:TLBatchStart(timer, timerShatteringFrostspikeCD, timerExact, eventID, "frostspike", "frostspikeCount", batchTimerValues)
 			return true
 		elseif timer == 50 then
-			timerFrozenTempestCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "tempest", "tempestCount"))
+			self:TLBatchStart(timer, timerFrozenTempestCD, timerExact, eventID, "tempest", "tempestCount", batchTimerValues)
 			return true
 		end
 	end
@@ -116,6 +124,7 @@ do
 	function mod:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(eventID)
 		local eventState = C_EncounterTimeline.GetEventState(eventID)
 		if not eventID or not eventState then return end
+		self:TLBatchUntrack(eventID)
 		if eventState == 2 then
 			local eventType, eventCount = self:TLCountFinish(eventID)
 			if eventType and eventCount then

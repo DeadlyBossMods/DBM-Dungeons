@@ -27,7 +27,6 @@ if DBM:IsPostMidnight() then
 	local badStateDetected = false
 	local nextTwentyFourIsHailburst = true
 	local batchTimerValues = {
-		[5] = true,
 		[24] = true,
 	}
 	---@param self DBMMod
@@ -85,7 +84,6 @@ if DBM:IsPostMidnight() then
 		local timerExact = eventInfo.duration
 		local timer = math.floor(timerExact + 0.5)
 		if timer == 5 then
-			if self:TLBatchTrackLatest(timer, eventID, batchTimerValues) == eventID then return end
 			timerHailburstCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "hailburst", "hailburstCount"))
 		elseif timer == 15 then
 			timerChillstormCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "chillstorm", "chillstormCount"))
