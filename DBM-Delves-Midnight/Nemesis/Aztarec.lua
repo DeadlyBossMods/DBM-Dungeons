@@ -32,7 +32,7 @@ local specWarnSermonofUlatek				= mod:NewSpecialWarningCount(1309375, nil, nil, 
 local specWarnEchoofUlatek					= mod:NewSpecialWarningCount(1288125, nil, nil, nil, 2, 2, nil, nil, "stilldanger")
 
 --reg Abilities
-local specWarnNoxiousBile					= mod:NewSpecialWarningDefensive(1291555, nil, nil, nil, 2, 15, nil, nil, "frontal")
+local specWarnNoxiousBile					= mod:NewSpecialWarningDodgeCount(1291555, nil, nil, nil, 2, 15, nil, nil, "frontal")
 local specWarnSerpentsStrike				= mod:NewSpecialWarningDefensive(1293825, nil, nil, nil, 1, 2, nil, nil, "defensive")
 local specWarnSoulExtinction				= mod:NewSpecialWarningInterruptCount(1294963, nil, nil, nil, 3, 2, nil, nil, "kickcast")
 local specWarnVenomStorm					= mod:NewSpecialWarningDodgeCount(1309418, nil, nil, nil, 2, 2, nil, nil, "watchwave")
@@ -242,7 +242,7 @@ do
 			local eventType, eventCount = self:TLCountFinish(eventID)
 			if eventType and eventCount then
 				if eventType == "noxiousBile" then
-					specWarnNoxiousBile:Show()
+					specWarnNoxiousBile:Show(eventCount)
 					specWarnNoxiousBile:Play("frontal")
 				elseif eventType == "voidToxin" then
 					warnVoidToxin:Show(eventCount)
