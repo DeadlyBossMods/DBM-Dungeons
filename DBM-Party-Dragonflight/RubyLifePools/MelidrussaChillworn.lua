@@ -14,7 +14,7 @@ mod:RegisterCombat("combat")
 
 if DBM:IsPostMidnight() then
 	local specWarnHailburst							= mod:NewSpecialWarningDodge(1307297, nil, nil, nil, 2, 2, nil, nil, "watchstep")
-	local specWarnChillStorm						= mod:NewSpecialWarningMoveAway(1307308, nil, nil, nil, 1, 2, nil, nil, "runout")
+	local specWarnChillStorm						= mod:NewSpecialWarningBlizzYou(1307308, nil, nil, nil, 1, 2, nil, nil, "runout")
 	--local specWarnFrostOverload						= mod:NewSpecialWarningSwitch(373686, nil, nil, nil, 1, 2, 4, nil, "attackshield")--Seems unused
 	local specWarnAwakenWhelps						= mod:NewSpecialWarningCount(373046, "-Healer", nil, nil, 1, 2, nil, nil, "mobsoon")
 
@@ -28,13 +28,25 @@ if DBM:IsPostMidnight() then
 	local nextTwentyFourIsHailburst = true
 	local batchTimerValues = {
 		[5] = true,
+		[24] = true,
 	}
+	---@param self DBMMod
+	---@param eventID number
+	local function resolveTwentyFourTimer(self, eventID)
+		if nextTwentyFourIsHailburst then
+			nextTwentyFourIsHailburst = false
+			return timerHailburstCD, "hailburst", "hailburstCount"
+		else
+			nextTwentyFourIsHailburst = true
+			return timerChillstormCD, "chillstorm", "chillstormCount"
+		end
+	end
 	---@param self DBMMod
 	---@param dontSetAlerts boolean? Called on engage when we only want to set timeline parameters and not touch encounter alerts
 	local function setFallback(self, dontSetAlerts)
 		if not dontSetAlerts then
 			specWarnHailburst:SetAlert(866, "watchstep", 2)
-			specWarnChillStorm:SetAlert(867, "runout", 2)
+			specWarnChillStorm:SetAlert(867, "runout", 2, 2, 0)
 	--		specWarnFrostOverload:SetAlert(868, "attackshield", 2, 2, 0)
 			specWarnAwakenWhelps:SetAlert(869, "mobsoon", 2, 3, 0)
 		end
@@ -72,18 +84,15 @@ if DBM:IsPostMidnight() then
 		if eventState ~= 0 then return end
 		local timerExact = eventInfo.duration
 		local timer = math.floor(timerExact + 0.5)
-		if self:TLBatchTrackLatest(timer, eventID, batchTimerValues) == eventID then return end
 		if timer == 5 then
+			if self:TLBatchTrackLatest(timer, eventID, batchTimerValues) == eventID then return end
 			timerHailburstCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "hailburst", "hailburstCount"))
 		elseif timer == 15 then
 			timerChillstormCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "chillstorm", "chillstormCount"))
 		elseif timer == 24 then
-			if nextTwentyFourIsHailburst then
-				timerHailburstCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "hailburst", "hailburstCount"))
-			else
-				timerChillstormCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "chillstorm", "chillstormCount"))
-			end
-			nextTwentyFourIsHailburst = not nextTwentyFourIsHailburst
+			--Blizzard emits a false 24-second Hailburst in the same frame as the Awaken Whelps cancel batch.
+			--Defer routing so its state-3 callback can discard it without advancing the alternating 24-second slot.
+			self:TLBatchStart(timer, resolveTwentyFourTimer, timerExact, eventID, nil, nil, batchTimerValues)
 		elseif timer == 12 then--Frost Overload cancels the unfinished Hailburst/Chillstorm batch
 			self:TLCountReset()
 			nextTwentyFourIsHailburst = true
@@ -106,8 +115,7 @@ if DBM:IsPostMidnight() then
 				specWarnHailburst:Show()
 				specWarnHailburst:Play("watchstep")
 			elseif eventType == "chillstorm" and eventCount then
-				specWarnChillStorm:Show()
-				specWarnChillStorm:Play("runout")
+				specWarnChillStorm:Show(eventCount, "runout")
 			end
 		elseif eventState == 3 then
 			self:TLCountCancel(eventID)

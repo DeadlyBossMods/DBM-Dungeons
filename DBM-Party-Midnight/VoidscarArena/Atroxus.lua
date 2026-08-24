@@ -18,7 +18,7 @@ local specWarnProvokeCreeper				= mod:NewSpecialWarningCount(1222371, nil, nil, 
 local specWarnHulkingClaw					= mod:NewSpecialWarningCount(1222642, "Tank", nil, nil, 1, 2, nil, nil, "defensive")
 local specWarnNoxiousBreath					= mod:NewSpecialWarningCount(1263977, nil, nil, nil, 2, 3, nil, nil, "frontal")
 local specWarnPoisonSplash					= mod:NewSpecialWarningCount(1226120, nil, nil, nil, 2, 2, nil, nil, "watchstep")
-local specWarnMonstrousRoar					= mod:NewSpecialWarningCount(1262497, nil, nil, nil, 2, 3, nil, nil, "carefly")
+local specWarnMonstrousRoar					= mod:NewSpecialWarningCount(1262497, nil, nil, nil, 2, 3, nil, nil, "aesoon")
 
 local timerProvokeCreeperCD					= mod:NewCDCountTimer(20.5, 1222371, nil, nil, nil, 1)--No direct timeline event; scheduled 3 seconds after Monstrous Roar
 local timerHulkingClawCD					= mod:NewCDCountTimer(20.5, 1222642, nil, nil, nil, 5)
@@ -44,7 +44,7 @@ local function setFallback(self, dontSetAlerts)
 		end
 		specWarnNoxiousBreath:SetAlert(54, "frontal", 15, 3)
 		specWarnPoisonSplash:SetAlert(55, "watchstep", 2, 2)
-		specWarnMonstrousRoar:SetAlert(297, "carefly", 2, 3)
+		specWarnMonstrousRoar:SetAlert(297, "aesoon", 2, 3)
 	end
 	local onlyColor = not DBM.Options.HideDBMBars and not badStateDetected
 	timerProvokeCreeperCD:SetTimeline(46, onlyColor)
@@ -135,7 +135,7 @@ do
 					specWarnPoisonSplash:Play("watchstep")
 				elseif eventType == "monstrousRoar" then
 					specWarnMonstrousRoar:Show(eventCount)
-					specWarnMonstrousRoar:Play("carefly")
+					specWarnMonstrousRoar:Play("aesoon")
 					local provokeCount = self.vb.provokeCreeperCount
 					timerProvokeCreeperCD:Start(3, provokeCount)
 					specWarnProvokeCreeper:Schedule(3, provokeCount)

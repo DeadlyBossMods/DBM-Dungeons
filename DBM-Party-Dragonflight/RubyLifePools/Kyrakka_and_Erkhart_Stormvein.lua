@@ -41,7 +41,6 @@ if DBM:IsPostMidnight() then
 	local badStateDetected = false
 	local nextTwentyIsFirebreath = true
 	local nextSixteenIsFirebreath = true
-	local windsEventIDs = {}
 	---@param self DBMMod
 	---@param dontSetAlerts boolean? Called on engage when we only want to set timeline parameters and not touch encounter alerts
 	local function setFallback(self, dontSetAlerts)
@@ -74,7 +73,6 @@ if DBM:IsPostMidnight() then
 		self.vb.cloudburstCount = 1
 		nextTwentyIsFirebreath = true
 		nextSixteenIsFirebreath = true
-		windsEventIDs = {}
 		if DBM.Options.HardcodedTimer and not badStateDetected then
 			self:IgnoreBlizzardAPI()
 			self:RegisterShortTermEvents("ENCOUNTER_TIMELINE_EVENT_ADDED", "ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED")
@@ -87,7 +85,6 @@ if DBM:IsPostMidnight() then
 	function mod:OnCombatEnd()
 		self:TLCountReset()
 		self:TLBatchReset()
-		windsEventIDs = {}
 		self:UnregisterShortTermEvents()
 	end
 
@@ -100,6 +97,11 @@ if DBM:IsPostMidnight() then
 		if self:TLBatchTrackLatest(eventID, eventID) == eventID then return end
 		local timerExact = eventInfo.duration
 		local timer = math.floor(timerExact + 0.5)
+		--The P2 batch starts with a 5-second Firebreath and 13-second Inferno Spit.
+		--The only P1 5-second event is the opening Stormslam, whose count is still 1.
+		if timer == 5 and self:GetStage(1) and self.vb.stormslamCount > 1 then
+			self:SetStage(2)
+		end
 		local handled = false
 		if self:GetStage(1) then
 			if timer == 1 or (timer == 20 and nextTwentyIsFirebreath) then
@@ -112,7 +114,6 @@ if DBM:IsPostMidnight() then
 				timerStormslamCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "stormslam", "stormslamCount"))
 				handled = true
 			elseif timer == 10 or timer == 22 then
-				windsEventIDs[eventID] = true
 				local windCount = self:TLCountStart(eventID, "winds", "windsCount")
 				timerWindsofChangeCD:TLStart(timerExact, eventID, windDirections[((windCount or 1) - 1) % 4], windCount)
 				handled = true
@@ -140,7 +141,6 @@ if DBM:IsPostMidnight() then
 				timerInfernoSpitCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "infernospit", "infernospitCount"))
 				handled = true
 			elseif timer == 22 then
-				windsEventIDs[eventID] = true
 				local windCount = self:TLCountStart(eventID, "winds", "windsCount")
 				timerWindsofChangeCD:TLStart(timerExact, eventID, windDirections[((windCount or 1) - 1) % 4], windCount)
 				handled = true
@@ -185,12 +185,8 @@ if DBM:IsPostMidnight() then
 				specWarnInterruptingCloudburst:Play("stopcast")
 			end
 		elseif eventState == 3 then
-			if windsEventIDs[eventID] and self:GetStage(1) then
-				self:SetStage(2)
-			end
 			self:TLCountCancel(eventID)
 		end
-		windsEventIDs[eventID] = nil
 	end
 else
 	mod:RegisterEventsInCombat(
