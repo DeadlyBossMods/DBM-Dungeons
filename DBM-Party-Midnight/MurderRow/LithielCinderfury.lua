@@ -80,8 +80,8 @@ do
 			timerFingersofGuldanCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "fingers", "fingersCount"))
 			return true
 		elseif timer == 24 or timer == 59 then
-			--Blizzards timer is actually a bit more variable with confirmedd 57.3-59 range
-			timerMaleficWaveCD:TLStart(timer == 59 and "v57.3-59" or timerExact, eventID, self:TLCountStart(eventID, "wave", "waveCount"))
+			--Blizzards timer is actually a bit more variable with confirmedd 55.1-59 range
+			timerMaleficWaveCD:TLStart(timer == 59 and "v55.1-59" or timerExact, eventID, self:TLCountStart(eventID, "wave", "waveCount"))
 			return true
 		end
 	end
