@@ -35,6 +35,7 @@ mod.vb.furyCount = 0
 mod.vb.onslaughtCount = 0
 local next25IsMaul = true
 local timerTypeByEventID = {}
+local replacementTimersByEventID = {}
 local badStateDetected = false
 local replacementTimerValues = {
 	--Blizzard first sends bad timers, then replaces and cancels them in a later dispatch.
@@ -70,6 +71,7 @@ function mod:OnLimitedCombatStart()
 	self.vb.onslaughtCount = 1
 	next25IsMaul = true
 	timerTypeByEventID = {}
+	replacementTimersByEventID = {}
 	if DBM.Options.HardcodedTimer and not badStateDetected then
 		self:IgnoreBlizzardAPI()
 		self:RegisterShortTermEvents(
@@ -85,6 +87,7 @@ end
 function mod:OnCombatEnd()
 	self:TLCountReset()
 	self:TLBatchReset()
+	replacementTimersByEventID = {}
 	self:UnregisterShortTermEvents()
 end
 
@@ -122,8 +125,18 @@ do
 			return
 		end
 		timerTypeByEventID[eventID] = timerTypeByEventID[eventID] or eventType
-		if self:TLBatchTrackLatest(timer, eventID, replacementTimerValues) == eventID then return true end
-		timerObj:TLStart(timerExact, eventID, self:TLCountStart(eventID, eventType, countKey))
+		local replacedEventID = self:TLBatchTrackLatest(timer, eventID, replacementTimerValues)
+		if replacedEventID == eventID then return true end
+		if replacedEventID then
+			local replacedTimer = replacementTimersByEventID[replacedEventID]
+			if replacedTimer then
+				replacedTimer.timerObj:Stop(replacedTimer.count)
+				replacementTimersByEventID[replacedEventID] = nil
+			end
+		end
+		local eventCount = self:TLCountStart(eventID, eventType, countKey)
+		timerObj:TLStart(timerExact, eventID, eventCount)
+		replacementTimersByEventID[eventID] = {timerObj = timerObj, count = eventCount}
 		return true
 	end
 
@@ -145,7 +158,10 @@ do
 	function mod:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(eventID)
 		local eventState = C_EncounterTimeline.GetEventState(eventID)
 		if not eventID or not eventState then return end
-		self:TLBatchUntrack(eventID)
+		if eventState >= 2 then
+			self:TLBatchUntrack(eventID)
+			replacementTimersByEventID[eventID] = nil
+		end
 		if eventState == 2 then
 			local eventType, eventCount = self:TLCountFinish(eventID)
 			timerTypeByEventID[eventID] = nil
