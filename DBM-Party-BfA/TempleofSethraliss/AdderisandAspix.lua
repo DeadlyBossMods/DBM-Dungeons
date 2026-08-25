@@ -12,6 +12,10 @@ mod:SetZone(1877)
 mod:RegisterCombat("combat")
 
 if DBM:IsPostMidnight() then
+	--General
+	local specWarnSwitchToAdderis			= mod:NewSpecialWarningSwitch(-18485, nil, nil, nil, 1, 2)
+	local specWarnSwitchToAspix				= mod:NewSpecialWarningSwitch(-18484, nil, nil, nil, 1, 2)
+
 	--Aspix
 	mod:AddTimerLine(DBM:EJ_GetSectionInfo(18484))
 
@@ -39,16 +43,25 @@ if DBM:IsPostMidnight() then
 	mod.vb.tempestWindsCount = 0
 	mod.vb.galeForceCount = 0
 	local badStateDetected = false
-	local nextFortyTwoTimer = 1
+	local nextFortyFiveTimer = 1
 	local nextNineteenTimer = 1
 	local adderisDead = false
 	local aspixDead = false
-	local activeEventByType = {}
+	local boss2Seen = false
+	local bossDeathTime = 0
+	local attackingAdderis = true
+	local transitionPaused = false
 	local batchTimerValues = {
 		[1] = true,
-		[4] = true,
-		[21] = true,
-		[31] = true,
+		[5] = true,
+		[9] = true,
+		[12] = true,
+		[15] = true,
+		[22] = true,
+		[25] = true,
+		[29] = true,
+		[35] = true,
+		[39] = true,
 	}
 
 	---@param self DBMMod
@@ -73,33 +86,40 @@ if DBM:IsPostMidnight() then
 	function mod:OnLimitedCombatStart()
 		self:TLCountReset()
 		self:TLBatchReset()
+		self:TLActiveEventReset()
 		self.vb.thunderAndLightningCount = 1
 		self.vb.overloadCount = 1
 		self.vb.tempestWindsCount = 1
 		self.vb.galeForceCount = 1
-		nextFortyTwoTimer = 1
+		nextFortyFiveTimer = 1
 		nextNineteenTimer = 1
 		adderisDead = false
 		aspixDead = false
-		activeEventByType = {}
+		boss2Seen = false
+		bossDeathTime = 0
+		attackingAdderis = true
+		transitionPaused = false
 		if DBM.Options.HardcodedTimer and not badStateDetected then
 			self:IgnoreBlizzardAPI()
-			self:RegisterShortTermEvents("ENCOUNTER_TIMELINE_EVENT_ADDED", "ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED")
+			self:RegisterShortTermEvents("ENCOUNTER_TIMELINE_EVENT_ADDED", "ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED", "INSTANCE_ENCOUNTER_ENGAGE_UNIT")
 			setFallback(self, true)
 		else
 			setFallback(self)
 		end
+		--Adderis is always one NOT affected by https://www.wowhead.com/spell=1310311/storm-blessed on pull
+		specWarnSwitchToAdderis:Show()
+		specWarnSwitchToAdderis:Play("targetchange")
 	end
 
 	function mod:OnCombatEnd()
 		self:TLCountReset()
 		self:TLBatchReset()
-		activeEventByType = {}
+		self:TLActiveEventReset()
 		self:UnregisterShortTermEvents()
 	end
 
 	do
-		local fortyTwoTimers = {
+		local fortyFiveTimers = {
 			"galeForce",
 			"thunderAndLightning",
 			"tempestWinds",
@@ -107,21 +127,21 @@ if DBM:IsPostMidnight() then
 		}
 
 		local function startTimer(self, timerObject, timerExact, eventID, eventType, countKey)
-			activeEventByType[eventType] = eventID
 			timerObject:TLStart(timerExact, eventID, self:TLCountStart(eventID, eventType, countKey))
 		end
 
 		local function startBatchTimer(self, timer, timerObject, timerExact, eventID, eventType, countKey)
-			if self:TLBatchStart(timer, timerObject, timerExact, eventID, eventType, countKey, batchTimerValues) then
-				activeEventByType[eventType] = eventID
-			end
+			self:TLBatchStart(timer, timerObject, timerExact, eventID, eventType, countKey, batchTimerValues)
 		end
 
-		local function timersAll(self, timer, timerExact, eventID)
-			if timer == 42 then
-				--Every transition resumes this four-event batch in this fixed order.
-				local eventType = fortyTwoTimers[nextFortyTwoTimer]
-				nextFortyTwoTimer = nextFortyTwoTimer % #fortyTwoTimers + 1
+		local function timersAll(self, timer, timerExact, eventID, bossJustDied)
+			if bossJustDied and timer ~= 5 and timer ~= 12 and timer ~= 15 and timer ~= 22 then
+				--A boss death re-adds the survivor's active bars with arbitrary remaining times before canceling them.
+				return true
+			elseif timer == 45 then
+				--Every empowerment transition resumes this four-event batch in this fixed order.
+				local eventType = fortyFiveTimers[nextFortyFiveTimer]
+				nextFortyFiveTimer = nextFortyFiveTimer % #fortyFiveTimers + 1
 				if eventType == "galeForce" then
 					startTimer(self, timerGaleForceCD, timerExact, eventID, eventType, "galeForceCount")
 				elseif eventType == "thunderAndLightning" then
@@ -131,27 +151,36 @@ if DBM:IsPostMidnight() then
 				else
 					startTimer(self, timerOverloadCD, timerExact, eventID, eventType, "overloadCount")
 				end
-			elseif timer == 9 or timer == 4 then
+			elseif timer == 9 then
 				adderisDead = false
 				startBatchTimer(self, timer, timerThunderandLightningCD, timerExact, eventID, "thunderAndLightning", "thunderAndLightningCount")
-			elseif timer == 36 then
+			elseif timer == 39 or timer == 35 then
 				adderisDead = false
-				startTimer(self, timerOverloadCD, timerExact, eventID, "overload", "overloadCount")
-			elseif timer == 31 then
-				--Overload is exactly 31; Gale Force is 31.082 in the final transition batch.
-				if timerExact > 31.05 then
-					aspixDead = false
-					startBatchTimer(self, timer, timerGaleForceCD, timerExact, eventID, "galeForce", "galeForceCount")
-				else
-					adderisDead = false
-					startBatchTimer(self, timer, timerOverloadCD, timerExact, eventID, "overload", "overloadCount")
-				end
-			elseif timer == 26 or timer == 21 or timer == 12 then
+				startBatchTimer(self, timer, timerOverloadCD, timerExact, eventID, "overload", "overloadCount")
+			elseif timer == 29 or timer == 25 then
 				aspixDead = false
 				startBatchTimer(self, timer, timerTempestWindsCD, timerExact, eventID, "tempestWinds", "tempestWindsCount")
-			elseif timer == 5 or timer == 1 then
+			elseif timer == 1 then
 				aspixDead = false
 				startBatchTimer(self, timer, timerGaleForceCD, timerExact, eventID, "galeForce", "galeForceCount")
+			elseif timer == 5 then
+				if bossJustDied or self.vb.galeForceCount == 1 then
+					--Gale Force opener, and Gale Force after Adderis dies.
+					if bossJustDied then adderisDead = true end
+					startTimer(self, timerGaleForceCD, timerExact, eventID, "galeForce", "galeForceCount")
+				else
+					--The transition re-sync re-adds Thunder and Lightning at five seconds.
+					startTimer(self, timerThunderandLightningCD, timerExact, eventID, "thunderAndLightning", "thunderAndLightningCount")
+				end
+			elseif bossJustDied and timer == 12 then
+				adderisDead = true
+				startBatchTimer(self, timer, timerTempestWindsCD, timerExact, eventID, "tempestWinds", "tempestWindsCount")
+			elseif bossJustDied and timer == 15 then
+				aspixDead = true
+				startBatchTimer(self, timer, timerOverloadCD, timerExact, eventID, "overload", "overloadCount")
+			elseif bossJustDied and timer == 22 then
+				aspixDead = true
+				startBatchTimer(self, timer, timerThunderandLightningCD, timerExact, eventID, "thunderAndLightning", "thunderAndLightningCount")
 			elseif timer == 19 then
 				if not aspixDead then
 					--Adderis died: Gale Force then Tempest Winds.
@@ -175,12 +204,23 @@ if DBM:IsPostMidnight() then
 			return true
 		end
 
+		function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
+			if UnitExists("boss2") then
+				boss2Seen = true
+			elseif boss2Seen then
+				bossDeathTime = GetTime()
+			end
+		end
+
 		function mod:ENCOUNTER_TIMELINE_EVENT_ADDED(eventInfo)
 			if eventInfo.source ~= 0 then return end
 			local eventID = eventInfo.id
 			if C_EncounterTimeline.GetEventState(eventID) ~= 0 then return end
+			--Blizzard can resend an active event with its remaining duration during an empowerment transfer.
+			if not self:TLTrackActiveEvent(eventID) then return end
 			local timerExact = eventInfo.duration
-			if not timersAll(self, math.floor(timerExact + 0.5), timerExact, eventID) and not badStateDetected then
+			local bossJustDied = bossDeathTime > 0 and GetTime() - bossDeathTime <= 1
+			if not timersAll(self, math.floor(timerExact + 0.5), timerExact, eventID, bossJustDied) and not badStateDetected then
 				badStateDetected = true
 				self:ResumeBlizzardAPI()
 				self:UnregisterShortTermEvents()
@@ -192,13 +232,29 @@ if DBM:IsPostMidnight() then
 		function mod:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(eventID)
 			if not eventID then return end
 			local eventState = C_EncounterTimeline.GetEventState(eventID)
+			if not eventState then return end
+			if eventState == 1 and not transitionPaused then
+				transitionPaused = true
+				if attackingAdderis then
+					attackingAdderis = false
+					specWarnSwitchToAspix:Show()
+					specWarnSwitchToAspix:Play("targetchange")
+				else
+					attackingAdderis = true
+					specWarnSwitchToAdderis:Show()
+					specWarnSwitchToAdderis:Play("targetchange")
+				end
+			elseif eventState == 0 then
+				--The first resumed event ends the transfer batch and arms the next switch warning.
+				transitionPaused = false
+			end
 			self:TLBatchUntrack(eventID)
+			if eventState >= 2 then
+				self:TLReleaseActiveEvent(eventID)
+			end
 			if eventState == 2 then
 				local eventType, eventCount = self:TLCountFinish(eventID)
 				if eventType and eventCount then
-					if activeEventByType[eventType] == eventID then
-						activeEventByType[eventType] = nil
-					end
 					if eventType == "thunderAndLightning" then
 						specWarnThunderandLightning:Show(eventCount, "helpsoak")
 					elseif eventType == "overload" and self:IsTank() then
@@ -213,15 +269,7 @@ if DBM:IsPostMidnight() then
 					end
 				end
 			elseif eventState == 3 then
-				local eventType = self:TLCountCancel(eventID)
-				if eventType and activeEventByType[eventType] == eventID then
-					activeEventByType[eventType] = nil
-					if eventType == "thunderAndLightning" or eventType == "overload" then
-						adderisDead = true
-					elseif eventType == "tempestWinds" or eventType == "galeForce" then
-						aspixDead = true
-					end
-				end
+				self:TLCountCancel(eventID)
 			end
 		end
 	end

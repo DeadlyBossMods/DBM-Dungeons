@@ -217,6 +217,35 @@ do
 		end
 	end
 
+	---@param eventType string?
+	---@param eventCount number?
+	local function showTimelineWarning(eventType, eventCount)
+		if not eventType or not eventCount then return end
+		if eventType == "noxiousBile" then
+			specWarnNoxiousBile:Show(eventCount)
+			specWarnNoxiousBile:Play("frontal")
+		elseif eventType == "voidToxin" then
+			warnVoidToxin:Show(eventCount)
+		elseif eventType == "serpentsStrike" then
+			specWarnSerpentsStrike:Show()
+			specWarnSerpentsStrike:Play("defensive")
+		elseif eventType == "soulExtinction" then
+			specWarnSoulExtinction:Show(L.name, eventCount)
+			specWarnSoulExtinction:Play("kickcast")
+		elseif eventType == "venomStorm" then
+			specWarnVenomStorm:Show(eventCount)
+			specWarnVenomStorm:Play("watchwave")
+		end
+	end
+
+	---@param self DBMMod
+	---@param eventID number
+	local function finishTimelineEvent(self, eventID)
+		timelineEvents[eventID] = nil
+		local eventType, eventCount = self:TLCountFinish(eventID)
+		showTimelineWarning(eventType, eventCount)
+	end
+
 	--Note, bar state changing and canceling is handled by core
 	function mod:ENCOUNTER_TIMELINE_EVENT_ADDED(eventInfo)
 		if eventInfo.source ~= 0 then return end
@@ -238,28 +267,16 @@ do
 			eventInfo.startedAt = eventInfo.startedAt + GetTime() - eventInfo.pausedAt
 			eventInfo.pausedAt = nil
 		elseif eventState == 2 then--Finished
-			timelineEvents[eventID] = nil
-			local eventType, eventCount = self:TLCountFinish(eventID)
-			if eventType and eventCount then
-				if eventType == "noxiousBile" then
-					specWarnNoxiousBile:Show(eventCount)
-					specWarnNoxiousBile:Play("frontal")
-				elseif eventType == "voidToxin" then
-					warnVoidToxin:Show(eventCount)
-				elseif eventType == "serpentsStrike" then
-					specWarnSerpentsStrike:Show()
-					specWarnSerpentsStrike:Play("defensive")
-				elseif eventType == "soulExtinction" then
-					specWarnSoulExtinction:Show(L.name, eventCount)
-					specWarnSoulExtinction:Play("kickcast")
-				elseif eventType == "venomStorm" then
-					specWarnVenomStorm:Show(eventCount)
-					specWarnVenomStorm:Play("watchwave")
-				end
-			end
+			finishTimelineEvent(self, eventID)
 		elseif eventState == 3 then--Canceled
-			timelineEvents[eventID] = nil
-			self:TLCountCancel(eventID)
+			--Blizzard can report a completed cast as canceled near its natural expiry.
+			--Do not treat paused/intermission timers or out-of-range clone cancellations as finishes.
+			if eventInfo and not eventInfo.pausedAt and math.abs(GetTime() - eventInfo.startedAt - eventInfo.timer) <= 3 then
+				finishTimelineEvent(self, eventID)
+			else
+				timelineEvents[eventID] = nil
+				self:TLCountCancel(eventID)
+			end
 		end
 	end
 end
