@@ -172,6 +172,7 @@ do
 			timelineEvents[eventID] = {eventType = "serpentsStrike", timer = timerExact, startedAt = GetTime()}
 		elseif self:IsRoundedTimer(timerExact, 18, 0.24)
 			or self:IsRoundedTimer(timerExact, 20, 0.24)
+			or self:IsRoundedTimer(timerExact, 20.42, 0.02)
 			or self:IsRoundedTimer(timerExact, 35.5, 0.75) then
 			local count = self:TLCountStart(eventID, "soulExtinction", "soulExtinctionCount")
 			timerSoulExtinctionCD:TLStart(timerExact, eventID, count)
