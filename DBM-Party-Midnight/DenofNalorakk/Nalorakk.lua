@@ -17,6 +17,9 @@ mod:RegisterCombat("combat")
 
 --NOTE, https://www.wowhead.com/spell=1262846/spirit-thrash seems to be older version of fury of the war god
 --NOTE, 909-911 are 12.1 versions of spells, likely custom alert texts added to fill void of private aura alert removals
+DBM:RegisterAltSpellName(1243011, DBM_COMMON_L.GROUPSOAKS)--Fury of the War God --> Soaks
+DBM:RegisterAltSpellName(1243569, DBM_COMMON_L.TANKCOMBO)--Overwhelming Onslaught --> Tank Combo
+DBM:RegisterAltSpellName(1242860, DBM_COMMON_L.SPREADDEBUFFS)--Echoing Maul --> Spread Debuffs
 local warnEchoingMaul						= mod:NewCountAnnounce(1242860, 3)
 
 local specWarnFuryoftheWarGod				= mod:NewSpecialWarningCount(1243011, nil, nil, nil, 2, 3, nil, nil, "specialsoon")

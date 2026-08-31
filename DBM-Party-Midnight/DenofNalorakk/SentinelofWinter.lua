@@ -15,6 +15,10 @@ mod:RegisterCombat("combat")
 
 --)
 
+DBM:RegisterAltSpellName(1235548, DBM_COMMON_L.DISPELS)--Glacial Torment --> Dispels
+DBM:RegisterAltSpellName(1235623, 86189)--Raging Squall --> Tornados
+DBM:RegisterAltSpellName(1235783, DBM_COMMON_L.ADDS)--Shattering Frostspike --> Adds
+DBM:RegisterAltSpellName(1235656, DBM_COMMON_L.PUSHBACK)--Frozen Tempest --> Interrupt
 local specWarnGlacialTorment			= mod:NewSpecialWarningCount(1235548, "Healer", nil, nil, 2, 3, nil, nil, "helpdispel")
 local specWarnRagingSquall				= mod:NewSpecialWarningCount(1235623, nil, nil, nil, 2, 2, nil, nil, "watchstep")
 local specWarnShatteringFrostspike		= mod:NewSpecialWarningCount(1235783, nil, nil, nil, 2, 1, nil, nil, "mobsoon")

@@ -15,6 +15,8 @@ mod:RegisterSafeEventsInCombat(
 	"ENCOUNTER_WARNING"
 )
 
+DBM:RegisterAltSpellName(1296220, DBM_COMMON_L.SPREADDEBUFFS)--Triple Shot -- > Spread Debuffs
+DBM:RegisterAltSpellName(1307894, DBM_COMMON_L.CIRCLES)--Ravenous Stomp --> Circles
 --https://www.wowhead.com/ptr/spell=1296219/fetid-roar isn't in journal but has encounter event
 local warnTripleShot				= mod:NewCountAnnounce(1296220, 2)
 

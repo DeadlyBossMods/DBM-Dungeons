@@ -11,6 +11,11 @@ mod.respawnTime = 29
 
 mod:RegisterCombat("combat")
 
+DBM:RegisterAltSpellName(1310547, DBM_COMMON_L.INTERRUPTS)--Toxic Atrophy --> Interrupts
+DBM:RegisterAltSpellName(1299053, DBM_COMMON_L.LINES)--Death Rattle --> Lines
+DBM:RegisterAltSpellName(1299940, DBM_COMMON_L.FRONTAL)--Vindictive Onslaught --> Frontal
+DBM:RegisterAltSpellName(1298949, DBM_COMMON_L.TANKBUSTER)--Tail Scythe --> Tank Buster
+--NOTE, toxic barrage is actually pointless, but since blizzard sends it anyways, we still have to have an option to control it
 local warnSynchonizedVenom			= mod:NewCountAnnounce(1299154, 3)
 
 local specWarnTailScythe			= mod:NewSpecialWarningDefensive(1298949, nil, nil, nil, 1, 2, nil, nil, "defensive")

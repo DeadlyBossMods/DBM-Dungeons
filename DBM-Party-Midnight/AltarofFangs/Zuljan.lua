@@ -11,6 +11,10 @@ mod.respawnTime = 29
 
 mod:RegisterCombat("combat")
 
+DBM:RegisterAltSpellName(1300876, DBM_COMMON_L.LINE .. DBM_COMMON_L.GROUPSOAKS)--Ritual of the Fang --> Line Soaks
+DBM:RegisterAltSpellName(1301413, DBM_COMMON_L.LINE .. DBM_COMMON_L.AVOID)--Boneslicer --> Line Avoid
+DBM:RegisterAltSpellName(1301111, DBM_COMMON_L.FRONTAL)--Axegrinder --> Frontal
+DBM:RegisterAltSpellName(1301350, DBM_COMMON_L.TANKBUSTER)--Chop Down --> Tank Buster
 --local warnRecklessLeap			= mod:NewCountAnnounce(1283247, 2)
 
 local specWarnBoneslicer			= mod:NewSpecialWarningCount(1301413, nil, nil, nil, 2, 2, nil, nil, "farfromline")
