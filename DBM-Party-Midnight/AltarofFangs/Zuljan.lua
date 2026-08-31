@@ -24,6 +24,7 @@ local timerAxegrinderCD				= mod:NewCDCountTimer(8, 1301111, nil, nil, nil, 3)
 local timerChopDownCD				= mod:NewCDCountTimer(8, 1301350, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 
 --mod:AddAuraSoundOption(470966, true, 470966, 4, 1, "justrun", 2)
+mod:AddAuraSoundOption(1301231, true, 1301231, 1, 2, "watchfeet", 8, 0)--Bloodletting
 
 local badStateDetected = false
 mod.vb.BoneslicerCount = 0
