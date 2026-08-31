@@ -167,13 +167,13 @@ if DBM:IsPostMidnight() then
 				if bossJustDied or self.vb.galeForceCount == 1 then
 					--Gale Force opener, and Gale Force after Adderis dies.
 					if bossJustDied then adderisDead = true end
-					startTimer(self, timerGaleForceCD, timerExact, eventID, "galeForce", "galeForceCount")
+					startBatchTimer(self, timer, timerGaleForceCD, timerExact, eventID, "galeForce", "galeForceCount")
 				else
 					--The transition re-sync re-adds Thunder and Lightning at five seconds.
-					startTimer(self, timerThunderandLightningCD, timerExact, eventID, "thunderAndLightning", "thunderAndLightningCount")
+					startBatchTimer(self, timer, timerThunderandLightningCD, timerExact, eventID, "thunderAndLightning", "thunderAndLightningCount")
 				end
-			elseif bossJustDied and timer == 12 then
-				adderisDead = true
+			elseif timer == 12 then
+				if bossJustDied then adderisDead = true end
 				startBatchTimer(self, timer, timerTempestWindsCD, timerExact, eventID, "tempestWinds", "tempestWindsCount")
 			elseif bossJustDied and timer == 15 then
 				aspixDead = true

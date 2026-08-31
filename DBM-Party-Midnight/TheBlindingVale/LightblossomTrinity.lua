@@ -19,7 +19,7 @@ local warnThornblade						= mod:NewCountAnnounce(1261276, 2)
 
 local specWarnBedrockSlam					= mod:NewSpecialWarningCount(1234753, "Tank", nil, nil, 1, 2, nil, nil, "defensive")
 local specWarnLightsowerDash				= mod:NewSpecialWarningCount(1234850, nil, nil, nil, 2, 2, nil, nil, "chargemove")
-local specWarnLightblossomBeam				= mod:NewSpecialWarningBlizzTarget(1235564, nil, nil, nil, 1, 2, nil, nil, "helpsoak")
+local specWarnLightblossomBeam				= mod:NewSpecialWarningCount(1235564, nil, nil, nil, 1, 2, nil, nil, "helpsoak")
 
 local timerBedrockSlamCD					= mod:NewCDCountTimer(20.5, 1234753, nil, "Tank", nil, 5)
 local timerThornbladeCD						= mod:NewCDCountTimer(20.5, 1261276, nil, nil, nil, 3)
@@ -153,7 +153,8 @@ do
 					specWarnLightsowerDash:Show(eventCount)
 					specWarnLightsowerDash:Play("chargemove")
 				elseif eventType == "lightblossomBeam" then
-					specWarnLightblossomBeam:Show(eventCount, "helpsoak")
+					specWarnLightblossomBeam:Show(eventCount)
+					specWarnLightblossomBeam:Play("helpsoak")
 				end
 			end
 		elseif eventState == 3 then
