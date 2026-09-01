@@ -16,6 +16,8 @@ mod:RegisterCombat("combat")
 --)
 
 --NOTE, https://www.wowhead.com/ptr/spell=1295452/infernal-crush has an ID of 752 for the targeted circles
+DBM:RegisterAltSpellName(473898, DBM_COMMON_L.TANKBUSTER)--Legion Strike --> Tank Buster
+DBM:RegisterAltSpellName(474197, DBM_COMMON_L.AOEDAMAGE)--Demonic Rage --> AOE Damage
 local specWarnLegionStrike					= mod:NewSpecialWarningCount(473898, "Tank", nil, nil, 1, 2, nil, nil, "defensive")
 local specWarnDemonicRage					= mod:NewSpecialWarningCount(474197, nil, nil, nil, 2, 2, nil, nil, "aesoon")
 local specWarnAxeToss						= mod:NewSpecialWarningBlizzYou(1214637, nil, nil, nil, 1, 2, nil, nil, "targetyou")--Unverified: personal ENCOUNTER_WARNING not seen in the logger's pulls

@@ -16,6 +16,9 @@ mod:RegisterCombat("combat")
 --)
 --NOTE https://www.wowhead.com/ptr/spell=1296871/power-surge has an ID of 780 but is not in the journal
 
+DBM:RegisterAltSpellName(1240222, DBM_COMMON_L.LINES)--Pulverizing Strikes --> Lines
+DBM:RegisterAltSpellName(1241058, DBM_COMMON_L.DEBUFFS)--Grievous Thrash --> Debuffs
+DBM:RegisterAltSpellName(1239825, DBM_COMMON_L.POOLS)--Lightfire --> Pools
 --local warnLightfire							= mod:NewCountAnnounce(1239825, 2)
 local warnPulverizingStrikes				= mod:NewCountAnnounce(1240222, 2)
 
@@ -34,7 +37,7 @@ local timerGrievousThrashCD					= mod:NewCDCountTimer(20.5, 1241058, nil, "Heale
 
 --Custom Aura Sounds
 --mod:AddAuraSoundOption(1239825, true, 1239825, 1, 1, "runout", 2)--Lightfire
---mod:AddAuraSoundOption(1240222, true, 1240222, 1, 1, "lineyou", 17)--Pulverizing Strikes
+mod:AddAuraSoundOption(1240222, true, 1240222, 1, 1, "lineyou", 17)--Pulverizing Strikes
 
 mod.vb.lightfireCount = 0
 mod.vb.lightfallCount = 0

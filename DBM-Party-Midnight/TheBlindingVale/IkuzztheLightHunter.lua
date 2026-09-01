@@ -15,6 +15,9 @@ mod:RegisterCombat("combat")
 
 --)
 
+DBM:RegisterAltSpellName(1237091, 12021)--Bloodthirsty Gaze --> Fixate
+DBM:RegisterAltSpellName(1236746, 28405)--Verdant Stomp --> Knockback
+DBM:RegisterAltSpellName(1236709, DBM_COMMON_L.ROOTS)--Thorncaller Roar --> Roots
 local warnBloodthirstyGaze						= mod:NewCountAnnounce(1237091, 2)
 
 local specWarnVerdantStomp						= mod:NewSpecialWarningCount(1236746, nil, nil, nil, 2, 2, nil, nil, "carefly")

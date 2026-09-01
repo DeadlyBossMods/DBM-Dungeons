@@ -14,7 +14,11 @@ mod:RegisterCombat("combat")
 --mod:RegisterEventsInCombat(
 
 --)
-local specWarnVoidBlast						= mod:NewSpecialWarningCount(1297017, "Tank", nil, nil, 1, 2, nil, nil, "defensive")
+DBM:RegisterAltSpellName(1297017, DBM_COMMON_L.TANKBUSTER)--Void Blast --> Tank Buster
+DBM:RegisterAltSpellName(1300259, DBM_COMMON_L.ORBS)--Black Hole --> Orbs
+DBM:RegisterAltSpellName(1222098, DBM_COMMON_L.LINES)--Nether Dash --> Lines
+DBM:RegisterAltSpellName(1296963, DBM_COMMON_L.POOLS)--Umbral Rupture --> Pools
+local specWarnVoidBlast						= mod:NewSpecialWarningDefensive(1297017, nil, nil, nil, 1, 2, nil, nil, "defensive")
 local specWarnBlackHole						= mod:NewSpecialWarningCount(1300259, nil, nil, nil, 2, 2, nil, nil, "watchorb")
 local specWarnUmbralRupture					= mod:NewSpecialWarningCount(1296963, nil, nil, nil, 2, 2, nil, nil, "watchstep")
 local specWarnNetherDash					= mod:NewSpecialWarningBlizzYou(1222098, nil, nil, nil, 2, 2, nil, nil, "lineyou")
@@ -118,7 +122,7 @@ do
 			if eventType and eventCount then
 				if eventType == "voidBlast" then
 					if self:IsTanking("player", "boss1", nil, true) then
-						specWarnVoidBlast:Show(eventCount)
+						specWarnVoidBlast:Show()
 						specWarnVoidBlast:Play("defensive")
 					end
 				elseif eventType == "blackHole" then

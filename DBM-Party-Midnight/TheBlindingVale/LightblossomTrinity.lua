@@ -15,6 +15,8 @@ mod:RegisterCombat("combat")
 
 --)
 
+DBM:RegisterAltSpellName(1234753, DBM_COMMON_L.TANKBUSTER)--Bedrock Slam --> Tank Buster
+DBM:RegisterAltSpellName(1235564, DBM_COMMON_L.GROUPSOAKS)--Lightblossom Beam --> Soaks
 local warnThornblade						= mod:NewCountAnnounce(1261276, 2)
 
 local specWarnBedrockSlam					= mod:NewSpecialWarningCount(1234753, "Tank", nil, nil, 1, 2, nil, nil, "defensive")
