@@ -12,6 +12,9 @@ mod:SetZone(1877)
 mod:RegisterCombat("combat")
 
 if DBM:IsPostMidnight() then
+	DBM:RegisterAltSpellName(1288049, DBM_COMMON_L.GROUPSOAK)--Thunder and Lightning --> Help Soak
+	DBM:RegisterAltSpellName(1311805, DBM_COMMON_L.POOLS)--Tempest Winds --> Pools
+	DBM:RegisterAltSpellName(1289059, DBM_COMMON_L.PUSHBACK)--Gale Force --> Pushback
 	--General
 	local specWarnSwitchToAdderis			= mod:NewSpecialWarningSwitch(-18485, nil, nil, nil, 1, 2)
 	local specWarnSwitchToAspix				= mod:NewSpecialWarningSwitch(-18484, nil, nil, nil, 1, 2)
