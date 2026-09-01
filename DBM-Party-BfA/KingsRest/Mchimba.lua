@@ -11,6 +11,9 @@ mod:SetZone(1762)
 mod:RegisterCombat("combat")
 
 if DBM:IsPostMidnight() then
+	DBM:RegisterAltSpellName(267618, DBM_COMMON_L.DEBUFFS)--Drain Fluids --> Debuffs
+	DBM:RegisterAltSpellName(267639, DBM_COMMON_L.POOLS)--Burn Corruption --> Pools
+	DBM:RegisterAltSpellName(1312146, DBM_COMMON_L.AOEDAMAGE)--Awakening Slam --> AoE
 	local warnDrainFluids				= mod:NewCountAnnounce(267618, 2)--Cast count for use in hardode only
 	local warnBurnCorruption			= mod:NewCountAnnounce(267639, 2)--Cast count for use in hardode only
 

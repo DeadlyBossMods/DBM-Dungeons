@@ -11,6 +11,11 @@ mod:SetZone(1762)
 mod:RegisterCombat("combat")
 
 if DBM:IsPostMidnight() then
+	DBM:RegisterAltSpellName(269369, DBM_COMMON_L.INTERRUPT)--Deadly Roar --> Interrupt
+	DBM:RegisterAltSpellName(268586, DBM_COMMON_L.TANKBUSTER)--Blade Combo --> Tank Buster
+	DBM:RegisterAltSpellName(1303267, DBM_COMMON_L.AOEDAMAGE)--Gilded Destruction --> AoE Damage
+	DBM:RegisterAltSpellName(1303327, DBM_COMMON_L.SPREADDEBUFFS)--Quaking Leap --> Spread Debuffs
+	DBM:RegisterAltSpellName(1303115, DBM_COMMON_L.SPREADDEBUFFS)--Aerial Smash --> Spread Debuffs
 	--Hardcode Note. Boss phases at 80% health and changes attack pattern. Signal for this is hunting leap being canceled (replaced by quaking leap in stage 2)
 	local warnAerialSmash				= mod:NewCountAnnounce(1303115, 3)--Upgrade to generic special warning if aura sound doesn't work
 	local warnHuntingLeap				= mod:NewCountAnnounce(269230, 3)--Upgrade to generic special warning if aura sound doesn't work
@@ -18,14 +23,14 @@ if DBM:IsPostMidnight() then
 
 	local specWarnBladeCombo			= mod:NewSpecialWarningDefensive(268586, nil, nil, nil, 1, 2, nil, nil, "defensive")
 	local specWarnGildedDestruction		= mod:NewSpecialWarningCount(1303267, nil, nil, nil, 2, 2, nil, nil, "aesoon")
-	local specWarnDeadlyRoar			= mod:NewSpecialWarningCount(269369, nil, nil, nil, 2, 2, nil, nil, "fearsoon")
+	local specWarnDeadlyRoar			= mod:NewSpecialWarningCount(269369, nil, nil, nil, 2, 2, nil, nil, "kickcast")
 	local specWarnQuakingLeap			= mod:NewSpecialWarningBlizzYou(1303327, nil, nil, nil, 1, 2, nil, nil, "scatter")
 
 	local timerAerialSmashCD			= mod:NewCDCountTimer(0, 1303115, nil, nil, nil, 3)
 	local timerBladeComboCD				= mod:NewCDCountTimer(0, 268586, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 	local timerGildedDestructionCD		= mod:NewCDCountTimer(0, 1303267, nil, nil, nil, 2)
 	local timerHuntingLeapCD			= mod:NewCDCountTimer(0, 269230, nil, nil, nil, 3)
-	local timerDeadlyRoarCD				= mod:NewCDCountTimer(0, 269369, nil, nil, nil, 2)
+	local timerDeadlyRoarCD				= mod:NewCDCountTimer(0, 269369, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 	local timerQuakingLeapCD			= mod:NewCDCountTimer(0, 1303327, nil, nil, nil, 3)
 	local timerSavageMaulCD				= mod:NewCDCountTimer(0, 1303488, nil, nil, nil, 3)
 
@@ -176,7 +181,7 @@ if DBM:IsPostMidnight() then
 					warnHuntingLeap:Show(eventCount)
 				elseif eventType == "deadlyRoar" and eventCount then
 					specWarnDeadlyRoar:Show(eventCount)
-					specWarnDeadlyRoar:Play("fearsoon")
+					specWarnDeadlyRoar:Play("kickcast")
 				elseif eventType == "savageMaul" and eventCount then
 					warnSavageMaul:Show(eventCount)
 				end

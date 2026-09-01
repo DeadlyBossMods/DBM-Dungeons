@@ -25,6 +25,12 @@ if DBM:IsPostMidnight() then
 	--4. Barrel Through continues to fire ENCOUNTER_WARNING when Aka'ali is defeated, but the timeline event no longer exists, so NewSpecialWarningBlizzTarget is broken. Therefore, when Aka'ali is defeated specWarnBarrelThrough fires its SetFallback
 	--5. Objects are sorted by boss for clear identification of ability ownership.
 
+	DBM:RegisterAltSpellName(267494, DBM_COMMON_L.GROUPSOAK)--Barrel Through --> Group Soak
+	DBM:RegisterAltSpellName(266206, DBM_COMMON_L.AVOID)--Whirling Axes --> Avoid
+	DBM:RegisterAltSpellName(266231, DBM_COMMON_L.DEBUFF)--Severing Axe --> Debuff
+	DBM:RegisterAltSpellName(266237, DBM_COMMON_L.TANKBUSTER)--Debilitating Backhand --> Tank Buster
+	DBM:RegisterAltSpellName(267273, DBM_COMMON_L.INTERRUPT)--Poison Nova --> Interrupt
+	DBM:RegisterAltSpellName(267060, DBM_COMMON_L.DPSSWAP)--Totems --> Dps Swap
 	--Kula the Butcher
 	mod:AddTimerLine(DBM:EJ_GetSectionInfo(18261))
 	--local warnSeveringAxe				= mod:NewCountAnnounce(266231, 3, nil, "Healer")

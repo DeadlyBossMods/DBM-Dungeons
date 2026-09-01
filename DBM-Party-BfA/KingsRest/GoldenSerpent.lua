@@ -10,7 +10,11 @@ mod:SetZone(1762)
 
 mod:RegisterCombat("combat")
 
+DBM:RegisterAltSpellName(265773, DBM_COMMON_L.POOLS)--Spit Gold --> Pools
+DBM:RegisterAltSpellName(265910, DBM_COMMON_L.TANKBUSTER)--Tail Thrash --> Tank Buster
+DBM:RegisterAltSpellName(265923, DBM_COMMON_L.ADDS)--Lucre Call --> Kill Mob
 if DBM:IsPostMidnight() then
+	DBM:RegisterAltSpellName(1311987, DBM_COMMON_L.PUSHBACK)--Serpentine --> Pushback
 	local warnSpitGold					= mod:NewCountAnnounce(265773, 2)--Cast count for use in hardode only
 
 	local specWarnTailThrash			= mod:NewSpecialWarningDefensive(265910, nil, nil, nil, 1, 2, nil, nil, "defensive")
