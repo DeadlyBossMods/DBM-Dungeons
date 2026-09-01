@@ -17,13 +17,13 @@ if DBM:IsPostMidnight() then
 	local warnSavageMaul				= mod:NewCountAnnounce(1303488, 3)--Upgrade to generic special warning if aura sound doesn't work
 
 	local specWarnBladeCombo			= mod:NewSpecialWarningDefensive(268586, nil, nil, nil, 1, 2, nil, nil, "defensive")
-	local specWarnGildedDestruction		= mod:NewSpecialWarningCount(1303101, nil, nil, nil, 2, 2, nil, nil, "aesoon")
+	local specWarnGildedDestruction		= mod:NewSpecialWarningCount(1303267, nil, nil, nil, 2, 2, nil, nil, "aesoon")
 	local specWarnDeadlyRoar			= mod:NewSpecialWarningCount(269369, nil, nil, nil, 2, 2, nil, nil, "fearsoon")
 	local specWarnQuakingLeap			= mod:NewSpecialWarningBlizzYou(1303327, nil, nil, nil, 1, 2, nil, nil, "scatter")
 
 	local timerAerialSmashCD			= mod:NewCDCountTimer(0, 1303115, nil, nil, nil, 3)
 	local timerBladeComboCD				= mod:NewCDCountTimer(0, 268586, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
-	local timerGildedDestructionCD		= mod:NewCDCountTimer(0, 1303101, nil, nil, nil, 2)
+	local timerGildedDestructionCD		= mod:NewCDCountTimer(0, 1303267, nil, nil, nil, 2)
 	local timerHuntingLeapCD			= mod:NewCDCountTimer(0, 269230, nil, nil, nil, 3)
 	local timerDeadlyRoarCD				= mod:NewCDCountTimer(0, 269369, nil, nil, nil, 2)
 	local timerQuakingLeapCD			= mod:NewCDCountTimer(0, 1303327, nil, nil, nil, 3)
@@ -39,6 +39,8 @@ if DBM:IsPostMidnight() then
 	mod.vb.deadlyRoarCount = 0
 	mod.vb.quakingLeapCount = 0
 	mod.vb.savageMaulCount = 0
+	--The 10-second bucket repeats Hunting Leap, then Deathly Roar; stage 2 contains both.
+	local nextTenIsHuntingLeap = true
 	local badStateDetected = false
 	---@param self DBMMod
 	---@param dontSetAlerts boolean? Called on engage when we only want to set timeline parameters and not touch encounter alerts
@@ -72,6 +74,7 @@ if DBM:IsPostMidnight() then
 		self.vb.deadlyRoarCount = 1
 		self.vb.quakingLeapCount = 1
 		self.vb.savageMaulCount = 1
+		nextTenIsHuntingLeap = true
 		if DBM.Options.HardcodedTimer and not badStateDetected then
 			self:IgnoreBlizzardAPI()
 			self:RegisterShortTermEvents(
@@ -87,6 +90,7 @@ if DBM:IsPostMidnight() then
 	function mod:OnCombatEnd()
 		self:TLCountReset()
 		self:TLActiveEventReset()
+		nextTenIsHuntingLeap = true
 		self:UnregisterShortTermEvents()
 	end
 
@@ -110,13 +114,13 @@ if DBM:IsPostMidnight() then
 			elseif timer == 8 then
 				timerHuntingLeapCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "huntingLeap", "huntingLeapCount"))
 			elseif timer == 10 then
-				if self:GetStage(1) then
+				--All 12.1 M+ pulls alternate the ambiguous 10-second bucket: Hunting Leap, then Deathly Roar.
+				if nextTenIsHuntingLeap then
 					timerHuntingLeapCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "huntingLeap", "huntingLeapCount"))
-				elseif self:GetStage(2) then
-					timerDeadlyRoarCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "deadlyRoar", "deadlyRoarCount"))
 				else
-					return
+					timerDeadlyRoarCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "deadlyRoar", "deadlyRoarCount"))
 				end
+				nextTenIsHuntingLeap = not nextTenIsHuntingLeap
 			elseif timer == 14 then
 				timerDeadlyRoarCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "deadlyRoar", "deadlyRoarCount"))
 			elseif timer == 9 then
