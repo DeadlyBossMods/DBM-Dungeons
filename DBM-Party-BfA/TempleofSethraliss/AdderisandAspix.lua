@@ -65,6 +65,7 @@ if DBM:IsPostMidnight() then
 		[29] = true,
 		[35] = true,
 		[39] = true,
+		[45] = true,
 	}
 
 	---@param self DBMMod
@@ -137,23 +138,39 @@ if DBM:IsPostMidnight() then
 			self:TLBatchStart(timer, timerObject, timerExact, eventID, eventType, countKey, batchTimerValues)
 		end
 
+		local function getFortyFiveTimer()
+			local eventType = fortyFiveTimers[nextFortyFiveTimer]
+			nextFortyFiveTimer = nextFortyFiveTimer % #fortyFiveTimers + 1
+			if eventType == "galeForce" then
+				return timerGaleForceCD, eventType, "galeForceCount"
+			elseif eventType == "thunderAndLightning" then
+				return timerThunderandLightningCD, eventType, "thunderAndLightningCount"
+			elseif eventType == "tempestWinds" then
+				return timerTempestWindsCD, eventType, "tempestWindsCount"
+			end
+			return timerOverloadCD, eventType, "overloadCount"
+		end
+
+		local function getTwelveTimer()
+			--A surviving 12-second row identifies the Adderis-death survivor schedule.
+			adderisDead = true
+			return timerTempestWindsCD, "tempestWinds", "tempestWindsCount"
+		end
+
+		local function getFiveTimer(self)
+			if adderisDead or self.vb.galeForceCount == 1 then
+				return timerGaleForceCD, "galeForce", "galeForceCount"
+			end
+			return timerThunderandLightningCD, "thunderAndLightning", "thunderAndLightningCount"
+		end
+
 		local function timersAll(self, timer, timerExact, eventID, bossJustDied)
 			if bossJustDied and timer ~= 5 and timer ~= 12 and timer ~= 15 and timer ~= 22 then
 				--A boss death re-adds the survivor's active bars with arbitrary remaining times before canceling them.
 				return true
 			elseif timer == 45 then
-				--Every empowerment transition resumes this four-event batch in this fixed order.
-				local eventType = fortyFiveTimers[nextFortyFiveTimer]
-				nextFortyFiveTimer = nextFortyFiveTimer % #fortyFiveTimers + 1
-				if eventType == "galeForce" then
-					startTimer(self, timerGaleForceCD, timerExact, eventID, eventType, "galeForceCount")
-				elseif eventType == "thunderAndLightning" then
-					startTimer(self, timerThunderandLightningCD, timerExact, eventID, eventType, "thunderAndLightningCount")
-				elseif eventType == "tempestWinds" then
-					startTimer(self, timerTempestWindsCD, timerExact, eventID, eventType, "tempestWindsCount")
-				else
-					startTimer(self, timerOverloadCD, timerExact, eventID, eventType, "overloadCount")
-				end
+				--Defer this bucket: a death rebuild can cancel a partial 45-second sequence in the same dispatch.
+				self:TLBatchStart(timer, getFortyFiveTimer, timerExact, eventID, nil, nil, batchTimerValues)
 			elseif timer == 9 then
 				adderisDead = false
 				startBatchTimer(self, timer, timerThunderandLightningCD, timerExact, eventID, "thunderAndLightning", "thunderAndLightningCount")
@@ -167,17 +184,10 @@ if DBM:IsPostMidnight() then
 				aspixDead = false
 				startBatchTimer(self, timer, timerGaleForceCD, timerExact, eventID, "galeForce", "galeForceCount")
 			elseif timer == 5 then
-				if bossJustDied or self.vb.galeForceCount == 1 then
-					--Gale Force opener, and Gale Force after Adderis dies.
-					if bossJustDied then adderisDead = true end
-					startBatchTimer(self, timer, timerGaleForceCD, timerExact, eventID, "galeForce", "galeForceCount")
-				else
-					--The transition re-sync re-adds Thunder and Lightning at five seconds.
-					startBatchTimer(self, timer, timerThunderandLightningCD, timerExact, eventID, "thunderAndLightning", "thunderAndLightningCount")
-				end
+				--Resolve after a concurrent 12-second survivor marker, if any, has settled.
+				self:TLBatchStart(timer, getFiveTimer, timerExact, eventID, nil, nil, batchTimerValues)
 			elseif timer == 12 then
-				if bossJustDied then adderisDead = true end
-				startBatchTimer(self, timer, timerTempestWindsCD, timerExact, eventID, "tempestWinds", "tempestWindsCount")
+				self:TLBatchStart(timer, getTwelveTimer, timerExact, eventID, nil, nil, batchTimerValues)
 			elseif bossJustDied and timer == 15 then
 				aspixDead = true
 				startBatchTimer(self, timer, timerOverloadCD, timerExact, eventID, "overload", "overloadCount")
