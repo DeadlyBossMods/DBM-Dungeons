@@ -7,6 +7,7 @@ mod:SetCreatureID(10339, 10429) -- Gyth, Rend
 mod:SetMainBossID(10429)
 mod:SetMinSyncRevision(20240729000000)
 mod:SetZone(229)
+mod:SetModelID(9778)
 
 mod:RegisterCombat("combat")
 

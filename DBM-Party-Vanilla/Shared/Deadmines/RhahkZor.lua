@@ -11,6 +11,7 @@ mod:SetRevision("@file-date-integer@")
 mod:DisableHardcodedOptions()
 mod:SetCreatureID(644)
 mod:SetEncounterID(2967)--Retail Encounter ID
+mod:SetModelID(14403)
 mod:SetZone(36)
 
 mod:RegisterCombat("combat")
