@@ -5,6 +5,7 @@ mod:SetRevision("@file-date-integer@")
 mod:DisableHardcodedOptions()
 mod:SetCreatureID(DBM:IsRetail() and 45412 or 10440)--10440 Baron Rivendare, 45412 Lord Aurius Rivendare, 11197/mindless-skeleton
 mod:SetEncounterID(484)
+mod:SetModelID(10729)
 mod:SetZone(329)
 
 mod:RegisterCombat("combat")

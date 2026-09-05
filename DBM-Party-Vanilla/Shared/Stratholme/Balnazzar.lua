@@ -10,6 +10,7 @@ else
 	mod:SetBossHPInfoToHighest()
 end
 mod:SetEncounterID(478)
+mod:SetModelID(10545)
 mod:SetZone(329)
 
 mod:RegisterCombat("combat")

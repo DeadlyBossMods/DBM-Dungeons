@@ -5,6 +5,7 @@ local L		= mod:GetLocalizedStrings()
 mod:SetRevision("@file-date-integer@")
 mod:DisableHardcodedOptions()
 mod:SetEncounterID(3146)
+mod:SetModelID(126401)
 --mod:SetCreatureID()
 mod:SetZone(2875)
 
