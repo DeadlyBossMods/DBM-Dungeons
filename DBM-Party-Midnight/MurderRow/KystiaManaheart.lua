@@ -15,8 +15,10 @@ mod:RegisterCombat("combat")
 
 --)
 --NOTE: Chaos Barrage has no event ID, but some wierd spell called "escape" (https://www.wowhead.com/spell=1248184/escape) does
+DBM:RegisterAltSpellName(1253811, DBM_COMMON_L.FRONTAL)--Fel Spray --> Frontal
+DBM:RegisterAltSpellName(1264095, DBM_COMMON_L.INTERRUPTS)--Mirror Images --> Interrupts
 local specWarnMirrorImages					= mod:NewSpecialWarningCount(1264095, nil, nil, nil, 1, 2, nil, nil, "crowdcontrol")
-local specWarnFelSpray						= mod:NewSpecialWarningCount(1253811, nil, nil, nil, 2, 2, nil, nil, "frontal")
+local specWarnFelSpray						= mod:NewSpecialWarningBlizzTarget(1253811, nil, nil, nil, 2, 2, nil, nil, "frontal")
 local specWarnFelNova						= mod:NewSpecialWarningCount(474240, nil, nil, nil, 2, 3, nil, nil, "watchstep")
 
 local timerMirrorImagesCD					= mod:NewCDCountTimer(20.5, 1264095, nil, nil, nil, 1)
@@ -83,14 +85,11 @@ end
 do
 	local function timersAll(self, timer, timerExact, eventID)
 		if timer == 8 or timer == 28 then
-			self:TLBatchTrackLatest(timer, eventID, batchTimerValues)
-			timerFelSprayCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "felSpray", "felSprayCount"))
+			self:TLBatchStart(timer, timerFelSprayCD, timerExact, eventID, "felSpray", "felSprayCount", batchTimerValues)
 		elseif timer == 15 or timer == 30 then
-			self:TLBatchTrackLatest(timer, eventID, batchTimerValues)
-			timerMirrorImagesCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "mirrorImages", "mirrorImagesCount"))
+			self:TLBatchStart(timer, timerMirrorImagesCD, timerExact, eventID, "mirrorImages", "mirrorImagesCount", batchTimerValues)
 		elseif timer == 12 then
-			self:TLBatchTrackLatest(timer, eventID, batchTimerValues)
-			timerFelNovaCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "felNova", "felNovaCount"))
+			self:TLBatchStart(timer, timerFelNovaCD, timerExact, eventID, "felNova", "felNovaCount", batchTimerValues)
 		else
 			return
 		end
@@ -119,8 +118,7 @@ do
 			local eventType, eventCount = self:TLCountFinish(eventID)
 			if eventType and eventCount then
 				if eventType == "felSpray" then
-					specWarnFelSpray:Show(eventCount)
-					specWarnFelSpray:Play("frontal")
+					specWarnFelSpray:Show(eventCount, "frontal")
 				elseif eventType == "mirrorImages" then
 					specWarnMirrorImages:Show(eventCount)
 					specWarnMirrorImages:Play("crowdcontrol")

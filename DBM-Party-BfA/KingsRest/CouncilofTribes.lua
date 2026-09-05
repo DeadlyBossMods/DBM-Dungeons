@@ -25,6 +25,12 @@ if DBM:IsPostMidnight() then
 	--4. Barrel Through continues to fire ENCOUNTER_WARNING when Aka'ali is defeated, but the timeline event no longer exists, so NewSpecialWarningBlizzTarget is broken. Therefore, when Aka'ali is defeated specWarnBarrelThrough fires its SetFallback
 	--5. Objects are sorted by boss for clear identification of ability ownership.
 
+	DBM:RegisterAltSpellName(267494, DBM_COMMON_L.GROUPSOAK)--Barrel Through --> Group Soak
+	DBM:RegisterAltSpellName(266206, DBM_COMMON_L.AVOID)--Whirling Axes --> Avoid
+	DBM:RegisterAltSpellName(266231, DBM_COMMON_L.DEBUFF)--Severing Axe --> Debuff
+	DBM:RegisterAltSpellName(266237, DBM_COMMON_L.TANKBUSTER)--Debilitating Backhand --> Tank Buster
+	DBM:RegisterAltSpellName(267273, DBM_COMMON_L.INTERRUPT)--Poison Nova --> Interrupt
+	DBM:RegisterAltSpellName(267060, DBM_COMMON_L.DPSSWAP)--Totems --> Dps Swap
 	--Kula the Butcher
 	mod:AddTimerLine(DBM:EJ_GetSectionInfo(18261))
 	--local warnSeveringAxe				= mod:NewCountAnnounce(266231, 3, nil, "Healer")
@@ -94,6 +100,7 @@ if DBM:IsPostMidnight() then
 
 	function mod:OnLimitedCombatStart()
 		self:TLCountReset()
+		self:TLActiveEventReset()
 		self:SetStage(1)
 		self.vb.whirlingAxesCount = 1
 		self.vb.severingAxeCount = 1
@@ -119,6 +126,7 @@ if DBM:IsPostMidnight() then
 
 	function mod:OnCombatEnd()
 		self:TLCountReset()
+		self:TLActiveEventReset()
 		stage3BarrelYellArmed = false
 		lastStage3YellTime = 0
 		self:UnregisterShortTermEvents()
@@ -150,7 +158,8 @@ if DBM:IsPostMidnight() then
 					timerArcLightningCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "arcLightning", "arcLightningCount"))
 					handled = true
 				elseif timer == 10 or timer == 24 then--Poison Nova opener and repeat
-					timerPoisonNovaCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "poisonNova", "poisonNovaCount"))
+					--When blizzard sends a timer of 24, it's wrong, it's 23
+					timerPoisonNovaCD:TLStart(timer == 24 and 23 or timerExact, eventID, self:TLCountStart(eventID, "poisonNova", "poisonNovaCount"))
 					handled = true
 				elseif timer == 20 or timer == 53 then--Call of the Elements opener and repeat
 					timerTotemsCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "totems", "totemsCount"))
@@ -169,6 +178,10 @@ if DBM:IsPostMidnight() then
 		function mod:ENCOUNTER_TIMELINE_EVENT_ADDED(eventInfo)
 			if eventInfo.source ~= 0 then return end
 			local eventID = eventInfo.id
+			if C_EncounterTimeline.GetEventState(eventID) ~= 0 then return end--Ignore garbage resends
+			--Blizzard can resend a still-active event ID with its remaining duration.
+			--Keep the original routing until its state transition releases this ID.
+			if not self:TLTrackActiveEvent(eventID) then return end
 			local timerExact = eventInfo.duration
 			local timer = math.floor(timerExact + 0.5)
 			if not badStateDetected then
@@ -177,8 +190,12 @@ if DBM:IsPostMidnight() then
 		end
 
 		function mod:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(eventID)
+			if not eventID then return end
 			local eventState = C_EncounterTimeline.GetEventState(eventID)
-			if not eventID or not eventState then return end
+			if not eventState then return end
+			if eventState >= 2 then
+				self:TLReleaseActiveEvent(eventID)
+			end
 			if eventState == 2 then
 				local eventType, eventCount = self:TLCountFinish(eventID)
 				if eventType and eventCount then

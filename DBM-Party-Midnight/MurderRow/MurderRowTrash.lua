@@ -27,8 +27,8 @@ mod:AddGossipOption(true, "Action")
 function mod:GOSSIP_SHOW()
 	local gossipOptionID = self:GetGossipID()
 	if gossipOptionID then
-		--Balath Dawnblade NPC before server event
-		if self.Options.AutoGossipAction and gossipOptionID == 131567 then
+		--Balath Dawnblade NPC before server event and event itself
+		if self.Options.AutoGossipAction and (gossipOptionID == 131567 or gossipOptionID == 131502) then
 			self:SelectGossip(gossipOptionID)
 		end
 	end

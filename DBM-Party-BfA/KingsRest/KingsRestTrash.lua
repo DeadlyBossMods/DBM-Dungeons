@@ -15,6 +15,7 @@ if DBM:IsPostMidnight() then
 	mod:AddAuraSoundOption(270492, true, 270492, 1, 1, "stunyou", 19, 0)--Hex
 	mod:AddAuraSoundOption(267763, "RemoveDisease", 267763, 1, 3, "helpdispel", 2, 0)--Wretched Discharge (applies to everyone, so warning it wasn't kicked important)
 	mod:AddAuraSoundOption(269972, "RemoveCurse", 269972, 1, 3, "helpdispel", 2, 0)--Hex Volley (same as above)
+	mod:AddAuraSoundOption(270292, true, 270292, 1, 2, "watchfeet", 8, 0)--Purifying Flame
 else
 	mod:RegisterEvents(
 		"SPELL_CAST_START 270003 269973 270923 270889 270901 270084 270872 270293 270284 270492 270482 270514 270507",

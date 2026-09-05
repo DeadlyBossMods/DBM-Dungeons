@@ -14,6 +14,7 @@ if DBM:IsPostMidnight() then
 	mod:AddAuraSoundOption(1303486, false, 1303486, 1, 3, "aesoon", 2, 0)--Caustic Stomp
 	mod:AddAuraSoundOption(1296052, "RemoveMagic", 1296052, 1, 1, "helpdispel", 2, 0)--Imbued Conduction (stuns if not dispelled)
 	mod:AddAuraSoundOption(1293307, true, 1293307, 1, 3, "stunyou", 19, 0)--Addle Mind
+	mod:AddAuraSoundOption(1293133, nil, 1293133, 1, 2, "watchfeet", 8, 0)--Lingering Storm
 else
 	mod:RegisterEvents(
 		"SPELL_CAST_START 265968 272657 264574 258908 272655 261635 273995 272700 268061",

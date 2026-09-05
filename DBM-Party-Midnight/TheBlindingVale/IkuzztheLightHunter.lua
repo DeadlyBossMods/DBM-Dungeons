@@ -15,6 +15,9 @@ mod:RegisterCombat("combat")
 
 --)
 
+DBM:RegisterAltSpellName(1237091, 12021)--Bloodthirsty Gaze --> Fixate
+DBM:RegisterAltSpellName(1236746, 28405)--Verdant Stomp --> Knockback
+DBM:RegisterAltSpellName(1236709, DBM_COMMON_L.ROOTS)--Thorncaller Roar --> Roots
 local warnBloodthirstyGaze						= mod:NewCountAnnounce(1237091, 2)
 
 local specWarnVerdantStomp						= mod:NewSpecialWarningCount(1236746, nil, nil, nil, 2, 2, nil, nil, "carefly")
@@ -32,6 +35,18 @@ mod.vb.verdantStompCount = 0
 mod.vb.thorncallerRoarCount = 0
 mod.vb.bloodthirstyGazeCount = 0
 local badStateDetected = false
+local pendingVerdantStompEventID
+
+local function startPendingVerdantStomp(self, eventID, timerExact)
+	if pendingVerdantStompEventID ~= eventID then return end
+	pendingVerdantStompEventID = nil
+	timerVerdantStompCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "verdantStomp", "verdantStompCount"))
+end
+
+local function cancelPendingVerdantStomp(self)
+	pendingVerdantStompEventID = nil
+	self:Unschedule(startPendingVerdantStomp)
+end
 
 ---@param self DBMMod
 ---@param dontSetAlerts boolean? Called on engage when we only want to set timeline parameters and not touch encounter alerts
@@ -48,6 +63,7 @@ end
 
 function mod:OnLimitedCombatStart()
 	self:TLCountReset()
+	cancelPendingVerdantStomp(self)
 	self.vb.verdantStompCount = 1
 	self.vb.thorncallerRoarCount = 1
 	self.vb.bloodthirstyGazeCount = 1
@@ -65,6 +81,7 @@ end
 
 function mod:OnCombatEnd()
 	self:TLCountReset()
+	cancelPendingVerdantStomp(self)
 	self:UnregisterShortTermEvents()
 end
 
@@ -72,8 +89,15 @@ do
 	local function timersAll(self, timer, timerExact, eventID)
 		if timer > 60 then
 			return true--Paused placeholder bars
-		elseif timer == 6 or timer == 29 then
+		elseif timer == 6 then
+			--At recurring reset, Blizzard sends a false 29-second Stomp immediately before the valid 6-second Stomp.
+			--Discard the pending 29 before it can reserve a count or refresh the valid bar.
+			cancelPendingVerdantStomp(self)
 			timerVerdantStompCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "verdantStomp", "verdantStompCount"))
+		elseif timer == 29 then
+			--Defer until this dispatch completes: only the reset's false 29 is followed by a 6 in the same batch.
+			pendingVerdantStompEventID = eventID
+			self:Schedule(0, startPendingVerdantStomp, self, eventID, timerExact)
 		elseif timer == 22 then
 			timerThorncallerRoarCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "thorncallerRoar", "thorncallerRoarCount"))
 		elseif timer == 50 then
@@ -93,6 +117,7 @@ do
 			badStateDetected = true
 			self:ResumeBlizzardAPI()
 			self:UnregisterShortTermEvents()
+			cancelPendingVerdantStomp(self)
 			setFallback(self)
 			DBM:Debug("|cffff0000Failed to match encounter timeline events to expected timers, falling back to Blizzard API|r", nil, nil, nil, true)
 		end

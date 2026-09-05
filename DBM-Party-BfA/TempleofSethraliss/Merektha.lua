@@ -11,6 +11,11 @@ mod:SetZone(1877)
 mod:RegisterCombat("combat")
 
 if DBM:IsPostMidnight() then
+	DBM:RegisterAltSpellName(1293048, 28405)--Serpent Storm --> Knockback
+	DBM:RegisterAltSpellName(1289109, DBM_COMMON_L.POOLS)--Thunderspit --> Pools
+	DBM:RegisterAltSpellName(1290797, DBM_COMMON_L.TANKBUSTER)--Lightning Bite --> Tank Buster
+	DBM:RegisterAltSpellName(1289205, DBM_COMMON_L.ADDS)--Hatch --> Adds
+	DBM:RegisterAltSpellName(1290029, DBM_COMMON_L.ROOTS)--Knot of Snakes --> Roots
 	--TODO, better log that tracks UTC
 	--NOTE: https://www.wowhead.com/ptr/spell=1293154/tempest-breath has an ID of 730 but is not in journal and has no log evidence
 	local specWarnBurrow			= mod:NewSpecialWarningCount(264172, nil, nil, nil, 2, 2, nil, nil, "phasechange")

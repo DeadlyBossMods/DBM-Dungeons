@@ -11,6 +11,11 @@ mod.respawnTime = 29
 
 mod:RegisterCombat("combat")
 
+DBM:RegisterAltSpellName(1310547, DBM_COMMON_L.INTERRUPTS)--Toxic Atrophy --> Interrupts
+DBM:RegisterAltSpellName(1299053, DBM_COMMON_L.LINES)--Death Rattle --> Lines
+DBM:RegisterAltSpellName(1299940, DBM_COMMON_L.FRONTAL)--Vindictive Onslaught --> Frontal
+DBM:RegisterAltSpellName(1298949, DBM_COMMON_L.TANKBUSTER)--Tail Scythe --> Tank Buster
+--NOTE, toxic barrage is actually pointless, but since blizzard sends it anyways, we still have to have an option to control it
 local warnSynchonizedVenom			= mod:NewCountAnnounce(1299154, 3)
 
 local specWarnTailScythe			= mod:NewSpecialWarningDefensive(1298949, nil, nil, nil, 1, 2, nil, nil, "defensive")
@@ -26,6 +31,7 @@ local timerVindictiveOnslaughtCD	= mod:NewCDCountTimer(8, 1299940, nil, nil, nil
 local timerDeathRattleCD			= mod:NewCDCountTimer(8, 1299053, nil, nil, nil, 3)
 local timerToxicBarrageCD			= mod:NewCDCountTimer(8, 1310357, nil, nil, nil, 5)
 local timerToxicAtrophyCD			= mod:NewCDCountTimer(8, 1310547, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+local timerAssimilationCD			= mod:NewCDCountTimer(8, 1300686, nil, nil, nil, 6)
 
 --mod:AddAuraSoundOption(470966, true, 470966, 4, 1, "justrun", 2)
 
@@ -37,6 +43,7 @@ mod.vb.VindictiveOnslaughtCount = 0
 mod.vb.DeathRattleCount = 0
 mod.vb.AssimilationCount = 0
 mod.vb.ToxicAtrophyCount = 0
+mod.vb.ToxicBarrageCount = 0
 
 ---@param self DBMMod
 ---@param dontSetAlerts boolean? Called on engage when we only want to set timeline parameters and not touch encounter alerts
@@ -61,6 +68,7 @@ local function setFallback(self, dontSetAlerts)
 	timerDeathRattleCD:SetTimeline(816, onlyColor)
 	timerToxicBarrageCD:SetTimeline(938, onlyColor)
 	timerToxicAtrophyCD:SetTimeline(939, onlyColor)
+	timerAssimilationCD:SetTimeline(818, onlyColor)
 end
 
 function mod:OnLimitedCombatStart()
@@ -72,6 +80,7 @@ function mod:OnLimitedCombatStart()
 	self.vb.DeathRattleCount = 1
 	self.vb.AssimilationCount = 1
 	self.vb.ToxicAtrophyCount = 1
+	self.vb.ToxicBarrageCount = 1
 	nextTenIsToxicAtrophy = true
 	if DBM.Options.HardcodedTimer and not badStateDetected then
 		self:IgnoreBlizzardAPI()
@@ -111,9 +120,9 @@ do
 				timerSynchonizedVenomCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "synchonizedVenom", "SynchonizedVenomCount"))
 			end
 		elseif timer == 14 or timer == 23 then
-			timerToxicBarrageCD:TLStart(timerExact, eventID)
+			timerToxicBarrageCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "toxicBarrage", "ToxicBarrageCount"))
 		elseif timer == 25 then
-			self:TLCountStart(eventID, "assimilation", "AssimilationCount")
+			timerAssimilationCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "assimilation", "AssimilationCount"))
 		elseif timer == 30 or timer == 39 then
 			timerVindictiveOnslaughtCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "vindictiveOnslaught", "VindictiveOnslaughtCount"))
 		elseif timer == 44 or timer == 53 then

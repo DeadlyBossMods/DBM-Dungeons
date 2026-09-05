@@ -15,8 +15,10 @@ mod:RegisterCombat("combat")
 
 --)
 --TODO, void cascade has two private auras, but neitehr appear to be pre target aura and rather ones you just get if in beam
+--I have a hard time remembering what spell is waht so these renames mostly need doing later
+--DBM:RegisterAltSpellName(1282770, DBM_COMMON_L.ORB .. " " .. DBM_COMMON_L.POOLS)--Unstable Singularity --> Orb Pools (ok?)
 local specWarnUnstableSingularity			= mod:NewSpecialWarningCount(1282770, nil, nil, nil, 2, 2, nil, nil, "watchstep")
-local specWarnCosmicCrash					= mod:NewSpecialWarningCount(1227264, nil, nil, nil, 2, 2, nil, nil, "carefly")
+local specWarnCosmicCrash					= mod:NewSpecialWarningCount(1227264, nil, nil, nil, 2, 2, nil, nil, "scatter")
 local specWarnGraviticOrbs					= mod:NewSpecialWarningCount(1263982, nil, nil, nil, 2, 2, nil, nil, "specialsoon")
 local specWarnVoidCascade					= mod:NewSpecialWarningCount(1222758, nil, nil, nil, 2, 2, nil, nil, "watchstep")
 local specWarnDarkWaves						= mod:NewSpecialWarningCount(1311923, nil, nil, nil, 2, 2, nil, nil, "specialsoon")

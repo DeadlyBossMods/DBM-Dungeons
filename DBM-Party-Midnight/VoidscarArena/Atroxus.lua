@@ -14,11 +14,16 @@ mod:RegisterCombat("combat")
 --mod:RegisterEventsInCombat(
 
 --)
+DBM:RegisterAltSpellName(1222371, DBM_COMMON_L.BIG_ADD)--Provoke Creeper --> Big Add
+DBM:RegisterAltSpellName(1222642, DBM_COMMON_L.TANKBUSTER)--Hulking Claw --> Tank Buster
+DBM:RegisterAltSpellName(1263977, DBM_COMMON_L.FRONTAL)--Noxious Breath --> Frontal
+DBM:RegisterAltSpellName(1226120, DBM_COMMON_L.POOLS)--Poison Splash --> Pools
+DBM:RegisterAltSpellName(1262497, DBM_COMMON_L.AOEDAMAGE)--Monstrous Roar --> AoE
 local specWarnProvokeCreeper				= mod:NewSpecialWarningCount(1222371, nil, nil, nil, 1, 2, nil, nil, "bigmob")--No direct timeline event; scheduled 3 seconds after Monstrous Roar
-local specWarnHulkingClaw					= mod:NewSpecialWarningCount(1222642, "Tank", nil, nil, 1, 2, nil, nil, "defensive")
+local specWarnHulkingClaw					= mod:NewSpecialWarningDefensive(1222642, nil, nil, nil, 1, 2, nil, nil, "defensive")
 local specWarnNoxiousBreath					= mod:NewSpecialWarningCount(1263977, nil, nil, nil, 2, 3, nil, nil, "frontal")
 local specWarnPoisonSplash					= mod:NewSpecialWarningCount(1226120, nil, nil, nil, 2, 2, nil, nil, "watchstep")
-local specWarnMonstrousRoar					= mod:NewSpecialWarningCount(1262497, nil, nil, nil, 2, 3, nil, nil, "carefly")
+local specWarnMonstrousRoar					= mod:NewSpecialWarningCount(1262497, nil, nil, nil, 2, 3, nil, nil, "aesoon")
 
 local timerProvokeCreeperCD					= mod:NewCDCountTimer(20.5, 1222371, nil, nil, nil, 1)--No direct timeline event; scheduled 3 seconds after Monstrous Roar
 local timerHulkingClawCD					= mod:NewCDCountTimer(20.5, 1222642, nil, nil, nil, 5)
@@ -26,7 +31,7 @@ local timerNoxiousBreathCD					= mod:NewCDCountTimer(20.5, 1263977, nil, nil, ni
 local timerPoisonSplashCD					= mod:NewCDCountTimer(20.5, 1226120, nil, nil, nil, 3)
 local timerMonstrousRoarCD					= mod:NewCDCountTimer(20.5, 1262497, nil, nil, nil, 2)
 --Custom Aura Sounds
-mod:AddAuraSoundOption(1283506, true, 1283506, 4, 1, "fixateyou", 19)--Fixate
+mod:AddAuraSoundOption(1283506, true, 1283506, 4, 1, "kite", 19)--Fixate (currently broken, doesn't work on blizzards end)
 mod:AddAuraSoundOption(1222484, true, 1222484, 1, 2, "watchfeet", 8)--Poison Pool
 
 mod.vb.provokeCreeperCount = 0
@@ -44,7 +49,7 @@ local function setFallback(self, dontSetAlerts)
 		end
 		specWarnNoxiousBreath:SetAlert(54, "frontal", 15, 3)
 		specWarnPoisonSplash:SetAlert(55, "watchstep", 2, 2)
-		specWarnMonstrousRoar:SetAlert(297, "carefly", 2, 3)
+		specWarnMonstrousRoar:SetAlert(297, "aesoon", 2, 3)
 	end
 	local onlyColor = not DBM.Options.HideDBMBars and not badStateDetected
 	timerProvokeCreeperCD:SetTimeline(46, onlyColor)
@@ -124,7 +129,7 @@ do
 			if eventType and eventCount then
 				if eventType == "hulkingClaw" then
 					if self:IsTanking("player", "boss1", nil, true) then
-						specWarnHulkingClaw:Show(eventCount)
+						specWarnHulkingClaw:Show()
 						specWarnHulkingClaw:Play("defensive")
 					end
 				elseif eventType == "noxiousBreath" then
@@ -135,7 +140,7 @@ do
 					specWarnPoisonSplash:Play("watchstep")
 				elseif eventType == "monstrousRoar" then
 					specWarnMonstrousRoar:Show(eventCount)
-					specWarnMonstrousRoar:Play("carefly")
+					specWarnMonstrousRoar:Play("aesoon")
 					local provokeCount = self.vb.provokeCreeperCount
 					timerProvokeCreeperCD:Start(3, provokeCount)
 					specWarnProvokeCreeper:Schedule(3, provokeCount)
