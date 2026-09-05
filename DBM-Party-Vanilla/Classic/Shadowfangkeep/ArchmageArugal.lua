@@ -5,6 +5,7 @@ mod:SetRevision("@file-date-integer@")
 mod:DisableHardcodedOptions()
 mod:SetCreatureID(4275)
 mod:SetZone(33)
+mod:SetModelID(2353)
 
 mod:RegisterCombat("combat")
 

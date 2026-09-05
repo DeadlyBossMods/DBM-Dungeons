@@ -6,6 +6,7 @@ mod:SetRevision("@file-date-integer@")
 mod:DisableHardcodedOptions()
 mod:SetCreatureID(6906, 6907, 6908)
 mod:SetEncounterID(548)
+mod:SetModelID(5710)
 mod:SetBossHPInfoToHighest()
 mod:SetZone(70)
 
