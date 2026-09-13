@@ -14,23 +14,23 @@ mod:SetWipeTime(30)--Prevent intermission to stage 2 causing mod to think it wip
 mod:SetReCombatTime(20, 5)--Basically killing of recombat restriction. mage tower lets you spam retry, we want the mod to let you
 
 if DBM:IsPostMidnight() then
-	--local warnFrostPhase = mod:NewSpellAnnounce(242394, 2)
-	--local warnArcanePhase = mod:NewSpellAnnounce(242386, 2)
+	--local warnFrostPhase				= mod:NewSpellAnnounce(242394, 2)
+	--local warnArcanePhase				= mod:NewSpellAnnounce(242386, 2)
 
-	--local specWarnRazorIce = mod:NewSpecialWarningDodge(232661, nil, nil, nil, 1, 2, nil, nil, "watchstep")
-	--local specWarnArcaneAnnihilation = mod:NewSpecialWarningInterrupt(234728, nil, nil, nil, 1, 2, nil, nil, "kickcast")
-	--local specWarnShadowBarrage = mod:NewSpecialWarningDodge(231443, nil, nil, nil, 2, 2, nil, nil, "watchorb")
-	--local specWarnDrawPower = mod:NewSpecialWarningInterrupt(231522, nil, nil, nil, 1, 2, nil, nil, "kickcast")
-	--local specWarnSeeds = mod:NewSpecialWarningRun(233248, nil, nil, nil, 4, 2, nil, nil, "runout")
-	--local specWarnGTFO = mod:NewSpecialWarningGTFO(232672, nil, nil, nil, 1, 8, nil, nil, "watchfeet")
+	--local specWarnRazorIce			= mod:NewSpecialWarningDodge(232661, nil, nil, nil, 1, 2, nil, nil, "watchstep")
+	--local specWarnArcaneAnnihilation	= mod:NewSpecialWarningInterrupt(234728, nil, nil, nil, 1, 2, nil, nil, "kickcast")
+	--local specWarnShadowBarrage		= mod:NewSpecialWarningDodge(231443, nil, nil, nil, 2, 2, nil, nil, "watchorb")
+	--local specWarnDrawPower			= mod:NewSpecialWarningInterrupt(231522, nil, nil, nil, 1, 2, nil, nil, "kickcast")
+	--local specWarnSeeds				= mod:NewSpecialWarningRun(233248, nil, nil, nil, 4, 2, nil, nil, "runout")
+	--local specWarnGTFO				= mod:NewSpecialWarningGTFO(232672, nil, nil, nil, 1, 8, nil, nil, "watchfeet")
 
-	--local timerRazorIceCD = mod:NewCDCountTimer(0, 232661, nil, nil, nil, 3)
-	--local timerArcaneAnnihilationCD = mod:NewCDCountTimer(0, 234728, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
-	--local timerArcaneAnnihilation = mod:NewCDCountTimer(0, 234728, nil, nil, nil, 6)
-	--local timerShadowBarrageCD = mod:NewCDCountTimer(0, 231443, nil, nil, nil, 3)
-	--local timerDrawPowerCD = mod:NewCDCountTimer(0, 231522, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
-	--local timerSeedsCD = mod:NewCDCountTimer(0, 233248, nil, nil, nil, 3)
-	--local timerDarknessWithin = mod:NewCDCountTimer(0, 158830, nil, nil, nil, 1)
+	--local timerRazorIceCD				= mod:NewCDCountTimer(0, 232661, nil, nil, nil, 3)
+	--local timerArcaneAnnihilationCD	= mod:NewCDCountTimer(0, 234728, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+	--local timerArcaneAnnihilation		= mod:NewCDCountTimer(0, 234728, nil, nil, nil, 6)
+	--local timerShadowBarrageCD		= mod:NewCDCountTimer(0, 231443, nil, nil, nil, 3)
+	--local timerDrawPowerCD			= mod:NewCDCountTimer(0, 231522, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+	--local timerSeedsCD				= mod:NewCDCountTimer(0, 233248, nil, nil, nil, 3)
+	--local timerDarknessWithin			= mod:NewCDCountTimer(0, 158830, nil, nil, nil, 1)
 	local badStateDetected = false
 	local function setFallback(self, dontSetAlerts)
 		if not dontSetAlerts then
@@ -116,7 +116,7 @@ else
 	local timerDrawPowerCD				= mod:NewCDTimer(18.2, 231522, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 	--Phase 2
 	local timerSeedsCD					= mod:NewCDTimer(65.6, 233248, nil, nil, nil, 3)
-	local timerDarknessWithin	 		= mod:NewAddsTimer(8, 158830)
+	local timerDarknessWithin			= mod:NewAddsTimer(8, 158830)
 
 	local activeBossGUIDS = {}
 

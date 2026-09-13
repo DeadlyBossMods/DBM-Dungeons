@@ -13,18 +13,18 @@ mod:RegisterCombat("combat")
 mod:SetReCombatTime(20, 5)--Basically killing of recombat restriction. mage tower lets you spam retry, we want the mod to let you
 
 if DBM:IsPostMidnight() then
-	--local warnPhase = mod:NewPhaseChangeAnnounce()
-	--local warnRisingDragon = mod:NewSpellAnnounce(235426, 3)
+	--local warnPhase				= mod:NewPhaseChangeAnnounce()
+	--local warnRisingDragon		= mod:NewSpellAnnounce(235426, 3)
 
-	--local specWarnFixate = mod:NewSpecialWarningRun(202081, nil, nil, nil, 4, 2, nil, nil, "justrun")
-	--local specWarnGrasp = mod:NewSpecialWarningInterrupt(235578, nil, nil, nil, 1, 2, nil, nil, "kickcast")
-	--local specWarnRift = mod:NewSpecialWarningSwitch(235446, nil, nil, nil, 1, 2, nil, nil, "killmob")
-	--local specWarnRune = mod:NewSpecialWarningMoveTo(236460, nil, nil, nil, 1, 12, nil, nil, "getinyellowrunes")
+	--local specWarnFixate			= mod:NewSpecialWarningRun(202081, nil, nil, nil, 4, 2, nil, nil, "justrun")
+	--local specWarnGrasp			= mod:NewSpecialWarningInterrupt(235578, nil, nil, nil, 1, 2, nil, nil, "kickcast")
+	--local specWarnRift			= mod:NewSpecialWarningSwitch(235446, nil, nil, nil, 1, 2, nil, nil, "killmob")
+	--local specWarnRune			= mod:NewSpecialWarningMoveTo(236460, nil, nil, nil, 1, 12, nil, nil, "getinyellowrunes")
 
-	--local timerRisingDragonCD = mod:NewCDCountTimer(0, 235426, nil, nil, nil, 2)
-	--local timerHandCD = mod:NewCDCountTimer(0, 235580, nil, nil, nil, 1, 235578, DBM_COMMON_L.DAMAGE_ICON)
-	--local timerGraspCD = mod:NewCDCountTimer(0, 235578, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
-	--local timerRuneCD = mod:NewCDCountTimer(0, 236460, nil, nil, nil, 5)
+	--local timerRisingDragonCD		= mod:NewCDCountTimer(0, 235426, nil, nil, nil, 2)
+	--local timerHandCD				= mod:NewCDCountTimer(0, 235580, nil, nil, nil, 1, 235578, DBM_COMMON_L.DAMAGE_ICON)
+	--local timerGraspCD			= mod:NewCDCountTimer(0, 235578, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+	--local timerRuneCD				= mod:NewCDCountTimer(0, 236460, nil, nil, nil, 5)
 	local badStateDetected = false
 	local function setFallback(self, dontSetAlerts)
 		if not dontSetAlerts then
