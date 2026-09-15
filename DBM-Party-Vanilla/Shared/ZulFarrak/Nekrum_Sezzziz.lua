@@ -5,6 +5,7 @@ mod:SetRevision("@file-date-integer@")
 mod:DisableHardcodedOptions()
 mod:SetCreatureID(7796, 7275)--nekrum-gutchewer, shadowpriest-sezzziz
 mod:SetEncounterID(598, 599)--Each boss has it's own encounter ID?
+mod:SetModelID(6690)
 mod:DisableEEKillDetection()--So we have to disable using encounter events for win detection since you don't win until BOTH died
 mod:DisableBKKillDetection()
 mod:SetZone(209)

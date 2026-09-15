@@ -5,6 +5,7 @@ mod:SetRevision("@file-date-integer@")
 mod:DisableHardcodedOptions()
 mod:SetCreatureID(3977, 3976, 99999)--Whitemane, Mograine
 mod:SetEncounterID(450)
+mod:SetModelID(2043)
 mod:SetZone(189)
 
 mod:RegisterCombat("combat")

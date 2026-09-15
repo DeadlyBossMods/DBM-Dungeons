@@ -5,6 +5,7 @@ mod:SetRevision("@file-date-integer@")
 mod:DisableHardcodedOptions()
 mod:SetCreatureID(5710)--5711 Ogom the Wretched
 mod:SetEncounterID(488)
+mod:SetModelID(6708)
 mod:SetZone(109)
 
 mod:RegisterCombat("combat")
