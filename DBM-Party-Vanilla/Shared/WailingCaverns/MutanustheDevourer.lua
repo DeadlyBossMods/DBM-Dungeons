@@ -9,47 +9,53 @@ mod:SetZone(43)
 
 mod:RegisterCombat("combat")
 
-mod:RegisterEventsInCombat(
-	"SPELL_CAST_START 7967",
-	"SPELL_CAST_SUCCESS 7399 8150",
-	"SPELL_AURA_APPLIED 7399"
-)
+if DBM:IsRestricted() then
+	--do stuff
+	--mod:AddAuraSoundOption(372820, true, 372820, 1, 2, "watchfeet", 8, 0)
+else
 
-local warningNaralexsNightmare		= mod:NewTargetNoFilterAnnounce(7967, 2)
-local warningTerrify				= mod:NewTargetNoFilterAnnounce(7399, 2)
+	mod:RegisterEventsInCombat(
+		"SPELL_CAST_START 7967",
+		"SPELL_CAST_SUCCESS 7399 8150",
+		"SPELL_AURA_APPLIED 7399"
+	)
 
-local specWarnNaralexsNightmare		= mod:NewSpecialWarningInterrupt(7967, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
+	local warningNaralexsNightmare		= mod:NewTargetNoFilterAnnounce(7967, 2)
+	local warningTerrify				= mod:NewTargetNoFilterAnnounce(7399, 2)
 
-local timerNaralexsNightmareCD		= mod:NewAITimer(180, 7967, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON..DBM_COMMON_L.MAGIC_ICON)
-local timerTerrifyCD				= mod:NewAITimer(180, 7399, nil, nil, nil, 3, nil, DBM_COMMON_L.MAGIC_ICON)
-local timerThundercrackCD			= mod:NewAITimer(180, 8150, nil, nil, nil, 2, nil, DBM_COMMON_L.HEALER_ICON..DBM_COMMON_L.MAGIC_ICON)
+	local specWarnNaralexsNightmare		= mod:NewSpecialWarningInterrupt(7967, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
 
-function mod:OnCombatStart(delay)
-	timerNaralexsNightmareCD:Start(1-delay)
-	timerTerrifyCD:Start(1-delay)
-	timerThundercrackCD:Start(1-delay)
-end
+	local timerNaralexsNightmareCD		= mod:NewAITimer(180, 7967, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON..DBM_COMMON_L.MAGIC_ICON)
+	local timerTerrifyCD				= mod:NewAITimer(180, 7399, nil, nil, nil, 3, nil, DBM_COMMON_L.MAGIC_ICON)
+	local timerThundercrackCD			= mod:NewAITimer(180, 8150, nil, nil, nil, 2, nil, DBM_COMMON_L.HEALER_ICON..DBM_COMMON_L.MAGIC_ICON)
 
-function mod:SPELL_CAST_START(args)
-	if args:IsSpell(7967) then
-		timerNaralexsNightmareCD:Start()
-		if self:CheckInterruptFilter(args.sourceGUID, false, true) then
-			specWarnNaralexsNightmare:Show(args.sourceName)
-			specWarnNaralexsNightmare:Play("kickcast")
+	function mod:OnCombatStart(delay)
+		timerNaralexsNightmareCD:Start(1-delay)
+		timerTerrifyCD:Start(1-delay)
+		timerThundercrackCD:Start(1-delay)
+	end
+
+	function mod:SPELL_CAST_START(args)
+		if args:IsSpell(7967) then
+			timerNaralexsNightmareCD:Start()
+			if self:CheckInterruptFilter(args.sourceGUID, false, true) then
+				specWarnNaralexsNightmare:Show(args.sourceName)
+				specWarnNaralexsNightmare:Play("kickcast")
+			end
 		end
 	end
-end
 
-function mod:SPELL_CAST_SUCCESS(args)
-	if args:IsSpell(7399) then
-		timerTerrifyCD:Start()
-	elseif args:IsSpell(8150) then
-		timerThundercrackCD:Start()
+	function mod:SPELL_CAST_SUCCESS(args)
+		if args:IsSpell(7399) then
+			timerTerrifyCD:Start()
+		elseif args:IsSpell(8150) then
+			timerThundercrackCD:Start()
+		end
 	end
-end
 
-function mod:SPELL_AURA_APPLIED(args)
-	if args:IsSpell(7399) then
-		warningTerrify:Show(args.destName)
+	function mod:SPELL_AURA_APPLIED(args)
+		if args:IsSpell(7399) then
+			warningTerrify:Show(args.destName)
+		end
 	end
 end

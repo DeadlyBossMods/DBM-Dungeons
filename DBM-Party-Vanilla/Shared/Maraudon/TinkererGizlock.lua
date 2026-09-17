@@ -9,23 +9,29 @@ mod:SetZone(349)
 
 mod:RegisterCombat("combat")
 
-mod:RegisterEventsInCombat(
-	"SPELL_CAST_SUCCESS 21833"
-)
+if DBM:IsRestricted() then
+	--do stuff
+	--mod:AddAuraSoundOption(372820, true, 372820, 1, 2, "watchfeet", 8, 0)
+else
 
---TODO, support his other spells? technicaly they won't be cast if you stack on him
---TODO, more timer review on goblin Dragon Gun
-local warningGoblinDragonGun		= mod:NewSpellAnnounce(21833, 2)
+	mod:RegisterEventsInCombat(
+		"SPELL_CAST_SUCCESS 21833"
+	)
 
-local timerGoblinDragonGunCD		= mod:NewCDTimer(20.7, 21833, nil, nil, nil, 3)
+	--TODO, support his other spells? technicaly they won't be cast if you stack on him
+	--TODO, more timer review on goblin Dragon Gun
+	local warningGoblinDragonGun		= mod:NewSpellAnnounce(21833, 2)
 
-function mod:OnCombatStart(delay)
-	timerGoblinDragonGunCD:Start(9.7-delay)
-end
+	local timerGoblinDragonGunCD		= mod:NewCDTimer(20.7, 21833, nil, nil, nil, 3)
 
-function mod:SPELL_CAST_SUCCESS(args)
-	if args:IsSpell(21833) then
-		warningGoblinDragonGun:Show()
-		timerGoblinDragonGunCD:Start()
+	function mod:OnCombatStart(delay)
+		timerGoblinDragonGunCD:Start(9.7-delay)
+	end
+
+	function mod:SPELL_CAST_SUCCESS(args)
+		if args:IsSpell(21833) then
+			warningGoblinDragonGun:Show()
+			timerGoblinDragonGunCD:Start()
+		end
 	end
 end

@@ -9,33 +9,39 @@ mod:SetZone(129)
 
 mod:RegisterCombat("combat")
 
-mod:RegisterEventsInCombat(
-	"SPELL_CAST_SUCCESS 12255 12252",
-	"SPELL_AURA_APPLIED 12255"
-)
+if DBM:IsRestricted() then
+	--do stuff
+	--mod:AddAuraSoundOption(372820, true, 372820, 1, 2, "watchfeet", 8, 0)
+else
 
-local warningCurseofTut				= mod:NewTargetNoFilterAnnounce(12255, 2, nil, "RemoveCurse")
-local warningWebSpray				= mod:NewSpellAnnounce(12252, 2)
+	mod:RegisterEventsInCombat(
+		"SPELL_CAST_SUCCESS 12255 12252",
+		"SPELL_AURA_APPLIED 12255"
+	)
 
-local timerCurseofTutCD				= mod:NewAITimer(180, 12255, nil, nil, nil, 3, nil, DBM_COMMON_L.CURSE_ICON)
-local timerWebSprayCD				= mod:NewAITimer(180, 12252, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+	local warningCurseofTut				= mod:NewTargetNoFilterAnnounce(12255, 2, nil, "RemoveCurse")
+	local warningWebSpray				= mod:NewSpellAnnounce(12252, 2)
 
-function mod:OnCombatStart(delay)
-	timerCurseofTutCD:Start(1-delay)
-	timerWebSprayCD:Start(1-delay)
-end
+	local timerCurseofTutCD				= mod:NewAITimer(180, 12255, nil, nil, nil, 3, nil, DBM_COMMON_L.CURSE_ICON)
+	local timerWebSprayCD				= mod:NewAITimer(180, 12252, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 
-function mod:SPELL_CAST_SUCCESS(args)
-	if args:IsSpell(12255) then
-		timerCurseofTutCD:Start()
-	elseif args:IsSpell(12252) then
-		warningWebSpray:Show()
-		timerWebSprayCD:Start()
+	function mod:OnCombatStart(delay)
+		timerCurseofTutCD:Start(1-delay)
+		timerWebSprayCD:Start(1-delay)
 	end
-end
 
-function mod:SPELL_AURA_APPLIED(args)
-	if args:IsSpell(12255) and self:CheckDispelFilter("curse") then
-		warningCurseofTut:Show(args.destName)
+	function mod:SPELL_CAST_SUCCESS(args)
+		if args:IsSpell(12255) then
+			timerCurseofTutCD:Start()
+		elseif args:IsSpell(12252) then
+			warningWebSpray:Show()
+			timerWebSprayCD:Start()
+		end
+	end
+
+	function mod:SPELL_AURA_APPLIED(args)
+		if args:IsSpell(12255) and self:CheckDispelFilter("curse") then
+			warningCurseofTut:Show(args.destName)
+		end
 	end
 end

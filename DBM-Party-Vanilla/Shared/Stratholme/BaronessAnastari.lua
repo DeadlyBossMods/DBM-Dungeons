@@ -9,37 +9,43 @@ mod:SetZone(329)
 
 mod:RegisterCombat("combat")
 
-mod:RegisterEventsInCombat(
---	"SPELL_CAST_SUCCESS 17244",
-	"SPELL_AURA_APPLIED 17244 16867 18327"
-)
+if DBM:IsRestricted() then
+	--do stuff
+	--mod:AddAuraSoundOption(372820, true, 372820, 1, 2, "watchfeet", 8, 0)
+else
 
-local warningBansheeCurse		= mod:NewTargetNoFilterAnnounce(16867, 2, nil, "RemoveCurse")
-local warningSilence			= mod:NewTargetNoFilterAnnounce(18327, 2, nil, "RemoveMagic")
+	mod:RegisterEventsInCombat(
+	--	"SPELL_CAST_SUCCESS 17244",
+		"SPELL_AURA_APPLIED 17244 16867 18327"
+	)
 
-local specWarnPossess			= mod:NewSpecialWarningTargetChange(17244, nil, nil, nil, 1, 2, nil, nil, "targetchange")
+	local warningBansheeCurse		= mod:NewTargetNoFilterAnnounce(16867, 2, nil, "RemoveCurse")
+	local warningSilence			= mod:NewTargetNoFilterAnnounce(18327, 2, nil, "RemoveMagic")
 
---local timerPossessCD			= mod:NewAITimer(180, 17244, nil, nil, nil, 3, nil, DBM_COMMON_L.DAMAGE_ICON)
+	local specWarnPossess			= mod:NewSpecialWarningTargetChange(17244, nil, nil, nil, 1, 2, nil, nil, "targetchange")
 
---function mod:OnCombatStart(delay)
---	timerPossessCD:Start(1-delay)
---end
+	--local timerPossessCD			= mod:NewAITimer(180, 17244, nil, nil, nil, 3, nil, DBM_COMMON_L.DAMAGE_ICON)
 
---[[
-function mod:SPELL_CAST_SUCCESS(args)
-	if args.spellId == 17244 then
---		timerPossessCD:Start()
+	--function mod:OnCombatStart(delay)
+	--	timerPossessCD:Start(1-delay)
+	--end
+
+	--[[
+	function mod:SPELL_CAST_SUCCESS(args)
+		if args.spellId == 17244 then
+	--		timerPossessCD:Start()
+		end
 	end
-end
---]]
+	--]]
 
-function mod:SPELL_AURA_APPLIED(args)
-	if args:IsSpell(17244) then
-		specWarnPossess:Show(args.destName)
-		specWarnPossess:Play("targetchange")
-	elseif args:IsSpell(16867) then
-		warningBansheeCurse:CombinedShow(0.5, args.destName)
-	elseif args:IsSpell(18327) then
-		warningSilence:CombinedShow(0.5, args.destName)
+	function mod:SPELL_AURA_APPLIED(args)
+		if args:IsSpell(17244) then
+			specWarnPossess:Show(args.destName)
+			specWarnPossess:Play("targetchange")
+		elseif args:IsSpell(16867) then
+			warningBansheeCurse:CombinedShow(0.5, args.destName)
+		elseif args:IsSpell(18327) then
+			warningSilence:CombinedShow(0.5, args.destName)
+		end
 	end
 end

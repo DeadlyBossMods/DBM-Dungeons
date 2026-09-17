@@ -9,39 +9,45 @@ mod:SetZone(209)
 
 mod:RegisterCombat("combat")
 
-mod:RegisterEventsInCombat(
-	"SPELL_CAST_START 11836",
-	"SPELL_CAST_SUCCESS 11902",
-	"SPELL_AURA_APPLIED 11836"
-)
+if DBM:IsRestricted() then
+	--do stuff
+	--mod:AddAuraSoundOption(372820, true, 372820, 1, 2, "watchfeet", 8, 0)
+else
 
---TODO, no indication she actually has a heal, only lightning bolt and throns
-local warningFreezeSolid			= mod:NewTargetNoFilterAnnounce(11836, 2)
-local warningSlam					= mod:NewSpellAnnounce(11902, 2)
+	mod:RegisterEventsInCombat(
+		"SPELL_CAST_START 11836",
+		"SPELL_CAST_SUCCESS 11902",
+		"SPELL_AURA_APPLIED 11836"
+	)
 
-local timerFreezeSolidCD			= mod:NewAITimer(180, 11836, nil, nil, nil, 3, nil, DBM_COMMON_L.MAGIC_ICON)
-local timerSlamCD					= mod:NewAITimer(180, 11902, nil, nil, nil, 2)
+	--TODO, no indication she actually has a heal, only lightning bolt and throns
+	local warningFreezeSolid			= mod:NewTargetNoFilterAnnounce(11836, 2)
+	local warningSlam					= mod:NewSpellAnnounce(11902, 2)
 
-function mod:OnCombatStart(delay)
-	timerFreezeSolidCD:Start(1-delay)
-	timerSlamCD:Start(1-delay)
-end
+	local timerFreezeSolidCD			= mod:NewAITimer(180, 11836, nil, nil, nil, 3, nil, DBM_COMMON_L.MAGIC_ICON)
+	local timerSlamCD					= mod:NewAITimer(180, 11902, nil, nil, nil, 2)
 
-function mod:SPELL_CAST_START(args)
-	if args:IsSpell(11836) and args:IsSrcTypeHostile() then
-		timerFreezeSolidCD:Start()
+	function mod:OnCombatStart(delay)
+		timerFreezeSolidCD:Start(1-delay)
+		timerSlamCD:Start(1-delay)
 	end
-end
 
-function mod:SPELL_CAST_SUCCESS(args)
-	if args:IsSpell(11902) and args:IsSrcTypeHostile() then
-		warningSlam:Show()
-		timerSlamCD:Start()
+	function mod:SPELL_CAST_START(args)
+		if args:IsSpell(11836) and args:IsSrcTypeHostile() then
+			timerFreezeSolidCD:Start()
+		end
 	end
-end
 
-function mod:SPELL_AURA_APPLIED(args)
-	if args:IsSpell(11836) and args:IsDestTypePlayer() then
-		warningFreezeSolid:Show(args.destName)
+	function mod:SPELL_CAST_SUCCESS(args)
+		if args:IsSpell(11902) and args:IsSrcTypeHostile() then
+			warningSlam:Show()
+			timerSlamCD:Start()
+		end
+	end
+
+	function mod:SPELL_AURA_APPLIED(args)
+		if args:IsSpell(11836) and args:IsDestTypePlayer() then
+			warningFreezeSolid:Show(args.destName)
+		end
 	end
 end

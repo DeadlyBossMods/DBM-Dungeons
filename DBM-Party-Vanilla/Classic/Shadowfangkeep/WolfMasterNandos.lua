@@ -8,33 +8,39 @@ mod:SetZone(33)
 
 mod:RegisterCombat("combat")
 
-mod:RegisterEventsInCombat(
-	"SPELL_CAST_START 7487 7489 7488"
-)
+if DBM:IsRestricted() then
+	--do stuff
+	--mod:AddAuraSoundOption(372820, true, 372820, 1, 2, "watchfeet", 8, 0)
+else
 
-local warningBleakWorg		= mod:NewSpellAnnounce(7487, 2)
-local warningLupineHorror	= mod:NewSpellAnnounce(7489, 2)
-local warningSlaveringWorg	= mod:NewSpellAnnounce(7488, 2)
+	mod:RegisterEventsInCombat(
+		"SPELL_CAST_START 7487 7489 7488"
+	)
 
-local timerBleakWorgCD		= mod:NewAITimer(180, 7487, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)
-local timerLupineHorrorCD	= mod:NewAITimer(180, 7489, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)
-local timerSlaveringWorgCD	= mod:NewAITimer(180, 7488, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)
+	local warningBleakWorg		= mod:NewSpellAnnounce(7487, 2)
+	local warningLupineHorror	= mod:NewSpellAnnounce(7489, 2)
+	local warningSlaveringWorg	= mod:NewSpellAnnounce(7488, 2)
 
-function mod:OnCombatStart(delay)
-	timerBleakWorgCD:Start(1-delay)
-	timerLupineHorrorCD:Start(1-delay)
-	timerSlaveringWorgCD:Start(1-delay)
-end
+	local timerBleakWorgCD		= mod:NewAITimer(180, 7487, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)
+	local timerLupineHorrorCD	= mod:NewAITimer(180, 7489, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)
+	local timerSlaveringWorgCD	= mod:NewAITimer(180, 7488, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)
 
-function mod:SPELL_CAST_START(args)
-	if args:IsSpell(7487) then
-		warningBleakWorg:Show()
-		timerBleakWorgCD:Start()
-	elseif args:IsSpell(7489) then
-		warningLupineHorror:Show()
-		timerLupineHorrorCD:Start()
-	elseif args:IsSpell(7488) then
-		warningSlaveringWorg:Show()
-		timerSlaveringWorgCD:Start()
+	function mod:OnCombatStart(delay)
+		timerBleakWorgCD:Start(1-delay)
+		timerLupineHorrorCD:Start(1-delay)
+		timerSlaveringWorgCD:Start(1-delay)
+	end
+
+	function mod:SPELL_CAST_START(args)
+		if args:IsSpell(7487) then
+			warningBleakWorg:Show()
+			timerBleakWorgCD:Start()
+		elseif args:IsSpell(7489) then
+			warningLupineHorror:Show()
+			timerLupineHorrorCD:Start()
+		elseif args:IsSpell(7488) then
+			warningSlaveringWorg:Show()
+			timerSlaveringWorgCD:Start()
+		end
 	end
 end

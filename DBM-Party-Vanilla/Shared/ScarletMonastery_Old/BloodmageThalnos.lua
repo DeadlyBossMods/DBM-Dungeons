@@ -9,30 +9,36 @@ mod:SetZone(189)
 
 mod:RegisterCombat("combat")
 
-mod:RegisterEventsInCombat(
-	"SPELL_CAST_START 8814",
-	"SPELL_CAST_SUCCESS 12470"
-)
+if DBM:IsRestricted() then
+	--do stuff
+	--mod:AddAuraSoundOption(372820, true, 372820, 1, 2, "watchfeet", 8, 0)
+else
 
---TODO, still can't use CD timer yet because only have initial timers from a single log, Fire nova timer too variable (8.5, 21 wtf?) to be useful
-local warningFlameSpike				= mod:NewSpellAnnounce(8814, 2)
-local warningFireNova				= mod:NewSpellAnnounce(12470, 2)
+	mod:RegisterEventsInCombat(
+		"SPELL_CAST_START 8814",
+		"SPELL_CAST_SUCCESS 12470"
+	)
 
-local timerFlameSpikeCD				= mod:NewAITimer(180, 8814, nil, nil, nil, 3)
+	--TODO, still can't use CD timer yet because only have initial timers from a single log, Fire nova timer too variable (8.5, 21 wtf?) to be useful
+	local warningFlameSpike				= mod:NewSpellAnnounce(8814, 2)
+	local warningFireNova				= mod:NewSpellAnnounce(12470, 2)
 
-function mod:OnCombatStart(delay)
-	--timerFlameSpikeCD:Start(15.8-delay)
-end
+	local timerFlameSpikeCD				= mod:NewAITimer(180, 8814, nil, nil, nil, 3)
 
-function mod:SPELL_CAST_START(args)
-	if args:IsSpell(8814) then
-		warningFlameSpike:Show()
-		timerFlameSpikeCD:Start()
+	function mod:OnCombatStart(delay)
+		--timerFlameSpikeCD:Start(15.8-delay)
 	end
-end
 
-function mod:SPELL_CAST_SUCCESS(args)
-	if args:IsSpell(12470) then
-		warningFireNova:Show()
+	function mod:SPELL_CAST_START(args)
+		if args:IsSpell(8814) then
+			warningFlameSpike:Show()
+			timerFlameSpikeCD:Start()
+		end
+	end
+
+	function mod:SPELL_CAST_SUCCESS(args)
+		if args:IsSpell(12470) then
+			warningFireNova:Show()
+		end
 	end
 end

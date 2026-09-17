@@ -9,31 +9,37 @@ mod:SetZone(189)
 
 mod:RegisterCombat("combat")
 
-mod:RegisterEventsInCombat(
-	"SPELL_AURA_APPLIED 8989 8269"
-)
+if DBM:IsRestricted() then
+	--do stuff
+	--mod:AddAuraSoundOption(372820, true, 372820, 1, 2, "watchfeet", 8, 0)
+else
 
-local warningEnrage					= mod:NewTargetNoFilterAnnounce(8269, 2)
-local warningWhirlwind				= mod:NewSpellAnnounce(8989, 2)
+	mod:RegisterEventsInCombat(
+		"SPELL_AURA_APPLIED 8989 8269"
+	)
 
-local specWarnWhirlwind				= mod:NewSpecialWarningRun(8989, false, nil, 2, 4, 2, nil, nil, "justrun")
+	local warningEnrage					= mod:NewTargetNoFilterAnnounce(8269, 2)
+	local warningWhirlwind				= mod:NewSpellAnnounce(8989, 2)
 
-local timerWhirlwindCD				= mod:NewCDTimer(18, 8989, nil, nil, nil, 4, nil, DBM_COMMON_L.DEADLY_ICON)
+	local specWarnWhirlwind				= mod:NewSpecialWarningRun(8989, false, nil, 2, 4, 2, nil, nil, "justrun")
 
-function mod:OnCombatStart(delay)
-	timerWhirlwindCD:Start(10.5-delay)
-end
+	local timerWhirlwindCD				= mod:NewCDTimer(18, 8989, nil, nil, nil, 4, nil, DBM_COMMON_L.DEADLY_ICON)
 
-function mod:SPELL_AURA_APPLIED(args)
-	if args:IsSpell(8269) and args:IsDestTypeHostile() and self:AntiSpam(3, 1) then
-		if self.Options.SpecWarn8269run then
-			specWarnWhirlwind:Show()
-			specWarnWhirlwind:Play("justrun")
-		else
-			warningWhirlwind:Show()
+	function mod:OnCombatStart(delay)
+		timerWhirlwindCD:Start(10.5-delay)
+	end
+
+	function mod:SPELL_AURA_APPLIED(args)
+		if args:IsSpell(8269) and args:IsDestTypeHostile() and self:AntiSpam(3, 1) then
+			if self.Options.SpecWarn8269run then
+				specWarnWhirlwind:Show()
+				specWarnWhirlwind:Play("justrun")
+			else
+				warningWhirlwind:Show()
+			end
+			timerWhirlwindCD:Start()
+		elseif args:IsSpell(8269) and args:IsDestTypeHostile() then
+			warningEnrage:Show(args.destName)
 		end
-		timerWhirlwindCD:Start()
-	elseif args:IsSpell(8269) and args:IsDestTypeHostile() then
-		warningEnrage:Show(args.destName)
 	end
 end

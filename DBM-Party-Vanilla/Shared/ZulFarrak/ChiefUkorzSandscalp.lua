@@ -9,15 +9,21 @@ mod:SetZone(209)
 
 mod:RegisterCombat("combat")
 
-mod:RegisterEventsInCombat(
-	"SPELL_AURA_APPLIED 8269"
-)
+if DBM:IsRestricted() then
+	--do stuff
+	--mod:AddAuraSoundOption(372820, true, 372820, 1, 2, "watchfeet", 8, 0)
+else
 
---TODO, Add cleave timer?
-local warningEnrage			= mod:NewTargetNoFilterAnnounce(8269, 2)
+	mod:RegisterEventsInCombat(
+		"SPELL_AURA_APPLIED 8269"
+	)
 
-function mod:SPELL_AURA_APPLIED(args)
-	if args:IsSpell(8269) and args:IsDestTypePlayer() then
-		warningEnrage:Show(args.destName)
+	--TODO, Add cleave timer?
+	local warningEnrage			= mod:NewTargetNoFilterAnnounce(8269, 2)
+
+	function mod:SPELL_AURA_APPLIED(args)
+		if args:IsSpell(8269) and args:IsDestTypePlayer() then
+			warningEnrage:Show(args.destName)
+		end
 	end
 end

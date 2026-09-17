@@ -9,43 +9,49 @@ mod:SetZone(129)
 
 mod:RegisterCombat("combat")
 
-mod:RegisterEventsInCombat(
-	"SPELL_CAST_START 12675",
-	"SPELL_CAST_SUCCESS 13009 12642"
-)
+if DBM:IsRestricted() then
+	--do stuff
+	--mod:AddAuraSoundOption(372820, true, 372820, 1, 2, "watchfeet", 8, 0)
+else
 
---TODO, check/fix frostbolt spellId
-local warningAmnennarsWrath			= mod:NewSpellAnnounce(13009, 2)
+	mod:RegisterEventsInCombat(
+		"SPELL_CAST_START 12675",
+		"SPELL_CAST_SUCCESS 13009 12642"
+	)
 
-local specWarnFrostbolt				= mod:NewSpecialWarningInterrupt(12675, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
-local specWarnFrostSpectres			= mod:NewSpecialWarningSwitch(13322, "-Healer", nil, nil, 1, 2, nil, nil, "killmob")
+	--TODO, check/fix frostbolt spellId
+	local warningAmnennarsWrath			= mod:NewSpellAnnounce(13009, 2)
 
-local timerAmnennarsWrathCD			= mod:NewAITimer(180, 13009, nil, nil, nil, 2)
-local timerFrostboltCD				= mod:NewAITimer(180, 12675, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON..DBM_COMMON_L.MAGIC_ICON)
-local timerSummonFrostSpectresCD	= mod:NewAITimer(180, 13322, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)
+	local specWarnFrostbolt				= mod:NewSpecialWarningInterrupt(12675, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
+	local specWarnFrostSpectres			= mod:NewSpecialWarningSwitch(13322, "-Healer", nil, nil, 1, 2, nil, nil, "killmob")
 
-function mod:OnCombatStart(delay)
-	timerAmnennarsWrathCD:Start(1-delay)
-	timerFrostboltCD:Start(1-delay)
-end
+	local timerAmnennarsWrathCD			= mod:NewAITimer(180, 13009, nil, nil, nil, 2)
+	local timerFrostboltCD				= mod:NewAITimer(180, 12675, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON..DBM_COMMON_L.MAGIC_ICON)
+	local timerSummonFrostSpectresCD	= mod:NewAITimer(180, 13322, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)
 
-function mod:SPELL_CAST_START(args)
-	if args:IsSpell(12675) and args:IsSrcTypeHostile()  then
-		timerFrostboltCD:Start()
-		if self:CheckInterruptFilter(args.sourceGUID, false, true) then
-			specWarnFrostbolt:Show(args.sourceName)
-			specWarnFrostbolt:Play("kickcast")
+	function mod:OnCombatStart(delay)
+		timerAmnennarsWrathCD:Start(1-delay)
+		timerFrostboltCD:Start(1-delay)
+	end
+
+	function mod:SPELL_CAST_START(args)
+		if args:IsSpell(12675) and args:IsSrcTypeHostile()  then
+			timerFrostboltCD:Start()
+			if self:CheckInterruptFilter(args.sourceGUID, false, true) then
+				specWarnFrostbolt:Show(args.sourceName)
+				specWarnFrostbolt:Play("kickcast")
+			end
 		end
 	end
-end
 
-function mod:SPELL_CAST_SUCCESS(args)
-	if args:IsSpell(13009) then
-		warningAmnennarsWrath:Show()
-		timerAmnennarsWrathCD:Start()
-	elseif args:IsSpell(12642) then
-		specWarnFrostSpectres:Show()
-		specWarnFrostSpectres:Play("killmob")
-		timerSummonFrostSpectresCD:Start()
+	function mod:SPELL_CAST_SUCCESS(args)
+		if args:IsSpell(13009) then
+			warningAmnennarsWrath:Show()
+			timerAmnennarsWrathCD:Start()
+		elseif args:IsSpell(12642) then
+			specWarnFrostSpectres:Show()
+			specWarnFrostSpectres:Play("killmob")
+			timerSummonFrostSpectresCD:Start()
+		end
 	end
 end

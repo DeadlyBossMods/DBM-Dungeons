@@ -15,27 +15,33 @@ mod:SetZone(36)
 
 mod:RegisterCombat("combat")
 
-mod:RegisterEventsInCombat(
-	"SPELL_CAST_SUCCESS 12097",
-	"SPELL_AURA_APPLIED 12097"
-)
+if DBM:IsRestricted() then
+	--do stuff
+	--mod:AddAuraSoundOption(372820, true, 372820, 1, 2, "watchfeet", 8, 0)
+else
 
-local warningPierceArmor			= mod:NewTargetNoFilterAnnounce(12097, 2)
+	mod:RegisterEventsInCombat(
+		"SPELL_CAST_SUCCESS 12097",
+		"SPELL_AURA_APPLIED 12097"
+	)
 
-local timerPierceArmorCD			= mod:NewAITimer(180, 12097, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+	local warningPierceArmor			= mod:NewTargetNoFilterAnnounce(12097, 2)
 
-function mod:OnCombatStart(delay)
-	timerPierceArmorCD:Start(1-delay)
-end
+	local timerPierceArmorCD			= mod:NewAITimer(180, 12097, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 
-function mod:SPELL_CAST_SUCCESS(args)
-	if args:IsSpell(12097) then
-		timerPierceArmorCD:Start()
+	function mod:OnCombatStart(delay)
+		timerPierceArmorCD:Start(1-delay)
 	end
-end
 
-function mod:SPELL_AURA_APPLIED(args)
-	if args:IsSpell(12097) then
-		warningPierceArmor:Show(args.destName)
+	function mod:SPELL_CAST_SUCCESS(args)
+		if args:IsSpell(12097) then
+			timerPierceArmorCD:Start()
+		end
+	end
+
+	function mod:SPELL_AURA_APPLIED(args)
+		if args:IsSpell(12097) then
+			warningPierceArmor:Show(args.destName)
+		end
 	end
 end

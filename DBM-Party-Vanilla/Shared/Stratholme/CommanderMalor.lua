@@ -9,36 +9,42 @@ mod:SetZone(329)
 
 mod:RegisterCombat("combat")
 
-mod:RegisterEventsInCombat(
-	"SPELL_CAST_START 15245",
-	"SPELL_CAST_SUCCESS 12734"
-)
+if DBM:IsRestricted() then
+	--do stuff
+	--mod:AddAuraSoundOption(372820, true, 372820, 1, 2, "watchfeet", 8, 0)
+else
 
-local warningGroundSmash				= mod:NewSpellAnnounce(12734, 2)
+	mod:RegisterEventsInCombat(
+		"SPELL_CAST_START 15245",
+		"SPELL_CAST_SUCCESS 12734"
+	)
 
-local specWarnShadowBoltVolley			= mod:NewSpecialWarningInterrupt(15245, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
+	local warningGroundSmash				= mod:NewSpellAnnounce(12734, 2)
 
-local timerShadowBoltVolleyCD			= mod:NewAITimer(180, 15245, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
-local timerGroundSmashCD				= mod:NewAITimer(180, 12734, nil, nil, nil, 2)
+	local specWarnShadowBoltVolley			= mod:NewSpecialWarningInterrupt(15245, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
 
-function mod:OnCombatStart(delay)
-	timerShadowBoltVolleyCD:Start(1-delay)
-	timerGroundSmashCD:Start(1-delay)
-end
+	local timerShadowBoltVolleyCD			= mod:NewAITimer(180, 15245, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+	local timerGroundSmashCD				= mod:NewAITimer(180, 12734, nil, nil, nil, 2)
 
-function mod:SPELL_CAST_START(args)
-	if args:IsSpell(15245) then
-		timerShadowBoltVolleyCD:Start()
-		if self:CheckInterruptFilter(args.sourceGUID, false, true) then
-			specWarnShadowBoltVolley:Show(args.sourceName)
-			specWarnShadowBoltVolley:Play("kickcast")
+	function mod:OnCombatStart(delay)
+		timerShadowBoltVolleyCD:Start(1-delay)
+		timerGroundSmashCD:Start(1-delay)
+	end
+
+	function mod:SPELL_CAST_START(args)
+		if args:IsSpell(15245) then
+			timerShadowBoltVolleyCD:Start()
+			if self:CheckInterruptFilter(args.sourceGUID, false, true) then
+				specWarnShadowBoltVolley:Show(args.sourceName)
+				specWarnShadowBoltVolley:Play("kickcast")
+			end
 		end
 	end
-end
 
-function mod:SPELL_CAST_SUCCESS(args)
-	if args:IsSpell(12734) then
-		warningGroundSmash:Show()
-		timerGroundSmashCD:Start()
+	function mod:SPELL_CAST_SUCCESS(args)
+		if args:IsSpell(12734) then
+			warningGroundSmash:Show()
+			timerGroundSmashCD:Start()
+		end
 	end
 end

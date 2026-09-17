@@ -15,27 +15,33 @@ mod:SetZone(36)
 
 mod:RegisterCombat("combat")
 
-mod:RegisterEventsInCombat(
-	"SPELL_CAST_SUCCESS 6304",
-	"SPELL_AURA_APPLIED 6304"
-)
+if DBM:IsRestricted() then
+	--do stuff
+	--mod:AddAuraSoundOption(372820, true, 372820, 1, 2, "watchfeet", 8, 0)
+else
 
-local warningSlam			= mod:NewTargetNoFilterAnnounce(6304, 2)
+	mod:RegisterEventsInCombat(
+		"SPELL_CAST_SUCCESS 6304",
+		"SPELL_AURA_APPLIED 6304"
+	)
 
-local timerSlamCD			= mod:NewAITimer(180, 6304, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+	local warningSlam			= mod:NewTargetNoFilterAnnounce(6304, 2)
 
-function mod:OnCombatStart(delay)
-	timerSlamCD:Start(1-delay)
-end
+	local timerSlamCD			= mod:NewAITimer(180, 6304, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 
-function mod:SPELL_CAST_SUCCESS(args)
-	if args:IsSpell(6304) then
-		timerSlamCD:Start()
+	function mod:OnCombatStart(delay)
+		timerSlamCD:Start(1-delay)
 	end
-end
 
-function mod:SPELL_AURA_APPLIED(args)
-	if args:IsSpell(6304) then
-		warningSlam:Show(args.destName)
+	function mod:SPELL_CAST_SUCCESS(args)
+		if args:IsSpell(6304) then
+			timerSlamCD:Start()
+		end
+	end
+
+	function mod:SPELL_AURA_APPLIED(args)
+		if args:IsSpell(6304) then
+			warningSlam:Show(args.destName)
+		end
 	end
 end

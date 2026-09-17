@@ -9,22 +9,28 @@ mod:SetZone(349)
 
 mod:RegisterCombat("combat")
 
-mod:RegisterEventsInCombat(
-	"SPELL_CAST_SUCCESS 16495"
-)
+if DBM:IsRestricted() then
+	--do stuff
+	--mod:AddAuraSoundOption(372820, true, 372820, 1, 2, "watchfeet", 8, 0)
+else
 
---Puncture too random, and not important enough, so removed. Fatal bite was never seen?
-local warningFatalBite				= mod:NewSpellAnnounce(16495, 3)
+	mod:RegisterEventsInCombat(
+		"SPELL_CAST_SUCCESS 16495"
+	)
 
-local timerFatalBiteCD				= mod:NewAITimer(180, 16495, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+	--Puncture too random, and not important enough, so removed. Fatal bite was never seen?
+	local warningFatalBite				= mod:NewSpellAnnounce(16495, 3)
 
-function mod:OnCombatStart(delay)
-	timerFatalBiteCD:Start(1-delay)
-end
+	local timerFatalBiteCD				= mod:NewAITimer(180, 16495, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 
-function mod:SPELL_CAST_SUCCESS(args)
-	if args:IsSpell(16495) then
-		warningFatalBite:Show()
-		timerFatalBiteCD:Start()
+	function mod:OnCombatStart(delay)
+		timerFatalBiteCD:Start(1-delay)
+	end
+
+	function mod:SPELL_CAST_SUCCESS(args)
+		if args:IsSpell(16495) then
+			warningFatalBite:Show()
+			timerFatalBiteCD:Start()
+		end
 	end
 end

@@ -15,27 +15,33 @@ mod:SetZone(36)
 
 mod:RegisterCombat("combat")
 
-mod:RegisterEventsInCombat(
-	"SPELL_CAST_SUCCESS 5213",
-	"SPELL_AURA_APPLIED 5213"
-)
+if DBM:IsRestricted() then
+	--do stuff
+	--mod:AddAuraSoundOption(372820, true, 372820, 1, 2, "watchfeet", 8, 0)
+else
 
-local warningMoltenMetal	= mod:NewTargetNoFilterAnnounce(5213, 2)
+	mod:RegisterEventsInCombat(
+		"SPELL_CAST_SUCCESS 5213",
+		"SPELL_AURA_APPLIED 5213"
+	)
 
-local timerMoltenMetalCD	= mod:NewAITimer(180, 5213, nil, nil, nil, 3)
+	local warningMoltenMetal	= mod:NewTargetNoFilterAnnounce(5213, 2)
 
-function mod:OnCombatStart(delay)
-	timerMoltenMetalCD:Start(1-delay)
-end
+	local timerMoltenMetalCD	= mod:NewAITimer(180, 5213, nil, nil, nil, 3)
 
-function mod:SPELL_CAST_SUCCESS(args)
-	if args:IsSpell(5213) then
-		timerMoltenMetalCD:Start()
+	function mod:OnCombatStart(delay)
+		timerMoltenMetalCD:Start(1-delay)
 	end
-end
 
-function mod:SPELL_AURA_APPLIED(args)
-	if args:IsSpell(5213) then
-		warningMoltenMetal:Show(args.destName)
+	function mod:SPELL_CAST_SUCCESS(args)
+		if args:IsSpell(5213) then
+			timerMoltenMetalCD:Start()
+		end
+	end
+
+	function mod:SPELL_AURA_APPLIED(args)
+		if args:IsSpell(5213) then
+			warningMoltenMetal:Show(args.destName)
+		end
 	end
 end

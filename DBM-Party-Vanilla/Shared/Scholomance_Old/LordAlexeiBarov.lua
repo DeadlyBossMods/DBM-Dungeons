@@ -9,14 +9,20 @@ mod:SetZone(289)
 
 mod:RegisterCombat("combat")
 
-mod:RegisterEventsInCombat(
-	"SPELL_AURA_APPLIED 17820"
-)
+if DBM:IsRestricted() then
+	--do stuff
+	--mod:AddAuraSoundOption(372820, true, 372820, 1, 2, "watchfeet", 8, 0)
+else
 
-local warningVeilofShadow			= mod:NewTargetNoFilterAnnounce(17820, 2, nil, "RemoveCurse")
+	mod:RegisterEventsInCombat(
+		"SPELL_AURA_APPLIED 17820"
+	)
 
-function mod:SPELL_AURA_APPLIED(args)
-	if args:IsSpell(17820) then
-		warningVeilofShadow:CombinedShow(0.5, args.destName)
+	local warningVeilofShadow			= mod:NewTargetNoFilterAnnounce(17820, 2, nil, "RemoveCurse")
+
+	function mod:SPELL_AURA_APPLIED(args)
+		if args:IsSpell(17820) then
+			warningVeilofShadow:CombinedShow(0.5, args.destName)
+		end
 	end
 end

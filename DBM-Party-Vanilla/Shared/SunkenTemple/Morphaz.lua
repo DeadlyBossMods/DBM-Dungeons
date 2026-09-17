@@ -9,28 +9,34 @@ mod:SetZone(109)
 
 mod:RegisterCombat("combat")
 
-mod:RegisterEventsInCombat(
-	"SPELL_CAST_SUCCESS 12882 12884"
-)
+if DBM:IsRestricted() then
+	--do stuff
+	--mod:AddAuraSoundOption(372820, true, 372820, 1, 2, "watchfeet", 8, 0)
+else
 
---TODO, Change timers to sourcename timers when not AI
-local warnWingFlap						= mod:NewSpellAnnounce(12882, 2)
-local warnAcidBreath					= mod:NewSpellAnnounce(12884, 2)
+	mod:RegisterEventsInCombat(
+		"SPELL_CAST_SUCCESS 12882 12884"
+	)
 
-local timerWingFlapCD					= mod:NewAITimer(180, 12882, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
-local timerAcidBreathCD					= mod:NewAITimer(180, 12884, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+	--TODO, Change timers to sourcename timers when not AI
+	local warnWingFlap						= mod:NewSpellAnnounce(12882, 2)
+	local warnAcidBreath					= mod:NewSpellAnnounce(12884, 2)
 
-function mod:OnCombatStart(delay)
-	timerWingFlapCD:Start(1-delay)
-	timerAcidBreathCD:Start(1-delay)
-end
+	local timerWingFlapCD					= mod:NewAITimer(180, 12882, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+	local timerAcidBreathCD					= mod:NewAITimer(180, 12884, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 
-function mod:SPELL_CAST_SUCCESS(args)
-	if args:IsSpell(12882) then
-		warnWingFlap:Show()
-		timerWingFlapCD:Start()
-	elseif args:IsSpell(12884) then
-		warnAcidBreath:Show()
-		timerAcidBreathCD:Start()
+	function mod:OnCombatStart(delay)
+		timerWingFlapCD:Start(1-delay)
+		timerAcidBreathCD:Start(1-delay)
+	end
+
+	function mod:SPELL_CAST_SUCCESS(args)
+		if args:IsSpell(12882) then
+			warnWingFlap:Show()
+			timerWingFlapCD:Start()
+		elseif args:IsSpell(12884) then
+			warnAcidBreath:Show()
+			timerAcidBreathCD:Start()
+		end
 	end
 end

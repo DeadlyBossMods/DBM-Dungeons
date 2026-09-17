@@ -9,27 +9,33 @@ mod:SetZone(189)
 
 mod:RegisterCombat("combat")
 
-mod:RegisterEventsInCombat(
-	"SPELL_CAST_SUCCESS 9034",
-	"SPELL_AURA_APPLIED 9034"
-)
+if DBM:IsRestricted() then
+	--do stuff
+	--mod:AddAuraSoundOption(372820, true, 372820, 1, 2, "watchfeet", 8, 0)
+else
 
-local warningImmolate				= mod:NewTargetNoFilterAnnounce(9034, 2)
+	mod:RegisterEventsInCombat(
+		"SPELL_CAST_SUCCESS 9034",
+		"SPELL_AURA_APPLIED 9034"
+	)
 
-local timerImmolateCD				= mod:NewAITimer(180, 9034, nil, nil, nil, 3, nil, DBM_COMMON_L.MAGIC_ICON)
+	local warningImmolate				= mod:NewTargetNoFilterAnnounce(9034, 2)
 
-function mod:OnCombatStart(delay)
-	timerImmolateCD:Start(1-delay)
-end
+	local timerImmolateCD				= mod:NewAITimer(180, 9034, nil, nil, nil, 3, nil, DBM_COMMON_L.MAGIC_ICON)
 
-function mod:SPELL_CAST_SUCCESS(args)
-	if args:IsSpell(9034) and args:IsSrcTypeHostile() then
-		timerImmolateCD:Start()
+	function mod:OnCombatStart(delay)
+		timerImmolateCD:Start(1-delay)
 	end
-end
 
-function mod:SPELL_AURA_APPLIED(args)
-	if args:IsSpell(9034) and args:IsDestTypePlayer() then
-		warningImmolate:Show(args.destName)
+	function mod:SPELL_CAST_SUCCESS(args)
+		if args:IsSpell(9034) and args:IsSrcTypeHostile() then
+			timerImmolateCD:Start()
+		end
+	end
+
+	function mod:SPELL_AURA_APPLIED(args)
+		if args:IsSpell(9034) and args:IsDestTypePlayer() then
+			warningImmolate:Show(args.destName)
+		end
 	end
 end

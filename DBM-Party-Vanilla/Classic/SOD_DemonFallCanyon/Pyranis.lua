@@ -10,22 +10,28 @@ mod:SetZone(2784)
 
 mod:RegisterCombat("combat")
 
-mod:RegisterEventsInCombat(
---	"SPELL_CAST_START",
---	"SPELL_CAST_SUCCESS,
---	"SPELL_AURA_APPLIED"
-)
+if DBM:IsRestricted() then
+	--do stuff
+	--mod:AddAuraSoundOption(372820, true, 372820, 1, 2, "watchfeet", 8, 0)
+else
 
---function mod:OnCombatStart(delay)
+	mod:RegisterEventsInCombat(
+	--	"SPELL_CAST_START",
+	--	"SPELL_CAST_SUCCESS,
+	--	"SPELL_AURA_APPLIED"
+	)
 
---end
+	--function mod:OnCombatStart(delay)
 
--- Summons adds that need to be killed, but didn't fully understand when they are summoned; also, it's really really obvious that this happens.
+	--end
 
---[[
-function mod:SPELL_CAST_START(args)
-	if args:IsSpell(5174) then
+	-- Summons adds that need to be killed, but didn't fully understand when they are summoned; also, it's really really obvious that this happens.
 
+	--[[
+	function mod:SPELL_CAST_START(args)
+		if args:IsSpell(5174) then
+
+		end
 	end
+	--]]
 end
---]]

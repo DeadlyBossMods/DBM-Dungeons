@@ -15,28 +15,34 @@ mod:SetZone(36)
 
 mod:RegisterCombat("combat")
 
-mod:RegisterEventsInCombat(
-	"SPELL_CAST_SUCCESS 5208",
-	"SPELL_AURA_APPLIED 5208"
-)
+if DBM:IsRestricted() then
+	--do stuff
+	--mod:AddAuraSoundOption(372820, true, 372820, 1, 2, "watchfeet", 8, 0)
+else
 
---TODO, consider a cleave timer if not cast too often
-local warningPoisonedHarpoon		= mod:NewTargetNoFilterAnnounce(5208, 2, nil, "RemovePoison")
+	mod:RegisterEventsInCombat(
+		"SPELL_CAST_SUCCESS 5208",
+		"SPELL_AURA_APPLIED 5208"
+	)
 
-local timerPoisonedHarpoonCD		= mod:NewAITimer(30, 5208, nil, "RemovePoison", nil, 5, nil, DBM_COMMON_L.POISON_ICON)
+	--TODO, consider a cleave timer if not cast too often
+	local warningPoisonedHarpoon		= mod:NewTargetNoFilterAnnounce(5208, 2, nil, "RemovePoison")
 
-function mod:OnCombatStart(delay)
-	timerPoisonedHarpoonCD:Start(1-delay)
-end
+	local timerPoisonedHarpoonCD		= mod:NewAITimer(30, 5208, nil, "RemovePoison", nil, 5, nil, DBM_COMMON_L.POISON_ICON)
 
-function mod:SPELL_CAST_SUCCESS(args)
-	if args:IsSpell(5208) then
-		timerPoisonedHarpoonCD:Start()
+	function mod:OnCombatStart(delay)
+		timerPoisonedHarpoonCD:Start(1-delay)
 	end
-end
 
-function mod:SPELL_AURA_APPLIED(args)
-	if args:IsSpell(5208) then
-		warningPoisonedHarpoon:Show(args.destName)
+	function mod:SPELL_CAST_SUCCESS(args)
+		if args:IsSpell(5208) then
+			timerPoisonedHarpoonCD:Start()
+		end
+	end
+
+	function mod:SPELL_AURA_APPLIED(args)
+		if args:IsSpell(5208) then
+			warningPoisonedHarpoon:Show(args.destName)
+		end
 	end
 end

@@ -9,37 +9,43 @@ mod:SetZone(129)
 
 mod:RegisterCombat("combat")
 
-mod:RegisterEventsInCombat(
-	"SPELL_CAST_START 12039 7645",
-	"SPELL_AURA_APPLIED 7645"
-)
+if DBM:IsRestricted() then
+	--do stuff
+	--mod:AddAuraSoundOption(372820, true, 372820, 1, 2, "watchfeet", 8, 0)
+else
 
-local warningDominateMind			= mod:NewTargetNoFilterAnnounce(7645, 2)
+	mod:RegisterEventsInCombat(
+		"SPELL_CAST_START 12039 7645",
+		"SPELL_AURA_APPLIED 7645"
+	)
 
-local specWarnHeal					= mod:NewSpecialWarningInterrupt(12039, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
+	local warningDominateMind			= mod:NewTargetNoFilterAnnounce(7645, 2)
 
-local timerHealCD					= mod:NewAITimer(180, 12039, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
-local timerDominateMindCD			= mod:NewAITimer(180, 7645, nil, nil, nil, 3)
+	local specWarnHeal					= mod:NewSpecialWarningInterrupt(12039, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
 
-function mod:OnCombatStart(delay)
-	timerHealCD:Start(1-delay)
-	timerDominateMindCD:Start(1-delay)
-end
+	local timerHealCD					= mod:NewAITimer(180, 12039, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+	local timerDominateMindCD			= mod:NewAITimer(180, 7645, nil, nil, nil, 3)
 
-function mod:SPELL_CAST_START(args)
-	if args:IsSpell(12039) and args:IsSrcTypeHostile() then
-		timerHealCD:Start()
-		if self:CheckInterruptFilter(args.sourceGUID, false, true) then
-			specWarnHeal:Show(args.sourceName)
-			specWarnHeal:Play("kickcast")
-		end
-	elseif args:IsSpell(7645) then
-		timerDominateMindCD:Start()
+	function mod:OnCombatStart(delay)
+		timerHealCD:Start(1-delay)
+		timerDominateMindCD:Start(1-delay)
 	end
-end
 
-function mod:SPELL_AURA_APPLIED(args)
-	if args:IsSpell(7645) then
-		warningDominateMind:Show(args.destName)
+	function mod:SPELL_CAST_START(args)
+		if args:IsSpell(12039) and args:IsSrcTypeHostile() then
+			timerHealCD:Start()
+			if self:CheckInterruptFilter(args.sourceGUID, false, true) then
+				specWarnHeal:Show(args.sourceName)
+				specWarnHeal:Play("kickcast")
+			end
+		elseif args:IsSpell(7645) then
+			timerDominateMindCD:Start()
+		end
+	end
+
+	function mod:SPELL_AURA_APPLIED(args)
+		if args:IsSpell(7645) then
+			warningDominateMind:Show(args.destName)
+		end
 	end
 end

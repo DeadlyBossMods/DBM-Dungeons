@@ -9,57 +9,63 @@ mod:SetZone(70)
 
 mod:RegisterCombat("combat")
 
-mod:RegisterEventsInCombat(
-	"SPELL_CAST_START 8292 12167",
-	"SPELL_CAST_SUCCESS 6742",
-	"SPELL_AURA_APPLIED 6742 9906 3636"
-)
+if DBM:IsRestricted() then
+	--do stuff
+	--mod:AddAuraSoundOption(372820, true, 372820, 1, 2, "watchfeet", 8, 0)
+else
 
-local warningBloodlust				= mod:NewTargetNoFilterAnnounce(6742, 3)
-local warningReflection				= mod:NewTargetNoFilterAnnounce(9906, 4)
-local warningCrystallineSlumber		= mod:NewTargetNoFilterAnnounce(3636, 4, nil, "RemoveMagic")
+	mod:RegisterEventsInCombat(
+		"SPELL_CAST_START 8292 12167",
+		"SPELL_CAST_SUCCESS 6742",
+		"SPELL_AURA_APPLIED 6742 9906 3636"
+	)
 
-local specWarnChainBolt				= mod:NewSpecialWarningInterrupt(8292, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
-local specWarnLightningBolt			= mod:NewSpecialWarningInterrupt(12167, false, nil, nil, 1, 2, nil, nil, "kickcast")
+	local warningBloodlust				= mod:NewTargetNoFilterAnnounce(6742, 3)
+	local warningReflection				= mod:NewTargetNoFilterAnnounce(9906, 4)
+	local warningCrystallineSlumber		= mod:NewTargetNoFilterAnnounce(3636, 4, nil, "RemoveMagic")
 
-local timerChainBoltCD				= mod:NewAITimer(180, 8292, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
-local timerLightningBoltCD			= mod:NewAITimer(180, 12167, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
-local timerBloodlustCD				= mod:NewAITimer(180, 6742, nil, nil, nil, 5, nil, DBM_COMMON_L.MAGIC_ICON)
+	local specWarnChainBolt				= mod:NewSpecialWarningInterrupt(8292, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
+	local specWarnLightningBolt			= mod:NewSpecialWarningInterrupt(12167, false, nil, nil, 1, 2, nil, nil, "kickcast")
 
-function mod:OnCombatStart(delay)
-	timerChainBoltCD:Start(1-delay)
-	timerLightningBoltCD:Start(1-delay)
-	timerBloodlustCD:Start(1-delay)
-end
+	local timerChainBoltCD				= mod:NewAITimer(180, 8292, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+	local timerLightningBoltCD			= mod:NewAITimer(180, 12167, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+	local timerBloodlustCD				= mod:NewAITimer(180, 6742, nil, nil, nil, 5, nil, DBM_COMMON_L.MAGIC_ICON)
 
-function mod:SPELL_CAST_START(args)
-	if args:IsSpell(8292) and args:IsSrcTypeHostile() then
-		timerChainBoltCD:Start()
-		if self:CheckInterruptFilter(args.sourceGUID, false, true) then
-			specWarnChainBolt:Show(args.sourceName)
-			specWarnChainBolt:Play("kickcast")
-		end
-	elseif args:IsSpell(12167) and args:IsSrcTypeHostile() then
-		timerLightningBoltCD:Start()
-		if self:CheckInterruptFilter(args.sourceGUID, false, true) then
-			specWarnLightningBolt:Show(args.sourceName)
-			specWarnLightningBolt:Play("kickcast")
+	function mod:OnCombatStart(delay)
+		timerChainBoltCD:Start(1-delay)
+		timerLightningBoltCD:Start(1-delay)
+		timerBloodlustCD:Start(1-delay)
+	end
+
+	function mod:SPELL_CAST_START(args)
+		if args:IsSpell(8292) and args:IsSrcTypeHostile() then
+			timerChainBoltCD:Start()
+			if self:CheckInterruptFilter(args.sourceGUID, false, true) then
+				specWarnChainBolt:Show(args.sourceName)
+				specWarnChainBolt:Play("kickcast")
+			end
+		elseif args:IsSpell(12167) and args:IsSrcTypeHostile() then
+			timerLightningBoltCD:Start()
+			if self:CheckInterruptFilter(args.sourceGUID, false, true) then
+				specWarnLightningBolt:Show(args.sourceName)
+				specWarnLightningBolt:Play("kickcast")
+			end
 		end
 	end
-end
 
-function mod:SPELL_CAST_SUCCESS(args)
-	if args:IsSpell(6742) and args:IsSrcTypeHostile() then
-		timerBloodlustCD:Start()
+	function mod:SPELL_CAST_SUCCESS(args)
+		if args:IsSpell(6742) and args:IsSrcTypeHostile() then
+			timerBloodlustCD:Start()
+		end
 	end
-end
 
-function mod:SPELL_AURA_APPLIED(args)
-	if args:IsSpell(6742) and args:IsDestTypeHostile() then
-		warningBloodlust:Show(args.destName)
-	elseif args:IsSpell(9906) then
-		warningReflection:Show(args.destName)
-	elseif args:IsSpell(3636) then
-		warningCrystallineSlumber:Show(args.destName)
+	function mod:SPELL_AURA_APPLIED(args)
+		if args:IsSpell(6742) and args:IsDestTypeHostile() then
+			warningBloodlust:Show(args.destName)
+		elseif args:IsSpell(9906) then
+			warningReflection:Show(args.destName)
+		elseif args:IsSpell(3636) then
+			warningCrystallineSlumber:Show(args.destName)
+		end
 	end
 end

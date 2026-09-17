@@ -10,22 +10,28 @@ mod:SetZone(230)
 
 mod:RegisterCombat("combat")
 
-mod:RegisterEventsInCombat(
-	"UNIT_DIED"
-)
+if DBM:IsRestricted() then
+	--do stuff
+	--mod:AddAuraSoundOption(372820, true, 372820, 1, 2, "watchfeet", 8, 0)
+else
 
-function mod:OnCombatStart(delay)
-	self.vb.bossLeft = 1--Force set number of bosses we expect to kill to 1 on engage for wipe/boss statistics
-	self.numBoss = 1--^^
-end
+	mod:RegisterEventsInCombat(
+		"UNIT_DIED"
+	)
 
-function mod:UNIT_DIED(args)
-	local cid = self:GetCIDFromGUID(args.destGUID)
-	--Grizzle, Anub'shiah, Eviscerator, Ok'thor the Breaker, Hedrum the Creeper, Gorosh the Dervish
-	if cid == 9028 or cid == 9031 or cid == 9029 or cid == 9030 or cid == 9032 or cid == 9027 then
-		--self.vb.bossLeft = self.vb.bossLeft - 1
-		--if self.vb.bossLeft == 0 then
-			DBM:EndCombat(self)
-		--end
+	function mod:OnCombatStart(delay)
+		self.vb.bossLeft = 1--Force set number of bosses we expect to kill to 1 on engage for wipe/boss statistics
+		self.numBoss = 1--^^
+	end
+
+	function mod:UNIT_DIED(args)
+		local cid = self:GetCIDFromGUID(args.destGUID)
+		--Grizzle, Anub'shiah, Eviscerator, Ok'thor the Breaker, Hedrum the Creeper, Gorosh the Dervish
+		if cid == 9028 or cid == 9031 or cid == 9029 or cid == 9030 or cid == 9032 or cid == 9027 then
+			--self.vb.bossLeft = self.vb.bossLeft - 1
+			--if self.vb.bossLeft == 0 then
+				DBM:EndCombat(self)
+			--end
+		end
 	end
 end

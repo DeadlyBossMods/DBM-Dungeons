@@ -10,33 +10,39 @@ mod:SetZone(2784)
 
 mod:RegisterCombat("combat")
 
-mod:RegisterEventsInCombat(
-	"SPELL_CAST_START 470280 470457"
-)
+if DBM:IsRestricted() then
+	--do stuff
+	--mod:AddAuraSoundOption(372820, true, 372820, 1, 2, "watchfeet", 8, 0)
+else
 
--- Umbral Slash (470280)
--- Seems to be the only relevant ability, a shockwave that splits damage.
--- No clue what the cooldown or timer on that is
+	mod:RegisterEventsInCombat(
+		"SPELL_CAST_START 470280 470457"
+	)
 
--- Bounding Shadow (470457)
--- Summons some ghostly skull things that fly towards you and presumably do damage? Didn't seem very relevant.
+	-- Umbral Slash (470280)
+	-- Seems to be the only relevant ability, a shockwave that splits damage.
+	-- No clue what the cooldown or timer on that is
 
--- Rain of Fire (469990)
--- Seems bugged because it only does 9 fire damage?
--- I guess we want a GTFO warning if that gets fixed.
+	-- Bounding Shadow (470457)
+	-- Summons some ghostly skull things that fly towards you and presumably do damage? Didn't seem very relevant.
+
+	-- Rain of Fire (469990)
+	-- Seems bugged because it only does 9 fire damage?
+	-- I guess we want a GTFO warning if that gets fixed.
 
 
-local warnShadow    = mod:NewCastAnnounce(470457, 3)
-local specWarnSlash = mod:NewSpecialWarningSoak(470280, nil, nil, nil, 2, 2, nil, nil, "frontal")
-local timerSlash    = mod:NewCastTimer(470280)
+	local warnShadow    = mod:NewCastAnnounce(470457, 3)
+	local specWarnSlash = mod:NewSpecialWarningSoak(470280, nil, nil, nil, 2, 2, nil, nil, "frontal")
+	local timerSlash    = mod:NewCastTimer(470280)
 
 
-function mod:SPELL_CAST_START(args)
-	if args:IsSpell(470280) then
-		specWarnSlash:Show()
-		specWarnSlash:Play("frontal")
-		timerSlash:Start()
-	elseif args:IsSpellID(470457) then
-		warnShadow:Show()
+	function mod:SPELL_CAST_START(args)
+		if args:IsSpell(470280) then
+			specWarnSlash:Show()
+			specWarnSlash:Play("frontal")
+			timerSlash:Start()
+		elseif args:IsSpellID(470457) then
+			warnShadow:Show()
+		end
 	end
 end

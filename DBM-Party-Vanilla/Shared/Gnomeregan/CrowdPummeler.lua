@@ -9,27 +9,33 @@ mod:SetZone(90)
 
 mod:RegisterCombat("combat")
 
-mod:RegisterEventsInCombat(
-	"SPELL_CAST_SUCCESS 10887 8374"
-)
+if DBM:IsRestricted() then
+	--do stuff
+	--mod:AddAuraSoundOption(372820, true, 372820, 1, 2, "watchfeet", 8, 0)
+else
 
-local specWarnCrowdPummel			= mod:NewSpecialWarningSpell(10887, "Melee", nil, nil, 2, 2, nil, nil, "carefly")
+	mod:RegisterEventsInCombat(
+		"SPELL_CAST_SUCCESS 10887 8374"
+	)
 
-local timerCrowdPummelCD			= mod:NewAITimer(180, 10887, nil, nil, nil, 2)
+	local specWarnCrowdPummel			= mod:NewSpecialWarningSpell(10887, "Melee", nil, nil, 2, 2, nil, nil, "carefly")
 
-local timerArcingSmashD				= mod:NewAITimer(180, 8374, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+	local timerCrowdPummelCD			= mod:NewAITimer(180, 10887, nil, nil, nil, 2)
 
-function mod:OnCombatStart(delay)
-	timerCrowdPummelCD:Start(1-delay)
-	timerArcingSmashD:Start(1-delay)
-end
+	local timerArcingSmashD				= mod:NewAITimer(180, 8374, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 
-function mod:SPELL_CAST_SUCCESS(args)
-	if args:IsSpell(10887) then
-		specWarnCrowdPummel:Show()
-		specWarnCrowdPummel:Play("carefly")
-		timerCrowdPummelCD:Start()
-	elseif args:IsSpell(8374) then
-		timerArcingSmashD:Start()
+	function mod:OnCombatStart(delay)
+		timerCrowdPummelCD:Start(1-delay)
+		timerArcingSmashD:Start(1-delay)
+	end
+
+	function mod:SPELL_CAST_SUCCESS(args)
+		if args:IsSpell(10887) then
+			specWarnCrowdPummel:Show()
+			specWarnCrowdPummel:Play("carefly")
+			timerCrowdPummelCD:Start()
+		elseif args:IsSpell(8374) then
+			timerArcingSmashD:Start()
+		end
 	end
 end

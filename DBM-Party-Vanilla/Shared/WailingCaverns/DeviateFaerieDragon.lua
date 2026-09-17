@@ -8,26 +8,32 @@ mod:SetZone(43)
 
 mod:RegisterCombat("combat")
 
-mod:RegisterEventsInCombat(
-	"SPELL_CAST_START 8040",
-	"SPELL_AURA_APPLIED 8040"
-)
+if DBM:IsRestricted() then
+	--do stuff
+	--mod:AddAuraSoundOption(372820, true, 372820, 1, 2, "watchfeet", 8, 0)
+else
 
-local warningDruidSlumber			= mod:NewTargetNoFilterAnnounce(8040, 2)
+	mod:RegisterEventsInCombat(
+		"SPELL_CAST_START 8040",
+		"SPELL_AURA_APPLIED 8040"
+	)
 
-local specWarnDruidsSlumber			= mod:NewSpecialWarningInterrupt(8040, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
+	local warningDruidSlumber			= mod:NewTargetNoFilterAnnounce(8040, 2)
 
-function mod:SPELL_CAST_START(args)
-	if args:IsSpell(8040) and args:IsSrcTypeHostile() then
-		if self:CheckInterruptFilter(args.sourceGUID, false, true) then
-			specWarnDruidsSlumber:Show(args.sourceName)
-			specWarnDruidsSlumber:Play("kickcast")
+	local specWarnDruidsSlumber			= mod:NewSpecialWarningInterrupt(8040, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
+
+	function mod:SPELL_CAST_START(args)
+		if args:IsSpell(8040) and args:IsSrcTypeHostile() then
+			if self:CheckInterruptFilter(args.sourceGUID, false, true) then
+				specWarnDruidsSlumber:Show(args.sourceName)
+				specWarnDruidsSlumber:Play("kickcast")
+			end
 		end
 	end
-end
 
-function mod:SPELL_AURA_APPLIED(args)
-	if args:IsSpell(8040) and args:IsDestTypePlayer() then
-		warningDruidSlumber:Show(args.destName)
+	function mod:SPELL_AURA_APPLIED(args)
+		if args:IsSpell(8040) and args:IsDestTypePlayer() then
+			warningDruidSlumber:Show(args.destName)
+		end
 	end
 end

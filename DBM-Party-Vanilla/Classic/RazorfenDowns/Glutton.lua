@@ -9,15 +9,21 @@ mod:SetZone(129)
 
 mod:RegisterCombat("combat")
 
-mod:RegisterEventsInCombat(
-	"SPELL_CAST_SUCCESS 12795"
-)
+if DBM:IsRestricted() then
+	--do stuff
+	--mod:AddAuraSoundOption(372820, true, 372820, 1, 2, "watchfeet", 8, 0)
+else
 
---TODO, add Disease Cloud when data is known
-local warningEnrage					= mod:NewSpellAnnounce(12795, 2)
+	mod:RegisterEventsInCombat(
+		"SPELL_CAST_SUCCESS 12795"
+	)
 
-function mod:SPELL_CAST_SUCCESS(args)
-	if args:IsSpell(12795) and args:IsSrcTypeHostile() then
-		warningEnrage:Show()
+	--TODO, add Disease Cloud when data is known
+	local warningEnrage					= mod:NewSpellAnnounce(12795, 2)
+
+	function mod:SPELL_CAST_SUCCESS(args)
+		if args:IsSpell(12795) and args:IsSrcTypeHostile() then
+			warningEnrage:Show()
+		end
 	end
 end

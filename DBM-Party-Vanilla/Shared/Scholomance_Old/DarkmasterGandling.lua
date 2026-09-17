@@ -9,14 +9,20 @@ mod:SetZone(289)
 
 mod:RegisterCombat("combat")
 
-mod:RegisterEventsInCombat(
-	"SPELL_CAST_SUCCESS 17950"
-)
+if DBM:IsRestricted() then
+	--do stuff
+	--mod:AddAuraSoundOption(372820, true, 372820, 1, 2, "watchfeet", 8, 0)
+else
 
-local warningShadowPortal		= mod:NewSpellAnnounce(17950, 2) -- Target seems unreliable
+	mod:RegisterEventsInCombat(
+		"SPELL_CAST_SUCCESS 17950"
+	)
 
-function mod:SPELL_CAST_SUCCESS(args)
-	if args:IsSpell(17950) then
-		warningShadowPortal:Show()
+	local warningShadowPortal		= mod:NewSpellAnnounce(17950, 2) -- Target seems unreliable
+
+	function mod:SPELL_CAST_SUCCESS(args)
+		if args:IsSpell(17950) then
+			warningShadowPortal:Show()
+		end
 	end
 end

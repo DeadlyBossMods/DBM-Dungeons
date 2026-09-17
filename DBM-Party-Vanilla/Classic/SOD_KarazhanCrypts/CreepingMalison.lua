@@ -10,31 +10,37 @@ mod:SetZone(2875)
 
 mod:RegisterCombat("combat")
 
--- The GTFO warning uses in combat events on purpose despite the fire staying around after the fight.
--- The warning is just annoying if you are looking for the Relics after the fight.
-mod:RegisterEventsInCombat(
-	"SPELL_PERIODIC_DAMAGE 1222097",
-	"SPELL_PERIODIC_MISSED 1222097",
-	"SPELL_AURA_APPLIED 1222097"
-)
+if DBM:IsRestricted() then
+	--do stuff
+	--mod:AddAuraSoundOption(372820, true, 372820, 1, 2, "watchfeet", 8, 0)
+else
 
--- This fight was completely free, just tank and spank.
--- Without a Shaman tank you should probably burn the eggs to avoid adds, that creates some fire on the floor to watch out for.
+	-- The GTFO warning uses in combat events on purpose despite the fire staying around after the fight.
+	-- The warning is just annoying if you are looking for the Relics after the fight.
+	mod:RegisterEventsInCombat(
+		"SPELL_PERIODIC_DAMAGE 1222097",
+		"SPELL_PERIODIC_MISSED 1222097",
+		"SPELL_AURA_APPLIED 1222097"
+	)
 
-local specWarnGTFO	= mod:NewSpecialWarningGTFO(1222097, nil, nil, nil, 1, 8, nil, nil, "watchfeet")
+	-- This fight was completely free, just tank and spank.
+	-- Without a Shaman tank you should probably burn the eggs to avoid adds, that creates some fire on the floor to watch out for.
 
-function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId, spellName)
-	if spellId == 1222097 and destGUID == UnitGUID("player") and self:AntiSpam(3.5, "gtfo") then
-		specWarnGTFO:Show(spellName)
-		specWarnGTFO:Play("watchfeet")
+	local specWarnGTFO	= mod:NewSpecialWarningGTFO(1222097, nil, nil, nil, 1, 8, nil, nil, "watchfeet")
+
+	function mod:SPELL_PERIODIC_DAMAGE(_, _, _, _, destGUID, _, _, _, spellId, spellName)
+		if spellId == 1222097 and destGUID == UnitGUID("player") and self:AntiSpam(3.5, "gtfo") then
+			specWarnGTFO:Show(spellName)
+			specWarnGTFO:Play("watchfeet")
+		end
 	end
-end
-mod.SPELL_PERIODIC_MISSED = mod.SPELL_PERIODIC_DAMAGE
+	mod.SPELL_PERIODIC_MISSED = mod.SPELL_PERIODIC_DAMAGE
 
-function mod:SPELL_AURA_APPLIED(args)
-	if args:IsSpellID(1222097) and args:IsPlayer() and self:AntiSpam(3.5, "gtfo") then
-		specWarnGTFO:Show(args.spellName)
-		specWarnGTFO:Play("watchfeet")
+	function mod:SPELL_AURA_APPLIED(args)
+		if args:IsSpellID(1222097) and args:IsPlayer() and self:AntiSpam(3.5, "gtfo") then
+			specWarnGTFO:Show(args.spellName)
+			specWarnGTFO:Play("watchfeet")
+		end
 	end
-end
 
+end

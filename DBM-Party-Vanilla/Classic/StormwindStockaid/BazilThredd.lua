@@ -8,21 +8,27 @@ mod:SetZone(34)
 
 mod:RegisterCombat("combat")
 
-mod:RegisterEventsInCombat(
-	"SPELL_CAST_SUCCESS 7964"
-)
+if DBM:IsRestricted() then
+	--do stuff
+	--mod:AddAuraSoundOption(372820, true, 372820, 1, 2, "watchfeet", 8, 0)
+else
 
-local warningSmokeBomb			= mod:NewSpellAnnounce(7964, 2)
+	mod:RegisterEventsInCombat(
+		"SPELL_CAST_SUCCESS 7964"
+	)
 
-local timerSmokeBombCD			= mod:NewCDTimer(15.8, 7964, nil, nil, nil, 3)
+	local warningSmokeBomb			= mod:NewSpellAnnounce(7964, 2)
 
-function mod:OnCombatStart(delay)
-	timerSmokeBombCD:Start(8-delay)
-end
+	local timerSmokeBombCD			= mod:NewCDTimer(15.8, 7964, nil, nil, nil, 3)
 
-function mod:SPELL_CAST_SUCCESS(args)
-	if args:IsSpell(7964) and args:IsSrcTypeHostile() then
-		warningSmokeBomb:Show()
-		timerSmokeBombCD:Start()
+	function mod:OnCombatStart(delay)
+		timerSmokeBombCD:Start(8-delay)
+	end
+
+	function mod:SPELL_CAST_SUCCESS(args)
+		if args:IsSpell(7964) and args:IsSrcTypeHostile() then
+			warningSmokeBomb:Show()
+			timerSmokeBombCD:Start()
+		end
 	end
 end

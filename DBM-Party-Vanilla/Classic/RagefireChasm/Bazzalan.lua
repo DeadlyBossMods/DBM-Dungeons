@@ -9,27 +9,33 @@ mod:SetZone(389)
 
 mod:RegisterCombat("combat")
 
-mod:RegisterEventsInCombat(
-	"SPELL_CAST_SUCCESS 744",
-	"SPELL_AURA_APPLIED 744"
-)
+if DBM:IsRestricted() then
+	--do stuff
+	--mod:AddAuraSoundOption(372820, true, 372820, 1, 2, "watchfeet", 8, 0)
+else
 
-local warningDeadlyPoison			= mod:NewTargetNoFilterAnnounce(744, 2, nil, "RemovePoison")
+	mod:RegisterEventsInCombat(
+		"SPELL_CAST_SUCCESS 744",
+		"SPELL_AURA_APPLIED 744"
+	)
 
-local timerDeadlyPoisonCD			= mod:NewAITimer(180, 744, nil, "RemovePoison", nil, 5, nil, DBM_COMMON_L.POISON_ICON)
+	local warningDeadlyPoison			= mod:NewTargetNoFilterAnnounce(744, 2, nil, "RemovePoison")
 
-function mod:OnCombatStart(delay)
-	timerDeadlyPoisonCD:Start(1-delay)
-end
+	local timerDeadlyPoisonCD			= mod:NewAITimer(180, 744, nil, "RemovePoison", nil, 5, nil, DBM_COMMON_L.POISON_ICON)
 
-function mod:SPELL_CAST_SUCCESS(args)
-	if args:IsSpell(744) and args:IsSrcTypeHostile() then
-		timerDeadlyPoisonCD:Start()
+	function mod:OnCombatStart(delay)
+		timerDeadlyPoisonCD:Start(1-delay)
 	end
-end
 
-function mod:SPELL_AURA_APPLIED(args)
-	if args:IsSpell(744) and args:IsDestTypePlayer() and self:CheckDispelFilter("poison") then
-		warningDeadlyPoison:Show(args.destName)
+	function mod:SPELL_CAST_SUCCESS(args)
+		if args:IsSpell(744) and args:IsSrcTypeHostile() then
+			timerDeadlyPoisonCD:Start()
+		end
+	end
+
+	function mod:SPELL_AURA_APPLIED(args)
+		if args:IsSpell(744) and args:IsDestTypePlayer() and self:CheckDispelFilter("poison") then
+			warningDeadlyPoison:Show(args.destName)
+		end
 	end
 end

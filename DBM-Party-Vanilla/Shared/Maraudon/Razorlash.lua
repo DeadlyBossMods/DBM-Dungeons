@@ -8,3 +8,8 @@ mod:SetEncounterID(423)
 mod:SetZone(349)
 
 mod:RegisterCombat("combat")
+
+if DBM:IsRestricted() then
+	--do stuff
+	--mod:AddAuraSoundOption(372820, true, 372820, 1, 2, "watchfeet", 8, 0)
+end

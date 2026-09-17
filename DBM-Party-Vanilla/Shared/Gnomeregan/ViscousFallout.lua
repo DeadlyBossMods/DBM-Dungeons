@@ -9,21 +9,27 @@ mod:SetZone(90)
 
 mod:RegisterCombat("combat")
 
-mod:RegisterEventsInCombat(
-	"SPELL_CAST_SUCCESS 21687"
-)
+if DBM:IsRestricted() then
+	--do stuff
+	--mod:AddAuraSoundOption(372820, true, 372820, 1, 2, "watchfeet", 8, 0)
+else
 
-local warningToxicVolley			= mod:NewSpellAnnounce(21687, 2, nil, "Healer|RemovePoison")
+	mod:RegisterEventsInCombat(
+		"SPELL_CAST_SUCCESS 21687"
+	)
 
-local timerToxicVolleyCD			= mod:NewAITimer(180, 21687, nil, nil, nil, 3, nil, DBM_COMMON_L.POISON_ICON)
+	local warningToxicVolley			= mod:NewSpellAnnounce(21687, 2, nil, "Healer|RemovePoison")
 
-function mod:OnCombatStart(delay)
-	timerToxicVolleyCD:Start(1-delay)
-end
+	local timerToxicVolleyCD			= mod:NewAITimer(180, 21687, nil, nil, nil, 3, nil, DBM_COMMON_L.POISON_ICON)
 
-function mod:SPELL_CAST_SUCCESS(args)
-	if args:IsSpell(21687) then
-		warningToxicVolley:Show()
-		timerToxicVolleyCD:Start()
+	function mod:OnCombatStart(delay)
+		timerToxicVolleyCD:Start(1-delay)
+	end
+
+	function mod:SPELL_CAST_SUCCESS(args)
+		if args:IsSpell(21687) then
+			warningToxicVolley:Show()
+			timerToxicVolleyCD:Start()
+		end
 	end
 end
