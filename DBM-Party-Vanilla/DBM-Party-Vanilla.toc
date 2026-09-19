@@ -65,7 +65,7 @@
 ## X-DBM-Mod-MinCoreRevision: 20260522000000
 ## X-DBM-Mod-MinExpansion: 0
 ## X-Curse-Project-ID: 314994
-## X-Wago-ID: xZKxZENk [AllowLoadGameType camelot, standard, tbc, vanilla, wrath]
+## X-Wago-ID: xZKxZENk
 ## Version: @project-version@
 ## IconTexture: Interface\AddOns\DBM-Core\textures\dbm_airhorn [AllowLoadGameType cata, standard, mists]
 
