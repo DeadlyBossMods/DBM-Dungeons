@@ -11,7 +11,7 @@ mod:RegisterCombat("combat")
 DBM:RegisterAltSpellName(1263528, 28405)--Repulse -> Knockback
 DBM:RegisterAltSpellName(1277358, DBM_COMMON_L.ORBS)--Gates of the Abyss -> Orbs
 
-if DBM:IsPostMidnight() then
+if DBM:IsRestricted() then
 	--NOTE: Repulse being cast signals a restart of the ability sequence
 	local warnMindBlast					= mod:NewCountAnnounce(244750, 2, nil, "HasInterrupt")
 	local warnMassVoidInfusion			= mod:NewCountAnnounce(1263542, 2)

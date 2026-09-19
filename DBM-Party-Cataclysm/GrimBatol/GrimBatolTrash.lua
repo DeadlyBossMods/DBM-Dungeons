@@ -1,4 +1,4 @@
-if DBM:IsPostMidnight() or not DBM:IsRetail() then return end
+if DBM:IsRestricted() or not DBM:IsRetail() then return end
 local mod	= DBM:NewMod("GrimBatolTrash", "DBM-Party-Cataclysm", 3)
 local L		= mod:GetLocalizedStrings()
 

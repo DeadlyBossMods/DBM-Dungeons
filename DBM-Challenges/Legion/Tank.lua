@@ -12,7 +12,7 @@ mod.soloChallenge = true
 mod:RegisterCombat("combat")
 mod:SetReCombatTime(20, 5)--Basically killing of recombat restriction. mage tower lets you spam retry, we want the mod to let you
 
-if DBM:IsPostMidnight() then
+if DBM:IsRestricted() then
 	--local warnHolyWard					= mod:NewCastAnnounce(233473, 1)
 	--local warnDecay						= mod:NewStackAnnounce(234422, 3)
 	--local warnShadowSweep					= mod:NewSpellAnnounce(234441, 3)

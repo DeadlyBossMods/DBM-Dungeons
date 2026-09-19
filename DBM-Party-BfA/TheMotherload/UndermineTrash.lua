@@ -24,7 +24,7 @@ if IsTestBuild() or IsBetaBuild() then
 	end
 end
 
-if DBM:IsPostMidnight() then return end
+if DBM:IsRestricted() then return end
 local mod	= DBM:NewMod("MotherloadTrash", "DBM-Party-BfA", 7)
 local L		= mod:GetLocalizedStrings()
 

@@ -4,7 +4,7 @@ local L		= mod:GetLocalizedStrings()
 mod:SetRevision("@file-date-integer@")
 mod:SetZone(974)
 
-if DBM:IsPostMidnight() then
+if DBM:IsRestricted() then
 	mod:RegisterSafeEvents(
 		"UNIT_SPELLCAST_SUCCEEDED player",
 		"UNIT_AURA player",

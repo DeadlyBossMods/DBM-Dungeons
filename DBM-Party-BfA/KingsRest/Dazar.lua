@@ -10,7 +10,7 @@ mod:SetZone(1762)
 
 mod:RegisterCombat("combat")
 
-if DBM:IsPostMidnight() then
+if DBM:IsRestricted() then
 	DBM:RegisterAltSpellName(269369, DBM_COMMON_L.INTERRUPT)--Deadly Roar --> Interrupt
 	DBM:RegisterAltSpellName(268586, DBM_COMMON_L.TANKBUSTER)--Blade Combo --> Tank Buster
 	DBM:RegisterAltSpellName(1303267, DBM_COMMON_L.AOEDAMAGE)--Gilded Destruction --> AoE Damage

@@ -8,7 +8,7 @@ mod:SetZone(1753)
 
 mod:RegisterCombat("combat")
 
-if DBM:IsPostMidnight() then
+if DBM:IsRestricted() then
 	local warnPhaseDash					= mod:NewCountAnnounce(1280064, 2)
 	local warnShadowPounce				= mod:NewCountAnnounce(245738, 2)
 

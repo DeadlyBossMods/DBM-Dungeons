@@ -9,7 +9,7 @@ mod:SetZone(1753)
 
 mod:RegisterCombat("combat")
 
-if DBM:IsPostMidnight() then
+if DBM:IsRestricted() then
 	DBM:RegisterAltSpellName(1268916, DBM_COMMON_L.FRONTAL)--Null Palm -> Frontal
 	DBM:RegisterAltSpellName(1263304, DBM_COMMON_L.AOEDAMAGE)--Crashing Void -> AOE Damage
 

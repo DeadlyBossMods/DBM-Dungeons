@@ -1,4 +1,4 @@
-if DBM:IsPostMidnight() then return end
+if DBM:IsRestricted() then return end
 local mod	= DBM:NewMod("AuctTombsTrash", "DBM-Party-BC", 8, 250)
 
 mod:SetRevision("@file-date-integer@")

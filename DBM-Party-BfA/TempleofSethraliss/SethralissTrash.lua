@@ -8,7 +8,7 @@ mod:SetZone(1877)
 mod.isTrashMod = true
 mod.isTrashModBossFightAllowed = true
 
-if DBM:IsPostMidnight() then
+if DBM:IsRestricted() then
 	mod:AddAuraSoundOption(1291468, "Tank", 1291468, 1, 1, "defensive", 2, 0)--Sunder Slam
 	mod:AddAuraSoundOption(1291399, "RemoveBleed", 1291399, 1, 3, "bleedyou", 19, 0)--Serrated Charge
 	mod:AddAuraSoundOption(1303486, false, 1303486, 1, 3, "aesoon", 2, 0)--Caustic Stomp

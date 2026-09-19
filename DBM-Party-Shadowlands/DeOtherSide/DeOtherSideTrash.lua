@@ -1,4 +1,4 @@
-if DBM:IsPostMidnight() then return end
+if DBM:IsRestricted() then return end
 local mod	= DBM:NewMod("DeOtherSideTrash", "DBM-Party-Shadowlands", 7)
 local L		= mod:GetLocalizedStrings()
 

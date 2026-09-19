@@ -104,7 +104,7 @@ function mod:OnCombatStart(delay)
 end
 
 function mod:OnCombatEnd()
-	if not DBM:IsPostMidnight() then
+	if not DBM:IsRestricted() then
 		self:UnregisterZoneCombat(2441)
 	end
 	table.wipe(activeBossGUIDS)

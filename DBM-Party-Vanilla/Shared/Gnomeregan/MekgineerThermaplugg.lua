@@ -1,7 +1,7 @@
-local isRetail = WOW_PROJECT_ID == (WOW_PROJECT_MAINLINE or 1)
-local isClassic = WOW_PROJECT_ID == (WOW_PROJECT_CLASSIC or 2)
-local isBCC = WOW_PROJECT_ID == (WOW_PROJECT_BURNING_CRUSADE_CLASSIC or 5)
---local isCata = WOW_PROJECT_ID == (WOW_PROJECT_CATA_CLASSIC or 99)--NYI in Cata beta
+local isRetail = DBM:IsRetail()
+local isClassic = DBM:IsVanillaEra()
+local isBCC = DBM:IsTBC()
+--local isCata = DBM:IsCata()--NYI in Cata beta
 local tempTOC = DBM:GetTOC()
 local isCata = (tempTOC >= 40400) and (tempTOC < 50000)
 local mod	= DBM:NewMod(422, "DBM-Party-Vanilla", (isCata or isRetail) and 4 or 7, 231)

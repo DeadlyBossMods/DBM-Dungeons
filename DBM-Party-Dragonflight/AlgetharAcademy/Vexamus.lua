@@ -12,7 +12,7 @@ mod.sendMainBossGUID = true
 
 mod:RegisterCombat("combat")
 
-if DBM:IsPostMidnight() then
+if DBM:IsRestricted() then
 	DBM:RegisterAltSpellName(385974, DBM_COMMON_L.ORBS)--Arcane Orbs -> Orbs
 	DBM:RegisterAltSpellName(386173, DBM_COMMON_L.POOLS)--Mana Bombs -> Pools
 	DBM:RegisterAltSpellName(388537, DBM_COMMON_L.AOEDAMAGE)--Arcane Fissure -> AOE Damage

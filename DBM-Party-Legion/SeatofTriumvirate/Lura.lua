@@ -8,7 +8,7 @@ mod:SetZone(1753)
 
 mod:RegisterCombat("combat")
 
-if DBM:IsPostMidnight() then
+if DBM:IsRestricted() then
 	local warnDiscordantbeam			= mod:NewCountAnnounce(1265426, 2)
 
 	local specWarnDiscordantbeam		= mod:NewSpecialWarningBlizzYou(1265426, nil, nil, nil, 1, 19, nil, nil, "beamyou")

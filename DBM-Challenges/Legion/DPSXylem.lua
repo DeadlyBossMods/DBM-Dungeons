@@ -13,7 +13,7 @@ mod:RegisterCombat("combat")
 mod:SetWipeTime(30)--Prevent intermission to stage 2 causing mod to think it wipes since wipe check would detect no combat and no boss1
 mod:SetReCombatTime(20, 5)--Basically killing of recombat restriction. mage tower lets you spam retry, we want the mod to let you
 
-if DBM:IsPostMidnight() then
+if DBM:IsRestricted() then
 	--local warnFrostPhase				= mod:NewSpellAnnounce(242394, 2)
 	--local warnArcanePhase				= mod:NewSpellAnnounce(242386, 2)
 
