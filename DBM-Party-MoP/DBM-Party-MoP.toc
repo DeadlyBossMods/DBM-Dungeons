@@ -1,7 +1,6 @@
-## Interface: 50504
-## X-Min-Interface-Mists: 50500
+## Interface: 50504, 120100
+## AllowLoadGameType: mists, standard
 ## Category: DBM
-
 ## Title:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Dungeons (MoP)|r
 ## Title-koKR:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0던전 (판다)|r
 ## Title-deDE:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Gruppe-MoP|r
@@ -18,7 +17,8 @@
 ## X-DBM-Mod: 1
 ## X-DBM-Mod-Type: PARTY
 ## X-DBM-Mod-Category: MOP
-## X-DBM-StatTypes: normal,heroic,mythic,challenge
+## X-DBM-StatTypes: normal,heroic,challenge [AllowLoadGameType standard]
+## X-DBM-StatTypes: normal,heroic,mythic,challenge [AllowLoadGameType mists]
 ## X-DBM-Mod-SubCategoriesID: 960, 961, 959, 962, 994, 1011, 1007, 1001, 1004
 ## X-DBM-Mod-Name: Dungeons (MoP)
 ## X-DBM-Mod-Name-koKR: 던전 (판다)

@@ -1,6 +1,6 @@
 ## Interface: 120100
+## AllowLoadGameType: standard
 ## Category: DBM
-
 ## Title:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Dungeons (BfA)|r
 ## Title-deDE:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Gruppe-BfA|r
 ## Title-koKR:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0던전 (격아)|r
@@ -31,6 +31,7 @@
 ## X-DBM-Mod-MapID: 1763, 1754, 1762, 1864, 1822, 1877, 1594, 1841, 1771, 1862, 2097
 ## X-DBM-Mod-MinCoreRevision: 20260522000000
 ## X-DBM-Mod-MinExpansion: 7
+
 localization.en.lua
 localization.de.lua
 localization.kr.lua

@@ -1,0 +1,49 @@
+## Interface: 16001
+## AllowLoadGameType: camelot
+## Category: DBM
+## Title:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Dungeons (Forever)|r
+## Author: MysticalOS
+## LoadOnDemand: 1
+## RequiredDeps: DBM-Core
+## SavedVariables: DBMPartyForever_AllSavedVars
+## SavedVariablesPerCharacter: DBMPartyForever_SavedStats
+## X-DBM-Mod: 1
+## X-DBM-Mod-Type: PARTY
+## X-DBM-Mod-Category: Classic
+## X-DBM-StatTypes: normal
+## X-DBM-Mod-SubCategoriesID: 3065,2999,2998,2959
+## X-DBM-Mod-Name: Dungeons (Forever)
+## X-DBM-Mod-Sort: 1102
+## X-DBM-Mod-MapID: 3065,2999,2998,2959
+## X-DBM-Mod-MinCoreRevision: 20260522000000
+## X-DBM-Mod-MinExpansion: 0
+## X-Curse-Project-ID: 314994
+## X-Wago-ID: xZKxZENk
+## Version: @project-version@
+
+locale.generated.lua
+localization.en.lua
+HallofThanes\FaldrimAnvilmar.lua
+HallofThanes\Infurnus.lua
+HallofThanes\Plunder.lua
+HallofThanes\DurgenDirgehammer.lua
+RuinsofLordaeron\Witherfang.lua
+RuinsofLordaeron\TheAbandoned.lua
+RuinsofLordaeron\TheButcher.lua
+RuinsofLordaeron\Rathmael.lua
+RuinsofLordaeron\LordaeronCaptain.lua
+RuinsofLordaeron\ViktortheVile.lua
+RuinsofLordaeron\Bjork.lua
+KroldokStronghold\Saltspine.lua
+KroldokStronghold\Shadetooth.lua
+KroldokStronghold\HighlandHorror.lua
+KroldokStronghold\RelicGuardian.lua
+TheShapersTerrace\ArcaneAnomaly.lua
+TheShapersTerrace\FelAncient.lua
+TheShapersTerrace\ManaDevourer.lua
+TheShapersTerrace\ManaElemental.lua
+TheShapersTerrace\UnstableSentinel.lua
+TheShapersTerrace\ShadeoftheArchmage.lua
+TheShapersTerrace\LyntheIgnored.lua
+TheShapersTerrace\AtrexistheGraveKnight.lua
+TheShapersTerrace\ManaWraith.lua

@@ -1,5 +1,5 @@
 ## Interface: 120100
-## X-Min-Interface: 110002
+## AllowLoadGameType: standard
 ## Category: DBM
 ## Title:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cff4565ffDelves (Midnight)|r
 ## Title-koKR:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cff4565ff구렁 (한밤)|r
@@ -36,10 +36,8 @@ localization.en.lua
 localization.kr.lua
 localization.ru.lua
 localization.cn.lua
-
 Nemesis\Aztarec.lua
 Nemesis\TormentsRise.lua
-
 Encounters\InfiltratorGulkat.lua
 Encounters\BladeMasterDarza.lua
 Encounters\SpiritflayerJinma.lua
@@ -56,7 +54,6 @@ Encounters\InfiltratorGarand.lua
 Encounters\Antenorian.lua
 Encounters\ChiefArcanistPatram.lua
 Encounters\EsuritusSunkiller.lua
-
 Zones\TheDarkway.lua
 Zones\TwilightCrypts.lua
 Zones\AtalAman.lua

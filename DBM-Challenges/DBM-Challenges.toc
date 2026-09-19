@@ -1,5 +1,5 @@
-## Interface: 50504
-## X-Min-Interface: 50500
+## Interface: 50504, 120100
+## AllowLoadGameType: mists, standard
 ## Category: DBM
 ## Title:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Challenges|r
 ## Title-deDE:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Herausforderungen|r
@@ -44,4 +44,24 @@ localization.kr.lua
 localization.tw.lua
 localization.cn.lua
 localization.ru.lua
+Shadowlands\Torghast.lua [AllowLoadGameType standard]
+Shadowlands\PoA_Echthra.lua [AllowLoadGameType standard]
+Shadowlands\PoA_Nuuminuuru.lua [AllowLoadGameType standard]
+Shadowlands\PoA_Splinterbark.lua [AllowLoadGameType standard]
+Shadowlands\PoA_CravenCorinth.lua [AllowLoadGameType standard]
+Shadowlands\PoA_Kalisthene.lua [AllowLoadGameType standard]
+Shadowlands\PoA_AlderynandMynir.lua [AllowLoadGameType standard]
+Shadowlands\PoA_MadMortimer.lua [AllowLoadGameType standard]
+Shadowlands\PoA_Thrantiok.lua [AllowLoadGameType standard]
+Shadowlands\PoA_Athanos.lua [AllowLoadGameType standard]
+Shadowlands\PoA_Azaruux.lua [AllowLoadGameType standard]
+BfA\NzothVisionStormwind.lua [AllowLoadGameType standard]
+BfA\NzothVisionOrgrimmar.lua [AllowLoadGameType standard]
+Legion\DPSFelTotem.lua [AllowLoadGameType standard]
+Legion\DPSImpossibleFoe.lua [AllowLoadGameType standard]
+Legion\DPSQueen.lua [AllowLoadGameType standard]
+Legion\DPSTwins.lua [AllowLoadGameType standard]
+Legion\DPSXylem.lua [AllowLoadGameType standard]
+Legion\Healer.lua [AllowLoadGameType standard]
+Legion\Tank.lua [AllowLoadGameType standard]
 MoP\PGWhiteTiger.lua

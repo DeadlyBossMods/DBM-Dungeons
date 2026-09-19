@@ -1,7 +1,6 @@
-## Interface: 50504
-## X-Min-Interface-Mists: 50500
+## Interface: 20506, 30405, 38002, 40402, 50504, 120100
+## AllowLoadGameType: tbc, wrath, cata, mists, standard
 ## Category: DBM
-
 ## Title:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Dungeons (BC)|r
 ## Title-deDE:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Gruppe-BC|r
 ## Title-ruRU:|cffffe00a<|r|cffff7d0aDBM Мод|r|cffffe00a>|r |cffc030c0Подземелья (BC)|r
@@ -28,7 +27,8 @@
 ## X-DBM-Mod-Name-zhTW: 隊伍首領 (燃燒的遠征)
 ## X-DBM-Mod-Name-zhCN: 队伍首领 (燃烧的远征)
 ## X-DBM-Mod-Sort: 1002
-## X-DBM-Mod-MapID: 540,558,556,555,542,546,545,547,553,554,552,557,269,560,543,585
+## X-DBM-Mod-MapID: 540,558,556,555,542,546,545,547,553,554,552,557,269,560,543,585 [AllowLoadGameType cata, mists, tbc, wrath]
+## X-DBM-Mod-MapID: 540,558,556,555,542,546,545,547,553,554,552,557,269,560,543,585,2849 [AllowLoadGameType standard]
 ## X-DBM-Mod-MinCoreRevision: 20260522000000
 ## X-DBM-Mod-MinExpansion: 1
 ## X-Curse-Project-ID: 314994
