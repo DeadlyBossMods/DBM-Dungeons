@@ -3,7 +3,7 @@
 ## Category: DBM
 ## Title:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Dungeons (Legion)|r
 ## Title-deDE:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Dungeons (Legion)|r
-## Title-frFR:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Groupe-Legion|r
+## Title-frFR:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Donjons (Legion)|r
 ## Title-ruRU:|cffffe00a<|r|cffff7d0aDBM Мод|r|cffffe00a>|r |cffc030c0Подземелья (Легион)|r
 ## Title-zhTW:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0隊伍首領-軍臨天下|r
 ## Title-zhCN:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0队伍首领 (军团再临)|r
@@ -23,9 +23,9 @@
 ## X-DBM-Mod-Name-deDE: Dungeons (Legion)
 ## X-DBM-Mod-Name-ruRU: Подземелья (Легион)
 ## X-DBM-Mod-Name-esES: Mazmorras (Legion)
-## X-DBM-Mod-Name-esMX: Mazmorras (Legion)
+## X-DBM-Mod-Name-esMX: Calabozos (Legion)
 ## X-DBM-Mod-Name-ptBR: Masmorras (Legion)
-## X-DBM-Mod-Name-frFR: Groupe (Legion)
+## X-DBM-Mod-Name-frFR: Donjons (Legion)
 ## X-DBM-Mod-Name-zhTW: 隊伍首領 (軍臨天下)
 ## X-DBM-Mod-Name-zhCN: 队伍首领 (军团再临)
 ## X-DBM-Mod-Name-koKR: 던전 (군단)

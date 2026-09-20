@@ -5,7 +5,7 @@
 ## Title-koKR:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0던전 (드군)|r
 ## Title-deDE:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Dungeons (WoD)|r
 ## Title-esES:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Mazmorras (WoD)|r
-## Title-frFR:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Groupe-WoD|r
+## Title-frFR:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Donjons (WoD)|r
 ## Title-ruRU:|cffffe00a<|r|cffff7d0aDBM Мод|r|cffffe00a>|r |cffc030c0Подземелья (Дренор)|r
 ## Title-zhTW:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0隊伍首領-德拉諾之霸|r
 ## Title-zhCN:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0队伍首领 (德拉诺之王)|r
@@ -24,9 +24,9 @@
 ## X-DBM-Mod-Name-deDE: Dungeons (WoD)
 ## X-DBM-Mod-Name-ruRU: Подземелья (Дренор)
 ## X-DBM-Mod-Name-esES: Mazmorras (WoD)
-## X-DBM-Mod-Name-esMX: Mazmorras (WoD)
+## X-DBM-Mod-Name-esMX: Calabozos (WoD)
 ## X-DBM-Mod-Name-ptBR: Masmorras (WoD)
-## X-DBM-Mod-Name-frFR: Groupe (WoD)
+## X-DBM-Mod-Name-frFR: Donjons (WoD)
 ## X-DBM-Mod-Name-zhTW: 隊伍首領 (德拉諾之霸)
 ## X-DBM-Mod-Name-zhCN: 队伍首领 (德拉诺之王)
 ## X-DBM-Mod-Sort: 602

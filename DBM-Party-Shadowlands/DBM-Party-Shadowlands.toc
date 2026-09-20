@@ -3,7 +3,7 @@
 ## Category: DBM
 ## Title:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Dungeons (SL)|r
 ## Title-esES:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Mazmorras (SL)|r
-## Title-esMX:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Mazmorras (SL)|r
+## Title-esMX:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Calabozos (SL)|r
 ## Title-koKR:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0던전 (어둠땅)|r
 ## Title-zhTW:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0隊伍首領-暗影之境|r
 ## Title-zhCN:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0队伍首领 (暗影国度)|r
@@ -20,7 +20,7 @@
 ## X-DBM-Mod-SubCategoriesID: 2286, 2289, 2290, 2287, 2285, 2293, 2291, 2284, 2441
 ## X-DBM-Mod-Name: Dungeons (Shadowlands)
 ## X-DBM-Mod-Name-esES: Mazmorras (Shadowlands)
-## X-DBM-Mod-Name-esMX: Mazmorras (Shadowlands)
+## X-DBM-Mod-Name-esMX: Calabozos (Shadowlands)
 ## X-DBM-Mod-Name-koKR: 던전 (어둠땅)
 ## X-DBM-Mod-Name-zhTW: 隊伍首領 (暗影之境)
 ## X-DBM-Mod-Name-zhCN: 队伍首领 (暗影国度)
