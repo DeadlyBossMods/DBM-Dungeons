@@ -6,8 +6,8 @@
 ## Title-ruRU:|cffffe00a<|r|cffff7d0aDBM Мод|r|cffffe00a>|r |cffc030c0Подземелья (BC)|r
 ## Title-esES:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Mazmorras (TBC)|r
 ## Title-koKR:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0던전 (불성)|r
-## Title-zhTW:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0隊伍首領 (燃燒的遠征)|r
-## Title-zhCN:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0队伍首领 (燃烧的远征)|r
+## Title-zhTW:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0地城 (燃燒的遠征)|r
+## Title-zhCN:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0地下城 (燃烧的远征)|r
 ## Author: Arta/MysticalOS
 ## LoadOnDemand: 1
 ## RequiredDeps: DBM-Core
@@ -24,8 +24,8 @@
 ## X-DBM-Mod-Name-ruRU: Подземелья (BC)
 ## X-DBM-Mod-Name-esES: Mazmorras (TBC)
 ## X-DBM-Mod-Name-koKR: 던전 (불성)
-## X-DBM-Mod-Name-zhTW: 隊伍首領 (燃燒的遠征)
-## X-DBM-Mod-Name-zhCN: 队伍首领 (燃烧的远征)
+## X-DBM-Mod-Name-zhTW: 地城 (燃燒的遠征)
+## X-DBM-Mod-Name-zhCN: 地下城 (燃烧的远征)
 ## X-DBM-Mod-Sort: 1002
 ## X-DBM-Mod-MapID: 540,558,556,555,542,546,545,547,553,554,552,557,269,560,543,585 [AllowLoadGameType cata, mists, tbc, wrath]
 ## X-DBM-Mod-MapID: 540,558,556,555,542,546,545,547,553,554,552,557,269,560,543,585,2849 [AllowLoadGameType standard]

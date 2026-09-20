@@ -5,8 +5,8 @@
 ## Title-esES:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Mazmorras (SL)|r
 ## Title-esMX:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Calabozos (SL)|r
 ## Title-koKR:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0던전 (어둠땅)|r
-## Title-zhTW:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0隊伍首領 (暗影之境)|r
-## Title-zhCN:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0队伍首领 (暗影国度)|r
+## Title-zhTW:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0地城 (暗影之境)|r
+## Title-zhCN:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0地下城 (暗影国度)|r
 ## Title-ruRU:|cffffe00a<|r|cffff7d0aDBM Мод|r|cffffe00a>|r |cffc030c0Подземелья (Темные Земли)|r
 ## LoadOnDemand: 1
 ## RequiredDeps: DBM-Core
@@ -22,8 +22,8 @@
 ## X-DBM-Mod-Name-esES: Mazmorras (Shadowlands)
 ## X-DBM-Mod-Name-esMX: Calabozos (Shadowlands)
 ## X-DBM-Mod-Name-koKR: 던전 (어둠땅)
-## X-DBM-Mod-Name-zhTW: 隊伍首領 (暗影之境)
-## X-DBM-Mod-Name-zhCN: 队伍首领 (暗影国度)
+## X-DBM-Mod-Name-zhTW: 地城 (暗影之境)
+## X-DBM-Mod-Name-zhCN: 地下城 (暗影国度)
 ## X-DBM-Mod-Name-ruRU: Подземелья (Темные Земли)
 ## X-DBM-Mod-Sort: 302
 ## X-DBM-Mod-MapID: 2286, 2289, 2290, 2287, 2285, 2293, 2291, 2284, 2441

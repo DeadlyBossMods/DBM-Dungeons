@@ -4,9 +4,9 @@
 ## Title:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Dungeons (BfA)|r
 ## Title-deDE:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Dungeons (BfA)|r
 ## Title-koKR:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0던전 (격아)|r
-## Title-zhTW:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0隊伍首領 (決戰艾澤拉斯)|r
-## Title-zhCN:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0队伍首领 (争霸艾泽拉斯)|r
-## Title-itIT:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Gruppo-BfA|r
+## Title-zhTW:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0地城 (決戰艾澤拉斯)|r
+## Title-zhCN:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0地下城 (争霸艾泽拉斯)|r
+## Title-itIT:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Spedizione (BfA)|r
 ## Title-ruRU:|cffffe00a<|r|cffff7d0aDBM Мод|r|cffffe00a>|r |cffc030c0Подземелья (Битва за Азерот)|r
 ## LoadOnDemand: 1
 ## RequiredDeps: DBM-Core
@@ -23,9 +23,9 @@
 ## X-DBM-Mod-Name-esMX: Calabozos (BfA)
 ## X-DBM-Mod-Name-deDE: Dungeons (BfA)
 ## X-DBM-Mod-Name-koKR: 던전 (격아)
-## X-DBM-Mod-Name-zhTW: 隊伍首領 (決戰艾澤拉斯)
-## X-DBM-Mod-Name-zhCN: 队伍首领 (争霸艾泽拉斯)
-## X-DBM-Mod-Name-itiT: Gruppo (BfA)
+## X-DBM-Mod-Name-zhTW: 地城 (決戰艾澤拉斯)
+## X-DBM-Mod-Name-zhCN: 地下城 (争霸艾泽拉斯)
+## X-DBM-Mod-Name-itiT: Spedizione (BfA)
 ## X-DBM-Mod-Name-ruRU: Подземелья (Битва за Азерот)
 ## X-DBM-Mod-Sort: 402
 ## X-DBM-Mod-MapID: 1763, 1754, 1762, 1864, 1822, 1877, 1594, 1841, 1771, 1862, 2097

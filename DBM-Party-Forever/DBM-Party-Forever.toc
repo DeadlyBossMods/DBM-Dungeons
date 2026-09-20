@@ -9,8 +9,8 @@
 ## Title-frFR:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Donjons (Forever)|r
 ## Title-ruRU:|cffffe00a<|r|cffff7d0aDBM Мод|r|cffffe00a>|r |cffc030c0Подземелья (Forever)|r
 ## Title-koKR:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0던전 (포에버)|r
-## Title-zhTW:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0隊伍首領 (永恆)|r
-## Title-zhCN:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0队伍首领 (无限)|r
+## Title-zhTW:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0地城 (永恆)|r
+## Title-zhCN:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0地下城 (无限)|r
 ## Author: MysticalOS
 ## LoadOnDemand: 1
 ## RequiredDeps: DBM-Core
@@ -29,8 +29,8 @@
 ## X-DBM-Mod-Name-frFR: Donjons (Forever)
 ## X-DBM-Mod-Name-ruRU: Подземелья (Forever)
 ## X-DBM-Mod-Name-koKR: 던전 (포에버)
-## X-DBM-Mod-Name-zhTW: 隊伍首領 (永恆)
-## X-DBM-Mod-Name-zhCN: 队伍首领 (无限)
+## X-DBM-Mod-Name-zhTW: 地城 (永恆)
+## X-DBM-Mod-Name-zhCN: 地下城 (无限)
 ## X-DBM-Mod-Sort: 1102
 ## X-DBM-Mod-MapID: 3065,2999,2998,2959
 ## X-DBM-Mod-MinCoreRevision: 20260522000000

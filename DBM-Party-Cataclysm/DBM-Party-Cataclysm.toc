@@ -4,11 +4,11 @@
 ## Title:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Dungeons (Cata)|r
 ## Title-frFR:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Donjons (Cata)|r
 ## Title-deDE:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Dungeons (Cata)|r
-## Title-zhTW:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0隊伍首領 (浩劫與重生)|r
+## Title-zhTW:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0地城 (浩劫與重生)|r
 ## Title-ruRU:|cffffe00a<|r|cffff7d0aDBM Мод|r|cffffe00a>|r |cffc030c0Подземелья (Катаклизм)|r
 ## Title-koKR:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0던전 (대격변)|r
 ## Title-esES:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Mazmorras (Cata)|r
-## Title-zhCN:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0队伍首领 (大地的裂变)|r
+## Title-zhCN:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0地下城 (大地的裂变)|r
 ## Title-ptBR:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c05Masmorras-Cata|r
 ## Author: MysticalOS
 ## LoadOnDemand: 1
@@ -25,8 +25,8 @@
 ## X-DBM-Mod-Name-frFR: Donjons (Cataclysm)
 ## X-DBM-Mod-Name-deDE: Dungeons (Cataclysm)
 ## X-DBM-Mod-Name-ruRU: Подземелья (Катаклизм)
-## X-DBM-Mod-Name-zhTW: 隊伍首領 (浩劫與重生)
-## X-DBM-Mod-Name-zhCN: 队伍首领 (大地的裂变)
+## X-DBM-Mod-Name-zhTW: 地城 (浩劫與重生)
+## X-DBM-Mod-Name-zhCN: 地下城 (大地的裂变)
 ## X-DBM-Mod-Name-esES: Mazmorras (Cataclysm)
 ## X-DBM-Mod-Name-koKR: 던전 (대격변)
 ## X-DBM-Mod-Name-esMX: Calabozos (Cataclysm)
