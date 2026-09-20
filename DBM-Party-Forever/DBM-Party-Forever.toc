@@ -23,6 +23,15 @@
 
 locale.generated.lua
 localization.en.lua
+localization.de.lua
+localization.es.lua
+localization.mx.lua
+localization.br.lua
+localization.fr.lua
+localization.ru.lua
+localization.kr.lua
+localization.tw.lua
+localization.cn.lua
 HallofThanes\FaldrimAnvilmar.lua
 HallofThanes\Infurnus.lua
 HallofThanes\Plunder.lua
