@@ -9,7 +9,7 @@
 ## Title-frFR:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Donjons (Forever)|r
 ## Title-ruRU:|cffffe00a<|r|cffff7d0aDBM Мод|r|cffffe00a>|r |cffc030c0Подземелья (Forever)|r
 ## Title-koKR:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0던전 (Forever)|r
-## Title-zhTW:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0隊伍首領-Forever|r
+## Title-zhTW:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0隊伍首領 (Forever)|r
 ## Title-zhCN:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0队伍首领 (Forever)|r
 ## Author: MysticalOS
 ## LoadOnDemand: 1
@@ -30,7 +30,7 @@
 ## X-DBM-Mod-Name-ruRU: Подземелья (Forever)
 ## X-DBM-Mod-Name-koKR: 던전 (Forever)
 ## X-DBM-Mod-Name-zhTW: 隊伍首領 (Forever)
-## X-DBM-Mod-Name-zhCN: 队伍首领(Forever)
+## X-DBM-Mod-Name-zhCN: 队伍首领 (Forever)
 ## X-DBM-Mod-Sort: 1102
 ## X-DBM-Mod-MapID: 3065,2999,2998,2959
 ## X-DBM-Mod-MinCoreRevision: 20260522000000
