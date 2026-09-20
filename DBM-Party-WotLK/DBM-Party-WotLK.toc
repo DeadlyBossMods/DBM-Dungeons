@@ -22,7 +22,7 @@
 ## X-DBM-Mod-SubCategoriesID: 619, 601, 595, 600, 604, 602, 599, 576, 578, 574, 575, 608, 650, 632, 658, 668
 ## X-DBM-Mod-Name: Dungeons (WotLK)
 ## X-DBM-Mod-Name-frFR: Groupe-WotLK
-## X-DBM-Mod-Name-deDE: Gruppe (WotLK)
+## X-DBM-Mod-Name-deDE: Dungeons (WotLK)
 ## X-DBM-Mod-Name-ruRU: Подземелья (Король-лич)
 ## X-DBM-Mod-Name-zhTW: 隊伍首領 (巫妖王之怒)
 ## X-DBM-Mod-Name-zhCN: 队伍首领 (巫妖王之怒)

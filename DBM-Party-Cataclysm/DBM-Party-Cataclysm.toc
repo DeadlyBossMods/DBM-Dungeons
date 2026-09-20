@@ -23,7 +23,7 @@
 ## X-DBM-Mod-SubCategoriesID: 645, 36, 670, 644, 755, 33, 725, 657, 643, 568, 859, 938, 939, 940
 ## X-DBM-Mod-Name: Dungeons (Cataclysm)
 ## X-DBM-Mod-Name-frFR: Groupe (Cataclysm)
-## X-DBM-Mod-Name-deDE: Gruppe (Cataclysm)
+## X-DBM-Mod-Name-deDE: Dungeons (Cataclysm)
 ## X-DBM-Mod-Name-ruRU: Подземелья (Катаклизм)
 ## X-DBM-Mod-Name-zhTW: 隊伍首領 (浩劫與重生)
 ## X-DBM-Mod-Name-zhCN: 队伍首领 (大地的裂变)

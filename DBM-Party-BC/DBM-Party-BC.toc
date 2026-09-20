@@ -20,7 +20,7 @@
 ## X-DBM-StatTypes: normal,heroic
 ## X-DBM-Mod-SubCategoriesID: 543, 542, 540, 547, 546, 545, 558, 557, 556, 555, 560, 269, 554, 553, 552, 585
 ## X-DBM-Mod-Name: Dungeons (BC)
-## X-DBM-Mod-Name-deDE: Gruppe (BC)
+## X-DBM-Mod-Name-deDE: Dungeons (BC)
 ## X-DBM-Mod-Name-ruRU: Подземелья (BC)
 ## X-DBM-Mod-Name-esES: Mazmorras (TBC)
 ## X-DBM-Mod-Name-koKR: 던전 (불성)

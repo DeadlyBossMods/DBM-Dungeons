@@ -22,7 +22,7 @@
 ## X-DBM-Mod-SubCategoriesID: 960, 961, 959, 962, 994, 1011, 1007, 1001, 1004
 ## X-DBM-Mod-Name: Dungeons (MoP)
 ## X-DBM-Mod-Name-koKR: 던전 (판다)
-## X-DBM-Mod-Name-deDE: Gruppe (MoP)
+## X-DBM-Mod-Name-deDE: Dungeons (MoP)
 ## X-DBM-Mod-Name-ruRU: Подземелья (Пандария)
 ## X-DBM-Mod-Name-esES: Mazmorras (MoP)
 ## X-DBM-Mod-Name-esMX: Mazmorras (MoP)

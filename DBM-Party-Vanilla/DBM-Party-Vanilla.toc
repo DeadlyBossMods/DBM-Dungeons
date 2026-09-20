@@ -46,7 +46,7 @@
 ## X-DBM-Mod-SubCategoriesID-zhCN: 48,230,229|下层,229|上层,36,429,90,349,389,129,47,189,289,33,34,329,109,70,43,209,2784,2875 [AllowLoadGameType camelot, vanilla]
 ## X-DBM-Mod-SubCategoriesID-zhCN: 48,230,229|下层,229|上层,36,429,90,349,389,129,47,189,289,33,34,329,109,70,43,209 [AllowLoadGameType tbc, wrath]
 ## X-DBM-Mod-Name: Dungeons (Vanilla)
-## X-DBM-Mod-Name-deDE: Gruppe (Vanilla)
+## X-DBM-Mod-Name-deDE: Dungeons (Vanilla)
 ## X-DBM-Mod-Name-esES: Mazmorras (Clásico)
 ## X-DBM-Mod-Name-esMX: Calabozos (Clásico) [AllowLoadGameType camelot, tbc, vanilla, wrath]
 ## X-DBM-Mod-Name-ptBR: Masmorras (Clássico) [AllowLoadGameType camelot, tbc, vanilla, wrath]
