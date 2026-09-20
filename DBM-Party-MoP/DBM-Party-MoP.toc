@@ -2,12 +2,15 @@
 ## AllowLoadGameType: mists, standard
 ## Category: DBM
 ## Title:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Dungeons (MoP)|r
-## Title-koKR:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0던전 (판다)|r
 ## Title-deDE:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Dungeons (MoP)|r
 ## Title-esES:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Mazmorras (MoP)|r
-## Title-zhCN:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0地下城 (熊猫人之谜)|r
+## Title-esMX:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Calabozos (MoP)|r
 ## Title-frFR:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Donjons (MoP)|r
+## Title-itIT:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Spedizione (MoP)|r
+## Title-koKR:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0던전 (판다)|r
+## Title-ptBR:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Masmorras (MoP)|r
 ## Title-ruRU:|cffffe00a<|r|cffff7d0aDBM Мод|r|cffffe00a>|r |cffc030c0Подземелья (Пандария)|r
+## Title-zhCN:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0地下城 (熊猫人之谜)|r
 ## Title-zhTW:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0地城 (潘達利亞之謎)|r
 ## LoadOnDemand: 1
 ## RequiredDeps: DBM-Core
@@ -21,15 +24,16 @@
 ## X-DBM-StatTypes: normal,heroic,mythic,challenge [AllowLoadGameType mists]
 ## X-DBM-Mod-SubCategoriesID: 960, 961, 959, 962, 994, 1011, 1007, 1001, 1004
 ## X-DBM-Mod-Name: Dungeons (MoP)
-## X-DBM-Mod-Name-koKR: 던전 (판다)
 ## X-DBM-Mod-Name-deDE: Dungeons (MoP)
-## X-DBM-Mod-Name-ruRU: Подземелья (Пандария)
 ## X-DBM-Mod-Name-esES: Mazmorras (MoP)
 ## X-DBM-Mod-Name-esMX: Calabozos (MoP)
-## X-DBM-Mod-Name-ptBR: Masmorras (MoP)
-## X-DBM-Mod-Name-zhTW: 地城 (潘達利亞之謎)
-## X-DBM-Mod-Name-zhCN: 地下城 (熊猫人之谜)
 ## X-DBM-Mod-Name-frFR: Donjons (MoP)
+## X-DBM-Mod-Name-itiT: Spedizione (MoP)
+## X-DBM-Mod-Name-koKR: 던전 (판다)
+## X-DBM-Mod-Name-ptBR: Masmorras (MoP)
+## X-DBM-Mod-Name-ruRU: Подземелья (Пандария)
+## X-DBM-Mod-Name-zhCN: 地下城 (熊猫人之谜)
+## X-DBM-Mod-Name-zhTW: 地城 (潘達利亞之謎)
 ## X-DBM-Mod-Sort: 702
 ## X-DBM-Mod-MapID: 960,961,959,962,994,1011,1007,1001,1004,2849
 ## X-DBM-Mod-MinCoreRevision: 20260522000000

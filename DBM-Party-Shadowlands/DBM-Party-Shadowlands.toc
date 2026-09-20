@@ -2,12 +2,16 @@
 ## AllowLoadGameType: standard
 ## Category: DBM
 ## Title:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Dungeons (SL)|r
+## Title-deDE:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Dungeons (SL)|r
 ## Title-esES:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Mazmorras (SL)|r
 ## Title-esMX:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Calabozos (SL)|r
+## Title-frFR:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Donjons (SL)|r
+## Title-itIT:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Spedizione (SL)|r
 ## Title-koKR:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0던전 (어둠땅)|r
-## Title-zhTW:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0地城 (暗影之境)|r
-## Title-zhCN:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0地下城 (暗影国度)|r
+## Title-ptBR:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Masmorras (SL)|r
 ## Title-ruRU:|cffffe00a<|r|cffff7d0aDBM Мод|r|cffffe00a>|r |cffc030c0Подземелья (Темные Земли)|r
+## Title-zhCN:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0地下城 (暗影国度)|r
+## Title-zhTW:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0地城 (暗影之境)|r
 ## LoadOnDemand: 1
 ## RequiredDeps: DBM-Core
 ## SavedVariables: DBMPartyShadowlands_AllSavedVars
@@ -19,12 +23,16 @@
 ## X-DBM-StatTypes: normal,heroic,mythic,challenge
 ## X-DBM-Mod-SubCategoriesID: 2286, 2289, 2290, 2287, 2285, 2293, 2291, 2284, 2441
 ## X-DBM-Mod-Name: Dungeons (Shadowlands)
+## X-DBM-Mod-Name-deDE: Dungeons (Shadowlands)
 ## X-DBM-Mod-Name-esES: Mazmorras (Shadowlands)
 ## X-DBM-Mod-Name-esMX: Calabozos (Shadowlands)
+## X-DBM-Mod-Name-frFR: Donjons (Shadowlands)
+## X-DBM-Mod-Name-itiT: Spedizione (Shadowlands)
 ## X-DBM-Mod-Name-koKR: 던전 (어둠땅)
-## X-DBM-Mod-Name-zhTW: 地城 (暗影之境)
-## X-DBM-Mod-Name-zhCN: 地下城 (暗影国度)
+## X-DBM-Mod-Name-ptBR: Masmorras (Shadowlands)
 ## X-DBM-Mod-Name-ruRU: Подземелья (Темные Земли)
+## X-DBM-Mod-Name-zhCN: 地下城 (暗影国度)
+## X-DBM-Mod-Name-zhTW: 地城 (暗影之境)
 ## X-DBM-Mod-Sort: 302
 ## X-DBM-Mod-MapID: 2286, 2289, 2290, 2287, 2285, 2293, 2291, 2284, 2441
 ## X-DBM-Mod-MinCoreRevision: 20260522000000

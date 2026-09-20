@@ -2,13 +2,16 @@
 ## AllowLoadGameType: wrath, cata, mists, standard
 ## Category: DBM
 ## Title:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Dungeons (WotLK)|r
-## Title-frFR:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Donjons (WotLK)|r
 ## Title-deDE:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Dungeons (WotLK)|r
 ## Title-esES:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Mazmorras (WotLK)|r
-## Title-zhTW:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0地城 (巫妖王之怒)|r
-## Title-zhCN:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0地下城 (巫妖王之怒)|r
-## Title-ruRU:|cffffe00a<|r|cffff7d0aDBM Мод|r|cffffe00a>|r |cffc030c0Подземелья (Король-лич)|r
+## Title-esMX:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Calabozos (WotLK)|r
+## Title-frFR:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Donjons (WotLK)|r
+## Title-itIT:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Spedizione (WotLK)|r
 ## Title-koKR:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0던전 (리분)|r
+## Title-ptBR:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Masmorras (WotLK)|r
+## Title-ruRU:|cffffe00a<|r|cffff7d0aDBM Мод|r|cffffe00a>|r |cffc030c0Подземелья (Король-лич)|r
+## Title-zhCN:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0地下城 (巫妖王之怒)|r
+## Title-zhTW:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0地城 (巫妖王之怒)|r
 ## Author: Arta
 ## LoadOnDemand: 1
 ## RequiredDeps: DBM-Core
@@ -21,14 +24,16 @@
 ## X-DBM-StatTypes: normal,heroic
 ## X-DBM-Mod-SubCategoriesID: 619, 601, 595, 600, 604, 602, 599, 576, 578, 574, 575, 608, 650, 632, 658, 668
 ## X-DBM-Mod-Name: Dungeons (WotLK)
-## X-DBM-Mod-Name-frFR: Donjons (WotLK)
 ## X-DBM-Mod-Name-deDE: Dungeons (WotLK)
-## X-DBM-Mod-Name-ruRU: Подземелья (Король-лич)
-## X-DBM-Mod-Name-zhTW: 地城 (巫妖王之怒)
-## X-DBM-Mod-Name-zhCN: 地下城 (巫妖王之怒)
 ## X-DBM-Mod-Name-esES: Mazmorras (WotLK)
-## X-DBM-Mod-Name-koKR: 던전 (리분)
 ## X-DBM-Mod-Name-esMX: Calabozos (WotLK)
+## X-DBM-Mod-Name-frFR: Donjons (WotLK)
+## X-DBM-Mod-Name-itiT: Spedizione (WotLK)
+## X-DBM-Mod-Name-koKR: 던전 (리분)
+## X-DBM-Mod-Name-ptBR: Masmorras (WotLK)
+## X-DBM-Mod-Name-ruRU: Подземелья (Король-лич)
+## X-DBM-Mod-Name-zhCN: 地下城 (巫妖王之怒)
+## X-DBM-Mod-Name-zhTW: 地城 (巫妖王之怒)
 ## X-DBM-Mod-Sort: 915
 ## X-DBM-Mod-MapID: 619,601,595,600,604,602,599,576,578,574,575,608,658,632,668,650 [AllowLoadGameType cata, mists, wrath]
 ## X-DBM-Mod-MapID: 619,601,595,600,604,602,599,576,578,574,575,608,658,632,668,650,2849 [AllowLoadGameType standard]
