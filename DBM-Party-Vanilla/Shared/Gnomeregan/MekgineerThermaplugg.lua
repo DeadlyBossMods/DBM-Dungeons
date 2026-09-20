@@ -1,5 +1,5 @@
 local isRetail = DBM:IsRetail()
-local isClassic = DBM:IsVanillaEra()
+local isClassic = DBM:IsVanilla()--This mod needs retesting to see if forever uses the vanilla classic era changes or not
 local isBCC = DBM:IsTBC()
 --local isCata = DBM:IsCata()--NYI in Cata beta
 local tempTOC = DBM:GetTOC()
