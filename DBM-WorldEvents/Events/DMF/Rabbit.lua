@@ -10,7 +10,7 @@ mod:SetZone(974)
 mod:RegisterCombat("combat")
 
 --Rest of mod below this point is only useful pre midnight
-if DBM:IsPostMidnight() then return end
+if DBM:IsRestricted() then return end
 
 mod:RegisterEventsInCombat(
 	"SPELL_AURA_APPLIED 114078"

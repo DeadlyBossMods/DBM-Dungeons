@@ -5,28 +5,35 @@ mod:SetRevision("@file-date-integer@")
 mod:DisableHardcodedOptions()
 mod:SetCreatureID(7795)
 mod:SetEncounterID(593)
+mod:SetModelID(6685)
 mod:SetZone(209)
 
 mod:RegisterCombat("combat")
 
-mod:RegisterEventsInCombat(
-	"SPELL_CAST_START 12491"
-)
+if DBM:IsRestricted() then
+	--do stuff
+	--mod:AddAuraSoundOption(372820, true, 372820, 1, 2, "watchfeet", 8, 0)
+else
 
-local specWarnHealingWave			= mod:NewSpecialWarningInterrupt(12491, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
+	mod:RegisterEventsInCombat(
+		"SPELL_CAST_START 12491"
+	)
 
-local timerHealingWaveCD			= mod:NewAITimer(180, 12491, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+	local specWarnHealingWave			= mod:NewSpecialWarningInterrupt(12491, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
 
-function mod:OnCombatStart(delay)
-	timerHealingWaveCD:Start(1-delay)
-end
+	local timerHealingWaveCD			= mod:NewAITimer(180, 12491, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 
-function mod:SPELL_CAST_START(args)
-	if args:IsSpell(12491) and args:IsSrcTypeHostile() then
-		timerHealingWaveCD:Start()
-		if self:CheckInterruptFilter(args.sourceGUID, false, true) then
-			specWarnHealingWave:Show(args.sourceName)
-			specWarnHealingWave:Play("kickcast")
+	function mod:OnCombatStart(delay)
+		timerHealingWaveCD:Start(1-delay)
+	end
+
+	function mod:SPELL_CAST_START(args)
+		if args:IsSpell(12491) and args:IsSrcTypeHostile() then
+			timerHealingWaveCD:Start()
+			if self:CheckInterruptFilter(args.sourceGUID, false, true) then
+				specWarnHealingWave:Show(args.sourceName)
+				specWarnHealingWave:Play("kickcast")
+			end
 		end
 	end
 end

@@ -5,28 +5,35 @@ mod:SetRevision("@file-date-integer@")
 mod:DisableHardcodedOptions()
 mod:SetCreatureID(DBM:IsRetail() and 45412 or 10440)--10440 Baron Rivendare, 45412 Lord Aurius Rivendare, 11197/mindless-skeleton
 mod:SetEncounterID(484)
+mod:SetModelID(10729)
 mod:SetZone(329)
 
 mod:RegisterCombat("combat")
 
-mod:RegisterEventsInCombat(
-	"SPELL_SUMMON 17480"
-)
+if DBM:IsRestricted() then
+	--do stuff
+	--mod:AddAuraSoundOption(372820, true, 372820, 1, 2, "watchfeet", 8, 0)
+else
 
---TODO, verify Raise Dead for adds or replace it with 17473 and SPELL_CAST event or some emote/yell
-local warningRaiseDead					= mod:NewSpellAnnounce(17473, 2)
+	mod:RegisterEventsInCombat(
+		"SPELL_SUMMON 17480"
+	)
 
-local timerRaiseDeadCD					= mod:NewAITimer(180, 17473, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)
-local timerDeathPactCD					= mod:NewNextTimer(12, 17471, nil, nil, nil, 5, nil, DBM_COMMON_L.DAMAGE_ICON)
+	--TODO, verify Raise Dead for adds or replace it with 17473 and SPELL_CAST event or some emote/yell
+	local warningRaiseDead					= mod:NewSpellAnnounce(17473, 2)
 
-function mod:OnCombatStart(delay)
-	timerRaiseDeadCD:Start(1-delay)
-end
+	local timerRaiseDeadCD					= mod:NewAITimer(180, 17473, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)
+	local timerDeathPactCD					= mod:NewNextTimer(12, 17471, nil, nil, nil, 5, nil, DBM_COMMON_L.DAMAGE_ICON)
 
-function mod:SPELL_SUMMON(args)
-	if args:IsSpell(17480) and self:AntiSpam(5, 1) then
-		warningRaiseDead:Show()
-		timerDeathPactCD:Start()
-		timerRaiseDeadCD:Start()
+	function mod:OnCombatStart(delay)
+		timerRaiseDeadCD:Start(1-delay)
+	end
+
+	function mod:SPELL_SUMMON(args)
+		if args:IsSpell(17480) and self:AntiSpam(5, 1) then
+			warningRaiseDead:Show()
+			timerDeathPactCD:Start()
+			timerRaiseDeadCD:Start()
+		end
 	end
 end

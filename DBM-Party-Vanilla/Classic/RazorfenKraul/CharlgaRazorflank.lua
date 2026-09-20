@@ -5,38 +5,45 @@ mod:SetRevision("@file-date-integer@")
 mod:DisableHardcodedOptions()
 mod:SetCreatureID(4421)
 --mod:SetEncounterID(1661)
+mod:SetModelID(4642)
 mod:SetZone(47)
 
 mod:RegisterCombat("combat")
 
-mod:RegisterEventsInCombat(
-	"SPELL_CAST_START 8292",
-	"SPELL_CAST_SUCCESS 8358",
-	"SPELL_AURA_APPLIED 8361"
-)
+if DBM:IsRestricted() then
+	--do stuff
+	--mod:AddAuraSoundOption(372820, true, 372820, 1, 2, "watchfeet", 8, 0)
+else
 
-local warningPurity				= mod:NewTargetNoFilterAnnounce(8361, 2)
-local warningManaSpike			= mod:NewSpellAnnounce(8358, 2)
+	mod:RegisterEventsInCombat(
+		"SPELL_CAST_START 8292",
+		"SPELL_CAST_SUCCESS 8358",
+		"SPELL_AURA_APPLIED 8361"
+	)
 
-local specWarnChainBolt			= mod:NewSpecialWarningInterrupt(8292, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")--Spammy if CheckInterruptFilter is disabled or isn't working
+	local warningPurity				= mod:NewTargetNoFilterAnnounce(8361, 2)
+	local warningManaSpike			= mod:NewSpellAnnounce(8358, 2)
 
-function mod:SPELL_CAST_START(args)
-	if args:IsSpell(8292) and args:IsSrcTypeHostile() then
-		if self:CheckInterruptFilter(args.sourceGUID, false, true) then
-			specWarnChainBolt:Show(args.sourceName)
-			specWarnChainBolt:Play("kickcast")
+	local specWarnChainBolt			= mod:NewSpecialWarningInterrupt(8292, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")--Spammy if CheckInterruptFilter is disabled or isn't working
+
+	function mod:SPELL_CAST_START(args)
+		if args:IsSpell(8292) and args:IsSrcTypeHostile() then
+			if self:CheckInterruptFilter(args.sourceGUID, false, true) then
+				specWarnChainBolt:Show(args.sourceName)
+				specWarnChainBolt:Play("kickcast")
+			end
 		end
 	end
-end
 
-function mod:SPELL_CAST_SUCCESS(args)
-	if args:IsSpell(8358) then
-		warningManaSpike:Show()
+	function mod:SPELL_CAST_SUCCESS(args)
+		if args:IsSpell(8358) then
+			warningManaSpike:Show()
+		end
 	end
-end
 
-function mod:SPELL_AURA_APPLIED(args)
-	if args:IsSpell(8361) then
-		warningPurity:Show(args.destName)
+	function mod:SPELL_AURA_APPLIED(args)
+		if args:IsSpell(8361) then
+			warningPurity:Show(args.destName)
+		end
 	end
 end

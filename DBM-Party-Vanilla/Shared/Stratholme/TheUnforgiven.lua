@@ -5,37 +5,44 @@ mod:SetRevision("@file-date-integer@")
 mod:DisableHardcodedOptions()
 mod:SetCreatureID(10516)
 mod:SetEncounterID(472)
+mod:SetModelID(10771)
 mod:SetZone(329)
 
 mod:RegisterCombat("combat")
 
-mod:RegisterEventsInCombat(
---	"SPELL_CAST_START"
-)
+if DBM:IsRestricted() then
+	--do stuff
+	--mod:AddAuraSoundOption(372820, true, 372820, 1, 2, "watchfeet", 8, 0)
+else
 
---local warningSoul	= mod:NewTargetAnnounce(32346, 2)
+	mod:RegisterEventsInCombat(
+	--	"SPELL_CAST_START"
+	)
 
---local specWarnMaddeningCall			= mod:NewSpecialWarningInterrupt(86620, "HasInterrupt", nil, nil, 1, 2)
+	--local warningSoul	= mod:NewTargetAnnounce(32346, 2)
 
---local timerMaddeningCallCD			= mod:NewAITimer(180, 86620, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+	--local specWarnMaddeningCall			= mod:NewSpecialWarningInterrupt(86620, "HasInterrupt", nil, nil, 1, 2)
 
---[[
-function mod:OnCombatStart(delay)
-	timerMaddeningCallCD:Start(1-delay)
-end
+	--local timerMaddeningCallCD			= mod:NewAITimer(180, 86620, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 
-function mod:SPELL_CAST_START(args)
-	if args.spellId == 86620 then
-		timerMaddeningCallCD:Start()
-		if self:CheckInterruptFilter(args.sourceGUID, false, true) then
-			specWarnMaddeningCall:Show(args.sourceName)
-			specWarnMaddeningCall:Play("kickcast")
+	--[[
+	function mod:OnCombatStart(delay)
+		timerMaddeningCallCD:Start(1-delay)
+	end
+
+	function mod:SPELL_CAST_START(args)
+		if args.spellId == 86620 then
+			timerMaddeningCallCD:Start()
+			if self:CheckInterruptFilter(args.sourceGUID, false, true) then
+				specWarnMaddeningCall:Show(args.sourceName)
+				specWarnMaddeningCall:Play("kickcast")
+			end
 		end
 	end
-end
 
-function mod:SPELL_AURA_APPLIED(args)
-	if args.spellId == 32346 then
-		warningSoul:Show(args.destName)
-	end
-end--]]
+	function mod:SPELL_AURA_APPLIED(args)
+		if args.spellId == 32346 then
+			warningSoul:Show(args.destName)
+		end
+	end--]]
+end

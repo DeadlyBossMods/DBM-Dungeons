@@ -14,7 +14,7 @@ DBM:RegisterAltSpellName(1252733, 28405)--Gale Surge -> Knockback
 DBM:RegisterAltSpellName(153757, DBM_COMMON_L.AOEDAMAGE)--Fan of Blades -> AOE Damage
 DBM:RegisterAltSpellName(1258148, DBM_COMMON_L.FRONTAL)--Wind Chakram -> Frontal
 
-if DBM:IsPostMidnight() then
+if DBM:IsRestricted() then
 	local warnGaleSurge				= mod:NewCountAnnounce(1252733, 2)
 
 	local specWarnFanofBlades		= mod:NewSpecialWarningCount(153757, nil, nil, nil, 2, 2, nil, nil, "aesoon")

@@ -12,7 +12,7 @@ mod.sendMainBossGUID = true
 
 mod:RegisterCombat("combat")
 
-if DBM:IsPostMidnight() then
+if DBM:IsRestricted() then
 	DBM:RegisterAltSpellName(377004, DBM_COMMON_L.AOEDAMAGE)--Deafening Screech -> AOE Damage
 	DBM:RegisterAltSpellName(377034, DBM_COMMON_L.FRONTAL)--Overpowering Gust -> Frontal
 

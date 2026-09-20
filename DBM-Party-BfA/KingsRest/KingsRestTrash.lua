@@ -8,7 +8,7 @@ mod:SetZone(1762)
 mod.isTrashMod = true
 mod.isTrashModBossFightAllowed = true
 
-if DBM:IsPostMidnight() then
+if DBM:IsRestricted() then
 	mod:AddAuraSoundOption(269936, true, 269936, 1, 1, "fixateyou", 19, 0)--Fixate
 	mod:AddAuraSoundOption(1302028, "Tank", 1302028, 1, 1, "defensive", 2, 0)--Soul Crush
 	mod:AddAuraSoundOption(271555, true, 271555, 1, 1, "stunyou", 19, 0)--Entomb

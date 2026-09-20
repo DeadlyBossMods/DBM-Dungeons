@@ -10,7 +10,7 @@ mod:SetZone(1877)
 
 mod:RegisterCombat("combat")
 
-if DBM:IsPostMidnight() then
+if DBM:IsRestricted() then
 	DBM:RegisterAltSpellName(1309525, DBM_COMMON_L.AOEDAMAGE)--Induction --> AoE
 	DBM:RegisterAltSpellName(1291618, DBM_COMMON_L.GROUPSOAK .. " " .. DBM_COMMON_L.LINES)--Lightning Spire --> Pushback
 	local specWarnInduction			= mod:NewSpecialWarningCount(1309525, nil, nil, nil, 2, 2, nil, nil, "aesoon")

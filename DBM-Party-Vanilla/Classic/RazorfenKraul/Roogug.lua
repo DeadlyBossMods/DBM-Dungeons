@@ -5,19 +5,26 @@ mod:SetRevision("@file-date-integer@")
 mod:DisableHardcodedOptions()
 mod:SetCreatureID(6168)
 --mod:SetEncounterID(438)
+mod:SetModelID(6110)
 mod:SetZone(47)
 
 mod:RegisterCombat("combat")
 
-mod:RegisterEventsInCombat(
-	"SPELL_CAST_SUCCESS 8270"
-)
+if DBM:IsRestricted() then
+	--do stuff
+	--mod:AddAuraSoundOption(372820, true, 372820, 1, 2, "watchfeet", 8, 0)
+else
 
---Rumbler spawned on engage
-local warningSummonEarthRumbler		= mod:NewSpellAnnounce(8270, 2)
+	mod:RegisterEventsInCombat(
+		"SPELL_CAST_SUCCESS 8270"
+	)
 
-function mod:SPELL_CAST_SUCCESS(args)
-	if args:IsSpell(8270) then
-		warningSummonEarthRumbler:Show()
+	--Rumbler spawned on engage
+	local warningSummonEarthRumbler		= mod:NewSpellAnnounce(8270, 2)
+
+	function mod:SPELL_CAST_SUCCESS(args)
+		if args:IsSpell(8270) then
+			warningSummonEarthRumbler:Show()
+		end
 	end
 end

@@ -12,7 +12,7 @@ mod:SetZone(1877)
 
 mod:RegisterCombat("combat")
 
-if DBM:IsPostMidnight() then
+if DBM:IsRestricted() then
 	--TODO: https://www.wowhead.com/ptr/spell=1301963/cleansed has an encounter event ID of 827, but it's not visible in my logs. Healer only message?
 	--TODO, add aura applied sound for https://www.wowhead.com/ptr/spell=1303446/tainted-strike ? depends on frequency of application
 	--NOTE: Most of this bosses abilities are ignored by blizzard timeline and warning API, so DBM has to also ignore the mechanics since they can't be disambiguated

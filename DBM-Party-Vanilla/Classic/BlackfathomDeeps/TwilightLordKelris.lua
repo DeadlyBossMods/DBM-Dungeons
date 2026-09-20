@@ -5,32 +5,39 @@ mod:SetRevision("@file-date-integer@")
 mod:DisableHardcodedOptions()
 mod:SetCreatureID(4832)
 mod:SetEncounterID(2766)
+mod:SetModelID(4939)
 mod:SetZone(48)
 
 mod:RegisterCombat("combat")
 
-mod:RegisterEventsInCombat(
-	"SPELL_CAST_START 8399",
-	"SPELL_AURA_APPLIED 8399"
-)
+if DBM:IsRestricted() then
+	--do stuff
+	--mod:AddAuraSoundOption(372820, true, 372820, 1, 2, "watchfeet", 8, 0)
+else
 
---TODO, maybe interrupt warning for mind blast
-local warningSleep			= mod:NewTargetNoFilterAnnounce(8399, 2)
+	mod:RegisterEventsInCombat(
+		"SPELL_CAST_START 8399",
+		"SPELL_AURA_APPLIED 8399"
+	)
 
-local timerSleepCD			= mod:NewAITimer(180, 8399, nil, nil, nil, 3, nil, DBM_COMMON_L.MAGIC_ICON)
+	--TODO, maybe interrupt warning for mind blast
+	local warningSleep			= mod:NewTargetNoFilterAnnounce(8399, 2)
 
-function mod:OnCombatStart(delay)
-	timerSleepCD:Start(1-delay)
-end
+	local timerSleepCD			= mod:NewAITimer(180, 8399, nil, nil, nil, 3, nil, DBM_COMMON_L.MAGIC_ICON)
 
-function mod:SPELL_CAST_START(args)
-	if args:IsSpell(8399) and args:IsSrcTypeHostile() then
-		timerSleepCD:Start()
+	function mod:OnCombatStart(delay)
+		timerSleepCD:Start(1-delay)
 	end
-end
 
-function mod:SPELL_AURA_APPLIED(args)
-	if args:IsSpell(8399) and args:IsDestTypePlayer() then
-		warningSleep:Show(args.destName)
+	function mod:SPELL_CAST_START(args)
+		if args:IsSpell(8399) and args:IsSrcTypeHostile() then
+			timerSleepCD:Start()
+		end
+	end
+
+	function mod:SPELL_AURA_APPLIED(args)
+		if args:IsSpell(8399) and args:IsDestTypePlayer() then
+			warningSleep:Show(args.destName)
+		end
 	end
 end

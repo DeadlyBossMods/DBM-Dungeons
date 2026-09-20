@@ -5,8 +5,15 @@ mod:SetRevision("@file-date-integer@")
 mod:DisableHardcodedOptions()
 mod:SetCreatureID(4425)
 --mod:SetEncounterID(438)
+mod:SetModelID(4735)
 mod:SetZone(47)
 
 mod:RegisterCombat("combat")
 
---Just a stats module, nothing more, boss doesn't really do anything, this just tracks your kills
+if DBM:IsRestricted() then
+	--do stuff
+	--mod:AddAuraSoundOption(372820, true, 372820, 1, 2, "watchfeet", 8, 0)
+else
+
+	--Just a stats module, nothing more, boss doesn't really do anything, this just tracks your kills
+end

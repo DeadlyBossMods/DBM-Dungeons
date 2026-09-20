@@ -5,32 +5,39 @@ mod:SetRevision("@file-date-integer@")
 mod:DisableHardcodedOptions()
 mod:SetCreatureID(10438)
 mod:SetEncounterID(481)
+mod:SetModelID(10546)
 mod:SetZone(329)
 
 mod:RegisterCombat("combat")
 
-mod:RegisterEventsInCombat(
-	"SPELL_CAST_START 16869",
-	"SPELL_AURA_APPLIED 16869"
-)
+if DBM:IsRestricted() then
+	--do stuff
+	--mod:AddAuraSoundOption(372820, true, 372820, 1, 2, "watchfeet", 8, 0)
+else
 
-local warningIceTomb				= mod:NewTargetNoFilterAnnounce(16869, 3)
+	mod:RegisterEventsInCombat(
+		"SPELL_CAST_START 16869",
+		"SPELL_AURA_APPLIED 16869"
+	)
 
-local timerIceTombCD				= mod:NewAITimer(180, 16869, nil, nil, nil, 3, nil, DBM_COMMON_L.MAGIC_ICON)
+	local warningIceTomb				= mod:NewTargetNoFilterAnnounce(16869, 3)
 
-function mod:OnCombatStart(delay)
-	timerIceTombCD:Start(1-delay)
-end
+	local timerIceTombCD				= mod:NewAITimer(180, 16869, nil, nil, nil, 3, nil, DBM_COMMON_L.MAGIC_ICON)
 
-function mod:SPELL_CAST_START(args)
-	if args:IsSpell(16869) then
-		timerIceTombCD:Start()
+	function mod:OnCombatStart(delay)
+		timerIceTombCD:Start(1-delay)
 	end
-end
+
+	function mod:SPELL_CAST_START(args)
+		if args:IsSpell(16869) then
+			timerIceTombCD:Start()
+		end
+	end
 
 
-function mod:SPELL_AURA_APPLIED(args)
-	if args:IsSpell(16869) then
-		warningIceTomb:Show(args.destName)
+	function mod:SPELL_AURA_APPLIED(args)
+		if args:IsSpell(16869) then
+			warningIceTomb:Show(args.destName)
+		end
 	end
 end

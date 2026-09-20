@@ -9,13 +9,13 @@ mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(36476)
 mod:SetEncounterID(2001)
 mod:SetZone(658)
-if not DBM:IsPostMidnight() then
+if not DBM:IsRestricted() then
 	mod:SetUsedIcons(8)
 end
 
 mod:RegisterCombat("combat")
 
-if DBM:IsPostMidnight() then
+if DBM:IsRestricted() then
 
 	mod:RegisterSafeEventsInCombat(
 		"UNIT_SPELLCAST_START boss2"

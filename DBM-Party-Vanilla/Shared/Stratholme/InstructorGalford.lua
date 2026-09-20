@@ -5,42 +5,49 @@ mod:SetRevision("@file-date-integer@")
 mod:DisableHardcodedOptions()
 mod:SetCreatureID(10811)
 mod:SetEncounterID(477)
+mod:SetModelID(10544)
 mod:SetZone(329)
 
 mod:RegisterCombat("combat")
 
-mod:RegisterEventsInCombat(
-	"SPELL_CAST_START 17293",
-	"SPELL_CAST_SUCCESS 17366",
-	"SPELL_AURA_APPLIED 17293"
-)
+if DBM:IsRestricted() then
+	--do stuff
+	--mod:AddAuraSoundOption(372820, true, 372820, 1, 2, "watchfeet", 8, 0)
+else
 
-local warningBurningWinds			= mod:NewTargetNoFilterAnnounce(17293, 2)
-local warningFireNova				= mod:NewSpellAnnounce(17366, 2)
+	mod:RegisterEventsInCombat(
+		"SPELL_CAST_START 17293",
+		"SPELL_CAST_SUCCESS 17366",
+		"SPELL_AURA_APPLIED 17293"
+	)
 
-local timerBurningWindsCD			= mod:NewAITimer(180, 17293, nil, nil, nil, 3, nil, DBM_COMMON_L.MAGIC_ICON)
-local timerFireNovaCD				= mod:NewAITimer(180, 17366, nil, nil, nil, 2)
+	local warningBurningWinds			= mod:NewTargetNoFilterAnnounce(17293, 2)
+	local warningFireNova				= mod:NewSpellAnnounce(17366, 2)
 
-function mod:OnCombatStart(delay)
-	timerBurningWindsCD:Start(1-delay)
-	timerFireNovaCD:Start(1-delay)
-end
+	local timerBurningWindsCD			= mod:NewAITimer(180, 17293, nil, nil, nil, 3, nil, DBM_COMMON_L.MAGIC_ICON)
+	local timerFireNovaCD				= mod:NewAITimer(180, 17366, nil, nil, nil, 2)
 
-function mod:SPELL_CAST_START(args)
-	if args:IsSpell(17293) then
-		timerBurningWindsCD:Start()
+	function mod:OnCombatStart(delay)
+		timerBurningWindsCD:Start(1-delay)
+		timerFireNovaCD:Start(1-delay)
 	end
-end
 
-function mod:SPELL_CAST_SUCCESS(args)
-	if args:IsSpell(17366) then
-		warningFireNova:Show()
-		timerFireNovaCD:Start()
+	function mod:SPELL_CAST_START(args)
+		if args:IsSpell(17293) then
+			timerBurningWindsCD:Start()
+		end
 	end
-end
 
-function mod:SPELL_AURA_APPLIED(args)
-	if args:IsSpell(17293) then
-		warningBurningWinds:Show(args.destName)
+	function mod:SPELL_CAST_SUCCESS(args)
+		if args:IsSpell(17366) then
+			warningFireNova:Show()
+			timerFireNovaCD:Start()
+		end
+	end
+
+	function mod:SPELL_AURA_APPLIED(args)
+		if args:IsSpell(17293) then
+			warningBurningWinds:Show(args.destName)
+		end
 	end
 end

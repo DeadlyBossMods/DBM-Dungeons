@@ -10,7 +10,7 @@ mod:SetZone(1877)
 
 mod:RegisterCombat("combat")
 
-if DBM:IsPostMidnight() then
+if DBM:IsRestricted() then
 	DBM:RegisterAltSpellName(1293048, 28405)--Serpent Storm --> Knockback
 	DBM:RegisterAltSpellName(1289109, DBM_COMMON_L.POOLS)--Thunderspit --> Pools
 	DBM:RegisterAltSpellName(1290797, DBM_COMMON_L.TANKBUSTER)--Lightning Bite --> Tank Buster

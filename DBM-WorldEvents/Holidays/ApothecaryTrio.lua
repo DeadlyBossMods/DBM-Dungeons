@@ -44,7 +44,7 @@ function mod:OnSync(msg)
 	end
 end
 
-if DBM:IsPostMidnight() then return end
+if DBM:IsRestricted() then return end
 
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 68821",

@@ -11,7 +11,7 @@ mod:SetZone(1877)
 
 mod:RegisterCombat("combat")
 
-if DBM:IsPostMidnight() then
+if DBM:IsRestricted() then
 	DBM:RegisterAltSpellName(1288049, DBM_COMMON_L.GROUPSOAK)--Thunder and Lightning --> Help Soak
 	DBM:RegisterAltSpellName(1311805, DBM_COMMON_L.POOLS)--Tempest Winds --> Pools
 	DBM:RegisterAltSpellName(1289059, DBM_COMMON_L.PUSHBACK)--Gale Force --> Pushback
@@ -52,6 +52,7 @@ if DBM:IsPostMidnight() then
 	local aspixDead = false
 	local boss2Seen = false
 	local bossDeathTime = 0
+	local bossDeathDetected = false
 	local attackingAdderis = true
 	local transitionPaused = false
 	local batchTimerValues = {
@@ -68,6 +69,14 @@ if DBM:IsPostMidnight() then
 		[45] = true,
 	}
 
+	local function detectBossDeath()
+		--The death rebuild can arrive before INSTANCE_ENCOUNTER_ENGAGE_UNIT reports that boss2 disappeared.
+		if not bossDeathDetected and boss2Seen and not UnitExists("boss2") then
+			bossDeathDetected = true
+			bossDeathTime = GetTime()
+		end
+	end
+
 	---@param self DBMMod
 	---@param dontSetAlerts boolean? Called on engage when we only want to set timeline parameters and not touch encounter alerts
 	local function setFallback(self, dontSetAlerts)
@@ -77,7 +86,7 @@ if DBM:IsPostMidnight() then
 			if self:IsTank() then
 				specWarnOverload:SetAlert(690, "defensive", 2, 2)
 			end
-			specWarnTempestWinds:SetAlert({691,713}, "watchstep", 2, 2, 0)
+			specWarnTempestWinds:SetAlert({691,713}, "poolyou", 18, 2, 0)
 			specWarnGaleForce:SetAlert({692,718}, "pushbackincoming", 2, 3, 0)
 		end
 		local onlyColor = not DBM.Options.HideDBMBars and not badStateDetected
@@ -101,6 +110,7 @@ if DBM:IsPostMidnight() then
 		aspixDead = false
 		boss2Seen = false
 		bossDeathTime = 0
+		bossDeathDetected = false
 		attackingAdderis = true
 		transitionPaused = false
 		if DBM.Options.HardcodedTimer and not badStateDetected then
@@ -220,8 +230,8 @@ if DBM:IsPostMidnight() then
 		function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
 			if UnitExists("boss2") then
 				boss2Seen = true
-			elseif boss2Seen then
-				bossDeathTime = GetTime()
+			else
+				detectBossDeath()
 			end
 		end
 
@@ -231,6 +241,7 @@ if DBM:IsPostMidnight() then
 			if C_EncounterTimeline.GetEventState(eventID) ~= 0 then return end
 			--Blizzard can resend an active event with its remaining duration during an empowerment transfer.
 			if not self:TLTrackActiveEvent(eventID) then return end
+			detectBossDeath()
 			local timerExact = eventInfo.duration
 			local bossJustDied = bossDeathTime > 0 and GetTime() - bossDeathTime <= 1
 			if not timersAll(self, math.floor(timerExact + 0.5), timerExact, eventID, bossJustDied) and not badStateDetected then

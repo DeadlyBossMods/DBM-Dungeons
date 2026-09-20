@@ -13,7 +13,7 @@ mod:SetWipeTime(600)--This mod lets you leave combat for as long as you want, so
 mod:SetReCombatTime(20, 5)--Basically killing of recombat restriction. mage tower lets you spam retry, we want the mod to let you
 mod:SetZone(1220, 1710)--doesn't need fully disabled zone detection, can only be queued from broken shore
 
-if DBM:IsPostMidnight() then
+if DBM:IsRestricted() then
 	--NOTE: boss mod api only supports 2 spells, the rest were not added so they can't be supported here either
 	--TODO, FelStomp alert?.
 	local specWarnIgniteSoul		= mod:NewSpecialWarningYou(237188, nil, nil, nil, 3, 17, nil, nil, "debuffyou")

@@ -10,7 +10,7 @@ mod:SetReCombatTime(10)
 
 mod:RegisterCombat("combat")
 
-if DBM:IsPostMidnight() then return end
+if DBM:IsRestricted() then return end
 
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 47310",

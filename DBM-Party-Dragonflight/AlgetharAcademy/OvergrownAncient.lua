@@ -34,7 +34,7 @@ do
 	end
 end
 
-if DBM:IsPostMidnight() then
+if DBM:IsRestricted() then
 	DBM:RegisterAltSpellName(388796, DBM_COMMON_L.SWIRLS)--Germinate -> Swirls
 	DBM:RegisterAltSpellName(388923, DBM_COMMON_L.ADDS)--Burst Forth -> Adds
 	DBM:RegisterAltSpellName(388623, DBM_COMMON_L.BIG_ADD)--Branch Out -> Big Add

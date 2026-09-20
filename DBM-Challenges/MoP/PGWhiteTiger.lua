@@ -221,7 +221,7 @@ do
 				name = Ambiguate(name, "none")
 				local diffID, currWave = C_Scenario.GetProvingGroundsInfo()--, maxWave, duration
 				local message = L.ReplyWhisper:format(UnitName("player"), mode[diffID], currWave)
-				if self:IsPostMidnight() then
+				if self:IsRestricted() then
 					--Post midnight yell restrictions in instances
 					return
 				end

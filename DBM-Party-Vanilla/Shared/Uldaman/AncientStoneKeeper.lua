@@ -5,25 +5,32 @@ mod:SetRevision("@file-date-integer@")
 mod:DisableHardcodedOptions()
 mod:SetCreatureID(7206)
 mod:SetEncounterID(551)
+mod:SetModelID(10798)
 mod:SetZone(70)
 
 mod:RegisterCombat("combat")
 
-mod:RegisterEventsInCombat(
-	"SPELL_CAST_SUCCESS 10132 10094"
-)
+if DBM:IsRestricted() then
+	--do stuff
+	--mod:AddAuraSoundOption(372820, true, 372820, 1, 2, "watchfeet", 8, 0)
+else
 
-local warningSandStorms				= mod:NewSpellAnnounce(10132, 2)
+	mod:RegisterEventsInCombat(
+		"SPELL_CAST_SUCCESS 10132 10094"
+	)
 
-local timerSandStormsCD				= mod:NewAITimer(180, 10132, nil, nil, nil, 3)
+	local warningSandStorms				= mod:NewSpellAnnounce(10132, 2)
 
-function mod:OnCombatStart(delay)
-	timerSandStormsCD:Start(1-delay)
-end
+	local timerSandStormsCD				= mod:NewAITimer(180, 10132, nil, nil, nil, 3)
 
-function mod:SPELL_CAST_SUCCESS(args)
-	if args:IsSpell(10132, 10094) then
-		warningSandStorms:Show()
-		timerSandStormsCD:Start()
+	function mod:OnCombatStart(delay)
+		timerSandStormsCD:Start(1-delay)
+	end
+
+	function mod:SPELL_CAST_SUCCESS(args)
+		if args:IsSpell(10132, 10094) then
+			warningSandStorms:Show()
+			timerSandStormsCD:Start()
+		end
 	end
 end

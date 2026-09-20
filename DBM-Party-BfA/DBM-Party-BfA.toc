@@ -1,0 +1,102 @@
+## Interface: 120100
+## AllowLoadGameType: standard
+## Category: DBM
+## Title:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Dungeons (BfA)|r
+## Title-deDE:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Gruppe-BfA|r
+## Title-koKR:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0던전 (격아)|r
+## Title-zhTW:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0隊伍首領-決戰艾澤拉斯|r
+## Title-zhCN:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0队伍首领 (争霸艾泽拉斯)|r
+## Title-itIT:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Gruppo-BfA|r
+## Title-ruRU:|cffffe00a<|r|cffff7d0aDBM Мод|r|cffffe00a>|r |cffc030c0Подземелья (Битва за Азерот)|r
+## LoadOnDemand: 1
+## RequiredDeps: DBM-Core
+## SavedVariables: DBMPartyBfA_AllSavedVars
+## SavedVariablesPerCharacter: DBMPartyBfA_SavedStats
+## IconTexture: Interface\AddOns\DBM-Core\textures\dbm_airhorn
+## X-DBM-Mod: 1
+## X-DBM-Mod-Type: PARTY
+## X-DBM-Mod-Category: BFA
+## X-DBM-StatTypes: normal,heroic,mythic,challenge
+## X-DBM-Mod-SubCategoriesID: 1763, 1754, 1762, 1864, 1822, 1877, 1594, 1841, 1771, 1862, 2097
+## X-DBM-Mod-Name: Dungeons (BfA)
+## X-DBM-Mod-Name-esES: Mazmorras (BfA)
+## X-DBM-Mod-Name-esMX: Mazmorras (BfA)
+## X-DBM-Mod-Name-deDE: Gruppe (BfA)
+## X-DBM-Mod-Name-koKR: 던전 (격아)
+## X-DBM-Mod-Name-zhTW: 隊伍首領 (決戰艾澤拉斯)
+## X-DBM-Mod-Name-zhCN: 队伍首领 (争霸艾泽拉斯)
+## X-DBM-Mod-Name-itiT: Gruppo (BfA)
+## X-DBM-Mod-Name-ruRU: Подземелья (Битва за Азерот)
+## X-DBM-Mod-Sort: 402
+## X-DBM-Mod-MapID: 1763, 1754, 1762, 1864, 1822, 1877, 1594, 1841, 1771, 1862, 2097
+## X-DBM-Mod-MinCoreRevision: 20260522000000
+## X-DBM-Mod-MinExpansion: 7
+
+localization.en.lua
+localization.de.lua
+localization.kr.lua
+localization.cn.lua
+localization.es.lua
+localization.tw.lua
+localization.it.lua
+localization.ru.lua
+AtalDazar\Alunza.lua
+AtalDazar\Volkaal.lua
+AtalDazar\Rezan.lua
+AtalDazar\Yazma.lua
+AtalDazar\AtalDazarTrash.lua
+Freehold\SkycapnKragg.lua
+Freehold\CounciloCaptains.lua
+Freehold\RingofBooty.lua
+Freehold\HarlanSweete.lua
+Freehold\FreeholdTrash.lua
+KingsRest\GoldenSerpent.lua
+KingsRest\Mchimba.lua
+KingsRest\CouncilofTribes.lua
+KingsRest\Dazar.lua
+KingsRest\KingsRestTrash.lua
+ShrineoftheStorm\Agusirr.lua
+ShrineoftheStorm\TidesageCouncil.lua
+ShrineoftheStorm\Stormsong.lua
+ShrineoftheStorm\Volzith.lua
+ShrineoftheStorm\SotSTrash.lua
+SiegeofBoralus\Lockwood.lua
+SiegeofBoralus\Redhook_Bainbridge.lua
+SiegeofBoralus\Darkfathom.lua
+SiegeofBoralus\ViqGoth.lua
+SiegeofBoralus\BoralusTrash.lua
+TempleofSethraliss\AdderisandAspix.lua
+TempleofSethraliss\Merektha.lua
+TempleofSethraliss\Galvazzt.lua
+TempleofSethraliss\AvatarofSethraliss.lua
+TempleofSethraliss\SethralissTrash.lua
+TheMotherload\CrowdPummeler.lua
+TheMotherload\Azerokk.lua
+TheMotherload\RixxaFluxflame.lua
+TheMotherload\MogulRazzdunk.lua
+TheMotherload\UndermineTrash.lua
+TheUnderrot\ElderLeaxa.lua
+TheUnderrot\InfestedCrawg.lua
+TheUnderrot\SporecallerZancha.lua
+TheUnderrot\Unbound.lua
+TheUnderrot\UnderrotTrash.lua
+TolDagor\TheSandQueen.lua
+TolDagor\JesHowlis.lua
+TolDagor\Valyri.lua
+TolDagor\Korgus.lua
+TolDagor\TolDagorTrash.lua
+WaycrestManor\HeartsbaneTriad.lua
+WaycrestManor\SoulboundGoliath.lua
+WaycrestManor\RaaltheGlut.lua
+WaycrestManor\Waycrests.lua
+WaycrestManor\GorakTul.lua
+WaycrestManor\WaycrestTrash.lua
+Mechagon\KingGobbamak.lua
+Mechagon\Gunker.lua
+Mechagon\Trixie_Naeno.lua
+Mechagon\HK8.lua
+Mechagon\TussleTonks.lua
+Mechagon\KUJ0.lua
+Mechagon\MachinistGarden.lua
+Mechagon\KingMechagon.lua
+Mechagon\MechagonTrash.lua

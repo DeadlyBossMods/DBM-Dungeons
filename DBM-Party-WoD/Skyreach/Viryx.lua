@@ -12,7 +12,7 @@ mod:SetZone(1209)
 mod:RegisterCombat("combat")
 
 --NOTE: Solar Blast alternates between 12 and 27 second cd
-if DBM:IsPostMidnight() then
+if DBM:IsRestricted() then
 	DBM:RegisterAltSpellName(1253998, DBM_COMMON_L.ADD)--Cast Down -> Add
 
 	local warnScorchingRay			= mod:NewCountAnnounce(1253538, 2)

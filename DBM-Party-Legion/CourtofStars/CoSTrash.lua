@@ -620,7 +620,7 @@ do
 	function mod:CHAT_MSG_MONSTER_SAY(msg, _, _, _, target)
 		if msg:find(L.Found) or msg == L.Found then
 			self:SendSync("Finished", target)
-			if self:IsPostMidnight() then
+			if self:IsRestricted() then
 				--Post midnight yell restrictions in instances
 				return
 			end
@@ -652,7 +652,7 @@ do
 				if not self.Options.SpyHelper then return end
 				local clue = clueIds[gossipOptionID]
 				if not hints[clue] then
-					if self.Options.SendToChat2 and not self:IsPostMidnight() then
+					if self.Options.SendToChat2 and not self:IsRestricted() then
 						local text = hintTranslations[clue]
 						if IsInGroup(LE_PARTY_CATEGORY_INSTANCE) then
 							SendChatMessage("DBM: "..text, "INSTANCE_CHAT")

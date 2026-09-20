@@ -5,40 +5,47 @@ mod:SetRevision("@file-date-integer@")
 mod:DisableHardcodedOptions()
 mod:SetCreatureID(4424)
 --mod:SetEncounterID(438)
+mod:SetModelID(6097)
 mod:SetZone(47)
 
 mod:RegisterCombat("combat")
 
-mod:RegisterEventsInCombat(
-	"SPELL_CAST_START 14900",
-	"SPELL_CAST_SUCCESS 8286"
-)
+if DBM:IsRestricted() then
+	--do stuff
+	--mod:AddAuraSoundOption(372820, true, 372820, 1, 2, "watchfeet", 8, 0)
+else
 
-local warningSummonBoar		= mod:NewSpellAnnounce(8286, 2)
+	mod:RegisterEventsInCombat(
+		"SPELL_CAST_START 14900",
+		"SPELL_CAST_SUCCESS 8286"
+	)
 
-local specWarnHeal			= mod:NewSpecialWarningInterrupt(14900, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
+	local warningSummonBoar		= mod:NewSpellAnnounce(8286, 2)
 
-local timerSummonBoarCD		= mod:NewAITimer(180, 8286, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)
-local timerHealCD			= mod:NewAITimer(180, 14900, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+	local specWarnHeal			= mod:NewSpecialWarningInterrupt(14900, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
 
-function mod:OnCombatStart(delay)
-	--timerSummonBoarCD:Start(7-delay)
-	--timerHealCD:Start(9.5-delay)
-end
+	local timerSummonBoarCD		= mod:NewAITimer(180, 8286, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)
+	local timerHealCD			= mod:NewAITimer(180, 14900, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 
-function mod:SPELL_CAST_START(args)
-	if args:IsSpell(14900) and args:IsSrcTypeHostile() then
-		timerHealCD:Start()
-		if self:CheckInterruptFilter(args.sourceGUID, false, true) then
-			specWarnHeal:Show(args.sourceName)
-			specWarnHeal:Play("kickcast")
+	function mod:OnCombatStart(delay)
+		--timerSummonBoarCD:Start(7-delay)
+		--timerHealCD:Start(9.5-delay)
+	end
+
+	function mod:SPELL_CAST_START(args)
+		if args:IsSpell(14900) and args:IsSrcTypeHostile() then
+			timerHealCD:Start()
+			if self:CheckInterruptFilter(args.sourceGUID, false, true) then
+				specWarnHeal:Show(args.sourceName)
+				specWarnHeal:Play("kickcast")
+			end
 		end
 	end
-end
 
-function mod:SPELL_CAST_SUCCESS(args)
-	if args:IsSpell(8286) then
-		warningSummonBoar:Show()
-		timerSummonBoarCD:Start()
+	function mod:SPELL_CAST_SUCCESS(args)
+		if args:IsSpell(8286) then
+			warningSummonBoar:Show()
+			timerSummonBoarCD:Start()
+		end
 	end
 end

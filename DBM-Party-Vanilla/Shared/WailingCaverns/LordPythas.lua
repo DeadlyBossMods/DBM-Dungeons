@@ -5,43 +5,50 @@ mod:SetRevision("@file-date-integer@")
 mod:DisableHardcodedOptions()
 mod:SetCreatureID(3670)
 mod:SetEncounterID(588)
+mod:SetModelID(4214)
 mod:SetZone(43)
 
 mod:RegisterCombat("combat")
 
-mod:RegisterEventsInCombat(
-	"SPELL_CAST_START 8040 23381",
-	"SPELL_AURA_APPLIED 8040"
-)
+if DBM:IsRestricted() then
+	--do stuff
+	--mod:AddAuraSoundOption(372820, true, 372820, 1, 2, "watchfeet", 8, 0)
+else
 
-local warningDruidSlumber			= mod:NewTargetNoFilterAnnounce(8040, 2)
-local warningHealingTouch			= mod:NewCastAnnounce(23381, 2)
+	mod:RegisterEventsInCombat(
+		"SPELL_CAST_START 8040 23381",
+		"SPELL_AURA_APPLIED 8040"
+	)
 
-local specWarnDruidsSlumber			= mod:NewSpecialWarningInterrupt(8040, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
+	local warningDruidSlumber			= mod:NewTargetNoFilterAnnounce(8040, 2)
+	local warningHealingTouch			= mod:NewCastAnnounce(23381, 2)
 
-local timerDruidsSlumberCD			= mod:NewAITimer(180, 8040, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON..DBM_COMMON_L.MAGIC_ICON)
-local timerHealingTouchCD			= mod:NewAITimer(180, 23381, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+	local specWarnDruidsSlumber			= mod:NewSpecialWarningInterrupt(8040, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
 
-function mod:OnCombatStart(delay)
-	timerDruidsSlumberCD:Start(1-delay)
-	timerHealingTouchCD:Start(1-delay)
-end
+	local timerDruidsSlumberCD			= mod:NewAITimer(180, 8040, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON..DBM_COMMON_L.MAGIC_ICON)
+	local timerHealingTouchCD			= mod:NewAITimer(180, 23381, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
 
-function mod:SPELL_CAST_START(args)
-	if args:IsSpell(8040) and args:IsSrcTypeHostile() then
-		timerDruidsSlumberCD:Start()
-		if self:CheckInterruptFilter(args.sourceGUID, false, true) then
-			specWarnDruidsSlumber:Show(args.sourceName)
-			specWarnDruidsSlumber:Play("kickcast")
-		end
-	elseif args:IsSpell(23381) and args:IsSrcTypeHostile() then
-		warningHealingTouch:Show()
-		timerHealingTouchCD:Start()
+	function mod:OnCombatStart(delay)
+		timerDruidsSlumberCD:Start(1-delay)
+		timerHealingTouchCD:Start(1-delay)
 	end
-end
 
-function mod:SPELL_AURA_APPLIED(args)
-	if args:IsSpell(8040) and args:IsDestTypePlayer() then
-		warningDruidSlumber:Show(args.destName)
+	function mod:SPELL_CAST_START(args)
+		if args:IsSpell(8040) and args:IsSrcTypeHostile() then
+			timerDruidsSlumberCD:Start()
+			if self:CheckInterruptFilter(args.sourceGUID, false, true) then
+				specWarnDruidsSlumber:Show(args.sourceName)
+				specWarnDruidsSlumber:Play("kickcast")
+			end
+		elseif args:IsSpell(23381) and args:IsSrcTypeHostile() then
+			warningHealingTouch:Show()
+			timerHealingTouchCD:Start()
+		end
+	end
+
+	function mod:SPELL_AURA_APPLIED(args)
+		if args:IsSpell(8040) and args:IsDestTypePlayer() then
+			warningDruidSlumber:Show(args.destName)
+		end
 	end
 end

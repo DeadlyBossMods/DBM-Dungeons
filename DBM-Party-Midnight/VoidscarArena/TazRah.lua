@@ -127,7 +127,7 @@ do
 					end
 				elseif eventType == "blackHole" then
 					specWarnBlackHole:Show(eventCount)
-					specWarnBlackHole:Play("pullin")
+					specWarnBlackHole:Play("watchorb")
 				elseif eventType == "umbralRupture" then
 					specWarnUmbralRupture:Show(eventCount)
 					specWarnUmbralRupture:Play("watchstep")

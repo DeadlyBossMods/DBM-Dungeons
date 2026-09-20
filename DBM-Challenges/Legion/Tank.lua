@@ -12,51 +12,52 @@ mod.soloChallenge = true
 mod:RegisterCombat("combat")
 mod:SetReCombatTime(20, 5)--Basically killing of recombat restriction. mage tower lets you spam retry, we want the mod to let you
 
-if DBM:IsPostMidnight() then
-	--local warnHolyWard = mod:NewCastAnnounce(233473, 1)
-	--local warnDecay = mod:NewStackAnnounce(234422, 3)
-	--local warnShadowSweep = mod:NewSpellAnnounce(234441, 3)
-	--local warnTormentingEye = mod:NewSpellAnnounce(234428, 2)
-	--local warnNetherAberration = mod:NewSpellAnnounce(235110, 2)
-	--local warnInfernal = mod:NewSpellAnnounce(235112, 2)
+if DBM:IsRestricted() then
+	--local warnHolyWard					= mod:NewCastAnnounce(233473, 1)
+	--local warnDecay						= mod:NewStackAnnounce(234422, 3)
+	--local warnShadowSweep					= mod:NewSpellAnnounce(234441, 3)
+	--local warnTormentingEye				= mod:NewSpellAnnounce(234428, 2)--Hardcode Only
+	--local warnNetherHorrors				= mod:NewSpellAnnounce(235110, 2)
+	--local warnInfernal					= mod:NewSpellAnnounce(235112, 2)
 
-	--local specWarnDecay = mod:NewSpecialWarningStack(234422, nil, 5, nil, nil, 1, 6, nil, nil, "stackhigh")
-	--local specWarnDrainLife = mod:NewSpecialWarningInterrupt(234423, nil, nil, 2, 3, 2, nil, nil, "kickcast")
-	--local specWarnSmash = mod:NewSpecialWarningDodge(234631, nil, nil, nil, 1, 2, nil, nil, "shockwave")
-	--local specWarnAnnihilate = mod:NewSpecialWarningDefensive(236572, nil, nil, nil, 1, 2, nil, nil, "defensive")
-	--local specWarnTwistedReflection = mod:NewSpecialWarningInterrupt(234676, nil, nil, nil, 3, 2, nil, nil, "kickcast")
+	--local specWarnDecay					= mod:NewSpecialWarningStack(234422, nil, 5, nil, nil, 1, 6, nil, nil, "stackhigh")
+	local specWarnDrainLife					= mod:NewSpecialWarningInterrupt(234423, nil, nil, 2, 3, 2, nil, nil, "kickcast")
+	--local specWarnSmash					= mod:NewSpecialWarningDodge(234631, nil, nil, nil, 1, 2, nil, nil, "shockwave")
+	local specWarnAnnihilate				= mod:NewSpecialWarningDefensive(236572, nil, nil, nil, 1, 2, nil, nil, "defensive")
+	--local specWarnTwistedReflection		= mod:NewSpecialWarningInterrupt(234676, nil, nil, nil, 3, 2, nil, nil, "kickcast")
+	local specWarnNetherStomp				= mod:NewSpecialWarningDodge(234672, nil, nil, nil, 3, 2, nil, nil, "runout")
 
-	--local timerDrainLifeCD = mod:NewCDCountTimer(0, 234423, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
-	--local timerHolyWardCD = mod:NewCDCountTimer(0, 233473, nil, nil, nil, 3, nil, DBM_COMMON_L.HEALER_ICON)
-	--local timerHolyWard = mod:NewCDCountTimer(0, 233473, nil, nil, nil, 3, nil, DBM_COMMON_L.HEALER_ICON)
-	--local timerTormentingEyeCD = mod:NewCDCountTimer(0, 234428, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)
-	--local timerNetherAbberationCD = mod:NewCDCountTimer(0, 235110, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)
-	--local timerInfernalCD = mod:NewCDCountTimer(0, 235112, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)
-	--local timerShadowSweepCD = mod:NewCDCountTimer(0, 234441, nil, nil, nil, 3)
-	--local timerAnnihilateCD = mod:NewCDCountTimer(0, 236572, nil, nil, nil, 3, nil, DBM_COMMON_L.TANK_ICON)
+	local timerDrainLifeCD					= mod:NewCDCountTimer(30, 234423, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON)
+	--local timerHolyWardCD					= mod:NewCDCountTimer(30, 233473, nil, nil, nil, 3, nil, DBM_COMMON_L.HEALER_ICON)
+	--local timerHolyWard					= mod:NewCDCountTimer(30, 233473, nil, nil, nil, 3, nil, DBM_COMMON_L.HEALER_ICON)
+	local timerTormentingEyeCD				= mod:NewCDCountTimer(30, 234428, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)
+	local timerNetherHorrorsCD				= mod:NewCDCountTimer(30, 235110, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)
+	local timerInfernalCD					= mod:NewCDCountTimer(30, 235112, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)
+	local timerShadowSweepCD				= mod:NewCDCountTimer(30, 234920, nil, nil, nil, 3)
+	local timerAnnihilateCD					= mod:NewCDCountTimer(30, 236572, nil, nil, nil, 3, nil, DBM_COMMON_L.TANK_ICON)
+
 	local badStateDetected = false
+
+	---@param self DBMMod
+	---@param dontSetAlerts boolean? Called on engage when we only want to set timeline parameters and not touch encounter alerts
 	local function setFallback(self, dontSetAlerts)
 		if not dontSetAlerts then
-			--specWarnDecay:SetAlert(0, "stackhigh", 2)
-			--specWarnDrainLife:SetAlert(0, "kickcast", 2)
-			--specWarnSmash:SetAlert(0, "shockwave", 2)
-			--specWarnAnnihilate:SetAlert(0, "defensive", 2)
-			--specWarnTwistedReflection:SetAlert(0, "kickcast", 2)
+			specWarnDrainLife:SetAlert(913, "kickcast", 2)
+			specWarnAnnihilate:SetAlert(919, "defensive", 2)
+			specWarnNetherStomp:SetAlert(917, "runout", 2, 4, 0)--Confirm this works
 		end
 		local onlyColor = not DBM.Options.HideDBMBars and not badStateDetected
-		--timerDrainLifeCD:SetTimeline(0, onlyColor)
-		--timerHolyWardCD:SetTimeline(0, onlyColor)
-		--timerHolyWard:SetTimeline(0, onlyColor)
-		--timerTormentingEyeCD:SetTimeline(0, onlyColor)
-		--timerNetherAbberationCD:SetTimeline(0, onlyColor)
-		--timerInfernalCD:SetTimeline(0, onlyColor)
-		--timerShadowSweepCD:SetTimeline(0, onlyColor)
-		--timerAnnihilateCD:SetTimeline(0, onlyColor)
+		timerDrainLifeCD:SetTimeline(913, onlyColor)
+		timerTormentingEyeCD:SetTimeline(914, onlyColor)
+		timerNetherHorrorsCD:SetTimeline(915, onlyColor)
+		timerInfernalCD:SetTimeline(916, onlyColor)
+		timerShadowSweepCD:SetTimeline(920, onlyColor)
+		timerAnnihilateCD:SetTimeline(919, onlyColor)
 	end
 
 	function mod:OnLimitedCombatStart()
 		self:TLCountReset()
-		badStateDetected = true
+		badStateDetected = true--TEMP, REMOVE ME IN HARDCODE
 		if DBM.Options.HardcodedTimer and not badStateDetected then
 			self:IgnoreBlizzardAPI()
 			self:RegisterShortTermEvents("ENCOUNTER_TIMELINE_EVENT_ADDED", "ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED")
@@ -112,7 +113,7 @@ else
 	local timerHolyWardCD			= mod:NewCDTimer(33, 233473, nil, nil, nil, 3, nil, DBM_COMMON_L.HEALER_ICON)
 	local timerHolyWard				= mod:NewCastTimer(8, 233473, nil, false, nil, 3, nil, DBM_COMMON_L.HEALER_ICON)
 	local timerTormentingEyeCD		= mod:NewCDTimer(15.4, 234428, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)--15.4-19.4
-	local timerNetherAbberationCD	= mod:NewCDTimer(35, 235110, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON, nil, 1, 4)
+	local timerNetherHorrorsCD	= mod:NewCDTimer(35, 235110, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON, nil, 1, 4)
 	local timerInfernalCD			= mod:NewCDTimer(65, 235112, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON, nil, 3, 4)
 	--Phase 2
 	local timerShadowSweepCD		= mod:NewCDTimer(20, 234441, nil, nil, nil, 3)--20-27
@@ -127,7 +128,7 @@ else
 		timerTormentingEyeCD:Start(3.8)--3.8-5
 		timerDrainLifeCD:Start(5)--5-9?
 		timerHolyWardCD:Start(8)--8-16
-		timerNetherAbberationCD:Start(9.6)--9.6-12.3
+		timerNetherHorrorsCD:Start(9.6)--9.6-12.3
 		timerInfernalCD:Start(37.5)--37-43
 	end
 
@@ -187,7 +188,7 @@ else
 			self:SetStage(2)
 			timerDrainLifeCD:Stop()
 			timerTormentingEyeCD:Stop()
-			timerNetherAbberationCD:Stop()
+			timerNetherHorrorsCD:Stop()
 			timerInfernalCD:Stop()
 			--timerAnnihilateCD:Start(16.5, 1)--16-28?, too variable, disabled for now
 			--Does holy ward reset here? reset timer here if it does
@@ -201,9 +202,9 @@ else
 		elseif spellId == 235110 then--Nether Aberration
 			warnNetherAberration:Show()
 			if self.vb.phase == 2 then
-				timerNetherAbberationCD:Start(30)
+				timerNetherHorrorsCD:Start(30)
 			else
-				timerNetherAbberationCD:Start()--35
+				timerNetherHorrorsCD:Start()--35
 			end
 		elseif spellId == 235112 then--Smoldering Infernal Summon
 			warnInfernal:Show()

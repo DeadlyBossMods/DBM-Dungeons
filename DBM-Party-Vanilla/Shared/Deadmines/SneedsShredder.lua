@@ -11,42 +11,49 @@ mod:SetRevision("@file-date-integer@")
 mod:DisableHardcodedOptions()
 mod:SetCreatureID(642, 643)--Shredder, Sneed
 mod:SetEncounterID(2968)--Retail Encounter ID
+mod:SetModelID(1269)
 mod:SetZone(36)
 
 mod:RegisterCombat("combat")
 
-mod:RegisterEventsInCombat(
-	"SPELL_CAST_SUCCESS 7399 6713 5141",
-	"SPELL_AURA_APPLIED 7399 6713"
-)
+if DBM:IsRestricted() then
+	--do stuff
+	--mod:AddAuraSoundOption(372820, true, 372820, 1, 2, "watchfeet", 8, 0)
+else
 
-local warningFear			= mod:NewTargetNoFilterAnnounce(7399, 2)
-local warningDisarm			= mod:NewTargetNoFilterAnnounce(6713, 2)
-local warningEjectSneed		= mod:NewSpellAnnounce(5141, 2)
+	mod:RegisterEventsInCombat(
+		"SPELL_CAST_SUCCESS 7399 6713 5141",
+		"SPELL_AURA_APPLIED 7399 6713"
+	)
 
-local timerFearCD			= mod:NewAITimer(180, 7399, nil, nil, nil, 3, nil, DBM_COMMON_L.MAGIC_ICON)
-local timerDisarmCD			= mod:NewAITimer(180, 6713, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+	local warningFear			= mod:NewTargetNoFilterAnnounce(7399, 2)
+	local warningDisarm			= mod:NewTargetNoFilterAnnounce(6713, 2)
+	local warningEjectSneed		= mod:NewSpellAnnounce(5141, 2)
 
-function mod:OnCombatStart(delay)
-	timerFearCD:Start(1-delay)
-end
+	local timerFearCD			= mod:NewAITimer(180, 7399, nil, nil, nil, 3, nil, DBM_COMMON_L.MAGIC_ICON)
+	local timerDisarmCD			= mod:NewAITimer(180, 6713, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 
-function mod:SPELL_CAST_SUCCESS(args)
-	if args:IsSpell(7399) and args:IsSrcTypeHostile() then
-		timerFearCD:Start()
-	elseif args:IsSpell(6713) and args:IsSrcTypeHostile() then
-		timerDisarmCD:Start()
-	elseif args:IsSpell(5141) then
-		warningEjectSneed:Show()
-		timerFearCD:Stop()
-		timerDisarmCD:Start(1)
+	function mod:OnCombatStart(delay)
+		timerFearCD:Start(1-delay)
 	end
-end
 
-function mod:SPELL_AURA_APPLIED(args)
-	if args:IsSpell(7399) and args:IsDestTypePlayer() then
-		warningFear:Show(args.destName)
-	elseif args:IsSpell(6713) and args:IsDestTypePlayer() then
-		warningDisarm:Show(args.destName)
+	function mod:SPELL_CAST_SUCCESS(args)
+		if args:IsSpell(7399) and args:IsSrcTypeHostile() then
+			timerFearCD:Start()
+		elseif args:IsSpell(6713) and args:IsSrcTypeHostile() then
+			timerDisarmCD:Start()
+		elseif args:IsSpell(5141) then
+			warningEjectSneed:Show()
+			timerFearCD:Stop()
+			timerDisarmCD:Start(1)
+		end
+	end
+
+	function mod:SPELL_AURA_APPLIED(args)
+		if args:IsSpell(7399) and args:IsDestTypePlayer() then
+			warningFear:Show(args.destName)
+		elseif args:IsSpell(6713) and args:IsDestTypePlayer() then
+			warningDisarm:Show(args.destName)
+		end
 	end
 end

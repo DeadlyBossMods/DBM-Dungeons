@@ -9,7 +9,7 @@ mod:SetRevision("@file-date-integer@")
 mod:SetCreatureID(36658, 36661)
 mod:SetEncounterID(2000)
 mod:SetZone(658)
-if not DBM:IsPostMidnight() then
+if not DBM:IsRestricted() then
 	mod:DisableESCombatDetection()
 	mod:SetUsedIcons(8)
 end
@@ -19,7 +19,7 @@ mod:SetMinSyncRevision(20220119000000)
 mod:RegisterCombat("combat")
 
 --TODO, some actual custom sounds and timer disables when apis added
-if DBM:IsPostMidnight() then
+if DBM:IsRestricted() then
 	local warnRimeBlast					= mod:NewCountAnnounce(1262772, 3)
 	local warnBoneInfusion				= mod:NewCountAnnounce(1276648, 3)
 

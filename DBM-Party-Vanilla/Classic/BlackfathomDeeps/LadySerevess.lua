@@ -5,31 +5,38 @@ mod:SetRevision("@file-date-integer@")
 mod:DisableHardcodedOptions()
 mod:SetCreatureID(4831)
 mod:SetEncounterID(2762)
+mod:SetModelID(4979)
 mod:SetZone(48)
 
 mod:RegisterCombat("combat")
 
-mod:RegisterEventsInCombat(
-	"SPELL_CAST_SUCCESS 246",
-	"SPELL_AURA_APPLIED 246"
-)
+if DBM:IsRestricted() then
+	--do stuff
+	--mod:AddAuraSoundOption(372820, true, 372820, 1, 2, "watchfeet", 8, 0)
+else
 
-local warningSlow			= mod:NewTargetNoFilterAnnounce(246, 2)
+	mod:RegisterEventsInCombat(
+		"SPELL_CAST_SUCCESS 246",
+		"SPELL_AURA_APPLIED 246"
+	)
 
-local timerSlowCD			= mod:NewAITimer(180, 246, nil, nil, nil, 3, nil, DBM_COMMON_L.MAGIC_ICON)
+	local warningSlow			= mod:NewTargetNoFilterAnnounce(246, 2)
 
-function mod:OnCombatStart(delay)
-	timerSlowCD:Start(1-delay)
-end
+	local timerSlowCD			= mod:NewAITimer(180, 246, nil, nil, nil, 3, nil, DBM_COMMON_L.MAGIC_ICON)
 
-function mod:SPELL_CAST_SUCCESS(args)
-	if args:IsSpell(246) and args:IsSrcTypeHostile() then
-		timerSlowCD:Start()
+	function mod:OnCombatStart(delay)
+		timerSlowCD:Start(1-delay)
 	end
-end
 
-function mod:SPELL_AURA_APPLIED(args)
-	if args:IsSpell(246) and args:IsDestTypePlayer() then
-		warningSlow:Show(args.destName)
+	function mod:SPELL_CAST_SUCCESS(args)
+		if args:IsSpell(246) and args:IsSrcTypeHostile() then
+			timerSlowCD:Start()
+		end
+	end
+
+	function mod:SPELL_AURA_APPLIED(args)
+		if args:IsSpell(246) and args:IsDestTypePlayer() then
+			warningSlow:Show(args.destName)
+		end
 	end
 end

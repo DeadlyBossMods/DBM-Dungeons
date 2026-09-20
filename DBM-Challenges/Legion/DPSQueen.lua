@@ -12,25 +12,25 @@ mod.soloChallenge = true
 mod:RegisterCombat("combat")
 mod:SetReCombatTime(20, 5)--Basically killing of recombat restriction. mage tower lets you spam retry, we want the mod to let you
 
-if DBM:IsPostMidnight() then
-	--local warnHurlAxe = mod:NewSpellAnnounce(237870, 2, nil, false)
-	--local warnAdvance = mod:NewSpellAnnounce(237849, 2)
+if DBM:IsRestricted() then
+	--local warnHurlAxe					= mod:NewSpellAnnounce(237870, 2, nil, false)
+	--local warnAdvance					= mod:NewSpellAnnounce(237849, 2)
 
-	--local specWarnThrowSpear = mod:NewSpecialWarningDodge(238694, nil, nil, nil, 1, 2, nil, nil, "watchstep")
-	--local specWarnBloodFather = mod:NewSpecialWarningTarget(237945, nil, nil, nil, 3, 7, nil, nil, "crowdcontrol")
-	--local specWarnDarkWings = mod:NewSpecialWarningDodge(237772, nil, nil, nil, 2, 2, nil, nil, "stilldanger")
-	--local specWarnBerserkersRage = mod:NewSpecialWarningRun(237947, nil, nil, nil, 4, 2, nil, nil, "justrun")
-	--local specWarnBladeStorm = mod:NewSpecialWarningRun(237857, nil, nil, nil, 4, 2, nil, nil, "justrun")
-	--local specWarnRunicDetonation = mod:NewSpecialWarningMoveTo(237914, nil, nil, nil, 1, 12, nil, nil, "getinyellowrunes")
-	--local specWarnKnowledge = mod:NewSpecialWarningSwitch(237952, nil, nil, nil, 1, 2, nil, nil, "targetchange")
+	--local specWarnThrowSpear			= mod:NewSpecialWarningDodge(238694, nil, nil, nil, 1, 2, nil, nil, "watchstep")
+	--local specWarnBloodFather			= mod:NewSpecialWarningTarget(237945, nil, nil, nil, 3, 7, nil, nil, "crowdcontrol")
+	--local specWarnDarkWings			= mod:NewSpecialWarningDodge(237772, nil, nil, nil, 2, 2, nil, nil, "stilldanger")
+	--local specWarnBerserkersRage		= mod:NewSpecialWarningRun(237947, nil, nil, nil, 4, 2, nil, nil, "justrun")
+	--local specWarnBladeStorm			= mod:NewSpecialWarningRun(237857, nil, nil, nil, 4, 2, nil, nil, "justrun")
+	--local specWarnRunicDetonation		= mod:NewSpecialWarningMoveTo(237914, nil, nil, nil, 1, 12, nil, nil, "getinyellowrunes")
+	--local specWarnKnowledge			= mod:NewSpecialWarningSwitch(237952, nil, nil, nil, 1, 2, nil, nil, "targetchange")
 
-	--local timerThrowSpearCD = mod:NewCDCountTimer(0, 238694, nil, nil, nil, 3)
-	--local timerBloodFatherCD = mod:NewCDCountTimer(0, 237945, nil, nil, nil, 2)
-	--local timerDarkWingsCD = mod:NewCDCountTimer(0, 237772, nil, nil, nil, 3)
-	--local timerBerserkersRageCD = mod:NewCDCountTimer(0, 237947, nil, nil, nil, 3)
-	--local timerBladeStormCD = mod:NewCDCountTimer(0, 237857, nil, nil, nil, 2)
-	--local timerRunicDetonationCD = mod:NewCDCountTimer(0, 237914, nil, nil, nil, 5)
-	--local timerKnowledgeCD = mod:NewCDCountTimer(0, 237952, nil, nil, nil, 3)
+	--local timerThrowSpearCD			= mod:NewCDCountTimer(0, 238694, nil, nil, nil, 3)
+	--local timerBloodFatherCD			= mod:NewCDCountTimer(0, 237945, nil, nil, nil, 2)
+	--local timerDarkWingsCD			= mod:NewCDCountTimer(0, 237772, nil, nil, nil, 3)
+	--local timerBerserkersRageCD		= mod:NewCDCountTimer(0, 237947, nil, nil, nil, 3)
+	--local timerBladeStormCD			= mod:NewCDCountTimer(0, 237857, nil, nil, nil, 2)
+	--local timerRunicDetonationCD		= mod:NewCDCountTimer(0, 237914, nil, nil, nil, 5)
+	--local timerKnowledgeCD			= mod:NewCDCountTimer(0, 237952, nil, nil, nil, 3)
 	local badStateDetected = false
 	local function setFallback(self, dontSetAlerts)
 		if not dontSetAlerts then

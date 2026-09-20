@@ -12,7 +12,7 @@ mod:SetZone(1762)
 
 mod:RegisterCombat("combat")
 
-if DBM:IsPostMidnight() then
+if DBM:IsRestricted() then
 	mod:RegisterSafeEventsInCombat("CHAT_MSG_MONSTER_YELL")
 	--Overview:
 	--The battle will begin with Kula the Butcher. When a councilor is defeated, they will return to their urn and the next will join the encounter.

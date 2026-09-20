@@ -6,7 +6,7 @@ mod:SetZone(974)
 
 mod:RegisterCombat("combat")
 
-if DBM:IsPostMidnight() then
+if DBM:IsRestricted() then
 	mod:RegisterSafeEvents(
 		"UNIT_AURA player"
 	)

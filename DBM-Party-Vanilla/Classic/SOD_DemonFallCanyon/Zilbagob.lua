@@ -5,20 +5,27 @@ local L		= mod:GetLocalizedStrings()
 mod:SetRevision("@file-date-integer@")
 mod:DisableHardcodedOptions()
 mod:SetEncounterID(3029)
+mod:SetModelID(121881)
 mod:SetCreatureID(226922)
 mod:SetZone(2784)
 
 mod:RegisterCombat("combat")
 
-mod:RegisterEventsInCombat(
-	"SPELL_AURA_APPLIED 462272"
-)
+if DBM:IsRestricted() then
+	--do stuff
+	--mod:AddAuraSoundOption(372820, true, 372820, 1, 2, "watchfeet", 8, 0)
+else
 
-local specWarnGTFO = mod:NewSpecialWarningGTFO(462272, nil, nil, nil, 1, 8, nil, nil, "watchfeet")
+	mod:RegisterEventsInCombat(
+		"SPELL_AURA_APPLIED 462272"
+	)
 
-function mod:SPELL_AURA_APPLIED(args)
-	if args:IsSpell(462272) and args:IsPlayer() and self:AntiSpam(2.5, 1) then
-		specWarnGTFO:Play("watchfeet")
-		specWarnGTFO:Show(args.spellName)
+	local specWarnGTFO = mod:NewSpecialWarningGTFO(462272, nil, nil, nil, 1, 8, nil, nil, "watchfeet")
+
+	function mod:SPELL_AURA_APPLIED(args)
+		if args:IsSpell(462272) and args:IsPlayer() and self:AntiSpam(2.5, 1) then
+			specWarnGTFO:Play("watchfeet")
+			specWarnGTFO:Show(args.spellName)
+		end
 	end
 end

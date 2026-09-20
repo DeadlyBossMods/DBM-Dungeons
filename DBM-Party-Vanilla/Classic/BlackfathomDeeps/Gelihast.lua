@@ -5,31 +5,38 @@ mod:SetRevision("@file-date-integer@")
 mod:DisableHardcodedOptions()
 mod:SetCreatureID(6243)
 mod:SetEncounterID(2763)
+mod:SetModelID(1773)
 mod:SetZone(48)
 
 mod:RegisterCombat("combat")
 
-mod:RegisterEventsInCombat(
-	"SPELL_CAST_SUCCESS 6533",
-	"SPELL_AURA_APPLIED 6533"
-)
+if DBM:IsRestricted() then
+	--do stuff
+	--mod:AddAuraSoundOption(372820, true, 372820, 1, 2, "watchfeet", 8, 0)
+else
 
-local warningNet			= mod:NewTargetNoFilterAnnounce(6533, 2)
+	mod:RegisterEventsInCombat(
+		"SPELL_CAST_SUCCESS 6533",
+		"SPELL_AURA_APPLIED 6533"
+	)
 
-local timerNetCD			= mod:NewAITimer(180, 6533, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+	local warningNet			= mod:NewTargetNoFilterAnnounce(6533, 2)
 
-function mod:OnCombatStart(delay)
-	timerNetCD:Start(1-delay)
-end
+	local timerNetCD			= mod:NewAITimer(180, 6533, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 
-function mod:SPELL_CAST_SUCCESS(args)
-	if args:IsSpell(6533) then
-		timerNetCD:Start()
+	function mod:OnCombatStart(delay)
+		timerNetCD:Start(1-delay)
 	end
-end
 
-function mod:SPELL_AURA_APPLIED(args)
-	if args:IsSpell(6533) then
-		warningNet:Show(args.destName)
+	function mod:SPELL_CAST_SUCCESS(args)
+		if args:IsSpell(6533) then
+			timerNetCD:Start()
+		end
+	end
+
+	function mod:SPELL_AURA_APPLIED(args)
+		if args:IsSpell(6533) then
+			warningNet:Show(args.destName)
+		end
 	end
 end

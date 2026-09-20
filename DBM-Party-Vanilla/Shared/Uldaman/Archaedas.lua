@@ -5,39 +5,46 @@ mod:SetRevision("@file-date-integer@")
 mod:DisableHardcodedOptions()
 mod:SetCreatureID(2748)
 mod:SetEncounterID(554)
+mod:SetModelID(5988)
 mod:SetZone(70)
 
 mod:RegisterCombat("combat")
 
-mod:RegisterEventsInCombat(
-	"SPELL_CAST_START 10252 10258",
-	"SPELL_CAST_SUCCESS 6524"
-)
+if DBM:IsRestricted() then
+	--do stuff
+	--mod:AddAuraSoundOption(372820, true, 372820, 1, 2, "watchfeet", 8, 0)
+else
 
-local warningAwakenEarthenGuardians		= mod:NewSpellAnnounce(10252, 2)
-local warningAwakenVaultWarder			= mod:NewSpellAnnounce(10258, 2)
-local warningGroundTremor				= mod:NewSpellAnnounce(6524, 3)
+	mod:RegisterEventsInCombat(
+		"SPELL_CAST_START 10252 10258",
+		"SPELL_CAST_SUCCESS 6524"
+	)
 
-local timerAwakenEarthenGuardiansCD		= mod:NewAITimer(180, 10252, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)
-local timerGroundTremorCD				= mod:NewAITimer(180, 6524, nil, nil, nil, 2)
+	local warningAwakenEarthenGuardians		= mod:NewSpellAnnounce(10252, 2)
+	local warningAwakenVaultWarder			= mod:NewSpellAnnounce(10258, 2)
+	local warningGroundTremor				= mod:NewSpellAnnounce(6524, 3)
 
-function mod:OnCombatStart(delay)
-	timerAwakenEarthenGuardiansCD:Start(1-delay)
-	timerGroundTremorCD:Start(1-delay)
-end
+	local timerAwakenEarthenGuardiansCD		= mod:NewAITimer(180, 10252, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)
+	local timerGroundTremorCD				= mod:NewAITimer(180, 6524, nil, nil, nil, 2)
 
-function mod:SPELL_CAST_START(args)
-	if args:IsSpell(10252) then
-		warningAwakenEarthenGuardians:Show()
-		timerAwakenEarthenGuardiansCD:Start()
-	elseif args:IsSpell(10258) then
-		warningAwakenVaultWarder:Show()
+	function mod:OnCombatStart(delay)
+		timerAwakenEarthenGuardiansCD:Start(1-delay)
+		timerGroundTremorCD:Start(1-delay)
 	end
-end
 
-function mod:SPELL_CAST_SUCCESS(args)
-	if args:IsSpell(6524) then
-		warningGroundTremor:Show()
-		timerGroundTremorCD:Start()
+	function mod:SPELL_CAST_START(args)
+		if args:IsSpell(10252) then
+			warningAwakenEarthenGuardians:Show()
+			timerAwakenEarthenGuardiansCD:Start()
+		elseif args:IsSpell(10258) then
+			warningAwakenVaultWarder:Show()
+		end
+	end
+
+	function mod:SPELL_CAST_SUCCESS(args)
+		if args:IsSpell(6524) then
+			warningGroundTremor:Show()
+			timerGroundTremorCD:Start()
+		end
 	end
 end

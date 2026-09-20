@@ -5,39 +5,46 @@ mod:SetRevision("@file-date-integer@")
 mod:DisableHardcodedOptions()
 mod:SetCreatureID(4428)
 --mod:SetEncounterID(438)
+mod:SetModelID(4644)
 mod:SetZone(47)
 
 mod:RegisterCombat("combat")
 
-mod:RegisterEventsInCombat(
-	"SPELL_CAST_START 14515",
-	"SPELL_CAST_SUCCESS 14515",
-	"SPELL_AURA_APPLIED 14515"
-)
+if DBM:IsRestricted() then
+	--do stuff
+	--mod:AddAuraSoundOption(372820, true, 372820, 1, 2, "watchfeet", 8, 0)
+else
 
-local warningMCCast			= mod:NewCastAnnounce(14515, 3)
-local warningMC				= mod:NewTargetNoFilterAnnounce(14515, 4, nil, false, 2)--Don't want to announce the MC cast AND the target, 2 second apart warnings for same thing is not agreeable in classic (by default)
+	mod:RegisterEventsInCombat(
+		"SPELL_CAST_START 14515",
+		"SPELL_CAST_SUCCESS 14515",
+		"SPELL_AURA_APPLIED 14515"
+	)
 
-local timerMCCD				= mod:NewAITimer(180, 14515, nil, nil, nil, 3)--Uses success, because start can be interrupted by CC, evem though normal interrupts don't work, but boss recasts immediately on CC break
+	local warningMCCast			= mod:NewCastAnnounce(14515, 3)
+	local warningMC				= mod:NewTargetNoFilterAnnounce(14515, 4, nil, false, 2)--Don't want to announce the MC cast AND the target, 2 second apart warnings for same thing is not agreeable in classic (by default)
 
-function mod:OnCombatStart(delay)
-	--timerMCCD:Start(6-delay)--Cast Start
-end
+	local timerMCCD				= mod:NewAITimer(180, 14515, nil, nil, nil, 3)--Uses success, because start can be interrupted by CC, evem though normal interrupts don't work, but boss recasts immediately on CC break
 
-function mod:SPELL_CAST_START(args)
-	if args:IsSpell(14515) then
-		warningMCCast:Show()
+	function mod:OnCombatStart(delay)
+		--timerMCCD:Start(6-delay)--Cast Start
 	end
-end
 
-function mod:SPELL_CAST_SUCCESS(args)
-	if args:IsSpell(14515) then
-		timerMCCD:Start()--From Success to start when final, but while AI, success to success :\
+	function mod:SPELL_CAST_START(args)
+		if args:IsSpell(14515) then
+			warningMCCast:Show()
+		end
 	end
-end
 
-function mod:SPELL_AURA_APPLIED(args)
-	if args:IsSpell(14515) then
-		warningMC:Show(args.destName)
+	function mod:SPELL_CAST_SUCCESS(args)
+		if args:IsSpell(14515) then
+			timerMCCD:Start()--From Success to start when final, but while AI, success to success :\
+		end
+	end
+
+	function mod:SPELL_AURA_APPLIED(args)
+		if args:IsSpell(14515) then
+			warningMC:Show(args.destName)
+		end
 	end
 end

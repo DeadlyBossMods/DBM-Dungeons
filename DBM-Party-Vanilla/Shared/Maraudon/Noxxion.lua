@@ -5,32 +5,39 @@ mod:SetRevision("@file-date-integer@")
 mod:DisableHardcodedOptions()
 mod:SetCreatureID(13282)
 mod:SetEncounterID(422)
+mod:SetModelID(11172)
 mod:SetZone(349)
 
 mod:RegisterCombat("combat")
 
-mod:RegisterEventsInCombat(
-	"SPELL_CAST_SUCCESS 10966 21707"
-)
+if DBM:IsRestricted() then
+	--do stuff
+	--mod:AddAuraSoundOption(372820, true, 372820, 1, 2, "watchfeet", 8, 0)
+else
 
---TODO, spawns affect uppercut timer?
-local warningSpawns					= mod:NewSpellAnnounce(21707, 2)
-local warningUppercut				= mod:NewSpellAnnounce(10966, 2)
+	mod:RegisterEventsInCombat(
+		"SPELL_CAST_SUCCESS 10966 21707"
+	)
 
-local timerSpawnsCD					= mod:NewAITimer(180, 21707, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)
-local timerUppercutCD				= mod:NewAITimer(180, 10966, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
+	--TODO, spawns affect uppercut timer?
+	local warningSpawns					= mod:NewSpellAnnounce(21707, 2)
+	local warningUppercut				= mod:NewSpellAnnounce(10966, 2)
 
-function mod:OnCombatStart(delay)
-	timerSpawnsCD:Start(1-delay)--6
-	timerUppercutCD:Start(1-delay)--18
-end
+	local timerSpawnsCD					= mod:NewAITimer(180, 21707, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)
+	local timerUppercutCD				= mod:NewAITimer(180, 10966, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 
-function mod:SPELL_CAST_SUCCESS(args)
-	if args:IsSpell(10966) then
-		warningUppercut:Show()
-		timerUppercutCD:Start()
-	elseif args:IsSpell(21707) then
-		warningSpawns:Show()
-		timerSpawnsCD:Start()
+	function mod:OnCombatStart(delay)
+		timerSpawnsCD:Start(1-delay)--6
+		timerUppercutCD:Start(1-delay)--18
+	end
+
+	function mod:SPELL_CAST_SUCCESS(args)
+		if args:IsSpell(10966) then
+			warningUppercut:Show()
+			timerUppercutCD:Start()
+		elseif args:IsSpell(21707) then
+			warningSpawns:Show()
+			timerSpawnsCD:Start()
+		end
 	end
 end

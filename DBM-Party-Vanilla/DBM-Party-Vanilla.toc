@@ -1,0 +1,309 @@
+## Interface: 11509, 16001, 20506, 30405, 38002, 40402, 50504, 120100
+## AllowLoadGameType: classic, mainline
+## Category: DBM
+## Title:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Dungeons (Vanilla)|r
+## Title-deDE:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Gruppe-Vanilla|r
+## Title-esES:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Mazmorras (Clásico)|r
+## Title-esMX:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Calabozos (Clásico)|r [AllowLoadGameType camelot, tbc, vanilla, wrath]
+## Title-ptBR:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Masmorras (Clássico)|r [AllowLoadGameType camelot, tbc, vanilla, wrath]
+## Title-frFR:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Donjons (Classique)|r [AllowLoadGameType camelot, tbc, vanilla, wrath]
+## Title-ruRU:|cffffe00a<|r|cffff7d0aDBM Мод|r|cffffe00a>|r |cffc030c0Классические подземелья|r
+## Title-koKR:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0던전 (오리지널)|r
+## Title-zhTW:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0隊伍首領-傳統|r
+## Title-zhCN:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0队伍首领(经典旧世)|r [AllowLoadGameType camelot, tbc, vanilla, wrath]
+## Title-zhCN:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0队伍首领 (经典旧世)|r [AllowLoadGameType cata, standard, mists]
+## Author: MysticalOS
+## LoadOnDemand: 1
+## RequiredDeps: DBM-Core
+## SavedVariables: DBMPartyVanilla_AllSavedVars
+## SavedVariablesPerCharacter: DBMPartyVanilla_SavedStats
+## X-DBM-Mod: 1
+## X-DBM-Mod-Type: PARTY
+## X-DBM-Mod-Category: Classic
+## X-DBM-StatTypes: normal
+## X-DBM-Mod-SubCategoriesID: 48,230,229|Lower,229|Upper,36,429,90,349,389,129,47,189,289,33,34,329,109,70,43,209,2784,2875 [AllowLoadGameType camelot, vanilla]
+## X-DBM-Mod-SubCategoriesID: 48,230,429,90,229|Lower,349,389,129,47,329,34,109,70,43,209,289|Legacy,189|Legacy,229|Upper [AllowLoadGameType cata, mists]
+## X-DBM-Mod-SubCategoriesID: 48,230,429,90,229,349,389,129,47,329,34,109,70,43,209,289|Legacy,189|Legacy,36|Legacy [AllowLoadGameType standard]
+## X-DBM-Mod-SubCategoriesID: 48,230,229|Lower,229|Upper,36,429,90,349,389,129,47,189,289,33,34,329,109,70,43,209 [AllowLoadGameType tbc, wrath]
+## X-DBM-Mod-SubCategoriesID-deDE: 48,230,229|Untere,229|Obere,36,429,90,349,389,129,47,189,289,33,34,329,109,70,43,209,2784,2875 [AllowLoadGameType camelot, vanilla]
+## X-DBM-Mod-SubCategoriesID-deDE: 48,230,229|Untere,229|Obere,36,429,90,349,389,129,47,189,289,33,34,329,109,70,43,209 [AllowLoadGameType tbc, wrath]
+## X-DBM-Mod-SubCategoriesID-esES: 48,230,229|Inferior,229|Superior,36,429,90,349,389,129,47,189,289,33,34,329,109,70,43,209,2784,2875 [AllowLoadGameType camelot, vanilla]
+## X-DBM-Mod-SubCategoriesID-esES: 48,230,229|Inferior,229|Superior,36,429,90,349,389,129,47,189,289,33,34,329,109,70,43,209 [AllowLoadGameType tbc, wrath]
+## X-DBM-Mod-SubCategoriesID-esMX: 48,230,229|Inferior,229|Superior,36,429,90,349,389,129,47,189,289,33,34,329,109,70,43,209,2784,2875 [AllowLoadGameType camelot, vanilla]
+## X-DBM-Mod-SubCategoriesID-esMX: 48,230,229|Inferior,229|Superior,36,429,90,349,389,129,47,189,289,33,34,329,109,70,43,209 [AllowLoadGameType tbc, wrath]
+## X-DBM-Mod-SubCategoriesID-ptBR: 48,230,229|Inferior,229|Superior,36,429,90,349,389,129,47,189,289,33,34,329,109,70,43,209,2784,2875 [AllowLoadGameType camelot, vanilla]
+## X-DBM-Mod-SubCategoriesID-ptBR: 48,230,229|Inferior,229|Superior,36,429,90,349,389,129,47,189,289,33,34,329,109,70,43,209 [AllowLoadGameType tbc, wrath]
+## X-DBM-Mod-SubCategoriesID-frFR: 48,230,229|Inférieur,229|Supérieur,36,429,90,349,389,129,47,189,289,33,34,329,109,70,43,209,2784,2875 [AllowLoadGameType camelot, vanilla]
+## X-DBM-Mod-SubCategoriesID-frFR: 48,230,229|Inférieur,229|Supérieur,36,429,90,349,389,129,47,189,289,33,34,329,109,70,43,209 [AllowLoadGameType tbc, wrath]
+## X-DBM-Mod-SubCategoriesID-ruRU: 48,230,229|Нижняя,229|Верхняя,36,429,90,349,389,129,47,189,289,33,34,329,109,70,43,209,2784,2875 [AllowLoadGameType camelot, vanilla]
+## X-DBM-Mod-SubCategoriesID-ruRU: 48,230,229|Нижняя,229|Верхняя,36,429,90,349,389,129,47,189,289,33,34,329,109,70,43,209 [AllowLoadGameType tbc, wrath]
+## X-DBM-Mod-SubCategoriesID-koKR: 48,230,229|하층,229|상층,36,429,90,349,389,129,47,189,289,33,34,329,109,70,43,209,2784,2875 [AllowLoadGameType camelot, vanilla]
+## X-DBM-Mod-SubCategoriesID-koKR: 48,230,429,90,229|하층,349,389,129,47,329,34,109,70,43,209,289|구버전,189|구버전,229|상층 [AllowLoadGameType cata, mists]
+## X-DBM-Mod-SubCategoriesID-koKR: 48,230,429,90,229,349,389,129,47,329,34,109,70,43,209,289|구버전,189|구버전 [AllowLoadGameType standard]
+## X-DBM-Mod-SubCategoriesID-koKR: 48,230,229|하층,229|상층,36,429,90,349,389,129,47,189,289,33,34,329,109,70,43,209 [AllowLoadGameType tbc, wrath]
+## X-DBM-Mod-SubCategoriesID-zhTW: 48,230,229|下層,229|上層,36,429,90,349,389,129,47,189,289,33,34,329,109,70,43,209,2784,2875 [AllowLoadGameType camelot, vanilla]
+## X-DBM-Mod-SubCategoriesID-zhTW: 48,230,229|下層,229|上層,36,429,90,349,389,129,47,189,289,33,34,329,109,70,43,209 [AllowLoadGameType tbc, wrath]
+## X-DBM-Mod-SubCategoriesID-zhCN: 48,230,229|下层,229|上层,36,429,90,349,389,129,47,189,289,33,34,329,109,70,43,209,2784,2875 [AllowLoadGameType camelot, vanilla]
+## X-DBM-Mod-SubCategoriesID-zhCN: 48,230,229|下层,229|上层,36,429,90,349,389,129,47,189,289,33,34,329,109,70,43,209 [AllowLoadGameType tbc, wrath]
+## X-DBM-Mod-Name: Dungeons (Vanilla)
+## X-DBM-Mod-Name-deDE: Gruppe (Vanilla)
+## X-DBM-Mod-Name-esES: Mazmorras (Clásico)
+## X-DBM-Mod-Name-esMX: Calabozos (Clásico) [AllowLoadGameType camelot, tbc, vanilla, wrath]
+## X-DBM-Mod-Name-ptBR: Masmorras (Clássico) [AllowLoadGameType camelot, tbc, vanilla, wrath]
+## X-DBM-Mod-Name-frFR: Donjons (Classique) [AllowLoadGameType camelot, tbc, vanilla, wrath]
+## X-DBM-Mod-Name-ruRU: Подземелье (классический) [AllowLoadGameType camelot, tbc, vanilla, wrath]
+## X-DBM-Mod-Name-ruRU: Классические подземелья [AllowLoadGameType cata, standard, mists]
+## X-DBM-Mod-Name-koKR: 던전 (오리지널)
+## X-DBM-Mod-Name-zhTW: 隊伍首領 (傳統)
+## X-DBM-Mod-Name-zhCN: 队伍首领(经典旧世) [AllowLoadGameType camelot, tbc, vanilla, wrath]
+## X-DBM-Mod-Name-zhCN: 队伍首领 (经典旧世) [AllowLoadGameType cata, standard, mists]
+## X-DBM-Mod-Sort: 1102
+## X-DBM-Mod-MapID: 48,230,229,36,429,90,349,389,129,47,189,289,33,34,329,109,70,43,209,2784,2875 [AllowLoadGameType camelot, vanilla]
+## X-DBM-Mod-MapID: 48,230,429,90,229,349,389,129,47,329,34,109,70,43,209,289,189 [AllowLoadGameType cata, mists]
+## X-DBM-Mod-MapID: 48,230,429,90,229,349,389,129,47,329,34,109,70,43,209,289,189,36 [AllowLoadGameType standard]
+## X-DBM-Mod-MapID: 48,230,229,36,429,90,349,389,129,47,189,289,33,34,329,109,70,43,209 [AllowLoadGameType tbc, wrath]
+## X-DBM-Mod-MinCoreRevision: 20260522000000
+## X-DBM-Mod-MinExpansion: 0
+## X-Curse-Project-ID: 314994
+## X-Wago-ID: xZKxZENk
+## Version: @project-version@
+## IconTexture: Interface\AddOns\DBM-Core\textures\dbm_airhorn [AllowLoadGameType cata, standard, mists]
+
+locale.generated.lua
+Classic\localization.en.lua [AllowLoadGameType camelot, tbc, vanilla, wrath]
+Classic\localization.de.lua [AllowLoadGameType camelot, tbc, vanilla, wrath]
+Classic\localization.es.lua [AllowLoadGameType camelot, tbc, vanilla, wrath]
+Classic\localization.mx.lua [AllowLoadGameType camelot, tbc, vanilla, wrath]
+Classic\localization.br.lua [AllowLoadGameType camelot, tbc, vanilla, wrath]
+Classic\localization.fr.lua [AllowLoadGameType camelot, tbc, vanilla, wrath]
+Classic\localization.ru.lua [AllowLoadGameType camelot, tbc, vanilla, wrath]
+Classic\localization.kr.lua [AllowLoadGameType camelot, tbc, vanilla, wrath]
+Classic\localization.tw.lua [AllowLoadGameType camelot, tbc, vanilla, wrath]
+Classic\localization.cn.lua [AllowLoadGameType camelot, tbc, vanilla, wrath]
+Classic\BlackfathomDeeps\GhamooRa.lua [AllowLoadGameType camelot, tbc, vanilla, wrath]
+Classic\BlackfathomDeeps\LadySerevess.lua [AllowLoadGameType camelot, tbc, vanilla, wrath]
+Classic\BlackfathomDeeps\Gelihast.lua [AllowLoadGameType camelot, tbc, vanilla, wrath]
+Classic\BlackfathomDeeps\TwilightLordKelris.lua [AllowLoadGameType camelot, tbc, vanilla, wrath]
+Classic\BlackfathomDeeps\OldSerrakis.lua [AllowLoadGameType camelot, tbc, vanilla, wrath]
+Classic\BlackfathomDeeps\Akumai.lua [AllowLoadGameType camelot, tbc, vanilla, wrath]
+Shared\BlackrockDepths\Gerstahn.lua
+Shared\BlackrockDepths\LordRoccor.lua
+Shared\BlackrockDepths\HoundmasterGrebmar.lua
+Shared\BlackrockDepths\RingofLaw.lua
+Shared\BlackrockDepths\PyromancerLoregrain.lua
+Shared\BlackrockDepths\LordIncendius.lua
+Shared\BlackrockDepths\WardenStilgiss.lua
+Shared\BlackrockDepths\FineousDarkvire.lua
+Shared\BlackrockDepths\BaelGar.lua
+Shared\BlackrockDepths\GeneralAngerforge.lua
+Shared\BlackrockDepths\GolemLordArgelmach.lua
+Shared\BlackrockDepths\HurleyBlackbreath.lua
+Shared\BlackrockDepths\Phalanx.lua
+Shared\BlackrockDepths\PluggerSpazzring.lua
+Shared\BlackrockDepths\AmbassadorFlamelash.lua
+Shared\BlackrockDepths\TheSeven.lua
+Shared\BlackrockDepths\Magmus.lua
+Shared\BlackrockDepths\EmperorDagranThaurissan.lua
+Shared\LowerBlackrockSpire\HighlordOmokk.lua
+Shared\LowerBlackrockSpire\ShadowHunterVoshgajin.lua
+Shared\LowerBlackrockSpire\WarMasterVoone.lua
+Shared\LowerBlackrockSpire\MotherSmolderweb.lua
+Shared\LowerBlackrockSpire\UrokDoomhowl.lua
+Shared\LowerBlackrockSpire\QuartermasterZigris.lua
+Shared\LowerBlackrockSpire\Halycon.lua
+Shared\LowerBlackrockSpire\Gizrul.lua
+Shared\LowerBlackrockSpire\OverlordWyrmthalak.lua
+Classic\UpperBlackrockSpire\PyroguardEmberseer.lua [AllowLoadGameType camelot, cata, mists, tbc, vanilla, wrath]
+Classic\UpperBlackrockSpire\SolakarFlamewreath.lua [AllowLoadGameType camelot, cata, mists, tbc, vanilla, wrath]
+Classic\UpperBlackrockSpire\GoralukAnvilcrack.lua [AllowLoadGameType camelot, cata, mists, tbc, vanilla, wrath]
+Classic\UpperBlackrockSpire\JedRunewatcher.lua [AllowLoadGameType camelot, cata, mists, tbc, vanilla, wrath]
+Classic\UpperBlackrockSpire\WarchiefRendBlackhand.lua [AllowLoadGameType camelot, cata, mists, tbc, vanilla, wrath]
+Classic\UpperBlackrockSpire\TheBeast.lua [AllowLoadGameType camelot, cata, mists, tbc, vanilla, wrath]
+Classic\UpperBlackrockSpire\LordValthalak.lua [AllowLoadGameType camelot, cata, mists, tbc, vanilla, wrath]
+Classic\UpperBlackrockSpire\GeneralDrakkisath.lua [AllowLoadGameType camelot, cata, mists, tbc, vanilla, wrath]
+Shared\Deadmines\RhahkZor.lua [AllowLoadGameType camelot, standard, tbc, vanilla, wrath]
+Shared\Deadmines\MinerJohnson.lua [AllowLoadGameType camelot, standard, tbc, vanilla, wrath]
+Shared\Deadmines\SneedsShredder.lua [AllowLoadGameType camelot, standard, tbc, vanilla, wrath]
+Shared\Deadmines\Gilnid.lua [AllowLoadGameType camelot, standard, tbc, vanilla, wrath]
+Shared\Deadmines\MrSmite.lua [AllowLoadGameType camelot, standard, tbc, vanilla, wrath]
+Shared\Deadmines\CaptainGreenskin.lua [AllowLoadGameType camelot, standard, tbc, vanilla, wrath]
+Shared\Deadmines\EdwinVanCleef.lua [AllowLoadGameType camelot, standard, tbc, vanilla, wrath]
+Shared\Deadmines\Cookie.lua [AllowLoadGameType camelot, standard, tbc, vanilla, wrath]
+Shared\DireMaul\ZevrimThornhoof.lua
+Shared\DireMaul\Hydrospawn.lua
+Shared\DireMaul\Lethtendris.lua
+Shared\DireMaul\Alzzin.lua
+Shared\DireMaul\TendrisWarpwood.lua
+Shared\DireMaul\IllyannaRavensoak.lua
+Shared\DireMaul\MagisterKelendris.lua
+Shared\DireMaul\Immolthar.lua
+Shared\DireMaul\PrinceTortheldrin.lua
+Shared\DireMaul\GuardMoldar.lua
+Shared\DireMaul\StomperKreeg.lua
+Shared\DireMaul\GuardFengus.lua
+Shared\DireMaul\GuardSlipkik.lua
+Shared\DireMaul\CaptainKromcrush.lua
+Shared\DireMaul\ChoRush.lua
+Shared\DireMaul\KingGordok.lua
+Shared\Gnomeregan\Grubbis.lua
+Shared\Gnomeregan\ViscousFallout.lua
+Shared\Gnomeregan\Electrocutioner6000.lua
+Shared\Gnomeregan\CrowdPummeler.lua
+Shared\Gnomeregan\MekgineerThermaplugg.lua
+Shared\Maraudon\Noxxion.lua
+Shared\Maraudon\Razorlash.lua
+Shared\Maraudon\TinkererGizlock.lua
+Shared\Maraudon\LordVyletongue.lua
+Shared\Maraudon\CelebrastheCursed.lua
+Shared\Maraudon\Landslide.lua
+Shared\Maraudon\Rotgrip.lua
+Shared\Maraudon\PrincessTheradras.lua
+
+Classic\RagefireChasm\Oggleflint.lua [AllowLoadGameType camelot, tbc, vanilla, wrath]
+Classic\RagefireChasm\Taragaman.lua [AllowLoadGameType camelot, tbc, vanilla, wrath]
+Classic\RagefireChasm\Jergosh.lua [AllowLoadGameType camelot, tbc, vanilla, wrath]
+Classic\RagefireChasm\Bazzalan.lua [AllowLoadGameType camelot, tbc, vanilla, wrath]
+Classic\RazorfenDowns\Tutenkash.lua [AllowLoadGameType camelot, tbc, vanilla, wrath]
+Classic\RazorfenDowns\MordreshFireEye.lua [AllowLoadGameType camelot, tbc, vanilla, wrath]
+Classic\RazorfenDowns\Glutton.lua [AllowLoadGameType camelot, tbc, vanilla, wrath]
+Classic\RazorfenDowns\Ragglesnout.lua [AllowLoadGameType camelot, tbc, vanilla, wrath]
+Classic\RazorfenDowns\AmnennartheColdbringer.lua [AllowLoadGameType camelot, tbc, vanilla, wrath]
+Classic\RazorfenDowns\PlaguemawtheRotting.lua [AllowLoadGameType camelot, tbc, vanilla, wrath]
+Classic\RazorfenKraul\Roogug.lua [AllowLoadGameType camelot, tbc, vanilla, wrath]
+Classic\RazorfenKraul\AggemThorncurse.lua [AllowLoadGameType camelot, tbc, vanilla, wrath]
+Classic\RazorfenKraul\DeathSpeakerJargba.lua [AllowLoadGameType camelot, tbc, vanilla, wrath]
+Classic\RazorfenKraul\OverlordRamtusk.lua [AllowLoadGameType camelot, tbc, vanilla, wrath]
+Classic\RazorfenKraul\AgathelostheRaging.lua [AllowLoadGameType camelot, tbc, vanilla, wrath]
+Classic\RazorfenKraul\BlindHunter.lua [AllowLoadGameType camelot, tbc, vanilla, wrath]
+Classic\RazorfenKraul\EarthcallerHalmgar.lua [AllowLoadGameType camelot, tbc, vanilla, wrath]
+Classic\RazorfenKraul\CharlgaRazorflank.lua [AllowLoadGameType camelot, tbc, vanilla, wrath]
+
+Shared\ScarletMonastery_Old\InterrogatorVishas.lua
+Shared\ScarletMonastery_Old\BloodmageThalnos.lua
+Shared\ScarletMonastery_Old\HoundmasterLoksey.lua
+Shared\ScarletMonastery_Old\ArcanistDoan.lua
+Shared\ScarletMonastery_Old\Herod.lua
+Shared\ScarletMonastery_Old\Mograine_and_Whitemane.lua
+Shared\ScarletMonastery_Old\HighInquisitorFairbanks.lua
+Shared\Scholomance_Old\KirtonostheHerald.lua
+Shared\Scholomance_Old\JandiceBarov.lua
+Shared\Scholomance_Old\Rattlegore.lua
+Shared\Scholomance_Old\MardukBlackpool.lua
+Shared\Scholomance_Old\Vectus.lua
+Shared\Scholomance_Old\RasFrostwhisper.lua
+Shared\Scholomance_Old\InstructorMalicia.lua
+Shared\Scholomance_Old\DoctorTheolenKrastinov.lua
+Shared\Scholomance_Old\LorekeeperPolkelt.lua
+Shared\Scholomance_Old\TheRavenian.lua
+Shared\Scholomance_Old\LordAlexeiBarov.lua
+Shared\Scholomance_Old\LadyIlluciaBarov.lua
+Shared\Scholomance_Old\DarkmasterGandling.lua
+
+Classic\Shadowfangkeep\Rethilgore.lua [AllowLoadGameType camelot, tbc, vanilla, wrath]
+Classic\Shadowfangkeep\RazorclawtheButcher.lua [AllowLoadGameType camelot, tbc, vanilla, wrath]
+Classic\Shadowfangkeep\BaronSilverlaine.lua [AllowLoadGameType camelot, tbc, vanilla, wrath]
+Classic\Shadowfangkeep\CommanderSpringvale.lua [AllowLoadGameType camelot, tbc, vanilla, wrath]
+Classic\Shadowfangkeep\OdotheBlindwatcher.lua [AllowLoadGameType camelot, tbc, vanilla, wrath]
+Classic\Shadowfangkeep\DeathswornCaptain.lua [AllowLoadGameType camelot, tbc, vanilla, wrath]
+Classic\Shadowfangkeep\FenrustheDevourer.lua [AllowLoadGameType camelot, tbc, vanilla, wrath]
+Classic\Shadowfangkeep\WolfMasterNandos.lua [AllowLoadGameType camelot, tbc, vanilla, wrath]
+Classic\Shadowfangkeep\ArchmageArugal.lua [AllowLoadGameType camelot, tbc, vanilla, wrath]
+Classic\StormwindStockaid\Targorr.lua [AllowLoadGameType camelot, tbc, vanilla, wrath]
+Classic\StormwindStockaid\KamDeepfury.lua [AllowLoadGameType camelot, tbc, vanilla, wrath]
+Classic\StormwindStockaid\Hamhock.lua [AllowLoadGameType camelot, tbc, vanilla, wrath]
+Classic\StormwindStockaid\BazilThredd.lua [AllowLoadGameType camelot, tbc, vanilla, wrath]
+Classic\StormwindStockaid\DextrenWard.lua [AllowLoadGameType camelot, tbc, vanilla, wrath]
+Classic\StormwindStockaid\BruegalIronknuckle.lua [AllowLoadGameType camelot, tbc, vanilla, wrath]
+
+Shared\Stratholme\HearthsingerForresten.lua
+Shared\Stratholme\TimmytheCruel.lua
+Shared\Stratholme\CommanderMalor.lua
+Shared\Stratholme\WilleyHopebreaker.lua
+Shared\Stratholme\InstructorGalford.lua
+Shared\Stratholme\Balnazzar.lua
+Shared\Stratholme\TheUnforgiven.lua
+Shared\Stratholme\BaronessAnastari.lua
+Shared\Stratholme\Narubenkan.lua
+Shared\Stratholme\MalekithePallid.lua
+Shared\Stratholme\MagistrateBarthilas.lua
+Shared\Stratholme\RamsteintheGorger.lua
+Shared\Stratholme\LordAuriusRivendare.lua
+Shared\SunkenTemple\AvatarofHakkar.lua
+Shared\SunkenTemple\JammalantheProphet.lua
+Shared\SunkenTemple\Dreamscythe.lua
+Shared\SunkenTemple\Weaver.lua
+Shared\SunkenTemple\Morphaz.lua
+Shared\SunkenTemple\Hazzas.lua
+Shared\SunkenTemple\ShadeofEranikus.lua
+Shared\Uldaman\Revelosh.lua
+Shared\Uldaman\TheLostDwarves.lua
+Shared\Uldaman\Ironaya.lua
+Shared\Uldaman\ObsidianSentinel.lua
+Shared\Uldaman\AncientStoneKeeper.lua
+Shared\Uldaman\GalgannFirehammer.lua
+Shared\Uldaman\Grimlok.lua
+Shared\Uldaman\Archaedas.lua
+Shared\WailingCaverns\LadyAnacondra.lua
+Shared\WailingCaverns\LordPythas.lua
+Shared\WailingCaverns\LordCobrahn.lua
+Shared\WailingCaverns\Kresh.lua
+Shared\WailingCaverns\Skum.lua
+Shared\WailingCaverns\LordSerpentis.lua
+Shared\WailingCaverns\VerantheEverliving.lua
+Shared\WailingCaverns\MutanustheDevourer.lua
+Shared\WailingCaverns\DeviateFaerieDragon.lua
+Shared\ZulFarrak\Gahzrilla.lua
+Shared\ZulFarrak\Antusul.lua
+Shared\ZulFarrak\ThekatheMartyr.lua
+Shared\ZulFarrak\WitchDoctorZumrah.lua
+Shared\ZulFarrak\HydromancerVelrath.lua
+Shared\ZulFarrak\Nekrum_Sezzziz.lua
+Shared\ZulFarrak\ChiefUkorzSandscalp.lua
+
+Classic\SOD_DemonFallCanyon\Grimroot.lua [AllowLoadGameType camelot, vanilla]
+Classic\SOD_DemonFallCanyon\DestructorsWraith.lua [AllowLoadGameType camelot, vanilla]
+Classic\SOD_DemonFallCanyon\Zilbagob.lua [AllowLoadGameType camelot, vanilla]
+Classic\SOD_DemonFallCanyon\Azgaloth.lua [AllowLoadGameType camelot, vanilla]
+Classic\SOD_DemonFallCanyon\Pyranis.lua [AllowLoadGameType camelot, vanilla]
+Classic\SOD_DemonFallCanyon\Diathorus.lua [AllowLoadGameType camelot, vanilla]
+Classic\SOD_DemonFallCanyon\HellscreamsPhantom.lua [AllowLoadGameType camelot, vanilla]
+Classic\SOD_KarazhanCrypts\Apprentice.lua [AllowLoadGameType camelot, vanilla]
+Classic\SOD_KarazhanCrypts\OperaOfMalediction.lua [AllowLoadGameType camelot, vanilla]
+Classic\SOD_KarazhanCrypts\HarbingerOfSin.lua [AllowLoadGameType camelot, vanilla]
+Classic\SOD_KarazhanCrypts\CreepingMalison.lua [AllowLoadGameType camelot, vanilla]
+Classic\SOD_KarazhanCrypts\Kharon.lua [AllowLoadGameType camelot, vanilla]
+Classic\SOD_KarazhanCrypts\DarkRider.lua [AllowLoadGameType camelot, vanilla]
+Classic\SOD_KarazhanCrypts\Unkomon.lua [AllowLoadGameType camelot, vanilla]
+Classic\SOD_KarazhanCrypts\KCTrash.lua [AllowLoadGameType camelot, vanilla]
+
+Retail\localization.en.lua [AllowLoadGameType cata, standard, mists]
+Retail\localization.es.lua [AllowLoadGameType cata, standard, mists]
+Retail\localization.cn.lua [AllowLoadGameType cata, standard, mists]
+Retail\localization.kr.lua [AllowLoadGameType cata, standard, mists]
+Retail\BlackfathomDeeps\GhamooRa.lua [AllowLoadGameType cata, standard, mists]
+Retail\BlackfathomDeeps\Domina.lua [AllowLoadGameType cata, standard, mists]
+Retail\BlackfathomDeeps\Korul.lua [AllowLoadGameType cata, standard, mists]
+Retail\BlackfathomDeeps\Thruk.lua [AllowLoadGameType cata, standard, mists]
+Retail\BlackfathomDeeps\Guardian.lua [AllowLoadGameType cata, standard, mists]
+Retail\BlackfathomDeeps\Gore.lua [AllowLoadGameType cata, standard, mists]
+Retail\BlackfathomDeeps\Bathiel.lua [AllowLoadGameType cata, standard, mists]
+Retail\BlackfathomDeeps\Akumai.lua [AllowLoadGameType cata, standard, mists]
+Retail\RagefireChasm\Adarogg.lua [AllowLoadGameType cata, standard, mists]
+Retail\RagefireChasm\Koranthal.lua [AllowLoadGameType cata, standard, mists]
+Retail\RagefireChasm\Slagmaw.lua [AllowLoadGameType cata, standard, mists]
+Retail\RagefireChasm\Gordoth.lua [AllowLoadGameType cata, standard, mists]
+Retail\RazorfenDowns\Aarux.lua [AllowLoadGameType cata, standard, mists]
+Retail\RazorfenDowns\MordressFireEye.lua [AllowLoadGameType cata, standard, mists]
+Retail\RazorfenDowns\Mushlump.lua [AllowLoadGameType cata, standard, mists]
+Retail\RazorfenDowns\DeathSpeakerBlackhorn.lua [AllowLoadGameType cata, standard, mists]
+Retail\RazorfenDowns\AmnenartheColdbringer.lua [AllowLoadGameType cata, standard, mists]
+Retail\RazorfenKraul\HunterBonetusk.lua [AllowLoadGameType cata, standard, mists]
+Retail\RazorfenKraul\Roogug.lua [AllowLoadGameType cata, standard, mists]
+Retail\RazorfenKraul\WarlordRamtusk.lua [AllowLoadGameType cata, standard, mists]
+Retail\RazorfenKraul\Groyat.lua [AllowLoadGameType cata, standard, mists]
+Retail\RazorfenKraul\CharlgaRazorflank.lua [AllowLoadGameType cata, standard, mists]
+Retail\StormwindStockaid\Hogger.lua [AllowLoadGameType cata, standard, mists]
+Retail\StormwindStockaid\LordOverheat.lua [AllowLoadGameType cata, standard, mists]
+Retail\StormwindStockaid\Moloch.lua [AllowLoadGameType cata, standard, mists]
+
+Shared\Stratholme\PostmasterMalown.lua [AllowLoadGameType standard]

@@ -10,7 +10,7 @@ mod:SetZone(1209)
 
 mod:RegisterCombat("combat")
 
-if DBM:IsPostMidnight() then
+if DBM:IsRestricted() then
 	DBM:RegisterAltSpellName(154162, DBM_COMMON_L.GROUPSOAKS)--Energize -> Group Soaks
 
 	local specWarnFierySmash	= mod:NewSpecialWarningCount(154115, nil, nil, nil, 1, 15, nil, nil, "frontal")

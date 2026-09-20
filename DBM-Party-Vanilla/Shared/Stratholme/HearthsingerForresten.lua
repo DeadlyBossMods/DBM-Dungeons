@@ -5,38 +5,45 @@ mod:SetRevision("@file-date-integer@")
 mod:DisableHardcodedOptions()
 mod:SetCreatureID(10558)
 mod:SetEncounterID(473)
+mod:SetModelID(10482)
 mod:SetZone(329)
 
 mod:RegisterCombat("combat")
 
-mod:RegisterEventsInCombat(
-	"SPELL_CAST_START 16798",
-	"SPELL_AURA_APPLIED 16798"
-)
+if DBM:IsRestricted() then
+	--do stuff
+	--mod:AddAuraSoundOption(372820, true, 372820, 1, 2, "watchfeet", 8, 0)
+else
 
-local warningEnchantingLullaby		= mod:NewTargetNoFilterAnnounce(16798, 2)
+	mod:RegisterEventsInCombat(
+		"SPELL_CAST_START 16798",
+		"SPELL_AURA_APPLIED 16798"
+	)
 
-local specWarnEnchantingLullaby		= mod:NewSpecialWarningInterrupt(16798, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
+	local warningEnchantingLullaby		= mod:NewTargetNoFilterAnnounce(16798, 2)
 
-local timerEnchantingLullabyCD		= mod:NewAITimer(180, 16798, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON..DBM_COMMON_L.MAGIC_ICON)
+	local specWarnEnchantingLullaby		= mod:NewSpecialWarningInterrupt(16798, "HasInterrupt", nil, nil, 1, 2, nil, nil, "kickcast")
+
+	local timerEnchantingLullabyCD		= mod:NewAITimer(180, 16798, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON..DBM_COMMON_L.MAGIC_ICON)
 
 
-function mod:OnCombatStart(delay)
-	timerEnchantingLullabyCD:Start(1-delay)
-end
+	function mod:OnCombatStart(delay)
+		timerEnchantingLullabyCD:Start(1-delay)
+	end
 
-function mod:SPELL_CAST_START(args)
-	if args:IsSpell(16798) then
-		timerEnchantingLullabyCD:Start()
-		if self:CheckInterruptFilter(args.sourceGUID, false, true) then
-			specWarnEnchantingLullaby:Show(args.sourceName)
-			specWarnEnchantingLullaby:Play("kickcast")
+	function mod:SPELL_CAST_START(args)
+		if args:IsSpell(16798) then
+			timerEnchantingLullabyCD:Start()
+			if self:CheckInterruptFilter(args.sourceGUID, false, true) then
+				specWarnEnchantingLullaby:Show(args.sourceName)
+				specWarnEnchantingLullaby:Play("kickcast")
+			end
 		end
 	end
-end
 
-function mod:SPELL_AURA_APPLIED(args)
-	if args:IsSpell(16798) then
-		warningEnchantingLullaby:Show(args.destName)
+	function mod:SPELL_AURA_APPLIED(args)
+		if args:IsSpell(16798) then
+			warningEnchantingLullaby:Show(args.destName)
+		end
 	end
 end
