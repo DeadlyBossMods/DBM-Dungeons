@@ -1,5 +1,5 @@
 ## Interface: 16001
-## AllowLoadGameType: camelot
+## ExcludeLoadGameType: standard, classic
 ## Category: DBM
 ## Title:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Dungeons (Forever)|r
 ## Title-deDE:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Dungeons (Forever)|r
