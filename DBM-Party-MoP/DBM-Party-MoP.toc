@@ -11,7 +11,7 @@
 ## Title-ptBR:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Masmorras (MoP)|r
 ## Title-ruRU:|cffffe00a<|r|cffff7d0aDBM Мод|r|cffffe00a>|r |cffc030c0Подземелья (Пандария)|r
 ## Title-zhCN:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0地下城 (熊猫人之谜)|r
-## Title-zhTW:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0地城 (潘達利亞之謎)|r
+## Title-zhTW:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0地下城 (潘達利亞之謎)|r
 ## LoadOnDemand: 1
 ## RequiredDeps: DBM-Core
 ## SavedVariables: DBMPartyMoP_AllSavedVars
@@ -33,7 +33,7 @@
 ## X-DBM-Mod-Name-ptBR: Masmorras (MoP)
 ## X-DBM-Mod-Name-ruRU: Подземелья (Пандария)
 ## X-DBM-Mod-Name-zhCN: 地下城 (熊猫人之谜)
-## X-DBM-Mod-Name-zhTW: 地城 (潘達利亞之謎)
+## X-DBM-Mod-Name-zhTW: 地下城 (潘達利亞之謎)
 ## X-DBM-Mod-Sort: 702
 ## X-DBM-Mod-MapID: 960,961,959,962,994,1011,1007,1001,1004,2849
 ## X-DBM-Mod-MinCoreRevision: 20260522000000

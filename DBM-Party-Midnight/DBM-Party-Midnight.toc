@@ -11,7 +11,7 @@
 ## Title-ptBR:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Masmorras (Midnight)|r
 ## Title-ruRU:|cffffe00a<|r|cffff7d0aDBM Мод|r|cffffe00a>|r |cffc030c0Подземелья (Полночь)|r
 ## Title-zhCN:|cffffe00a<|r|cffff7d0aDBM 模组|r|cffffe00a>|r |cffc030c0地下城 (至暗之夜)|r
-## Title-zhTW:|cffffe00a<|r|cffff7d0aDBM 模組|r|cffffe00a>|r |cffc030c0地城 (至暗之夜)|r
+## Title-zhTW:|cffffe00a<|r|cffff7d0aDBM 模組|r|cffffe00a>|r |cffc030c0地下城 (至暗之夜)|r
 ## LoadOnDemand: 1
 ## RequiredDeps: DBM-Core
 ## SavedVariables: DBMPartyMidnight_AllSavedVars
@@ -32,7 +32,7 @@
 ## X-DBM-Mod-Name-ptBR: Masmorras (Midnight)
 ## X-DBM-Mod-Name-ruRU: Подземелья (Полночь)
 ## X-DBM-Mod-Name-zhCN: 地下城 (至暗之夜)
-## X-DBM-Mod-Name-zhTW: 地城 (至暗之夜)
+## X-DBM-Mod-Name-zhTW: 地下城 (至暗之夜)
 ## X-DBM-Mod-Sort: 105
 ## X-DBM-Mod-MapID: 2805, 2813, 2811, 2859, 2825, 2923, 2874, 2915, 2993
 ## X-DBM-Mod-MapIDNameOverrides: 2993 = "Altar of Fangs"

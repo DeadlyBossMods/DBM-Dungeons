@@ -11,7 +11,7 @@
 ## Title-ruRU:|cffffe00a<|r|cffff7d0aDBM Мод|r|cffffe00a>|r |cffc030c0Классические подземелья|r
 ## Title-zhCN:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0地下城 (经典旧世)|r [AllowLoadGameType camelot, tbc, vanilla, wrath]
 ## Title-zhCN:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0地下城 (经典旧世)|r [AllowLoadGameType cata, standard, mists]
-## Title-zhTW:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0地城 (傳統)|r
+## Title-zhTW:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0地下城 (傳統)|r
 ## Author: MysticalOS
 ## LoadOnDemand: 1
 ## RequiredDeps: DBM-Core
@@ -57,7 +57,7 @@
 ## X-DBM-Mod-Name-ruRU: Классические подземелья [AllowLoadGameType cata, standard, mists]
 ## X-DBM-Mod-Name-zhCN: 地下城 (经典旧世) [AllowLoadGameType camelot, tbc, vanilla, wrath]
 ## X-DBM-Mod-Name-zhCN: 地下城 (经典旧世) [AllowLoadGameType cata, standard, mists]
-## X-DBM-Mod-Name-zhTW: 地城 (傳統)
+## X-DBM-Mod-Name-zhTW: 地下城 (傳統)
 ## X-DBM-Mod-Sort: 1102
 ## X-DBM-Mod-MapID: 48,230,229,36,429,90,349,389,129,47,189,289,33,34,329,109,70,43,209 [ExcludeLoadGameType standard, vanilla, cata, mists]
 ## X-DBM-Mod-MapID: 48,230,229,36,429,90,349,389,129,47,189,289,33,34,329,109,70,43,209,2784,2875 [AllowLoadGameType vanilla]

@@ -11,7 +11,7 @@
 ## Title-ptBR:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Masmorras (BfA)|r
 ## Title-ruRU:|cffffe00a<|r|cffff7d0aDBM Мод|r|cffffe00a>|r |cffc030c0Подземелья (Битва за Азерот)|r
 ## Title-zhCN:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0地下城 (争霸艾泽拉斯)|r
-## Title-zhTW:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0地城 (決戰艾澤拉斯)|r
+## Title-zhTW:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0地下城 (決戰艾澤拉斯)|r
 ## LoadOnDemand: 1
 ## RequiredDeps: DBM-Core
 ## SavedVariables: DBMPartyBfA_AllSavedVars
@@ -32,7 +32,7 @@
 ## X-DBM-Mod-Name-ptBR: Masmorras (BfA)
 ## X-DBM-Mod-Name-ruRU: Подземелья (Битва за Азерот)
 ## X-DBM-Mod-Name-zhCN: 地下城 (争霸艾泽拉斯)
-## X-DBM-Mod-Name-zhTW: 地城 (決戰艾澤拉斯)
+## X-DBM-Mod-Name-zhTW: 地下城 (決戰艾澤拉斯)
 ## X-DBM-Mod-Sort: 402
 ## X-DBM-Mod-MapID: 1763, 1754, 1762, 1864, 1822, 1877, 1594, 1841, 1771, 1862, 2097
 ## X-DBM-Mod-MinCoreRevision: 20260522000000
