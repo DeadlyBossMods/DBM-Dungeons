@@ -116,10 +116,8 @@ do
 	end
 
 	function mod:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(eventID)
-		local eventState = C_EncounterTimeline.GetEventState(eventID)
-		if not eventID or not eventState then return end
+		local eventState, eventType, eventCount = self:TLHandleStateChanged(eventID)
 		if eventState == 2 then
-			local eventType, eventCount = self:TLCountFinish(eventID)
 			if eventType and eventCount then
 				if eventType == "entropy" then
 					warnDevouringEntropy:Show(eventCount)
@@ -133,8 +131,6 @@ do
 					end
 				end
 			end
-		elseif eventState == 3 then
-			self:TLCountCancel(eventID)
 		end
 	end
 end

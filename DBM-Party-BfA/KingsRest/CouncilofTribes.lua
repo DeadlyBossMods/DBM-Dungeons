@@ -190,14 +190,8 @@ if DBM:IsRestricted() then
 		end
 
 		function mod:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(eventID)
-			if not eventID then return end
-			local eventState = C_EncounterTimeline.GetEventState(eventID)
-			if not eventState then return end
-			if eventState >= 2 then
-				self:TLReleaseActiveEvent(eventID)
-			end
+			local eventState, eventType, eventCount = self:TLHandleStateChanged(eventID)
 			if eventState == 2 then
-				local eventType, eventCount = self:TLCountFinish(eventID)
 				if eventType and eventCount then
 					if eventType == "whirlingAxes" then
 						specWarnWhirlingAxes:Show(eventCount)
@@ -218,7 +212,6 @@ if DBM:IsRestricted() then
 					end
 				end
 			elseif eventState == 3 then
-				local eventType = self:TLCountCancel(eventID)
 				if self:GetStage(1) and (eventType == "whirlingAxes" or eventType == "severingAxe") then
 					self:SetStage(2)
 				elseif self:GetStage(2) and (eventType == "barrelThrough" or eventType == "debilitatingBackhand") then
