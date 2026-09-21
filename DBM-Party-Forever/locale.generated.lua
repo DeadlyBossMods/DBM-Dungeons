@@ -285,31 +285,3 @@ if GetLocale() == "zhTW" then
 		[3644] = "Highland Horror",
 	})
 end
-if GetLocale() == "itIT" then
-	DBM:RegisterGeneratedLocales("encounter", {
-		[3298] = "Arcane Anomaly",
-		[3299] = "Fel Ancient",
-		[3300] = "Mana Devourer",
-		[3301] = "Mana Elemental",
-		[3302] = "Unstable Sentinel",
-		[3303] = "Shade of the Archmage",
-		[3310] = "Lyn the Ignored",
-		[3311] = "Atrexis the Grave Knight",
-		[3312] = "Mana Wraith",
-		[3353] = "Witherfang",
-		[3354] = "Rath'mael",
-		[3355] = "The Butcher",
-		[3357] = "The Abandoned",
-		[3408] = "Lordaeron Captain",
-		[3411] = "Viktor the Vile",
-		[3412] = "Bjork",
-		[3480] = "Saltspine",
-		[3481] = "Shadetooth",
-		[3482] = "Relic Guardian",
-		[3493] = "Faldrim Anvilmar",
-		[3494] = "Plunder",
-		[3495] = "Infurnus",
-		[3496] = "Durgen Dirgehammer",
-		[3644] = "Highland Horror",
-	})
-end

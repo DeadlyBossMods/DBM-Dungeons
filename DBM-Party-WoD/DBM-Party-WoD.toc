@@ -2,13 +2,16 @@
 ## AllowLoadGameType: standard
 ## Category: DBM
 ## Title:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Dungeons (WoD)|r
-## Title-koKR:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0던전 (드군)|r
-## Title-deDE:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Gruppe-WoD|r
+## Title-deDE:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Dungeons (WoD)|r
 ## Title-esES:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Mazmorras (WoD)|r
-## Title-frFR:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Groupe-WoD|r
+## Title-esMX:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Calabozos (WoD)|r
+## Title-frFR:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Donjons (WoD)|r
+## Title-itIT:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Spedizione (WoD)|r
+## Title-koKR:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0던전 (드군)|r
+## Title-ptBR:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Masmorras (WoD)|r
 ## Title-ruRU:|cffffe00a<|r|cffff7d0aDBM Мод|r|cffffe00a>|r |cffc030c0Подземелья (Дренор)|r
-## Title-zhTW:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0隊伍首領-德拉諾之霸|r
-## Title-zhCN:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0队伍首领 (德拉诺之王)|r
+## Title-zhCN:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0地下城 (德拉诺之王)|r
+## Title-zhTW:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0地下城 (德拉諾之霸)|r
 ## LoadOnDemand: 1
 ## RequiredDeps: DBM-Core
 ## SavedVariables: DBMPartyWoD_AllSavedVars
@@ -20,15 +23,16 @@
 ## X-DBM-StatTypes: normal,heroic,mythic,challenge
 ## X-DBM-Mod-SubCategoriesID: 1182, 1175, 1208, 1195, 1279, 1176, 1209, 1358
 ## X-DBM-Mod-Name: Dungeons (WoD)
-## X-DBM-Mod-Name-koKR: 던전 (드군)
-## X-DBM-Mod-Name-deDE: Gruppe (WoD)
-## X-DBM-Mod-Name-ruRU: Подземелья (Дренор)
+## X-DBM-Mod-Name-deDE: Dungeons (WoD)
 ## X-DBM-Mod-Name-esES: Mazmorras (WoD)
-## X-DBM-Mod-Name-esMX: Mazmorras (WoD)
+## X-DBM-Mod-Name-esMX: Calabozos (WoD)
+## X-DBM-Mod-Name-frFR: Donjons (WoD)
+## X-DBM-Mod-Name-itiT: Spedizione (WoD)
+## X-DBM-Mod-Name-koKR: 던전 (드군)
 ## X-DBM-Mod-Name-ptBR: Masmorras (WoD)
-## X-DBM-Mod-Name-frFR: Groupe (WoD)
-## X-DBM-Mod-Name-zhTW: 隊伍首領 (德拉諾之霸)
-## X-DBM-Mod-Name-zhCN: 队伍首领 (德拉诺之王)
+## X-DBM-Mod-Name-ruRU: Подземелья (Дренор)
+## X-DBM-Mod-Name-zhCN: 地下城 (德拉诺之王)
+## X-DBM-Mod-Name-zhTW: 地下城 (德拉諾之霸)
 ## X-DBM-Mod-Sort: 602
 ## X-DBM-Mod-MapID: 1182, 1175, 1208, 1195, 1279, 1176, 1209, 1358
 ## X-DBM-Mod-MinCoreRevision: 20260522000000

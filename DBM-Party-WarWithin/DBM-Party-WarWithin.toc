@@ -2,10 +2,16 @@
 ## AllowLoadGameType: standard
 ## Category: DBM
 ## Title:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Dungeons (WW)|r
+## Title-deDE:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Dungeons (WW)|r
+## Title-esES:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Mazmorras (WW)|r
+## Title-esMX:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Calabozos (WW)|r
+## Title-frFR:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Donjons (WW)|r
+## Title-itIT:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Spedizione (WW)|r
 ## Title-koKR:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0던전 (내부 전쟁)|r
+## Title-ptBR:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Masmorras (WW)|r
 ## Title-ruRU:|cffffe00a<|r|cffff7d0aDBM Мод|r|cffffe00a>|r |cffc030c0Подземелья (Война Внутри)|r
-## Title-zhCN:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0队伍首领 (地心之战)|r
-## Title-zhTW:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0隊伍首領 (地心之戰)|r
+## Title-zhCN:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0地下城 (地心之战)|r
+## Title-zhTW:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0地下城 (地心之戰)|r
 ## LoadOnDemand: 1
 ## RequiredDeps: DBM-Core
 ## SavedVariables: DBMPartyWarWithin_AllSavedVars
@@ -17,10 +23,16 @@
 ## X-DBM-StatTypes: follower,normal,heroic,mythic,challenge
 ## X-DBM-Mod-SubCategoriesID: 2651, 2649, 2648, 2652, 2662, 2660, 2661, 2669, 2773, 2830
 ## X-DBM-Mod-Name: Dungeons (War Within)
+## X-DBM-Mod-Name-deDE: Dungeons (War Within)
+## X-DBM-Mod-Name-esES: Mazmorras (War Within)
+## X-DBM-Mod-Name-esMX: Calabozos (War Within)
+## X-DBM-Mod-Name-frFR: Donjons (War Within)
+## X-DBM-Mod-Name-itiT: Spedizione (War Within)
 ## X-DBM-Mod-Name-koKR: 던전 (내부 전쟁)
+## X-DBM-Mod-Name-ptBR: Masmorras (War Within)
 ## X-DBM-Mod-Name-ruRU: Подземелья (Война Внутри)
-## X-DBM-Mod-Name-zhCN: 队伍首领 (地心之战)
-## X-DBM-Mod-Name-zhTW: 隊伍首領 (地心之戰)
+## X-DBM-Mod-Name-zhCN: 地下城 (地心之战)
+## X-DBM-Mod-Name-zhTW: 地下城 (地心之戰)
 ## X-DBM-Mod-Sort: 115
 ## X-DBM-Mod-MapID: 2651, 2649, 2648, 2652, 2662, 2660, 2661, 2669, 2773, 2830
 ## X-DBM-Mod-MinCoreRevision: 20260522000000
