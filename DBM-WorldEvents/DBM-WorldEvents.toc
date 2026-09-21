@@ -89,7 +89,7 @@ localization.br.lua
 localization.it.lua
 Holidays\ApothecaryTrio.lua [AllowLoadGameType cata, standard, mists, wrath]
 Holidays\Ahune.lua [AllowLoadGameType cata, standard, mists, tbc, wrath]
-Holidays\CorenDirebrew.lua [AllowLoadGameType cata, standard, mists, tbc, wrath]
+Holidays\CorenDirebrew.lua [AllowLoadGameType cata, mists, tbc, wrath]
 Holidays\HeadlessHorseman.lua [AllowLoadGameType cata, standard, mists, tbc, wrath]
 Quests\Plants.lua [AllowLoadGameType cata, standard, mists]
 Quests\EscortQuests.lua [AllowLoadGameType cata, standard, mists, tbc, wrath]
