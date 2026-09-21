@@ -53,7 +53,7 @@
 ## X-DBM-Mod-Name-itiT: Spedizione (Vanilla)
 ## X-DBM-Mod-Name-koKR: 던전 (오리지널)
 ## X-DBM-Mod-Name-ptBR: Masmorras (Clássico) [AllowLoadGameType camelot, tbc, vanilla, wrath]
-## X-DBM-Mod-Name-ruRU: Подземелье (классический) [AllowLoadGameType camelot, tbc, vanilla, wrath]
+## X-DBM-Mod-Name-ruRU: Подземелья (Классика) [AllowLoadGameType camelot, tbc, vanilla, wrath]
 ## X-DBM-Mod-Name-ruRU: Классические подземелья [AllowLoadGameType cata, standard, mists]
 ## X-DBM-Mod-Name-zhCN: 地下城 (经典旧世) [AllowLoadGameType camelot, tbc, vanilla, wrath]
 ## X-DBM-Mod-Name-zhCN: 地下城 (经典旧世) [AllowLoadGameType cata, standard, mists]
