@@ -159,7 +159,7 @@ if DBM:IsRestricted() then
 					handled = true
 				elseif timer == 10 or timer == 24 then--Poison Nova opener and repeat
 					--When blizzard sends a timer of 24, it's wrong, it's 23
-					timerPoisonNovaCD:TLStart(timer == 24 and 23 or timerExact, eventID, self:TLCountStart(eventID, "poisonNova", "poisonNovaCount"))
+					timerPoisonNovaCD:TLStart(timer == 24 and "v21.9-24" or timerExact, eventID, self:TLCountStart(eventID, "poisonNova", "poisonNovaCount"))
 					handled = true
 				elseif timer == 20 or timer == 53 then--Call of the Elements opener and repeat
 					timerTotemsCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "totems", "totemsCount"))
