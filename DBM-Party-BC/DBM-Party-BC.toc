@@ -2,12 +2,16 @@
 ## AllowLoadGameType: tbc, wrath, cata, mists, standard
 ## Category: DBM
 ## Title:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Dungeons (BC)|r
-## Title-deDE:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Gruppe-BC|r
-## Title-ruRU:|cffffe00a<|r|cffff7d0aDBM Мод|r|cffffe00a>|r |cffc030c0Подземелья (BC)|r
+## Title-deDE:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Dungeons (BC)|r
 ## Title-esES:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Mazmorras (TBC)|r
+## Title-esMX:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Calabozos (BC)|r
+## Title-frFR:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Donjons (BC)|r
+## Title-itIT:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Spedizione (BC)|r
 ## Title-koKR:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0던전 (불성)|r
-## Title-zhTW:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0隊伍首領-燃燒的遠征|r
-## Title-zhCN:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0队伍首领 (燃烧的远征)|r
+## Title-ptBR:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Masmorras (BC)|r
+## Title-ruRU:|cffffe00a<|r|cffff7d0aDBM Мод|r|cffffe00a>|r |cffc030c0Подземелья (BC)|r
+## Title-zhCN:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0地下城 (燃烧的远征)|r
+## Title-zhTW:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0地下城 (燃燒的遠征)|r
 ## Author: Arta/MysticalOS
 ## LoadOnDemand: 1
 ## RequiredDeps: DBM-Core
@@ -20,12 +24,16 @@
 ## X-DBM-StatTypes: normal,heroic
 ## X-DBM-Mod-SubCategoriesID: 543, 542, 540, 547, 546, 545, 558, 557, 556, 555, 560, 269, 554, 553, 552, 585
 ## X-DBM-Mod-Name: Dungeons (BC)
-## X-DBM-Mod-Name-deDE: Gruppe (BC)
-## X-DBM-Mod-Name-ruRU: Подземелья (BC)
+## X-DBM-Mod-Name-deDE: Dungeons (BC)
 ## X-DBM-Mod-Name-esES: Mazmorras (TBC)
+## X-DBM-Mod-Name-esMX: Calabozos (TBC)
+## X-DBM-Mod-Name-frFR: Donjons (BC)
+## X-DBM-Mod-Name-itiT: Spedizione (BC)
 ## X-DBM-Mod-Name-koKR: 던전 (불성)
-## X-DBM-Mod-Name-zhTW: 隊伍首領 (燃燒的遠征)
-## X-DBM-Mod-Name-zhCN: 队伍首领 (燃烧的远征)
+## X-DBM-Mod-Name-ptBR: Masmorras (BC)
+## X-DBM-Mod-Name-ruRU: Подземелья (BC)
+## X-DBM-Mod-Name-zhCN: 地下城 (燃烧的远征)
+## X-DBM-Mod-Name-zhTW: 地下城 (燃燒的遠征)
 ## X-DBM-Mod-Sort: 1002
 ## X-DBM-Mod-MapID: 540,558,556,555,542,546,545,547,553,554,552,557,269,560,543,585 [AllowLoadGameType cata, mists, tbc, wrath]
 ## X-DBM-Mod-MapID: 540,558,556,555,542,546,545,547,553,554,552,557,269,560,543,585,2849 [AllowLoadGameType standard]

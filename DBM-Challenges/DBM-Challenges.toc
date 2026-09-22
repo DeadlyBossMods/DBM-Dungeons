@@ -1,5 +1,6 @@
 ## Interface: 50504, 120100
 ## AllowLoadGameType: mists, standard
+## Version: @project-version@
 ## Category: DBM
 ## Title:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Challenges|r
 ## Title-deDE:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Herausforderungen|r
@@ -35,7 +36,6 @@
 ## X-DBM-Mod-MinExpansion: 4
 ## X-Curse-Project-ID: 61621
 ## X-Wago-ID: Rn6VLLGd
-## Version: @project-version@
 
 localization.en.lua
 localization.de.lua

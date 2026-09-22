@@ -159,7 +159,7 @@ if DBM:IsRestricted() then
 					handled = true
 				elseif timer == 10 or timer == 24 then--Poison Nova opener and repeat
 					--When blizzard sends a timer of 24, it's wrong, it's 23
-					timerPoisonNovaCD:TLStart(timer == 24 and 23 or timerExact, eventID, self:TLCountStart(eventID, "poisonNova", "poisonNovaCount"))
+					timerPoisonNovaCD:TLStart(timer == 24 and "v21.9-24" or timerExact, eventID, self:TLCountStart(eventID, "poisonNova", "poisonNovaCount"))
 					handled = true
 				elseif timer == 20 or timer == 53 then--Call of the Elements opener and repeat
 					timerTotemsCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "totems", "totemsCount"))
@@ -190,14 +190,8 @@ if DBM:IsRestricted() then
 		end
 
 		function mod:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(eventID)
-			if not eventID then return end
-			local eventState = C_EncounterTimeline.GetEventState(eventID)
-			if not eventState then return end
-			if eventState >= 2 then
-				self:TLReleaseActiveEvent(eventID)
-			end
+			local eventState, eventType, eventCount = self:TLHandleStateChanged(eventID)
 			if eventState == 2 then
-				local eventType, eventCount = self:TLCountFinish(eventID)
 				if eventType and eventCount then
 					if eventType == "whirlingAxes" then
 						specWarnWhirlingAxes:Show(eventCount)
@@ -218,7 +212,6 @@ if DBM:IsRestricted() then
 					end
 				end
 			elseif eventState == 3 then
-				local eventType = self:TLCountCancel(eventID)
 				if self:GetStage(1) and (eventType == "whirlingAxes" or eventType == "severingAxe") then
 					self:SetStage(2)
 				elseif self:GetStage(2) and (eventType == "barrelThrough" or eventType == "debilitatingBackhand") then

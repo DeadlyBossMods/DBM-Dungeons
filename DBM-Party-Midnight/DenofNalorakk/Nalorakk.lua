@@ -159,14 +159,11 @@ do
 	end
 
 	function mod:ENCOUNTER_TIMELINE_EVENT_STATE_CHANGED(eventID)
-		local eventState = C_EncounterTimeline.GetEventState(eventID)
-		if not eventID or not eventState then return end
+		local eventState, eventType, eventCount = self:TLHandleStateChanged(eventID)
 		if eventState >= 2 then
-			self:TLBatchUntrack(eventID)
 			replacementTimersByEventID[eventID] = nil
 		end
 		if eventState == 2 then
-			local eventType, eventCount = self:TLCountFinish(eventID)
 			timerTypeByEventID[eventID] = nil
 			if eventType and eventCount then
 				if eventType == "maul" then
@@ -185,7 +182,6 @@ do
 			elseif timerTypeByEventID[eventID] == "onslaught25" and next25IsMaul then
 				next25IsMaul = false
 			end
-			self:TLCountCancel(eventID)
 			timerTypeByEventID[eventID] = nil
 		end
 	end

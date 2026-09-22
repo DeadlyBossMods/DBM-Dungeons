@@ -2,12 +2,16 @@
 ## AllowLoadGameType: standard
 ## Category: DBM
 ## Title:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Dungeons (BfA)|r
-## Title-deDE:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Gruppe-BfA|r
+## Title-deDE:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Dungeons (BfA)|r
+## Title-esES:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Mazmorras (BfA)|r
+## Title-esMX:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Calabozos (BfA)|r
+## Title-frFR:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Donjons (BfA)|r
+## Title-itIT:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Spedizione (BfA)|r
 ## Title-koKR:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0던전 (격아)|r
-## Title-zhTW:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0隊伍首領-決戰艾澤拉斯|r
-## Title-zhCN:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0队伍首领 (争霸艾泽拉斯)|r
-## Title-itIT:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Gruppo-BfA|r
+## Title-ptBR:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Masmorras (BfA)|r
 ## Title-ruRU:|cffffe00a<|r|cffff7d0aDBM Мод|r|cffffe00a>|r |cffc030c0Подземелья (Битва за Азерот)|r
+## Title-zhCN:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0地下城 (争霸艾泽拉斯)|r
+## Title-zhTW:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0地下城 (決戰艾澤拉斯)|r
 ## LoadOnDemand: 1
 ## RequiredDeps: DBM-Core
 ## SavedVariables: DBMPartyBfA_AllSavedVars
@@ -19,14 +23,16 @@
 ## X-DBM-StatTypes: normal,heroic,mythic,challenge
 ## X-DBM-Mod-SubCategoriesID: 1763, 1754, 1762, 1864, 1822, 1877, 1594, 1841, 1771, 1862, 2097
 ## X-DBM-Mod-Name: Dungeons (BfA)
+## X-DBM-Mod-Name-deDE: Dungeons (BfA)
 ## X-DBM-Mod-Name-esES: Mazmorras (BfA)
-## X-DBM-Mod-Name-esMX: Mazmorras (BfA)
-## X-DBM-Mod-Name-deDE: Gruppe (BfA)
+## X-DBM-Mod-Name-esMX: Calabozos (BfA)
+## X-DBM-Mod-Name-frFR: Donjons (BfA)
+## X-DBM-Mod-Name-itiT: Spedizione (BfA)
 ## X-DBM-Mod-Name-koKR: 던전 (격아)
-## X-DBM-Mod-Name-zhTW: 隊伍首領 (決戰艾澤拉斯)
-## X-DBM-Mod-Name-zhCN: 队伍首领 (争霸艾泽拉斯)
-## X-DBM-Mod-Name-itiT: Gruppo (BfA)
+## X-DBM-Mod-Name-ptBR: Masmorras (BfA)
 ## X-DBM-Mod-Name-ruRU: Подземелья (Битва за Азерот)
+## X-DBM-Mod-Name-zhCN: 地下城 (争霸艾泽拉斯)
+## X-DBM-Mod-Name-zhTW: 地下城 (決戰艾澤拉斯)
 ## X-DBM-Mod-Sort: 402
 ## X-DBM-Mod-MapID: 1763, 1754, 1762, 1864, 1822, 1877, 1594, 1841, 1771, 1862, 2097
 ## X-DBM-Mod-MinCoreRevision: 20260522000000
