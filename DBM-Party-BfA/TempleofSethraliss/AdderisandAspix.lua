@@ -228,7 +228,11 @@ if DBM:IsRestricted() then
 		end
 
 		function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
-			if UnitExists("boss2") then
+			if boss2Seen and not bossDeathDetected then
+				--The next boss-frame roster update is the death transfer, even while boss2 lingers briefly.
+				bossDeathDetected = true
+				bossDeathTime = GetTime()
+			elseif UnitExists("boss2") then
 				boss2Seen = true
 			else
 				detectBossDeath()
@@ -286,7 +290,6 @@ if DBM:IsRestricted() then
 						specWarnOverload:Play("defensive")
 					elseif eventType == "tempestWinds" then
 						specWarnTempestWinds:Show(eventCount, "poolyou")
-						specWarnTempestWinds:Play("poolyou")
 					elseif eventType == "galeForce" then
 						specWarnGaleForce:Show(eventCount, "pushbackincoming")
 						specWarnGaleForce:Play("pushbackincoming")
