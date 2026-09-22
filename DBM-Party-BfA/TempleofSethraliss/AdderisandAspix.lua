@@ -179,8 +179,9 @@ if DBM:IsRestricted() then
 				--A boss death re-adds the survivor's active bars with arbitrary remaining times before canceling them.
 				return true
 			elseif timer == 45 then
-				--Defer this bucket: a death rebuild can cancel a partial 45-second sequence in the same dispatch.
-				self:TLBatchStart(timer, getFortyFiveTimer, timerExact, eventID, nil, nil, batchTimerValues)
+				--Reserve the schedule slot now: a paused row can be canceled before TLBatchStart runs.
+				local timerObject, eventType, countKey = getFortyFiveTimer()
+				self:TLBatchStart(timer, timerObject, timerExact, eventID, eventType, countKey, batchTimerValues)
 			elseif timer == 9 then
 				adderisDead = false
 				startBatchTimer(self, timer, timerThunderandLightningCD, timerExact, eventID, "thunderAndLightning", "thunderAndLightningCount")
@@ -228,11 +229,7 @@ if DBM:IsRestricted() then
 		end
 
 		function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
-			if boss2Seen and not bossDeathDetected then
-				--The next boss-frame roster update is the death transfer, even while boss2 lingers briefly.
-				bossDeathDetected = true
-				bossDeathTime = GetTime()
-			elseif UnitExists("boss2") then
+			if UnitExists("boss2") then
 				boss2Seen = true
 			else
 				detectBossDeath()
