@@ -86,7 +86,6 @@ else
 		end
 	end
 	f:SetScript("OnEvent", handler)
-	DBM:RegisterCallback("DBMTest_Event", function(_, ...) handler(f, ...) end)
 
 	local lastZone = nil
 	function mod:CheckInstance()

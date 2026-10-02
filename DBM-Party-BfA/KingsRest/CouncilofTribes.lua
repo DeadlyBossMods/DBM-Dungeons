@@ -230,8 +230,9 @@ if DBM:IsRestricted() then
 			end
 		end
 
-		function mod:ENCOUNTER_WARNING()
-			if not stage3BarrelYellArmed or lastStage3YellTime == 0 then return end
+		--Poison Nova and call of Elements use severity 2. Soak uses Severity 1
+		function mod:ENCOUNTER_WARNING(eventInfo)
+			if not stage3BarrelYellArmed or lastStage3YellTime == 0 or eventInfo.severity ~= 1 then return end
 			local elapsed = GetTime() - lastStage3YellTime
 			lastStage3YellTime = 0
 			if elapsed <= 0.5 then
