@@ -27,7 +27,7 @@
 ## X-DBM-Mod-Name-zhTW: 探究 (午夜)
 ## X-DBM-Mod-Name-zhCN: 地下堡 (午夜)
 ## X-DBM-Mod-Sort: 115
-## X-DBM-Mod-MapID: 3003, 2961, 2962, 2963, 2964, 2953, 2933, 2952, 2979, 2965, 2966, 3079, 3038, 3077
+## X-DBM-Mod-MapID: 3003, 2961, 2962, 2963, 2964, 2953, 2933, 2952, 2979, 2965, 2966, 3079, 3038, 3077, 3043
 ## X-DBM-Mod-MinCoreRevision: 20260522000000
 ## X-DBM-Mod-MinExpansion: 11
 ## Version: @project-version@
@@ -54,6 +54,18 @@ Encounters\InfiltratorGarand.lua
 Encounters\Antenorian.lua
 Encounters\ChiefArcanistPatram.lua
 Encounters\EsuritusSunkiller.lua
+Encounters\Junala.lua
+Encounters\SulliedRevenant.lua
+Encounters\ShaKuro.lua
+Encounters\Kindojan.lua
+Encounters\DenZara.lua
+Encounters\DrillSergeant.lua
+Encounters\TheUndeadTrollbunal.lua
+Encounters\Grukk.lua
+Encounters\TreasureHunterTaltrois.lua
+Encounters\ShadowhunterJodin.lua
+Encounters\KingofSouls.lua
+Encounters\CynthraButtonsmasher.lua
 Zones\TheDarkway.lua
 Zones\TwilightCrypts.lua
 Zones\AtalAman.lua

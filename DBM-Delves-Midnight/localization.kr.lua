@@ -162,3 +162,111 @@ L = DBM:GetModLocalization("Aztarec")
 L:SetGeneralLocalization({
 	name =	"아즈타레크"
 })
+
+-----------------------
+-- <<< Jun'ala >>> --
+-----------------------
+L = DBM:GetModLocalization("Junala")
+
+L:SetGeneralLocalization({
+	name =	"주날라"
+})
+
+-----------------------
+-- <<< Sullied Revenant >>> --
+-----------------------
+L = DBM:GetModLocalization("SulliedRevenant")
+
+L:SetGeneralLocalization({
+	name =	"더럽혀진 망령"
+})
+
+-----------------------
+-- <<< Sha'Kuro >>> --
+-----------------------
+L = DBM:GetModLocalization("ShaKuro")
+
+L:SetGeneralLocalization({
+	name =	"샤쿠로"
+})
+
+-----------------------
+-- <<< Kindo'jan >>> --
+-----------------------
+L = DBM:GetModLocalization("Kindojan")
+
+L:SetGeneralLocalization({
+	name =	"킨도잔"
+})
+
+-----------------------
+-- <<< Den'Zara >>> --
+-----------------------
+L = DBM:GetModLocalization("DenZara")
+
+L:SetGeneralLocalization({
+	name =	"덴자라"
+})
+
+-----------------------
+-- <<< Drill Sergeant >>> --
+-----------------------
+L = DBM:GetModLocalization("DrillSergeant")
+
+L:SetGeneralLocalization({
+	name =	"훈련교관"
+})
+
+-----------------------
+-- <<< The Undead Trollbunal >>> --
+-----------------------
+L = DBM:GetModLocalization("TheUndeadTrollbunal")
+
+L:SetGeneralLocalization({
+	name =	"언데드 트롤심판원"
+})
+
+-----------------------
+-- <<< Grukk >>> --
+-----------------------
+L = DBM:GetModLocalization("Grukk")
+
+L:SetGeneralLocalization({
+	name =	"그루크"
+})
+
+-----------------------
+-- <<< Treasure Hunter Taltrois >>> --
+-----------------------
+L = DBM:GetModLocalization("TreasureHunterTaltrois")
+
+L:SetGeneralLocalization({
+	name =	"보물 사냥꾼 탈트루아"
+})
+
+-----------------------
+-- <<< Shadowhunter Jo'din >>> --
+-----------------------
+L = DBM:GetModLocalization("ShadowhunterJodin")
+
+L:SetGeneralLocalization({
+	name =	"어둠사냥꾼 조딘"
+})
+
+-----------------------
+-- <<< King of Souls >>> --
+-----------------------
+L = DBM:GetModLocalization("KingofSouls")
+
+L:SetGeneralLocalization({
+	name =	"영혼의 왕"
+})
+
+-----------------------
+-- <<< Cynthra Buttonsmasher >>> --
+-----------------------
+L = DBM:GetModLocalization("CynthraButtonsmasher")
+
+L:SetGeneralLocalization({
+	name =	"신트라 단추난타자"
+})
