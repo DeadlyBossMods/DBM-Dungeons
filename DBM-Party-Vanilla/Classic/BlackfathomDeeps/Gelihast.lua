@@ -2,7 +2,6 @@ local mod	= DBM:NewMod("Gelihast", "DBM-Party-Vanilla", 1)
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
-mod:DisableHardcodedOptions()
 mod:SetCreatureID(6243)
 mod:SetEncounterID(2763)
 mod:SetModelID(1773)

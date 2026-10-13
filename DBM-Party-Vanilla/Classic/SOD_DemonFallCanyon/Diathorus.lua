@@ -3,7 +3,6 @@ local mod	= DBM:NewMod("Diathorus", "DBM-Party-Vanilla", 21)
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
-mod:DisableHardcodedOptions()
 mod:SetEncounterID(3024)
 mod:SetModelID(10691)
 mod:SetCreatureID(227019)

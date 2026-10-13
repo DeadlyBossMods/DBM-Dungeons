@@ -2,7 +2,6 @@ local mod	= DBM:NewMod(487, "DBM-Party-Vanilla", DBM:IsPostCata() and 15 or 20, 
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
-mod:DisableHardcodedOptions()
 mod:SetCreatureID(7796, 7275)--nekrum-gutchewer, shadowpriest-sezzziz
 mod:SetEncounterID(598, 599)--Each boss has it's own encounter ID?
 mod:SetModelID(6690)

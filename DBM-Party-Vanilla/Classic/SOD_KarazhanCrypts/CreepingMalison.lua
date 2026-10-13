@@ -3,7 +3,6 @@ local mod	= DBM:NewMod("CreepingMalison", "DBM-Party-Vanilla", 22)
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
-mod:DisableHardcodedOptions()
 mod:SetEncounterID(3146)
 mod:SetModelID(126401)
 --mod:SetCreatureID()

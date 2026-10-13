@@ -3,7 +3,6 @@ local mod	= DBM:NewMod("Azgaloth", "DBM-Party-Vanilla", 21)
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
-mod:DisableHardcodedOptions()
 mod:SetEncounterID(3080)
 mod:SetModelID(124018)
 mod:SetCreatureID(232632)

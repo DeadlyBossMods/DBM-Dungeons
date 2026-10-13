@@ -3,7 +3,6 @@ local mod	= DBM:NewMod("Pyranis", "DBM-Party-Vanilla", 21)
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
-mod:DisableHardcodedOptions()
 mod:SetEncounterID(3030)
 mod:SetModelID(121845)
 mod:SetCreatureID(227140)

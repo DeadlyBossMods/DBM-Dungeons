@@ -2,7 +2,6 @@ local mod	= DBM:NewMod("Vectus", "DBM-Party-Vanilla", DBM:IsPostCata() and 16 or
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
-mod:DisableHardcodedOptions()
 mod:SetCreatureID(10432)
 mod:SetEncounterID(mod:IsClassic() and 2813 or 455)
 mod:SetModelID(2606)

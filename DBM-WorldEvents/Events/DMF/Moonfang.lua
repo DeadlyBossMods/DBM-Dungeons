@@ -2,7 +2,6 @@ local mod	= DBM:NewMod("Moonfang", "DBM-WorldEvents", 3)
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
-mod:DisableHardcodedOptions()
 mod:SetCreatureID(71992)
 --mod:SetModelID(328)
 mod:SetZone(974)

@@ -2,7 +2,6 @@ local mod	= DBM:NewMod("WolfMasterNandos", "DBM-Party-Vanilla", 14)
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
-mod:DisableHardcodedOptions()
 mod:SetCreatureID(3927)
 mod:SetZone(33)
 mod:SetModelID(11179)

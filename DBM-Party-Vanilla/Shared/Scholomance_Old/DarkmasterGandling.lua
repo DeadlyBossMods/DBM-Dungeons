@@ -2,7 +2,6 @@ local mod	= DBM:NewMod("DarkmasterGandling", "DBM-Party-Vanilla", DBM:IsPostCata
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
-mod:DisableHardcodedOptions()
 mod:SetCreatureID(1853)
 mod:SetEncounterID(mod:IsClassic() and 2801 or 463)
 mod:SetModelID(11070)

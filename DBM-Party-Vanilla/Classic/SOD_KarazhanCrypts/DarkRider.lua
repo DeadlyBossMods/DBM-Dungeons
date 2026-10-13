@@ -3,7 +3,6 @@ local mod	= DBM:NewMod("DarkRider", "DBM-Party-Vanilla", 22)
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
-mod:DisableHardcodedOptions()
 mod:SetEncounterID(3145)
 mod:SetModelID(126912)
 --mod:SetCreatureID()

@@ -2,7 +2,6 @@ local mod	= DBM:NewMod("FenrustheDevourer", "DBM-Party-Vanilla", 14)
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
-mod:DisableHardcodedOptions()
 mod:SetCreatureID(4274)
 mod:SetZone(33)
 mod:SetModelID(2352)

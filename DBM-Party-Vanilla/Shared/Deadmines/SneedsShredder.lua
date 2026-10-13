@@ -8,7 +8,6 @@ else
 end
 
 mod:SetRevision("@file-date-integer@")
-mod:DisableHardcodedOptions()
 mod:SetCreatureID(642, 643)--Shredder, Sneed
 mod:SetEncounterID(2968)--Retail Encounter ID
 mod:SetModelID(1269)
