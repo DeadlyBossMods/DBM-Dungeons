@@ -270,3 +270,84 @@ L = DBM:GetModLocalization("CynthraButtonsmasher")
 L:SetGeneralLocalization({
 	name =	"신트라 단추난타자"
 })
+
+-----------------------
+-- <<< Replicating Venomborne >>> --
+-----------------------
+L = DBM:GetModLocalization("ReplicatingVenomborne")
+
+L:SetGeneralLocalization({
+	name =	"복제하는 맹독살이"
+})
+
+-----------------------
+-- <<< Disciple of Vashnik >>> --
+-----------------------
+L = DBM:GetModLocalization("DiscipleofVashnik")
+
+L:SetGeneralLocalization({
+	name =	"바쉬니크의 사도"
+})
+
+-----------------------
+-- <<< Ritual Pillar >>> --
+-----------------------
+L = DBM:GetModLocalization("RitualPillar")
+
+L:SetGeneralLocalization({
+	name =	"의식의 기둥"
+})
+
+-----------------------
+-- <<< Appalling Potadpolastrophy >>> --
+-----------------------
+L = DBM:GetModLocalization("AppallingPotadpolastrophy")
+
+L:SetGeneralLocalization({
+	name =	"경악스러운 재앙을 부르는 감자올챙이"
+})
+
+-----------------------
+-- <<< Gralka Snake-Eater >>> --
+-----------------------
+L = DBM:GetModLocalization("GralkaSnakeEater")
+
+L:SetGeneralLocalization({
+	name =	"그랄카 뱀포식자"
+})
+
+-----------------------
+-- <<< Osseous Amalgamation >>> --
+-----------------------
+L = DBM:GetModLocalization("OsseousAmalgamation")
+
+L:SetGeneralLocalization({
+	name =	"골화 융합체"
+})
+
+-----------------------
+-- <<< Gnok >>> --
+-----------------------
+L = DBM:GetModLocalization("Gnok")
+
+L:SetGeneralLocalization({
+	name =	"똑똑"
+})
+
+-----------------------
+-- <<< Drakta, Hero of the Arena >>> --
+-----------------------
+L = DBM:GetModLocalization("Drakta")
+
+L:SetGeneralLocalization({
+	name =	"투기장의 영웅 드락타"
+})
+
+-----------------------
+-- <<< Tarem'be >>> --
+-----------------------
+L = DBM:GetModLocalization("Tarembe")
+
+L:SetGeneralLocalization({
+	name =	"타렘베"
+})

@@ -33,8 +33,14 @@
 ## Version: @project-version@
 
 localization.en.lua
+localization.de.lua
+localization.fr.lua
+localization.es.lua
+localization.it.lua
+localization.br.lua
 localization.kr.lua
 localization.ru.lua
+localization.tw.lua
 localization.cn.lua
 Nemesis\Aztarec.lua
 Nemesis\TormentsRise.lua
@@ -66,6 +72,15 @@ Encounters\TreasureHunterTaltrois.lua
 Encounters\ShadowhunterJodin.lua
 Encounters\KingofSouls.lua
 Encounters\CynthraButtonsmasher.lua
+Encounters\ReplicatingVenomborne.lua
+Encounters\DiscipleofVashnik.lua
+Encounters\RitualPillar.lua
+Encounters\AppallingPotadpolastrophy.lua
+Encounters\GralkaSnakeEater.lua
+Encounters\OsseousAmalgamation.lua
+Encounters\Gnok.lua
+Encounters\Drakta.lua
+Encounters\Tarembe.lua
 Zones\TheDarkway.lua
 Zones\TwilightCrypts.lua
 Zones\AtalAman.lua
