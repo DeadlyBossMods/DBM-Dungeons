@@ -4,7 +4,7 @@ local L		= mod:GetLocalizedStrings()
 mod:SetRevision("@file-date-integer@")
 mod:DisableHardcodedOptions()
 mod:SetCreatureID(5720)
-mod:SetEncounterID(487)
+mod:SetEncounterID(487, 3587)--TODO: Verify 3587; may belong to a Forever version of the Season of Discovery Sunken Temple raid, not the dungeon.
 mod:SetModelID(6375)
 mod:SetZone(109)
 

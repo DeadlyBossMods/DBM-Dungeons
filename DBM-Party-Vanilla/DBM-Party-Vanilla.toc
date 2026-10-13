@@ -234,6 +234,7 @@ Shared\Stratholme\MalekithePallid.lua
 Shared\Stratholme\MagistrateBarthilas.lua
 Shared\Stratholme\RamsteintheGorger.lua
 Shared\Stratholme\LordAuriusRivendare.lua
+Shared\SunkenTemple\Atalalarion.lua [ExcludeLoadGameType standard, vanilla, cata, mists]
 Shared\SunkenTemple\AvatarofHakkar.lua
 Shared\SunkenTemple\JammalantheProphet.lua
 Shared\SunkenTemple\Dreamscythe.lua
