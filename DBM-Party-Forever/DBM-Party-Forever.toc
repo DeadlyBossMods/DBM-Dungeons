@@ -19,7 +19,7 @@
 ## SavedVariablesPerCharacter: DBMPartyForever_SavedStats
 ## X-DBM-Mod: 1
 ## X-DBM-Mod-Type: PARTY
-## X-DBM-Mod-Category: Classic
+## X-DBM-Mod-Category: Forever
 ## X-DBM-StatTypes: normal
 ## X-DBM-Mod-SubCategoriesID: 3065,2999,2998,2959
 ## X-DBM-Mod-Name: Dungeons (Forever)
@@ -27,7 +27,7 @@
 ## X-DBM-Mod-Name-esES: Mazmorras (Forever)
 ## X-DBM-Mod-Name-esMX: Calabozos (Forever)
 ## X-DBM-Mod-Name-frFR: Donjons (Forever)
-## X-DBM-Mod-Name-itiT: Spedizione (Forever)
+## X-DBM-Mod-Name-itIT: Spedizione (Forever)
 ## X-DBM-Mod-Name-koKR: 던전 (포에버)
 ## X-DBM-Mod-Name-ptBR: Masmorras (Forever)
 ## X-DBM-Mod-Name-ruRU: Подземелья (Forever)
