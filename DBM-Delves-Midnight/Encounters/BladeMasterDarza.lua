@@ -8,6 +8,7 @@ mod:SetRevision("@file-date-integer@")
 --mod:SetCreatureID(0)--TODO
 mod:SetEncounterID(3360)
 mod:SetZone()
+mod:IgnoreGenericTrash()
 
 mod:RegisterCombat("combat")
 
