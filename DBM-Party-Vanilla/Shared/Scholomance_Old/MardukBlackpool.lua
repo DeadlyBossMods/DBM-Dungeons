@@ -2,6 +2,9 @@ local mod	= DBM:NewMod("MardukBlackpool", "DBM-Party-Vanilla", DBM:IsPostCata() 
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
+if DBM:IsForever() then
+	mod:EnableGenericTrash()
+end
 mod:SetCreatureID(10433)
 mod:SetEncounterID(mod:IsClassic() and 2809 or 454)
 mod:SetModelID(10248)

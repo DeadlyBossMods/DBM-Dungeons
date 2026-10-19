@@ -8,6 +8,9 @@ else
 end
 
 mod:SetRevision("@file-date-integer@")
+if DBM:IsForever() then
+	mod:EnableGenericTrash()
+end
 mod:SetCreatureID(645)
 mod:SetEncounterID(2986)--Retail Encounter ID
 mod:SetModelID(1305)

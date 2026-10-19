@@ -2,6 +2,9 @@ local mod	= DBM:NewMod("BloodmageThalnos", "DBM-Party-Vanilla", DBM:IsPostCata()
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
+if DBM:IsForever() then
+	mod:EnableGenericTrash()
+end
 mod:SetCreatureID(4543)
 mod:SetEncounterID(mod:IsClassic() and 2779 or mod:IsRetail() and 2818 or 445)--445 in TBC and Wrath
 mod:SetModelID(11396)

@@ -4,6 +4,7 @@ local L		= mod:GetLocalizedStrings()
 mod:SetRevision("@file-date-integer@")
 
 if mod:IsRetail() then--10.1.7 fight rework
+	mod:EnableGenericTrash()
 	mod:SetZone(1004)
 	mod:SetCreatureID(207438)
 	mod:SetEncounterID(2725)

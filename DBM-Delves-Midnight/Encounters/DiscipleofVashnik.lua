@@ -5,6 +5,7 @@ mod.statTypes = "normal"
 mod.soloChallenge = true
 
 mod:SetRevision("@file-date-integer@")
+mod:EnableGenericTrash()
 --mod:SetCreatureID(0)--TODO
 mod:SetEncounterID(3522, 3537, 3559, 3563)
 mod:SetZone()

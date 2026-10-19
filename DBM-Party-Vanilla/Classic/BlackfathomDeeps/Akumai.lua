@@ -2,6 +2,9 @@ local mod	= DBM:NewMod("Akumai", "DBM-Party-Vanilla", 1)
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
+if DBM:IsForever() then
+	mod:EnableGenericTrash()
+end
 mod:SetCreatureID(4829)
 mod:SetEncounterID(2767)
 mod:SetModelID(2837)

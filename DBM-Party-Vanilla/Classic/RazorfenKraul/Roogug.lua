@@ -2,6 +2,9 @@ local mod	= DBM:NewMod("Roogug", "DBM-Party-Vanilla", 11)
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
+if DBM:IsForever() then
+	mod:EnableGenericTrash()
+end
 mod:SetCreatureID(6168)
 --mod:SetEncounterID(438)
 mod:SetModelID(6110)

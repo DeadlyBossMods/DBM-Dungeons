@@ -2,6 +2,7 @@ local mod	= DBM:NewMod("LyntheIgnored", "DBM-Party-Forever", 4)
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
+mod:EnableGenericTrash()
 --mod:SetCreatureID(11517)
 mod:SetEncounterID(3310)
 mod:SetZone(2959)

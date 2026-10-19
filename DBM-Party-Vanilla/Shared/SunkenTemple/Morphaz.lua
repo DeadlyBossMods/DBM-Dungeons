@@ -2,6 +2,9 @@ local mod	= DBM:NewMod("Morphaz", "DBM-Party-Vanilla", DBM:IsPostCata() and 12 o
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
+if DBM:IsForever() then
+	mod:EnableGenericTrash()
+end
 mod:SetCreatureID(5719)
 mod:SetEncounterID(490, 3586)--TODO: Verify 3586; may belong to a Forever version of the Season of Discovery Sunken Temple raid, not the dungeon.
 mod:SetModelID(7975)

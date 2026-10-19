@@ -10,7 +10,6 @@ mod:SetEncounterID(3508, 3525)
 mod:SetHotfixNoticeRev(20250220000000)
 mod:SetMinSyncRevision(20250220000000)
 mod:SetZone(3079)
-mod:IgnoreGenericTrash()
 
 mod:RegisterCombat("combat")
 

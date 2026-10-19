@@ -2,6 +2,7 @@ local mod	= DBM:NewMod("RelicGuardian", "DBM-Party-Forever", 3)
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
+mod:EnableGenericTrash()
 --mod:SetCreatureID(11517)
 mod:SetEncounterID(3482)
 mod:SetZone(2998)

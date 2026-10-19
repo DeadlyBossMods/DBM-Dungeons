@@ -8,6 +8,9 @@ local mod	= DBM:NewMod(422, "DBM-Party-Vanilla", (isCata or isRetail) and 4 or 7
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
+if DBM:IsForever() then
+	mod:EnableGenericTrash()
+end
 mod:SetCreatureID(7800)
 mod:SetEncounterID(mod:IsClassic() and 2772 or 382)
 mod:SetModelID(6980)

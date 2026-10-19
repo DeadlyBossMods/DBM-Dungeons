@@ -2,6 +2,9 @@ local mod	= DBM:NewMod("PyroguardEmberseer", "DBM-Party-Vanilla", DBM:IsCata() a
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
+if DBM:IsForever() then
+	mod:EnableGenericTrash()
+end
 mod:SetCreatureID(9816)
 mod:SetZone(229)
 mod:SetModelID(2172)

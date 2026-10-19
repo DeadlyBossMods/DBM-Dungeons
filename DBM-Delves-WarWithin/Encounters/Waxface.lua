@@ -2,7 +2,7 @@ local mod	= DBM:NewMod("Waxface", "DBM-Delves-WarWithin", 2)
 --local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
-mod:DisableHardcodedOptions()
+mod:EnableGenericTrash()
 --mod:SetCreatureID(0)--TODO
 mod:SetEncounterID(2894)
 mod:SetZone()

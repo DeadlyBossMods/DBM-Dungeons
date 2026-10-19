@@ -2,6 +2,9 @@ local mod	= DBM:NewMod("Mograine_and_Whitemane", "DBM-Party-Vanilla", DBM:IsPost
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
+if DBM:IsForever() then
+	mod:EnableGenericTrash()
+end
 mod:SetCreatureID(3977, 3976, 99999)--Whitemane, Mograine
 mod:SetEncounterID(450)
 mod:SetModelID(2043)

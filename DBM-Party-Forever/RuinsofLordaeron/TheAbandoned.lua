@@ -2,6 +2,7 @@ local mod	= DBM:NewMod("TheAbandoned", "DBM-Party-Forever", 2)
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
+mod:EnableGenericTrash()
 --mod:SetCreatureID(11517)
 mod:SetEncounterID(3357)
 mod:SetZone(2999)

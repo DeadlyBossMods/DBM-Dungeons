@@ -2,6 +2,9 @@ local mod	= DBM:NewMod("Oggleflint", "DBM-Party-Vanilla", 9)
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
+if DBM:IsForever() then
+	mod:EnableGenericTrash()
+end
 mod:SetCreatureID(11517)
 --mod:SetEncounterID(1443)
 mod:SetModelID(11611)

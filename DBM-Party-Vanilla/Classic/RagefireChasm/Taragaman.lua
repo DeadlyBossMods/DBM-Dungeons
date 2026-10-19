@@ -2,6 +2,9 @@ local mod	= DBM:NewMod("Taragaman", "DBM-Party-Vanilla", 9)
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
+if DBM:IsForever() then
+	mod:EnableGenericTrash()
+end
 mod:SetCreatureID(11520)
 --mod:SetEncounterID(1446)
 mod:SetModelID(7970)

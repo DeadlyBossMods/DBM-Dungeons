@@ -12,6 +12,7 @@ mod:RegisterCombat("combat")
 mod:SetMinCombatTime(15)
 
 if mod:IsRetail() then
+	mod:EnableGenericTrash()
 	mod:RegisterSafeEventsInCombat(
 		"UNIT_TARGETABLE_CHANGED"
 	)

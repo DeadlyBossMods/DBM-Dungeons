@@ -2,6 +2,9 @@ local mod	= DBM:NewMod("RazorclawtheButcher", "DBM-Party-Vanilla", 14)
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
+if DBM:IsForever() then
+	mod:EnableGenericTrash()
+end
 mod:SetCreatureID(3886)
 mod:SetZone(33)
 mod:SetModelID(524)
