@@ -19,7 +19,7 @@
 ## SavedVariablesPerCharacter: DBMPartyForever_SavedStats
 ## X-DBM-Mod: 1
 ## X-DBM-Mod-Type: PARTY
-## X-DBM-Mod-Category: Classic
+## X-DBM-Mod-Category: Forever
 ## X-DBM-StatTypes: normal
 ## X-DBM-Mod-SubCategoriesID: 3065,2999,2998,2959
 ## X-DBM-Mod-Name: Dungeons (Forever)
@@ -27,7 +27,7 @@
 ## X-DBM-Mod-Name-esES: Mazmorras (Forever)
 ## X-DBM-Mod-Name-esMX: Calabozos (Forever)
 ## X-DBM-Mod-Name-frFR: Donjons (Forever)
-## X-DBM-Mod-Name-itiT: Spedizione (Forever)
+## X-DBM-Mod-Name-itIT: Spedizione (Forever)
 ## X-DBM-Mod-Name-koKR: 던전 (포에버)
 ## X-DBM-Mod-Name-ptBR: Masmorras (Forever)
 ## X-DBM-Mod-Name-ruRU: Подземелья (Forever)
@@ -63,16 +63,16 @@ RuinsofLordaeron\Rathmael.lua
 RuinsofLordaeron\LordaeronCaptain.lua
 RuinsofLordaeron\ViktortheVile.lua
 RuinsofLordaeron\Bjork.lua
-KroldokStronghold\Saltspine.lua
-KroldokStronghold\Shadetooth.lua
-KroldokStronghold\HighlandHorror.lua
-KroldokStronghold\RelicGuardian.lua
-TheShapersTerrace\ArcaneAnomaly.lua
-TheShapersTerrace\FelAncient.lua
-TheShapersTerrace\ManaDevourer.lua
-TheShapersTerrace\ManaElemental.lua
-TheShapersTerrace\UnstableSentinel.lua
-TheShapersTerrace\ShadeoftheArchmage.lua
-TheShapersTerrace\LyntheIgnored.lua
-TheShapersTerrace\AtrexistheGraveKnight.lua
-TheShapersTerrace\ManaWraith.lua
+ExcavationSite\Saltspine.lua
+ExcavationSite\Shadetooth.lua
+ExcavationSite\HighlandHorror.lua
+ExcavationSite\RelicGuardian.lua
+CityofDalaran\ArcaneAnomaly.lua
+CityofDalaran\FelAncient.lua
+CityofDalaran\ManaDevourer.lua
+CityofDalaran\ManaElemental.lua
+CityofDalaran\UnstableSentinel.lua
+CityofDalaran\ShadeoftheArchmage.lua
+CityofDalaran\LyntheIgnored.lua
+CityofDalaran\AtrexistheGraveKnight.lua
+CityofDalaran\ManaWraith.lua

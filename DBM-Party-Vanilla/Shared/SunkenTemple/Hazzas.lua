@@ -2,9 +2,11 @@ local mod	= DBM:NewMod("Hazzas", "DBM-Party-Vanilla", DBM:IsPostCata() and 12 or
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
-mod:DisableHardcodedOptions()
+if DBM:IsForever() then
+	mod:EnableGenericTrash()
+end
 mod:SetCreatureID(5722)
-mod:SetEncounterID(491)
+mod:SetEncounterID(491, 3585)--TODO: Verify 3585; may belong to a Forever version of the Season of Discovery Sunken Temple raid, not the dungeon.
 mod:SetModelID(9584)
 mod:SetZone(109)
 

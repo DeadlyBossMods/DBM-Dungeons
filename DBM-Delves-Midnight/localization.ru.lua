@@ -163,3 +163,192 @@ L = DBM:GetModLocalization("Aztarec")
 L:SetGeneralLocalization({
 	name =	"Азта'рек"
 })
+
+-----------------------
+-- <<< Jun'ala >>> --
+-----------------------
+L = DBM:GetModLocalization("Junala")
+
+L:SetGeneralLocalization({
+	name =	"Джун'ала"
+})
+
+-----------------------
+-- <<< Sullied Revenant >>> --
+-----------------------
+L = DBM:GetModLocalization("SulliedRevenant")
+
+L:SetGeneralLocalization({
+	name =	"Поруганный загробник"
+})
+
+-----------------------
+-- <<< Sha'Kuro >>> --
+-----------------------
+L = DBM:GetModLocalization("ShaKuro")
+
+L:SetGeneralLocalization({
+	name =	"Ша'куро"
+})
+
+-----------------------
+-- <<< Kindo'jan >>> --
+-----------------------
+L = DBM:GetModLocalization("Kindojan")
+
+L:SetGeneralLocalization({
+	name =	"Киндо'джан"
+})
+
+-----------------------
+-- <<< Den'Zara >>> --
+-----------------------
+L = DBM:GetModLocalization("DenZara")
+
+L:SetGeneralLocalization({
+	name =	"Ден'зара"
+})
+
+-----------------------
+-- <<< Drill Sergeant >>> --
+-----------------------
+L = DBM:GetModLocalization("DrillSergeant")
+
+L:SetGeneralLocalization({
+	name =	"Сержант-инструктор"
+})
+
+-----------------------
+-- <<< The Undead Trollbunal >>> --
+-----------------------
+L = DBM:GetModLocalization("TheUndeadTrollbunal")
+
+L:SetGeneralLocalization({
+	name =	"Тролльбунал нежити"
+})
+
+-----------------------
+-- <<< Grukk >>> --
+-----------------------
+L = DBM:GetModLocalization("Grukk")
+
+L:SetGeneralLocalization({
+	name =	"Грукк"
+})
+
+-----------------------
+-- <<< Treasure Hunter Taltrois >>> --
+-----------------------
+L = DBM:GetModLocalization("TreasureHunterTaltrois")
+
+L:SetGeneralLocalization({
+	name =	"Охотник за сокровищами Талтруа"
+})
+
+-----------------------
+-- <<< Shadowhunter Jo'din >>> --
+-----------------------
+L = DBM:GetModLocalization("ShadowhunterJodin")
+
+L:SetGeneralLocalization({
+	name =	"Темный охотник Джо'дин"
+})
+
+-----------------------
+-- <<< King of Souls >>> --
+-----------------------
+L = DBM:GetModLocalization("KingofSouls")
+
+L:SetGeneralLocalization({
+	name =	"Король душ"
+})
+
+-----------------------
+-- <<< Cynthra Buttonsmasher >>> --
+-----------------------
+L = DBM:GetModLocalization("CynthraButtonsmasher")
+
+L:SetGeneralLocalization({
+	name =	"Синтра Кнопколом"
+})
+
+-----------------------
+-- <<< Replicating Venomborne >>> --
+-----------------------
+L = DBM:GetModLocalization("ReplicatingVenomborne")
+
+L:SetGeneralLocalization({
+	name =	"Плодящийся ядорожденный"
+})
+
+-----------------------
+-- <<< Disciple of Vashnik >>> --
+-----------------------
+L = DBM:GetModLocalization("DiscipleofVashnik")
+
+L:SetGeneralLocalization({
+	name =	"Ученик Вашника"
+})
+
+-----------------------
+-- <<< Ritual Pillar >>> --
+-----------------------
+L = DBM:GetModLocalization("RitualPillar")
+
+L:SetGeneralLocalization({
+	name =	"Ритуальная колонна"
+})
+
+-----------------------
+-- <<< Appalling Potadpolastrophy >>> --
+-----------------------
+L = DBM:GetModLocalization("AppallingPotadpolastrophy")
+
+L:SetGeneralLocalization({
+	name =	"Возмутительная бульбожаблострофа"
+})
+
+-----------------------
+-- <<< Gralka Snake-Eater >>> --
+-----------------------
+L = DBM:GetModLocalization("GralkaSnakeEater")
+
+L:SetGeneralLocalization({
+	name =	"Гралка Змееедка"
+})
+
+-----------------------
+-- <<< Osseous Amalgamation >>> --
+-----------------------
+L = DBM:GetModLocalization("OsseousAmalgamation")
+
+L:SetGeneralLocalization({
+	name =	"Костяное слияние"
+})
+
+-----------------------
+-- <<< Gnok >>> --
+-----------------------
+L = DBM:GetModLocalization("Gnok")
+
+L:SetGeneralLocalization({
+	name =	"Гнок"
+})
+
+-----------------------
+-- <<< Drakta, Hero of the Arena >>> --
+-----------------------
+L = DBM:GetModLocalization("Drakta")
+
+L:SetGeneralLocalization({
+	name =	"Дракта, Герой арены"
+})
+
+-----------------------
+-- <<< Tarem'be >>> --
+-----------------------
+L = DBM:GetModLocalization("Tarembe")
+
+L:SetGeneralLocalization({
+	name =	"Тарем'бе"
+})

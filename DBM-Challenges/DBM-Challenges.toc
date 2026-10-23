@@ -1,4 +1,4 @@
-## Interface: 50504, 120100
+## Interface: 50504, 120100, 120105
 ## AllowLoadGameType: mists, standard
 ## Version: @project-version@
 ## Category: DBM

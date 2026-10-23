@@ -1,4 +1,4 @@
-## Interface: 11509, 20506, 30405, 38002, 40402, 50504, 120100
+## Interface: 11509, 20506, 30405, 38002, 40402, 50504, 120100, 120105
 ## Category: DBM
 ## Title:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cff10ff10World Events|r
 ## Title-esES:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cff10ff10Eventos del mundo|r

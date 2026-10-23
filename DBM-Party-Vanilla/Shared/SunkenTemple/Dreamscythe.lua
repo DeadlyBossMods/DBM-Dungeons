@@ -2,9 +2,11 @@ local mod	= DBM:NewMod("Dreamscythe", "DBM-Party-Vanilla", DBM:IsPostCata() and 
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
-mod:DisableHardcodedOptions()
+if DBM:IsForever() then
+	mod:EnableGenericTrash()
+end
 mod:SetCreatureID(5721)
-mod:SetEncounterID(486)
+mod:SetEncounterID(486, 3588)--TODO: Verify 3588; may belong to a Forever version of the Season of Discovery Sunken Temple raid, not the dungeon.
 mod:SetModelID(7553)
 mod:SetZone(109)
 

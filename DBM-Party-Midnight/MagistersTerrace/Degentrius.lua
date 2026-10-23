@@ -80,12 +80,22 @@ do
 	local function timersAll(self, timer, timerExact, eventID)
 		--Logic confirmed against M+ logs. Opener is 3/9/15, then a repeating 22-second Fragment -> Entropy -> Essence loop.
 		if timer > 900 then--Ignored long placeholder artifacts seen in logged pulls
-		elseif timer == 3 then--Hulking Fragment opener
+		elseif timer == 3 or timer == 7 then--Hulking Fragment opener (M+, follower)
 			timerHulkingFragmentCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "fragment", "fragmentCount"))
-		elseif timer == 9 then--Devouring Entropy opener
+		elseif timer == 9 or timer == 13 then--Devouring Entropy opener (M+, follower)
 			timerDevouringEntropyCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "entropy", "entropyCount"))
-		elseif timer == 15 then--Unstable Void Essence opener
+		elseif timer == 15 then
+			if self:IsFollower() or self:IsNormal() then--Normal assumed, but it typically mirrors follower
+				--Hulking Fragment recast
+				timerHulkingFragmentCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "fragment", "fragmentCount"))
+			else
+				--Unstable Void Essence opener
+				timerUnstableVoidEssenceCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "essence", "essenceCount"))
+			end
+		elseif timer == 16 then--Unstable Void Essence opener (M+, follower)
 			timerUnstableVoidEssenceCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "essence", "essenceCount"))
+		elseif timer == 20 then--Devouring Entropy (follower)
+			timerDevouringEntropyCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "entropy", "entropyCount"))
 		elseif timer == 24 then--Recurring Fragment -> Entropy -> Essence rotation
 			recurringTwentyTwoCount = recurringTwentyTwoCount + 1
 			if recurringTwentyTwoCount % 3 == 1 then
@@ -95,6 +105,8 @@ do
 			else
 				timerUnstableVoidEssenceCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "essence", "essenceCount"))
 			end
+		elseif timer == 31 then--Unstable Void Essence (follower)
+			timerUnstableVoidEssenceCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "essence", "essenceCount"))
 		else--Reached end of chain without finding a valid timer, this means hardcode mod has failed, so we need to disable hardcoded features and fall back to blizz API
 			badStateDetected = true
 			self:ResumeBlizzardAPI()

@@ -1,10 +1,11 @@
-local mod	= DBM:NewMod("ArcaneAnomaly", "DBM-Party-Forever", 4)
+local mod	= DBM:NewMod("HighlandHorror", "DBM-Party-Forever", 3)
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
+mod:EnableGenericTrash()
 --mod:SetCreatureID(11517)
-mod:SetEncounterID(3298)
-mod:SetZone(2959)
+mod:SetEncounterID(3644)
+mod:SetZone(2998)
 
 mod:RegisterCombat("combat")
 

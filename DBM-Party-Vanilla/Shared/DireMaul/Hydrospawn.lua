@@ -1,7 +1,9 @@
 local mod	= DBM:NewMod(403, "DBM-Party-Vanilla", DBM:IsPostCata() and 3 or 6, 230)
 local L		= mod:GetLocalizedStrings()
 mod:SetRevision("@file-date-integer@")
-mod:DisableHardcodedOptions()
+if DBM:IsForever() then
+	mod:EnableGenericTrash()
+end
 mod:SetCreatureID(13280)
 --mod:SetEncounterID(1443)
 mod:SetModelID(5489)

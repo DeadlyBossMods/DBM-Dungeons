@@ -3,7 +3,6 @@ local mod	= DBM:NewMod("Grimroot", "DBM-Party-Vanilla", 21)
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
-mod:DisableHardcodedOptions()
 mod:SetEncounterID(3023)
 mod:SetModelID(121733)
 mod:SetCreatureID(226923)

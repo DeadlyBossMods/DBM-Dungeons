@@ -2,9 +2,11 @@ local mod	= DBM:NewMod(458, "DBM-Party-Vanilla", DBM:IsPostCata() and 12 or 17, 
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
-mod:DisableHardcodedOptions()
+if DBM:IsForever() then
+	mod:EnableGenericTrash()
+end
 mod:SetCreatureID(5710)--5711 Ogom the Wretched
-mod:SetEncounterID(488)
+mod:SetEncounterID(488, 3589)--TODO: Verify 3589; may belong to a Forever version of the Season of Discovery Sunken Temple raid, not the dungeon.
 mod:SetModelID(6708)
 mod:SetZone(109)
 

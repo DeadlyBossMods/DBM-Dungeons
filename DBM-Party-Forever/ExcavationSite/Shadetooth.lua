@@ -1,10 +1,11 @@
-local mod	= DBM:NewMod("UnstableSentinel", "DBM-Party-Forever", 4)
+local mod	= DBM:NewMod("Shadetooth", "DBM-Party-Forever", 3)
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
+mod:EnableGenericTrash()
 --mod:SetCreatureID(11517)
-mod:SetEncounterID(3302)
-mod:SetZone(2959)
+mod:SetEncounterID(3481)
+mod:SetZone(2998)
 
 mod:RegisterCombat("combat")
 

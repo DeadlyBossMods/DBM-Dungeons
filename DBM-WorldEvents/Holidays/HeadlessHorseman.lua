@@ -2,9 +2,9 @@ local mod	= DBM:NewMod("d285", "DBM-WorldEvents", 1)
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
-mod:DisableHardcodedOptions()
 
 if mod:IsRetail() then--10.1.7 fight rework
+	mod:EnableGenericTrash()
 	mod:SetZone(1004)
 	mod:SetCreatureID(207438)
 	mod:SetEncounterID(2725)
@@ -122,7 +122,7 @@ if mod:IsRetail() then--10.1.7 fight rework
 	function mod:GOSSIP_SHOW()
 		if self.Options.AutoGossipBuff then
 			--Embers, Delusions, Shadows, Thorns, All at once (center one)
-			self:SelectMatchingGossip(true, 110383, 110379, 110372, 110377, 111387)
+			self:SelectMatchingGossip(true, 110383, 110379, 110372, 110377, 111387, 110369)
 		end
 		if self.Options.AutoGossipEncounter then
 			self:SelectMatchingGossip(true, 36316)

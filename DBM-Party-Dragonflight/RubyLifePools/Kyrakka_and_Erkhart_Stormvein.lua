@@ -151,6 +151,9 @@ if DBM:IsRestricted() then
 				timerStormslamCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "stormslam", "stormslamCount"))
 				handled = true
 			elseif timer == 25 then
+				--Kyrakka's death can force an early Cloudburst cast, with its replacement added before state 2.
+				--Stop only the bar; keep the old reservation so the actual cast still warns and advances its count.
+				timerInterruptingCloudburstCD:Stop()
 				timerInterruptingCloudburstCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "cloudburst", "cloudburstCount"))
 				handled = true
 			end

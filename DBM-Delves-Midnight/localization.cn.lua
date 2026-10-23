@@ -8,7 +8,7 @@ local L
 L = DBM:GetModLocalization("InfiltratorGulkat")
 
 L:SetGeneralLocalization({
-	name =	"Infiltrator Gulkat"
+	name =	"渗透者古尔卡特"
 })
 
 -----------------------
@@ -17,7 +17,7 @@ L:SetGeneralLocalization({
 L = DBM:GetModLocalization("BladeMasterDarza")
 
 L:SetGeneralLocalization({
-	name =	"Blademaster Darza"
+	name =	"剑圣达尔扎"
 })
 
 -----------------------
@@ -26,7 +26,7 @@ L:SetGeneralLocalization({
 L = DBM:GetModLocalization("SpiritflayerJinma")
 
 L:SetGeneralLocalization({
-	name =	"Spiritflayer Jin'ma"
+	name =	"夺灵者金玛"
 })
 
 -----------------------
@@ -35,7 +35,7 @@ L:SetGeneralLocalization({
 L = DBM:GetModLocalization("Mycomight")
 
 L:SetGeneralLocalization({
-	name =	"Mycomight"
+	name =	"菌威"
 })
 
 -----------------------
@@ -44,7 +44,7 @@ L:SetGeneralLocalization({
 L = DBM:GetModLocalization("SpinshroomMid")
 
 L:SetGeneralLocalization({
-	name =	"Spinshroom"
+	name =	"旋菇"
 })
 
 -----------------------
@@ -53,7 +53,7 @@ L:SetGeneralLocalization({
 L = DBM:GetModLocalization("Brightthorn")
 
 L:SetGeneralLocalization({
-	name =	"Brightthorn"
+	name =	"明棘"
 })
 
 -----------------------
@@ -62,7 +62,7 @@ L:SetGeneralLocalization({
 L = DBM:GetModLocalization("MulthAul")
 
 L:SetGeneralLocalization({
-	name =	"Mul'tha'ul"
+	name =	"穆尔萨乌"
 })
 
 -----------------------
@@ -71,7 +71,7 @@ L:SetGeneralLocalization({
 L = DBM:GetModLocalization("Lumenia")
 
 L:SetGeneralLocalization({
-	name =	"Lumenia"
+	name =	"流明尼亚"
 })
 
 -----------------------
@@ -80,7 +80,7 @@ L:SetGeneralLocalization({
 L = DBM:GetModLocalization("GladiusSlaurna")
 
 L:SetGeneralLocalization({
-	name =	"Gladius Slaurna"
+	name =	"剑尉斯拉乌纳"
 })
 
 -----------------------
@@ -89,7 +89,7 @@ L:SetGeneralLocalization({
 L = DBM:GetModLocalization("EsuritusParhelion")
 
 L:SetGeneralLocalization({
-	name =	"Esuritus"
+	name =	"厄苏利图斯"
 })
 
 -----------------------
@@ -98,7 +98,7 @@ L:SetGeneralLocalization({
 L = DBM:GetModLocalization("Hydrangea")
 
 L:SetGeneralLocalization({
-	name =	"Hydrangea"
+	name =	"绣球花"
 })
 
 -----------------------
@@ -107,7 +107,7 @@ L:SetGeneralLocalization({
 L = DBM:GetModLocalization("VoidScornedVagrant")
 
 L:SetGeneralLocalization({
-	name =	"Voidscorned Vagrant"
+	name =	"蔑虚流浪者"
 })
 
 -----------------------
@@ -116,7 +116,7 @@ L:SetGeneralLocalization({
 L = DBM:GetModLocalization("InfiltratorGarand")
 
 L:SetGeneralLocalization({
-	name =	"Infiltrator Garand"
+	name =	"渗透者加兰德"
 })
 
 -----------------------
@@ -125,7 +125,7 @@ L:SetGeneralLocalization({
 L = DBM:GetModLocalization("Antenorian")
 
 L:SetGeneralLocalization({
-	name =	"Antenorian"
+	name =	"安忒诺里安"
 })
 
 -----------------------
@@ -134,7 +134,7 @@ L:SetGeneralLocalization({
 L = DBM:GetModLocalization("ChiefArcanistPatram")
 
 L:SetGeneralLocalization({
-	name =	"Chief-Arcanist Patram"
+	name =	"首席奥术师帕特拉姆"
 })
 
 -----------------------
@@ -143,7 +143,7 @@ L:SetGeneralLocalization({
 L = DBM:GetModLocalization("EsuritusSunkiller")
 
 L:SetGeneralLocalization({
-	name =	"Esuritus"
+	name =	"厄苏利图斯"
 })
 
 -----------------------
@@ -152,6 +152,204 @@ L:SetGeneralLocalization({
 L = DBM:GetModLocalization("Nullaeus")
 
 L:SetGeneralLocalization({
-	name =	"Nullaeus"
+	name =	"努雷乌斯"
+})
+
+-----------------------
+-- <<< Azta'rec >>> --
+-----------------------
+L = DBM:GetModLocalization("Aztarec")
+
+L:SetGeneralLocalization({
+	name =	"阿兹塔雷克"
+})
+
+-----------------------
+-- <<< Jun'ala >>> --
+-----------------------
+L = DBM:GetModLocalization("Junala")
+
+L:SetGeneralLocalization({
+	name =	"尊阿拉"
+})
+
+-----------------------
+-- <<< Sullied Revenant >>> --
+-----------------------
+L = DBM:GetModLocalization("SulliedRevenant")
+
+L:SetGeneralLocalization({
+	name =	"污秽亡魂"
+})
+
+-----------------------
+-- <<< Sha'Kuro >>> --
+-----------------------
+L = DBM:GetModLocalization("ShaKuro")
+
+L:SetGeneralLocalization({
+	name =	"沙库罗"
+})
+
+-----------------------
+-- <<< Kindo'jan >>> --
+-----------------------
+L = DBM:GetModLocalization("Kindojan")
+
+L:SetGeneralLocalization({
+	name =	"金多赞"
+})
+
+-----------------------
+-- <<< Den'Zara >>> --
+-----------------------
+L = DBM:GetModLocalization("DenZara")
+
+L:SetGeneralLocalization({
+	name =	"登扎拉"
+})
+
+-----------------------
+-- <<< Drill Sergeant >>> --
+-----------------------
+L = DBM:GetModLocalization("DrillSergeant")
+
+L:SetGeneralLocalization({
+	name =	"钻头中士"
+})
+
+-----------------------
+-- <<< The Undead Trollbunal >>> --
+-----------------------
+L = DBM:GetModLocalization("TheUndeadTrollbunal")
+
+L:SetGeneralLocalization({
+	name =	"亡灵巨魔审判团"
+})
+
+-----------------------
+-- <<< Grukk >>> --
+-----------------------
+L = DBM:GetModLocalization("Grukk")
+
+L:SetGeneralLocalization({
+	name =	"格卢克"
+})
+
+-----------------------
+-- <<< Treasure Hunter Taltrois >>> --
+-----------------------
+L = DBM:GetModLocalization("TreasureHunterTaltrois")
+
+L:SetGeneralLocalization({
+	name =	"财宝猎人塔尔特鲁瓦"
+})
+
+-----------------------
+-- <<< Shadowhunter Jo'din >>> --
+-----------------------
+L = DBM:GetModLocalization("ShadowhunterJodin")
+
+L:SetGeneralLocalization({
+	name =	"暗影猎手乔丁"
+})
+
+-----------------------
+-- <<< King of Souls >>> --
+-----------------------
+L = DBM:GetModLocalization("KingofSouls")
+
+L:SetGeneralLocalization({
+	name =	"灵魂之王"
+})
+
+-----------------------
+-- <<< Cynthra Buttonsmasher >>> --
+-----------------------
+L = DBM:GetModLocalization("CynthraButtonsmasher")
+
+L:SetGeneralLocalization({
+	name =	"辛瑟拉·砸钮"
+})
+
+-----------------------
+-- <<< Replicating Venomborne >>> --
+-----------------------
+L = DBM:GetModLocalization("ReplicatingVenomborne")
+
+L:SetGeneralLocalization({
+	name =	"毒裔增生"
+})
+
+-----------------------
+-- <<< Disciple of Vashnik >>> --
+-----------------------
+L = DBM:GetModLocalization("DiscipleofVashnik")
+
+L:SetGeneralLocalization({
+	name =	"瓦什尼克信徒"
+})
+
+-----------------------
+-- <<< Ritual Pillar >>> --
+-----------------------
+L = DBM:GetModLocalization("RitualPillar")
+
+L:SetGeneralLocalization({
+	name =	"仪式之柱"
+})
+
+-----------------------
+-- <<< Appalling Potadpolastrophy >>> --
+-----------------------
+L = DBM:GetModLocalization("AppallingPotadpolastrophy")
+
+L:SetGeneralLocalization({
+	name =	"骇人蝌蚪灾"
+})
+
+-----------------------
+-- <<< Gralka Snake-Eater >>> --
+-----------------------
+L = DBM:GetModLocalization("GralkaSnakeEater")
+
+L:SetGeneralLocalization({
+	name =	"食蛇者格拉尔卡"
+})
+
+-----------------------
+-- <<< Osseous Amalgamation >>> --
+-----------------------
+L = DBM:GetModLocalization("OsseousAmalgamation")
+
+L:SetGeneralLocalization({
+	name =	"骨质融合体"
+})
+
+-----------------------
+-- <<< Gnok >>> --
+-----------------------
+L = DBM:GetModLocalization("Gnok")
+
+L:SetGeneralLocalization({
+	name =	"咚咚"
+})
+
+-----------------------
+-- <<< Drakta, Hero of the Arena >>> --
+-----------------------
+L = DBM:GetModLocalization("Drakta")
+
+L:SetGeneralLocalization({
+	name =	"德拉克塔，竞技场英雄"
+})
+
+-----------------------
+-- <<< Tarem'be >>> --
+-----------------------
+L = DBM:GetModLocalization("Tarembe")
+
+L:SetGeneralLocalization({
+	name =	"塔伦贝"
 })
 

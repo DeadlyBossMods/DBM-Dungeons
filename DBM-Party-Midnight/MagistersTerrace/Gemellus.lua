@@ -94,6 +94,8 @@ do
 			else
 				timerCosmicStingCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "sting", "stingCount"))
 			end
+		elseif timer == 8 then--Cosmic Sting (follower difficulty)
+			timerCosmicStingCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "sting", "stingCount"))
 		elseif timer == 16 then--Neural Link
 			timerNeuralLinkCD:TLStart(timerExact, eventID, self:TLCountStart(eventID, "link", "linkCount"))
 		elseif timer == 29 then--Astral Grasp
@@ -111,6 +113,8 @@ do
 	function mod:ENCOUNTER_TIMELINE_EVENT_ADDED(eventInfo)
 		if eventInfo.source ~= 0 then return end
 		local eventID = eventInfo.id
+		local eventState = C_EncounterTimeline.GetEventState(eventID)
+		if eventState ~= 0 then return end--Ignore garbage state timers entirely since this boss sends a lot of them
 		local timerExact = eventInfo.duration
 		local timer = math.floor(timerExact + 0.5)
 		if not badStateDetected then

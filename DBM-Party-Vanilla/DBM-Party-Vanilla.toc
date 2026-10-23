@@ -1,4 +1,4 @@
-## Interface: 11509, 16001, 20506, 30405, 38002, 40402, 50504, 120100
+## Interface: 11509, 16001, 20506, 30405, 38002, 40402, 50504, 120100, 120105
 ## Category: DBM
 ## Title:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Dungeons (Vanilla)|r
 ## Title-deDE:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Dungeons (Vanilla)|r
@@ -234,6 +234,7 @@ Shared\Stratholme\MalekithePallid.lua
 Shared\Stratholme\MagistrateBarthilas.lua
 Shared\Stratholme\RamsteintheGorger.lua
 Shared\Stratholme\LordAuriusRivendare.lua
+Shared\SunkenTemple\Atalalarion.lua [ExcludeLoadGameType standard, vanilla, cata, mists]
 Shared\SunkenTemple\AvatarofHakkar.lua
 Shared\SunkenTemple\JammalantheProphet.lua
 Shared\SunkenTemple\Dreamscythe.lua

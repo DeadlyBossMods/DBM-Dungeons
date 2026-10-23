@@ -1,9 +1,10 @@
-local mod	= DBM:NewMod("AtrexistheGraveKnight", "DBM-Party-Forever", 4)
+local mod	= DBM:NewMod("UnstableSentinel", "DBM-Party-Forever", 4)
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
+mod:EnableGenericTrash()
 --mod:SetCreatureID(11517)
-mod:SetEncounterID(3311)
+mod:SetEncounterID(3302)
 mod:SetZone(2959)
 
 mod:RegisterCombat("combat")

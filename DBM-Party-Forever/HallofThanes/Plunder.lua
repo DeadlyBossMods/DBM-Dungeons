@@ -2,6 +2,7 @@ local mod	= DBM:NewMod("Plunder", "DBM-Party-Forever", 1)
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
+mod:EnableGenericTrash()
 --mod:SetCreatureID(11517)
 mod:SetEncounterID(3494)
 mod:SetZone(3065)

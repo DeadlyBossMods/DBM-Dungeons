@@ -1,9 +1,10 @@
-local mod	= DBM:NewMod("ShadeoftheArchmage", "DBM-Party-Forever", 4)
+local mod	= DBM:NewMod("ManaElemental", "DBM-Party-Forever", 4)
 local L		= mod:GetLocalizedStrings()
 
 mod:SetRevision("@file-date-integer@")
+mod:EnableGenericTrash()
 --mod:SetCreatureID(11517)
-mod:SetEncounterID(3303)
+mod:SetEncounterID(3301)
 mod:SetZone(2959)
 
 mod:RegisterCombat("combat")
