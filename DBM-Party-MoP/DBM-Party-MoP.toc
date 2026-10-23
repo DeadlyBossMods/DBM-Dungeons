@@ -1,4 +1,4 @@
-## Interface: 50504, 120100, 120105
+## Interface: 50504, 120105, 120107
 ## AllowLoadGameType: mists, standard
 ## Category: DBM
 ## Title:|cffffe00a<|r|cffff7d0aDBM Mod|r|cffffe00a>|r |cffc030c0Dungeons (MoP)|r
