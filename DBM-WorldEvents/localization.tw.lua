@@ -92,6 +92,10 @@ L:SetOptionLocalization({
 -----------------------------
 L = DBM:GetModLocalization("d285")
 
+L:SetGeneralLocalization({
+	name = "無頭騎士"
+})
+
 L:SetWarningLocalization({
 	WarnPhase				= "第%d階段",
 	warnHorsemanSoldiers	= "跳動的南瓜出現了!",

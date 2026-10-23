@@ -83,6 +83,10 @@ L:SetMiscLocalization({
 -------------------------
 L = DBM:GetModLocalization("d285")
 
+L:SetGeneralLocalization({
+	name = "O Cavaleiro sem Cabeça"
+})
+
 L:SetWarningLocalization({
 	WarnPhase				= "Fase %d",
 	warnHorsemanSoldiers	= "Abóboras Pulsantes surgindo",
