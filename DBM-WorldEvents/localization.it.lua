@@ -92,6 +92,10 @@ L:SetOptionLocalization({
 -----------------------------
 L = DBM:GetModLocalization("d285")
 
+L:SetGeneralLocalization({
+	name = "Cavaliere senza testa"
+})
+
 L:SetWarningLocalization({
 	WarnPhase				= "Fase %d",
 	warnHorsemanSoldiers	= "Evocazione Zucche Pulsanti",
