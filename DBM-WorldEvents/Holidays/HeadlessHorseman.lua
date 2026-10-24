@@ -122,7 +122,7 @@ if mod:IsRetail() then--10.1.7 fight rework
 	function mod:GOSSIP_SHOW()
 		if self.Options.AutoGossipBuff then
 			--Embers, Delusions, Shadows, Thorns, All at once (center one)
-			self:SelectMatchingGossip(true, 110383, 110379, 110372, 110377, 111387, 110369)
+			self:SelectMatchingGossip(true, 110383, 110379, 110372, 110377, 111387)--110369
 		end
 		if self.Options.AutoGossipEncounter then
 			self:SelectMatchingGossip(true, 36316)
