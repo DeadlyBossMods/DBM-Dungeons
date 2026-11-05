@@ -91,6 +91,10 @@ L:SetOptionLocalization({
 -----------------------------
 L = DBM:GetModLocalization("d285")
 
+L:SetGeneralLocalization({
+	name = "The Headless Horseman"
+})
+
 L:SetWarningLocalization({
 	WarnPhase				= "Phase %d",
 	warnHorsemanSoldiers	= "Pulsing Pumpkins spawning",

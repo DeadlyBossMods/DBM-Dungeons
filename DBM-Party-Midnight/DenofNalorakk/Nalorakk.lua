@@ -69,6 +69,7 @@ end
 function mod:OnLimitedCombatStart()
 	self:TLCountReset()
 	self:TLBatchReset()
+	self:TLActiveEventReset()
 	self.vb.maulCount = 1
 	self.vb.furyCount = 1
 	self.vb.onslaughtCount = 1
@@ -90,6 +91,7 @@ end
 function mod:OnCombatEnd()
 	self:TLCountReset()
 	self:TLBatchReset()
+	self:TLActiveEventReset()
 	replacementTimersByEventID = {}
 	self:UnregisterShortTermEvents()
 end
@@ -101,7 +103,7 @@ do
 	---@param eventID number
 	local function timersAll(self, timer, timerExact, eventID)
 		local timerObj, eventType, countKey
-		if timer == 5 then
+		if timer == 5 or timer == 10 then
 			timerObj = timerEchoingMaulCD
 			eventType = "maul"
 			countKey = "maulCount"
@@ -109,7 +111,7 @@ do
 			timerObj = timerOverwhelmingOnslaughtCD
 			eventType = "onslaught"
 			countKey = "onslaughtCount"
-		elseif timer == 54 then
+		elseif timer == 20 or timer == 54 or (timer == 25 and self:IsFollower()) then
 			timerObj = timerFuryoftheWarGodCD
 			eventType = "fury"
 			countKey = "furyCount"
@@ -148,13 +150,15 @@ do
 		local eventID = eventInfo.id
 		if C_EncounterTimeline.GetEventState(eventID) ~= 0 then return end
 		local timerExact = eventInfo.duration
+		if timerExact == 0 then return end
+		if not self:TLTrackActiveEvent(eventID) then return end
 		local handled = timersAll(self, math.floor(timerExact + 0.5), timerExact, eventID)
 		if not handled and not badStateDetected then
 			badStateDetected = true
 			self:ResumeBlizzardAPI()
 			self:UnregisterShortTermEvents()
 			setFallback(self)
-			DBM:Debug("|cffff0000Failed to match encounter timeline events to expected timers, falling back to Blizzard API|r", nil, nil, nil, true)
+			DBM:Debug("|cffff0000Failed to match encounter timeline events to expected timers, falling back to Blizzard API|r", nil, true, nil, true)
 		end
 	end
 

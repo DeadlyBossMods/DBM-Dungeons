@@ -103,6 +103,10 @@ L:SetOptionLocalization({
 -------------------------
 L = DBM:GetModLocalization("d285")
 
+L:SetGeneralLocalization({
+	name = "无头骑士"
+})
+
 L:SetWarningLocalization({
 	WarnPhase				= "第%d阶段",
 	warnHorsemanSoldiers	= "跃动的南瓜出现了",

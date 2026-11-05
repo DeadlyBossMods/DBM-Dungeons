@@ -92,6 +92,10 @@ L:SetOptionLocalization({
 -----------------------------
 L = DBM:GetModLocalization("d285")
 
+L:SetGeneralLocalization({
+	name = "저주받은 기사"
+})
+
 L:SetWarningLocalization({
 	WarnPhase				= "%d단계",
 	warnHorsemanSoldiers	= "고동치는 호박 생성",

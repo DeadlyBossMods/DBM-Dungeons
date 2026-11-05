@@ -92,6 +92,10 @@ L:SetOptionLocalization({
 -----------------------------
 L = DBM:GetModLocalization("d285")
 
+L:SetGeneralLocalization({
+	name = "Der kopflose Reiter"
+})
+
 L:SetWarningLocalization({
 	WarnPhase				= "Phase %d",
 	warnHorsemanSoldiers	= "Pulsierende Kürbisse erscheinen",

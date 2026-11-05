@@ -92,6 +92,10 @@ L:SetOptionLocalization({
 --------------------------
 L = DBM:GetModLocalization("d285")
 
+L:SetGeneralLocalization({
+	name = "El Jinete Decapitado"
+})
+
 L:SetWarningLocalization({
 	WarnPhase			 	= "Fase %d",
 	warnHorsemanSoldiers	= "Calabazas con pulso",

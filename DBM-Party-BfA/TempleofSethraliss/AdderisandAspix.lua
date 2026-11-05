@@ -179,9 +179,8 @@ if DBM:IsRestricted() then
 				--A boss death re-adds the survivor's active bars with arbitrary remaining times before canceling them.
 				return true
 			elseif timer == 45 then
-				--Reserve the schedule slot now: a paused row can be canceled before TLBatchStart runs.
-				local timerObject, eventType, countKey = getFortyFiveTimer()
-				self:TLBatchStart(timer, timerObject, timerExact, eventID, eventType, countKey, batchTimerValues)
+				--Canceled rebuild rows must not consume a slot in the recurring schedule.
+				self:TLBatchStart(timer, getFortyFiveTimer, timerExact, eventID, nil, nil, batchTimerValues)
 			elseif timer == 9 then
 				adderisDead = false
 				startBatchTimer(self, timer, timerThunderandLightningCD, timerExact, eventID, "thunderAndLightning", "thunderAndLightningCount")
@@ -250,7 +249,7 @@ if DBM:IsRestricted() then
 				self:ResumeBlizzardAPI()
 				self:UnregisterShortTermEvents()
 				setFallback(self)
-				DBM:Debug("|cffff0000Failed to match encounter timeline events to expected timers, falling back to Blizzard API|r", nil, nil, nil, true)
+				DBM:Debug("|cffff0000Failed to match encounter timeline events to expected timers, falling back to Blizzard API|r", nil, true, nil, true)
 			end
 		end
 
@@ -273,7 +272,11 @@ if DBM:IsRestricted() then
 				--The first resumed event ends the transfer batch and arms the next switch warning.
 				transitionPaused = false
 			end
-			self:TLBatchUntrack(eventID)
+			local batchTimer = self:TLBatchUntrack(eventID)
+			if eventState == 1 and batchTimer == 45 then
+				--A legitimate recurrence can pause before its queued start; it still owns a schedule slot.
+				getFortyFiveTimer()
+			end
 			if eventState >= 2 then
 				self:TLReleaseActiveEvent(eventID)
 			end

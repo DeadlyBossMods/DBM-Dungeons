@@ -93,6 +93,10 @@ L:SetOptionLocalization({
 -----------------------------
 L = DBM:GetModLocalization("d285")
 
+L:SetGeneralLocalization({
+	name = "Всадник без головы"
+})
+
 L:SetWarningLocalization({
 	WarnPhase				= "Фаза %d",
 	warnHorsemanSoldiers	= "Призыв Пульсирующих тыкв",
