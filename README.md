@@ -17,6 +17,10 @@ Features:
 * Helpful alerts, timers, and frames for most special event content (World events, holiday events, Darkmoon Faire, and even some misc quests)
 * All alerts are configurable through DBM GUI
 
+Forever Dungeon Scaffolds
+-------------------------
+The Forever package includes 34 encounter scaffolds for The Drowned City, Krol'dok Stronghold, Alcaz Prison, Blackmaw Hold, and The Shaper's Terrace, using Wago.tools build `1.60.1.70840` with hotfixes enabled. These modules register encounters and enable generic trash support; custom boss timers and warnings are not yet implemented.
+
 Looking for Raid mods?
 ----------------------
 You can find them at these links:

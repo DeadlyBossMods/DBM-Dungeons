@@ -105,7 +105,7 @@ L:SetGeneralLocalization{
 }
 
 -----------------------------
---  Krol'dok Stronghold (2998)  --
+--  Excavation Site (2998)  --
 -----------------------------
 --  Saltspine  --
 -----------------------------
@@ -143,7 +143,7 @@ L:SetGeneralLocalization{
 }
 
 -----------------------------
---  The Shaper's Terrace (2959)  --
+--  City of Dalaran (2959)  --
 -----------------------------
 --  Arcane Anomaly  --
 -----------------------------
@@ -223,4 +223,227 @@ L = DBM:GetModLocalization("ManaWraith")
 
 L:SetGeneralLocalization{
 	name 		= "마나 망령"
+}
+
+-----------------------------
+--  The Drowned City (2970)  --
+-----------------------------
+L = DBM:GetModLocalization("ZulAlai")
+
+L:SetGeneralLocalization{
+	name 		= "줄알라이"
+}
+
+L = DBM:GetModLocalization("VarTaka")
+
+L:SetGeneralLocalization{
+	name 		= "바르타카"
+}
+
+L = DBM:GetModLocalization("CaptainDreadrise")
+
+L:SetGeneralLocalization{
+	name 		= "대장 드레드라이즈"
+}
+
+L = DBM:GetModLocalization("DeathlessGuardians")
+
+L:SetGeneralLocalization{
+	name 		= "죽지 않는 수호자"
+}
+
+L = DBM:GetModLocalization("PrimevalElemental")
+
+L:SetGeneralLocalization{
+	name 		= "태고의 정령"
+}
+
+L = DBM:GetModLocalization("MinloththeSerpent")
+
+L:SetGeneralLocalization{
+	name 		= "독사 민로스"
+}
+
+
+-----------------------------
+--  Krol'dok Stronghold (3039)  --
+-----------------------------
+L = DBM:GetModLocalization("SlavecrusherGrox")
+
+L:SetGeneralLocalization{
+	name 		= "노예파괴자 그록스"
+}
+
+L = DBM:GetModLocalization("TwilightCommanderZarmok")
+
+L:SetGeneralLocalization{
+	name 		= "황혼의 사령관 자르모크"
+}
+
+L = DBM:GetModLocalization("HandlerAshka")
+
+L:SetGeneralLocalization{
+	name 		= "조련사 아쉬카"
+}
+
+L = DBM:GetModLocalization("Nargurk")
+
+L:SetGeneralLocalization{
+	name 		= "나르구르크"
+}
+
+L = DBM:GetModLocalization("OverseerMugg")
+
+L:SetGeneralLocalization{
+	name 		= "감독관 머그"
+}
+
+
+-----------------------------
+--  Alcaz Prison (2994)  --
+-----------------------------
+L = DBM:GetModLocalization("OverseerWrex")
+
+L:SetGeneralLocalization{
+	name 		= "감독관 렉스"
+}
+
+L = DBM:GetModLocalization("TidemistressCazass")
+
+L:SetGeneralLocalization{
+	name 		= "해일여제 카자스"
+}
+
+L = DBM:GetModLocalization("KaterinatheCleaner")
+
+L:SetGeneralLocalization{
+	name 		= "청소부 카테리나"
+}
+
+L = DBM:GetModLocalization("TheQuestioner")
+
+L:SetGeneralLocalization{
+	name 		= "심문관"
+}
+
+L = DBM:GetModLocalization("Blazeroar")
+
+L:SetGeneralLocalization{
+	name 		= "불길포효"
+}
+
+
+-----------------------------
+--  Blackmaw Hold (2974)  --
+-----------------------------
+L = DBM:GetModLocalization("Withermaw")
+
+L:SetGeneralLocalization{
+	name 		= "마른아귀"
+}
+
+L = DBM:GetModLocalization("ImpaantheImprisoner")
+
+L:SetGeneralLocalization{
+	name 		= "간수 임판"
+}
+
+L = DBM:GetModLocalization("ElderShamanBloodmane")
+
+L:SetGeneralLocalization{
+	name 		= "장로 주술사 핏빛갈기"
+}
+
+L = DBM:GetModLocalization("BonesnouttheUnbroken")
+
+L:SetGeneralLocalization{
+	name 		= "꺾이지 않는 해골주둥이"
+}
+
+L = DBM:GetModLocalization("VarroxBleakhoof")
+
+L:SetGeneralLocalization{
+	name 		= "바록스 블릭후프"
+}
+
+L = DBM:GetModLocalization("BlackmawBehemoth")
+
+L:SetGeneralLocalization{
+	name 		= "검은아귀 거수"
+}
+
+L = DBM:GetModLocalization("UnboundSpirit")
+
+L:SetGeneralLocalization{
+	name 		= "속박 풀린 영혼"
+}
+
+
+-----------------------------
+--  The Shaper's Terrace (3001)  --
+-----------------------------
+L = DBM:GetModLocalization("Titanosaur")
+
+L:SetGeneralLocalization{
+	name 		= "티타노사우루스"
+}
+
+L = DBM:GetModLocalization("RavasaurHunters")
+
+L:SetGeneralLocalization{
+	name 		= "갈퀴발톱 라바사우루스"
+}
+
+L = DBM:GetModLocalization("Thunderhoof")
+
+L:SetGeneralLocalization{
+	name 		= "천둥발굽"
+}
+
+L = DBM:GetModLocalization("Venomridge")
+
+L:SetGeneralLocalization{
+	name 		= "맹독마루"
+}
+
+L = DBM:GetModLocalization("DirehornMatriarch")
+
+L:SetGeneralLocalization{
+	name 		= "암컷 공포뿔"
+}
+
+L = DBM:GetModLocalization("Cinder")
+
+L:SetGeneralLocalization{
+	name 		= "잉걸불"
+}
+
+L = DBM:GetModLocalization("KingOp")
+
+L:SetGeneralLocalization{
+	name 		= "왕 오프"
+}
+
+L = DBM:GetModLocalization("Snowtalon")
+
+L:SetGeneralLocalization{
+	name 		= "눈갈퀴"
+}
+
+L = DBM:GetModLocalization("Bolt")
+
+L:SetGeneralLocalization{
+	name 		= "쏜살"
+}
+
+L = DBM:GetModLocalization("Vitrix")
+
+L:SetGeneralLocalization{
+	name 		= "비트릭스"
+}
+
+L = DBM:GetModLocalization("Nanaya")
+
+L:SetGeneralLocalization{
+	name 		= "나나야"
 }

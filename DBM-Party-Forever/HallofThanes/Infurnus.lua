@@ -5,6 +5,7 @@ mod:SetRevision("@file-date-integer@")
 mod:EnableGenericTrash()
 --mod:SetCreatureID(11517)
 mod:SetEncounterID(3495)
+mod:SetModelID(1070)
 mod:SetZone(3065)
 
 mod:RegisterCombat("combat")
