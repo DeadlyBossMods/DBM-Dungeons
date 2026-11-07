@@ -62,8 +62,6 @@ RuinsofLordaeron\Witherfang.lua
 RuinsofLordaeron\TheAbandoned.lua
 RuinsofLordaeron\TheButcher.lua
 RuinsofLordaeron\Rathmael.lua
-RuinsofLordaeron\LordaeronCaptain.lua
-RuinsofLordaeron\ViktortheVile.lua
 RuinsofLordaeron\Bjork.lua
 ExcavationSite\Saltspine.lua
 ExcavationSite\Shadetooth.lua
@@ -72,12 +70,10 @@ ExcavationSite\RelicGuardian.lua
 CityofDalaran\ArcaneAnomaly.lua
 CityofDalaran\FelAncient.lua
 CityofDalaran\ManaDevourer.lua
-CityofDalaran\ManaElemental.lua
 CityofDalaran\UnstableSentinel.lua
 CityofDalaran\ShadeoftheArchmage.lua
 CityofDalaran\LyntheIgnored.lua
 CityofDalaran\AtrexistheGraveKnight.lua
-CityofDalaran\ManaWraith.lua
 TheDrownedCity\ZulAlai.lua
 TheDrownedCity\VarTaka.lua
 TheDrownedCity\CaptainDreadrise.lua
