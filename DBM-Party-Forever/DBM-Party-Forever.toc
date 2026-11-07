@@ -22,7 +22,7 @@
 ## X-DBM-Mod-Type: PARTY
 ## X-DBM-Mod-Category: Forever
 ## X-DBM-StatTypes: normal
-## X-DBM-Mod-SubCategoriesID: 3065,2999,2998,2959
+## X-DBM-Mod-SubCategoriesID: 3065,2999,2998,2959,2970,3039,2994,2974,3001
 ## X-DBM-Mod-Name: Dungeons (Forever)
 ## X-DBM-Mod-Name-deDE: Dungeons (Forever)
 ## X-DBM-Mod-Name-esES: Mazmorras (Forever)
@@ -35,7 +35,7 @@
 ## X-DBM-Mod-Name-zhCN: 地下城 (无限)
 ## X-DBM-Mod-Name-zhTW: 地下城 (永恆)
 ## X-DBM-Mod-Sort: 1102
-## X-DBM-Mod-MapID: 3065,2999,2998,2959
+## X-DBM-Mod-MapID: 3065,2999,2998,2959,2970,3039,2994,2974,3001
 ## X-DBM-Mod-MinCoreRevision: 20260522000000
 ## X-DBM-Mod-MinExpansion: 0
 ## X-Curse-Project-ID: 314994
@@ -49,6 +49,7 @@ localization.es.lua
 localization.mx.lua
 localization.br.lua
 localization.fr.lua
+localization.it.lua
 localization.ru.lua
 localization.kr.lua
 localization.tw.lua
@@ -77,3 +78,37 @@ CityofDalaran\ShadeoftheArchmage.lua
 CityofDalaran\LyntheIgnored.lua
 CityofDalaran\AtrexistheGraveKnight.lua
 CityofDalaran\ManaWraith.lua
+TheDrownedCity\ZulAlai.lua
+TheDrownedCity\VarTaka.lua
+TheDrownedCity\CaptainDreadrise.lua
+TheDrownedCity\DeathlessGuardians.lua
+TheDrownedCity\PrimevalElemental.lua
+TheDrownedCity\MinloththeSerpent.lua
+KroldokStronghold\SlavecrusherGrox.lua
+KroldokStronghold\TwilightCommanderZarmok.lua
+KroldokStronghold\HandlerAshka.lua
+KroldokStronghold\Nargurk.lua
+KroldokStronghold\OverseerMugg.lua
+AlcazPrison\OverseerWrex.lua
+AlcazPrison\TidemistressCazass.lua
+AlcazPrison\KaterinatheCleaner.lua
+AlcazPrison\TheQuestioner.lua
+AlcazPrison\Blazeroar.lua
+BlackmawHold\Withermaw.lua
+BlackmawHold\ImpaantheImprisoner.lua
+BlackmawHold\ElderShamanBloodmane.lua
+BlackmawHold\BonesnouttheUnbroken.lua
+BlackmawHold\VarroxBleakhoof.lua
+BlackmawHold\BlackmawBehemoth.lua
+BlackmawHold\UnboundSpirit.lua
+TheShapersTerrace\Titanosaur.lua
+TheShapersTerrace\RavasaurHunters.lua
+TheShapersTerrace\Thunderhoof.lua
+TheShapersTerrace\Venomridge.lua
+TheShapersTerrace\DirehornMatriarch.lua
+TheShapersTerrace\Cinder.lua
+TheShapersTerrace\KingOp.lua
+TheShapersTerrace\Snowtalon.lua
+TheShapersTerrace\Bolt.lua
+TheShapersTerrace\Vitrix.lua
+TheShapersTerrace\Nanaya.lua

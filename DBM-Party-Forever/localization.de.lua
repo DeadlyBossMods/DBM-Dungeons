@@ -105,7 +105,7 @@ L:SetGeneralLocalization{
 }
 
 -----------------------------
---  Krol'dok Stronghold (2998)  --
+--  Excavation Site (2998)  --
 -----------------------------
 --  Saltspine  --
 -----------------------------
@@ -143,7 +143,7 @@ L:SetGeneralLocalization{
 }
 
 -----------------------------
---  The Shaper's Terrace (2959)  --
+--  City of Dalaran (2959)  --
 -----------------------------
 --  Arcane Anomaly  --
 -----------------------------
@@ -223,4 +223,227 @@ L = DBM:GetModLocalization("ManaWraith")
 
 L:SetGeneralLocalization{
 	name 		= "Managespenst"
+}
+
+-----------------------------
+--  The Drowned City (2970)  --
+-----------------------------
+L = DBM:GetModLocalization("ZulAlai")
+
+L:SetGeneralLocalization{
+	name 		= "Zul'Alai"
+}
+
+L = DBM:GetModLocalization("VarTaka")
+
+L:SetGeneralLocalization{
+	name 		= "Var'Taka"
+}
+
+L = DBM:GetModLocalization("CaptainDreadrise")
+
+L:SetGeneralLocalization{
+	name 		= "Captain Dreadrise"
+}
+
+L = DBM:GetModLocalization("DeathlessGuardians")
+
+L:SetGeneralLocalization{
+	name 		= "Unsterbliche Wächter"
+}
+
+L = DBM:GetModLocalization("PrimevalElemental")
+
+L:SetGeneralLocalization{
+	name 		= "Urtümlicher Elementar"
+}
+
+L = DBM:GetModLocalization("MinloththeSerpent")
+
+L:SetGeneralLocalization{
+	name 		= "Min'loth die Schlange"
+}
+
+
+-----------------------------
+--  Krol'dok Stronghold (3039)  --
+-----------------------------
+L = DBM:GetModLocalization("SlavecrusherGrox")
+
+L:SetGeneralLocalization{
+	name 		= "Sklavenbrecher Grox"
+}
+
+L = DBM:GetModLocalization("TwilightCommanderZarmok")
+
+L:SetGeneralLocalization{
+	name 		= "Twilight-Kommandant Zarmok"
+}
+
+L = DBM:GetModLocalization("HandlerAshka")
+
+L:SetGeneralLocalization{
+	name 		= "Tierführerin Ashka"
+}
+
+L = DBM:GetModLocalization("Nargurk")
+
+L:SetGeneralLocalization{
+	name 		= "Nar'gurk"
+}
+
+L = DBM:GetModLocalization("OverseerMugg")
+
+L:SetGeneralLocalization{
+	name 		= "Aufseher Mugg"
+}
+
+
+-----------------------------
+--  Alcaz Prison (2994)  --
+-----------------------------
+L = DBM:GetModLocalization("OverseerWrex")
+
+L:SetGeneralLocalization{
+	name 		= "Aufseher Wrex"
+}
+
+L = DBM:GetModLocalization("TidemistressCazass")
+
+L:SetGeneralLocalization{
+	name 		= "Gezeitenherrin Ca'zass"
+}
+
+L = DBM:GetModLocalization("KaterinatheCleaner")
+
+L:SetGeneralLocalization{
+	name 		= "Katerina die Aufräumerin"
+}
+
+L = DBM:GetModLocalization("TheQuestioner")
+
+L:SetGeneralLocalization{
+	name 		= "Der Verhörer"
+}
+
+L = DBM:GetModLocalization("Blazeroar")
+
+L:SetGeneralLocalization{
+	name 		= "Blazeroar"
+}
+
+
+-----------------------------
+--  Blackmaw Hold (2974)  --
+-----------------------------
+L = DBM:GetModLocalization("Withermaw")
+
+L:SetGeneralLocalization{
+	name 		= "Welkschlund"
+}
+
+L = DBM:GetModLocalization("ImpaantheImprisoner")
+
+L:SetGeneralLocalization{
+	name 		= "Impaan der Kerkermeister"
+}
+
+L = DBM:GetModLocalization("ElderShamanBloodmane")
+
+L:SetGeneralLocalization{
+	name 		= "Schamanenältester Bloodmane"
+}
+
+L = DBM:GetModLocalization("BonesnouttheUnbroken")
+
+L:SetGeneralLocalization{
+	name 		= "Knochenschnauze der Ungebrochene"
+}
+
+L = DBM:GetModLocalization("VarroxBleakhoof")
+
+L:SetGeneralLocalization{
+	name 		= "Varrox Bleakhoof"
+}
+
+L = DBM:GetModLocalization("BlackmawBehemoth")
+
+L:SetGeneralLocalization{
+	name 		= "Behemoth des Schwarzschlunds"
+}
+
+L = DBM:GetModLocalization("UnboundSpirit")
+
+L:SetGeneralLocalization{
+	name 		= "Ungebundener Geist"
+}
+
+
+-----------------------------
+--  The Shaper's Terrace (3001)  --
+-----------------------------
+L = DBM:GetModLocalization("Titanosaur")
+
+L:SetGeneralLocalization{
+	name 		= "Titanosaurus"
+}
+
+L = DBM:GetModLocalization("RavasaurHunters")
+
+L:SetGeneralLocalization{
+	name 		= "Ravasaurusjäger"
+}
+
+L = DBM:GetModLocalization("Thunderhoof")
+
+L:SetGeneralLocalization{
+	name 		= "Thunderhoof"
+}
+
+L = DBM:GetModLocalization("Venomridge")
+
+L:SetGeneralLocalization{
+	name 		= "Giftkamm"
+}
+
+L = DBM:GetModLocalization("DirehornMatriarch")
+
+L:SetGeneralLocalization{
+	name 		= "Terrorhornmatriarchin"
+}
+
+L = DBM:GetModLocalization("Cinder")
+
+L:SetGeneralLocalization{
+	name 		= "Zunder"
+}
+
+L = DBM:GetModLocalization("KingOp")
+
+L:SetGeneralLocalization{
+	name 		= "König Op"
+}
+
+L = DBM:GetModLocalization("Snowtalon")
+
+L:SetGeneralLocalization{
+	name 		= "Schneekralle"
+}
+
+L = DBM:GetModLocalization("Bolt")
+
+L:SetGeneralLocalization{
+	name 		= "Bolt"
+}
+
+L = DBM:GetModLocalization("Vitrix")
+
+L:SetGeneralLocalization{
+	name 		= "Vitrix"
+}
+
+L = DBM:GetModLocalization("Nanaya")
+
+L:SetGeneralLocalization{
+	name 		= "Nanaya"
 }
