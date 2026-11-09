@@ -12,7 +12,7 @@ if DBM:IsForever() then
 	mod:EnableGenericTrash()
 end
 mod:SetCreatureID(642, 643)--Shredder, Sneed
-mod:SetEncounterID(2968)--Retail Encounter ID
+mod:SetEncounterID(2968, 2742)--Retail Encounter ID (2742 is Forever)
 mod:SetModelID(1269)
 mod:SetZone(36)
 

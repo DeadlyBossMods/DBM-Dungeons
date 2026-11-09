@@ -6,6 +6,7 @@ if DBM:IsForever() then
 	mod:EnableGenericTrash()
 end
 mod:SetCreatureID(1663)
+mod:SetEncounterID(2759)
 mod:SetZone(34)
 mod:SetModelID(2149)
 
