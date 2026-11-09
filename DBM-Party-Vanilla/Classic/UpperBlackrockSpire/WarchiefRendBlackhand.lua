@@ -6,6 +6,7 @@ if DBM:IsForever() then
 	mod:EnableGenericTrash()
 end
 mod:SetCreatureID(10339, 10429) -- Gyth, Rend
+mod:SetEncounterID(3063)
 mod:SetMainBossID(10429)
 mod:SetMinSyncRevision(20240729000000)
 mod:SetZone(229)

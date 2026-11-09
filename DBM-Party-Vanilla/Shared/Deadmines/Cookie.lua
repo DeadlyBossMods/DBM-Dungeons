@@ -12,7 +12,7 @@ if DBM:IsForever() then
 	mod:EnableGenericTrash()
 end
 mod:SetCreatureID(645)
-mod:SetEncounterID(2986)--Retail Encounter ID
+mod:SetEncounterID(2986, 2746)--Retail Encounter ID (2746 is Forever)
 mod:SetModelID(1305)
 mod:RequiresTimeWalking()
 mod:SetZone(36)
