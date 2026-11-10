@@ -42,7 +42,6 @@
 ## X-Wago-ID: xZKxZENk
 ## Version: @project-version@
 
-locale.generated.lua
 localization.en.lua
 localization.de.lua
 localization.es.lua

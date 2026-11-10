@@ -68,7 +68,6 @@
 ## Version: @project-version@
 ## IconTexture: Interface\AddOns\DBM-Core\textures\dbm_airhorn [AllowLoadGameType cata, standard, mists]
 
-locale.generated.lua
 Classic\localization.en.lua [ExcludeLoadGameType standard, cata, mists]
 Classic\localization.de.lua [ExcludeLoadGameType standard, cata, mists]
 Classic\localization.es.lua [ExcludeLoadGameType standard, cata, mists]
