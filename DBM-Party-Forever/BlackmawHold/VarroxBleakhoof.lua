@@ -9,3 +9,4 @@ mod:SetZone(2974)
 mod:RegisterCombat("combat")
 
 mod:AddAuraSoundOption(1246362, true, 1246362, 1, 1, "bombyou", 12, 0)
+mod:AddAuraSoundOption(1246456, true, 1246456, 1, 2, "pullin", 12, 0)
