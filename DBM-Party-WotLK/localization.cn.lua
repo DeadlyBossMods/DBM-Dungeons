@@ -1,10 +1,4 @@
--- Simplified Chinese by Diablohu
--- http://wow.gamespot.com.cn
--- Last Update: 12/13/2008
-
--- author: callmejames @《凤凰之翼》 一区藏宝海湾
--- commit by: yaroot <yaroot AT gmail.com>
--- Last Update: 9/16/2010
+-- 泰坦重铸时光服-时光2-法师-旺仔芒果/椰奶冻-2026.11.13--
 
 if GetLocale() ~= "zhCN" then return end
 
@@ -338,7 +332,7 @@ L:SetGeneralLocalization{
 L = DBM:GetModLocalization(606)
 
 L:SetGeneralLocalization{
-	name 		= "布莱恩 事件"
+	name 		= "布莱恩事件"
 }
 
 L:SetWarningLocalization({
@@ -734,6 +728,7 @@ L:SetGeneralLocalization{
 L:SetMiscLocalization({
 	Barrage	= "%s 开始迅速地召唤爆裂地雷!"
 })
+
 ----------------------------
 --  Forgemaster Garfrost  --
 ----------------------------
@@ -762,6 +757,13 @@ L:SetMiscLocalization({
 	YellCombatEnd	= "不可能……霜牙……警报……"
 })
 
+-- 补全：PitOfSaronTrash 模块
+L = DBM:GetModLocalization("PitOfSaronTrash")
+
+L:SetGeneralLocalization({
+	name = "萨隆矿坑小怪"
+})
+
 ----------------------
 --  Forge of Souls  --
 ----------------------
@@ -784,14 +786,13 @@ L:SetGeneralLocalization{
 
 L:SetWarningLocalization({
 	specwarnMirroredSoul	= "停止攻击",
-	specwarnWailingSouls	= "哀嚎之魂 - 快躲到boss背后"
+	specwarnWailingSouls	= "哀嚎之魂 - 快躲到首领背后"
 })
 
 L:SetOptionLocalization({
 	specwarnMirroredSoul	= "为$spell:69051需要停止攻击时显示特别警告",
 	specwarnWailingSouls	= "当$spell:68899施放时显示特别警告"
 })
-
 
 ---------------------------
 --  Halls of Reflection  --
@@ -857,7 +858,7 @@ L:SetWarningLocalization({
 })
 
 L:SetTimerLocalization({
-	achievementEscape	= "Time to escape"
+	achievementEscape	= "逃离计时"
 })
 
 L:SetOptionLocalization({
