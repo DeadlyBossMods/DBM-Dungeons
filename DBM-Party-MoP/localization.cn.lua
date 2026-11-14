@@ -1,5 +1,4 @@
--- Simplified Chinese by Diablohu(diablohudream@gmail.com)
--- Last update: 1/4/2013
+-- 泰坦重铸时光服-时光2-法师-旺仔芒果/椰奶冻-2026.11.13--
 
 if GetLocale() ~= "zhCN" then return end
 local L
@@ -21,6 +20,15 @@ L:SetWarningLocalization({
 	SpecWarnIntensity	= "%s -> %s (%d)"
 })
 
+L:SetOptionLocalization({
+	SpecWarnIntensity2	= DBM_CORE_L.AUTO_SPEC_WARN_OPTIONS.switch:format(113315)
+})
+
+L:SetMiscLocalization({
+	Event1	= "啊，还没结束。依我看，我们要面对的是野牛人的试炼。让我来照亮前路……",
+	Event2	= "天哪，如果我没认错，这似乎是孙·寻日者的故事在我们眼前重演了。"
+})
+
 -----------------------
 -- Liu Flameheart --
 -----------------------
@@ -30,6 +38,15 @@ L= DBM:GetModLocalization(658)
 -- Sha of Doubt --
 -----------------------
 L= DBM:GetModLocalization(335)
+
+-------------
+--  Temple of the Jade Serpent Trash  --
+-------------
+L = DBM:GetModLocalization("JadeTempleTrash")
+
+L:SetGeneralLocalization({
+	name =	"青龙寺小怪"
+})
 
 -----------------------
 -- <<<Stormstout Brewery>>> --
@@ -70,6 +87,10 @@ L:SetWarningLocalization({
 	warnStaticField	= "%s"
 })
 
+L:SetOptionLocalization({
+	warnStaticField	= DBM_CORE_L.AUTO_ANNOUNCE_OPTIONS.spell:format(106923)
+})
+
 -----------------------
 -- Snowdrift --
 -----------------------
@@ -94,6 +115,10 @@ L:SetMiscLocalization({
 -----------------------
 L= DBM:GetModLocalization(685)
 
+L:SetMiscLocalization({
+	Kill			= "只要你们心中还存有暴力，我就..会回来..."
+})
+
 -----------------------
 -- Taran Zhu --
 -----------------------
@@ -114,6 +139,10 @@ L:SetMiscLocalization({
 -- Kiptilak --
 ---------------------
 L= DBM:GetModLocalization(655)
+
+L:SetOptionLocalization({
+	IconOnSabotage	= DBM_CORE_L.AUTO_ICONS_OPTION_TARGETS:format(107268)
+})
 
 -------------
 -- Gadok --
@@ -211,16 +240,19 @@ L= DBM:GetModLocalization(663)
 L= DBM:GetModLocalization(665)
 
 L:SetWarningLocalization({
-	SpecWarnGetBoned	= "快去获得骨甲"
+	SpecWarnGetBoned	= "快去获得骨甲",
+	SpecWarnDoctor		= "医生来了！"
 })
 
 L:SetOptionLocalization({
 	SpecWarnGetBoned	= "特殊警报：当你没有受到$spell:113996效果影响时",
+	SpecWarnDoctor		= "当瑟尔林·卡斯迪诺夫医生出现时显示特别警告",
 	InfoFrame			= "信息框：没有受到$spell:113996效果影响的玩家"
 })
 
 L:SetMiscLocalization({
-	PlayerDebuffs	= "没有骨甲"
+	PlayerDebuffs	= "没有骨甲",
+	TheolenSpawn	= "医生来了！"
 })
 
 -----------------------
@@ -229,7 +261,7 @@ L:SetMiscLocalization({
 L= DBM:GetModLocalization(666)
 
 L:SetMiscLocalization({
-	Kill	= "什么？！"
+	Kill	= "受死吧，死灵法师！"
 })
 
 -----------------------
