@@ -1,9 +1,14 @@
 local mod	= DBM:NewMod("d640", "DBM-Challenges", 4, nil, function(t)
-	return string.match(t, "[^:]+:%s?(.*)")
+	local name = string.match(t, "[^:]+:%s?(.*)") or t
+	if not name or name == "" or name == "d640" then
+		local L = DBM:GetModLocalization("d640")
+		name = (L and L.general and L.general.name) or "试炼场"
+	end
+	return name
 end)
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision("@file-date-integer@")
+mod:SetRevision("20260919193459")
 mod:DisableHardcodedOptions()
 mod.noStatistics = true
 
