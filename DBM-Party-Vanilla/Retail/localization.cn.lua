@@ -1,3 +1,4 @@
+-- 泰坦重铸时光服-时光2-法师-旺仔芒果/椰奶冻-2026.11.13--
 if GetLocale() ~= "zhCN" then return end
 local L
 
@@ -108,7 +109,7 @@ L:SetGeneralLocalization{
 L = DBM:GetModLocalization(375)
 
 L:SetGeneralLocalization{
-	name 		= "Warden Stilgiss"
+	name 		= "典狱官斯迪尔基斯"
 }
 -----------------------------
 --  Fineous Darkvire  --
@@ -387,6 +388,10 @@ L = DBM:GetModLocalization(416)
 
 L:SetGeneralLocalization{
 	name 		= "观察者克鲁什"
+}
+
+L:SetMiscLocalization{
+	Defeat	= "国王死了——天呐！快召唤狡猾的米兹尔！他知道下一步该怎么做！"
 }
 -----------------------------
 --  King Gordok  --
@@ -807,7 +812,7 @@ L:SetGeneralLocalization{
 L = DBM:GetModLocalization("Mograine_and_Whitemane")
 
 L:SetGeneralLocalization{
-	name 		= "莫格莱尼 & 怀特迈恩"
+	name 		= "莫格莱尼和怀特迈恩"
 }
 
 -----------------------------
@@ -1363,7 +1368,7 @@ L:SetGeneralLocalization{
 	name 		= "烈焰卫士艾博希尔"
 }
 L:SetMiscLocalization{
-	Pull		= "%s 开始恢复实力!"
+	Pull		= "%s开始恢复力量！"
 }
 -----------------------------
 --  Solakar Flamewreath  --
@@ -1404,6 +1409,14 @@ L = DBM:GetModLocalization("TheBeast")
 
 L:SetGeneralLocalization{
 	name 		= "比斯巨兽"
+}
+-----------------------------
+--  Lord Valthalak  --
+-----------------------------
+L = DBM:GetModLocalization("LordValthalak")
+
+L:SetGeneralLocalization{
+	name 		= "瓦塔拉克公爵"
 }
 -----------------------------
 --  General Drakkisath  --
@@ -1480,3 +1493,180 @@ L = DBM:GetModLocalization("Cookie")
 L:SetGeneralLocalization{
 	name 		= "曲奇"
 }
+
+------------------------------------
+--  Retail 专属数字 ID 补全  --
+--  这些条目用于重制版（Cata/正式服/MoP）  --
+------------------------------------
+
+-------------------------
+--  Blackfathom Deeps (Retail)-227J/48M  --
+-----------------------------
+L = DBM:GetModLocalization(368)
+L:SetGeneralLocalization{ name = "加摩拉" }
+
+L = DBM:GetModLocalization(436)
+L:SetGeneralLocalization{ name = "多米尼娜" }
+
+L = DBM:GetModLocalization(426)
+L:SetGeneralLocalization{ name = "征服者克鲁尔" } 
+
+L = DBM:GetModLocalization(1145)
+L:SetGeneralLocalization{ name = "斯鲁克" }
+
+L = DBM:GetModLocalization(447)
+L:SetGeneralLocalization{ name = "深渊守卫" } 
+
+L = DBM:GetModLocalization(1144)
+L:SetGeneralLocalization{ name = "戈尔" }
+
+L = DBM:GetModLocalization(437)
+L:SetGeneralLocalization{ name = "巴希尔" }
+
+L = DBM:GetModLocalization(444)
+L:SetGeneralLocalization{ name = "阿库麦尔" }
+
+-------------------------
+--  Ragefire Chasm (Retail)-226J/389M  --
+-----------------------------
+L = DBM:GetModLocalization(694)
+L:SetGeneralLocalization{ name = "阿达罗格" }
+
+L = DBM:GetModLocalization(695)
+L:SetGeneralLocalization{ name = "柯兰萨" }
+
+L = DBM:GetModLocalization(696)
+L:SetGeneralLocalization{ name = "斯纳格玛" }
+
+L = DBM:GetModLocalization(697)
+L:SetGeneralLocalization{ name = "熔岩守卫戈多斯" }
+
+-------------------------
+--  Razorfen Downs (Retail)-233J/129M  --
+-----------------------------
+L = DBM:GetModLocalization(1142)
+L:SetGeneralLocalization{ name = "阿鲁克斯" }
+
+L = DBM:GetModLocalization(1143)
+L:SetGeneralLocalization{ name = "麦什伦" }
+
+L = DBM:GetModLocalization(1146)
+L:SetGeneralLocalization{ name = "亡语者布莱克松" }
+
+L = DBM:GetModLocalization(1141)
+L:SetGeneralLocalization{ name = "寒冰之王亚门纳尔" }
+
+L = DBM:GetModLocalization(433)
+L:SetGeneralLocalization{ name = "火眼莫德雷斯" }
+
+-------------------------
+--  Razorfen Kraul (Retail)-234J/47M  --
+-----------------------------
+L = DBM:GetModLocalization(896)
+L:SetGeneralLocalization{ name = "猎人骨牙" }
+
+L = DBM:GetModLocalization(895)
+L:SetGeneralLocalization{ name = "鲁古格" }
+
+L = DBM:GetModLocalization(899)
+L:SetGeneralLocalization{ name = "主宰拉姆塔斯" }
+
+L = DBM:GetModLocalization(900)
+L:SetGeneralLocalization{ name = "盲眼猎手" }
+
+L = DBM:GetModLocalization(901)
+L:SetGeneralLocalization{ name = "卡尔加·刺肋" }
+
+-------------------------
+--  Stormwind Stockaid (Retail)-238J/34M  --
+-----------------------------
+L = DBM:GetModLocalization(464)
+L:SetGeneralLocalization{ name = "霍格" }
+
+L = DBM:GetModLocalization(465)
+L:SetGeneralLocalization{ name = "灼热勋爵" }
+
+L = DBM:GetModLocalization(466)
+L:SetGeneralLocalization{ name = "兰多菲·摩洛克" }
+
+
+-------------------------
+--  斯坦索姆 / 通灵学院 / 沉没的神庙（数字 ID 补全）  --
+-------------------------
+L = DBM:GetModLocalization(443)
+L:SetGeneralLocalization{ name = "弗雷斯特恩" }
+
+L = DBM:GetModLocalization(445)
+L:SetGeneralLocalization{ name = "悲惨的提米" }
+
+L = DBM:GetModLocalization(749)
+L:SetGeneralLocalization{ name = "指挥官玛洛尔" }
+
+L = DBM:GetModLocalization(446)
+L:SetGeneralLocalization{ name = "希望破坏者威利" }
+
+L = DBM:GetModLocalization(448)
+L:SetGeneralLocalization{ name = "档案管理员加尔福特" }
+
+L = DBM:GetModLocalization(449)
+L:SetGeneralLocalization{ name = "巴纳扎尔" }
+
+L = DBM:GetModLocalization(450)
+L:SetGeneralLocalization{ name = "不可宽恕者" }
+
+L = DBM:GetModLocalization(451)
+L:SetGeneralLocalization{ name = "安娜丝塔丽男爵夫人" }
+
+L = DBM:GetModLocalization(452)
+L:SetGeneralLocalization{ name = "耐鲁布恩坎" }
+
+L = DBM:GetModLocalization(453)
+L:SetGeneralLocalization{ name = "苍白的玛勒基" }
+
+L = DBM:GetModLocalization(454)
+L:SetGeneralLocalization{ name = "巴瑟拉斯镇长" }
+
+L = DBM:GetModLocalization(455)
+L:SetGeneralLocalization{ name = "吞咽者拉姆斯登" }
+
+L = DBM:GetModLocalization(456)
+L:SetGeneralLocalization{ name = "奥里克斯·瑞文戴尔领主" }
+
+L = DBM:GetModLocalization(457)
+L:SetGeneralLocalization{ name = "哈卡的化身" }
+
+L = DBM:GetModLocalization(458)
+L:SetGeneralLocalization{ name = "预言者迦玛兰" }
+
+-------------------------
+--  沉没的神庙（数字 ID 补全）  --
+-------------------------
+L = DBM:GetModLocalization("Dreamscythe")
+L:SetGeneralLocalization{ name = "德姆塞卡尔" }
+
+L = DBM:GetModLocalization("Weaver")
+L:SetGeneralLocalization{ name = "德拉维沃尔" }
+
+L = DBM:GetModLocalization("Morphaz")
+L:SetGeneralLocalization{ name = "摩弗拉斯" }
+
+L = DBM:GetModLocalization("Hazzas")
+L:SetGeneralLocalization{ name = "哈扎斯" }
+
+L = DBM:GetModLocalization(463)
+L:SetGeneralLocalization{ name = "伊兰尼库斯的阴影" }
+
+-------------------------
+--  Atal'alarion（仅 WLK 加载）  --
+-------------------------
+L = DBM:GetModLocalization(459)
+L:SetGeneralLocalization{ name = "阿塔拉利恩" }
+
+L = DBM:GetModLocalization("Atalalarion")
+L:SetGeneralLocalization{ name = "阿塔拉利恩" }
+
+-------------------------
+--  Postmaster Malown（仅正式服 standard 加载）  --
+-------------------------
+L = DBM:GetModLocalization("PostmasterMalown")
+L:SetGeneralLocalization{ name = "邮差马龙" }
