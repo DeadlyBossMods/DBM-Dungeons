@@ -1,4 +1,4 @@
--- Last update: 2025/10/18 （重新整理）
+-- 泰坦重铸时光服-时光2-法师-旺仔芒果/椰奶冻-2026.11.13--
 if GetLocale() ~= "zhCN" then return end
 local L
 
@@ -1601,6 +1601,7 @@ L = DBM:GetModLocalization("HellscreamsPhantom")
 L:SetGeneralLocalization{
 	name 		= "地狱咆哮的幻灵"
 }
+
 -------------------------
 -- SoD Karazhan Crypts --
 -------------------------
@@ -1640,10 +1641,10 @@ L:SetGeneralLocalization{
 }
 
 L:SetMiscLocalization {
-	PullTrizivast = "For your evenings entertainment, comes a brave tale of survival, loss, and conviction.",
-	PullHanselAndGretel1 = "For your evenings entertainment, comes the lost fable of two children attempting to find their way!",
-	PullHanselAndGretel2 = "We're sorry grandmother. Your time has expired.",
-	PullEngineers = "For your evening viewing we have a tragic story of a humble technician who has been outcast!",
+	PullTrizivast = "今晚为您献上的，是一个关于生存、失去与信念的勇敢故事。",
+	PullHanselAndGretel1 = "今晚为您献上的，是两个孩子试图寻找归途的失落寓言！",
+	PullHanselAndGretel2 = "对不起，祖母。您的时辰已到。",
+	PullEngineers = "今晚为您呈现的，是一个谦卑技师被放逐的悲惨故事！",
 }
 
 -- Dark Rider
@@ -1654,12 +1655,12 @@ L:SetGeneralLocalization{
 }
 
 L:SetOptionLocalization{
-	EnableMinorNameplates = "Automatically enable enemy nameplates for minor units in Karazhan to show Mirror Images"
+	EnableMinorNameplates = "自动为卡拉赞内的小怪开启敌方姓名板，以显示镜像"
 }
 
 L:SetMiscLocalization{
-	MirrorImage = "Mirror Image",
-	EnabledNameplates = "DBM auto-enabled nameplates for minor enemy units while in Karazhan, this helps to detect mirror images. You can disable this in the Dark Rider mod options under Dungeons/Karazhan Crypts."
+	MirrorImage = "镜像",
+	EnabledNameplates = "DBM 已在卡拉赞内自动为小怪开启姓名板，这有助于侦测镜像。你可以在 地下城/卡拉赞墓穴 的黑暗骑士模块选项中关闭此功能。"
 }
 
 -- Creeping Malison
@@ -1673,7 +1674,7 @@ L:SetGeneralLocalization{
 L = DBM:GetModLocalization("KCTrash")
 
 L:SetGeneralLocalization{
-	name = "Karazhan Crypts Trash"
+	name = "卡拉赞墓穴小怪"
 }
 
 -- Unk'omon
@@ -1684,9 +1685,24 @@ L:SetGeneralLocalization{
 }
 
 L:SetWarningLocalization{
-	WarnDoom = "Doom - Decurse"
+	WarnDoom = "末日 - 解诅咒"
 }
 
 L:SetOptionLocalization{
-	WarnDoom = "Show announce to decurse $spell:1221577"
+	WarnDoom = "显示解除 $spell:1221577 的团队警告"
 }
+
+-------------------------
+--  Atal'alarion（仅 WLK 加载）  --
+-------------------------
+L = DBM:GetModLocalization(459)
+L:SetGeneralLocalization{ name = "阿塔拉利恩" }
+
+L = DBM:GetModLocalization("Atalalarion")
+L:SetGeneralLocalization{ name = "阿塔拉利恩" }
+
+-------------------------
+--  Postmaster Malown（仅正式服 standard 加载）  --
+-------------------------
+L = DBM:GetModLocalization("PostmasterMalown")
+L:SetGeneralLocalization{ name = "邮差马龙" }
