@@ -39,7 +39,7 @@
 ## X-DBM-Mod-SubCategories-zhTW: 節慶,任務,DMF,Events [AllowLoadGameType standard]
 ## X-DBM-Mod-SubCategories-zhTW: 節慶,任務 [AllowLoadGameType tbc, wrath]
 ## X-DBM-Mod-SubCategories-zhCN: 节日,任务,暗月马戏团 [AllowLoadGameType cata, mists, vanilla]
-## X-DBM-Mod-SubCategories-zhCN: 节日,任务,暗月马戏团,Events [AllowLoadGameType standard]
+## X-DBM-Mod-SubCategories-zhCN: 节日,任务,暗月马戏团,事件 [AllowLoadGameType standard]
 ## X-DBM-Mod-SubCategories-zhCN: 节日,任务 [AllowLoadGameType tbc, wrath]
 ## X-DBM-Mod-SubCategories-esES: Fiestas,Misiones,Feria de la Luna Negra [AllowLoadGameType cata, mists, vanilla]
 ## X-DBM-Mod-SubCategories-esES: Fiestas,Misiones,Feria de la Luna Negra,Eventos [AllowLoadGameType standard]
