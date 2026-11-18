@@ -1,7 +1,7 @@
 local mod	= DBM:NewMod("d287", "DBM-WorldEvents", 1)
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision("@file-date-integer@")
+mod:SetRevision("20261019224209")
 if DBM:IsRetail() then
 	mod:EnableGenericTrash()
 end
@@ -13,6 +13,8 @@ mod:SetReCombatTime(10)
 mod:RegisterCombat("combat")
 
 if DBM:IsRestricted() then return end
+
+mod:AddRename(47340, "黑铁美酒女郎的昏迷")--该法术在中文客户端无译名，强制使用中文名
 
 mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 47310",
@@ -66,3 +68,4 @@ function mod:SPELL_AURA_REMOVED(args)
 		timerBarrel:Cancel(args.destName)
 	end
 end
+
