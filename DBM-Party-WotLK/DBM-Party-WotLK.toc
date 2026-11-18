@@ -42,13 +42,13 @@
 ## Version: @project-version@
 
 localization.en.lua
-localization.cn.lua
-localization.ru.lua
-localization.fr.lua
-localization.tw.lua
-localization.kr.lua
-localization.de.lua
-localization.es.lua
+localization.cn.lua [AllowLoadTextLocale zhCN]
+localization.ru.lua [AllowLoadTextLocale ruRU]
+localization.fr.lua [AllowLoadTextLocale frFR]
+localization.tw.lua [AllowLoadTextLocale zhTW]
+localization.kr.lua [AllowLoadTextLocale koKR]
+localization.de.lua [AllowLoadTextLocale deDE]
+localization.es.lua [AllowLoadTextLocale esES, esMX]
 AhnKahet\Taldaram.lua
 AhnKahet\Nadox.lua
 AhnKahet\JedogaShadowseeker.lua

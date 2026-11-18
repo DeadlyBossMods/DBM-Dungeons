@@ -79,15 +79,15 @@
 ## X-DBM-Mod-MinCoreRevision: 20260522000000
 
 localization.en.lua
-localization.ru.lua
-localization.fr.lua
-localization.tw.lua
-localization.kr.lua
-localization.de.lua
-localization.es.lua
-localization.cn.lua
-localization.br.lua
-localization.it.lua
+localization.ru.lua [AllowLoadTextLocale ruRU]
+localization.fr.lua [AllowLoadTextLocale frFR]
+localization.tw.lua [AllowLoadTextLocale zhTW]
+localization.kr.lua [AllowLoadTextLocale koKR]
+localization.de.lua [AllowLoadTextLocale deDE]
+localization.es.lua [AllowLoadTextLocale esES, esMX]
+localization.cn.lua [AllowLoadTextLocale zhCN]
+localization.br.lua [AllowLoadTextLocale ptBR]
+localization.it.lua [AllowLoadTextLocale itIT]
 Holidays\ApothecaryTrio.lua [AllowLoadGameType cata, standard, mists, wrath]
 Holidays\Ahune.lua [AllowLoadGameType cata, standard, mists, tbc, wrath]
 Holidays\CorenDirebrew.lua [AllowLoadGameType cata, mists, tbc, wrath]

@@ -41,15 +41,15 @@
 ## Version: @project-version@
 
 localization.en.lua
-localization.cn.lua
-localization.de.lua
-localization.tw.lua
-localization.es.lua
-localization.kr.lua
-localization.ru.lua
-localization.br.lua
-localization.it.lua
-localization.fr.lua
+localization.cn.lua [AllowLoadTextLocale zhCN]
+localization.de.lua [AllowLoadTextLocale deDE]
+localization.tw.lua [AllowLoadTextLocale zhTW]
+localization.es.lua [AllowLoadTextLocale esES, esMX]
+localization.kr.lua [AllowLoadTextLocale koKR]
+localization.ru.lua [AllowLoadTextLocale ruRU]
+localization.br.lua [AllowLoadTextLocale ptBR]
+localization.it.lua [AllowLoadTextLocale itIT]
+localization.fr.lua [AllowLoadTextLocale frFR]
 BlackRookHold\AmalgamSouls.lua
 BlackRookHold\Illysanna.lua
 BlackRookHold\Smashspite.lua

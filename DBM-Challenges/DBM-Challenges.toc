@@ -38,12 +38,12 @@
 ## X-Wago-ID: Rn6VLLGd
 
 localization.en.lua
-localization.de.lua
-localization.es.lua
-localization.kr.lua
-localization.tw.lua
-localization.cn.lua
-localization.ru.lua
+localization.de.lua [AllowLoadTextLocale deDE]
+localization.es.lua [AllowLoadTextLocale esES, esMX]
+localization.kr.lua [AllowLoadTextLocale koKR]
+localization.tw.lua [AllowLoadTextLocale zhTW]
+localization.cn.lua [AllowLoadTextLocale zhCN]
+localization.ru.lua [AllowLoadTextLocale ruRU]
 Shadowlands\Torghast.lua [AllowLoadGameType standard]
 Shadowlands\PoA_Echthra.lua [AllowLoadGameType standard]
 Shadowlands\PoA_Nuuminuuru.lua [AllowLoadGameType standard]

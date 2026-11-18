@@ -39,13 +39,13 @@
 ## X-DBM-Mod-MinExpansion: 7
 
 localization.en.lua
-localization.de.lua
-localization.kr.lua
-localization.cn.lua
-localization.es.lua
-localization.tw.lua
-localization.it.lua
-localization.ru.lua
+localization.de.lua [AllowLoadTextLocale deDE]
+localization.kr.lua [AllowLoadTextLocale koKR]
+localization.cn.lua [AllowLoadTextLocale zhCN]
+localization.es.lua [AllowLoadTextLocale esES, esMX]
+localization.tw.lua [AllowLoadTextLocale zhTW]
+localization.it.lua [AllowLoadTextLocale itIT]
+localization.ru.lua [AllowLoadTextLocale ruRU]
 AtalDazar\Alunza.lua
 AtalDazar\Volkaal.lua
 AtalDazar\Rezan.lua

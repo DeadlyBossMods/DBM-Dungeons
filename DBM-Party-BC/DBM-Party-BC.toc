@@ -44,12 +44,12 @@
 ## Version: @project-version@
 
 localization.en.lua
-localization.cn.lua
-localization.de.lua
-localization.kr.lua
-localization.ru.lua
-localization.es.lua
-localization.tw.lua
+localization.cn.lua [AllowLoadTextLocale zhCN]
+localization.de.lua [AllowLoadTextLocale deDE]
+localization.kr.lua [AllowLoadTextLocale koKR]
+localization.ru.lua [AllowLoadTextLocale ruRU]
+localization.es.lua [AllowLoadTextLocale esES, esMX]
+localization.tw.lua [AllowLoadTextLocale zhTW]
 Hellfire_Ramp\Gargolmar.lua
 Hellfire_Ramp\Omor.lua
 Hellfire_Ramp\Vazruden.lua

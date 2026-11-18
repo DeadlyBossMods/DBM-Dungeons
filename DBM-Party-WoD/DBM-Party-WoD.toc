@@ -41,14 +41,14 @@
 ## X-DBM-Mod-MinExpansion: 5
 
 localization.en.lua
-localization.kr.lua
-localization.de.lua
-localization.es.lua
-localization.ru.lua
-localization.tw.lua
-localization.cn.lua
-localization.fr.lua
-localization.br.lua
+localization.kr.lua [AllowLoadTextLocale koKR]
+localization.de.lua [AllowLoadTextLocale deDE]
+localization.es.lua [AllowLoadTextLocale esES, esMX]
+localization.ru.lua [AllowLoadTextLocale ruRU]
+localization.tw.lua [AllowLoadTextLocale zhTW]
+localization.cn.lua [AllowLoadTextLocale zhCN]
+localization.fr.lua [AllowLoadTextLocale frFR]
+localization.br.lua [AllowLoadTextLocale ptBR]
 Auchindoun\AuchTrash.lua
 Auchindoun\ProtectorOfAuch.lua
 Auchindoun\Nyami.lua

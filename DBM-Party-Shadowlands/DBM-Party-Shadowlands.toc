@@ -39,11 +39,11 @@
 ## X-DBM-Mod-MinExpansion: 8
 
 localization.en.lua
-localization.kr.lua
-localization.tw.lua
-localization.cn.lua
-localization.es.lua
-localization.ru.lua
+localization.kr.lua [AllowLoadTextLocale koKR]
+localization.tw.lua [AllowLoadTextLocale zhTW]
+localization.cn.lua [AllowLoadTextLocale zhCN]
+localization.es.lua [AllowLoadTextLocale esES, esMX]
+localization.ru.lua [AllowLoadTextLocale ruRU]
 TheNecroticWake\Blightbone.lua
 TheNecroticWake\Amarth.lua
 TheNecroticWake\SurgeonStitchflesh.lua
