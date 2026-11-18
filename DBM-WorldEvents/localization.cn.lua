@@ -3,6 +3,7 @@
 -- Mini_Dragon(projecteurs@gmail.com)
 -- Yike Xia
 -- Last update: Sep 23 2015, 06:10 UTC@14543
+-- 泰坦重铸时光服-时光2-法师-旺仔芒果/椰奶冻-2026.11.13--
 
 if GetLocale() ~= "zhCN" then return end
 
@@ -126,7 +127,7 @@ L:SetOptionLocalization({
 
 L:SetMiscLocalization({
 	HorsemanSummon			= "无头骑士来了……",
-	HorsemanSoldiers	= "士兵们，起来战斗吧！为死去的骑士带来胜利的荣耀！"
+	HorsemanSoldiers		= "士兵们，起来战斗吧！为死去的骑士带来胜利的荣耀！"
 })
 
 ------------------------------
@@ -166,13 +167,33 @@ L:SetMiscLocalization({
 	MassiveWave		= "一大波僵尸正在靠近！"
 })
 
+-- Quest
+L = DBM:GetModLocalization("EscortQuests")
+
+L:SetGeneralLocalization{
+	name = "护送任务",
+}
+
+L:SetOptionLocalization{
+	Timers = "为部分护送任务显示计时条"
+}
+
+--------------------------
+--  Demonic Invasions  --
+--------------------------
+L = DBM:GetModLocalization("DemonInvasions")
+
+L:SetGeneralLocalization({
+	name = "恶魔入侵"
+})
+
 --------------------------
 --  Memories of Azeroth: Burning Crusade  --
 --------------------------
 L = DBM:GetModLocalization("BCEvent")
 
 L:SetGeneralLocalization({
-	name = "MoA: Burning Crusade"
+	name = "艾泽拉斯回忆：燃烧的远征"
 })
 
 --------------------------
@@ -181,12 +202,39 @@ L:SetGeneralLocalization({
 L = DBM:GetModLocalization("WrathEvent")
 
 L:SetGeneralLocalization({
-	name = "MoA: WotLK"
+	name = "艾泽拉斯回忆：巫妖王之怒"
 })
+
+L:SetWarningLocalization{
+	WarnEmerge				= "阿努巴拉克出现",
+	WarnEmergeSoon			= "10秒后出现",
+	WarnSubmerge			= "阿努巴拉克钻入地下",
+	WarnSubmergeSoon		= "10秒后钻入地下",
+	WarningTeleportNow		= "传送",
+	WarningTeleportSoon		= "10秒后传送"
+}
+
+L:SetTimerLocalization{
+	TimerEmerge				= "出现",
+	TimerSubmerge			= "钻入地下",
+	TimerTeleport			= "传送"
+}
 
 L:SetMiscLocalization{
 	Emerge				= "钻入了地下！",
 	Burrow				= "从地面上升起来了！"
+}
+
+L:SetOptionLocalization{
+	WarnEmerge				= "为出现显示警告",
+	WarnEmergeSoon			= "为出现显示预先警告",
+	WarnSubmerge			= "为钻入地下显示警告",
+	WarnSubmergeSoon		= "为钻入地下显示预先警告",
+	TimerEmerge				= "为出现显示计时条",
+	TimerSubmerge			= "为钻入地下显示计时条",
+	WarningTeleportNow		= "为传送显示警告",
+	WarningTeleportSoon		= "为传送显示预先警告",
+	TimerTeleport			= "为传送显示计时条"
 }
 
 --------------------------
@@ -195,7 +243,17 @@ L:SetMiscLocalization{
 L = DBM:GetModLocalization("CataEvent")
 
 L:SetGeneralLocalization({
-	name = "MoA: Cataclysm"
+	name = "艾泽拉斯回忆：大地的裂变"
+})
+
+L:SetWarningLocalization({
+	warnSplittingBlow		= "%s于%s",
+	warnEngulfingFlame		= "%s于%s"
+})
+
+L:SetOptionLocalization({
+	warnSplittingBlow			= "为$spell:98951的位置显示警告",
+	warnEngulfingFlame			= "为$spell:99171的位置显示警告"
 })
 
 ----------------------------------
@@ -206,7 +264,7 @@ L:SetGeneralLocalization({
 L = DBM:GetModLocalization("KazzakClassic")
 
 L:SetGeneralLocalization{
-	name = "卡札克领主"
+	name = "卡扎克领主"
 }
 
 L:SetMiscLocalization({
@@ -217,7 +275,7 @@ L:SetMiscLocalization({
 L = DBM:GetModLocalization("Azuregos")
 
 L:SetGeneralLocalization{
-	name = "艾索雷苟斯"
+	name = "艾索雷葛斯"
 }
 
 L:SetMiscLocalization({
@@ -239,7 +297,7 @@ L:SetMiscLocalization({
 L = DBM:GetModLocalization("Ysondre")
 
 L:SetGeneralLocalization{
-	name = "伊索德雷"
+	name = "伊森德雷"
 }
 
 L:SetMiscLocalization({
@@ -250,7 +308,7 @@ L:SetMiscLocalization({
 L = DBM:GetModLocalization("Lethon")
 
 L:SetGeneralLocalization{
-	name = "雷索"
+	name = "莱索恩"
 }
 
 -- Emeriss (Duskwood)
@@ -263,6 +321,27 @@ L:SetGeneralLocalization{
 L:SetMiscLocalization({
 	Pull		= "希望是灵魂染上的疾病!这片土地应该枯竭，从此死气腾腾!"
 })
+
+-- Doomwalker (Tanaris)
+L = DBM:GetModLocalization("DoomwalkerEvent")
+
+L:SetGeneralLocalization{
+	name = "末日行者（事件）"
+}
+
+-- Archavon (???)
+L = DBM:GetModLocalization("ArchavonEvent")
+
+L:SetGeneralLocalization{
+	name = "阿尔卡冯（事件）"
+}
+
+-- Sha of Anger (???)
+L = DBM:GetModLocalization("ShaofAngerEvent")
+
+L:SetGeneralLocalization{
+	name = "怒之煞（事件）"
+}
 
 --------------------------
 --  Blastenheimer 5000  --
@@ -325,6 +404,15 @@ L:SetGeneralLocalization({
 	name = "坦克大战"
 })
 
+---------------------------
+--  Fire Ring Challenge  --
+---------------------------
+L = DBM:GetModLocalization("Rings")
+
+L:SetGeneralLocalization({
+	name = "火鸟的挑战"
+})
+
 -----------------------
 --  Darkmoon Rabbit  --
 -----------------------
@@ -346,4 +434,9 @@ L:SetGeneralLocalization({
 L:SetWarningLocalization({
 	specWarnCallPack		= "召唤狼群 － 远离月牙40码以上!",
 	specWarnMoonfangCurse	= "月牙的诅咒 － 远离月牙10码以上!"
+})
+
+L:SetOptionLocalization({
+	specWarnCallPack		= DBM_CORE_L.AUTO_SPEC_WARN_OPTIONS.run:format(144602),
+	specWarnMoonfangCurse	= DBM_CORE_L.AUTO_SPEC_WARN_OPTIONS.run:format(144590)
 })
