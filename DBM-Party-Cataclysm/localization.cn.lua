@@ -1,5 +1,4 @@
--- Simplified Chinese by Diablohu(diablohudream@gmail.com)
--- Last update: 2/25/2012
+-- 泰坦重铸时光服-时光2-法师-旺仔芒果/椰奶冻-2026.11.13--
 
 if GetLocale() ~= "zhCN" then return end
 
@@ -52,6 +51,15 @@ L:SetOptionLocalization({
 	SetIconOnBoss	= "在$spell:76200之后自动为首领添加标记"
 })
 
+---------
+--Trash--
+---------
+L = DBM:GetModLocalization("BlackrockCavernsTrash")
+
+L:SetGeneralLocalization({
+	name =	"黑石岩窟小怪"
+})
+
 ---------------------
 --  The Deadmines  --
 ---------------------
@@ -69,9 +77,9 @@ L= DBM:GetModLocalization(90)
 ---------------------
 L= DBM:GetModLocalization(91)
 
-L:SetOptionLocalization{
+L:SetOptionLocalization({
 	HarvestIcon		= DBM_CORE_L.AUTO_ICONS_OPTION_TARGETS:format(88495)
-}
+})
 
 ----------------------
 -- Admiral Ripsnarl --
@@ -114,6 +122,21 @@ L= DBM:GetModLocalization(133)
 ------------
 L= DBM:GetModLocalization(134)
 
+L = DBM:GetModLocalization("GrimBatolTrash")
+
+L:SetGeneralLocalization({
+	name =	"格瑞姆巴托小怪"
+})
+
+---------
+--Trash--
+---------
+L = DBM:GetModLocalization("BoralusTrash")
+
+L:SetGeneralLocalization({
+	name =	"伯拉勒斯小怪"
+})
+
 ----------------------------
 --  Halls of Origination  --
 ----------------------------
@@ -126,9 +149,9 @@ L= DBM:GetModLocalization(124)
 ---------------------
 L= DBM:GetModLocalization(125)
 
-L:SetMiscLocalization{
+L:SetMiscLocalization({
 	Kill		= "塔赫……不复存在了……"
-}
+})
 
 --------------
 -- Anraphet --
@@ -183,9 +206,9 @@ L= DBM:GetModLocalization(117)
 --------------
 L= DBM:GetModLocalization(118)
 
-L:SetOptionLocalization{
+L:SetOptionLocalization({
 	RangeFrame	= "距离监视器（5码）"
-}
+})
 
 ----------
 -- Augh --
@@ -206,13 +229,13 @@ L= DBM:GetModLocalization(119)
 ------------------------------------
 L= DBM:GetModLocalization(122)
 
-L:SetWarningLocalization{
+L:SetWarningLocalization({
 	specWarnPhase2Soon	= "5秒后进入第2阶段"
-}
+})
 
-L:SetOptionLocalization{
+L:SetOptionLocalization({
 	specWarnPhase2Soon	= "特殊警报：第2阶段即将开始（约5秒）"
-}
+})
 
 -----------------------
 --  Shadowfang Keep  --
@@ -235,27 +258,27 @@ L:SetTimerLocalization({
 	TimerAdds		= "下一次小怪刷新"
 })
 
-L:SetOptionLocalization{
+L:SetOptionLocalization({
 	TimerAdds		= "计时条：下一次小怪刷新"
-}
+})
 
-L:SetMiscLocalization{
+L:SetMiscLocalization({
 	YellAdds		= "击退入侵者！"
-}
+})
 
 -----------------
 -- Lord Walden --
 -----------------
 L= DBM:GetModLocalization(99)
 
-L:SetWarningLocalization{
+L:SetWarningLocalization({
 	specWarnCoagulant	= "绿色混合剂 - 持续移动！",	-- Green light
 	specWarnRedMix		= "红色混合剂 - 不要移动！"		-- Red light
-}
+})
 
-L:SetOptionLocalization{
+L:SetOptionLocalization({
 	RedLightGreenLight	= "特殊警报：红色/绿色混合剂的移动要求"
-}
+})
 
 ------------------
 -- Lord Godfrey --
@@ -281,12 +304,11 @@ L:SetTimerLocalization({
 
 L:SetOptionLocalization({
 	WarnEmerge		= "警报：出现",
-	WarnSubmerge	= "警报：钻地",
+	WarnSubmerge		= "警报：钻地",
 	TimerEmerge		= "计时条：下一次出现",
 	TimerSubmerge	= "计时条：下一次钻地",
 	RangeFrame		= "距离监视器（5码）"
 })
-
 
 --------------
 -- Slabhide --
@@ -322,6 +344,15 @@ L= DBM:GetModLocalization(112)
 ------------------------
 L= DBM:GetModLocalization(113)
 
+---------
+--Trash--
+---------
+L = DBM:GetModLocalization("StonecoreTrash")
+
+L:SetGeneralLocalization({
+	name =	"巨石之核小怪"
+})
+
 ---------------------------
 --  The Vortex Pinnacle  --
 ---------------------------
@@ -329,9 +360,9 @@ L= DBM:GetModLocalization(113)
 ------------------------
 L= DBM:GetModLocalization(114)
 
-L:SetMiscLocalization{
+L:SetMiscLocalization({
 	Retract		= "%s收回了他的旋风之盾！"
-}
+})
 
 --------------
 -- Altairus --
@@ -342,6 +373,15 @@ L= DBM:GetModLocalization(115)
 -- Asaad --
 -----------
 L= DBM:GetModLocalization(116)
+
+---------
+--Trash--
+---------
+L = DBM:GetModLocalization("VortexPinnacleTrash")
+
+L:SetGeneralLocalization({
+	name =	"漩涡尖塔小怪"
+})
 
 ---------------------------
 --  The Throne of Tides  --
@@ -365,6 +405,27 @@ L= DBM:GetModLocalization(103)
 ------------
 L= DBM:GetModLocalization(104)
 
+L:SetTimerLocalization({
+	TimerPhase		= "第二阶段"
+})
+
+L:SetOptionLocalization({
+	TimerPhase		= "为第二阶段显示计时器"
+})
+
+L:SetMiscLocalization({
+	RolePlay		= "这头野兽又回来了！它绝不能污染我的水域！"
+})
+
+---------
+--Trash--
+---------
+L = DBM:GetModLocalization("ThroneofTidesTrash")
+
+L:SetGeneralLocalization({
+	name =	"潮汐王座小怪"
+})
+
 ----------------
 --  Zul'Aman  --
 ----------------
@@ -372,28 +433,28 @@ L= DBM:GetModLocalization(104)
 ---------------
 L= DBM:GetModLocalization(186)
 
-L:SetOptionLocalization{
+L:SetOptionLocalization({
 	RangeFrame	= "距离监视器（10码）"
-}
+})
 
 ---------------
 --  Nalorakk --
 ---------------
 L= DBM:GetModLocalization(187)
 
-L:SetWarningLocalization{
+L:SetWarningLocalization({
 	WarnBear		= "熊形态",
 	WarnBearSoon	= "5秒后熊形态",
 	WarnNormal		= "人形态",
 	WarnNormalSoon	= "5秒后人形态"
-}
+})
 
-L:SetTimerLocalization{
+L:SetTimerLocalization({
 	TimerBear		= "熊形态",
 	TimerNormal		= "人形态"
-}
+})
 
-L:SetOptionLocalization{
+L:SetOptionLocalization({
 	WarnBear		= "警报：变为熊形态",
 	WarnBearSoon	= "提前警报：变为熊形态",
 	WarnNormal		= "警报：变为人形态",
@@ -401,85 +462,85 @@ L:SetOptionLocalization{
 	TimerBear		= "计时条：熊形态",
 	TimerNormal		= "计时条：人形态",
 	InfoFrame		= "信息框：拥有$spell:42402效果的团员的列表"
-}
+})
 
-L:SetMiscLocalization{
+L:SetMiscLocalization({
 	YellBear 		= "你们召唤野兽？你马上就要大大的后悔了！",
 	YellNormal		= "让我带给你们痛苦！",
 	PlayerDebuffs	= "澎湃效果"
-}
+})
 
 ---------------
 --  Jan'alai --
 ---------------
 L= DBM:GetModLocalization(188)
 
-L:SetOptionLocalization{
+L:SetOptionLocalization({
 	FlameIcon		= DBM_CORE_L.AUTO_ICONS_OPTION_TARGETS:format(43140)
-}
+})
 
-L:SetMiscLocalization{
+L:SetMiscLocalization({
 	YellBomb	= "烧死你们！",
 	YellHatchAll= "现在，让我来告诉你们什么叫……数量优势。",
 	YellAdds	= "孵化者呢？快去孵蛋！"
-}
+})
 
 --------------
 --  Halazzi --
 --------------
 L= DBM:GetModLocalization(189)
 
-L:SetWarningLocalization{
+L:SetWarningLocalization({
 	WarnSpirit	= "灵魂阶段",
 	WarnNormal	= "普通阶段"
-}
+})
 
-L:SetOptionLocalization{
+L:SetOptionLocalization({
 	WarnSpirit	= "警报：灵魂阶段",
 	WarnNormal	= "警报：普通阶段"
-}
+})
 
-L:SetMiscLocalization{
+L:SetMiscLocalization({
 	YellSpirit	= "狂野的灵魂与我同在……",
 	YellNormal	= "灵魂，到我这里来！"
-}
+})
 
 -----------------------
 -- Hexlord Malacrass --
 -----------------------
 L= DBM:GetModLocalization(190)
 
-L:SetTimerLocalization{
+L:SetTimerLocalization({
 	TimerSiphon	= "%s：%s"
-}
+})
 
-L:SetOptionLocalization{
+L:SetOptionLocalization({
 	TimerSiphon	= "计时条：$spell:43501"
-}
+})
 
-L:SetMiscLocalization{
+L:SetMiscLocalization({
 	YellPull	= "阴影将会降临在你们头上……"
-}
+})
 
 -------------
 -- Daakara --
 -------------
 L= DBM:GetModLocalization(191)
 
-L:SetTimerLocalization{
+L:SetTimerLocalization({
 	timerNextForm	= "下一次变形"
-}
+})
 
-L:SetOptionLocalization{
+L:SetOptionLocalization({
 	timerNextForm	= "计时条：变形",
 	InfoFrame		= "信息框：拥有$spell:42402效果的团员的列表",
-	ThrowIcon		= DBM_CORE_L.AUTO_ICONS_OPTION_TARGETS:format(97639),
-	ClawRageIcon	= DBM_CORE_L.AUTO_ICONS_OPTION_TARGETS:format(97672)
-}
+	ThrowIcon		= DBM_CORE_L.AUTO_ICONS_OPTION_TARGETS:format(43093),
+	ClawRageIcon	= DBM_CORE_L.AUTO_ICONS_OPTION_TARGETS:format(43150)
+})
 
-L:SetMiscLocalization{
+L:SetMiscLocalization({
 	PlayerDebuffs	= "澎湃效果"
-}
+})
 
 -----------------
 --  Zul'Gurub  --
@@ -488,24 +549,24 @@ L:SetMiscLocalization{
 -------------------------
 L= DBM:GetModLocalization(175)
 
-L:SetOptionLocalization{
+L:SetOptionLocalization({
 	SetIconOnToxicLink	= DBM_CORE_L.AUTO_ICONS_OPTION_TARGETS:format(96477)
-}
+})
 
 ------------------------
 -- Bloodlord Mandokir --
 ------------------------
 L= DBM:GetModLocalization(176)
 
-L:SetWarningLocalization{
+L:SetWarningLocalization({
 	WarnRevive		= "剩余%d个幽灵",
-	SpecWarnOhgan	= "奥根复活了！" -- check this, i'm not good at English
-}
+	SpecWarnOhgan	= "奥根复活了！"
+})
 
-L:SetOptionLocalization{
+L:SetOptionLocalization({
 	WarnRevive		= "警报：幽灵剩余数量",
 	SpecWarnOhgan	= "警报：奥根的复活"
-}
+})
 
 ----------------------
 -- Cache of Madness --
@@ -540,37 +601,37 @@ L= DBM:GetModLocalization(181)
 ------------
 L= DBM:GetModLocalization(184)
 
-L:SetWarningLocalization{
-	SpecWarnToxic	= "Get Toxic Torment"
-}
+L:SetWarningLocalization({
+	SpecWarnToxic	= "获得剧毒折磨"
+})
 
-L:SetOptionLocalization{
+L:SetOptionLocalization({
 	SpecWarnToxic	= "特殊警报：当你缺少$spell:96328效果时",
 	InfoFrame		= "信息框：没有$spell:96328效果的团员的列表",
 	SetIconOnGaze	= DBM_CORE_L.AUTO_ICONS_OPTION_TARGETS:format(96342)
-}
+})
 
-L:SetMiscLocalization{
+L:SetMiscLocalization({
 	PlayerDebuffs	= "没有剧毒折磨效果"
-}
+})
 
 ----------------------------
 -- Jindo --
 ----------------------------
 L= DBM:GetModLocalization(185)
 
-L:SetWarningLocalization{
+L:SetWarningLocalization({
 	WarnBarrierDown	= "哈卡之链壁垒被摧毁 - %d/3剩余"
-}
+})
 
-L:SetOptionLocalization{
+L:SetOptionLocalization({
 	WarnBarrierDown	= "警报：哈卡之链的壁垒被摧毁",
 	BodySlamIcon	= DBM_CORE_L.AUTO_ICONS_OPTION_TARGETS:format(97198)
-}
+})
 
-L:SetMiscLocalization{
-	Kill			= "You overstepped your bounds, Jin'do. You toy with powers that are beyond you. Have you forgotten who I am? Have you forgotten what I can do?!"
-}
+L:SetMiscLocalization({
+	Kill			= "你越界了，金度。你所玩弄的力量远非你所能掌控。你忘了我是什么人了吗？你忘了我的本事了吗？！"
+})
 
 ----------------
 --  End Time  --
@@ -584,13 +645,13 @@ L= DBM:GetModLocalization(340)
 -------------------
 L= DBM:GetModLocalization(285)
 
-L:SetTimerLocalization{
+L:SetTimerLocalization({
 	TimerFlarecoreDetonate	= "炙焰之核"
-}
+})
 
-L:SetOptionLocalization{
+L:SetOptionLocalization({
 	TimerFlarecoreDetonate	= "计时条：$spell:101927引爆"
-}
+})
 
 ----------------------
 -- Echo of Sylvanas --
@@ -607,9 +668,9 @@ L= DBM:GetModLocalization(283)
 --------------
 L= DBM:GetModLocalization(289)
 
-L:SetMiscLocalization{
+L:SetMiscLocalization({
 	Kill		= "你根本不明白你究竟干了什么。阿曼苏尔……我……看到……的……"
-}
+})
 
 ------------------------
 --  Well of Eternity  --
@@ -618,48 +679,48 @@ L:SetMiscLocalization{
 ----------------
 L= DBM:GetModLocalization(290)
 
-L:SetMiscLocalization{
+L:SetMiscLocalization({
 	Pull		= "没有凡人能从我手中逃脱！"
-}
+})
 
 -------------
 -- Azshara --
 -------------
 L= DBM:GetModLocalization(291)
 
-L:SetWarningLocalization{
+L:SetWarningLocalization({
 	WarnAdds	= "新的小怪即将出现"
-}
+})
 
-L:SetTimerLocalization{
+L:SetTimerLocalization({
 	TimerAdds	= "下一批小怪"
-}
+})
 
-L:SetOptionLocalization{
+L:SetOptionLocalization({
 	WarnAdds	= "警报：新的小怪出现",
 	TimerAdds	= "计时条：下一批小怪"
-}
+})
 
-L:SetMiscLocalization{
+L:SetMiscLocalization({
 	Kill		= "够了！我虽然好客，但现在必须要去处理更重要的事情了。"
-}
+})
 
 -----------------------------
 -- Mannoroth and Varo'then --
 -----------------------------
 L= DBM:GetModLocalization(292)
 
-L:SetTimerLocalization{
+L:SetTimerLocalization({
 	TimerTyrandeHelp	= "泰兰德需要帮助"
-}
+})
 
-L:SetOptionLocalization{
+L:SetOptionLocalization({
 	TimerTyrandeHelp	= "计时条：泰兰德需要帮助"
-}
+})
 
-L:SetMiscLocalization{
+L:SetMiscLocalization({
 	Kill		= "玛法里奥，他成功了！传送门崩溃了！"
-}
+})
 
 ------------------------
 --  Hour of Twilight  --
@@ -668,22 +729,29 @@ L:SetMiscLocalization{
 --------------
 L= DBM:GetModLocalization(322)
 
-L:SetMiscLocalization{
+L:SetTimerLocalization({
+	TimerCombatStart	= "战斗开始"
+})
+
+L:SetMiscLocalization({
 	Event		= "现身吧！",
-	Pull		= "你不过是个凡人。现在，像个凡人那样卑微地死去吧。"
-	--Pull		= "Twilight forces begin to appear around the canyons edges."
-}
+	Pull		= "暮光军队开始出现在峡谷边缘。"
+})
 
 ----------------------
 -- Asira Dawnslayer --
 ----------------------
 L= DBM:GetModLocalization(342)
 
-L:SetMiscLocalization{
-	Pull		= "该干正事了，对吧？"
-}
+L:SetMiscLocalization({
+	Pull		= "...搞定了那家伙，现在轮到你和你这群笨拙的朋友了。嗯，我还以为你们到不了这里呢！"
+})
 
 ---------------------------
 -- Archbishop Benedictus --
 ---------------------------
 L= DBM:GetModLocalization(341)
+
+L:SetMiscLocalization({
+	Event		= "现在呢，萨满，把巨龙之魂交给我吧。"
+})
