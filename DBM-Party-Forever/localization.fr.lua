@@ -246,6 +246,12 @@ L:SetGeneralLocalization{
 	name 		= "Capitaine Lèveffroi"
 }
 
+L = DBM:GetModLocalization("DeathlessGuardians")
+
+L:SetGeneralLocalization{
+	name 		= "Moelle impérissable"
+}
+
 L = DBM:GetModLocalization("PrimevalElemental")
 
 L:SetGeneralLocalization{
