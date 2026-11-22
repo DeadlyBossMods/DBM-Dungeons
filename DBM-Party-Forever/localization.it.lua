@@ -22,12 +22,6 @@ L:SetGeneralLocalization{
 	name 		= "Captain Dreadrise"
 }
 
-L = DBM:GetModLocalization("DeathlessGuardians")
-
-L:SetGeneralLocalization{
-	name 		= "Deathless Guardians"
-}
-
 L = DBM:GetModLocalization("PrimevalElemental")
 
 L:SetGeneralLocalization{
@@ -56,22 +50,10 @@ L:SetGeneralLocalization{
 	name 		= "Twilight Commander Zarmok"
 }
 
-L = DBM:GetModLocalization("HandlerAshka")
-
-L:SetGeneralLocalization{
-	name 		= "Handler Ashka"
-}
-
 L = DBM:GetModLocalization("Nargurk")
 
 L:SetGeneralLocalization{
 	name 		= "Nar'gurk"
-}
-
-L = DBM:GetModLocalization("OverseerMugg")
-
-L:SetGeneralLocalization{
-	name 		= "Overseer Mugg"
 }
 
 

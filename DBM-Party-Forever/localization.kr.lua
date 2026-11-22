@@ -22,12 +22,12 @@ L:SetGeneralLocalization{
 }
 
 -----------------------------
---  Infurnus  --
+--  Magmatus  --
 -----------------------------
 L = DBM:GetModLocalization("Infurnus")
 
 L:SetGeneralLocalization{
-	name 		= "인퍼르누스"
+	name 		= "마그마투스"
 }
 
 -----------------------------
@@ -60,12 +60,12 @@ L:SetGeneralLocalization{
 }
 
 -----------------------------
---  The Butcher  --
+--  The Baron  --
 -----------------------------
 L = DBM:GetModLocalization("TheButcher")
 
 L:SetGeneralLocalization{
-	name 		= "도살자"
+	name 		= "남작"
 }
 
 -----------------------------
@@ -172,12 +172,12 @@ L:SetGeneralLocalization{
 }
 
 -----------------------------
---  Mana Elemental  --
+--  Arcanic Enigma  --
 -----------------------------
 L = DBM:GetModLocalization("ManaElemental")
 
 L:SetGeneralLocalization{
-	name 		= "마나 정령"
+	name 		= "신비한 수수께끼"
 }
 
 -----------------------------
@@ -246,12 +246,6 @@ L:SetGeneralLocalization{
 	name 		= "대장 드레드라이즈"
 }
 
-L = DBM:GetModLocalization("DeathlessGuardians")
-
-L:SetGeneralLocalization{
-	name 		= "죽지 않는 수호자"
-}
-
 L = DBM:GetModLocalization("PrimevalElemental")
 
 L:SetGeneralLocalization{
@@ -283,7 +277,7 @@ L:SetGeneralLocalization{
 L = DBM:GetModLocalization("HandlerAshka")
 
 L:SetGeneralLocalization{
-	name 		= "조련사 아쉬카"
+	name 		= "전투조련사 아쉬카"
 }
 
 L = DBM:GetModLocalization("Nargurk")
@@ -295,7 +289,7 @@ L:SetGeneralLocalization{
 L = DBM:GetModLocalization("OverseerMugg")
 
 L:SetGeneralLocalization{
-	name 		= "감독관 머그"
+	name 		= "대군주 머그"
 }
 
 

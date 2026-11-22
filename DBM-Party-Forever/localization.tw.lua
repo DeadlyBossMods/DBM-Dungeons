@@ -22,12 +22,12 @@ L:SetGeneralLocalization{
 }
 
 -----------------------------
---  Infurnus  --
+--  Magmatus  --
 -----------------------------
 L = DBM:GetModLocalization("Infurnus")
 
 L:SetGeneralLocalization{
-	name 		= "英弗努斯"
+	name 		= "梅格瑪圖斯"
 }
 
 -----------------------------
@@ -60,12 +60,12 @@ L:SetGeneralLocalization{
 }
 
 -----------------------------
---  The Butcher  --
+--  The Baron  --
 -----------------------------
 L = DBM:GetModLocalization("TheButcher")
 
 L:SetGeneralLocalization{
-	name 		= "屠夫"
+	name 		= "男爵"
 }
 
 -----------------------------
@@ -172,12 +172,12 @@ L:SetGeneralLocalization{
 }
 
 -----------------------------
---  Mana Elemental  --
+--  Arcanic Enigma  --
 -----------------------------
 L = DBM:GetModLocalization("ManaElemental")
 
 L:SetGeneralLocalization{
-	name 		= "法力元素"
+	name 		= "秘法謎團"
 }
 
 -----------------------------
@@ -246,12 +246,6 @@ L:SetGeneralLocalization{
 	name 		= "懼湧船長"
 }
 
-L = DBM:GetModLocalization("DeathlessGuardians")
-
-L:SetGeneralLocalization{
-	name 		= "不滅的守護者"
-}
-
 L = DBM:GetModLocalization("PrimevalElemental")
 
 L:SetGeneralLocalization{
@@ -283,7 +277,7 @@ L:SetGeneralLocalization{
 L = DBM:GetModLocalization("HandlerAshka")
 
 L:SetGeneralLocalization{
-	name 		= "管理員艾絲卡"
+	name 		= "戰爭管理員艾絲卡"
 }
 
 L = DBM:GetModLocalization("Nargurk")
@@ -295,7 +289,7 @@ L:SetGeneralLocalization{
 L = DBM:GetModLocalization("OverseerMugg")
 
 L:SetGeneralLocalization{
-	name 		= "監督者馬戈"
+	name 		= "霸主馬戈"
 }
 
 
