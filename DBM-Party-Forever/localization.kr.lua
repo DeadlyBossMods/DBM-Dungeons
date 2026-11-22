@@ -246,6 +246,12 @@ L:SetGeneralLocalization{
 	name 		= "대장 드레드라이즈"
 }
 
+L = DBM:GetModLocalization("DeathlessGuardians")
+
+L:SetGeneralLocalization{
+	name 		= "죽지 않는 골수 구체"
+}
+
 L = DBM:GetModLocalization("PrimevalElemental")
 
 L:SetGeneralLocalization{
