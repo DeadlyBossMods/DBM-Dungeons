@@ -246,6 +246,12 @@ L:SetGeneralLocalization{
 	name 		= "懼湧船長"
 }
 
+L = DBM:GetModLocalization("DeathlessGuardians")
+
+L:SetGeneralLocalization{
+	name 		= "不滅之髓"
+}
+
 L = DBM:GetModLocalization("PrimevalElemental")
 
 L:SetGeneralLocalization{
