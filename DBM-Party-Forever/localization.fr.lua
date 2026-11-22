@@ -22,12 +22,12 @@ L:SetGeneralLocalization{
 }
 
 -----------------------------
---  Infurnus  --
+--  Magmatus  --
 -----------------------------
 L = DBM:GetModLocalization("Infurnus")
 
 L:SetGeneralLocalization{
-	name 		= "Infurnus"
+	name 		= "Magmatus"
 }
 
 -----------------------------
@@ -60,12 +60,12 @@ L:SetGeneralLocalization{
 }
 
 -----------------------------
---  The Butcher  --
+--  The Baron  --
 -----------------------------
 L = DBM:GetModLocalization("TheButcher")
 
 L:SetGeneralLocalization{
-	name 		= "Le Boucher"
+	name 		= "Le baron"
 }
 
 -----------------------------
@@ -172,12 +172,12 @@ L:SetGeneralLocalization{
 }
 
 -----------------------------
---  Mana Elemental  --
+--  Arcanic Enigma  --
 -----------------------------
 L = DBM:GetModLocalization("ManaElemental")
 
 L:SetGeneralLocalization{
-	name 		= "Élémentaire de mana"
+	name 		= "Enigme arcanique"
 }
 
 -----------------------------
@@ -249,7 +249,7 @@ L:SetGeneralLocalization{
 L = DBM:GetModLocalization("DeathlessGuardians")
 
 L:SetGeneralLocalization{
-	name 		= "Gardiens impérissables"
+	name 		= "Moelle impérissable"
 }
 
 L = DBM:GetModLocalization("PrimevalElemental")
@@ -283,7 +283,7 @@ L:SetGeneralLocalization{
 L = DBM:GetModLocalization("HandlerAshka")
 
 L:SetGeneralLocalization{
-	name 		= "Dresseuse Ashka"
+	name 		= "Marchande de guerre Ashka"
 }
 
 L = DBM:GetModLocalization("Nargurk")
