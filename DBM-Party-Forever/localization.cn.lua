@@ -130,7 +130,7 @@ L:SetGeneralLocalization{
 L = DBM:GetModLocalization("HighlandHorror")
 
 L:SetGeneralLocalization{
-	name 		= "Highland Horror" -- WAGO MISSING NAME
+	name 		= "高地恐魔"
 }
 
 -----------------------------
