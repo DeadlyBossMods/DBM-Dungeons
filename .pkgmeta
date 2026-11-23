@@ -2,6 +2,9 @@ package-as: DBM-Party-Vanilla
 enable-nolib-creation: no
 changelog-title: DBM - Dungeons, Delves, & Events
 
+required-dependencies:
+  - deadly-boss-mods
+
 move-folders:
     DBM-Party-Vanilla/DBM-WorldEvents: DBM-WorldEvents
     DBM-Party-Vanilla/DBM-Party-Cataclysm: DBM-Party-Cataclysm
