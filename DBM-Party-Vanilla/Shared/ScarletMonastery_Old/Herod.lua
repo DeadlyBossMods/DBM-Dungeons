@@ -33,8 +33,8 @@ else
 	end
 
 	function mod:SPELL_AURA_APPLIED(args)
-		if args:IsSpell(8269) and args:IsDestTypeHostile() and self:AntiSpam(3, 1) then
-			if self.Options.SpecWarn8269run then
+		if args:IsSpell(8989) and args:IsDestTypeHostile() and self:AntiSpam(3, 1) then
+			if self.Options.SpecWarn8989run then
 				specWarnWhirlwind:Show()
 				specWarnWhirlwind:Play("justrun")
 			else
