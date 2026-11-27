@@ -91,8 +91,8 @@ end
 --local timerShockwaveCD				= mod:NewCDNPTimer(8.4, 207979, nil, nil, nil, 3)
 --local timerCrushingLeapCD			= mod:NewCDNPTimer(16.9, 397897, nil, nil, nil, 3)
 
---mod:AddGossipOption(true, "Buff")
---mod:AddGossipOption(true, "Action")
+mod:AddGossipOption(true, "Buff")
+mod:AddGossipOption(true, "Action")
 mod:AddBoolOption("SpyHelper", true)
 --mod:AddBoolOption("SendToChat2", true)
 mod:AddBoolOption("SpyHelperClose2", false)
